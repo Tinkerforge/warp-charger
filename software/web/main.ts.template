@@ -1,0 +1,48 @@
+import $ from "jquery";
+
+import "bootstrap";
+
+import feather = require("feather-icons");
+
+import {reboot} from "./ts/util";
+
+{{{module_imports}}}
+
+interface Module {
+    init(): any;
+    addEventListeners(source: EventSource): any;
+}
+
+let modules: Module[] = [{{{modules}}}];
+
+$('.navbar-collapse a').on("click", function () {
+    $(".navbar-collapse").collapse('hide');
+});
+
+
+$(function () {
+    feather.replace();
+
+    for (let m of modules) {
+        m.init();
+    }
+
+    if (!!window.EventSource) {
+        let source = new EventSource('/events');
+
+        source.addEventListener('open', function (e) {
+            console.log("Events Connected");
+        }, false);
+
+        source.addEventListener('error', function (e) {
+            if ((<EventSource>e.target).readyState != EventSource.OPEN) {
+                console.log("Events Disconnected");
+            }
+        }, false);
+
+        for (let m of modules) {
+            m.addEventListeners(source);
+        }
+    }
+
+});

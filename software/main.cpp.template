@@ -1,0 +1,286 @@
+#include <Arduino.h>
+#include <WiFi.h>
+#include <SPIFFS.h>
+
+#include <stdio.h>
+#include <string.h>
+
+#include "ESPAsyncWebServer.h"
+#include "AsyncJson.h"
+
+#include "hal_arduino_esp32/hal_arduino_esp32.h"
+
+#include "bindings/errors.h"
+#include "bindings/endian_convert.h"
+#include "bindings/packetbuffer.h"
+#include "bindings/base58.h"
+#include "bindings/spitfp.h"
+
+#include "index.html.h"
+{{{module_includes}}}
+
+#include <soc/efuse_reg.h>
+
+#include "esp_spiffs.h"
+
+#define GREEN_LED 4
+#define BLUE_LED 32
+
+AsyncWebServer server(80);
+AsyncEventSource events("/events");
+
+TF_HalContext hal;
+{{{module_decls}}}
+
+uint32_t uid_numeric = 0;
+char uid[7] = {0};
+char passphrase[20] = {0};
+
+TF_Port ports[6] = {{
+        .chip_select_pin = 16,
+        .spi = VSPI,
+        .port_name = 'A'
+    }, {
+        .chip_select_pin = 33,
+        .spi = VSPI,
+        .port_name = 'B'
+    }, {
+        .chip_select_pin = 17,
+        .spi = VSPI,
+        .port_name = 'C'
+    }, {
+        .chip_select_pin = 25,
+        .spi = HSPI,
+        .port_name = 'D'
+    }, {
+        .chip_select_pin = 26,
+        .spi = HSPI,
+        .port_name = 'E'
+    }, {
+        .chip_select_pin = 27,
+        .spi = HSPI,
+        .port_name = 'F'
+    }
+};
+
+int check(int rc,const char *msg) {
+    if (rc >= 0)
+        return rc;
+    Serial.print(millis());
+    Serial.print(" Failed to ");
+    Serial.print(msg);
+    Serial.print( " rc:");
+    Serial.println(tf_hal_strerror(rc));
+    delay(10);
+    return rc;
+}
+
+Config version;
+
+void read_efuses(uint32_t *ret_uid_numeric, char *ret_uid_string, char *ret_passphrase_string) {
+    uint32_t blocks[8] = {0};
+
+    for(int32_t block3Address=EFUSE_BLK3_RDATA0_REG, i = 0; block3Address<=EFUSE_BLK3_RDATA7_REG; block3Address+=4, ++i)
+    {
+        blocks[i] = REG_GET_FIELD(block3Address, EFUSE_BLK3_DOUT0);
+    }
+
+    uint32_t passphrase[4] = {0};
+    uint32_t uid = 0;
+
+/*
+    EFUSE_BLK_3 is 256 bit (32 byte, 8 blocks) long and organized as follows:
+    block 0:
+        Custom MAC CRC + MAC bytes 0 to 2
+    block 1:
+        Custom MAC bytes 3 to 5
+        byte 3 - Wifi passphrase chunk 0 byte 0
+    block 2:
+        byte 0 - Wifi passphrase chunk 0 byte 1
+        byte 1 - Wifi passphrase chunk 0 byte 2
+        byte 2 - Wifi passphrase chunk 1 byte 0
+        byte 3 - Wifi passphrase chunk 1 byte 1
+    block 3:
+        ADC 1 calibration data
+    block 4:
+        ADC 2 calibration data
+    block 5:
+        byte 0 - Wifi passphrase chunk 1 byte 2
+        byte 1 - Wifi passphrase chunk 2 byte 0
+        byte 2 - Wifi passphrase chunk 2 byte 1
+        byte 3 - Custom MAC Version
+    block 6:
+        byte 0 - Wifi passphrase chunk 2 byte 2
+        byte 1 - Wifi passphrase chunk 3 byte 0
+        byte 2 - Wifi passphrase chunk 3 byte 1
+        byte 3 - Wifi passphrase chunk 3 byte 2
+    block 7:
+        UID
+*/
+
+    passphrase[0] = ((blocks[1] & 0xFF000000) >> 24) | ((blocks[2] & 0x0000FFFF) << 8);
+    passphrase[1] = ((blocks[2] & 0xFFFF0000) >> 16) | ((blocks[5] & 0x000000FF) << 16);
+    passphrase[2] = ((blocks[5] & 0x00FFFF00) >> 8)  | ((blocks[6] & 0x000000FF) << 16);
+    passphrase[3] =  (blocks[6] & 0xFFFFFF00) >> 8;
+    uid = blocks[7];
+
+    char buf[7] = {0};
+    for(int i = 0; i < 4; ++i) {
+        if(i != 0)
+            ret_passphrase_string[i * 5 - 1] = '-';
+
+        tf_base58_encode(passphrase[i], buf);
+        if(strnlen(buf, sizeof(buf)/sizeof(buf[0])) != 4) {
+            printf("malformed passphrase! \n");
+        } else {
+            memcpy(ret_passphrase_string + i * 5, buf, 4);
+
+        }
+    }
+    tf_base58_encode(uid, ret_uid_string);
+}
+
+void read_firmware_version() {
+    String firmware_version = String((uint32_t)__COMMIT_ID__, 16) + "-" +  String((uint32_t)(__COMMIT_ID__ >> 32), 16);
+    Serial.printf("    **** TINKERFORGE {{{display_name}}} V%s ****\n",firmware_version.c_str());
+    Serial.printf(" %dK RAM SYSTEM  %d HEAP BYTES FREE\nREADY.\n\n", ESP.getHeapSize()/1024, ESP.getFreeHeap());
+
+    esp_vfs_spiffs_conf_t conf = {
+      .base_path = "/spiffs",
+      .partition_label = NULL,
+      .max_files = 10,
+      .format_if_mount_failed = false
+    };
+
+    esp_err_t err = esp_vfs_spiffs_register(&conf);
+    if(err == ESP_FAIL) {
+        Serial.println("SPIFFS is not formatted. Formatting now. This will take about 30 seconds.");
+        SPIFFS.format();
+    } else {
+        esp_vfs_spiffs_unregister(NULL);
+    }
+
+    if (!SPIFFS.begin(false)) {
+        Serial.println("Failed to mount SPIFFS.");
+    }
+
+
+    String spiffs_version = "unknown";
+    if (SPIFFS.exists("/spiffs.json")) {
+        const size_t capacity = JSON_OBJECT_SIZE(1) + 60;
+        StaticJsonDocument<capacity> doc;
+
+        File file = SPIFFS.open("/spiffs.json", "r");
+        deserializeJson(doc, file);
+        file.close();
+
+        spiffs_version = doc["spiffs"].as<char*>();
+    }
+    Serial.println(String("{{{display_name}}} SPIFFS version ") + spiffs_version);
+
+    version = Config::Object({
+        {"firmware", Config::Str(firmware_version)},
+        {"spiffs", Config::Str(spiffs_version)},
+    });
+}
+
+void register_default_urls() {
+    server.onNotFound([](AsyncWebServerRequest *request) {
+        if (request->method() == HTTP_OPTIONS)
+            request->send(200);
+        else
+            request->send(404, "text/html", "404");
+    });
+
+    server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
+        auto *response = request->beginChunkedResponse("text/html", [](uint8_t *buffer, size_t maxLen, size_t index) -> size_t {
+            auto CHUNK_SIZE = 1024 * 10;
+            //Write up to "maxLen" bytes into "buffer" and return the amount written.
+            //index equals the amount of bytes that have been already sent
+            //You will be asked for more data until 0 is returned
+            //Keep in mind that you can not delay or yield waiting for more data!
+            size_t to_write = MIN(MIN(CHUNK_SIZE, maxLen), index_html_gz_len - index);
+            memcpy(buffer, index_html_gz + index, to_write);
+            return to_write;
+        });
+
+        response->addHeader("Content-Encoding", "gzip");
+        response->setCode(200);
+        request->send(response);
+    });
+
+     server.on("/reboot", HTTP_ANY, [](AsyncWebServerRequest *request) {
+        task_scheduler.scheduleOnce("reboot", [](){ESP.restart();}, 3000);
+        request->send(200, "text/html", "Will reboot in 3 seconds.");
+    });
+
+    server.on("/force_reboot", HTTP_ANY, [](AsyncWebServerRequest *request) {
+        ESP.restart();
+        request->send(200, "text/html", "Forced reboot.");
+    });
+
+    server.on("/version", HTTP_GET, [](AsyncWebServerRequest *request) {
+        request->send(200, "application/json", version.to_string());
+    });
+
+    server.on("/uptime", HTTP_GET, [](AsyncWebServerRequest *request) {
+        request->send(200, "text/html", String(millis()));
+    });
+}
+
+void setup(void) {
+    Serial.begin(115200);
+
+    read_firmware_version();
+
+    check(tf_hal_create(&hal, ports, sizeof(ports)/sizeof(ports[0])), "hal create");
+
+    read_efuses(&uid_numeric, uid, passphrase);
+
+    {{{module_setup}}}
+
+    register_default_urls();
+
+    {{{module_register_urls}}}
+
+    pinMode(GREEN_LED, OUTPUT);
+    pinMode(BLUE_LED, OUTPUT);
+    pinMode(0, INPUT);
+
+    task_scheduler.scheduleWithFixedDelay("led_blink", [](){
+        static bool led_blink_state = false;
+        led_blink_state = !led_blink_state;
+        digitalWrite(BLUE_LED, led_blink_state ? HIGH : LOW);
+    }, 0, 1000);
+
+    events.onConnect([](AsyncEventSourceClient *client){
+        if(client->lastId()){
+            Serial.printf("Client reconnected! Last message ID that it got is: %u\n", client->lastId());
+        }
+        {
+            String version_str = version.to_string();
+            client->send(version_str.c_str(), "version", millis(), 1000);
+        }
+        {{{module_on_event_connect}}}
+    });
+
+    server.addHandler(&events);
+
+    server.begin();
+}
+
+void loop(void) {
+    //prioritize proxy performance over web interface and wifi responsitivity
+    tf_hal_tick(&hal, 1000);
+    tf_hal_tick(&hal, 1000);
+    tf_hal_tick(&hal, 1000);
+    tf_hal_tick(&hal, 1000);
+    tf_hal_tick(&hal, 1000);
+    tf_hal_tick(&hal, 1000);
+    tf_hal_tick(&hal, 1000);
+    tf_hal_tick(&hal, 1000);
+
+    {{{module_loop}}}
+
+    digitalWrite(GREEN_LED, digitalRead(0));
+}

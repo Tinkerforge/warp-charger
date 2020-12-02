@@ -1,0 +1,354 @@
+ <div class="tab-pane fade" role="tabpanel" aria-labelledby="sidebar-evse" id="evse">
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">EVSE</h1>
+    </div>
+
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <span class="h3">State</span>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <label for="evse_state_not_connected" class="col-form-label">
+                <span class="form-label">IEC61851 State</span>
+            </label>
+        </div>
+        <div class="col-sm-8">
+            <div id="btn_group_iec_state" class="btn-group flex-wrap" role="group">
+                <button type="button" class="btn btn-outline-primary" disabled>A (Not
+                    connected)</button>
+                <button type="button" class="btn btn-outline-warning" disabled>B
+                    (Connected)</button>
+                <button type="button" class="btn btn-outline-success" disabled>C (Charging; no
+                    ventilation)</button>
+                <button type="button" class="btn btn-outline-danger" disabled>D (Charging;
+                    ventilation)</button>
+                <button type="button" class="btn btn-outline-danger" disabled>EF (Error)</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <label for="btn_groups_ac" class="col-form-label">
+                <span class="form-label">Contactor State</span>
+                <span class="text-muted">(AC1/AC2/Error)</span>
+            </label>
+        </div>
+        <div id="btn_groups_ac" class="col-sm-8">
+            <div id="btn_group_ac1" class="btn-group flex-wrap" role="group">
+                <button type="button" class="btn btn-outline-secondary" disabled>Not Live</button>
+                <button type="button" class="btn btn-outline-primary" disabled>Live</button>
+            </div>
+            <div id="btn_group_ac2" class="btn-group flex-wrap" role="group">
+                <button type="button" class="btn btn-outline-secondary" disabled>Not Live</button>
+                <button type="button" class="btn btn-outline-primary" disabled>Live</button>
+            </div>
+            <div id="btn_group_contactor_error" class="btn-group flex-wrap" role="group">
+                <button type="button" class="btn btn-outline-success" disabled>OK</button>
+                <button type="button" class="btn btn-outline-danger" disabled>Error</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <label for="allowed_charging_current" class="col-form-label">
+                <span class="form-label">Allowed Charging Current</span>
+            </label>
+        </div>
+        <div class="col-sm-4">
+            <input id="allowed_charging_current" class="form-control" type="text"
+                placeholder="Allowed charging current..." readonly>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <label for="btn_group_lock_state" class="col-form-label">
+                <span class="form-label">Lock State</span>
+            </label>
+        </div>
+        <div class="col-sm-8">
+            <div id="btn_group_lock_state" class="btn-group flex-wrap" role="group">
+                <button type="button" class="btn btn-outline-secondary" disabled>Init</button>
+                <button type="button" class="btn btn-outline-primary" disabled>Open</button>
+                <button type="button" class="btn btn-outline-primary" disabled>Closing</button>
+                <button type="button" class="btn btn-outline-primary" disabled>Close</button>
+                <button type="button" class="btn btn-outline-primary" disabled>Opening</button>
+                <button type="button" class="btn btn-outline-danger" disabled>Error</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <label for="time_since_state_change" class="col-form-label">
+                <span class="form-label">Time Since State Change</span>
+            </label>
+        </div>
+        <div class="col-sm-4">
+            <input id="time_since_state_change" class="form-control" type="text"
+                placeholder="Time since state change..." readonly>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <label for="uptime" class="col-form-label">
+                <span class="form-label">Uptime</span>
+            </label>
+        </div>
+        <div class="col-sm-4">
+            <input id="uptime" class="form-control" type="text" placeholder="Uptime..." readonly>
+        </div>
+    </div>
+
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <span class="h3">Configuration</span>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <label for="btn_group_has_lock_switch" class="col-form-label">
+                <span class="form-label">Has Lock Switch</span>
+            </label>
+        </div>
+        <div class="col-sm-8">
+            <div id="btn_group_has_lock_switch" class="btn-group flex-wrap" role="group">
+                <button type="button" class="btn btn-outline-secondary" disabled>No</button>
+                <button type="button" class="btn btn-outline-primary" disabled>Yes</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <label for="btn_group_jumper_config" class="col-form-label">
+                <span class="form-label">Maximum charge current</span>
+                <span class="text-muted">(Jumper configured)</span>
+            </label>
+        </div>
+        <div class="col-sm-8">
+            <div id="btn_group_jumper_config" class="btn-group flex-wrap" role="group">
+                <button type="button" class="btn btn-outline-primary" disabled>6A</button>
+                <button type="button" class="btn btn-outline-primary" disabled>10A</button>
+                <button type="button" class="btn btn-outline-primary" disabled>13A</button>
+                <button type="button" class="btn btn-outline-primary" disabled>16A</button>
+                <button type="button" class="btn btn-outline-primary" disabled>20A</button>
+                <button type="button" class="btn btn-outline-primary" disabled>25A</button>
+                <button type="button" class="btn btn-outline-primary" disabled>32A</button>
+                <button type="button" class="btn btn-outline-danger" disabled>Software</button>
+                <button type="button" class="btn btn-outline-danger" disabled>Unconfigured</button>
+            </div>
+        </div>
+    </div>
+
+    <div
+    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <span class="h3">Charging Current</span>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <label for="max_current_configured" class="col-form-label">
+                <span class="form-label">Configured Current</span>
+            </label>
+        </div>
+        <div class="col-sm-4">
+            <input id="max_current_configured" class="form-control" type="text"
+                placeholder="Allowed charging current..." readonly>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <label for="max_current_incoming_cable" class="col-form-label">
+                <span class="form-label">Max current of incoming cable</span>
+            </label>
+        </div>
+        <div class="col-sm-4">
+            <input id="max_current_incoming_cable" class="form-control" type="text"
+                placeholder="Max current of incoming cable..." readonly>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <label for="max_current_outgoing_cable" class="col-form-label">
+                <span class="form-label">Max current of outgoing cable</span>
+            </label>
+        </div>
+        <div class="col-sm-4">
+            <input id="max_current_outgoing_cable" class="form-control" type="text"
+                placeholder="Max current of outgoing cable..." readonly>
+        </div>
+    </div>
+
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <span class="h3">Low Level State</span>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#low_level_state_collapse" aria-expanded="false" aria-controls="low_level_state_collapse">
+            Show
+        </button>
+    </div>
+    <div class="collapse" id="low_level_state_collapse">
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <label for="btn_group_low_level_mode_enabled" class="col-form-label">
+                    <span class="form-label">Low Level Mode</span>
+                </label>
+            </div>
+            <div class="col-sm-8">
+                <div id="btn_group_low_level_mode_enabled" class="btn-group flex-wrap" role="group">
+                    <button type="button" class="btn btn-outline-secondary"
+                        disabled>Disabled</button>
+                    <button type="button" class="btn btn-outline-primary" disabled>Enabled</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <label for="btn_group_led_state" class="col-form-label">
+                    <span class="form-label">LED State</span>
+                </label>
+            </div>
+            <div class="col-sm-8">
+                <div id="btn_group_led_state" class="btn-group flex-wrap" role="group">
+                    <button type="button" class="btn btn-outline-secondary" disabled>Off</button>
+                    <button type="button" class="btn btn-outline-primary" disabled>On</button>
+                    <button type="button" class="btn btn-outline-primary" disabled>Blinking</button>
+                    <button type="button" class="btn btn-outline-primary"
+                        disabled>Breathing</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <label for="pwm_duty_cycle" class="col-form-label">
+                    <span class="form-label">CP PWM Duty Cycle</span>
+                </label>
+            </div>
+            <div class="col-sm-4">
+                <input id="pwm_duty_cycle" class="form-control" type="text"
+                    placeholder="CP PWM Duty Cycle..." readonly>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <label for="adc_value_0" class="col-form-label">
+                    <span class="form-label">ADC Values</span>
+                </label>
+            </div>
+            <div class="col-sm-2">
+                <input id="adc_value_0" class="form-control" type="text" placeholder="ADC Value..."
+                    readonly>
+            </div>
+            <div class="col-sm-2">
+                <input id="adc_value_1" class="form-control" type="text" placeholder="ADC Value..."
+                    readonly>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <label for="voltage_0" class="col-form-label">
+                    <span class="form-label">Voltages</span>
+                    <span class="text-muted">(PE-CP, PE-PP, High Voltage PE-CP)</span>
+                </label>
+            </div>
+            <div class="col-sm-2">
+                <input id="voltage_0" class="form-control" type="text" placeholder="Voltage..."
+                    readonly>
+            </div>
+            <div class="col-sm-2">
+                <input id="voltage_1" class="form-control" type="text" placeholder="Voltage..."
+                    readonly>
+            </div>
+            <div class="col-sm-2">
+                <input id="voltage_2" class="form-control" type="text" placeholder="Voltage..."
+                    readonly>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <label for="resistance_0" class="col-form-label">
+                    <span class="form-label">Resistances</span>
+                </label>
+            </div>
+            <div class="col-sm-2">
+                <input id="resistance_0" class="form-control" type="text"
+                    placeholder="Resistance..." readonly>
+            </div>
+            <div class="col-sm-2 ">
+                <input id="resistance_1" class="form-control" type="text"
+                    placeholder="Resistance..." readonly>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <label for="btn_groups_gpios" class="col-form-label">
+                    <span class="form-label">GPIOs</span>
+                    <span class="text-muted">(Input, Output, Motor Input Switch, Relay, Motor
+                        Fault)</span>
+                </label>
+            </div>
+            <div id="btn_groups_gpios" class="col-sm-8">
+                <div id="btn_group_gpio0" class="btn-group flex-wrap" role="group">
+                    <button type="button" class="btn btn-outline-secondary" disabled>Low</button>
+                    <button type="button" class="btn btn-outline-primary" disabled>High</button>
+                </div>
+                <div id="btn_group_gpio1" class="btn-group flex-wrap" role="group">
+                    <button type="button" class="btn btn-outline-secondary" disabled>Low</button>
+                    <button type="button" class="btn btn-outline-primary" disabled>High</button>
+                </div>
+                <div id="btn_group_gpio2" class="btn-group flex-wrap" role="group">
+                    <button type="button" class="btn btn-outline-secondary" disabled>Low</button>
+                    <button type="button" class="btn btn-outline-primary" disabled>High</button>
+                </div>
+                <div id="btn_group_gpio3" class="btn-group flex-wrap" role="group">
+                    <button type="button" class="btn btn-outline-secondary" disabled>Low</button>
+                    <button type="button" class="btn btn-outline-primary" disabled>High</button>
+                </div>
+                <div id="btn_group_gpio4" class="btn-group flex-wrap" role="group">
+                    <button type="button" class="btn btn-outline-secondary" disabled>Low</button>
+                    <button type="button" class="btn btn-outline-primary" disabled>High</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <label for="btn_group_motor_direction" class="col-form-label">
+                    <span class="form-label">Motor Direction</span>
+                </label>
+            </div>
+            <div class="col-sm-8">
+                <div id="btn_group_motor_direction" class="btn-group flex-wrap" role="group">
+                    <button type="button" class="btn btn-outline-secondary" disabled>TODO</button>
+                    <button type="button" class="btn btn-outline-primary" disabled>TODO</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <label for="motor_duty_cycle" class="col-form-label">
+                    <span class="form-label">Motor Duty Cycle</span>
+                </label>
+            </div>
+            <div class="col-sm-4">
+                <input id="motor_duty_cycle" class="form-control" type="text"
+                    placeholder="Motor Duty Cycle..." readonly>
+            </div>
+        </div>
+    </div>
+</div>
