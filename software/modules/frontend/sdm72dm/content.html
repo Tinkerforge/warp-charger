@@ -1,0 +1,65 @@
+<div class="tab-pane fade" role="tabpanel" aria-labelledby="sidebar-meter" id="meter">
+    <div class="row">
+        <div class="col-lg-6 col-md-12">
+            <div
+                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Energy Meter</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <select id="meter_chart_time_select" class="custom-select">
+                        <option value="history" selected>History</option>
+                        <option value="live">Live</option>
+                    </select>
+                </div>
+            </div>
+            <div id="meter_chart" class="ct-chart ct-golden-section"></div>
+        </div>
+        <div class="col-xl-4 col-lg-6">
+            <div
+                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Statistics</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <button type="button" class="btn btn-outline-secondary"
+                        id="energy_meter_reset_statistics_button">
+                        <span data-feather="trash-2"></span>
+                        Reset statistics
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-group row no-gutters">
+                <div class="col-sm-6">
+                    <label for="meter_power_values" class="col-form-label">
+                        <span class="form-label">Power</span>
+                    </label>
+                </div>
+                <div id="meter_power_values" class="col-sm-6">
+                    <input id="meter_power_total" class="form-control" type="text" placeholder="Total Power" readonly>
+                </div>
+            </div>
+
+            <div class="form-group row no-gutters">
+                <div class="col-sm-6">
+                    <label for="meter_energy_rel_values" class="col-form-label">
+                        <span class="form-label">Energy</span>
+                        <span class="text-muted">(Since last reset)</span>
+                    </label>
+                </div>
+                <div id="meter_energy_rel_values" class="col-sm-6">
+                    <input id="meter_energy_rel_total" class="form-control" type="text" placeholder="Total Energy (since last reset)" readonly>
+                </div>
+            </div>
+
+            <div class="form-group row no-gutters">
+                <div class="col-sm-6">
+                    <label for="meter_energy_abs_values" class="col-form-label">
+                        <span class="form-label">Energy</span>
+                        <span class="text-muted">(Lifetime)</span>
+                    </label>
+                </div>
+                <div id="meter_energy_abs_values" class="col-sm-6">
+                    <input id="meter_energy_abs_total" class="form-control" type="text" placeholder="Total Energy (lifetime)" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

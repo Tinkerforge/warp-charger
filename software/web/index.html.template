@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <title>{{{display_name}}} Web Interface</title>
+
+    <link href="css/main.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark sticky-top flex-md-nowrap p-0">
+        <img class="" src="img/logo_white.png" style="transform: scale(0.8, 0.8);"/>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
+            data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- show inline status here? -->
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse navbar-collapse">
+                <div class="sidebar-sticky pt-3">
+                    <ul class="nav flex-column" role="tablist">
+                        <li class="nav-item">
+                            <a id="sidebar-status" class="nav-link active" data-toggle="tab" role="tab"
+                                aria-controls="status" aria-selected="true" href="#status">
+                                <span data-feather="home"></span>
+                                Status <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+
+                        {{{navbar}}}
+                    </ul>
+                </div>
+            </nav>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div id="alert_placeholder"></div>
+
+                    <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="sidebar-status" id="status">
+                        <div
+                            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                            <h1 class="h2">Status</h1>
+                        </div>
+                        <form>
+                            {{{status}}}
+                        </form>
+                    </div>
+
+                    {{{content}}}
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="js/bundle.js"></script>
+</body>
+
+</html>
