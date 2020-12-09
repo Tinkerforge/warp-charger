@@ -46,20 +46,20 @@ void read_input_registers_handler(struct TF_RS485 *device, uint8_t request_id, i
         return;
     }
 
+    if(exception_code != 0) {
+        tf_hal_printf("Request %I8u: Exception code %I8d\n", request_id, exception_code);
+        ud->done = true;
+        return;
+    }
+
     if(input_registers_length != 2) {
-        tf_hal_printf("Unexpected response length %I16u\n", input_registers_length);
+        tf_hal_printf("Request %I8u: Unexpected response length %I16u\n", request_id, input_registers_length);
         ud->done = true;
         return;
     }
 
     if(ud->value_to_write == nullptr) {
         tf_hal_printf("value to write was nullptr\n");
-        ud->done = true;
-        return;
-    }
-
-    if(exception_code != 0) {
-        tf_hal_printf("Exception code %I8d", exception_code);
         ud->done = true;
         return;
     }
@@ -96,8 +96,8 @@ void write_multiple_registers_handler(struct TF_RS485 *device, uint8_t request_i
 
 void SDM72DM::setup() {
     for(int i = 0; i < power_history.size(); ++i) {
-        float f = 5000.0 * sin(PI/120.0 * i) + 5000.0;
-        power_history.push(f);
+        //float f = 5000.0 * sin(PI/120.0 * i) + 5000.0;
+        power_history.push(0);
     }
 
     char uid[7] = {0};
@@ -274,7 +274,7 @@ void SDM72DM::loop()
             events.send(state.to_string().c_str(), "meter_state", millis());
         }
 
-        interval_samples.push(state.get("power")->get("export")->asFloat());
+        interval_samples.push(state.get("power")->get("import")->asFloat());
         ++samples_last_interval;
 
         if(deadline_elapsed(interval_end_ms)) {
