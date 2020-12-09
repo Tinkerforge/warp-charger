@@ -62,30 +62,7 @@ EVSE::EVSE()
 
 void EVSE::setup()
 {
-    char uid[7] = {0};
-    if (!find_uid_by_did(&hal, TF_EVSE_DEVICE_IDENTIFIER, uid)) {
-        Serial.println("No EVSE bricklet found. Disabling EVSE support.");
-        return;
-    }
-
-    auto result = tf_evse_create(&evse, uid, &hal);
-    if(result != TF_E_OK) {
-        Serial.printf("EVSE init failed (rc %d). Disabling EVSE support.\n", result);
-        return;
-    }
-    initialized = true;
-
-    uint8_t jumper_configuration;
-    bool has_lock_switch;
-
-    result = tf_evse_get_hardware_configuration(&evse, &jumper_configuration, &has_lock_switch);
-    if(result != TF_E_OK) {
-        Serial.printf("EVSE hardware config query failed (rc %d).\n", result);
-    } else {
-        evse_hardware_configuration.get("jumper_configuration")->asUint() = jumper_configuration;
-        evse_hardware_configuration.get("has_lock_switch")->asBool() = has_lock_switch;
-    }
-
+    setup_evse();
     task_scheduler.scheduleWithFixedDelay("update_evse_state", [this](){
         update_evse_state();
     }, 0, 1000);
@@ -101,9 +78,6 @@ void EVSE::setup()
 
 void EVSE::register_urls()
 {
-    if(!initialized)
-        return;
-
     server.on("/evse_charging_state", HTTP_GET, [this](AsyncWebServerRequest *request) {
         auto *response = request->beginResponseStream("application/json; charset=utf-8");
         evse_charging_state.write_to_stream(*response);
@@ -122,12 +96,17 @@ void EVSE::register_urls()
         request->send(response);
     });
 
+    server.on("/evse_low_level_state", HTTP_GET, [this](AsyncWebServerRequest *request) {
+        auto *response = request->beginResponseStream("application/json; charset=utf-8");
+        evse_low_level_state.write_to_stream(*response);
+        request->send(response);
+    });
+
     task_scheduler.scheduleWithFixedDelay("sse_evse_state", [this](){
         if(!send_event_allowed(&events))
             return;
 
-        String evse_state_str = evse_state.to_string();
-        events.send(evse_state_str.c_str(), "evse_state", millis());
+        events.send(evse_state.to_string().c_str(), "evse_state", millis());
     }, 10000, 10000);
 }
 
@@ -140,11 +119,47 @@ void EVSE::onEventConnect(AsyncEventSourceClient *client)
 
 void EVSE::loop()
 {
-    if(!initialized)
+    static uint32_t last_check = 0;
+    if(!initialized && deadline_elapsed(last_check + 10000)) {
+        last_check = millis();
+        if(check_bootloader_state(TF_E_TIMEOUT))
+            setup_evse();
+    }
+}
+
+void EVSE::setup_evse()
+{
+    char uid[7] = {0};
+    if (!find_uid_by_did(&hal, TF_EVSE_DEVICE_IDENTIFIER, uid)) {
+        Serial.println("No EVSE bricklet found. Disabling EVSE support.");
         return;
+    }
+
+    auto result = tf_evse_create(&evse, uid, &hal);
+    if(result != TF_E_OK) {
+        Serial.printf("EVSE init failed (rc %d). Disabling EVSE support.\n", result);
+        return;
+    }
+
+    uint8_t jumper_configuration;
+    bool has_lock_switch;
+
+    result = tf_evse_get_hardware_configuration(&evse, &jumper_configuration, &has_lock_switch);
+
+    if (result != TF_E_OK && !check_bootloader_state(result)) {
+        Serial.printf("EVSE hardware config query failed (rc %d). Disabling EVSE support.\n", result);
+        return;
+    } else {
+        evse_hardware_configuration.get("jumper_configuration")->asUint() = jumper_configuration;
+        evse_hardware_configuration.get("has_lock_switch")->asBool() = has_lock_switch;
+    }
+
+    initialized = true;
 }
 
 void EVSE::update_evse_low_level_state() {
+    if(!initialized)
+        return;
     bool low_level_mode_enabled;
     uint8_t led_state;
     uint16_t cp_pwm_duty_cycle;
@@ -167,8 +182,10 @@ void EVSE::update_evse_low_level_state() {
         &motor_direction,
         &motor_duty_cycle);
 
-    if(rc != TF_E_OK)
+    if(rc != TF_E_OK) {
+        check_bootloader_state(rc);
         return;
+    }
 
     evse_low_level_state.get("low_level_mode_enabled")->updateBool(low_level_mode_enabled);
     evse_low_level_state.get("led_state")->updateUint(led_state);
@@ -195,6 +212,8 @@ void EVSE::update_evse_low_level_state() {
 }
 
 void EVSE::update_evse_state() {
+    if(!initialized)
+        return;
     uint8_t iec61851_state, contactor_state, contactor_error, lock_state;
     uint16_t allowed_charging_current;
     uint32_t time_since_state_change, uptime;
@@ -208,8 +227,10 @@ void EVSE::update_evse_state() {
         &time_since_state_change,
         &uptime);
 
-    if(rc != TF_E_OK)
+    if(rc != TF_E_OK) {
+        check_bootloader_state(rc);
         return;
+    }
 
     evse_state.get("iec61851_state")->updateUint(iec61851_state);
     evse_state.get("contactor_state")->updateUint(contactor_state);
@@ -233,6 +254,8 @@ void EVSE::update_evse_state() {
 }
 
 void EVSE::update_evse_max_charging_current() {
+    if(!initialized)
+        return;
     uint16_t configured, incoming, outgoing;
 
     int rc = tf_evse_get_max_charging_current(&evse,
@@ -240,8 +263,10 @@ void EVSE::update_evse_max_charging_current() {
         &incoming,
         &outgoing);
 
-    if(rc != TF_E_OK)
+    if(rc != TF_E_OK) {
+        check_bootloader_state(rc);
         return;
+    }
 
     evse_max_charging_current.get("max_current_configured")->updateUint(configured);
     evse_max_charging_current.get("max_current_incoming_cable")->updateUint(incoming);
@@ -251,4 +276,19 @@ void EVSE::update_evse_max_charging_current() {
         return;
 
     events.send(evse_max_charging_current.to_string().c_str(), "evse_max_charging_current", millis());
+}
+
+bool EVSE::check_bootloader_state(int rc) {
+    if(rc != TF_E_TIMEOUT && rc != TF_E_NOT_SUPPORTED)
+        return false;
+
+    uint8_t mode;
+    if(tf_evse_get_bootloader_mode(&evse, &mode) != TF_E_OK)
+        return false;
+
+    if(mode != TF_EVSE_BOOTLOADER_MODE_FIRMWARE) {
+        initialized = false;
+    }
+
+    return mode != TF_EVSE_BOOTLOADER_MODE_FIRMWARE;
 }

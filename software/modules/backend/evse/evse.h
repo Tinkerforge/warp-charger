@@ -22,9 +22,11 @@ public:
     bool initialized = false;
 
 private:
+    void setup_evse();
     void update_evse_state();
     void update_evse_low_level_state();
     void update_evse_max_charging_current();
+    bool check_bootloader_state(int rc);
 
     Config evse_state;
     Config evse_charging_state;
