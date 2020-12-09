@@ -57,7 +57,6 @@ function meter_chart_change_time(value: string) {
                         last_minute = d.getMinutes();
                     }
                 }
-                console.log(labels);
 
                 let data = {
                     labels: labels,

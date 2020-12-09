@@ -231,6 +231,10 @@ export function init() {
 }
 
 export function addEventListeners(source: EventSource) {
+    source.addEventListener('evse_state', function (e: util.SSE) {
+        update_evse_state(<EVSEState>(JSON.parse(e.data)));
+    }, false);
+
     source.addEventListener('evse_low_level_state', function (e: util.SSE) {
         update_evse_low_level_state(<EVSELowLevelState>(JSON.parse(e.data)));
     }, false);
