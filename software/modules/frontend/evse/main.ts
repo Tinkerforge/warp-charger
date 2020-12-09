@@ -252,3 +252,8 @@ export function addEventListeners(source: EventSource) {
     //}, false);
 
 }
+
+export function updateLockState(module_init) {
+    console.log(module_init.sdm72dm);
+    $('#sidebar-evse').prop('hidden', !module_init.sdm72dm);
+}

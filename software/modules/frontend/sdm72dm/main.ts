@@ -186,3 +186,7 @@ export function addEventListeners(source: EventSource) {
         update_meter_state(<MeterState>(JSON.parse(e.data)));
     }, false);
 }
+
+export function updateLockState(module_init) {
+    $('#sidebar-meter').prop('hidden', !module_init.sdm72dm);
+}

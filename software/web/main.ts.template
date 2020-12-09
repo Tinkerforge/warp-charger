@@ -4,7 +4,7 @@ import "bootstrap";
 
 import feather = require("feather-icons");
 
-import {reboot} from "./ts/util";
+import * as util from "./ts/util";
 
 {{{module_imports}}}
 
@@ -19,6 +19,16 @@ $('.navbar-collapse a').on("click", function () {
     $(".navbar-collapse").collapse('hide');
 });
 
+
+interface Modules {
+    {{{module_interface}}}
+}
+
+function update_modules(module_init: Modules) {
+    for (let m of modules) {
+        m.updateLockState(module_init);
+    }
+}
 
 $(function () {
     feather.replace();
@@ -38,6 +48,10 @@ $(function () {
             if ((<EventSource>e.target).readyState != EventSource.OPEN) {
                 console.log("Events Disconnected");
             }
+        }, false);
+
+        source.addEventListener('modules', function (e: util.SSE) {
+            update_modules(<Modules>(JSON.parse(e.data)));
         }, false);
 
         for (let m of modules) {

@@ -63,6 +63,9 @@ TF_Port ports[6] = {{
     }
 };
 
+Config version;
+Config modules;
+
 int check(int rc,const char *msg) {
     if (rc >= 0)
         return rc;
@@ -74,8 +77,6 @@ int check(int rc,const char *msg) {
     delay(10);
     return rc;
 }
-
-Config version;
 
 void read_efuses(uint32_t *ret_uid_numeric, char *ret_uid_string, char *ret_passphrase_string) {
     uint32_t blocks[8] = {0};
@@ -134,7 +135,6 @@ void read_efuses(uint32_t *ret_uid_numeric, char *ret_uid_string, char *ret_pass
             printf("malformed passphrase! \n");
         } else {
             memcpy(ret_passphrase_string + i * 5, buf, 4);
-
         }
     }
     tf_base58_encode(uid, ret_uid_string);
@@ -226,6 +226,12 @@ void register_default_urls() {
     server.on("/uptime", HTTP_GET, [](AsyncWebServerRequest *request) {
         request->send(200, "text/html", String(millis()));
     });
+
+    server.on("/modules", HTTP_GET, [](AsyncWebServerRequest *request) {
+        auto *response = request->beginResponseStream("application/json; charset=utf-8");
+        modules.write_to_stream(*response);
+        request->send(response);
+    });
 }
 
 void setup(void) {
@@ -234,10 +240,15 @@ void setup(void) {
     read_firmware_version();
 
     check(tf_hal_create(&hal, ports, sizeof(ports)/sizeof(ports[0])), "hal create");
+    tf_hal_set_timeout(&hal, 100000);
 
     read_efuses(&uid_numeric, uid, passphrase);
 
     {{{module_setup}}}
+
+    modules = Config::Object({
+        {{{module_init_config}}}
+    });
 
     register_default_urls();
 
@@ -257,10 +268,8 @@ void setup(void) {
         if(client->lastId()){
             Serial.printf("Client reconnected! Last message ID that it got is: %u\n", client->lastId());
         }
-        {
-            String version_str = version.to_string();
-            client->send(version_str.c_str(), "version", millis(), 1000);
-        }
+        client->send(version.to_string().c_str(), "version", millis(), 1000);
+        client->send(modules.to_string().c_str(), "modules", millis(), 1000);
         {{{module_on_event_connect}}}
     });
 

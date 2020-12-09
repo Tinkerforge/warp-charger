@@ -112,7 +112,7 @@ def main():
         mod_path = os.path.join("modules", "backend", name.under)
         if not os.path.exists(mod_path) or not os.path.isdir(mod_path):
             mod_path = os.path.join("esp32-brick", "software", mod_path)
-            
+
         if not os.path.exists(mod_path) or not os.path.isdir(mod_path):
             print("Backend module {} not found.".format(name.space, mod_path))
 
@@ -125,7 +125,8 @@ def main():
         '{{{module_register_urls}}}': '\n    '.join(['{}.register_urls();'.format(x.under) for x in backend_modules]),
         '{{{module_on_event_connect}}}': '\n        '.join(['{}.onEventConnect(client);'.format(x.under) for x in backend_modules]),
         '{{{module_loop}}}': '\n    '.join(['{}.loop();'.format(x.under) for x in backend_modules]),
-        '{{{display_name}}}': display_name
+        '{{{display_name}}}': display_name,
+        '{{{module_init_config}}}': ',\n        '.join('{{"{0}", Config::Bool({0}.initialized)}}'.format(x.under) for x in backend_modules)
     })
 
     # Embed frontend modules
@@ -167,6 +168,7 @@ def main():
 
     specialize_template(os.path.join("web", "main.ts.template"), os.path.join("web", "src", "main.ts"), {
         '{{{module_imports}}}': '\n'.join(['import * as {0} from "./ts/modules/{0}";'.format(x.under) for x in frontend_modules]),
+        '{{{module_interface}}}': ',\n    '.join('{}: boolean'.format(x.under) for x in backend_modules),
         '{{{modules}}}': ', '.join([x.under for x in frontend_modules]),
     })
 
