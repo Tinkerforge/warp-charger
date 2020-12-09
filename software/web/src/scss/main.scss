@@ -8,6 +8,29 @@
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
+@import "../../node_modules/chartist/dist/scss/chartist.scss";
+
+// Color graph points and lines (with transparency) in bootstrap's primary color
+.ct-series-a .ct-line {
+    stroke: var(--primary);
+    opacity: .65;
+}
+
+.ct-series-a .ct-point {
+    stroke: var(--primary);
+}
+
+.ct-label {
+    color: rgba(0,0,0,.66);
+}
+
+.ct-label.ct-horizontal.ct-end {
+    transform: translate(-50%,0);
+    display: block;
+    text-align: center;
+    width: 100px !important; //For some reasone chartist sets every label to a width of 1 px. Fix this here so that the centering works.
+}
+
 body {
   font-size: 0.875rem;
 }
@@ -31,13 +54,13 @@ body {
   bottom: 0;
   left: 0;
   z-index: 100; /* Behind the navbar */
-  padding: 48px 0 0; /* Height of navbar */
+  padding: 66px 0 0; /* Height of navbar */
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 767.98px) {
   .sidebar {
-    top: 60px; //TODO: don't hardcode this
+    top: 66px; //TODO: don't hardcode this
     padding-top: 0;
   }
 }
@@ -118,12 +141,12 @@ body {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: 1rem;
-  background-color: #00AAEA;
+  background-color: #555;
   /*box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);*/
 }
 
 .navbar {
-  background-color: #00AAEA;
+  background-color: #555;
   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15) !important;
 }
 
@@ -176,4 +199,40 @@ body {
 
 .text-muted {
     color: rgba(0,0,0,.66) !important;
+}
+
+.btn-outline-primary.disabled, .btn-outline-primary:disabled {
+    border-color: #555 !important;
+    color: #555 !important;
+    opacity: 1 !important;
+}
+
+.btn-outline-secondary.disabled, .btn-outline-secondary:disabled {
+    border-color: #555 !important;
+    color: #555 !important;
+    opacity: 1 !important;
+}
+
+.btn-outline-success.disabled, .btn-outline-success:disabled {
+    border-color: #555 !important;
+    color: #555 !important;
+    opacity: 1 !important;
+}
+
+.btn-outline-danger.disabled, .btn-outline-danger:disabled {
+    border-color: #555 !important;
+    color: #555 !important;
+    opacity: 1 !important;
+}
+
+.btn-outline-warning.disabled, .btn-outline-warning:disabled {
+    border-color: #555 !important;
+    color: #555 !important;
+    opacity: 1 !important;
+}
+
+.btn-outline-info.disabled, .btn-outline-info:disabled {
+    border-color: #555 !important;
+    color: #555 !important;
+    opacity: 1 !important;
 }
