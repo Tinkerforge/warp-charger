@@ -111,10 +111,15 @@ gulp.task("gzip", function () {
         .pipe(gulp.dest('dist'));
 });
 
-gulp.task("generate_header", gulp.series(
-        run("xxd -i dist/index.html.gz dist/index.html.h"),
-        run("sed -i 's/unsigned char/const char/g' dist/index.html.h"),
-        run("sed -i 's/dist_index_html_gz/index_html_gz/g' dist/index.html.h")));
+gulp.task("generate_header", run("xxd -i dist/index.html.gz dist/index.html.h"));
+
+gulp.task("patch_header", function() {
+    const replace = require('gulp-string-replace');
+    return gulp.src("dist/index.html.h")
+               .pipe(replace('unsigned char', 'const char'))
+               .pipe(replace('dist_index_html_gz', 'index_html_gz'))
+               .pipe(gulp.dest("dist"))
+});
 
 gulp.task("debug",
     gulp.series(gulp.parallel("copy-html"), gulp.parallel("sass"), "bundle-js")
@@ -126,5 +131,6 @@ gulp.task("default",
         "embed",
         "gzip",
         "generate_header",
+        "patch_header",
     )
 );
