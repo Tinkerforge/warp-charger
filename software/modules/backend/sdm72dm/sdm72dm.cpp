@@ -263,7 +263,10 @@ void SDM72DM::loop()
 
     user_data.value_to_write = to_write;
     user_data.done = false;
-    tf_rs485_modbus_master_read_input_registers(&rs485, 1, start_address, 2, &user_data.expected_request_id);
+    int rc = tf_rs485_modbus_master_read_input_registers(&rs485, 1, start_address, 2, &user_data.expected_request_id);
+    if(rc != TF_E_OK || user_data.expected_request_id == 0) {
+        printf("Failed to read energy meter registers starting at %u: rc %d, request_id: %u\n", start_address, rc, user_data.expected_request_id);
+    }
 
     if(modbus_read_state < 8)
         ++modbus_read_state;
