@@ -18,6 +18,7 @@ interface MeterState {
 }
 
 function update_meter_state(state: MeterState) {
+    $('#status_meter_power_total').val(state.power.total.toFixed(0) + " W");
     $('#meter_power_total').val(state.power.total.toFixed(0) + " W");
     $('#meter_power_import').val(state.power.import.toFixed(0) + " W");
     $('#meter_power_export').val(state.power.export.toFixed(0) + " W");
@@ -103,6 +104,7 @@ function meter_chart_change_time(value: string) {
 }
 
 let meter_chart: Chartist.IChartistLineChart;
+let status_meter_chart: Chartist.IChartistLineChart;
 
 function init_chart() {
     let data = {};
@@ -151,6 +153,79 @@ function init_chart() {
     meter_chart_change_time(input.value);
 }
 
+function init_status_chart() {
+    let data = {};
+
+    // Create a new line chart object where as first parameter we pass in a selector
+    // that is resolving to our chart container element. The Second parameter
+    // is the actual data object.
+    status_meter_chart = new Chartist.Line('#status_meter_chart', data, {
+        fullWidth: true,
+        showPoint: false,
+        axisX: {
+            offset: 50,
+            labelOffset: {x: 0, y: 5}
+        },
+        axisY: {
+            scaleMinSpace: 40,
+            onlyInteger: true,
+            offset: 50,
+            labelOffset: {x: 0, y: 6}
+        },
+        plugins: [
+            ctAxisTitle({
+                axisX: {
+                axisTitle: "Time",
+                axisClass: "ct-axis-title",
+                offset: {
+                    x: 0,
+                    y: 40
+                },
+                textAnchor: "middle"
+                },
+                axisY: {
+                axisTitle: "Power (Watt)",
+                axisClass: "ct-axis-title",
+                offset: {
+                    x: 0,
+                    y: 12
+                },
+                flipTitle: true
+                }
+            })
+        ]
+    });
+
+    $.get("/power_history").done(function (values: Number[]) {
+        const HISTORY_MINUTE_INTERVAL = 4;
+        const VALUE_COUNT = 48 * (60 / HISTORY_MINUTE_INTERVAL);
+        const LABEL_COUNT = 5;
+        const VALUES_PER_LABEL = VALUE_COUNT / (LABEL_COUNT - 1); // - 1 for the last label that has no values
+
+        if (values.length != VALUE_COUNT) {
+            console.log("Unexpected number of values to plot!");
+            return;
+        }
+
+        let labels = Array(values.length + 1).fill(null);
+
+        let now = Date.now();
+        let start = now - 1000 * 60 * 60 * 48;
+        for(let i = 0; i < labels.length; i += VALUES_PER_LABEL) {
+            let d = new Date(start + i * (1000 * 60 * HISTORY_MINUTE_INTERVAL));
+            labels[i] = d.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
+        }
+
+        let data = {
+            labels: labels,
+            series: [
+                values
+            ]
+        };
+        status_meter_chart.update(data);
+    });
+}
+
 function energy_meter_reset_statistics() {
     $.get("/energy_meter_reset").done(function () {
         util.show_alert("alert-success", "Energy data reset initiated.", "");
@@ -179,6 +254,12 @@ export function init() {
             live_interval = null;
         }
     });
+
+    $('#sidebar-status').on('shown.bs.tab', function (e) {
+        init_status_chart();
+    });
+
+    init_status_chart();
 }
 
 export function addEventListeners(source: EventSource) {
