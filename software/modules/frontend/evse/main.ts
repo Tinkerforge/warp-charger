@@ -143,7 +143,12 @@ function update_evse_state(state: EVSEState) {
     // Handle state D (3) and E/F (4) as error
     util.update_button_group("btn_group_evse_state", Math.min(3, state.iec61851_state));
 
-    $('#allowed_charging_current').val((state.allowed_charging_current / 1000.0).toFixed(3) + "A");
+    let allowed_charging_current = (state.allowed_charging_current / 1000.0).toFixed(3) + "A";
+    $('#allowed_charging_current').val(allowed_charging_current);
+
+    if($('#status_charging_current_save').prop("disabled")) {
+        $('#status_charging_current').val(state.allowed_charging_current / 1000);
+    }
 
     util.update_button_group("btn_group_ac1", (state.contactor_state & 1) == 1 ? 1 : 0);
     util.update_button_group("btn_group_ac2", state.contactor_state > 1 ? 1 : 0);
@@ -224,9 +229,35 @@ function update_evse_max_charging_current(state: EVSEMaxChargingCurrent) {
     $('#max_current_configured').val((state.max_current_configured / 1000.0).toFixed(3) + "A");
     $('#max_current_incoming_cable').val((state.max_current_incoming_cable / 1000.0).toFixed(3) + "A");
     $('#max_current_outgoing_cable').val((state.max_current_outgoing_cable / 1000.0).toFixed(3) + "A");
+
+    let theoretical_maximum = Math.min(state.max_current_incoming_cable, state.max_current_outgoing_cable);
+    let theoretical_maximum_str = (theoretical_maximum / 1000.0).toFixed(0) + " A";
+    $('#status_charging_current').prop("max", theoretical_maximum / 1000);
+    $('#status_charging_current_maximum').html("Max ("+theoretical_maximum_str+")");
+}
+
+function set_charging_current(current: number) {
+    $.ajax({
+        url: '/evse_current_limit',
+        method: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify({"current": current}),
+        success: () => $('#status_charging_current_save').prop("disabled", true),
+        error: (_x, _y, error) => util.show_alert("alert-danger", "Failed to set charging current.", error)
+    });
 }
 
 export function init() {
+    (<HTMLButtonElement>document.getElementById("status_charging_current_minimum")).addEventListener("click", () => set_charging_current(6000));
+    (<HTMLButtonElement>document.getElementById("status_charging_current_maximum")).addEventListener("click", () => set_charging_current(32000));
+    let input = $('#status_charging_current');
+    let save_btn = $('#status_charging_current_save');
+    input.on("input", () => save_btn.prop("disabled", false));
+
+    save_btn.on("click", () => {
+        if(input.val() >= 6 || input.val() <= 32)
+            set_charging_current(Number(input.val() * 1000));
+    });
 
 }
 

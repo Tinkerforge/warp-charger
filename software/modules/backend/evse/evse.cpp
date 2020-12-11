@@ -102,6 +102,33 @@ void EVSE::register_urls()
         request->send(response);
     });
 
+    server.on("/evse_max_charging_current", HTTP_GET, [this](AsyncWebServerRequest *request) {
+        auto *response = request->beginResponseStream("application/json; charset=utf-8");
+        evse_max_charging_current.write_to_stream(*response);
+        request->send(response);
+    });
+
+    AsyncCallbackJsonWebHandler *evse_current_limit_handler = new AsyncCallbackJsonWebHandler("/evse_current_limit", [this](AsyncWebServerRequest *request, JsonVariant &json){
+        if(!json["current"].is<uint16_t>()) {
+            request->send(400, "text/html", "expected an unsigned integer between 6000 and 32000");
+            return;
+        }
+
+        uint16_t new_current = json["current"].as<uint16_t>();
+        if(new_current < 6000 || new_current > 32000) {
+            request->send(400, "text/html", "value was not between 6000 and 32000");
+            return;
+        }
+
+        task_scheduler.scheduleOnce("change_charging_current", [this, new_current](){
+            check_bootloader_state(tf_evse_set_max_charging_current(&evse, new_current));
+        }, 0);
+
+        request->send(200, "text/html", String("Limiting current") + String(new_current));
+    });
+
+    server.addHandler(evse_current_limit_handler);
+
     task_scheduler.scheduleWithFixedDelay("sse_evse_state", [this](){
         if(!send_event_allowed(&events))
             return;
@@ -115,6 +142,7 @@ void EVSE::onEventConnect(AsyncEventSourceClient *client)
     client->send(evse_hardware_configuration.to_string().c_str(), "evse_hardware_configuration", millis(), 1000);
     client->send(evse_state.to_string().c_str(), "evse_state", millis(), 1000);
     client->send(evse_low_level_state.to_string().c_str(), "evse_low_level_state", millis(), 1000);
+    client->send(evse_max_charging_current.to_string().c_str(), "evse_max_charging_current", millis(), 1000);
 }
 
 void EVSE::loop()
