@@ -148,7 +148,7 @@ void EVSE::onEventConnect(AsyncEventSourceClient *client)
 void EVSE::loop()
 {
     static uint32_t last_check = 0;
-    if(!initialized && deadline_elapsed(last_check + 10000)) {
+    if(evse_found && !initialized && deadline_elapsed(last_check + 10000)) {
         last_check = millis();
         if(check_bootloader_state(TF_E_TIMEOUT))
             setup_evse();
@@ -162,6 +162,7 @@ void EVSE::setup_evse()
         Serial.println("No EVSE bricklet found. Disabling EVSE support.");
         return;
     }
+    evse_found = true;
 
     auto result = tf_evse_create(&evse, uid, &hal);
     if(result != TF_E_OK) {

@@ -19,6 +19,7 @@ public:
     void onEventConnect(AsyncEventSourceClient *client);
     void loop();
 
+    bool evse_found = false;
     bool initialized = false;
 
 private:
