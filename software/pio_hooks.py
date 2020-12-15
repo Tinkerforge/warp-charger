@@ -90,18 +90,21 @@ class ChangedDirectory(object):
 
 def main():
     # Add build flags
+    t = time.time()
     git_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode('utf-8').strip()
-    git_commit = '{:x}'.format(int(time.time())) + git_commit[:8]
-    git_flag = '-D__COMMIT_ID__=0x{}ull'.format(git_commit)
+    git_flag = '-D__COMMIT_ID__=0x{:x}{}ull'.format(int(t),git_commit[:8])
 
     name = env.GetProjectOption("name")
     display_name = env.GetProjectOption("display_name")
     host_prefix_flag = "-D__HOST_PREFIX__=\\\"{}-\\\"".format(name)
 
+    firmware_name_flag = "-D__FIRMWARE_NAME__={}-{}-{:x}".format(name, git_commit[:8], int(t))
+
     env.Append(
         BUILD_FLAGS=[
             git_flag,
-            host_prefix_flag
+            host_prefix_flag,
+            firmware_name_flag
         ]
     )
 
