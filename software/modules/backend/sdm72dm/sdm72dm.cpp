@@ -196,13 +196,13 @@ void SDM72DM::loop()
     if(!initialized)
         return;
 
-    if(!user_data.done && !deadline_elapsed(callback_timeout_ms))
+    if(!user_data.done && !deadline_elapsed(callback_deadline_ms))
         return;
 
-    // This protects against lost callback responses.
-    // If the callback packet is lost,
-    // user_data.done would never be set to true.
-    callback_timeout_ms = millis() + 3000;
+    if(!user_data.done) {
+        printf("rs485 deadline reached!\n");
+    }
+
 
     if(energy_meter_reset_requested) {
         energy_meter_reset_requested = false;
@@ -294,4 +294,9 @@ void SDM72DM::loop()
             interval_end_ms = millis() + 1000 * 60 * HISTORY_MINUTE_INTERVAL;
         }
     }
+
+    // This protects against lost callback responses.
+    // If the callback packet is lost,
+    // user_data.done would never be set to true.
+    callback_deadline_ms = millis() + 3000;
 }
