@@ -153,6 +153,37 @@ function init_chart() {
     meter_chart_change_time(input.value);
 }
 
+function update_status_chart() {
+    $.get("/power_history").done(function (values: Number[]) {
+        const HISTORY_MINUTE_INTERVAL = 4;
+        const VALUE_COUNT = 48 * (60 / HISTORY_MINUTE_INTERVAL);
+        const LABEL_COUNT = 5;
+        const VALUES_PER_LABEL = VALUE_COUNT / (LABEL_COUNT - 1); // - 1 for the last label that has no values
+
+        if (values.length != VALUE_COUNT) {
+            console.log("Unexpected number of values to plot!");
+            return;
+        }
+
+        let labels = Array(values.length + 1).fill(null);
+
+        let now = Date.now();
+        let start = now - 1000 * 60 * 60 * 48;
+        for(let i = 0; i < labels.length; i += VALUES_PER_LABEL) {
+            let d = new Date(start + i * (1000 * 60 * HISTORY_MINUTE_INTERVAL));
+            labels[i] = d.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
+        }
+
+        let data = {
+            labels: labels,
+            series: [
+                values
+            ]
+        };
+        status_meter_chart.update(data);
+    });
+}
+
 function init_status_chart() {
     let data = {};
 
@@ -196,34 +227,7 @@ function init_status_chart() {
         ]
     });
 
-    $.get("/power_history").done(function (values: Number[]) {
-        const HISTORY_MINUTE_INTERVAL = 4;
-        const VALUE_COUNT = 48 * (60 / HISTORY_MINUTE_INTERVAL);
-        const LABEL_COUNT = 5;
-        const VALUES_PER_LABEL = VALUE_COUNT / (LABEL_COUNT - 1); // - 1 for the last label that has no values
 
-        if (values.length != VALUE_COUNT) {
-            console.log("Unexpected number of values to plot!");
-            return;
-        }
-
-        let labels = Array(values.length + 1).fill(null);
-
-        let now = Date.now();
-        let start = now - 1000 * 60 * 60 * 48;
-        for(let i = 0; i < labels.length; i += VALUES_PER_LABEL) {
-            let d = new Date(start + i * (1000 * 60 * HISTORY_MINUTE_INTERVAL));
-            labels[i] = d.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
-        }
-
-        let data = {
-            labels: labels,
-            series: [
-                values
-            ]
-        };
-        status_meter_chart.update(data);
-    });
 }
 
 function energy_meter_reset_statistics() {
@@ -257,9 +261,12 @@ export function init() {
 
     $('#sidebar-status').on('shown.bs.tab', function (e) {
         init_status_chart();
+        update_status_chart();
     });
 
     init_status_chart();
+    update_status_chart();
+    setInterval(update_status_chart, 60*1000);
 }
 
 export function addEventListeners(source: EventSource) {
