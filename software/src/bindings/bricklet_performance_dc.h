@@ -1,5 +1,5 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-11-25.      *
+ * This file was automatically generated on 2020-12-17.      *
  *                                                           *
  * C/C++ for Microcontrollers Bindings Version 2.0.0         *
  *                                                           *
@@ -27,6 +27,9 @@ extern "C" {
 struct TF_PerformanceDC;
 #ifdef TF_IMPLEMENT_CALLBACKS
 
+typedef void (*TF_PerformanceDCEmergencyShutdownHandler)(struct TF_PerformanceDC *device, void *user_data);
+typedef void (*TF_PerformanceDCVelocityReachedHandler)(struct TF_PerformanceDC *device, int16_t velocity, void *user_data);
+typedef void (*TF_PerformanceDCCurrentVelocityHandler)(struct TF_PerformanceDC *device, int16_t velocity, void *user_data);
 
 #endif
 /**
@@ -37,9 +40,17 @@ struct TF_PerformanceDC;
 typedef struct TF_PerformanceDC {
     TF_TfpContext *tfp;
 #ifdef TF_IMPLEMENT_CALLBACKS
+    TF_PerformanceDCEmergencyShutdownHandler emergency_shutdown_handler;
+    void *emergency_shutdown_user_data;
+
+    TF_PerformanceDCVelocityReachedHandler velocity_reached_handler;
+    void *velocity_reached_user_data;
+
+    TF_PerformanceDCCurrentVelocityHandler current_velocity_handler;
+    void *current_velocity_user_data;
 
 #endif
-    uint8_t response_expected[2];
+    uint8_t response_expected[3];
 } TF_PerformanceDC;
 
 /**
@@ -110,67 +121,107 @@ typedef struct TF_PerformanceDC {
 /**
  * \ingroup BrickletPerformanceDC
  */
-#define TF_PERFORMANCE_DC_FUNCTION_SET_GPIO_CONFIGURATION 14
+#define TF_PERFORMANCE_DC_FUNCTION_SET_THERMAL_SHUTDOWN 14
 
 /**
  * \ingroup BrickletPerformanceDC
  */
-#define TF_PERFORMANCE_DC_FUNCTION_GET_GPIO_CONFIGURATION 15
+#define TF_PERFORMANCE_DC_FUNCTION_GET_THERMAL_SHUTDOWN 15
 
 /**
  * \ingroup BrickletPerformanceDC
  */
-#define TF_PERFORMANCE_DC_FUNCTION_SET_GPIO_ACTION 16
+#define TF_PERFORMANCE_DC_FUNCTION_SET_GPIO_CONFIGURATION 16
 
 /**
  * \ingroup BrickletPerformanceDC
  */
-#define TF_PERFORMANCE_DC_FUNCTION_GET_GPIO_ACTION 17
+#define TF_PERFORMANCE_DC_FUNCTION_GET_GPIO_CONFIGURATION 17
 
 /**
  * \ingroup BrickletPerformanceDC
  */
-#define TF_PERFORMANCE_DC_FUNCTION_GET_GPIO_STATE 18
+#define TF_PERFORMANCE_DC_FUNCTION_SET_GPIO_ACTION 18
 
 /**
  * \ingroup BrickletPerformanceDC
  */
-#define TF_PERFORMANCE_DC_FUNCTION_SET_ERROR_LED_CONFIG 19
+#define TF_PERFORMANCE_DC_FUNCTION_GET_GPIO_ACTION 19
 
 /**
  * \ingroup BrickletPerformanceDC
  */
-#define TF_PERFORMANCE_DC_FUNCTION_GET_ERROR_LED_CONFIG 20
+#define TF_PERFORMANCE_DC_FUNCTION_GET_GPIO_STATE 20
 
 /**
  * \ingroup BrickletPerformanceDC
  */
-#define TF_PERFORMANCE_DC_FUNCTION_SET_CW_LED_CONFIG 21
+#define TF_PERFORMANCE_DC_FUNCTION_SET_ERROR_LED_CONFIG 21
 
 /**
  * \ingroup BrickletPerformanceDC
  */
-#define TF_PERFORMANCE_DC_FUNCTION_GET_CW_LED_CONFIG 22
+#define TF_PERFORMANCE_DC_FUNCTION_GET_ERROR_LED_CONFIG 22
 
 /**
  * \ingroup BrickletPerformanceDC
  */
-#define TF_PERFORMANCE_DC_FUNCTION_SET_CCW_LED_CONFIG 23
+#define TF_PERFORMANCE_DC_FUNCTION_SET_CW_LED_CONFIG 23
 
 /**
  * \ingroup BrickletPerformanceDC
  */
-#define TF_PERFORMANCE_DC_FUNCTION_GET_CCW_LED_CONFIG 24
+#define TF_PERFORMANCE_DC_FUNCTION_GET_CW_LED_CONFIG 24
 
 /**
  * \ingroup BrickletPerformanceDC
  */
-#define TF_PERFORMANCE_DC_FUNCTION_SET_GPIO_LED_CONFIG 25
+#define TF_PERFORMANCE_DC_FUNCTION_SET_CCW_LED_CONFIG 25
 
 /**
  * \ingroup BrickletPerformanceDC
  */
-#define TF_PERFORMANCE_DC_FUNCTION_GET_GPIO_LED_CONFIG 26
+#define TF_PERFORMANCE_DC_FUNCTION_GET_CCW_LED_CONFIG 26
+
+/**
+ * \ingroup BrickletPerformanceDC
+ */
+#define TF_PERFORMANCE_DC_FUNCTION_SET_GPIO_LED_CONFIG 27
+
+/**
+ * \ingroup BrickletPerformanceDC
+ */
+#define TF_PERFORMANCE_DC_FUNCTION_GET_GPIO_LED_CONFIG 28
+
+/**
+ * \ingroup BrickletPerformanceDC
+ */
+#define TF_PERFORMANCE_DC_FUNCTION_SET_EMERGENCY_SHUTDOWN_CALLBACK_CONFIGURATION 29
+
+/**
+ * \ingroup BrickletPerformanceDC
+ */
+#define TF_PERFORMANCE_DC_FUNCTION_GET_EMERGENCY_SHUTDOWN_CALLBACK_CONFIGURATION 30
+
+/**
+ * \ingroup BrickletPerformanceDC
+ */
+#define TF_PERFORMANCE_DC_FUNCTION_SET_VELOCITY_REACHED_CALLBACK_CONFIGURATION 31
+
+/**
+ * \ingroup BrickletPerformanceDC
+ */
+#define TF_PERFORMANCE_DC_FUNCTION_GET_VELOCITY_REACHED_CALLBACK_CONFIGURATION 32
+
+/**
+ * \ingroup BrickletPerformanceDC
+ */
+#define TF_PERFORMANCE_DC_FUNCTION_SET_CURRENT_VELOCITY_CALLBACK_CONFIGURATION 33
+
+/**
+ * \ingroup BrickletPerformanceDC
+ */
+#define TF_PERFORMANCE_DC_FUNCTION_GET_CURRENT_VELOCITY_CALLBACK_CONFIGURATION 34
 
 /**
  * \ingroup BrickletPerformanceDC
@@ -233,6 +284,21 @@ typedef struct TF_PerformanceDC {
 #define TF_PERFORMANCE_DC_FUNCTION_GET_IDENTITY 255
 
 #ifdef TF_IMPLEMENT_CALLBACKS
+
+/**
+ * \ingroup BrickletPerformanceDC
+ */
+#define TF_PERFORMANCE_DC_CALLBACK_EMERGENCY_SHUTDOWN 35
+
+/**
+ * \ingroup BrickletPerformanceDC
+ */
+#define TF_PERFORMANCE_DC_CALLBACK_VELOCITY_REACHED 36
+
+/**
+ * \ingroup BrickletPerformanceDC
+ */
+#define TF_PERFORMANCE_DC_CALLBACK_CURRENT_VELOCITY 37
 
 #endif
 
@@ -529,8 +595,74 @@ TF_ATTRIBUTE_NONNULL_ALL int tf_performance_dc_set_response_expected(TF_Performa
  * functions of this device at once.
  */
 TF_ATTRIBUTE_NONNULL_ALL void tf_performance_dc_set_response_expected_all(TF_PerformanceDC *performance_dc, bool response_expected);
+#ifdef TF_IMPLEMENT_CALLBACKS
+/**
+ * \ingroup BrickletPerformanceDC
+ *
+ * Registers the given \c handler to the Emergency Shutdown callback. The
+ * \c user_data will be passed as the last parameter to the \c handler.
+ *
+ * Signature: \code void callback(void *user_data) \endcode
+ * 
+ * TODO
+ * 
+ * This callback is triggered if either the current consumption
+ * is too high (above 5A) or the temperature of the driver chip is too high
+ * (above 175°C). These two possibilities are essentially the same, since the
+ * temperature will reach this threshold immediately if the motor consumes too
+ * much current. In case of a voltage below 3.3V (external or stack) this
+ * callback is triggered as well.
+ * 
+ * If this callback is triggered, the driver chip gets disabled at the same time.
+ * That means, {@link tf_performance_dc_set_enabled} has to be called to drive the motor again.
+ * 
+ * \note
+ *  This callback only works in Drive/Brake mode (see {@link tf_performance_dc_set_drive_mode}). In
+ *  Drive/Coast mode it is unfortunately impossible to reliably read the
+ *  overcurrent/overtemperature signal from the driver chip.
+ */
+TF_ATTRIBUTE_NONNULL(1) void tf_performance_dc_register_emergency_shutdown_callback(TF_PerformanceDC *performance_dc, TF_PerformanceDCEmergencyShutdownHandler handler, void *user_data);
 
 
+/**
+ * \ingroup BrickletPerformanceDC
+ *
+ * Registers the given \c handler to the Velocity Reached callback. The
+ * \c user_data will be passed as the last parameter to the \c handler.
+ *
+ * Signature: \code void callback(int16_t velocity, void *user_data) \endcode
+ * 
+ * This callback is triggered whenever a set velocity is reached. For example:
+ * If a velocity of 0 is present, acceleration is set to 5000 and velocity
+ * to 10000, the {@link tf_performance_dc_register_velocity_reached_callback} callback will be triggered after about
+ * 2 seconds, when the set velocity is actually reached.
+ * 
+ * \note
+ *  Since we can't get any feedback from the DC motor, this only works if the
+ *  acceleration (see {@link tf_performance_dc_set_motion}) is set smaller or equal to the
+ *  maximum acceleration of the motor. Otherwise the motor will lag behind the
+ *  control value and the callback will be triggered too early.
+ */
+TF_ATTRIBUTE_NONNULL(1) void tf_performance_dc_register_velocity_reached_callback(TF_PerformanceDC *performance_dc, TF_PerformanceDCVelocityReachedHandler handler, void *user_data);
+
+
+/**
+ * \ingroup BrickletPerformanceDC
+ *
+ * Registers the given \c handler to the Current Velocity callback. The
+ * \c user_data will be passed as the last parameter to the \c handler.
+ *
+ * Signature: \code void callback(int16_t velocity, void *user_data) \endcode
+ * 
+ * This callback is triggered with the period that is set by
+ * {@link tf_performance_dc_set_current_velocity_callback_configuration}. The parameter is the *current*
+ * velocity used by the motor.
+ * 
+ * The {@link tf_performance_dc_register_current_velocity_callback} callback is only triggered after the set period
+ * if there is a change in the velocity.
+ */
+TF_ATTRIBUTE_NONNULL(1) void tf_performance_dc_register_current_velocity_callback(TF_PerformanceDC *performance_dc, TF_PerformanceDCCurrentVelocityHandler handler, void *user_data);
+#endif
 #ifdef TF_IMPLEMENT_CALLBACKS
 /**
  * \ingroup BrickletPerformanceDC
@@ -685,6 +817,20 @@ TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_get_power_statistics(TF_Performanc
  *
  * TBD
  */
+TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_set_thermal_shutdown(TF_PerformanceDC *performance_dc, uint8_t temperature);
+
+/**
+ * \ingroup BrickletPerformanceDC
+ *
+ * TBD
+ */
+TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_get_thermal_shutdown(TF_PerformanceDC *performance_dc, uint8_t *ret_temperature);
+
+/**
+ * \ingroup BrickletPerformanceDC
+ *
+ * TBD
+ */
 TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_set_gpio_configuration(TF_PerformanceDC *performance_dc, uint8_t channel, uint16_t debounce, uint16_t stop_deceleration);
 
 /**
@@ -778,6 +924,59 @@ TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_set_gpio_led_config(TF_Performance
  * Returns the LED configuration as set by {@link tf_performance_dc_set_gpio_led_config}
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_get_gpio_led_config(TF_PerformanceDC *performance_dc, uint8_t channel, uint8_t *ret_config);
+
+/**
+ * \ingroup BrickletPerformanceDC
+ *
+ * Enable/Disable {@link tf_performance_dc_register_emergency_shutdown_callback} callback.
+ */
+TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_set_emergency_shutdown_callback_configuration(TF_PerformanceDC *performance_dc, bool enabled);
+
+/**
+ * \ingroup BrickletPerformanceDC
+ *
+ * Returns the callback configuration as set by
+ * {@link tf_performance_dc_set_emergency_shutdown_callback_configuration}.
+ */
+TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_get_emergency_shutdown_callback_configuration(TF_PerformanceDC *performance_dc, bool *ret_enabled);
+
+/**
+ * \ingroup BrickletPerformanceDC
+ *
+ * Enable/Disable {@link tf_performance_dc_register_velocity_reached_callback} callback.
+ */
+TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_set_velocity_reached_callback_configuration(TF_PerformanceDC *performance_dc, bool enabled);
+
+/**
+ * \ingroup BrickletPerformanceDC
+ *
+ * Returns the callback configuration as set by
+ * {@link tf_performance_dc_set_velocity_reached_callback_configuration}.
+ */
+TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_get_velocity_reached_callback_configuration(TF_PerformanceDC *performance_dc, bool *ret_enabled);
+
+/**
+ * \ingroup BrickletPerformanceDC
+ *
+ * The period is the period with which the {@link tf_performance_dc_register_current_velocity_callback}
+ * callback is triggered periodically. A value of 0 turns the callback off.
+ * 
+ * If the `value has to change`-parameter is set to true, the callback is only
+ * triggered after the value has changed. If the value didn't change within the
+ * period, the callback is triggered immediately on change.
+ * 
+ * If it is set to false, the callback is continuously triggered with the period,
+ * independent of the value.
+ */
+TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_set_current_velocity_callback_configuration(TF_PerformanceDC *performance_dc, uint32_t period, bool value_has_to_change);
+
+/**
+ * \ingroup BrickletPerformanceDC
+ *
+ * Returns the callback configuration as set by
+ * {@link tf_performance_dc_set_current_velocity_callback_configuration}.
+ */
+TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_get_current_velocity_callback_configuration(TF_PerformanceDC *performance_dc, uint32_t *ret_period, bool *ret_value_has_to_change);
 
 /**
  * \ingroup BrickletPerformanceDC

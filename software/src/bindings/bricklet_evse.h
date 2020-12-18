@@ -1,5 +1,5 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-11-25.      *
+ * This file was automatically generated on 2020-12-17.      *
  *                                                           *
  * C/C++ for Microcontrollers Bindings Version 2.0.0         *
  *                                                           *
@@ -71,6 +71,26 @@ typedef struct TF_EVSE {
  * \ingroup BrickletEVSE
  */
 #define TF_EVSE_FUNCTION_CALIBRATE 6
+
+/**
+ * \ingroup BrickletEVSE
+ */
+#define TF_EVSE_FUNCTION_START_CHARGING 7
+
+/**
+ * \ingroup BrickletEVSE
+ */
+#define TF_EVSE_FUNCTION_STOP_CHARGING 8
+
+/**
+ * \ingroup BrickletEVSE
+ */
+#define TF_EVSE_FUNCTION_SET_CHARGING_AUTOSTART 9
+
+/**
+ * \ingroup BrickletEVSE
+ */
+#define TF_EVSE_FUNCTION_GET_CHARGING_AUTOSTART 10
 
 /**
  * \ingroup BrickletEVSE
@@ -179,7 +199,32 @@ typedef struct TF_EVSE {
 /**
  * \ingroup BrickletEVSE
  */
-#define TF_EVSE_LED_STATE_BREATHING 3
+#define TF_EVSE_LED_STATE_FLICKER 3
+
+/**
+ * \ingroup BrickletEVSE
+ */
+#define TF_EVSE_LED_STATE_BREATHING 4
+
+/**
+ * \ingroup BrickletEVSE
+ */
+#define TF_EVSE_VEHICLE_STATE_NOT_CONNECTED 0
+
+/**
+ * \ingroup BrickletEVSE
+ */
+#define TF_EVSE_VEHICLE_STATE_CONNECTED 1
+
+/**
+ * \ingroup BrickletEVSE
+ */
+#define TF_EVSE_VEHICLE_STATE_CHARGING 2
+
+/**
+ * \ingroup BrickletEVSE
+ */
+#define TF_EVSE_VEHICLE_STATE_ERROR 3
 
 /**
  * \ingroup BrickletEVSE
@@ -447,7 +492,7 @@ TF_ATTRIBUTE_NONNULL_ALL int tf_evse_callback_tick(TF_EVSE *evse, uint32_t timeo
  *
  * TODO
  */
-TF_ATTRIBUTE_NONNULL(1) int tf_evse_get_state(TF_EVSE *evse, uint8_t *ret_iec61851_state, uint8_t *ret_contactor_state, uint8_t *ret_contactor_error, uint16_t *ret_allowed_charging_current, uint8_t *ret_lock_state, uint32_t *ret_time_since_state_change, uint32_t *ret_uptime);
+TF_ATTRIBUTE_NONNULL(1) int tf_evse_get_state(TF_EVSE *evse, uint8_t *ret_iec61851_state, uint8_t *ret_vehicle_state, uint8_t *ret_contactor_state, uint8_t *ret_contactor_error, uint16_t *ret_allowed_charging_current, uint8_t *ret_lock_state, uint32_t *ret_time_since_state_change, uint32_t *ret_uptime);
 
 /**
  * \ingroup BrickletEVSE
@@ -461,7 +506,7 @@ TF_ATTRIBUTE_NONNULL(1) int tf_evse_get_hardware_configuration(TF_EVSE *evse, ui
  *
  * TODO
  */
-TF_ATTRIBUTE_NONNULL(1) int tf_evse_get_low_level_state(TF_EVSE *evse, bool *ret_low_level_mode_enabled, uint8_t *ret_led_state, uint16_t *ret_cp_pwm_duty_cycle, uint16_t ret_adc_values[2], int16_t ret_voltages[3], uint32_t ret_resistances[2], bool ret_gpio[5], bool *ret_motor_direction, uint16_t *ret_motor_duty_cycle);
+TF_ATTRIBUTE_NONNULL(1) int tf_evse_get_low_level_state(TF_EVSE *evse, bool *ret_low_level_mode_enabled, uint8_t *ret_led_state, uint16_t *ret_cp_pwm_duty_cycle, uint16_t ret_adc_values[2], int16_t ret_voltages[3], uint32_t ret_resistances[2], bool ret_gpio[5]);
 
 /**
  * \ingroup BrickletEVSE
@@ -487,6 +532,34 @@ TF_ATTRIBUTE_NONNULL(1) int tf_evse_get_max_charging_current(TF_EVSE *evse, uint
  * TODO
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_evse_calibrate(TF_EVSE *evse, uint8_t state, uint32_t password, int32_t value, bool *ret_success);
+
+/**
+ * \ingroup BrickletEVSE
+ *
+ * TODO
+ */
+TF_ATTRIBUTE_NONNULL(1) int tf_evse_start_charging(TF_EVSE *evse);
+
+/**
+ * \ingroup BrickletEVSE
+ *
+ * TODO
+ */
+TF_ATTRIBUTE_NONNULL(1) int tf_evse_stop_charging(TF_EVSE *evse);
+
+/**
+ * \ingroup BrickletEVSE
+ *
+ * TODO
+ */
+TF_ATTRIBUTE_NONNULL(1) int tf_evse_set_charging_autostart(TF_EVSE *evse, bool autostart);
+
+/**
+ * \ingroup BrickletEVSE
+ *
+ * TODO
+ */
+TF_ATTRIBUTE_NONNULL(1) int tf_evse_get_charging_autostart(TF_EVSE *evse, bool *ret_autostart);
 
 /**
  * \ingroup BrickletEVSE

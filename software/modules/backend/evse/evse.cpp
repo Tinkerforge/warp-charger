@@ -15,6 +15,7 @@ EVSE::EVSE()
 {
     evse_state = Config::Object({
         {"iec61851_state", Config::Uint8(0)},
+        {"vehicle_state", Config::Uint8(0)},
         {"contactor_state", Config::Uint8(0)},
         {"contactor_error", Config::Uint8(0)},
         {"allowed_charging_current", Config::Uint16(0)},
@@ -48,9 +49,7 @@ EVSE::EVSE()
                 Config::Uint32(0),
             }, Config::Uint32(0), 2, 2, Config::type_id<Config::ConfUint>())
         },
-        {"gpio", Config::Array({Config::Bool(false),Config::Bool(false),Config::Bool(false),Config::Bool(false), Config::Bool(false)}, Config::Bool(false), 5, 5, Config::type_id<Config::ConfBool>())},
-        {"motor_direction", Config::Bool(false)},
-        {"motor_duty_cycle", Config::Uint16(0)},
+        {"gpio", Config::Array({Config::Bool(false),Config::Bool(false),Config::Bool(false),Config::Bool(false), Config::Bool(false)}, Config::Bool(false), 5, 5, Config::type_id<Config::ConfBool>())}
     });
 
     evse_max_charging_current = Config::Object ({
@@ -192,8 +191,6 @@ void EVSE::update_evse_low_level_state() {
     bool low_level_mode_enabled;
     uint8_t led_state;
     uint16_t cp_pwm_duty_cycle;
-    bool motor_direction;
-    uint16_t motor_duty_cycle;
 
     uint16_t adc_values[2];
     int16_t voltages[3];
@@ -207,9 +204,7 @@ void EVSE::update_evse_low_level_state() {
         adc_values,
         voltages,
         resistances,
-        gpio,
-        &motor_direction,
-        &motor_duty_cycle);
+        gpio);
 
     if(rc != TF_E_OK) {
         check_bootloader_state(rc);
@@ -219,8 +214,6 @@ void EVSE::update_evse_low_level_state() {
     evse_low_level_state.get("low_level_mode_enabled")->updateBool(low_level_mode_enabled);
     evse_low_level_state.get("led_state")->updateUint(led_state);
     evse_low_level_state.get("cp_pwm_duty_cycle")->updateUint(cp_pwm_duty_cycle);
-    evse_low_level_state.get("motor_direction")->updateBool(motor_direction);
-    evse_low_level_state.get("motor_duty_cycle")->updateUint(motor_duty_cycle);
 
     for(int i = 0; i < sizeof(adc_values)/sizeof(adc_values[0]); ++i)
         evse_low_level_state.get("adc_values")->get(i)->updateUint(adc_values[i]);
@@ -243,12 +236,13 @@ void EVSE::update_evse_low_level_state() {
 void EVSE::update_evse_state() {
     if(!initialized)
         return;
-    uint8_t iec61851_state, contactor_state, contactor_error, lock_state;
+    uint8_t iec61851_state, vehicle_state, contactor_state, contactor_error, lock_state;
     uint16_t allowed_charging_current;
     uint32_t time_since_state_change, uptime;
 
     int rc = tf_evse_get_state(&evse,
         &iec61851_state,
+        &vehicle_state,
         &contactor_state,
         &contactor_error,
         &allowed_charging_current,
@@ -262,6 +256,7 @@ void EVSE::update_evse_state() {
     }
 
     evse_state.get("iec61851_state")->updateUint(iec61851_state);
+    evse_state.get("vehicle_state")->updateUint(vehicle_state);
     evse_state.get("contactor_state")->updateUint(contactor_state);
     evse_state.get("contactor_error")->updateUint(contactor_error);
     evse_state.get("allowed_charging_current")->updateUint(allowed_charging_current);
