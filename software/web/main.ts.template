@@ -4,6 +4,8 @@ import "bootstrap";
 
 import feather = require("feather-icons");
 
+import Translator from '@andreasremdt/simple-translator';
+
 import * as util from "./ts/util";
 
 {{{module_imports}}}
@@ -11,6 +13,7 @@ import * as util from "./ts/util";
 interface Module {
     init(): any;
     addEventListeners(source: EventSource): any;
+    getTranslation(lang: string);
 }
 
 let modules: Module[] = [{{{modules}}}];
@@ -32,6 +35,24 @@ function update_modules(module_init: Modules) {
 
 $(function () {
     feather.replace();
+
+    let de = Object.assign({
+        "main": {
+            "navbar_status": "Status",
+            "content_status": "Status"
+        }
+    }, ...modules.map(m => m.getTranslation('de')));
+    let en = Object.assign({
+        "main": {
+            "navbar_status": "Status",
+            "content_status": "Status"
+        }
+    }, ...modules.map(m => m.getTranslation('en')));
+
+    var translator = new Translator();
+
+    // Add the language to the translator and translate the page
+    translator.add('de', de).add('en', en).translatePageTo();
 
     for (let m of modules) {
         m.init();

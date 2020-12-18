@@ -27,19 +27,19 @@ function update_evse_state(state: EVSEState) {
 
     util.update_button_group("btn_group_ac1", (state.contactor_state & 1) == 1 ? 1 : 0);
     util.update_button_group("btn_group_ac2", state.contactor_state > 1 ? 1 : 0);
-    util.update_button_group("btn_group_contactor_error", state.contactor_error != 0 ? 1 : 0, state.contactor_error != 0 ? "Error Code " + state.contactor_error : null);
+    util.update_button_group("btn_group_contactor_error", state.contactor_error != 0 ? 1 : 0, state.contactor_error != 0 ? __("evse.script.error_code") + " " + state.contactor_error : null);
     util.update_button_group("btn_group_lock_state", state.lock_state);
 
-    $('#uptime').val(format_timespan(Math.floor(state.uptime / 1000)));
+    $('#uptime').val(util.format_timespan(Math.floor(state.uptime / 1000)));
     $('#time_since_state_change').val(util.format_timespan(Math.floor(state.time_since_state_change / 1000)));
 
     if (state.iec61851_state == 2) {
-        $("#evse_state_charging_text").html("Charging for ");
+        $("#evse_state_charging_text").html(__("evse.script.charging_for") + " ");
         $('#evse_state_charging_charge_time').html(util.format_timespan(Math.floor(state.time_since_state_change / 1000)));
     } else if ($('#evse_state_charging_charge_time').html() != "") {
-        $("#evse_state_charging_text").html("Last charge took ");
+        $("#evse_state_charging_text").html(__("evse.script.last_charge_took") + " ");
     } else {
-        $("#evse_state_charging_text").html("Charging");
+        $("#evse_state_charging_text").html(__("evse.status.charging"));
     }
 }
 
@@ -112,7 +112,7 @@ function set_charging_current(current: number) {
         contentType: 'application/json',
         data: JSON.stringify({"current": current}),
         success: () => $('#status_charging_current_save').prop("disabled", true),
-        error: (_x, _y, error) => util.show_alert("alert-danger", "Failed to set charging current.", error)
+        error: (_x, _y, error) => util.show_alert("alert-danger", __("evse.script.set_charging_current_failed"), error)
     });
 }
 
@@ -151,4 +151,189 @@ export function addEventListeners(source: EventSource) {
 export function updateLockState(module_init) {
     console.log(module_init.sdm72dm);
     $('#sidebar-evse').prop('hidden', !module_init.sdm72dm);
+}
+
+export function getTranslation(lang: string) {
+    return {
+        "de": {
+            "evse": {
+                "status": {
+                    "evse": "Ladestatus",
+                    "not_connected": "Nicht verbunden",
+                    "connected": "Verbunden",
+                    "charging": "Lädt",
+                    "error": "Fehler",
+                    "charging_current": "Ladestrom",
+                    "charging_current_set": "TODO",
+                    "charging_current_minimum": "Min (6 A)",
+                    "charging_current_maximum": "Max",
+                    "charge_control": "Ladekontrolle",
+                    "auto_start_charging": "Autostart",
+                    "start_charging": "Start",
+                    "stop_charging": "Stop"
+                },
+                "navbar": {
+                    "evse": "Ladecontroller"
+                },
+                "content": {
+                    "evse": "Ladecontroller (EVSE Bricklet)",
+                    "state": "Zustand",
+                    "iec_state": "IEC-61851-Zustand",
+                    "iec_state_a": "A (nicht verbunden)",
+                    "iec_state_b": "B (verbunden)",
+                    "iec_state_c": "C (lädt ohne Belüftung)",
+                    "iec_state_d": "D (lädt mit Belüftung)",
+                    "iec_state_ef": "EF (Fehler)",
+                    "contactor_state": "Schützprüfung",
+                    "contactor_names": "Vor/Nach Schütz; Gültigkeit",
+                    "contactor_not_live": "Nicht stromführend",
+                    "contactor_live": "Stromführend",
+                    "contactor_ok": "OK",
+                    "contactor_error": "Fehler",
+                    "allowed_charging_current": "Erlaubter Ladestrom",
+                    "lock_state": "Kabelverriegelung",
+                    "lock_init": "Init",
+                    "lock_open": "Offen",
+                    "lock_closing": "Schließend",
+                    "lock_close": "Geschlossen",
+                    "lock_opening": "Öffnend",
+                    "lock_error": "Fehler",
+                    "time_since_state_change": "Zeit seit Zustandswechsel",
+                    "uptime": "Laufzeit",
+                    "configuration": "Hardware-Konfiguration",
+                    "has_lock_switch": "Hat Kabelverriegelung",
+                    "lock_no": "Nein",
+                    "lock_yes": "Ja",
+                    "jumper_config_max_current": "Maximalstrom des eingehenden Kabels",
+                    "jumper_config": "Durch Jumper konfiguriert",
+                    "jumper_config_software": "Software",
+                    "jumper_config_unconfigured": "Nicht konfiguriert",
+                    "charging_current": "Erlaubter Ladestrom",
+                    "charging_current_configured": "Konfiguriert",
+                    "charging_current_max_incoming": "Eingehendes Kabel",
+                    "charging_current_max_outgoing": "Ausgehendes Kabel",
+                    "low_level_state": "Low-Level-Zustand",
+                    "low_level_state_show": "Anzeigen",
+                    "low_level_mode": "Low-Level-Modus",
+                    "low_level_state_disabled": "Deaktiviert",
+                    "low_level_state_enabled": "Aktiviert",
+                    "led_state": "LED-Zustand",
+                    "led_state_off": "Aus",
+                    "led_state_on": "An",
+                    "led_state_blinking": "Blinkt",
+                    "led_state_flickering": "Flackert",
+                    "led_state_breathing": "Atmet",
+                    "cp_pwm_dc": "CP-PWM-Tastverhältnis",
+                    "adc_values": "ADC-Werte",
+                    "adc_names": "PE-CP, PE-PP",
+                    "voltages": "Spannungen",
+                    "voltage_names": "PE-CP, PE-PP, Maximalspannung PE-CP",
+                    "resistances": "Widerstände",
+                    "resistance_names": "PE-CP, PE-PP",
+                    "gpios": "GPIOs",
+                    "gpio_names": "Eingang, Ausgang, Motoreingangsschalter, Relais, Motorfehler",
+                    "gpio_low": "Low",
+                    "gpio_high": "High",
+                },
+                "script": {
+                    "error_code": "Fehlercode",
+                    "charging_for": "Lädt seit",
+                    "last_charge_took": "Letzes Laden dauerte",
+                    "charging": "Lädt",
+                    "set_charging_current_failed": "Konnte Ladestrom nicht setzen",
+                    "not_implemented": "Noch nicht implementiert"
+                }
+            }
+        },
+        "en": {
+            "evse": {
+                "status": {
+                    "evse": "Charge state",
+                    "not_connected": "Not connected",
+                    "connected": "Connected",
+                    "charging": "Charging",
+                    "error": "Error",
+                    "charging_current": "Charge current",
+                    "charging_current_set": "Set",
+                    "charging_current_minimum": "Min (6 A)",
+                    "charging_current_maximum": "Max",
+                    "charge_control": "Charge control",
+                    "auto_start_charging": "Auto-start",
+                    "start_charging": "Start",
+                    "stop_charging": "Stop"
+                },
+                "navbar": {
+                    "evse": "EVSE"
+                },
+                "content": {
+                    "evse": "Charge controller (EVSE Bricklet)",
+                    "state": "State",
+                    "iec_state": "IEC 61851 State",
+                    "iec_state_a": "A (not connected)",
+                    "iec_state_b": "B (connected)",
+                    "iec_state_c": "C (charging without ventilation)",
+                    "iec_state_d": "D (charging with ventilation)",
+                    "iec_state_ef": "EF (error)",
+                    "contactor_state": "Contactor check",
+                    "contactor_names": "Before/after contactor; Validity",
+                    "contactor_not_live": "Not live",
+                    "contactor_live": "Live",
+                    "contactor_ok": "OK",
+                    "contactor_error": "Error",
+                    "allowed_charging_current": "Allowed charging current",
+                    "lock_state": "Cable lock",
+                    "lock_init": "Init",
+                    "lock_open": "Open",
+                    "lock_closing": "Closing",
+                    "lock_close": "Close",
+                    "lock_opening": "Opening",
+                    "lock_error": "Error",
+                    "time_since_state_change": "Time since state change",
+                    "uptime": "Uptime",
+                    "configuration": "Hardware configuration",
+                    "has_lock_switch": "Has cable lock",
+                    "lock_no": "Nein",
+                    "lock_yes": "Ja",
+                    "jumper_config_max_current": "Max current of incoming cable",
+                    "jumper_config": "Jumper configured",
+                    "jumper_config_software": "Software",
+                    "jumper_config_unconfigured": "Unconfiguriert",
+                    "charging_current": "Allowed charging current",
+                    "charging_current_configured": "Configured",
+                    "charging_current_max_incoming": "Incoming cable",
+                    "charging_current_max_outgoing": "Outgoing cable",
+                    "low_level_state": "Low Level State",
+                    "low_level_state_show": "Show",
+                    "low_level_mode": "Low Level Mode",
+                    "low_level_state_disabled": "Disabled",
+                    "low_level_state_enabled": "Enabled",
+                    "led_state": "LED state",
+                    "led_state_off": "Off",
+                    "led_state_on": "On",
+                    "led_state_blinking": "Blinking",
+                    "led_state_flickering": "Flickering",
+                    "led_state_breathing": "Breathing",
+                    "cp_pwm_dc": "CP PWM duty cycle",
+                    "adc_values": "ADC values",
+                    "adc_names": "PE-CP, PE-PP",
+                    "voltages": "Voltages",
+                    "voltage_names": "PE-CP, PE-PP, high voltage PE-CP",
+                    "resistances": "Resistances",
+                    "resistance_names": "PE-CP, PE-PP",
+                    "gpios": "GPIOs",
+                    "gpio_names": "Input, Output, Motor Input Switch, Relay, Motor Fault",
+                    "gpio_low": "Low",
+                    "gpio_high": "High",
+                },
+                "script": {
+                    "error_code": "Error code",
+                    "charging_for": "Charging for",
+                    "last_charge_took": "Last charge took",
+                    "charging": "Charging",
+                    "set_charging_current_failed": "Failed to set charging current",
+                    "not_implemented": "Not implemented yet"
+                }
+            }
+        }
+    }[lang];
 }

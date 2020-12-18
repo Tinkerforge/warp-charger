@@ -128,7 +128,7 @@ function init_chart() {
         plugins: [
             ctAxisTitle({
                 axisX: {
-                axisTitle: "Time",
+                axisTitle: __("sdm72dm.script.time"),
                 axisClass: "ct-axis-title",
                 offset: {
                     x: 0,
@@ -137,7 +137,7 @@ function init_chart() {
                 textAnchor: "middle"
                 },
                 axisY: {
-                axisTitle: "Power (Watt)",
+                axisTitle: __("sdm72dm.script.power"),
                 axisClass: "ct-axis-title",
                 offset: {
                     x: 0,
@@ -206,7 +206,7 @@ function init_status_chart() {
         plugins: [
             ctAxisTitle({
                 axisX: {
-                axisTitle: "Time",
+                axisTitle: __("sdm72dm.script.time"),
                 axisClass: "ct-axis-title",
                 offset: {
                     x: 0,
@@ -215,7 +215,7 @@ function init_status_chart() {
                 textAnchor: "middle"
                 },
                 axisY: {
-                axisTitle: "Power (Watt)",
+                axisTitle: __("sdm72dm.script.power"),
                 axisClass: "ct-axis-title",
                 offset: {
                     x: 0,
@@ -231,9 +231,7 @@ function init_status_chart() {
 }
 
 function energy_meter_reset_statistics() {
-    $.get("/energy_meter_reset").done(function () {
-        util.show_alert("alert-success", "Energy data reset initiated.", "");
-    });
+    $.get("/energy_meter_reset");
 }
 
 export function init() {
@@ -277,4 +275,59 @@ export function addEventListeners(source: EventSource) {
 
 export function updateLockState(module_init) {
     $('#sidebar-meter').prop('hidden', !module_init.sdm72dm);
+export function getTranslation(lang: string) {
+    return {
+        "de": {
+            "sdm72dm": {
+                "status": {
+                    "charge_history": "Ladeverlauf",
+                    "current_power": "Leistungs&shy;aufnahme"
+                },
+                "navbar": {
+                    "energy_meter": "Stromzähler"
+                },
+                "content": {
+                    "energy_meter": "Stromzähler",
+                    "history": "Verlauf (48 h)",
+                    "live": "Live",
+                    "statistics": "Statistiken",
+                    "reset_statistics": "Zurücksetzen",
+                    "power": "Leistungs&shy;aufnahme",
+                    "energy": "Strom&shy;verbrauch",
+                    "energy_since_reset": "seit dem letzten Zurücksetzen",
+                    "energy_lifetime": "seit Herstellung"
+                },
+                "script": {
+                    "time": "Zeit",
+                    "power": "Leistung (Watt)"
+                }
+            }
+        },
+        "en": {
+            "sdm72dm": {
+                "status": {
+                    "charge_history": "Charge history",
+                    "current_power": "Current power draw"
+                },
+                "navbar": {
+                    "energy_meter": "Energy Meter"
+                },
+                "content": {
+                    "energy_meter": "Energy Meter",
+                    "history": "History (48 h)",
+                    "live": "Live",
+                    "statistics": "Statistics",
+                    "reset_statistics": "Reset",
+                    "power": "Current power draw",
+                    "energy": "Energy used",
+                    "energy_since_reset": "since last reset",
+                    "energy_lifetime": "since manufactoring"
+                },
+                "script": {
+                    "time": "Time",
+                    "power": "Power (Watt)"
+                }
+            }
+        }
+    }[lang];
 }
