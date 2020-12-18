@@ -97,7 +97,8 @@ void write_multiple_registers_handler(struct TF_RS485 *device, uint8_t request_i
 void SDM72DM::setup() {
     for(int i = 0; i < power_history.size(); ++i) {
         //float f = 5000.0 * sin(PI/120.0 * i) + 5000.0;
-        power_history.push(0);
+        // Use negative values to mark that these are pre-filled.
+        power_history.push(-1);
     }
 
     char uid[7] = {0};
@@ -142,10 +143,18 @@ void SDM72DM::register_urls() {
 
         int32_t val;
         power_history.peek(&val);
-        response->printf("[%d", (int)val);
+        // Negative values are prefilled, because the ESP was booted less than 48 hours ago.
+        if(val < 0)
+            response->print("[null");
+        else
+            response->printf("[%d", (int)val);
 
         for(int i = 1; i < power_history.used() && power_history.peek_offset(&val, i); ++i) {
-            response->printf(",%d", (int)val);
+            // Negative values are prefilled, because the ESP was booted less than 48 hours ago.
+            if(val < 0)
+                response->print(", null");
+            else
+                response->printf(",%d", (int)val);
         }
         response->printf("]");
         request->send(response);

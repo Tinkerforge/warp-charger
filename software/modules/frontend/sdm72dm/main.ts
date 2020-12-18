@@ -34,6 +34,7 @@ function update_meter_state(state: MeterState) {
 
 
 let live_interval: number = null;
+let status_interval: number = null;
 
 function meter_chart_change_time(value: string) {
     if (live_interval != null) {
@@ -154,7 +155,7 @@ function init_chart() {
 }
 
 function update_status_chart() {
-    $.get("/power_history").done(function (values: Number[]) {
+    $.get("/power_history").done(function (values: number[]) {
         const HISTORY_MINUTE_INTERVAL = 4;
         const VALUE_COUNT = 48 * (60 / HISTORY_MINUTE_INTERVAL);
         const LABEL_COUNT = 5;
@@ -180,11 +181,27 @@ function update_status_chart() {
                 values
             ]
         };
-        status_meter_chart.update(data);
+
+        // This is a hack in two ways:
+        // 1. We don't have any mechanism to communicate with the evse module if it is even compiled in,
+        //    so we just assume that it is and ask for the allowed current.
+        // 2. This only calculates the correct value if we charge with three phases. This is okay for the moment,
+        //    as the energy meter itself will only work correctly if powered with a three-phase current.
+        $.get("/evse_state")
+         .done((result) => {
+                let configured_max = result.allowed_charging_current / 1000 * 3 * 230;
+                init_status_chart(0, Math.max(configured_max, Math.max(...values))),
+                status_meter_chart.update(data);
+            })
+          .fail(() => {
+                console.log("Failed to query max charging current.");
+                init_status_chart(0, Math.max(...values)),
+                status_meter_chart.update(data);
+            });
     });
 }
 
-function init_status_chart() {
+function init_status_chart(min_value=0, max_value=0) {
     let data = {};
 
     // Create a new line chart object where as first parameter we pass in a selector
@@ -193,6 +210,8 @@ function init_status_chart() {
     status_meter_chart = new Chartist.Line('#status_meter_chart', data, {
         fullWidth: true,
         showPoint: false,
+        low: min_value,
+        high: max_value,
         axisX: {
             offset: 50,
             labelOffset: {x: 0, y: 5}
@@ -264,7 +283,7 @@ export function init() {
 
     init_status_chart();
     update_status_chart();
-    setInterval(update_status_chart, 60*1000);
+    status_interval = setInterval(update_status_chart, 60*1000);
 }
 
 export function addEventListeners(source: EventSource) {
@@ -275,6 +294,24 @@ export function addEventListeners(source: EventSource) {
 
 export function updateLockState(module_init) {
     $('#sidebar-meter').prop('hidden', !module_init.sdm72dm);
+
+    if(!module_init.sdm72dm) {
+        if (live_interval != null) {
+            clearInterval(live_interval);
+            live_interval = null;
+        }
+
+        if (status_interval != null) {
+            clearInterval(status_interval);
+            status_interval = null;
+        }
+    } else {
+        if (status_interval == null) {
+            status_interval = setInterval(update_status_chart, 60*1000);
+        }
+    }
+}
+
 export function getTranslation(lang: string) {
     return {
         "de": {
