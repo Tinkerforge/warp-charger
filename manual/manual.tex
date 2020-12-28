@@ -84,7 +84,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 \begin{document}
 \begin{titlepage}
-	Betriebsanleitung\hfill Version 0.3\hfill \today \centering \vfill
+	Betriebsanleitung\hfill Version 0.4\hfill \today \centering \vfill
 	\colorbox{boxgray}{\makebox[\dimexpr\linewidth-2\fboxsep][c]{\includegraphics[width=0.6\textwidth]{./img/resized/logo}}} \vfill \textcolor{red}{Work in progress!} \vfill
 	\textcolor{red}{Dieses Dokument befindet sich noch in der Erstellung und wird zusammen mit dem
 		Versand der ersten Wallboxen im Januar fertiggestellt. Die Wallbox-Software
@@ -392,13 +392,33 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 	\subsection{Startseite / Status}
 	\gfx{./img/resized/web_status}
-	Auf der Startseite siehst du den Status deiner Wallbox.
+	Die Startseite des Webinterfaces zeigt kompakt den aktuellen Ladestatus der 
+	Wallbox, sowie Ladezeit und -strom, und erlaubt es die Ladung zu steuern. 
+	Es kann sowohl das automatische Laden (de-)aktiviert werden, als auch 
+	manuell eine Ladung gestartet oder gestoppt werden.
 
-	Der \textbf{EVSE} (Electric Vehicle Supply Equipment)-Status gibt dir die Information ob aktuell ein
+	In der Variante Pro mit verbautem Stromzähler wird zusätzlich der Ladeverlauf 
+	über die letzten 48 Stunden und die aktuelle Leistungsaufnahme gezeigt.
+
+	Der \textbf{Ladestatus} gibt dir die Information ob aktuell ein
 	Fahrzeug mit der Wallbox verbunden ist und ob dieses geladen wird.
 
-	Der \textbf{WiFi Connection} Status gibt dir Informationen ob die Wallbox zu
-	einem anderen WLAN verbunden ist und wenn ja welches.
+	Der \textbf{Ladestrom} zeigt dir an mit welchem Strom das Fahrzeug geladen
+	wird/würde. Über \textbf{Set} kannst du diesen Strom innerhalb der Min-
+	und Max-Grenzen einstellen. Minimal können 6A eingestellt werden. Das
+	Maximum hängt von der Hardwarekonfiguration deiner Wallbox ab.
+	
+	Die \textbf{Ladekontrolle} ermöglicht es dir manuell einen Ladevorgang zu
+	starten oder abzubrechen (Start/Stop). Wenn du \textbf{Autostart}
+	einschaltest, startet der Ladevorgang automatisch sobald ein Fahrzeug
+	angeschlossen wird.
+
+	\textbf{Ladeverlauf und Leistungsaufnahme} sind nur in der Pro Variante
+	vorhanden. Hier werden dir die aktuelle Leistungsaufnahme und ein Chart über
+	die letzten 24 Stunden angezeigt.
+
+	Der \textbf{WLAN-Verbindung zu ...} Zeigt dir im Namen an zu welchem WLAN 
+	Netz sich die Wallbox verbinden soll und wie der Status der Verbindung ist.
 
 	Der \textbf{WiFi Access Point} Status besitzt verschiedene Zustände: Status
 	„Active“ bedeutet, dass die Wallbox permanent ihr eigenes WLAN eröffnet. Der
@@ -411,22 +431,34 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	Point Funktionalität deaktiviert hast.
 
 	\subsection{EVSE}
-	Auf der EVSE Seite erhältst detaillierte Informationen zum Status des
-	Ladecontrollers.
+	\gfx{./img/resized/web_evse}
+	Die Unterseite des Ladecontrollers gibt detaillierte Auskunft über den Zustand
+	des Ladecontrollers (des EVSE Bricklets) und dessen Hardware-Konfiguration. Der
+	erlaubte Ladestrom, mit dem ein Auto geladen werden kann, ist das Minimum des 
+	konfigurierten Ladestroms und der Maximalströme des eingehenden 
+	(zur Stromversorgung) und ausgehenden (zum Auto) Kabels.
 
-	\subsection{Energy Meter}
+	Falls Probleme beim Laden auftreten können diese mit den Informationen dieser 
+	Seite diagnostiziert werden.
+
+	\subsection{Stromzähler}
+	\gfx{./img/resized/web_counter}
 	Diese Ansicht ist nur für die Pro Variante der Wallbox nutzbar. Auf der Seite
-	siehst du ein Diagramm mit dem Leistungsverbrauch für die letzten 24h und die
+	siehst du ein Diagramm mit der Leistungsaufnahme für die letzten 24h und die
 	Statistiken dazu.
 
-	\subsection{WiFi Settings}
+	\subsection{WLAN}
 	\gfx{./img/resized/web_wifi}
-	In den WIFI Settings kannst du dich mit deinem eigenen WLAN verbinden. Dazu
+	In den WLAN Einstellungen kannst du dich mit deinem eigenen WLAN verbinden. Dazu
 	wählst du einfach das von der Wallbox gefundene WLAN aus und gibst die
 	Zugangsdaten ein. Anschließend konfigurierst du einen möglichen Fallback auf
 	den Access Point Betrieb und schließt die Konfiguration ab.
+	
+	\subsection{Bricklets}
+	Hier findest du Informationen zu den an dem ESP32 Brick angeschlossenen
+	Bricklets.
 
-	\subsection{Firmware}
+	\subsection{System}
 	Hier kannst du die Firmware der Wallbox updaten. Wir werden die Funktionalität
 	laufend weiterentwickeln.
 
@@ -587,6 +619,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		30.11.2020 & 0.1     & Initialversion         \\
 		04.12.2020 & 0.2     & Fotos hinzugefügt      \\
 		05.12.2020 & 0.3     & Portierung nach \LaTeX \\
+		28.12.2020 & 0.4     & Webinterface Dokumentation erweitert \\
 		\bottomrule
 	\end{tabular}
 
