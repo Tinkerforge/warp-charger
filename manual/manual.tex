@@ -84,7 +84,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 \begin{document}
 \begin{titlepage}
-	Betriebsanleitung\hfill Version 0.4\hfill \today \centering \vfill
+	Betriebsanleitung\hfill Version 0.5\hfill \today \centering \vfill
 	\colorbox{boxgray}{\makebox[\dimexpr\linewidth-2\fboxsep][c]{\includegraphics[width=0.6\textwidth]{./img/resized/logo}}} \vfill \textcolor{red}{Work in progress!} \vfill
 	\textcolor{red}{Dieses Dokument befindet sich noch in der Erstellung und wird zusammen mit dem
 		Versand der ersten Wallboxen im Januar fertiggestellt. Die Wallbox-Software
@@ -566,6 +566,11 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	\subsection{Stromlaufplan}
 	Ein Stromlaufplan ist in einem gesonderten Dokument verfügbar.
 
+	\subsection{Sicherungswechsel}
+	Die Wallbox ist intern über zwei Feinsicherungen abgesichert. Es handelt
+	sich um 6,3x32mm Feinsicherungen in der Ausführung mittelträge (m), 500mA.
+	Tinkerforge verbaut Sicherungen vom Typ \glqq ESKA  632.214\grqq.
+
 	\section{Technische Daten}
 
 	%use minipage here to control footnote placement
@@ -582,6 +587,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 			\item[Nennfrequenz] \SI{50}{\hertz}
 			\item[Nennstrom] \SI{16}{\ampere} / \SI{32}{\ampere}
 			      \footref{fn:1}
+			\item[Standby, WLAN an] ca. \SI{1}{\watt}
 			\item[Ladekabellänge] \SI{5}{\meter}
 			\item[Zuleitungsquerschnitt] \SI{2,5}{\square\milli\meter} bis
 			      \SI{10}{\square\milli\meter}
@@ -620,6 +626,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		04.12.2020 & 0.2     & Fotos hinzugefügt      \\
 		05.12.2020 & 0.3     & Portierung nach \LaTeX \\
 		28.12.2020 & 0.4     & Webinterface Dokumentation erweitert \\
+		29.12.2020 & 0.5     & Beschreibungen erweitert \\
 		\bottomrule
 	\end{tabular}
 
