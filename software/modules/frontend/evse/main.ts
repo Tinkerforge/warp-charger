@@ -21,7 +21,7 @@ function update_evse_state(state: EVSEState) {
     $('#status_start_charging').prop("disabled", state.vehicle_state != 1);
     $('#status_stop_charging').prop("disabled", state.vehicle_state != 2);
 
-    let allowed_charging_current = (state.allowed_charging_current / 1000.0).toFixed(3) + "A";
+    let allowed_charging_current = util.toLocaleFixed(state.allowed_charging_current / 1000.0, 3) + " A";
     $('#allowed_charging_current').val(allowed_charging_current);
 
     if($('#status_charging_current_save').prop("disabled")) {
@@ -78,14 +78,14 @@ function update_evse_low_level_state(state: EVSELowLevelState) {
         util.update_button_group("btn_group_gpio" + i, state.gpio[i] ? 1 : 0);
     }
 
-    $('#pwm_duty_cycle').val((state.cp_pwm_duty_cycle / 10).toFixed(1) + "%");
+    $('#pwm_duty_cycle').val(util.toLocaleFixed(state.cp_pwm_duty_cycle / 10, 1) + " %");
 
     $('#adc_value_0').val(state.adc_values[0]);
     $('#adc_value_1').val(state.adc_values[1]);
 
-    $('#voltage_0').val((state.voltages[0] / 1000.0).toFixed(3) + "V");
-    $('#voltage_1').val((state.voltages[1] / 1000.0).toFixed(3) + "V");
-    $('#voltage_2').val((state.voltages[2] / 1000.0).toFixed(3) + "V");
+    $('#voltage_0').val(util.toLocaleFixed(state.voltages[0] / 1000.0, 3) + " V");
+    $('#voltage_1').val(util.toLocaleFixed(state.voltages[1] / 1000.0, 3) + " V");
+    $('#voltage_2').val(util.toLocaleFixed(state.voltages[2] / 1000.0, 3) + " V");
 
     $('#resistance_0').val(state.resistances[0] + "Ω");
     $('#resistance_1').val(state.resistances[1] + "Ω");
@@ -98,12 +98,12 @@ interface EVSEMaxChargingCurrent {
 }
 
 function update_evse_max_charging_current(state: EVSEMaxChargingCurrent) {
-    $('#max_current_configured').val((state.max_current_configured / 1000.0).toFixed(3) + "A");
-    $('#max_current_incoming_cable').val((state.max_current_incoming_cable / 1000.0).toFixed(3) + "A");
-    $('#max_current_outgoing_cable').val((state.max_current_outgoing_cable / 1000.0).toFixed(3) + "A");
+    $('#max_current_configured').val(util.toLocaleFixed(state.max_current_configured / 1000.0, 3) + " A");
+    $('#max_current_incoming_cable').val(util.toLocaleFixed(state.max_current_incoming_cable / 1000.0, 3) + " A");
+    $('#max_current_outgoing_cable').val(util.toLocaleFixed(state.max_current_outgoing_cable / 1000.0, 3) + " A");
 
     let theoretical_maximum = Math.min(state.max_current_incoming_cable, state.max_current_outgoing_cable);
-    let theoretical_maximum_str = (theoretical_maximum / 1000.0).toFixed(0) + " A";
+    let theoretical_maximum_str = util.toLocaleFixed(theoretical_maximum / 1000.0, 0) + " A";
     $('#status_charging_current').prop("max", theoretical_maximum / 1000);
     $('#status_charging_current_maximum').html("Max ("+theoretical_maximum_str+")");
 }

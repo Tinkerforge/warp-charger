@@ -18,18 +18,18 @@ interface MeterState {
 }
 
 function update_meter_state(state: MeterState) {
-    $('#status_meter_power_total').val(state.power.total.toFixed(0) + " W");
-    $('#meter_power_total').val(state.power.total.toFixed(0) + " W");
-    $('#meter_power_import').val(state.power.import.toFixed(0) + " W");
-    $('#meter_power_export').val(state.power.export.toFixed(0) + " W");
+    $('#status_meter_power_total').val(util.toLocaleFixed(state.power.total, 0) + " W");
+    $('#meter_power_total').val(util.toLocaleFixed(state.power.total, 0) + " W");
+    $('#meter_power_import').val(util.toLocaleFixed(state.power.import, 0) + " W");
+    $('#meter_power_export').val(util.toLocaleFixed(state.power.export, 0) + " W");
 
-    $('#meter_energy_rel_total').val(state.energy_rel.total.toFixed(3) + " kWh");
-    $('#meter_energy_rel_import').val(state.energy_rel.import.toFixed(3) + " kWh");
-    $('#meter_energy_rel_export').val(state.energy_rel.export.toFixed(3) + " kWh");
+    $('#meter_energy_rel_total').val(util.toLocaleFixed(state.energy_rel.total, 3) + " kWh");
+    $('#meter_energy_rel_import').val(util.toLocaleFixed(state.energy_rel.import, 3) + " kWh");
+    $('#meter_energy_rel_export').val(util.toLocaleFixed(state.energy_rel.export, 3) + " kWh");
 
-    $('#meter_energy_abs_total').val(state.energy_abs.total.toFixed(3) + " kWh");
-    $('#meter_energy_abs_import').val(state.energy_abs.import.toFixed(3) + " kWh");
-    $('#meter_energy_abs_export').val(state.energy_abs.export.toFixed(3) + " kWh");
+    $('#meter_energy_abs_total').val(util.toLocaleFixed(state.energy_abs.total, 3) + " kWh");
+    $('#meter_energy_abs_import').val(util.toLocaleFixed(state.energy_abs.import, 3) + " kWh");
+    $('#meter_energy_abs_export').val(util.toLocaleFixed(state.energy_abs.export, 3) + " kWh");
 }
 
 

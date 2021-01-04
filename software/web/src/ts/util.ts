@@ -103,3 +103,10 @@ export function format_timespan(secs: number) {
 
     return dayString + hourString + minString + secString;
 }
+
+export function toLocaleFixed(i: number, fractionDigits: number) {
+    return i.toLocaleString(undefined, {
+        minimumFractionDigits: fractionDigits,
+        maximumFractionDigits: fractionDigits
+    });
+}
