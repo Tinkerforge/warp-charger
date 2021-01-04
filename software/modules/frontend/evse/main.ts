@@ -180,7 +180,6 @@ export function addEventListeners(source: EventSource) {
 }
 
 export function updateLockState(module_init) {
-    console.log(module_init.sdm72dm);
     $('#sidebar-evse').prop('hidden', !module_init.sdm72dm);
 }
 
@@ -195,7 +194,7 @@ export function getTranslation(lang: string) {
                     "charging": "Lädt",
                     "error": "Fehler",
                     "charging_current": "Ladestrom",
-                    "charging_current_set": "TODO",
+                    "charging_current_set": "Set",
                     "charging_current_minimum": "Min (6 A)",
                     "charging_current_maximum": "Max",
                     "charge_control": "Ladekontrolle",
