@@ -57,6 +57,10 @@ EVSE::EVSE()
         {"max_current_incoming_cable", Config::Uint16(0)},
         {"max_current_outgoing_cable", Config::Uint16(0)},
     });
+
+    evse_auto_start_charging = Config::Object({
+        {"auto_start_charging", Config::Bool(true)}
+    });
 }
 
 void EVSE::setup()
@@ -72,6 +76,10 @@ void EVSE::setup()
 
     task_scheduler.scheduleWithFixedDelay("update_evse_max_charging_current", [this](){
         update_evse_max_charging_current();
+    }, 0, 1000);
+
+    task_scheduler.scheduleWithFixedDelay("update_evse_auto_start_charging", [this](){
+        update_evse_auto_start_charging();
     }, 0, 1000);
 }
 
@@ -105,6 +113,45 @@ void EVSE::register_urls()
         auto *response = request->beginResponseStream("application/json; charset=utf-8");
         evse_max_charging_current.write_to_stream(*response);
         request->send(response);
+    });
+
+    server.on("/evse_auto_start_charging", HTTP_GET, [this](AsyncWebServerRequest *request) {
+        auto *response = request->beginResponseStream("application/json; charset=utf-8");
+        evse_auto_start_charging.write_to_stream(*response);
+        request->send(response);
+    });
+
+    AsyncCallbackJsonWebHandler *evse_auto_start_charging_handler = new AsyncCallbackJsonWebHandler("/evse_auto_start_charging", [this](AsyncWebServerRequest *request, JsonVariant &json){
+        if(!json["auto_start_charging"].is<bool>()) {
+            request->send(400, "text/html", "expected a boolean");
+            return;
+        }
+
+        bool new_auto_start = json["auto_start_charging"].as<bool>();
+
+        task_scheduler.scheduleOnce("change_charging_current", [this, new_auto_start](){
+            int rc = tf_evse_set_charging_autostart(&evse, new_auto_start);
+            Serial.printf("rc: %d\n", rc);
+            check_bootloader_state(rc);
+        }, 0);
+
+        request->send(200, "text/html", "Updating auto start");
+    });
+
+    server.addHandler(evse_auto_start_charging_handler);
+
+    server.on("/evse_stop_charging", HTTP_GET, [this](AsyncWebServerRequest *request) {
+        task_scheduler.scheduleOnce("stop_charging", [this](){
+            tf_evse_stop_charging(&evse);
+        }, 0);
+        request->send(200, "text/html", String("Stopping charging"));
+    });
+
+    server.on("/evse_start_charging", HTTP_GET, [this](AsyncWebServerRequest *request) {
+        task_scheduler.scheduleOnce("start_charging", [this](){
+            tf_evse_start_charging(&evse);
+        }, 0);
+        request->send(200, "text/html", String("Startping charging"));
     });
 
     AsyncCallbackJsonWebHandler *evse_current_limit_handler = new AsyncCallbackJsonWebHandler("/evse_current_limit", [this](AsyncWebServerRequest *request, JsonVariant &json){
@@ -142,6 +189,7 @@ void EVSE::onEventConnect(AsyncEventSourceClient *client)
     client->send(evse_state.to_string().c_str(), "evse_state", millis(), 1000);
     client->send(evse_low_level_state.to_string().c_str(), "evse_low_level_state", millis(), 1000);
     client->send(evse_max_charging_current.to_string().c_str(), "evse_max_charging_current", millis(), 1000);
+    client->send(evse_auto_start_charging.to_string().c_str(), "evse_auto_start_charging", millis(), 1000);
 }
 
 void EVSE::loop()
@@ -300,6 +348,27 @@ void EVSE::update_evse_max_charging_current() {
         return;
 
     events.send(evse_max_charging_current.to_string().c_str(), "evse_max_charging_current", millis());
+}
+
+void EVSE::update_evse_auto_start_charging() {
+    if(!initialized)
+        return;
+    bool auto_start_charging;
+
+    int rc = tf_evse_get_charging_autostart(&evse,
+        &auto_start_charging);
+
+    if(rc != TF_E_OK) {
+        check_bootloader_state(rc);
+        return;
+    }
+
+    evse_auto_start_charging.get("auto_start_charging")->updateBool(auto_start_charging);
+
+    if(!send_event_allowed(&events))
+        return;
+
+    events.send(evse_auto_start_charging.to_string().c_str(), "evse_auto_start_charging", millis());
 }
 
 bool EVSE::check_bootloader_state(int rc) {

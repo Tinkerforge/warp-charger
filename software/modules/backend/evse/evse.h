@@ -27,6 +27,7 @@ private:
     void update_evse_state();
     void update_evse_low_level_state();
     void update_evse_max_charging_current();
+    void update_evse_auto_start_charging();
     bool check_bootloader_state(int rc);
 
     Config evse_state;
@@ -34,6 +35,7 @@ private:
     Config evse_hardware_configuration;
     Config evse_low_level_state;
     Config evse_max_charging_current;
+    Config evse_auto_start_charging;
 
     TF_EVSE evse;
 };

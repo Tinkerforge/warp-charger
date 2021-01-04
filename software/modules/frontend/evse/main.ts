@@ -18,6 +18,9 @@ function update_evse_state(state: EVSEState) {
 
     util.update_button_group("btn_group_evse_state", state.vehicle_state);
 
+    $('#status_start_charging').prop("disabled", state.vehicle_state != 1);
+    $('#status_stop_charging').prop("disabled", state.vehicle_state != 2);
+
     let allowed_charging_current = (state.allowed_charging_current / 1000.0).toFixed(3) + "A";
     $('#allowed_charging_current').val(allowed_charging_current);
 
@@ -116,9 +119,33 @@ function set_charging_current(current: number) {
     });
 }
 
+interface EVSEAutoStart {
+    auto_start_charging: boolean
+}
+
+function update_evse_auto_start_charging(x: EVSEAutoStart) {
+    $('#status_auto_start_charging').prop("checked", x.auto_start_charging);
+}
+
+function set_auto_start_charging(auto_start_charging: boolean) {
+    $.ajax({
+        url: '/evse_auto_start_charging',
+        method: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify({"auto_start_charging": auto_start_charging}),
+        error: (_x, _y, error) => util.show_alert("alert-danger", "Failed to set auto charge.", error)
+    });
+}
+
 export function init() {
     $("#status_charging_current_minimum").on("click", () => set_charging_current(6000));
     $("#status_charging_current_maximum").on("click", () => set_charging_current(32000));
+
+    $("#status_stop_charging").on("click", () => $.get("/evse_stop_charging"));
+    $("#status_start_charging").on("click", () => $.get("/evse_start_charging"));
+
+    $('#status_auto_start_charging').on("change", () => set_auto_start_charging($('#status_auto_start_charging').prop('checked')));
+
     let input = $('#status_charging_current');
     let save_btn = $('#status_charging_current_save');
     input.on("input", () => save_btn.prop("disabled", false));
@@ -145,6 +172,10 @@ export function addEventListeners(source: EventSource) {
 
     source.addEventListener('evse_hardware_configuration', function (e: util.SSE) {
         update_evse_hardware_configuration(<EVSEHardwareConfiguration>(JSON.parse(e.data)));
+    }, false);
+
+    source.addEventListener('evse_auto_start_charging', function (e: util.SSE) {
+        update_evse_auto_start_charging(<EVSEAutoStart>(JSON.parse(e.data)));
     }, false);
 }
 
