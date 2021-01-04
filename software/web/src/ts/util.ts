@@ -64,9 +64,9 @@ export function format_timespan(secs: number) {
     if (secs >= 60 * 60 * 24) {
         days = Math.floor(secs / (60 * 60 * 24));
         if (days > 1) {
-            dayString = days + " days, ";
+            dayString = days + ` ${__("days")}, `;
         } else if (days > 0) {
-            dayString = days + " day, ";
+            dayString = days + ` ${__("day")}, `;
         }
         secs %= 60 * 60 * 24;
     }
