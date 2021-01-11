@@ -228,8 +228,8 @@ void EVSE::setup_evse()
         }
         return;
     } else {
-        evse_hardware_configuration.get("jumper_configuration")->asUint() = jumper_configuration;
-        evse_hardware_configuration.get("has_lock_switch")->asBool() = has_lock_switch;
+        evse_hardware_configuration.get("jumper_configuration")->updateUint(jumper_configuration);
+        evse_hardware_configuration.get("has_lock_switch")->updateBool(has_lock_switch);
     }
 
     initialized = true;

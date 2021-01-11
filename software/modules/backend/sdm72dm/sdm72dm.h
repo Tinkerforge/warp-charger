@@ -29,7 +29,7 @@ public:
     void loop();
 
     struct UserData {
-        double *value_to_write;
+        Config *value_to_write;
         uint8_t expected_request_id;
         bool done;
     };

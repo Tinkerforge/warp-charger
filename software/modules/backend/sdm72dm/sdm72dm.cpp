@@ -72,7 +72,7 @@ void read_input_registers_handler(struct TF_RS485 *device, uint8_t request_id, i
     value.regs[1] = input_registers_chunk_data[0];
     value.regs[0] = input_registers_chunk_data[1];
 
-    *ud->value_to_write = value.f;
+    ud->value_to_write->updateFloat(value.f);
     ud->done = true;
 }
 
@@ -224,46 +224,46 @@ void SDM72DM::loop()
         return;
     }
 
-    double *to_write = nullptr;
+    Config *to_write = nullptr;
     uint32_t start_address = 0;
 
     switch(modbus_read_state) {
         case 0:
-            to_write = state.get("power")->get("total")->as<double, Config::ConfFloat>();
+            to_write = state.get("power")->get("total");
             start_address = 53;
             break;
         case 1:
-            to_write = state.get("power")->get("import")->as<double, Config::ConfFloat>();
+            to_write = state.get("power")->get("import");
             start_address = 1281;
             break;
         case 2:
-            to_write = state.get("power")->get("export")->as<double, Config::ConfFloat>();
+            to_write = state.get("power")->get("export");
             start_address = 1283;
             break;
 
         case 3:
-            to_write = state.get("energy_rel")->get("total")->as<double, Config::ConfFloat>();
+            to_write = state.get("energy_rel")->get("total");
             start_address = 385;
             break;
         case 4:
-            to_write = state.get("energy_rel")->get("import")->as<double, Config::ConfFloat>();
+            to_write = state.get("energy_rel")->get("import");
             start_address = 389;
             break;
         case 5:
-            to_write = state.get("energy_rel")->get("export")->as<double, Config::ConfFloat>();
+            to_write = state.get("energy_rel")->get("export");
             start_address = 391;
             break;
 
         case 6:
-            to_write = state.get("energy_abs")->get("total")->as<double, Config::ConfFloat>();
+            to_write = state.get("energy_abs")->get("total");
             start_address = 343;
             break;
         case 7:
-            to_write = state.get("energy_abs")->get("import")->as<double, Config::ConfFloat>();
+            to_write = state.get("energy_abs")->get("import");
             start_address = 73;
             break;
         case 8:
-            to_write = state.get("energy_abs")->get("export")->as<double, Config::ConfFloat>();
+            to_write = state.get("energy_abs")->get("export");
             start_address = 75;
 
         default:
