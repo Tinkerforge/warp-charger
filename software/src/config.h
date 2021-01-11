@@ -66,6 +66,10 @@ struct Config {
     > ConfVariant;
 
     ConfVariant value;
+    bool updated;
+
+    bool was_updated();
+    void set_update_handled();
 
     template<typename T>
     static int type_id()
@@ -234,17 +238,17 @@ struct Config {
         return &strict_variant::get<ConfigT>(&value)->value;
     }
 
-    String &asString();
+    const String &asString();
 
     const char *asCStr();
 
-    double &asFloat();
+    const double &asFloat();
 
-    uint64_t &asUint();
+    const uint64_t &asUint();
 
-    int64_t &asInt();
+    const int64_t &asInt();
 
-    bool &asBool();
+    const bool &asBool();
 
     std::vector<Config> &asArray();
 
@@ -258,6 +262,10 @@ struct Config {
         T *target = as<T, ConfigT>();
         T old_value = *target;
         *target = value;
+
+        if(old_value != value)
+            this->updated = true;
+
         return old_value != value;
     }
 
@@ -352,15 +360,19 @@ struct Config {
 
     String update_from_file(File file);
 
+    String update_from_string(String s);
+
     String update_from_json(JsonVariant root);
 
     void save_to_file(File file);
 
     void write_to_stream(Print &output);
     void write_to_stream_except(Print &output, std::initializer_list<String> keys_to_censor);
+    void write_to_stream_except(Print &output, const std::vector<String> &keys_to_censor);
 
     String to_string();
     String to_string_except(std::initializer_list<String> keys_to_censor);
+    String to_string_except(const std::vector<String> &keys_to_censor);
 };
 
 /*void test() {

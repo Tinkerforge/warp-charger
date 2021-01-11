@@ -26,7 +26,7 @@ struct recursive_validator {
     bool operator()(std::nullptr_t x) const { return true; }
     bool operator()(const Config::ConfArray &x) const {
         // Intentionally do the recursive validation first.
-        // This ensures, that the array's validator may assume, that it's
+        // This ensures, that the array's validator may assume, that its
         // entries itself are valid. Then only dependencies between (valid) entries
         // have to be validated.
         for(const Config &elem : x.value)
@@ -40,7 +40,7 @@ struct recursive_validator {
     }
     bool operator()(const Config::ConfObject &x) const {
         // Intentionally do the recursive validation first.
-        // This ensures, that the object's validator may assume, that it's
+        // This ensures, that the object's validator may assume, that its
         // entries itself are valid. Then only dependencies between (valid) entries
         // have to be validated.
         for(const std::pair<String, Config> &elem : x.value)
@@ -127,7 +127,7 @@ struct json_length_visitor {
         return 0;
     }
     size_t operator()(std::nullptr_t x) {
-        return 0;
+        return 10; //TODO: is this still necessary?
     }
     size_t operator()(Config::ConfArray &x) {
         size_t sum = 0;
@@ -232,36 +232,92 @@ struct from_json {
     JsonVariant json_node;
 };
 
+struct is_updated {
+    bool operator()(const Config::ConfString &x) {
+        return false;
+    }
+    bool operator()(const Config::ConfFloat &x) {
+        return false;
+    }
+    bool operator()(const Config::ConfInt &x) {
+        return false;
+    }
+    bool operator()(const Config::ConfUint &x) {
+        return false;
+    }
+    bool operator()(const Config::ConfBool &x) {
+        return false;
+    }
+    bool operator()(const std::nullptr_t x) {
+        return false;
+    }
+    bool operator()(const Config::ConfArray &x) const {
+        for(const Config &c : x.value) {
+            if(c.updated || strict_variant::apply_visitor(is_updated{}, c.value))
+                return true;
+        }
+        return false;
+    }
+    bool operator()(const Config::ConfObject &x) const {
+        for(const std::pair<String, Config> &c : x.value) {
+            if(c.second.updated || strict_variant::apply_visitor(is_updated{}, c.second.value))
+                return true;
+        }
+        return false;
+    }
+};
+
+struct set_updated_false {
+    void operator()(Config::ConfString &x) {}
+    void operator()(Config::ConfFloat &x) {}
+    void operator()(Config::ConfInt &x) {}
+    void operator()(Config::ConfUint &x) {}
+    void operator()(Config::ConfBool &x) {}
+    void operator()(std::nullptr_t x) {}
+    void operator()(Config::ConfArray &x) {
+        for(Config &c : x.value) {
+            c.updated = false;
+            strict_variant::apply_visitor(set_updated_false{}, c.value);
+        }
+    }
+    void operator()(Config::ConfObject &x) {
+        for(std::pair<String, Config> &c : x.value) {
+            c.second.updated = false;
+            strict_variant::apply_visitor(set_updated_false{}, c.second.value);
+        }
+    }
+};
+
 Config Config::Str(String s,
                    size_t maxChars,
                    String(*validator)(const ConfString &)) {
-    return Config{ConfString{s, maxChars == 0 ? s.length() : maxChars, validator}};
+    return Config{ConfString{s, maxChars == 0 ? s.length() : maxChars, validator}, true};
 }
 
 Config Config::Float(double d,
                      double min,
                      double max,
                      String(*validator)(const ConfFloat &)) {
-    return Config{ConfFloat{d, min, max, validator}};
+    return Config{ConfFloat{d, min, max, validator}, true};
 }
 
 Config Config::Int(int64_t i,
                       int64_t min,
                       int64_t max,
                       String(*validator)(const ConfInt &)) {
-    return Config{ConfInt{i, min, max, validator}};
+    return Config{ConfInt{i, min, max, validator}, true};
 }
 
 Config Config::Uint(uint64_t u,
                        uint64_t min,
                        uint64_t max,
                        String(*validator)(const ConfUint &)) {
-    return Config{ConfUint{u, min, max, validator}};
+    return Config{ConfUint{u, min, max, validator}, true};
 }
 
 Config Config::Bool(bool b,
                        String(*validator)(const ConfBool &)) {
-    return Config{ConfBool{b, validator}};
+    return Config{ConfBool{b, validator}, true};
 }
 
 Config Config::Array(std::initializer_list<Config> arr,
@@ -270,15 +326,15 @@ Config Config::Array(std::initializer_list<Config> arr,
                         size_t maxElements,
                         int variantType,
                         String(*validator)(const ConfArray &)) {
-    return Config{ConfArray{arr, {prototype}, minElements, maxElements, variantType, validator}};
+    return Config{ConfArray{arr, {prototype}, minElements, maxElements, variantType, validator}, true};
 }
 
 Config Config::Object(std::initializer_list<std::pair<String, Config>> obj,
                          String(*validator)(const ConfObject &)) {
-    return Config{ConfObject{obj, validator}};
+    return Config{ConfObject{obj, validator}, true};
 }
 
-Config Config::Null() { return Config{nullptr}; }
+Config Config::Null() { return Config{nullptr, true}; }
 
 Config Config::Uint8(uint8_t u) {
         return Config::Uint(u, std::numeric_limits<uint8_t>::lowest(), std::numeric_limits<uint8_t>::max());
@@ -351,23 +407,23 @@ Config *Config::get(size_t i) {
     return &children[i];
 }
 
-String &Config::asString() {
+const String &Config::asString() {
     return *as<String, Config::ConfString>();
 }
 
-double &Config::asFloat() {
+const double &Config::asFloat() {
     return *as<double, Config::ConfFloat>();
 }
 
-uint64_t &Config::asUint() {
+const uint64_t &Config::asUint() {
     return *as<uint64_t, Config::ConfUint>();
 }
 
-int64_t &Config::asInt() {
+const int64_t &Config::asInt() {
     return *as<int64_t, Config::ConfInt>();
 }
 
-bool &Config::asBool() {
+const bool &Config::asBool() {
     return *as<bool, Config::ConfBool>();
 }
 
@@ -424,6 +480,25 @@ String Config::update_from_file(File file) {
     DeserializationError error = deserializeJson(doc, file);
     if (error)
         Serial.println(F("Failed to read file, using default configuration"));
+
+    String err = strict_variant::apply_visitor(from_json{doc.as<JsonVariant>()}, copy);
+
+    if (err == "") {
+        printf("updating\n");
+        value = copy;
+    }
+
+    return err;
+}
+
+String Config::update_from_string(String s) {
+    ConfVariant copy = value;
+    DynamicJsonDocument doc(json_size());
+    DeserializationError error = deserializeJson(doc, s);
+
+    if (error)
+        Serial.println(String("Failed to deserialize string, using default configuration") + error.c_str());
+
     String err = strict_variant::apply_visitor(from_json{doc.as<JsonVariant>()}, copy);
 
     if (err == "")
@@ -437,6 +512,7 @@ String Config::update_from_json(JsonVariant root) {
     String err = strict_variant::apply_visitor(from_json{root}, copy);
     if (err == "")
         value = copy;
+
     return err;
 }
 
@@ -474,6 +550,10 @@ void Config::write_to_stream(Print &output)
 }
 
 String Config::to_string() {
+    return this->to_string_except({});
+}
+
+String Config::to_string_except(std::initializer_list<String> keys_to_censor) {
     DynamicJsonDocument doc(json_size());
 
     JsonVariant var;
@@ -485,12 +565,16 @@ String Config::to_string() {
         var = doc.as<JsonVariant>();
     }
     strict_variant::apply_visitor(to_json{var}, value);
+
+    for(const String &key : keys_to_censor)
+        doc[key] = nullptr;
+
     String result;
     serializeJson(doc, result);
     return result;
 }
 
-String Config::to_string_except(std::initializer_list<String> keys_to_censor) {
+String Config::to_string_except(const std::vector<String> &keys_to_censor) {
     DynamicJsonDocument doc(json_size());
 
     JsonVariant var;
@@ -529,6 +613,35 @@ void Config::write_to_stream_except(Print &output, std::initializer_list<String>
     serializeJson(doc, output);
 }
 
+void Config::write_to_stream_except(Print &output, const std::vector<String> &keys_to_censor)
+{
+    DynamicJsonDocument doc(json_size());
+
+    JsonVariant var;
+    if(is<Config::ConfObject>()) {
+        var = doc.to<JsonObject>();
+    } else if(is<Config::ConfArray>()) {
+        var = doc.to<JsonArray>();
+    } else {
+        var = doc.as<JsonVariant>();
+    }
+    strict_variant::apply_visitor(to_json{var}, value);
+
+    for(const String &key : keys_to_censor)
+        doc[key] = nullptr;
+
+    serializeJson(doc, output);
+}
+
 bool Config::isValid() {
     return strict_variant::apply_visitor(recursive_validator{}, value);
+}
+
+bool Config::was_updated() {
+    return updated || strict_variant::apply_visitor(is_updated{}, value);
+}
+
+void Config::set_update_handled() {
+    updated = false;
+    strict_variant::apply_visitor(set_updated_false{}, value);
 }
