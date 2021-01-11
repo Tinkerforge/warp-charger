@@ -41,6 +41,9 @@ private:
 
     Config config;
     Config state;
+    Config energy_meter_reset;
+
+
     TF_RS485 rs485;
     int modbus_read_state = 0;
     int samples_last_interval = 0;

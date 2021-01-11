@@ -129,7 +129,7 @@ function update_evse_auto_start_charging(x: EVSEAutoStart) {
 
 function set_auto_start_charging(auto_start_charging: boolean) {
     $.ajax({
-        url: '/evse_auto_start_charging',
+        url: '/evse_auto_start_charging_update',
         method: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify({"auto_start_charging": auto_start_charging}),

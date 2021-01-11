@@ -6,10 +6,13 @@
 
 #include "modules/task_scheduler/task_scheduler.h"
 
+#include "api.h"
+
 extern TaskScheduler task_scheduler;
 extern TF_HalContext hal;
 extern AsyncWebServer server;
-extern AsyncEventSource events;
+
+extern API api;
 
 EVSE::EVSE()
 {
@@ -61,6 +64,13 @@ EVSE::EVSE()
     evse_auto_start_charging = Config::Object({
         {"auto_start_charging", Config::Bool(true)}
     });
+
+    evse_current_limit = Config::Object({
+        {"current", Config::Uint(32000, 6000, 32000)}
+    });
+
+    evse_stop_charging = Config::Null();
+    evse_start_charging = Config::Null();
 }
 
 void EVSE::setup()
@@ -85,111 +95,26 @@ void EVSE::setup()
 
 void EVSE::register_urls()
 {
-    server.on("/evse_charging_state", HTTP_GET, [this](AsyncWebServerRequest *request) {
-        auto *response = request->beginResponseStream("application/json; charset=utf-8");
-        evse_charging_state.write_to_stream(*response);
-        request->send(response);
+    api.addState("evse_state", &evse_state, {}, 1000);
+    api.addState("evse_hardware_configuration", &evse_hardware_configuration, {}, 1000);
+    api.addState("evse_low_level_state", &evse_low_level_state, {}, 1000);
+    api.addState("evse_max_charging_current", &evse_max_charging_current, {}, 1000);
+
+    api.addTemporaryConfig("evse_auto_start_charging", &evse_auto_start_charging, {}, 1000, [this](){
+        is_in_bootloader(tf_evse_set_charging_autostart(&evse, evse_auto_start_charging.get("auto_start_charging")->asBool()));
     });
 
-    server.on("/evse_state", HTTP_GET, [this](AsyncWebServerRequest *request) {
-        auto *response = request->beginResponseStream("application/json; charset=utf-8");
-        evse_state.write_to_stream(*response);
-        request->send(response);
+    api.addCommand("evse_current_limit", &evse_current_limit, [this](){
+        is_in_bootloader(tf_evse_set_max_charging_current(&evse, evse_current_limit.get("current")->asUint()));
     });
 
-    server.on("/evse_hardware_configuration", HTTP_GET, [this](AsyncWebServerRequest *request) {
-        auto *response = request->beginResponseStream("application/json; charset=utf-8");
-        evse_hardware_configuration.write_to_stream(*response);
-        request->send(response);
-    });
-
-    server.on("/evse_low_level_state", HTTP_GET, [this](AsyncWebServerRequest *request) {
-        auto *response = request->beginResponseStream("application/json; charset=utf-8");
-        evse_low_level_state.write_to_stream(*response);
-        request->send(response);
-    });
-
-    server.on("/evse_max_charging_current", HTTP_GET, [this](AsyncWebServerRequest *request) {
-        auto *response = request->beginResponseStream("application/json; charset=utf-8");
-        evse_max_charging_current.write_to_stream(*response);
-        request->send(response);
-    });
-
-    server.on("/evse_auto_start_charging", HTTP_GET, [this](AsyncWebServerRequest *request) {
-        auto *response = request->beginResponseStream("application/json; charset=utf-8");
-        evse_auto_start_charging.write_to_stream(*response);
-        request->send(response);
-    });
-
-    AsyncCallbackJsonWebHandler *evse_auto_start_charging_handler = new AsyncCallbackJsonWebHandler("/evse_auto_start_charging", [this](AsyncWebServerRequest *request, JsonVariant &json){
-        if(!json["auto_start_charging"].is<bool>()) {
-            request->send(400, "text/html", "expected a boolean");
-            return;
-        }
-
-        bool new_auto_start = json["auto_start_charging"].as<bool>();
-
-        task_scheduler.scheduleOnce("change_charging_current", [this, new_auto_start](){
-            int rc = tf_evse_set_charging_autostart(&evse, new_auto_start);
-            Serial.printf("rc: %d\n", rc);
-            check_bootloader_state(rc);
-        }, 0);
-
-        request->send(200, "text/html", "Updating auto start");
-    });
-
-    server.addHandler(evse_auto_start_charging_handler);
-
-    server.on("/evse_stop_charging", HTTP_GET, [this](AsyncWebServerRequest *request) {
-        task_scheduler.scheduleOnce("stop_charging", [this](){
-            tf_evse_stop_charging(&evse);
-        }, 0);
-        request->send(200, "text/html", String("Stopping charging"));
-    });
-
-    server.on("/evse_start_charging", HTTP_GET, [this](AsyncWebServerRequest *request) {
-        task_scheduler.scheduleOnce("start_charging", [this](){
-            tf_evse_start_charging(&evse);
-        }, 0);
-        request->send(200, "text/html", String("Startping charging"));
-    });
-
-    AsyncCallbackJsonWebHandler *evse_current_limit_handler = new AsyncCallbackJsonWebHandler("/evse_current_limit", [this](AsyncWebServerRequest *request, JsonVariant &json){
-        if(!json["current"].is<uint16_t>()) {
-            request->send(400, "text/html", "expected an unsigned integer between 6000 and 32000");
-            return;
-        }
-
-        uint16_t new_current = json["current"].as<uint16_t>();
-        if(new_current < 6000 || new_current > 32000) {
-            request->send(400, "text/html", "value was not between 6000 and 32000");
-            return;
-        }
-
-        task_scheduler.scheduleOnce("change_charging_current", [this, new_current](){
-            check_bootloader_state(tf_evse_set_max_charging_current(&evse, new_current));
-        }, 0);
-
-        request->send(200, "text/html", String("Limiting current") + String(new_current));
-    });
-
-    server.addHandler(evse_current_limit_handler);
-
-    task_scheduler.scheduleWithFixedDelay("sse_evse_state", [this](){
-        if(!send_event_allowed(&events))
-            return;
-
-        events.send(evse_state.to_string().c_str(), "evse_state", millis());
-    }, 10000, 10000);
+    api.addCommand("evse_stop_charging", &evse_stop_charging, [this](){tf_evse_stop_charging(&evse);});
+    api.addCommand("evse_start_charging", &evse_start_charging, [this](){tf_evse_start_charging(&evse);});
 }
 
 void EVSE::onEventConnect(AsyncEventSourceClient *client)
 {
-    client->send(evse_hardware_configuration.to_string().c_str(), "evse_hardware_configuration", millis(), 1000);
-    client->send(evse_state.to_string().c_str(), "evse_state", millis(), 1000);
-    client->send(evse_low_level_state.to_string().c_str(), "evse_low_level_state", millis(), 1000);
-    client->send(evse_max_charging_current.to_string().c_str(), "evse_max_charging_current", millis(), 1000);
-    client->send(evse_auto_start_charging.to_string().c_str(), "evse_auto_start_charging", millis(), 1000);
+
 }
 
 void EVSE::loop()
@@ -238,6 +163,7 @@ void EVSE::setup_evse()
 void EVSE::update_evse_low_level_state() {
     if(!initialized)
         return;
+
     bool low_level_mode_enabled;
     uint8_t led_state;
     uint16_t cp_pwm_duty_cycle;
@@ -276,11 +202,6 @@ void EVSE::update_evse_low_level_state() {
 
     for(int i = 0; i < sizeof(gpio)/sizeof(gpio[0]); ++i)
         evse_low_level_state.get("gpio")->get(i)->updateBool(gpio[i]);
-
-    if(!send_event_allowed(&events))
-        return;
-
-    events.send(evse_low_level_state.to_string().c_str(), "evse_low_level_state", millis());
 }
 
 void EVSE::update_evse_state() {
@@ -320,11 +241,6 @@ void EVSE::update_evse_state() {
     else {
         digitalWrite(GREEN_LED, HIGH);
     }
-
-    if(!send_event_allowed(&events))
-        return;
-
-    events.send(evse_state.to_string().c_str(), "evse_state", millis());
 }
 
 void EVSE::update_evse_max_charging_current() {
@@ -345,11 +261,6 @@ void EVSE::update_evse_max_charging_current() {
     evse_max_charging_current.get("max_current_configured")->updateUint(configured);
     evse_max_charging_current.get("max_current_incoming_cable")->updateUint(incoming);
     evse_max_charging_current.get("max_current_outgoing_cable")->updateUint(outgoing);
-
-    if(!send_event_allowed(&events))
-        return;
-
-    events.send(evse_max_charging_current.to_string().c_str(), "evse_max_charging_current", millis());
 }
 
 void EVSE::update_evse_auto_start_charging() {
@@ -366,11 +277,6 @@ void EVSE::update_evse_auto_start_charging() {
     }
 
     evse_auto_start_charging.get("auto_start_charging")->updateBool(auto_start_charging);
-
-    if(!send_event_allowed(&events))
-        return;
-
-    events.send(evse_auto_start_charging.to_string().c_str(), "evse_auto_start_charging", millis());
 }
 
 bool EVSE::is_in_bootloader(int rc) {

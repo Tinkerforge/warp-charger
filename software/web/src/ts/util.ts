@@ -11,7 +11,12 @@ export interface SSE extends Event{
 }
 
 export function reboot() {
-    $.get("/reboot");
+    $.ajax({
+        url: '/reboot',
+        method: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(null)
+    });
 }
 
 export function update_button_group(button_group_id: string, index_to_select: number, text_replacement?: string) {

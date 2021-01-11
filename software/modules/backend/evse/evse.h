@@ -31,11 +31,13 @@ private:
     bool is_in_bootloader(int rc);
 
     Config evse_state;
-    Config evse_charging_state;
     Config evse_hardware_configuration;
     Config evse_low_level_state;
     Config evse_max_charging_current;
     Config evse_auto_start_charging;
+    Config evse_current_limit;
+    Config evse_stop_charging;
+    Config evse_start_charging;
 
     TF_EVSE evse;
 };

@@ -1,15 +1,19 @@
 #include "sdm72dm.h"
 
-#include "bindings/errors.h"
-
-#include "tools.h"
-
 #include "ArduinoJson.h"
 #include "AsyncJson.h"
 
+#include "bindings/errors.h"
+
+#include "api.h"
+#include "tools.h"
+
+#include "modules/mqtt/mqtt.h"
+
 extern TF_HalContext hal;
 extern AsyncWebServer server;
-extern AsyncEventSource events;
+
+extern API api;
 
 SDM72DM::SDM72DM() {
     state = Config::Object({
@@ -32,6 +36,9 @@ SDM72DM::SDM72DM() {
             })
         },
     });
+
+    energy_meter_reset = Config::Null();
+
     user_data.expected_request_id = 0;
     user_data.value_to_write = nullptr;
     user_data.done = true;
@@ -122,15 +129,10 @@ void SDM72DM::setup() {
 }
 
 void SDM72DM::register_urls() {
-    server.on("/meter_state", HTTP_GET, [this](AsyncWebServerRequest *request) {
-        if(!initialized) {
-            request->send(400, "text/html", "not initialized");
-            return;
-        }
+    api.addState("meter_state", &state, {}, 1000);
 
-        auto *response = request->beginResponseStream("application/json; charset=utf-8");
-        state.write_to_stream(*response);
-        request->send(response);
+    api.addCommand("energy_meter_reset", &energy_meter_reset, [this](){
+        this->energy_meter_reset_requested = true;
     });
 
     server.on("/power_history", HTTP_GET, [this](AsyncWebServerRequest *request) {
@@ -184,20 +186,11 @@ void SDM72DM::register_urls() {
         response->printf("]}");
         request->send(response);
     });
-
-    server.on("/energy_meter_reset", HTTP_ANY, [this](AsyncWebServerRequest *request) {
-        if(!initialized) {
-            request->send(400, "text/html", "not initialized");
-            return;
-        }
-        energy_meter_reset_requested = true;
-        request->send(200, "text/html", "reset initiated");
-    });
 }
 
 void SDM72DM::onEventConnect(AsyncEventSourceClient *client)
 {
-    client->send(state.to_string().c_str(), "meter_state", millis(), 1000);
+    //client->send(state.to_string().c_str(), "meter_state", millis(), 1000);
 }
 
 void SDM72DM::loop()
@@ -281,10 +274,6 @@ void SDM72DM::loop()
         ++modbus_read_state;
     else {
         modbus_read_state = 0;
-
-        if(send_event_allowed(&events)) {
-            events.send(state.to_string().c_str(), "meter_state", millis());
-        }
 
         interval_samples.push(state.get("power")->get("import")->asFloat());
         ++samples_last_interval;

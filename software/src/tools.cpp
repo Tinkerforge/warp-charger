@@ -3,6 +3,7 @@
 #include "bindings/errors.h"
 
 #include <Arduino.h>
+#include "SPIFFS.h"
 
 bool deadline_elapsed(uint32_t deadline_ms) {
     uint32_t now = millis();
@@ -35,4 +36,33 @@ bool find_uid_by_did(TF_HalContext *hal, uint16_t device_id, char uid[7]) {
 bool send_event_allowed(AsyncEventSource *events) {
     // TODO: patch the library to get how many packets are waiting in the fullest client queue
     return events->count() > 0 && events->avgPacketsWaiting() < 8;
+}
+
+String update_config(Config &cfg, String config_name, JsonVariant &json) {
+    String error = cfg.update_from_json(json);
+
+    String tmp_path = String("/") + config_name + ".json.tmp";
+    String path = String("/") + config_name + ".json";
+
+    if (error == "") {
+        if (SPIFFS.exists(tmp_path))
+            Serial.println(SPIFFS.remove(tmp_path));
+
+        File file = SPIFFS.open(tmp_path, "w");
+        cfg.save_to_file(file);
+        file.close();
+
+        if (SPIFFS.exists(path))
+            Serial.println(SPIFFS.remove(path));
+
+        Serial.println(SPIFFS.rename(tmp_path, path));
+        Serial.print(path);
+        Serial.println(" updated");
+    } else {
+        Serial.print("Failed to update ");
+        Serial.print(path);
+        Serial.print(":\n    ");
+        Serial.println(error);
+    }
+    return error;
 }
