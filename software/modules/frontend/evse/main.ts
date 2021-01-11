@@ -180,7 +180,7 @@ export function addEventListeners(source: EventSource) {
 }
 
 export function updateLockState(module_init) {
-    $('#sidebar-evse').prop('hidden', !module_init.sdm72dm);
+    $('#sidebar-evse').prop('hidden', !module_init.evse);
 }
 
 export function getTranslation(lang: string) {
@@ -268,7 +268,7 @@ export function getTranslation(lang: string) {
                 "script": {
                     "error_code": "Fehlercode",
                     "charging_for": "Lädt seit",
-                    "last_charge_took": "Letzes Laden dauerte",
+                    "last_charge_took": "Letztes Laden dauerte",
                     "charging": "Lädt",
                     "set_charging_current_failed": "Konnte Ladestrom nicht setzen",
                     "not_implemented": "Noch nicht implementiert"
