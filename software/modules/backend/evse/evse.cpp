@@ -197,7 +197,7 @@ void EVSE::loop()
     static uint32_t last_check = 0;
     if(evse_found && !initialized && deadline_elapsed(last_check + 10000)) {
         last_check = millis();
-        if(check_bootloader_state(TF_E_TIMEOUT))
+        if(!is_in_bootloader(TF_E_TIMEOUT))
             setup_evse();
     }
 }
@@ -222,8 +222,10 @@ void EVSE::setup_evse()
 
     result = tf_evse_get_hardware_configuration(&evse, &jumper_configuration, &has_lock_switch);
 
-    if (result != TF_E_OK && !check_bootloader_state(result)) {
-        Serial.printf("EVSE hardware config query failed (rc %d). Disabling EVSE support.\n", result);
+    if (result != TF_E_OK) {
+        if(!is_in_bootloader(result)) {
+            Serial.printf("EVSE hardware config query failed (rc %d). Disabling EVSE support.\n", result);
+        }
         return;
     } else {
         evse_hardware_configuration.get("jumper_configuration")->asUint() = jumper_configuration;
@@ -255,7 +257,7 @@ void EVSE::update_evse_low_level_state() {
         gpio);
 
     if(rc != TF_E_OK) {
-        check_bootloader_state(rc);
+        is_in_bootloader(rc);
         return;
     }
 
@@ -299,7 +301,7 @@ void EVSE::update_evse_state() {
         &uptime);
 
     if(rc != TF_E_OK) {
-        check_bootloader_state(rc);
+        is_in_bootloader(rc);
         return;
     }
 
@@ -336,7 +338,7 @@ void EVSE::update_evse_max_charging_current() {
         &outgoing);
 
     if(rc != TF_E_OK) {
-        check_bootloader_state(rc);
+        is_in_bootloader(rc);
         return;
     }
 
@@ -359,7 +361,7 @@ void EVSE::update_evse_auto_start_charging() {
         &auto_start_charging);
 
     if(rc != TF_E_OK) {
-        check_bootloader_state(rc);
+        is_in_bootloader(rc);
         return;
     }
 
@@ -371,13 +373,15 @@ void EVSE::update_evse_auto_start_charging() {
     events.send(evse_auto_start_charging.to_string().c_str(), "evse_auto_start_charging", millis());
 }
 
-bool EVSE::check_bootloader_state(int rc) {
+bool EVSE::is_in_bootloader(int rc) {
     if(rc != TF_E_TIMEOUT && rc != TF_E_NOT_SUPPORTED)
         return false;
 
     uint8_t mode;
-    if(tf_evse_get_bootloader_mode(&evse, &mode) != TF_E_OK)
+    int bootloader_rc = tf_evse_get_bootloader_mode(&evse, &mode);
+    if(bootloader_rc != TF_E_OK) {
         return false;
+    }
 
     if(mode != TF_EVSE_BOOTLOADER_MODE_FIRMWARE) {
         initialized = false;
