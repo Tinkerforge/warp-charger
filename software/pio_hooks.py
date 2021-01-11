@@ -96,7 +96,7 @@ def main():
 
     name = env.GetProjectOption("name")
     display_name = env.GetProjectOption("display_name")
-    host_prefix_flag = "-D__HOST_PREFIX__=\\\"{}-\\\"".format(name)
+    host_prefix_flag = "-D__HOST_PREFIX__=\\\"{}\\\"".format(name)
 
     firmware_name_flag = "-D__FIRMWARE_NAME__={}-{}-{:x}".format(name, git_commit[:8], int(t))
 
