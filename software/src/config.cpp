@@ -156,12 +156,18 @@ struct json_length_visitor {
 
 struct from_json {
     String operator()(Config::ConfString &x) {
+        if(json_node.isNull())
+            return x.validator(x);
+
         if(!json_node.is<String>())
             return "JSON node was not a string.";
         x.value = json_node.as<String>();
         return x.validator(x);
     }
     String operator()(Config::ConfFloat &x) {
+        if(json_node.isNull())
+            return x.validator(x);
+
         if(!json_node.is<double>())
             return "JSON node was not a float.";
 
@@ -175,18 +181,27 @@ struct from_json {
         return x.validator(x);
     }
     String operator()(Config::ConfInt &x) {
+        if(json_node.isNull())
+            return x.validator(x);
+
         if(!json_node.is<int64_t>())
             return "JSON node was not a signed integer.";
         x.value = json_node.as<int64_t>();
         return x.validator(x);
     }
     String operator()(Config::ConfUint &x) {
+        if(json_node.isNull())
+            return x.validator(x);
+
         if(!json_node.is<uint64_t>())
             return "JSON node was not an unsigned integer.";
         x.value = json_node.as<uint64_t>();
         return x.validator(x);
     }
     String operator()(Config::ConfBool &x) {
+        if(json_node.isNull())
+            return x.validator(x);
+
         if(!json_node.is<bool>())
             return "JSON node was not a boolean.";
         x.value = json_node.as<bool>();
@@ -196,6 +211,9 @@ struct from_json {
         return json_node.isNull() ? "" : "JSON null node was not null";
     }
     String operator()(Config::ConfArray &x) {
+        if(json_node.isNull())
+            return x.validator(x);
+
         if(!json_node.is<JsonArray>())
             return "JSON node was not an array.";
 
@@ -212,6 +230,9 @@ struct from_json {
         return x.validator(x);
     }
     String operator()(Config::ConfObject &x) {
+        if(json_node.isNull())
+            return x.validator(x);
+
         if(!json_node.is<JsonObject>())
             return "JSON node was not an object.";
 
