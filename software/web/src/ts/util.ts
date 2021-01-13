@@ -115,3 +115,13 @@ export function toLocaleFixed(i: number, fractionDigits: number) {
         maximumFractionDigits: fractionDigits
     });
 }
+
+export function toggle_password_fn(input_name) {
+    return () => {
+        let input = <HTMLInputElement>$(input_name)[0];
+        if (input.type == 'password')
+            input.type = 'text';
+        else
+            input.type = 'password';
+    }
+}

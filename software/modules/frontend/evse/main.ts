@@ -87,8 +87,8 @@ function update_evse_low_level_state(state: EVSELowLevelState) {
     $('#voltage_1').val(util.toLocaleFixed(state.voltages[1] / 1000.0, 3) + " V");
     $('#voltage_2').val(util.toLocaleFixed(state.voltages[2] / 1000.0, 3) + " V");
 
-    $('#resistance_0').val(state.resistances[0] + "Ω");
-    $('#resistance_1').val(state.resistances[1] + "Ω");
+    $('#resistance_0').val(state.resistances[0] + " Ω");
+    $('#resistance_1').val(state.resistances[1] + " Ω");
 }
 
 interface EVSEMaxChargingCurrent {
@@ -206,7 +206,7 @@ export function getTranslation(lang: string) {
                     "evse": "Ladecontroller"
                 },
                 "content": {
-                    "evse": "Ladecontroller (EVSE Bricklet)",
+                    "evse": "Ladecontroller (EVSE)",
                     "state": "Zustand",
                     "iec_state": "IEC-61851-Zustand",
                     "iec_state_a": "A (nicht verbunden)",
@@ -215,14 +215,14 @@ export function getTranslation(lang: string) {
                     "iec_state_d": "D (lädt mit Belüftung)",
                     "iec_state_ef": "EF (Fehler)",
                     "contactor_state": "Schützprüfung",
-                    "contactor_names": "Vor/Nach Schütz; Gültigkeit",
+                    "contactor_names": "Vor Schütz; Nach Schütz; Gültigkeit",
                     "contactor_not_live": "Nicht stromführend",
                     "contactor_live": "Stromführend",
                     "contactor_ok": "OK",
                     "contactor_error": "Fehler",
                     "allowed_charging_current": "Erlaubter Ladestrom",
                     "lock_state": "Kabelverriegelung",
-                    "lock_init": "Init",
+                    "lock_init": "Start",
                     "lock_open": "Offen",
                     "lock_closing": "Schließend",
                     "lock_close": "Geschlossen",
@@ -231,7 +231,7 @@ export function getTranslation(lang: string) {
                     "time_since_state_change": "Zeit seit Zustandswechsel",
                     "uptime": "Laufzeit",
                     "configuration": "Hardware-Konfiguration",
-                    "has_lock_switch": "Hat Kabelverriegelung",
+                    "has_lock_switch": "Kabelverriegelung vorhanden",
                     "lock_no": "Nein",
                     "lock_yes": "Ja",
                     "jumper_config_max_current": "Maximalstrom des eingehenden Kabels",
@@ -296,7 +296,7 @@ export function getTranslation(lang: string) {
                     "evse": "EVSE"
                 },
                 "content": {
-                    "evse": "Charge controller (EVSE Bricklet)",
+                    "evse": "Charge controller (EVSE)",
                     "state": "State",
                     "iec_state": "IEC 61851 State",
                     "iec_state_a": "A (not connected)",
@@ -305,7 +305,7 @@ export function getTranslation(lang: string) {
                     "iec_state_d": "D (charging with ventilation)",
                     "iec_state_ef": "EF (error)",
                     "contactor_state": "Contactor check",
-                    "contactor_names": "Before/after contactor; Validity",
+                    "contactor_names": "Before contactor; After contactor; Validity",
                     "contactor_not_live": "Not live",
                     "contactor_live": "Live",
                     "contactor_ok": "OK",
@@ -321,7 +321,7 @@ export function getTranslation(lang: string) {
                     "time_since_state_change": "Time since state change",
                     "uptime": "Uptime",
                     "configuration": "Hardware configuration",
-                    "has_lock_switch": "Has cable lock",
+                    "has_lock_switch": "Cable lock available",
                     "lock_no": "Nein",
                     "lock_yes": "Ja",
                     "jumper_config_max_current": "Max current of incoming cable",
