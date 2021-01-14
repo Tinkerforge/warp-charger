@@ -58,6 +58,7 @@ typedef struct TF_SpiTfpContext {
     uint8_t last_sequence_number_seen;
     uint8_t last_sequence_number_acked;
     uint8_t last_sequence_number_sent;
+    uint8_t last_sequence_number_given_to_tfp;
 
     uint32_t error_count_checksum;
     uint32_t error_count_frame;

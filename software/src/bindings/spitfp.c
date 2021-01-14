@@ -32,18 +32,8 @@ static bool on_receive_packet(TF_SpiTfpContext *spitfp) {
     uint8_t seq_nums;
     tf_packetbuffer_pop(&spitfp->recv_buf, &seq_nums);
 
-    uint8_t seq_num = seq_nums & 0x0F;
-    uint8_t seq_num_acked = seq_nums >> 4;
-
-    if(spitfp->last_sequence_number_seen == seq_num) {
-        tf_packetbuffer_remove(&spitfp->recv_buf, packet_length);
-        spitfp->last_sequence_number_seen = seq_num;
-        spitfp->last_sequence_number_acked = seq_num_acked;
-        return false;
-    }
-
-    spitfp->last_sequence_number_seen = seq_num;
-    spitfp->last_sequence_number_acked = seq_num_acked;
+    spitfp->last_sequence_number_seen = seq_nums & 0x0F;
+    spitfp->last_sequence_number_acked = seq_nums >> 4;
     //TODO: Check that ack packets (seq num == 0) have length of 3
 
     tf_hal_log_debug("SPITFP packet received: length %d, seq_nums %x, last_seen now %d, last_acked now %d\n", packet_length, seq_nums, seq_nums & 0x0F, seq_nums >> 4);
@@ -299,6 +289,14 @@ static int tf_spitfp_wait_for_ack(TF_SpiTfpContext *spitfp, uint8_t seq_num, uin
     return tf_hal_deadline_elapsed(spitfp->hal, deadline_us) ? TRANSCEIVE_TIMEOUT : 0;
 }
 
+static int tf_spitfp_filter_duplicates(TF_SpiTfpContext *spitfp) {
+    if(spitfp->last_sequence_number_given_to_tfp == spitfp->last_sequence_number_seen) {
+        return 0;
+    }
+    spitfp->last_sequence_number_given_to_tfp = spitfp->last_sequence_number_seen;
+    return TF_TICK_PACKET_RECEIVED;
+}
+
 // See: dot -Tpng spitfp_tick.dot -o spitfp_tick.png && xdg-open spitfp_tick.png
 int tf_spitfp_tick(TF_SpiTfpContext *spitfp, uint32_t deadline_us) {
     TF_SpiTfpStateMachine *m = &spitfp->state;
@@ -340,12 +338,12 @@ int tf_spitfp_tick(TF_SpiTfpContext *spitfp, uint32_t deadline_us) {
                 m->info.wait_for_ack.packet_received = true;
                 m->info.wait_for_ack.inner_deadline_us = MIN(m->deadline_us, tf_hal_current_time_us(spitfp->hal) + 5000);
 
-                return TF_TICK_AGAIN | TF_TICK_PACKET_RECEIVED;
+                return TF_TICK_AGAIN | tf_spitfp_filter_duplicates(spitfp);
             }
 
             if (result & TRANSCEIVE_PACKET_RECEIVED) {
                 m->info.transceive.packet_received = true;
-                return TF_TICK_AGAIN | TF_TICK_PACKET_RECEIVED;
+                return TF_TICK_AGAIN | tf_spitfp_filter_duplicates(spitfp);
             }
 
             if (result & TRANSCEIVE_PACKET_SENT) {
@@ -375,7 +373,7 @@ int tf_spitfp_tick(TF_SpiTfpContext *spitfp, uint32_t deadline_us) {
                     m->state = STATE_BUILD_ACK;
                     tf_hal_log_debug("->BUILD_ACK\n");
 
-                    return TF_TICK_AGAIN | TF_TICK_PACKET_RECEIVED;
+                    return TF_TICK_AGAIN | tf_spitfp_filter_duplicates(spitfp);
                 }
                 else {
                     m->state = STATE_IDLE;
@@ -392,7 +390,7 @@ int tf_spitfp_tick(TF_SpiTfpContext *spitfp, uint32_t deadline_us) {
                 tf_hal_log_debug("->BUILD_ACK\n");
 
 
-                return TF_TICK_AGAIN | TF_TICK_PACKET_SENT | TF_TICK_PACKET_RECEIVED;
+                return TF_TICK_AGAIN | TF_TICK_PACKET_SENT | tf_spitfp_filter_duplicates(spitfp);
             }
 
             // If we receive a packet that does not acknowledge our sent packet
@@ -405,7 +403,7 @@ int tf_spitfp_tick(TF_SpiTfpContext *spitfp, uint32_t deadline_us) {
                 m->state = STATE_IDLE;
                 tf_hal_log_debug("->IDLE\n");
 
-                return TF_TICK_AGAIN | TF_TICK_TIMEOUT | TF_TICK_PACKET_RECEIVED;
+                return TF_TICK_AGAIN | TF_TICK_TIMEOUT | tf_spitfp_filter_duplicates(spitfp);
             }
 
             if (result & TRANSCEIVE_PACKET_ACKED) {
@@ -414,7 +412,7 @@ int tf_spitfp_tick(TF_SpiTfpContext *spitfp, uint32_t deadline_us) {
                     m->state = STATE_BUILD_ACK;
                     tf_hal_log_debug("->BUILD_ACK\n");
 
-                    return TF_TICK_AGAIN | TF_TICK_PACKET_SENT | TF_TICK_PACKET_RECEIVED;
+                    return TF_TICK_AGAIN | TF_TICK_PACKET_SENT | tf_spitfp_filter_duplicates(spitfp);
                 }
                 else {
 
@@ -444,7 +442,7 @@ int tf_spitfp_tick(TF_SpiTfpContext *spitfp, uint32_t deadline_us) {
                 m->state = STATE_BUILD_ACK;
                 tf_hal_log_debug("->BUILD_ACK\n");
 
-                return TF_TICK_AGAIN | TF_TICK_PACKET_RECEIVED;
+                return TF_TICK_AGAIN | tf_spitfp_filter_duplicates(spitfp);
             }
 
             m->state = STATE_IDLE;
@@ -480,6 +478,7 @@ int tf_spitfp_init(TF_SpiTfpContext *spitfp, struct TF_HalContext *hal, uint8_t 
     spitfp->last_sequence_number_seen = 0;
     spitfp->last_sequence_number_acked = 0;
     spitfp->last_sequence_number_sent = 0;
+    spitfp->last_sequence_number_given_to_tfp = 0;
     spitfp->state.deadline_us = 0;
     spitfp->state.state = STATE_IDLE;
     spitfp->error_count_checksum = 0;
