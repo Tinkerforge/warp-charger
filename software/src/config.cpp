@@ -505,7 +505,6 @@ String Config::update_from_file(File file) {
     String err = strict_variant::apply_visitor(from_json{doc.as<JsonVariant>()}, copy);
 
     if (err == "") {
-        printf("updating\n");
         value = copy;
     }
 
