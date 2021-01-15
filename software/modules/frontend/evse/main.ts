@@ -155,6 +155,15 @@ export function init() {
             set_charging_current(Number(input.val() * 1000));
     });
 
+    let form = <HTMLFormElement>$('#evse_status_charging_current_form')[0];
+    form.addEventListener('submit', function (event: Event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if(input.val() >= 6 || input.val() <= 32)
+            set_charging_current(Number(input.val() * 1000));
+    }, false);
+
 }
 
 export function addEventListeners(source: EventSource) {
