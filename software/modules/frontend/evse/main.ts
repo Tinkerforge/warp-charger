@@ -105,7 +105,7 @@ function update_evse_max_charging_current(state: EVSEMaxChargingCurrent) {
     let theoretical_maximum = Math.min(state.max_current_incoming_cable, state.max_current_outgoing_cable);
     let theoretical_maximum_str = util.toLocaleFixed(theoretical_maximum / 1000.0, 0) + " A";
     $('#status_charging_current').prop("max", theoretical_maximum / 1000);
-    $('#status_charging_current_maximum').html("Max ("+theoretical_maximum_str+")");
+    $('#status_charging_current_maximum').html(theoretical_maximum_str);
 }
 
 function set_charging_current(current: number) {
@@ -204,7 +204,7 @@ export function getTranslation(lang: string) {
                     "error": "Fehler",
                     "charging_current": "Ladestrom",
                     "charging_current_set": "Set",
-                    "charging_current_minimum": "Min (6 A)",
+                    "charging_current_minimum": "6 A",
                     "charging_current_maximum": "Max",
                     "charge_control": "Ladekontrolle",
                     "auto_start_charging": "Autostart",
@@ -294,7 +294,7 @@ export function getTranslation(lang: string) {
                     "error": "Error",
                     "charging_current": "Charge current",
                     "charging_current_set": "Set",
-                    "charging_current_minimum": "Min (6 A)",
+                    "charging_current_minimum": "6 A",
                     "charging_current_maximum": "Max",
                     "charge_control": "Charge control",
                     "auto_start_charging": "Auto-start",
