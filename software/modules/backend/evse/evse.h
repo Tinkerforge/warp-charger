@@ -35,6 +35,7 @@ private:
     Config evse_low_level_state;
     Config evse_max_charging_current;
     Config evse_auto_start_charging;
+    Config evse_auto_start_charging_update;
     Config evse_current_limit;
     Config evse_stop_charging;
     Config evse_start_charging;

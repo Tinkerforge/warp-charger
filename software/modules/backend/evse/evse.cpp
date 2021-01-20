@@ -65,6 +65,11 @@ EVSE::EVSE()
         {"auto_start_charging", Config::Bool(true)}
     });
 
+    evse_auto_start_charging_update = Config::Object({
+        {"auto_start_charging", Config::Bool(true)}
+    });
+
+
     evse_current_limit = Config::Object({
         {"current", Config::Uint(32000, 6000, 32000)}
     });
@@ -99,10 +104,15 @@ void EVSE::register_urls()
     api.addState("evse_hardware_configuration", &evse_hardware_configuration, {}, 1000);
     api.addState("evse_low_level_state", &evse_low_level_state, {}, 1000);
     api.addState("evse_max_charging_current", &evse_max_charging_current, {}, 1000);
+    api.addState("evse_auto_start_charging", &evse_auto_start_charging, {}, 1000);
 
-    api.addTemporaryConfig("evse_auto_start_charging", &evse_auto_start_charging, {}, 1000, [this](){
-        is_in_bootloader(tf_evse_set_charging_autostart(&evse, evse_auto_start_charging.get("auto_start_charging")->asBool()));
+    api.addCommand("evse_auto_start_charging_update", &evse_auto_start_charging_update, [this](){
+        is_in_bootloader(tf_evse_set_charging_autostart(&evse, evse_auto_start_charging_update.get("auto_start_charging")->asBool()));
     });
+
+    /*api.addTemporaryConfig("evse_auto_start_charging", &evse_auto_start_charging, {}, 1000, [this](){
+        is_in_bootloader(tf_evse_set_charging_autostart(&evse, evse_auto_start_charging.get("auto_start_charging")->asBool()));
+    });*/
 
     api.addCommand("evse_current_limit", &evse_current_limit, [this](){
         is_in_bootloader(tf_evse_set_max_charging_current(&evse, evse_current_limit.get("current")->asUint()));
