@@ -6,14 +6,26 @@
 //$body-color: purple;
 //$body-bg: #f5f5f5;
 
+$body-color: black;
+$gray-700: black;
+$gray-900: black;
+
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
 @import "../../node_modules/chartist/dist/scss/chartist.scss";
+
+.borderless-form-control {
+    @extend .form-control;
+    border: none;
+    height: auto;
+}
+
 
 // Color graph points and lines (with transparency) in bootstrap's primary color
 .ct-series-a .ct-line {
     stroke: var(--primary);
     opacity: .65;
+    stroke-width: 2px;
 }
 
 .ct-series-a .ct-point {
@@ -31,8 +43,13 @@
     width: 100px !important; //For some reasone chartist sets every label to a width of 1 px. Fix this here so that the centering works.
 }
 
+.ct-grid {
+    stroke-dasharray: 4px;
+}
+
 body {
   font-size: 0.875rem;
+  line-height: 1.2;
 }
 
 .feather {
@@ -72,7 +89,7 @@ body {
 .sidebar-sticky {
   position: relative;
   top: 0;
-  height: calc(100vh - 48px);
+  height: calc(100vh - 66px);
   padding-top: 0.5rem;
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
@@ -241,7 +258,7 @@ body {
     opacity: 1 !important;
 }
 
-.text-prefer-nowrap {
+.text-muted {
     display: inline-block;
 }
 
@@ -251,4 +268,8 @@ body {
 
 .navbar-dark .navbar-toggler:hover {
     background-color: #5a6268
+}
+
+.feather-trash-2 {
+    vertical-align: top !important;
 }

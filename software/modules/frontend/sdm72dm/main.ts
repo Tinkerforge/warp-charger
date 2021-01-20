@@ -55,7 +55,7 @@ function meter_chart_change_time(value: string) {
                 for(let i = 0; i < labels.length; ++i) {
                     let d = new Date(start + i * (1000 * (1/sps)));
                     if(d.getSeconds() == 0 && d.getMinutes() != last_minute) {
-                        labels[i] = d.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit', second: '2-digit'});
+                        labels[i] = d.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
                         last_minute = d.getMinutes();
                     }
                 }
@@ -219,7 +219,7 @@ function init_status_chart(min_value=0, max_value=0) {
         axisY: {
             scaleMinSpace: 40,
             onlyInteger: true,
-            offset: 50,
+            offset: 60,
             labelOffset: {x: 0, y: 6}
         },
         plugins: [
@@ -237,8 +237,8 @@ function init_status_chart(min_value=0, max_value=0) {
                 axisTitle: __("sdm72dm.script.power"),
                 axisClass: "ct-axis-title",
                 offset: {
-                    x: 0,
-                    y: 12
+                    x: -10,
+                    y: 15
                 },
                 flipTitle: true
                 }
@@ -335,7 +335,7 @@ export function getTranslation(lang: string) {
                     "energy_lifetime": "seit Herstellung"
                 },
                 "script": {
-                    "time": "Zeit",
+                    "time": "Uhrzeit",
                     "power": "Leistung (Watt)"
                 }
             }
@@ -361,7 +361,7 @@ export function getTranslation(lang: string) {
                     "energy_lifetime": "since manufactoring"
                 },
                 "script": {
-                    "time": "Time",
+                    "time": "Time of day",
                     "power": "Power (Watt)"
                 }
             }
