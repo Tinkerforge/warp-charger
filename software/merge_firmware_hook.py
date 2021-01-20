@@ -24,3 +24,15 @@ env.AddPostAction(
         "cp", "$BUILD_DIR/${PROGNAME}.bin", "$BUILD_DIR/../../../build/{}.bin".format(defines.get("__FIRMWARE_NAME__"))
     ]), "Copying $BUILD_DIR/${PROGNAME}.bin")
 )
+
+env.AddPostAction(
+    "$BUILD_DIR/${PROGNAME}.bin",
+    env.VerboseAction(" ".join([
+        "python3", "merge_bins.py",
+        "0x1000", "$BUILD_DIR/../../../bootloader_dio_40m.bin",
+        "0x8000", "$BUILD_DIR/partitions.bin",
+        "0xe000", "$BUILD_DIR/../../../boot_app0.bin",
+        "0x10000", "$BUILD_DIR/${PROGNAME}.bin",
+        "$BUILD_DIR/../../../build/{}-merged.bin".format(defines.get("__FIRMWARE_NAME__"))
+    ]), "Merging firmware.bin")
+)
