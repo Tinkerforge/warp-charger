@@ -115,7 +115,7 @@ function set_charging_current(current: number) {
         contentType: 'application/json',
         data: JSON.stringify({"current": current}),
         success: () => $('#status_charging_current_save').prop("disabled", true),
-        error: (_x, _y, error) => util.show_alert("alert-danger", __("evse.script.set_charging_current_failed"), error)
+        error: (xhr, status, error) => util.show_alert("alert-danger", __("evse.script.set_charging_current_failed"), error + ": " + xhr.responseText)
     });
 }
 
@@ -133,7 +133,7 @@ function set_auto_start_charging(auto_start_charging: boolean) {
         method: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify({"auto_start_charging": auto_start_charging}),
-        error: (_x, _y, error) => util.show_alert("alert-danger", "Failed to set auto charge.", error)
+        error: (xhr, status, error) => util.show_alert("alert-danger", "Failed to set auto charge.", error + ": " + xhr.responseText)
     });
 }
 
