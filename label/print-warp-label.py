@@ -1,10 +1,13 @@
 #!/usr/bin/python3 -u
 
 import os
+import sys
 import re
 import argparse
 import socket
 from datetime import datetime
+import urllib.request
+import ssl
 
 PRINTER_HOST = 'BP730i'
 PRINTER_PORT = 9100
@@ -29,6 +32,30 @@ CURRENT_PLACEHOLDER = b'16 A'
 CONDUCTOR_PLACEHOLDER = b'1P / 3P'
 
 COPIES_FORMAT = '^C{0}\r'
+
+def get_next_serial_number():
+    with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'staging-password.txt'), 'r') as f:
+        staging_password = f.read().strip()
+
+    if sys.version_info < (3, 5, 3):
+        context = ssl.SSLContext(protocol=ssl.PROTOCOL_SSLv23)
+    else:
+        context = ssl.SSLContext()
+
+    https_handler = urllib.request.HTTPSHandler(context=context)
+
+    auth_handler = urllib.request.HTTPBasicAuthHandler()
+    auth_handler.add_password(realm='Staging',
+                              uri='https://stagingwww.tinkerforge.com',
+                              user='staging',
+                              passwd=staging_password)
+
+    opener = urllib.request.build_opener(https_handler, auth_handler)
+    urllib.request.install_opener(opener)
+
+    serial_number = int(urllib.request.urlopen('https://stagingwww.tinkerforge.com/warpsn', timeout=15).read())
+
+    return '5{0:09}'.format(serial_number)
 
 def print_warp_label(type_, version, serial_number, date, copies=1):
     # parse type
@@ -96,6 +123,9 @@ def print_warp_label(type_, version, serial_number, date, copies=1):
         raise Exception('Invalid version: {0}'.format(version))
 
     # check serial number
+    if serial_number == '-':
+        serial_number = get_next_serial_number()
+
     if re.match('^5[0-9]{9}$', serial_number) == None:
         raise Exception('Invalid serial number: {0}'.format(serial_number))
 
