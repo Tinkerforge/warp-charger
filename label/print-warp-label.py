@@ -218,7 +218,7 @@ def main():
     parser.add_argument('version')
     parser.add_argument('serial_number')
     parser.add_argument('date')
-    parser.add_argument('-c', '--copies', type=int)
+    parser.add_argument('-c', '--copies', type=int, default=1)
 
     args = parser.parse_args()
 
