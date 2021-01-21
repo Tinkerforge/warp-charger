@@ -12,8 +12,8 @@ import ssl
 PRINTER_HOST = 'BP730i'
 PRINTER_PORT = 9100
 
-QR_CODE_FORMAT = 'W649,209,5,2,M,8,6,{0},0\r'
-QR_CODE_LENGTH = 56
+QR_CODE_COMMAND = b'W649,209,5,2,M,8,6,53,0\r'
+QR_CODE_PADDING = b';;\r'
 
 DESCRIPTION_PLACEHOLDER = b'WARP Charger Smart, 11 kW, 5 m, CEE'
 
@@ -23,7 +23,7 @@ VERSION_PLACEHOLDER = b'2.17'
 
 SERIAL_NUMBER_PLACEHOLDER = b'5000000001'
 
-DATE_PLACEHOLDER = b'2021-01-13'
+DATE_PLACEHOLDER = b'2021-01'
 
 VOLTAGE_PLACEHOLDER = b'230 / 400'
 
@@ -130,7 +130,7 @@ def print_warp_label(type_, version, serial_number, date, copies=1):
         raise Exception('Invalid serial number: {0}'.format(serial_number))
 
     # check date
-    datetime.strptime(date, '%Y-%m-%d')
+    datetime.strptime(date, '%Y-%m')
 
     # check copies
     if copies < 1 or copies > 5:
@@ -144,12 +144,15 @@ def print_warp_label(type_, version, serial_number, date, copies=1):
         raise Exception('EZPL file is using wrong darkness setting')
 
     # patch QR code
-    qr_code_command = QR_CODE_FORMAT.format(QR_CODE_LENGTH).encode('ascii')
-
-    if data.find(qr_code_command) < 0:
+    if data.find(QR_CODE_COMMAND) < 0:
         raise Exception('QR code command missing in EZPL file')
 
-    data = data.replace(qr_code_command, QR_CODE_FORMAT.format(QR_CODE_LENGTH - len(TYPE_PLACEHOLDER) - len(VERSION_PLACEHOLDER) + len(type_) + len(version)).encode('ascii'))
+    offset = len(TYPE_PLACEHOLDER) + len(type_) - len(VERSION_PLACEHOLDER) + len(version)
+
+    if offset < 0:
+        raise Exception('QR code data too long')
+
+    data = data.replace(QR_CODE_PADDING, b';' * offset + QR_CODE_PADDING)
 
     # patch description
     if data.find(DESCRIPTION_PLACEHOLDER) < 0:
