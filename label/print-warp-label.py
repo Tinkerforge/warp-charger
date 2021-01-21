@@ -28,7 +28,9 @@ CURRENT_PLACEHOLDER = b'16 A'
 
 CONDUCTOR_PLACEHOLDER = b'1P / 3P'
 
-def print_warp_label(type_, version, serial_number, date):
+COPIES_FORMAT = '^C{0}\r'
+
+def print_warp_label(type_, version, serial_number, date, copies=1):
     # parse type
     m = re.match('^WARP-C(B|S|P)-(11|22)KW-(50|75)(|-CEE)$', type_)
 
@@ -100,6 +102,10 @@ def print_warp_label(type_, version, serial_number, date):
     # check date
     datetime.strptime(date, '%Y-%m-%d')
 
+    # check copies
+    if copies < 1 or copies > 5:
+        raise Exception('Invalid copies: {0}'.format(copies))
+
     # read EZPL file
     with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'warp.prn'), 'rb') as f:
         data = f.read()
@@ -163,6 +169,14 @@ def print_warp_label(type_, version, serial_number, date):
 
     data = data.replace(CONDUCTOR_PLACEHOLDER, conductor)
 
+    # patch copies
+    copies_command = COPIES_FORMAT.format(1).encode('ascii')
+
+    if data.find(copies_command) < 0:
+        raise Exception('Copies command missing in EZPL file')
+
+    data = data.replace(copies_command, COPIES_FORMAT.format(copies).encode('ascii'))
+
     # print label
     with socket.create_connection((PRINTER_HOST, PRINTER_PORT)) as s:
         s.send(data)
@@ -174,10 +188,11 @@ def main():
     parser.add_argument('version')
     parser.add_argument('serial_number')
     parser.add_argument('date')
+    parser.add_argument('-c', '--copies', type=int)
 
     args = parser.parse_args()
 
-    print_warp_label(args.type, args.version, args.serial_number, args.date)
+    print_warp_label(args.type, args.version, args.serial_number, args.date, args.copies)
 
 if __name__ == '__main__':
     main()
