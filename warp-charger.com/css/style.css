@@ -65,8 +65,8 @@ h1, h2, h3, h4, h5, h6 {
 # Header
 --------------------------------------------------------------*/
 #header {
-  padding: 30px 0;
-  height: 92px;
+  padding: 40px 0 0 0;
+  height: 100px;
   position: fixed;
   left: 0;
   top: 0;
@@ -77,16 +77,17 @@ h1, h2, h3, h4, h5, h6 {
 
 #header.header-scrolled {
   background: rgba(35, 35, 35, 0.9);
-  padding: 20px 0;
-  height: 72px;
+  padding: 18px 0;
+  height: 78px;
   transition: all 0.5s;
 }
 
 #header #logo {
   float: left;
+  padding-left: 15px;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   #header #logo {
     padding-left: 60px;
   }
@@ -114,11 +115,22 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 768px) {
+  #header {
+    padding: 25px 0 0 0;
+    height: 67px;
+  }
+
+  #header.header-scrolled {
+    padding: 12px 0;
+    height: 54px;
+  }
+
   #header #logo h1 {
     font-size: 28px;
   }
+
   #header #logo img {
-    max-height: 40px;
+    max-height: 30px;
   }
 }
 
@@ -263,9 +275,15 @@ h1, h2, h3, h4, h5, h6 {
 --------------------------------------------------------------*/
 /* Nav Menu Essentials */
 .nav-menu, .nav-menu * {
-  margin: 0;
+  margin: 9px 0 0 0;
   padding: 0;
   list-style: none;
+}
+
+@media (max-width: 1150px) {
+  .nav-menu, .nav-menu * {
+    margin: 0;
+  }
 }
 
 .nav-menu ul {
@@ -319,13 +337,22 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Nav Meu Container */
 #nav-menu-container {
+  display: flex;
   float: right;
   margin: 0;
+  padding-right: 7px;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   #nav-menu-container {
-    padding-right: 60px;
+    padding-right: 52px;
+  }
+}
+
+@media (max-width: 1150px) {
+  #nav-menu-container {
+    display: block;
+    margin-top: -6px;
   }
 }
 
@@ -384,20 +411,34 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
 
+@media (max-width: 1150px) {
+  .nav-menu-top a {
+    padding-bottom: 6px;
+  }
+
+  .nav-menu-bottom {
+    float: right;
+  }
+}
+
 /* Mobile Nav Toggle */
 #mobile-nav-toggle {
   position: fixed;
   right: 0;
   top: 0;
   z-index: 999;
-  margin: 20px 20px 0 0;
+  margin: 19px 25px 0 0;
   border: 0;
   background: none;
-  font-size: 24px;
+  font-size: 30px;
   display: none;
   transition: all 0.4s;
   outline: none;
   cursor: pointer;
+}
+
+#mobile-nav-toggle.header-scrolled {
+  margin-top: 5px;
 }
 
 #mobile-nav-toggle i {
