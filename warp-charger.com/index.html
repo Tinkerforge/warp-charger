@@ -518,9 +518,10 @@
             <div class="col-12 text-center">
                 <p>Die Varianten WARP Charger Smart und WARP Charger Pro können über MQTT und HTTP den aktuellen Zustand melden und gesteuert werden. Durch eine
                 einfache, JSON-basierte API können schnell Ergebnisse erreicht werden:</p>
+                <a href="api.html" class="btn btn-lg btn-primary mb-4">API-Dokumentation</a>
             </div>
-            <div class="col-md-12 col-lg-4">
-                <pre style='color:#000000;background:#ffffff;'><span style='color:#696969; '># Verwendung der MQTT-API mit Python</span>
+            <div class="col-lg-12 col-xl-4">
+                <pre class="code-example" style='color:#000000;background:#ffffff;'><span style='color:#696969; '># Verwendung der MQTT-API mit Python</span>
 <span style='color:#800000; font-weight:bold; '>import</span> paho<span style='color:#808030; '>.</span>mqtt<span style='color:#808030; '>.</span>client <span style='color:#800000; font-weight:bold; '>as</span> mqtt
 <span style='color:#800000; font-weight:bold; '>import</span> json
 
@@ -544,22 +545,19 @@ client<span style='color:#808030; '>.</span>subscribe<span style='color:#808030;
 client<span style='color:#808030; '>.</span>loop_forever<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span>
 </pre>
             </div>
-            <div class="col-md-12 col-lg-4">
-                <pre style='color:#000000;background:#ffffff;'><span style='color:#696969; '># Abfrage über die HTTP-API</span>
+            <div class="col-lg-12 col-xl-4">
+                <pre class="code-example" style='color:#000000;background:#ffffff;'><span style='color:#696969; '># Abfrage über die HTTP-API</span>
 pi@raspberrypi<span style='color:#808030; '>:</span>~ <span style='color:#797997; '>$</span>
-curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:</span><span style='color:#40015a; '>/</span><span style='color:#40015a; '>/10.0.0.1/meter/state</span>
 <span style='color:#696969; '># Auslesen des Energie-Werts seit Reset</span>
+curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:</span><span style='color:#40015a; '>/</span><span style='color:#40015a; '>/10.0.0.1/meter/state</span> ↵
 <span style='color:#e34adc; '>|</span> jq <span style='color:#0000e6; '>'.energy_rel'</span>
 <span style='color:#696969; '># Ergebnis in kWh</span>
 <span style='color:#008c00; '>706</span><span style='color:#800000; font-weight:bold; '>.</span><span style='color:#008c00; '>289978</span>
 </pre>
             </div>
-            <div class="col-md-12 col-lg-4">
+            <!-- <div class="col-lg-12 col-xl-4">
                 <b>TODO:Hier ein Node-RED-Beispiel-Flow?</b>
-            </div>
-        </div>
-        <div class="col-12 text-center">
-            <a href="api.html" class="btn btn-lg btn-primary">API-Dokumentation</a>
+            </div>-->
         </div>
       </div>
     </section>
@@ -579,7 +577,7 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
 
         <div class="row">
             <div class="col-12 text-center">
-                <b>TODO: Link auf das warp-charger Git</b>
+              <p>Coming soon...</p>
             </div>
         </div>
       </div>
