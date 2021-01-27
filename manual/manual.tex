@@ -84,7 +84,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 \begin{document}
 \begin{titlepage}
-	Betriebsanleitung\hfill Version 0.5\hfill \today \centering \vfill
+	Betriebsanleitung\hfill Version 0.6\hfill \today \centering \vfill
 	\colorbox{boxgray}{\makebox[\dimexpr\linewidth-2\fboxsep][c]{\includegraphics[width=0.6\textwidth]{./img/resized/logo}}} \vfill \textcolor{red}{Work in progress!} \vfill
 	\textcolor{red}{Dieses Dokument befindet sich noch in der Erstellung und wird zusammen mit dem
 		Versand der ersten Wallboxen im Januar fertiggestellt. Die Wallbox-Software
@@ -142,7 +142,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 	\gfx{./img/resized/type_2_connector_ready}
 	Alle Wallboxen werden mit einem fest angeschlossenen
-	\SI{5}{\meter}-Ladekabel mit Typ-2-Stecker geliefert. Die Modelle WARP
+	\SI{5}{\meter}-/\SI{7,5}{\meter}-Ladekabel mit Typ-2-Stecker geliefert. Die Modelle WARP
 	Charger Basic und Smart sind ohne Anschlusskabel (Anschluss über interne
 	Klemmen) oder mit einem \SI{2}{\meter}-Anschlusskabel mit CEE-Stecker
 	erhältlich. Das Modell WARP Charger Pro wird immer mit einem
@@ -235,8 +235,9 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	\gfx{./img/resized/warp_button_connect_arrow_ready}
 
 	Achtung! Der Taster im Deckel ist über ein Anschlusskabel verbunden und muss
-	durch Drücken der Raste\fxnote{Pfeil ins Bild?} vom Kabel gelöst werden. Erst
-	danach kann der Deckel vollständig zur Seite gelegt werden.
+	durch Drücken der Raste\fxnote{Pfeil ins Bild?} vom Kabel gelöst werden.
+	Zusätzlich muss der Erdungsstecker von der Frontblende abgesteckt werden. 
+	Erst danach kann der Deckel vollständig zur Seite gelegt werden.
 
 	Nach Entfernen des Deckels kann das Gehäuse an die Wand montiert werden. Zum
 	Bohren der Befestigungslöcher kann die mitgelieferte Bohrschablone genutzt
@@ -246,7 +247,9 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	\subsubsection{Anforderungen an die Elektroinstallation}
 	Die Wahl des Leitungsquerschnitts und der Leitungsabsicherung der
 	Wallboxzuleitung muss in Übereinstimmung mit den nationalen Vorschriften
-	erfolgen. Die Wallbox verfügt über eine interne DC-Fehlerstromerkennung, welche
+	erfolgen. Es sollte ein 3-poliger Leitungsschutzschalter mit C-Charakteristik
+	verwendet werden.
+	Die Wallbox verfügt über eine interne DC-Fehlerstromerkennung, welche
 	bei einem DC-Fehlerstrom $\geq \SI{6}{\milli\ampere}$ einen
 	$\SI{70}{\milli\ampere}$-AC-Fehlerstrom erzeugt, der dazu gedacht ist einen
 	vorgeschalteten AC-Fehlerstromschutzschalter (RCD) auszulösen.
@@ -278,9 +281,22 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	Berührungsschutz zu entfernen. Dieser wird durch Lösen der vier
 	Kreuschlitzschrauben entfernt.
 
+	Bei der Variante Smart ist auf dem Berührungsschutz ein Controller
+	angeschlossen. Zu diesem führen zwei Kabel: Ein 2poliges
+	Stromversorgungskabel und ein 7-adriges Kabel über das die Verbindung mit dem
+	EVSE Bricklet auf der Hutschiene hergestellt wird. Eigentlich reicht es aus
+	den Berührungsschutz ohne Trennung dieser Leitungen einfach an die Seite zu
+	legen. Soll dennoch der Berührungsschutz vollständig entfernt werden, so 
+	müssen diese Kabel getrennt werden. Dazu ist das 2-polige 
+	Stromversorgungskabel auf der Unterseite des Controllers auf dem 
+	Berührungsschutz auszustecken. Die Verbindung zum Ladecontroller (EVSE) wird 
+	am besten direkt an dem Hutschienenmodul gelöst. Das Kabel verfügt über 
+	eine kleine Verriegelungstaste, diese muss zum Entfernen gedrückt werden.
+
 	\gfx{./img/resized/warp_cable_cut_ready}
 
-	Hier wird die Zuleitung an einen Phoenix Contact PT 6 Klemmenblock
+	Bei den Wallbox Varianten Basic und Smart
+	wird die Zuleitung an einen internen Phoenix Contact PT 6 Klemmenblock
 	angeschlossen. Um bei starren Leitern maximalen Bewegungsspielraum zu bieten,
 	werden die Adern um den Klemmenblock geführt und von der Rückseite
 	angeschlossen. Wir empfehlen das Kabel dafür auf einer Länge von
@@ -299,7 +315,8 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 	\subsubsection{Variante Pro}
 	Die Variante Pro wird direkt mit einer \SI{2}{\meter}-Gummileitung vom
-	Typ H07RN-F 5G ausgeliefert. Diese wird extern mit der Zuleitung verbunden, zum
+	Typ H07RN-F 5G ausgeliefert (4mm² bei 11kW, 6mm² bei 22kW Variante). 
+	Diese wird extern mit der Zuleitung verbunden, zum
 	Beispiel über eine Verteilerdose.
 
 	Der korrekte Sitz der Adern und die Phasenzugehörigkeit ist nach der
@@ -313,16 +330,19 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	Zum Einstellen des Ladestroms muss der Deckel (siehe \fullref{wandmontage})
 	und der interne Berührungsschutz entfernt werden. Der Berührungsschutz wird
 	durch Lösen der vier Kreuzschlitzschrauben entfernt. Achtung! Vom
-	Berührungsschutz geht ein Kabel zum Ladecontroller. Dieses darf nicht
+	Berührungsschutz gehen mehrere Kabel in die Wallbox. Zum Einstellen des
+	Ladestroms muss der Berührungsschutz nicht vollständig entfernt werden,
+	so dass die Kabel angeschlossen bleiben dürfen.
 
 	Über zwei Schiebeschalter auf dem internen Ladecontroller (EVSE) wird der
 	maximale Ladestrom eingestellt. Die verschiedenen Schalterstellungen sind neben
 	den Schaltern dokumentiert. Der weiße Block stellt dabei jeweils die Position
 	des Schalters dar. Im Auslieferungszustand sind die Schalter so eingestellt,
-	dass die Wallbox inaktiv ist. Im nachfolgenden Foto ist exemplarisch beide
-	Schalter auf die rechte Position gestellt. \gfx{./img/resized/warp_evse_switch_cut_ready} Um eine
-	maximale Ladeleistung von \SI{11}{\kilo\watt} (\SI{16}{\ampere}) einzustellen, müssen beide
-	Schalter auf die Mittelstellung gebracht werden. \hint{Die Schalterstellung und der damit verbundene maximale Ladestrom darf nach der
+	dass die Wallbox inaktiv ist. Im nachfolgenden Foto sind exemplarisch beide
+	Schalter auf die mittlere Position gestellt worden. 
+	\gfx{./img/resized/warp_evse_switch_cut_ready} Damit wurde eine
+	maximale Ladeleistung von \SI{11}{\kilo\watt} (\SI{16}{\ampere}) vorgegeben.
+ 	\hint{Die Schalterstellung und der damit verbundene maximale Ladestrom darf nach der
 		Installation nur von einer ausgewiesenen Elektrofachkraft unter
 		Berücksichtigung der genannten Bedingungen geändert werden!}
 
@@ -333,7 +353,10 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 	Wird die Stromversorgung zur Wallbox unterbrochen und wieder eingeschaltet, so
 	sind unbedingt ca. 10 Sekunden abzuwarten („Wallbox-LED blinkt sehr schnell“)
-	bis die DC-Fehlerstromerkennungskalibrierung durchgeführt wurde.
+	bis die DC-Fehlerstromerkennungskalibrierung durchgeführt wurde. Wird in
+	dieser Zeit dennoch ein Fahrzeug angeschlossen, so erkennt die Wallbox dies
+	als Fehlerfall und muss nach Trennung des Fahrzeugs noch einmal vom Strom
+	getrennt werden.
 
 	Bei der Messung des Isolationswiderstands wird für L1 ein niedrigerer Wert
 	gemessen (ca. \SI{249}{\kilo\ohm}). Dies hat den Hintergrund, dass
@@ -588,11 +611,11 @@ white,title=Hinweis]#1\end{tcolorbox}}
 			\item[Nennstrom] \SI{16}{\ampere} / \SI{32}{\ampere}
 			      \footref{fn:1}
 			\item[Standby, WLAN an] ca. \SI{1}{\watt}
-			\item[Ladekabellänge] \SI{5}{\meter}
+			\item[Ladekabellänge] \SI{5}{\meter} / \SI{7,5}{\meter}~\footref{fn:1}
 			\item[Zuleitungsquerschnitt] \SI{2,5}{\square\milli\meter} bis
 			      \SI{10}{\square\milli\meter}
 			\item[Zugangsverriegelung]
-			      Schlüsselschalter / Webinterface / Konfigurierbare Ladezeiten
+			      Schlüsselschalter / Webinterface / Konfigurierbare Ladezeiten~\footref{fn:1}
 			\item[Betriebstemperatur] \SI{-25}{\celsius}
 			      bis \SI{+50}{\celsius} (Durchschnitt in \SI{24}{\hour}: $\leq \SI{35}{\celsius}$)
 			\item[Fehlerstromerkennung] DC \SI{6}{\milli\ampere} (integriert)
@@ -627,6 +650,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		05.12.2020 & 0.3     & Portierung nach \LaTeX \\
 		28.12.2020 & 0.4     & Webinterface Dokumentation erweitert \\
 		29.12.2020 & 0.5     & Beschreibungen erweitert \\
+		27.01.2021 & 0.6     & Installationsbeschreibung ergänzt \\
 		\bottomrule
 	\end{tabular}
 
