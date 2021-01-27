@@ -110,7 +110,7 @@ function update_evse_max_charging_current(state: EVSEMaxChargingCurrent) {
 
 function set_charging_current(current: number) {
     $.ajax({
-        url: '/evse_current_limit',
+        url: '/evse/current_limit',
         method: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify({"current": current}),
@@ -129,7 +129,7 @@ function update_evse_auto_start_charging(x: EVSEAutoStart) {
 
 function set_auto_start_charging(auto_start_charging: boolean) {
     $.ajax({
-        url: '/evse_auto_start_charging_update',
+        url: '/evse/auto_start_charging_update',
         method: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify({"auto_start_charging": auto_start_charging}),
@@ -167,23 +167,23 @@ export function init() {
 }
 
 export function addEventListeners(source: EventSource) {
-    source.addEventListener('evse_state', function (e: util.SSE) {
+    source.addEventListener('evse/state', function (e: util.SSE) {
         update_evse_state(<EVSEState>(JSON.parse(e.data)));
     }, false);
 
-    source.addEventListener('evse_low_level_state', function (e: util.SSE) {
+    source.addEventListener('evse/low_level_state', function (e: util.SSE) {
         update_evse_low_level_state(<EVSELowLevelState>(JSON.parse(e.data)));
     }, false);
 
-    source.addEventListener('evse_max_charging_current', function (e: util.SSE) {
+    source.addEventListener('evse/max_charging_current', function (e: util.SSE) {
         update_evse_max_charging_current(<EVSEMaxChargingCurrent>(JSON.parse(e.data)));
     }, false);
 
-    source.addEventListener('evse_hardware_configuration', function (e: util.SSE) {
+    source.addEventListener('evse/hardware_configuration', function (e: util.SSE) {
         update_evse_hardware_configuration(<EVSEHardwareConfiguration>(JSON.parse(e.data)));
     }, false);
 
-    source.addEventListener('evse_auto_start_charging', function (e: util.SSE) {
+    source.addEventListener('evse/auto_start_charging', function (e: util.SSE) {
         update_evse_auto_start_charging(<EVSEAutoStart>(JSON.parse(e.data)));
     }, false);
 }

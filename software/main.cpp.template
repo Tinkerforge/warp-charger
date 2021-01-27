@@ -216,7 +216,7 @@ void register_default_urls() {
     });
 
     reboot = Config::Null();
-    api.addCommand("reboot", &reboot, []() {
+    api.addCommand("reboot", &reboot, {}, []() {
         ESP.restart();
     });
 

@@ -59,4 +59,5 @@ private:
     bool energy_meter_reset_requested;
 
     uint32_t callback_deadline_ms = 0;
+    uint32_t next_read_deadline_ms = 0;
 };

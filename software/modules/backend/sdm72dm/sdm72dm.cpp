@@ -17,24 +17,9 @@ extern API api;
 
 SDM72DM::SDM72DM() {
     state = Config::Object({
-        {"power", Config::Object({
-                {"total", Config::Float(0.0)},
-                {"import", Config::Float(0.0)},
-                {"export", Config::Float(0.0)}
-            })
-        },
-        {"energy_rel", Config::Object({
-                {"total", Config::Float(0.0)},
-                {"import", Config::Float(0.0)},
-                {"export", Config::Float(0.0)}
-            })
-        },
-        {"energy_abs", Config::Object({
-                {"total", Config::Float(0.0)},
-                {"import", Config::Float(0.0)},
-                {"export", Config::Float(0.0)}
-            })
-        },
+        {"power", Config::Float(0.0)},
+        {"energy_rel", Config::Float(0.0)},
+        {"energy_abs", Config::Float(0.0)},
     });
 
     energy_meter_reset = Config::Null();
@@ -129,13 +114,13 @@ void SDM72DM::setup() {
 }
 
 void SDM72DM::register_urls() {
-    api.addState("meter_state", &state, {}, 1000);
+    api.addState("meter/state", &state, {}, 1000);
 
-    api.addCommand("energy_meter_reset", &energy_meter_reset, [this](){
+    api.addCommand("meter/reset", &energy_meter_reset, {}, [this](){
         this->energy_meter_reset_requested = true;
     });
 
-    server.on("/power_history", HTTP_GET, [this](AsyncWebServerRequest *request) {
+    server.on("/meter/history", HTTP_GET, [this](AsyncWebServerRequest *request) {
         if(!initialized) {
             request->send(400, "text/html", "not initialized");
             return;
@@ -162,7 +147,7 @@ void SDM72DM::register_urls() {
         request->send(response);
     });
 
-    server.on("/power_live", HTTP_GET, [this](AsyncWebServerRequest *request) {
+    server.on("/meter/live", HTTP_GET, [this](AsyncWebServerRequest *request) {
         if(!initialized) {
             request->send(400, "text/html", "not initialized");
             return;
@@ -205,6 +190,8 @@ void SDM72DM::loop()
         printf("rs485 deadline reached!\n");
     }
 
+    if(user_data.done && !deadline_elapsed(next_read_deadline_ms))
+        return;
 
     if(energy_meter_reset_requested) {
         energy_meter_reset_requested = false;
@@ -222,43 +209,55 @@ void SDM72DM::loop()
 
     switch(modbus_read_state) {
         case 0:
-            to_write = state.get("power")->get("total");
+            to_write = state.get("power");
+            start_address = 1281;
+            break;
+        case 1:
+            to_write = state.get("energy_rel");
+            start_address = 389;
+            break;
+        case 2:
+            to_write = state.get("energy_abs");
+            start_address = 73;
+            break;
+        /*case 0:
+            to_write = state.get("power_total");
             start_address = 53;
             break;
         case 1:
-            to_write = state.get("power")->get("import");
+            to_write = state.get("power_import");
             start_address = 1281;
             break;
         case 2:
-            to_write = state.get("power")->get("export");
+            to_write = state.get("power_export");
             start_address = 1283;
             break;
 
         case 3:
-            to_write = state.get("energy_rel")->get("total");
+            to_write = state.get("energy_rel_total");
             start_address = 385;
             break;
         case 4:
-            to_write = state.get("energy_rel")->get("import");
+            to_write = state.get("energy_rel_import");
             start_address = 389;
             break;
         case 5:
-            to_write = state.get("energy_rel")->get("export");
+            to_write = state.get("energy_rel_export");
             start_address = 391;
             break;
 
         case 6:
-            to_write = state.get("energy_abs")->get("total");
+            to_write = state.get("energy_abs_total");
             start_address = 343;
             break;
         case 7:
-            to_write = state.get("energy_abs")->get("import");
+            to_write = state.get("energy_abs_import");
             start_address = 73;
             break;
         case 8:
-            to_write = state.get("energy_abs")->get("export");
+            to_write = state.get("energy_abs_export");
             start_address = 75;
-
+        */
         default:
             break;
     }
@@ -270,12 +269,13 @@ void SDM72DM::loop()
         printf("Failed to read energy meter registers starting at %u: rc %d, request_id: %u\n", start_address, rc, user_data.expected_request_id);
     }
 
-    if(modbus_read_state < 8)
+    if(modbus_read_state < 2)
         ++modbus_read_state;
     else {
         modbus_read_state = 0;
+        next_read_deadline_ms = next_read_deadline_ms + 500;
 
-        interval_samples.push(state.get("power")->get("import")->asFloat());
+        interval_samples.push(state.get("power")->asFloat());
         ++samples_last_interval;
 
         if(deadline_elapsed(interval_end_ms)) {

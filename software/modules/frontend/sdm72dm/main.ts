@@ -5,31 +5,19 @@ import * as util from "../util";
 import Chartist = require("chartist");
 import ctAxisTitle = require("chartist-plugin-axistitle");
 
-interface MeterStateEntry {
-    total: number,
-    import: number,
-    export: number
-}
-
 interface MeterState {
-    power: MeterStateEntry,
-    energy_rel: MeterStateEntry,
-    energy_abs: MeterStateEntry,
+    power: number,
+    energy_rel: number,
+    energy_abs: number,
 }
 
 function update_meter_state(state: MeterState) {
-    $('#status_meter_power_total').val(util.toLocaleFixed(state.power.total, 0) + " W");
-    $('#meter_power_total').val(util.toLocaleFixed(state.power.total, 0) + " W");
-    $('#meter_power_import').val(util.toLocaleFixed(state.power.import, 0) + " W");
-    $('#meter_power_export').val(util.toLocaleFixed(state.power.export, 0) + " W");
+    $('#status_meter_power').val(util.toLocaleFixed(state.power, 0) + " W");
+    $('#meter_power').val(util.toLocaleFixed(state.power, 0) + " W");
 
-    $('#meter_energy_rel_total').val(util.toLocaleFixed(state.energy_rel.total, 3) + " kWh");
-    $('#meter_energy_rel_import').val(util.toLocaleFixed(state.energy_rel.import, 3) + " kWh");
-    $('#meter_energy_rel_export').val(util.toLocaleFixed(state.energy_rel.export, 3) + " kWh");
+    $('#meter_energy_rel').val(util.toLocaleFixed(state.energy_rel, 3) + " kWh");
 
-    $('#meter_energy_abs_total').val(util.toLocaleFixed(state.energy_abs.total, 3) + " kWh");
-    $('#meter_energy_abs_import').val(util.toLocaleFixed(state.energy_abs.import, 3) + " kWh");
-    $('#meter_energy_abs_export').val(util.toLocaleFixed(state.energy_abs.export, 3) + " kWh");
+    $('#meter_energy_abs').val(util.toLocaleFixed(state.energy_abs, 3) + " kWh");
 }
 
 
@@ -44,7 +32,7 @@ function meter_chart_change_time(value: string) {
 
     if (value == "live") {
         live_interval = setInterval(() =>
-            $.get("/power_live").done(function (result) {
+            $.get("/meter/live").done(function (result) {
                 let values = result["samples"];
                 let sps = result["samples_per_second"];
                 let labels = Array(values.length + 1).fill(null);
@@ -71,7 +59,7 @@ function meter_chart_change_time(value: string) {
             ), 1000);
         return;
     } else if (value == "history") {
-        $.get("/power_history").done(function (values: Number[]) {
+        $.get("/meter/history").done(function (values: Number[]) {
             const HISTORY_MINUTE_INTERVAL = 4;
             const VALUE_COUNT = 48 * (60 / HISTORY_MINUTE_INTERVAL);
             const LABEL_COUNT = 9;
@@ -155,7 +143,7 @@ function init_chart() {
 }
 
 function update_status_chart() {
-    $.get("/power_history").done(function (values: number[]) {
+    $.get("/meter/history").done(function (values: number[]) {
         const HISTORY_MINUTE_INTERVAL = 4;
         const VALUE_COUNT = 48 * (60 / HISTORY_MINUTE_INTERVAL);
         const LABEL_COUNT = 5;
@@ -187,7 +175,7 @@ function update_status_chart() {
         //    so we just assume that it is and ask for the allowed current.
         // 2. This only calculates the correct value if we charge with three phases. This is okay for the moment,
         //    as the energy meter itself will only work correctly if powered with a three-phase current.
-        $.get("/evse_state")
+        $.get("/evse/state")
          .done((result) => {
                 let configured_max = result.allowed_charging_current / 1000 * 3 * 230;
                 init_status_chart(0, Math.max(configured_max, Math.max(...values))),
@@ -250,7 +238,12 @@ function init_status_chart(min_value=0, max_value=0) {
 }
 
 function energy_meter_reset_statistics() {
-    $.get("/energy_meter_reset");
+    $.ajax({
+        url: '/meter/reset',
+        method: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(null)
+    });
 }
 
 export function init() {
@@ -287,7 +280,7 @@ export function init() {
 }
 
 export function addEventListeners(source: EventSource) {
-    source.addEventListener('meter_state', function (e: util.SSE) {
+    source.addEventListener('meter/state', function (e: util.SSE) {
         update_meter_state(<MeterState>(JSON.parse(e.data)));
     }, false);
 }

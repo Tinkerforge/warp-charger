@@ -16,7 +16,7 @@ void API::setup()
 
 }
 
-void API::addCommand(String path, Config *config, std::function<void(void)> callback)
+void API::addCommand(String path, Config *config, std::initializer_list<String> keys_to_censor_in_debug_report, std::function<void(void)> callback)
 {
     if(use_mqtt) {
         mqtt.subscribe(path, config->json_size(), [config, path, callback](String payload){
@@ -43,7 +43,7 @@ void API::addCommand(String path, Config *config, std::function<void(void)> call
         server.addHandler(handler);
     }
 
-    commands.push_back({path, config, callback});
+    commands.push_back({path, config, callback, keys_to_censor_in_debug_report});
 }
 
 void API::addState(String path, Config *config, std::initializer_list<String> keys_to_censor, uint32_t interval_ms)
@@ -77,9 +77,11 @@ void API::addState(String path, Config *config, std::initializer_list<String> ke
 void API::addPersistentConfig(String path, Config *config, std::initializer_list<String> keys_to_censor, uint32_t interval_ms)
 {
     addState(path, config, keys_to_censor, interval_ms);
-    addCommand(path + String("_update"), config, [path, config](){
-        String tmp_path = String("/") + path + ".json.tmp";
-        String cfg_path = String("/") + path + ".json";
+    addCommand(path + String("_update"), config, keys_to_censor, [path, config](){
+        String path_copy = path;
+        path_copy.replace('/', '_');
+        String tmp_path = String("/") + path_copy + ".json.tmp";
+        String cfg_path = String("/") + path_copy + ".json";
 
         if (SPIFFS.exists(tmp_path))
             SPIFFS.remove(tmp_path);
@@ -96,13 +98,13 @@ void API::addPersistentConfig(String path, Config *config, std::initializer_list
         Serial.println(" updated");
     });
 }
-
+/*
 void API::addTemporaryConfig(String path, Config *config, std::initializer_list<String> keys_to_censor, uint32_t interval_ms, std::function<void(void)> callback)
 {
     addState(path, config, keys_to_censor, interval_ms);
     addCommand(path + String("_update"), config, callback);
 }
-
+*/
 void API::onEventConnect(AsyncEventSourceClient *client)
 {
     for(auto &reg : states) {
@@ -137,6 +139,13 @@ void API::registerDebugUrl() {
             result += reg.path;
             result += "\": ";
             result += reg.config->to_string_except(reg.keys_to_censor);
+        }
+
+        for(auto &reg: commands) {
+            result += ",\n \"";
+            result += reg.path;
+            result += "\": ";
+            result += reg.config->to_string_except(reg.keys_to_censor_in_debug_report);
         }
         result += "}";
         request->send(200, "application/json; charset=utf-8", result);

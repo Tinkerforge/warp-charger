@@ -20,6 +20,7 @@ struct CommandRegistration {
     String path;
     Config *config;
     std::function<void(void)> callback;
+    std::vector<String> keys_to_censor_in_debug_report;
 };
 
 
@@ -29,10 +30,10 @@ public:
 
     void setup();
 
-    void addCommand(String path, Config *config, std::function<void(void)> callback);
+    void addCommand(String path, Config *config, std::initializer_list<String> keys_to_censor_in_debug_report, std::function<void(void)> callback);
     void addState(String path, Config *config, std::initializer_list<String> keys_to_censor, uint32_t interval_ms);
     void addPersistentConfig(String path, Config *config, std::initializer_list<String> keys_to_censor, uint32_t interval_ms);
-    void addTemporaryConfig(String path, Config *config, std::initializer_list<String> keys_to_censor, uint32_t interval_ms, std::function<void(void)> callback);
+    //void addTemporaryConfig(String path, Config *config, std::initializer_list<String> keys_to_censor, uint32_t interval_ms, std::function<void(void)> callback);
 
     void onEventConnect(AsyncEventSourceClient *client);
     void onMqttConnect();
