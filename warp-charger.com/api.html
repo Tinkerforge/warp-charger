@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>WARP Charger</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <link href="img/favicon.png" rel="icon">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+
+</head>
+
+<body id="api_body">
+
+  <!--==========================
+    Header
+  ============================-->
+  <header id="mqtt_header" class="header header-scrolled" style="position: sticky">
+    <div class="container-fluid">
+      <div id="logo" class="pull-left">
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <a href="index.html"><img src="img/logo.png" alt="" title="" /></a>
+      </div>
+
+      <nav id="nav-menu-container">
+        <ul class="nav-menu nav-menu-top">
+          <li><a href="#start">Konfiguration</a></li>
+          <li><a href="#http">HTTP-API</a></li>
+          <li><a href="#basics">Grundlagen</a></li>
+        </ul>
+        <ul class="nav-menu nav-menu-bottom">
+          <li><a href="#states">Zustände, Kommandos, Konfigurationen</a></li>
+          <li class="menu-has-children"><a href="#reference">API</a>
+            <ul>
+              <li><a href="#evse">Ladecontroller (EVSE)</a></li>
+              <li><a href="#meter">Stromzähler</a></li>
+              <li><a href="#mqtt">MQTT-Konfiguration</a></li>
+              <li><a href="#wifi">WLAN-Konfiguration</a></li>
+              <li><a href="#misc">Sonstiges</a></li>
+              <li><a href="#http-only">HTTP-Spezifisch</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav><!-- #nav-menu-container -->
+    </div>
+  </header><!-- #header -->
+
+  <!--==========================
+    Intro Section
+  ============================-->
+  <main id="mqtt_main">
+    <header id="start" class="reference-section-header pt-4"><h2>MQTT- und HTTP-API</h2></header>
+    <section id="" class="section">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>Einführung</h3>
+            </header>
+            <p>Die Varianten WARP Charger Smart und WARP Charger Pro können über MQTT und HTTP den aktuellen Zustand melden und gesteuert werden.
+                Während die MQTT-API zunächst aktiviert und konfiguriert werden muss, kann die HTTP-API sofort verwendet werden, da sie auch
+                vom Webinterface selbst benutzt wird.
+            </p>
+        </div>
+    </section>
+    <section id="configuration" class="section">
+      <div class="container">
+        <header class="reference-section-header">
+            <h3>MQTT-Konfiguration</h3>
+        </header>
+        <div class="row">
+            <div class="col-md-12 col-lg-6">
+                <p>Damit die Wallbox über MQTT kommuniziert, muss zunächst im Webinterface die Verbindung zum MQTT-Broker konfiguriert werden. Folgende Einstellungen können vorgenommen werden:</p>
+                <ul>
+                    <li><b>Broker-Hostname oder IP-Adresse</b>: Der Hostname oder die IP-Adresse des Brokers zu dem sich die Wallbox verbinden soll.</li>
+                    <li><b>Broker-Port</b>: Der Port unter dem der Broker erreichbar ist. Der typische MQTT-Port 1883 ist voreingestellt.</li>
+                    <li><b>Broker-Benutzername und Passwort</b>: Manche Broker unterstützen eine Authentisierung mit Benutzername und Passwort.</li>
+                    <li><b>Topic-Präfix</b>: Dieser Präfix wird allen Topics vorangestellt, die die Wallbox verwendet.
+                        Voreingestellt ist warp/ABC wobei ABC eine eindeutige Kennung pro Wallbox ist,
+                        es sind aber andere Präfixe wie z.B. garage_links möglich.
+                        Falls mehrere Wallboxen mit dem selben Broker kommunizieren <strong>müssen</strong> eindeutige Präfixe pro Box gewählt werden.</li>
+                    <li><b>Client-ID</b>: Mit dieser ID registriert sich die Wallbox beim Broker.</li>
+                </ul>
+                <p>Nachdem die Konfiguration gesetzt und der "MQTT aktivieren"-Schalter gesetzt ist, kann die Konfiguration gespeichert werden.
+                Der ESP startet dann neu und verbindet sich zum Broker. Auf der Status-Seite wird angezeigt, ob die Verbindung aufgebaut werden konnte.</p>
+            </div>
+            <div class="col-md-12 col-lg-6">
+                <div class="impressions-container">
+                    <div class="impressions-item filter-warp-charger wow fadeInUp" style="height: auto;">
+                        <figure style="height: auto;">
+                            <img src="img/mqtt/mqtt_ui.png" class="img-fluid" alt="">
+                            <a href="img/mqtt/mqtt_ui.png" data-lightbox="impressions" data-title="MQTT-Konfiguration" class="link-preview" title="Preview"><i class="ion ion-eye"></i></a>
+                        </figure>
+                        <div class="impressions-info">
+                            MQTT-Konfiguration
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+      <p>Im Folgenden werden die <a href="https://mosquitto.org/man/mosquitto_pub-1.html">mosquitto_pub</a> und <a href="https://mosquitto.org/man/mosquitto_sub-1.html">mosquitto_sub</a>-Befehle des <a href="https://mosquitto.org/">Mosquitto-MQTT-Brokers</a> verwendet, um mit dem Broker zu kommunizieren.</p>
+    </section>
+    <section id="http" class="section">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>HTTP-API</h3>
+            </header>
+        <p>
+            Nachfolgend wird die Benutzung der MQTT-API gezeigt. Die HTTP-API funktioniert jedoch identisch.
+            Wenn eine MQTT-API beispielsweise das Topic <code>warp/ABC/evse/state</code> verwendet,
+            kann die selbe API über die URL <code>http://[IP-Adresse oder Hostname der Wallbox]/evse/state</code> erreicht werden.
+            Es können zusätzlich die <a href="https://en.wikipedia.org/wiki/Server-sent_events">server-sent Events</a> unter <code>http://[IP-Adresse oder Hostname der Wallbox]/events</code> verwendet werden,
+            die von der Wallbox automatisch ausgelöst werden.
+        </p>
+        <p>
+            Die HTTP-API verfügt über <a class="scrollto" href="#http-only">fortgeschrittene Funktionen</a>, die für den Normalbetrieb unnötig sein sollten.
+        </p>
+        </div>
+    </section>
+    <section id="basics" class="section">
+        <div class="container">
+          <header class="reference-section-header">
+              <h3>Grundlagen</h3>
+          </header>
+        <p>
+            Wenn die Verbindung zum Broker erfolgreich aufgebaut wurde, sollten jetzt bereits erste Nachrichten der Wallbox eintreffen.
+            Sämtliche Nachrichten der Wallbox sind Strings im <a href="https://www.json.org/json-de.html">JSON-Format</a>. Genauso müssen alle Nachrichten, die zur Wallbox
+            geschickt werden, das JSON-Format einhalten.
+        </p>
+        <p>
+            Mit <code>mosquitto_sub -v -t 'warp/ABC/#'</code> können alle Nachrichten der Wallbox angezeigt werden. (Den Präfix warp/ABC gegebenenfalls durch den konfigurierten ersetzen)
+            Es könnte z.B. die folgende Nachricht empfangen werden:
+            <samp class="samp-box">warp/ABC/<a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a> {"max_current_configured":32000, "max_current_incoming_cable":13000, "max_current_outgoing_cable":16000}</samp>
+            Die Nachrichten des Topics <samp><a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a></samp> geben an, welchen Limitierungen der Ladestrom unterliegt.
+            Im konkreten Fall begrenzt die Software den Ladestrom auf 32 Ampere, das zur Wallbox führende Kabel ihn auf 13, das zum Fahrzeug gehende Kabel ihn auf 16 Ampere.
+            Der maximal mögliche Ladestrom ist immer das Minimum dieser Werte, also in diesem Fall 13 Ampere.
+        </p>
+        <p>
+            Durch Senden der Nachricht <samp>{"current":8000}</samp> an das Topic <samp>warp/ABC/<a class="scrollto" href="#evse_current_limit">evse/current_limit</a></samp> kann der Ladestrom auf 8 Ampere begrenzt werden,
+            zum Beispiel so:
+            <code>mosquitto_pub -t 'warp/ABC/<a class="scrollto" href="#evse_current_limit">evse/current_limit</a>' -m '{"current": 8000}'</code>
+            Der Ladestrom ist jetzt auf 8 Ampere begrenzt, die Wallbox durch eine neue Nachricht anzeigt:
+            <samp class="samp-box">warp/ABC/<a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a> {"max_current_configured":8000, "max_current_incoming_cable":13000, "max_current_outgoing_cable":16000}</samp>
+        </p>
+        </div>
+    </section>
+    <section id="states" class="section">
+        <div class="container">
+          <header class="reference-section-header">
+              <h3>Zustände, Kommandos und Konfigurationen</h3>
+          </header>
+        <p>
+            Die Wallbox bietet über MQTT drei Arten von Schnittstellen: Zustände, Kommandos und Konfigurationen.
+        </p>
+        <h4>Zustände</h4>
+        <p>
+            Zustände sind Statusinformationen, die die Wallbox kontinuierlich an den Broker schickt. Zustände können nicht direkt geändert werden,
+            es ist aber möglich, dass Kommandos und Konfigurationen auf indirekte Weise Zustände beeinflussen. So kann durch Verwenden des
+            <code><a class="scrollto" href="#evse_current_limit">evse/current_limit</a></code>-Kommandos der konfigurierte Ladestrom soweit gesenkt werden, dass er den erlaubten Ladestrom des
+            <samp><a class="scrollto" href="#evse_state">evse/state</a></samp>-Zustands verändert. Zustände können vom Broker durch Subscriptions abgefragt werden:
+            <code>mosquitto_sub -v -t 'warp/ABC/<a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a>'</code>
+            liefert beispielsweise
+            <samp class="samp-box">warp/ABC/<a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a> {"max_current_configured":8000, "max_current_incoming_cable":13000, "max_current_outgoing_cable":16000}</samp>
+        </p>
+        <h4>Kommandos</h4>
+        <p>
+            Kommandos können durch publishen auf das entsprechende Topic ausgelöst werden. <strong>Der MQTT-Payload eines Kommandos muss immer gültiges JSON sein.</strong>
+            Das heißt insbesondere, dass ein Kommando, das keine Informationen benötigt, nicht mit einer leeren Nachricht aufgerufen werden darf, sondern mit <code>null</code>.
+            Um einen Neustart des ESPs auszulösen kann beispielsweise folgendes Kommando verwendet werden:
+            <code class="code-box">mosquitto_pub -t 'warp/ABC/<a class="scrollto" href="#reboot">reboot</a>' -m 'null'</code>
+        </p>
+        <h4>Konfigurationen</h4>
+        <p>
+            Konfigurationen können sowohl gelesen, als auch geschrieben werden. Da sie im Flash des ESPs abgelegt werden, muss aber, damit eine aktualisierte
+            Konfiguration verwendet wird, nach der Aktualisierung ein Neustart des ESPs ausgelöst werden. Konfigurationen werden unter dem jeweiligen Pfad von der
+            Wallbox gepublisht. Aktualisierungen werden auf dem speziellen Suffix <code>_update</code> entgegengenommen. Es können dabei nicht zu verändernde Einträge
+            der Konfiguration durch <code>null</code> ausgedrückt werden.
+        </p>
+        <p>Wenn zum Beispiel die Access-Point-Konfiguration der Wallbox wie folgt abgefragt wird:
+            <code class="code-box">mosquitto_sub -v -t 'warp/ABC/<a class="scrollto" href="#wifi_ap_config">wifi/ap_config</a>'</code>
+            <samp class="samp-box">
+                "warp/ABC/<a class="scrollto" href="#wifi_ap_config">wifi/ap_config</a>": {"enable_ap":true, "ap_fallback_only":false, "ssid":"warp-ABC", "hide_ssid":false, "passphrase":null, "hostname":"warp-ABC", "channel":1, "ip":[10,0,0,1], "gateway":[10,0,0,1], "subnet":[255,255,255,0]},
+            </samp>
+            kann der Access Point danach folgendermaßen in den Fallback-Modus gebracht werden:
+            <code class="code-box">mosquitto_pub -t 'warp/ABC/<a class="scrollto" href="#wifi_ap_config">wifi/ap_config_update</a>' -m '{<strong>"ap_fallback_only": true,</strong> "enable_ap":null, "ssid":null, "hide_ssid":null, "passphrase":null, "hostname":null, "channel":null, "ip":null, "gateway":null, "subnet":null}'</code>
+            Danach muss, um die Konfiguration anzuwenden noch ein Neustart durchgeführt werden:
+            <code class="code-box">mosquitto_pub -t 'warp/ABC/<a class="scrollto" href="#reboot">reboot</a>' -m 'null'</code>
+            Der Access Point sollte dann ab jetzt nur noch aktiv sein, wenn die Verbindung zum konfigurierten WLAN fehlgeschlagen ist.
+        </p>
+        </div>
+    </section>
+    <section id="reference" class="section">
+        <div class="container">
+          <header class="reference-section-header">
+              <h3>API-Referenz</h3>
+          </header>
+        <section id="evse" class="section pt-4">
+            <header class="reference-section-header">
+                <h4>Ladecontroller (EVSE)</h4>
+            </header>
+            <ul class="ul-no-bullet">
+                <li>Zustände</li>
+                <ul>
+                    <li><a class="scrollto" href="#evse_state">evse/state</a></li>
+                    <li><a class="scrollto" href="#evse_hardware_configuration">evse/hardware_configuration</a></li>
+                    <li><a class="scrollto" href="#evse_low_level_state">evse/low_level_state</a></li>
+                    <li><a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a></li>
+                    <li><a class="scrollto" href="#evse_auto_start_charging">evse/auto_start_charging</a></li>
+                </ul>
+                <li>Kommandos</li>
+                <ul>
+                    <li><a class="scrollto" href="#evse_current_limit">evse/current_limit</a></li>
+                    <li><a class="scrollto" href="#evse_stop_charging">evse/stop_charging</a></li>
+                    <li><a class="scrollto" href="#evse_start_charging">evse/start_charging</a></li>
+                    <li><a class="scrollto" href="#evse_auto_start_charging">evse/auto_start_charging_update</a></li>
+                </ul>
+            </ul>
+            <div>
+                <div class="h5" id="evse_state">evse/state</div>
+                Der Zustand des Ladecontrollers.
+                <table class="table table-striped table-bottom-border table-bottom-border mt-3 ml-5">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Typ</th>
+                        <th scope="col">Einheit</th>
+                        <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">iec61851_state</th>
+                            <td>int</td>
+                            <td></td>
+                            <td>Der aktuelle Zustand nach IEC 61851:
+                                <ol class="ol-enum">
+                                    <li><b>0</b> - A: Nicht verbunden (Sicht des Fahrzeugs)</li>
+                                    <li><b>1</b> - B: Verbunden</li>
+                                    <li><b>2</b> - C: Lädt</li>
+                                    <li><b>3</b> - D: Lädt mit Belüftung (nicht unterstützt)</li>
+                                    <li><b>4</b> - E/F: Fehler</li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">vehicle_state</th>
+                            <td>int</td>
+                            <td></td>
+                            <td>
+                                Der aktuelle Zustand, aufbereitet vom Ladecontroller:
+                                <ol class="ol-enum">
+                                    <li><b>0</b> - Nicht verbunden (Sicht der Wallbox)</li>
+                                    <li><b>1</b> - Verbunden</li>
+                                    <li><b>2</b> - Lädt</li>
+                                    <li><b>3</b> - Fehler</li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">contactor_state</th>
+                            <td>int</td>
+                            <td></td>
+                            <td>
+                                Schützüberwachung. Überwacht wird die Spannung vor und nach dem Schütz:
+                                <ol class="ol-enum">
+                                    <li><b>0</b> - Nicht stromführend vor und nach dem Schütz</li>
+                                    <li><b>1</b> - Nicht stromführend vor, aber stromführend nach dem Schütz</li>
+                                    <li><b>2</b> - Stromführend vor, aber nicht stromführend nach dem Schütz</li>
+                                    <li><b>3</b> - Stromführend vor und nach dem Schütz</li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">contactor_error</th>
+                            <td>int</td>
+                            <td></td>
+                            <td>
+                                Fehlercode der Schützüberwachung. Ein Wert ungleich 0 zeigt einen Fehler an.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">allowed_charging_current</th>
+                            <td>int</td>
+                            <td><abbr title="Milliampere">mA</abbr></td>
+                            <td>
+                                Maximal erlaubter Ladestrom, der dem Fahrzeug zur Verfügung gestellt wird. Dieser Strom ist das Minimum folgender Ströme:
+                                <ul>
+                                    <li>Maximaler Strom des eingehenden Kabels</li>
+                                    <li>Maximaler Strom des ausgehenden Kabels</li>
+                                    <li>Maximaler Strom, der über MQTT oder das Webinterface konfiguriert wurde</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">lock_state</th>
+                            <td>int</td>
+                            <td></td>
+                            <td>
+                                Zustand der Kabelverriegelung (nur relevant für Wallboxen mit Typ-2-Dose):
+                                <ol class="ol-enum">
+                                    <li><b>0</b> - Initialisierung</li>
+                                    <li><b>1</b> - Offen</li>
+                                    <li><b>2</b> - Schließend</li>
+                                    <li><b>3</b> - Geschlossen</li>
+                                    <li><b>4</b> - Öffnend</li>
+                                    <li><b>5</b> - Fehler</li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">time_since_state_change</th>
+                            <td>int</td>
+                            <td><abbr title="Millisekunden">ms</abbr></td>
+                            <td>
+                                Zeit seit dem letzten IEC 61851 Zustandswechsel. Falls der Zustand 2 (= B: Lädt) ist, entspricht dieser Wert der Ladezeit.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">uptime</th>
+                            <td>int</td>
+                            <td><abbr title="Millisekunden">ms</abbr></td>
+                            <td>
+                                Zeit seit Starten des Ladecontrollers.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="evse_hardware_configuration">evse/hardware_configuration</div>
+                Die Hardwarekonfiguration des Ladecontrollers.
+                <table class="table table-striped table-bottom-border mt-3 ml-5">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Typ</th>
+                        <th scope="col">Einheit</th>
+                        <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">jumper_configuration</th>
+                            <td>int</td>
+                            <td></td>
+                            <td>Der Maximalstrom des eingehenden Kabels. Dieser Strom wird auf dem Ladecontroller durch Jumper oder eine Steckplatine mit Schaltern konfiguriert:
+                                <ol class="ol-enum">
+                                    <li><b>0</b> - 6 Ampere</li>
+                                    <li><b>1</b> - 10 Ampere</li>
+                                    <li><b>2</b> - 13 Ampere</li>
+                                    <li><b>3</b> - 16 Ampere</li>
+                                    <li><b>4</b> - 20 Ampere</li>
+                                    <li><b>5</b> - 25 Ampere</li>
+                                    <li><b>6</b> - 32 Ampere</li>
+                                    <li><b>7</b> - Kontrolliert durch Software</li>
+                                    <li><b>8</b> - Nicht konfiguriert</li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">has_lock_switch</th>
+                            <td>bool</td>
+                            <td></td>
+                            <td>
+                                Gibt an, ob die Wallbox ein festangeschlagenes Kabel (false) oder eine Typ-2-Dose mit Kabelverriegelung (true) hat.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="evse_low_level_state">evse/low_level_state</div>
+                Der Low-Level-Zustand des Ladecontrollers.
+                <table class="table table-striped table-bottom-border mt-3 ml-5">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Typ</th>
+                        <th scope="col">Einheit</th>
+                        <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">low_level_mode_enabled</th>
+                            <td>bool</td>
+                            <td></td>
+                            <td>Zeigt an, ob der Low-Level-Modus aktiv ist. Wird derzeit nicht unterstützt.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">led_state</th>
+                            <td>int</td>
+                            <td></td>
+                            <td>
+                                Der Zustand der am Ladecontroller angeschlossenen LED:
+                                <ol class="ol-enum">
+                                    <li><b>0</b> - Aus</li>
+                                    <li><b>1</b> - An</li>
+                                    <li><b>2</b> - Blinkt</li>
+                                    <li><b>3</b> - Flackert</li>
+                                    <li><b>4</b> - Atmet</li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">cp_pwm_duty_cycle</th>
+                            <td>int</td>
+                            <td><abbr title="Zehntel Prozent">%/10</abbr></td>
+                            <td>
+                                Tastverhältnis der Pulsweitenmodulation auf dem CP-Signal.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">adc_values</th>
+                            <td>int[2]</td>
+                            <td></td>
+                            <td>
+                                16-Bit ADC-Rohwerte der PE-CP- und PE-PP-Spannungen.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">voltages</th>
+                            <td>int[3]</td>
+                            <td><abbr title="Millivolt">mV</abbr></td>
+                            <td>
+                                Aus den ADC-Werten berechnete Spannungen: PE-CP, PE-PP und Maximalspannung von PE-EE.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">resistances</th>
+                            <td>int[2]</td>
+                            <td><abbr title="Ohm">Ω</abbr></td>
+                            <td>
+                                Aus den Spannungen berechnete Widerstände: PE-CP, PE-PP.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">gpio</th>
+                            <td>bool[5]</td>
+                            <td></td>
+                            <td>
+                                Signal auf den GPIOs:
+                                <ol class="ol-enum">
+                                    <li><b>[0]</b> - Eingang</li>
+                                    <li><b>[1]</b> - Ausgang</li>
+                                    <li><b>[2]</b> - Motoreingangsschalter</li>
+                                    <li><b>[3]</b> - Relais</li>
+                                    <li><b>[4]</b> - Motorfehler</li>
+                                </ol>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="evse_max_charging_current">evse/max_charging_current</div>
+                Die maximalen Ladeströme des Ladecontrollers. Das Minimum dieser Ströme ist der tatsächliche maximale Ladestrom, der dem Fahrzeug bereitgestellt wird. Alle Ströme haben einen Minimalwert von 6000 (6 Ampere) und einen Maximalwert von 32000 (32 Ampere).
+                <table class="table table-striped table-bottom-border mt-3 ml-5">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Typ</th>
+                        <th scope="col">Einheit</th>
+                        <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">max_current_configured</th>
+                            <td>int</td>
+                            <td><abbr title="Milliampere">mA</abbr></td>
+                            <td>Der maximale konfigurierte Ladestrom. Kann durch <a class="scrollto" href="#evse_current_limit">evse/current_limit</a> oder das Webinterface eingestellt werden.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">max_current_incoming_cable</th>
+                            <td>int</td>
+                            <td><abbr title="Milliampere">mA</abbr></td>
+                            <td>Der maximale Ladestrom des eingehenden Kabels. Siehe <a class="scrollto" href="#evse_hardware_configuration">evse/hardware_configuration</a>.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">max_current_outgoing_cable</th>
+                            <td>int</td>
+                            <td><abbr title="Milliampere">mA</abbr></td>
+                            <td>Der maximale Ladestrom des ausgehenden Kabels. Fest konfiguriert, falls das Kabel angeschlagen ist.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pt-5">
+                <div class="h5" id="evse_auto_start_charging">evse/auto_start_charging</div>
+                Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Dieser Wert kann über evse/auto_start_charging_update mit dem selben Payload aktualisiert werden. Achtung: Ein Neustart des Ladecontrollers setzt diesen Wert zurück auf true.
+                <table class="table table-striped table-bottom-border mt-3 ml-5">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Typ</th>
+                        <th scope="col">Einheit</th>
+                        <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">auto_start_charging</th>
+                            <td>bool</td>
+                            <td></td>
+                            <td>Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Falls aktiviert, beginnt sofort, wenn das Fahrzeug angeschlossen wird der Ladevorgang. Falls deaktiviert, kann das Laden mit <a class="scrollto" href="#evse_start_charging">evse/start_charging</a> gestartet werden.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="evse_current_limit">evse/current_limit</div>
+                Begrenzt den Ladestrom
+                <table class="table table-striped table-bottom-border mt-3 ml-5">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Typ</th>
+                        <th scope="col">Einheit</th>
+                        <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">current</th>
+                            <td><abbr title="Milliampere">mA</abbr></td>
+                            <td></td>
+                            <td>Begrenzt den Ladestrom auf den übergebenen Wert. Der Strom hat einen Minimalwert von 6000 (6 Ampere) und einen Maximalwert von 32000 (32 Ampere). <b>TODO: Hier erwähnen, dass z.B. der Zoe auf einphasig wechselt?</b></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pt-5">
+                <div class="h5" id="evse_stop_charging">evse/stop_charging</div>
+                Beendet den laufenden Ladevorgang. Ein Ladevorgang kann mit evse/start_charging wieder gestartet werden. <b>Leerer Payload. Es muss <code>null</code> übergeben werden.</b>
+            </div>
+            <div class="pt-5">
+                <div class="h5" id="evse_start_charging">evse/start_charging</div>
+                Startet einen Ladevorgang. Ein Ladevorgang kann mit evse/stop_charging wieder gestoppt werden. <b>Leerer Payload. Es muss <code>null</code> übergeben werden.</b>
+            </div>
+        </section>
+        <section id="meter" class="section pt-4">
+            <header class="reference-section-header">
+                <h4>Stromzähler (Nur WARP Charger Pro)</h4>
+            </header>
+            <ul class="ul-no-bullet">
+                <li>Zustände</li>
+                <ul>
+                    <li><a class="scrollto" href="#meter_state">meter/state</a></li>
+                </ul>
+                <li>Kommandos</li>
+                <ul>
+                    <li><a class="scrollto" href="#meter_reset">meter/reset</a></li>
+                </ul>
+            </ul>
+            <div>
+                <div class="h5" id="meter_state">meter/state</div>
+                Der aktuelle Zählerstand.
+                <table class="table table-striped table-bottom-border mt-3 ml-5">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Typ</th>
+                        <th scope="col">Einheit</th>
+                        <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">power</th>
+                            <td>float</td>
+                            <td><abbr title="Watt">W</abbr></td>
+                            <td>Die aktuelle Ladeleistung.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">energy_rel</th>
+                            <td>float</td>
+                            <td><abbr title="Kilowattstunde">kWh</abbr></td>
+                            <td>Die geladene Energie seit dem letzten Reset.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">energy_abs</th>
+                            <td>float</td>
+                            <td><abbr title="Kilowattstunde">kWh</abbr></td>
+                            <td>Die geladene Energie seit der Herstellung.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="meter_reset">meter/reset</div>
+                Setzt den Energiezähler zurück. <b>Leerer Payload. Es muss <code>null</code> übergeben werden.</b>
+            </div>
+        </section>
+        <section id="mqtt" class="section pt-4">
+            <header class="reference-section-header">
+                <h4>MQTT-Konfiguration</h4>
+            </header>
+            <ul class="ul-no-bullet">
+                <li>Zustände</li>
+                <ul>
+                    <li><a class="scrollto" href="#mqtt_state">mqtt/state</a></li>
+                </ul>
+                <li>Konfigurationen</li>
+                <ul>
+                    <li><a class="scrollto" href="#mqtt_config">mqtt/config</a></li>
+                </ul>
+            </ul>
+            <div>
+                <div class="h5" id="mqtt_state">mqtt/state</div>
+                Der aktuelle MQTT-Zustand
+                <table class="table table-striped table-bottom-border mt-3 ml-5">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Typ</th>
+                        <th scope="col">Einheit</th>
+                        <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">connection_state</th>
+                            <td>int</td>
+                            <td></td>
+                            <td> Zustand der Verbindung zum MQTT-Broker:
+                                <ol class="ol-enum">
+                                <li><b>0</b> - Nicht konfiguriert</li>
+                                <li><b>1</b> - Nicht verbunden</li>
+                                <li><b>2</b> - Verbunden</li>
+                                <li><b>3</b> - Fehler</li>
+                            </ol></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">last_error</th>
+                            <td>int</td>
+                            <td></td>
+                            <td>Der zuletzt aufgetretene MQTT-Fehler. -1, wenn kein Fehler aufgetreten ist.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="mqtt_config">mqtt/config</div>
+                Die MQTT-Konfiguration. Diese kann über mqtt/config_update mit dem selben Payload aktualisiert werden. <b>Eine aktualisierte MQTT-Konfiguration wird erst nach einem Neustart des ESPs verwendet. Siehe <a class="scrollto" href="#reboot">reboot</a>.</b>
+                <table class="table table-striped table-bottom-border mt-3 ml-5">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Typ</th>
+                        <th scope="col">Einheit</th>
+                        <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">enable_mqtt</th>
+                            <td>bool</td>
+                            <td></td>
+                            <td>true wenn MQTT aktiviert ist, ansonsten false.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">broker_host</th>
+                            <td>string</td>
+                            <td></td>
+                            <td>Hostname oder IP-Adresse des MQTT-Brokers zu dem sich die Wallbox verbinden soll.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">broker_port</th>
+                            <td>int</td>
+                            <td></td>
+                            <td>Port des MQTT-Brokers zu dem sich die Wallbox verbinden soll. Typischerweise 1883.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">broker_username</th>
+                            <td>string</td>
+                            <td></td>
+                            <td>Username mit dem sich zum Broker verbunden werden soll. Leer falls keine Authentisierung verwendet wird.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">broker_password</th>
+                            <td>string</td>
+                            <td></td>
+                            <td>Passwort mit dem sich zum Broker verbunden werden soll. Leer falls keine Authentisierung verwendet wird. <b>Die Wallbox gibt gespeicherte Passwörter nicht zurück. Stattdessen wird <samp>null</samp> zurückgegeben.</b></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">global_topic_prefix</th>
+                            <td>string</td>
+                            <td></td>
+                            <td>Präfix der allen MQTT-Topics vorangestellt wird. Normalerweise warp/[UID der Wallbox]</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">client_name</th>
+                            <td>string</td>
+                            <td></td>
+                            <td>Name unter dem sich die Wallbox beim Broker registriert. <b>Das ist nicht der Username zur Authentisierung.</b></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <section id="wifi" class="section pt-4">
+            <header class="reference-section-header">
+                <h4>WLAN-Konfiguration</h4>
+            </header>
+            <ul class="ul-no-bullet">
+                <li>Zustände</li>
+                <ul>
+                    <li><a class="scrollto" href="#wifi_state">wifi/state</a></li>
+                </ul>
+                <li>Kommandos</li>
+                <ul>
+                    <li><a class="scrollto" href="#wifi_scan">wifi/scan</a></li>
+                </ul>
+                <li>Konfigurationen</li>
+                <ul>
+                    <li><a class="scrollto" href="#wifi_sta_config">wifi/sta_config</a></li>
+                    <li><a class="scrollto" href="#wifi_ap_config">wifi/ap_config</a></li>
+                </ul>
+            </ul>
+            <div>
+                <div class="h5" id="wifi_state">wifi/state</div>
+                Der aktuelle WLAN-Zustand.
+                <table class="table table-striped table-bottom-border mt-3 ml-5">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Typ</th>
+                        <th scope="col">Einheit</th>
+                        <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">connection_state</th>
+                            <td>int</td>
+                            <td></td>
+                            <td>Zustand der Verbindung zu einem WLAN:
+                                <ol class="ol-enum">
+                                    <li><b>0</b> - Nicht konfiguriert</li>
+                                    <li><b>1</b> - Nicht verbunden</li>
+                                    <li><b>2</b> - Verbinde</li>
+                                    <li><b>3</b> - Verbunden</li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ap_state</th>
+                            <td>int</td>
+                            <td></td>
+                            <td>Zustand des WLAN-Access-Points:
+                                <ol class="ol-enum">
+                                    <li><b>0</b> - Deaktiviert</li>
+                                    <li><b>1</b> - Aktiviert</li>
+                                    <li><b>2</b> - Fallback inaktiv</li>
+                                    <li><b>3</b> - Fallback aktiv</li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ap_bssid</th>
+                            <td>string</td>
+                            <td></td>
+                            <td>BSSID des WLAN-Access-Points.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="wifi_scan">wifi/scan</div>
+                Löst einen Scan nach WLANs aus. Die Scan-Ergebnisse können derzeit nur über HTTP abgefragt werden. <b>Leerer Payload. Es muss <code>null</code> übergeben werden.</b>
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="wifi_sta_config">wifi/sta_config</div>
+                Die WLAN-Verbindungskonfiguration. Diese kann über wifi/sta_config_update mit dem selben Payload aktualisiert werden. <b>Eine aktualisierte WLAN-Verbindungskonfiguration wird erst nach einem Neustart des ESPs verwendet. Siehe <a class="scrollto" href="#reboot">reboot</a>.</b>
+                <table class="table table-striped table-bottom-border mt-3 ml-5">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Typ</th>
+                        <th scope="col">Einheit</th>
+                        <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">enable_sta</th>
+                            <td>bool</td>
+                            <td></td>
+                            <td>true wenn eine WLAN-Verbindung aufgebaut werden soll, ansonsten false.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ssid</th>
+                            <td>string</td>
+                            <td></td>
+                            <td>SSID zu der sich verbunden werden soll. Maximal 32 Byte.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">bssid</th>
+                            <td>string</td>
+                            <td></td>
+                            <td>BSSID zu der sich verbunden werden soll. Dieser Eintrag ist optional und kann leer übergeben werden, wird aber für das bssid_lock benötigt.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">bssid_lock</th>
+                            <td>bool</td>
+                            <td></td>
+                            <td>Verbindet sich nur zum WLAN mit der übergebenen BSSID. Deaktiviert lassen, falls Repeater o.Ä. verwendet werden sollen.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">passphrase</th>
+                            <td>string</td>
+                            <td></td>
+                            <td>Die WLAN-Passphrase. Maximal 63 Byte. Dieser Eintrag ist optional und kann leer übergeben werden, falls sich zu einem unverschlüsselten WLAN verbunden werden soll. <b>Die Wallbox gibt gespeicherte Passwörter nicht zurück. Stattdessen wird <samp>null</samp> zurückgegeben.</b></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">hostname</th>
+                            <td>string</td>
+                            <td></td>
+                            <td>Hostname den die Wallbox im konfigurierten Netz verwenden soll.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ip</th>
+                            <td>int[4]</td>
+                            <td></td>
+                            <td>IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als [0, 0, 0, 0] übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">gateway</th>
+                            <td>int[4]</td>
+                            <td></td>
+                            <td>Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">subnet</th>
+                            <td>int[4]</td>
+                            <td></td>
+                            <td>Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">dns</th>
+                            <td>int[4]</td>
+                            <td></td>
+                            <td>DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">dns2</th>
+                            <td>int[4]</td>
+                            <td></td>
+                            <td>Alternative DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pt-5">
+                    <div class="h5" id="wifi_ap_config">wifi/ap_config</div>
+                    Die WLAN-Access-Point-Konfiguration. Diese kann über wifi/ap_config_update mit dem selben Payload aktualisiert werden. <b>Achtung! Wenn sowohl Access Point, als auch WLAN-Verbindung deaktiviert werden, kann der ESP nur noch durch einen Factory-Reset erreicht werden! Wir empfehlen, den Access Point immer im Fallback-Modus zu belassen.</b> <b>Eine aktualisierte WLAN-Access-Point-Konfiguration wird erst nach einem Neustart des ESPs verwendet. Siehe <a class="scrollto" href="#reboot">reboot</a>.</b>
+                    <table class="table table-striped table-bottom-border mt-3 ml-5">
+                        <thead class="thead-dark">
+                            <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Typ</th>
+                            <th scope="col">Einheit</th>
+                            <th scope="col">Bedeutung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">enable_ap</th>
+                                <td>bool</td>
+                                <td></td>
+                                <td>true wenn der Access Point aktiviert werden soll, ansonsten false.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">ap_fallback_only</th>
+                                <td>bool</td>
+                                <td></td>
+                                <td>true wenn der Access Point nur aktiviert werden soll, falls die WLAN-Verbindung fehlschlägt, ansonsten false.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">ssid</th>
+                                <td>string</td>
+                                <td></td>
+                                <td>SSID des Access Points. Maximal 32 Byte.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">hide_ssid</th>
+                                <td>bool</td>
+                                <td></td>
+                                <td>true falls die SSID versteckt werden soll, ansonsten false.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">passphrase</th>
+                                <td>string</td>
+                                <td></td>
+                                <td>Die WLAN-Passphrase. Maximal 63 Byte. <b>Die Wallbox gibt gespeicherte Passwörter nicht zurück. Stattdessen wird <samp>null</samp> zurückgegeben.</b></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">hostname</th>
+                                <td>string</td>
+                                <td></td>
+                                <td>Hostname den die Wallbox verwenden soll.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">ip</th>
+                                <td>int[4]</td>
+                                <td></td>
+                                <td>IP-Adresse, die die Wallbox verwenden soll.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">gateway</th>
+                                <td>int[4]</td>
+                                <td></td>
+                                <td>Gateway-Adresse, die die Wallbox verwenden soll.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">subnet</th>
+                                <td>int[4]</td>
+                                <td></td>
+                                <td>Subnetzmaske, die die Wallbox verwenden soll.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section id="misc" class="section pt-4">
+            <header class="reference-section-header">
+                <h4>Sonstiges</h4>
+            </header>
+            <ul class="ul-no-bullet">
+                <li>Zustände</li>
+                <ul>
+                    <li><a class="scrollto" href="#version">version</a></li>
+                    <li><a class="scrollto" href="#modules">modules</a></li>
+                </ul>
+                <li>Kommandos</li>
+                <ul>
+                    <li><a class="scrollto" href="#reboot">reboot</a></li>
+                </ul>
+            </ul>
+            <div>
+                <div class="h5" id="version">version</div>
+                Version der ESP-Firmware.
+                <table class="table table-striped table-bottom-border mt-3 ml-5">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Typ</th>
+                        <th scope="col">Einheit</th>
+                        <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">firmware</th>
+                            <td>string</td>
+                            <td></td>
+                            <td>Die Firmware-Version, die aktuell ausgeführt wird.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">spiffs</th>
+                            <td>string</td>
+                            <td></td>
+                            <td>Die Version der Konfiguration, die aktuell verwendet wird.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="modules">modules</div>
+                Initialisierungszustand der Firmware-Module.
+            </div>
+
+
+            <div class="pt-5">
+                <div class="h5" id="reboot">reboot</div>
+                Startet den ESP neu um Konfigurationsänderungen anzuwenden. <b>Leerer Payload. Es muss <code>null</code> übergeben werden.</b>
+            </div>
+        </section>
+        <section id="http-only" class="section pt-4">
+            <header class="reference-section-header">
+                <h4>HTTP-Spezifisch</h4>
+            </header>
+            <p>Zusätzlich zur eigentlichen API, die sowohl über MQTT, als auch HTTP, verwendet werden kann, werden die folgenden HTTP-Schnittstellen zur Verfügung gestellt.
+                Diese passen nicht in das bisher verwendete Schema von Zuständen, Kommandos und Konfigurationen, und können deshalb <strong>nur</strong> über HTTP verwendet werden.
+            </p>
+            <ul class="ul-no-bullet">
+                <ul>
+                    <li><a class="scrollto" href="#meter_history">meter/history</a>
+                    <li><a class="scrollto" href="#meter_live">meter/live</a>
+
+                    <li><a class="scrollto" href="#wifi_scan_results">wifi/scan_results</a>
+
+                    <li><a class="scrollto" href="#uptime">uptime</a>
+                    <li><a class="scrollto" href="#debug_report">debug_report</a>
+                    <li><a class="scrollto" href="#force_reboot">force_reboot</a>
+
+                    <li><a class="scrollto" href="#update">update</a>
+                    <li><a class="scrollto" href="#flash_firmware">flash_firmware</a>
+                    <li><a class="scrollto" href="#flash_spiffs">flash_spiffs</a>
+
+                </ul>
+            </ul>
+            <div>
+                <div class="h5" id="meter_history">meter/history</div> (nur WARP Charger Pro)
+                Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch <samp>null</samp> angezeigt.
+                Die Historie wird von hinten nach vorne gefüllt, sodass <samp>null</samp>-Werte nur geschlossen am Anfang des Arrays auftreten,
+                falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde.
+                Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="meter_live">meter/live</div> (nur WARP Charger Pro)
+                Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte wird einer der Durchschnittswerte für <a class="scrollto" href="#meter_history">meter/history</a> generiert.
+                <table class="table table-striped table-bottom-border mt-3 ml-5">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Typ</th>
+                        <th scope="col">Einheit</th>
+                        <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">samples_per_second</th>
+                            <td>float</td>
+                            <td><abbr title="Hertz">Hz</abbr></td>
+                            <td>Die Anzahl der gemessenen Werte pro Sekunde.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">samples</th>
+                            <td>int[...]</td>
+                            <td><abbr title="Watt">W</abbr></td>
+                            <td>Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="pt-5">
+                <div class="h5" id="wifi_scan_results">wifi/scan_results</div>
+                Die WLANs, die aufgrund einer durch <a class="scrollto" href="#wifi_scan">wifi/scan</a> ausgelösten Suche gefunden wurden. Ein Array aus Objekten des folgenden Formats:
+                <table class="table table-striped table-bottom-border mt-3 ml-5">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Typ</th>
+                        <th scope="col">Einheit</th>
+                        <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">ssid</th>
+                            <td>string</td>
+                            <td></td>
+                            <td>SSID des gefundenen WLANs. Leer bei versteckten Access Points.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">bssid</th>
+                            <td>string</td>
+                            <td></td>
+                            <td>BSSID des gefundenen WLANs</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">rssi</th>
+                            <td>int</td>
+                            <td>dBm</td>
+                            <td>Die Empfangsqualität des gefundenen WLANs. Immer ein negativer Wert, wobei Werte nahe 0 eine bessere Empfangsqualität bedeuten. <a href="https://en.wikipedia.org/wiki/Received_signal_strength_indication#In_802.11_implementations">Siehe hier für Details</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">channel</th>
+                            <td>int</td>
+                            <td></td>
+                            <td>Kanal des gefundenen WLANs</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">encryption</th>
+                            <td>int</td>
+                            <td></td>
+                            <td>Verschlüsselungsstandard des gefundenen WLANs
+                                <ol class="ol-enum">
+                                    <li><b>0</b> - Unverschlüsselt</li>
+                                    <li><b>1</b> - WEP</li>
+                                    <li><b>2</b> - WPA-PSK</li>
+                                    <li><b>3</b> - WPA2-PSK</li>
+                                    <li><b>4</b> - WPA/WPA2-PSK</li>
+                                    <li><b>5</b> - WPA2-Enterprise</li>
+                                    <li><b>6</b> - Unbekannt</li>
+                                </ol>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="uptime">uptime</div>
+                Die Laufzeit des ESPs seit dem letzten Neustart in Millisekunden.
+            </div>
+            <div class="pt-5">
+                <div class="h5" id="debug_report">debug_report</div>
+                Generiert einen Debug-Report. Dieser besteht aus allen Zuständen und Konfigurationen, sowie den letzten empfangenen Kommandos und Konfigurationsupdates. Passwörter werden, genau wie bei Konfigurationsabfragen, zensiert.
+            </div>
+            <div class="pt-5">
+                <div class="h5" id="force_reboot">force_reboot</div>
+                Erzwingt einen sofortigen Neustart des ESPs. Nützlich, falls <a class="scrollto" href="#reboot">reboot</a> aus irgendwelchen Gründen hängt.
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="update">update</div>
+                Notfall-Update-Seite mit der eine Firmware-Aktualisierung eingespielt werden kann, auch wenn das normale Webinterface nicht funktioniert.
+            </div>
+            <div class="pt-5">
+                <div class="h5" id="flash_firmware">flash_firmware</div>
+                Nimmt ein Firmware-Update als POST entgegen, dass dann geflasht wird.
+            </div>
+            <div class="pt-5">
+                <div class="h5" id="flash_spiffs">flash_spiffs</div>
+                Nimmt ein Update der Konfigurationspartition als POST entgegen, dass dann geflasht wird.
+            </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <!--==========================
+    Footer
+  ============================-->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-info">
+            <h3>WARP</h3>
+            <p>WARP ist die Elektromobiliätssparte von Tinkerforge.
+              Die Tinkerforge GmbH ist ein 2011 gegründetes Unternehmen, das echtes „Made in Germany" bietet.
+            </p>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Links</h4>
+            <ul>
+              <li><i class="ion-ios-arrow-right"></i> <a href="#intro">Start</a></li>
+              <li><i class="ion-ios-arrow-right"></i> <a href="https://www.tinkerforge.com/de/shop/warp/wallbox.html">Shop</a></li>
+              <li><i class="ion-ios-arrow-right"></i> <a href="https://www.tinkerforge.com/de/home/legal_info/">Impressum</a></li>
+              <li><i class="ion-ios-arrow-right"></i> <a href="https://www.tinkerforge.com/de/home/privacy_notice/">Datenschutz</a></li>
+              <li><i class="ion-ios-arrow-right"></i> <a href="https://www.tinkerforge.com/de/home/terms_and_conditions/">AGB</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h4>Kontakt</h4>
+            <p>
+              Tinkerforge GmbH <br>
+              Zur Brinke 7 <br>
+              33758 Schloß Holte-Stukenbrock<br>
+              Deutschland <br>
+              <strong>Telefon:</strong> 05207 / 8998614<br>
+              <strong>Email:</strong> info@tinkerforge.com<br>
+            </p>
+
+            <div class="social-links">
+              <a href="https://twitter.com/tinkerforge" class="twitter"><i class="fa fa-twitter"></i></a>
+              <a href="https://www.facebook.com/tinkerforge42" class="facebook"><i class="fa fa-facebook"></i></a>
+              <a href="https://www.instagram.com/tinkerforge" class="instagram"><i class="fa fa-instagram"></i></a>
+              <a href="https://www.linkedin.com/company/tinkerforge-gmbh/" class="linkedin"><i class="fa fa-linkedin"></i></a>
+            </div>
+
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-newsletter">
+            <h4>Über uns</h4>
+            <p>
+              Wir bei Tinkerforge sind der Meinung, dass Produkte offen sein müssen. Nur so gehören sie wirklich den
+              Nutzern. Daher folgen wir der Open‐Source‐Philosophie, indem wir die Quelltexte sowie Baupläne all unserer
+              Soft- und Hardware veröffentlichen und ermöglichen es so jedem Einzelnen, unsere Produkte nach eigenen
+              Wünschen zu verändern und zu erweitern. Durch die enge Zusammenarbeit mit unserer aktiven Community
+              entwickeln wir schnell kundenorientierte Lösungen.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </footer><!-- #footer -->
+
+  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+  <!-- JavaScript Libraries -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/jquery/jquery-migrate.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="lib/easing/easing.min.js"></script>
+  <script src="lib/superfish/hoverIntent.js"></script>
+  <script src="lib/superfish/superfish.min.js"></script>
+  <script src="lib/wow/wow.min.js"></script>
+  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+  <script src="lib/isotope/isotope.pkgd.min.js"></script>
+  <script src="lib/lightbox/js/lightbox.min.js"></script>
+  <script src="lib/touchSwipe/jquery.touchSwipe.min.js"></script>
+
+  <!-- Template Main Javascript File -->
+  <script src="js/main.js"></script>
+
+</body>
+</html>

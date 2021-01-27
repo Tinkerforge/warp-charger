@@ -25,12 +25,12 @@
 
 </head>
 
-<body>
+<body id="main_body">
 
   <!--==========================
     Header
   ============================-->
-  <header id="header">
+  <header id="header" class="header">
     <div class="container-fluid">
 
       <div id="logo" class="pull-left">
@@ -52,8 +52,7 @@
           <li><a href="#documents">Dokumente</a></li>
           <li class="menu-has-children"><a href="#MQTT">Open Source</a>
             <ul>
-              <li><a href="#MQTT">MQTT-API</a></li>
-              <li><a href="#open-source">Beispiele</a></li>
+              <li><a href="#MQTT">MQTT- und HTTP-API</a></li>
               <li><a href="#open-source">Quellcode</a></li>
             </ul>
           </li>
@@ -181,8 +180,8 @@
                 ein vorhandenes Netz eingebunden werden. Die WARP Charger Wallbox verfügt über
                 eine eigene Webseite, auf der der aktuellen Ladezustand angezeigt wird und du
                 Einstellungen vornehmen kannst. Du kannst über die Webseite zum Beispiel die
-                Ladeleistung konfigurieren. Über die MQTT-Schnittstelle der Wallbox kannst du
-                die Wallbox auch fernsteuern.
+                Ladeleistung konfigurieren. Über die MQTT- oder die HTTP-Schnittstelle der Wallbox
+                kannst du die Wallbox auch fernsteuern.
               </p>
               <p>Ab 749,00€ inklusive 19% MwSt.</p>
             </div>
@@ -202,7 +201,7 @@
                 bietet. Zusätzlich ist diese Wallbox aber mit einem MID-geeichten Zähler
                 ausgestattet. Dieser misst wie viel Energie (kWh) geladen
                 wurden und bietet dir Statistiken mit denen du einen Überblick über deine
-                Stromkosten erhältst. 
+                Stromkosten erhältst.
               </p>
               <p>Ab 899,00€ inklusive 19% MwSt.</p>
             </div>
@@ -288,7 +287,7 @@
             <h4 class="title"><a href="">Vernetzt und MID-konform</a></h4>
             <p class="description">
               <ul>
-                <li class="description">Per MQTT‐Schnittstelle fernsteuerbar</li>
+                <li class="description">Per MQTT‐ und HTTP-Schnittstelle fernsteuerbar</li>
                 <li class="description">Einbindung in Smart‐Home‐Lösungen wie openHAB, ioBroker, FHEM o.ä. möglich</li>
                 <li class="description">Schnittstellen für diverse Programmiersprachen vorhanden</li>
                 <li class="description">WLAN (Client oder Access Point), Webinterface zur Konfiguration und Statusanzeige</li>
@@ -422,7 +421,7 @@
               </figure>
 
               <div class="impressions-info">
-                Ohne Edelstahlfront 
+                Ohne Edelstahlfront
               </div>
             </div>
           </div>
@@ -507,20 +506,61 @@
     <!--==========================
       MQTT Section
     ============================-->
-  
+
     <section id="MQTT" class="section-bg wow fadeInUp">
       <div class="container">
 
         <header class="section-header">
-          <h3>MQTT API</h3>
+          <h3>MQTT- und HTTP-API</h3>
         </header>
 
         <div class="row">
-  				<div class="col-12 text-center">
-          Coming Soon...
-          </div>
-        </div>
+            <div class="col-12 text-center">
+                <p>Die Varianten WARP Charger Smart und WARP Charger Pro können über MQTT und HTTP den aktuellen Zustand melden und gesteuert werden. Durch eine
+                einfache, JSON-basierte API können schnell Ergebnisse erreicht werden:</p>
+            </div>
+            <div class="col-md-12 col-lg-4">
+                <pre style='color:#000000;background:#ffffff;'><span style='color:#696969; '># Verwendung der MQTT-API mit Python</span>
+<span style='color:#800000; font-weight:bold; '>import</span> paho<span style='color:#808030; '>.</span>mqtt<span style='color:#808030; '>.</span>client <span style='color:#800000; font-weight:bold; '>as</span> mqtt
+<span style='color:#800000; font-weight:bold; '>import</span> json
 
+<span style='color:#696969; '># Ausgabe des Ladestroms</span>
+<span style='color:#696969; '># wenn eine Zustandsmeldung</span>
+<span style='color:#696969; '># des Ladecontrollers eintrifft</span>
+<span style='color:#800000; font-weight:bold; '>def</span> on_message<span style='color:#808030; '>(</span>client<span style='color:#808030; '>,</span> userdata<span style='color:#808030; '>,</span> msg<span style='color:#808030; '>)</span><span style='color:#808030; '>:</span>
+  state <span style='color:#808030; '>=</span> json<span style='color:#808030; '>.</span>loads<span style='color:#808030; '>(</span>msg<span style='color:#808030; '>.</span>payload<span style='color:#808030; '>)</span>
+  amp <span style='color:#808030; '>=</span> state<span style='color:#808030; '>[</span><span style='color:#0000e6; '>"allowed_charging_current"</span><span style='color:#808030; '>]</span>
+  <span style='color:#800000; font-weight:bold; '>print</span><span style='color:#808030; '>(</span><span style='color:#0000e6; '>"Ladestrom: {} mA"</span><span style='color:#808030; '>.</span>format<span style='color:#808030; '>(</span>amp<span style='color:#808030; '>)</span><span style='color:#808030; '>)</span>
+
+<span style='color:#696969; '># Verbinden zum MQTT-Broker</span>
+client <span style='color:#808030; '>=</span> mqtt<span style='color:#808030; '>.</span>Client<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span>
+client<span style='color:#808030; '>.</span>on_message <span style='color:#808030; '>=</span> on_message
+client<span style='color:#808030; '>.</span>connect<span style='color:#808030; '>(</span><span style='color:#0000e6; '>"localhost"</span><span style='color:#808030; '>)</span>
+
+<span style='color:#696969; '># Reagiere auf Zustandsmeldungen</span>
+<span style='color:#696969; '># des Ladecontrollers</span>
+client<span style='color:#808030; '>.</span>subscribe<span style='color:#808030; '>(</span><span style='color:#0000e6; '>"warp/ABC/evse/state"</span><span style='color:#808030; '>)</span>
+
+client<span style='color:#808030; '>.</span>loop_forever<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span>
+</pre>
+            </div>
+            <div class="col-md-12 col-lg-4">
+                <pre style='color:#000000;background:#ffffff;'><span style='color:#696969; '># Abfrage über die HTTP-API</span>
+pi@raspberrypi<span style='color:#808030; '>:</span>~ <span style='color:#797997; '>$</span>
+curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:</span><span style='color:#40015a; '>/</span><span style='color:#40015a; '>/10.0.0.1/meter/state</span>
+<span style='color:#696969; '># Auslesen des Energie-Werts seit Reset</span>
+<span style='color:#e34adc; '>|</span> jq <span style='color:#0000e6; '>'.energy_rel'</span>
+<span style='color:#696969; '># Ergebnis in kWh</span>
+<span style='color:#008c00; '>706</span><span style='color:#800000; font-weight:bold; '>.</span><span style='color:#008c00; '>289978</span>
+</pre>
+            </div>
+            <div class="col-md-12 col-lg-4">
+                <b>TODO:Hier ein Node-RED-Beispiel-Flow?</b>
+            </div>
+        </div>
+        <div class="col-12 text-center">
+            <a href="api.html" class="btn btn-lg btn-primary">API-Dokumentation</a>
+        </div>
       </div>
     </section>
 
@@ -534,13 +574,13 @@
       <div class="container">
 
         <header class="section-header">
-          <h3>Beispiele und Quellcode</h3>
+          <h3>Quellcode</h3>
         </header>
 
         <div class="row">
-  				<div class="col-12 text-center">
-          Coming Soon...
-          </div>
+            <div class="col-12 text-center">
+                <b>TODO: Link auf das warp-charger Git</b>
+            </div>
         </div>
       </div>
     </section>
@@ -599,7 +639,7 @@
 
           <div class="col-lg-3 col-md-6 footer-info">
             <h3>WARP</h3>
-            <p>WARP ist die Elektromobiliätssparte von Tinkerforge. 
+            <p>WARP ist die Elektromobiliätssparte von Tinkerforge.
               Die Tinkerforge GmbH ist ein 2011 gegründetes Unternehmen, das echtes „Made in Germany" bietet.
             </p>
           </div>
