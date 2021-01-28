@@ -8,6 +8,7 @@ interface EVSEState {
     contactor_state: number,
     contactor_error: number,
     allowed_charging_current: number,
+    error_state: number,
     lock_state: number,
     time_since_state_change: number
     uptime: number
@@ -31,6 +32,7 @@ function update_evse_state(state: EVSEState) {
     util.update_button_group("btn_group_ac1", (state.contactor_state & 1) == 1 ? 1 : 0);
     util.update_button_group("btn_group_ac2", state.contactor_state > 1 ? 1 : 0);
     util.update_button_group("btn_group_contactor_error", state.contactor_error != 0 ? 1 : 0, state.contactor_error != 0 ? __("evse.script.error_code") + " " + state.contactor_error : null);
+    util.update_button_group("btn_group_error_state", state.error_state);
     util.update_button_group("btn_group_lock_state", state.lock_state);
 
     $('#uptime').val(util.format_timespan(Math.floor(state.uptime / 1000)));
@@ -230,6 +232,12 @@ export function getTranslation(lang: string) {
                     "contactor_ok": "OK",
                     "contactor_error": "Fehler",
                     "allowed_charging_current": "Erlaubter Ladestrom",
+                    "error_state": "Fehlerzustand",
+                    "error_ok": "OK",
+                    "error_switch": "Schalter",
+                    "error_calibration": "Kalibrierung",
+                    "error_contactor": "Schütz",
+                    "error_communication": "Kommunikation",
                     "lock_state": "Kabelverriegelung",
                     "lock_init": "Start",
                     "lock_open": "Offen",
@@ -320,6 +328,12 @@ export function getTranslation(lang: string) {
                     "contactor_ok": "OK",
                     "contactor_error": "Error",
                     "allowed_charging_current": "Allowed charging current",
+                    "error_state": "Error state",
+                    "error_ok": "OK",
+                    "error_switch": "Switch",
+                    "error_calibration": "Calibration",
+                    "error_contactor": "Contactor",
+                    "error_communication": "Communication",
                     "lock_state": "Cable lock",
                     "lock_init": "Init",
                     "lock_open": "Open",

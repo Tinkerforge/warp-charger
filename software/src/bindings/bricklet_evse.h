@@ -1,5 +1,5 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-12-17.      *
+ * This file was automatically generated on 2021-01-28.      *
  *                                                           *
  * C/C++ for Microcontrollers Bindings Version 2.0.0         *
  *                                                           *
@@ -279,6 +279,31 @@ typedef struct TF_EVSE {
 /**
  * \ingroup BrickletEVSE
  */
+#define TF_EVSE_ERROR_STATE_OK 0
+
+/**
+ * \ingroup BrickletEVSE
+ */
+#define TF_EVSE_ERROR_STATE_SWITCH 2
+
+/**
+ * \ingroup BrickletEVSE
+ */
+#define TF_EVSE_ERROR_STATE_CALIBRATION 3
+
+/**
+ * \ingroup BrickletEVSE
+ */
+#define TF_EVSE_ERROR_STATE_CONTACTOR 4
+
+/**
+ * \ingroup BrickletEVSE
+ */
+#define TF_EVSE_ERROR_STATE_COMMUNICATION 5
+
+/**
+ * \ingroup BrickletEVSE
+ */
 #define TF_EVSE_JUMPER_CONFIGURATION_6A 0
 
 /**
@@ -492,7 +517,7 @@ TF_ATTRIBUTE_NONNULL_ALL int tf_evse_callback_tick(TF_EVSE *evse, uint32_t timeo
  *
  * TODO
  */
-TF_ATTRIBUTE_NONNULL(1) int tf_evse_get_state(TF_EVSE *evse, uint8_t *ret_iec61851_state, uint8_t *ret_vehicle_state, uint8_t *ret_contactor_state, uint8_t *ret_contactor_error, uint16_t *ret_allowed_charging_current, uint8_t *ret_lock_state, uint32_t *ret_time_since_state_change, uint32_t *ret_uptime);
+TF_ATTRIBUTE_NONNULL(1) int tf_evse_get_state(TF_EVSE *evse, uint8_t *ret_iec61851_state, uint8_t *ret_vehicle_state, uint8_t *ret_contactor_state, uint8_t *ret_contactor_error, uint16_t *ret_allowed_charging_current, uint8_t *ret_error_state, uint8_t *ret_lock_state, uint32_t *ret_time_since_state_change, uint32_t *ret_uptime);
 
 /**
  * \ingroup BrickletEVSE

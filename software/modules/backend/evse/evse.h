@@ -29,6 +29,9 @@ private:
     void update_evse_max_charging_current();
     void update_evse_auto_start_charging();
     bool is_in_bootloader(int rc);
+    bool flash_firmware();
+    bool flash_plugin(int regular_plugin_upto);
+    bool wait_for_bootloader_mode(int mode);
 
     Config evse_state;
     Config evse_hardware_configuration;
