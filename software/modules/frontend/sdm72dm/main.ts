@@ -325,7 +325,7 @@ export function getTranslation(lang: string) {
                     "power": "Leistungs&shy;aufnahme",
                     "energy": "Strom&shy;verbrauch",
                     "energy_since_reset": "seit dem letzten Zurücksetzen",
-                    "energy_lifetime": "seit Herstellung"
+                    "energy_lifetime": "seit Herstellung des Stromzählers"
                 },
                 "script": {
                     "time": "Uhrzeit",
@@ -351,7 +351,7 @@ export function getTranslation(lang: string) {
                     "power": "Current power draw",
                     "energy": "Energy used",
                     "energy_since_reset": "since last reset",
-                    "energy_lifetime": "since manufactoring"
+                    "energy_lifetime": "since manufactoring of the energy meter"
                 },
                 "script": {
                     "time": "Time of day",
