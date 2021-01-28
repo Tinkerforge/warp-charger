@@ -70,7 +70,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 \newcommand{\gfx}[1]{\includegraphics[width=\linewidth]{#1}}
 
-\newcommand*{\fullref}[1]{\hyperref[{#1}]{\ref*{#1} \nameref*{#1}}}
+\newcommand*{\fullref}[1]{\hyperref[{#1}]{\ref*{#1}~\nameref*{#1}}}
 
 \fancyhf{}
 \fancyhead{\colorbox{boxgray}{
@@ -81,18 +81,26 @@ white,title=Hinweis]#1\end{tcolorbox}}
 }
 
 \usepackage{hyperref}
+\usepackage{qrcode}
+
+\appto\UrlNoBreaks{\do\.\do\:\do\/\do\_}
 
 \begin{document}
+\pagestyle{plain}
 \begin{titlepage}
-	Betriebsanleitung\hfill Version 0.6\hfill \today \centering \vfill
-	\colorbox{boxgray}{\makebox[\dimexpr\linewidth-2\fboxsep][c]{\includegraphics[width=0.6\textwidth]{./img/resized/logo}}} \vfill \textcolor{red}{Work in progress!} \vfill
-	\textcolor{red}{Dieses Dokument befindet sich noch in der Erstellung und wird zusammen mit dem
-		Versand der ersten Wallboxen im Januar fertiggestellt. Die Wallbox-Software
-		befindet sich aktuell ebenfalls noch in der Entwicklung und wird ebenfalls im
-		Januar veröffentlicht. Die Screenshots des Web-Interfaces stellen den aktuellen
-		Entwicklungsstand dar, so dass sich gegenüber der Januar Version noch Änderungen ergeben werden. Wir
-		planen die Software-Funktionen bis dahin noch zu erweitern.}\fxnote{Alles ab \enquote{Die Screenshots} weglassen?} \vfill \gfx{./img/resized/warp_perspective_blue_ready}
+	\vspace*{-3.08cm}
+	\colorbox{boxgray}{\makebox[\dimexpr\linewidth-2\fboxsep][c]{\includegraphics[width=0.6\textwidth]{./img/resized/logo}}}
+	\vfill
+	\begin{center}
+		\Huge
+		WARP Charger Betriebsanleitung\\\vspace{1cm}
+		\large
+		Version 0.7\\\vspace{0.25cm}
+		\today
+	\end{center}
+	\vfill \gfx{./img/resized/warp_perspective_blue_ready}
 \end{titlepage}
+\pagestyle{fancy}
 
 \begin{multicols*}{2}
 	\tableofcontents \section{Einführung}
@@ -141,14 +149,15 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	Stromkosten erhältst.
 
 	\gfx{./img/resized/type_2_connector_ready}
+
 	Alle Wallboxen werden mit einem fest angeschlossenen
-	\SI{5}{\meter}-/\SI{7,5}{\meter}-Ladekabel mit Typ-2-Stecker geliefert. Die Modelle WARP
-	Charger Basic und Smart sind ohne Anschlusskabel (Anschluss über interne
-	Klemmen) oder mit einem \SI{2}{\meter}-Anschlusskabel mit CEE-Stecker
+	\SI{5}{\meter}- oder \SI{7,5}{\meter}-Ladekabel mit Typ-2-Stecker geliefert. Die Modelle WARP
+	Charger Basic und Smart sind ohne Anschlusskabel (Anschluss der Zuleitung)
+	oder mit einem \SI{2}{\meter}-Anschlusskabel mit CEE-Stecker
 	erhältlich. Das Modell WARP Charger Pro wird immer mit einem
 	\SI{2}{\meter}-Anschlusskabel ausgeliefert, da auf Grund des zusätzlich
-	verbauten Stromzählers nicht genug Platz zur Verfügung steht, um ein
-	Anschlusskabel direkt anzuschließen. Es gibt daher die Varianten mit
+	verbauten Stromzählers nicht genug Platz zur Verfügung steht, um eine Zuleitung
+	direkt anzuschließen. Es gibt daher die Varianten mit
 	\SI{2}{\meter}-Kabel und offenen Kabelenden und
 	\SI{2}{\meter}-Kabel mit CEE-Stecker.
 
@@ -203,7 +212,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	permanente Erdungsüberwachung (PE). Ist die Erdung unterbrochen, so geht die
 	Wallbox in einen Fehlerzustand. Als letztes prüft die Box bei jedem
 	Schaltvorgang, ob das verbaute Leitungsschütz korrekt schaltet. Sollte das
-	Schütz defekt sein (schaltet nicht an/schaltet nicht ab), geht die Wallbox
+	Schütz defekt sein (schaltet nicht an oder ab), geht die Wallbox
 	ebenfalls in einen Fehlerzustand.
 
 	\section{Montage und Installation}
@@ -221,11 +230,10 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	Nach Möglichkeit sollte die Wallbox vor Witterungseinflüssen geschützt
 	installiert werden. Direkte Sonneneinstrahlung ist zu vermeiden, um ein
 	unnötiges Aufheizen der Wallbox zu verhindern. Auf eine ausreichende Belüftung
-	ist zu achten.\fxnote{Man sollte in der ganzen Anleitung mal konsistent passiv oder
-		\enquote{du} benutzen}
+	ist zu achten.
 
 	\subsubsection{Wandmontage}\label{wandmontage}
-	Zur Montage der Wallbox muss der Frontdeckel entfernt werden. Dazu müssen die
+	Zur Montage der Wallbox muss der Deckel entfernt werden. Dazu müssen die
 	vier Kreuzschlitzschrauben gelöst werden.
 
 	\gfx{./img/resized/warp_screw_points_ready}
@@ -235,8 +243,8 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	\gfx{./img/resized/warp_button_connect_arrow_ready}
 
 	Achtung! Der Taster im Deckel ist über ein Anschlusskabel verbunden und muss
-	durch Drücken der Raste\fxnote{Pfeil ins Bild?} vom Kabel gelöst werden.
-	Zusätzlich muss der Erdungsstecker von der Frontblende abgesteckt werden. 
+	durch Drücken der Raste vom Kabel gelöst werden.
+	Zusätzlich muss der Erdungsstecker von der Frontblende abgesteckt werden.
 	Erst danach kann der Deckel vollständig zur Seite gelegt werden.
 
 	Nach Entfernen des Deckels kann das Gehäuse an die Wand montiert werden. Zum
@@ -252,16 +260,16 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	Die Wallbox verfügt über eine interne DC-Fehlerstromerkennung, welche
 	bei einem DC-Fehlerstrom $\geq \SI{6}{\milli\ampere}$ einen
 	$\SI{70}{\milli\ampere}$-AC-Fehlerstrom erzeugt, der dazu gedacht ist einen
-	vorgeschalteten AC-Fehlerstromschutzschalter (RCD) auszulösen.
-	\textbf{Um im Fehlerfall eine Abschaltung zu garantieren ist daher ein vorgeschalteter
-		\SI{30}{\milli\ampere}-Fehlerstromschutzschalter (RCD) Typ-A notwendig.} Die Wallbox darf nur in einem TN/TT-Netz angeschlossen
+	vorgeschalteten AC-Fehler-stromschutzschalter (RCD) auszulösen.
+	\hint{Um im Fehlerfall eine Abschaltung zu garantieren ist daher ein vorgeschalteter
+		\SI{30}{\milli\ampere}-Fehlerstromschutzschalter (RCD) Typ-A notwendig.} Die Wallbox darf nur in einem TN / TT-Netz angeschlossen
 	werden.
 
 	\newpage
 	\subsection{Elektrischer Anschluss}
-	\hint{Die in diesem Kapitel genannten Arbeiten dürfen nur von einer ausgewiesenen
+	\hint{Die in diesem Kapitel beschriebenen Arbeiten dürfen nur von einer ausgewiesenen
 		Elektrofachkraft durchgeführt werden.}
-	Der elektrische Anschluss unterscheidet sich bei den Varianten Basic/Smart
+	Der elektrische Anschluss unterscheidet sich bei den Varianten Basic / Smart
 	(ohne Zähler) und Pro (mit Zähler).
 
 	% Force non-floating figure. Floating envs are not allowed in multicol.
@@ -275,22 +283,22 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		\caption*{WARP Charger Pro.}
 	\end{figure}
 
-	\subsubsection{Variante Basic/Smart}
+	\subsubsection{Variante Basic / Smart}
 	Nachdem die Wallbox montiert wurde, kann diese nun angeschlossen werden. Dazu
 	ist zusätzlich zum Deckel (siehe \fullref{wandmontage}) auch der interne
 	Berührungsschutz zu entfernen. Dieser wird durch Lösen der vier
-	Kreuschlitzschrauben entfernt.
+	Schlitzschrauben entfernt.
 
 	Bei der Variante Smart ist auf dem Berührungsschutz ein Controller
-	angeschlossen. Zu diesem führen zwei Kabel: Ein 2poliges
-	Stromversorgungskabel und ein 7-adriges Kabel über das die Verbindung mit dem
-	EVSE Bricklet auf der Hutschiene hergestellt wird. Eigentlich reicht es aus
+	angeschlossen. Zu diesem führen zwei Kabel: Ein zweipoliges
+	Stromversorgungskabel und ein siebenpoliges Bricklet-Kabel über das die Verbindung mit dem
+	Ladecontroller (EVSE Bricklet) auf der Hutschiene hergestellt wird. Eigentlich reicht es aus
 	den Berührungsschutz ohne Trennung dieser Leitungen einfach an die Seite zu
-	legen. Soll dennoch der Berührungsschutz vollständig entfernt werden, so 
-	müssen diese Kabel getrennt werden. Dazu ist das 2-polige 
-	Stromversorgungskabel auf der Unterseite des Controllers auf dem 
-	Berührungsschutz auszustecken. Die Verbindung zum Ladecontroller (EVSE) wird 
-	am besten direkt an dem Hutschienenmodul gelöst. Das Kabel verfügt über 
+	legen. Soll dennoch der Berührungsschutz vollständig entfernt werden, so
+	müssen diese Kabel getrennt werden. Dazu ist das zweipolige
+	Stromversorgungskabel auf der Unterseite des Controllers auf dem
+	Berührungsschutz auszustecken. Die Verbindung zum Ladecontroller wird
+	am besten direkt an dem Hutschienenmodul gelöst. Das Bricklet-Kabel verfügt über
 	eine kleine Verriegelungstaste, diese muss zum Entfernen gedrückt werden.
 
 	\gfx{./img/resized/warp_cable_cut_ready}
@@ -309,40 +317,41 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	werden kann.  Als letztes muss die Kabelverschraubung festgezogen werden.
 
 	Der korrekte Sitz der Adern und die Phasenzugehörigkeit ist nach der
-	Installation zu prüfen!
+	Installation zu prüfen! Fortfahren mit \fullref{ladestrom_schalter}!
 
 	\gfx{./img/resized/warp_wire_ready}
 
 	\subsubsection{Variante Pro}
 	Die Variante Pro wird direkt mit einer \SI{2}{\meter}-Gummileitung vom
-	Typ H07RN-F 5G ausgeliefert (4mm² bei 11kW, 6mm² bei 22kW Variante). 
+	Typ H07RN-F 5G ausgeliefert (\SI{4}{\milli\meter\squared} bei \SI{11}{\kilo\watt}, \SI{6}{\milli\meter\squared} bei \SI{22}{\kilo\watt}).
 	Diese wird extern mit der Zuleitung verbunden, zum
 	Beispiel über eine Verteilerdose.
 
 	Der korrekte Sitz der Adern und die Phasenzugehörigkeit ist nach der
-	Installation zu prüfen!
+	Installation zu prüfen! Fortfahren mit \fullref{ladestrom_schalter}!
 
-	\subsubsection{Einstellen des Ladestroms}
+	\subsubsection{Einstellen des Ladestroms (Alle Varianten)}\label{ladestrom_schalter}
 	Der maximal erlaubte Ladestrom muss abhängig von der gebäudeseitigen
 	Leitungsabsicherung eingestellt werden. Der Ladestrom darf nicht höher gewählt
 	werden, als die Leitungsabsicherung es zulässt.
 
 	Zum Einstellen des Ladestroms muss der Deckel (siehe \fullref{wandmontage})
-	und der interne Berührungsschutz entfernt werden. Der Berührungsschutz wird
-	durch Lösen der vier Kreuzschlitzschrauben entfernt. Achtung! Vom
+	und der interne Berührungsschutz geöffnet werden. Der Berührungsschutz wird
+	durch Lösen der vier Schlitzschrauben entfernt. Achtung! Vom
 	Berührungsschutz gehen mehrere Kabel in die Wallbox. Zum Einstellen des
 	Ladestroms muss der Berührungsschutz nicht vollständig entfernt werden,
 	so dass die Kabel angeschlossen bleiben dürfen.
+
+	\gfx{./img/resized/warp_evse_switch_cut_ready_small}
 
 	Über zwei Schiebeschalter auf dem internen Ladecontroller (EVSE) wird der
 	maximale Ladestrom eingestellt. Die verschiedenen Schalterstellungen sind neben
 	den Schaltern dokumentiert. Der weiße Block stellt dabei jeweils die Position
 	des Schalters dar. Im Auslieferungszustand sind die Schalter so eingestellt,
-	dass die Wallbox inaktiv ist. Im nachfolgenden Foto sind exemplarisch beide
-	Schalter auf die mittlere Position gestellt worden. 
-	\gfx{./img/resized/warp_evse_switch_cut_ready} Damit wurde eine
+	dass die Wallbox inaktiv ist. Im obigen Foto sind exemplarisch beide
+	Schalter auf die mittlere Position gestellt worden. Damit wurde eine
 	maximale Ladeleistung von \SI{11}{\kilo\watt} (\SI{16}{\ampere}) vorgegeben.
- 	\hint{Die Schalterstellung und der damit verbundene maximale Ladestrom darf nach der
+	\hint{Die Schalterstellung und der damit verbundene maximale Ladestrom darf nach der
 		Installation nur von einer ausgewiesenen Elektrofachkraft unter
 		Berücksichtigung der genannten Bedingungen geändert werden!}
 
@@ -352,7 +361,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	wurde die Wallbox geprüft, das Messprotokoll liegt der Wallbox bei.
 
 	Wird die Stromversorgung zur Wallbox unterbrochen und wieder eingeschaltet, so
-	sind unbedingt ca. 10 Sekunden abzuwarten („Wallbox-LED blinkt sehr schnell“)
+	sind unbedingt ca. 12 Sekunden abzuwarten („Wallbox-LED blinkt sehr schnell“)
 	bis die DC-Fehlerstromerkennungskalibrierung durchgeführt wurde. Wird in
 	dieser Zeit dennoch ein Fahrzeug angeschlossen, so erkennt die Wallbox dies
 	als Fehlerfall und muss nach Trennung des Fahrzeugs noch einmal vom Strom
@@ -360,20 +369,26 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 	Bei der Messung des Isolationswiderstands wird für L1 ein niedrigerer Wert
 	gemessen (ca. \SI{249}{\kilo\ohm}). Dies hat den Hintergrund, dass
-	der\fxnote{das?} verbaute EVSE über je einen Optokoppler mit
+	der verbaute Ladecontroller über je einen Optokoppler mit
 	\SI{249}{\kilo\ohm} Vorwiderstand, vor und nach dem Schütz, zwischen L1 und
 	PE verfügt (Erdungsüberwachung, Schützüberwachung).
 
 	Der DC-Fehlerstromschutz kann getestet werden indem der Taster (siehe
 	nachfolgendes Foto) auf dem DC-Fehlerstromschutzmodul gedrückt wird. In diesem
 	Fall wird ein AC-Fehlerstrom erzeugt, welcher den vorgeschalteten
-	AC-Fehlerstromschutzschalter auslöst. \gfx{./img/resized/warp_hole_button_ready} \newpage
-	\section{Bedienung / Erstinbetriebnahme} \gfx{./img/resized/warp_button_key_ready} Nachdem die Wallbox installiert
+	AC-Fehlerstromschutzschalter auslöst.
+	\vfill
+	\gfx{./img/resized/warp_hole_button_ready}
+	\section{Bedienung / Erstinbetriebnahme}
+
+	\gfx{./img/resized/warp_button_key_ready}
+
+	Nachdem die Wallbox installiert
 	und die korrekte elektrische Installation überprüft wurde, kann die Wallbox in
 	Betrieb genommen werden. Dazu darf kein Fahrzeug an der Wallbox angeschlossen
 	sein. Im ersten Schritt wird die Stromversorgung zur Wallbox eingeschaltet. Die
 	blaue LED (1) der Wallbox blinkt anschließend sehr schnell. Die Wallbox führt
-	für die ersten 10 Sekunden eine Kalibrierung der
+	für die ersten 12 Sekunden eine Kalibrierung der
 	DC-Fehlerstrom-Schutzeinrichtung durch. Nach Abschluss dieser Kalibrierung
 	leuchtet die LED dauerhaft. Die Wallbox ist nun betriebsbereit. Sollte die LED
 	nicht permanent leuchten, so wurde ein Fehler erkannt (siehe
@@ -398,117 +413,174 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	werden.
 
 	\section{Webinterface}
-	\hint{Die Software der Wallbox ist aktuell noch in der Entwicklung aktuell
-		dokumentiert ist der aktuelle Stand. Zur Auslieferung im Januar 2021 werden
-		noch Funktionen hinzukommen!}
 	Das Webinterface der Wallbox ist nur bei den Varianten Smart und Pro verfügbar.
 
+	Über das Webinterface kannst du unter anderem das Laden steuern und überwachen.
 	Die Wallbox kann sich sowohl als Client mit einem bestehenden WLAN verbinden,
 	als auch als Access Point einen eigenes WLAN eröffnen. Der Betrieb von Client
-	und Access Point ist parallel möglich. Im Auslieferungszustand öffnet die
-	Wallbox einen Access Point, auf den du dich verbinden kannst.
+	und Access Point ist parallel möglich.
 
-	Zusammen mit der Wallbox hast du ein Dokument erhalten, welches die
-	Zugangsdaten (SSID, Passwort) dokumentiert. Jede Wallbox besitzt individuelle
-	Zugangsdaten.  Über diese Zugangsdaten kannst du dich mit der Wallbox im
-	Auslieferungszustand verbinden.
+	\subsection{Ersteinrichtung}
+	Im Auslieferungszustand öffnet die Wallbox einen WLAN-Access-Point, über den
+	die Konfiguration des Web-Interfaces vorgenommen werden kann.
+	Die Zugangsdaten des Access Points findest du auf dem WLAN-Zugangsdaten-Aufkleber
+	auf der Rückseite dieser Anleitung. Du kannst entweder der QR-Code des Aufklebers verwenden,
+	der das WLAN automatisch konfiguriert, oder SSID und Passphrase abschreiben.
+
+	\begin{minipage}{0.35\textwidth}
+		Wenn die Verbindung mit dem Access Point der Wallbox hergestellt ist, kannst du das Webinterface
+		unter \url{http://10.0.0.1} erreichen. Alternativ kannst du den nebenstehenden QR-Code scannen.
+	\end{minipage}\hfill
+	\begin{minipage}{0.12\textwidth}
+		\begin{flushright}
+			\qrcode{http://10.0.0.1}
+		\end{flushright}
+	\end{minipage}
+
+	Die Wallbox kann jetzt in ein vorhandenes WLAN eingebunden werden.
+	\subsubsection{Einbinden in ein vorhandenes WLAN}
+	\gfx{./img/resized/web_wifi_sta}
+	Auf der Unterseite \enquote{WLAN-Verbindung} kannst du die Verbindung zu einem WLAN konfigurieren.
+	Durch Drücken des Netzwerksuche-Buttons öffnet sich ein Menü, in dem das gewünschte WLAN ausgewählt werden kann.
+	Es werden dann automatisch Netzwerkname (SSID) und BSSID eingetragen, sowie die Verbindung beim Neustart aktiviert.
+	Gegebenenfalls musst du jetzt noch die Passphrase des gewählten Netzes eintragen.
+
+	Falls die Wallbox sich zu einem versteckten Access Point verbinden soll, musst du den Netzwerkname selbst eingeben,
+	nachdem das Netzwerk mit der passenden BSSID ausgewählt wurde.
+
+	Du kannst jetzt die Konfiguration mit dem Speichern-Button abspeichern.
+	Das Webinterface startet dann neu und verbindet sich zum konfigurierten WLAN. Die Statusseite zeigt
+	an, ob die Verbindung erfolgreich war. Der Access Point bleibt weiterhin
+	geöffnet, sodass Konfigurationsfehler behoben werden können.
+
+	Bei einer erfolgreichen Verbindung sollte die Wallbox jetzt im konfigurierten Netz unter
+	\url{http://[konfigurierter_hostname]}, z.B. \url{http://warp-ABC} erreichbar sein.
+
+	\subsubsection{Konfiguration des Access Points}
+	\gfx{./img/resized/web_wifi_ap}
+	Der Access Point kann in einem von zwei Modi betrieben werden: Entweder kann er immer aktiv sein,
+	oder nur dann, wenn die Verbindung zu einem anderen WLAN nicht konfiguriert oder fehlgeschlagen ist.
+	Außerdem kann der Access Point komplett deaktiviert sein.
+	\hint{Wir empfehlen, den Access Point nie komplett zu deaktivieren, da sonst bei einer
+		fehlgeschlagenen Verbindung zu einem anderen Netz das Webinterface nicht mehr erreicht
+		werden kann. Die einzige Möglichkeit das Interface wieder zu erreichen ist dann ein Zurücksetzen auf Werkszustand, siehe \ref{reset}}
+	Der Modus des Access Points und weitere Einstellungen wie Netzwerkname, Passphrase usw. können
+	auf der Unterseite \enquote{WLAN-Access-Point} konfiguriert werden.
 
 	\subsection{Startseite / Status}
 	\gfx{./img/resized/web_status}
-	Die Startseite des Webinterfaces zeigt kompakt den aktuellen Ladestatus der 
-	Wallbox, sowie Ladezeit und -strom, und erlaubt es die Ladung zu steuern. 
-	Es kann sowohl das automatische Laden (de-)aktiviert werden, als auch 
-	manuell eine Ladung gestartet oder gestoppt werden.
+	Die Startseite des Webinterfaces zeigt kompakt den aktuellen Ladestatus der
+	Wallbox, sowie Ladezeit und -strom, und erlaubt es die Ladung zu steuern.
+	Du kannst hier sowohl das automatische Laden (de-)aktivieren, als auch
+	manuell eine Ladung starten oder stoppen.
 
-	In der Variante Pro mit verbautem Stromzähler wird zusätzlich der Ladeverlauf 
+	In der Variante Pro mit verbautem Stromzähler wird zusätzlich der Ladeverlauf
 	über die letzten 48 Stunden und die aktuelle Leistungsaufnahme gezeigt.
 
 	Der \textbf{Ladestatus} gibt dir die Information ob aktuell ein
 	Fahrzeug mit der Wallbox verbunden ist und ob dieses geladen wird.
 
 	Der \textbf{Ladestrom} zeigt dir an mit welchem Strom das Fahrzeug geladen
-	wird/würde. Über \textbf{Set} kannst du diesen Strom innerhalb der Min-
+	wird / würde. Über den Haken kannst du diesen Strom innerhalb der Min-
 	und Max-Grenzen einstellen. Minimal können 6A eingestellt werden. Das
 	Maximum hängt von der Hardwarekonfiguration deiner Wallbox ab.
-	
+
 	Die \textbf{Ladekontrolle} ermöglicht es dir manuell einen Ladevorgang zu
-	starten oder abzubrechen (Start/Stop). Wenn du \textbf{Autostart}
+	starten oder abzubrechen (Start / Stop). Wenn du \textbf{Autostart}
 	einschaltest, startet der Ladevorgang automatisch sobald ein Fahrzeug
 	angeschlossen wird.
 
 	\textbf{Ladeverlauf und Leistungsaufnahme} sind nur in der Pro Variante
 	vorhanden. Hier werden dir die aktuelle Leistungsaufnahme und ein Chart über
-	die letzten 24 Stunden angezeigt.
+	die letzten 48 Stunden angezeigt.
 
-	Der \textbf{WLAN-Verbindung zu ...} Zeigt dir im Namen an zu welchem WLAN 
+	\textbf{WLAN-Verbindung zu ...} zeigt dir im Namen an zu welchem WLAN
 	Netz sich die Wallbox verbinden soll und wie der Status der Verbindung ist.
 
-	Der \textbf{WiFi Access Point} Status besitzt verschiedene Zustände: Status
-	„Active“ bedeutet, dass die Wallbox permanent ihr eigenes WLAN eröffnet. Der
-	Status ist „Fallback inactive“ wenn die Wallbox mit einem anderen WLAN
-	erfolgreich verbunden ist, sie ist aber so konfiguriert, das sie den Access
-	Point nur öffnet, wenn etwas schief geht und sie sich nicht verbinden kann.
-	„Fallback Active“ ist der Status, wenn die Wallbox so konfiguriert ist, das sie
-	den Access Point nur öffnet, wenn etwas schief geht und sie sich nicht
-	verbinden kann. Dies ist dann der Fall. „Deactivated“ bedeutet, dass die Access
-	Point Funktionalität deaktiviert hast.
+	Der \textbf{WLAN-Access-Point}-Status bildet den Status des Access Points ab.
+	\enquote{Deaktiviert} beziehungsweise \enquote{Aktiviert} zeigt den Zustand, wenn der Access Point nicht
+	nur als Fallback für die WLAN-Verbindung verwendet wird. Falls der Status \enquote{Fallback inaktiv} ist,
+	war die WLAN-Verbindung erfolgreich und der Access Point wurde deshalb deaktiviert.
+	Beim Status \enquote{Fallback aktiv} ist der Aufbau der WLAN-Verbindung fehlgeschlagen und der
+	Access Point wurde deshalb aktiviert.
 
-	\subsection{EVSE}
+	\textbf{MQTT-Verbindung zu ...} zeigt den aktuellen Status der MQTT-Verbindung
+	zum konfigurierten Broker.
+
+	\subsection{Ladecontroller}
 	\gfx{./img/resized/web_evse}
 	Die Unterseite des Ladecontrollers gibt detaillierte Auskunft über den Zustand
-	des Ladecontrollers (des EVSE Bricklets) und dessen Hardware-Konfiguration. Der
-	erlaubte Ladestrom, mit dem ein Auto geladen werden kann, ist das Minimum des 
-	konfigurierten Ladestroms und der Maximalströme des eingehenden 
-	(zur Stromversorgung) und ausgehenden (zum Auto) Kabels.
+	des Ladecontrollers (des EVSEs) und dessen Hardware-Konfiguration. Der
+	erlaubte Ladestrom, mit dem ein Auto geladen werden kann, ist das Minimum des
+	konfigurierten Ladestroms und der Maximalströme der Zuleitung und des Typ-2-Kabels.
 
-	Falls Probleme beim Laden auftreten können diese mit den Informationen dieser 
-	Seite diagnostiziert werden.
+	Probleme beim Laden kannst du mit den Informationen dieser
+	Seite diagnostizieren werden.
 
 	\subsection{Stromzähler}
-	\gfx{./img/resized/web_counter}
-	Diese Ansicht ist nur für die Pro Variante der Wallbox nutzbar. Auf der Seite
+	\gfx{./img/resized/web_meter}
+	(Nur bei der Variante WARP Charger Pro). Auf der Seite
 	siehst du ein Diagramm mit der Leistungsaufnahme für die letzten 24h und die
 	Statistiken dazu.
 
-	\subsection{WLAN}
-	\gfx{./img/resized/web_wifi}
-	In den WLAN Einstellungen kannst du dich mit deinem eigenen WLAN verbinden. Dazu
-	wählst du einfach das von der Wallbox gefundene WLAN aus und gibst die
-	Zugangsdaten ein. Anschließend konfigurierst du einen möglichen Fallback auf
-	den Access Point Betrieb und schließt die Konfiguration ab.
-	
-	\subsection{Bricklets}
-	Hier findest du Informationen zu den an dem ESP32 Brick angeschlossenen
-	Bricklets.
-
 	\subsection{System}
+	\gfx{./img/resized/web_system}
 	Hier kannst du die Firmware der Wallbox updaten. Wir werden die Funktionalität
-	laufend weiterentwickeln.
+	laufend weiterentwickeln. Aktuelle Firmwares findest du unter \url{https://warp-charger.com}
 
-	\section{MQTT-Schnittstelle zur Fernsteuerung der Wallbox}
-	Per MQTT kann die Wallbox ferngesteuert werden. Eine Einbindung in
-	Hausautomatisationssysteme wie openHAB, ioBroker, FHEM o.ä. ist somit einfach
-	möglich.
+	\newpage
+	\subsection{Zurücksetzen auf Auslieferungszustand}\label{reset}
+	Falls das Webinterface nicht korrekt funktioniert, oder die Konfiguration defekt ist,
+	kannst du auf der System-Unterseite alle Einstellungen auf den Auslieferungszustand zurücksetzen.
+	Das Zurücksetzen dauert ungefähr eine Minute, danach startet das Webinterface wieder und öffnet
+	den Access Point mit dem Netzwerknamen und Passwort, die auf dem Aufkleber vermerkt sind.
 
-	Die Spezifikation der MQTT Schnittstelle folgt noch und wird bald
-	nachdokumentiert. Die Schnittstelle ermöglicht das Auslesen der
-	Statusinformationen der Wallbox und die Einstellung der aktuellen Ladeleistung.
-	\newpage \section{Fehlerbehebung}\label{fehlerbehebung} \subsection{Tabelle zur Fehlersuche}
-	Fehlerzustände werden von der Wallbox durch die LED in der Frontplatte
-	dargestellt. Bei den Modellen Smart und Pro gibt die Statusseite des EVSE
+	Falls du das Webinterface nicht mehr erreichen kannst, kannst du das Zurücksetzen auch
+	auslösen, indem du den Deckel abschraubst und den linken Button des ESP32 Bricks (markiert mit IO0)
+	10 Sekunden lang gedrückt hältst. Die grüne LED sollte diese 10 Sekunden lang leuchten und danach dreimal blinken.
+
+	\vspace{0.25cm}
+
+	\gfx{./img/resized/warp_esp_open}
+	\newpage
+	\section{MQTT- und HTTP-Schnittstelle zur Fernsteuerung der Wallbox}
+	Die Wallbox kann per MQTT oder HTTP ferngesteuert werden. Über diese Schnittstellen ist eine
+	Einbindung in Hausautomatisationssysteme wie openHAB, ioBroker, FHEM o.ä. möglich. Die aktuelle
+	Dokumentation der Schnittstellen findet sich auf \url{https://warp-charger.com/api.html}
+
+	\gfx{./img/resized/web_mqtt}
+	Auf der MQTT-Unterseite kannst du die Verbindung zu einem MQTT-Broker konfigurieren. Folgende Einstellungen können vorgenommen werden:
+	\begin{itemize}
+		\item \textbf{Broker-Hostname oder IP-Adresse} Der Hostname oder die IP-Adresse des Brokers zu dem sich die Wallbox verbinden soll.
+		\item \textbf{Broker-Port} Der Port unter dem der Broker erreichbar ist. Der typische MQTT-Port 1883 ist voreingestellt.
+		\item \textbf{Broker-Benutzername und Passwort} Manche Broker unterstützen eine Authentifizierung mit Benutzername und Passwort.
+		\item \textbf{Topic-Präfix} Dieser Präfix wird allen Topics vorangestellt, die die Wallbox verwendet.
+		      Voreingestellt ist warp/ABC wobei ABC eine eindeutige Kennung pro Wallbox ist,
+		      es sind aber andere Präfixe wie z.B. garage\_links möglich.
+		      Falls mehrere Wallboxen mit dem selben Broker kommunizieren,
+		      müssen eindeutige Präfixe pro Box gewählt werden.
+		\item \textbf{Client-ID} Mit dieser ID registriert sich die Wallbox beim Broker.
+	\end{itemize}
+	Nachdem die Konfiguration gesetzt und der \enquote{MQTT aktivieren}-Schalter gesetzt ist, kann die Konfiguration gespeichert werden.
+	Das Webinterface startet dann neu und verbindet sich zum Broker.
+	Auf der Status-Seite wird angezeigt, ob die Verbindung aufgebaut werden konnte.
+
+	\newpage \section{Fehlerbehebung}\label{fehlerbehebung} \subsection{Fehlersuche}
+	Fehlerzustände werden von der Wallbox durch die LED im Deckel
+	dargestellt. Bei den Varianten WARP Charger Smart und WARP Charger Pro gibt die Statusseite des Ladecontrollers
 	weitere Informationen.
 
 	\subsubsection*{Wallbox-LED ist aus}
 	Für diesen Fehlerzustand gibt es verschiedene mögliche Ursachen:
-	\begin{enumerate}
-		\item Die Wallbox-LED geht nach ca. 15min Inaktivität aus. Das Drücken des Tasters
+	\begin{itemize}
+		\item Die Wallbox-LED geht nach etwa 15 Minuten Inaktivität aus. Das Drücken des Tasters
 		      oder das Anschließen eines Elektrofahrzeugs zur Ladung weckt die Wallbox wieder
 		      und die LED sollte wieder dauerhaft leuchten.
 		\item Die Wallbox ist nicht mit Strom versorgt. Mögliche Ursachen: Stromausfall,
-		      Sicherung/ Fehlerstrom-schutzschalter hat ausgelöst
-		\item Der interne EVSE ist ohne Strom. Die Wallbox verfügt intern über zwei
-		      Feinsicherungen, ggf. ist eine defekt.
-	\end{enumerate}
+		      Sicherung oder Fehlerstrom-schutzschalter haben ausgelöst
+		\item Der interne Ladecontroller ist ohne Strom. Die Wallbox verfügt intern über zwei
+		      Feinsicherungen, gegebenenfalls ist eine defekt.
+	\end{itemize}
 
 	\subsubsection*{Wallbox-LED blinkt sehr schnell}
 	Nach dem Einschalten der Stromversorgung kalibriert die Wallbox die
@@ -517,20 +589,20 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	abgeschlossen sein und die Wallbox-LED sollte dauerhaft leuchten
 	(betriebsbereit).
 
-	\subsubsection*{Wallbox-LED blinkt 2x im Intervall}
-	Die Wallbox wurde nicht korrekt installiert. Die EVSE Schalter-Einstellung ist
-	noch auf dem Werkszustand. Siehe Kapitel 4 für eine korrekte Installation.
+	\subsubsection*{Wallbox-LED blinkt 2x im Intervall \\ Webinterface zeigt Schalterfehler}
+	Die Wallbox wurde nicht korrekt installiert. Die Schalter-Einstellung des Ladecontrollers ist
+	noch auf dem Werkszustand. Siehe \fullref{ladestrom_schalter}.
 
-	\subsubsection*{Wallbox-LED blinkt 3x im Intervall}
+	\subsubsection*{Wallbox-LED blinkt 3x im Intervall \\ Webinterface zeigt Kalibrierungsfehler}
 	Nach dem Einschalten der Stromversorgung war direkt oder wurde zu schnell ein
-	Fahrzeug angeschlossen. Die DC Kalibierung kann somit nicht abgeschlossen
+	Fahrzeug angeschlossen. Die DC-Kalibierung kann somit nicht abgeschlossen
 	werden. Das Fahrzeug von der Wallbox trennen, die Stromversorgung der Wallbox
 	trennen und nach 5 Sekunden wieder einschalten. Die Kalibrierung sollte nun
 	erfolgreich verlaufen.
 
-	\subsubsection*{Wallbox-LED blinkt 4x im Intervall}
+	\subsubsection*{Wallbox-LED blinkt 4x im Intervall \\ Webinterface zeigt Schützfehler}
 	Für diesen Fehlerzustand gibt es verschiedene mögliche Ursachen:
-	\begin{enumerate}
+	\begin{itemize}
 		\item Erdungsfehler der Wallbox → Erdung überprüfen
 		\item Phase L1 ohne Spannung
 		\item Schütz schaltet nicht korrekt ein (Keine Spannung für L1 nach dem Schütz), kein
@@ -538,60 +610,88 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		\item Schütz schaltet nicht korrekt ab (Spannung von L1 liegt trotz Abschalten noch
 		      nach dem Schütz an), „Schütz klebt“
 		\item Eine der internen Feinsicherungen ist defekt.
-	\end{enumerate}
+	\end{itemize}
 
-	\subsubsection*{Wallbox-LED blinkt 5x im Intervall}
+	\subsubsection*{Wallbox-LED blinkt 5x im Intervall \\ Webinterface zeigt Kommunikationsfehler}
 	Es besteht ein Kommunikationsfehler mit dem Elektrofahrzeug. Bei erstmaligem
 	auftreten das Ladekabel vom Fahrzeug trennen, 10 Sekunden warten und das
 	Ladekabel erneut mit dem Fahrzeug verbinden (erneuter Ladevorgang).
 
 	Sollte das Problem bestehen bleiben, so kann es verschiedene Gründe dafür
 	geben:
-	\begin{enumerate}
-		\item Es liegt ein Fehler beim Ladekabel vor (Kurzschluss, verschmutze/feuchte
+	\begin{itemize}
+		\item Es liegt ein Fehler beim Ladekabel vor (Kurzschluss, verschmutze / feuchte
 		      Kontakte o.ä.). Die Wallbox ist dann sofort außer Betrieb zu nehmen und
 		      fachmännisch in Stand zu setzen.
 		\item Es liegt ein technischer Defekt beim Fahrzeug vor.
-		\item Es liegt ein technischer Defekt bei der Wallbox vor (EVSE defekt o.ä.)
-		\item Das Fahrzeug fordert den IEC 61851-1 Status „D – „charging with ventilation“
+		\item Es liegt ein technischer Defekt bei der Wallbox vor (Ladecontroller defekt o.ä.)
+		\item Das Fahrzeug fordert den IEC 61851-1 Status \enquote{D – Laden mit Belüftung}
 		      an. Dieser Modus wird von der Wallbox nicht unterstützt.
 		\item Das Fahrzeug übermittelt den IEC 61851-1 Status E oder F. In beiden Fällen
 		      handelt es sich um einen Fehler den das Fahrzeug erkannt hat.
-	\end{enumerate}
+	\end{itemize}
 
 	\subsubsection*{Die Wallbox ist nicht über das WLAN erreichbar, aber die LED leuchtet}
-	In diesem Fall ist zu prüfen ob die Wallbox ggf. in den Accesspoint-Fallback
+	In diesem Fall ist zu prüfen ob die Wallbox gegebenenfalls in den Access-Point-Fallback
 	gegangen ist. Wie im Auslieferungszustand eröffnet die Wallbox dann ein eigenes
-	WLAN. Die Zugangsdaten entsprechen denen der Werkseinstellungen und sind dem
-	mitgelieferten Dokument zu entnehmen.
+	WLAN. Wenn die Zugangsdaten nicht geändert werden, entsprechen sie der Werkseinstellungen und sind dem
+	Aufkleber auf der Rückseite der Anleitung zu entnehmen.
 
 	\subsection{Ersatzteile}
 	\begin{tabular}{ll}
-		\toprule
-		Bauteil                                                                                                                  & Artikelnummer                                         \\
-		\midrule
-		\href{https://www.tinkerforge.com/de/shop/warp/contactor-4-pole-din-rail-63a.html}{WARP-CON-4P-63A}                      & Schaltschütz 4 Pol,                                   \\
-		                                                                                                                         & Hutschiene, \SI{63}{\ampere}                          \\
-		\href{https://www.tinkerforge.com/de/shop/warp/din-rail-power-supply-230vac-12vdc-1-25a.html}{WARP-PS-12V}               & Hutschienennetzteil                                   \\
-		                                                                                                                         & \SI{230}{\volt}AC – \SI{12}{\volt} \SI{1,25}{\ampere} \\
-		\href{https://www.tinkerforge.com/de/shop/warp/bidirectional-polyphase-meter-3-phase-rs485-mid.html}{WARP-METER-3PH-MID} & Zweirichtungs-                                        \\
-		                                                                                                                         & Drehstromzähler,                                      \\
-		                                                                                                                         & 3 Phasen, RS485, MID                                  \\
-		\href{https://www.tinkerforge.com/de/shop/warp/dc-residual-current-protection-module-6ma.html}{WARP-DC-PROTECT}          & DC Fehlerstrom                                        \\
-		                                                                                                                         & Schutzmodul \SI{6}{\milli\ampere}                     \\
-		2159                                                                                                                     & EVSE Bricklet                                         \\
-		113                                                                                                                      & ESP32 Brick                                           \\
-		TBD                                                                                                                      & ESP32 Brick \SI{5}{\volt}                             \\
-		                                                                                                                         & Stromversorgung                                       \\
-		\bottomrule
+		%\toprule
+		\textbf{Artikelnummer}                                                                                                   & \textbf{Bauteil}                                              \\
+		\cmidrule(lr{0.5em}){1-2}
+		WARP-CASE                                                                                                                & WARP Charger Case                                             \\
+		\cmidrule(lr{0.5em}){1-2}
+		\href{https://www.tinkerforge.com/de/shop/warp/contactor-4-pole-din-rail-63a.html}{WARP-CON-4P-63A}                      & Schaltschütz 4 Pol,                                           \\
+		                                                                                                                         & Hutschiene, \SI{63}{\ampere}                                  \\
+		\cmidrule(lr{0.5em}){1-2}
+		\href{https://www.tinkerforge.com/de/shop/warp/dc-residual-current-protection-module-6ma.html}{WARP-DC-PROTECT}          & DC Fehlerstrom                                                \\
+		                                                                                                                         & Schutzmodul \SI{6}{\milli\ampere}                             \\
+		\cmidrule(lr{0.5em}){1-2}
+		\href{https://www.tinkerforge.com/de/shop/warp/bidirectional-polyphase-meter-3-phase-rs485-mid.html}{WARP-METER-3PH-MID} & Zweirichtungs-                                                \\
+		                                                                                                                         & Drehstromzähler,                                              \\
+		                                                                                                                         & 3 Phasen, RS485, MID                                          \\
+		\cmidrule(lr{0.5em}){1-2}
+		\href{https://www.tinkerforge.com/de/shop/warp/din-rail-power-supply-230vac-12vdc-1-25a.html}{WARP-PS-12V}               & Hutschienennetzteil                                           \\
+		                                                                                                                         & \SI{230}{\volt}AC – \SI{12}{\volt} \SI{1,25}{\ampere}         \\
+		\cmidrule(lr{0.5em}){1-2}
+		\href{https://www.tinkerforge.com/de/shop/warp/rccb-type-b-4-pole-40a.html}{WARP-RCCB-B-4P-40A}                          & Fehlerstrom-                                                  \\
+		                                                                                                                         & schutzschalter                                                \\
+		                                                                                                                         & Typ B, 4 Pol, \SI{40}{\ampere}                                \\
+		\cmidrule(lr{0.5em}){1-2}
+		WARP-T2-5M-16A                                                                                                           & Typ 2 Stecker mit                                             \\
+		                                                                                                                         & \SI{5}{\meter} Kabel \SI{11}{\kilo\watt} / \SI{16}{\ampere}   \\
+		\cmidrule(lr{0.5em}){1-2}
+		WARP-T2-5M-32A                                                                                                           & Typ 2 Stecker mit                                             \\
+		                                                                                                                         & \SI{5}{\meter} Kabel \SI{22}{\kilo\watt} / \SI{32}{\ampere}   \\
+		\cmidrule(lr{0.5em}){1-2}
+		WARP-T2-75M-16A                                                                                                          & Typ 2 Stecker mit                                             \\
+		                                                                                                                         & \SI{7,5}{\meter} Kabel \SI{11}{\kilo\watt} / \SI{16}{\ampere} \\
+		\cmidrule(lr{0.5em}){1-2}
+		WARP-T2-75M-32A                                                                                                          & Typ 2 Stecker mit                                             \\
+		                                                                                                                         & \SI{7,5}{\meter} Kabel \SI{22}{\kilo\watt} / \SI{32}{\ampere} \\
+		\cmidrule(lr{0.5em}){1-2}
+		113                                                                                                                      & ESP32 Brick                                                   \\
+		\cmidrule(lr{0.5em}){1-2}
+		\href{https://www.tinkerforge.com/de/shop/bricklets/rs485-bricklet.html}{277}                                            & RS 485 Bricklet                                               \\
+		\cmidrule(lr{0.5em}){1-2}
+		2159                                                                                                                     & EVSE Bricklet                                                 \\
+		\cmidrule(lr{0.5em}){1-2}
+		\href{https://www.tinkerforge.com/de/shop/accessories/cable/bricklet-cable-15cm-7p-7p.html}{6150}                        & Bricklet Kabel                                                \\
+		                                                                                                                         & \SI{15}{\centi\meter} (7p-7p)                                 \\
+		\cmidrule(lr{0.5em}){1-2}
+		6189                                                                                                                     & \SI{7} - \SI{28}{\volt} zu \SI{5}{\volt} Inline               \\
+		                                                                                                                         & Stromversorgung                                               \\
+		%\bottomrule
 	\end{tabular}
 
 	\subsection{Stromlaufplan}
 	Ein Stromlaufplan ist in einem gesonderten Dokument verfügbar.
 
 	\subsection{Sicherungswechsel}
-	Die Wallbox ist intern über zwei Feinsicherungen abgesichert. Es handelt
-	sich um 6,3x32mm Feinsicherungen in der Ausführung mittelträge (m), 500mA.
+	Die Wallbox ist intern über zwei 6,3x32mm Feinsicherungen (mittelträge (m), 500mA) abgesichert.
 	Tinkerforge verbaut Sicherungen vom Typ \glqq ESKA  632.214\grqq.
 
 	\section{Technische Daten}
@@ -600,13 +700,14 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	\begin{minipage}{\linewidth}
 
 		\begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{Fehlerstromerkennung}}]
+			\setlength{\itemsep}{3pt}
 			\item[Ladestandard] DIN EN 61851‐1
 			\item[Ladeleistung] einstellbar
-			      bis \SI{11}{\kilo\watt} / \SI{22}{\kilo\watt}~\footnote[7]{\label{fn:1}je nach Variante}
+			      bis \SI{11}{\kilo\watt} / \SI{22}{\kilo\watt}~\footnote[7]{\label{fn:1} je nach Variante}
 			\item[Fahrzeugladestecker] Typ 2
 			\item[Abmessungen] 280 × 215 × \SI{95}{\milli\meter} (B/H/T)
 			\item[Nennspannung] \SI{230}{\volt} / \SI{400}{\volt} / 1/3
-			      AC~\footref{fn:1}
+			      AC$\sim$\footref{fn:1}
 			\item[Nennfrequenz] \SI{50}{\hertz}
 			\item[Nennstrom] \SI{16}{\ampere} / \SI{32}{\ampere}
 			      \footref{fn:1}
@@ -629,31 +730,56 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 	\section{Kontakt}
 	Tinkerforge GmbH\\ Zur Brinke 7\\ 33758 Schloß Holte-Stukenbrock\\
-	\href{mailto:info@tinkerforge.com}{\texttt{info@tinkerforge.com}}\\ \href{https://www.tinkerforge.com/de/shop/warp.html}{\texttt{tinkerforge.com/de/shop/warp.html}}
+	\begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{Website}}]
+		\item[E-Mail] \href{mailto:info@tinkerforge.com}{\texttt{info@tinkerforge.com}}
+		\item[Website] \href{https://warp-charger.com}{warp-charger.com}
+		\item[Shop] \href{https://tinkerforge.com/de/shop/warp.html}{tinkerforge.com/de/shop/warp.html}
+	\end{description}
 
 	\section{Konformitätserklärung}
 	Die EU-Konformitätserklärung ist in einem gesonderten Dokument verfügbar.
 
 	\section{Entsorgung}
-	Die Wallbox und die Verpackung ist bei Gebrauchsende ordnungsgemäß zu
-	entsorgen. Altgeräte dürfen nicht über den Hausmüll entsorgt werden.
-
-	\includegraphics[width=0.2\linewidth]{./img/resized/weee.pdf}
+	\begin{minipage}{0.35\textwidth}
+		Die Wallbox und die Verpackung ist bei Gebrauchsende ordnungsgemäß zu
+		entsorgen. Altgeräte dürfen nicht über den Hausmüll entsorgt werden.
+	\end{minipage}\hfill
+	\begin{minipage}{0.1\textwidth}
+		\includegraphics[width=\linewidth]{./img/resized/weee.pdf}
+	\end{minipage}
 
 	\section{Dokumentversionen}
 	\begin{tabular}{lll}
 		\toprule
-		Datum      & Version & Kommentar              \\
+		Datum      & Version & Kommentar                  \\
 		\midrule
-		30.11.2020 & 0.1     & Initialversion         \\
-		04.12.2020 & 0.2     & Fotos hinzugefügt      \\
-		05.12.2020 & 0.3     & Portierung nach \LaTeX \\
-		28.12.2020 & 0.4     & Webinterface Dokumentation erweitert \\
-		29.12.2020 & 0.5     & Beschreibungen erweitert \\
-		27.01.2021 & 0.6     & Installationsbeschreibung ergänzt \\
+		30.11.2020 & 0.1     & Initialversion             \\
+		04.12.2020 & 0.2     & Fotos hinzugefügt          \\
+		05.12.2020 & 0.3     & Portierung nach \LaTeX     \\
+		28.12.2020 & 0.4     & Webinterface Dokumentation \\
+		           &         & erweitert                  \\
+		29.12.2020 & 0.5     & Beschreibungen erweitert   \\
+		27.01.2021 & 0.6     & Installationsbeschreibung  \\
+		           &         & ergänzt                    \\
+		28.01.2021 & 0.7     & Ersteinrichtung ergänzt    \\
+		           &         & Layout überarbeitet        \\
 		\bottomrule
 	\end{tabular}
+	\vfill
+	WLAN-Zugangsdaten
+	\begin{tcolorbox}[width=4.2cm,height=2.7cm, boxrule=0.25mm]
 
+	\end{tcolorbox}
+	Dieser Aufkleber findet sich auch auf\\ der Innenseite der Deckel der Wallbox.
+	\columnbreak
+
+	\null
+	\vfill
+	Typenschild
+	\begin{tcolorbox}[width=7.8cm,height=4.1cm, boxrule=0.25mm]
+
+	\end{tcolorbox}
+	Dieser Aufkleber findet sich auch auf der Unterseite\\ der Wallbox.
 \end{multicols*}
 \includepdf{./img/resized/bohrschablone.pdf}
 \end{document}
