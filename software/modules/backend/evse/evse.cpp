@@ -14,6 +14,7 @@ extern TF_HalContext hal;
 extern AsyncWebServer server;
 
 extern API api;
+extern bool firmware_update_allowed;
 
 EVSE::EVSE()
 {
@@ -269,6 +270,8 @@ void EVSE::update_evse_state() {
         is_in_bootloader(rc);
         return;
     }
+
+    firmware_update_allowed = vehicle_state == 0;
 
     evse_state.get("iec61851_state")->updateUint(iec61851_state);
     evse_state.get("vehicle_state")->updateUint(vehicle_state);
