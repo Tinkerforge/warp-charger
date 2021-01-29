@@ -32,7 +32,7 @@ function update_evse_state(state: EVSEState) {
     util.update_button_group("btn_group_ac1", (state.contactor_state & 1) == 1 ? 1 : 0);
     util.update_button_group("btn_group_ac2", state.contactor_state > 1 ? 1 : 0);
     util.update_button_group("btn_group_contactor_error", state.contactor_error != 0 ? 1 : 0, state.contactor_error != 0 ? __("evse.script.error_code") + " " + state.contactor_error : null);
-    util.update_button_group("btn_group_error_state", state.error_state);
+    util.update_button_group("btn_group_error_state", state.error_state == 0 ? 0 : state.error_state - 1); // 1 is not a valid error state
     util.update_button_group("btn_group_lock_state", state.lock_state);
 
     $('#uptime').val(util.format_timespan(Math.floor(state.uptime / 1000)));
