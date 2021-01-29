@@ -97,7 +97,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		\Huge
 		WARP Charger Betriebsanleitung\\\vspace{1cm}
 		\large
-		Version 0.7\\\vspace{0.25cm}
+		Version 1.0\\\vspace{0.25cm}
 		\today
 	\end{center}
 	\vfill \gfx{./img/resized/warp_perspective_blue_ready}
@@ -200,8 +200,8 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 	\subsection{Schutzeinrichtungen der Wallbox}
 	Der AC-Fehlerstromschutz wird über den hausseitig verbauten
-	Typ-A-AC-Fehlerstromschutzschalter (RCCB) oder einem eigens dafür installierten
-	Typ-A-\SI{30}{\milli\ampere}-Fehlerstromschutzschalter gewährleistet. Die Wallbox ist
+	Typ-A AC-Fehlerstromschutzschalter (RCCB) oder einem eigens dafür installierten
+	Typ-A \SI{30}{\milli\ampere}-Fehlerstromschutzschalter gewährleistet. Die Wallbox ist
 	mit einem integrierten DC-Fehlerstromwächter der Firma Alcona ausgestattet
 	(ALC-DC6-CO30). Bei einem DC-Fehlerstrom $\geq \SI{6}{\milli\ampere}$ generiert dieser
 	einen AC-Fehlerstrom, der den hausseitig verbauten
@@ -244,7 +244,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	\gfx{./img/resized/warp_button_connect_arrow_ready}
 
 	\hint{Achtung! Der Taster im Deckel ist über ein Anschlusskabel verbunden und muss
-	durch Drücken der Raste vom Kabel gelöst werden.}
+		durch Drücken der Raste vom Kabel gelöst werden.}
 	Zusätzlich muss der Erdungsstecker von der Frontblende abgesteckt werden.
 	Erst danach kann der Deckel vollständig zur Seite gelegt werden.
 
@@ -290,17 +290,16 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	Berührungsschutz zu entfernen. Dieser wird durch Lösen der vier
 	Schlitzschrauben entfernt.
 
-	Bei der Variante Smart ist auf dem Berührungsschutz ein Controller
+	Bei der Variante Smart ist auf dem Berührungsschutz ein WLAN-Controller (ESP32 Brick)
 	angeschlossen, zu dem zwei Kabel führen: Ein zweipoliges
 	Stromversorgungskabel und ein siebenpoliges Bricklet-Kabel, über das die Verbindung mit dem
 	Ladecontroller (EVSE Bricklet) auf der Hutschiene hergestellt wird. Eigentlich reicht es aus,
 	den Berührungsschutz ohne Trennung dieser Leitungen einfach an die Seite zu
 	legen. Soll dennoch der Berührungsschutz vollständig entfernt werden, so
-	müssen diese Kabel getrennt werden. Dazu ist das zweipolige
-	Stromversorgungskabel auf der Unterseite des Controllers auf dem
-	Berührungsschutz auszustecken. Die Verbindung zum Ladecontroller wird
-	am besten direkt an dem Hutschienenmodul gelöst. Das Bricklet-Kabel verfügt über
-	eine kleine Verriegelungstaste, diese muss zum Entfernen gedrückt werden.
+	müssen diese Kabel getrennt werden. Beide Kabel werden am besten direkt
+	an der linken, bzw Unterseite des ESP32 Brick ausgesteckt.
+	Das Bricklet-Kabel verfügt über eine kleine Verriegelungstaste,
+	diese muss zum Entfernen gedrückt werden.
 
 	\gfx{./img/resized/warp_cable_cut_ready}
 
@@ -679,7 +678,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		\cmidrule(lr{0.5em}){1-2}
 		113                                                                                                                      & ESP32 Brick                                                   \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/bricklets/rs485-bricklet.html}{277}                                            & RS485 Bricklet                                               \\
+		\href{https://www.tinkerforge.com/de/shop/bricklets/rs485-bricklet.html}{277}                                            & RS485 Bricklet                                                \\
 		\cmidrule(lr{0.5em}){1-2}
 		2159                                                                                                                     & EVSE Bricklet                                                 \\
 		\cmidrule(lr{0.5em}){1-2}
@@ -767,6 +766,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		           &         & ergänzt                    \\
 		28.01.2021 & 0.7     & Ersteinrichtung ergänzt    \\
 		           &         & Layout überarbeitet        \\
+		29.01.2021 & 1.0     & Druckversion               \\
 		\bottomrule
 	\end{tabular}
 	\vfill
