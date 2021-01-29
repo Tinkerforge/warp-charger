@@ -326,6 +326,21 @@
                             </td>
                         </tr>
                         <tr>
+                            <th scope="row">error_state</th>
+                            <td>int</td>
+                            <td></td>
+                            <td>
+                                Der aktuelle Fehlerzustand. <a href="https://www.warp-charger.com/#documents">Siehe Handbuch für Details.</a>
+                                <ol class="ol-enum">
+                                    <li><b>0</b> - OK</li>
+                                    <li><b>1</b> - Schalterfehler</li>
+                                    <li><b>2</b> - Kalibrierungsfehler</li>
+                                    <li><b>3</b> - Schützfehler</li>
+                                    <li><b>4</b> - Kommunikationsfehler</li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
                             <th scope="row">lock_state</th>
                             <td>int</td>
                             <td></td>
@@ -816,6 +831,12 @@
                             <td>string</td>
                             <td></td>
                             <td>BSSID des WLAN-Access-Points.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">sta_ip</th>
+                            <td>int[4]</td>
+                            <td></td>
+                            <td>Aktuelle IP der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.</td>
                         </tr>
                     </tbody>
                 </table>
