@@ -192,6 +192,7 @@ export function addEventListeners(source: EventSource) {
 
 export function updateLockState(module_init) {
     $('#sidebar-evse').prop('hidden', !module_init.evse);
+    $('#status-evse').prop('hidden', !module_init.evse);
 }
 
 export function getTranslation(lang: string) {

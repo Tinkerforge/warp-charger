@@ -287,6 +287,7 @@ export function addEventListeners(source: EventSource) {
 
 export function updateLockState(module_init) {
     $('#sidebar-meter').prop('hidden', !module_init.sdm72dm);
+    $('#status-meter').prop('hidden', !module_init.sdm72dm);
 
     if(!module_init.sdm72dm) {
         if (live_interval != null) {
