@@ -170,7 +170,8 @@ void read_firmware_version() {
     }
 
 
-    String spiffs_version = "unknown";
+    String spiffs_version = firmware_version;
+
     if (SPIFFS.exists("/spiffs.json")) {
         const size_t capacity = JSON_OBJECT_SIZE(1) + 60;
         StaticJsonDocument<capacity> doc;
@@ -180,7 +181,12 @@ void read_firmware_version() {
         file.close();
 
         spiffs_version = doc["spiffs"].as<char*>();
+    } else {
+        File file = SPIFFS.open("/spiffs.json", "w");
+        file.printf("{\"spiffs\": \"%s\"}", firmware_version.c_str());
+        file.close();
     }
+
     Serial.println(String("{{{display_name}}} SPIFFS version ") + spiffs_version);
 
     version = Config::Object({
