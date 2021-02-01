@@ -3,6 +3,8 @@
 #include "modules/mqtt/mqtt.h"
 #include "modules/task_scheduler/task_scheduler.h"
 #include "SPIFFS.h"
+#include "bindings/hal_common.h"
+#include "bindings/errors.h"
 
 extern Mqtt mqtt;
 
@@ -10,6 +12,7 @@ extern TaskScheduler task_scheduler;
 extern AsyncWebServer server;
 extern AsyncEventSource events;
 
+extern TF_HalContext hal;
 
 void API::setup()
 {
@@ -131,8 +134,22 @@ void API::onMqttConnect()
 
 void API::registerDebugUrl() {
     server.on("/debug_report", HTTP_GET, [this](AsyncWebServerRequest *request) {
+
         String result = "{\"uptime\": ";
         result += String(millis());
+
+        result += ",\n \"devices\": [";
+        size_t i = 0;
+        char uid[7] = {0};
+        char pos = 0;
+        uint16_t did = 0;
+        while(tf_hal_get_device_info(&hal, i, uid, &pos, &did) == TF_E_OK) {
+            char buf[100] = {0};
+            snprintf(buf, sizeof(buf), "%c{\"UID\":\"%s\", \"DID\":%u, \"port\":\"%c\"}", i == 0 ? ' ': ',', uid, did, pos);
+            result += buf;
+            ++i;
+        }
+        result += "]";
 
         for(auto &reg : states) {
             result += ",\n \"";
