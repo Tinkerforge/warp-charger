@@ -14,14 +14,14 @@ defines = {k: v for (k, v) in my_flags.get("CPPDEFINES")}
 env.AddPostAction(
     "$BUILD_DIR/${PROGNAME}.elf",
     env.VerboseAction(" ".join([
-        "cp", "$BUILD_DIR/${PROGNAME}.elf", "$BUILD_DIR/../../../build/{}.elf".format(defines.get("__FIRMWARE_NAME__"))
+        "cp", "$BUILD_DIR/${PROGNAME}.elf", "$BUILD_DIR/../../../build/{}.elf".format(defines.get("_FIRMWARE_NAME_"))
     ]), "Copying $BUILD_DIR/${PROGNAME}.elf")
 )
 
 env.AddPostAction(
     "$BUILD_DIR/${PROGNAME}.bin",
     env.VerboseAction(" ".join([
-        "cp", "$BUILD_DIR/${PROGNAME}.bin", "$BUILD_DIR/../../../build/{}.bin".format(defines.get("__FIRMWARE_NAME__"))
+        "cp", "$BUILD_DIR/${PROGNAME}.bin", "$BUILD_DIR/../../../build/{}.bin".format(defines.get("_FIRMWARE_NAME_"))
     ]), "Copying $BUILD_DIR/${PROGNAME}.bin")
 )
 
@@ -33,6 +33,6 @@ env.AddPostAction(
         "0x8000", "$BUILD_DIR/partitions.bin",
         "0xe000", "$BUILD_DIR/../../../boot_app0.bin",
         "0x10000", "$BUILD_DIR/${PROGNAME}.bin",
-        "$BUILD_DIR/../../../build/{}-merged.bin".format(defines.get("__FIRMWARE_NAME__"))
+        "$BUILD_DIR/../../../build/{}-merged.bin".format(defines.get("_FIRMWARE_NAME_"))
     ]), "Merging firmware.bin")
 )

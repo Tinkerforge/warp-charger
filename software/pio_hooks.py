@@ -9,6 +9,7 @@ import shutil
 import subprocess
 import sys
 import time
+import re
 
 NameFlavors = namedtuple('NameFlavors', 'space lower camel headless under upper dash camel_abbrv lower_no_space camel_constant_safe')
 
@@ -88,23 +89,77 @@ class ChangedDirectory(object):
     def __exit__(self, type_, value, traceback):
         os.chdir(self.previous_path)
 
+
+def get_changelog_version():
+    versions = []
+
+    with open(os.path.join('changelog.txt'), 'r') as f:
+        for i, line in enumerate(f.readlines()):
+            line = line.rstrip()
+
+            if len(line) == 0:
+                continue
+
+            if re.match(r'^(?:- [A-Z0-9\(]|  ([A-Za-z0-9\(\"]|--hide-payload)).*$', line) != None:
+                continue
+
+            m = re.match(r'^(?:<unknown>|20[0-9]{2}-[0-9]{2}-[0-9]{2}): ([0-9]+)\.([0-9]+)\.([0-9]+) \((?:<unknown>|[a-f0-9]+)\)$', line)
+
+            if m == None:
+                raise Exception('invalid line {} in changelog: {}'.format(i + 1, line))
+
+            version = (int(m.group(1)), int(m.group(2)), int(m.group(3)))
+
+            if version[0] not in [0, 1, 2]:
+                raise Exception('invalid major version in changelog: {}'.format(version))
+
+            if len(versions) > 0:
+                if versions[-1] >= version:
+                    raise Exception('invalid version order in changelog: {} -> {}'.format(versions[-1], version))
+
+                if versions[-1][0] == version[0] and versions[-1][1] == version[1] and versions[-1][2] + 1 != version[2]:
+                    raise Exception('invalid version jump in changelog: {} -> {}'.format(versions[-1], version))
+
+                if versions[-1][0] == version[0] and versions[-1][1] != version[1] and versions[-1][1] + 1 != version[1]:
+                    raise Exception('invalid version jump in changelog: {} -> {}'.format(versions[-1], version))
+
+                if versions[-1][1] != version[1] and version[2] != 0:
+                    raise Exception('invalid version jump in changelog: {} -> {}'.format(versions[-1], version))
+
+                if versions[-1][0] != version[0] and (version[1] != 0 or version[2] != 0):
+                    raise Exception('invalid version jump in changelog: {} -> {}'.format(versions[-1], version))
+
+            versions.append(version)
+
+    if len(versions) == 0:
+        raise Exception('no version found in changelog')
+
+    version = (str(versions[-1][0]), str(versions[-1][1]), str(versions[-1][2]))
+    return version
+
 def main():
     # Add build flags
     t = time.time()
-    git_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode('utf-8').strip()
-    git_flag = '-D__COMMIT_ID__=0x{:x}{}ull'.format(int(t),git_commit[:8])
+    build_time_flag = '-D_BUILD_TIME_=0x{:x}'.format(int(t))
+    version = get_changelog_version()
+    major_flag = '-D_MAJOR_={}'.format(version[0])
+    minor_flag = '-D_MINOR_={}'.format(version[1])
+    patch_flag = '-D_PATCH_={}'.format(version[2])
 
     name = env.GetProjectOption("name")
     display_name = env.GetProjectOption("display_name")
     host_prefix_flag = "-D__HOST_PREFIX__=\\\"{}\\\"".format(name)
 
-    firmware_name_flag = "-D__FIRMWARE_NAME__={}-{}-{:x}".format(name, git_commit[:8], int(t))
+    firmware_name_flag = "-D_FIRMWARE_NAME_={}_firmware_{}_{:x}".format(name, '_'.join(version), int(t))
 
     env.Append(
         BUILD_FLAGS=[
-            git_flag,
+            build_time_flag,
             host_prefix_flag,
-            firmware_name_flag
+            firmware_name_flag,
+            major_flag,
+            minor_flag,
+            patch_flag
         ]
     )
 

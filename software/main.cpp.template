@@ -146,7 +146,7 @@ void read_efuses(uint32_t *ret_uid_numeric, char *ret_uid_string, char *ret_pass
 }
 
 void read_firmware_version() {
-    String firmware_version = String((uint32_t)__COMMIT_ID__, 16) + "-" +  String((uint32_t)(__COMMIT_ID__ >> 32), 16);
+    String firmware_version = String((uint32_t)_MAJOR_, 10) + "." +  String((uint32_t)_MINOR_, 10) + "." +  String((uint32_t)_PATCH_, 10) + "-" +  String((uint32_t)(_BUILD_TIME_), 16);
     Serial.printf("    **** TINKERFORGE {{{display_name}}} V%s ****\n",firmware_version.c_str());
     Serial.printf(" %dK RAM SYSTEM  %d HEAP BYTES FREE\nREADY.\n\n", ESP.getHeapSize()/1024, ESP.getFreeHeap());
 
