@@ -117,19 +117,21 @@ void API::onEventConnect(AsyncEventSourceClient *client)
 
 void API::onMqttConnect()
 {
-    for(auto &reg : commands) {
-        mqtt.subscribe(reg.path, reg.config->json_size(), [reg](String payload){
-            String error = reg.config->update_from_string(payload);
-            if(error == "")
-                task_scheduler.scheduleOnce((String("notify command update for ") + reg.path).c_str(), [reg](){reg.callback();}, 0);
-            else
-                Serial.println(error);
-        });
-    }
-    for(auto &reg : states) {
-        mqtt.publish(reg.path, reg.config->to_string_except(reg.keys_to_censor));
-    }
-
+    // Do the publishing in the "main thread". Otherwise this would be a race condition with the publishing in addState.
+    task_scheduler.scheduleOnce("onMqttConnect", [this](){
+        for(auto &reg : commands) {
+            mqtt.subscribe(reg.path, reg.config->json_size(), [reg](String payload){
+                String error = reg.config->update_from_string(payload);
+                if(error == "")
+                    task_scheduler.scheduleOnce((String("notify command update for ") + reg.path).c_str(), [reg](){reg.callback();}, 0);
+                else
+                    Serial.println(error);
+            });
+        }
+        for(auto &reg : states) {
+            mqtt.publish(reg.path, reg.config->to_string_except(reg.keys_to_censor));
+        }
+    }, 0);
 }
 
 void API::registerDebugUrl() {
