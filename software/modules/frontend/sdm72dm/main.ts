@@ -341,7 +341,7 @@ export function getTranslation(lang: string) {
             "sdm72dm": {
                 "status": {
                     "charge_history": "Charge history",
-                    "current_power": "Current power draw"
+                    "current_power": "Power draw"
                 },
                 "navbar": {
                     "energy_meter": "Energy Meter"
@@ -352,8 +352,8 @@ export function getTranslation(lang: string) {
                     "live": "Live",
                     "statistics": "Statistics",
                     "reset_statistics": "Reset",
-                    "power": "Current power draw",
-                    "energy": "Energy used",
+                    "power": "Power draw",
+                    "energy": "Energy consumption",
                     "energy_since_reset": "since last reset",
                     "energy_lifetime": "since manufactoring of the energy meter"
                 },

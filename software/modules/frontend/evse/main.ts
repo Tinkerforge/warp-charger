@@ -269,9 +269,9 @@ export function getTranslation(lang: string) {
                     "led_state": "LED-Zustand",
                     "led_state_off": "Aus",
                     "led_state_on": "An",
-                    "led_state_blinking": "Blinkt",
-                    "led_state_flickering": "Flackert",
-                    "led_state_breathing": "Atmet",
+                    "led_state_blinking": "Blinkend",
+                    "led_state_flickering": "Flackernd",
+                    "led_state_breathing": "Atmend",
                     "cp_pwm_dc": "CP-PWM-Tastverhältnis",
                     "adc_values": "ADC-Werte",
                     "adc_names": "PE-CP, PE-PP",
@@ -312,10 +312,10 @@ export function getTranslation(lang: string) {
                     "stop_charging": "Stop"
                 },
                 "navbar": {
-                    "evse": "EVSE"
+                    "evse": "Charge Controller"
                 },
                 "content": {
-                    "evse": "Charge controller (EVSE)",
+                    "evse": "Charge Controller (EVSE)",
                     "state": "State",
                     "iec_state": "IEC 61851 State",
                     "iec_state_a": "A (not connected)",
@@ -348,12 +348,12 @@ export function getTranslation(lang: string) {
                     "uptime": "Uptime",
                     "configuration": "Hardware configuration",
                     "has_lock_switch": "Cable lock available",
-                    "lock_no": "Nein",
-                    "lock_yes": "Ja",
+                    "lock_no": "No",
+                    "lock_yes": "Yes",
                     "jumper_config_max_current": "Max current of supply cable",
-                    "jumper_config": "Switch configured",
+                    "jumper_config": "switch configured",
                     "jumper_config_software": "Software",
-                    "jumper_config_unconfigured": "Unconfiguriert",
+                    "jumper_config_unconfigured": "Unconfigured",
                     "charging_current": "Allowed charging current",
                     "charging_current_configured": "Configured",
                     "charging_current_max_incoming": "Supply cable",
