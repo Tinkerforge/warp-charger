@@ -9,6 +9,10 @@
 
 #include "api.h"
 
+#include "event_log.h"
+
+extern EventLog logger;
+
 extern TaskScheduler task_scheduler;
 extern TF_HalContext hal;
 extern AsyncWebServer server;
@@ -144,14 +148,14 @@ void EVSE::setup_evse()
 {
     char uid[7] = {0};
     if (!find_uid_by_did(&hal, TF_EVSE_DEVICE_IDENTIFIER, uid)) {
-        Serial.println("No EVSE bricklet found. Disabling EVSE support.");
+        logger.printfln("No EVSE bricklet found. Disabling EVSE support.");
         return;
     }
     evse_found = true;
 
     auto result = tf_evse_create(&evse, uid, &hal);
     if(result != TF_E_OK) {
-        Serial.printf("EVSE init failed (rc %d). Disabling EVSE support.\n", result);
+        logger.printfln("EVSE init failed (rc %d). Disabling EVSE support.", result);
         return;
     }
 
@@ -159,7 +163,7 @@ void EVSE::setup_evse()
 
     result = tf_evse_get_identity(&evse, nullptr, nullptr, nullptr, nullptr, firmware_version, nullptr);
     if(result != TF_E_OK) {
-        Serial.printf("EVSE get identity (rc %d). Disabling EVSE support.\n", result);
+        logger.printfln("EVSE get identity (rc %d). Disabling EVSE support.", result);
         return;
     }
 
@@ -171,17 +175,17 @@ void EVSE::setup_evse()
     }
 
     if (flash_required) {
-        Serial.printf("EVSE firmware is %d.%d.%d not the expected %d.%d.%d. Flashing firmware...\n",
+        logger.printfln("EVSE firmware is %d.%d.%d not the expected %d.%d.%d. Flashing firmware...",
                       firmware_version[0], firmware_version[1], firmware_version[2],
                       evse_firmware_version[0], evse_firmware_version[1], evse_firmware_version[2]);
         if(!flash_firmware()) {
-            Serial.printf("EVSE flashing failed. Disabling EVSE support.\n", result);
+            logger.printfln("EVSE flashing failed. Disabling EVSE support.");
             return;
         }
 
         result = tf_evse_create(&evse, uid, &hal);
         if(result != TF_E_OK) {
-            Serial.printf("EVSE init failed (rc %d). Disabling EVSE support.\n", result);
+            logger.printfln("EVSE init failed (rc %d). Disabling EVSE support.", result);
             return;
         }
     }
@@ -193,7 +197,7 @@ void EVSE::setup_evse()
 
     if (result != TF_E_OK) {
         if(!is_in_bootloader(result)) {
-            Serial.printf("EVSE hardware config query failed (rc %d). Disabling EVSE support.\n", result);
+            logger.printfln("EVSE hardware config query failed (rc %d). Disabling EVSE support.", result);
         }
         return;
     } else {
@@ -365,7 +369,7 @@ bool EVSE::flash_firmware() {
     }
 
     if (regular_plugin_upto == -1) {
-        Serial.println("    Firmware end marker not found. Is this a valid firmware?");
+        logger.printfln("    Firmware end marker not found. Is this a valid firmware?");
         return false;
     }
 
@@ -373,45 +377,45 @@ bool EVSE::flash_firmware() {
         return false;
     }
 
-    Serial.println("    Setting bootloader mode to firmware.");
+    logger.printfln("    Setting bootloader mode to firmware.");
     uint8_t ret_status = 0;
     tf_evse_set_bootloader_mode(&evse, 1, &ret_status);
     if (ret_status != 0 && ret_status != 2) {
-        Serial.printf("    Failed to set bootloader mode to firmware. status %d.\n", ret_status);
+        logger.printfln("    Failed to set bootloader mode to firmware. status %d.", ret_status);
         if (ret_status != 5) {
             return false;
         }
-        Serial.println("    Status is 5, retrying.");
+        logger.printfln("    Status is 5, retrying.");
         if(!flash_plugin(regular_plugin_upto)) {
             return false;
         }
 
         ret_status = 0;
-        Serial.println("    Setting bootloader mode to firmware.");
+        logger.printfln("    Setting bootloader mode to firmware.");
         tf_evse_set_bootloader_mode(&evse, 1, &ret_status);
         if (ret_status != 0 && ret_status != 2) {
-            Serial.printf("    (Second attempt) Failed to set bootloader mode to firmware. status %d.\n", ret_status);
+            logger.printfln("    (Second attempt) Failed to set bootloader mode to firmware. status %d.", ret_status);
             return false;
         }
     }
-    Serial.println("    Waiting for firmware...");
+    logger.printfln("    Waiting for firmware...");
     if(!wait_for_bootloader_mode(1)) {
-        Serial.println("    Timed out, flashing failed");
+        logger.printfln("    Timed out, flashing failed");
         return false;
     }
-    Serial.println("    Firmware flashed successfully");
+    logger.printfln("    Firmware flashed successfully");
     return true;
 }
 
 bool EVSE::flash_plugin(int regular_plugin_upto) {
-    Serial.println("    Setting bootloader mode to bootloader.");
+    logger.printfln("    Setting bootloader mode to bootloader.");
     tf_evse_set_bootloader_mode(&evse, 0, nullptr);
-    Serial.println("    Waiting for bootloader...");
+    logger.printfln("    Waiting for bootloader...");
     if(!wait_for_bootloader_mode(0)) {
-        Serial.println("    Timed out, flashing failed");
+        logger.printfln("    Timed out, flashing failed");
         return false;
     }
-    Serial.println("    Device is in bootloader, flashing...");
+    logger.printfln("    Device is in bootloader, flashing...");
 
     int num_packets = evse_bricklet_firmware_bin_len / 64;
 
@@ -428,14 +432,14 @@ bool EVSE::flash_plugin(int regular_plugin_upto) {
         int start = position * 64;
         if(tf_evse_set_write_firmware_pointer(&evse, start) != TF_E_OK) {
             if(tf_evse_set_write_firmware_pointer(&evse, start) != TF_E_OK) {
-                Serial.printf("    Failed to set firmware pointer to %d\n", start);
+                logger.printfln("    Failed to set firmware pointer to %d", start);
                 return false;
             }
         }
 
         if(tf_evse_write_firmware(&evse, const_cast<uint8_t *>(evse_bricklet_firmware_bin + start), nullptr) != TF_E_OK) {
             if(tf_evse_write_firmware(&evse, const_cast<uint8_t *>(evse_bricklet_firmware_bin + start), nullptr) != TF_E_OK) {
-                Serial.printf("    Failed to write firmware at %d\n", start);
+                logger.printfln("    Failed to write firmware at %d", start);
                 return false;
             }
         }
@@ -446,18 +450,19 @@ bool EVSE::flash_plugin(int regular_plugin_upto) {
             int start = position * 64;
             if(tf_evse_set_write_firmware_pointer(&evse, start) != TF_E_OK) {
                 if(tf_evse_set_write_firmware_pointer(&evse, start) != TF_E_OK) {
-                    Serial.printf("    (Footer) Failed to set firmware pointer to %d\n", start);
+                    logger.printfln("    (Footer) Failed to set firmware pointer to %d", start);
                     return false;
                 }
             }
 
             if(tf_evse_write_firmware(&evse, const_cast<uint8_t *>(evse_bricklet_firmware_bin + start), nullptr) != TF_E_OK) {
                 if(tf_evse_write_firmware(&evse, const_cast<uint8_t *>(evse_bricklet_firmware_bin + start), nullptr) != TF_E_OK) {
-                    Serial.printf("    (Footer) Failed to write firmware at %d\n", start);
+                    logger.printfln("    (Footer) Failed to write firmware at %d", start);
                     return false;
                 }
             }
         }
     }
-    Serial.println("    Device flashed successfully.");
+    logger.printfln("    Device flashed successfully.");
+    return true;
 }

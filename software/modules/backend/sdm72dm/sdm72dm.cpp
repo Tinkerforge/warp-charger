@@ -10,6 +10,10 @@
 
 #include "modules/mqtt/mqtt.h"
 
+#include "event_log.h"
+
+extern EventLog logger;
+
 extern TF_HalContext hal;
 extern AsyncWebServer server;
 
@@ -33,25 +37,25 @@ void read_input_registers_handler(struct TF_RS485 *device, uint8_t request_id, i
     SDM72DM::UserData *ud = (SDM72DM::UserData *) user_data;
 
     if(request_id != ud->expected_request_id || ud->expected_request_id == 0) {
-        tf_hal_printf("Unexpected request id %I8u, expected %I8u\n", request_id, ud->expected_request_id);
+        logger.printfln("Unexpected request id %u, expected %u", request_id, ud->expected_request_id);
         ud->done = true;
         return;
     }
 
     if(exception_code != 0) {
-        tf_hal_printf("Request %I8u: Exception code %I8d\n", request_id, exception_code);
+        logger.printfln("Request %u: Exception code %d", request_id, exception_code);
         ud->done = true;
         return;
     }
 
     if(input_registers_length != 2) {
-        tf_hal_printf("Request %I8u: Unexpected response length %I16u\n", request_id, input_registers_length);
+        logger.printfln("Request %u: Unexpected response length %I16u", request_id, input_registers_length);
         ud->done = true;
         return;
     }
 
     if(ud->value_to_write == nullptr) {
-        tf_hal_printf("value to write was nullptr\n");
+        logger.printfln("value to write was nullptr");
         ud->done = true;
         return;
     }
@@ -72,13 +76,13 @@ void write_multiple_registers_handler(struct TF_RS485 *device, uint8_t request_i
     SDM72DM::UserData *ud = (SDM72DM::UserData *) user_data;
 
     if(request_id != ud->expected_request_id || ud->expected_request_id == 0) {
-        tf_hal_printf("Unexpected request id %I8u, expected %I8u\n", request_id, ud->expected_request_id);
+        logger.printfln("Unexpected request id %u, expected %u", request_id, ud->expected_request_id);
         ud->done = true;
         return;
     }
 
     if(exception_code != 0) {
-        tf_hal_printf("Exception code %I8d", exception_code);
+        logger.printfln("Exception code %d", exception_code);
         ud->done = true;
         return;
     }
@@ -95,7 +99,7 @@ void SDM72DM::setup() {
 
     char uid[7] = {0};
     if (!find_uid_by_did(&hal, TF_RS485_DEVICE_IDENTIFIER, uid)) {
-        tf_hal_printf("No RS485 bricklet found. Disabling power meter\n");
+        logger.printfln("No RS485 bricklet found. Disabling power meter\n");
         return;
     }
 
@@ -187,7 +191,7 @@ void SDM72DM::loop()
         return;
 
     if(!user_data.done) {
-        printf("rs485 deadline reached!\n");
+        logger.printfln("rs485 deadline reached!");
     }
 
     if(user_data.done && !deadline_elapsed(next_read_deadline_ms))
@@ -266,7 +270,7 @@ void SDM72DM::loop()
     user_data.done = false;
     int rc = tf_rs485_modbus_master_read_input_registers(&rs485, 1, start_address, 2, &user_data.expected_request_id);
     if(rc != TF_E_OK || user_data.expected_request_id == 0) {
-        printf("Failed to read energy meter registers starting at %u: rc %d, request_id: %u\n", start_address, rc, user_data.expected_request_id);
+        logger.printfln("Failed to read energy meter registers starting at %u: rc %d, request_id: %u", start_address, rc, user_data.expected_request_id);
     }
 
     if(modbus_read_state < 2)

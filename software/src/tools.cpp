@@ -46,23 +46,18 @@ String update_config(Config &cfg, String config_name, JsonVariant &json) {
 
     if (error == "") {
         if (SPIFFS.exists(tmp_path))
-            Serial.println(SPIFFS.remove(tmp_path));
+            SPIFFS.remove(tmp_path);
 
         File file = SPIFFS.open(tmp_path, "w");
         cfg.save_to_file(file);
         file.close();
 
         if (SPIFFS.exists(path))
-            Serial.println(SPIFFS.remove(path));
+            SPIFFS.remove(path);
 
-        Serial.println(SPIFFS.rename(tmp_path, path));
-        Serial.print(path);
-        Serial.println(" updated");
+        SPIFFS.rename(tmp_path, path);
     } else {
-        Serial.print("Failed to update ");
-        Serial.print(path);
-        Serial.print(":\n    ");
-        Serial.println(error);
+        logger.printfln("Failed to update %s: %s", path.c_str(), error.c_str());
     }
     return error;
 }

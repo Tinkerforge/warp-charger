@@ -3,9 +3,13 @@
 #include "ArduinoJson.h"
 #include "FS.h"
 
+#include "event_log.h"
+
 #define STRICT_VARIANT_ASSUME_MOVE_NOTHROW true
 #include "strict_variant/variant.hpp"
 #include "strict_variant/mpl/find_with.hpp"
+
+extern EventLog logger;
 
 struct Config {
     struct ConfString {
@@ -181,9 +185,7 @@ struct Config {
     bool set(String s, T val) {
         Config *toChange = get(s);
         if(!toChange->is<ConfigT>()) {
-            Serial.print("Config key ");
-            Serial.print(s);
-            Serial.print(" not found! Can't set to");
+            logger.printfln("Config key %s not found! Can't set to [see serial console]", s.c_str());
             Serial.println(val);
             delay(100);
             return false;
@@ -196,10 +198,8 @@ struct Config {
     bool set(size_t idx, T val) {
         Config *toChange = get(idx);
         if(!toChange->is<ConfigT>()) {
-            /*Serial.print("Config key ");
-            Serial.print(s);
-            Serial.print(" not found! Can't set to");
-            Serial.println(val);*/
+            logger.printfln("Config idx %u not found! Can't set to [see serial console]", idx);
+            Serial.println(val);
             delay(100);
             return false;
         }
@@ -209,7 +209,7 @@ struct Config {
 
     bool add() {
         if (!this->is<Config::ConfArray>()){
-            Serial.println("Tried to add to a node that is not an array!");
+            logger.printfln("Tried to add to a node that is not an array!");
             delay(100);
             return false;
         }
@@ -220,7 +220,7 @@ struct Config {
 
     ssize_t count() {
         if (!this->is<Config::ConfArray>()){
-            Serial.println("Tried to add to a node that is not an array!");
+            logger.printfln("Tried to add to a node that is not an array!");
             delay(100);
             return -1;
         }
@@ -231,7 +231,7 @@ struct Config {
     template<typename T, typename ConfigT>
     T *as() {
         if (!this->is<ConfigT>()) {
-            Serial.print("Config has wrong type.");
+            logger.printfln("Config has wrong type.");
             delay(100);
             return nullptr;
         }
@@ -255,7 +255,7 @@ struct Config {
     template<typename T, typename ConfigT>
     bool update_value(T value) {
         if (!this->is<ConfigT>()) {
-            Serial.print("Config has wrong type.");
+            logger.printfln("Config has wrong type.");
             delay(100);
             return false;
         }
@@ -292,7 +292,7 @@ struct Config {
     template<typename T, typename ConfigT>
     size_t fillArray(T *arr, size_t elements) {
         if (!this->is<ConfArray>()) {
-            Serial.print("Can't fill array, Config is not an array");
+            logger.printfln("Can't fill array, Config is not an array");
             delay(100);
             return 0;
         }
@@ -303,7 +303,7 @@ struct Config {
         for(size_t i = 0; i < toWrite; ++i) {
             Config &entry = confArr->value[i];
             if (!entry.is<ConfigT>()) {
-                Serial.print("Config entry has wrong type.");
+                logger.printfln("Config entry has wrong type.");
                 delay(100);
                 return 0;
             }

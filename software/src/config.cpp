@@ -391,9 +391,7 @@ Config Config::Int64(int64_t i) {
 
 Config *Config::get(String s) {
     if (!this->is<Config::ConfObject>()) {
-        Serial.print("Config key ");
-        Serial.print(s);
-        Serial.println(" not in this node, is not an object!");
+        logger.printfln("Config key %s not in this node: is not an object!", s.c_str());
         delay(100);
         return nullptr;
     }
@@ -403,27 +401,21 @@ Config *Config::get(String s) {
         if(children[i].first == s)
             return &children[i].second;
     }
-    Serial.print("Config key ");
-    Serial.print(s);
-    Serial.println(" not found!");
+    logger.printfln("Config key %s not found!", s.c_str());
     delay(100);
     return nullptr;
 }
 
 Config *Config::get(size_t i) {
     if (!this->is<Config::ConfArray>()){
-        Serial.print("Config index ");
-        Serial.print(i);
-        Serial.println(" not in this node, is not an array!");
+        logger.printfln("Config index %u not in this node: is not an array!", i);
         delay(100);
         return nullptr;
     }
 
     std::vector<Config> &children = strict_variant::get<Config::ConfArray>(&value)->value;
     if(i >= children.size()) {
-        Serial.print("Config index ");
-        Serial.print(i);
-        Serial.println(" out of range");
+        logger.printfln("Config index %u out of range!", i);
     }
     return &children[i];
 }
@@ -500,7 +492,7 @@ String Config::update_from_file(File file) {
     DynamicJsonDocument doc(json_size());
     DeserializationError error = deserializeJson(doc, file);
     if (error)
-        Serial.println(F("Failed to read file, using default configuration"));
+        logger.printfln("Failed to read file, using default configuration");
 
     String err = strict_variant::apply_visitor(from_json{doc.as<JsonVariant>()}, copy);
 
@@ -517,7 +509,7 @@ String Config::update_from_string(String s) {
     DeserializationError error = deserializeJson(doc, s);
 
     if (error)
-        Serial.println(String("Failed to deserialize string, using default configuration") + error.c_str());
+        logger.printfln("Failed to deserialize string, using default configuration: %s", error.c_str());
 
     String err = strict_variant::apply_visitor(from_json{doc.as<JsonVariant>()}, copy);
 

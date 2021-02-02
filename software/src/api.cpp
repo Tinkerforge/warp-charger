@@ -6,6 +6,8 @@
 #include "bindings/hal_common.h"
 #include "bindings/errors.h"
 
+#include "event_log.h"
+
 extern Mqtt mqtt;
 
 extern TaskScheduler task_scheduler;
@@ -13,6 +15,8 @@ extern AsyncWebServer server;
 extern AsyncEventSource events;
 
 extern TF_HalContext hal;
+
+extern EventLog logger;
 
 void API::setup()
 {
@@ -27,7 +31,7 @@ void API::addCommand(String path, Config *config, std::initializer_list<String> 
             if(error == "")
                 task_scheduler.scheduleOnce((String("notify command update for ") + path).c_str(), [callback](){callback();}, 0);
             else
-                Serial.println(error);
+                logger.printfln("%s", error.c_str());
         });
     }
 
@@ -94,11 +98,9 @@ void API::addPersistentConfig(String path, Config *config, std::initializer_list
         file.close();
 
         if (SPIFFS.exists(cfg_path))
-            Serial.println(SPIFFS.remove(cfg_path));
+            SPIFFS.remove(cfg_path);
 
-        Serial.println(SPIFFS.rename(tmp_path, cfg_path));
-        Serial.print(cfg_path);
-        Serial.println(" updated");
+        SPIFFS.rename(tmp_path, cfg_path);
     });
 }
 /*
@@ -125,7 +127,7 @@ void API::onMqttConnect()
                 if(error == "")
                     task_scheduler.scheduleOnce((String("notify command update for ") + reg.path).c_str(), [reg](){reg.callback();}, 0);
                 else
-                    Serial.println(error);
+                    logger.printfln("%s", error.c_str());
             });
         }
         for(auto &reg : states) {
@@ -139,6 +141,10 @@ void API::registerDebugUrl() {
 
         String result = "{\"uptime\": ";
         result += String(millis());
+        result += ",\n \"free_heap_bytes\":" ;
+        result += ESP.getFreeHeap();
+        result += ",\n \"largest_free_heap_block\":" ;
+        result += ESP.getMaxAllocHeap();
 
         result += ",\n \"devices\": [";
         size_t i = 0;
