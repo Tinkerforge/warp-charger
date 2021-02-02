@@ -218,6 +218,7 @@ void register_default_urls() {
         });
 
         response->addHeader("Content-Encoding", "gzip");
+        response->addHeader("ETag", String((uint32_t)(_BUILD_TIME_), 16));
         response->setCode(200);
         request->send(response);
     });
