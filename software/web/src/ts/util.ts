@@ -44,7 +44,7 @@ export function update_button_group(button_group_id: string, index_to_select: nu
 }
 
 export function show_alert(cls: string, title: string, text: string) {
-    $('#alert_placeholder').html(`<div class="alert ${cls} alert-dismissible fade show custom-alert" role="alert">
+    $('#alert_placeholder').html(`<div class="alert ${cls} alert-dismissible fade show custom-alert" role="alert" style="line-height: 1.5rem;">
             <strong>${title}</strong> ${text}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
