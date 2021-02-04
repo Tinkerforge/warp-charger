@@ -38,6 +38,6 @@ env.AddPostAction(
         "0x8000", "$BUILD_DIR/partitions.bin",
         "0xe000", "$BUILD_DIR/../../../boot_app0.bin",
         "0x10000", "$BUILD_DIR/${PROGNAME}.bin",
-        "$BUILD_DIR/../../../build/{}-merged.bin".format(defines.get("_FIRMWARE_NAME_"))
+        "$BUILD_DIR/../../../build/{}_merged.bin".format(defines.get("_FIRMWARE_NAME_"))
     ]), "Merging firmware.bin")
 )
