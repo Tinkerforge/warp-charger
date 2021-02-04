@@ -13,6 +13,11 @@ defines = {k: v for (k, v) in my_flags.get("CPPDEFINES")}
 
 env.AddPostAction(
     "$BUILD_DIR/${PROGNAME}.elf",
+    env.VerboseAction("mkdir -p $BUILD_DIR/../../../build", "Ensuring build dir exists")
+)
+
+env.AddPostAction(
+    "$BUILD_DIR/${PROGNAME}.elf",
     env.VerboseAction(" ".join([
         "cp", "$BUILD_DIR/${PROGNAME}.elf", "$BUILD_DIR/../../../build/{}.elf".format(defines.get("_FIRMWARE_NAME_"))
     ]), "Copying $BUILD_DIR/${PROGNAME}.elf")
