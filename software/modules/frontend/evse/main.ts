@@ -135,16 +135,37 @@ function set_auto_start_charging(auto_start_charging: boolean) {
         method: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify({"auto_start_charging": auto_start_charging}),
-        error: (xhr, status, error) => util.show_alert("alert-danger", "Failed to set auto charge.", error + ": " + xhr.responseText)
+        error: (xhr, status, error) => util.show_alert("alert-danger",  __("evse.script.auto_start_charging_update"), error + ": " + xhr.responseText)
     });
 }
+
+function start_charging() {
+    $.ajax({
+        url: '/evse/start_charging',
+        method: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(null),
+        error: (xhr, status, error) => util.show_alert("alert-danger", __("evse.script.start_charging_failed"), error + ": " + xhr.responseText)
+    });
+}
+
+function stop_charging() {
+    $.ajax({
+        url: '/evse/stop_charging',
+        method: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(null),
+        error: (xhr, status, error) => util.show_alert("alert-danger",  __("evse.script.stop_charging_failed"), error + ": " + xhr.responseText)
+    });
+}
+
 
 export function init() {
     $("#status_charging_current_minimum").on("click", () => set_charging_current(6000));
     $("#status_charging_current_maximum").on("click", () => set_charging_current(32000));
 
-    $("#status_stop_charging").on("click", () => $.get("/evse_stop_charging"));
-    $("#status_start_charging").on("click", () => $.get("/evse_start_charging"));
+    $("#status_stop_charging").on("click", stop_charging);
+    $("#status_start_charging").on("click", start_charging);
 
     $('#status_auto_start_charging').on("change", () => set_auto_start_charging($('#status_auto_start_charging').prop('checked')));
 
@@ -290,7 +311,11 @@ export function getTranslation(lang: string) {
                     "last_charge_took": "Letztes Laden dauerte",
                     "charging": "Lädt",
                     "set_charging_current_failed": "Konnte Ladestrom nicht setzen",
-                    "not_implemented": "Noch nicht implementiert"
+                    "not_implemented": "Noch nicht implementiert",
+
+                    "auto_start_charging_update": "Lade-Autostart setzen fehlgeschlagen.",
+                    "start_charging_failed": "Ladestart auslösen fehlgeschlagen",
+                    "stop_charging_failed": "Ladestop auslösen fehlgeschlagen"
                 }
             }
         },
@@ -387,7 +412,10 @@ export function getTranslation(lang: string) {
                     "last_charge_took": "Last charge took",
                     "charging": "Charging",
                     "set_charging_current_failed": "Failed to set charging current",
-                    "not_implemented": "Not implemented yet"
+                    "not_implemented": "Not implemented yet",
+                    "auto_start_charging_update": "Failed to set auto charge.",
+                    "start_charging_failed": "Failed to start charging",
+                    "stop_charging_failed": "Failed to stop charging"
                 }
             }
         }
