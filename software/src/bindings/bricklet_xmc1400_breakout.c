@@ -1,5 +1,5 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-12-17.      *
+ * This file was automatically generated on 2021-02-08.      *
  *                                                           *
  * C/C++ for Microcontrollers Bindings Version 2.0.0         *
  *                                                           *
@@ -88,8 +88,8 @@ int tf_xmc1400_breakout_create(TF_XMC1400Breakout *xmc1400_breakout, const char 
         return rc;
     }
     xmc1400_breakout->tfp->device = xmc1400_breakout;
+    xmc1400_breakout->tfp->uid = numeric_uid;
     xmc1400_breakout->tfp->cb_handler = tf_xmc1400_breakout_callback_handler;
-    
     xmc1400_breakout->response_expected[0] = 0x0C;
     return TF_E_OK;
 }
@@ -972,7 +972,7 @@ int tf_xmc1400_breakout_get_identity(TF_XMC1400Breakout *xmc1400_breakout, char 
     if (result & TF_TICK_PACKET_RECEIVED && error_code == 0) {
         char tmp_connected_uid[8] = {0};
         if (ret_uid != NULL) { tf_packetbuffer_pop_n(&xmc1400_breakout->tfp->spitfp->recv_buf, (uint8_t*)ret_uid, 8);} else { tf_packetbuffer_remove(&xmc1400_breakout->tfp->spitfp->recv_buf, 8); }
-        *tmp_connected_uid = tf_packetbuffer_read_char(&xmc1400_breakout->tfp->spitfp->recv_buf);
+        tf_packetbuffer_pop_n(&xmc1400_breakout->tfp->spitfp->recv_buf, (uint8_t*)tmp_connected_uid, 8);
         if (ret_position != NULL) { *ret_position = tf_packetbuffer_read_char(&xmc1400_breakout->tfp->spitfp->recv_buf); } else { tf_packetbuffer_remove(&xmc1400_breakout->tfp->spitfp->recv_buf, 1); }
         if (ret_hardware_version != NULL) { for (i = 0; i < 3; ++i) ret_hardware_version[i] = tf_packetbuffer_read_uint8_t(&xmc1400_breakout->tfp->spitfp->recv_buf);} else { tf_packetbuffer_remove(&xmc1400_breakout->tfp->spitfp->recv_buf, 3); }
         if (ret_firmware_version != NULL) { for (i = 0; i < 3; ++i) ret_firmware_version[i] = tf_packetbuffer_read_uint8_t(&xmc1400_breakout->tfp->spitfp->recv_buf);} else { tf_packetbuffer_remove(&xmc1400_breakout->tfp->spitfp->recv_buf, 3); }

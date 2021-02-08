@@ -1,5 +1,5 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-12-17.      *
+ * This file was automatically generated on 2021-02-08.      *
  *                                                           *
  * C/C++ for Microcontrollers Bindings Version 2.0.0         *
  *                                                           *
@@ -209,8 +209,8 @@ int tf_imu_v3_create(TF_IMUV3 *imu_v3, const char *uid, TF_HalContext *hal) {
         return rc;
     }
     imu_v3->tfp->device = imu_v3;
+    imu_v3->tfp->uid = numeric_uid;
     imu_v3->tfp->cb_handler = tf_imu_v3_callback_handler;
-    
     imu_v3->response_expected[0] = 0xFC;
     imu_v3->response_expected[1] = 0x07;
     return TF_E_OK;
@@ -1864,7 +1864,7 @@ int tf_imu_v3_get_identity(TF_IMUV3 *imu_v3, char ret_uid[8], char ret_connected
     if (result & TF_TICK_PACKET_RECEIVED && error_code == 0) {
         char tmp_connected_uid[8] = {0};
         if (ret_uid != NULL) { tf_packetbuffer_pop_n(&imu_v3->tfp->spitfp->recv_buf, (uint8_t*)ret_uid, 8);} else { tf_packetbuffer_remove(&imu_v3->tfp->spitfp->recv_buf, 8); }
-        *tmp_connected_uid = tf_packetbuffer_read_char(&imu_v3->tfp->spitfp->recv_buf);
+        tf_packetbuffer_pop_n(&imu_v3->tfp->spitfp->recv_buf, (uint8_t*)tmp_connected_uid, 8);
         if (ret_position != NULL) { *ret_position = tf_packetbuffer_read_char(&imu_v3->tfp->spitfp->recv_buf); } else { tf_packetbuffer_remove(&imu_v3->tfp->spitfp->recv_buf, 1); }
         if (ret_hardware_version != NULL) { for (i = 0; i < 3; ++i) ret_hardware_version[i] = tf_packetbuffer_read_uint8_t(&imu_v3->tfp->spitfp->recv_buf);} else { tf_packetbuffer_remove(&imu_v3->tfp->spitfp->recv_buf, 3); }
         if (ret_firmware_version != NULL) { for (i = 0; i < 3; ++i) ret_firmware_version[i] = tf_packetbuffer_read_uint8_t(&imu_v3->tfp->spitfp->recv_buf);} else { tf_packetbuffer_remove(&imu_v3->tfp->spitfp->recv_buf, 3); }

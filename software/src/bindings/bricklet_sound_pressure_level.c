@@ -1,5 +1,5 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-12-17.      *
+ * This file was automatically generated on 2021-02-08.      *
  *                                                           *
  * C/C++ for Microcontrollers Bindings Version 2.0.0         *
  *                                                           *
@@ -90,8 +90,8 @@ int tf_sound_pressure_level_create(TF_SoundPressureLevel *sound_pressure_level, 
         return rc;
     }
     sound_pressure_level->tfp->device = sound_pressure_level;
+    sound_pressure_level->tfp->uid = numeric_uid;
     sound_pressure_level->tfp->cb_handler = tf_sound_pressure_level_callback_handler;
-    
     sound_pressure_level->response_expected[0] = 0x03;
     return TF_E_OK;
 }
@@ -851,7 +851,7 @@ int tf_sound_pressure_level_get_identity(TF_SoundPressureLevel *sound_pressure_l
     if (result & TF_TICK_PACKET_RECEIVED && error_code == 0) {
         char tmp_connected_uid[8] = {0};
         if (ret_uid != NULL) { tf_packetbuffer_pop_n(&sound_pressure_level->tfp->spitfp->recv_buf, (uint8_t*)ret_uid, 8);} else { tf_packetbuffer_remove(&sound_pressure_level->tfp->spitfp->recv_buf, 8); }
-        *tmp_connected_uid = tf_packetbuffer_read_char(&sound_pressure_level->tfp->spitfp->recv_buf);
+        tf_packetbuffer_pop_n(&sound_pressure_level->tfp->spitfp->recv_buf, (uint8_t*)tmp_connected_uid, 8);
         if (ret_position != NULL) { *ret_position = tf_packetbuffer_read_char(&sound_pressure_level->tfp->spitfp->recv_buf); } else { tf_packetbuffer_remove(&sound_pressure_level->tfp->spitfp->recv_buf, 1); }
         if (ret_hardware_version != NULL) { for (i = 0; i < 3; ++i) ret_hardware_version[i] = tf_packetbuffer_read_uint8_t(&sound_pressure_level->tfp->spitfp->recv_buf);} else { tf_packetbuffer_remove(&sound_pressure_level->tfp->spitfp->recv_buf, 3); }
         if (ret_firmware_version != NULL) { for (i = 0; i < 3; ++i) ret_firmware_version[i] = tf_packetbuffer_read_uint8_t(&sound_pressure_level->tfp->spitfp->recv_buf);} else { tf_packetbuffer_remove(&sound_pressure_level->tfp->spitfp->recv_buf, 3); }

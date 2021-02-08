@@ -1,5 +1,5 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-12-17.      *
+ * This file was automatically generated on 2021-02-08.      *
  *                                                           *
  * C/C++ for Microcontrollers Bindings Version 2.0.0         *
  *                                                           *
@@ -90,8 +90,8 @@ int tf_compass_create(TF_Compass *compass, const char *uid, TF_HalContext *hal) 
         return rc;
     }
     compass->tfp->device = compass;
+    compass->tfp->uid = numeric_uid;
     compass->tfp->cb_handler = tf_compass_callback_handler;
-    
     compass->response_expected[0] = 0x03;
     return TF_E_OK;
 }
@@ -931,7 +931,7 @@ int tf_compass_get_identity(TF_Compass *compass, char ret_uid[8], char ret_conne
     if (result & TF_TICK_PACKET_RECEIVED && error_code == 0) {
         char tmp_connected_uid[8] = {0};
         if (ret_uid != NULL) { tf_packetbuffer_pop_n(&compass->tfp->spitfp->recv_buf, (uint8_t*)ret_uid, 8);} else { tf_packetbuffer_remove(&compass->tfp->spitfp->recv_buf, 8); }
-        *tmp_connected_uid = tf_packetbuffer_read_char(&compass->tfp->spitfp->recv_buf);
+        tf_packetbuffer_pop_n(&compass->tfp->spitfp->recv_buf, (uint8_t*)tmp_connected_uid, 8);
         if (ret_position != NULL) { *ret_position = tf_packetbuffer_read_char(&compass->tfp->spitfp->recv_buf); } else { tf_packetbuffer_remove(&compass->tfp->spitfp->recv_buf, 1); }
         if (ret_hardware_version != NULL) { for (i = 0; i < 3; ++i) ret_hardware_version[i] = tf_packetbuffer_read_uint8_t(&compass->tfp->spitfp->recv_buf);} else { tf_packetbuffer_remove(&compass->tfp->spitfp->recv_buf, 3); }
         if (ret_firmware_version != NULL) { for (i = 0; i < 3; ++i) ret_firmware_version[i] = tf_packetbuffer_read_uint8_t(&compass->tfp->spitfp->recv_buf);} else { tf_packetbuffer_remove(&compass->tfp->spitfp->recv_buf, 3); }

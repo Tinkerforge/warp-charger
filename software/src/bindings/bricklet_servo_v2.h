@@ -1,5 +1,5 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-12-17.      *
+ * This file was automatically generated on 2021-02-08.      *
  *                                                           *
  * C/C++ for Microcontrollers Bindings Version 2.0.0         *
  *                                                           *
@@ -27,7 +27,7 @@ extern "C" {
 struct TF_ServoV2;
 #ifdef TF_IMPLEMENT_CALLBACKS
 
-typedef void (*TF_ServoV2PositionReachedHandler)(struct TF_ServoV2 *device, uint8_t servo_channel, int16_t position, void *user_data);
+typedef void (*TF_ServoV2PositionReachedHandler)(struct TF_ServoV2 *device, uint16_t servo_channel, int16_t position, void *user_data);
 
 #endif
 /**
@@ -404,7 +404,7 @@ TF_ATTRIBUTE_NONNULL_ALL void tf_servo_v2_set_response_expected_all(TF_ServoV2 *
  * Registers the given \c handler to the Position Reached callback. The
  * \c user_data will be passed as the last parameter to the \c handler.
  *
- * Signature: \code void callback(uint8_t servo_channel, int16_t position, void *user_data) \endcode
+ * Signature: \code void callback(uint16_t servo_channel, int16_t position, void *user_data) \endcode
  * 
  * This callback is triggered when a position set by {@link tf_servo_v2_set_position}
  * is reached. If the new position matches the current position then the
@@ -499,7 +499,7 @@ TF_ATTRIBUTE_NONNULL(1) int tf_servo_v2_get_current_position(TF_ServoV2 *servo_v
  * \ingroup BrickletServoV2
  *
  * Returns the *current* velocity of the specified servo channel. This may not be the
- * velocity specified by {@link tf_servo_v2_set_motion_configuration}. if the servo is 
+ * velocity specified by {@link tf_servo_v2_set_motion_configuration}. if the servo is
  * currently approaching a velocity goal.
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_servo_v2_get_current_velocity(TF_ServoV2 *servo_v2, uint16_t servo_channel, uint16_t *ret_velocity);
@@ -512,7 +512,8 @@ TF_ATTRIBUTE_NONNULL(1) int tf_servo_v2_get_current_velocity(TF_ServoV2 *servo_v
  * 
  * With a velocity of 0 °/100s the position will be set immediately (no velocity).
  * 
- * With an acc-/deceleration of 0 °/100s² the velocity will be set immediately (no acc-/deceleration).
+ * With an acc-/deceleration of 0 °/100s² the velocity will be set immediately
+ * (no acc-/deceleration).
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_servo_v2_set_motion_configuration(TF_ServoV2 *servo_v2, uint16_t servo_channel, uint32_t velocity, uint32_t acceleration, uint32_t deceleration);
 
@@ -643,7 +644,8 @@ TF_ATTRIBUTE_NONNULL(1) int tf_servo_v2_set_servo_current_configuration(TF_Servo
 /**
  * \ingroup BrickletServoV2
  *
- * Returns the servo current configuration for the specified servo channel as set by {@link tf_servo_v2_set_servo_current_configuration}.
+ * Returns the servo current configuration for the specified servo channel as set
+ * by {@link tf_servo_v2_set_servo_current_configuration}.
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_servo_v2_get_servo_current_configuration(TF_ServoV2 *servo_v2, uint16_t servo_channel, uint8_t *ret_averaging_duration);
 

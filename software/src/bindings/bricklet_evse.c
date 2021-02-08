@@ -1,5 +1,5 @@
 /* ***********************************************************
- * This file was automatically generated on 2021-01-28.      *
+ * This file was automatically generated on 2021-02-08.      *
  *                                                           *
  * C/C++ for Microcontrollers Bindings Version 2.0.0         *
  *                                                           *
@@ -49,8 +49,8 @@ int tf_evse_create(TF_EVSE *evse, const char *uid, TF_HalContext *hal) {
         return rc;
     }
     evse->tfp->device = evse;
+    evse->tfp->uid = numeric_uid;
     evse->tfp->cb_handler = tf_evse_callback_handler;
-
     evse->response_expected[0] = 0x00;
     return TF_E_OK;
 }

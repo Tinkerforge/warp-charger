@@ -1,5 +1,5 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-12-17.      *
+ * This file was automatically generated on 2021-02-08.      *
  *                                                           *
  * C/C++ for Microcontrollers Bindings Version 2.0.0         *
  *                                                           *
@@ -74,8 +74,8 @@ int tf_e_paper_296x128_create(TF_EPaper296x128 *e_paper_296x128, const char *uid
         return rc;
     }
     e_paper_296x128->tfp->device = e_paper_296x128;
+    e_paper_296x128->tfp->uid = numeric_uid;
     e_paper_296x128->tfp->cb_handler = tf_e_paper_296x128_callback_handler;
-    
     e_paper_296x128->response_expected[0] = 0x06;
     e_paper_296x128->response_expected[1] = 0x00;
     return TF_E_OK;
@@ -1124,7 +1124,7 @@ int tf_e_paper_296x128_get_identity(TF_EPaper296x128 *e_paper_296x128, char ret_
     if (result & TF_TICK_PACKET_RECEIVED && error_code == 0) {
         char tmp_connected_uid[8] = {0};
         if (ret_uid != NULL) { tf_packetbuffer_pop_n(&e_paper_296x128->tfp->spitfp->recv_buf, (uint8_t*)ret_uid, 8);} else { tf_packetbuffer_remove(&e_paper_296x128->tfp->spitfp->recv_buf, 8); }
-        *tmp_connected_uid = tf_packetbuffer_read_char(&e_paper_296x128->tfp->spitfp->recv_buf);
+        tf_packetbuffer_pop_n(&e_paper_296x128->tfp->spitfp->recv_buf, (uint8_t*)tmp_connected_uid, 8);
         if (ret_position != NULL) { *ret_position = tf_packetbuffer_read_char(&e_paper_296x128->tfp->spitfp->recv_buf); } else { tf_packetbuffer_remove(&e_paper_296x128->tfp->spitfp->recv_buf, 1); }
         if (ret_hardware_version != NULL) { for (i = 0; i < 3; ++i) ret_hardware_version[i] = tf_packetbuffer_read_uint8_t(&e_paper_296x128->tfp->spitfp->recv_buf);} else { tf_packetbuffer_remove(&e_paper_296x128->tfp->spitfp->recv_buf, 3); }
         if (ret_firmware_version != NULL) { for (i = 0; i < 3; ++i) ret_firmware_version[i] = tf_packetbuffer_read_uint8_t(&e_paper_296x128->tfp->spitfp->recv_buf);} else { tf_packetbuffer_remove(&e_paper_296x128->tfp->spitfp->recv_buf, 3); }

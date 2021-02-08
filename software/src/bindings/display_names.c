@@ -1,5 +1,5 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-12-17.      *
+ * This file was automatically generated on 2021-02-08.      *
  *                                                           *
  * C/C++ for Microcontrollers Bindings Version 2.0.0         *
  *                                                           *
@@ -61,6 +61,7 @@ const char *tf_get_device_display_name(uint16_t device_id) {
         case 2123: return "One Wire Bricklet";
         case  288: return "Outdoor Weather Bricklet";
         case 2110: return "Particulate Matter Bricklet";
+        case 2156: return "Performance DC Bricklet";
         case 2145: return "Piezo Speaker Bricklet 2.0";
         case 2101: return "PTC Bricklet 2.0";
         case 2106: return "Real-Time Clock Bricklet 2.0";
@@ -73,6 +74,7 @@ const char *tf_get_device_display_name(uint16_t device_id) {
         case 2108: return "RS232 Bricklet 2.0";
         case  277: return "RS485 Bricklet";
         case 2137: return "Segment Display 4x7 Bricklet 2.0";
+        case 2157: return "Servo Bricklet 2.0";
         case  296: return "Solid State Relay Bricklet 2.0";
         case  290: return "Sound Pressure Level Bricklet";
         case  291: return "Temperature IR Bricklet 2.0";

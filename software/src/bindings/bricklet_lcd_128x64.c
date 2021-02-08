@@ -1,5 +1,5 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-12-17.      *
+ * This file was automatically generated on 2021-02-08.      *
  *                                                           *
  * C/C++ for Microcontrollers Bindings Version 2.0.0         *
  *                                                           *
@@ -142,8 +142,8 @@ int tf_lcd_128x64_create(TF_LCD128x64 *lcd_128x64, const char *uid, TF_HalContex
         return rc;
     }
     lcd_128x64->tfp->device = lcd_128x64;
+    lcd_128x64->tfp->uid = numeric_uid;
     lcd_128x64->tfp->cb_handler = tf_lcd_128x64_callback_handler;
-    
     lcd_128x64->response_expected[0] = 0x61;
     lcd_128x64->response_expected[1] = 0x90;
     lcd_128x64->response_expected[2] = 0xA0;
@@ -2539,7 +2539,7 @@ int tf_lcd_128x64_get_identity(TF_LCD128x64 *lcd_128x64, char ret_uid[8], char r
     if (result & TF_TICK_PACKET_RECEIVED && error_code == 0) {
         char tmp_connected_uid[8] = {0};
         if (ret_uid != NULL) { tf_packetbuffer_pop_n(&lcd_128x64->tfp->spitfp->recv_buf, (uint8_t*)ret_uid, 8);} else { tf_packetbuffer_remove(&lcd_128x64->tfp->spitfp->recv_buf, 8); }
-        *tmp_connected_uid = tf_packetbuffer_read_char(&lcd_128x64->tfp->spitfp->recv_buf);
+        tf_packetbuffer_pop_n(&lcd_128x64->tfp->spitfp->recv_buf, (uint8_t*)tmp_connected_uid, 8);
         if (ret_position != NULL) { *ret_position = tf_packetbuffer_read_char(&lcd_128x64->tfp->spitfp->recv_buf); } else { tf_packetbuffer_remove(&lcd_128x64->tfp->spitfp->recv_buf, 1); }
         if (ret_hardware_version != NULL) { for (i = 0; i < 3; ++i) ret_hardware_version[i] = tf_packetbuffer_read_uint8_t(&lcd_128x64->tfp->spitfp->recv_buf);} else { tf_packetbuffer_remove(&lcd_128x64->tfp->spitfp->recv_buf, 3); }
         if (ret_firmware_version != NULL) { for (i = 0; i < 3; ++i) ret_firmware_version[i] = tf_packetbuffer_read_uint8_t(&lcd_128x64->tfp->spitfp->recv_buf);} else { tf_packetbuffer_remove(&lcd_128x64->tfp->spitfp->recv_buf, 3); }

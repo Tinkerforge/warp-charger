@@ -1,5 +1,5 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-12-17.      *
+ * This file was automatically generated on 2021-02-08.      *
  *                                                           *
  * C/C++ for Microcontrollers Bindings Version 2.0.0         *
  *                                                           *
@@ -74,8 +74,8 @@ int tf_rgb_led_button_create(TF_RGBLEDButton *rgb_led_button, const char *uid, T
         return rc;
     }
     rgb_led_button->tfp->device = rgb_led_button;
+    rgb_led_button->tfp->uid = numeric_uid;
     rgb_led_button->tfp->cb_handler = tf_rgb_led_button_callback_handler;
-    
     rgb_led_button->response_expected[0] = 0x00;
     return TF_E_OK;
 }
@@ -723,7 +723,7 @@ int tf_rgb_led_button_get_identity(TF_RGBLEDButton *rgb_led_button, char ret_uid
     if (result & TF_TICK_PACKET_RECEIVED && error_code == 0) {
         char tmp_connected_uid[8] = {0};
         if (ret_uid != NULL) { tf_packetbuffer_pop_n(&rgb_led_button->tfp->spitfp->recv_buf, (uint8_t*)ret_uid, 8);} else { tf_packetbuffer_remove(&rgb_led_button->tfp->spitfp->recv_buf, 8); }
-        *tmp_connected_uid = tf_packetbuffer_read_char(&rgb_led_button->tfp->spitfp->recv_buf);
+        tf_packetbuffer_pop_n(&rgb_led_button->tfp->spitfp->recv_buf, (uint8_t*)tmp_connected_uid, 8);
         if (ret_position != NULL) { *ret_position = tf_packetbuffer_read_char(&rgb_led_button->tfp->spitfp->recv_buf); } else { tf_packetbuffer_remove(&rgb_led_button->tfp->spitfp->recv_buf, 1); }
         if (ret_hardware_version != NULL) { for (i = 0; i < 3; ++i) ret_hardware_version[i] = tf_packetbuffer_read_uint8_t(&rgb_led_button->tfp->spitfp->recv_buf);} else { tf_packetbuffer_remove(&rgb_led_button->tfp->spitfp->recv_buf, 3); }
         if (ret_firmware_version != NULL) { for (i = 0; i < 3; ++i) ret_firmware_version[i] = tf_packetbuffer_read_uint8_t(&rgb_led_button->tfp->spitfp->recv_buf);} else { tf_packetbuffer_remove(&rgb_led_button->tfp->spitfp->recv_buf, 3); }

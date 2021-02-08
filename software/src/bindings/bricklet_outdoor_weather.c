@@ -1,5 +1,5 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-12-17.      *
+ * This file was automatically generated on 2021-02-08.      *
  *                                                           *
  * C/C++ for Microcontrollers Bindings Version 2.0.0         *
  *                                                           *
@@ -97,8 +97,8 @@ int tf_outdoor_weather_create(TF_OutdoorWeather *outdoor_weather, const char *ui
         return rc;
     }
     outdoor_weather->tfp->device = outdoor_weather;
+    outdoor_weather->tfp->uid = numeric_uid;
     outdoor_weather->tfp->cb_handler = tf_outdoor_weather_callback_handler;
-    
     outdoor_weather->response_expected[0] = 0x03;
     return TF_E_OK;
 }
@@ -857,7 +857,7 @@ int tf_outdoor_weather_get_identity(TF_OutdoorWeather *outdoor_weather, char ret
     if (result & TF_TICK_PACKET_RECEIVED && error_code == 0) {
         char tmp_connected_uid[8] = {0};
         if (ret_uid != NULL) { tf_packetbuffer_pop_n(&outdoor_weather->tfp->spitfp->recv_buf, (uint8_t*)ret_uid, 8);} else { tf_packetbuffer_remove(&outdoor_weather->tfp->spitfp->recv_buf, 8); }
-        *tmp_connected_uid = tf_packetbuffer_read_char(&outdoor_weather->tfp->spitfp->recv_buf);
+        tf_packetbuffer_pop_n(&outdoor_weather->tfp->spitfp->recv_buf, (uint8_t*)tmp_connected_uid, 8);
         if (ret_position != NULL) { *ret_position = tf_packetbuffer_read_char(&outdoor_weather->tfp->spitfp->recv_buf); } else { tf_packetbuffer_remove(&outdoor_weather->tfp->spitfp->recv_buf, 1); }
         if (ret_hardware_version != NULL) { for (i = 0; i < 3; ++i) ret_hardware_version[i] = tf_packetbuffer_read_uint8_t(&outdoor_weather->tfp->spitfp->recv_buf);} else { tf_packetbuffer_remove(&outdoor_weather->tfp->spitfp->recv_buf, 3); }
         if (ret_firmware_version != NULL) { for (i = 0; i < 3; ++i) ret_firmware_version[i] = tf_packetbuffer_read_uint8_t(&outdoor_weather->tfp->spitfp->recv_buf);} else { tf_packetbuffer_remove(&outdoor_weather->tfp->spitfp->recv_buf, 3); }

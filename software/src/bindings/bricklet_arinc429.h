@@ -1,5 +1,5 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-12-17.      *
+ * This file was automatically generated on 2021-02-08.      *
  *                                                           *
  * C/C++ for Microcontrollers Bindings Version 2.0.0         *
  *                                                           *
@@ -29,6 +29,7 @@ struct TF_ARINC429;
 
 typedef void (*TF_ARINC429HeartbeatHandler)(struct TF_ARINC429 *device, uint8_t seq_number, uint16_t timestamp, uint16_t frames_processed[3], uint16_t frames_lost[3], void *user_data);
 typedef void (*TF_ARINC429FrameMessageHandler)(struct TF_ARINC429 *device, uint8_t channel, uint8_t seq_number, uint16_t timestamp, uint8_t frame_status, uint32_t frame, uint16_t age, void *user_data);
+typedef void (*TF_ARINC429SchedulerMessageHandler)(struct TF_ARINC429 *device, uint8_t channel, uint8_t seq_number, uint16_t timestamp, uint8_t token, void *user_data);
 
 #endif
 /**
@@ -45,6 +46,9 @@ typedef struct TF_ARINC429 {
     TF_ARINC429FrameMessageHandler frame_message_handler;
     void *frame_message_user_data;
 
+    TF_ARINC429SchedulerMessageHandler scheduler_message_handler;
+    void *scheduler_message_user_data;
+
 #endif
     uint8_t response_expected[2];
 } TF_ARINC429;
@@ -52,122 +56,107 @@ typedef struct TF_ARINC429 {
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FUNCTION_DEBUG_GET_DISCRETES 1
+#define TF_ARINC429_FUNCTION_GET_CAPABILITIES 1
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FUNCTION_DEBUG_READ_REGISTER_LOW_LEVEL 2
+#define TF_ARINC429_FUNCTION_SET_HEARTBEAT_CALLBACK_CONFIGURATION 2
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FUNCTION_DEBUG_WRITE_REGISTER_LOW_LEVEL 3
+#define TF_ARINC429_FUNCTION_GET_HEARTBEAT_CALLBACK_CONFIGURATION 3
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FUNCTION_GET_CAPABILITIES 4
+#define TF_ARINC429_FUNCTION_SET_CHANNEL_CONFIGURATION 5
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FUNCTION_SET_HEARTBEAT_CALLBACK_CONFIGURATION 5
+#define TF_ARINC429_FUNCTION_GET_CHANNEL_CONFIGURATION 6
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FUNCTION_GET_HEARTBEAT_CALLBACK_CONFIGURATION 6
+#define TF_ARINC429_FUNCTION_SET_CHANNEL_MODE 7
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FUNCTION_SET_CHANNEL_CONFIGURATION 8
+#define TF_ARINC429_FUNCTION_GET_CHANNEL_MODE 8
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FUNCTION_GET_CHANNEL_CONFIGURATION 9
+#define TF_ARINC429_FUNCTION_CLEAR_ALL_RX_FILTERS 9
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FUNCTION_SET_CHANNEL_MODE 10
+#define TF_ARINC429_FUNCTION_CLEAR_RX_FILTER 10
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FUNCTION_GET_CHANNEL_MODE 11
+#define TF_ARINC429_FUNCTION_SET_RX_STANDARD_FILTERS 11
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FUNCTION_CLEAR_ALL_RX_FILTERS 12
+#define TF_ARINC429_FUNCTION_SET_RX_FILTER 12
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FUNCTION_CLEAR_RX_FILTER 13
+#define TF_ARINC429_FUNCTION_GET_RX_FILTER 13
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FUNCTION_SET_RX_STANDARD_FILTERS 14
+#define TF_ARINC429_FUNCTION_READ_FRAME 14
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FUNCTION_SET_RX_FILTER 15
+#define TF_ARINC429_FUNCTION_SET_RX_CALLBACK_CONFIGURATION 15
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FUNCTION_GET_RX_FILTER 16
+#define TF_ARINC429_FUNCTION_GET_RX_CALLBACK_CONFIGURATION 16
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FUNCTION_READ_FRAME 17
+#define TF_ARINC429_FUNCTION_WRITE_FRAME_DIRECT 18
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FUNCTION_SET_RX_CALLBACK_CONFIGURATION 18
+#define TF_ARINC429_FUNCTION_WRITE_FRAME_SCHEDULED 19
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FUNCTION_GET_RX_CALLBACK_CONFIGURATION 19
+#define TF_ARINC429_FUNCTION_CLEAR_SCHEDULE_ENTRIES 20
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FUNCTION_WRITE_FRAME_DIRECT 21
+#define TF_ARINC429_FUNCTION_SET_SCHEDULE_ENTRY 21
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FUNCTION_WRITE_FRAME_SCHEDULED 22
+#define TF_ARINC429_FUNCTION_GET_SCHEDULE_ENTRY 22
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FUNCTION_CLEAR_SCHEDULE_ENTRIES 23
-
-/**
- * \ingroup BrickletARINC429
- */
-#define TF_ARINC429_FUNCTION_SET_SCHEDULE_ENTRY 24
-
-/**
- * \ingroup BrickletARINC429
- */
-#define TF_ARINC429_FUNCTION_GET_SCHEDULE_ENTRY 25
-
-/**
- * \ingroup BrickletARINC429
- */
-#define TF_ARINC429_FUNCTION_RESET_A429 26
+#define TF_ARINC429_FUNCTION_RESTART 23
 
 /**
  * \ingroup BrickletARINC429
@@ -234,44 +223,19 @@ typedef struct TF_ARINC429 {
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_CALLBACK_HEARTBEAT 7
+#define TF_ARINC429_CALLBACK_HEARTBEAT 4
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_CALLBACK_FRAME_MESSAGE 20
+#define TF_ARINC429_CALLBACK_FRAME_MESSAGE 17
+
+/**
+ * \ingroup BrickletARINC429
+ */
+#define TF_ARINC429_CALLBACK_SCHEDULER_MESSAGE 24
 
 #endif
-
-/**
- * \ingroup BrickletARINC429
- */
-#define TF_ARINC429_RW_ERROR_OK 0
-
-/**
- * \ingroup BrickletARINC429
- */
-#define TF_ARINC429_RW_ERROR_NO_WRITE 1
-
-/**
- * \ingroup BrickletARINC429
- */
-#define TF_ARINC429_RW_ERROR_NO_READ 2
-
-/**
- * \ingroup BrickletARINC429
- */
-#define TF_ARINC429_RW_ERROR_INVALID_OP_CODE 3
-
-/**
- * \ingroup BrickletARINC429
- */
-#define TF_ARINC429_RW_ERROR_INVALID_LENGTH 4
-
-/**
- * \ingroup BrickletARINC429
- */
-#define TF_ARINC429_RW_ERROR_SPI 5
 
 /**
  * \ingroup BrickletARINC429
@@ -466,7 +430,12 @@ typedef struct TF_ARINC429 {
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_FRAME_STATUS_UPDATE 0
+#define TF_ARINC429_FRAME_STATUS_NEW 0
+
+/**
+ * \ingroup BrickletARINC429
+ */
+#define TF_ARINC429_FRAME_STATUS_UPDATE 1
 
 /**
  * \ingroup BrickletARINC429
@@ -481,37 +450,47 @@ typedef struct TF_ARINC429 {
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_SCHEDULER_JOB_DWELL 1
+#define TF_ARINC429_SCHEDULER_JOB_CALLBACK 1
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_SCHEDULER_JOB_SINGLE 2
+#define TF_ARINC429_SCHEDULER_JOB_STOP 2
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_SCHEDULER_JOB_CYCLIC 3
+#define TF_ARINC429_SCHEDULER_JOB_JUMP 3
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_SCHEDULER_JOB_RETRANS_RX1 4
+#define TF_ARINC429_SCHEDULER_JOB_RETURN 4
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_SCHEDULER_JOB_RETRANS_RX2 5
+#define TF_ARINC429_SCHEDULER_JOB_DWELL 5
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_A429_MODE_NORMAL 0
+#define TF_ARINC429_SCHEDULER_JOB_SINGLE 6
 
 /**
  * \ingroup BrickletARINC429
  */
-#define TF_ARINC429_A429_MODE_DEBUG 1
+#define TF_ARINC429_SCHEDULER_JOB_CYCLIC 7
+
+/**
+ * \ingroup BrickletARINC429
+ */
+#define TF_ARINC429_SCHEDULER_JOB_RETRANS_RX1 8
+
+/**
+ * \ingroup BrickletARINC429
+ */
+#define TF_ARINC429_SCHEDULER_JOB_RETRANS_RX2 9
 
 /**
  * \ingroup BrickletARINC429
@@ -703,6 +682,23 @@ TF_ATTRIBUTE_NONNULL(1) void tf_arinc429_register_heartbeat_callback(TF_ARINC429
  *  * Age:          time in milliseconds since this frame (label + SDI combination) was received last. If not received for so far or after a previous timeout, 60000 or the timeout value set with the 'Set RX Callback Configuration' function will be returned.
  */
 TF_ATTRIBUTE_NONNULL(1) void tf_arinc429_register_frame_message_callback(TF_ARINC429 *arinc429, TF_ARINC429FrameMessageHandler handler, void *user_data);
+
+
+/**
+ * \ingroup BrickletARINC429
+ *
+ * Registers the given \c handler to the Scheduler Message callback. The
+ * \c user_data will be passed as the last parameter to the \c handler.
+ *
+ * Signature: \code void callback(uint8_t channel, uint8_t seq_number, uint16_t timestamp, uint8_t token, void *user_data) \endcode
+ * 
+ * This callback is triggered by respective jobs in the transmit schedule.
+ *  * Channel:    TX channel sending the callback
+ *  * Seq Number: running counter that is incremented with each callback, starting with 0 and rolling over after 255 to 1. It will restart from 0 whenever the scheduler is stopped and started again. This counter can be used to detect lost callbacks.
+ *  * Timestamp:  running counter that is incremented on every millisecond, starting when the bricklet is powered up and rolling over after 65535 to 0. This counter can be used to measure the relative timing between frame receptions.
+ *  * Token:      number assigned in the 'Frame Index' field when setting up the callback job.
+ */
+TF_ATTRIBUTE_NONNULL(1) void tf_arinc429_register_scheduler_message_callback(TF_ARINC429 *arinc429, TF_ARINC429SchedulerMessageHandler handler, void *user_data);
 #endif
 #ifdef TF_IMPLEMENT_CALLBACKS
 /**
@@ -718,55 +714,13 @@ TF_ATTRIBUTE_NONNULL_ALL int tf_arinc429_callback_tick(TF_ARINC429 *arinc429, ui
 /**
  * \ingroup BrickletARINC429
  *
- * Low-level debug function to read the discrete signals from the A429 chip.
- * RX Discretes Bit   9: MB2-1   - pending frame in RX2, PRIO 1 mailbox
- *                    8: MB2-2   -                            2 mailbox
- *                    7: MB2-3   -                            3 mailbox
- *                    6: R2FLAG  -                       FIFO
- *                    5: R2INT   -                       FIFO (pulse only)
- *                    4: MB1-1   - pending frame in RX1, PRIO 1 mailbox
- *                    3: MB1-2   -                            2 mailbox
- *                    2: MB1-3   -                            3 mailbox
- *                    1: R1FLAG  -                       FIFO
- *                    0: R1INT   -                       FIFO (pulse only)
- * TX Discretes Bit 2-7: unused
- *                    1: TFULL   - TX buffer full
- *                    0: TEMPTY  - TX buffer empty
- */
-TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_debug_get_discretes(TF_ARINC429 *arinc429, uint16_t *ret_rx_discretes, uint16_t *ret_tx_discretes);
-
-/**
- * \ingroup BrickletARINC429
- *
- * Low-level debug function to execute a direct SPI read access on the A429 chip.
- *  * OP Code:      code number of the SPI read command
- *  * Value Length: number of bytes read
- *  * Value Data:   data bytes read
- *  * RW Error:     'OK' if the read access was successful, else error code
- */
-TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_debug_read_register_low_level(TF_ARINC429 *arinc429, uint8_t op_code, uint8_t *ret_value_length, uint8_t ret_value_data[32], uint8_t *ret_rw_error);
-
-/**
- * \ingroup BrickletARINC429
- *
- * Low-level debug function to execute a direct SPI write access on the A429 chip.
- *  * OP Code:      code number of the SPI read command
- *  * Value Length: number of bytes to write
- *  * Value Data:   data bytes to write
- *  * RW Error:     'OK' if the write access was successful, else error code
- */
-TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_debug_write_register_low_level(TF_ARINC429 *arinc429, uint8_t op_code, uint8_t value_length, uint8_t value_data[32], uint8_t *ret_rw_error);
-
-/**
- * \ingroup BrickletARINC429
- *
  * Get the TX and RX capabilities and their current usage:
- *  * TX Total Scheduler Tasks: total number of task entries in the scheduling table.
- *  * TX Used Scheduler Tasks:  number of task entries that are currently in use.
- *  * RX Total Frame Filters:   total number of frame filters that can be defined per channel.
- *  * RX Used Frame Filters:    number of frame filters that are currently in use per each channel.
+ *  * TX Total Scheduler Jobs: total number of job entries in the scheduling table.
+ *  * TX Used Scheduler Jobs:  number of job entries that are currently in use.
+ *  * RX Total Frame Filters:  total number of frame filters that can be defined per channel.
+ *  * RX Used Frame Filters:   number of frame filters that are currently in use per each channel.
  */
-TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_get_capabilities(TF_ARINC429 *arinc429, uint16_t *ret_tx_total_scheduler_tasks, uint16_t *ret_tx_used_scheduler_tasks, uint16_t *ret_rx_total_frame_filters, uint16_t ret_rx_used_frame_filters[2]);
+TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_get_capabilities(TF_ARINC429 *arinc429, uint16_t *ret_tx_total_scheduler_jobs, uint16_t *ret_tx_used_scheduler_jobs, uint16_t *ret_rx_total_frame_filters, uint16_t ret_rx_used_frame_filters[2]);
 
 /**
  * \ingroup BrickletARINC429
@@ -808,7 +762,7 @@ TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_get_channel_configuration(TF_ARINC429 *a
  * Set the operating mode of the selected channel:
  *  * passive: TX channel: all transmissions are stopped and the hardware interface becomes high-Z. RX channels: all arriving frames will be discarded.
  *  * active:  TX channel: Arinc429 frames can be sent via the 'Write Frame Direct' function. RX channels: arriving frames will be processed according to the frame filter and callback settings.
- *  * run:     TX channels only: the scheduler will run and transmit frames according to the entries made in the scheduler task table.
+ *  * run:     TX channels only: the scheduler will run and transmit frames according to the entries made in the scheduler job table.
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_set_channel_mode(TF_ARINC429 *arinc429, uint8_t channel, uint8_t mode);
 
@@ -913,9 +867,9 @@ TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_write_frame_direct(TF_ARINC429 *arinc429
 /**
  * \ingroup BrickletARINC429
  *
- * Set or update an Arinc429 frame that is transmitted by the scheduler using the task types 'Single' and 'Cyclic'.
+ * Set or update an Arinc429 frame that is transmitted by the scheduler using the job types 'Single' and 'Cyclic'.
  *  * Channel:     selected transmit channel.
- *  * Frame Index: index number that will be used in the transmit scheduler task table to refer to this frame.
+ *  * Frame Index: index number that will be used in the transmit scheduler job table to refer to this frame.
  *  * frame:       complete Arinc429 frame including the label and SDI bits. If 'parity_auto' is set for the channel, the parity bit will be set (adjusted) automatically.
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_write_frame_scheduled(TF_ARINC429 *arinc429, uint8_t channel, uint16_t frame_index, uint32_t frame);
@@ -923,51 +877,64 @@ TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_write_frame_scheduled(TF_ARINC429 *arinc
 /**
  * \ingroup BrickletARINC429
  *
- * Clear a range of transmit scheduler task table entries:
+ * Clear a range of transmit scheduler job table entries:
  *  * Channel: selected TX channel.
  *  * First:   index of the first table entry to be cleared.
  *  * Last:    index of the last  table entry to be cleared.
  * To clear a single entry, set 'First' and 'Last' to the one index of the one entry to be cleared.
  */
-TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_clear_schedule_entries(TF_ARINC429 *arinc429, uint8_t channel, uint16_t task_index_first, uint16_t task_index_last);
+TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_clear_schedule_entries(TF_ARINC429 *arinc429, uint8_t channel, uint16_t job_index_first, uint16_t job_index_last);
 
 /**
  * \ingroup BrickletARINC429
  *
- * Set an entry in the transmit scheduler task table:
+ * Set an entry in the transmit scheduler job table:
  *  * Channel:     selected TX channel
- *  * Task Index:  index number of the task, the scheduler processes the task table in ascending order of these index numbers.
+ *  * Job Index:   index number of the job, the scheduler processes the job table in ascending order of these index numbers.
  *  * Job:         activity assigned to this entry, see below.
- *  * Frame Index: frame assigned to this task, either the 'Frame Index' used along with the :func: `Write Frame Scheduled` or the extended label (label + SDI) in case of RX1/RX2 retransmits.
- *  * Dwell Time:  time to wait before executing the next task table entry (0-250 milliseconds).
+ *  * Frame Index: generally, the frame assigned to this job by the 'Frame Index' used along with the :func: `Write Frame Scheduled`.
+ *                 In case of a RX1 or RX2 retransmit job, the extended label (label + SDI) of the frame to be retransmitted.
+ *                 In case of the Jump command, the Job Index at which execution shall continue.
+ *                 In case of the Callback command, this number will be sent as 'Token' code (values 0-255 only).
+ *                 In all other cases (Skip, Stop, Dwell, Return) this parameter is not used.
+ *  * Dwell Time:  time to wait before executing the next job table entry (0-250 milliseconds).
  * 
- * When the scheduler is set to 'run' mode via the {@link tf_arinc429_set_channel_mode}, it continuously loops through the task table and executes the assigned tasks.
- * It starts with the task stored at task index 0.
+ * When the scheduler is set to 'run' mode via the {@link tf_arinc429_set_channel_mode}, it continuously loops through the job table and executes
+ * the assigned tasks. It starts with the job stored at job index 0.
  * The scheduler can execute the following activity types (jobs):
- *  * Skip:        the task is skipped, i.e. no frame is transmitted and no dwelling is done. The frame index and dwell time are not used.
+ *  * Skip:        the job is skipped, i.e. no frame is transmitted and no dwelling is done. The frame index and dwell time are not used.
+ *  * Stop:        the scheduler is stopped, i.e. the channel mode is reverted from 'run' to 'active'. The frame index and dwell time are not used.
+ *  * Jump:        the scheduler immediately continues at the Job Index position given by the Frame Index parameter. The assigned dwell time will be executed when the scheduler runs into the next Return job.
+ *  * Return:      the scheduler immediately continues at the next Job Index position following the last Jump command. Nested Jumps are not supported. The frame index and dwell time are not used.
+ *  * Callback:    the scheduler triggers a callback message and immediately continues with executing the next job (dwell time is not used).
  *  * Dwell        the scheduler executes the dwelling but does not transmit any frame. The frame index is not used.
  *  * Single:      the scheduler transmits the referenced frame, but only once. On subsequent executions the frame is not sent until it is renewed via the {@link tf_arinc429_write_frame_scheduled}, then the process repeats.
  *  * Cyclic:      the scheduler transmits the referenced frame and executed the dwelling on each round.
  *  * Retrans RX1: the scheduler retransmits a frame that was previously received on the RX1 channel. The frame to send is referenced by setting the 'Frame Index' to its extended label code, which is a 10 bit number made of the label code in the lower bits and the two SDI bits in the upper bits. If the SDI bits are used for data, set the SDI bits to zero. As long as the referenced frame was not received yet, or if it is in timeout, no frame will be sent.
  *  * Retrans RX2: same as before, but for frames received on the RX2 channel.
+ * 
+ * The value assigned to the 'Frame Index' parameter varies with the activity type (job):
+ * 
+ *  * Single or Cyclic: frame index as used with the :func: `Write Frame Scheduled` of the frame to transmit. Valid range: 0-255
+ *  * Retrans RX1/RX2:  extended label (label + SDI) of the frame to re-transmit. Valid range: 0-1023
+ *  * Callback:         arbitrary number decided by the user, it will be reported in the callback via the 'Token' value. Valid range: 0-255
+ *  * Jump:             next job index to jump to.
  */
-TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_set_schedule_entry(TF_ARINC429 *arinc429, uint8_t channel, uint16_t task_index, uint8_t job, uint16_t frame_index, uint8_t dwell_time);
+TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_set_schedule_entry(TF_ARINC429 *arinc429, uint8_t channel, uint16_t job_index, uint8_t job, uint16_t frame_index, uint8_t dwell_time);
 
 /**
  * \ingroup BrickletARINC429
  *
- * Get a transmit scheduler task table entry.
+ * Get a transmit scheduler job table entry.
  */
-TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_get_schedule_entry(TF_ARINC429 *arinc429, uint8_t channel, uint16_t task_index, uint8_t *ret_job, uint16_t *ret_frame_index, uint32_t *ret_frame, uint8_t *ret_dwell_time);
+TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_get_schedule_entry(TF_ARINC429 *arinc429, uint8_t channel, uint16_t job_index, uint8_t *ret_job, uint16_t *ret_frame_index, uint32_t *ret_frame, uint8_t *ret_dwell_time);
 
 /**
  * \ingroup BrickletARINC429
  *
- * Reset the A429 bricklet. The bricklet will restart in the selected mode:
- *  * 'Normal': normal operating mode with all high-level Arinc429 frame processing being executed.
- *  * 'Debug':  debug mode with all high-level processing suspended, for use in conjunction with the low-level debug functions.
+ * Sets the whole bricklet into its power-up default state.
  */
-TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_reset_a429(TF_ARINC429 *arinc429, uint8_t mode);
+TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_restart(TF_ARINC429 *arinc429);
 
 /**
  * \ingroup BrickletARINC429
@@ -1112,28 +1079,6 @@ TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_read_uid(TF_ARINC429 *arinc429, uint32_t
  * |device_identifier_constant|
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_get_identity(TF_ARINC429 *arinc429, char ret_uid[8], char ret_connected_uid[8], char *ret_position, uint8_t ret_hardware_version[3], uint8_t ret_firmware_version[3], uint16_t *ret_device_identifier);
-
-/**
- * \ingroup BrickletARINC429
- *
- * Low-level debug function to execute a direct SPI read access on the A429 chip.
- *  * OP Code:      code number of the SPI read command
- *  * Value Length: number of bytes read
- *  * Value Data:   data bytes read
- *  * RW Error:     'OK' if the read access was successful, else error code
- */
-TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_debug_read_register(TF_ARINC429 *arinc429, uint8_t op_code, uint8_t *ret_value, uint8_t *ret_value_length, uint8_t *ret_rw_error);
-
-/**
- * \ingroup BrickletARINC429
- *
- * Low-level debug function to execute a direct SPI write access on the A429 chip.
- *  * OP Code:      code number of the SPI read command
- *  * Value Length: number of bytes to write
- *  * Value Data:   data bytes to write
- *  * RW Error:     'OK' if the write access was successful, else error code
- */
-TF_ATTRIBUTE_NONNULL(1) int tf_arinc429_debug_write_register(TF_ARINC429 *arinc429, uint8_t op_code, uint8_t *value, uint8_t value_length, uint8_t *ret_rw_error);
 
 #ifdef __cplusplus
 }

@@ -1,5 +1,5 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-12-17.      *
+ * This file was automatically generated on 2021-02-08.      *
  *                                                           *
  * C/C++ for Microcontrollers Bindings Version 2.0.0         *
  *                                                           *
@@ -369,8 +369,8 @@ int tf_rs485_create(TF_RS485 *rs485, const char *uid, TF_HalContext *hal) {
         return rc;
     }
     rs485->tfp->device = rs485;
+    rs485->tfp->uid = numeric_uid;
     rs485->tfp->cb_handler = tf_rs485_callback_handler;
-    
     rs485->response_expected[0] = 0x03;
     rs485->response_expected[1] = 0x1B;
     rs485->response_expected[2] = 0x0E;
@@ -2482,7 +2482,7 @@ int tf_rs485_get_identity(TF_RS485 *rs485, char ret_uid[8], char ret_connected_u
     if (result & TF_TICK_PACKET_RECEIVED && error_code == 0) {
         char tmp_connected_uid[8] = {0};
         if (ret_uid != NULL) { tf_packetbuffer_pop_n(&rs485->tfp->spitfp->recv_buf, (uint8_t*)ret_uid, 8);} else { tf_packetbuffer_remove(&rs485->tfp->spitfp->recv_buf, 8); }
-        *tmp_connected_uid = tf_packetbuffer_read_char(&rs485->tfp->spitfp->recv_buf);
+        tf_packetbuffer_pop_n(&rs485->tfp->spitfp->recv_buf, (uint8_t*)tmp_connected_uid, 8);
         if (ret_position != NULL) { *ret_position = tf_packetbuffer_read_char(&rs485->tfp->spitfp->recv_buf); } else { tf_packetbuffer_remove(&rs485->tfp->spitfp->recv_buf, 1); }
         if (ret_hardware_version != NULL) { for (i = 0; i < 3; ++i) ret_hardware_version[i] = tf_packetbuffer_read_uint8_t(&rs485->tfp->spitfp->recv_buf);} else { tf_packetbuffer_remove(&rs485->tfp->spitfp->recv_buf, 3); }
         if (ret_firmware_version != NULL) { for (i = 0; i < 3; ++i) ret_firmware_version[i] = tf_packetbuffer_read_uint8_t(&rs485->tfp->spitfp->recv_buf);} else { tf_packetbuffer_remove(&rs485->tfp->spitfp->recv_buf, 3); }

@@ -1,5 +1,5 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-12-17.      *
+ * This file was automatically generated on 2021-02-08.      *
  *                                                           *
  * C/C++ for Microcontrollers Bindings Version 2.0.0         *
  *                                                           *
@@ -35,7 +35,7 @@ typedef void (*TF_PerformanceDCCurrentVelocityHandler)(struct TF_PerformanceDC *
 /**
  * \ingroup BrickletPerformanceDC
  *
- * TBD
+ * Drives one brushed DC motor with up to 36V and 10A
  */
 typedef struct TF_PerformanceDC {
     TF_TfpContext *tfp;
@@ -604,22 +604,14 @@ TF_ATTRIBUTE_NONNULL_ALL void tf_performance_dc_set_response_expected_all(TF_Per
  *
  * Signature: \code void callback(void *user_data) \endcode
  * 
- * TODO
- * 
  * This callback is triggered if either the current consumption
- * is too high (above 5A) or the temperature of the driver chip is too high
- * (above 175°C). These two possibilities are essentially the same, since the
- * temperature will reach this threshold immediately if the motor consumes too
- * much current. In case of a voltage below 3.3V (external or stack) this
+ * is too high or the temperature of the driver chip is too high
+ * (above 150°C) or the user defined thermal shutdown is triggered (see {@link tf_performance_dc_set_thermal_shutdown}).
+ * n case of a voltage below 6V (input voltage) this
  * callback is triggered as well.
  * 
  * If this callback is triggered, the driver chip gets disabled at the same time.
  * That means, {@link tf_performance_dc_set_enabled} has to be called to drive the motor again.
- * 
- * \note
- *  This callback only works in Drive/Brake mode (see {@link tf_performance_dc_set_drive_mode}). In
- *  Drive/Coast mode it is unfortunately impossible to reliably read the
- *  overcurrent/overtemperature signal from the driver chip.
  */
 TF_ATTRIBUTE_NONNULL(1) void tf_performance_dc_register_emergency_shutdown_callback(TF_PerformanceDC *performance_dc, TF_PerformanceDCEmergencyShutdownHandler handler, void *user_data);
 
@@ -677,14 +669,15 @@ TF_ATTRIBUTE_NONNULL_ALL int tf_performance_dc_callback_tick(TF_PerformanceDC *p
 /**
  * \ingroup BrickletPerformanceDC
  *
- * TBD
+ * Enables/Disables the driver chip. The driver parameters can be configured
+ * (velocity, acceleration, etc) before it is enabled.
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_set_enabled(TF_PerformanceDC *performance_dc, bool enabled);
 
 /**
  * \ingroup BrickletPerformanceDC
  *
- * TBD
+ * Returns *true* if the driver chip is enabled, *false* otherwise.
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_get_enabled(TF_PerformanceDC *performance_dc, bool *ret_enabled);
 
@@ -693,13 +686,13 @@ TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_get_enabled(TF_PerformanceDC *perf
  *
  * Sets the velocity of the motor. Whereas -32767 is full speed backward,
  * 0 is stop and 32767 is full speed forward. Depending on the
- * acceleration (see TBD), the motor is not immediately
+ * acceleration (see {@link tf_performance_dc_set_motion}), the motor is not immediately
  * brought to the velocity but smoothly accelerated.
  * 
  * The velocity describes the duty cycle of the PWM with which the motor is
  * controlled, e.g. a velocity of 3277 sets a PWM with a 10% duty cycle.
  * You can not only control the duty cycle of the PWM but also the frequency,
- * see TBD.
+ * see {@link tf_performance_dc_set_pwm_frequency}.
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_set_velocity(TF_PerformanceDC *performance_dc, int16_t velocity);
 
@@ -722,23 +715,23 @@ TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_get_current_velocity(TF_Performanc
 /**
  * \ingroup BrickletPerformanceDC
  *
- * Sets the acceleration of the motor. It is given in *velocity/s*. An
- * acceleration of 10000 means, that every second the velocity is increased
+ * Sets the acceleration and deceleration of the motor. It is given in *velocity/s*.
+ * An acceleration of 10000 means, that every second the velocity is increased
  * by 10000 (or about 30% duty cycle).
  * 
  * For example: If the current velocity is 0 and you want to accelerate to a
  * velocity of 16000 (about 50% duty cycle) in 10 seconds, you should set
  * an acceleration of 1600.
  * 
- * If acceleration is set to 0, there is no speed ramping, i.e. a new velocity
- * is immediately given to the motor.
+ * If acceleration and deceleration is set to 0, there is no speed ramping, i.e. a
+ * new velocity is immediately given to the motor.
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_set_motion(TF_PerformanceDC *performance_dc, uint16_t acceleration, uint16_t deceleration);
 
 /**
  * \ingroup BrickletPerformanceDC
  *
- * Returns the acceleration as set by {@link tf_performance_dc_set_motion}.
+ * Returns the acceleration/deceleration as set by {@link tf_performance_dc_set_motion}.
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_get_motion(TF_PerformanceDC *performance_dc, uint16_t *ret_acceleration, uint16_t *ret_deceleration);
 
@@ -808,70 +801,87 @@ TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_get_pwm_frequency(TF_PerformanceDC
 /**
  * \ingroup BrickletPerformanceDC
  *
- * TBD
+ * Returns input voltage, current usage and temperature of the driver.
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_get_power_statistics(TF_PerformanceDC *performance_dc, uint16_t *ret_voltage, uint16_t *ret_current, int16_t *ret_temperature);
 
 /**
  * \ingroup BrickletPerformanceDC
  *
- * TBD
+ * Sets a temperature threshold that is used for thermal shutdown.
+ * 
+ * Additionally to this user defined threshold the driver chip will shut down at a
+ * temperature of 150°C.
+ * 
+ * If a thermal shutdown is triggered the driver is disabled and has to be
+ * explicitly re-enabled with {@link tf_performance_dc_set_enabled}.
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_set_thermal_shutdown(TF_PerformanceDC *performance_dc, uint8_t temperature);
 
 /**
  * \ingroup BrickletPerformanceDC
  *
- * TBD
+ * Returns the thermal shutdown temperature as set by {@link tf_performance_dc_set_thermal_shutdown}.
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_get_thermal_shutdown(TF_PerformanceDC *performance_dc, uint8_t *ret_temperature);
 
 /**
  * \ingroup BrickletPerformanceDC
  *
- * TBD
+ * Sets the GPIO configuration for the given channel.
+ * You can configure a debounce and the deceleration that is used if the action is
+ * configured as ``normal stop``. See {@link tf_performance_dc_set_gpio_action}.
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_set_gpio_configuration(TF_PerformanceDC *performance_dc, uint8_t channel, uint16_t debounce, uint16_t stop_deceleration);
 
 /**
  * \ingroup BrickletPerformanceDC
  *
- * TBD
+ * Returns the GPIO configuration for a channel as set by {@link tf_performance_dc_set_gpio_configuration}.
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_get_gpio_configuration(TF_PerformanceDC *performance_dc, uint8_t channel, uint16_t *ret_debounce, uint16_t *ret_stop_deceleration);
 
 /**
  * \ingroup BrickletPerformanceDC
  *
- * TBD
+ * Sets the GPIO action for the given channel.
+ * 
+ * The action can be a normal stop, a full brake or a callback. Each for a rising
+ * edge or falling edge. The actions are a bitmask they can be used at the same time.
+ * You can for example trigger a full brake and a callback at the same time or for
+ * rising and falling edge.
+ * 
+ * The deceleration speed for the normal stop can be configured with
+ * {@link tf_performance_dc_set_gpio_configuration}.
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_set_gpio_action(TF_PerformanceDC *performance_dc, uint8_t channel, uint32_t action);
 
 /**
  * \ingroup BrickletPerformanceDC
  *
- * TBD
+ * Returns the GPIO action for a channel as set by {@link tf_performance_dc_set_gpio_action}.
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_get_gpio_action(TF_PerformanceDC *performance_dc, uint8_t channel, uint32_t *ret_action);
 
 /**
  * \ingroup BrickletPerformanceDC
  *
- * TBD
+ * Returns the GPIO state for both channels. True if the state is ``high`` and
+ * false if the state is ``low``.
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_get_gpio_state(TF_PerformanceDC *performance_dc, bool ret_gpio_state[2]);
 
 /**
  * \ingroup BrickletPerformanceDC
  *
- * Configures the touch LED to be either turned off, turned on, blink in
- * heartbeat mode or show TBD.
+ * Configures the error LED to be either turned off, turned on, blink in
+ * heartbeat mode or show an error.
  * 
- * TODO:
+ * If the LED is configured to show errors it has three different states:
  * 
- * * one second interval blink: Input voltage too small
- * * 250ms interval blink: Overtemperature warning
- * * full red: motor disabled because of short to ground in phase a or b or because of overtemperature
+ * * Off: No error present.
+ * * 1s interval blinking: Input voltage too low (below 6V).
+ * * 250ms interval blinking: Overtemperature or overcurrent.
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_set_error_led_config(TF_PerformanceDC *performance_dc, uint8_t config);
 
@@ -885,7 +895,8 @@ TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_get_error_led_config(TF_Performanc
 /**
  * \ingroup BrickletPerformanceDC
  *
- * TBD
+ * Configures the CW LED to be either turned off, turned on, blink in
+ * heartbeat mode or if the motor turn clockwise.
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_set_cw_led_config(TF_PerformanceDC *performance_dc, uint8_t config);
 
@@ -899,7 +910,8 @@ TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_get_cw_led_config(TF_PerformanceDC
 /**
  * \ingroup BrickletPerformanceDC
  *
- * TBD
+ * Configures the CCW LED to be either turned off, turned on, blink in
+ * heartbeat mode or if the motor turn counter-clockwise.
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_set_ccw_led_config(TF_PerformanceDC *performance_dc, uint8_t config);
 
@@ -913,8 +925,10 @@ TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_get_ccw_led_config(TF_PerformanceD
 /**
  * \ingroup BrickletPerformanceDC
  *
- * Configures the touch LED to be either turned off, turned on, blink in
- * heartbeat mode or show TBD.
+ * Configures the GPIO LED to be either turned off, turned on, blink in
+ * heartbeat mode or the GPIO state.
+ * 
+ * The GPIO LED can be configured for both channels.
  */
 TF_ATTRIBUTE_NONNULL(1) int tf_performance_dc_set_gpio_led_config(TF_PerformanceDC *performance_dc, uint8_t channel, uint8_t config);
 

@@ -1,5 +1,5 @@
 /* ***********************************************************
- * This file was automatically generated on 2020-12-17.      *
+ * This file was automatically generated on 2021-02-08.      *
  *                                                           *
  * C/C++ for Microcontrollers Bindings Version 2.0.0         *
  *                                                           *
@@ -102,8 +102,8 @@ int tf_performance_dc_create(TF_PerformanceDC *performance_dc, const char *uid, 
         return rc;
     }
     performance_dc->tfp->device = performance_dc;
+    performance_dc->tfp->uid = numeric_uid;
     performance_dc->tfp->cb_handler = tf_performance_dc_callback_handler;
-    
     performance_dc->response_expected[0] = 0x00;
     performance_dc->response_expected[1] = 0xE0;
     performance_dc->response_expected[2] = 0x00;
@@ -1846,7 +1846,7 @@ int tf_performance_dc_get_identity(TF_PerformanceDC *performance_dc, char ret_ui
     if (result & TF_TICK_PACKET_RECEIVED && error_code == 0) {
         char tmp_connected_uid[8] = {0};
         if (ret_uid != NULL) { tf_packetbuffer_pop_n(&performance_dc->tfp->spitfp->recv_buf, (uint8_t*)ret_uid, 8);} else { tf_packetbuffer_remove(&performance_dc->tfp->spitfp->recv_buf, 8); }
-        *tmp_connected_uid = tf_packetbuffer_read_char(&performance_dc->tfp->spitfp->recv_buf);
+        tf_packetbuffer_pop_n(&performance_dc->tfp->spitfp->recv_buf, (uint8_t*)tmp_connected_uid, 8);
         if (ret_position != NULL) { *ret_position = tf_packetbuffer_read_char(&performance_dc->tfp->spitfp->recv_buf); } else { tf_packetbuffer_remove(&performance_dc->tfp->spitfp->recv_buf, 1); }
         if (ret_hardware_version != NULL) { for (i = 0; i < 3; ++i) ret_hardware_version[i] = tf_packetbuffer_read_uint8_t(&performance_dc->tfp->spitfp->recv_buf);} else { tf_packetbuffer_remove(&performance_dc->tfp->spitfp->recv_buf, 3); }
         if (ret_firmware_version != NULL) { for (i = 0; i < 3; ++i) ret_firmware_version[i] = tf_packetbuffer_read_uint8_t(&performance_dc->tfp->spitfp->recv_buf);} else { tf_packetbuffer_remove(&performance_dc->tfp->spitfp->recv_buf, 3); }
