@@ -347,7 +347,7 @@ uint32_t tf_hal_get_timeout(TF_HalContext *hal) {
 int tf_hal_get_port_id(TF_HalContext *hal, uint32_t uid, uint8_t *port_id, int *inventory_index) {
     TF_HalCommon *hal_common = tf_hal_get_common(hal);
 
-    for(int i = 0; i < (int)hal_common->used; ++i) {
+    for(int i = 1; i < (int)hal_common->used; ++i) {
         if(hal_common->uids[i] == uid) {
             *port_id = hal_common->port_ids[i];
             *inventory_index = i;
@@ -432,7 +432,8 @@ int tf_hal_tick(TF_HalContext *hal, uint32_t timeout_us) {
     if(net != NULL) {
         tf_net_tick(net);
 
-        for(int i = 0; i < (int)hal_common->used; ++i) {
+        // Skip index 0: the unknown bricklet
+        for(int i = 1; i < (int)hal_common->used; ++i) {
             if(hal_common->send_enumerate_request[i]) {
                 if(hal_common->tfps[i].spitfp->send_buf[0] == 0) {
                     tf_tfp_inject_packet(&hal_common->tfps[i], &enumerate_request_header, enumerate_request);
@@ -454,7 +455,7 @@ int tf_hal_tick(TF_HalContext *hal, uint32_t timeout_us) {
 
             // Handle enumerate requests
             if (header.fid == 254 && header.uid == 0 && header.length == 8) {
-                for(int i = 0; i < (int)hal_common->used; ++i) {
+                for(int i = 1; i < (int)hal_common->used; ++i) {
                     hal_common->send_enumerate_request[i] = true;
                 }
                 tf_net_drop_packet(net, packet_id);
@@ -476,7 +477,7 @@ int tf_hal_tick(TF_HalContext *hal, uint32_t timeout_us) {
             }
             bool device_found = false;
             bool dispatched = false;
-            for(int i = 0; i < (int)hal_common->used; ++i) {
+            for(int i = 1; i < (int)hal_common->used; ++i) {
                 if(header.uid != hal_common->uids[i])
                     continue;
 
@@ -557,7 +558,7 @@ int tf_hal_get_error_counters(TF_HalContext *hal,
 
     bool port_found = false;
 
-    for(int i = 0; i < (int)hal_common->used; ++i) {
+    for(int i = 1; i < (int)hal_common->used; ++i) {
         if(tf_hal_get_port_name(hal, hal_common->port_ids[i]) != port_name)
             continue;
 
