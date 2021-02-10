@@ -26,11 +26,16 @@ SDM72DM::SDM72DM() {
         {"energy_abs", Config::Float(0.0)},
     });
 
+    error_counters = Config::Object({
+        {"meter", Config::Uint32(0)},
+        {"bricklet", Config::Uint32(0)},
+    });
+
     energy_meter_reset = Config::Null();
 
     user_data.expected_request_id = 0;
     user_data.value_to_write = nullptr;
-    user_data.done = true;
+    user_data.done = SDM72DM::UserDataDone::DONE;
 }
 
 void read_input_registers_handler(struct TF_RS485 *device, uint8_t request_id, int8_t exception_code, uint16_t input_registers_length, uint16_t input_registers_chunk_offset, uint16_t input_registers_chunk_data[29], void *user_data) {
@@ -38,25 +43,25 @@ void read_input_registers_handler(struct TF_RS485 *device, uint8_t request_id, i
 
     if(request_id != ud->expected_request_id || ud->expected_request_id == 0) {
         logger.printfln("Unexpected request id %u, expected %u", request_id, ud->expected_request_id);
-        ud->done = true;
+        ud->done = SDM72DM::UserDataDone::ERROR;
         return;
     }
 
     if(exception_code != 0) {
         logger.printfln("Request %u: Exception code %d", request_id, exception_code);
-        ud->done = true;
+        ud->done = SDM72DM::UserDataDone::ERROR;
         return;
     }
 
     if(input_registers_length != 2) {
         logger.printfln("Request %u: Unexpected response length %I16u", request_id, input_registers_length);
-        ud->done = true;
+        ud->done = SDM72DM::UserDataDone::ERROR;
         return;
     }
 
     if(ud->value_to_write == nullptr) {
         logger.printfln("value to write was nullptr");
-        ud->done = true;
+        ud->done = SDM72DM::UserDataDone::ERROR;
         return;
     }
 
@@ -69,7 +74,7 @@ void read_input_registers_handler(struct TF_RS485 *device, uint8_t request_id, i
     value.regs[0] = input_registers_chunk_data[1];
 
     ud->value_to_write->updateFloat(value.f);
-    ud->done = true;
+    ud->done = SDM72DM::UserDataDone::DONE;
 }
 
 void write_multiple_registers_handler(struct TF_RS485 *device, uint8_t request_id, int8_t exception_code, void *user_data) {
@@ -77,17 +82,17 @@ void write_multiple_registers_handler(struct TF_RS485 *device, uint8_t request_i
 
     if(request_id != ud->expected_request_id || ud->expected_request_id == 0) {
         logger.printfln("Unexpected request id %u, expected %u", request_id, ud->expected_request_id);
-        ud->done = true;
+        ud->done = SDM72DM::UserDataDone::ERROR;
         return;
     }
 
     if(exception_code != 0) {
         logger.printfln("Exception code %d", exception_code);
-        ud->done = true;
+        ud->done = SDM72DM::UserDataDone::ERROR;
         return;
     }
 
-    ud->done = true;
+    ud->done = SDM72DM::UserDataDone::DONE;
 }
 
 void SDM72DM::setup() {
@@ -119,6 +124,7 @@ void SDM72DM::setup() {
 
 void SDM72DM::register_urls() {
     api.addState("meter/state", &state, {}, 1000);
+    api.addState("meter/error_counters", &error_counters, {}, 1000);
 
     api.addCommand("meter/reset", &energy_meter_reset, {}, [this](){
         this->energy_meter_reset_requested = true;
@@ -187,20 +193,20 @@ void SDM72DM::loop()
     if(!initialized)
         return;
 
-    if(!user_data.done && !deadline_elapsed(callback_deadline_ms))
+    if(user_data.done == UserDataDone::NOT_DONE && !deadline_elapsed(callback_deadline_ms))
         return;
 
-    if(!user_data.done) {
+    if(user_data.done == UserDataDone::NOT_DONE) {
         logger.printfln("rs485 deadline reached!");
     }
 
-    if(user_data.done && !deadline_elapsed(next_read_deadline_ms))
+    if(user_data.done != UserDataDone::NOT_DONE && !deadline_elapsed(next_read_deadline_ms))
         return;
 
     if(energy_meter_reset_requested) {
         energy_meter_reset_requested = false;
 
-        user_data.done = false;
+        user_data.done = UserDataDone::NOT_DONE;
         user_data.value_to_write = nullptr;
 
         uint16_t payload = 0x0003;
@@ -266,8 +272,10 @@ void SDM72DM::loop()
             break;
     }
 
+    auto last_user_data_done = user_data.done;
+
     user_data.value_to_write = to_write;
-    user_data.done = false;
+    user_data.done = UserDataDone::NOT_DONE;
     int rc = tf_rs485_modbus_master_read_input_registers(&rs485, 1, start_address, 2, &user_data.expected_request_id);
     if(rc != TF_E_OK || user_data.expected_request_id == 0) {
         logger.printfln("Failed to read energy meter registers starting at %u: rc %d, request_id: %u", start_address, rc, user_data.expected_request_id);
@@ -279,8 +287,14 @@ void SDM72DM::loop()
         modbus_read_state = 0;
         next_read_deadline_ms = next_read_deadline_ms + 500;
 
-        interval_samples.push(state.get("power")->asFloat());
-        ++samples_last_interval;
+        if (last_user_data_done == UserDataDone::DONE) {
+            interval_samples.push(state.get("power")->asFloat());
+            ++samples_last_interval;
+        } else if (last_user_data_done == UserDataDone::ERROR) {
+            error_counters.get("meter")->updateUint(error_counters.get("meter")->asUint() + 1);
+        } else {
+            error_counters.get("bricklet")->updateUint(error_counters.get("bricklet")->asUint() + 1);
+        }
 
         if(deadline_elapsed(interval_end_ms)) {
             float interval_sum = 0;
@@ -299,6 +313,6 @@ void SDM72DM::loop()
 
     // This protects against lost callback responses.
     // If the callback packet is lost,
-    // user_data.done would never be set to true.
+    // user_data.done would never be set to ::DONE.
     callback_deadline_ms = millis() + 3000;
 }

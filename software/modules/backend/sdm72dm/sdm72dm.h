@@ -28,10 +28,16 @@ public:
     void onEventConnect(AsyncEventSourceClient *client);
     void loop();
 
+    enum class UserDataDone {
+        NOT_DONE,
+        DONE,
+        ERROR
+    };
+
     struct UserData {
         Config *value_to_write;
         uint8_t expected_request_id;
-        bool done;
+        UserDataDone done;
     };
 
     bool initialized = false;
@@ -42,7 +48,7 @@ private:
     Config config;
     Config state;
     Config energy_meter_reset;
-
+    Config error_counters;
 
     TF_RS485 rs485;
     int modbus_read_state = 0;
