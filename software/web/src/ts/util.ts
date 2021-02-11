@@ -15,7 +15,8 @@ export function reboot() {
         url: '/reboot',
         method: 'PUT',
         contentType: 'application/json',
-        data: JSON.stringify(null)
+        data: JSON.stringify(null),
+        success: () => show_alert("alert-success", __("util.reboot_title"), __("util.reboot_text"))
     });
 }
 
