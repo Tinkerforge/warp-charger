@@ -2,9 +2,10 @@
 
 #include "ESPAsyncWebServer.h"
 #include "ArduinoJson.h"
-#include "config.h"
 
 #include "bindings/bricklet_evse.h"
+
+#include "config.h"
 
 #define EVSE_CHARGING_STATE_NOT_CONNECTED 0
 #define EVSE_CHARGING_STATE_CONNECTED 1

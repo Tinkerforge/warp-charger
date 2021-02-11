@@ -2,11 +2,10 @@
 
 #include "ESPAsyncWebServer.h"
 #include "ArduinoJson.h"
-#include "config.h"
 
-#include "bindings/hal_common.h"
 #include "bindings/bricklet_rs485.h"
 
+#include "config.h"
 #include "ringbuffer.h"
 
 // How many hours to keep the coarse history for

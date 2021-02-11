@@ -6,11 +6,8 @@
 #include "bindings/errors.h"
 
 #include "api.h"
-#include "tools.h"
-
-#include "modules/mqtt/mqtt.h"
-
 #include "event_log.h"
+#include "tools.h"
 
 extern EventLog logger;
 

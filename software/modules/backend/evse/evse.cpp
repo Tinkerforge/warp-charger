@@ -3,13 +3,10 @@
 
 #include "bindings/errors.h"
 
-#include "tools.h"
-
-#include "modules/task_scheduler/task_scheduler.h"
-
 #include "api.h"
-
 #include "event_log.h"
+#include "task_scheduler.h"
+#include "tools.h"
 
 extern EventLog logger;
 
