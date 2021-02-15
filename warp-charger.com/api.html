@@ -39,9 +39,9 @@
 
       <nav id="nav-menu-container">
         <ul class="nav-menu nav-menu-top">
-          <li><a href="#start">Konfiguration</a></li>
-          <li><a href="#http">HTTP-API</a></li>
-          <li><a href="#basics">Grundlagen</a></li>
+          <li><a href="#mqtt">MQTT</a></li>
+          <li><a href="#http">HTTP</a></li>
+
         </ul>
         <ul class="nav-menu nav-menu-bottom">
           <li><a href="#states">Zustände, Kommandos, Konfigurationen</a></li>
@@ -76,97 +76,148 @@
             </p>
         </div>
     </section>
-    <section id="configuration" class="section">
-      <div class="container">
-        <header class="reference-section-header">
-            <h3>MQTT-Konfiguration</h3>
-        </header>
-        <div class="row">
-            <div class="col-md-12 col-lg-6">
-                <p>Damit die Wallbox über MQTT kommuniziert, muss zunächst im Webinterface die Verbindung zum MQTT-Broker konfiguriert werden.
+    <section id="mqtt" class="section">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>MQTT</h3>
+            </header>
+        </div>
+        <div class="container">
+            <h4>Konfiguration</h4>
+            <p>Damit die Wallbox über MQTT kommuniziert, muss zunächst im Webinterface die Verbindung zum MQTT-Broker konfiguriert werden.
                 Folgende Einstellungen können vorgenommen werden:</p>
-                <ul>
-                    <li><b>Broker-Hostname oder IP-Adresse</b>: Der Hostname oder die IP-Adresse des Brokers zu dem sich die Wallbox verbinden soll.</li>
-                    <li><b>Broker-Port</b>: Der Port unter dem der Broker erreichbar ist. Der typische MQTT-Port 1883 ist voreingestellt.</li>
-                    <li><b>Broker-Benutzername und Passwort</b>: Manche Broker unterstützen eine Authentifizierung mit Benutzername und Passwort.</li>
-                    <li><b>Topic-Präfix</b>: Dieser Präfix wird allen Topics vorangestellt, die die Wallbox verwendet.
-                        Voreingestellt ist warp/ABC wobei ABC eine eindeutige Kennung pro Wallbox ist,
-                        es sind aber andere Präfixe wie z.B. garage_links möglich.
-                        Falls mehrere Wallboxen mit dem selben Broker kommunizieren <strong>müssen</strong> eindeutige Präfixe pro Box gewählt werden.</li>
-                    <li><b>Client-ID</b>: Mit dieser ID registriert sich die Wallbox beim Broker.</li>
-                </ul>
-                <p>Nachdem die Konfiguration gesetzt und der "MQTT aktivieren"-Schalter gesetzt ist, kann die Konfiguration gespeichert werden.
-                Der ESP startet dann neu und verbindet sich zum Broker. Auf der Status-Seite wird angezeigt, ob die Verbindung aufgebaut werden konnte.</p>
-            </div>
-            <div class="col-md-12 col-lg-6">
-                <div class="impressions-container">
-                    <div class="impressions-item filter-warp-charger wow fadeInUp" style="height: auto;">
-                        <figure style="height: auto;">
-                            <img src="img/mqtt/mqtt_ui.png" class="img-fluid" alt="">
-                            <a href="img/mqtt/mqtt_ui.png" data-lightbox="impressions" data-title="MQTT-Konfiguration" class="link-preview" title="Preview"><i class="ion ion-eye"></i></a>
-                        </figure>
-                        <div class="impressions-info">
-                            MQTT-Konfiguration
+            <div class="row pb-2">
+                <div class="col-md-12 col-lg-6">
+                    <ul>
+                        <li><b>Broker-Hostname oder IP-Adresse</b>: Der Hostname oder die IP-Adresse des Brokers zu dem sich die Wallbox verbinden soll.</li>
+                        <li><b>Broker-Port</b>: Der Port unter dem der Broker erreichbar ist. Der typische MQTT-Port 1883 ist voreingestellt.</li>
+                        <li><b>Broker-Benutzername und Passwort</b>: Manche Broker unterstützen eine Authentifizierung mit Benutzername und Passwort.</li>
+                        <li><b>Topic-Präfix</b>: Dieser Präfix wird allen Topics vorangestellt, die die Wallbox verwendet.
+                            Voreingestellt ist warp/ABC wobei ABC eine eindeutige Kennung pro Wallbox ist,
+                            es sind aber andere Präfixe wie z.B. garage_links möglich.
+                            Falls mehrere Wallboxen mit dem selben Broker kommunizieren <strong>müssen</strong> eindeutige Präfixe pro Box gewählt werden.</li>
+                        <li><b>Client-ID</b>: Mit dieser ID registriert sich die Wallbox beim Broker.</li>
+                    </ul>
+                    <p>Nachdem die Konfiguration gesetzt und der "MQTT aktivieren"-Schalter gesetzt ist, kann die Konfiguration gespeichert werden.
+                    Der ESP startet dann neu und verbindet sich zum Broker. Auf der Status-Seite wird angezeigt, ob die Verbindung aufgebaut werden konnte.</p>
+                </div>
+                <div class="col-md-12 col-lg-6">
+                    <div class="impressions-container">
+                        <div class="impressions-item filter-warp-charger wow fadeInUp" style="height: auto;">
+                            <figure style="height: auto;">
+                                <img src="img/mqtt/mqtt_ui.png" class="img-fluid" alt="">
+                                <a href="img/mqtt/mqtt_ui.png" data-lightbox="impressions" data-title="MQTT-Konfiguration" class="link-preview" title="Preview"><i class="ion ion-eye"></i></a>
+                            </figure>
+                            <div class="impressions-info">
+                                MQTT-Konfiguration
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-         </div>
-         <p>Im Folgenden werden die <a href="https://mosquitto.org/man/mosquitto_pub-1.html">mosquitto_pub</a> und
-         <a href="https://mosquitto.org/man/mosquitto_sub-1.html">mosquitto_sub</a>-Befehle des
-         <a href="https://mosquitto.org/">Mosquitto-MQTT-Brokers</a> verwendet, um mit dem Broker zu kommunizieren.</p>
-      </div>
+            <p>Im Folgenden werden die <a href="https://mosquitto.org/man/mosquitto_pub-1.html">mosquitto_pub</a> und
+            <a href="https://mosquitto.org/man/mosquitto_sub-1.html">mosquitto_sub</a>-Befehle des
+            <a href="https://mosquitto.org/">Mosquitto-MQTT-Brokers</a> verwendet, um mit dem Broker zu kommunizieren.</p>
+        </div>
+        <div class="container">
+            <h4>Grundlagen</h4>
+            <p>
+                Wenn die Verbindung zum Broker erfolgreich aufgebaut wurde, sollten jetzt bereits erste Nachrichten der Wallbox eintreffen.
+                Sämtliche Nachrichten der Wallbox sind Strings im <a href="https://www.json.org/json-de.html">JSON-Format</a>.
+                Genauso müssen alle Nachrichten, die zur Wallbox geschickt werden, das JSON-Format einhalten.
+            </p>
+            <p>
+                Mit <code>mosquitto_sub -v -t 'warp/ABC/#'</code> können alle Nachrichten der Wallbox angezeigt werden.
+                (Den Präfix warp/ABC gegebenenfalls durch den konfigurierten ersetzen)
+                Es könnte z.B. die folgende Nachricht empfangen werden:
+
+                <samp class="samp-box">warp/ABC/<a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a> {"max_current_configured":32000, "max_current_incoming_cable":13000, "max_current_outgoing_cable":16000}</samp>
+
+                Die Nachrichten des Topics <samp><a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a></samp> geben an,
+                welchen Limitierungen der Ladestrom unterliegt.
+                Im konkreten Fall begrenzt die Software den Ladestrom auf 32 Ampere, das zur Wallbox führende Kabel ihn auf 13, das zum Fahrzeug gehende Kabel ihn auf 16 Ampere.
+                Der maximal mögliche Ladestrom ist immer das Minimum dieser Werte, also in diesem Fall 13 Ampere.
+            </p>
+            <p>
+                Durch Senden der Nachricht <samp>{"current":8000}</samp> an das Topic <samp>warp/ABC/<a class="scrollto" href="#evse_current_limit">evse/current_limit</a></samp>
+                kann der Ladestrom auf 8 Ampere begrenzt werden, zum Beispiel so:
+                <code>mosquitto_pub -t 'warp/ABC/<a class="scrollto" href="#evse_current_limit">evse/current_limit</a>' -m '{"current": 8000}'</code>
+                Der Ladestrom ist jetzt auf 8 Ampere begrenzt, die Wallbox durch eine neue Nachricht anzeigt:
+
+                <samp class="samp-box">warp/ABC/<a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a> {"max_current_configured":8000, "max_current_incoming_cable":13000, "max_current_outgoing_cable":16000}</samp>
+            </p>
+        </div>
     </section>
+
     <section id="http" class="section">
         <div class="container">
             <header class="reference-section-header">
-                <h3>HTTP-API</h3>
+                <h3>HTTP</h3>
             </header>
-        <p>
-            Nachfolgend wird die Benutzung der MQTT-API gezeigt. Die HTTP-API funktioniert jedoch identisch.
-            Wenn eine MQTT-API beispielsweise das Topic <code>warp/ABC/evse/state</code> verwendet,
-            kann die selbe API über die URL <code>http://[IP-Adresse oder Hostname der Wallbox]/evse/state</code> erreicht werden.
-            Es können zusätzlich die <a href="https://en.wikipedia.org/wiki/Server-sent_events">server-sent Events</a> unter
-            <code>http://[IP-Adresse oder Hostname der Wallbox]/events</code> verwendet werden,
-            die von der Wallbox automatisch ausgelöst werden.
-        </p>
-        <p>
-            Die HTTP-API verfügt über <a class="scrollto" href="#http-only">fortgeschrittene Funktionen</a>,
-            die für den Normalbetrieb unnötig sein sollten.
-        </p>
         </div>
-    </section>
-    <section id="basics" class="section">
-        <div class="container">
-          <header class="reference-section-header">
-              <h3>Grundlagen</h3>
-          </header>
-        <p>
-            Wenn die Verbindung zum Broker erfolgreich aufgebaut wurde, sollten jetzt bereits erste Nachrichten der Wallbox eintreffen.
-            Sämtliche Nachrichten der Wallbox sind Strings im <a href="https://www.json.org/json-de.html">JSON-Format</a>.
-            Genauso müssen alle Nachrichten, die zur Wallbox geschickt werden, das JSON-Format einhalten.
-        </p>
-        <p>
-            Mit <code>mosquitto_sub -v -t 'warp/ABC/#'</code> können alle Nachrichten der Wallbox angezeigt werden.
-            (Den Präfix warp/ABC gegebenenfalls durch den konfigurierten ersetzen)
-            Es könnte z.B. die folgende Nachricht empfangen werden:
-
-            <samp class="samp-box">warp/ABC/<a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a> {"max_current_configured":32000, "max_current_incoming_cable":13000, "max_current_outgoing_cable":16000}</samp>
-
-            Die Nachrichten des Topics <samp><a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a></samp> geben an,
-            welchen Limitierungen der Ladestrom unterliegt.
-            Im konkreten Fall begrenzt die Software den Ladestrom auf 32 Ampere, das zur Wallbox führende Kabel ihn auf 13, das zum Fahrzeug gehende Kabel ihn auf 16 Ampere.
-            Der maximal mögliche Ladestrom ist immer das Minimum dieser Werte, also in diesem Fall 13 Ampere.
-        </p>
-        <p>
-            Durch Senden der Nachricht <samp>{"current":8000}</samp> an das Topic <samp>warp/ABC/<a class="scrollto" href="#evse_current_limit">evse/current_limit</a></samp>
-            kann der Ladestrom auf 8 Ampere begrenzt werden, zum Beispiel so:
-            <code>mosquitto_pub -t 'warp/ABC/<a class="scrollto" href="#evse_current_limit">evse/current_limit</a>' -m '{"current": 8000}'</code>
-            Der Ladestrom ist jetzt auf 8 Ampere begrenzt, die Wallbox durch eine neue Nachricht anzeigt:
-
-            <samp class="samp-box">warp/ABC/<a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a> {"max_current_configured":8000, "max_current_incoming_cable":13000, "max_current_outgoing_cable":16000}</samp>
-        </p>
-        </div>
+            <div class="container">
+                <h4>Konfiguration</h4>
+                <p>
+                    Die HTTP-API kann ohne vorherige Konfiguration verwendet werden.
+                </p>
+            </div>
+            <div class="container">
+                <h4>Grundlagen</h4>
+                <p>
+                    Die HTTP-API funktioniert strukturell identisch wie die MQTT-API:
+                    Wenn eine MQTT-API beispielsweise das Topic <code>warp/ABC/evse/state</code> verwendet,
+                    kann die selbe API über die URL <code>http://[IP-Adresse oder Hostname der Wallbox]/evse/state</code> erreicht werden.
+                    Die HTTP-API verfügt allerdings über <a class="scrollto" href="#http-only">fortgeschrittene Funktionen</a>, die nicht über MQTT verfügbar sind.
+                    Es können zusätzlich die <a href="https://en.wikipedia.org/wiki/Server-sent_events">Server-Sent-Events (SSE)</a> unter
+                    <code>http://[IP-Adresse oder Hostname der Wallbox]/events</code> verwendet werden,
+                    die von der Wallbox automatisch ausgelöst werden.
+                </p>
+                <p>
+                    Um Analog zum MQTT-Beispiel alle von der Wallbox gesendeten Nachrichten zu empfangen, kann die Event-Verbindung
+                    genutzt werden. Hierzu und für die weiteren Beispiele wird <a href="https://curl.se/">cURL</a> verwendet und davon ausgegangen, dass
+                    die Wallbox unter der IP-Adresse 10.0.0.1 erreichbar ist.
+                </p>
+                <p>
+                    Mit <code>curl -N 10.0.0.1/events</code> könnte unter anderem folgende Nachricht empfangen werden:
+                    <samp class="samp-box">
+                        retry: 1000
+                        id: 238659782
+                        event: <a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a>
+                        data: {"max_current_configured":32000,"max_current_incoming_cable":13000,"max_current_outgoing_cable":16000}
+                    </samp>
+                    Diese Nachricht ist äquivalent zu der aus den MQTT-Grundlagen: Die Wallbox-Software begrenzt den Ladestorm auf 32 Ampere,
+                    das Anschlusskabel der Box ihn auf 13 Ampere und das zum Fahrzeug führende Kabel auf 16 Ampere. Es kann also mit 13 Ampere geladen werden.
+                </p>
+                <p>
+                    Wenn nur eine Information abgefragt werden soll, kann mit cURL eine einzelne URL aufgerufen werden:
+                    <code class="code-box">
+                        curl -s http://10.0.0.1/<a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a>
+                    </code>
+                    liefert die gleichen JSON-Daten:
+                    <samp class="samp-box">
+                        {"max_current_configured":32000,"max_current_incoming_cable":13000,"max_current_outgoing_cable":16000}
+                    </samp>
+                    Mit <a href="https://stedolan.github.io/jq/">jq</a> können einzelne Werte aus einem JSON-Objekt extrahiert werden.
+                    <code class="code-box">
+                        curl -s http://10.0.0.1/<a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a> | jq '.max_current_configured'
+                    </code>
+                    gibt 32000, also den konfigurierten Ladestrom von 32 Ampere zurück.
+                </p>
+                <p>
+                    Jetzt soll der Ladestrom auf 8 Ampere begrenzt werden. Dafür wird die Nachricht <code>{"current":8000}</code> an die URL <code>http://10.0.0.1/<a class="scrollto" href="#evse_current_limit">evse/current_limit</a></code>
+                    geschickt:
+                    <code class="code-box">
+                        curl -H 'Content-Type: application/json' -X PUT -d '{"current":8000}' 10.0.0.1/<a class="scrollto" href="#evse_current_limit">evse/current_limit</a></samp>
+                    </code>
+                    Wichtig ist hierbei, den Content-Type-Header auf application/json zu setzen, da die Anfrage sonst ignoriert wird. Es können sowohl PUT, POST, als auch PATCH verwendet werden, die API verhält sich in allen drei Fällen gleich.<br>
+                </p>
+                <p>
+                    Zur Kontrolle:
+                    <code class="code-box">
+                        curl -s http://10.0.0.1/<a class="scrollto" href="#evse_state">evse/state</a> | jq '.allowed_charging_current'
+                    </code> liefert den erlaubten Ladestrom (also das Minimum der oben erlaubten Ströme), was jetzt <samp>8000</samp>, also 8 Ampere sein sollten.
+                </p>
+            </div>
     </section>
     <section id="states" class="section">
         <div class="container">
@@ -174,7 +225,7 @@
               <h3>Zustände, Kommandos und Konfigurationen</h3>
           </header>
         <p>
-            Die Wallbox bietet über MQTT drei Arten von Schnittstellen: Zustände, Kommandos und Konfigurationen.
+            Die Wallbox bietet über MQTT und HTTP drei Arten von Schnittstellen: Zustände, Kommandos und Konfigurationen.
         </p>
         <h4>Zustände</h4>
         <p>
@@ -187,6 +238,10 @@
             liefert beispielsweise
 
             <samp class="samp-box">warp/ABC/<a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a> {"max_current_configured":8000, "max_current_incoming_cable":13000, "max_current_outgoing_cable":16000}</samp>
+            Für die HTTP-API funktioniert ein GET auf die entsprechende URL identisch:
+            <code>
+                curl -s http://10.0.0.1/<a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a>
+            </code>
         </p>
         <h4>Kommandos</h4>
         <p>
@@ -195,6 +250,10 @@
             Um einen Neustart des ESPs auszulösen kann beispielsweise folgendes Kommando verwendet werden:
 
             <code class="code-box">mosquitto_pub -t 'warp/ABC/<a class="scrollto" href="#reboot">reboot</a>' -m 'null'</code>
+            Der analoge HTTP-Request wäre:
+            <code class="code-box">
+                curl -H 'Content-Type: application/json' -X PUT -d 'null' http://10.0.0.1/<a class="scrollto" href="#reboot">reboot</a>
+            </code>
         </p>
         <h4>Konfigurationen</h4>
         <p>
@@ -220,6 +279,21 @@
             <code class="code-box">mosquitto_pub -t 'warp/ABC/<a class="scrollto" href="#reboot">reboot</a>' -m 'null'</code>
 
             Der Access Point sollte dann ab jetzt nur noch aktiv sein, wenn die Verbindung zum konfigurierten WLAN fehlgeschlagen ist.
+        </p>
+        <p>
+            Äquivalent kann die Access-Point-Konfiguration mit
+            <code class="code-box">
+                curl -s 'http://10.0.0.1/<a class="scrollto" href="#wifi_ap_config">wifi/ap_config</a>
+            </code>
+            abgefragt werden, der Fallback-Modus mit
+            <code class="code-box">
+                curl http://10.0.0.1/<a class="scrollto" href="#wifi_ap_config">wifi/ap_config_update</a> -H 'Content-Type: application/json' -X PUT -d '{<strong>"ap_fallback_only": true,</strong> "enable_ap":null, "ssid":null, "hide_ssid":null, "passphrase":null, "hostname":null, "channel":null, "ip":null, "gateway":null, "subnet":null}'
+            </code>
+            aktiviert werden und danach der Neustart mit
+            <code class="code-box">
+                curl -H 'Content-Type: application/json' -X PUT -d 'null' http://10.0.0.1/<a class="scrollto" href="#reboot">reboot</a>
+            </code>
+            ausgelöst werden.
         </p>
         </div>
     </section>
