@@ -272,12 +272,28 @@ void EVSE::update_evse_state() {
     evse_state.get("iec61851_state")->updateUint(iec61851_state);
     evse_state.get("vehicle_state")->updateUint(vehicle_state);
     evse_state.get("contactor_state")->updateUint(contactor_state);
-    evse_state.get("contactor_error")->updateUint(contactor_error);
+    bool contactor_error_changed = evse_state.get("contactor_error")->updateUint(contactor_error);
     evse_state.get("allowed_charging_current")->updateUint(allowed_charging_current);
-    evse_state.get("error_state")->updateUint(error_state);
+    bool error_state_changed = evse_state.get("error_state")->updateUint(error_state);
     evse_state.get("lock_state")->updateUint(lock_state);
     evse_state.get("time_since_state_change")->updateUint(time_since_state_change);
     evse_state.get("uptime")->updateUint(uptime);
+
+    if (contactor_error_changed) {
+        if (contactor_error != 0) {
+            logger.printfln("EVSE: Contactor error %d", contactor_error);
+        } else {
+            logger.printfln("EVSE: Contactor error cleared");
+        }
+    }
+
+    if (error_state_changed) {
+        if (error_state != 0) {
+            logger.printfln("EVSE: Error state %d", error_state);
+        } else {
+            logger.printfln("EVSE: Error state cleared");
+        }
+    }
 }
 
 void EVSE::update_evse_max_charging_current() {
