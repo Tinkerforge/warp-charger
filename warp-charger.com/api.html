@@ -685,6 +685,7 @@
                 <li>Zustände
                 <ul>
                     <li><a class="scrollto" href="#meter_state">meter/state</a></li>
+                    <li><a class="scrollto" href="#meter_error_counters">meter/error_counters</a></li>
                 </ul></li>
                 <li>Kommandos
                 <ul>
@@ -721,6 +722,34 @@
                             <td>float</td>
                             <td><abbr title="Kilowattstunde">kWh</abbr></td>
                             <td>Die geladene Energie seit der Herstellung des Stromzählers.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pt-5">
+                <div class="h5" id="meter_error_counters">meter/error_counters</div>
+                Fehlerzähler der Kommunikation mit dem Stromzähler.
+                <table class="table table-striped table-bottom-border mt-3 ml-5">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Typ</th>
+                        <th scope="col">Einheit</th>
+                        <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">meter</th>
+                            <td>int</td>
+                            <td></td>
+                            <td>Kommunikationsfehler zwischen RS485 Bricklet und Stromzähler</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">bricklet</th>
+                            <td>int</td>
+                            <td></td>
+                            <td>Kommunikationsfehler zwischen ESP Brick und RS485 Bricklet.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -912,6 +941,12 @@
                             <td></td>
                             <td>Aktuelle IP der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.</td>
                         </tr>
+                        <tr>
+                            <th scope="row">sta_rssi</th>
+                            <td>int</td>
+                            <td></td>
+                            <td>Die aktuelle Empfangsqualität. 0 falls keine Verbindung besteht, sonst negativ. Werte näher 0 entsprechen einem besseren Empfang.</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -1009,83 +1044,89 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="pt-5">
-                    <div class="h5" id="wifi_ap_config">wifi/ap_config</div>
-                    Die WLAN-Access-Point-Konfiguration. Diese kann über wifi/ap_config_update mit dem selben Payload aktualisiert werden.
-                    <strong>Achtung! Wenn sowohl Access Point, als auch WLAN-Verbindung deaktiviert werden,
-                        kann der ESP nur noch durch einen Factory-Reset erreicht werden!
-                        Wir empfehlen, den Access Point immer im Fallback-Modus zu belassen.</strong>
-                        <strong>Eine aktualisierte WLAN-Access-Point-Konfiguration wird erst nach einem Neustart des ESPs verwendet.
-                            Siehe <a class="scrollto" href="#reboot">reboot</a>.</strong>
-                    <table class="table table-striped table-bottom-border mt-3 ml-5">
-                        <thead class="thead-dark">
-                            <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Typ</th>
-                            <th scope="col">Einheit</th>
-                            <th scope="col">Bedeutung</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">enable_ap</th>
-                                <td>bool</td>
-                                <td></td>
-                                <td>true wenn der Access Point aktiviert werden soll, ansonsten false.</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">ap_fallback_only</th>
-                                <td>bool</td>
-                                <td></td>
-                                <td>true wenn der Access Point nur aktiviert werden soll, falls die WLAN-Verbindung fehlschlägt, ansonsten false.</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">ssid</th>
-                                <td>string</td>
-                                <td></td>
-                                <td>SSID des Access Points. Maximal 32 Byte.</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">hide_ssid</th>
-                                <td>bool</td>
-                                <td></td>
-                                <td>true falls die SSID versteckt werden soll, ansonsten false.</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">passphrase</th>
-                                <td>string</td>
-                                <td></td>
-                                <td>Die WLAN-Passphrase. Maximal 63 Byte.
-                                    <strong>Die Wallbox gibt gespeicherte Passwörter nicht zurück.
-                                        Stattdessen wird <samp>null</samp> zurückgegeben.</strong></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">hostname</th>
-                                <td>string</td>
-                                <td></td>
-                                <td>Hostname den die Wallbox verwenden soll.</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">ip</th>
-                                <td>int[4]</td>
-                                <td></td>
-                                <td>IP-Adresse, die die Wallbox verwenden soll.</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">gateway</th>
-                                <td>int[4]</td>
-                                <td></td>
-                                <td>Gateway-Adresse, die die Wallbox verwenden soll.</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">subnet</th>
-                                <td>int[4]</td>
-                                <td></td>
-                                <td>Subnetzmaske, die die Wallbox verwenden soll.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            </div>
+            <div class="pt-5">
+                <div class="h5" id="wifi_ap_config">wifi/ap_config</div>
+                Die WLAN-Access-Point-Konfiguration. Diese kann über wifi/ap_config_update mit dem selben Payload aktualisiert werden.
+                <strong>Achtung! Wenn sowohl Access Point, als auch WLAN-Verbindung deaktiviert werden,
+                    kann der ESP nur noch durch einen Factory-Reset erreicht werden!
+                    Wir empfehlen, den Access Point immer im Fallback-Modus zu belassen.</strong>
+                    <strong>Eine aktualisierte WLAN-Access-Point-Konfiguration wird erst nach einem Neustart des ESPs verwendet.
+                        Siehe <a class="scrollto" href="#reboot">reboot</a>.</strong>
+                <table class="table table-striped table-bottom-border mt-3 ml-5">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Typ</th>
+                        <th scope="col">Einheit</th>
+                        <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">enable_ap</th>
+                            <td>bool</td>
+                            <td></td>
+                            <td>true wenn der Access Point aktiviert werden soll, ansonsten false.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ap_fallback_only</th>
+                            <td>bool</td>
+                            <td></td>
+                            <td>true wenn der Access Point nur aktiviert werden soll, falls die WLAN-Verbindung fehlschlägt, ansonsten false.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ssid</th>
+                            <td>string</td>
+                            <td></td>
+                            <td>SSID des Access Points. Maximal 32 Byte.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">hide_ssid</th>
+                            <td>bool</td>
+                            <td></td>
+                            <td>true falls die SSID versteckt werden soll, ansonsten false.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">passphrase</th>
+                            <td>string</td>
+                            <td></td>
+                            <td>Die WLAN-Passphrase. Maximal 63 Byte.
+                                <strong>Die Wallbox gibt gespeicherte Passwörter nicht zurück.
+                                    Stattdessen wird <samp>null</samp> zurückgegeben.</strong></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">hostname</th>
+                            <td>string</td>
+                            <td></td>
+                            <td>Hostname den die Wallbox verwenden soll.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">channel</th>
+                            <td>int</td>
+                            <td></td>
+                            <td>Channel, auf dem der Access Point erreichbar sein soll. Gültige Werte sind 1 bis 13.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ip</th>
+                            <td>int[4]</td>
+                            <td></td>
+                            <td>IP-Adresse, die die Wallbox verwenden soll.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">gateway</th>
+                            <td>int[4]</td>
+                            <td></td>
+                            <td>Gateway-Adresse, die die Wallbox verwenden soll.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">subnet</th>
+                            <td>int[4]</td>
+                            <td></td>
+                            <td>Subnetzmaske, die die Wallbox verwenden soll.</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
         <section id="misc" class="section pt-4">
