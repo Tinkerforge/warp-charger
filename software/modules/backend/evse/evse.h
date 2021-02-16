@@ -17,7 +17,6 @@ public:
     EVSE();
     void setup();
     void register_urls();
-    void onEventConnect(AsyncEventSourceClient *client);
     void loop();
 
     bool evse_found = false;

@@ -26,15 +26,14 @@
 #define BLUE_LED 32
 
 AsyncWebServer server(80);
-AsyncEventSource events("/events");
 
 EventLog logger;
 
 TF_HalContext hal;
 TaskScheduler task_scheduler;
-{{{module_decls}}}
+API api;
 
-API api{true, true, true};
+{{{module_decls}}}
 
 uint32_t uid_numeric = 0;
 char uid[7] = {0};
@@ -115,7 +114,7 @@ void register_default_urls() {
         request->send(200, "text/html", String(millis()));
     });
 
-    api.registerDebugUrl();
+    api.registerDebugUrl(&server);
 }
 
 void setup(void) {
@@ -169,17 +168,7 @@ void setup(void) {
         digitalWrite(BLUE_LED, led_blink_state ? HIGH : LOW);
     }, 0, 1000);
 
-    events.onConnect([](AsyncEventSourceClient *client){
-        if(client->lastId()){
-            logger.printfln("Client reconnected! Last message ID that it got is: %u\n", client->lastId());
-        }
 
-        {{{module_on_event_connect}}}
-
-        api.onEventConnect(client);
-    });
-
-    server.addHandler(&events);
 
     server.begin();
 }

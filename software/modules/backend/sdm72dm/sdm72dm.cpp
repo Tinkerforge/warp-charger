@@ -180,11 +180,6 @@ void SDM72DM::register_urls() {
     });
 }
 
-void SDM72DM::onEventConnect(AsyncEventSourceClient *client)
-{
-    //client->send(state.to_string().c_str(), "meter_state", millis(), 1000);
-}
-
 void SDM72DM::loop()
 {
     if(!initialized)

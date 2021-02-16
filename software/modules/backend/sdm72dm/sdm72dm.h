@@ -24,7 +24,6 @@ public:
     SDM72DM();
     void setup();
     void register_urls();
-    void onEventConnect(AsyncEventSourceClient *client);
     void loop();
 
     enum class UserDataDone {

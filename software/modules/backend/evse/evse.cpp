@@ -126,11 +126,6 @@ void EVSE::register_urls()
     api.addCommand("evse/start_charging", &evse_start_charging, {}, [this](){tf_evse_start_charging(&evse);});
 }
 
-void EVSE::onEventConnect(AsyncEventSourceClient *client)
-{
-
-}
-
 void EVSE::loop()
 {
     static uint32_t last_check = 0;
