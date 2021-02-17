@@ -42,6 +42,8 @@ public:
 
 private:
     void modbus_read();
+    bool setupRS485();
+    void checkRS485State();
 
     Config config;
     Config state;
@@ -64,4 +66,6 @@ private:
 
     uint32_t callback_deadline_ms = 0;
     uint32_t next_read_deadline_ms = 0;
+
+    char uid[7] = {0};
 };
