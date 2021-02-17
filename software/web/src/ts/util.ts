@@ -16,7 +16,7 @@ export function reboot() {
         method: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(null),
-        success: () => show_alert("alert-success", __("util.reboot_title"), __("util.reboot_text"))
+        success: () => postReboot(__("util.reboot_title"), __("util.reboot_text"))
     });
 }
 
@@ -51,10 +51,10 @@ export function show_alert(cls: string, title: string, text: string) {
               <span aria-hidden="true">&times;</span>
             </button>
           </div>`);
+}
 
-    if(cls.indexOf("success") >= 0) {
-        setTimeout(() => $('#alert_placeholder').html(""), 10000);
-    }
+export function hide_alert() {
+    $('#alert_placeholder').html("");
 }
 
 export function format_timespan(secs: number) {
@@ -125,4 +125,51 @@ export function toggle_password_fn(input_name) {
         else
             input.type = 'password';
     }
+}
+
+
+
+let eventSourceReconnectTimeout = null;
+let eventSource = null;
+
+const RECONNECT_TIME = 5000;
+
+export function setupEventSource(first: boolean, keep_as_first: boolean, continuation: (eventSource: EventSource) => void) {
+    if (!first) {
+        show_alert("alert-warning",  __("util.event_connection_lost_title"), __("util.event_connection_lost"))
+    }
+    console.log("Connecting to event source");
+    if (eventSource != null) {
+        eventSource.close();
+    }
+    eventSource = new EventSource('/events');
+
+    if (eventSourceReconnectTimeout != null) {
+        clearTimeout(eventSourceReconnectTimeout);
+    }
+    eventSourceReconnectTimeout = setTimeout(() => setupEventSource(keep_as_first ? first : false, keep_as_first, continuation), RECONNECT_TIME);
+
+    eventSource.addEventListener('keep-alive', function (e) {
+        if(!keep_as_first)
+            hide_alert();
+        clearTimeout(eventSourceReconnectTimeout);
+        eventSourceReconnectTimeout = setTimeout(() => setupEventSource(keep_as_first ? first : false, keep_as_first, continuation), RECONNECT_TIME);
+    }, false);
+
+    continuation(eventSource);
+}
+
+export function postReboot(alert_title: string, alert_text: string) {
+    setupEventSource(true, true, (eventSource) =>
+            setTimeout(() =>
+            // It is a bit of a hack to use version here, but
+            // as opposed to keep-alive, version was already there in the first version.
+            // so this will even work if downgrading to an version older than
+            // 1.1.0
+            eventSource.addEventListener('version', function (e) {
+                window.location.reload();
+            }, false), 5000)
+    );
+
+    show_alert("alert-success",alert_title, alert_text);
 }
