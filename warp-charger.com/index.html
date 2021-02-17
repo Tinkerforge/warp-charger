@@ -577,27 +577,45 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-3 col-md-12"></div>
-                <div class="col-lg-6 col-md-12 mt-4">
+                <div class="col-lg-2 col-md-12"></div>
+                <div class="col-lg-8 col-md-12 mt-4">
                     <div class="text-center">
-                        <a href="firmwares/warp_firmware_1_0_3_6023a452_merged.bin" class="btn btn-primary btn-lg">Firmware 1.0.3 herunterladen</a>
-                        <div class="text-muted pt-2 pb-2">Veröffentlicht am 10.02.2021</div>
+                        <a href="firmwares/warp_firmware_1_1_0_602d2c71_merged.bin" class="btn btn-primary btn-lg">Firmware 1.1.0 herunterladen</a>
+                        <div class="text-muted pt-2 pb-2">Veröffentlicht am 17.02.2021</div>
                     </div>
 
                     <ul>
-                        <li>Timing-Problem bei der Kommunikation mit den Bricklets behoben</li>
-                        <li>Race Condition zwischen MQTT- und WLAN-Reconnects behoben</li>
-                        <li>Null-Messungen bei Kommunikationsfehlern mit dem Stromzähler entfernt</li>
+                        <li>Erlaubt, dass beim Start der Wallbox ein Auto angeschlossen ist<br>(Durch Update auf Ladecontroller-Firmware 2.0.4)</li>
+                        <li>Automatisches Neuladen des Web-Interfaces nach Neustart oder Firmware-Update hinzugefügt</li>
+                        <li>Warnung wenn Verbindung zur Wallbox unterbrochen ist hinzugefügt</li>
+                        <li>MQTT-Verbindungsproblem bei Verwendung der statischen IP-Konfiguration behoben</li>
+                        <li>Ladecontroller-Fehler werden jetzt im Event-Log aufgezeichnet</li>
+                        <li>Passphrase wird nach einem erfolgreichen Speichern nicht mehr als ungültig angezeigt</li>
+                        <li>WLAN-Empfangsqualität zur Statusseite hinzugefügt</li>
+                        <li>"Verbindung zu" von der Statusseite entfernt</li>
+                        <li>Anzeige der IP "0.0.0.0" entfernt, wenn keine Verbindung aufgebaut ist</li>
+                        <li>Beschreibung zu MQTT-Fehlercodes hinzugefügt</li>
                     </ul>
 
                     <table class="table mt-5">
                         <tbody>
                             <tr>
+                                <th scope="row"><a href="firmwares/warp_firmware_1_0_3_6023a452_merged.bin">1.0.3</a></th>
+                                <td>10.02.2021</td>
+                                <td>
+                                    <ul>
+                                        <li>Timing-Problem bei der Kommunikation mit den Bricklets behoben</li>
+                                        <li>Race Condition zwischen MQTT- und WLAN-Reconnects behoben</li>
+                                        <li>Null-Messungen bei Kommunikationsfehlern mit dem Stromzähler entfernt</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th scope="row"><a href="firmwares/warp_firmware_1_0_2_60213214_merged.bin">1.0.2</a></th>
                                 <td>08.02.2021</td>
                                 <td>
                                     <ul>
-                                        <li>Sichergestellt, dass manueller Ladestop nichts tut, wenn kein Auto angeschlossen ist.<br>(Durch Update auf EVSE Firmware 2.0.2)</li>
+                                        <li>Sichergestellt, dass manueller Ladestop nichts tut, wenn kein Auto angeschlossen ist.<br>(Durch Update auf Ladecontroller-Firmware 2.0.2)</li>
                                     </ul>
                                 </td>
                             </tr>
@@ -606,7 +624,7 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
                                 <td>05.02.2021</td>
                                 <td>
                                     <ul>
-                                        <li>Buttons für manuellen Ladestart/stop repariert</li>
+                                        <li>Buttons für manuellen Ladestart/-stop repariert</li>
                                         <li>Fehlende Übersetzungen von Fehlermeldungen hinzugefügt</li>
                                     </ul>
                                 </td>
@@ -623,7 +641,7 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
                         </tbody>
                     </table>
                 </div>
-                <div class="col-lg-3 col-md-12"></div>
+                <div class="col-lg-2 col-md-12"></div>
             </div>
             <div class="col-12 text-center mt-4">
                 <p>Den Quellcode des Firmware und dieser Webseite veröffentlichen wir auf Github:<br>
