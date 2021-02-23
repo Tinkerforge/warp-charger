@@ -21,72 +21,80 @@ function update_meter_state(state: MeterState) {
 }
 
 
-let live_interval: number = null;
+let graph_update_interval: number = null;
 let status_interval: number = null;
 
+function update_live_meter() {
+    $.get("/meter/live").done(function (result) {
+        let values = result["samples"];
+        let sps = result["samples_per_second"];
+        let labels = Array(values.length + 1).fill(null);
+
+        let now = Date.now();
+        let start = now - 1000 * values.length / sps;
+        let last_minute = -1;
+        for(let i = 0; i < labels.length; ++i) {
+            let d = new Date(start + i * (1000 * (1/sps)));
+            if(d.getSeconds() == 0 && d.getMinutes() != last_minute) {
+                labels[i] = d.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
+                last_minute = d.getMinutes();
+            }
+        }
+
+        let data = {
+            labels: labels,
+            series: [
+                values
+            ]
+        };
+        meter_chart.update(data);
+    });
+}
+
+function update_history_meter() {
+    $.get("/meter/history").done(function (values: Number[]) {
+        const HISTORY_MINUTE_INTERVAL = 4;
+        const VALUE_COUNT = 48 * (60 / HISTORY_MINUTE_INTERVAL);
+        const LABEL_COUNT = 9;
+        const VALUES_PER_LABEL = VALUE_COUNT / (LABEL_COUNT - 1); // - 1 for the last label that has no values
+
+        if (values.length != VALUE_COUNT) {
+            console.log("Unexpected number of values to plot!");
+            return;
+        }
+
+        let labels = Array(values.length + 1).fill(null);
+
+        let now = Date.now();
+        let start = now - 1000 * 60 * 60 * 48;
+        for(let i = 0; i < labels.length; i += VALUES_PER_LABEL) {
+            let d = new Date(start + i * (1000 * 60 * HISTORY_MINUTE_INTERVAL));
+            labels[i] = d.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
+        }
+
+        let data = {
+            labels: labels,
+            series: [
+                values
+            ]
+        };
+        meter_chart.update(data);
+    });
+}
+
 function meter_chart_change_time(value: string) {
-    if (live_interval != null) {
-        clearInterval(live_interval);
-        live_interval = null;
+    if (graph_update_interval != null) {
+        clearInterval(graph_update_interval);
+        graph_update_interval = null;
     }
 
     if (value == "live") {
-        live_interval = setInterval(() =>
-            $.get("/meter/live").done(function (result) {
-                let values = result["samples"];
-                let sps = result["samples_per_second"];
-                let labels = Array(values.length + 1).fill(null);
-
-                let now = Date.now();
-                let start = now - 1000 * values.length / sps;
-                let last_minute = -1;
-                for(let i = 0; i < labels.length; ++i) {
-                    let d = new Date(start + i * (1000 * (1/sps)));
-                    if(d.getSeconds() == 0 && d.getMinutes() != last_minute) {
-                        labels[i] = d.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
-                        last_minute = d.getMinutes();
-                    }
-                }
-
-                let data = {
-                    labels: labels,
-                    series: [
-                        values
-                    ]
-                };
-                meter_chart.update(data);
-            }
-            ), 1000);
+        update_live_meter();
+        graph_update_interval = setInterval(update_live_meter, 1000);
         return;
     } else if (value == "history") {
-        $.get("/meter/history").done(function (values: Number[]) {
-            const HISTORY_MINUTE_INTERVAL = 4;
-            const VALUE_COUNT = 48 * (60 / HISTORY_MINUTE_INTERVAL);
-            const LABEL_COUNT = 9;
-            const VALUES_PER_LABEL = VALUE_COUNT / (LABEL_COUNT - 1); // - 1 for the last label that has no values
-
-            if (values.length != VALUE_COUNT) {
-                console.log("Unexpected number of values to plot!");
-                return;
-            }
-
-            let labels = Array(values.length + 1).fill(null);
-
-            let now = Date.now();
-            let start = now - 1000 * 60 * 60 * 48;
-            for(let i = 0; i < labels.length; i += VALUES_PER_LABEL) {
-                let d = new Date(start + i * (1000 * 60 * HISTORY_MINUTE_INTERVAL));
-                labels[i] = d.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
-            }
-
-            let data = {
-                labels: labels,
-                series: [
-                    values
-                ]
-            };
-            meter_chart.update(data);
-        });
+        update_history_meter();
+        graph_update_interval = setInterval(update_history_meter, 10000);
     } else {
         console.log("Unknown plot type!");
     }
@@ -266,9 +274,9 @@ export function init() {
     });
 
     $('#sidebar-meter').on('hidden.bs.tab', function (e) {
-        if (live_interval != null) {
-            clearInterval(live_interval);
-            live_interval = null;
+        if (graph_update_interval != null) {
+            clearInterval(graph_update_interval);
+            graph_update_interval = null;
         }
     });
 
@@ -293,9 +301,9 @@ export function updateLockState(module_init) {
     $('#status-meter').prop('hidden', !module_init.sdm72dm);
 
     if(!module_init.sdm72dm) {
-        if (live_interval != null) {
-            clearInterval(live_interval);
-            live_interval = null;
+        if (graph_update_interval != null) {
+            clearInterval(graph_update_interval);
+            graph_update_interval = null;
         }
 
         if (status_interval != null) {
