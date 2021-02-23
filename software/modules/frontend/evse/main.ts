@@ -249,7 +249,7 @@ export function getTranslation(lang: string) {
                     "iec_state_ef": "E/F (Fehler)",
                     "contactor_state": "Schützprüfung",
                     "contactor_names": "vor Schütz, nach Schütz, Zustand",
-                    "contactor_not_live": "Nicht stromführend",
+                    "contactor_not_live": "Stromlos",
                     "contactor_live": "Stromführend",
                     "contactor_ok": "OK",
                     "contactor_error": "Fehler",
