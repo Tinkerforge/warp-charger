@@ -169,7 +169,7 @@ void SDM72DM::register_urls() {
 
         auto *response = request->beginResponseStream("application/json; charset=utf-8");
 
-        int32_t val;
+        int16_t val;
         power_history.peek(&val);
         // Negative values are prefilled, because the ESP was booted less than 48 hours ago.
         if(val < 0)
@@ -196,7 +196,7 @@ void SDM72DM::register_urls() {
 
         auto *response = request->beginResponseStream("application/json; charset=utf-8");
 
-        int32_t val;
+        int16_t val;
         interval_samples.peek(&val);
         float samples_per_second = 0;
         if(this->samples_per_interval > 0) {
@@ -319,7 +319,8 @@ void SDM72DM::loop()
         next_read_deadline_ms = next_read_deadline_ms + 500;
 
         if (last_user_data_done == UserDataDone::DONE) {
-            interval_samples.push(state.get("power")->asFloat());
+            int16_t val = (int16_t)min((float)INT16_MAX, state.get("power")->asFloat());
+            interval_samples.push(val);
             ++samples_last_interval;
         } else if (last_user_data_done == UserDataDone::ERROR) {
             error_counters.get("meter")->updateUint(error_counters.get("meter")->asUint() + 1);
@@ -329,13 +330,13 @@ void SDM72DM::loop()
 
         if(deadline_elapsed(interval_end_ms)) {
             float interval_sum = 0;
-            int32_t val;
+            int16_t val;
             for(int i = 0; i < samples_last_interval; ++i) {
                 interval_samples.peek_offset(&val, interval_samples.used() - 1 - i);
                 interval_sum += val;
             }
 
-            power_history.push((int32_t)(interval_sum / samples_last_interval));
+            power_history.push((int16_t)(interval_sum / samples_last_interval));
             samples_per_interval = samples_last_interval;
             samples_last_interval = 0;
             interval_end_ms = millis() + 1000 * 60 * HISTORY_MINUTE_INTERVAL;
