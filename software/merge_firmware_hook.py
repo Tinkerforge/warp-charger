@@ -9,7 +9,7 @@ import sys
 import time
 
 my_flags = env.ParseFlags(env['BUILD_FLAGS'])
-defines = {k: v for (k, v) in my_flags.get("CPPDEFINES")}
+defines = {tup[0]: tup[1] for tup in my_flags.get("CPPDEFINES") if len(tup) == 2}
 
 env.AddPostAction(
     "$BUILD_DIR/${PROGNAME}.elf",
