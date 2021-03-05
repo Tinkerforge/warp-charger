@@ -190,6 +190,7 @@ def main():
     navbar_entries = []
     content_entries = []
     status_entries = []
+    main_ts_entries = []
     frontend_modules = [FlavoredName(x).get() for x in env.GetProjectOption("frontend_modules").splitlines()]
 
     recreate_dir(os.path.join("web", "src", "ts", "modules"))
@@ -201,6 +202,7 @@ def main():
 
         if not os.path.exists(mod_path) or not os.path.isdir(mod_path):
             print("Frontend module {} not found.".format(name.space, mod_path))
+            sys.exit(1)
 
         if os.path.exists(os.path.join(mod_path, 'navbar.html')):
             with open(os.path.join(mod_path, 'navbar.html')) as f:
@@ -214,7 +216,9 @@ def main():
             with open(os.path.join(mod_path, 'status.html')) as f:
                 status_entries.append(f.read())
 
-        shutil.copy(os.path.join(mod_path, 'main.ts'), os.path.join("web", "src", "ts", "modules", name.under + ".ts"))
+        if os.path.exists(os.path.join(mod_path, 'main.ts')):
+            main_ts_entries.append(name)
+            shutil.copy(os.path.join(mod_path, 'main.ts'), os.path.join("web", "src", "ts", "modules", name.under + ".ts"))
 
     specialize_template(os.path.join("web", "index.html.template"), os.path.join("web", "src", "index.html"), {
         '{{{navbar}}}': '\n                        '.join(navbar_entries),
@@ -224,9 +228,9 @@ def main():
     })
 
     specialize_template(os.path.join("web", "main.ts.template"), os.path.join("web", "src", "main.ts"), {
-        '{{{module_imports}}}': '\n'.join(['import * as {0} from "./ts/modules/{0}";'.format(x.under) for x in frontend_modules]),
+        '{{{module_imports}}}': '\n'.join(['import * as {0} from "./ts/modules/{0}";'.format(x.under) for x in main_ts_entries]),
         '{{{module_interface}}}': ',\n    '.join('{}: boolean'.format(x.under) for x in backend_modules),
-        '{{{modules}}}': ', '.join([x.under for x in frontend_modules]),
+        '{{{modules}}}': ', '.join([x.under for x in main_ts_entries]),
     })
 
     # Generate web interface
