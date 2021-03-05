@@ -21,6 +21,8 @@ import $ from "jquery";
 
 import * as util from "../util";
 
+declare function __(s: string): string;
+
 interface EVSEState {
     iec61851_state: number,
     vehicle_state: number,
@@ -194,7 +196,7 @@ export function init() {
 
     save_btn.on("click", () => {
         if(input.val() >= 6 || input.val() <= 32)
-            set_charging_current(Number(input.val() * 1000));
+            set_charging_current(<number>input.val() * 1000);
     });
 
     let form = <HTMLFormElement>$('#evse_status_charging_current_form')[0];
@@ -203,7 +205,7 @@ export function init() {
         event.stopPropagation();
 
         if(input.val() >= 6 || input.val() <= 32)
-            set_charging_current(Number(input.val() * 1000));
+            set_charging_current(<number>input.val() * 1000);
     }, false);
 
 }
@@ -230,13 +232,13 @@ export function addEventListeners(source: EventSource) {
     }, false);
 }
 
-export function updateLockState(module_init) {
+export function updateLockState(module_init: any) {
     $('#sidebar-evse').prop('hidden', !module_init.evse);
     $('#status-evse').prop('hidden', !module_init.evse);
 }
 
 export function getTranslation(lang: string) {
-    return {
+    const translations: {[index: string]:any} = {
         "de": {
             "evse": {
                 "status": {
@@ -438,5 +440,6 @@ export function getTranslation(lang: string) {
                 }
             }
         }
-    }[lang];
+    };
+    return translations[lang];
 }

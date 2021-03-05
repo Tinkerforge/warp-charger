@@ -1,5 +1,8 @@
 import $ from "jquery";
 
+
+declare function __(s: string): string;
+
 /* Helper interface to silence typescript error about the data member of server sent events not existing.
    Use like this:
    eventSource.addEventListener('eventName', function (e: SSE) {
@@ -117,7 +120,7 @@ export function toLocaleFixed(i: number, fractionDigits: number) {
     });
 }
 
-export function toggle_password_fn(input_name) {
+export function toggle_password_fn(input_name: string) {
     return () => {
         let input = <HTMLInputElement>$(input_name)[0];
         if (input.type == 'password')
@@ -129,8 +132,8 @@ export function toggle_password_fn(input_name) {
 
 
 
-let eventSourceReconnectTimeout = null;
-let eventSource = null;
+let eventSourceReconnectTimeout: number = null;
+let eventSource: EventSource = null;
 
 const RECONNECT_TIME = 5000;
 
@@ -147,13 +150,13 @@ export function setupEventSource(first: boolean, keep_as_first: boolean, continu
     if (eventSourceReconnectTimeout != null) {
         clearTimeout(eventSourceReconnectTimeout);
     }
-    eventSourceReconnectTimeout = setTimeout(() => setupEventSource(keep_as_first ? first : false, keep_as_first, continuation), RECONNECT_TIME);
+    eventSourceReconnectTimeout = window.setTimeout(() => setupEventSource(keep_as_first ? first : false, keep_as_first, continuation), RECONNECT_TIME);
 
     eventSource.addEventListener('keep-alive', function (e) {
         if(!keep_as_first)
             hide_alert();
         clearTimeout(eventSourceReconnectTimeout);
-        eventSourceReconnectTimeout = setTimeout(() => setupEventSource(keep_as_first ? first : false, keep_as_first, continuation), RECONNECT_TIME);
+        eventSourceReconnectTimeout = window.setTimeout(() => setupEventSource(keep_as_first ? first : false, keep_as_first, continuation), RECONNECT_TIME);
     }, false);
 
     continuation(eventSource);
@@ -161,7 +164,7 @@ export function setupEventSource(first: boolean, keep_as_first: boolean, continu
 
 export function postReboot(alert_title: string, alert_text: string) {
     setupEventSource(true, true, (eventSource) =>
-            setTimeout(() =>
+            window.setTimeout(() =>
             // It is a bit of a hack to use version here, but
             // as opposed to keep-alive, version was already there in the first version.
             // so this will even work if downgrading to an version older than

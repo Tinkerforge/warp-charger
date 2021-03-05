@@ -11,10 +11,10 @@ import * as util from "./ts/util";
 {{{module_imports}}}
 
 interface Module {
-    init(): any;
-    addEventListeners(source: EventSource): any;
-    updateLockState(m: Modules);
-    getTranslation(lang: string);
+    init(): void;
+    addEventListeners(source: EventSource): void;
+    updateLockState(m: Modules): void;
+    getTranslation(lang: string): any;
 }
 
 let modules: Module[] = [{{{modules}}}];
@@ -34,7 +34,7 @@ function update_modules(module_init: Modules) {
     }
 }
 
-export function registerEvents(eventSource) {
+export function registerEvents(eventSource: EventSource) {
     eventSource.addEventListener('open', function (e) {
         console.log("Events Connected");
     }, false);
@@ -99,5 +99,5 @@ $(function () {
         util.setupEventSource(true, false, registerEvents);
     }
 
-    setTimeout(() => $('#container').removeAttr("style"), 200);
+    window.setTimeout(() => $('#container').removeAttr("style"), 200);
 });

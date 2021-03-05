@@ -21,6 +21,8 @@ import $ from "jquery";
 
 import * as util from "../util";
 
+declare function __(s: string): string;
+
 import Chartist = require("chartist");
 import ctAxisTitle = require("chartist-plugin-axistitle");
 
@@ -109,11 +111,11 @@ function meter_chart_change_time(value: string) {
 
     if (value == "live") {
         update_live_meter();
-        graph_update_interval = setInterval(update_live_meter, 1000);
+        graph_update_interval = window.setInterval(update_live_meter, 1000);
         return;
     } else if (value == "history") {
         update_history_meter();
-        graph_update_interval = setInterval(update_history_meter, 10000);
+        graph_update_interval = window.setInterval(update_history_meter, 10000);
     } else {
         console.log("Unknown plot type!");
     }
@@ -128,7 +130,7 @@ function init_chart() {
     // Create a new line chart object where as first parameter we pass in a selector
     // that is resolving to our chart container element. The Second parameter
     // is the actual data object.
-    meter_chart = new Chartist.Line('#meter_chart', data, {
+    meter_chart = new Chartist.Line('#meter_chart', <any>data, {
         fullWidth: true,
         showPoint: false,
         axisX: {
@@ -225,7 +227,7 @@ function init_status_chart(min_value=0, max_value=0) {
     // Create a new line chart object where as first parameter we pass in a selector
     // that is resolving to our chart container element. The Second parameter
     // is the actual data object.
-    status_meter_chart = new Chartist.Line('#status_meter_chart', data, {
+    status_meter_chart = new Chartist.Line('#status_meter_chart', <any>data, {
         fullWidth: true,
         showPoint: false,
         low: min_value,
@@ -306,7 +308,7 @@ export function init() {
 
     init_status_chart();
     update_status_chart();
-    status_interval = setInterval(update_status_chart, 60*1000);
+    status_interval = window.setInterval(update_status_chart, 60*1000);
 }
 
 export function addEventListeners(source: EventSource) {
@@ -315,7 +317,7 @@ export function addEventListeners(source: EventSource) {
     }, false);
 }
 
-export function updateLockState(module_init) {
+export function updateLockState(module_init: any) {
     $('#sidebar-meter').prop('hidden', !module_init.sdm72dm);
     $('#status-meter').prop('hidden', !module_init.sdm72dm);
 
@@ -331,13 +333,13 @@ export function updateLockState(module_init) {
         }
     } else {
         if (status_interval == null) {
-            status_interval = setInterval(update_status_chart, 60*1000);
+            status_interval = window.setInterval(update_status_chart, 60*1000);
         }
     }
 }
 
 export function getTranslation(lang: string) {
-    return {
+    const translations: {[index: string]:any} = {
         "de": {
             "sdm72dm": {
                 "status": {
@@ -390,5 +392,6 @@ export function getTranslation(lang: string) {
                 }
             }
         }
-    }[lang];
+    };
+    return translations[lang];
 }
