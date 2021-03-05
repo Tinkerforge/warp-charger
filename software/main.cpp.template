@@ -168,6 +168,8 @@ void setup(void) {
     {{{module_setup}}}
 
     modules = Config::Object({
+        // Fake that the event_log is a module for now.
+        {"event_log", Config::Bool(true)},
         {{{module_init_config}}}
     });
 
