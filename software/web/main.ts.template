@@ -54,6 +54,8 @@ export function registerEvents(eventSource: EventSource) {
     }
 }
 
+let last_shown_tab = null;
+
 $(function () {
     feather.replace();
 
@@ -99,5 +101,9 @@ $(function () {
         util.setupEventSource(true, false, registerEvents);
     }
 
+    $('a[data-toggle="tab"]').on('show.bs.tab', () => {
+        $('a[data-toggle="tab"]').not(<Element>event.target).removeClass("active");
+        $('a[data-toggle="tab"]').not(<Element>event.target).trigger("hidden.bs.tab");
+    });
     window.setTimeout(() => $('#container').removeAttr("style"), 200);
 });
