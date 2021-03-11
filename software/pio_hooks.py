@@ -174,7 +174,11 @@ def main():
         if not os.path.exists(mod_path) or not os.path.isdir(mod_path):
             print("Backend module {} not found.".format(name.space, mod_path))
 
-        shutil.copytree(os.path.join(mod_path), os.path.join("src", "modules", name.under))
+        if os.path.exists(os.path.join(mod_path, "prepare.py")):
+            with ChangedDirectory(mod_path):
+                subprocess.run(["python3", "prepare.py"])
+
+        shutil.copytree(os.path.join(mod_path), os.path.join("src", "modules", name.under), ignore=shutil.ignore_patterns('*ignored'))
 
     specialize_template("main.cpp.template", os.path.join("src", "main.cpp"), {
         '{{{module_includes}}}': '\n'.join(['#include "modules/{0}/{0}.h"'.format(x.under) for x in backend_modules]),
