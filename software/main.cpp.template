@@ -90,6 +90,8 @@ Config version;
 Config modules;
 Config reboot;
 
+AsyncCallbackWebHandler *main_page_handler;
+
 void register_default_urls() {
     server.onNotFound([](AsyncWebServerRequest *request) {
         if (request->method() == HTTP_OPTIONS)
@@ -98,7 +100,7 @@ void register_default_urls() {
             request->send(404, "text/html", "404");
     });
 
-    server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
+    main_page_handler = &server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
         auto *response = request->beginChunkedResponse("text/html", [](uint8_t *buffer, size_t maxLen, size_t index) -> size_t {
             auto CHUNK_SIZE = 1024 * 10;
             //Write up to "maxLen" bytes into "buffer" and return the amount written.
