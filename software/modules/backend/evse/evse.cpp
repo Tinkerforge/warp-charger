@@ -43,6 +43,7 @@ EVSE::EVSE()
         {"vehicle_state", Config::Uint8(0)},
         {"contactor_state", Config::Uint8(0)},
         {"contactor_error", Config::Uint8(0)},
+        {"charge_release", Config::Uint8(0)},
         {"allowed_charging_current", Config::Uint16(0)},
         {"error_state", Config::Uint8(0)},
         {"lock_state", Config::Uint8(0)},
@@ -266,7 +267,7 @@ void EVSE::update_evse_low_level_state() {
 void EVSE::update_evse_state() {
     if(!initialized)
         return;
-    uint8_t iec61851_state, vehicle_state, contactor_state, contactor_error, error_state, lock_state;
+    uint8_t iec61851_state, vehicle_state, contactor_state, contactor_error, charge_release, error_state, lock_state;
     uint16_t allowed_charging_current;
     uint32_t time_since_state_change, uptime;
 
@@ -275,6 +276,7 @@ void EVSE::update_evse_state() {
         &vehicle_state,
         &contactor_state,
         &contactor_error,
+        &charge_release,
         &allowed_charging_current,
         &error_state,
         &lock_state,
@@ -292,6 +294,7 @@ void EVSE::update_evse_state() {
     evse_state.get("vehicle_state")->updateUint(vehicle_state);
     evse_state.get("contactor_state")->updateUint(contactor_state);
     bool contactor_error_changed = evse_state.get("contactor_error")->updateUint(contactor_error);
+    evse_state.get("charge_release")->updateUint(charge_release);
     evse_state.get("allowed_charging_current")->updateUint(allowed_charging_current);
     bool error_state_changed = evse_state.get("error_state")->updateUint(error_state);
     evse_state.get("lock_state")->updateUint(lock_state);

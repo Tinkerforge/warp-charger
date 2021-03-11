@@ -28,6 +28,7 @@ interface EVSEState {
     vehicle_state: number,
     contactor_state: number,
     contactor_error: number,
+    charge_release: number,
     allowed_charging_current: number,
     error_state: number,
     lock_state: number,
@@ -53,6 +54,7 @@ function update_evse_state(state: EVSEState) {
     util.update_button_group("btn_group_ac1", (state.contactor_state & 1) == 1 ? 1 : 0);
     util.update_button_group("btn_group_ac2", state.contactor_state > 1 ? 1 : 0);
     util.update_button_group("btn_group_contactor_error", state.contactor_error != 0 ? 1 : 0, state.contactor_error != 0 ? __("evse.script.error_code") + " " + state.contactor_error : null);
+    util.update_button_group("btn_group_charge_release", state.charge_release);
     util.update_button_group("btn_group_error_state", state.error_state == 0 ? 0 : state.error_state - 1); // 1 is not a valid error state
     util.update_button_group("btn_group_lock_state", state.lock_state);
 
@@ -274,6 +276,10 @@ export function getTranslation(lang: string) {
                     "contactor_live": "Stromführend",
                     "contactor_ok": "OK",
                     "contactor_error": "Fehler",
+                    "charge_release": "Ladefreigabe",
+                    "charge_release_automatic": "Automatisch",
+                    "charge_release_manual": "Manuell",
+                    "charge_release_deactivated": "Deaktiviert",
                     "allowed_charging_current": "Erlaubter Ladestrom",
                     "error_state": "Fehlerzustand",
                     "error_state_desc": "<a href=\"https://www.warp-charger.com/#documents\">siehe Betriebsanleitung für Details</a>",
@@ -375,6 +381,10 @@ export function getTranslation(lang: string) {
                     "contactor_live": "Live",
                     "contactor_ok": "OK",
                     "contactor_error": "Error",
+                    "charge_release": "Charge release",
+                    "charge_release_automatic": "Automatic",
+                    "charge_release_manual": "Manual",
+                    "charge_release_deactivated": "Deactivated",
                     "allowed_charging_current": "Allowed charging current",
                     "error_state": "Error state",
                     "error_state_desc": "<a href=\"https://www.warp-charger.com/#documents\">see manual for details</a>",
