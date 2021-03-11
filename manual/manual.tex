@@ -97,7 +97,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		\Huge
 		WARP Charger Betriebsanleitung\\\vspace{1cm}
 		\large
-		Version 1.1\\\vspace{0.25cm}
+		Version 1.2\\\vspace{0.25cm}
 		\today
 	\end{center}
 	\vfill \gfx{./img/resized/warp_perspective_blue_ready}
@@ -425,7 +425,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 	\subsection{Ersteinrichtung}
 	Im Auslieferungszustand öffnet die Wallbox einen WLAN-Access-Point, über den
-	die Konfiguration des Web-Interfaces vorgenommen werden kann.
+	die Konfiguration des Webinterfaces vorgenommen werden kann.
 	Die Zugangsdaten des Access Points findest du auf dem WLAN-Zugangsdaten-Aufkleber
 	auf der Rückseite dieser Anleitung. Du kannst entweder den QR-Code des Aufklebers verwenden,
 	der das WLAN automatisch konfiguriert, oder SSID und Passphrase abschreiben.
@@ -530,14 +530,31 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	Statistiken dazu.
 
 	\subsection{System}
-	\gfx{./img/resized/web_system}
-	Hier kannst du die Firmware der Wallbox aktualisieren. Wir werden die Funktionalität
-	laufend weiterentwickeln. Aktuelle Firmwares findest du unter \url{https://warp-charger.com}
+	Im System-Unterabschnitt kannst du das Ereignis-Log einsehen, das Webinterface durch Zugangsdaten schützen und Firmware-Updates einspielen.
+	\subsubsection{Ereignis-Log}
+	\gfx{./img/resized/web_event_log}
+	Das Ereignis-Log zeichnet relevante Informationen des Systemstarts, sowie WLAN- und MQTT-Verbindungsabbrüche und Ladefehler auf.
+	Falls Probleme mit der Wallbox auftreten, kannst du diese mit dem Log diagnostizieren.
+	Das Log wird wenn die Unterseite geöffnet wird und danach periodisch aktualisiert.
+	Falls du ein Problem mit der Wallbox an uns melden möchtest, kannst du das Ereignis-Log,
+	sowie einen Debug-Report abrufen, die uns helfen das Problem zu verstehen und zu lösen.
 
-	\newpage
+	\subsubsection{Firmware-Update}
+	\gfx{./img/resized/web_firmware_update}
+	Hier kannst du die Firmware der Wallbox aktualisieren. Wir werden die Funktionalität
+	laufend weiterentwickeln. Aktuelle Firmwares findest du unter \url{https://warp-charger.com}.
+	Außerdem kannst du hier das Webinterface neustarten, ohne einen Ladevorgang zu unterbrechen.
+
+	\subsubsection{Zugangsdaten}
+	\gfx{./img/resized/web_authentication}
+	Auf dieser Unterseite kannst du Zugangsdaten konfigurieren, mit denen man sich anmelden muss,
+	damit das Webinterface und die HTTP-API verwendet werden können.
+	\hint{Wenn du die Zugangsdaten des Webinterfaces vergisst, kannst du nur nach einem Zurücksetzen
+	auf den Auslieferungszustand wieder darauf zugreifen.}
+
 	\subsection{Zurücksetzen auf Auslieferungszustand}\label{reset}
 	Falls das Webinterface nicht korrekt funktioniert, oder die Konfiguration defekt ist,
-	kannst du auf der System-Unterseite alle Einstellungen auf den Auslieferungszustand zurücksetzen.
+	kannst du auf der Firmware-Update-Unterseite alle Einstellungen auf den Auslieferungszustand zurücksetzen.
 	Das Zurücksetzen dauert ungefähr eine Minute, danach startet das Webinterface wieder und öffnet
 	den Access Point mit dem Netzwerknamen und Passwort, die auf dem Aufkleber vermerkt sind.
 
@@ -554,6 +571,9 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	Die Wallbox kann per MQTT oder HTTP ferngesteuert werden. Über diese Schnittstellen ist eine
 	Einbindung in Hausautomatisationssysteme wie openHAB, ioBroker, FHEM o.ä. möglich. Die aktuelle
 	Dokumentation der Schnittstellen findet sich auf \url{https://warp-charger.com/api.html}
+
+	Falls du die Zugangsdaten für das Webinterface gesetzt und die Anmeldung aktiviert hast, musst du
+	für die HTTP-API die selben Zugangsdaten verwenden.
 
 	\gfx{./img/resized/web_mqtt}
 	Auf der MQTT-Unterseite kannst du die Verbindung zu einem MQTT-Broker konfigurieren. Folgende Einstellungen können vorgenommen werden:
@@ -773,6 +793,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		           &         & Layout überarbeitet        \\
 		29.01.2021 & 1.0     & Druckversion               \\
 		26.02.2021 & 1.1     & Anpassung an Firmware 1.1  \\
+		11.03.2021 & 1.2     & Anpassung an Firmware 1.2  \\
 		\bottomrule
 	\end{tabular}
 	\newpage
