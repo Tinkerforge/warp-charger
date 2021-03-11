@@ -9,24 +9,25 @@ gulp.task("bundle-js", function () {
     const fancy_log = require("fancy-log");
     const source = require("vinyl-source-stream");
     const buffer = require("vinyl-buffer");
-    const sourcemaps = require("gulp-sourcemaps");
     const uglify = require("gulp-uglify");
 
-    var files = glob.sync('./src/**/*.ts');
+    var files = glob.sync('./src/t*/**/*.ts'); //match typings and ts
+    files.push("./src/main.ts");
 
     return browserify({ // Collect js dependencies
         basedir: ".",
-        debug: true,
+        debug: false,
         entries: files,//["src/main.ts"],
         cache: {},
         packageCache: {},
     })
-        .plugin(tsify) // Compile typescript
+        .plugin(tsify, {noImplicitAny: true,
+                        esModuleInterop: true,
+                        target: "es5"}) // Compile typescript
         .bundle()
         .on("error", fancy_log)
         .pipe(source("bundle.js")) //Collect in bundle.js
         .pipe(buffer())
-        .pipe(sourcemaps.init({ loadMaps: true })) // Collect source maps before uglifying
         // TODO: for some reason meter_chart_change_time gets removed by the default config
         // This config costs about 5kb
         .pipe(
@@ -35,7 +36,6 @@ gulp.task("bundle-js", function () {
                 mangle: { reserved: ["meter_chart_change_time"] },
             }*/)
         )
-        .pipe(sourcemaps.write("./"))
         .pipe(gulp.dest("assets/js")); // Write to assets/js/bundle.js(.map)
 });
 
