@@ -19,7 +19,7 @@ export function reboot() {
         method: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(null),
-        success: () => postReboot(__("util.reboot_title"), __("util.reboot_text"))
+        success: () => window.setTimeout(() => postReboot(__("util.reboot_title"), __("util.reboot_text")), 3000)
     });
 }
 
@@ -163,16 +163,48 @@ export function setupEventSource(first: boolean, keep_as_first: boolean, continu
 }
 
 export function postReboot(alert_title: string, alert_text: string) {
-    setupEventSource(true, true, (eventSource) =>
-            window.setTimeout(() =>
-            // It is a bit of a hack to use version here, but
-            // as opposed to keep-alive, version was already there in the first version.
-            // so this will even work if downgrading to an version older than
-            // 1.1.0
-            eventSource.addEventListener('version', function (e) {
-                window.location.reload();
-            }, false), 5000)
+    whenLoggedInElseReload(() =>
+        setupEventSource(true, true, (eventSource) =>
+                window.setTimeout(() =>
+                // It is a bit of a hack to use version here, but
+                // as opposed to keep-alive, version was already there in the first version.
+                // so this will even work if downgrading to an version older than
+                // 1.1.0
+                eventSource.addEventListener('version', function (e) {
+                    window.location.reload();
+                }, false), 5000))
     );
 
     show_alert("alert-success",alert_title, alert_text);
+}
+
+let loginReconnectTimeout: number = null;
+
+export function ifLoggedInElseReload(continuation: () => void) {
+    $.ajax({url: "/login_state", timeout:3000}).done(function(data, statusText, xhr){
+        if (data == "Logged in") {
+            continuation();
+        } else {
+            window.location.href = window.location.href
+        }
+    }).fail(function(xhr, statusText, errorThrown) {
+        if (xhr.status == 404) {
+            continuation();
+        }
+    });
+}
+
+export function whenLoggedInElseReload(continuation: () => void) {
+    if (loginReconnectTimeout != null) {
+        clearTimeout(loginReconnectTimeout);
+        loginReconnectTimeout = null;
+    }
+    if (eventSourceReconnectTimeout != null) {
+        clearTimeout(eventSourceReconnectTimeout);
+        eventSourceReconnectTimeout = null;
+    }
+    loginReconnectTimeout = window.setTimeout(
+        () => ifLoggedInElseReload(
+            () => {clearTimeout(loginReconnectTimeout); continuation();}),
+        RECONNECT_TIME);
 }

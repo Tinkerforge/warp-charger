@@ -56,7 +56,24 @@ export function registerEvents(eventSource: EventSource) {
 
 let last_shown_tab = null;
 
-$(function () {
+// This is the part of the initialization to be done
+// if we are authenticated (or authentication is deactivated)
+function init() {
+    for (let m of modules) {
+        m.init();
+    }
+
+    if (!!window.EventSource) {
+        util.setupEventSource(true, false, registerEvents);
+    }
+
+    window.setTimeout(() => $('#nav-list').removeAttr("style"), 200);
+    window.setTimeout(() => $('#main').removeAttr("style"), 200);
+}
+
+$(window).on('pageshow', (ev) => {
+    util.ifLoggedInElseReload(init);
+
     feather.replace();
 
     let de = Object.assign({
@@ -93,18 +110,8 @@ $(function () {
     // Add the language to the translator and translate the page
     translator.add('de', de).add('en', en).translatePageTo();
 
-    for (let m of modules) {
-        m.init();
-    }
-
-    if (!!window.EventSource) {
-        util.setupEventSource(true, false, registerEvents);
-    }
-
     $('a[data-toggle="tab"]').on('show.bs.tab', () => {
         $('a[data-toggle="tab"]').not(<Element>event.target).removeClass("active");
         $('a[data-toggle="tab"]').not(<Element>event.target).trigger("hidden.bs.tab");
     });
-    window.setTimeout(() => $('#nav-list').removeAttr("style"), 200);
-    window.setTimeout(() => $('#main').removeAttr("style"), 200);
 });
