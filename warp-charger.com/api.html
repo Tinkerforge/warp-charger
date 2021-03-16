@@ -51,6 +51,7 @@
               <li><a href="#meter">Stromzähler</a></li>
               <li><a href="#mqtt">MQTT-Konfiguration</a></li>
               <li><a href="#wifi">WLAN-Konfiguration</a></li>
+              <li><a href="#auth">Authentifizierung</a></li>
               <li><a href="#misc">Sonstiges</a></li>
               <li><a href="#http-only">HTTP-Spezifisch</a></li>
             </ul>
@@ -216,6 +217,16 @@
                     <code class="code-box">
                         curl -s http://10.0.0.1/<a class="scrollto" href="#evse_state">evse/state</a> | jq '.allowed_charging_current'
                     </code> liefert den erlaubten Ladestrom (also das Minimum der oben erlaubten Ströme), was jetzt <samp>8000</samp>, also 8 Ampere sein sollten.
+                </p>
+            </div>
+            <div class="container">
+                <h4>Authentifizierung</h4>
+                <p>
+                    Die HTTP-API und das Webinterface können durch einen Benutzernamen und ein Passwort geschützt werden.
+                    Die Authentifizierung kann im System-Abschnitt des Webinterfaces unter Zugangsdaten aktiviert werden.
+                    Alle Requests müssen dann mit der <a href="https://en.wikipedia.org/wiki/Digest_access_authentication">Digest access authentication</a> authentisiert werden.
+                    Nicht authentifizierte Requests werden von der Wallbox mit dem HTTP-Code 401 beantwortet. Eine Ausnahme bildet die Hauptseite des Webinterfaces, die den meisten Browsern
+                    auf einen nicht authentifizierten Request mit der Login-Seite antwortet.
                 </p>
             </div>
     </section>
@@ -384,6 +395,19 @@
                             <td></td>
                             <td>
                                 Fehlercode der Schützüberwachung. Ein Wert ungleich 0 zeigt einen Fehler an.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">charge_release</th>
+                            <td>int</td>
+                            <td></td>
+                            <td>
+                                Ladefreigabe. Gibt an, ob automatisch, manuell oder nicht geladen werden kann.
+                                <ol class="ol-enum">
+                                    <li><b>0</b> - Automatisch: Sobald ein Fahrzeug angeschlossen wird, kann es mit dem Laden beginnen. Dieser Modus ist aktiv, wenn <a class="scrollto" href="#evse_auto_start_charging">evse/auto_start_charging</a> aktiviert ist und das Laden nicht abgebrochen wurde.</li>
+                                    <li><b>1</b> - Manuell: Wenn ein Fahrzeug angeschlossen wird, wird es erst geladen, wenn das Laden manuell freigegeben wird. Dieser Modus wird aktiviert, wenn <a class="scrollto" href="#evse_auto_start_charging">evse/auto_start_charging</a> deaktiviert, der Knopf an der Wallbox gedrückt oder <a class="scrollto" href="#evse_start_charging">evse/stop_charging</a> aufgerufen wird. Die manuelle Freigabe kann über das Webinterface, oder durch einen API-Aufruf von <a class="scrollto" href="#evse_start_charging">evse/start_charging</a> erfolgen.</li>
+                                    <li><b>2</b> - Deaktiviert: Das Laden ist blockiert, da die Wallbox entweder in einem Fehlerzustand ist, oder durch den Schlüsselschalter deaktiviert wurde.</li>
+                                </ol>
                             </td>
                         </tr>
                         <tr>
@@ -1135,6 +1159,56 @@
                 </table>
             </div>
         </section>
+        <section id="auth" class="section pt-4">
+            <header class="reference-section-header">
+                <h4>Authentifizierung</h4>
+            </header>
+            <ul class="ul-no-bullet">
+                <li>Konfigurationen
+                <ul>
+                    <li><a class="scrollto" href="#authentication_config">authentication/config</a></li>
+                </ul></li>
+            </ul>
+            <div class="pt-5">
+                <div class="h5" id="authentication_config">authentication/config</div>
+                Konfigurierte Zugangsdaten für Webinterface und HTTP-API.
+                <strong>Aktualisierte Zugangsdaten werden erst nach einem Neustart des ESPs verwendet.
+                    Siehe <a class="scrollto" href="#reboot">reboot</a>.</strong>
+                <table class="table table-striped table-bottom-border mt-3 ml-5">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Typ</th>
+                        <th scope="col">Einheit</th>
+                        <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">enable_auth</th>
+                            <td>bool</td>
+                            <td></td>
+                            <td>true, falls für Webinterface und HTTP-API Zugangsdaten abgefragt werden sollen, sonst false.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">username</th>
+                            <td>string</td>
+                            <td></td>
+                            <td>Der Benutzername, dem Zugriff auf Webinterface und HTTP-API gewährt werden.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">password</th>
+                            <td>string</td>
+                            <td></td>
+                            <td>Das Passwort, dem Zugriff auf Webinterface und HTTP-API gewährt werden. <strong>Die Wallbox gibt gespeicherte Passwörter nicht zurück. Stattdessen wird <samp>null</samp> zurückgegeben.</strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
         <section id="misc" class="section pt-4">
             <header class="reference-section-header">
                 <h4>Sonstiges</h4>
@@ -1185,7 +1259,6 @@
                 <div class="h5" id="modules">modules</div>
                 Initialisierungszustand der Firmware-Module.
             </div>
-
 
             <div class="pt-5">
                 <div class="h5" id="reboot">reboot</div>
