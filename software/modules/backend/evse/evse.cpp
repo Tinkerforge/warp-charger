@@ -26,12 +26,14 @@
 #include "event_log.h"
 #include "task_scheduler.h"
 #include "tools.h"
+#include "modules/sse/sse.h"
 
 extern EventLog logger;
 
 extern TaskScheduler task_scheduler;
 extern TF_HalContext hal;
 extern AsyncWebServer server;
+extern Sse sse;
 
 extern API api;
 extern bool firmware_update_allowed;
@@ -122,6 +124,80 @@ void EVSE::setup()
     }, 0, 1000);
 }
 
+String EVSE::get_evse_debug_header() {
+    return "millis,iec61851_state,vehicle_state,contactor_state,contactor_error,charge_release,allowed_charging_current,error_state,lock_state,time_since_state_change,uptime,low_level_mode_enabled,led_state,cp_pwm_duty_cycle,adc_values_0,adc_values_1,voltages_0,voltages_1,voltages_2,resistances_0,resistances_1,gpio_0,gpio_1,gpio_2,gpio_3,gpio_4\n";
+}
+
+String EVSE::get_evse_debug_line() {
+    if(!initialized)
+        return "EVSE is not initialized!";
+
+    uint8_t iec61851_state, vehicle_state, contactor_state, contactor_error, charge_release, error_state, lock_state;
+    uint16_t allowed_charging_current;
+    uint32_t time_since_state_change, uptime;
+
+    int rc = tf_evse_get_state(&evse,
+        &iec61851_state,
+        &vehicle_state,
+        &contactor_state,
+        &contactor_error,
+        &charge_release,
+        &allowed_charging_current,
+        &error_state,
+        &lock_state,
+        &time_since_state_change,
+        &uptime);
+
+    if(rc != TF_E_OK) {
+        return String("evse_get_state failed: rc: ") + String(rc);
+    }
+
+    bool low_level_mode_enabled;
+    uint8_t led_state;
+    uint16_t cp_pwm_duty_cycle;
+
+    uint16_t adc_values[2];
+    int16_t voltages[3];
+    uint32_t resistances[2];
+    bool gpio[5];
+
+    rc = tf_evse_get_low_level_state(&evse,
+        &low_level_mode_enabled,
+        &led_state,
+        &cp_pwm_duty_cycle,
+        adc_values,
+        voltages,
+        resistances,
+        gpio);
+
+    if(rc != TF_E_OK) {
+        return String("evse_get_low_level_state failed: rc: ") + String(rc);
+    }
+
+    char line[150] = {0};
+    snprintf(line, sizeof(line)/sizeof(line[0]), "%lu,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%c,%u,%u,%u,%u,%d,%d,%d,%u,%u,%c,%c,%c,%c,%c\n",
+        millis(),
+        iec61851_state,
+        vehicle_state,
+        contactor_state,
+        contactor_error,
+        charge_release,
+        allowed_charging_current,
+        error_state,
+        lock_state,
+        time_since_state_change,
+        uptime,
+        low_level_mode_enabled ? '1' : '0',
+        led_state,
+        cp_pwm_duty_cycle,
+        adc_values[0],adc_values[1],
+        voltages[0],voltages[1],voltages[2],
+        resistances[0],resistances[1],
+        gpio[0] ? '1' : '0',gpio[1] ? '1' : '0',gpio[2] ? '1' : '0',gpio[3] ? '1' : '0',gpio[4] ? '1' : '0');
+
+    return String(line);
+}
+
 void EVSE::register_urls()
 {
     api.addState("evse/state", &evse_state, {}, 1000);
@@ -144,15 +220,36 @@ void EVSE::register_urls()
 
     api.addCommand("evse/stop_charging", &evse_stop_charging, {}, [this](){tf_evse_stop_charging(&evse);});
     api.addCommand("evse/start_charging", &evse_start_charging, {}, [this](){tf_evse_start_charging(&evse);});
+
+    server.on("/evse/start_debug", HTTP_GET, [this](AsyncWebServerRequest *request) {
+        task_scheduler.scheduleOnce("enable evse debug", [this](){
+            sse.pushStateUpdate(this->get_evse_debug_header(), "evse/debug");
+            debug = true;
+        }, 0);
+        request->send(200);
+    });
+
+    server.on("/evse/stop_debug", HTTP_GET, [this](AsyncWebServerRequest *request){
+        task_scheduler.scheduleOnce("enable evse debug", [this](){
+            debug = false;
+        }, 0);
+        request->send(200);
+    });
 }
 
 void EVSE::loop()
 {
     static uint32_t last_check = 0;
+    static uint32_t last_debug = 0;
     if(evse_found && !initialized && deadline_elapsed(last_check + 10000)) {
         last_check = millis();
         if(!is_in_bootloader(TF_E_TIMEOUT))
             setup_evse();
+    }
+
+    if(debug && deadline_elapsed(last_debug + 50)) {
+        last_debug = millis();
+        sse.pushStateUpdate(this->get_evse_debug_line(), "evse/debug");
     }
 }
 

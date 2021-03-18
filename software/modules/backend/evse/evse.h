@@ -51,6 +51,10 @@ private:
     bool flash_firmware();
     bool flash_plugin(int regular_plugin_upto);
     bool wait_for_bootloader_mode(int mode);
+    String get_evse_debug_header();
+    String get_evse_debug_line();
+
+    bool debug = false;
 
     Config evse_state;
     Config evse_hardware_configuration;

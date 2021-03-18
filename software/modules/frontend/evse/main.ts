@@ -182,6 +182,104 @@ function stop_charging() {
     });
 }
 
+let debug_log = "";
+
+function allow_debug(b: boolean) {
+    $('#debug_start').prop("disabled", !b);
+    $('#debug_stop').prop("disabled", b);
+    if (!b) {
+        window.onbeforeunload = (e: Event) => {
+            e.preventDefault();
+            e.returnValue = __('evse.script.tab_close_warning');
+        }
+    } else {
+        window.onbeforeunload = null;
+    }
+}
+
+function debug_start() {
+    debug_log = "";
+    let status = <HTMLInputElement>$('#debug_label')[0];
+    status.value = __("evse.script.loading_debug_report");
+    allow_debug(false);
+    $.get("/debug_report")
+        .fail(() => {
+            status.value = __("evse.script.loading_debug_report_failed");
+            allow_debug(true);
+        })
+        .done((result) => {
+            console.log(result);
+            debug_log += JSON.stringify(result) + "\n\n";
+
+            status.value = __("evse.script.loading_event_log");
+
+            $.get("/event_log")
+                .fail(() => {
+                    status.value = __("evse.script.loading_event_log_failed");
+                    allow_debug(true);
+                })
+                .done((result) => {
+                    debug_log += result + "\n";
+
+                    status.value = __("evse.script.starting_debug");
+
+                    $.get("/evse/start_debug")
+                        .fail(() => {
+                            status.value = __("evse.script.starting_debug_failed");
+                            allow_debug(true);
+                        })
+                        .done((result) => {
+                            status.value = __("evse.script.debug_running");
+                        });
+                });
+        });
+}
+
+function downloadToFile(content, filename, contentType) {
+    const a = document.createElement('a');
+    const file = new Blob([content], {type: contentType});
+
+    a.href= URL.createObjectURL(file);
+    a.download = filename;
+    a.click();
+
+    URL.revokeObjectURL(a.href);
+  };
+
+function debug_stop() {
+    let status = <HTMLInputElement>$('#debug_label')[0];
+
+    allow_debug(true);
+
+    $.get("/evse/stop_debug")
+        .fail(() => {
+            status.value = __("evse.script.debug_stop_failed");
+        })
+        .done((result) => {
+            status.value = __("evse.script.debug_stopped");
+            $.get("/debug_report")
+                .fail(() => {
+                    status.value = __("evse.script.loading_debug_report_failed");
+                })
+                .done((result) => {
+                    debug_log += "\n" + JSON.stringify(result) + "\n\n";
+
+                    status.value = __("evse.script.loading_event_log");
+
+                    $.get("/event_log")
+                        .fail(() => {
+                            status.value = __("evse.script.loading_event_log_failed");
+                        })
+                        .done((result) => {
+                            debug_log += result + "\n";
+                            status.value = __("evse.script.debug_done");
+
+                            downloadToFile(debug_log, "evse-debug-log-" + (new Date()).toISOString().replace(/:/gi, "-").replace(/\./gi, "-") + ".txt", "text/plain");
+                        });
+                });
+        });
+}
+
 
 export function init() {
     $("#status_charging_current_minimum").on("click", () => set_charging_current(6000));
@@ -210,6 +308,11 @@ export function init() {
             set_charging_current(<number>input.val() * 1000);
     }, false);
 
+
+    $("#debug_start").on("click", debug_start);
+    $("#debug_stop").on("click", debug_stop);
+
+    allow_debug(true);
 }
 
 export function addEventListeners(source: EventSource) {
@@ -231,6 +334,10 @@ export function addEventListeners(source: EventSource) {
 
     source.addEventListener('evse/auto_start_charging', function (e: util.SSE) {
         update_evse_auto_start_charging(<EVSEAutoStart>(JSON.parse(e.data)));
+    }, false);
+
+    source.addEventListener("evse/debug", function (e: util.SSE) {
+        debug_log += e.data + "\n";
     }, false);
 }
 
@@ -331,6 +438,11 @@ export function getTranslation(lang: string) {
                     "gpio_names": "Eingang, Ausgang, Motoreingangsschalter, Relais, Motorfehler",
                     "gpio_low": "Low",
                     "gpio_high": "High",
+                    "debug": "Ladeprotokoll",
+                    "debug_start": "Start",
+                    "debug_stop": "Stop + Download",
+                    "debug_description": "Ladeprotokoll erstellen",
+                    "debug_description_muted": "zur Diagnose bei Ladeproblemen"
                 },
                 "script": {
                     "error_code": "Fehlercode",
@@ -339,10 +451,20 @@ export function getTranslation(lang: string) {
                     "charging": "Lädt",
                     "set_charging_current_failed": "Konnte Ladestrom nicht setzen",
                     "not_implemented": "Noch nicht implementiert",
-
                     "auto_start_charging_update": "Lade-Autostart setzen fehlgeschlagen.",
                     "start_charging_failed": "Ladestart auslösen fehlgeschlagen",
-                    "stop_charging_failed": "Ladestop auslösen fehlgeschlagen"
+                    "stop_charging_failed": "Ladestop auslösen fehlgeschlagen",
+                    "tab_close_warning": "Die Aufzeichnung des Ladecontroller-Logs wird abgebrochen, wenn der Tab geschlossen wird.",
+                    "loading_debug_report": "Lade Debug-Report",
+                    "loading_debug_report_failed": "Laden des Debug-Reports fehlgeschlagen",
+                    "loading_event_log": "Lade Event-Log",
+                    "loading_event_log_failed": "Laden des Event-Logs fehlgeschlagen",
+                    "starting_debug": "Aktiviere Aufzeichnung des Ladecontroller-Logs.",
+                    "starting_debug_failed": "Aktivierung der Aufzeichung des Ladecontroller-Logs fehlgeschlagen.",
+                    "debug_running": "Aufzeichnung läuft. Tab nicht schließen!",
+                    "debug_stop_failed": "Stoppen der Aufzeichnung des Ladecontroller-Logs fehlgeschlagen.",
+                    "debug_stopped": "Aufzeichung des Ladecontroller-Logs gestoppt.",
+                    "debug_done": "Abgeschlossen."
                 }
             }
         },
@@ -436,6 +558,11 @@ export function getTranslation(lang: string) {
                     "gpio_names": "Input, Output, Motor Input Switch, Relay, Motor Fault",
                     "gpio_low": "Low",
                     "gpio_high": "High",
+                    "debug": "Charge log",
+                    "debug_start": "Start",
+                    "debug_stop": "Stop + Download",
+                    "debug_description": "Create charge log",
+                    "debug_description_muted": "to diagnose charging problems"
                 },
                 "script": {
                     "error_code": "Error code",
@@ -446,7 +573,18 @@ export function getTranslation(lang: string) {
                     "not_implemented": "Not implemented yet",
                     "auto_start_charging_update": "Failed to set auto charge.",
                     "start_charging_failed": "Failed to start charging",
-                    "stop_charging_failed": "Failed to stop charging"
+                    "stop_charging_failed": "Failed to stop charging",
+                    "tab_close_warning": "Charge log capture will be aborted if this tab is closed.",
+                    "loading_debug_report": "Loading debug report",
+                    "loading_debug_report_failed": "Loading debug reprot failed",
+                    "loading_event_log": "Loading event log",
+                    "loading_event_log_failed": "Loading event log failed",
+                    "starting_debug": "Starting charge log capture",
+                    "starting_debug_failed": "Starting charge log capture failed.",
+                    "debug_running": "Capturing. Don't close tab!",
+                    "debug_stop_failed": "Stopping charge log capture failed",
+                    "debug_stopped": "Stopped charge log capture",
+                    "debug_done": "Done"
                 }
             }
         }
