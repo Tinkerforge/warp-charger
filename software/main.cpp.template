@@ -121,7 +121,7 @@ void register_default_urls() {
     reboot = Config::Null();
     api.addCommand("reboot", &reboot, {}, []() {
         ESP.restart();
-    });
+    }, true);
 
     api.addState("version", &version, {}, 10000);
     api.addState("modules", &modules, {}, 10000);

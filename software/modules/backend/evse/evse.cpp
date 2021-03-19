@@ -211,7 +211,7 @@ void EVSE::register_urls()
 
     api.addCommand("evse/auto_start_charging_update", &evse_auto_start_charging_update, {}, [this](){
         is_in_bootloader(tf_evse_set_charging_autostart(&evse, evse_auto_start_charging_update.get("auto_start_charging")->asBool()));
-    });
+    }, false);
 
     /*api.addTemporaryConfig("evse/auto_start_charging", &evse_auto_start_charging, {}, 1000, [this](){
         is_in_bootloader(tf_evse_set_charging_autostart(&evse, evse_auto_start_charging.get("auto_start_charging")->asBool()));
@@ -219,10 +219,10 @@ void EVSE::register_urls()
 
     api.addCommand("evse/current_limit", &evse_current_limit, {}, [this](){
         is_in_bootloader(tf_evse_set_max_charging_current(&evse, evse_current_limit.get("current")->asUint()));
-    });
+    }, false);
 
-    api.addCommand("evse/stop_charging", &evse_stop_charging, {}, [this](){tf_evse_stop_charging(&evse);});
-    api.addCommand("evse/start_charging", &evse_start_charging, {}, [this](){tf_evse_start_charging(&evse);});
+    api.addCommand("evse/stop_charging", &evse_stop_charging, {}, [this](){tf_evse_stop_charging(&evse);}, true);
+    api.addCommand("evse/start_charging", &evse_start_charging, {}, [this](){tf_evse_start_charging(&evse);}, true);
 
     server.on("/evse/start_debug", HTTP_GET, [this](AsyncWebServerRequest *request) {
         task_scheduler.scheduleOnce("enable evse debug", [this](){
