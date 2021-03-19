@@ -211,4 +211,9 @@ export function whenLoggedInElseReload(continuation: () => void) {
 
     ifLoggedInElseReload(() => {clearTimeout(loginReconnectTimeout); continuation();});
 }
+
+// Password inputs use the empty string as the "unchanged" value.
+// However the API expects a null value if the value should not be changed.
+export function passwordUpdate(value: string) {
+    return value.length > 0 ? value : null;
 }
