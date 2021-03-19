@@ -19,7 +19,7 @@ export function reboot() {
         method: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(null),
-        success: () => window.setTimeout(() => postReboot(__("util.reboot_title"), __("util.reboot_text")), 3000)
+        success: () => postReboot(__("util.reboot_title"), __("util.reboot_text"))
     });
 }
 
@@ -163,7 +163,10 @@ export function setupEventSource(first: boolean, keep_as_first: boolean, continu
 }
 
 export function postReboot(alert_title: string, alert_text: string) {
-    whenLoggedInElseReload(() =>
+    show_alert("alert-success",alert_title, alert_text);
+    // Wait 3 seconds before starting the reload/reconnect logic, to make sure the reboot has actually started yet.
+    // Else it sometimes happens, that we reconnect _before_ the reboot starts.
+    window.setTimeout(() => whenLoggedInElseReload(() =>
         setupEventSource(true, true, (eventSource) =>
                 window.setTimeout(() =>
                 // It is a bit of a hack to use version here, but
@@ -173,9 +176,7 @@ export function postReboot(alert_title: string, alert_text: string) {
                 eventSource.addEventListener('version', function (e) {
                     window.location.reload();
                 }, false), 5000))
-    );
-
-    show_alert("alert-success",alert_title, alert_text);
+    ), 3000);
 }
 
 let loginReconnectTimeout: number = null;
@@ -207,4 +208,7 @@ export function whenLoggedInElseReload(continuation: () => void) {
         () => ifLoggedInElseReload(
             () => {clearTimeout(loginReconnectTimeout); continuation();}),
         RECONNECT_TIME);
+
+    ifLoggedInElseReload(() => {clearTimeout(loginReconnectTimeout); continuation();});
+}
 }
