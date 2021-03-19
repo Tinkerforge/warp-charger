@@ -226,7 +226,7 @@ void EVSE::register_urls()
 
     server.on("/evse/start_debug", HTTP_GET, [this](AsyncWebServerRequest *request) {
         task_scheduler.scheduleOnce("enable evse debug", [this](){
-            sse.pushStateUpdate(this->get_evse_debug_header(), "evse/debug");
+            sse.pushStateUpdate(this->get_evse_debug_header(), "evse/debug_header");
             debug = true;
         }, 0);
         request->send(200);

@@ -26,6 +26,7 @@ declare function __(s: string): string;
 import Chartist = require("chartist");
 import ctAxisTitle = require("chartist-plugin-axistitle");
 
+// Duplicated in evse/main.ts
 interface MeterState {
     power: number,
     energy_rel: number,

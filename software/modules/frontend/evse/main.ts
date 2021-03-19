@@ -183,6 +183,7 @@ function stop_charging() {
 }
 
 let debug_log = "";
+let meter_chunk = "";
 
 function allow_debug(b: boolean) {
     $('#debug_start').prop("disabled", !b);
@@ -315,6 +316,13 @@ export function init() {
     allow_debug(true);
 }
 
+//From sdm72dm/main.ts
+interface MeterState {
+    power: number,
+    energy_rel: number,
+    energy_abs: number,
+}
+
 export function addEventListeners(source: EventSource) {
     source.addEventListener('evse/state', function (e: util.SSE) {
         update_evse_state(<EVSEState>(JSON.parse(e.data)));
@@ -336,8 +344,21 @@ export function addEventListeners(source: EventSource) {
         update_evse_auto_start_charging(<EVSEAutoStart>(JSON.parse(e.data)));
     }, false);
 
+    source.addEventListener("evse/debug_header", function (e: util.SSE) {
+        debug_log += e.data;
+        if (meter_chunk.length > 0) {
+            debug_log += ",power,energy_rel,energy_abs";
+        }
+        debug_log += "\n";
+    }, false);
+
     source.addEventListener("evse/debug", function (e: util.SSE) {
-        debug_log += e.data + "\n";
+        debug_log += e.data + meter_chunk + "\n";
+    }, false);
+
+    source.addEventListener("meter/state", function (e: util.SSE) {
+        let ms = <MeterState>(JSON.parse(e.data));
+        meter_chunk = "," + ms.power + "," + ms.energy_rel + "," + ms.energy_abs;
     }, false);
 }
 
