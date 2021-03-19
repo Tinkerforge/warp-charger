@@ -265,6 +265,11 @@
             <code class="code-box">
                 curl -H 'Content-Type: application/json' -X PUT -d 'null' http://10.0.0.1/<a class="scrollto" href="#reboot">reboot</a>
             </code>
+
+            Bestimmte Kommandos ändern den Zustand der Wallbox nicht direkt, sondern lösen einmalige Ereignisse aus. Ein Beispiel ist
+            <a class="scrollto" href="#evse_stop_charging">evse/stop_charging</a>, das einen Ladevorgang abbricht. Falls ein Kommando
+            dieser Art mit dem MQTT-Retain-Flag auf dem Broker hinterlegt wird, wird es nach einen Verbindungsaufbau von der Wallbox ignoriert.
+            Das verhindert, dass eigentlich einmalige Ereignisse mehrfach ausgeführt werden.
         </p>
         <h4>Konfigurationen</h4>
         <p>
@@ -694,11 +699,13 @@
                 <div class="h5" id="evse_stop_charging">evse/stop_charging</div>
                 Beendet den laufenden Ladevorgang. Ein Ladevorgang kann mit evse/start_charging wieder gestartet werden.
                 <strong>Leerer Payload. Es muss <code>null</code> übergeben werden.</strong>
+                <strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
             </div>
             <div class="pt-5">
                 <div class="h5" id="evse_start_charging">evse/start_charging</div>
                 Startet einen Ladevorgang. Ein Ladevorgang kann mit evse/stop_charging wieder gestoppt werden.
                 <strong>Leerer Payload. Es muss <code>null</code> übergeben werden.</strong>
+                <strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
             </div>
         </section>
         <section id="meter" class="section pt-4">
@@ -788,6 +795,7 @@
             <div class="pt-5">
                 <div class="h5" id="meter_reset">meter/reset</div>
                 Setzt den Energiezähler zurück. <strong>Leerer Payload. Es muss <code>null</code> übergeben werden.</strong>
+                <strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
             </div>
         </section>
         <section id="mqtt" class="section pt-4">
@@ -985,6 +993,7 @@
                 <div class="h5" id="wifi_scan">wifi/scan</div>
                 Löst einen Scan nach WLANs aus. Die Scan-Ergebnisse können derzeit nur über HTTP abgefragt werden.
                 <strong>Leerer Payload. Es muss <code>null</code> übergeben werden.</strong>
+                <strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
             </div>
 
             <div class="pt-5">
@@ -1263,6 +1272,7 @@
             <div class="pt-5">
                 <div class="h5" id="reboot">reboot</div>
                 Startet den ESP neu um Konfigurationsänderungen anzuwenden. <strong>Leerer Payload. Es muss <code>null</code> übergeben werden.</strong>
+                <strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
             </div>
         </section>
         <section id="http-only" class="section pt-4">
