@@ -183,7 +183,7 @@ void SDM72DM::register_urls() {
 
     api.addCommand("meter/reset", &energy_meter_reset, {}, [this](){
         this->energy_meter_reset_requested = true;
-    }, false);
+    }, true);
 
     server.on("/meter/history", HTTP_GET, [this](AsyncWebServerRequest *request) {
         if(!initialized) {
