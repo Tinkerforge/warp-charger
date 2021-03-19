@@ -58,6 +58,7 @@ public:
     };
 
     bool initialized = false;
+    bool hardware_available = false;
 
 private:
     void modbus_read();

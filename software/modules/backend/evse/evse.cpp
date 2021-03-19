@@ -200,6 +200,9 @@ String EVSE::get_evse_debug_line() {
 
 void EVSE::register_urls()
 {
+    if (!evse_found)
+        return;
+
     api.addState("evse/state", &evse_state, {}, 1000);
     api.addState("evse/hardware_configuration", &evse_hardware_configuration, {}, 1000);
     api.addState("evse/low_level_state", &evse_low_level_state, {}, 1000);

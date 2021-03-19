@@ -162,8 +162,10 @@ void SDM72DM::setup() {
     if (!find_uid_by_did(&hal, TF_RS485_DEVICE_IDENTIFIER, uid)) {
         logger.printfln("No RS485 bricklet found. Disabling power meter\n");
         initialized = false;
+        hardware_available = false;
         return;
     }
+    hardware_available = true;
 
     initialized = setupRS485();
 
@@ -173,6 +175,9 @@ void SDM72DM::setup() {
 }
 
 void SDM72DM::register_urls() {
+    if (!hardware_available)
+        return;
+
     api.addState("meter/state", &state, {}, 1000);
     api.addState("meter/error_counters", &error_counters, {}, 1000);
 
