@@ -163,6 +163,8 @@ export function setupEventSource(first: boolean, keep_as_first: boolean, continu
 }
 
 export function postReboot(alert_title: string, alert_text: string) {
+    eventSource.close();
+    clearTimeout(eventSourceReconnectTimeout);
     show_alert("alert-success",alert_title, alert_text);
     // Wait 3 seconds before starting the reload/reconnect logic, to make sure the reboot has actually started yet.
     // Else it sometimes happens, that we reconnect _before_ the reboot starts.
