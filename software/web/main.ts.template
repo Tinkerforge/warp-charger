@@ -76,7 +76,7 @@ $(window).on('pageshow', (ev) => {
 
     feather.replace();
 
-    let de = Object.assign({
+    let de: {[index: string]:any} = {
         "main": {
             "navbar_status": "Status",
             "content_status": "Status"
@@ -89,8 +89,9 @@ $(window).on('pageshow', (ev) => {
         },
         "days": "Tage",
         "day": "Tag",
-    }, ...modules.map(m => m.getTranslation('de')));
-    let en = Object.assign({
+    };
+
+    let en: {[index: string]:any} = {
         "main": {
             "navbar_status": "Status",
             "content_status": "Status"
@@ -103,7 +104,19 @@ $(window).on('pageshow', (ev) => {
         },
         "days": "days",
         "day": "day",
-    }, ...modules.map(m => m.getTranslation('en')));
+    };
+
+    for (let item of modules) {
+        let item_de = item.getTranslation("de");
+        for (let subitem in item_de) {
+            de[subitem] = item_de[subitem];
+        }
+
+        let item_en = item.getTranslation("en");
+        for (let subitem in item_en) {
+            en[subitem] = item_en[subitem];
+        }
+    }
 
     var translator = new Translator();
 
