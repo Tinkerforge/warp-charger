@@ -191,7 +191,10 @@ function allow_debug(b: boolean) {
     if (!b) {
         window.onbeforeunload = (e: Event) => {
             e.preventDefault();
-            e.returnValue = __('evse.script.tab_close_warning');
+            // returnValue is not a boolean, but the string to be shown
+            // in the "are you sure you want to close this tab" message
+            // box. However this string is only shown in some browsers.
+            e.returnValue = <any>__('evse.script.tab_close_warning');
         }
     } else {
         window.onbeforeunload = null;
@@ -236,7 +239,7 @@ function debug_start() {
         });
 }
 
-function downloadToFile(content, filename, contentType) {
+function downloadToFile(content: BlobPart, filename: string, contentType: string) {
     const a = document.createElement('a');
     const file = new Blob([content], {type: contentType});
 
@@ -245,7 +248,7 @@ function downloadToFile(content, filename, contentType) {
     a.click();
 
     URL.revokeObjectURL(a.href);
-  };
+};
 
 function debug_stop() {
     let status = <HTMLInputElement>$('#debug_label')[0];
