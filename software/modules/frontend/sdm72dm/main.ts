@@ -50,16 +50,19 @@ function update_live_meter() {
     $.get("/meter/live").done(function (result) {
         let values = result["samples"];
         let sps = result["samples_per_second"];
-        let labels = Array(values.length + 1).fill(null);
+        let labels = [];
 
         let now = Date.now();
         let start = now - 1000 * values.length / sps;
         let last_minute = -1;
-        for(let i = 0; i < labels.length; ++i) {
+        for(let i = 0; i < values.length + 1; ++i) {
             let d = new Date(start + i * (1000 * (1/sps)));
             if(d.getSeconds() == 0 && d.getMinutes() != last_minute) {
                 labels[i] = d.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
                 last_minute = d.getMinutes();
+            }
+            else {
+                labels[i] = null;
             }
         }
 
@@ -85,13 +88,18 @@ function update_history_meter() {
             return;
         }
 
-        let labels = Array(values.length + 1).fill(null);
+        let labels = [];
 
         let now = Date.now();
         let start = now - 1000 * 60 * 60 * 48;
-        for(let i = 0; i < labels.length; i += VALUES_PER_LABEL) {
-            let d = new Date(start + i * (1000 * 60 * HISTORY_MINUTE_INTERVAL));
-            labels[i] = d.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
+        for(let i = 0; i < values.length + 1; ++i) {
+            if (i % VALUES_PER_LABEL == 0) {
+                let d = new Date(start + i * (1000 * 60 * HISTORY_MINUTE_INTERVAL));
+                labels[i] = d.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
+            }
+            else {
+                labels[i] = null;
+            }
         }
 
         let data = {
@@ -184,13 +192,18 @@ function update_status_chart() {
             return;
         }
 
-        let labels = Array(values.length + 1).fill(null);
+        let labels = [];
 
         let now = Date.now();
         let start = now - 1000 * 60 * 60 * 48;
-        for(let i = 0; i < labels.length; i += VALUES_PER_LABEL) {
-            let d = new Date(start + i * (1000 * 60 * HISTORY_MINUTE_INTERVAL));
-            labels[i] = d.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
+        for(let i = 0; i < values.length + 1; ++i) {
+            if (i % VALUES_PER_LABEL == 0) {
+                let d = new Date(start + i * (1000 * 60 * HISTORY_MINUTE_INTERVAL));
+                labels[i] = d.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
+            }
+            else {
+                labels[i] = null;
+            }
         }
 
         let data = {
