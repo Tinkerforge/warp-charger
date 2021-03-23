@@ -375,7 +375,7 @@ export function getTranslation(lang: string) {
         "de": {
             "evse": {
                 "status": {
-                    "evse": "Ladestatus",
+                    "evse": "Fahrzeugstatus",
                     "not_connected": "Getrennt",
                     "connected": "Verbunden",
                     "charging": "Lädt",
@@ -384,7 +384,7 @@ export function getTranslation(lang: string) {
                     "charging_current_set": "Set",
                     "charging_current_minimum": "6 A",
                     "charging_current_maximum": "Max",
-                    "charge_control": "Ladekontrolle",
+                    "charge_control": "Ladesteuerung",
                     "auto_start_charging": "Autostart",
                     "start_charging": "Start",
                     "stop_charging": "Stop"
@@ -495,7 +495,7 @@ export function getTranslation(lang: string) {
         "en": {
             "evse": {
                 "status": {
-                    "evse": "Charge state",
+                    "evse": "Vehicle state",
                     "not_connected": "Disconnected",
                     "connected": "Connected",
                     "charging": "Charging",
