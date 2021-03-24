@@ -392,8 +392,8 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	für die ersten 12 Sekunden eine Kalibrierung der
 	DC-Fehlerstrom-Schutzeinrichtung durch. Nach Abschluss dieser Kalibrierung
 	leuchtet die LED dauerhaft. Die Wallbox ist nun betriebsbereit. Sollte die LED
-	nicht permanent leuchten, so wurde ein Fehler erkannt (siehe
-	\fullref{fehlerbehebung}).
+	nicht permanent leuchten, ist die Wallbox entweder über den Schlüsselschalter (2) deaktiviert,
+	oder es wurde ein Fehler erkannt (siehe \fullref{fehlerbehebung}).
 
 	Als Nächstes kann ein Elektrofahrzeug zum Laden mit der Wallbox verbunden
 	werden. Dazu wird die Schutzkappe vom Ladestecker entfernt und den Stecker in die
@@ -403,22 +403,23 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	Ladevorgangs. Ist die Ladung beendet, so leuchtet die LED permanent. Nach ca.
 	15 Minuten Inaktivität schaltet sich die LED aus.
 
-	Um einen aktiven Ladevorgang zu unterbrechen, gibt es zwei Möglichkeiten: Das
-	Drücken des Tasters auf der Frontseite unterbricht einen aktiven Ladevorgang
+	\subsection{Bedienelemente}\label{lockswitch}
+	Das Drücken des Tasters (1) auf der Frontseite unterbricht einen aktiven Ladevorgang
 	sofort. Alternativ kann das Ladekabel vom Elektrofahrzeug entriegelt werden,
 	wodurch der Ladevorgang ebenfalls unterbrochen wird. Um den Ladevorgang erneut
 	zu starten, muss in beiden Fällen die Verbindung zum Fahrzeug getrennt und
 	anschließend erneut hergestellt werden (Kabel aus- und wieder einstecken).
 
-	Über den Schlüsselschalter (2) kann die Ladefunktion der Wallbox deaktiviert
-	werden.
+	Über den Schlüsselschalter (2) kann die Ladefunktion der Wallbox permanent deaktiviert
+	werden (Stellung AUS). Laden ist dann erst wieder möglich, nachdem der Schlüsselschalter
+	auf die Stellung AN gebracht wurde.
 
 	\section{Webinterface}
 	Das Webinterface der Wallbox ist nur bei den Varianten Smart und Pro verfügbar.
 
 	Über das Webinterface kannst du unter anderem das Laden steuern und überwachen.
 	Die Wallbox kann sich sowohl als Client mit einem bestehenden WLAN verbinden,
-	als auch als Access Point einen eigenes WLAN eröffnen. Der Betrieb von Client
+	als auch als Access Point einen eigenes WLAN eröffnen. Der Betrieb als Client
 	und Access Point ist parallel möglich.
 
 	\subsection{Ersteinrichtung}
@@ -442,7 +443,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	Die Wallbox kann jetzt in ein vorhandenes WLAN eingebunden werden.
 	\subsubsection{Einbinden in ein vorhandenes WLAN}
 	\gfx{./img/resized/web_wifi_sta}
-	Auf der Unterseite \enquote{WLAN-Verbindung} kannst du die Verbindung zu einem WLAN konfigurieren.
+	Auf der Unterseite \enquote{WLAN-Verbindungseinstellungen} kannst du die Verbindung zu einem WLAN konfigurieren.
 	Durch Drücken des Netzwerksuche-Buttons öffnet sich ein Menü, in dem das gewünschte WLAN ausgewählt werden kann.
 	Es werden dann automatisch Netzwerkname (SSID) und BSSID eingetragen, sowie die Verbindung beim Neustart aktiviert.
 	Gegebenenfalls musst du jetzt noch die Passphrase des gewählten Netzes eintragen.
@@ -561,7 +562,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	10 Sekunden lang gedrückt hältst. Die grüne LED fängt sofort an zu leuchten und blinkt nach 10 Sekunden
 	dreimal, um anzuzeigen, dass das Zurücksetzen beginnt.
 
-	\vspace{0.25cm}
+	\vfill
 
 	\gfx{./img/resized/warp_esp_open}
 	\newpage
@@ -598,6 +599,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	\subsubsection*{Wallbox-LED ist aus}
 	Für diesen Fehlerzustand gibt es verschiedene mögliche Ursachen:
 	\begin{itemize}
+		\item Die Wallbox ist über den Schlüsselschalter deaktiviert. Siehe \fullref{lockswitch}.
 		\item Die Wallbox-LED geht nach etwa 15 Minuten Inaktivität aus. Das Drücken des Tasters
 		      oder das Anschließen eines Elektrofahrzeugs zur Ladung weckt die Wallbox wieder
 		      und die LED sollte wieder dauerhaft leuchten.
