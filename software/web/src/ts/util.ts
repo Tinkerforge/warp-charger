@@ -121,15 +121,30 @@ export function toLocaleFixed(i: number, fractionDigits: number) {
 }
 
 export function toggle_password_fn(input_name: string) {
-    return () => {
+    return (ev: Event) => {
         let input = <HTMLInputElement>$(input_name)[0];
-        if (input.type == 'password')
+        let x = <HTMLInputElement>ev.target;
+
+        if (x.checked)
             input.type = 'text';
         else
             input.type = 'password';
     }
 }
 
+export function clear_password_fn(input_name: string) {
+    return (ev: Event) => {
+        let x = <HTMLInputElement>ev.target;
+        if (x.checked) {
+            $(input_name).val('');
+            $(input_name).attr('placeholder', __("util.to_be_cleared"));
+        } else {
+            $(input_name).attr('placeholder', __("util.unchanged"));
+        }
+
+        $(input_name).prop("disabled", x.checked);
+    }
+}
 
 
 let eventSourceReconnectTimeout: number = null;
@@ -216,6 +231,14 @@ export function whenLoggedInElseReload(continuation: () => void) {
 
 // Password inputs use the empty string as the "unchanged" value.
 // However the API expects a null value if the value should not be changed.
-export function passwordUpdate(value: string) {
+// If the input is disabled, the clear toggle was set.
+// Return an empty string to remove the stored password in this case.
+export function passwordUpdate(input_selector: string) {
+    let input = $(input_selector);
+    if (input.attr("disabled"))
+        return "";
+
+    let value = input.val().toString();
+
     return value.length > 0 ? value : null;
 }
