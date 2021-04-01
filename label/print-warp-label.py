@@ -23,7 +23,7 @@ VERSION_PLACEHOLDER = b'2.17'
 
 SERIAL_NUMBER_PLACEHOLDER = b'5000000001'
 
-DATE_PLACEHOLDER = b'2021-01'
+BUILD_DATE_PLACEHOLDER = b'2021-01'
 
 VOLTAGE_PLACEHOLDER = b'230 / 400'
 
@@ -57,7 +57,15 @@ def get_next_serial_number():
 
     return '5{0:09}'.format(serial_number)
 
-def print_warp_label(type_, version, serial_number, date, copies=1):
+def print_warp_label(type_, version, serial_number, build_date, instances, copies, stdout):
+    # check instances
+    if instances < 1 or instances > 25:
+        raise Exception('Invalid instances: {0}'.format(instances))
+
+    # check copies
+    if copies < 1 or copies > 5:
+        raise Exception('Invalid copies: {0}'.format(copies))
+
     # parse type
     m = re.match('^WARP-C(B|S|P)-(11|22)KW-(50|75)(|-CEE)$', type_)
 
@@ -123,96 +131,105 @@ def print_warp_label(type_, version, serial_number, date, copies=1):
         raise Exception('Invalid version: {0}'.format(version))
 
     # check serial number
-    if serial_number == '-':
-        serial_number = get_next_serial_number()
-
-    if re.match('^5[0-9]{9}$', serial_number) == None:
+    if re.match('^-|5[0-9]{9}$', serial_number) == None:
         raise Exception('Invalid serial number: {0}'.format(serial_number))
 
-    # check date
-    datetime.strptime(date, '%Y-%m')
+    # check build date
+    parsed_build_date = datetime.strptime(build_date, '%Y-%m')
+    now = datetime.now()
 
-    # check copies
-    if copies < 1 or copies > 5:
-        raise Exception('Invalid copies: {0}'.format(copies))
+    if parsed_build_date.year < now.year or (parsed_build_date.year == now.year and parsed_build_date.month < now.month):
+        raise Exception('Invalid build date: {0}'.format(build_date))
 
     # read EZPL file
     with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'warp.prn'), 'rb') as f:
-        data = f.read()
+        template = f.read()
 
-    if data.find(b'^H13\r') < 0:
+    if template.find(b'^H13\r') < 0:
         raise Exception('EZPL file is using wrong darkness setting')
 
     # patch QR code
-    if data.find(QR_CODE_COMMAND) < 0:
+    if template.find(QR_CODE_COMMAND) < 0:
         raise Exception('QR code command missing in EZPL file')
 
-    offset = len(TYPE_PLACEHOLDER) + len(type_) - len(VERSION_PLACEHOLDER) + len(version)
+    offset = len(TYPE_PLACEHOLDER) - len(type_) + len(VERSION_PLACEHOLDER) - len(version)
 
     if offset < 0:
         raise Exception('QR code data too long')
 
-    data = data.replace(QR_CODE_PADDING, b';' * offset + QR_CODE_PADDING)
+    template = template.replace(QR_CODE_PADDING, b';' * offset + QR_CODE_PADDING)
 
     # patch description
-    if data.find(DESCRIPTION_PLACEHOLDER) < 0:
+    if template.find(DESCRIPTION_PLACEHOLDER) < 0:
         raise Exception('Description placeholder missing in EZPL file')
 
-    data = data.replace(DESCRIPTION_PLACEHOLDER, description)
+    template = template.replace(DESCRIPTION_PLACEHOLDER, description)
 
     # patch type
-    if data.find(TYPE_PLACEHOLDER) < 0:
+    if template.find(TYPE_PLACEHOLDER) < 0:
         raise Exception('Type placeholder missing in EZPL file')
 
-    data = data.replace(TYPE_PLACEHOLDER, type_.encode('ascii'))
+    template = template.replace(TYPE_PLACEHOLDER, type_.encode('ascii'))
 
     # patch version
-    if data.find(VERSION_PLACEHOLDER) < 0:
+    if template.find(VERSION_PLACEHOLDER) < 0:
         raise Exception('Version placeholder missing in EZPL file')
 
-    data = data.replace(VERSION_PLACEHOLDER, version.encode('ascii'))
+    template = template.replace(VERSION_PLACEHOLDER, version.encode('ascii'))
 
-    # patch serial number
-    if data.find(SERIAL_NUMBER_PLACEHOLDER) < 0:
-        raise Exception('Serial number placeholder missing in EZPL file')
+    # patch build date
+    if template.find(BUILD_DATE_PLACEHOLDER) < 0:
+        raise Exception('Build date placeholder missing in EZPL file')
 
-    data = data.replace(SERIAL_NUMBER_PLACEHOLDER, serial_number.encode('ascii'))
-
-    # patch date
-    if data.find(DATE_PLACEHOLDER) < 0:
-        raise Exception('Date placeholder missing in EZPL file')
-
-    data = data.replace(DATE_PLACEHOLDER, date.encode('ascii'))
+    template = template.replace(BUILD_DATE_PLACEHOLDER, build_date.encode('ascii'))
 
     # patch voltage
-    if data.find(VOLTAGE_PLACEHOLDER) < 0:
+    if template.find(VOLTAGE_PLACEHOLDER) < 0:
         raise Exception('Voltage placeholder missing in EZPL file')
 
-    data = data.replace(VOLTAGE_PLACEHOLDER, voltage)
+    template = template.replace(VOLTAGE_PLACEHOLDER, voltage)
 
     # patch current
-    if data.find(CURRENT_PLACEHOLDER) < 0:
+    if template.find(CURRENT_PLACEHOLDER) < 0:
         raise Exception('Current placeholder missing in EZPL file')
 
-    data = data.replace(CURRENT_PLACEHOLDER, current)
+    template = template.replace(CURRENT_PLACEHOLDER, current)
 
     # patch conductor
-    if data.find(CONDUCTOR_PLACEHOLDER) < 0:
+    if template.find(CONDUCTOR_PLACEHOLDER) < 0:
         raise Exception('Conductor placeholder missing in EZPL file')
 
-    data = data.replace(CONDUCTOR_PLACEHOLDER, conductor)
+    template = template.replace(CONDUCTOR_PLACEHOLDER, conductor)
 
     # patch copies
     copies_command = COPIES_FORMAT.format(1).encode('ascii')
 
-    if data.find(copies_command) < 0:
+    if template.find(copies_command) < 0:
         raise Exception('Copies command missing in EZPL file')
 
-    data = data.replace(copies_command, COPIES_FORMAT.format(copies).encode('ascii'))
+    template = template.replace(copies_command, COPIES_FORMAT.format(copies).encode('ascii'))
+
+    # patch serial number
+    if template.find(SERIAL_NUMBER_PLACEHOLDER) < 0:
+        raise Exception('Serial number placeholder missing in EZPL file')
+
+    data = b''
+
+    for _ in range(instances):
+        if serial_number == '-':
+            actual_serial_number = get_next_serial_number()
+        else:
+            actual_serial_number = serial_number
+
+        data += template.replace(SERIAL_NUMBER_PLACEHOLDER, actual_serial_number.encode('ascii'))
 
     # print label
-    with socket.create_connection((PRINTER_HOST, PRINTER_PORT)) as s:
-        s.send(data)
+    if stdout:
+        sys.stdout.buffer.write(data)
+        sys.stdout.buffer.flush()
+    else:
+        with socket.create_connection((PRINTER_HOST, PRINTER_PORT)) as s:
+            s.send(data)
 
 def main():
     parser = argparse.ArgumentParser()
@@ -220,12 +237,17 @@ def main():
     parser.add_argument('type')
     parser.add_argument('version')
     parser.add_argument('serial_number')
-    parser.add_argument('date')
+    parser.add_argument('build_date')
+    parser.add_argument('-i', '--instances', type=int, default=1)
     parser.add_argument('-c', '--copies', type=int, default=1)
+    parser.add_argument('-s', '--stdout', action='store_true')
 
     args = parser.parse_args()
 
-    print_warp_label(args.type, args.version, args.serial_number, args.date, args.copies)
+    assert args.instances > 0
+    assert args.copies > 0
+
+    print_warp_label(args.type, args.version, args.serial_number, args.build_date, args.instances, args.copies, args.stdout)
 
 if __name__ == '__main__':
     main()
