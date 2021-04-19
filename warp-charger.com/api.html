@@ -144,7 +144,7 @@
                 kann der Ladestrom auf 8 Ampere begrenzt werden, zum Beispiel so:
                 <code>mosquitto_pub -t "warp/ABC/<a class="scrollto" href="#evse_current_limit">evse/current_limit</a>" -m "{\"current\": 8000}'</code>
                 (Damit die Beispiele auch mit cmd.exe von Windows kompatibel sind, werden nur doppelte Anführungszeichen verwendet. Anführungszeichen in JSON-Nachrichten müssen deshalb mit \ escapt werden.)
-                Der Ladestrom ist jetzt auf 8 Ampere begrenzt, die Wallbox durch eine neue Nachricht anzeigt:
+                Der Ladestrom ist jetzt auf 8 Ampere begrenzt, was die Wallbox durch eine neue Nachricht anzeigt:
 
                 <samp class="samp-box">warp/ABC/<a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a> {"max_current_configured":8000, "max_current_incoming_cable":13000, "max_current_outgoing_cable":16000}</samp>
             </p>
@@ -167,7 +167,7 @@
                 <h4>Grundlagen</h4>
                 <p>
                     Die HTTP-API funktioniert strukturell identisch wie die MQTT-API:
-                    Wenn eine MQTT-API beispielsweise das Topic <code>warp/ABC/evse/state</code> verwendet,
+                    Wenn die MQTT-API beispielsweise das Topic <code>warp/ABC/evse/state</code> verwendet,
                     kann die selbe API über die URL <code>http://[IP-Adresse oder Hostname der Wallbox]/evse/state</code> erreicht werden.
                     Die HTTP-API verfügt allerdings über <a class="scrollto" href="#http-only">fortgeschrittene Funktionen</a>, die nicht über MQTT verfügbar sind.
                     Es können zusätzlich die <a href="https://en.wikipedia.org/wiki/Server-sent_events">Server-Sent-Events (SSE)</a> unter
@@ -298,7 +298,7 @@
             Der Access Point sollte dann ab jetzt nur noch aktiv sein, wenn die Verbindung zum konfigurierten WLAN fehlgeschlagen ist.
         </p>
         <p>
-            Äquivalent kann die Access-Point-Konfiguration mit
+            Mit der HTTP-API kann äquivalent die Access-Point-Konfiguration mit
             <code class="code-box">
                 curl -s http://10.0.0.1/<a class="scrollto" href="#wifi_ap_config">wifi/ap_config</a>
             </code>
