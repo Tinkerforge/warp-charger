@@ -130,6 +130,7 @@ function update_evse_max_charging_current(state: EVSEMaxChargingCurrent) {
     let theoretical_maximum = Math.min(state.max_current_incoming_cable, state.max_current_outgoing_cable);
     let theoretical_maximum_str = util.toLocaleFixed(theoretical_maximum / 1000.0, 0) + " A";
     $('#status_charging_current').prop("max", theoretical_maximum / 1000);
+    $("#status_charging_current_maximum").on("click", () => set_charging_current(theoretical_maximum));
     $('#status_charging_current_maximum').html(theoretical_maximum_str);
 }
 
