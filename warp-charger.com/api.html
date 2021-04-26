@@ -353,7 +353,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">iec61851_state <br/><span class="api-type">int</span></th>
+                                <th scope="row">iec61851_state <br/><span class="th-details">int</span></th>
                                 <td>Der aktuelle Zustand nach IEC 61851:
                                     <ol class="ol-enum">
                                         <li><b>0</b> - A: Nicht verbunden (Sicht des Fahrzeugs)</li>
@@ -365,7 +365,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">vehicle_state <br/><span class="api-type">int</span></th>
+                                <th scope="row">vehicle_state <br/><span class="th-details">int</span></th>
                                 <td>
                                     Der aktuelle Zustand, aufbereitet vom Ladecontroller:
                                     <ol class="ol-enum">
@@ -377,7 +377,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">contactor_state <br/><span class="api-type">int</span></th>
+                                <th scope="row">contactor_state <br/><span class="th-details">int</span></th>
                                 <td>
                                     Schützüberwachung. Überwacht wird die Spannung vor und nach dem Schütz:
                                     <ol class="ol-enum">
@@ -389,13 +389,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">contactor_error <br/><span class="api-type">int</span></th>
+                                <th scope="row">contactor_error <br/><span class="th-details">int</span></th>
                                 <td>
                                     Fehlercode der Schützüberwachung. Ein Wert ungleich 0 zeigt einen Fehler an.
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">charge_release <br/><span class="api-type">int</span></th>
+                                <th scope="row">charge_release <br/><span class="th-details">int</span></th>
                                 <td>
                                     Ladefreigabe. Gibt an, ob automatisch, manuell oder nicht geladen werden kann.
                                     <ol class="ol-enum">
@@ -406,7 +406,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">allowed_charging_current <br/><span class="api-type">int (<abbr title="Milliampere">mA</abbr>)</span></th>
+                                <th scope="row">allowed_charging_current <br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
                                 <td>
                                     Maximal erlaubter Ladestrom, der dem Fahrzeug zur Verfügung gestellt wird. Dieser Strom ist das Minimum folgender Ströme:
                                     <ul>
@@ -417,7 +417,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">error_state <br/><span class="api-type">int</span></th>
+                                <th scope="row">error_state <br/><span class="th-details">int</span></th>
                                 <td>
                                     Der aktuelle Fehlerzustand. <a href="https://www.warp-charger.com/#documents">Siehe Handbuch für Details.</a>
                                     <ol class="ol-enum">
@@ -430,7 +430,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">lock_state <br/><span class="api-type">int</span></th>
+                                <th scope="row">lock_state <br/><span class="th-details">int</span></th>
                                 <td>
                                     Zustand der Kabelverriegelung (nur relevant für Wallboxen mit Typ-2-Dose):
                                     <ol class="ol-enum">
@@ -444,13 +444,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">time_since_state_change <br/><span class="api-type">int (<abbr title="Millisekunden">ms</abbr>)</span></th>
+                                <th scope="row">time_since_state_change <br/><span class="th-details">int (<abbr title="Millisekunden">ms</abbr>)</span></th>
                                 <td>
                                     Zeit seit dem letzten IEC 61851 Zustandswechsel. Falls der Zustand 2 (= B: Lädt) ist, entspricht dieser Wert der Ladezeit.
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">uptime <br/><span class="api-type">int (<abbr title="Millisekunden">ms</abbr>)</span></th>
+                                <th scope="row">uptime <br/><span class="th-details">int (<abbr title="Millisekunden">ms</abbr>)</span></th>
                                 <td>
                                     Zeit seit Starten des Ladecontrollers.
                                 </td>
@@ -473,7 +473,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">jumper_configuration <br/><span class="api-type">int</span></th>
+                                <th scope="row">jumper_configuration <br/><span class="th-details">int</span></th>
                                 <td>Der Maximalstrom des eingehenden Kabels. Dieser Strom wird auf dem Ladecontroller durch
                                 Jumper oder eine Steckplatine mit Schaltern konfiguriert:
                                     <ol class="ol-enum">
@@ -490,7 +490,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">has_lock_switch <br/><span class="api-type">bool</span></th>
+                                <th scope="row">has_lock_switch <br/><span class="th-details">bool</span></th>
                                 <td>
                                     Gibt an, ob die Wallbox ein festangeschlagenes Kabel (false) oder eine Typ-2-Dose mit Kabelverriegelung (true) hat.
                                 </td>
@@ -513,11 +513,11 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">low_level_mode_enabled <br/><span class="api-type">bool</span></th>
+                                <th scope="row">low_level_mode_enabled <br/><span class="th-details">bool</span></th>
                                 <td>Zeigt an, ob der Low-Level-Modus aktiv ist. Wird derzeit nicht unterstützt.</td>
                             </tr>
                             <tr>
-                                <th scope="row">led_state <br/><span class="api-type">int</span></th>
+                                <th scope="row">led_state <br/><span class="th-details">int</span></th>
                                 <td>
                                     Der Zustand der am Ladecontroller angeschlossenen LED:
                                     <ol class="ol-enum">
@@ -530,31 +530,31 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">cp_pwm_duty_cycle <br/><span class="api-type">int (<abbr title="Zehntel Prozent">%/10</abbr>)</span></th>
+                                <th scope="row">cp_pwm_duty_cycle <br/><span class="th-details">int (<abbr title="Zehntel Prozent">%/10</abbr>)</span></th>
                                 <td>
                                     Tastverhältnis der Pulsweitenmodulation auf dem CP-Signal.
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">adc_values <br/><span class="api-type">int[2]</span></th>
+                                <th scope="row">adc_values <br/><span class="th-details">int[2]</span></th>
                                 <td>
                                     16-Bit ADC-Rohwerte der PE-CP- und PE-PP-Spannungen.
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">voltages <br/><span class="api-type">int[3] (<abbr title="Millivolt">mV</abbr>)</span></th>
+                                <th scope="row">voltages <br/><span class="th-details">int[3] (<abbr title="Millivolt">mV</abbr>)</span></th>
                                 <td>
                                     Aus den ADC-Werten berechnete Spannungen: PE-CP, PE-PP und Maximalspannung von PE-EE.
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">resistances <br/><span class="api-type">int[2] (<abbr title="Ohm">Ω</abbr>)</span></th>
+                                <th scope="row">resistances <br/><span class="th-details">int[2] (<abbr title="Ohm">Ω</abbr>)</span></th>
                                 <td>
                                     Aus den Spannungen berechnete Widerstände: PE-CP, PE-PP.
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">gpio <br/><span class="api-type">bool[5]</span></th>
+                                <th scope="row">gpio <br/><span class="th-details">bool[5]</span></th>
                                 <td>
                                     Signal auf den GPIOs:
                                     <ol class="ol-enum">
@@ -585,16 +585,16 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">max_current_configured <br/><span class="api-type">int (<abbr title="Milliampere">mA</abbr>)</span></th>
+                                <th scope="row">max_current_configured <br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
                                 <td>Der maximale konfigurierte Ladestrom.
                                 Kann durch <a class="scrollto" href="#evse_current_limit">evse/current_limit</a> oder das Webinterface eingestellt werden.</td>
                             </tr>
                             <tr>
-                                <th scope="row">max_current_incoming_cable <br/><span class="api-type">int (<abbr title="Milliampere">mA</abbr>)</span></th>
+                                <th scope="row">max_current_incoming_cable <br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
                                 <td>Der maximale Ladestrom des eingehenden Kabels. Siehe <a class="scrollto" href="#evse_hardware_configuration">evse/hardware_configuration</a>.</td>
                             </tr>
                             <tr>
-                                <th scope="row">max_current_outgoing_cable <br/><span class="api-type">int (<abbr title="Milliampere">mA</abbr>)</span></th>
+                                <th scope="row">max_current_outgoing_cable <br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
                                 <td>Der maximale Ladestrom des ausgehenden Kabels. Fest konfiguriert, falls das Kabel angeschlagen ist.</td>
                             </tr>
                         </tbody>
@@ -616,7 +616,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row">auto_start_charging <br/><span class="api-type">bool</span></th>
+                            <th scope="row">auto_start_charging <br/><span class="th-details">bool</span></th>
                             <td>Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Falls aktiviert, beginnt sofort,
                             wenn das Fahrzeug angeschlossen wird der Ladevorgang. Falls deaktiviert,
                             kann das Laden mit <a class="scrollto" href="#evse_start_charging">evse/start_charging</a> gestartet werden.</td>
@@ -639,7 +639,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">current <br/><span class="api-type">int (<abbr title="Milliampere">mA</abbr>)</span></th>
+                                <th scope="row">current <br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
                                 <td>Begrenzt den Ladestrom auf den übergebenen Wert.
                                     Der Strom hat einen Minimalwert von 6000 (6 Ampere) und einen Maximalwert von 32000 (32 Ampere).
                                     Manche Fahrzeuge wechseln bei einem zu kleinen Ladestrom automatisch zu einphasigem Laden.</td>
@@ -689,15 +689,15 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">power <br/><span class="api-type">float (<abbr title="Watt">W</abbr>)</span></th>
+                                <th scope="row">power <br/><span class="th-details">float (<abbr title="Watt">W</abbr>)</span></th>
                                 <td>Die aktuelle Ladeleistung.</td>
                             </tr>
                             <tr>
-                                <th scope="row">energy_rel <br/><span class="api-type">float (<abbr title="Kilowattstunde">kWh</abbr>)</span></th>
+                                <th scope="row">energy_rel <br/><span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)</span></th>
                                 <td>Die geladene Energie seit dem letzten Reset.</td>
                             </tr>
                             <tr>
-                                <th scope="row">energy_abs <br/><span class="api-type">float (<abbr title="Kilowattstunde">kWh</abbr>)</span></th>
+                                <th scope="row">energy_abs <br/><span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)</span></th>
                                 <td>Die geladene Energie seit der Herstellung des Stromzählers.</td>
                             </tr>
                         </tbody>
@@ -717,15 +717,15 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">meter <br/><span class="api-type">int</span></th>
+                                <th scope="row">meter <br/><span class="th-details">int</span></th>
                                 <td>Kommunikationsfehler zwischen RS485 Bricklet und Stromzähler</td>
                             </tr>
                             <tr>
-                                <th scope="row">bricklet <br/><span class="api-type">int</span></th>
+                                <th scope="row">bricklet <br/><span class="th-details">int</span></th>
                                 <td>Kommunikationsfehler zwischen ESP Brick und RS485 Bricklet.</td>
                             </tr>
                             <tr>
-                                <th scope="row">bricklet_reset <br/><span class="api-type">int</span></th>
+                                <th scope="row">bricklet_reset <br/><span class="th-details">int</span></th>
                                 <td>Unerwartete Resets des RS485 Bricklets.</td>
                             </tr>
                         </tbody>
@@ -766,7 +766,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">connection_state <br/><span class="api-type">int</span></th>
+                                <th scope="row">connection_state <br/><span class="th-details">int</span></th>
                                 <td> Zustand der Verbindung zum MQTT-Broker:
                                     <ol class="ol-enum">
                                     <li><b>0</b> - Nicht konfiguriert</li>
@@ -776,7 +776,7 @@
                                 </ol></td>
                             </tr>
                             <tr>
-                                <th scope="row">last_error <br/><span class="api-type">int</span></th>
+                                <th scope="row">last_error <br/><span class="th-details">int</span></th>
                                 <td>Der zuletzt aufgetretene MQTT-Fehler. -1, wenn kein Fehler aufgetreten ist.</td>
                             </tr>
                         </tbody>
@@ -799,32 +799,32 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">enable_mqtt <br/><span class="api-type">bool</span></th>
+                                <th scope="row">enable_mqtt <br/><span class="th-details">bool</span></th>
                                 <td>true wenn MQTT aktiviert ist, ansonsten false.</td>
                             </tr>
                             <tr>
-                                <th scope="row">broker_host <br/><span class="api-type">string</span></th>
+                                <th scope="row">broker_host <br/><span class="th-details">string</span></th>
                                 <td>Hostname oder IP-Adresse des MQTT-Brokers zu dem sich die Wallbox verbinden soll.</td>
                             </tr>
                             <tr>
-                                <th scope="row">broker_port <br/><span class="api-type">int</span></th>
+                                <th scope="row">broker_port <br/><span class="th-details">int</span></th>
                                 <td>Port des MQTT-Brokers zu dem sich die Wallbox verbinden soll. Typischerweise 1883.</td>
                             </tr>
                             <tr>
-                                <th scope="row">broker_username <br/><span class="api-type">string</span></th>
+                                <th scope="row">broker_username <br/><span class="th-details">string</span></th>
                                 <td>Username mit dem sich zum Broker verbunden werden soll. Leer falls keine Authentifizierung verwendet wird.</td>
                             </tr>
                             <tr>
-                                <th scope="row">broker_password <br/><span class="api-type">string</span></th>
+                                <th scope="row">broker_password <br/><span class="th-details">string</span></th>
                                 <td>Passwort mit dem sich zum Broker verbunden werden soll. Leer falls keine Authentisierung verwendet wird.
                                     <strong>Die Wallbox gibt gespeicherte Passwörter nicht zurück. Stattdessen wird <samp>null</samp> zurückgegeben.</strong></td>
                             </tr>
                             <tr>
-                                <th scope="row">global_topic_prefix <br/><span class="api-type">string</span></th>
+                                <th scope="row">global_topic_prefix <br/><span class="th-details">string</span></th>
                                 <td>Präfix der allen MQTT-Topics vorangestellt wird. Normalerweise warp/[UID der Wallbox]</td>
                             </tr>
                             <tr>
-                                <th scope="row">client_name <br/><span class="api-type">string</span></th>
+                                <th scope="row">client_name <br/><span class="th-details">string</span></th>
                                 <td>Name unter dem sich die Wallbox beim Broker registriert. <strong>Das ist nicht der Username zur Authentisierung.</strong></td>
                             </tr>
                         </tbody>
@@ -864,7 +864,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">connection_state <br/><span class="api-type">int</span></th>
+                                <th scope="row">connection_state <br/><span class="th-details">int</span></th>
                                 <td>Zustand der Verbindung zu einem WLAN:
                                     <ol class="ol-enum">
                                         <li><b>0</b> - Nicht konfiguriert</li>
@@ -875,7 +875,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">ap_state <br/><span class="api-type">int</span></th>
+                                <th scope="row">ap_state <br/><span class="th-details">int</span></th>
                                 <td>Zustand des WLAN-Access-Points:
                                     <ol class="ol-enum">
                                         <li><b>0</b> - Deaktiviert</li>
@@ -886,19 +886,19 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">ap_bssid <br/><span class="api-type">string</span></th>
+                                <th scope="row">ap_bssid <br/><span class="th-details">string</span></th>
                                 <td>BSSID des WLAN-Access-Points.</td>
                             </tr>
                             <tr>
-                                <th scope="row">sta_ip <br/><span class="api-type">int[4]</span></th>
+                                <th scope="row">sta_ip <br/><span class="th-details">int[4]</span></th>
                                 <td>Aktuelle IP der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.</td>
                             </tr>
                             <tr>
-                                <th scope="row">sta_rssi <br/><span class="api-type">int</span></th>
+                                <th scope="row">sta_rssi <br/><span class="th-details">int</span></th>
                                 <td>Die aktuelle Empfangsqualität. 0 falls keine Verbindung besteht, sonst negativ. Werte näher 0 entsprechen einem besseren Empfang.</td>
                             </tr>
                             <tr>
-                                <th scope="row">sta_bssid <br/><span class="api-type">string</span></th>
+                                <th scope="row">sta_bssid <br/><span class="th-details">string</span></th>
                                 <td>Die BSSID der Gegenstelle zu der die Wallbox verbunden ist.</td>
                             </tr>
                         </tbody>
@@ -928,51 +928,51 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">enable_sta <br/><span class="api-type">bool</span></th>
+                                <th scope="row">enable_sta <br/><span class="th-details">bool</span></th>
                                 <td>true wenn eine WLAN-Verbindung aufgebaut werden soll, ansonsten false.</td>
                             </tr>
                             <tr>
-                                <th scope="row">ssid <br/><span class="api-type">string</span></th>
+                                <th scope="row">ssid <br/><span class="th-details">string</span></th>
                                 <td>SSID zu der sich verbunden werden soll. Maximal 32 Byte.</td>
                             </tr>
                             <tr>
-                                <th scope="row">bssid <br/><span class="api-type">string</span></th>
+                                <th scope="row">bssid <br/><span class="th-details">string</span></th>
                                 <td>BSSID zu der sich verbunden werden soll. Dieser Eintrag ist optional und kann leer übergeben werden, wird aber für das bssid_lock benötigt.</td>
                             </tr>
                             <tr>
-                                <th scope="row">bssid_lock <br/><span class="api-type">bool</span></th>
+                                <th scope="row">bssid_lock <br/><span class="th-details">bool</span></th>
                                 <td>Verbindet sich nur zum WLAN mit der übergebenen BSSID. Deaktiviert lassen, falls Repeater o.Ä. verwendet werden sollen.</td>
                             </tr>
                             <tr>
-                                <th scope="row">passphrase <br/><span class="api-type">string</span></th>
+                                <th scope="row">passphrase <br/><span class="th-details">string</span></th>
                                 <td>Die WLAN-Passphrase. Maximal 63 Byte. Dieser Eintrag ist optional und kann leer übergeben werden,
                                     falls sich zu einem unverschlüsselten WLAN verbunden werden soll.
                                     <strong>Die Wallbox gibt gespeicherte Passwörter nicht zurück. Stattdessen wird <samp>null</samp> zurückgegeben.</strong></td>
                             </tr>
                             <tr>
-                                <th scope="row">hostname <br/><span class="api-type">string</span></th>
+                                <th scope="row">hostname <br/><span class="th-details">string</span></th>
                                 <td>Hostname den die Wallbox im konfigurierten Netz verwenden soll.</td>
                             </tr>
                             <tr>
-                                <th scope="row">ip <br/><span class="api-type">int[4]</span></th>
+                                <th scope="row">ip <br/><span class="th-details">int[4]</span></th>
                                 <td>IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
                                 Dieser Eintrag und die folgenden sind optional und können als [0, 0, 0, 0] übergeben werden,
                                 falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.</td>
                             </tr>
                             <tr>
-                                <th scope="row">gateway <br/><span class="api-type">int[4]</span></th>
+                                <th scope="row">gateway <br/><span class="th-details">int[4]</span></th>
                                 <td>Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.</td>
                             </tr>
                             <tr>
-                                <th scope="row">subnet <br/><span class="api-type">int[4]</span></th>
+                                <th scope="row">subnet <br/><span class="th-details">int[4]</span></th>
                                 <td>Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll.</td>
                             </tr>
                             <tr>
-                                <th scope="row">dns <br/><span class="api-type">int[4]</span></th>
+                                <th scope="row">dns <br/><span class="th-details">int[4]</span></th>
                                 <td>DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.</td>
                             </tr>
                             <tr>
-                                <th scope="row">dns2 <br/><span class="api-type">int[4]</span></th>
+                                <th scope="row">dns2 <br/><span class="th-details">int[4]</span></th>
                                 <td>Alternative DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.</td>
                             </tr>
                         </tbody>
@@ -997,45 +997,45 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">enable_ap <br/><span class="api-type">bool</span></th>
+                                <th scope="row">enable_ap <br/><span class="th-details">bool</span></th>
                                 <td>true wenn der Access Point aktiviert werden soll, ansonsten false.</td>
                             </tr>
                             <tr>
-                                <th scope="row">ap_fallback_only <br/><span class="api-type">bool</span></th>
+                                <th scope="row">ap_fallback_only <br/><span class="th-details">bool</span></th>
                                 <td>true wenn der Access Point nur aktiviert werden soll, falls die WLAN-Verbindung fehlschlägt, ansonsten false.</td>
                             </tr>
                             <tr>
-                                <th scope="row">ssid <br/><span class="api-type">string</span></th>
+                                <th scope="row">ssid <br/><span class="th-details">string</span></th>
                                 <td>SSID des Access Points. Maximal 32 Byte.</td>
                             </tr>
                             <tr>
-                                <th scope="row">hide_ssid <br/><span class="api-type">bool</span></th>
+                                <th scope="row">hide_ssid <br/><span class="th-details">bool</span></th>
                                 <td>true falls die SSID versteckt werden soll, ansonsten false.</td>
                             </tr>
                             <tr>
-                                <th scope="row">passphrase <br/><span class="api-type">string</span></th>
+                                <th scope="row">passphrase <br/><span class="th-details">string</span></th>
                                 <td>Die WLAN-Passphrase. Maximal 63 Byte.
                                     <strong>Die Wallbox gibt gespeicherte Passwörter nicht zurück.
                                         Stattdessen wird <samp>null</samp> zurückgegeben.</strong></td>
                             </tr>
                             <tr>
-                                <th scope="row">hostname <br/><span class="api-type">string</span></th>
+                                <th scope="row">hostname <br/><span class="th-details">string</span></th>
                                 <td>Hostname den die Wallbox verwenden soll.</td>
                             </tr>
                             <tr>
-                                <th scope="row">channel <br/><span class="api-type">int</span></th>
+                                <th scope="row">channel <br/><span class="th-details">int</span></th>
                                 <td>Channel, auf dem der Access Point erreichbar sein soll. Gültige Werte sind 1 bis 13.</td>
                             </tr>
                             <tr>
-                                <th scope="row">ip <br/><span class="api-type">int[4]</span></th>
+                                <th scope="row">ip <br/><span class="th-details">int[4]</span></th>
                                 <td>IP-Adresse, die die Wallbox verwenden soll.</td>
                             </tr>
                             <tr>
-                                <th scope="row">gateway <br/><span class="api-type">int[4]</span></th>
+                                <th scope="row">gateway <br/><span class="th-details">int[4]</span></th>
                                 <td>Gateway-Adresse, die die Wallbox verwenden soll.</td>
                             </tr>
                             <tr>
-                                <th scope="row">subnet <br/><span class="api-type">int[4]</span></th>
+                                <th scope="row">subnet <br/><span class="th-details">int[4]</span></th>
                                 <td>Subnetzmaske, die die Wallbox verwenden soll.</td>
                             </tr>
                         </tbody>
@@ -1068,17 +1068,17 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">enable_auth <br/><span class="api-type">bool</span></th>
+                                <th scope="row">enable_auth <br/><span class="th-details">bool</span></th>
                                 <td>true, falls für Webinterface und HTTP-API Zugangsdaten abgefragt werden sollen, sonst false.
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">username <br/><span class="api-type">string</span></th>
+                                <th scope="row">username <br/><span class="th-details">string</span></th>
                                 <td>Der Benutzername, dem Zugriff auf Webinterface und HTTP-API gewährt werden.
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">password <br/><span class="api-type">string</span></th>
+                                <th scope="row">password <br/><span class="th-details">string</span></th>
                                 <td>Das Passwort, dem Zugriff auf Webinterface und HTTP-API gewährt werden. <strong>Die Wallbox gibt gespeicherte Passwörter nicht zurück. Stattdessen wird <samp>null</samp> zurückgegeben.</strong>
                                 </td>
                             </tr>
@@ -1115,12 +1115,12 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">firmware <br/><span class="api-type">string</span></th>
+                                <th scope="row">firmware <br/><span class="th-details">string</span></th>
                                 <td>Die Firmware-Version, die aktuell ausgeführt wird.
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">spiffs <br/><span class="api-type">string</span></th>
+                                <th scope="row">spiffs <br/><span class="th-details">string</span></th>
                                 <td>Die Version der Konfiguration, die aktuell verwendet wird.
                                 </td>
                             </tr>
@@ -1186,12 +1186,12 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">samples_per_second <br/><span class="api-type">float (<abbr title="Hertz">Hz</abbr>)</span></th>
+                                <th scope="row">samples_per_second <br/><span class="th-details">float (<abbr title="Hertz">Hz</abbr>)</span></th>
                                 <td>Die Anzahl der gemessenen Werte pro Sekunde.
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">samples <br/><span class="api-type">int[...] (<abbr title="Watt">W</abbr>)</span></th>
+                                <th scope="row">samples <br/><span class="th-details">int[...] (<abbr title="Watt">W</abbr>)</span></th>
                                 <td>Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie
                                     weit in die Vergangenheit die Messwerte reichen.
                                 </td>
@@ -1216,24 +1216,24 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">ssid <br/><span class="api-type">string</span></th>
+                                <th scope="row">ssid <br/><span class="th-details">string</span></th>
                                 <td>SSID des gefundenen WLANs. Leer bei versteckten Access Points.</td>
                             </tr>
                             <tr>
-                                <th scope="row">bssid <br/><span class="api-type">string</span></th>
+                                <th scope="row">bssid <br/><span class="th-details">string</span></th>
                                 <td>BSSID des gefundenen WLANs</td>
                             </tr>
                             <tr>
-                                <th scope="row">rssi <br/><span class="api-type">int</span></th>
+                                <th scope="row">rssi <br/><span class="th-details">int</span></th>
                                 <td>Die Empfangsqualität des gefundenen WLANs. Immer ein negativer Wert, wobei Werte nahe 0 eine bessere Empfangsqualität bedeuten.
                                     <a href="https://en.wikipedia.org/wiki/Received_signal_strength_indication#In_802.11_implementations">Siehe hier für Details</a></td>
                             </tr>
                             <tr>
-                                <th scope="row">channel <br/><span class="api-type">int</span></th>
+                                <th scope="row">channel <br/><span class="th-details">int</span></th>
                                 <td>Kanal des gefundenen WLANs</td>
                             </tr>
                             <tr>
-                                <th scope="row">encryption <br/><span class="api-type">int</span></th>
+                                <th scope="row">encryption <br/><span class="th-details">int</span></th>
                                 <td>Verschlüsselungsstandard des gefundenen WLANs
                                     <ol class="ol-enum">
                                         <li><b>0</b> - Unverschlüsselt</li>
