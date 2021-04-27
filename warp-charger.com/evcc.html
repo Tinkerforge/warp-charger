@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>WARP Charger</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <link href="img/favicon.png" rel="icon">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+
+</head>
+
+<body id="api_body">
+
+  <!--==========================
+    Header
+  ============================-->
+  <header id="mqtt_header" class="header header-scrolled" style="position: sticky">
+    <div class="container-fluid">
+      <div id="logo" class="pull-left">
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <a href="index.html"><img src="img/logo.png" alt="" title="" /></a>
+      </div>
+
+      <nav id="nav-menu-container">
+        <ul class="nav-menu nav-menu-top">
+          <li><a href="/">HOME</a></li>
+          <li><a href="/api.html">API</a></li>
+          <li class="menu-has-children"><a href="/evcc.html">EVCC</a>
+            <ul class="push-left">
+              <li><a href="#evcc_main">Einführung</a></li>
+              <li><a href="#evcc-rpi-preparation">Vorbereitung des Raspberry Pis</a></li>
+              <li><a href="#evcc-mqtt-installation">Installation des MQTT-Brokers</a></li>
+              <li><a href="#evcc-warp-mqtt">Verknüpfen des WARP Chargers</a></li>
+              <li><a href="#evcc-installation">Installation von EVCC</a></li>
+              <li class="menu-has-children"><a href="#evcc-configuration">Konfiguration von EVCC</a>
+                <ul class="push-left">
+                    <li><a href="#evcc-configuration-general">Allgemeine Einstellungen</a></li>
+                    <li><a href="#evcc-configuration-warp">Konfiguration des WARP Chargers</a></li>
+                    <li><a href="#evcc-configuration-meter">Konfiguration der simulierten Stromzähler</a></li>
+                    <li><a href="#evcc-configuration-site">Site-Konfiguration</a></li>
+                    <li><a href="#evcc-configuration-chargepoint">Konfiguration des Ladepunkts</a></li>
+                    <li><a href="#evcc-configuration-test">Test der Gesamtkonfiguration</a></li>
+                    <li><a href="#evcc-configuration-complete">Gesamtkonfiguration</a></li>
+                </ul>
+              </li>
+              <li><a href="#evcc-auto-start">Automatischer Start von EVCC</a></li>
+              <li><a href="#evcc-extensions">Erweiterungsmöglichkeiten</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav><!-- #nav-menu-container -->
+    </div>
+  </header><!-- #header -->
+
+  <!--==========================
+    Intro Section
+  ============================-->
+  <main id="evcc_main" style="text-align: justify;">
+    <header id="start" class="reference-section-header pt-4" style="padding-left: 15px; padding-right: 15px;"><h2>PV-Überschuss&shy;laden mit EVCC</h2></header>
+    <section class="section">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>Einführung</h3>
+            </header>
+            <p>
+                Dein WARP Charger ist mit <a href="https://evcc.io">EVCC</a> kompatibel. EVCC ist eine Open-Source-Lösung,
+                mit der du auf einfache Weise den Überschuss deiner Photovoltaik-Anlage zum Laden deines Elektroautos benutzen kannst.
+                EVCC implementiert zudem weitere APIs, mit denen du zum Beispiel eine Hausbatterie bevorzugt,
+                oder dein Elektroauto bis zu einem gewünschten Ladestand laden kannst.
+                Weitere Informationen zu EVCC findest du auf <a href="https://evcc.io">evcc.io</a>, detaillierte Dokumentation, ein Support-Forum und den Quellcode im <a href="https://github.com/andig/evcc">GitHub-Repository</a>.
+            </p>
+            <div class="row pb-2">
+                <div class="col-md-12 col-lg-6">
+                    <p>
+                        Diese Anleitung zeigt dir, wie du EVCC aufsetzt, deinen WARP Charger mit EVCC verknüpfst und wie weitere Komponenten, beispielhaft ein Elektroauto eingebunden werden können.
+                        Hierfür benötigst du neben deinem WARP Charger nur einen Rechner, auf dem EVCC ausgeführt werden soll. Wir verwenden im Folgenden einen Raspberry Pi.
+                        EVCC kann auch auf anderen Plattformen installiert werden, aber da die Steuerung des WARP Chargers möglichst robust sein soll,
+                        bietet es sich an ein System nur für diesen Einsatzzweck abzustellen.
+                        Die notwendigen Zähler, die die Stromerzeugung einer PV-Anlage, sowie den Gesamtverbrauch des Hauses messen, werden wir zunächst simulieren.
+                    </p>
+                </div>
+                <div class="col-md-12 col-lg-6">
+                    <div class="impressions-container">
+                        <div class="impressions-item filter-warp-charger wow fadeInUp" style="height: auto;">
+                            <figure style="height: auto;">
+                                <img src="img/evcc/evcc-schema.svg" class="img-fluid" alt="">
+                                <a href="img/evcc/evcc-schema.svg" data-lightbox="impressions" data-title="Ladesteuerung mit EVCC" class="link-preview" title="Preview"><i class="ion ion-eye"></i></a>
+                            </figure>
+                            <div class="impressions-info">
+                                Ladesteuerung mit EVCC
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="evcc-rpi-preparation">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>Vorbereitung des Raspberry Pis</h3>
+            </header>
+            <div class="row pb-2">
+                <div class="col-md-12 col-lg-6">
+                    <p>
+                        Zunächst musst du eine SD-Karte mit dem Betriebssystem für den Raspberry Pi vorbereiten.
+                        Am einfachsten ist das mit dem <a href="https://www.raspberrypi.org/software/">Raspberry Pi Imager</a>.
+                        Der RPi-Imager lädt das ausgewählte Betriebssystem herunter und flasht es auf eine angeschlossene Micro-SD-Karte.
+                        Wenn du mit der Benutzung einer Linux-Konsole vertraut bist, empfehlen wir das Raspberry Pi OS Lite, das im Imager
+                        unter <code>OS auswählen</code> -> <code>Raspberry Pi OS (other)</code> zu finden ist. Falls du mit einer graphischen Oberfläche arbeiten
+                        möchtest, kannst du das normale Raspberry Pi OS verwenden. Der Imager flasht nach Auswahl der SD-Karte und klicken auf
+                        <code>Schreiben</code> das Betriebssystem auf die Micro-SD-Karte.
+                    </p>
+                    <p>
+                        Um den Raspberry Pi weiter vorzubereiten musst du jetzt entweder einen Monitor und eine Tastatur anschließen,
+                        oder auf der Boot-Partition der SD-Karte eine leere Datei mit dem Namen <code>ssh</code> anlegen, damit der Pi beim Booten
+                        den SSH-Dienst startet, <a href="https://www.raspberrypi.org/documentation/remote-access/ssh/README.md">siehe hier für Details</a>.
+                        Du musst dann nur noch entweder ein LAN-Kabel anschließen, oder eine WLAN-Verbindung konfigurieren,
+                        wie <a href="https://www.raspberrypi.org/documentation/configuration/wireless/headless.md">hier beschrieben</a>.
+                    </p>
+                </div>
+                <div class="col-md-12 col-lg-6">
+                    <div class="impressions-container">
+                        <div class="impressions-item filter-warp-charger wow fadeInUp" style="height: auto;">
+                            <figure style="height: auto;">
+                                <img src="img/evcc/rpi_imager.png" class="img-fluid" alt="">
+                                <a href="img/evcc/rpi_imager.png" data-lightbox="impressions" data-title="Raspberry Pi Imager" class="link-preview" title="Preview"><i class="ion ion-eye"></i></a>
+                            </figure>
+                            <div class="impressions-info">
+                                Raspberry Pi Imager
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p>
+                Du kannst jetzt die Micro-SD-Karte in den Raspberry Pi einlegen und ihn booten. Nachdem du dich gegebenenfalls eingeloggt hast
+                (per SSH auf <code>pi@raspberry</code>, oder in der Textkonsole als <code>pi</code>; Passwort ist jeweils <code>raspberrypi</code>), solltest du zunächst,
+                falls du die graphische Oberfläche gebootet hast, dem Einrichtungs-Wizard folgen.
+                Ansonsten kannst du mit <code>sudo raspi-config</code> die deutsche Locale <code>de_DE.UTF-8</code> aktivieren (unter <code>Localization options</code> -> <code>Locale</code>).
+                In beiden Fällen solltest du danach in der Konsole mit <code>sudo apt update</code> und <code>sudo apt upgrade</code>
+                das System aktualisieren und mit <code>passwd</code> das Standardpasswort ändern.
+                Danach kannst du den Pi mit <code>sudo reboot</code> neustarten.
+            </p>
+        </div>
+    </section>
+
+    <section class="section" id="evcc-mqtt-installation">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>Installation des MQTT-Brokers</h3>
+            </header>
+            <p>
+                Die Kommunikation zwischen dem WARP Charger und EVCC erfordert den Einsatz eines MQTT-Brokers. Auf dem Raspberry Pi
+                kann mit <code style="white-space: normal; word-break: break-word;">sudo apt install mosquitto mosquitto-clients</code> der <a href="https://mosquitto.org/">Mosquitto</a>-MQTT-Broker installiert werden.
+                Mosquitto startet sofort und bei jedem Start des Systems automatisch.
+            </p>
+        </div>
+    </section>
+
+    <section class="section" id="evcc-warp-mqtt">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>Verknüpfen des WARP Chargers</h3>
+            </header>
+            <div class="row pb-2">
+                <div class="col-md-12 col-lg-6">
+                    <p>
+                        (Mehr Informationen zur MQTT-Konfiguration findest du in der <a href="https://www.warp-charger.com/api.html">API-Dokumentation</a>)
+                    </p>
+                    <p>
+                        Im Webinterface des WARP Chargers kannst du jetzt die Verbindung zum MQTT-Broker konfigurieren. Hierzu musst du unter <code>MQTT</code>
+                        die Verbindung aktivieren und den Host eintragen (<code>raspberrypi</code> falls du ihn nicht geändert hast). Alternativ kannst du die IP-Adresse
+                        des Pis verwenden. Diese kannst du in der Konsole mit <code>ip -brief a</code> auslesen: unter <samp>eth0</samp> die der LAN-Verbindung, oder unter <samp>wlan0</samp> die der WLAN-Verbindung.
+                        Danach kannst du die Konfigurationsänderung durch Klicken auf Speichern anwenden. Das Webinterface startet dann neu.
+                    </p>
+                    <p>
+                        Um zu Testen, ob die Verbindung zum MQTT-Broker funktioniert, kannst du zunächst die Status-Seite des Webinterfaces prüfen. Der
+                        Status der MQTT-Verbindung sollte auf <samp>Verbunden</samp> stehen. Falls das nicht der Fall ist, kannst du im Ereignislog nachsehen,
+                        was das Problem ist. Als weiteren Test kannst du in der Konsole des Pis die empfangenen Nachrichten mitlesen:
+                        <code>mosquitto_sub -v -t 'warp/#'</code> liefert empfangene Nachrichten aller Wallboxen, die mit dem Broker verbunden sind.
+                    </p>
+                </div>
+                <div class="col-md-12 col-lg-6">
+                    <div class="impressions-container">
+                        <div class="impressions-item filter-warp-charger wow fadeInUp" style="height: auto;">
+                            <figure style="height: auto;">
+                                <img src="img/mqtt/mqtt_ui.png" class="img-fluid" alt="">
+                                <a href="img/mqtt/mqtt_ui.png" data-lightbox="impressions" data-title="MQTT-Konfiguration" class="link-preview" title="Preview"><i class="ion ion-eye"></i></a>
+                            </figure>
+                            <div class="impressions-info">
+                                MQTT-Konfiguration
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="evcc-installation">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>Installation von EVCC</h3>
+            </header>
+            <p>
+                (Dieser Teil der Anleitung folgt grob der <a href="https://github.com/andig/evcc/wiki/1.1.-Manual-installation">manuellen Installationsanleitung</a> von EVCC.
+                Alternativ kann EVCC als Docker-Container eingerichtet werden, <a href="https://github.com/andig/evcc/wiki/1.2.-Docker-installation">wie hier beschrieben</a>.)
+            </p>
+            <p>
+                EVCC kannst du von Github herunterladen: Per Browser <a href="https://github.com/andig/evcc/releases/latest">von hier</a>, oder alternativ auf der Konsole mit
+                <code style="white-space: normal; word-break: break-all;">wget https://github.com/andig/evcc/releases/download/0.53/evcc_0.53_linux_armv6.tar.gz</code>
+                <samp></samp>0.53 solltest du durch die gerade aktuelle Version ersetzen. Für den Raspberry Pi benötigst du die <samp>linux_armv6</samp>-Variante.
+            </p>
+            <p>
+                Auf der Konsole kannst du jetzt, falls du EVCC nicht neu installierst, sondern aktualisierst, eine eventuell vorhandene alte EVCC-Installation entfernen:
+                <code>sudo rm -f /usr/local/bin/evcc*</code>
+                Danach kannst du mit
+                <code style="white-space: normal; word-break: break-all;">sudo tar xvfz ./evcc_0.53_linux_armv6.tar.gz -C /usr/local/bin/</code>
+                die gerade runtergeladene Version von EVCC installieren.
+                Mit <code>evcc -v</code> kannst du testen, ob die Installation erfolgreich war. EVCC sollte dann seine Versionsnummer ausgeben.
+            </p>
+        </div>
+    </section>
+
+    <section class="section" id="evcc-configuration">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>Konfiguration von EVCC</h3>
+            </header>
+            <p>
+                (Dieser Teil der Anleitung folgt grob der <a href="https://github.com/andig/evcc/wiki/1.3.-Manual-configuration">manuellen Konfigurationssanleitung</a> von EVCC.)
+            </p>
+            <p>
+                EVCC wird durch eine Konfigurationsdatei in YAML-Syntax konfiguriert.
+                Du kannst diese mit einem Texteditor deiner Wahl, auf der Konsole zum Beispiel mit <code>nano</code><a href="https://xkcd.com/378/">*</a> anlegen.
+                Im Folgenden erstellen wir eine Minimalkonfiguration für den WARP Charger und erweitern diese sukzessive. Diese Datei nennen wir <code>config.yaml</code>.
+                Die YAML-Syntax erfordert genaue Einrückung. Falls aus dem Kontext nicht klar ist, wie ein Block genau in die Konfigurationsdatei eingefügt werden kann, kannst
+                du die <a href="#complete_config">vollständige Konfigurationsdatei</a> zu Rate ziehen.
+            </p>
+            <section class="section pt-2 pb-2" id="evcc-configuration-general">
+                <header class="reference-section-header">
+                    <h4>Allgemeine Einstellungen</h4>
+                </header>
+                <p>
+                    Zunächst werden einige allgemeine Einträge benötigt. Die Kommentate an den Einträgen erklären deren Bedeutung. Du musst sie aber nicht in die Datei übernehmen.
+                    <pre>
+<samp># Die Adresse, sowie der Port auf der das Webinterface erreichbar ist.
+# Wenn du Zugriffe nur vom Raspberry Pi aus erlauben willst, könntest du hier 127.0.0.1:7070 einfügen.</samp>
+uri: 0.0.0.0:7070
+<samp># Das Ladesteuerungs-Intervall</samp>
+interval: 10s
+
+<samp># Log-Einstellungen.
+# Für die Einrichtung hilft es detailliertere Logausgaben zu bekommen.
+# Wenn alles funktioniert kannst du hier stattdessen log: error setzen.</samp>
+log: debug
+levels:
+  core: debug
+  lp-1: debug</pre>
+                </p>
+            </section>
+            <section class="section pt-2 pb-2" id="evcc-configuration-warp">
+                <header class="reference-section-header">
+                    <h4>Konfiguration des WARP Chargers</h4>
+                </header>
+                <p>
+                    Danach kannst du die Konfiguration des WARP Chargers anfügen. Du brauchst dafür den Topic-Präfix des Chargers, der gesteuert werden soll.
+                    Diesen findest du im Webinterface unter den MQTT-Einstellungen. Wir gehen hier davon aus, dass er <samp>warp/AbC</samp> lautet.
+                </p>
+<pre>
+chargers:
+- name: warp        <samp># Konfigurationsname der Wallbox</samp>
+  type: warp        <samp># Typ der Wallbox</samp>
+  broker: localhost <samp># Hostname oder Adresse des MQTT-Brokers</samp>
+  topic: warp/AbC   <samp># Der Topic-Präfix</samp>
+  usemeter: true    <samp># true für WARP Charger Pro, false für Smart</samp>
+  timeout: 30s
+</pre>
+                <p>
+                    Falls du für die Verbindung zum Broker einen Usernamen und ein Passwort konfiguriert hast, kannst du diese wie folgt anfügen:
+                </p>
+<pre>
+  user: testuser
+  password: testpass
+</pre>
+                <p>
+                    Diesen Teil der Konfiguration kannst du jetzt testen. Mit:
+                    <code>evcc charger -c config.yaml</code>
+                    sollte EVCC sich zum MQTT-Broker verbinden und dann den aktuellen Ladestatus <code>Charge status</code> sowie ob das Auto-Start-Verhalten <code>Enabled</code> der Wallbox auslesen.
+                    Falls du den Zähler eines WARP Charger Pro mit ausliest, werden zusätzlich Ladeleistung <code>Power</code> und bisheriger Stromverbrauch <code>Energy</code> ausgelesen.
+                </p>
+            </section>
+            <section class="section pt-2 pb-2" id="evcc-configuration-meter">
+                <header class="reference-section-header">
+                    <h4>Konfiguration der simulierten Stromzähler</h4>
+                </header>
+                <p>
+                    Jetzt müssen Stromzähler konfiguriert werden. Für den reinen Test der Anbindung des WARP Chargers reichen zwei simulierter Zähler:
+                    einen für die Stromerzeugung einer PV-Anlage, sowie einer, der den Strombezug des Netzes misst.
+                    Zur Konfiguration der echten unterstützten Zähler musst du die <a href="https://github.com/andig/evcc/wiki/3.-Power-meter">EVCC-Dokumentation</a> konsultieren.
+                </p>
+                <p>
+                    Einen simulierten Verbrauchszähler kannst du wie folgt zu deiner Konfigurationsdatei hinzufügen:
+                </p>
+<pre>
+meters:
+- name: gridmeter <samp># Name des Zählers. Falls du diesen änderst, musst du die site-Konfiguration auch anpassen.</samp>
+  type: default   <samp># Typ des Zählers</samp>
+  power:
+    <samp># Wir simulieren die Leistung über ein Shellscript, das 1000 Watt zurückgibt.
+    # Positive Werte bedeuten einen Strombezug im Netz.</samp>
+    type: script
+    cmd: /bin/sh -c 'echo 1000'
+</pre>
+                <p>
+                    Die Zählerkonfiguration kannst du jetzt mit
+                    <code>evcc meter -c config.yaml</code>
+                    testen. EVCC sollte dir den simulierten Bezug mit <code>Power: 1000W</code> ausgeben.
+                </p>
+                <p>
+                    Den zweiten simulierten Zähler, der die Einspeisung einer PV-Anlage misst kannst du wie folgt dem Abschnitt meters hinzufügen:
+                </p>
+                    <pre>
+- name: pvmeter
+  type: default
+  power:
+    type: script
+    <samp># Wir simulieren hier -10000 Watt. Negative Werte bedeuten eine Einspeisung ins Netz.</samp>
+    cmd: /bin/sh -c 'echo -10000'
+</pre>
+                <p>
+                    Auch diese Konfiguration kannst du mit
+                    <code>evcc meter -c config.yaml</code>
+                    testen. EVCC sollte dir jetzt den simulierten Bezug mit <code>Power: 1000W</code>, sowie die simulierte Einspeisung mit <code>Power: -10000W</code> ausgeben.
+                </p>
+            </section>
+            <section class="section pt-2 pb-2" id="evcc-configuration-site">
+                <header class="reference-section-header">
+                    <h4>Site-Konfiguration</h4>
+                </header>
+            <p>
+                Jetzt musst du mit einer site-Konfiguration die Zähler verknüpfen.
+            </p>
+                <pre>
+site:
+  title: Home       <samp># Anzeigename im Webinterface</samp>
+  meters:
+    grid: gridmeter <samp># Name des Zählers, der den Strombezug misst</samp>
+    pv: pvmeter     <samp># Name des Zählers, der die Einspeisung misst</samp>
+</pre>
+            </section>
+            <section class="section pt-2 pb-2" id="evcc-configuration-chargepoint">
+                <header class="reference-section-header">
+                    <h4>Konfiguration des Ladepunkts</h4>
+                </header>
+                <p>
+                    Als letzten Schritt musst du einen Ladepunkt konfigurieren. Dieser kann später genutzt werden um eine Fahrzeugkonfiguration mit einer Wallboxkonfiguration zu verknüpfen.
+                </p>
+                <pre>
+loadpoints:
+  <samp># Anzeigename des Ladepunkts im Webinterface</samp>
+- title: Mein erster Ladepunkt
+  mode: pv      <samp># Standard-Lademodus. pv bedeutet, dass nur Photovoltaikstrom geladen wird.</samp>
+  charger: warp <samp># Konfigurationsname der Wallbox die verknüpft werden soll</samp>
+  phases: 3     <samp># Konfiguriert ob die Wallbox ein- oder dreiphasig angeschlossen ist.</samp>
+</pre>
+            </section>
+            <section class="section pt-2 pb-2" id="evcc-configuration-test">
+                <header class="reference-section-header">
+                    <h4>Test der Gesamtkonfiguration</h4>
+                </header>
+                <div class="row pb-2">
+                    <div class="col-md-12 col-lg-6">
+                        <p>
+                            Jetzt sollte deine Konfigurationsdatei vollständig sein und du kannst EVCC starten:
+                            <code>evcc -c config.yaml</code>
+                            EVCC gibt dann diverse Debug-Informationen aus. Nach wenigen Sekunden sollte das Webinterface auf
+                            <a href="http://raspberrypi:7070">http://raspberrypi:7070</a> erreichbar sein. Alternativ kannst du die IP-Adresse des Raspberry Pis verwenden.
+                            Wenn alles funktioniert, kannst du in der Konfiguration die Zeile <code>log: debug</code> auf <code>log: error</code> ändern.
+                            Dann werden nur noch Fehler ausgegeben.
+                        </p>
+                    </div>
+                    <div class="col-md-12 col-lg-6">
+                        <div class="impressions-container">
+                            <div class="impressions-item filter-warp-charger wow fadeInUp" style="height: auto;">
+                                <figure style="height: auto;">
+                                    <img src="img/evcc/evcc.png" class="img-fluid" alt="">
+                                    <a href="img/evcc/evcc.png" data-lightbox="impressions" data-title="Webinterface von EVCC" class="link-preview" title="Preview"><i class="ion ion-eye"></i></a>
+                                </figure>
+                                <div class="impressions-info">
+                                    Webinterface von EVCC
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="section pt-2 pb-2" id="evcc-configuration-complete">
+                <header class="reference-section-header">
+                    <h4>Gesamtkonfiguration</h4>
+                </header>
+                <p>
+                    Hier die Konfigurationsdatei in ihrer Gänze:
+                </p>
+                <pre>
+uri: 0.0.0.0:7070
+interval: 10s
+
+log: debug
+levels:
+  core: debug
+  lp-1: debug
+
+chargers:
+- name: warp
+  type: warp
+  broker: localhost
+  topic: warp/AbC
+  usemeter: true
+  timeout: 30s
+
+meters:
+- name: gridmeter
+  type: default
+  power:
+    type: script
+    cmd: /bin/sh -c 'echo 1000'
+- name: pvmeter
+  type: default
+  power:
+    type: script
+    cmd: /bin/sh -c 'echo -10000'
+
+site:
+  title: Home
+  meters:
+    grid: gridmeter
+    pv: pvmeter
+
+loadpoints:
+- title: Mein erster Ladepunkt
+  mode: pv
+  charger: warp
+  phases: 3</pre>
+            </section>
+        </div>
+    </section>
+
+    <section class="section" id="evcc-auto-start">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>Automatischer Start von EVCC</h3>
+            </header>
+            <p>
+                Damit EVCC automatisch startet, wenn der Raspberry Pi neu bootet, musst du eine service-Datei für systemd anlegen:
+                Lege dazu mit einem Texteditor deiner Wahl eine neue Datei an mit folgenden Inhalt an:
+            </p>
+            <pre>
+[Unit]
+Description=evcc
+After=syslog.target
+[Service]
+ExecStart=/usr/local/bin/evcc --log error
+Restart=always
+[Install]
+WantedBy=multi-user.target</pre>
+            <p>
+                und speichere sie als Root unter <code>/etc/systemd/system/evcc.service</code>
+            </p>
+            <p>
+                EVCC erwartet eine Konfigurationsdatei namens <code>evcc.yaml</code> in <code>/etc</code>. Du kannst als Root die oben erstellte <code>config.yaml</code> als
+                <code>/etc/evcc.yaml</code> abspeichern.
+            </p>
+            <p>
+                Teste dann ob alles geklappt hat, indem du die service-Dateien neu lädst:
+                <code>sudo systemctl daemon-reload</code>
+                Dann den EVCC-Service startest:
+                <code>sudo systemctl start evcc</code>
+                und prüfst, ob das geklappt hat:
+                <code>sudo systemctl status evcc</code>
+                Die Ausgabe sollte <code>Active: active (running)</code> beinhalten.
+                Du kannst dann mit
+                <code>sudo systemctl enable evcc.service</code>
+                festlegen, dass EVCC beim Booten gestartet wird.
+            </p>
+        </div>
+    </section>
+
+    <section class="section" id="evcc-extensions">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>Erweiterungs&shy;möglichkeiten</h3>
+            </header>
+            <p>
+                Dein EVCC-Setup kannst du vielseitig erweitern. Zum Beispiel können <a href="https://github.com/andig/evcc/wiki/4.-PV-inverter">Photovoltaik-</a>
+                und <a href="https://github.com/andig/evcc/wiki/5.-Battery-inverter">Batterieinverter</a> für Hausbatterien angebunden werden.
+                Außerdem kann der Ladestand diverser <a href="https://github.com/andig/evcc/wiki/6.-Vehicle">Fahrzeuge</a> ausgelesen werden.
+            </p>
+            <p>
+                Exemplarisch binden wir im Folgenden einen Renault Zoe ein. Hierzu musst du wieder deine EVCC-Konfigurationsdatei bearbeiten.
+                Füge zunächst vor dem loadpoint-Block folgenden Block ein:
+            </p>
+
+            <div class="row pb-2">
+                <div class="col-md-12 col-lg-6">
+                    <pre>
+vehicles:
+- name: zoe             <samp># Konfigurationsname</samp>
+  type: renault         <samp># Fahrzeugtyp</samp>
+  title: Zoe            <samp># Anzeigename</samp>
+  capacity: 52          <samp># Akku-Kapazität in kWh</samp>
+  user: user@domain.com <samp># Deine myrenault-ID</samp>
+  password test123      <samp># Passwort deiner myrenault-ID</samp></pre>
+                    <p>
+                        Danach kannst du den Zoe mit deinem Ladepunkt verknüpfen. Füge dazu folgendes in den loadpoint-Block ein:
+                    </p>
+                        <pre>
+  vehicle: zoe <samp># Der Konfigurationsname von oben</samp>
+  soc:
+    poll:
+      <samp># Wann soll der Ladestand abgefragt werden?</samp>
+      mode: charging
+      <samp># Wie oft soll der Ladestand abgefragt werden?</samp>
+      interval: 60m
+    <samp># Auswählbare Zielladestände</samp>
+    levels:
+    - 30
+    - 50
+    - 80
+    - 100</pre>
+                    <p>
+                        Wenn du jetzt EVCC neu startest:
+                        <code>evcc -c config.yaml</code> bzw. <code>sudo systemctl restart evcc</code>, falls du den Auto-Start schon eingerichtet hast,
+                        sollten der Zoe, sowie die Ladeziel-Auswahl im Webinterface erscheinen.
+                    </p>
+                </div>
+                <div class="col-md-12 col-lg-6">
+                    <div class="impressions-container">
+                        <div class="impressions-item filter-warp-charger wow fadeInUp" style="height: auto;">
+                            <figure style="height: auto;">
+                                <img src="img/evcc/evcc_zoe.png" class="img-fluid" alt="">
+                                <a href="img/evcc/evcc_zoe.png" data-lightbox="impressions" data-title="Webinterface von EVCC mit konfiguriertem Fahrzeug" class="link-preview" title="Preview"><i class="ion ion-eye"></i></a>
+                            </figure>
+                            <div class="impressions-info">
+                                Webinterface mit Fahrzeug
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</main>
+
+<!--==========================
+  Footer
+============================-->
+<footer id="footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-lg-3 col-md-6 footer-info">
+          <h3>WARP</h3>
+          <p>WARP ist die Elektromobiliätssparte von Tinkerforge.
+            Die Tinkerforge GmbH ist ein 2011 gegründetes Unternehmen, das echtes &bdquo;Made in Germany&ldquo; bietet.
+          </p>
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-links">
+          <h4>Links</h4>
+          <ul>
+            <li><i class="ion-ios-arrow-right"></i> <a href="#intro">Start</a></li>
+            <li><i class="ion-ios-arrow-right"></i> <a href="https://www.tinkerforge.com/de/shop/warp/wallbox.html">Shop</a></li>
+            <li><i class="ion-ios-arrow-right"></i> <a href="https://www.tinkerforge.com/de/home/legal_info/">Impressum</a></li>
+            <li><i class="ion-ios-arrow-right"></i> <a href="https://www.tinkerforge.com/de/home/privacy_notice/">Datenschutz</a></li>
+            <li><i class="ion-ios-arrow-right"></i> <a href="https://www.tinkerforge.com/de/home/terms_and_conditions/">AGB</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-contact">
+          <h4>Kontakt</h4>
+          <p>
+            Tinkerforge GmbH <br>
+            Zur Brinke 7 <br>
+            33758 Schloß Holte-Stukenbrock<br>
+            Deutschland <br>
+            <strong>Telefon:</strong> 05207 / 8998614<br>
+            <strong>E-Mail:</strong> info@tinkerforge.com<br>
+          </p>
+
+          <div class="social-links">
+            <a href="https://twitter.com/tinkerforge" class="twitter"><i class="fa fa-twitter"></i></a>
+            <a href="https://www.facebook.com/tinkerforge42" class="facebook"><i class="fa fa-facebook"></i></a>
+            <a href="https://www.instagram.com/tinkerforge" class="instagram"><i class="fa fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/tinkerforge-gmbh/" class="linkedin"><i class="fa fa-linkedin"></i></a>
+          </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-newsletter">
+          <h4>Über uns</h4>
+          <p>
+            Wir bei Tinkerforge sind der Meinung, dass Produkte offen sein müssen. Nur so gehören sie wirklich den
+            Nutzern. Daher folgen wir der Open‐Source‐Philosophie, indem wir die Quelltexte sowie Baupläne all unserer
+            Soft- und Hardware veröffentlichen und ermöglichen es so jedem Einzelnen, unsere Produkte nach eigenen
+            Wünschen zu verändern und zu erweitern. Durch die enge Zusammenarbeit mit unserer aktiven Community
+            entwickeln wir schnell kundenorientierte Lösungen.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</footer><!-- #footer -->
+
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+<!-- JavaScript Libraries -->
+<script src="lib/jquery/jquery.min.js"></script>
+<script src="lib/jquery/jquery-migrate.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/superfish/hoverIntent.js"></script>
+<script src="lib/superfish/superfish.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/isotope/isotope.pkgd.min.js"></script>
+<script src="lib/lightbox/js/lightbox.min.js"></script>
+<script src="lib/touchSwipe/jquery.touchSwipe.min.js"></script>
+
+<!-- Template Main Javascript File -->
+<script src="js/main.js"></script>
+
+</body>
+</html>
+
