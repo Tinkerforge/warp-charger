@@ -26,11 +26,6 @@
 
 #include "config.h"
 
-#define EVSE_CHARGING_STATE_NOT_CONNECTED 0
-#define EVSE_CHARGING_STATE_CONNECTED 1
-#define EVSE_CHARGING_STATE_CHARGING 2
-#define EVSE_CHARGING_STATE_ERROR 3
-
 class EVSE {
 public:
     EVSE();
