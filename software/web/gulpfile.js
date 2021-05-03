@@ -75,7 +75,7 @@ gulp.task("copy-html", function () {
 });
 
 gulp.task("sass", function () {
-    const sass = require("gulp-sass");
+    const { sass } = require("@mr-hope/gulp-sass");
     const purgecss = require("gulp-purgecss");
     const postcss = require("gulp-postcss");
     const autoprefixer = require("autoprefixer");
