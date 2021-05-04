@@ -15,7 +15,7 @@ PRINTER_PORT = 9100
 QR_CODE_COMMAND = b'W619,119,5,2,M,8,6,84,0\r'
 QR_CODE_PADDING = b';;\r'
 
-DESCRIPTION_PLACEHOLDER = b'Smart 11kW AL:5m ZL:12m CEE:J'
+DESCRIPTION_PLACEHOLDER = b'Smart, 11 kW, 5 m, ZL 12 m, CEE'
 
 TYPE_PLACEHOLDER = b'WARP-CS-11KW-50-CEE'
 
@@ -96,16 +96,16 @@ def print_docket_label(type_, supply_cable_extension, version, serial_number, bu
         assert False, type_model
 
     if type_power == '11':
-        description += b' 11kW'
+        description += b', 11 kW'
     elif type_power == '22':
-        description += b' 22kW'
+        description += b', 22 kW'
     else:
         assert False, type_power
 
     if type_type2_cable_length == '50':
-        description += b' AL:5m'
+        description += b', 5 m'
     elif type_type2_cable_length == '75':
-        description += b' AL:7,5m'
+        description += b', 7,5 m'
     else:
         assert False, type_type2_cable_length
 
@@ -118,12 +118,10 @@ def print_docket_label(type_, supply_cable_extension, version, serial_number, bu
 
     supply_cable_length += supply_cable_extension
 
-    description += ' ZL:{0}m'.format(supply_cable_length).encode('ascii')
+    description += ', ZL {0} m'.format(supply_cable_length).encode('ascii')
 
     if type_cee:
-        description += b' CEE:J'
-    else:
-        description += b' CEE:N'
+        description += b', CEE'
 
     # check version
     if re.match('^[1-9]\.(0|[1-9][0-9]*)$', version) == None:
