@@ -62,7 +62,8 @@ def get_next_serial_number():
 
     return '5{0:09}'.format(serial_number)
 
-def print_docket_label(type_, supply_cable_extension, version, serial_number, build_date, order, item, order_date, name, instances, copies, stdout):
+def print_docket_label(type_, supply_cable_extension, version, serial_number, build_date, order,
+                       item, order_date, name, instances, copies, stdout, force_build_date):
     # check instances
     if instances < 1 or instances > 25:
         raise Exception('Invalid instances: {0}'.format(instances))
@@ -135,7 +136,7 @@ def print_docket_label(type_, supply_cable_extension, version, serial_number, bu
     parsed_build_date = datetime.strptime(build_date, '%Y-%m')
     now = datetime.now()
 
-    if parsed_build_date.year < now.year or (parsed_build_date.year == now.year and parsed_build_date.month < now.month):
+    if not force_build_date and (parsed_build_date.year < now.year or (parsed_build_date.year == now.year and parsed_build_date.month < now.month)):
         raise Exception('Invalid build date: {0}'.format(build_date))
 
     # check order
@@ -274,13 +275,15 @@ def main():
     parser.add_argument('-i', '--instances', type=int, default=1)
     parser.add_argument('-c', '--copies', type=int, default=1)
     parser.add_argument('-s', '--stdout', action='store_true')
+    parser.add_argument('--force-build-date', action='store_true')
 
     args = parser.parse_args()
 
     assert args.instances > 0
     assert args.copies > 0
 
-    print_docket_label(args.type, args.supply_cable_extension, args.version, args.serial_number, args.build_date, args.order, args.item, args.order_date, args.name, args.instances, args.copies, args.stdout)
+    print_docket_label(args.type, args.supply_cable_extension, args.version, args.serial_number, args.build_date, args.order,
+                       args.item, args.order_date, args.name, args.instances, args.copies, args.stdout, args.force_build_date)
 
 if __name__ == '__main__':
     main()
