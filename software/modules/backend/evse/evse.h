@@ -60,6 +60,9 @@ private:
     Config evse_current_limit;
     Config evse_stop_charging;
     Config evse_start_charging;
+    Config evse_managed;
+    Config evse_managed_update;
+    Config evse_managed_current;
 
     TF_EVSE evse;
 };

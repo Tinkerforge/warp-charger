@@ -85,6 +85,7 @@ EVSE::EVSE()
         {"max_current_configured", Config::Uint16(0)},
         {"max_current_incoming_cable", Config::Uint16(0)},
         {"max_current_outgoing_cable", Config::Uint16(0)},
+        {"max_current_managed", Config::Uint16(0)},
     });
 
     evse_auto_start_charging = Config::Object({
@@ -94,19 +95,31 @@ EVSE::EVSE()
     evse_auto_start_charging_update = Config::Object({
         {"auto_start_charging", Config::Bool(true)}
     });
-
-
     evse_current_limit = Config::Object({
         {"current", Config::Uint(32000, 6000, 32000)}
     });
 
     evse_stop_charging = Config::Null();
     evse_start_charging = Config::Null();
+
+    evse_managed_current = Config::Object ({
+        {"current", Config::Uint16(0)}
+    });
+
+    evse_managed = Config::Object({
+        {"managed", Config::Bool(false)}
+    });
+
+    evse_managed_update = Config::Object({
+        {"managed", Config::Bool(false)},
+        {"password", Config::Uint32(0)}
+    });
 }
 
 void EVSE::setup()
 {
     setup_evse();
+
     task_scheduler.scheduleWithFixedDelay("update_evse_state", [this](){
         update_evse_state();
     }, 0, 1000);
@@ -213,16 +226,21 @@ void EVSE::register_urls()
         is_in_bootloader(tf_evse_set_charging_autostart(&evse, evse_auto_start_charging_update.get("auto_start_charging")->asBool()));
     }, false);
 
-    /*api.addTemporaryConfig("evse/auto_start_charging", &evse_auto_start_charging, {}, 1000, [this](){
-        is_in_bootloader(tf_evse_set_charging_autostart(&evse, evse_auto_start_charging.get("auto_start_charging")->asBool()));
-    });*/
-
     api.addCommand("evse/current_limit", &evse_current_limit, {}, [this](){
         is_in_bootloader(tf_evse_set_max_charging_current(&evse, evse_current_limit.get("current")->asUint()));
     }, false);
 
     api.addCommand("evse/stop_charging", &evse_stop_charging, {}, [this](){tf_evse_stop_charging(&evse);}, true);
     api.addCommand("evse/start_charging", &evse_start_charging, {}, [this](){tf_evse_start_charging(&evse);}, true);
+
+    api.addCommand("evse/managed_current_update", &evse_managed_current, {}, [this](){
+        is_in_bootloader(tf_evse_set_managed_current(&evse, evse_managed_current.get("current")->asUint()));
+    }, true);
+
+    api.addState("evse/managed", &evse_managed, {}, 1000);
+    api.addCommand("evse/managed_update", &evse_managed_update, {"password"}, [this](){
+        is_in_bootloader(tf_evse_set_managed(&evse, evse_managed_update.get("managed")->asBool(), evse_managed_update.get("password")->asUint()));
+    }, true);
 
     server.on("/evse/start_debug", HTTP_GET, [this](AsyncWebServerRequest *request) {
         task_scheduler.scheduleOnce("enable evse debug", [this](){
@@ -395,12 +413,13 @@ void EVSE::update_evse_state() {
 void EVSE::update_evse_max_charging_current() {
     if(!initialized)
         return;
-    uint16_t configured, incoming, outgoing;
+    uint16_t configured, incoming, outgoing, managed;
 
     int rc = tf_evse_get_max_charging_current(&evse,
         &configured,
         &incoming,
-        &outgoing);
+        &outgoing,
+        &managed);
 
     if(rc != TF_E_OK) {
         is_in_bootloader(rc);
@@ -410,6 +429,7 @@ void EVSE::update_evse_max_charging_current() {
     evse_max_charging_current.get("max_current_configured")->updateUint(configured);
     evse_max_charging_current.get("max_current_incoming_cable")->updateUint(incoming);
     evse_max_charging_current.get("max_current_outgoing_cable")->updateUint(outgoing);
+    evse_max_charging_current.get("max_current_managed")->updateUint(managed);
 }
 
 void EVSE::update_evse_auto_start_charging() {
