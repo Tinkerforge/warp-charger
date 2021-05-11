@@ -26,9 +26,18 @@ entries = sum([s.select('div[id]') for s in soup.select('#reference')[0].select(
 
 documented = {}
 
+def first_line(x):
+    for br in x.find_all("br"):
+        br.replace_with("\n")
+
+    result = x.get_text()
+    if " \n" in result:
+        result = result.split(" \n")[0]
+    return result
+
 for e in entries:
-    topic = e.get_text()
-    payload_keys = [x.get_text() for x in e.parent.select('th[scope="row"]')]
+    topic = first_line(e)
+    payload_keys = [first_line(x) for x in e.parent.select('th[scope="row"]')]
     documented[topic] = payload_keys
 
 
