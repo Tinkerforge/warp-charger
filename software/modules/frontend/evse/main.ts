@@ -79,6 +79,7 @@ interface EVSEHardwareConfiguration {
 function update_evse_hardware_configuration(cfg: EVSEHardwareConfiguration) {
     util.update_button_group("btn_group_has_lock_switch", cfg.has_lock_switch ? 1 : 0);
     util.update_button_group("btn_group_jumper_config", cfg.jumper_configuration);
+    $('#evse_row_lock_switch').prop('hidden', !cfg.has_lock_switch);
 }
 
 interface EVSELowLevelState {
