@@ -85,7 +85,7 @@ EVSE::EVSE()
         {"max_current_configured", Config::Uint16(0)},
         {"max_current_incoming_cable", Config::Uint16(0)},
         {"max_current_outgoing_cable", Config::Uint16(0)},
-        {"max_current_managed", Config::Uint16(0)},
+        //{"max_current_managed", Config::Uint16(0)},
     });
 
     evse_auto_start_charging = Config::Object({
@@ -101,7 +101,7 @@ EVSE::EVSE()
 
     evse_stop_charging = Config::Null();
     evse_start_charging = Config::Null();
-
+/*
     evse_managed_current = Config::Object ({
         {"current", Config::Uint16(0)}
     });
@@ -114,6 +114,7 @@ EVSE::EVSE()
         {"managed", Config::Bool(false)},
         {"password", Config::Uint32(0)}
     });
+*/
 }
 
 void EVSE::setup()
@@ -232,7 +233,7 @@ void EVSE::register_urls()
 
     api.addCommand("evse/stop_charging", &evse_stop_charging, {}, [this](){tf_evse_stop_charging(&evse);}, true);
     api.addCommand("evse/start_charging", &evse_start_charging, {}, [this](){tf_evse_start_charging(&evse);}, true);
-
+/*
     api.addCommand("evse/managed_current_update", &evse_managed_current, {}, [this](){
         is_in_bootloader(tf_evse_set_managed_current(&evse, evse_managed_current.get("current")->asUint()));
     }, true);
@@ -241,7 +242,7 @@ void EVSE::register_urls()
     api.addCommand("evse/managed_update", &evse_managed_update, {"password"}, [this](){
         is_in_bootloader(tf_evse_set_managed(&evse, evse_managed_update.get("managed")->asBool(), evse_managed_update.get("password")->asUint()));
     }, true);
-
+*/
     server.on("/evse/start_debug", HTTP_GET, [this](AsyncWebServerRequest *request) {
         task_scheduler.scheduleOnce("enable evse debug", [this](){
             sse.pushStateUpdate(this->get_evse_debug_header(), "evse/debug_header");
@@ -429,7 +430,7 @@ void EVSE::update_evse_max_charging_current() {
     evse_max_charging_current.get("max_current_configured")->updateUint(configured);
     evse_max_charging_current.get("max_current_incoming_cable")->updateUint(incoming);
     evse_max_charging_current.get("max_current_outgoing_cable")->updateUint(outgoing);
-    evse_max_charging_current.get("max_current_managed")->updateUint(managed);
+    //evse_max_charging_current.get("max_current_managed")->updateUint(managed);
 }
 
 void EVSE::update_evse_auto_start_charging() {
