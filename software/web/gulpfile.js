@@ -76,7 +76,6 @@ gulp.task("copy-html", function () {
 
 gulp.task("sass", function () {
     const { sass } = require("@mr-hope/gulp-sass");
-    const purgecss = require("gulp-purgecss");
     const postcss = require("gulp-postcss");
     const autoprefixer = require("autoprefixer");
     const cssnano = require("cssnano");
@@ -84,10 +83,6 @@ gulp.task("sass", function () {
     return gulp
         .src("src/scss/*.scss")
         .pipe(sass()) // Compile sass to css
-        /*.pipe(purgecss({ //remove unused css
-              content: ["src/*.html"],
-              whitelistPatterns: [/^btn-/]
-          }))*/
         .pipe(
             postcss([
                 autoprefixer(), // Add browser-specific prefixes
