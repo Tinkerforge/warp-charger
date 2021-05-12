@@ -135,6 +135,10 @@ void EVSE::setup()
     task_scheduler.scheduleWithFixedDelay("update_evse_auto_start_charging", [this](){
         update_evse_auto_start_charging();
     }, 0, 1000);
+
+    task_scheduler.scheduleWithFixedDelay("update_evse_managed", [this](){
+        update_evse_managed();
+    }, 0, 1000);
 }
 
 String EVSE::get_evse_debug_header() {
@@ -446,6 +450,22 @@ void EVSE::update_evse_auto_start_charging() {
     }
 
     evse_auto_start_charging.get("auto_start_charging")->updateBool(auto_start_charging);
+}
+
+void EVSE::update_evse_managed() {
+    if(!initialized)
+        return;
+    bool managed;
+
+    int rc = tf_evse_get_managed(&evse,
+        &managed);
+
+    if(rc != TF_E_OK) {
+        is_in_bootloader(rc);
+        return;
+    }
+
+    evse_managed.get("managed")->updateBool(managed);
 }
 
 bool EVSE::is_in_bootloader(int rc) {
