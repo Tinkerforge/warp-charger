@@ -352,7 +352,7 @@
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="form-group row pb-3 border-bottom">
             <div class="col-lg-4">
                 <label for="btn_groups_gpios" class="col-form-label">
                     <span class="form-label pr-2" data-i18n="evse.content.gpios"></span>
@@ -380,6 +380,90 @@
                     <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
                     <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
                 </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-lg-4">
+                <label for="btn_group_user_calibration_enabled" class="col-form-label">
+                    <span class="form-label" data-i18n="evse.content.user_calibration"></span>
+                </label>
+            </div>
+            <div class="col-lg-8">
+                <div id="btn_group_user_calibration_enabled" class="btn-group flex-wrap" role="group">
+                    <button type="button" class="btn btn-outline-secondary"
+                        disabled  data-i18n="evse.content.user_calibration_state_disabled"></button>
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.user_calibration_state_enabled"></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-lg-4">
+                <label class="col-form-label">
+                    <span class="form-label pr-2" data-i18n="evse.content.user_calibration_description"></span>
+                    <span class="text-muted" data-i18n="evse.content.user_calibration_description_muted"></span>
+                </label>
+            </div>
+            <div class="col-xl-4 col-lg-8">
+                <div class="input-group">
+                    <a id="user_calibration_download" class="btn btn-primary form-control rounded-right mr-2" type="button" data-i18n="evse.content.user_calibration_download" href="evse/user_calibration" download="calibration.json"></a>
+                    <button id="user_calibration_reset" class="btn btn-primary form-control rounded-left" type="button" data-i18n="evse.content.user_calibration_reset"></button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-4">
+            </div>
+            <div class="col-xl-4 col-lg-8">
+                <div class="custom-file">
+                    <input name="firmware" type="file" class="custom-file-input form-control mr-2" accept="application/json"
+                        id="user_calibration_upload">
+                    <label class="custom-file-label form-control"
+                        for="user_calibration_upload" data-browse="" data-i18n="evse.content.user_calibration_browse evse.content.user_calibration_select_file" data-i18n-attr="data-browse innerHTML"></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-lg-4">
+                <label for="voltage_diff" class="col-form-label">
+                    <span class="form-label pr-2" data-i18n="evse.content.voltage_calibration"></span>
+                    <span class="text-muted" data-i18n="evse.content.voltage_calibration_names"></span>
+                </label>
+            </div>
+            <div class="col-lg-2 mb-1">
+                <input id="voltage_diff" class="form-control" type="text" placeholder="..." readonly>
+            </div>
+            <div class="col-lg-2 mb-1">
+                <input id="voltage_mul" class="form-control" type="text" placeholder="..." readonly>
+            </div>
+            <div class="col-lg-2 mb-1">
+                <input id="voltage_div" class="form-control" type="text" placeholder="..." readonly>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-lg-4">
+                <label for="resistance_2700" class="col-form-label">
+                    <span class="form-label" data-i18n="evse.content.resistance_2700"></span>
+                </label>
+            </div>
+            <div class="col-lg-4">
+                <input id="resistance_2700" class="form-control" type="text"
+                    placeholder="..." readonly>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-lg-4">
+                <label for="resistance_880" class="col-form-label">
+                    <span class="form-label" data-i18n="evse.content.resistance_880"></span>
+                </label>
+            </div>
+            <div class="col-lg-4">
+                <input id="resistance_880" class="form-control" type="text"
+                    placeholder="..." readonly>
             </div>
         </div>
     </div>

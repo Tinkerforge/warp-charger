@@ -114,6 +114,30 @@ EVSE::EVSE()
         {"managed", Config::Bool(false)},
         {"password", Config::Uint32(0)}
     });
+
+    evse_user_calibration = Config::Object({
+        {"user_calibration_active", Config::Bool(false)},
+        {"voltage_diff", Config::Int16(0)},
+        {"voltage_mul", Config::Int16(0)},
+        {"voltage_div", Config::Int16(0)},
+        {"resistance_2700", Config::Int16(0)},
+        {"resistance_880", Config::Array({
+                Config::Int16(0),
+                Config::Int16(0),
+                Config::Int16(0),
+                Config::Int16(0),
+                Config::Int16(0),
+                Config::Int16(0),
+                Config::Int16(0),
+                Config::Int16(0),
+                Config::Int16(0),
+                Config::Int16(0),
+                Config::Int16(0),
+                Config::Int16(0),
+                Config::Int16(0),
+                Config::Int16(0),
+            }, Config::Int16(0), 14, 14, Config::type_id<Config::ConfInt>())},
+    });
 }
 
 void EVSE::setup()
@@ -139,6 +163,10 @@ void EVSE::setup()
     task_scheduler.scheduleWithFixedDelay("update_evse_managed", [this](){
         update_evse_managed();
     }, 0, 1000);
+
+    task_scheduler.scheduleWithFixedDelay("update_evse_user_calibration", [this](){
+        update_evse_user_calibration();
+    }, 0, 10000);
 }
 
 String EVSE::get_evse_debug_header() {
@@ -244,6 +272,22 @@ void EVSE::register_urls()
     api.addState("evse/managed", &evse_managed, {}, 1000);
     api.addCommand("evse/managed_update", &evse_managed_update, {"password"}, [this](){
         is_in_bootloader(tf_evse_set_managed(&evse, evse_managed_update.get("managed")->asBool(), evse_managed_update.get("password")->asUint()));
+    }, true);
+
+    api.addState("evse/user_calibration", &evse_user_calibration, {}, 1000);
+    api.addCommand("evse/user_calibration_update", &evse_user_calibration, {}, [this](){
+        int16_t resistance_880[14];
+        evse_user_calibration.get("resistance_880")->fillArray<int16_t, Config::ConfInt>(resistance_880, sizeof(resistance_880)/sizeof(resistance_880[0]));
+
+        is_in_bootloader(tf_evse_set_user_calibration(&evse,
+            0xCA11B4A0,
+            evse_user_calibration.get("user_calibration_active")->asBool(),
+            evse_user_calibration.get("voltage_diff")->asInt(),
+            evse_user_calibration.get("voltage_mul")->asInt(),
+            evse_user_calibration.get("voltage_div")->asInt(),
+            evse_user_calibration.get("resistance_2700")->asInt(),
+            resistance_880
+            ));
     }, true);
 
     server.on("/evse/start_debug", HTTP_GET, [this](AsyncWebServerRequest *request) {
@@ -466,6 +510,36 @@ void EVSE::update_evse_managed() {
     }
 
     evse_managed.get("managed")->updateBool(managed);
+}
+
+void EVSE::update_evse_user_calibration() {
+    if(!initialized)
+        return;
+
+    bool user_calibration_active;
+    int16_t voltage_diff, voltage_mul, voltage_div, resistance_2700, resistance_880[14];
+
+    int rc = tf_evse_get_user_calibration(&evse,
+        &user_calibration_active,
+        &voltage_diff,
+        &voltage_mul,
+        &voltage_div,
+        &resistance_2700,
+        resistance_880);
+
+    if(rc != TF_E_OK) {
+        is_in_bootloader(rc);
+        return;
+    }
+
+    evse_user_calibration.get("user_calibration_active")->updateBool(user_calibration_active);
+    evse_user_calibration.get("voltage_diff")->updateInt(voltage_diff);
+    evse_user_calibration.get("voltage_mul")->updateInt(voltage_mul);
+    evse_user_calibration.get("voltage_div")->updateInt(voltage_div);
+    evse_user_calibration.get("resistance_2700")->updateInt(resistance_2700);
+
+    for(int i = 0; i < sizeof(resistance_880)/sizeof(resistance_880[0]); ++i)
+        evse_user_calibration.get("resistance_880")->get(i)->updateInt(resistance_880[i]);
 }
 
 bool EVSE::is_in_bootloader(int rc) {

@@ -186,6 +186,25 @@ function stop_charging() {
     });
 }
 
+interface EVSEUserCalibration {
+    user_calibration_active: boolean,
+    voltage_diff: number,
+    voltage_mul: number,
+    voltage_div: number,
+    resistance_2700: number,
+    resistance_880: number[],
+}
+
+function update_evse_user_calibration(c: EVSEUserCalibration) {
+    util.update_button_group("btn_group_user_calibration_enabled", c.user_calibration_active ? 1 : 0);
+    $('#voltage_diff').val(c.voltage_diff);
+    $('#voltage_mul').val(c.voltage_mul);
+    $('#voltage_div').val(c.voltage_div);
+    $('#resistance_2700').val(c.resistance_2700);
+    $('#resistance_880').val(c.resistance_880.join(", "));
+}
+
+
 let debug_log = "";
 let meter_chunk = "";
 
@@ -316,6 +335,39 @@ export function init() {
             set_charging_current(<number>input.val() * 1000);
     }, false);
 
+    $('#user_calibration_upload').on("change",(evt) => {
+        let files = evt.target.files;
+        if (files.length < 1) {
+            return;
+        }
+        let reader = new FileReader();
+        reader.onload = (event) => {
+            $.ajax({
+                url: '/evse/user_calibration_update',
+                method: 'PUT',
+                contentType: 'application/json',
+                data: event.target.result
+            });
+        };
+        reader.readAsText(files[0]);
+    });
+
+    $("#user_calibration_reset").on("click", () => {
+        let reset_calibration : EVSEUserCalibration = {
+            "user_calibration_active": false,
+            "voltage_diff": 0,
+            "voltage_mul": 0,
+            "voltage_div": 0,
+            "resistance_2700": 0,
+            "resistance_880": [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        };
+        $.ajax({
+            url: '/evse/user_calibration_update',
+            method: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(reset_calibration)
+        });
+    });
 
     $("#debug_start").on("click", debug_start);
     $("#debug_stop").on("click", debug_stop);
@@ -349,6 +401,10 @@ export function addEventListeners(source: EventSource) {
 
     source.addEventListener('evse/auto_start_charging', function (e: util.SSE) {
         update_evse_auto_start_charging(<EVSEAutoStart>(JSON.parse(e.data)));
+    }, false);
+
+    source.addEventListener('evse/user_calibration', function (e: util.SSE) {
+        update_evse_user_calibration(<EVSEUserCalibration>(JSON.parse(e.data)));
     }, false);
 
     source.addEventListener("evse/debug_header", function (e: util.SSE) {
@@ -472,7 +528,20 @@ export function getTranslation(lang: string) {
                     "debug_start": "Start",
                     "debug_stop": "Stop + Download",
                     "debug_description": "Ladeprotokoll erstellen",
-                    "debug_description_muted": "zur Diagnose bei Ladeproblemen"
+                    "debug_description_muted": "zur Diagnose bei Ladeproblemen",
+                    "user_calibration": "Kalibrierungsstatus",
+                    "user_calibration_state_disabled": "Werkseinstellungen",
+                    "user_calibration_state_enabled": "Modifiziert",
+                    "voltage_calibration": "Spannungskalibrierung",
+                    "voltage_calibration_names": "Diff, Mul, Div",
+                    "resistance_2700": "Widerstandskalibrierung 2700Ω",
+                    "resistance_880": "Widerstandskalibrierung 880Ω",
+                    "user_calibration_description": "Kalibrierung",
+                    "user_calibration_description_muted": "",
+                    "user_calibration_download": "Herunterladen",
+                    "user_calibration_browse": "Hochladen",
+                    "user_calibration_select_file": "Kalibrierungsdatei auswählen",
+                    "user_calibration_reset": "Zurücksetzen",
                 },
                 "script": {
                     "error_code": "Fehlercode",
@@ -593,7 +662,21 @@ export function getTranslation(lang: string) {
                     "debug_start": "Start",
                     "debug_stop": "Stop + Download",
                     "debug_description": "Create charge log",
-                    "debug_description_muted": "to diagnose charging problems"
+                    "debug_description_muted": "to diagnose charging problems",
+
+                    "user_calibration": "Calibration state",
+                    "user_calibration_state_disabled": "Factory settings",
+                    "user_calibration_state_enabled": "Modified",
+                    "voltage_calibration": "Voltage calibration",
+                    "voltage_calibration_names": "diff, mul, div",
+                    "resistance_2700": "Resistance calibration 2700Ω",
+                    "resistance_880": "Resistance calibration 880Ω",
+                    "user_calibration_description": "Calibration",
+                    "user_calibration_description_muted": "",
+                    "user_calibration_download": "Download",
+                    "user_calibration_browse": "Upload",
+                    "user_calibration_select_file": "Select calibration file",
+                    "user_calibration_reset": "Reset",
                 },
                 "script": {
                     "error_code": "Error code",
