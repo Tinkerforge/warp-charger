@@ -38,7 +38,7 @@ ChargeManager::ChargeManager()
         {"chargers", Config::Array(
             {},
             Config::Object({
-                {"host", Config::Str("", 128)},
+                {"host", Config::Str("", 64)},
                 {"port", Config::Uint16(80)},
                 {"username", Config::Str("", 64)},
                 {"password", Config::Str("", 64)},
