@@ -17,10 +17,10 @@ QR_CODE_PADDING = b';;\r'
 
 DESCRIPTION_PLACEHOLDER = b'Smart, 11 kW, 5 m, ZL 12 m, CEE'
 
-TYPE_PLACEHOLDER = b'WARP-CS-11KW-50-CEE'
+SKU_PLACEHOLDER = b'WARP-CS-11KW-50-CEE'
 
-SUPPLY_CABLE_EXTENSION_PLACEHOLDER_A = b'+10m'
-SUPPLY_CABLE_EXTENSION_PLACEHOLDER_B = b'E:10;'
+EXTRA_SUPPLY_CABLE_PLACEHOLDER_A = b'+10m'
+EXTRA_SUPPLY_CABLE_PLACEHOLDER_B = b'E:10;'
 
 VERSION_PLACEHOLDER = b'2.17'
 
@@ -28,13 +28,13 @@ SERIAL_NUMBER_PLACEHOLDER = b'5000000001'
 
 BUILD_DATE_PLACEHOLDER = b'2021-01'
 
-ORDER_PLACEHOLDER = b'SO/B202012345'
+ORDER_ID_PLACEHOLDER = b'SO/B202012345'
 
 ITEM_PLACEHOLDER = b'111/222'
 
 ORDER_DATE_PLACEHOLDER = b'1970-01-01 00:00:00'
 
-NAME_PLACEHOLDER = b'Max Mustermann'
+CUSTOMER_PLACEHOLDER = b'Max Mustermann'
 
 COPIES_FORMAT = '^C{0}\r'
 
@@ -62,8 +62,58 @@ def get_next_serial_number():
 
     return '5{0:09}'.format(serial_number)
 
-def print_docket_label(type_, supply_cable_extension, version, serial_number, build_date, order,
-                       item, order_date, name, instances, copies, stdout, force_build_date):
+def sku_to_description(sku, extra_supply_cable):
+    m = re.match(r'^WARP-C(B|S|P)-(11|22)KW-(50|75)(|-CEE)$', sku)
+
+    if m == None:
+        raise Exception('Invalid SKU: {0}'.format(sku))
+
+    sku_model = m.group(1)
+    sku_power = m.group(2)
+    sku_type2_cable_length = m.group(3)
+    sku_cee = len(m.group(4)) != 0
+
+    if sku_model == 'B':
+        description = b'Basic'
+    elif sku_model == 'S':
+        description = b'Smart'
+    elif sku_model == 'P':
+        description = b'Pro'
+    else:
+        assert False, sku_model
+
+    if sku_power == '11':
+        description += b', 11 kW'
+    elif sku_power == '22':
+        description += b', 22 kW'
+    else:
+        assert False, sku_power
+
+    if sku_type2_cable_length == '50':
+        description += b', 5 m'
+    elif sku_type2_cable_length == '75':
+        description += b', 7,5 m'
+    else:
+        assert False, sku_type2_cable_length
+
+    if sku_model == 'P':
+        supply_cable_length = 2
+    elif sku_cee:
+        supply_cable_length = 2
+    else:
+        supply_cable_length = 0
+
+    supply_cable_length += extra_supply_cable
+
+    description += ', ZL {0} m'.format(supply_cable_length).encode('ascii')
+
+    if sku_cee:
+        description += b', CEE'
+
+    return description
+
+def print_docket_label(sku, extra_supply_cable, version, serial_number, build_date, order_id,
+                       item, order_date, customer, instances, copies, stdout, force_build_date):
     # check instances
     if instances < 1 or instances > 25:
         raise Exception('Invalid instances: {0}'.format(instances))
@@ -72,64 +122,19 @@ def print_docket_label(type_, supply_cable_extension, version, serial_number, bu
     if copies < 1 or copies > 5:
         raise Exception('Invalid copies: {0}'.format(copies))
 
-    # check supply cable extension
-    if supply_cable_extension < 0:
-        raise Exception('Invalid supply cable extension: {0}'.format(supply_cable_extension))
+    # check extra supply cable
+    if extra_supply_cable < 0:
+        raise Exception('Invalid extra supply cable: {0}'.format(extra_supply_cable))
 
-    # parse type
-    m = re.match('^WARP-C(B|S|P)-(11|22)KW-(50|75)(|-CEE)$', type_)
-
-    if m == None:
-        raise Exception('Invalid type: {0}'.format(type_))
-
-    type_model = m.group(1)
-    type_power = m.group(2)
-    type_type2_cable_length = m.group(3)
-    type_cee = len(m.group(4)) != 0
-
-    if type_model == 'B':
-        description = b'Basic'
-    elif type_model == 'S':
-        description = b'Smart'
-    elif type_model == 'P':
-        description = b'Pro'
-    else:
-        assert False, type_model
-
-    if type_power == '11':
-        description += b', 11 kW'
-    elif type_power == '22':
-        description += b', 22 kW'
-    else:
-        assert False, type_power
-
-    if type_type2_cable_length == '50':
-        description += b', 5 m'
-    elif type_type2_cable_length == '75':
-        description += b', 7,5 m'
-    else:
-        assert False, type_type2_cable_length
-
-    if type_model == 'P':
-        supply_cable_length = 2
-    elif type_cee:
-        supply_cable_length = 2
-    else:
-        supply_cable_length = 0
-
-    supply_cable_length += supply_cable_extension
-
-    description += ', ZL {0} m'.format(supply_cable_length).encode('ascii')
-
-    if type_cee:
-        description += b', CEE'
+    # parse sku
+    description = sku_to_description(sku, extra_supply_cable)
 
     # check version
-    if re.match('^[1-9]\.(0|[1-9][0-9]*)$', version) == None:
+    if re.match(r'^[1-9]\.(0|[1-9][0-9]*)$', version) == None:
         raise Exception('Invalid version: {0}'.format(version))
 
     # check serial number
-    if re.match('^-|5[0-9]{9}$', serial_number) == None:
+    if re.match(r'^-|5[0-9]{9}$', serial_number) == None:
         raise Exception('Invalid serial number: {0}'.format(serial_number))
 
     # check build date
@@ -139,12 +144,12 @@ def print_docket_label(type_, supply_cable_extension, version, serial_number, bu
     if not force_build_date and (parsed_build_date.year < now.year or (parsed_build_date.year == now.year and parsed_build_date.month < now.month)):
         raise Exception('Invalid build date: {0}'.format(build_date))
 
-    # check order
-    if re.match('^SO/B?[0-9]+$', order) == None:
-        raise Exception('Invalid order: {0}'.format(order))
+    # check order id
+    if re.match(r'^SO/B?[0-9]+$', order_id) == None:
+        raise Exception('Invalid order ID: {0}'.format(order_id))
 
     # check item
-    if re.match('^[1-9][0-9]*/[1-9][0-9]*$', item) == None:
+    if re.match(r'^[1-9][0-9]*/[1-9][0-9]*$', item) == None:
         raise Exception('Invalid item: {0}'.format(item))
 
     # check order date
@@ -161,9 +166,9 @@ def print_docket_label(type_, supply_cable_extension, version, serial_number, bu
     if template.find(QR_CODE_COMMAND) < 0:
         raise Exception('QR code command missing in EZPL file')
 
-    offset = len(TYPE_PLACEHOLDER) - len(type_) + \
+    offset = len(SKU_PLACEHOLDER) - len(sku) + \
              len(VERSION_PLACEHOLDER) - len(version) + \
-             len(ORDER_PLACEHOLDER) - len(order) + \
+             len(ORDER_ID_PLACEHOLDER) - len(order_id) + \
              len(ITEM_PLACEHOLDER) - len(item)
 
     if offset < 0:
@@ -177,22 +182,22 @@ def print_docket_label(type_, supply_cable_extension, version, serial_number, bu
 
     template = template.replace(DESCRIPTION_PLACEHOLDER, description)
 
-    # patch type
-    if template.find(TYPE_PLACEHOLDER) < 0:
-        raise Exception('Type placeholder missing in EZPL file')
+    # patch SKU
+    if template.find(SKU_PLACEHOLDER) < 0:
+        raise Exception('SKU placeholder missing in EZPL file')
 
-    template = template.replace(TYPE_PLACEHOLDER, type_.encode('ascii'))
+    template = template.replace(SKU_PLACEHOLDER, sku.encode('ascii'))
 
-    # patch supply cable extension
-    if template.find(SUPPLY_CABLE_EXTENSION_PLACEHOLDER_A) < 0:
-        raise Exception('Supply cable extension placeholder A missing in EZPL file')
+    # patch extra supply cable
+    if template.find(EXTRA_SUPPLY_CABLE_PLACEHOLDER_A) < 0:
+        raise Exception('Extra supply cable placeholder A missing in EZPL file')
 
-    template = template.replace(SUPPLY_CABLE_EXTENSION_PLACEHOLDER_A, '+{0}m'.format(supply_cable_extension).encode('ascii'))
+    template = template.replace(EXTRA_SUPPLY_CABLE_PLACEHOLDER_A, '+{0}m'.format(extra_supply_cable).encode('ascii'))
 
-    if template.find(SUPPLY_CABLE_EXTENSION_PLACEHOLDER_B) < 0:
-        raise Exception('Supply cable extension placeholder B missing in EZPL file')
+    if template.find(EXTRA_SUPPLY_CABLE_PLACEHOLDER_B) < 0:
+        raise Exception('Extra supply cable placeholder B missing in EZPL file')
 
-    template = template.replace(SUPPLY_CABLE_EXTENSION_PLACEHOLDER_B, 'E:{0};'.format(supply_cable_extension).encode('ascii'))
+    template = template.replace(EXTRA_SUPPLY_CABLE_PLACEHOLDER_B, 'E:{0};'.format(extra_supply_cable).encode('ascii'))
 
     # patch version
     if template.find(VERSION_PLACEHOLDER) < 0:
@@ -206,11 +211,11 @@ def print_docket_label(type_, supply_cable_extension, version, serial_number, bu
 
     template = template.replace(BUILD_DATE_PLACEHOLDER, build_date.encode('ascii'))
 
-    # patch order
-    if template.find(ORDER_PLACEHOLDER) < 0:
-        raise Exception('Order placeholder missing in EZPL file')
+    # patch order ID
+    if template.find(ORDER_ID_PLACEHOLDER) < 0:
+        raise Exception('Order ID placeholder missing in EZPL file')
 
-    template = template.replace(ORDER_PLACEHOLDER, order.encode('ascii'))
+    template = template.replace(ORDER_ID_PLACEHOLDER, order_id.encode('ascii'))
 
     # patch item
     if template.find(ITEM_PLACEHOLDER) < 0:
@@ -224,11 +229,11 @@ def print_docket_label(type_, supply_cable_extension, version, serial_number, bu
 
     template = template.replace(ORDER_DATE_PLACEHOLDER, order_date.encode('ascii'))
 
-    # patch name
-    if template.find(NAME_PLACEHOLDER) < 0:
-        raise Exception('Name placeholder missing in EZPL file')
+    # patch customer
+    if template.find(CUSTOMER_PLACEHOLDER) < 0:
+        raise Exception('Customer placeholder missing in EZPL file')
 
-    template = template.replace(NAME_PLACEHOLDER, name.encode('latin1', errors='replace'))
+    template = template.replace(CUSTOMER_PLACEHOLDER, customer.encode('latin1', errors='replace'))
 
     # patch copies
     copies_command = COPIES_FORMAT.format(1).encode('ascii')
@@ -263,15 +268,15 @@ def print_docket_label(type_, supply_cable_extension, version, serial_number, bu
 def main():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('type')
-    parser.add_argument('supply_cable_extension', type=int)
+    parser.add_argument('sku')
+    parser.add_argument('extra_supply_cable', type=int)
     parser.add_argument('version')
     parser.add_argument('serial_number')
     parser.add_argument('build_date')
-    parser.add_argument('order')
+    parser.add_argument('order_id')
     parser.add_argument('item')
     parser.add_argument('order_date')
-    parser.add_argument('name')
+    parser.add_argument('customer')
     parser.add_argument('-i', '--instances', type=int, default=1)
     parser.add_argument('-c', '--copies', type=int, default=1)
     parser.add_argument('-s', '--stdout', action='store_true')
@@ -282,8 +287,8 @@ def main():
     assert args.instances > 0
     assert args.copies > 0
 
-    print_docket_label(args.type, args.supply_cable_extension, args.version, args.serial_number, args.build_date, args.order,
-                       args.item, args.order_date, args.name, args.instances, args.copies, args.stdout, args.force_build_date)
+    print_docket_label(args.sku, args.extra_supply_cable, args.version, args.serial_number, args.build_date, args.order_id,
+                       args.item, args.order_date, args.customer, args.instances, args.copies, args.stdout, args.force_build_date)
 
 if __name__ == '__main__':
     main()
