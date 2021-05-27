@@ -170,7 +170,7 @@ void EVSE::setup()
 }
 
 String EVSE::get_evse_debug_header() {
-    return "millis,iec61851_state,vehicle_state,contactor_state,contactor_error,charge_release,allowed_charging_current,error_state,lock_state,time_since_state_change,uptime,low_level_mode_enabled,led_state,cp_pwm_duty_cycle,adc_values_0,adc_values_1,voltages_0,voltages_1,voltages_2,resistances_0,resistances_1,gpio_0,gpio_1,gpio_2,gpio_3,gpio_4\n";
+    return "millis,iec,vehicle,contactor,_error,charge_release,allowed_current,error,lock,t_state_change,uptime,low_level_mode_enabled,led,cp_pwm,adc_pe_cp,adc_pe_pp,voltage_pe_cp,voltage_pe_pp,voltage_pe_cp_max,resistance_pe_cp,resistance_pe_pp,gpio_in,gpio_out,gpio_motor_in,gpio_relay,gpio_motor_error\n";
 }
 
 String EVSE::get_evse_debug_line() {
