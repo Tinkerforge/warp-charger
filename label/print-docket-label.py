@@ -9,7 +9,7 @@ from datetime import datetime
 import urllib.request
 import ssl
 
-PRINTER_HOST = 'BP730i'
+PRINTER_HOST = '192.168.178.241'
 PRINTER_PORT = 9100
 
 QR_CODE_COMMAND = b'W619,119,5,2,M,8,6,84,0\r'
