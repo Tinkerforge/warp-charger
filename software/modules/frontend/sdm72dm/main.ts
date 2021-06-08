@@ -58,7 +58,7 @@ function update_live_meter() {
         for(let i = 0; i < values.length + 1; ++i) {
             let d = new Date(start + i * (1000 * (1/sps)));
             if(d.getSeconds() == 0 && d.getMinutes() != last_minute) {
-                labels[i] = d.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
+                labels[i] = d.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit', hour12: false});
                 last_minute = d.getMinutes();
             }
             else {
@@ -95,7 +95,7 @@ function update_history_meter() {
         for(let i = 0; i < values.length + 1; ++i) {
             if (i % VALUES_PER_LABEL == 0) {
                 let d = new Date(start + i * (1000 * 60 * HISTORY_MINUTE_INTERVAL));
-                labels[i] = d.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
+                labels[i] = d.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit', hour12: false});
             }
             else {
                 labels[i] = null;
@@ -199,7 +199,7 @@ function update_status_chart() {
         for(let i = 0; i < values.length + 1; ++i) {
             if (i % VALUES_PER_LABEL == 0) {
                 let d = new Date(start + i * (1000 * 60 * HISTORY_MINUTE_INTERVAL));
-                labels[i] = d.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
+                labels[i] = d.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit', hour12: false});
             }
             else {
                 labels[i] = null;
