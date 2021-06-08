@@ -76,55 +76,57 @@ $(window).on('pageshow', (ev) => {
 
     feather.replace();
 
-    let de: {[index: string]:any} = {
-        "main": {
-            "navbar_status": "Status",
-            "content_status": "Status"
+    let translations: {[index: string]:any} = {
+        "de": {
+            "main": {
+                "navbar_status": "Status",
+                "content_status": "Status"
+            },
+            "util": {
+                "reboot_title": "Starte neu...",
+                "reboot_text": "Das Webinterface wird nach dem Neustart automatisch neu geladen.",
+                "event_connection_lost_title": "Verbindung zur Wallbox verloren!",
+                "event_connection_lost": "Verbindung wird wiederhergestellt...",
+                "to_be_cleared": "Wird beim Speichern geleert",
+                "unchanged": "unverändert"
+            },
+            "days": "Tage",
+            "day": "Tag",
         },
-        "util": {
-            "reboot_title": "Starte neu...",
-            "reboot_text": "Das Webinterface wird nach dem Neustart automatisch neu geladen.",
-            "event_connection_lost_title": "Verbindung zur Wallbox verloren!",
-            "event_connection_lost": "Verbindung wird wiederhergestellt...",
-            "to_be_cleared": "Wird beim Speichern geleert",
-            "unchanged": "unverändert"
-        },
-        "days": "Tage",
-        "day": "Tag",
-    };
-
-    let en: {[index: string]:any} = {
-        "main": {
-            "navbar_status": "Status",
-            "content_status": "Status"
-        },
-        "util": {
-            "reboot_title": "Rebooting...",
-            "reboot_text": "The web interface will be reloaded automatically after the restart.",
-            "event_connection_lost_title": "Wallbox connection lost!",
-            "event_connection_lost": "Connection will be reestablished...",
-            "to_be_cleared": "Will be cleared on save."
-        },
-        "days": "days",
-        "day": "day",
+        "en": {
+            "main": {
+                "navbar_status": "Status",
+                "content_status": "Status"
+            },
+            "util": {
+                "reboot_title": "Rebooting...",
+                "reboot_text": "The web interface will be reloaded automatically after the restart.",
+                "event_connection_lost_title": "Wallbox connection lost!",
+                "event_connection_lost": "Connection will be reestablished...",
+                "to_be_cleared": "Will be cleared on save.",
+                "unchanged": "unchanged"
+            },
+            "days": "days",
+            "day": "day",
+        }
     };
 
     for (let item of modules) {
         let item_de = item.getTranslation("de");
         for (let subitem in item_de) {
-            de[subitem] = item_de[subitem];
+            translations["de"][subitem] = item_de[subitem];
         }
 
         let item_en = item.getTranslation("en");
         for (let subitem in item_en) {
-            en[subitem] = item_en[subitem];
+            translations["en"][subitem] = item_en[subitem];
         }
     }
 
     var translator = new Translator();
 
     // Add the language to the translator and translate the page
-    translator.add('de', de).add('en', en).translatePageTo();
+    translator.add('de', translations["de"]).add('en', translations["en"]).translatePageTo();
 
     $('a[data-toggle="tab"]').on('show.bs.tab', () => {
         $('a[data-toggle="tab"]').not(<Element>event.target).removeClass("active");

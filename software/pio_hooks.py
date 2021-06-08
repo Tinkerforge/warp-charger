@@ -237,6 +237,10 @@ def main():
         '{{{modules}}}': ', '.join([x.under for x in main_ts_entries]),
     })
 
+    # Check translation completeness
+    with ChangedDirectory('web'):
+        subprocess.run(["python", "check_translation_completeness.py"], check=True)
+
     # Generate web interface
     with ChangedDirectory('web'):
         subprocess.run(["npx", "gulp"])
