@@ -217,7 +217,7 @@ function allow_debug(b: boolean) {
             // returnValue is not a boolean, but the string to be shown
             // in the "are you sure you want to close this tab" message
             // box. However this string is only shown in some browsers.
-            e.returnValue = <any>__('evse.script.tab_close_warning');
+            e.returnValue = <any>__("evse.script.tab_close_warning");
         }
     } else {
         window.onbeforeunload = null;
@@ -441,7 +441,6 @@ export function getTranslation(lang: string) {
                     "charging": "Lädt",
                     "error": "Fehler",
                     "charging_current": "Ladestrom",
-                    "charging_current_set": "Set",
                     "charging_current_minimum": "6 A",
                     "charging_current_maximum": "Max",
                     "charge_control": "Ladesteuerung",
@@ -547,9 +546,7 @@ export function getTranslation(lang: string) {
                     "error_code": "Fehlercode",
                     "charging_for": "Lädt seit",
                     "last_charge_took": "Letztes Laden dauerte",
-                    "charging": "Lädt",
                     "set_charging_current_failed": "Konnte Ladestrom nicht setzen",
-                    "not_implemented": "Noch nicht implementiert",
                     "auto_start_charging_update": "Lade-Autostart setzen fehlgeschlagen.",
                     "start_charging_failed": "Ladestart auslösen fehlgeschlagen",
                     "stop_charging_failed": "Ladestop auslösen fehlgeschlagen",
@@ -576,7 +573,6 @@ export function getTranslation(lang: string) {
                     "charging": "Charging",
                     "error": "Error",
                     "charging_current": "Charge current",
-                    "charging_current_set": "Set",
                     "charging_current_minimum": "6 A",
                     "charging_current_maximum": "Max",
                     "charge_control": "Charge control",
@@ -636,6 +632,7 @@ export function getTranslation(lang: string) {
                     "charging_current_configured": "Configured",
                     "charging_current_max_incoming": "Supply cable",
                     "charging_current_max_outgoing": "Type 2 cable",
+                    "charging_current_managed": "Managed",
                     "low_level_state": "Low Level State",
                     "low_level_state_show": "Show / Hide",
                     "low_level_mode": "Low Level Mode",
@@ -682,9 +679,7 @@ export function getTranslation(lang: string) {
                     "error_code": "Error code",
                     "charging_for": "Charging for",
                     "last_charge_took": "Last charge took",
-                    "charging": "Charging",
                     "set_charging_current_failed": "Failed to set charging current",
-                    "not_implemented": "Not implemented yet",
                     "auto_start_charging_update": "Failed to set auto charge.",
                     "start_charging_failed": "Failed to start charging",
                     "stop_charging_failed": "Failed to stop charging",
