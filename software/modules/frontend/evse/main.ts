@@ -336,7 +336,7 @@ export function init() {
     }, false);
 
     $('#user_calibration_upload').on("change",(evt) => {
-        let files = evt.target.files;
+        let files = (<HTMLInputElement>evt.target).files;
         if (files.length < 1) {
             return;
         }
