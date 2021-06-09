@@ -125,15 +125,10 @@
                         Der RPi-Imager lädt das ausgewählte Betriebssystem herunter und flasht es auf eine angeschlossene Micro-SD-Karte.
                         Wenn du mit der Benutzung einer Linux-Konsole vertraut bist, empfehlen wir das Raspberry Pi OS Lite, das im Imager
                         unter <code>OS auswählen</code> -> <code>Raspberry Pi OS (other)</code> zu finden ist. Falls du mit einer graphischen Oberfläche arbeiten
-                        möchtest, kannst du das normale Raspberry Pi OS verwenden. Der Imager flasht nach Auswahl der SD-Karte und klicken auf
+                        möchtest, kannst du das normale Raspberry Pi OS verwenden.
+                        Mit der Tastenkombination <kbd>STRG+SHIFT+X</kbd> kannst du die erweiterten Optionen öffnen um z.B. den SSH-Server zu aktivieren,
+                        oder ein WLAN-Netzwerk, die Spracheinstellungen und einen Hostnamen zu konfigurieren. Der Imager flasht nach Auswahl der SD-Karte und klicken auf
                         <code>Schreiben</code> das Betriebssystem auf die Micro-SD-Karte.
-                    </p>
-                    <p>
-                        Um den Raspberry Pi weiter vorzubereiten musst du jetzt entweder einen Monitor und eine Tastatur anschließen,
-                        oder auf der Boot-Partition der SD-Karte eine leere Datei mit dem Namen <code>ssh</code> anlegen, damit der Pi beim Booten
-                        den SSH-Dienst startet, <a href="https://www.raspberrypi.org/documentation/remote-access/ssh/README.md">siehe hier für Details</a>.
-                        Du musst dann nur noch entweder ein LAN-Kabel anschließen, oder eine WLAN-Verbindung konfigurieren,
-                        wie <a href="https://www.raspberrypi.org/documentation/configuration/wireless/headless.md">hier beschrieben</a>.
                     </p>
                 </div>
                 <div class="col-md-12 col-lg-6">
@@ -155,10 +150,8 @@
                 Du kannst jetzt die Micro-SD-Karte in den Raspberry Pi einlegen und ihn booten. Nachdem du dich gegebenenfalls eingeloggt hast
                 (per SSH auf <code>pi@raspberry</code>, oder in der Textkonsole als <code>pi</code>; Passwort ist jeweils <code>raspberrypi</code>), solltest du zunächst,
                 falls du die graphische Oberfläche gebootet hast, dem Einrichtungs-Wizard folgen.
-                Ansonsten kannst du mit <code>sudo raspi-config</code> die deutsche Locale <code>de_DE.UTF-8</code> aktivieren (unter <code>Localization options</code> -> <code>Locale</code>).
                 In beiden Fällen solltest du danach in der Konsole mit <code>sudo apt update</code> und <code>sudo apt upgrade</code>
-                das System aktualisieren und mit <code>passwd</code> das Standardpasswort ändern.
-                Danach kannst du den Pi mit <code>sudo reboot</code> neustarten.
+                das System aktualisieren. Danach kannst du den Pi mit <code>sudo reboot</code> neustarten.
             </p>
         </div>
     </section>
