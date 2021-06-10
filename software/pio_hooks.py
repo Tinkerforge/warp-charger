@@ -239,7 +239,7 @@ def main():
 
     # Check translation completeness
     with ChangedDirectory('web'):
-        subprocess.run(["python", "check_translation_completeness.py"], check=True)
+        subprocess.run(["python3", "check_translation_completeness.py"], check=True)
 
     # Generate web interface
     with ChangedDirectory('web'):
