@@ -95,7 +95,7 @@ gulp.task("sass", function () {
 });
 
 // Embed css and js into html
-gulp.task("embed", run("python embed_css_and_js.py"));
+gulp.task("embed", run("python3 embed_css_and_js.py"));
 
 gulp.task("gzip", function () {
     const gzip = require('gulp-gzip');
