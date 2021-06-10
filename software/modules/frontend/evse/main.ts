@@ -122,15 +122,15 @@ function update_evse_low_level_state(state: EVSELowLevelState) {
 interface EVSEMaxChargingCurrent {
     max_current_configured: number,
     max_current_incoming_cable: number,
-    max_current_outgoing_cable: number/*,
-    max_current_managed: number*/
+    max_current_outgoing_cable: number,
+    max_current_managed: number
 }
 
 function update_evse_max_charging_current(state: EVSEMaxChargingCurrent) {
     $('#max_current_configured').val(util.toLocaleFixed(state.max_current_configured / 1000.0, 3) + " A");
     $('#max_current_incoming_cable').val(util.toLocaleFixed(state.max_current_incoming_cable / 1000.0, 3) + " A");
     $('#max_current_outgoing_cable').val(util.toLocaleFixed(state.max_current_outgoing_cable / 1000.0, 3) + " A");
-    //$('#max_current_managed').val(util.toLocaleFixed(state.max_current_managed / 1000.0, 3) + " A");
+    $('#max_current_managed').val(util.toLocaleFixed(state.max_current_managed / 1000.0, 3) + " A");
 
     let theoretical_maximum = Math.min(state.max_current_incoming_cable, state.max_current_outgoing_cable);
     let theoretical_maximum_str = util.toLocaleFixed(theoretical_maximum / 1000.0, 0) + " A";
@@ -472,7 +472,7 @@ export function getTranslation(lang: string) {
                     "charge_release_automatic": "Automatisch",
                     "charge_release_manual": "Manuell",
                     "charge_release_deactivated": "Deaktiviert",
-                    //"charge_release_managed": "Managed",
+                    "charge_release_managed": "Managed",
                     "allowed_charging_current": "Erlaubter Ladestrom",
                     "error_state": "Fehlerzustand",
                     "error_state_desc": "<a href=\"https://www.warp-charger.com/#documents\">siehe Betriebsanleitung für Details</a>",
@@ -502,7 +502,7 @@ export function getTranslation(lang: string) {
                     "charging_current_configured": "Konfiguriert",
                     "charging_current_max_incoming": "Zuleitung",
                     "charging_current_max_outgoing": "Typ-2-Ladekabel",
-                    //"charging_current_managed": "Managed",
+                    "charging_current_managed": "Managed",
                     "low_level_state": "Low-Level-Zustand",
                     "low_level_state_show": "Anzeigen / Verstecken",
                     "low_level_mode": "Low-Level-Modus",
@@ -607,7 +607,7 @@ export function getTranslation(lang: string) {
                     "charge_release_automatic": "Automatic",
                     "charge_release_manual": "Manual",
                     "charge_release_deactivated": "Deactivated",
-                    //"charge_release_managed": "Managed",
+                    "charge_release_managed": "Managed",
                     "allowed_charging_current": "Allowed charging current",
                     "error_state": "Error state",
                     "error_state_desc": "<a href=\"https://www.warp-charger.com/#documents\">see manual for details</a>",
