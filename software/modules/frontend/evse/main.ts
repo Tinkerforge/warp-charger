@@ -89,11 +89,13 @@ interface EVSELowLevelState {
     adc_values: Uint16Array,
     voltages: Int16Array,
     resistances: Uint32Array,
-    gpio: boolean[]
+    gpio: boolean[],
+    hardware_version: number
 }
 
 function update_evse_low_level_state(state: EVSELowLevelState) {
     util.update_button_group("btn_group_low_level_mode_enabled", state.low_level_mode_enabled ? 1 : 0);
+    util.update_button_group("btn_group_hardware_version", state.hardware_version - 14);
     util.update_button_group("btn_group_led_state", state.led_state);
 
     for(let i = 0; i < 5; ++i) {
@@ -541,6 +543,9 @@ export function getTranslation(lang: string) {
                     "user_calibration_browse": "Hochladen",
                     "user_calibration_select_file": "Kalibrierungsdatei auswählen",
                     "user_calibration_reset": "Zurücksetzen",
+                    "hardware_version": "Hardware-Version",
+                    "hardware_version_14": "1.4",
+                    "hardware_version_15": "1.5",
                 },
                 "script": {
                     "error_code": "Fehlercode",
@@ -674,6 +679,9 @@ export function getTranslation(lang: string) {
                     "user_calibration_browse": "Upload",
                     "user_calibration_select_file": "Select calibration file",
                     "user_calibration_reset": "Reset",
+                    "hardware_version": "Hardware version",
+                    "hardware_version_14": "1.4",
+                    "hardware_version_14": "1.5",
                 },
                 "script": {
                     "error_code": "Error code",
