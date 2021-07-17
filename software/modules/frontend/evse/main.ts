@@ -681,7 +681,7 @@ export function getTranslation(lang: string) {
                     "user_calibration_reset": "Reset",
                     "hardware_version": "Hardware version",
                     "hardware_version_14": "1.4",
-                    "hardware_version_14": "1.5",
+                    "hardware_version_15": "1.5",
                 },
                 "script": {
                     "error_code": "Error code",
