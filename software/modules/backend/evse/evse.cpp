@@ -146,6 +146,8 @@ EVSE::EVSE()
 void EVSE::setup()
 {
     setup_evse();
+    if(!evse_found)
+        return;
 
     task_scheduler.scheduleWithFixedDelay("update_evse_state", [this](){
         update_evse_state();
