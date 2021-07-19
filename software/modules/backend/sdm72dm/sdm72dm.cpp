@@ -19,20 +19,18 @@
 
 #include "sdm72dm.h"
 
-#include "ArduinoJson.h"
-#include "AsyncJson.h"
-
 #include "bindings/errors.h"
 
 #include "api.h"
 #include "event_log.h"
 #include "tools.h"
 #include "task_scheduler.h"
+#include "web_server.h"
 
 extern EventLog logger;
 
 extern TF_HalContext hal;
-extern AsyncWebServer server;
+extern WebServer server;
 extern TaskScheduler task_scheduler;
 
 extern API api;
@@ -185,40 +183,47 @@ void SDM72DM::register_urls() {
         this->energy_meter_reset_requested = true;
     }, true);
 
-    server.on("/meter/history", HTTP_GET, [this](AsyncWebServerRequest *request) {
+    server.on("/meter/history", HTTP_GET, [this](WebServerRequest request) {
         if(!initialized) {
-            request->send(400, "text/html", "not initialized");
+            request.send(400, "text/html", "not initialized");
             return;
         }
 
-        auto *response = request->beginResponseStream("application/json; charset=utf-8");
+        const size_t buf_size = RING_BUF_SIZE * 6 + 100;
+        char buf[buf_size] = {0};
+        size_t buf_written = 0;
 
         int16_t val;
         power_history.peek(&val);
         // Negative values are prefilled, because the ESP was booted less than 48 hours ago.
         if(val < 0)
-            response->print("[null");
+            buf_written += snprintf(buf + buf_written, buf_size - buf_written, "%s", "[null");
         else
-            response->printf("[%d", (int)val);
+            buf_written += snprintf(buf + buf_written, buf_size - buf_written, "[%d", (int)val);
 
-        for(int i = 1; i < power_history.used() && power_history.peek_offset(&val, i); ++i) {
+        for(int i = 1; i < power_history.used() && power_history.peek_offset(&val, i) && buf_written < buf_size; ++i) {
             // Negative values are prefilled, because the ESP was booted less than 48 hours ago.
             if(val < 0)
-                response->print(", null");
+                buf_written += snprintf(buf + buf_written, buf_size - buf_written, "%s", ",null");
             else
-                response->printf(",%d", (int)val);
+                buf_written += snprintf(buf + buf_written, buf_size - buf_written, ",%d", (int)val);
         }
-        response->printf("]");
-        request->send(response);
+
+        if (buf_written < buf_size)
+            buf_written += snprintf(buf + buf_written, buf_size - buf_written, "%c", ']');
+
+        request.send(200, "application/json; charset=utf-8", buf, buf_written);
     });
 
-    server.on("/meter/live", HTTP_GET, [this](AsyncWebServerRequest *request) {
+    server.on("/meter/live", HTTP_GET, [this](WebServerRequest request) {
         if(!initialized) {
-            request->send(400, "text/html", "not initialized");
+            request.send(400, "text/html", "not initialized");
             return;
         }
 
-        auto *response = request->beginResponseStream("application/json; charset=utf-8");
+        const size_t buf_size = RING_BUF_SIZE * 6 + 100;
+        char buf[buf_size] = {0};
+        size_t buf_written = 0;
 
         int16_t val;
         interval_samples.peek(&val);
@@ -228,13 +233,14 @@ void SDM72DM::register_urls() {
         } else {
             samples_per_second = (float)this->samples_last_interval / millis() * 1000;
         }
-        response->printf("{\"samples_per_second\": %f, \"samples\":[%d", samples_per_second, val);
+        buf_written += snprintf(buf + buf_written, buf_size - buf_written, "{\"samples_per_second\":%f,\"samples\":[%d", samples_per_second, val);
 
-        for(int i = 1; (i < interval_samples.used() - 1) && interval_samples.peek_offset(&val, i); ++i) {
-            response->printf(",%d", val);
+        for(int i = 1; (i < interval_samples.used() - 1) && interval_samples.peek_offset(&val, i) && buf_written < buf_size; ++i) {
+            buf_written += snprintf(buf + buf_written, buf_size - buf_written, ",%d", val);
         }
-        response->printf("]}");
-        request->send(response);
+        if (buf_written < buf_size)
+            buf_written += snprintf(buf + buf_written, buf_size - buf_written, "%s", "]}");
+        request.send(200, "application/json; charset=utf-8", buf, buf_written);
     });
 }
 

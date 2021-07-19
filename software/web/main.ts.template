@@ -12,7 +12,7 @@ import * as util from "./ts/util";
 
 interface Module {
     init(): void;
-    addEventListeners(source: EventSource): void;
+    addEventListeners(source: EventTarget): void;
     updateLockState(m: Modules): void;
     getTranslation(lang: string): any;
 }
@@ -34,17 +34,7 @@ function update_modules(module_init: Modules) {
     }
 }
 
-export function registerEvents(eventSource: EventSource) {
-    eventSource.addEventListener('open', function (e) {
-        console.log("Events Connected");
-    }, false);
-
-    eventSource.addEventListener('error', function (e) {
-        if ((<EventSource>e.target).readyState != EventSource.OPEN) {
-            console.log("Events Disconnected");
-        }
-    }, false);
-
+export function registerEvents(eventSource: EventTarget) {
     eventSource.addEventListener('modules', function (e: util.SSE) {
         update_modules(<Modules>(JSON.parse(e.data)));
     }, false);
@@ -63,9 +53,7 @@ function init() {
         m.init();
     }
 
-    if (!!window.EventSource) {
-        util.setupEventSource(true, false, registerEvents);
-    }
+    util.setupEventSource(true, false,  (ws: WebSocket, eventTarget: EventTarget) => registerEvents(eventTarget));
 
     window.setTimeout(() => $('#nav-list').removeAttr("style"), 200);
     window.setTimeout(() => $('#main').removeAttr("style"), 200);

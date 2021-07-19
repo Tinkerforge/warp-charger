@@ -26,14 +26,15 @@
 #include "event_log.h"
 #include "task_scheduler.h"
 #include "tools.h"
-#include "modules/sse/sse.h"
+#include "web_server.h"
+#include "modules/ws/ws.h"
 
 extern EventLog logger;
 
 extern TaskScheduler task_scheduler;
 extern TF_HalContext hal;
-extern AsyncWebServer server;
-extern Sse sse;
+extern WebServer server;
+extern WS ws;
 
 extern API api;
 extern bool firmware_update_allowed;
@@ -171,7 +172,7 @@ void EVSE::setup()
 }
 
 String EVSE::get_evse_debug_header() {
-    return "millis,iec,vehicle,contactor,_error,charge_release,allowed_current,error,lock,t_state_change,uptime,low_level_mode_enabled,led,cp_pwm,adc_pe_cp,adc_pe_pp,voltage_pe_cp,voltage_pe_pp,voltage_pe_cp_max,resistance_pe_cp,resistance_pe_pp,gpio_in,gpio_out,gpio_motor_in,gpio_relay,gpio_motor_error,hardware_version\n";
+    return "\"millis,iec,vehicle,contactor,_error,charge_release,allowed_current,error,lock,t_state_change,uptime,low_level_mode_enabled,led,cp_pwm,adc_pe_cp,adc_pe_pp,voltage_pe_cp,voltage_pe_pp,voltage_pe_cp_max,resistance_pe_cp,resistance_pe_pp,gpio_in,gpio_out,gpio_motor_in,gpio_relay,gpio_motor_error,hardware_version\"";
 }
 
 String EVSE::get_evse_debug_line() {
@@ -223,7 +224,7 @@ String EVSE::get_evse_debug_line() {
     }
 
     char line[150] = {0};
-    snprintf(line, sizeof(line)/sizeof(line[0]), "%lu,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%c,%u,%u,%u,%u,%d,%d,%d,%u,%u,%c,%c,%c,%c,%c,%u\n",
+    snprintf(line, sizeof(line)/sizeof(line[0]), "[%lu,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%c,%u,%u,%u,%u,%d,%d,%d,%u,%u,%c,%c,%c,%c,%c,%u]",
         millis(),
         iec61851_state,
         vehicle_state,
@@ -294,19 +295,19 @@ void EVSE::register_urls()
             ));
     }, true);
 
-    server.on("/evse/start_debug", HTTP_GET, [this](AsyncWebServerRequest *request) {
+    server.on("/evse/start_debug", HTTP_GET, [this](WebServerRequest request) {
         task_scheduler.scheduleOnce("enable evse debug", [this](){
-            sse.pushStateUpdate(this->get_evse_debug_header(), "evse/debug_header");
+            ws.pushStateUpdate(this->get_evse_debug_header(), "evse/debug_header");
             debug = true;
         }, 0);
-        request->send(200);
+        request.send(200);
     });
 
-    server.on("/evse/stop_debug", HTTP_GET, [this](AsyncWebServerRequest *request){
+    server.on("/evse/stop_debug", HTTP_GET, [this](WebServerRequest request){
         task_scheduler.scheduleOnce("enable evse debug", [this](){
             debug = false;
         }, 0);
-        request->send(200);
+        request.send(200);
     });
 }
 
@@ -322,7 +323,7 @@ void EVSE::loop()
 
     if(debug && deadline_elapsed(last_debug + 50)) {
         last_debug = millis();
-        sse.pushStateUpdate(this->get_evse_debug_line(), "evse/debug");
+        ws.pushStateUpdate(this->get_evse_debug_line(), "evse/debug");
     }
 }
 

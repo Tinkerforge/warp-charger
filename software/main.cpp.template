@@ -24,9 +24,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "ESPAsyncWebServer.h"
-#include "AsyncJson.h"
-
 #include "hal_arduino_esp32/hal_arduino_esp32.h"
 
 #include "bindings/errors.h"
@@ -40,11 +37,12 @@
 #include "api.h"
 #include "event_log.h"
 #include "task_scheduler.h"
+#include "web_server.h"
 
 #define GREEN_LED 4
 #define BLUE_LED 32
 
-AsyncWebServer server(80);
+WebServer server;
 
 EventLog logger;
 
@@ -90,32 +88,21 @@ Config version;
 Config modules;
 Config reboot;
 
-AsyncCallbackWebHandler *main_page_handler;
+WebServerHandler *main_page_handler;
 
 void register_default_urls() {
+    /*
     server.onNotFound([](AsyncWebServerRequest *request) {
         if (request->method() == HTTP_OPTIONS)
             request->send(200);
         else
             request->send(404, "text/html", "404");
     });
-
-    main_page_handler = &server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
-        auto *response = request->beginChunkedResponse("text/html", [](uint8_t *buffer, size_t maxLen, size_t index) -> size_t {
-            auto CHUNK_SIZE = 1024 * 10;
-            //Write up to "maxLen" bytes into "buffer" and return the amount written.
-            //index equals the amount of bytes that have been already sent
-            //You will be asked for more data until 0 is returned
-            //Keep in mind that you can not delay or yield waiting for more data!
-            size_t to_write = MIN(MIN(CHUNK_SIZE, maxLen), index_html_gz_len - index);
-            memcpy(buffer, index_html_gz + index, to_write);
-            return to_write;
-        });
-
-        response->addHeader("Content-Encoding", "gzip");
-        response->addHeader("ETag", String((uint32_t)(_BUILD_TIME_), 16));
-        response->setCode(200);
-        request->send(response);
+    */
+    main_page_handler = server.on("/", HTTP_GET, [](WebServerRequest req) {
+        req.addResponseHeader("Content-Encoding", "gzip");
+        req.addResponseHeader("ETag", String((uint32_t)(_BUILD_TIME_), 16).c_str());
+        req.send(200, "text/html", index_html_gz, index_html_gz_len);
     });
 
     reboot = Config::Null();
@@ -126,13 +113,18 @@ void register_default_urls() {
     api.addState("version", &version, {}, 10000);
     api.addState("modules", &modules, {}, 10000);
 
-    server.on("/force_reboot", HTTP_ANY, [](AsyncWebServerRequest *request) {
+    server.on("/force_reboot", HTTP_GET, [](WebServerRequest request) {
         ESP.restart();
-        request->send(200, "text/html", "Forced reboot.");
+        request.send(200, "text/html", "Forced reboot.");
     });
 
-    server.on("/uptime", HTTP_GET, [](AsyncWebServerRequest *request) {
-        request->send(200, "text/html", String(millis()));
+    server.on("/uptime", HTTP_GET, [](WebServerRequest request) {
+        request.send(200, "text/html", String(millis()).c_str());
+    });
+
+    //This is a hack to allow running without the authentication module. Remove after 1.3 beta
+    server.on("/login_state", HTTP_GET, [](WebServerRequest request) {
+        request.send(200, "text/plain", "Logged in");
     });
 
     api.registerDebugUrl(&server);
@@ -175,6 +167,8 @@ void setup(void) {
         {{{module_init_config}}}
     });
 
+    server.start();
+
     register_default_urls();
     logger.register_urls();
     task_scheduler.register_urls();
@@ -190,10 +184,6 @@ void setup(void) {
         led_blink_state = !led_blink_state;
         digitalWrite(BLUE_LED, led_blink_state ? HIGH : LOW);
     }, 0, 1000);
-
-
-
-    server.begin();
 }
 
 void loop(void) {
@@ -211,6 +201,4 @@ void loop(void) {
     api.loop();
 
     {{{module_loop}}}
-
-    digitalWrite(GREEN_LED, digitalRead(0));
 }

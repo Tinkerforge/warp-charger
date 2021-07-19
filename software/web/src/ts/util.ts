@@ -146,53 +146,85 @@ export function clear_password_fn(input_name: string) {
     }
 }
 
+let wsReconnectTimeout: number = null;
+let wsReconnectCallback: () => void = null;
+let ws: WebSocket = null;
 
-let eventSourceReconnectTimeout: number = null;
-let eventSource: EventSource = null;
+const RECONNECT_TIME = 12000;
 
-const RECONNECT_TIME = 5000;
+let eventTarget: EventTarget = null;
 
-export function setupEventSource(first: boolean, keep_as_first: boolean, continuation: (eventSource: EventSource) => void) {
+export function setupEventSource(first: boolean, keep_as_first: boolean, continuation: (ws: WebSocket, eventTarget: EventTarget) => void) {
     if (!first) {
         show_alert("alert-warning",  __("util.event_connection_lost_title"), __("util.event_connection_lost"))
     }
-    console.log("Connecting to event source");
-    if (eventSource != null) {
-        eventSource.close();
+    console.log("Connecting to web socket");
+    if (ws != null) {
+        ws.close();
     }
-    eventSource = new EventSource('/events');
+    ws = new WebSocket('ws://' + location.host + '/ws');
+    eventTarget = new EventTarget();
 
-    if (eventSourceReconnectTimeout != null) {
-        clearTimeout(eventSourceReconnectTimeout);
+    if (wsReconnectTimeout != null) {
+        clearTimeout(wsReconnectTimeout);
     }
-    eventSourceReconnectTimeout = window.setTimeout(() => setupEventSource(keep_as_first ? first : false, keep_as_first, continuation), RECONNECT_TIME);
+    wsReconnectCallback = () => setupEventSource(keep_as_first ? first : false, keep_as_first, continuation)
+    wsReconnectTimeout = window.setTimeout(wsReconnectCallback, RECONNECT_TIME);
 
-    eventSource.addEventListener('keep-alive', function (e) {
+    ws.onmessage = (e: MessageEvent) => {
         if(!keep_as_first)
             hide_alert();
-        clearTimeout(eventSourceReconnectTimeout);
-        eventSourceReconnectTimeout = window.setTimeout(() => setupEventSource(keep_as_first ? first : false, keep_as_first, continuation), RECONNECT_TIME);
-    }, false);
 
-    continuation(eventSource);
+        if (wsReconnectTimeout != null) {
+            window.clearTimeout(wsReconnectTimeout);
+            wsReconnectTimeout = null;
+        }
+        wsReconnectTimeout = window.setTimeout(wsReconnectCallback, RECONNECT_TIME);
+
+        for (let item of e.data.split("\n")) {
+            if (item == "")
+                continue;
+            let obj = JSON.parse(item);
+            if (!("topic" in obj) || !("payload" in obj)) {
+                console.log("Received malformed event", obj);
+                return;
+            }
+            eventTarget.dispatchEvent(new MessageEvent(obj["topic"], {"data": JSON.stringify(obj["payload"])}));
+        }
+    }
+
+    continuation(ws, eventTarget);
+}
+
+export function pauseWebSockets() {
+    ws.close();
+    if (wsReconnectTimeout != null) {
+        clearTimeout(wsReconnectTimeout);
+    }
+}
+
+export function resumeWebSockets() {
+    wsReconnectTimeout = window.setTimeout(wsReconnectCallback, RECONNECT_TIME);
 }
 
 export function postReboot(alert_title: string, alert_text: string) {
-    eventSource.close();
-    clearTimeout(eventSourceReconnectTimeout);
+    ws.close();
+    clearTimeout(wsReconnectTimeout);
     show_alert("alert-success",alert_title, alert_text);
     // Wait 3 seconds before starting the reload/reconnect logic, to make sure the reboot has actually started yet.
     // Else it sometimes happens, that we reconnect _before_ the reboot starts.
     window.setTimeout(() => whenLoggedInElseReload(() =>
-        setupEventSource(true, true, (eventSource) =>
-                window.setTimeout(() =>
+        setupEventSource(true, true, (ws, eventSource) =>
+                window.setTimeout(() => {
                 // It is a bit of a hack to use version here, but
                 // as opposed to keep-alive, version was already there in the first version.
                 // so this will even work if downgrading to an version older than
                 // 1.1.0
+                console.log("setting up...");
                 eventSource.addEventListener('version', function (e) {
+                    console.log("reloading");
                     window.location.reload();
-                }, false), 5000))
+                }, false);}, 5000))
     ), 3000);
 }
 
@@ -217,9 +249,9 @@ export function whenLoggedInElseReload(continuation: () => void) {
         clearTimeout(loginReconnectTimeout);
         loginReconnectTimeout = null;
     }
-    if (eventSourceReconnectTimeout != null) {
-        clearTimeout(eventSourceReconnectTimeout);
-        eventSourceReconnectTimeout = null;
+    if (wsReconnectTimeout != null) {
+        clearTimeout(wsReconnectTimeout);
+        wsReconnectTimeout = null;
     }
     loginReconnectTimeout = window.setTimeout(
         () => ifLoggedInElseReload(

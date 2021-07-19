@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "ESPAsyncWebServer.h"
 #include "ArduinoJson.h"
 
 #include "bindings/bricklet_rs485.h"
