@@ -21,8 +21,6 @@
 
 #include "config.h"
 
-#include "async_http_client/AsyncHttpClient.h"
-
 class ChargeManager {
 public:
     ChargeManager();
@@ -33,21 +31,20 @@ public:
 
     bool initialized = false;
 
-private:
     void start_evse_state_update();
-    void update_local_evse_state(Config *target);
     void send_current();
     void distribute_current();
-    void update_local_current(Config *target);
+    void start_manager_task();
+
     Config charge_manager_config;
     Config charge_manager_config_in_use;
 
+    std::mutex state_mutex;
     Config charge_manager_state;
 
-    size_t current_charger;
+    Config charge_manager_available_current;
 
     bool request_in_progress;
     uint32_t request_id;
-    AsyncHttpClient client;
     String buf;
 };

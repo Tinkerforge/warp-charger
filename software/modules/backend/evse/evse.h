@@ -25,6 +25,8 @@
 
 #include "config.h"
 
+#include "lwip/sockets.h"
+
 class EVSE {
 public:
     EVSE();
@@ -49,6 +51,7 @@ private:
     bool wait_for_bootloader_mode(int mode);
     String get_evse_debug_header();
     String get_evse_debug_line();
+    void set_managed_current(uint16_t current);
 
     bool debug = false;
 
@@ -67,4 +70,12 @@ private:
     Config evse_user_calibration;
 
     TF_EVSE evse;
+
+    void start_managed_tasks();
+
+    bool source_addr_valid = false;
+    struct sockaddr_storage source_addr;
+    int sock;
+    uint32_t last_current_update = 0;
+    bool shutdown_logged = false;
 };

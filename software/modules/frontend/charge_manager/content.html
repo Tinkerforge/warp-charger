@@ -4,21 +4,117 @@
         <h1 class="h2" data-i18n="charge_manager.content.charge_manager"></h1>
     </div>
 
-    <div id="chargers">
+    <form id="charge_manager_config_form" class="needs-validation" novalidate>
+        <!--
+            Use custom validation instead of the browser default, that is broken on Chrome
+            See: https://getbootstrap.com/docs/4.5/components/forms/#validation
+        -->
+
+        <div class="form-group row">
+            <label for="charge_manager_enable" class="col-lg-3 col-xl-2 col-form-label form-label" data-i18n="charge_manager.content.enable_charge_manager"></label>
+            <div class="col-lg-9 col-xl-6">
+                <div class="borderless-form-control custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="charge_manager_enable">
+                    <label class="custom-control-label" for="charge_manager_enable" data-i18n="charge_manager.content.enable_charge_manager_desc"></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="charge_manager_default_available_current"
+                class="col-lg-3 col-xl-2 col-form-label form-label" data-i18n="charge_manager.content.default_available_current"></label>
+            <div class="col-lg-9 col-xl-6 input-group">
+                <input id="charge_manager_default_available_current" class="form-control" type="number" min="6" max="100" step="any" required>
+                <div class="input-group-append">
+                    <div class="input-group-text form-control">A</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-lg-12 col-xl-8 text-right">
+                <button id="charge_manager_save_button" type="submit" form="charge_manager_config_form" class="btn btn-primary" data-i18n="charge_manager.content.save"></button>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-lg-3 col-xl-2 col-form-label form-label" data-i18n="charge_manager.content.managed_boxes"></label>
+                <div class="col-lg-9 col-xl-6">
+                    <div id="charge_manager_configs" class="row row-cols-1 row-cols-md-2">
+
+                    </div>
+                </div>
+        </div>
+
+
+    </form>
+
+    <div class="modal fade" id="charge_manager_reboot" tabindex="-1" role="dialog" aria-hidden="true">
+        <div id="charge_manager_reboot_content"
+            class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <form-label class="modal-title" data-i18n="charge_manager.content.reboot_title"></form-label>
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" data-i18n="charge_manager.content.reboot_content"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal" data-i18n="charge_manager.content.abort"></button>
+                    <button id="charge_manager_reboot_button" type="button"
+                        class="btn btn-danger" data-i18n="charge_manager.content.reboot"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="charge_manager_add_charger_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" data-i18n="charge_manager.content.add_charger_modal_title">Wallbox hinzufügen</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <form id="charge_manager_add_charger_form">
+                        <div class="form-group">
+                            <label for="charge_manager_config_charger_new_name" data-i18n="charge_manager.content.add_charger_modal_name"></label>
+                            <input type="text" class="form-control" id="charge_manager_config_charger_new_name">
+                        </div>
+                        <div class="form-group">
+                            <label for="charge_manager_config_charger_new_host" data-i18n="charge_manager.content.add_charger_modal_host"></label>
+                            <input type="text" class="form-control" id="charge_manager_config_charger_new_host">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" data-i18n="charge_manager.content.add_charger_modal_abort"></button>
+                  <button id="charge_manager_save_charger" type="button" class="btn btn-primary" data-i18n="charge_manager.content.add_charger_modal_save"></button>
+                </div>
+              </div>
+        </div>
+    </div>
+
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <span class="h3" data-i18n="charge_manager.content.low_level_state"></span>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#charge_manager_content" aria-expanded="false" aria-controls="charge_manager_content" data-i18n="charge_manager.content.low_level_state_show"></button>
+    </div>
+    <div class="collapse" id="charge_manager_content">
         <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <span class="h3" data-i18n="charge_manager.content.state"></span>
         </div>
 
         <div class="form-group row">
-            <div class="col-lg-4">
-                <label for="charger_i_last_update" class="col-form-label">
-                    <span class="form-label" data-i18n="charge_manager.content.last_update"></span>
-                </label>
-            </div>
-            <div class="col-lg-4">
-                <input id="charger_i_last_update" class="form-control" type="text"
-                    placeholder="..." readonly>
+            <label for="charger_i_last_update" class="col-lg-3 col-xl-2 col-form-label form-label" data-i18n="charge_manager.content.last_update"></label>
+            <div class="col-lg-9 col-xl-6">
+                <input id="charger_i_last_update" class="form-control" type="text" placeholder="..." readonly>
             </div>
         </div>
 

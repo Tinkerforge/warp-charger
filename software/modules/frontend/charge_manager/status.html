@@ -9,67 +9,22 @@
             <div id="btn_group_charge_manager_state" class="btn-group flex-wrap" role="group"
                 style="width: 100%">
                 <button id="charge_manager_state_not_configured" type="button"
-                    class="btn btn-outline-primary" disabled  data-i18n="evse.status.not_configured"></button>
-                <button id="charge_manager_state_managed" type="button" class="btn btn-outline-warning"
-                    disabled data-i18n="evse.status.managed"></button>
-                    <button id="charge_manager_state_manager" type="button" class="btn btn-outline-warning"
-                    disabled data-i18n="evse.status.manager"></button>
+                    class="btn btn-outline-primary" disabled  data-i18n="charge_manager.status.not_configured"></button>
+                <button id="charge_manager_state_manager" type="button" class="btn btn-outline-success"
+                    disabled data-i18n="charge_manager.status.manager"></button>
                 <button id="charge_manager_state_error" type="button" class="btn btn-outline-danger"
-                    disabled data-i18n="evse.status.error"></button>
+                    disabled data-i18n="charge_manager.status.error"></button>
             </div>
         </div>
     </div>
-    <div class="form-group row no-gutters">
+    <div class="form-group row no-gutters" id="charge_manager_status_controlled_chargers">
         <div class="col-sm-4">
             <label for="charge_manager_state_not_configured" class="col-form-label">
                 <span class="form-label" data-i18n="charge_manager.status.managed_boxes"></span>
             </label>
         </div>
-        <div class="col-lg-8 col-xl-4">
-            <div class="card-deck mb-4">
-                <div class="card">
-                    <h5 class="card-header">Wallbox 1</h5>
-                    <div class="card-body">
-                        <h5 class="card-title">Lädt</h5>
-                        <p class="card-text">8 Ampere zugeteilt.</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Last updated 3 mins ago</small>
-                    </div>
-                </div>
-                <div class="card">
-                    <h5 class="card-header">Wallbox 2</h5>
-                    <div class="card-body">
-                        <h5 class="card-title">Lädt</h5>
-                        <p class="card-text">8 Ampere zugeteilt.</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Last updated 3 mins ago</small>
-                    </div>
-                </div>
-            </div>
-            <div class="card-deck mb-4">
-                <div class="card">
-                    <h5 class="card-header">Wallbox 3</h5>
-                    <div class="card-body">
-                        <h5 class="card-title">Wartet auf Ladefreigabe</h5>
-                        <p class="card-text">Blockiert durch Wallbox 1 und Wallbox 2</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Last updated 3 mins ago</small>
-                    </div>
-                </div>
-                <div class="card">
-                    <h5 class="card-header">Wallbox 4</h5>
-                    <div class="card-body">
-                        <h5 class="card-title">Fehler</h5>
-                        <p class="card-text">Wallbox kann seit 3 Minuten nicht erreicht werden.</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Last updated 3 mins ago</small>
-                    </div>
-                </div>
-            </div>
+        <div id="charge_manager_status_chargers" class="col-lg-8 col-xl-4">
+
         </div>
     </div>
 </div>
