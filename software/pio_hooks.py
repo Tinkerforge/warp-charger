@@ -113,7 +113,7 @@ def get_changelog_version():
             if version[0] not in [0, 1, 2]:
                 raise Exception('invalid major version in changelog: {}'.format(version))
 
-            if len(versions) > 0:
+            if version[2] < 90 and len(versions) > 0:
                 if versions[-1] >= version:
                     raise Exception('invalid version order in changelog: {} -> {}'.format(versions[-1], version))
 
