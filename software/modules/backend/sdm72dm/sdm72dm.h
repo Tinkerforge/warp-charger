@@ -25,6 +25,7 @@
 
 #include "config.h"
 #include "ringbuffer.h"
+#include "malloc_tools.h"
 
 // How many hours to keep the coarse history for
 #define HISTORY_HOURS 48
@@ -36,6 +37,8 @@
 // When we have 4 minutes worth of samples, we take the average
 // and add it to the coarse history.
 #define HISTORY_MINUTE_INTERVAL 4
+
+#define RING_BUF_SIZE (HISTORY_HOURS * (60 / HISTORY_MINUTE_INTERVAL) + 1)
 
 class SDM72DM {
 public:
@@ -74,12 +77,12 @@ private:
     int samples_last_interval = 0;
     int samples_per_interval = -1;
     uint32_t interval_end_ms = 1000 * 60 * HISTORY_MINUTE_INTERVAL;
-    TF_Ringbuffer<int16_t, 3 * 60 * HISTORY_MINUTE_INTERVAL> interval_samples;
+    TF_Ringbuffer<int16_t, 3 * 60 * HISTORY_MINUTE_INTERVAL, uint32_t, malloc_32bit_addressed, heap_caps_free> interval_samples;
 
     uint32_t next_modbus_read_deadline = 0;
     uint32_t next_power_history_entry = 0;
     UserData user_data;
-    TF_Ringbuffer<int16_t, HISTORY_HOURS * (60 / HISTORY_MINUTE_INTERVAL) + 1> power_history;
+    TF_Ringbuffer<int16_t, HISTORY_HOURS * (60 / HISTORY_MINUTE_INTERVAL) + 1, uint32_t, malloc_32bit_addressed, heap_caps_free> power_history;
 
     bool energy_meter_reset_requested;
 
