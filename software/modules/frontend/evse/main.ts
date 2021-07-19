@@ -21,6 +21,8 @@ import $ from "jquery";
 
 import * as util from "../util";
 
+import feather = require("feather-icons");
+
 declare function __(s: string): string;
 
 interface EVSEState {
@@ -46,10 +48,6 @@ function update_evse_state(state: EVSEState) {
 
     let allowed_charging_current = util.toLocaleFixed(state.allowed_charging_current / 1000.0, 3) + " A";
     $('#allowed_charging_current').val(allowed_charging_current);
-
-    if($('#status_charging_current_save').prop("disabled")) {
-        $('#status_charging_current').val(state.allowed_charging_current / 1000);
-    }
 
     util.update_button_group("btn_group_ac1", (state.contactor_state & 1) == 1 ? 1 : 0);
     util.update_button_group("btn_group_ac2", state.contactor_state > 1 ? 1 : 0);
@@ -126,6 +124,36 @@ interface EVSEMaxChargingCurrent {
     max_current_managed: number
 }
 
+let last_max_charging_current: EVSEMaxChargingCurrent = null;
+let last_managed: EVSEManaged = null;
+
+function update_allowed_current_status() {
+    let real_maximum = Math.min(last_max_charging_current.max_current_configured,
+                                last_max_charging_current.max_current_incoming_cable,
+                                last_max_charging_current.max_current_outgoing_cable);
+
+    let managed = last_managed != null && last_managed.managed;
+    if (managed) {
+        real_maximum = Math.min(real_maximum, last_max_charging_current.max_current_managed);
+    }
+
+    let status_string = util.toLocaleFixed(real_maximum / 1000.0, 3) + " A " + __("evse.script.by") + " ";
+
+    let status_list = [];
+    if (real_maximum == last_max_charging_current.max_current_configured)
+        status_list.push(__("evse.script.configuration"));
+    if (real_maximum == last_max_charging_current.max_current_managed)
+        status_list.push(__("evse.script.management"));
+    if (real_maximum == last_max_charging_current.max_current_outgoing_cable)
+        status_list.push(__("evse.script.outgoing"));
+    if (real_maximum == last_max_charging_current.max_current_incoming_cable)
+        status_list.push(__("evse.script.incoming"));
+
+    status_string += status_list.join(", ");
+
+    $('#evse_status_allowed_charging_current').val(status_string);
+}
+
 function update_evse_max_charging_current(state: EVSEMaxChargingCurrent) {
     $('#max_current_configured').val(util.toLocaleFixed(state.max_current_configured / 1000.0, 3) + " A");
     $('#max_current_incoming_cable').val(util.toLocaleFixed(state.max_current_incoming_cable / 1000.0, 3) + " A");
@@ -137,16 +165,29 @@ function update_evse_max_charging_current(state: EVSEMaxChargingCurrent) {
     $('#status_charging_current').prop("max", theoretical_maximum / 1000);
     $("#status_charging_current_maximum").on("click", () => set_charging_current(theoretical_maximum));
     $('#status_charging_current_maximum').html(theoretical_maximum_str);
+
+    if($('#status_charging_current_save').prop("disabled")) {
+        $('#status_charging_current').val(util.toLocaleFixed(state.max_current_configured / 1000.0, 3));
+    }
+
+    last_max_charging_current = state;
+    update_allowed_current_status();
 }
 
 function set_charging_current(current: number) {
+    $('#status_charging_current_save').prop("disabled", true);
     $.ajax({
         url: '/evse/current_limit',
         method: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify({"current": current}),
-        success: () => $('#status_charging_current_save').prop("disabled", true),
-        error: (xhr, status, error) => util.show_alert("alert-danger", __("evse.script.set_charging_current_failed"), error + ": " + xhr.responseText)
+        success: () => {
+            $('#status_charging_current_save').html(feather.icons.check.toSvg());
+        },
+        error: (xhr, status, error) => {
+            $('#status_charging_current_save').prop("disabled", false);
+            util.show_alert("alert-danger", __("evse.script.set_charging_current_failed"), error + ": " + xhr.responseText);
+        }
     });
 }
 
@@ -204,6 +245,17 @@ function update_evse_user_calibration(c: EVSEUserCalibration) {
     $('#voltage_div').val(c.voltage_div);
     $('#resistance_2700').val(c.resistance_2700);
     $('#resistance_880').val(c.resistance_880.join(", "));
+}
+
+interface EVSEManaged {
+    managed: boolean;
+}
+
+function update_evse_managed(m: EVSEManaged) {
+    $('#evse_charge_management').prop("checked", m.managed);
+    $('#evse_charging_current_managed_ignored').html(m.managed ? "" : __("evse.script.managed_current_ignored"));
+    last_managed = m;
+    update_allowed_current_status();
 }
 
 
@@ -321,20 +373,23 @@ export function init() {
 
     let input = $('#status_charging_current');
     let save_btn = $('#status_charging_current_save');
-    input.on("input", () => save_btn.prop("disabled", false));
-
-    save_btn.on("click", () => {
-        if(input.val() >= 6 || input.val() <= 32)
-            set_charging_current(<number>input.val() * 1000);
+    input.on("input", () => {
+        save_btn.html(feather.icons.save.toSvg());
+        save_btn.prop("disabled", false);
     });
 
+
     let form = <HTMLFormElement>$('#evse_status_charging_current_form')[0];
+
     form.addEventListener('submit', function (event: Event) {
         event.preventDefault();
         event.stopPropagation();
 
-        if(input.val() >= 6 || input.val() <= 32)
-            set_charging_current(<number>input.val() * 1000);
+        if (form.checkValidity() === false) {
+            return;
+        }
+
+        set_charging_current(Math.round(<number>input.val() * 1000));
     }, false);
 
     $('#user_calibration_upload').on("change",(evt) => {
@@ -375,6 +430,17 @@ export function init() {
     $("#debug_stop").on("click", debug_stop);
 
     allow_debug(true);
+
+    $('#evse_charge_management').on("change", () => {
+        let enable = $('#evse_charge_management').is(":checked");
+        $.ajax({
+            url: '/evse/managed_update',
+            method: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify({"managed": enable, "password": enable ? 0x00363702 : 0x036370FF}),
+            error: (xhr, status, error) => util.show_alert("alert-danger", __("evse.script.save_failed"), error + ": " + xhr.responseText)
+        });
+    });
 }
 
 //From sdm72dm/main.ts
@@ -409,8 +475,12 @@ export function addEventListeners(source: EventSource) {
         update_evse_user_calibration(<EVSEUserCalibration>(JSON.parse(e.data)));
     }, false);
 
+    source.addEventListener("evse/managed", function (e: util.SSE) {
+        update_evse_managed(<EVSEManaged>(JSON.parse(e.data)));
+    }, false);
+
     source.addEventListener("evse/debug_header", function (e: util.SSE) {
-        debug_log += e.data;
+        debug_log += e.data.slice(1, -1);
         if (meter_chunk.length > 0) {
             debug_log += ",power,energy_rel,energy_abs";
         }
@@ -418,7 +488,7 @@ export function addEventListeners(source: EventSource) {
     }, false);
 
     source.addEventListener("evse/debug", function (e: util.SSE) {
-        debug_log += e.data + meter_chunk + "\n";
+        debug_log += e.data.slice(1, -1) + meter_chunk + "\n";
     }, false);
 
     source.addEventListener("meter/state", function (e: util.SSE) {
@@ -442,7 +512,8 @@ export function getTranslation(lang: string) {
                     "connected": "Verbunden",
                     "charging": "Lädt",
                     "error": "Fehler",
-                    "charging_current": "Ladestrom",
+                    "configured_charging_current": "Konfigurierter Ladestrom",
+                    "allowed_charging_current": "Erlaubter Ladestrom",
                     "charging_current_minimum": "6 A",
                     "charging_current_maximum": "Max",
                     "charge_control": "Ladesteuerung",
@@ -472,7 +543,7 @@ export function getTranslation(lang: string) {
                     "charge_release_automatic": "Automatisch",
                     "charge_release_manual": "Manuell",
                     "charge_release_deactivated": "Deaktiviert",
-                    "charge_release_managed": "Managed",
+                    "charge_release_managed": "Lastmanagement",
                     "allowed_charging_current": "Erlaubter Ladestrom",
                     "error_state": "Fehlerzustand",
                     "error_state_desc": "<a href=\"https://www.warp-charger.com/#documents\">siehe Betriebsanleitung für Details</a>",
@@ -498,11 +569,12 @@ export function getTranslation(lang: string) {
                     "jumper_config": "durch Schalter konfiguriert",
                     "jumper_config_software": "Software",
                     "jumper_config_unconfigured": "Unkonfiguriert",
-                    "charging_current": "Erlaubter Ladestrom",
+                    "charging_current": "Ladestromgrenzen",
+                    "charging_current_muted": "Minimum der Ladestromgrenzen",
                     "charging_current_configured": "Konfiguriert",
                     "charging_current_max_incoming": "Zuleitung",
                     "charging_current_max_outgoing": "Typ-2-Ladekabel",
-                    "charging_current_managed": "Managed",
+                    "charging_current_managed": "Lastmanagement",
                     "low_level_state": "Low-Level-Zustand",
                     "low_level_state_show": "Anzeigen / Verstecken",
                     "low_level_mode": "Low-Level-Modus",
@@ -546,6 +618,10 @@ export function getTranslation(lang: string) {
                     "hardware_version": "Hardware-Version",
                     "hardware_version_14": "1.4",
                     "hardware_version_15": "1.5",
+                    "settings": "Einstellungen",
+                    "charge_management_description": "Lastmanagement",
+                    "charge_management_description_muted": "<a href=\"https://www.warp-charger.com/#documents\">siehe Betriebsanleitung für Details</a>",
+                    "charge_management_enable": "Erlaubt anderen Wallboxen diese zu steuern",
                 },
                 "script": {
                     "error_code": "Fehlercode",
@@ -565,7 +641,16 @@ export function getTranslation(lang: string) {
                     "debug_running": "Aufzeichnung läuft. Tab nicht schließen!",
                     "debug_stop_failed": "Stoppen der Aufzeichnung des Ladecontroller-Logs fehlgeschlagen.",
                     "debug_stopped": "Aufzeichung des Ladecontroller-Logs gestoppt.",
-                    "debug_done": "Abgeschlossen."
+                    "debug_done": "Abgeschlossen.",
+                    "managed_current_ignored": "ignoriert; Lastmanagement deaktiviert",
+
+                    "by": "durch",
+                    "configuration": "Konfiguration",
+                    "management": "Lastmanagement",
+                    "outgoing": "Ladekabel",
+                    "incoming": "Zuleitung",
+
+                    "save_failed": "(De-)Aktivieren des Lastmanagements fehlgeschlagen"
                 }
             }
         },
@@ -577,7 +662,8 @@ export function getTranslation(lang: string) {
                     "connected": "Connected",
                     "charging": "Charging",
                     "error": "Error",
-                    "charging_current": "Charge current",
+                    "configured_charging_current": "Configurerd charging current",
+                    "allowed_charging_current": "Allowed charging current",
                     "charging_current_minimum": "6 A",
                     "charging_current_maximum": "Max",
                     "charge_control": "Charge control",
@@ -633,7 +719,8 @@ export function getTranslation(lang: string) {
                     "jumper_config": "switch configured",
                     "jumper_config_software": "Software",
                     "jumper_config_unconfigured": "Unconfigured",
-                    "charging_current": "Allowed charging current",
+                    "charging_current": "Charging current limits",
+                    "charging_current_muted": "Minimum of the charging current limits",
                     "charging_current_configured": "Configured",
                     "charging_current_max_incoming": "Supply cable",
                     "charging_current_max_outgoing": "Type 2 cable",
@@ -682,6 +769,10 @@ export function getTranslation(lang: string) {
                     "hardware_version": "Hardware version",
                     "hardware_version_14": "1.4",
                     "hardware_version_15": "1.5",
+                    "settings": "Settings",
+                    "charge_management_description": "Charge management",
+                    "charge_management_description_muted": "<a href=\"https://www.warp-charger.com/#documents\">see manual for details</a>",
+                    "charge_management_enable": "Enables other chargers to control this one",
                 },
                 "script": {
                     "error_code": "Error code",
@@ -701,7 +792,16 @@ export function getTranslation(lang: string) {
                     "debug_running": "Capturing. Don't close tab!",
                     "debug_stop_failed": "Stopping charge log capture failed",
                     "debug_stopped": "Stopped charge log capture",
-                    "debug_done": "Done"
+                    "debug_done": "Done",
+
+                    "by": "by",
+                    "configuration": "configuration",
+                    "management": "charge management",
+                    "outgoing": "charging cable",
+                    "incoming": "supply cable",
+
+                    "save_failed": "(De)Activating the charge mananagement failed",
+                    "managed_current_ignored": "ignored; Charge management deactivated",
                 }
             }
         }

@@ -68,7 +68,8 @@
     <div class="form-group row">
         <div class="col-lg-4">
             <label for="allowed_charging_current" class="col-form-label">
-                <span class="form-label" data-i18n="evse.content.allowed_charging_current"></span>
+                <span class="form-label pr-2" data-i18n="evse.content.allowed_charging_current"></span>
+                <span class="text-muted" data-i18n="evse.content.charging_current_muted"></span>
             </label>
         </div>
         <div class="col-lg-4">
@@ -177,7 +178,7 @@
     </div>
 
     <div
-    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    class="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <span class="h3" data-i18n="evse.content.charging_current"></span>
     </div>
 
@@ -221,11 +222,32 @@
         <div class="col-lg-4">
             <label for="max_current_managed" class="col-form-label">
                 <span class="form-label" data-i18n="evse.content.charging_current_managed"></span>
+                <span class="text-muted" id="evse_charging_current_managed_ignored"></span>
             </label>
         </div>
         <div class="col-lg-4">
             <input id="max_current_managed" class="form-control" type="text"
                 placeholder="..." readonly>
+        </div>
+    </div>
+
+    <div
+    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <span class="h3" data-i18n="evse.content.settings"></span>
+    </div>
+
+    <div class="form-group row">
+        <div id="blah" class="col-lg-4">
+            <label for="evse_charge_management" class="col-form-label">
+                <span class="form-label pr-2" data-i18n="evse.content.charge_management_description"></span>
+                <span class="text-muted" data-i18n="evse.content.charge_management_description_muted"></span>
+            </label>
+        </div>
+        <div class="col-xl-4 col-lg-8">
+            <div class="borderless-form-control custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="evse_charge_management">
+                <label class="custom-control-label" for="evse_charge_management" data-i18n="evse.content.charge_management_enable"></label>
+            </div>
         </div>
     </div>
 
