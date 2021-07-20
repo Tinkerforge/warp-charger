@@ -268,7 +268,6 @@ void ChargeManager::setup()
         charge_manager_state.get("chargers")->get(i)->get("name")->updateString(charge_manager_config_in_use.get("chargers")->get(i)->get("name")->asString());
     }
 
-    //xTaskCreatePinnedToCore(&http_work, "http_work_task", 8192, this, 1, NULL, 1);
     start_manager_task();
 
     task_scheduler.scheduleWithFixedDelay("distribute current", [this](){this->distribute_current();}, 10000, 10000);
