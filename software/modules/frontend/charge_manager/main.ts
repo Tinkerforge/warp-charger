@@ -169,7 +169,7 @@ function update_charge_manager_state(state: ChargeManagerState) {
 
         let last_update = Math.floor((state.uptime - s.last_update) / 1000);
         $(`#charge_manager_status_charger_${i}_update`).text(__("charge_manager.script.last_update_prefix") +  util.format_timespan(last_update) + (__("charge_manager.script.last_update_suffix")));
-        $(`#charge_manager_status_charger_${i}_update`).prop("hidden", last_update == 0);
+        $(`#charge_manager_status_charger_${i}_update`).prop("hidden", last_update < 3);
     }
 
     util.update_button_group("btn_group_charge_manager_state", state.state);
