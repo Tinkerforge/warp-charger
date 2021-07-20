@@ -149,6 +149,7 @@ function update_charge_manager_state(state: ChargeManagerState) {
         $('#charge_manager_status_chargers').html(charger_status);
         charger_state_count = state.chargers.length;
         $('#charge_manager_status_controlled_chargers').prop('hidden', charger_state_count == 0);
+        $('#charge_manager_status_available_current_form').prop('hidden', charger_state_count == 0);
     }
     for (let i = 0; i < state.chargers.length; i++) {
         const s = state.chargers[i];
