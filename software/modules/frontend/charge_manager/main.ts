@@ -226,11 +226,9 @@ function update_charge_manager_config(config: ChargeManagerConfig) {
             $(`#charge_manager_content_${i}_remove`).on("click", () => save_charge_manager_config(null, i));
         }
     }
-    console.log("start");
+
     for (let i = 0; i < config.chargers.length; i++) {
-        console.log("hier", i);
         const s = config.chargers[i];
-        console.log(s);
         $(`#charge_manager_config_charger_${i}_name`).html(s.name);
         $(`#charge_manager_config_charger_${i}_host`).val(s.host);
     }
