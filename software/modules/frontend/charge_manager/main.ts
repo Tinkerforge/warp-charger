@@ -177,6 +177,29 @@ function update_charge_manager_state(state: ChargeManagerState) {
 
 let charger_config_count = -1;
 
+function set_available_current(current: number) {
+    $('#charge_manager_status_available_current_save').prop("disabled", true);
+    $.ajax({
+        url: '/charge_manager/available_current_update',
+        method: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify({"current": current}),
+        success: () => {
+            $('#charge_manager_status_available_current_save').html(feather.icons.check.toSvg());
+        },
+        error: (xhr, status, error) => {
+            $('#charge_manager_status_available_current_save').prop("disabled", false);
+            util.show_alert("alert-danger", __("charge_manager.script.set_available_current_failed"), error + ": " + xhr.responseText);
+        }
+    });
+}
+
+function update_available_current(current: number) {
+    if($('#charge_manager_status_available_current_save').prop("disabled")) {
+        $('#charge_manager_status_available_current').val(util.toLocaleFixed(current / 1000, 3));
+    }
+}
+
 function update_charge_manager_config(config: ChargeManagerConfig) {
     if (config.chargers.length != charger_config_count) {
         let charger_configs = "";
@@ -235,6 +258,12 @@ function update_charge_manager_config(config: ChargeManagerConfig) {
 
     $('#charge_manager_enable').prop("checked", config.enable_charge_manager);
     $('#charge_manager_default_available_current').val(util.toLocaleFixed(config.default_available_current / 1000, 3));
+
+    $('#charge_manager_status_available_current').prop("max", config.default_available_current / 1000.0);
+    $("#charge_manager_status_available_current_maximum").on("click", () => set_available_current(config.default_available_current));
+    $('#charge_manager_status_available_current_maximum').html(util.toLocaleFixed(config.default_available_current / 1000.0, 0) + " A");
+
+    update_available_current(config.default_available_current);
 }
 
 function save_charge_manager_config(new_charger: ChargerConfig = null, remove_charger: number = null) {
@@ -301,6 +330,29 @@ export function init() {
             name: $(`#charge_manager_config_charger_new_name`).val().toString(),
         }, null);
     });
+
+    $("#charge_manager_status_available_current_minimum").on("click", () => set_available_current(0));
+
+    let input = $('#charge_manager_status_available_current');
+    let save_btn = $('#charge_manager_status_available_current_save');
+    input.on("input", () => {
+        save_btn.html(feather.icons.save.toSvg());
+        save_btn.prop("disabled", false);
+    });
+
+
+    let form2 = <HTMLFormElement>$('#charge_manager_status_available_current_form')[0];
+
+    form2.addEventListener('submit', function (event: Event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (form.checkValidity() === false) {
+            return;
+        }
+
+        set_available_current(Math.round(<number>input.val() * 1000));
+    }, false);
 }
 
 export function addEventListeners(source: EventSource) {
@@ -310,6 +362,10 @@ export function addEventListeners(source: EventSource) {
 
     source.addEventListener('charge_manager/config', function (e: util.SSE) {
         update_charge_manager_config(<ChargeManagerConfig>(JSON.parse(e.data)));
+    }, false);
+
+    source.addEventListener('charge_manager/available_current', function (e: util.SSE) {
+        update_available_current(JSON.parse(e.data)["current"]);
     }, false);
 }
 
@@ -326,7 +382,10 @@ export function getTranslation(lang: string) {
                     "not_configured": "Unkonfiguriert",
                     "manager": "Aktiv",
                     "error": "Fehler",
-                    "managed_boxes": "Kontrollierte Wallboxen"
+                    "managed_boxes": "Kontrollierte Wallboxen",
+                    "available_current": "Verfügbarer Strom",
+                    "available_current_minimum": "0 A",
+                    "available_current_maximum": "...",
                 },
                 "navbar": {
                     "charge_manager": "Lastmanager"
@@ -384,7 +443,10 @@ export function getTranslation(lang: string) {
                     "not_configured": "Not configured",
                     "manager": "Active",
                     "error": "Error",
-                    "managed_boxes": "Managed Chargers"
+                    "managed_boxes": "Managed Chargers",
+                    "available_current": "Available current",
+                    "available_current_minimum": "0 A",
+                    "available_current_maximum": "...",
                 },
                 "navbar": {
                     "charge_manager": "Charge Manager"
