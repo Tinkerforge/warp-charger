@@ -64,6 +64,10 @@ $(window).on('pageshow', (ev) => {
 
     feather.replace();
 
+    $.ajaxSetup({
+        timeout: 5000
+    });
+
     let translations: {[index: string]:any} = {
         "de": {
             "main": {
