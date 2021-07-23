@@ -186,7 +186,7 @@ function set_charging_current(current: number) {
         },
         error: (xhr, status, error) => {
             $('#status_charging_current_save').prop("disabled", false);
-            util.show_alert("alert-danger", __("evse.script.set_charging_current_failed"), error + ": " + xhr.responseText);
+            util.add_alert("evse_set_charging_current_failed", "alert-danger", __("evse.script.set_charging_current_failed"), error + ": " + xhr.responseText);
         }
     });
 }
@@ -205,7 +205,7 @@ function set_auto_start_charging(auto_start_charging: boolean) {
         method: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify({"auto_start_charging": auto_start_charging}),
-        error: (xhr, status, error) => util.show_alert("alert-danger",  __("evse.script.auto_start_charging_update"), error + ": " + xhr.responseText)
+        error: (xhr, status, error) => util.add_alert("evse_set_auto_start_charging_failed", "alert-danger",  __("evse.script.auto_start_charging_update"), error + ": " + xhr.responseText)
     });
 }
 
@@ -215,7 +215,7 @@ function start_charging() {
         method: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(null),
-        error: (xhr, status, error) => util.show_alert("alert-danger", __("evse.script.start_charging_failed"), error + ": " + xhr.responseText)
+        error: (xhr, status, error) => util.add_alert("evse_set_start_charging_failed", "alert-danger", __("evse.script.start_charging_failed"), error + ": " + xhr.responseText)
     });
 }
 
@@ -225,7 +225,7 @@ function stop_charging() {
         method: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(null),
-        error: (xhr, status, error) => util.show_alert("alert-danger",  __("evse.script.stop_charging_failed"), error + ": " + xhr.responseText)
+        error: (xhr, status, error) => util.add_alert("evse_set_stop_charging_failed", "alert-danger",  __("evse.script.stop_charging_failed"), error + ": " + xhr.responseText)
     });
 }
 
@@ -438,7 +438,7 @@ export function init() {
             method: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify({"managed": enable, "password": enable ? 0x00363702 : 0x036370FF}),
-            error: (xhr, status, error) => util.show_alert("alert-danger", __("evse.script.save_failed"), error + ": " + xhr.responseText)
+            error: (xhr, status, error) => util.add_alert("evse_managed_update_failed", "alert-danger", __("evse.script.save_failed"), error + ": " + xhr.responseText)
         });
     });
 }

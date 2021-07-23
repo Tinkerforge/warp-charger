@@ -47,17 +47,23 @@ export function update_button_group(button_group_id: string, index_to_select: nu
         buttons[index_to_select].innerHTML = text_replacement;
 }
 
-export function show_alert(cls: string, title: string, text: string) {
-    $('#alert_placeholder').html(`<div class="alert ${cls} alert-dismissible fade show custom-alert" role="alert" style="line-height: 1.5rem;">
-            <strong>${title}</strong> ${text}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>`);
+export function add_alert(id: string, cls: string, title: string, text: string) {
+    let to_add = `<div id="alert_${id}" class="alert ${cls} alert-dismissible fade show custom-alert" role="alert" style="line-height: 1.5rem;">
+    <strong>${title}</strong> ${text}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+</div>`;
+
+    if(!document.getElementById(`alert_${id}`)) {
+        $('#alert_placeholder').append(to_add);
+    } else {
+        $(`#alert_${id}`).replaceWith(to_add);
+    }
 }
 
-export function hide_alert() {
-    $('#alert_placeholder').html("");
+export function remove_alert(id: string) {
+    $(`#alert_${id}`).remove();
 }
 
 export function format_timespan(secs: number) {
@@ -156,7 +162,7 @@ let eventTarget: EventTarget = null;
 
 export function setupEventSource(first: boolean, keep_as_first: boolean, continuation: (ws: WebSocket, eventTarget: EventTarget) => void) {
     if (!first) {
-        show_alert("alert-warning",  __("util.event_connection_lost_title"), __("util.event_connection_lost"))
+        add_alert("event_connection_lost", "alert-warning",  __("util.event_connection_lost_title"), __("util.event_connection_lost"))
     }
     console.log("Connecting to web socket");
     if (ws != null) {
@@ -173,7 +179,7 @@ export function setupEventSource(first: boolean, keep_as_first: boolean, continu
 
     ws.onmessage = (e: MessageEvent) => {
         if(!keep_as_first)
-            hide_alert();
+            remove_alert("event_connection_lost");
 
         if (wsReconnectTimeout != null) {
             window.clearTimeout(wsReconnectTimeout);
@@ -210,7 +216,7 @@ export function resumeWebSockets() {
 export function postReboot(alert_title: string, alert_text: string) {
     ws.close();
     clearTimeout(wsReconnectTimeout);
-    show_alert("alert-success",alert_title, alert_text);
+    add_alert("reboot", "alert-success",alert_title, alert_text);
     // Wait 3 seconds before starting the reload/reconnect logic, to make sure the reboot has actually started yet.
     // Else it sometimes happens, that we reconnect _before_ the reboot starts.
     window.setTimeout(() => whenLoggedInElseReload(() =>

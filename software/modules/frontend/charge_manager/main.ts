@@ -190,7 +190,7 @@ function set_available_current(current: number) {
         },
         error: (xhr, status, error) => {
             $('#charge_manager_status_available_current_save').prop("disabled", false);
-            util.show_alert("alert-danger", __("charge_manager.script.set_available_current_failed"), error + ": " + xhr.responseText);
+            util.add_alert("charge_manager_set_available_current_failed", "alert-danger", __("charge_manager.script.set_available_current_failed"), error + ": " + xhr.responseText);
         }
     });
 }
@@ -293,7 +293,7 @@ function save_charge_manager_config(new_charger: ChargerConfig = null, remove_ch
         contentType: 'application/json',
         data: JSON.stringify(payload),
         success: () => $('#charge_manager_reboot').modal('show'),
-        error: (xhr, status, error) => util.show_alert("alert-danger", __("charge_manager.script.save_failed"), error + ": " + xhr.responseText)
+        error: (xhr, status, error) => util.add_alert("charge_manager_config_update_failed", "alert-danger", __("charge_manager.script.save_failed"), error + ": " + xhr.responseText)
     });
 }
 
