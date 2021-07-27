@@ -30,16 +30,12 @@
 #include "freertos/task.h"
 #include "esp_http_client.h"
 
-#include "modules/firmware_update/firmware_update.h"
-
-#include "modules/evse/charge_management_protocol.h"
+#include "modules.h"
 
 #include "ArduinoJson.h"
 
 extern API api;
 extern TaskScheduler task_scheduler;
-
-extern FirmwareUpdate firmware_update;
 
 ChargeManager::ChargeManager()
 {
@@ -111,143 +107,58 @@ uint8_t get_charge_state(uint8_t vehicle_state, uint8_t iec61851_state, uint8_t 
 void ChargeManager::start_manager_task() {
     std::vector<Config> &chargers = charge_manager_config_in_use.get("chargers")->asArray();
 
-    struct sockaddr_in dest_addrs[6] = {0};
-
+    std::vector<String> hosts;
+    std::vector<String> names;
     for(int i = 0; i < chargers.size(); ++i) {
-        dest_addrs[i].sin_addr.s_addr = inet_addr(chargers[i].get("host")->asString().c_str());
-        dest_addrs[i].sin_family = AF_INET;
-        dest_addrs[i].sin_port = htons(CHARGE_MANAGEMENT_PORT);
+        hosts.push_back(chargers[i].get("host")->asString());
+        names.push_back(chargers[i].get("name")->asString());
     }
 
-    int sock = create_socket(true);
-    if (sock < 0)
-        return;
+    cm_networking.register_manager(hosts, names, [this, chargers](
+            uint8_t client_id,
+            uint8_t iec61851_state,
+            uint8_t vehicle_state,
+            uint8_t error_state,
+            uint8_t charge_release,
+            uint32_t uptime,
+            uint16_t allowed_charging_current
+        ){
+            Config &target = charge_manager_state.get("chargers")->asArray()[client_id];
+            // Don't update if the uptimes are the same.
+            // This means, that the EVSE hangs or the communication
+            // is not working. As last_update will now hang too,
+            // the management will stop all charging after some time.
+            if(target.get("uptime")->asUint() == uptime) {
+                logger.printfln("Received stale charger state from %s (%s). Reported EVSE uptime (%u) is the same as in the last state. Is the EVSE still reachable?",
+                    chargers[client_id].get("name")->asString().c_str(),
+                    uptime);
+                return;
+            }
 
-    task_scheduler.scheduleWithFixedDelay("charge_manager_send", [this, sock, dest_addrs](){
+            target.get("uptime")->updateUint(uptime);
+            target.get("wants_to_charge")->updateBool(charge_release == 3); // CHARGE_RELEASE_CHARGE_MANAGEMENT
+            target.get("is_charging")->updateBool(vehicle_state == 2); //VEHICLE_STATE_CHARGING
+            target.get("allowed_current")->updateUint(allowed_charging_current);
+            target.get("last_update")->updateUint(millis());
+            target.get("state")->updateUint(get_charge_state(vehicle_state,
+                                                                iec61851_state,
+                                                                charge_release,
+                                                                target.get("allocated_current")->asUint()));
+            charge_manager_state.get("uptime")->updateUint(millis());
+    });
+
+    task_scheduler.scheduleWithFixedDelay("charge_manager_send", [this, chargers](){
         static uint32_t next_seq_num = 1;
         static int i = 0;
-
-        std::vector<Config> &chargers = charge_manager_config_in_use.get("chargers")->asArray();
 
         if (i >= chargers.size())
             i = 0;
 
-        Config &charger = chargers[i];
-
-        request_packet request;
-        request.header.version[0] = _MAJOR_;
-        request.header.version[1] = _MINOR_;
-        request.header.version[2] = _PATCH_;
-        request.header.seq_num = next_seq_num;
-        ++next_seq_num;
-
         Config &state = charge_manager_state.get("chargers")->asArray()[i];
-
-        request.allocated_current = state.get("allocated_current")->asUint();
-
-        int err = sendto(sock, &request, sizeof(request), 0, (sockaddr *)&dest_addrs[i], sizeof(dest_addrs[i]));
-
-        if(err < 0) {
-            if (errno == EAGAIN || errno == EWOULDBLOCK)
-                // Intentionally don't increment i here, we want to resend to this charger next.
-                return;
-            logger.printfln("Failed to send to %s. errno: %d", charger.get("host")->asString().c_str(), errno);
+        if(cm_networking.send_manager_update(i, state.get("allocated_current")->asUint()))
             ++i;
-            return;
-        }
-        if (err != sizeof(request)) {
-            logger.printfln("Failed to send to %s. sendto truncated request (of %u bytes) to %d bytes.", sizeof(request), err);
-            ++i;
-            return;
-        }
-        //logger.printfln("Sent update to %s (%s); Current: %u", charger.get("name")->asString().c_str(), inet_ntoa(dest_addrs[i].sin_addr), request.allocated_current);
 
-        ++i;
     }, 1000, 1000);
-
-
-    task_scheduler.scheduleWithFixedDelay("charge_manager_receive_task", [this, chargers, sock, dest_addrs](){
-        static uint8_t last_seen_seq_num[6] = {255, 255, 255, 255, 255, 255};
-        response_packet recv_buf[2] = {0};
-        struct sockaddr_in source_addr;
-        socklen_t socklen = sizeof(source_addr);
-
-        int len = recvfrom(sock, recv_buf, sizeof(recv_buf), 0, (sockaddr *)&source_addr, &socklen);
-
-        if (len < 0) {
-            if (errno != EAGAIN && errno != EWOULDBLOCK)
-                logger.printfln("recvfrom failed: errno %d", errno);
-            return;
-        }
-
-        if (len != sizeof(response_packet)) {
-            logger.printfln("Received datagram of wrong size %d from %s", len, inet_ntoa(source_addr.sin_addr));
-            return;
-        }
-
-        int charger_idx = -1;
-        for(int i = 0; i < chargers.size(); ++i)
-            if (source_addr.sin_family == dest_addrs[i].sin_family &&
-                source_addr.sin_port == dest_addrs[i].sin_port &&
-                source_addr.sin_addr.s_addr == dest_addrs[i].sin_addr.s_addr) {
-                charger_idx = i;
-                break;
-            }
-
-        if (charger_idx == -1) {
-            logger.printfln("Received packet from unknown %s. Is the configuration complete?", inet_ntoa(source_addr.sin_addr));
-            return;
-        }
-
-        response_packet response;
-        memcpy(&response, recv_buf, sizeof(response));
-
-        if (response.header.seq_num <= last_seen_seq_num[charger_idx] && last_seen_seq_num[charger_idx] - response.header.seq_num < 5) {
-            logger.printfln("Received stale (out of order?) packet from %s (%s). Last seen seq_num is %u, Received seq_num is %u",
-                chargers[charger_idx].get("name")->asString().c_str(),
-                inet_ntoa(source_addr.sin_addr),
-                last_seen_seq_num[charger_idx],
-                response.header.seq_num);
-            return;
-        }
-
-        if (response.header.version[0] != _MAJOR_ || response.header.version[1] != _MINOR_ || response.header.version[2] != _PATCH_) {
-            logger.printfln("Received packet from %s (%s) with incompatible firmware. Our version is %u.%u.%u, received packet had %u.%u.%u",
-                chargers[charger_idx].get("name")->asString().c_str(),
-                inet_ntoa(source_addr.sin_addr),
-                _MAJOR_, _MINOR_, _PATCH_,
-                response.header.version[0],
-                response.header.version[1],
-                response.header.version[2]);
-            return;
-        }
-
-        last_seen_seq_num[charger_idx] = response.header.seq_num;
-
-        Config &target = charge_manager_state.get("chargers")->asArray()[charger_idx];
-        // Don't update if the uptimes are the same.
-        // This means, that the EVSE hangs or the communication
-        // is not working. As last_update will now hang too,
-        // the management will stop all charging after some time.
-        if(target.get("uptime")->asUint() == response.uptime) {
-            logger.printfln("Received stale charger state from %s (%s). Reported EVSE uptime (%u) is the same as in the last state. Is the EVSE still reachable?",
-                chargers[charger_idx].get("name")->asString().c_str(),
-                inet_ntoa(source_addr.sin_addr),
-                response.uptime);
-            return;
-        }
-
-        target.get("uptime")->updateUint(response.uptime);
-        target.get("wants_to_charge")->updateBool(response.charge_release == 3); // CHARGE_RELEASE_CHARGE_MANAGEMENT
-        target.get("is_charging")->updateBool(response.vehicle_state == 2); //VEHICLE_STATE_CHARGING
-        target.get("allowed_current")->updateUint(response.allowed_charging_current);
-        target.get("last_update")->updateUint(millis());
-        target.get("state")->updateUint(get_charge_state(response.vehicle_state,
-                                                            response.iec61851_state,
-                                                            response.charge_release,
-                                                            target.get("allocated_current")->asUint()));
-        charge_manager_state.get("uptime")->updateUint(millis());
-    }, 100, 100);
 }
 
 void ChargeManager::setup()
@@ -463,6 +374,7 @@ void ChargeManager::register_urls()
     api.addState("charge_manager/state", &charge_manager_state, {}, 1000);
     api.addState("charge_manager/available_current", &charge_manager_available_current, {}, 1000);
     api.addCommand("charge_manager/available_current_update", &charge_manager_available_current, {}, [](){}, false);
+
 }
 
 void ChargeManager::loop()

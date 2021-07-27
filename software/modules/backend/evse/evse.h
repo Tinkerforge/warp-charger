@@ -69,13 +69,10 @@ private:
     Config evse_managed_current;
     Config evse_user_calibration;
 
+    uint32_t last_current_update = 0;
+    bool shutdown_logged = false;
+
     TF_EVSE evse;
 
     void start_managed_tasks();
-
-    bool source_addr_valid = false;
-    struct sockaddr_storage source_addr;
-    int sock;
-    uint32_t last_current_update = 0;
-    bool shutdown_logged = false;
 };
