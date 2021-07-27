@@ -62,7 +62,7 @@ public:
 
     bool initialized = false;
 
-    int CMNetworking::create_port(uint16_t port);
+    int create_socket(uint16_t port);
 
     void register_manager(const std::vector<String> &hosts,
                           const std::vector<String> &names,

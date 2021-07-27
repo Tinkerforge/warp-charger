@@ -45,7 +45,7 @@ void CMNetworking::loop()
 
 }
 
-int CMNetworking::create_port(uint16_t port) {
+int CMNetworking::create_socket(uint16_t port) {
     int sock;
     struct sockaddr_in dest_addr;
 
