@@ -28,14 +28,13 @@
 #include "task_scheduler.h"
 #include "tools.h"
 #include "web_server.h"
-#include "modules/ws/ws.h"
+#include "modules.h"
 
 extern EventLog logger;
 
 extern TaskScheduler task_scheduler;
 extern TF_HalContext hal;
 extern WebServer server;
-extern WS ws;
 
 extern API api;
 extern bool firmware_update_allowed;
@@ -306,6 +305,7 @@ void EVSE::register_urls()
             ));
     }, true);
 
+#ifdef MODULE_WS_AVAILABLE
     server.on("/evse/start_debug", HTTP_GET, [this](WebServerRequest request) {
         task_scheduler.scheduleOnce("enable evse debug", [this](){
             ws.pushStateUpdate(this->get_evse_debug_header(), "evse/debug_header");
@@ -320,22 +320,25 @@ void EVSE::register_urls()
         }, 0);
         request.send(200);
     });
+#endif
 }
 
 void EVSE::loop()
 {
     static uint32_t last_check = 0;
-    static uint32_t last_debug = 0;
     if(evse_found && !initialized && deadline_elapsed(last_check + 10000)) {
         last_check = millis();
         if(!is_in_bootloader(TF_E_TIMEOUT))
             setup_evse();
     }
 
+#ifdef MODULE_WS_AVAILABLE
+    static uint32_t last_debug = 0;
     if(debug && deadline_elapsed(last_debug + 50)) {
         last_debug = millis();
         ws.pushStateUpdate(this->get_evse_debug_line(), "evse/debug");
     }
+#endif
 }
 
 void EVSE::setup_evse()
