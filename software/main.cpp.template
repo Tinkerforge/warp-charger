@@ -24,7 +24,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "hal_arduino_esp32/hal_arduino_esp32.h"
+#include "hal_arduino_esp32_ethernet/hal_arduino_esp32_ethernet.h"
 
 #include "bindings/errors.h"
 #include "bindings/endian_convert.h"
@@ -58,28 +58,16 @@ char passphrase[20] = {0};
 bool firmware_update_allowed = true;
 
 TF_Port ports[6] = {{
-        .chip_select_pin = 16,
-        .spi = VSPI,
         .port_name = 'A'
     }, {
-        .chip_select_pin = 33,
-        .spi = VSPI,
         .port_name = 'B'
     }, {
-        .chip_select_pin = 17,
-        .spi = VSPI,
         .port_name = 'C'
     }, {
-        .chip_select_pin = 25,
-        .spi = HSPI,
         .port_name = 'D'
     }, {
-        .chip_select_pin = 26,
-        .spi = HSPI,
         .port_name = 'E'
     }, {
-        .chip_select_pin = 27,
-        .spi = HSPI,
         .port_name = 'F'
     }
 };
