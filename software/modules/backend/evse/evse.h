@@ -19,13 +19,9 @@
 
 #pragma once
 
-#include "ArduinoJson.h"
-
 #include "bindings/bricklet_evse.h"
 
 #include "config.h"
-
-#include "lwip/sockets.h"
 
 class EVSE {
 public:
