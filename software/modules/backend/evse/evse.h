@@ -69,6 +69,4 @@ private:
     bool shutdown_logged = false;
 
     TF_EVSE evse;
-
-    void start_managed_tasks();
 };
