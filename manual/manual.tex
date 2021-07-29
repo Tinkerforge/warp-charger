@@ -97,7 +97,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		\Huge
 		WARP Charger Betriebsanleitung\\\vspace{1cm}
 		\large
-		Version 1.2.5\\\vspace{0.25cm}
+		Version 1.2.6\\\vspace{0.25cm}
 		\today
 	\end{center}
 	\vfill \gfx{./img/resized/warp_perspective_blue_ready}
@@ -361,8 +361,8 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		Berücksichtigung der genannten Bedingungen geändert werden!}
 
 	\subsection{Prüfungen}\label{tests}
-	Im Werk wurde die Wallbox nach IEC 60364-6 sowie den entsprechenden gültigen
-	nationalen Vorschriften geprüft, das Messprotokoll liegt bei.
+	Im Werk wurde jede Wallbox einzeln nach IEC 60364-6 sowie den entsprechenden gültigen
+	nationalen Vorschriften geprüft, das jeweilige Messprotokoll liegt bei.
 	Vor der ersten Inbetriebnahme ist dennoch eine Prüfung der Gesamtinstallation
 	nach den selben Vorschriften notwendig.
 
@@ -374,7 +374,10 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	gemessen (ca. \SI{249}{\kilo\ohm}). Dies hat den Hintergrund, dass
 	der verbaute Ladecontroller über je einen Optokoppler mit
 	\SI{249}{\kilo\ohm} Vorwiderstand, vor und nach dem Schütz, zwischen L1 und
-	PE verfügt (Erdungsüberwachung, Schützüberwachung).
+	PE verfügt (Erdungsüberwachung, Schützüberwachung). Wird während der Messung ein EVSE-Adapter verwendet,
+	kann es aufgrund der genannten Überwachungsschaltung im Wechselspiel mit dem EVSE-Adapter zu Fehlmessungen
+	auf L2, L3 und N (gemessen gegen PE) kommen. Ist dies der Fall, so muss die Isolationsmessung
+	ohne EVSE-Adapter direkt am Typ-2-Stecker durchgeführt werden.
 
 	Der DC-Fehlerstromschutz kann getestet werden, indem der orangene oder schwarze Taster (siehe
 	nachfolgendes Foto) auf dem DC-Fehlerstromschutzmodul gedrückt wird. In diesem
@@ -809,6 +812,10 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		           &         & anschluss als Fehlerursache \\
 		           &         & für \glqq Wallbox-LED ist aus\grqq\\
 		           &         & hinzugefügt                 \\
+		29.07.2021 & 1.2.6   & Farbe des DC-Fehlerstrom-   \\
+		           &         & schutztasters hinzugefügt.  \\
+		           &         & Hinweis zu EVSE-Test-\\
+		           &         & adaptern hinzugefügt\\
 		\bottomrule
 	\end{tabular}
 	\newpage
