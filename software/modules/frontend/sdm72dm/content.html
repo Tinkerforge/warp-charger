@@ -60,6 +60,41 @@
                     <input id="meter_energy_abs" class="form-control" type="text" placeholder="..." readonly>
                 </div>
             </div>
+
+            <div class="form-group row no-gutters" id="meter_phases">
+                <div class="col-sm-6">
+                    <label for="meter_phases_values" class="col-form-label">
+                        <span class="form-label pr-2" data-i18n="sdm72dm.content.phases_active"></span>
+                        <span class="text-muted" data-i18n="sdm72dm.content.phases_active_desc"></span>
+                    </label>
+                </div>
+                <div id="meter_phases_values" class="col-sm-6 row no-gutters">
+                    <div id="btn_group_meter_phase_0" class="btn-group-vertical flex-wrap mb-1 col-4 pr-2" role="group">
+                        <button type="button" class="btn btn-outline-primary" disabled><span data-feather="zap"></span></button>
+                        <button type="button" class="btn btn-outline-secondary" disabled><span data-feather="zap-off"></span></button>
+                    </div>
+                    <div id="btn_group_meter_phase_1" class="btn-group-vertical flex-wrap mb-1 col-4 pr-2" role="group">
+                        <button type="button" class="btn btn-outline-primary" disabled><span data-feather="zap"></span></button>
+                        <button type="button" class="btn btn-outline-secondary" disabled><span data-feather="zap-off"></span></button>
+                    </div>
+                    <div id="btn_group_meter_phase_2" class="btn-group-vertical flex-wrap mb-1 col-4" role="group">
+                        <button type="button" class="btn btn-outline-primary" disabled><span data-feather="zap"></span></button>
+                        <button type="button" class="btn btn-outline-secondary" disabled><span data-feather="zap-off"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="meter_detailed_values_container" class="col-xl-10 col-lg-12">
+            <div class="align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <span class="h3" data-i18n="sdm72dm.content.detailed_values"></span>
+                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#sdm72dm_detailed_values_collapse" aria-expanded="false" aria-controls="sdm72dm_detailed_values_collapse" data-i18n="sdm72dm.content.detailed_values_show"></button>
+            </div>
+            <div class="collapse" id="sdm72dm_detailed_values_collapse">
+                <div id="sdm72dm_detailed_values">
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
