@@ -114,9 +114,12 @@ EVSEV2::EVSEV2()
     evse_start_charging = Config::Null();
 
     evse_energy_meter_values = Config::Object({
-        {"power", Config::Uint(32000, 6000, 32000)},
-        {"energy_rel", Config::Uint(32000, 6000, 32000)},
-        {"energy_abs", Config::Uint(32000, 6000, 32000)}
+        {"power", Config::Float(0)},
+        {"energy_rel", Config::Float(0)},
+        {"energy_abs", Config::Float(0)},
+         {"phases_active", Config::Array({Config::Bool(false),Config::Bool(false),Config::Bool(false)},
+            Config::Bool(false),
+            3, 3, Config::type_id<Config::ConfBool>())}
     });
 
     evse_energy_meter_state = Config::Object({
@@ -135,7 +138,12 @@ EVSEV2::EVSEV2()
         {"state", Config::Uint8(0)}
     });
 
+    evse_reset_dc_fault_current = Config::Object({
+        {"password", Config::Uint32(0)} //0xDC42FA23
+    });
+
     evse_gpio_configuration = Config::Object({
+        {"enable_input", Config::Uint8(0)},
         {"input", Config::Uint8(0)},
         {"output", Config::Uint8(0)}
     });
@@ -217,6 +225,12 @@ void EVSEV2::setup()
     task_scheduler.scheduleWithFixedDelay("evse_managed_current_watchdog", [this]() {
         if (!deadline_elapsed(this->last_current_update + 30000))
             return;
+        if (!evse_managed.get("managed")->asBool()) {
+            // Push back the next check for 30 seconds: If managed gets enabled,
+            // we want to wait 30 seconds before setting the current for the first time.
+            this->last_current_update = millis();
+            return;
+        }
         if(!this->shutdown_logged)
             logger.printfln("Got no managed current update for more than 30 seconds. Setting managed current to 0");
         this->shutdown_logged = true;
@@ -312,7 +326,7 @@ String EVSEV2::get_evse_monitor_header() {
             "auto_start, auto_start,"
             "energy_meter_values,power,energy_rel,energy_abs,"
             "dc_fault_current_state,dc_fault,"
-            "gpio_cfg, input_cfg, output_cfg,"
+            "gpio_cfg, enable_input_cfg, input_cfg, output_cfg,"
             "gpios,gpio_0,gpio_1,gpio_2,gpio_3,gpio_4,gpio_5,gpio_6,gpio_7,gpio_8,gpio_9,gpio_10,gpio_11,gpio_12,gpio_13,gpio_14,gpio_15,gpio_16,gpio_17,gpio_18,gpio_19,gpio_20,gpio_21,gpio_22,gpio_23\n";
 }
 
@@ -391,6 +405,7 @@ String EVSEV2::get_evse_monitor_line() {
 
         evse_dc_fault_current_state.get("state")->asUint(),
 
+        evse_gpio_configuration.get("enable_input")->asUint(),
         evse_gpio_configuration.get("input")->asUint(),
         evse_gpio_configuration.get("output")->asUint(),
 
@@ -443,7 +458,17 @@ void EVSEV2::register_urls()
     api.addState("evse/energy_meter_values", &evse_energy_meter_values, {}, 1000);
     api.addState("evse/energy_meter_state", &evse_energy_meter_state, {}, 1000);
     api.addState("evse/dc_fault_current_state", &evse_dc_fault_current_state, {}, 1000);
+
+    api.addCommand("evse/reset_dc_fault_current", &evse_reset_dc_fault_current, {}, [this](){
+        is_in_bootloader(tf_evse_v2_reset_dc_fault_current(&evse, evse_reset_dc_fault_current.get("password")->asUint()));
+    }, true);
+
     api.addState("evse/gpio_configuration", &evse_gpio_configuration, {}, 1000);
+    api.addCommand("evse/gpio_configuration_update", &evse_gpio_configuration, {}, [this](){
+        is_in_bootloader(tf_evse_v2_set_gpio_configuration(&evse, evse_gpio_configuration.get("enable_input")->asUint(),
+                                                                  evse_gpio_configuration.get("input")->asUint(),
+                                                                  evse_gpio_configuration.get("output")->asUint()));
+    }, true);
 
     api.addCommand("evse/auto_start_charging_update", &evse_auto_start_charging_update, {}, [this](){
         is_in_bootloader(tf_evse_v2_set_charging_autostart(&evse, evse_auto_start_charging_update.get("auto_start_charging")->asBool()));
@@ -545,6 +570,8 @@ void EVSEV2::setup_evse()
     }
 
     initialized = true;
+
+    update_evse_energy_meter_state();
 }
 
 void EVSEV2::update_evse_low_level_state() {
@@ -700,21 +727,25 @@ void EVSEV2::update_evse_energy_meter_values() {
     if(!initialized)
         return;
 
-    uint32_t power, energy_rel, energy_abs;
+    float power, energy_rel, energy_abs;
+    bool phases_active[3];
 
     int rc = tf_evse_v2_get_energy_meter_values(&evse,
         &power,
         &energy_rel,
-        &energy_abs);
+        &energy_abs,
+        phases_active);
 
     if(rc != TF_E_OK) {
         is_in_bootloader(rc);
         return;
     }
 
-    evse_energy_meter_values.get("power")->updateUint(power);
-    evse_energy_meter_values.get("energy_rel")->updateUint(energy_rel);
-    evse_energy_meter_values.get("energy_abs")->updateUint(energy_abs);
+    evse_energy_meter_values.get("power")->updateFloat(power);
+    evse_energy_meter_values.get("energy_rel")->updateFloat(energy_rel);
+    evse_energy_meter_values.get("energy_abs")->updateFloat(energy_abs);
+    for(int i = 0; i < 3; ++i)
+            evse_energy_meter_values.get("phases_active")->get(i)->updateBool(phases_active[i]);
 }
 
 void EVSEV2::update_evse_energy_meter_state() {
@@ -759,9 +790,10 @@ void EVSEV2::update_evse_gpio_configuration() {
     if(!initialized)
         return;
 
-    uint8_t input, output;
+    uint8_t enable_input, input, output;
 
     int rc = tf_evse_v2_get_gpio_configuration(&evse,
+        &enable_input,
         &input,
         &output);
 
@@ -770,6 +802,7 @@ void EVSEV2::update_evse_gpio_configuration() {
         return;
     }
 
+    evse_gpio_configuration.get("enable_input")->updateUint(enable_input);
     evse_gpio_configuration.get("input")->updateUint(input);
     evse_gpio_configuration.get("output")->updateUint(output);
 }

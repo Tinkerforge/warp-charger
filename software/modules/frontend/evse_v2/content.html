@@ -1,0 +1,621 @@
+ <div class="tab-pane fade" role="tabpanel" aria-labelledby="sidebar-evse" id="evse">
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2" data-i18n="evse.content.evse"></h1>
+    </div>
+
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <span class="h3" data-i18n="evse.content.state"></span>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-3 col-xl-2">
+            <label for="evse_state_not_connected" class="col-form-label">
+                <span class="form-label" data-i18n="evse.content.iec_state"></span>
+            </label>
+        </div>
+        <div class="col-lg-9 col-xl-6">
+            <div id="btn_group_iec_state" class="btn-group flex-wrap" role="group" style="width: 100%;">
+                <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.iec_state_a"></button>
+                <button type="button" class="btn btn-outline-warning" disabled data-i18n="evse.content.iec_state_b"></button>
+                <button type="button" class="btn btn-outline-success" disabled data-i18n="evse.content.iec_state_c"></button>
+                <button type="button" class="btn btn-outline-danger" disabled data-i18n="evse.content.iec_state_d"></button>
+                <button type="button" class="btn btn-outline-danger" disabled data-i18n="evse.content.iec_state_ef"></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-3 col-xl-2">
+            <label for="btn_group_charge_release" class="col-form-label">
+                <span class="form-label" data-i18n="evse.content.charge_release"></span>
+            </label>
+        </div>
+        <div class="col-lg-9 col-xl-6">
+            <div id="btn_group_charge_release" class="btn-group flex-wrap" role="group" style="width: 100%;">
+                <button type="button" class="btn btn-outline-success" disabled data-i18n="evse.content.charge_release_automatic"></button>
+                <button type="button" class="btn btn-outline-warning" disabled data-i18n="evse.content.charge_release_manual"></button>
+                <button type="button" class="btn btn-outline-danger" disabled data-i18n="evse.content.charge_release_deactivated"></button>
+                <button type="button" class="btn btn-outline-warning" disabled data-i18n="evse.content.charge_release_managed"></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-3 col-xl-2">
+            <label for="allowed_charging_current" class="col-form-label">
+                <span class="form-label pr-2" data-i18n="evse.content.allowed_charging_current"></span>
+                <span class="text-muted" data-i18n="evse.content.charging_current_muted"></span>
+            </label>
+        </div>
+        <div class="col-lg-9 col-xl-6">
+            <input id="allowed_charging_current" class="form-control" type="text"
+                placeholder="..." readonly>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-3 col-xl-2">
+            <label for="btn_group_error_state" class="col-form-label">
+                <span class="form-label pr-2" data-i18n="evse.content.error_state"></span>
+                <span class="text-muted" data-i18n="evse.content.error_state_desc"></span>
+            </label>
+        </div>
+        <div class="col-lg-9 col-xl-6">
+            <div id="btn_group_error_state" class="btn-group flex-wrap" role="group" style="width: 100%;">
+                <button type="button" class="btn btn-outline-success" disabled data-i18n="evse.content.error_ok"></button>
+                <button type="button" class="btn btn-outline-danger" disabled data-i18n="evse.content.error_switch"></button>
+                <button type="button" class="btn btn-outline-danger" disabled data-i18n="evse.content.error_dc_fault_current"></button>
+                <button type="button" class="btn btn-outline-danger" disabled data-i18n="evse.content.error_contactor"></button>
+                <button type="button" class="btn btn-outline-danger" disabled data-i18n="evse.content.error_communication"></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-3 col-xl-2">
+            <label for="btn_groups_ac" class="col-form-label">
+                <span class="form-label pr-2" data-i18n="evse.content.contactor_state"></span>
+                <span class="text-muted" data-i18n="evse.content.contactor_names"></span>
+            </label>
+        </div>
+        <div id="btn_groups_ac" class="col-lg-9 col-xl-6 row form-group" style="padding-right: 0;">
+            <div id="btn_group_ac1" class="btn-group flex-wrap mb-1 col" role="group">
+                <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.contactor_not_live"></button>
+                <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.contactor_live"></button>
+            </div>
+            <div id="btn_group_ac2" class="btn-group flex-wrap mb-1 col" role="group">
+                <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.contactor_not_live"></button>
+                <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.contactor_live"></button>
+            </div>
+            <div id="btn_group_contactor_error" class="btn-group flex-wrap mb-1 col-auto" role="group" style="padding-right: 0;">
+                <button type="button" class="btn btn-outline-success" disabled data-i18n="evse.content.contactor_ok"></button>
+                <button type="button" class="btn btn-outline-danger" disabled data-i18n="evse.content.contactor_error"></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-3 col-xl-2">
+            <label for="btn_group_dc_fault_current_state" class="col-form-label">
+                <span class="form-label pr-2" data-i18n="evse.content.dc_fault_current_state"></span>
+                <span class="text-muted" data-i18n="evse.content.dc_fault_current_state_desc"></span>
+            </label>
+        </div>
+        <div class="col-lg-9 col-xl-6 row" style="padding-right: 0;">
+            <div id="btn_group_dc_fault_current_state" class="btn-group flex-wrap col" role="group">
+                <button type="button" class="btn btn-outline-success" disabled data-i18n="evse.content.dc_fault_current_ok"></button>
+                <button type="button" class="btn btn-outline-danger" disabled data-i18n="evse.content.dc_fault_current_6_ma"></button>
+                <button type="button" class="btn btn-outline-danger" disabled data-i18n="evse.content.dc_fault_current_system"></button>
+                <button type="button" class="btn btn-outline-danger" disabled data-i18n="evse.content.dc_fault_current_unknown"></button>
+                <button type="button" class="btn btn-outline-danger" disabled data-i18n="evse.content.dc_fault_current_calibration"></button>
+            </div>
+            <button id="evse_reset_dc_fault_current" type="button" class="btn btn-danger col-auto" disabled data-i18n="evse.content.dc_fault_current_reset"></button>
+        </div>
+    </div>
+
+    <div class="form-group row" id="evse_row_lock_switch">
+        <div class="col-lg-3 col-xl-2">
+            <label for="btn_group_lock_state" class="col-form-label">
+                <span class="form-label" data-i18n="evse.content.lock_state"></span>
+            </label>
+        </div>
+        <div class="col-lg-9 col-xl-6">
+            <div id="btn_group_lock_state" class="btn-group flex-wrap" role="group" style="width: 100%;">
+                <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.lock_init"></button>
+                <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.lock_open"></button>
+                <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.lock_closing"></button>
+                <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.lock_close"></button>
+                <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.lock_opening"></button>
+                <button type="button" class="btn btn-outline-danger" disabled data-i18n="evse.content.lock_error"></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-3 col-xl-2">
+            <label for="time_since_state_change" class="col-form-label">
+                <span class="form-label" data-i18n="evse.content.time_since_state_change"></span>
+            </label>
+        </div>
+        <div class="col-lg-9 col-xl-6">
+            <input id="time_since_state_change" class="form-control" type="text"
+                placeholder="..." readonly>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-3 col-xl-2">
+            <label for="uptime" class="col-form-label">
+                <span class="form-label" data-i18n="evse.content.uptime"></span>
+            </label>
+        </div>
+        <div class="col-lg-9 col-xl-6">
+            <input id="uptime" class="form-control" type="text" placeholder="..." readonly>
+        </div>
+    </div>
+
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <span class="h3" data-i18n="evse.content.configuration"></span>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-3 col-xl-2">
+            <label for="btn_group_has_lock_switch" class="col-form-label">
+                <span class="form-label" data-i18n="evse.content.has_lock_switch"></span>
+            </label>
+        </div>
+        <div class="col-lg-9 col-xl-6">
+            <div id="btn_group_has_lock_switch" class="btn-group flex-wrap" role="group">
+                <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.lock_no"></button>
+                <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.lock_yes"></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-3 col-xl-2">
+            <label for="btn_group_jumper_config" class="col-form-label">
+                <span class="form-label pr-2" data-i18n="evse.content.jumper_config_max_current"></span>
+                <span class="text-muted" data-i18n="evse.content.jumper_config"></span>
+            </label>
+        </div>
+        <div class="col-lg-9 col-xl-6">
+            <div id="btn_group_jumper_config" class="btn-group flex-wrap" role="group" style="width: 100%;">
+                <button type="button" class="btn btn-outline-primary" disabled>6 A</button>
+                <button type="button" class="btn btn-outline-primary" disabled>10 A</button>
+                <button type="button" class="btn btn-outline-primary" disabled>13 A</button>
+                <button type="button" class="btn btn-outline-primary" disabled>16 A</button>
+                <button type="button" class="btn btn-outline-primary" disabled>20 A</button>
+                <button type="button" class="btn btn-outline-primary" disabled>25 A</button>
+                <button type="button" class="btn btn-outline-primary" disabled>32 A</button>
+                <button type="button" class="btn btn-outline-danger" disabled data-i18n="evse.content.jumper_config_software"></button>
+                <button type="button" class="btn btn-outline-danger" disabled data-i18n="evse.content.jumper_config_unconfigured"></button>
+            </div>
+        </div>
+    </div>
+
+    <div
+    class="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <span class="h3" data-i18n="evse.content.charging_current"></span>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-3 col-xl-2">
+            <label for="max_current_configured" class="col-form-label">
+                <span class="form-label" data-i18n="evse.content.charging_current_configured"></span>
+            </label>
+        </div>
+        <div class="col-lg-9 col-xl-6">
+            <input id="max_current_configured" class="form-control" type="text"
+                placeholder="..." readonly>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-3 col-xl-2">
+            <label for="max_current_incoming_cable" class="col-form-label">
+                <span class="form-label" data-i18n="evse.content.charging_current_max_incoming"></span>
+            </label>
+        </div>
+        <div class="col-lg-9 col-xl-6">
+            <input id="max_current_incoming_cable" class="form-control" type="text"
+                placeholder="..." readonly>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-3 col-xl-2">
+            <label for="max_current_outgoing_cable" class="col-form-label">
+                <span class="form-label" data-i18n="evse.content.charging_current_max_outgoing"></span>
+            </label>
+        </div>
+        <div class="col-lg-9 col-xl-6">
+            <input id="max_current_outgoing_cable" class="form-control" type="text"
+                placeholder="..." readonly>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-3 col-xl-2">
+            <label for="max_current_managed" class="col-form-label">
+                <span class="form-label pr-2" data-i18n="evse.content.charging_current_managed"></span>
+                <span class="text-muted" id="evse_charging_current_managed_ignored"></span>
+            </label>
+        </div>
+        <div class="col-lg-9 col-xl-6">
+            <input id="max_current_managed" class="form-control" type="text"
+                placeholder="..." readonly>
+        </div>
+    </div>
+
+    <div
+    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <span class="h3" data-i18n="evse.content.settings"></span>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-3 col-xl-2">
+            <label for="evse_charge_management" class="col-form-label">
+                <span class="form-label pr-2" data-i18n="evse.content.charge_management_description"></span>
+                <span class="text-muted" data-i18n="evse.content.charge_management_description_muted"></span>
+            </label>
+        </div>
+        <div class="col-lg-9 col-xl-6">
+            <div class="borderless-form-control custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="evse_charge_management">
+                <label class="custom-control-label" for="evse_charge_management" data-i18n="evse.content.charge_management_enable"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-3 col-xl-2">
+            <label for="evse_gpio_enable" class="col-form-label">
+                <span class="form-label pr-2" data-i18n="evse.content.gpio_enable"></span>
+                <span class="text-muted" data-i18n="evse.content.gpio_enable_muted"></span>
+            </label>
+        </div>
+        <div class="col-lg-9 col-xl-6">
+            <select id="evse_gpio_enable" class="custom-select">
+                <option value="0" data-i18n="evse.content.gpio_enable_not_configured"></option>
+                <option value="1" data-i18n="evse.content.gpio_enable_active_open"></option>
+                <option value="2" data-i18n="evse.content.gpio_enable_active_close"></option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-3 col-xl-2">
+            <label for="evse_gpio_in" class="col-form-label">
+                <span class="form-label pr-2" data-i18n="evse.content.gpio_in"></span>
+                <span class="text-muted" data-i18n="evse.content.gpio_in_muted"></span>
+            </label>
+        </div>
+        <div class="col-lg-9 col-xl-6">
+            <select id="evse_gpio_in" class="custom-select">
+                <option value="0" data-i18n="evse.content.not_configured"></option>
+                <option value="1" data-i18n="evse.content.todo"></option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-3 col-xl-2">
+            <label for="evse_gpio_out" class="col-form-label">
+                <span class="form-label pr-2" data-i18n="evse.content.gpio_out"></span>
+                <span class="text-muted" data-i18n="evse.content.gpio_out_muted"></span>
+            </label>
+        </div>
+        <div class="col-lg-9 col-xl-6">
+            <select id="evse_gpio_out" class="custom-select">
+                <option value="0" data-i18n="evse.content.not_configured"></option>
+                <option value="1" data-i18n="evse.content.todo"></option>
+            </select>
+        </div>
+    </div>
+
+    <div
+    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <span class="h3" data-i18n="evse.content.debug"></span>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-3 col-xl-2">
+            <label class="col-form-label">
+                <span class="form-label pr-2" data-i18n="evse.content.debug_description"></span>
+                <span class="text-muted" data-i18n="evse.content.debug_description_muted"></span>
+            </label>
+        </div>
+        <div class="col-lg-9 col-xl-6">
+            <div class="input-group pb-2">
+                <button id="debug_start" class="btn btn-primary form-control rounded-right mr-2" type="button" data-i18n="evse.content.debug_start"></button>
+                <button id="debug_stop" class="btn btn-primary form-control rounded-left" type="button" data-i18n="evse.content.debug_stop"></button>
+            </div>
+            <input id="debug_label" class="form-control" type="text" placeholder="..." readonly>
+        </div>
+    </div>
+
+    <div
+        class="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom row">
+        <div class="col-lg-12 col-xl-8 align-items-center row" style="padding-right: 0;">
+            <span class="h3 col" data-i18n="evse.content.low_level_state"></span>
+            <button class="btn btn-primary col-auto" type="button" data-toggle="collapse" data-target="#low_level_state_collapse" aria-expanded="false" aria-controls="low_level_state_collapse" data-i18n="evse.content.low_level_state_show"></button>
+        </div>
+    </div>
+    <div class="collapse" id="low_level_state_collapse">
+        <div class="form-group row">
+            <div class="col-lg-3 col-xl-2">
+                <label for="btn_group_led_state" class="col-form-label">
+                    <span class="form-label" data-i18n="evse.content.led_state"></span>
+                </label>
+            </div>
+            <div class="col-lg-9 col-xl-6">
+                <div id="btn_group_led_state" class="btn-group flex-wrap" role="group" style="width: 100%;">
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.led_state_off"></button>
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.led_state_on"></button>
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.led_state_blinking"></button>
+                    <button type="button" class="btn btn-outline-danger" disabled data-i18n="evse.content.led_state_flickering"></button>
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.led_state_breathing"></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-lg-3 col-xl-2">
+                <label for="pwm_duty_cycle" class="col-form-label">
+                    <span class="form-label" data-i18n="evse.content.cp_pwm_dc"></span>
+                </label>
+            </div>
+            <div class="col-lg-9 col-xl-6">
+                <input id="pwm_duty_cycle" class="form-control" type="text"
+                    placeholder="..." readonly>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-lg-3 col-xl-2">
+                <label for="adc_value_0" class="col-form-label">
+                    <span class="form-label pr-2" data-i18n="evse.content.adc_values"></span>
+                    <span class="text-muted" data-i18n="evse.content.adc_names"></span>
+                </label>
+            </div>
+            <div class="col-lg-9 col-xl-6 row" style="padding-right: 0;">
+                <div class="mb-1 col-6 col-md-4 col-lg">
+                    <input id="adc_value_0" class="form-control" type="text" placeholder="..." readonly>
+                </div>
+                <div class="mb-1 col-6 col-md-4 col-lg evse-v2-padding-fix-sm">
+                    <input id="adc_value_1" class="form-control" type="text" placeholder="..." readonly>
+                </div>
+                <div class="mb-1 col-6 col-md-4 col-lg evse-v2-padding-fix-md">
+                    <input id="adc_value_2" class="form-control" type="text" placeholder="..." readonly>
+                </div>
+                <div class="mb-1 col-6 col-md-4 col-lg evse-v2-padding-fix-sm">
+                    <input id="adc_value_3" class="form-control" type="text" placeholder="..." readonly>
+                </div>
+                <div class="mb-1 col-6 col-md-4 col-lg evse-v2-padding-fix-lg">
+                    <input id="adc_value_4" class="form-control" type="text" placeholder="..." readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-lg-3 col-xl-2">
+                <label for="voltage_0" class="col-form-label">
+                    <span class="form-label pr-2" data-i18n="evse.content.voltages"></span>
+                    <span class="text-muted" data-i18n="evse.content.voltage_names"></span>
+                </label>
+            </div>
+            <div class="col-lg-9 col-xl-6 row" style="padding-right: 0;">
+                <div class="mb-1 col-6 col-md-4 col-lg">
+                    <input id="voltage_0" class="form-control" type="text" placeholder="..." readonly>
+                </div>
+                <div class="mb-1 col-6 col-md-4 col-lg evse-v2-padding-fix-sm">
+                    <input id="voltage_1" class="form-control" type="text" placeholder="..." readonly>
+                </div>
+                <div class="mb-1 col-6 col-md-4 col-lg evse-v2-padding-fix-md">
+                    <input id="voltage_2" class="form-control" type="text" placeholder="..." readonly>
+                </div>
+                <div class="mb-1 col-6 col-md-4 col-lg evse-v2-padding-fix-sm">
+                    <input id="voltage_3" class="form-control" type="text" placeholder="..." readonly>
+                </div>
+                <div class="mb-1 col-6 col-md-4 col-lg evse-v2-padding-fix-lg">
+                    <input id="voltage_4" class="form-control" type="text" placeholder="..." readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-lg-3 col-xl-2">
+                <label for="resistance_0" class="col-form-label">
+                    <span class="form-label pr-2" data-i18n="evse.content.resistances"></span>
+                    <span class="text-muted" data-i18n="evse.content.resistance_names"></span>
+                </label>
+            </div>
+            <div class="col-lg col-xl-3 mb-1">
+                <input id="resistance_0" class="form-control" type="text"
+                    placeholder="..." readonly>
+            </div>
+            <div class="col-lg col-xl-3 mb-1">
+                <input id="resistance_1" class="form-control" type="text"
+                    placeholder="..." readonly>
+            </div>
+        </div>
+
+        <div class="form-group row pb-3">
+            <div class="col-lg-3 col-xl-2">
+                <label for="btn_groups_gpios" class="col-form-label">
+                    <span class="form-label pr-2" data-i18n="evse.content.gpios"></span>
+                    <span class="text-muted" data-i18n="evse.content.gpio_names_0"></span>
+                </label>
+            </div>
+            <div id="btn_groups_gpios" class="col-lg-8">
+                <div id="btn_group_gpio0" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+                <div id="btn_group_gpio1" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+                <div id="btn_group_gpio2" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+                <div id="btn_group_gpio3" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row pb-3">
+            <div class="col-lg-3 col-xl-2">
+                <label for="btn_groups_gpios" class="col-form-label">
+                    <span class="text-muted" data-i18n="evse.content.gpio_names_1"></span>
+                </label>
+            </div>
+            <div id="btn_groups_gpios" class="col-lg-8">
+                <div id="btn_group_gpio4" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+                <div id="btn_group_gpio5" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+                <div id="btn_group_gpio6" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+                <div id="btn_group_gpio7" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row pb-3">
+            <div class="col-lg-3 col-xl-2">
+                <label for="btn_groups_gpios" class="col-form-label">
+                    <span class="text-muted" data-i18n="evse.content.gpio_names_2"></span>
+                </label>
+            </div>
+            <div id="btn_groups_gpios" class="col-lg-8">
+                <div id="btn_group_gpio8" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+                <div id="btn_group_gpio9" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+                <div id="btn_group_gpio10" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+                <div id="btn_group_gpio11" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row pb-3">
+            <div class="col-lg-3 col-xl-2">
+                <label for="btn_groups_gpios" class="col-form-label">
+                    <span class="text-muted" data-i18n="evse.content.gpio_names_3"></span>
+                </label>
+            </div>
+            <div id="btn_groups_gpios" class="col-lg-8">
+                <div id="btn_group_gpio12" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+                <div id="btn_group_gpio13" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+                <div id="btn_group_gpio14" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+                <div id="btn_group_gpio15" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row pb-3">
+            <div class="col-lg-3 col-xl-2">
+                <label for="btn_groups_gpios" class="col-form-label">
+                    <span class="text-muted" data-i18n="evse.content.gpio_names_4"></span>
+                </label>
+            </div>
+            <div id="btn_groups_gpios" class="col-lg-8">
+                <div id="btn_group_gpio16" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+                <div id="btn_group_gpio17" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+                <div id="btn_group_gpio18" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+                <div id="btn_group_gpio19" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row pb-3">
+            <div class="col-lg-3 col-xl-2">
+                <label for="btn_groups_gpios" class="col-form-label">
+                    <span class="text-muted" data-i18n="evse.content.gpio_names_5"></span>
+                </label>
+            </div>
+            <div id="btn_groups_gpios" class="col-lg-8">
+                <div id="btn_group_gpio20" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+                <div id="btn_group_gpio21" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+                <div id="btn_group_gpio22" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+                <div id="btn_group_gpio23" class="btn-group-vertical flex-wrap mb-1" role="group">
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.gpio_high"></button>
+                    <button type="button" class="btn btn-outline-secondary" disabled data-i18n="evse.content.gpio_low"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="evse_reset_dc_fault_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div id="evse_reset_dc_fault_modal_content"
+            class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <form-label class="modal-title" data-i18n="evse.content.reset_dc_fault_title"></form-label>
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" data-i18n="evse.content.reset_dc_fault_content"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal" data-i18n="evse.content.abort"></button>
+                    <button id="evse_reset_dc_fault_modal_button" type="button"
+                        class="btn btn-danger" data-i18n="evse.content.reset"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

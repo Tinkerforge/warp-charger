@@ -33,6 +33,10 @@ public:
     bool evse_found = false;
     bool initialized = false;
 
+    TF_EVSEV2 evse;
+
+    Config evse_energy_meter_state;
+
 private:
     void setup_evse();
     void update_evse_state();
@@ -66,8 +70,9 @@ private:
     Config evse_stop_charging;
     Config evse_start_charging;
     Config evse_energy_meter_values;
-    Config evse_energy_meter_state;
+
     Config evse_dc_fault_current_state;
+    Config evse_reset_dc_fault_current;
     Config evse_gpio_configuration;
     Config evse_managed;
     Config evse_managed_update;
@@ -76,5 +81,5 @@ private:
     uint32_t last_current_update = 0;
     bool shutdown_logged = false;
 
-    TF_EVSEV2 evse;
+
 };

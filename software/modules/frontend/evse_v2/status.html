@@ -1,0 +1,72 @@
+<div id="status-evse">
+    <div class="form-group row no-gutters">
+        <div class="col-sm-4">
+            <label for="evse_state_not_connected" class="col-form-label">
+                <span class="form-label" data-i18n="evse.status.evse"></span>
+            </label>
+        </div>
+        <div class="col-lg-8 col-xl-4">
+            <div id="btn_group_evse_state" class="btn-group flex-wrap" role="group"
+                style="width: 100%">
+                <button id="evse_state_not_connected" type="button"
+                    class="btn btn-outline-primary" disabled  data-i18n="evse.status.not_connected"></button>
+                <button id="evse_state_connected" type="button" class="btn btn-outline-warning"
+                    disabled data-i18n="evse.status.connected"></button>
+                <button id="evse_state_charging" type="button" class="btn btn-outline-success"
+                    disabled><span id="evse_state_charging_text" data-i18n="evse.status.charging"></span><span
+                        id="evse_state_charging_charge_time"></span></button>
+                <button id="evse_state_error" type="button" class="btn btn-outline-danger"
+                    disabled data-i18n="evse.status.error"></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row no-gutters">
+        <div class="col-sm-4">
+            <label class="col-form-label">
+                <span class="form-label" data-i18n="evse.status.charge_control"></span>
+            </label>
+        </div>
+        <div class="col-xl-2 col-lg-4">
+            <div class="borderless-form-control custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="status_auto_start_charging">
+                <label class="custom-control-label" for="status_auto_start_charging" data-i18n="evse.status.auto_start_charging"></label>
+            </div>
+        </div>
+        <div class="col-xl-2 col-lg-4 input-group">
+            <button id="status_start_charging" class="btn btn-primary form-control mr-2 rounded-right" type="button" disabled data-i18n="evse.status.start_charging"></button>
+            <button id="status_stop_charging" class="btn btn-primary form-control rounded-left" type="button" disabled data-i18n="evse.status.stop_charging"></button>
+        </div>
+    </div>
+
+    <form id="evse_status_charging_current_form">
+        <div class="form-group row no-gutters">
+            <div class="col-sm-4">
+                <label for="status_charging_current" class="col-form-label">
+                    <span class="form-label" data-i18n="evse.status.configured_charging_current"></span>
+                </label>
+            </div>
+                <div class="col-lg-8 col-xl-4 input-group">
+                    <input id="status_charging_current" class="form-control" type="number" min="6" placeholder="..." step="any" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text form-control">A</div>
+                        <button id="status_charging_current_save" class="form-control btn btn-primary rounded-right" type="submit" disabled><span data-feather="check"></span></button>
+                    </div>
+                    <div class="flex-wrap">
+                        <button id="status_charging_current_minimum" class="btn btn-primary ml-2 mr-2" type="button"  data-i18n="evse.status.charging_current_minimum"></button><button id="status_charging_current_maximum" class="btn btn-primary" type="button" data-i18n="evse.status.charging_current_maximum"></button>
+                    </div>
+                </div>
+        </div>
+    </form>
+
+    <div class="form-group row no-gutters">
+        <div class="col-sm-4">
+            <label for="evse_status_allowed_charging_current" class="col-form-label">
+                <span class="form-label" data-i18n="evse.status.allowed_charging_current"></span>
+            </label>
+        </div>
+        <div class="col-lg-8 col-xl-4">
+            <input id="evse_status_allowed_charging_current" class="form-control" type="text" placeholder="..." readonly>
+        </div>
+    </div>
+</div>
