@@ -92,16 +92,11 @@ interface EVSELowLevelState {
 }
 
 function update_evse_low_level_state(state: EVSELowLevelState) {
-    util.update_button_group("btn_group_low_level_mode_enabled", state.low_level_mode_enabled ? 1 : 0);
     util.update_button_group("btn_group_hardware_version", state.hardware_version - 14);
     util.update_button_group("btn_group_led_state", state.led_state);
 
     for(let i = 0; i < 5; ++i) {
-        util.update_button_group("btn_group_gpio" + i, state.gpio[i] ? 1 : 0);
-        util.update_button_group("btn_group_gpio" + i, state.gpio[i] ? 1 : 0);
-        util.update_button_group("btn_group_gpio" + i, state.gpio[i] ? 1 : 0);
-        util.update_button_group("btn_group_gpio" + i, state.gpio[i] ? 1 : 0);
-        util.update_button_group("btn_group_gpio" + i, state.gpio[i] ? 1 : 0);
+        util.update_button_group(`btn_group_gpio${i}`, state.gpio[i] ? 1 : 0);
     }
 
     $('#pwm_duty_cycle').val(util.toLocaleFixed(state.cp_pwm_duty_cycle / 10, 1) + " %");
@@ -289,7 +284,6 @@ function debug_start() {
             allow_debug(true);
         })
         .done((result) => {
-            console.log(result);
             debug_log += JSON.stringify(result) + "\n\n";
 
             status.value = __("evse.script.loading_event_log");
@@ -577,9 +571,6 @@ export function getTranslation(lang: string) {
                     "charging_current_managed": "Lastmanagement",
                     "low_level_state": "Low-Level-Zustand",
                     "low_level_state_show": "Anzeigen / Verstecken",
-                    "low_level_mode": "Low-Level-Modus",
-                    "low_level_state_disabled": "Deaktiviert",
-                    "low_level_state_enabled": "Aktiviert",
                     "led_state": "LED-Zustand",
                     "led_state_off": "Aus",
                     "led_state_on": "An",
@@ -727,9 +718,6 @@ export function getTranslation(lang: string) {
                     "charging_current_managed": "Managed",
                     "low_level_state": "Low Level State",
                     "low_level_state_show": "Show / Hide",
-                    "low_level_mode": "Low level mode",
-                    "low_level_state_disabled": "Disabled",
-                    "low_level_state_enabled": "Enabled",
                     "led_state": "LED state",
                     "led_state_off": "Off",
                     "led_state_on": "On",
