@@ -61,12 +61,10 @@ EVSEV2Meter::EVSEV2Meter() {
 
 bool EVSEV2Meter::setupEVSE() {
     if (!evse_v2.initialized) {
-        logger.printfln("evse not initialized!");
         return false;
     }
 
     if(!evse_v2.evse_energy_meter_state.get("available")->asBool()) {
-        logger.printfln("evse energy meter not available!");
         return false;
     }
 
@@ -75,7 +73,6 @@ bool EVSEV2Meter::setupEVSE() {
 
 void EVSEV2Meter::setup() {
     if (!setupEVSE()) {
-        logger.printfln("No power meter found.\n");
         initialized = false;
         hardware_available = false;
         return;
