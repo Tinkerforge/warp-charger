@@ -90,10 +90,10 @@ class ChangedDirectory(object):
         os.chdir(self.previous_path)
 
 
-def get_changelog_version():
+def get_changelog_version(name):
     versions = []
 
-    with open(os.path.join('changelog.txt'), 'r') as f:
+    with open(os.path.join('changelog_{}.txt'.format(name)), 'r') as f:
         for i, line in enumerate(f.readlines()):
             line = line.rstrip()
 
@@ -141,13 +141,14 @@ def main():
     # Add build flags
     t = time.time()
     build_time_flag = '-D_BUILD_TIME_=0x{:x}'.format(int(t))
-    version = get_changelog_version()
+    name = env.GetProjectOption("name")
+    display_name = env.GetProjectOption("display_name")
+
+    version = get_changelog_version(name)
     major_flag = '-D_MAJOR_={}'.format(version[0])
     minor_flag = '-D_MINOR_={}'.format(version[1])
     patch_flag = '-D_PATCH_={}'.format(version[2])
 
-    name = env.GetProjectOption("name")
-    display_name = env.GetProjectOption("display_name")
     host_prefix_flag = "-D__HOST_PREFIX__=\\\"{}\\\"".format(name)
 
     firmware_name_flag = "-D_FIRMWARE_NAME_={}_firmware_{}_{:x}".format(name, '_'.join(version), int(t))

@@ -24,13 +24,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "hal_arduino_esp32_ethernet/hal_arduino_esp32_ethernet.h"
-
-#include "bindings/errors.h"
-#include "bindings/endian_convert.h"
-#include "bindings/packetbuffer.h"
-#include "bindings/spitfp.h"
-
 #include "index.html.h"
 {{{module_includes}}}
 
@@ -39,42 +32,32 @@
 #include "task_scheduler.h"
 #include "web_server.h"
 
-#define GREEN_LED 4
-#define BLUE_LED 32
-
 WebServer server;
 
 EventLog logger;
 
-TF_HalContext hal;
 TaskScheduler task_scheduler;
 API api;
 
 {{{module_decls}}}
 
+//declared and initialized by board module
+extern TF_HalContext hal;
+//initialized by board module
 uint32_t uid_numeric = 0;
 char uid[7] = {0};
 char passphrase[20] = {0};
-bool firmware_update_allowed = true;
-
-TF_Port ports[6] = {{
-        .port_name = 'A'
-    }, {
-        .port_name = 'B'
-    }, {
-        .port_name = 'C'
-    }, {
-        .port_name = 'D'
-    }, {
-        .port_name = 'E'
-    }, {
-        .port_name = 'F'
-    }
-};
+int8_t blue_led_pin = -1;
+int8_t green_led_pin = -1;
+int8_t button_pin = -1;
+// filled by board module
+bool factory_reset_requested = false;
 
 Config version;
 Config modules;
 Config reboot;
+
+bool firmware_update_allowed = true;
 
 WebServerHandler *main_page_handler;
 
@@ -139,11 +122,6 @@ void setup(void) {
         {"spiffs", Config::Str(spiffs_version)},
     });
 
-    check(tf_hal_create(&hal, ports, sizeof(ports)/sizeof(ports[0])), "hal create");
-    tf_hal_set_timeout(&hal, 100000);
-
-    read_efuses(&uid_numeric, uid, passphrase);
-
     api.setup();
     task_scheduler.setup();
 
@@ -162,16 +140,6 @@ void setup(void) {
     task_scheduler.register_urls();
 
     {{{module_register_urls}}}
-
-    pinMode(GREEN_LED, OUTPUT);
-    pinMode(BLUE_LED, OUTPUT);
-    pinMode(0, INPUT);
-
-    task_scheduler.scheduleWithFixedDelay("led_blink", [](){
-        static bool led_blink_state = false;
-        led_blink_state = !led_blink_state;
-        digitalWrite(BLUE_LED, led_blink_state ? HIGH : LOW);
-    }, 0, 1000);
 }
 
 void loop(void) {
