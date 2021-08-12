@@ -97,7 +97,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	\vfill
 	\begin{center}
 		\Huge
-		WARP Charger Betriebsanleitung\\\vspace{1cm}
+		WARP2 Charger Betriebsanleitung\\\vspace{1cm}
 		\large
 		Version 0.1\\\vspace{0.25cm}
 		\today
@@ -115,59 +115,75 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 	\enquote{WARP} steht
 	für \textbf{W}all \textbf{A}ttached
-	\textbf{R}echarge \textbf{P}oint. Mit dem WARP Charger
-	erhältst du eine hochqualitative und langlebige Wallbox, mit der du dein
-	Elektrofahrzeug laden kannst. Die Wallbox ist modular aufgebaut, sodass
+	\textbf{R}echarge \textbf{P}oint. Mit dem WARP2 Charger
+	erhältst du die zweite Generation der hochqualitativen und langlebigen Wallbox, 
+	mit der du dein Elektrofahrzeug laden kannst. 
+	Die Wallbox ist modular aufgebaut, sodass
 	einzelne Komponenten einfach ausgetauscht werden können. Sowohl Hardware als
 	auch Software sind Open Source. Die nachfolgende Betriebsanleitung gibt dir
 	alle notwendigen Informationen zu Sicherheit, Montage, Installation, Betrieb
 	und Wartung der Wallbox.
 
 	\subsection{Funktionsweise}
-	Den WARP Charger bieten wir aktuell in drei Varianten: Basic, Smart und Pro.
+	Den WARP2 Charger bieten wir aktuell in drei Varianten: Basic, Smart und Pro.
 	Mit allen kannst du dein Elektrofahrzeug nach DIN EN 61851‐1 Mode 3 mit Strom
-	laden. Jedes Modell ermöglicht einphasiges und dreiphasiges Laden (je nach
-	Anschlussart) und ist als \SI{11}{\kilo\watt}- und
+	laden. Fahrzeuge können an der Wallbox ein- zwei- oder dreiphasig laden
+	(Abhängig vom Fahrzeug). Die Wallboxen können einphasig oder dreiphasig
+	angeschlossen werden und sind als \SI{11}{\kilo\watt}- und
 	\SI{22}{\kilo\watt}-Variante erhältlich. Bei der \SI{11}{\kilo\watt}- und
 	der \SI{22}{\kilo\watt}-Variante unterscheiden sich unter anderem die
-	Leitungsquerschnitte der Fahrzeug-Ladekabel der Wallboxen. Der maximale Ladestrom
+	Leitungsquerschnitte der Typ2-Fahrzeug-Ladekabel der Wallboxen. Der maximale Ladestrom
 	kann von \SI{16}{\ampere}
 	(dreiphasig \SI{11}{\kilo\watt})~/~\SI{32}{\ampere} (dreiphasig \SI{22}{\kilo\watt}) über
 	Schaltereinstellungen in der Wallbox reduziert werden. Minimal sind
 	\SI{6}{\ampere} möglich. Nach dem Einstecken des Typ-2-Ladesteckers in
 	dein Fahrzeug zeigt dir eine blaue LED auf der Frontblende der Wallbox den
-	Ladezustand an. Über einen Schlüsselschalter kannst du die Lademöglichkeit der
-	Wallbox deaktivieren. Innerhalb der Front-LED befindet sich ein Taster, mit dem
-	du sofort einen aktiven Ladevorgang abbrechen kannst.
+	Ladezustand an. Innerhalb der Front-LED befindet sich ein Taster, mit dem
+	du sofort einen aktiven Ladevorgang abbrechen kannst. Dies sind die
+	Funktionen des WARP2 Chargers Basic.
 
-	Die Modellreihe WARP Charger Smart ist zusätzlich mit einem WLAN-Controller
-	ausgestattet. Dieser kann als \nohyphens{Access} Point ein eigenes WLAN eröffnen oder in
-	ein vorhandenes Netz eingebunden werden. Die WARP Charger Wallbox verfügt über
-	eine eigene Webseite, auf der der aktuelle Ladezustand angezeigt wird und du
-	Einstellungen vornehmen kannst. Du kannst über die Webseite zum Beispiel die
-	Ladeleistung konfigurieren. Über die MQTT-Schnittstelle der Wallbox kannst du
-	die Wallbox auch fernsteuern.
+	Die Modellreihe WARP2 Charger Smart ist mit einem WLAN und
+	Ethernet-fähigen Controller ausgestattet. 
+	Dieser kann als \nohyphens{Access} Point ein eigenes WLAN eröffnen oder in
+	ein vorhandenes WLAN-Netz eingebunden werden. Alternativ ist ein Anschluss
+	per Ethernet mittels einer spritzwassergeschützten RJ45 Buchse über die
+	Unterseite der Wallbox möglich. Es können jeweils statische IPs oder DHCP
+	konfiguriert werden.
+
+	Per WLAN oder Ethernet kannst du auf die Webseite des WARP2 Chargers Smart
+	zugreifen. Diese zeigt dir den aktuellen Ladezustand an und hier kannst du
+	auch Einstellungen an der Wallbox vornehmen. Du kannst über die Webseite 
+	zum Beispiel das Ladeverhalten und die maximale Ladeleistung konfigurieren.
+	Per MQTT- und HTTP-API kannst du auch aus der Ferne den aktuellen Zustand 
+	der Wallbox auslesen und die Wallbox fernsteuern. 
+	Die Einbindung der Wallbox in andere System ist somit möglich.
+
+	Zusätzlich bietet dir der WARP2 Charger Smart die Möglichkeit Ladevorgänge
+	per NFC (RFID) freizuschalten. Über die Webseite kannst du dazu NFC-Tags
+	anlernen. Mehrere WARP Charger können sich auch einen Stromanschluss teilen
+	und diesen mittels eines aktiven Lastmanagements optimal nutzen.
 
 	Die Modellreihe WARP Charger Pro bietet dir alles, was der WARP Charger Smart
 	bietet. Zusätzlich ist diese Wallbox aber mit einem MID-geeichten Zähler
 	ausgestattet. Dieser misst, wie viel Energie (\SI{}{\kWh}) geladen
 	wurde und bietet dir Statistiken mit denen du einen Überblick über deine
-	Stromkosten erhältst.
+	Stromkosten erhältst. Zukünftig wird es auch möglich sein eine Statistik
+	bezogen auf die jeweiligen NFC Tags zu erhalten. Damit wird es dann möglich
+	sein eine Ladestatistik pro Fahrzeug aufzubauen.
 
 	\gfx{./img_warp2/resized/type_2_connector_ready}
 
 	Alle Wallboxen werden mit einem fest angeschlossenen
-	\SI{5}{\meter}- oder \SI{7,5}{\meter}-Ladekabel mit Typ-2-Stecker geliefert. Die Modelle WARP
-	Charger Basic und Smart sind ohne Anschlusskabel (Anschluss der Zuleitung)
-	oder mit einem \SI{2}{\meter}-Anschlusskabel mit CEE-Stecker
-	erhältlich. Das Modell WARP Charger Pro wird immer mit einem
-	\SI{2}{\meter}-Anschlusskabel ausgeliefert, da auf Grund des zusätzlich
-	verbauten Stromzählers nicht genug Platz zur Verfügung steht, um eine Zuleitung
-	direkt anzuschließen. Es gibt daher die Varianten mit
-	\SI{2}{\meter}-Kabel und offenen Kabelenden und
-	\SI{2}{\meter}-Kabel mit CEE-Stecker.
+	\SI{5}{\meter}- oder \SI{7,5}{\meter}-Ladekabel mit Typ-2-Stecker geliefert
+	(je nach Wahl).
+	In der Standardausführung werden alle WARP2 Charger ohne Anschlusskabel
+	(Zuleitung zur Wallbox) ausgeliefert. Die Zuleitung muss bauseits in die
+	Wallbox gelegt werden und wird dort angeschlossen.
 
-	Folgende Anschlusskabel werden verwendet (je nach gewählten Optionen):
+	Als Option können aber alle Wallboxen mit einem bereits ab Werk
+	installierten Anschlusskabel bestellt werden. Es besteht auch die
+	Möglichkeit dieses gleich mit einem CEE-Stecker ausstatten zu lassen.
+	Für die optionalen Anschlusskabel werden folgende Leitungen verwendet:
 
 	\begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{\SI{22}{\kilo\watt}}}]
 		\item[\SI{11}{\kilo\watt}]Gummianschlussleitung H07RN-F 5G4
@@ -207,12 +223,18 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	Der AC-Fehlerstromschutz wird über den hausseitig verbauten
 	Typ-A AC-Fehlerstromschutzschalter (RCCB) oder einem eigens dafür installierten
 	Typ-A \SI{30}{\milli\ampere}-Fehlerstromschutzschalter gewährleistet. Die Wallbox ist
-	mit einem integrierten DC-Fehlerstromwächter der Firma Alcona ausgestattet
-	(ALC-DC6-CO30). Bei einem DC-Fehlerstrom $\geq \SI{6}{\milli\ampere}$ generiert dieser
-	einen AC-Fehlerstrom, der den hausseitig verbauten
-	Typ-A-Fehlerstromschutzschalter sicher auslöst (AC Auslösestrom
-	$\geq \SI{70}{\milli\ampere}$. Somit wird sichergestellt, dass bei Auftreten eines
-	DC-Fehlerstroms die Stromversorgung unterbrochen wird.
+	mit einer integrierten DC-Fehlerstromüberwachung ausgestattet. 
+	Bei einem DC-Fehlerstrom $\geq \SI{6}{\milli\ampere}$ wird dieser
+	Fehlerstrom von der Wallbox erkannt und die Verbindung zum Fahrzeug sofort
+	unterbrochen (Schütz schaltet ab). Die Wallbox befindet sich ab da in einem
+	Fehlerzustand und kann erst durch ein vollständiges Trennen der
+	Stromversorgung oder über die Webseite wieder zurückgesetzt werden. 
+	Somit wird sichergestellt, dass bei Auftreten eines
+	DC-Fehlerstroms dieser sofort unterbrochen wird.
+	\hint{Achtung! Tritt ein DC-Fehlerstrom auf, ist unbedingt die Ursache zu
+	ermitteln! Ein DC Fehlerstrom kann den vorgeschalteten Fehlerstromschutzschalter
+	\glqq erblinden\grqq~lassen, so dass dann auch Wechselspannungs
+	(AC)-Fehlerströme nicht mehr korrekt erkannt werden!}
 
 	Darüber hinaus bietet die Wallbox weitere Schutzeinrichtungen: Dazu zählt eine
 	permanente Erdungsüberwachung (PE). Ist die Erdung unterbrochen, so geht die
@@ -264,11 +286,9 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	erfolgen. Es sollte ein 3-poliger Leitungsschutzschalter mit C-Charakteristik
 	verwendet werden.
 	Die Wallbox verfügt über eine interne DC-Fehlerstromerkennung, welche
-	bei einem DC-Fehlerstrom $\geq \SI{6}{\milli\ampere}$ einen
-	$\SI{70}{\milli\ampere}$-AC-Fehlerstrom erzeugt, der dazu gedacht, ist einen
-	vorgeschalteten AC-Fehler-stromschutzschalter (RCCB) auszulösen.
-	\hint{Um im Fehlerfall eine Abschaltung zu garantieren, ist daher ein vorgeschalteter
-		\SI{30}{\milli\ampere}-Fehlerstromschutzschalter (RCCB) Typ-A notwendig.}
+	bei einem DC-Fehlerstrom $\geq \SI{6}{\milli\ampere}$ die Stromversorgung
+	unterbricht. Daher ist nur ein vorgeschalteter AC-Fehlerstromschutzschalter
+	(RCCB) notwendig (\SI{30}{\milli\ampere}-Fehlerstromschutzschalter (RCCB) Typ-A).
 	Die Wallbox darf nur in einem TN / TT-Netz angeschlossen werden.
 
 	\newpage
@@ -291,35 +311,20 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 	\subsubsection{Variante Basic / Smart}
 	Nachdem die Wallbox montiert wurde, kann diese nun angeschlossen werden. Dazu
-	ist zusätzlich zum Deckel (siehe \fullref{wandmontage}) auch der interne
-	Berührungsschutz zu entfernen. Dieser wird durch Lösen der vier
-	Schlitzschrauben entfernt.
-
-	Bei der Variante Smart ist auf dem Berührungsschutz ein WLAN-Controller (ESP32 Brick)
-	angeschlossen, zu dem zwei Kabel führen: Ein zweipoliges
-	Stromversorgungskabel und ein siebenpoliges Bricklet-Kabel, über das die Verbindung mit dem
-	Ladecontroller (EVSE Bricklet) auf der Hutschiene hergestellt wird. Eigentlich reicht es aus,
-	den Berührungsschutz ohne Trennung dieser Leitungen einfach an die Seite zu
-	legen. Soll dennoch der Berührungsschutz vollständig entfernt werden, so
-	müssen diese Kabel getrennt werden. Beide Kabel werden am besten direkt
-	an der linken, bzw Unterseite des ESP32 Brick ausgesteckt.
-	Das Bricklet-Kabel verfügt über eine kleine Verriegelungstaste,
-	diese muss zum Entfernen gedrückt werden.
+	muss der Deckel (siehe \fullref{wandmontage}) entfernt werden.
 
 	\gfx{./img_warp2/resized/warp_cable_cut_ready}
 
 	Bei den Wallbox-Varianten Basic und Smart
-	wird die Zuleitung an einen internen Phoenix Contact PT 6 Klemmenblock
+	wird die Zuleitung an einen internen Klemmenblock
 	angeschlossen. Um bei starren Leitern maximalen Bewegungsspielraum zu bieten,
 	werden die Adern um den Klemmenblock geführt und von der Rückseite
 	angeschlossen. Wir empfehlen, das Kabel dafür auf einer Länge von
-	\SI{20}{\centi\meter} abzumanteln. Für die PT 6 Klemmen wird eine
+	\SI{20}{\centi\meter} abzumanteln. Für die Klemmen wird eine
 	Abisolierlänge von 10 bis \SI{12}{\milli\meter} vom Hersteller vorgegeben.
 
 	Die Adern werden anhand der Reihenfolge und Klemmenbeschriftungen in die
-	Klemmen gesteckt. Anschließend sollten die Adern vorsichtig nach unten gedrückt
-	werden, so dass später die Frontblende wieder über dem Klemmenblock angebracht
-	werden kann. Als letztes muss die Kabelverschraubung festgezogen werden. Die Verschraubung
+	Klemmen gesteckt. Als letztes muss die Kabelverschraubung festgezogen werden. Die Verschraubung
 	hat einen Klemmebereich von \SI{11}{\milli\meter} bis \SI{22}{\milli\meter} und soll laut Hersteller mit
 	\SI{10}{\newton{}\meter} angezogen werden.
 
@@ -329,11 +334,17 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	\gfx{./img_warp2/resized/warp_wire_ready}
 
 	\subsubsection{Variante Pro}
-	Die Variante Pro wird direkt mit einer \SI{2}{\meter}-Gummileitung vom
-	Typ H07RN-F 5G ausgeliefert (\SI{4}{\milli\meter\squared} bei \SI{11}{\kilo\watt}, \SI{6}{\milli\meter\squared} bei \SI{22}{\kilo\watt}).
-	Diese wird extern mit der Zuleitung verbunden, zum
-	Beispiel über eine Verteilerdose.
+	Die Variante Pro verfügt aus platzgründen nicht über einen Klemmenblock. Die
+	Zuleitung muss hier direkt an den Zähler angeschlossen werden.
 
+	Der korrekte Sitz der Adern und die Phasenzugehörigkeit ist nach der
+	Installation zu prüfen! Fortfahren mit \fullref{ladestrom_schalter}!
+	
+	\subsubsection{Varianten mit werkseitig angeschlossener Zuleitung}
+	Wird die Wallbox mit einer ab Werk vorinstallierten Zuleitung bestellt, so
+	muss diese extern verbunden werden. Die Farben sind nach DIN belegt und wie
+	folgt zugeordnet: L1 schwarz, L2 braun, L3 grau, N blau, PE gelb/grün.
+	
 	Der korrekte Sitz der Adern und die Phasenzugehörigkeit ist nach der
 	Installation zu prüfen! Fortfahren mit \fullref{ladestrom_schalter}!
 
@@ -343,17 +354,13 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	werden, als die Leitungsabsicherung es zulässt.
 
 	Zum Einstellen des Ladestroms muss der Deckel (siehe \fullref{wandmontage})
-	und der interne Berührungsschutz geöffnet werden. Der Berührungsschutz wird
-	durch Lösen der vier Schlitzschrauben entfernt. Achtung! Vom
-	Berührungsschutz gehen mehrere Kabel in die Wallbox. Zum Einstellen des
-	Ladestroms muss der Berührungsschutz nicht vollständig entfernt werden,
-	so dass die Kabel angeschlossen bleiben dürfen.
+	geöffnet werden. 
 
 	\gfx{./img_warp2/resized/warp_evse_switch_cut_ready_small}
 
 	Über zwei Schiebeschalter auf dem internen Ladecontroller (EVSE) wird der
-	maximale Ladestrom eingestellt. Die verschiedenen Schalterstellungen sind neben
-	den Schaltern dokumentiert. Der weiße Block stellt dabei jeweils die Position
+	maximale Ladestrom eingestellt. Die verschiedenen Schalterstellungen sind in
+	dem Foto dokumentiert. Der weiße Block stellt dabei jeweils die Position
 	des Schalters dar. Im Auslieferungszustand sind die Schalter so eingestellt,
 	dass die Wallbox inaktiv ist. Im obigen Foto sind exemplarisch beide
 	Schalter auf die mittlere Position gestellt worden. Damit wurde eine
@@ -377,21 +384,13 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	der verbaute Ladecontroller über je einen Optokoppler mit
 	\SI{249}{\kilo\ohm} Vorwiderstand, vor und nach dem Schütz, zwischen L1 und
 	PE verfügt (Erdungsüberwachung, Schützüberwachung). Wird während der Messung ein EVSE-Adapter verwendet,
-	kann es aufgrund der genannten Überwachungsschaltung im Wechselspiel mit dem EVSE-Adapter zu Fehlmessungen
+	kann es aufgrund der genannten Überwachungsschaltung in Wechselwirkung mit dem EVSE-Adapter zu Fehlmessungen
 	auf L2, L3 und N (gemessen gegen PE) kommen. Ist dies der Fall, so muss die Isolationsmessung
 	ohne EVSE-Adapter direkt am Typ-2-Stecker durchgeführt werden.
 
-	Der DC-Fehlerstromschutz kann getestet werden, indem der orangene oder schwarze Taster (siehe
-	nachfolgendes Foto) auf dem DC-Fehlerstromschutzmodul gedrückt wird. In diesem
-	Fall wird ein AC-Fehlerstrom erzeugt, welcher den vorgeschalteten
-	AC-Fehlerstromschutzschalter auslöst. Der Taster muss bis zu 10 Sekunden lang gedrückt werden,
-	damit ein AC-Fehlerstrom erzeugt wird.
-	\vfill
-	\gfx{./img_warp2/resized/warp_hole_button_ready}
-	\section{Bedienung / Erstinbetriebnahme}
-
-	\gfx{./img_warp2/resized/warp_button_key_ready}
-
+	Die interne DC-Fehlerstromerkennung wird von der Wallbox automatisch
+	periodisch getestet.
+	
 	Nachdem die Wallbox installiert
 	und die korrekte elektrische Installation überprüft wurde, kann die Wallbox in
 	Betrieb genommen werden.
@@ -418,17 +417,16 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	zu starten, muss in beiden Fällen die Verbindung zum Fahrzeug getrennt und
 	anschließend erneut hergestellt werden (Kabel aus- und wieder einstecken).
 
-	Über den Schlüsselschalter (2) kann die Ladefunktion der Wallbox permanent deaktiviert
-	werden (Stellung AUS). Laden ist dann erst wieder möglich, nachdem der Schlüsselschalter
-	auf die Stellung AN gebracht wurde.
-
 	\section{Webinterface}
 	Das Webinterface der Wallbox ist nur bei den Varianten Smart und Pro verfügbar.
+
+	\Blindtext %Todo hier und ff auch Ethernet beschreiben
 
 	Über das Webinterface kannst du unter anderem das Laden steuern und überwachen.
 	Die Wallbox kann sich sowohl als Client mit einem bestehenden WLAN verbinden,
 	als auch als Access Point einen eigenes WLAN eröffnen. Der Betrieb als Client
-	und Access Point ist parallel möglich.
+	und Access Point ist parallel möglich. Alternativ ist auch ein Zugriff per
+	Ethernet möglich.
 
 	\subsection{Ersteinrichtung}
 	Im Auslieferungszustand öffnet die Wallbox einen WLAN-Access-Point, über den
@@ -607,13 +605,12 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 	\newpage \section{Fehlerbehebung}\label{fehlerbehebung} \subsection{Fehlersuche}
 	Fehlerzustände werden von der Wallbox durch die LED im Deckel
-	dargestellt. Bei den Varianten WARP Charger Smart und WARP Charger Pro gibt die Statusseite des Ladecontrollers
+	dargestellt. Bei den Varianten WARP2 Charger Smart und WARP2 Charger Pro gibt die Statusseite des Ladecontrollers
 	weitere Informationen.
 
 	\subsubsection*{Wallbox-LED ist aus}
 	Für diesen Fehlerzustand gibt es verschiedene mögliche Ursachen:
 	\begin{itemize}
-		\item Die Wallbox ist über den Schlüsselschalter deaktiviert. Siehe \fullref{lockswitch}.
 		\item Die Wallbox-LED geht nach etwa 15 Minuten Inaktivität aus. Das Drücken des Tasters
 		      oder das Anschließen eines Elektrofahrzeugs zur Ladung weckt die Wallbox wieder
 		      und die LED sollte wieder dauerhaft leuchten.
@@ -621,7 +618,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		      Sicherung oder Fehlerstrom-schutzschalter haben ausgelöst
 		\item Der interne Ladecontroller ist ohne Strom. Die Wallbox verfügt intern über zwei
 		      Feinsicherungen, gegebenenfalls ist eine defekt.
-		\item Das innere Anschlusskabel zum Deckel wurde am Taster 180\textdegree\ verdreht aufgesteckt.
+		\item Das innere Anschlusskabel zum Deckel wurde nicht korrekt aufgesteckt (zum Beispiel am Taster 180\textdegree\ verdreht).
 	\end{itemize}
 
 	\subsubsection*{Wallbox-LED blinkt sehr schnell}
@@ -635,12 +632,11 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	noch auf dem Werkszustand. Siehe \fullref{ladestrom_schalter}.
 
 	\begin{minipage}{\linewidth} %use minipage to control footnote placement
-		\subsubsection*{Wallbox-LED blinkt 3x im Intervall \\ Webinterface zeigt Kalibrierungsfehler}
-		Die DC-Kalibrierung konnte nicht abgeschlossen werden. \footnote{Bei einer Firmware älter
-			als 1.1.0 darf beim Einschalten der Wallbox kein Fahrzeug angeschlossen sein, damit die
-			Kalibrierung erfolgreich verläuft.} Die Stromversorgung der Wallbox
-		trennen und nach 5 Sekunden wieder einschalten. Die Kalibrierung sollte nun
-		erfolgreich verlaufen.
+		\subsubsection*{Wallbox-LED blinkt 3x im Intervall \\ Webinterface zeigt DC-Fehler}
+		Entweder ein DC-Fehlerstrom wurde erkannt oder die DC-Fehlerstromerkennung ist defekt.
+		Der Fehler kann entweder über die Webseite der Wallbox oder aber über
+		ein kurzzeitiges Trennen der Stromversorgung der Wallbox zurückgesetzt
+		werden.
 	\end{minipage}
 
 	\subsubsection*{Wallbox-LED blinkt 4x im Intervall \\ Webinterface zeigt Schützfehler}
@@ -674,7 +670,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		      handelt es sich um einen Fehler, den das Fahrzeug erkannt hat.
 	\end{itemize}
 
-	\subsubsection*{Die Wallbox ist nicht über das WLAN erreichbar, aber die LED leuchtet}
+	\subsubsection*{Die Wallbox ist nicht über das Ethernet/WLAN erreichbar, aber die LED leuchtet}
 	In diesem Fall ist zu prüfen, ob die Wallbox gegebenenfalls in den Access-Point-Fallback
 	gegangen ist. Wie im Auslieferungszustand eröffnet die Wallbox dann ein eigenes
 	WLAN. Wenn die Zugangsdaten nicht geändert werden, entsprechen sie der Werkseinstellungen und sind dem
@@ -684,21 +680,14 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	\begin{tabular}{ll}
 		%\toprule
 		\textbf{Artikelnummer}                                                                                                   & \textbf{Bauteil}                                              \\
-		\cmidrule(lr{0.5em}){1-2}
-		WARP-CASE                                                                                                                & WARP Charger Case                                             \\
+		\cmidrule(lr{0.5em}){1-2}		WARP2-CASE																				 & WARP2 Charger Case                                             \\
 		\cmidrule(lr{0.5em}){1-2}
 		\href{https://www.tinkerforge.com/de/shop/warp/contactor-4-pole-din-rail-63a.html}{WARP-CON-4P-63A}                      & Schaltschütz 4 Pol,                                           \\
 		                                                                                                                         & Hutschiene, \SI{63}{\ampere}                                  \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/warp/dc-residual-current-protection-module-6ma.html}{WARP-DC-PROTECT}          & DC Fehlerstrom-                                               \\
-		                                                                                                                         & schutzmodul \SI{6}{\milli\ampere}                             \\
-		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/warp/bidirectional-polyphase-meter-3-phase-rs485-mid.html}{WARP-METER-3PH-MID} & Zweirichtungs-                                                \\
+		\href{}{WARP2-METER-3PH-MID} & Zweirichtungs-                                                \\
 		                                                                                                                         & Drehstromzähler,                                              \\
 		                                                                                                                         & 3 Phasen, RS485, MID                                          \\
-		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/warp/din-rail-power-supply-230vac-12vdc-1-25a.html}{WARP-PS-12V}               & Hutschienennetzteil                                           \\
-		                                                                                                                         & \SI{230}{\volt}AC – \SI{12}{\volt} \SI{1,25}{\ampere}         \\
 		\cmidrule(lr{0.5em}){1-2}
 		WARP-T2-5M-16A                                                                                                           & Typ 2 Stecker mit                                             \\
 		                                                                                                                         & \SI{5}{\meter} Kabel \SI{11}{\kilo\watt} / \SI{16}{\ampere}   \\
@@ -712,22 +701,14 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		WARP-T2-75M-32A                                                                                                          & Typ 2 Stecker mit                                             \\
 		                                                                                                                         & \SI{7,5}{\meter} Kabel \SI{22}{\kilo\watt} / \SI{32}{\ampere} \\
 		\cmidrule(lr{0.5em}){1-2}
-		113                                                                                                                      & ESP32 Brick                                                   \\
+		115																														 & ESP32 Ethernet Brick                                                   \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/bricklets/rs485-bricklet.html}{277}                                            & RS485 Bricklet                                                \\
-		\cmidrule(lr{0.5em}){1-2}
-		2159                                                                                                                     & EVSE Bricklet                                                 \\
+		2167																													 & EVSE 2 Bricklet                                                 \\
 		\cmidrule(lr{0.5em}){1-2}
 		\href{https://www.tinkerforge.com/de/shop/accessories/cable/bricklet-cable-15cm-7p-7p.html}{6150}                        & Bricklet Kabel                                                \\
 		                                                                                                                         & \SI{15}{\centi\meter} (7p-7p)                                 \\
-		\cmidrule(lr{0.5em}){1-2}
-		6189                                                                                                                     & \SI{7} - \SI{28}{\volt} zu \SI{5}{\volt} Inline               \\
-		                                                                                                                         & Stromversorgung                                               \\
 		%\bottomrule
 	\end{tabular}
-
-	\subsection{Stromlaufplan}
-	Ein Stromlaufplan ist in einem gesonderten Dokument verfügbar.
 
 	\subsection{Sicherungswechsel}
 	Die Wallbox ist intern über zwei 6,3x32mm Feinsicherungen (mittelträge (m), 500mA) abgesichert.
@@ -755,7 +736,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 			\item[Zuleitungsquerschnitt] \SI{2,5}{\square\milli\meter} bis
 			      \SI{10}{\square\milli\meter}
 			\item[Zugangsverriegelung]
-			      Schlüsselschalter\\Webinterface~\footref{fn:1}\\Konfigurierbare Ladezeiten~\footref{fn:1}
+			      NFC~\footref{fn:1}\\Webinterface~\footref{fn:1}\\Konfigurierbare Ladezeiten~\footref{fn:1}
 			\item[Betriebstemperatur] \SI{-25}{\celsius}
 			      bis \SI{+50}{\celsius} (Durchschnitt in \SI{24}{\hour}: $\leq \SI{35}{\celsius}$)
 			\item[Fehlerstromerkennung] DC \SI{6}{\milli\ampere} (integriert)
@@ -763,7 +744,8 @@ white,title=Hinweis]#1\end{tcolorbox}}
 			      (spritzwassergeschützt, für
 			      den Außenbereich geeignet)
 			\item[Lieferumfang] Wallbox,
-			      Bedienungsanleitung inklusive Installationsanleitung, Prüfprotokoll
+			      Bedienungsanleitung inklusive Installationsanleitung,
+				  Prüfprotokoll, 3x NFC Karte~\footref{fn:1}
 		\end{description}
 	\end{minipage}
 
