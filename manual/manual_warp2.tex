@@ -128,8 +128,8 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	\subsection{Funktionsweise}
 	Den WARP2 Charger bieten wir aktuell in drei Varianten: Basic, Smart und Pro.
 	Mit allen kannst du dein Elektrofahrzeug nach DIN EN 61851‐1 Mode 3 mit Strom
-	laden. Fahrzeuge können an der Wallbox ein- zwei- oder dreiphasig laden
-	(Abhängig vom Fahrzeug). Die Wallboxen können einphasig oder dreiphasig
+	betanken. Fahrzeuge können an der Wallbox ein- zwei- oder dreiphasig laden
+	(abhängig vom Fahrzeug). Die Wallboxen können einphasig oder dreiphasig
 	angeschlossen werden und sind als \SI{11}{\kilo\watt}- und
 	\SI{22}{\kilo\watt}-Variante erhältlich. Bei der \SI{11}{\kilo\watt}- und
 	der \SI{22}{\kilo\watt}-Variante unterscheiden sich unter anderem die
@@ -141,13 +141,13 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	dein Fahrzeug zeigt dir eine blaue LED auf der Frontblende der Wallbox den
 	Ladezustand an. Innerhalb der Front-LED befindet sich ein Taster, mit dem
 	du sofort einen aktiven Ladevorgang abbrechen kannst. Dies sind die
-	Funktionen des WARP2 Chargers Basic.
+	Funktionen des \textbf{WARP2 Chargers Basic}.
 
-	Die Modellreihe WARP2 Charger Smart ist mit einem WLAN und
+	Die Modellreihe \textbf{WARP2 Charger Smart} ist mit einem WLAN und
 	Ethernet-fähigen Controller ausgestattet. 
 	Dieser kann als \nohyphens{Access} Point ein eigenes WLAN eröffnen oder in
 	ein vorhandenes WLAN-Netz eingebunden werden. Alternativ ist ein Anschluss
-	per Ethernet mittels einer spritzwassergeschützten RJ45 Buchse über die
+	per Ethernet mittels einer spritzwassergeschützten RJ45 Buchse auf der
 	Unterseite der Wallbox möglich. Es können jeweils statische IPs oder DHCP
 	konfiguriert werden.
 
@@ -161,10 +161,11 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 	Zusätzlich bietet dir der WARP2 Charger Smart die Möglichkeit Ladevorgänge
 	per NFC (RFID) freizuschalten. Über die Webseite kannst du dazu NFC-Tags
-	anlernen. Mehrere WARP Charger können sich auch einen Stromanschluss teilen
-	und diesen mittels eines aktiven Lastmanagements optimal nutzen.
+	anlernen und verwalten. Mehrere WARP Charger können sich auch einen 
+	Stromanschluss teilen und diesen mittels eines aktiven Lastmanagements optimal
+	nutzen.
 
-	Die Modellreihe WARP Charger Pro bietet dir alles, was der WARP Charger Smart
+	Die Modellreihe \textbf{WARP Charger Pro} bietet dir alles, was der WARP Charger Smart
 	bietet. Zusätzlich ist diese Wallbox aber mit einem MID-geeichten Zähler
 	ausgestattet. Dieser misst, wie viel Energie (\SI{}{\kWh}) geladen
 	wurde und bietet dir Statistiken mit denen du einen Überblick über deine
@@ -181,7 +182,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	(Zuleitung zur Wallbox) ausgeliefert. Die Zuleitung muss bauseits in die
 	Wallbox gelegt werden und wird dort angeschlossen.
 
-	Als Option können aber alle Wallboxen mit einem bereits ab Werk
+	Als Option können alle Wallboxen mit einem bereits ab Werk
 	installierten Anschlusskabel bestellt werden. Es besteht auch die
 	Möglichkeit dieses gleich mit einem CEE-Stecker ausstatten zu lassen.
 	Für die optionalen Anschlusskabel werden folgende Leitungen verwendet:
@@ -227,12 +228,12 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	mit einer integrierten DC-Fehlerstromüberwachung ausgestattet. 
 	Bei einem DC-Fehlerstrom $\geq \SI{6}{\milli\ampere}$ wird dieser
 	Fehlerstrom von der Wallbox erkannt und die Verbindung zum Fahrzeug sofort
-	unterbrochen (Schütz schaltet ab). Die Wallbox befindet sich ab da in einem
-	Fehlerzustand und kann erst durch ein vollständiges Trennen der
+	unterbrochen (Schütz schaltet ab). Die Wallbox befindet sich ab sofort in einem
+	Fehlerzustand und kann erst durch ein Aus-/Einschalten der
 	Stromversorgung oder über die Webseite wieder zurückgesetzt werden. 
 	Somit wird sichergestellt, dass bei Auftreten eines
 	DC-Fehlerstroms dieser sofort unterbrochen wird.
-	\hint{Achtung! Tritt ein DC-Fehlerstrom auf, ist unbedingt die Ursache zu
+	\hint{Achtung! Tritt ein DC-Fehlerstrom auf ist unbedingt die Ursache zu
 	ermitteln! Ein DC Fehlerstrom kann den vorgeschalteten Fehlerstromschutzschalter
 	\glqq erblinden\grqq~lassen, so dass dann auch Wechselspannungs
 	(AC)-Fehlerströme nicht mehr korrekt erkannt werden!}
@@ -250,9 +251,10 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	Im Lieferumfang der Wallbox befinden sich:
 	\begin{itemize}
 		\item Vormontierte Wallbox inkl. Deckel
-		\item Bohrschablone
 		\item Diese Betriebsanleitung
 		\item Testprotokoll der Wallbox
+		\item Bohrschablone
+		\item 3x NFC Karte (bei Modellen Smart und Pro)
 	\end{itemize}
 
 	\subsubsection{Montageort}
@@ -373,12 +375,27 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 	\subsubsection{Ethernet / RJ45-Kabel konfektionieren}\label{ethernet}
 
-	TODO 
+	Auf der Unterseite der Wallbox befindet sich eine spritzwassergeschütze RJ45
+	Durchführung an die der in der Wallbox verbaute Controller intern
+	angeschlossen ist. Um ein Ethernetkabel anzuschließen muss der Blinddeckel
+	abgeschraubt werden. Anschließend muss ein LAN-Kabel (z.B. CAT.7) wie folgt
+	angefertigt werden:
+	\begin{itemize}
+		\item LAN Kabel durch den Aufsatz ziehen
+		\item Mitgelieferten RJ45 Stecker auf das LAN Kabel crimpen
+		\item Kabel im Aufsatz zurückziehen und Zugentlastung handfest anziehen
+	\end{itemize} 
 
-	\gfx{./img_warp2/resized/warp2_ethernet2_600}
-	\gfx{./img_warp2/resized/warp2_ethernet3_600}
-	\gfx{./img_warp2/resized/warp2_ethernet1_600}
-	\gfx{./img_warp2/resized/warp2_ethernet4_600}
+	\hint{Es sollte der mitgelieferte RJ45 Stecker verwendet werden. Werkzeuglose RJ45 Stecker können auf Grund der geringen
+	Platzverhältnisse im Steckeraufsatz nicht verwendet werden.}
+	Zum Schluss wird der RJ45 Stecker in die Box eingesteckt und die Überwurfmutter
+	handfest angezogen.
+
+
+	\gfx{./img_warp2/resized/warp2_ethernet3_600} % Blinddeckel
+	%Foto 2: gecrimptes RJ45 Kabel mit Abstand zu aufgezogenen Hülle
+	%Foto 3: Nahaufnahme RJ45 Stecker in Hülle
+	\gfx{./img_warp2/resized/warp2_ethernet4_600} % Montiert
 
 	\subsection{Prüfungen}\label{tests}
 	Im Werk wurde jede Wallbox einzeln nach IEC 60364-6 sowie den entsprechenden gültigen
@@ -410,8 +427,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	für die ersten 12 Sekunden eine Kalibrierung der
 	DC-Fehlerstrom-Schutzeinrichtung durch. Nach Abschluss dieser Kalibrierung
 	leuchtet die LED dauerhaft. Die Wallbox ist nun betriebsbereit. Sollte die LED
-	nicht permanent leuchten, ist die Wallbox entweder über den Schlüsselschalter (2) deaktiviert,
-	oder es wurde ein Fehler erkannt (siehe \fullref{fehlerbehebung}).
+	nicht permanent leuchten wurde ein Fehler erkannt (siehe \fullref{fehlerbehebung}).
 
 	Als Nächstes kann ein Elektrofahrzeug zum Laden mit der Wallbox verbunden
 	werden. Dazu wird die Schutzkappe vom Ladestecker entfernt und den Stecker in die
@@ -609,7 +625,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	Auf der Status-Seite wird angezeigt, ob die Verbindung aufgebaut werden konnte.
 
 	\section{Freischaltung per NFC}
-	\blindtext
+	\blindtext %TODO Erik inkl. LED Rückmeldungen
 
 	\section{Lastmanagement zwischen WARP Chargern}
 	\Blindtext
