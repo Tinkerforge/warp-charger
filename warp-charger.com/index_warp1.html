@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>WARP Charger</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <link href="img_warp1/favicon.png" rel="icon">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+
+</head>
+
+<body id="main_body">
+
+  <!--==========================
+    Header
+  ============================-->
+  <header id="header" class="header">
+    <div class="container-fluid">
+
+      <div id="logo" class="pull-left">
+        <!--<h1><a href="#intro" class="scrollto">WARP</a></h1> -->
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <a href="#intro"><img src="img_warp1/logo.png" alt="" title="" /></a>
+      </div>
+
+      <nav id="nav-menu-container">
+        <ul class="nav-menu nav-menu-top">
+            <li><a href="/index.html">HOME</a></li>
+            <li><a href="/api.html">API</a></li>
+            <li><a href="/evcc.html">EVCC</a></li>            
+            <li class="menu-has-children"><a href="/">WARP1</a>
+              <ul class="push-left-outer">
+                  <li><a href="#warp-charger">WARP Charger</a></li>
+                  <li><a href="#properties">Eigenschaften</a></li>
+                  <li><a href="#impressions">Impressionen</a></li>
+                  <li><a href="#documents">Dokumente</a></li>
+                  <li class="menu-has-children"><a href="#MQTT">Software</a>
+                      <ul class="push-left-inner">
+                      <li><a href="#MQTT">MQTT- und HTTP-API</a></li>
+                      <li><a href="#firmware">Firmware und Quellcode</a></li>
+                      </ul>
+                  </li>
+                  <li><a href="#contact">Kontakt</a></li>
+              </ul>
+            </li>
+          </ul>
+      </nav><!-- #nav-menu-container -->
+    </div>
+  </header><!-- #header -->
+
+  <!--==========================
+    Intro Section
+  ============================-->
+  <section id="intro">
+    <div class="intro-container">
+      <div id="introCarousel" class="carousel  slide carousel-fade" data-ride="carousel">
+
+        <ol class="carousel-indicators"></ol>
+
+        <div class="carousel-inner" role="listbox">
+
+          <div class="carousel-item active" style="background-image: url('img_warp1/intro-carousel/1_low_quality.jpg');">
+            <div class="carousel-container">
+              <div class="carousel-content">
+                <h2>WARP Charger</h2>
+                <p>Open Source Wallbox von Tinkerforge. Echtes Made in Germany.</p>
+                <a href="#warp-charger" class="btn-get-started scrollto"><i class="ion-chevron-down"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="carousel-item" style="background-image: url('img_warp1/intro-carousel/2_low_quality.jpg');">
+            <div class="carousel-container">
+              <div class="carousel-content">
+                <h2>KfW 440 förderfähig</h2>
+                <p>Die Varianten Smart und Pro sind KfW 440 förderfähig.</p>
+                <a href="#warp-charger" class="btn-get-started scrollto"><i class="ion-chevron-down"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="carousel-item" style="background-image: url('img_warp1/intro-carousel/3_low_quality.jpg');">
+            <div class="carousel-container">
+              <div class="carousel-content">
+                <h2>Robust und Sicher</h2>
+                <p>Edelstahlfront, hochwertige Komponenten, 6 mA DC‐Fehlerstromerkennung.</p>
+                <a href="#warp-charger" class="btn-get-started scrollto"><i class="ion-chevron-down"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a class="carousel-control-prev" href="#introCarousel" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon ion-chevron-left" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+
+        <a class="carousel-control-next" href="#introCarousel" role="button" data-slide="next">
+          <span class="carousel-control-next-icon ion-chevron-right" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+
+      </div>
+    </div>
+  </section><!-- #intro -->
+
+  <main id="main">
+    <!--==========================
+      About Us Section
+    ============================-->
+    <section id="warp-charger">
+      <div class="container">
+
+        <header class="section-header">
+          <h3>WARP Charger</h3>
+          <p>
+            Den WARP Charger bieten wir aktuell in drei Varianten: Basic, Smart und Pro.
+            Mit jeder kannst du dein Elektrofahrzeug nach DIN EN 61851‐1 Mode 3 mit Strom
+            betanken. Jedes Modell ermöglicht einphasiges und dreiphasiges Laden (je nach
+            Anschlussart) und ist als 11kW- und
+            22kW-Variante erhältlich. Bei der 11kW- und
+            der 22kW-Variante unterscheiden sich unter anderem der
+            Leitungsquerschnitt des Fahrzeug-Ladekabels der Wallbox. Der maximale Ladestrom
+            kann von 16A
+            (dreiphasig 11kW) / 32A (dreiphasig 22kW) über
+            Schaltereinstellungen in der Wallbox reduziert werden. Minimal sind
+            6A möglich.
+          </p>
+        </header>
+
+        <div class="row warp-charger-cols">
+
+          <div class="col-md-4">
+            <div class="warp-charger-col">
+                <div class="img">
+                    <img src="img_warp1/warp-charger-basic.jpg" alt="" class="img-fluid">
+                    <div class="icon"><i class="ion-ios-bolt-outline"></i></div>
+                </div>
+                <h2 class="title">Basic</h2>
+                <p>
+                    Die Modellreihe WARP Charger Basic bietet alles was notwendig ist um ein Elektrofahrzeug sicher zu laden.
+                    Nach dem Einstecken des Typ-2-Ladesteckers in
+                    dein Fahrzeug zeigt dir eine blaue LED auf der Frontblende der Wallbox den
+                    Ladezustand an. Über einen Schlüsselschalter kannst du die Lademöglichkeit der
+                    Wallbox deaktivieren. Innerhalb der Front-LED befindet sich ein Taster mit dem
+                    du sofort einen aktiven Ladevorgang abbrechen kannst.
+                </p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="warp-charger-col">
+                <div class="img">
+                    <img src="img_warp1/warp-charger-smart.jpg" alt="" class="img-fluid">
+                    <div class="icon"><i class="ion-ios-list-outline"></i></div>
+                </div>
+                <h2 class="title">Smart</h2>
+                <p>
+                    Die Modellreihe WARP Charger Smart ist zusätzlich mit einem WLAN-Controller
+                    ausgestattet. Dieser kann als Access Point ein eigenes WLAN eröffnen oder in
+                    ein vorhandenes Netz eingebunden werden. Die WARP Charger Wallbox verfügt über
+                    eine eigene Webseite, auf der der aktuellen Ladezustand angezeigt wird und du
+                    Einstellungen vornehmen kannst. Du kannst über die Webseite zum Beispiel die
+                    Ladeleistung konfigurieren. Über die MQTT- oder die HTTP-Schnittstelle der Wallbox
+                    kannst du die Wallbox auch fernsteuern.
+                </p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="warp-charger-col">
+                <div class="img">
+                    <img src="img_warp1/warp-charger-pro.jpg" alt="" class="img-fluid">
+                    <div class="icon"><i class="ion-ios-speedometer-outline"></i></div>
+                </div>
+                <h2 class="title">Pro</h2>
+                <p>
+                    Die Modellreihe WARP Charger Pro bietet dir alles was der WARP Charger Smart
+                    bietet. Zusätzlich ist diese Wallbox aber mit einem MID-geeichten Zähler
+                    ausgestattet. Dieser misst wie viel Energie (kWh) geladen
+                    wurden und bietet dir Statistiken mit denen du einen Überblick über deine
+                    Stromkosten erhältst.
+                </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- #warp-charger -->
+
+    <!--==========================
+      Properties Section
+    ============================-->
+    <section id="properties">
+      <div class="container">
+
+        <header class="section-header">
+          <h3>Eigenschaften</h3>
+          <p>Den WARP Charger zeichnet eine Vielzahl von Eigenschaften aus.</p>
+        </header>
+
+        <div class="row">
+
+          <div class="col-lg-4 col-md-6 box">
+            <div class="icon"><i class="ion-ios-analytics-outline"></i></div>
+            <h4 class="title">Robust und Langlebig</h4>
+            <div class="description">
+              <ul>
+                <li>1,5 mm starke Edelstahlfront</li>
+                <li>Glasfaserverstärktes Polyestergehäuse mit dicker Wandung</li>
+                <li>IP54, für den Außenbereich geeignet</li>
+                <li>Wandmontage</li>
+                <li>Hochwertige Komponenten für lange Lebensdauer (z.B. 63 A Schütz)</li>
+                <li>Komponenten einzeln austauschbar</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 box">
+            <div class="icon"><i class="ion-ios-lightbulb-outline"></i></div>
+            <h4 class="title">Offen</h4>
+            <div class="description">
+              <ul>
+                <li>Hardware und Software sind Open Source</li>
+                <li>Hardware‐Plaform von WARP Charger Smart und Pro basiert auf dem ESP32 (WLAN und Bluetooth)</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 box">
+            <div class="icon"><i class="ion-ios-paper-outline"></i></div>
+            <h4 class="title">Sicher</h4>
+            <div class="description">
+              <ul>
+                <li>6 mA DC‐Fehlerstromerkennung integriert</li>
+                <li>Jede Wallbox wird einzeln geprüft, Prüfprotokoll liegt jeder Wallbox bei</li>
+                <li>Erfüllt die Norm DIN EN 61851‐1</li>
+                <li>Automatische Erdungsüberwachung, Spannungsprüfung, Schützüberwachung</li>
+                <li>Steuerelektronik über wechselbare Feinsicherungen geschützt</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 box">
+            <div class="icon"><i class="ion-ios-speedometer-outline"></i></div>
+            <h4 class="title">Schnell</h4>
+            <div class="description">
+              <ul>
+                <li>Bis zu 22 kW Ladeleistung möglich (je nach Variante)</li>
+                <li>Zustandsanzeige über blauen LED‐Ring</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 box">
+            <div class="icon"><i class="ion-ios-barcode-outline"></i></div>
+            <h4 class="title">Förderfähig</h4>
+            <div class="description">
+              <ul>
+                <li>Installation der Varianten WARP Charger Smart und WARP Charger Pro mit 900 € über das Programm KfW 440 förderfähig</li>
+                <li>Die genauen Förderbedingungen sind im KfW Förderprogramm 440 einsehbar</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 box">
+            <div class="icon"><i class="ion-ios-people-outline"></i></div>
+            <h4 class="title">Vernetzt und MID-konform</h4>
+            <div class="description">
+              <ul>
+                <li>Per MQTT‐ und HTTP-Schnittstelle fernsteuerbar</li>
+                <li>Einbindung in Smart‐Home‐Lösungen wie openHAB, ioBroker, FHEM o.ä. möglich</li>
+                <li>Schnittstellen für diverse Programmiersprachen vorhanden</li>
+                <li>WLAN (Client oder Access Point), Webinterface zur Konfiguration und Statusanzeige</li>
+                <li>In den Varianten WARP Charger Pro ist ein MID‐konformer Stromzähler integriert</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- #properties -->
+
+    <!--==========================
+      Call To Action Section
+    ============================-->
+    <section id="call-to-action">
+      <div class="container text-center">
+        <header class="section-header">
+          <h3 class="section-title">Distributoren</h3>
+        </header>
+        <p>Zubehör für deinen WARP Charger kannst du aktuell bei den folgenden Distributoren und Online Shops erwerben.</p>
+        <a class="cta-btn" href="https://www.tinkerforge.com/de/shop/warp/accessories.html">Tinkerforge Shop</a>
+      </div>
+    </section><!-- #call-to-action -->
+
+    <!--==========================
+      Impressions Section
+    ============================-->
+    <section id="impressions"  class="section-bg" >
+      <div class="container">
+
+        <header class="section-header">
+          <h3 class="section-title">Impressionen</h3>
+        </header>
+
+        <div class="row">
+          <div class="col-lg-12">
+            <ul id="impressions-flters">
+              <li data-filter="*" class="filter-active">ALLE</li>
+              <li data-filter=".filter-warp-charger">AUẞENANSICHT</li>
+              <li data-filter=".filter-web">WEBINTERFACE</li>
+              <li data-filter=".filter-intern">INNENANSICHT</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row impressions-container">
+
+          <div class="col-lg-4 col-md-6 impressions-item filter-warp-charger">
+            <div class="impressions-wrap">
+              <figure>
+                <a href="img_warp1/impressions/wb1.jpg" data-lightbox="impressions" data-title="Vorderseite" class="link-preview" title="Preview">
+                    <img src="img_warp1/impressions/wb1.jpg" class="img-fluid" alt="">
+                </a>
+              </figure>
+
+              <div class="impressions-info">
+                Vorderseite
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 impressions-item filter-web">
+            <div class="impressions-wrap">
+              <figure>
+                <a href="img_warp1/impressions/web3.png" class="link-preview" data-lightbox="impressions" data-title="Statusübersicht" title="Preview">
+                    <img src="img_warp1/impressions/web3.png" class="img-fluid" alt="">
+                </a>
+              </figure>
+
+              <div class="impressions-info">
+                Statusübersicht
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 impressions-item filter-warp-charger">
+            <div class="impressions-wrap">
+              <figure>
+
+                <a href="img_warp1/impressions/wb2.jpg" class="link-preview" data-lightbox="impressions" data-title="Mit angeschlagenem Kabel" title="Preview">
+                    <img src="img_warp1/impressions/wb2.jpg" class="img-fluid" alt="">
+                </a>
+              </figure>
+
+              <div class="impressions-info">
+                Mit angeschlagenem Kabel
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 impressions-item filter-intern">
+            <div class="impressions-wrap">
+              <figure>
+
+                <a href="img_warp1/impressions/intern2.jpg" class="link-preview" data-lightbox="impressions" data-title="WARP Charger Pro von innen" title="Preview">
+                    <img src="img_warp1/impressions/intern2.jpg" class="img-fluid" alt="">
+                </a>
+              </figure>
+
+              <div class="impressions-info">
+                WARP Charger Pro von innen
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 impressions-item filter-web">
+            <div class="impressions-wrap">
+              <figure>
+
+                <a href="img_warp1/impressions/web2.png" class="link-preview" data-lightbox="impressions" data-title="WLAN-Einstellungen" title="Preview">
+                    <img src="img_warp1/impressions/web2.png" class="img-fluid" alt="">
+                </a>
+              </figure>
+
+              <div class="impressions-info">
+                WLAN-Einstellungen
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 impressions-item filter-warp-charger">
+            <div class="impressions-wrap">
+              <figure>
+
+                <a href="img_warp1/impressions/wb3.jpg" class="link-preview" data-lightbox="impressions" data-title="Edelstahlfront" title="Preview">
+                    <img src="img_warp1/impressions/wb3.jpg" class="img-fluid" alt="">
+                </a>
+              </figure>
+
+              <div class="impressions-info">
+                Edelstahlfront
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 impressions-item filter-intern">
+            <div class="impressions-wrap">
+              <figure>
+
+                <a href="img_warp1/impressions/intern1.jpg" class="link-preview" data-lightbox="impressions" data-title="Ohne Edelstahlfront " title="Preview">
+                    <img src="img_warp1/impressions/intern1.jpg" class="img-fluid" alt="">
+                </a>
+              </figure>
+
+              <div class="impressions-info">
+                Ohne Edelstahlfront
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 impressions-item filter-intern">
+            <div class="impressions-wrap">
+              <figure>
+
+                <a href="img_warp1/impressions/intern3.jpg" class="link-preview" data-lightbox="impressions" data-title="WARP Charger Basic von innen" title="Preview">
+                    <img src="img_warp1/impressions/intern3.jpg" class="img-fluid" alt="">
+                </a>
+              </figure>
+
+              <div class="impressions-info">
+                WARP Charger Basic von innen
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 impressions-item filter-web">
+            <div class="impressions-wrap">
+              <figure>
+
+                <a href="img_warp1/impressions/web1.png" class="link-preview" data-lightbox="impressions" data-title="Leistungsmessung" title="Preview">
+                    <img src="img_warp1/impressions/web1.png" class="img-fluid" alt="">
+                </a>
+              </figure>
+
+              <div class="impressions-info">
+               Leistungsmessung
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- #impressions -->
+
+
+    <!--==========================
+      Documents Section
+    ============================-->
+    <section id="documents">
+      <div class="container">
+        <div class="section-header">
+          <h3>Dokumente</h3>
+          <p>Folgende Dokumente stehen aktuell zur Verfügung</p>
+        </div>
+
+        <div class="row counters">
+            <div class="col-xl-2 col-lg-4 col-6 text-center">
+                <a href="documents/WARP_Betriebsanleitung.pdf">
+                <img src="img_warp1/documents/betriebsanleitung_small.jpg" class="img-fluid" alt="Betriebsanleitung">
+                <p>Betriebsanleitung</p>
+                </a>
+            </div>
+
+            <div class="col-xl-2 col-lg-4 col-6 text-center">
+                <a href="documents/WARP_Datenblatt_low.pdf">
+                <img src="img_warp1/documents/datenblatt_small.jpg" class="img-fluid" alt="Datenblatt">
+                <p>Datenblatt</p>
+                </a>
+            </div>
+
+            <div class="col-xl-2 col-lg-4 col-6 text-center">
+                <a href="documents/WARP_Broschuere_low.pdf">
+                <img src="img_warp1/documents/broschuere_small.jpg" class="img-fluid" alt="Broschüre">
+                <p>Broschüre</p>
+                </a>
+            </div>
+
+            <div class="col-xl-2 col-lg-4 col-6 text-center">
+                <a href="documents/WARP_Konformitaet.pdf">
+                <img src="img_warp1/documents/konfirmitaetserklaerung_small.jpg" class="img-fluid" alt="Konformitätserklärung">
+                <p>Konformitätserklärung</p>
+                </a>
+            </div>
+
+            <div class="col-xl-2 col-lg-4 col-6 text-center">
+                <a href="documents/WARP_Stromlaufplan.pdf">
+                <img src="img_warp1/documents/stromlaufplan_small.jpg" class="img-fluid" alt="Stromlaufplan">
+                <p>Stromlaufplan</p>
+                </a>
+            </div>
+
+             <div class="col-xl-2 col-lg-4 col-6 text-center">
+                <a href="documents/WARP_Bohrschablone.pdf">
+                <img src="img_warp1/documents/bohrschablone_small.png" class="img-fluid" alt="Bohrschablone">
+                <p>Bohrschablone</p>
+                </a>
+            </div>
+        </div>
+      </div>
+    </section>
+    <!-- #documents -->
+
+    <!--==========================
+      MQTT Section
+    ============================-->
+
+    <section id="MQTT" class="section-bg">
+      <div class="container">
+
+        <header class="section-header">
+          <h3>MQTT- und HTTP-API</h3>
+        </header>
+
+        <div class="row">
+            <div class="col-12 text-center">
+                <p>Die Varianten WARP Charger Smart und WARP Charger Pro können über MQTT und HTTP den aktuellen Zustand melden und gesteuert werden. Durch eine
+                einfache, JSON-basierte API können schnell Ergebnisse erreicht werden:</p>
+                <a href="api.html" class="btn btn-lg btn-primary mb-4">API-Dokumentation</a>
+            </div>
+            <div class="col-lg-12 col-xl-4">
+                <pre class="code-example" style='color:#000000;background:#ffffff;'><span style='color:#696969; '># Verwendung der MQTT-API mit Python</span>
+<span style='color:#800000; font-weight:bold; '>import</span> paho<span style='color:#808030; '>.</span>mqtt<span style='color:#808030; '>.</span>client <span style='color:#800000; font-weight:bold; '>as</span> mqtt
+<span style='color:#800000; font-weight:bold; '>import</span> json
+
+<span style='color:#696969; '># Ausgabe des Ladestroms</span>
+<span style='color:#696969; '># wenn eine Zustandsmeldung</span>
+<span style='color:#696969; '># des Ladecontrollers eintrifft</span>
+<span style='color:#800000; font-weight:bold; '>def</span> on_message<span style='color:#808030; '>(</span>client<span style='color:#808030; '>,</span> userdata<span style='color:#808030; '>,</span> msg<span style='color:#808030; '>)</span><span style='color:#808030; '>:</span>
+  state <span style='color:#808030; '>=</span> json<span style='color:#808030; '>.</span>loads<span style='color:#808030; '>(</span>msg<span style='color:#808030; '>.</span>payload<span style='color:#808030; '>)</span>
+  amp <span style='color:#808030; '>=</span> state<span style='color:#808030; '>[</span><span style='color:#0000e6; '>"allowed_charging_current"</span><span style='color:#808030; '>]</span>
+  <span style='color:#800000; font-weight:bold; '>print</span><span style='color:#808030; '>(</span><span style='color:#0000e6; '>"Ladestrom: {} mA"</span><span style='color:#808030; '>.</span>format<span style='color:#808030; '>(</span>amp<span style='color:#808030; '>)</span><span style='color:#808030; '>)</span>
+
+<span style='color:#696969; '># Verbinden zum MQTT-Broker</span>
+client <span style='color:#808030; '>=</span> mqtt<span style='color:#808030; '>.</span>Client<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span>
+client<span style='color:#808030; '>.</span>on_message <span style='color:#808030; '>=</span> on_message
+client<span style='color:#808030; '>.</span>connect<span style='color:#808030; '>(</span><span style='color:#0000e6; '>"localhost"</span><span style='color:#808030; '>)</span>
+
+<span style='color:#696969; '># Reagiere auf Zustandsmeldungen</span>
+<span style='color:#696969; '># des Ladecontrollers</span>
+client<span style='color:#808030; '>.</span>subscribe<span style='color:#808030; '>(</span><span style='color:#0000e6; '>"warp/ABC/evse/state"</span><span style='color:#808030; '>)</span>
+
+client<span style='color:#808030; '>.</span>loop_forever<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span>
+</pre>
+            </div>
+            <div class="col-lg-12 col-xl-4">
+                <pre class="code-example" style='color:#000000;background:#ffffff;'><span style='color:#696969; '># Abfrage über die HTTP-API</span>
+pi@raspberrypi<span style='color:#808030; '>:</span>~ <span style='color:#797997; '>$</span>
+<span style='color:#696969; '># Auslesen des Energie-Werts seit Reset</span>
+curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:</span><span style='color:#40015a; '>/</span><span style='color:#40015a; '>/10.0.0.1/meter/state</span> ↵
+<span style='color:#e34adc; '>|</span> jq <span style='color:#0000e6; '>'.energy_rel'</span>
+<span style='color:#696969; '># Ergebnis in kWh</span>
+<span style='color:#008c00; '>706</span><span style='color:#800000; font-weight:bold; '>.</span><span style='color:#008c00; '>289978</span>
+</pre>
+            </div>
+            <!-- <div class="col-lg-12 col-xl-4">
+                <b>TODO:Hier ein Node-RED-Beispiel-Flow?</b>
+            </div>-->
+        </div>
+      </div>
+    </section>
+
+    <!-- #MQTT -->
+
+    <!--==========================
+      Firmware Section
+    ============================-->
+    <section id="firmware">
+        <div class="container">
+            <header class="section-header">
+                <h3>Firmware und Quellcode</h3>
+            </header>
+
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p>Firmware-Updates kannst du im System-Abschnitt des Webinterfaces der Wallbox einspielen. Dort findest du auch die installierte Version der Firmware.</p>
+                     <p>
+                        <b>Firmware-Updates für WARP2 gibt es <a href="/index.html#firmware">hier</a>.</b>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2 col-md-12"></div>
+                <div class="col-lg-8 col-md-12 mt-4">
+                    <div class="text-center">
+                        <a href="firmwares/warp_firmware_1_2_4_60f17413_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">Firmware 1.2.4 herunterladen</a>
+                        <div class="text-muted pt-2 pb-2">Veröffentlicht am 16.07.2021</div>
+                    </div>
+
+                    <ul>
+                        <li>Verbindungsprobleme bei gerade noch erreichbaren WLANs gefixt</li>
+                        <li>Update auf Ladecontroller-Firmware 2.0.10:
+                            <ul>
+                                <li>Startverhalten bei angeschlossenem Fahrzeug verbessert</li>
+                                <li>Robustheit der Schützprüfung erhöht</li>
+                                <li>Anzeige der Hardware-Version des Ladecontrollers hinzugefügt</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <table class="table mt-5">
+                        <tbody>
+                            <tr>
+                                <th scope="row"><a href="firmwares/warp_firmware_1_2_3_60c0acef_merged.bin">1.2.3</a><br/><span class="th-details">09.06.2021</span></th>
+                                <td>
+                                    <ul>
+                                        <li>Unterstützung für angepasste Kalibrierung hinzugefügt<br/>(Durch Update auf Ladecontroller-Firmware 2.0.7)</li>
+                                        <li>Webserver- und WLAN-Stabilität verbessert</li>
+                                        <li>Konfigurations-API und -Webinterface des Passwortschutzes überarbeitet</li>
+                                        <li>Englische Übersetzung verbessert, fehlende Texte ergänzt</li>
+                                        <li>Erlaubtes Maximum/Minimum zu API-Fehlern bei zu großen/kleinen Werten hinzugefügt</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><a href="firmwares/warp_firmware_1_2_2_609a7746_merged.bin">1.2.2</a><br/><span class="th-details">11.05.2021</span></th>
+                                <td>
+                                    <ul>
+                                        <li>Möglichkeit zum Löschen von Passwörtern hinzugefügt</li>
+                                        <li>Kommunikation der WLAN-Scanergebnisse robuster gemacht</li>
+                                        <li>Verhindert, dass ein WLAN-Scan gestartet wird, während bereits ein Scan läuft</li>
+                                        <li>Logik des Maximal-Strom-Buttons repariert</li>
+                                        <li>Zustand der Kabelverriegelung versteckt, wenn keine Kabelverriegelung vorhanden ist</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><a href="firmwares/warp_firmware_1_2_1_6054b499_merged.bin">1.2.1</a><br/><span class="th-details">19.03.2021</span></th>
+                                <td>
+                                    <ul>
+                                        <li>Ladeprotokoll hinzugefügt</li>
+                                        <li>Instabile WLAN-Verbindung falls mehrere Access Points mit dem selben Netzwerknamen verbessert</li>
+                                        <li>BSSID-Anzeige hinzugefügt, wenn mehrere Access Points mit dem selben Netzwerknamen verfügbar sind</li>
+                                        <li>BSSID zu wifi/state und dem Ereignis-Log hinzugefügt</li>
+                                        <li>MQTT-Nachrichten die retained wurden werden für Actions ignoriert</li>
+                                        <li>Unerwartetes Löschen von Passwörtern wenn andere Konfiguration geändert wurde repariert</li>
+                                        <li>Neustart-Meldung bei Firmware-Aktualisierungen repariert</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><a href="firmwares/warp_firmware_1_2_0_6050aa83_merged.bin">1.2.0</a><br/><span class="th-details">16.03.2021</span></th>
+                                <td>
+                                    <ul>
+                                        <li>Ladefreigabe-API hinzugefügt (Durch Update auf Ladecontroller-Firmware 2.0.5)</li>
+                                        <li>Optionaler Passwortschutz hinzugefügt</li>
+                                        <li>System-Seite in Untermenü aufgeteilt</li>
+                                        <li>Duplizierte MQTT-Subscriptions entfernt</li>
+                                        <li>Fehlermeldungen bei falscher API-Verwendung verbessert</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><a href="firmwares/warp_firmware_1_1_1_603cb633_merged.bin">1.1.1</a><br/><span class="th-details">01.03.2021</span></th>
+                                <td>
+                                    <ul>
+                                        <li>Automatisches Neuladen des Webinterfaces, wenn ein anderer User die Firmware aktualisiert hat, hinzugefügt</li>
+                                        <li>Neustart-Button hinzugefügt</li>
+                                        <li>Oberfläche des System-Abschnitts überarbeitet</li>
+                                        <li>WLAN- und MQTT-Verbindungslogik überarbeitet</li>
+                                        <li>Auto-Update für alle Graphen hinzugefügt</li>
+                                        <li>Graph-Performance verbessert</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><a href="firmwares/warp_firmware_1_1_0_602d2c71_merged.bin">1.1.0</a><br/><span class="th-details">17.02.2021</span></th>
+                                <td>
+                                    <ul>
+                                        <li>Erlaubt, dass beim Start der Wallbox ein Auto angeschlossen ist<br>(Durch Update auf Ladecontroller-Firmware 2.0.4)</li>
+                                        <li>Automatisches Neuladen des Webinterfaces nach Neustart oder Firmware-Update hinzugefügt</li>
+                                        <li>Warnung wenn Verbindung zur Wallbox unterbrochen ist hinzugefügt</li>
+                                        <li>MQTT-Verbindungsproblem bei Verwendung der statischen IP-Konfiguration behoben</li>
+                                        <li>Ladecontroller-Fehler werden jetzt im Event-Log aufgezeichnet</li>
+                                        <li>Passphrase wird nach einem erfolgreichen Speichern nicht mehr als ungültig angezeigt</li>
+                                        <li>WLAN-Empfangsqualität zur Statusseite hinzugefügt</li>
+                                        <li>"Verbindung zu" von der Statusseite entfernt</li>
+                                        <li>Anzeige der IP "0.0.0.0" entfernt, wenn keine Verbindung aufgebaut ist</li>
+                                        <li>Beschreibung zu MQTT-Fehlercodes hinzugefügt</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><a href="firmwares/warp_firmware_1_0_3_6023a452_merged.bin">1.0.3</a><br/><span class="th-details">10.02.2021</span></th>
+                                <td>
+                                    <ul>
+                                        <li>Timing-Problem bei der Kommunikation mit den Bricklets behoben</li>
+                                        <li>Race Condition zwischen MQTT- und WLAN-Reconnects behoben</li>
+                                        <li>Null-Messungen bei Kommunikationsfehlern mit dem Stromzähler entfernt</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><a href="firmwares/warp_firmware_1_0_2_60213214_merged.bin">1.0.2</a><br/><span class="th-details">08.02.2021</span></th>
+                                <td>
+                                    <ul>
+                                        <li>Sichergestellt, dass manueller Ladestop nichts tut, wenn kein Auto angeschlossen ist.<br>(Durch Update auf Ladecontroller-Firmware 2.0.2)</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><a href="firmwares/warp_firmware_1_0_1_601d09ab_merged.bin">1.0.1</a><br/><span class="th-details">05.02.2021</span></th>
+                                <td>
+                                    <ul>
+                                        <li>Buttons für manuellen Ladestart/-stop repariert</li>
+                                        <li>Fehlende Übersetzungen von Fehlermeldungen hinzugefügt</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><a href="firmwares/warp_firmware_1_0_0_601ad477_merged.bin">1.0.0</a><br/><span class="th-details">03.02.2021</span></th>
+                                <td>
+                                    <ul>
+                                        <li>Initiales Release</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-lg-2 col-md-12"></div>
+            </div>
+            <div class="col-12 text-center mt-4">
+                <p>Den Quellcode der Firmware und dieser Webseite veröffentlichen wir auf Github:<br>
+                    <i class="icon ion-social-github pr-1" style="color:#000000"></i><a href="https://github.com/Tinkerforge/warp-charger"><code>Tinkerforge/warp-charger</code></a></p>
+                <p>Dort findet sich auch der Quellcode des Ladecontrollers:<br>
+                    <i class="icon ion-social-github pr-1" style="color:#000000"></i><a href="https://github.com/Tinkerforge/evse-bricklet"><code>Tinkerforge/evse-bricklet</code></a></p>
+            </div>
+        </div>
+    </section>
+    <!-- #firmware -->
+
+    <!--==========================
+      Contact Section
+    ============================-->
+    <section id="contact" class="section-bg">
+      <div class="container">
+
+        <div class="section-header">
+          <h3>Kontakt</h3>
+          <p>Wir freuen uns jeder Zeit über Fragen und Feedback von euch!</p>
+        </div>
+
+        <div class="row contact-info">
+
+          <div class="col-md-4">
+            <div class="contact-address">
+              <i class="ion-ios-location-outline"></i>
+              <h3>Adresse</h3>
+              <address>Tinkerforge GmbH, Zur Brinke 7,<br/>33758 Schloß Holte-Stukenbrock, Deutschland</address>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="contact-phone">
+              <i class="ion-ios-telephone-outline"></i>
+              <h3>Telefon</h3>
+              <p><a href="tel:052078998614">05207 / 8998614</a></p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="contact-email">
+              <i class="ion-ios-email-outline"></i>
+              <h3>E-Mail</h3>
+              <p><a href="mailto:info@tinkerforge.com">info@tinkerforge.com</a></p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section><!-- #contact -->
+
+  </main>
+
+  <!--==========================
+    Footer
+  ============================-->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-info">
+            <h3>WARP</h3>
+            <p>WARP ist die Elektromobiliätssparte von Tinkerforge.
+              Die Tinkerforge GmbH ist ein 2011 gegründetes Unternehmen, das echtes &bdquo;Made in Germany&ldquo; bietet.
+            </p>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Links</h4>
+            <ul>
+              <li><i class="ion-ios-arrow-right"></i> <a href="#intro">Start</a></li>
+              <li><i class="ion-ios-arrow-right"></i> <a href="https://www.tinkerforge.com/de/shop/warp/wallbox.html">Shop</a></li>
+              <li><i class="ion-ios-arrow-right"></i> <a href="https://www.tinkerforge.com/de/home/legal_info/">Impressum</a></li>
+              <li><i class="ion-ios-arrow-right"></i> <a href="https://www.tinkerforge.com/de/home/privacy_notice/">Datenschutz</a></li>
+              <li><i class="ion-ios-arrow-right"></i> <a href="https://www.tinkerforge.com/de/home/terms_and_conditions/">AGB</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h4>Kontakt</h4>
+            <p>
+              Tinkerforge GmbH <br>
+              Zur Brinke 7 <br>
+              33758 Schloß Holte-Stukenbrock<br>
+              Deutschland <br>
+              <strong>Telefon:</strong> 05207 / 8998614<br>
+              <strong>E-Mail:</strong> info@tinkerforge.com<br>
+            </p>
+
+            <div class="social-links">
+              <a href="https://twitter.com/tinkerforge" class="twitter"><i class="fa fa-twitter"></i></a>
+              <a href="https://www.facebook.com/tinkerforge42" class="facebook"><i class="fa fa-facebook"></i></a>
+              <a href="https://www.instagram.com/tinkerforge" class="instagram"><i class="fa fa-instagram"></i></a>
+              <a href="https://www.linkedin.com/company/tinkerforge-gmbh/" class="linkedin"><i class="fa fa-linkedin"></i></a>
+            </div>
+
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-newsletter">
+            <h4>Über uns</h4>
+            <p>
+              Wir bei Tinkerforge sind der Meinung, dass Produkte offen sein müssen. Nur so gehören sie wirklich den
+              Nutzern. Daher folgen wir der Open‐Source‐Philosophie, indem wir die Quelltexte sowie Baupläne all unserer
+              Soft- und Hardware veröffentlichen und ermöglichen es so jedem Einzelnen, unsere Produkte nach eigenen
+              Wünschen zu verändern und zu erweitern. Durch die enge Zusammenarbeit mit unserer aktiven Community
+              entwickeln wir schnell kundenorientierte Lösungen.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </footer><!-- #footer -->
+
+  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+  <!-- JavaScript Libraries -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/jquery/jquery-migrate.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="lib/easing/easing.min.js"></script>
+  <script src="lib/superfish/hoverIntent.js"></script>
+  <script src="lib/superfish/superfish.min.js"></script>
+
+  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+  <script src="lib/isotope/isotope.pkgd.min.js"></script>
+  <script src="lib/lightbox/js/lightbox.min.js"></script>
+  <script src="lib/touchSwipe/jquery.touchSwipe.min.js"></script>
+
+  <!-- Template Main Javascript File -->
+  <script src="js/main.js"></script>
+
+</body>
+</html>
