@@ -99,7 +99,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		\Huge
 		WARP2 Charger Betriebsanleitung\\\vspace{1cm}
 		\large
-		Version 0.2\\\vspace{0.25cm}
+		Version 0.3\\\vspace{0.25cm}
 		\today
 	\end{center}
 	\vfill \gfx{./img_warp2/resized/warp_perspective_blue_ready}
@@ -130,7 +130,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	\subsection{Funktionsweise}
 	Den WARP2 Charger bieten wir aktuell in drei Varianten: Basic, Smart und Pro.
 	Mit allen kannst du dein Elektrofahrzeug nach DIN EN 61851‐1 Mode 3 mit Strom
-	betanken. Fahrzeuge können an der Wallbox ein- zwei- oder dreiphasig laden
+	betanken. Fahrzeuge können an der Wallbox ein-, zwei- oder dreiphasig laden
 	(abhängig vom Fahrzeug). Die Wallboxen können einphasig oder dreiphasig
 	angeschlossen werden und sind als \SI{11}{\kilo\watt}- und
 	\SI{22}{\kilo\watt}-Variante erhältlich. Bei der \SI{11}{\kilo\watt}- und
@@ -235,7 +235,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	Somit wird sichergestellt, dass bei Auftreten eines
 	DC-Fehlerstroms dieser sofort unterbrochen wird.
 	\hint{Achtung! Tritt ein DC-Fehlerstrom auf ist unbedingt die Ursache zu
-	ermitteln! Ein DC Fehlerstrom kann den vorgeschalteten Fehlerstromschutzschalter
+	ermitteln! Ein DC-Fehlerstrom kann den vorgeschalteten Fehlerstromschutzschalter
 	\glqq erblinden\grqq~lassen, so dass dann auch Wechselspannungs
 	(AC)-Fehlerströme nicht mehr korrekt erkannt werden!}
 
@@ -256,7 +256,8 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		\item Diese Betriebsanleitung
 		\item Testprotokoll der Wallbox
 		\item Bohrschablone
-		\item 3x NFC-Karte (bei Modellen Smart und Pro)
+		\item RJ45-Durchführung
+		\item 3x NFC-Karte (nur Modelle Smart und Pro)
 	\end{itemize}
 
 	\subsubsection{Montageort}
@@ -291,8 +292,10 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	\subsubsection{Anforderungen an die Elektroinstallation}
 	Die Wahl des Leitungsquerschnitts und der Leitungsabsicherung der
 	Wallboxzuleitung muss in Übereinstimmung mit den nationalen Vorschriften
-	erfolgen. Es sollte ein 3-poliger Leitungsschutzschalter mit C-Charakteristik
-	verwendet werden.
+	erfolgen. Üblicherweise erfolgt der Anschluss der Wallbox dreiphasig.
+	Dafür sollte ein 3-poliger Leitungsschutzschalter mit C-Charakteristik
+	verwendet werden. Bei einem einphasigen Betrieb der Wallbox ist
+	dementsprechend ein 1-poliger Leitungsschutzschalter einzusetzen.
 	Die Wallbox verfügt über eine interne DC-Fehlerstromerkennung, welche
 	bei einem DC-Fehlerstrom $\geq \SI{6}{\milli\ampere}$ die Stromversorgung
 	unterbricht. Daher ist nur ein vorgeschalteter AC-Fehlerstromschutzschalter
@@ -303,8 +306,26 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	\subsection{Elektrischer Anschluss}
 	\hint{Die in diesem Kapitel beschriebenen Arbeiten dürfen nur von einer ausgewiesenen
 		Elektrofachkraft durchgeführt werden.}
-	Der elektrische Anschluss unterscheidet sich bei den Varianten Basic / Smart
-	(ohne Zähler) und Pro (mit Zähler).
+
+	Nachdem die Wallbox montiert wurde, kann diese nun angeschlossen werden. Dazu
+	muss der Deckel (siehe \fullref{wandmontage}) entfernt werden.
+
+	\gfx{./img_warp2/resized/warp_cable_cut_ready}
+
+	Die Zuleitung muss für alle Varianten, wie auf dem Foto zuvor abgebildet,
+	angefertigt werden. Wir empfehlen, das Kabel dafür auf einer Länge von
+	\SI{23}{\centi\meter} abzumanteln. Für die Klemmen wird eine
+	Abisolierlänge von 10 bis \SI{12}{\milli\meter} vorgegeben.
+
+
+
+
+	Wie diese Zuleitung angeschlossen wird, unterscheidet sich bei 
+	den Varianten Basic / Smart (ohne Zähler) und Pro (mit Zähler) und ist
+	nachfolgend beschrieben.
+
+
+	\subsubsection{Variante Basic / Smart}
 
 	% Force non-floating figure. Floating envs are not allowed in multicol.
 	\begin{figure}[H]
@@ -312,24 +333,11 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		\caption*{WARP Charger Basic.}
 	\end{figure}
 
-	\begin{figure}[H]
-		\gfx{./img_warp2/resized/warp2_pro_top_open}
-		\caption*{WARP Charger Pro.}
-	\end{figure}
-
-	\subsubsection{Variante Basic / Smart}
-	Nachdem die Wallbox montiert wurde, kann diese nun angeschlossen werden. Dazu
-	muss der Deckel (siehe \fullref{wandmontage}) entfernt werden.
-
-	\gfx{./img_warp2/resized/warp_cable_cut_ready}
-
 	Bei den Wallbox-Varianten Basic und Smart
 	wird die Zuleitung an einen internen Klemmenblock
 	angeschlossen. Um bei starren Leitern maximalen Bewegungsspielraum zu bieten,
 	werden die Adern um den Klemmenblock geführt und von der Rückseite
-	angeschlossen. Wir empfehlen, das Kabel dafür auf einer Länge von
-	\SI{23}{\centi\meter} abzumanteln. Für die Klemmen wird eine
-	Abisolierlänge von 10 bis \SI{12}{\milli\meter} vom Hersteller vorgegeben.
+	angeschlossen.
 
 	Die Adern werden anhand der Reihenfolge und Klemmenbeschriftungen in die
 	Klemmen gesteckt. Als letztes muss die Kabelverschraubung festgezogen werden. Die Verschraubung
@@ -341,8 +349,21 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 
 	\subsubsection{Variante Pro}
+
+	\begin{figure}[H]
+		\gfx{./img_warp2/resized/warp2_pro_top_open}
+		\caption*{WARP Charger Pro.}
+	\end{figure}
+
 	Die Variante Pro verfügt aus platzgründen nicht über einen Klemmenblock. Die
 	Zuleitung muss hier direkt an den Zähler angeschlossen werden. Der korrekte Sitz der Adern und die Phasenzugehörigkeit ist nach der
+	Installation zu prüfen! Fortfahren mit \fullref{ladestrom_schalter}!
+
+	Als letztes muss die Kabelverschraubung festgezogen werden. Die Verschraubung
+	hat einen Klemmebereich von \SI{11}{\milli\meter} bis \SI{22}{\milli\meter} und soll laut Hersteller mit
+	\SI{10}{\newton{}\meter} angezogen werden.
+
+	Der korrekte Sitz der Adern und die Phasenzugehörigkeit ist nach der
 	Installation zu prüfen! Fortfahren mit \fullref{ladestrom_schalter}!
 
 	\subsubsection{Varianten mit werkseitig angeschlossener Zuleitung}
@@ -352,6 +373,12 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 	Der korrekte Sitz der Adern und die Phasenzugehörigkeit ist nach der
 	Installation zu prüfen! Fortfahren mit \fullref{ladestrom_schalter}!
+
+	\subsubsection{Einphasiger Betrieb}
+	Alle Wallboxen können auch einphasig angeschlossen und betrieben werden.
+	Dazu ist unbedingt Phase L1 anzuschließen, da diese Phase ebenfalls zur
+	Stromversorgung der Wallbox genutzt wird. L2 und L3 werden von der Wallbox
+	nur durchgeschaltet und können dementsprechend unbeschaltet bleiben.
 
 	\subsubsection{Einstellen des Ladestroms (Alle Varianten)}\label{ladestrom_schalter}
 	Der maximal erlaubte Ladestrom muss abhängig von der gebäudeseitigen
@@ -365,11 +392,16 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 	Über zwei Schiebeschalter auf dem internen Ladecontroller (EVSE) wird der
 	maximale Ladestrom eingestellt. Die verschiedenen Schalterstellungen sind in
-	dem Foto dokumentiert. Der weiße Block stellt dabei jeweils die Position
+	dem Foto dokumentiert. Der schwarze Block stellt dabei jeweils die Position
 	des Schalters dar. Im Auslieferungszustand sind die Schalter so eingestellt,
 	dass die Wallbox inaktiv ist. Im obigen Foto ist exemplarisch der obere
-	Schalter auf die Linke und der untere auf die mittlere Position gestellt worden. Damit wurde eine
-	maximale Ladeleistung von \SI{9}{\kilo\watt} (\SI{13}{\ampere}) vorgegeben.
+	Schalter auf die linke und der untere auf die mittlere Position gestellt
+	worden. Damit wird eine maximale Ladeleistung bei einem dreiphasigen
+	Betrieb, von \SI{9}{\kilo\watt} (\SI{3}x\SI{13}{\ampere}) vorgegeben. 
+	Wird die Wallbox nur einphasig angeschlossen, können maximal 
+	\SI{3}{\kilo\watt} (\SI{1}x\SI{13}{\ampere}) über die Wallbox vom Fahrzeug
+	bezogen werden. 
+
 	\hint{Die Schalterstellung und der damit verbundene maximale Ladestrom dürfen nach der
 		Installation nur von einer ausgewiesenen Elektrofachkraft unter
 		Berücksichtigung der genannten Bedingungen geändert werden!}
@@ -382,7 +414,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	abgeschraubt werden.
 	\gfx{./img_warp2/resized/warp2_ethernet3_circle_600} % Blinddeckel
 
-	\columnbreak
+	%\columnbreak
 	Anschließend muss ein LAN-Kabel (z.B. Cat.~7) wie folgt
 	angefertigt werden:
 	\begin{enumerate}
@@ -443,11 +475,14 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	15 Minuten Inaktivität schaltet sich die LED aus.
 
 	\subsection{Bedienelemente}\label{lockswitch}
-	Das Drücken des Tasters (1) auf der Frontseite unterbricht einen aktiven Ladevorgang
+	Das Drücken des Tasters auf der Frontseite unterbricht einen aktiven Ladevorgang
 	sofort. Alternativ kann das Ladekabel vom Elektrofahrzeug entriegelt werden,
 	wodurch der Ladevorgang ebenfalls unterbrochen wird. Um den Ladevorgang erneut
 	zu starten, muss in beiden Fällen die Verbindung zum Fahrzeug getrennt und
 	anschließend erneut hergestellt werden (Kabel aus- und wieder einstecken).
+
+	Zusätzlich verfügen die Wallbox-Varianten Smart und Pro über NFC. Eine
+	genaue Beschreibung befindet sich im Kapitel \fullref{NFC}.
 
 	\newpage
 	\section{Webinterface}
@@ -647,8 +682,9 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	Nachdem die Konfiguration gesetzt und der \enquote{MQTT aktivieren}-Schalter aktiviert ist, kann die Konfiguration gespeichert werden.
 	Das Webinterface startet dann neu und verbindet sich zum Broker.
 	Auf der Status-Seite wird angezeigt, ob die Verbindung aufgebaut werden konnte.
-
+	
 	\section{Freischaltung per NFC}
+	\label{NFC}
 	Der WARP2 Charger unterstützt eine Freischaltung per NFC. Wenn diese aktiviert ist,
 	muss zum Starten und/oder zum Stoppen einer Ladung ein NFC-Tag an die rechte Seite
 	der Wallbox gehalten werden. Im Lieferumfang des WARP2 Chargers sind drei NFC-Karten enthalten,
@@ -681,14 +717,14 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 	\subsection{Verwendung}
 	Wenn die Freigabe per NFC aktiviert ist und ein Fahrzeug angeschlossen wird,
-	beginnt die Wallbox . Es muss dann eins der berechtigten Tags an die rechte
-	Seitenwand der Wallbox gehalten werden. Die Wallbox erinnert durch schnelles
-	Ein- und Ausblenden der LED daran, dass ein Tag notwendig ist, um zu laden.
+	beginnt die Wallbox mit einem schnellen Ein- und Ausblenden der LED.
+	Dies soll daran erinnern, dass ein Tag notwendig ist, um zu laden. Die
+	nachfolgende Grafik soll diesen Blinkcode illustrieren.
 
 	\gfx{./img_warp2/resized/blink_nag}
 
-	Die LED geht dreimal aus und blendet sich wieder ein, wenn ein berechtigtes Tag
-	erkannt wurde. Dann folgt eine längere Pause.
+	Wenn ein berechtigtes Tag erkannt wurde geht die LED 
+	dreimal aus und blendet sich wieder ein. Danach folgt eine längere Pause.
 
 	\gfx{./img_warp2/resized/blink_ack}
 
@@ -696,7 +732,8 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 	\gfx{./img_warp2/resized/blink_nack}
 
-	Wenn ein berechtigtes Tag erkannt wurde, kann es sein, dass die Ladung nicht
+	Wenn ein berechtigtes Tag erkannt wurde, sollte der Ladevorgang kurz danach
+	freigeschaltet werden. Es kann sein, dass die Ladung nicht
 	sofort beginnt, sondern erst nachdem eine Ladefreigabe vom Lastmanagement erhalten wurde,
 	und das Auto eine Ladung anfordert. Die NFC-Freigabe bleibt aber erhalten,
 	bis die Ladung durch ein Tag, den Knopf an der Wallbox, oder über das Webinterface gestoppt wird
@@ -843,8 +880,8 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	\end{tabular}
 
 	\subsection{Sicherungswechsel}
-	Die Wallbox ist intern über zwei 6,3x32mm Feinsicherungen (mittelträge (m), 500mA) abgesichert.
-	Tinkerforge verbaut Sicherungen vom Typ \glqq ESKA  632.214\grqq.
+	Die Wallbox ist intern über zwei 4x20mm Feinsicherungen (mittelträge (m), 500mA) abgesichert.
+	Tinkerforge verbaut Sicherungen vom Typ \glqq ESKA 521.014\grqq.
 
 	\vfill
 	\section{Konformitätserklärung}
@@ -910,6 +947,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		\midrule
 		09.08.2021 & 0.1     & Initialversion              \\
 		17.08.2021 & 0.2     & Neue Features hinzugefügt   \\
+		23.08.2021 & 0.3     & Inhaltliche Verbesserungen  \\
 		\bottomrule
 	\end{tabular}
 	\newpage
