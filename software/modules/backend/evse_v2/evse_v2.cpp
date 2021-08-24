@@ -161,6 +161,10 @@ EVSEV2::EVSEV2()
         {"managed", Config::Bool(false)},
         {"password", Config::Uint32(0)}
     });
+
+    evse_button_configuration = Config::Object({
+        {"button", Config::Uint8(2)}
+    });
 }
 
 void EVSEV2::setup()
@@ -199,6 +203,10 @@ void EVSEV2::setup()
 
     task_scheduler.scheduleWithFixedDelay("update_evse_gpio_configuration", [this](){
         update_evse_gpio_configuration();
+    }, 0, 1000);
+
+    task_scheduler.scheduleWithFixedDelay("update_evse_button_configuration", [this](){
+        update_evse_button_configuration();
     }, 0, 1000);
 
 
@@ -468,6 +476,11 @@ void EVSEV2::register_urls()
         is_in_bootloader(tf_evse_v2_set_gpio_configuration(&evse, evse_gpio_configuration.get("enable_input")->asUint(),
                                                                   evse_gpio_configuration.get("input")->asUint(),
                                                                   evse_gpio_configuration.get("output")->asUint()));
+    }, true);
+
+    api.addState("evse/button_configuration", &evse_button_configuration, {}, 1000);
+    api.addCommand("evse/button_configuration_update", &evse_button_configuration, {}, [this](){
+        is_in_bootloader(tf_evse_v2_set_button_configuration(&evse, evse_button_configuration.get("button")->asUint()));
     }, true);
 
     api.addCommand("evse/auto_start_charging_update", &evse_auto_start_charging_update, {}, [this](){
@@ -805,6 +818,24 @@ void EVSEV2::update_evse_gpio_configuration() {
     evse_gpio_configuration.get("enable_input")->updateUint(enable_input);
     evse_gpio_configuration.get("input")->updateUint(input);
     evse_gpio_configuration.get("output")->updateUint(output);
+}
+
+
+void EVSEV2::update_evse_button_configuration() {
+    if(!initialized)
+        return;
+
+    uint8_t button;
+
+    int rc = tf_evse_v2_get_button_configuration(&evse,
+        &button);
+
+    if(rc != TF_E_OK) {
+        is_in_bootloader(rc);
+        return;
+    }
+
+    evse_button_configuration.get("button")->updateUint(button);
 }
 
 bool EVSEV2::is_in_bootloader(int rc) {

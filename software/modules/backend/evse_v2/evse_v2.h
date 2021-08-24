@@ -48,6 +48,7 @@ private:
     void update_evse_energy_meter_state();
     void update_evse_dc_fault_current_state();
     void update_evse_gpio_configuration();
+    void update_evse_button_configuration();
     bool is_in_bootloader(int rc);
     bool flash_firmware();
     bool flash_plugin(int regular_plugin_upto);
@@ -74,6 +75,7 @@ private:
     Config evse_dc_fault_current_state;
     Config evse_reset_dc_fault_current;
     Config evse_gpio_configuration;
+    Config evse_button_configuration;
     Config evse_managed;
     Config evse_managed_update;
     Config evse_managed_current;
