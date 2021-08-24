@@ -1,0 +1,120 @@
+ <div class="tab-pane fade" role="tabpanel" aria-labelledby="sidebar-nfc" id="nfc">
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2" data-i18n="nfc.content.nfc"></h1>
+    </div>
+
+    <form id="nfc_config_form" class="needs-validation" novalidate>
+        <!--
+            Use custom validation instead of the browser default, that is broken on Chrome
+            See: https://getbootstrap.com/docs/4.5/components/forms/#validation
+        -->
+
+        <div class="form-group row">
+            <div id="blah" class="col-lg-3 col-xl-2">
+                <label for="nfc_require_tag_to_start" class="col-form-label form-label" data-i18n="nfc.content.require_tag_to_start"></label>
+            </div>
+            <div class="col-lg-9 col-xl-6">
+                <div class="borderless-form-control custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="nfc_require_tag_to_start">
+                    <label class="custom-control-label" for="nfc_require_tag_to_start" data-i18n="nfc.content.require_tag_to_start_desc"></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div id="blah" class="col-lg-3 col-xl-2">
+                <label for="nfc_require_tag_to_stop" class="col-form-label form-label" data-i18n="nfc.content.require_tag_to_stop"></label>
+            </div>
+            <div class="col-lg-9 col-xl-6">
+                <div class="borderless-form-control custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="nfc_require_tag_to_stop">
+                    <label id="nfc_require_tag_to_stop_desc" class="custom-control-label" for="nfc_require_tag_to_stop" data-i18n="nfc.content.require_tag_to_stop_desc"></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-lg-3 col-xl-2 col-form-label form-label" data-i18n="nfc.content.authorized_tags"></label>
+            <div class="col-lg-9 col-xl-6">
+                <div id="nfc_authorized_tags" class="row row-cols-1 row-cols-md-2">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-lg-12 col-xl-8 text-right">
+                <button id="nfc_save_button" type="submit" form="nfc_config_form" class="btn btn-primary" data-i18n="nfc.content.save" disabled></button>
+            </div>
+        </div>
+    </form>
+
+    <div class="modal fade" id="nfc_reboot" tabindex="-1" role="dialog" aria-hidden="true">
+        <div id="nfc_reboot_content"
+            class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <label class="form-label modal-title" data-i18n="nfc.content.reboot_title"></label>
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" data-i18n="nfc.content.reboot_content"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal" data-i18n="nfc.content.abort"></button>
+                    <button id="nfc_reboot_button" type="button"
+                        class="btn btn-danger" data-i18n="nfc.content.reboot"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="nfc_add_tag_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" data-i18n="nfc.content.add_tag_modal_title">NFC-Tag hinzufügen</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <form id="nfc_add_tag_form">
+                        <div class="form-group">
+                            <label class="form-label" for="nfc_config_tag_new_name" data-i18n="nfc.content.add_tag_modal_name"></label>
+                            <input type="text" class="form-control" id="nfc_config_tag_new_name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="nfc_config_tag_new_name" data-i18n="nfc.content.add_tag_modal_seen_tags"></label>
+                            <p id="nfc_config_tag_no_seen" data-i18n="nfc.content.add_tag_description"></p>
+                            <div class="list-group" id="nfc_seen_tags">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="nfc_config_tag_new_tag_id" data-i18n="nfc.content.add_tag_modal_tag_id"></label>
+                            <input type="text" class="form-control" id="nfc_config_tag_new_tag_id" minlength="8" maxlength="29"
+                            pattern="^([0-9a-fA-F]{2}:?){3,9}[0-9a-fA-F]{2}$">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="nfc_config_tag_new_tag_type" data-i18n="nfc.content.add_tag_modal_tag_type"></label>
+                            <select id="nfc_config_tag_new_tag_type" class="form-control">
+                                <option value="0" data-i18n="nfc.content.type_0"></option>
+                                <option value="1" data-i18n="nfc.content.type_1"></option>
+                                <option value="2" data-i18n="nfc.content.type_2"></option>
+                                <option value="3" data-i18n="nfc.content.type_3"></option>
+                                <option value="4" data-i18n="nfc.content.type_4"></option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" data-i18n="nfc.content.add_tag_modal_abort"></button>
+                  <button id="nfc_save_tag" type="button" class="btn btn-primary" data-i18n="nfc.content.add_tag_modal_save"></button>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
