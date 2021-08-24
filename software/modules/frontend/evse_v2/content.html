@@ -273,6 +273,23 @@
 
     <div class="form-group row">
         <div class="col-lg-3 col-xl-2">
+            <label for="evse_button_configuration" class="col-form-label">
+                <span class="form-label pr-2" data-i18n="evse.content.button_configuration"></span>
+                <span class="text-muted" data-i18n="evse.content.button_configuration_muted"></span>
+            </label>
+        </div>
+        <div class="col-lg-9 col-xl-6">
+            <select id="evse_button_configuration" class="custom-select">
+                <option value="0" data-i18n="evse.content.button_configuration_deactivated"></option>
+                <option value="1" data-i18n="evse.content.button_configuration_start_charging"></option>
+                <option value="2" data-i18n="evse.content.button_configuration_stop_charging"></option>
+                <option value="3" data-i18n="evse.content.button_configuration_start_and_stop_charging"></option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-3 col-xl-2">
             <label for="evse_gpio_enable" class="col-form-label">
                 <span class="form-label pr-2" data-i18n="evse.content.gpio_enable"></span>
                 <span class="text-muted" data-i18n="evse.content.gpio_enable_muted"></span>
@@ -359,6 +376,7 @@
                     <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.led_state_blinking"></button>
                     <button type="button" class="btn btn-outline-danger" disabled data-i18n="evse.content.led_state_flickering"></button>
                     <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.led_state_breathing"></button>
+                    <button type="button" class="btn btn-outline-primary" disabled data-i18n="evse.content.led_state_api"></button>
                 </div>
             </div>
         </div>
@@ -602,7 +620,7 @@
             class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <form-label class="modal-title" data-i18n="evse.content.reset_dc_fault_title"></form-label>
+                    <label class="form-label modal-title" data-i18n="evse.content.reset_dc_fault_title"></label>
                     <button type="button" class="close" data-dismiss="modal"
                         aria-label="Close">
                         <span aria-hidden="true">&times;</span>

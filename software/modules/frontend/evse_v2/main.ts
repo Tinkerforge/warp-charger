@@ -257,6 +257,21 @@ interface EVSEGPIOConfiguration {
     output: number
 }
 
+function update_evse_gpio_configuration(g: EVSEGPIOConfiguration) {
+    $('#evse_gpio_enable').val(g.enable_input);
+    $('#evse_gpio_in').val(g.input);
+    $('#evse_gpio_out').val(g.output);
+}
+
+interface EVSEButtonConfiguration {
+    button: boolean
+}
+
+function update_evse_button_configuration(b: EVSEButtonConfiguration) {
+    $('#evse_button_configuration').val(b.button);
+}
+
+
 let debug_log = "";
 let meter_chunk = "";
 
@@ -419,6 +434,17 @@ export function init() {
             error: (xhr, status, error) => util.add_alert("evse_managed_update_failed", "alert-danger", __("evse.script.save_failed"), error + ": " + xhr.responseText)
         });
     });
+
+    $('#evse_button_configuration').on("change", () => {
+        let val = parseInt($('#evse_button_configuration').val().toString());
+        $.ajax({
+            url: '/evse/button_configuration_update',
+            method: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify({"button": val}),
+            error: (xhr, status, error) => util.add_alert("evse_managed_update_failed", "alert-danger", __("evse.script.save_failed"), error + ": " + xhr.responseText)
+        });
+    });
 }
 
 //From sdm72dm/main.ts
@@ -455,6 +481,14 @@ export function addEventListeners(source: EventSource) {
 
     source.addEventListener("evse/dc_fault_current_state", function (e: util.SSE) {
         update_evse_dc_fault_current_state(<EVSEDCFaultCurrentState>(JSON.parse(e.data)));
+    }, false);
+
+    source.addEventListener("evse/gpio_configuration", function (e: util.SSE) {
+        update_evse_gpio_configuration(<EVSEGPIOConfiguration>(JSON.parse(e.data)));
+    }, false);
+
+    source.addEventListener("evse/button_configuration", function (e: util.SSE) {
+        update_evse_button_configuration(<EVSEButtonConfiguration>(JSON.parse(e.data)));
     }, false);
 
     source.addEventListener("evse/debug_header", function (e: util.SSE) {
@@ -564,6 +598,7 @@ export function getTranslation(lang: string) {
                     "led_state_blinking": "Blinkend",
                     "led_state_flickering": "Flackernd",
                     "led_state_breathing": "Atmend",
+                    "led_state_api": "API",
                     "cp_pwm_dc": "CP-PWM-Tastverhältnis",
                     "adc_values": "ADC-Werte",
                     "adc_names": "PE-CP, PE-PP",
@@ -615,6 +650,13 @@ export function getTranslation(lang: string) {
                     "gpio_in_muted": " ",
                     "gpio_out": "Konfigurierbarer Ausgang",
                     "gpio_out_muted": " ",
+
+                    "button_configuration": "Tastereinstellung",
+                    "button_configuration_muted": "Aktion, die bei Druck des Tasters ausgeführt wird",
+                    "button_configuration_deactivated": "Nichts",
+                    "button_configuration_start_charging": "Ladestart",
+                    "button_configuration_stop_charging": "Ladestop",
+                    "button_configuration_start_and_stop_charging": "Ladestart bzw. Ladestop"
                 },
                 "script": {
                     "error_code": "Fehlercode",
@@ -730,6 +772,7 @@ export function getTranslation(lang: string) {
                     "led_state_blinking": "Blinking",
                     "led_state_flickering": "Flickering",
                     "led_state_breathing": "Breathing",
+                    "led_state_api": "API",
                     "cp_pwm_dc": "CP PWM duty cycle",
                     "adc_values": "ADC values",
                     "adc_names": "PE-CP, PE-PP",
