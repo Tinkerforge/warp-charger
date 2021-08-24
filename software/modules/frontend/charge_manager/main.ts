@@ -201,7 +201,19 @@ function update_available_current(current: number) {
     }
 }
 
-function update_charge_manager_config(config: ChargeManagerConfig) {
+function update_charge_manager_config(config: ChargeManagerConfig, force: boolean) {
+    $('#charge_manager_status_available_current').prop("max", config.default_available_current / 1000.0);
+    $("#charge_manager_status_available_current_maximum").on("click", () => set_available_current(config.default_available_current));
+    $('#charge_manager_status_available_current_maximum').html(util.toLocaleFixed(config.default_available_current / 1000.0, 0) + " A");
+
+    update_available_current(config.default_available_current);
+
+    if (!force && !$('#charge_manager_save_button').prop("disabled"))
+        return;
+
+    $('#charge_manager_enable').prop("checked", config.enable_charge_manager);
+    $('#charge_manager_default_available_current').val(util.toLocaleFixed(config.default_available_current / 1000, 3));
+
     if (config.chargers.length != charger_config_count) {
         let charger_configs = "";
         for (let i = 0; i < config.chargers.length; i++) {
@@ -247,7 +259,10 @@ function update_charge_manager_config(config: ChargeManagerConfig) {
         charger_config_count = config.chargers.length;
         feather.replace();
         for (let i = 0; i < config.chargers.length; i++) {
-            $(`#charge_manager_content_${i}_remove`).on("click", () => save_charge_manager_config(null, i));
+            $(`#charge_manager_content_${i}_remove`).on("click", () => {
+                $('#charge_manager_save_button').prop("disabled", false);
+                update_charge_manager_config(collect_charge_manager_config(null, i), true);
+            });
         }
     }
 
@@ -256,18 +271,9 @@ function update_charge_manager_config(config: ChargeManagerConfig) {
         $(`#charge_manager_config_charger_${i}_name`).html(s.name);
         $(`#charge_manager_config_charger_${i}_host`).val(s.host);
     }
-
-    $('#charge_manager_enable').prop("checked", config.enable_charge_manager);
-    $('#charge_manager_default_available_current').val(util.toLocaleFixed(config.default_available_current / 1000, 3));
-
-    $('#charge_manager_status_available_current').prop("max", config.default_available_current / 1000.0);
-    $("#charge_manager_status_available_current_maximum").on("click", () => set_available_current(config.default_available_current));
-    $('#charge_manager_status_available_current_maximum').html(util.toLocaleFixed(config.default_available_current / 1000.0, 0) + " A");
-
-    update_available_current(config.default_available_current);
 }
 
-function save_charge_manager_config(new_charger: ChargerConfig = null, remove_charger: number = null) {
+function collect_charge_manager_config(new_charger: ChargerConfig = null, remove_charger: number = null) : ChargeManagerConfig {
     let chargers: ChargerConfig[] = [];
     for(let i = 0; i < charger_config_count; ++i) {
         if (remove_charger !== null && i == remove_charger)
@@ -281,18 +287,25 @@ function save_charge_manager_config(new_charger: ChargerConfig = null, remove_ch
     if (new_charger != null)
         chargers.push(new_charger);
 
-    let payload: ChargeManagerConfig = {
+    return {
        enable_charge_manager: $('#charge_manager_enable').is(':checked'),
        default_available_current: Math.round(<number>$('#charge_manager_default_available_current').val() * 1000),
        chargers: chargers
     };
+}
+
+function save_charge_manager_config() {
+    let payload = collect_charge_manager_config();
 
     $.ajax({
         url: '/charge_manager/config_update',
         method: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(payload),
-        success: () => $('#charge_manager_reboot').modal('show'),
+        success: () => {
+            $('#charge_manager_save_button').prop("disabled", true);
+            $('#charge_manager_reboot').modal('show');
+        },
         error: (xhr, status, error) => util.add_alert("charge_manager_config_update_failed", "alert-danger", __("charge_manager.script.save_failed"), error + ": " + xhr.responseText)
     });
 }
@@ -306,6 +319,10 @@ export function init() {
     (<HTMLButtonElement>document.getElementById("charge_manager_reboot_button")).addEventListener("click", charge_manager_save_reboot);
 
     let form = <HTMLFormElement>$('#charge_manager_config_form')[0];
+    form.addEventListener('input', function (event: Event) {
+        $('#charge_manager_save_button').prop("disabled", false);
+    }, false);
+
     form.addEventListener('submit', function (event: Event) {
         form.classList.add('was-validated');
         event.preventDefault();
@@ -315,7 +332,7 @@ export function init() {
             return;
         }
 
-        save_charge_manager_config(null, null);
+        save_charge_manager_config();
     }, false);
 
     $('#charge_manager_save_charger').on("click", () => {
@@ -325,11 +342,14 @@ export function init() {
         }
 
         $('#charge_manager_add_charger_modal').modal('hide');
+        $('#charge_manager_save_button').prop("disabled", false);
 
-        save_charge_manager_config({
+        let new_config = collect_charge_manager_config({
             host: $(`#charge_manager_config_charger_new_host`).val().toString(),
             name: $(`#charge_manager_config_charger_new_name`).val().toString(),
         }, null);
+
+        update_charge_manager_config(new_config, true);
     });
 
     $("#charge_manager_status_available_current_minimum").on("click", () => set_available_current(0));
@@ -362,7 +382,7 @@ export function addEventListeners(source: EventSource) {
     }, false);
 
     source.addEventListener('charge_manager/config', function (e: util.SSE) {
-        update_charge_manager_config(<ChargeManagerConfig>(JSON.parse(e.data)));
+        update_charge_manager_config(<ChargeManagerConfig>(JSON.parse(e.data)), false);
     }, false);
 
     source.addEventListener('charge_manager/available_current', function (e: util.SSE) {
