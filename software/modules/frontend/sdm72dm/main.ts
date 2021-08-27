@@ -613,7 +613,7 @@ export function getTranslation(lang: string) {
                     "detailed_neutral_current_demand": "Bezogener Neutral&shy;leiter&shy;strom",
                     "detailed_neutral_current_demand_desc": " ",
 
-                    "detailed_maximum_neutral_current_demand": "Max bezogener Neutral&shy;leiter&shy;strom",
+                    "detailed_maximum_neutral_current_demand": "Max. bezogener Neutral&shy;leiter&shy;strom",
                     "detailed_maximum_neutral_current_demand_desc": "Höchster gemessener Wert",
 
                     "detailed_line1_to_line2_volts": "Spannung L1 zu L2",
@@ -661,7 +661,7 @@ export function getTranslation(lang: string) {
                     "detailed_total_kwh_sum": "Summe der Gesamt&shy;wirk&shy;energien",
                     "detailed_total_kwh_sum_desc": "Import + Export aller Phasen",
 
-                    "detailed_total_kvarh_sum": "Summe der Blind&shy;energie",
+                    "detailed_total_kvarh_sum": "Summe der Gesamt&shy;blind&shy;energien",
                     "detailed_total_kvarh_sum_desc": "Import + Export aller Phasen",
 
                     "detailed_import_kwh": "Wirkenergie (Import)",
