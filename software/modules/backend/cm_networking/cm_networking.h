@@ -31,6 +31,9 @@
 #define CHARGE_MANAGER_PORT 34127
 #define CHARGE_MANAGEMENT_PORT CHARGE_MANAGER_PORT + 1
 
+// Keep in sync with charge_manager.cpp
+#define MAX_CLIENTS 6
+
 struct packet_header {
     uint8_t seq_num;
     uint8_t version[3];
@@ -87,7 +90,7 @@ public:
 
 private:
     int manager_sock;
-    struct sockaddr_in dest_addrs[6] = {0};
+    struct sockaddr_in dest_addrs[MAX_CLIENTS] = {0};
 
     int client_sock;
     bool source_addr_valid = false;

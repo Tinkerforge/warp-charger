@@ -102,7 +102,13 @@ void CMNetworking::register_manager(const std::vector<String> &hosts,
         return;
 
     task_scheduler.scheduleWithFixedDelay("charge_manager_receive_task", [this, names, manager_callback](){
-        static uint8_t last_seen_seq_num[6] = {255, 255, 255, 255, 255, 255};
+        static uint8_t last_seen_seq_num[MAX_CLIENTS];
+        static bool initialized = false;
+        if (!initialized) {
+            memset(last_seen_seq_num, 255, MAX_CLIENTS);
+            initialized = true;
+        }
+
         response_packet recv_buf[2] = {0};
         struct sockaddr_in source_addr;
         socklen_t socklen = sizeof(source_addr);

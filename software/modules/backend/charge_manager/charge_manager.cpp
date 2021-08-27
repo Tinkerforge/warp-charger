@@ -37,6 +37,9 @@
 extern API api;
 extern TaskScheduler task_scheduler;
 
+// Keep in sync with cm_networing.h
+#define MAX_CLIENTS 6
+
 ChargeManager::ChargeManager()
 {
     charge_manager_config = Config::Object({
@@ -53,7 +56,7 @@ ChargeManager::ChargeManager()
                 {"host", Config::Str("", 64)},
                 {"name", Config::Str("", 32)}
             }),
-            0, 6, Config::type_id<Config::ConfObject>()
+            0, MAX_CLIENTS, Config::type_id<Config::ConfObject>()
         )}
     });
 
@@ -77,7 +80,7 @@ ChargeManager::ChargeManager()
                 {"state", Config::Uint8(0)}, //0 - no vehicle, 1 - user blocked, 2 - manager blocked, 3, car blocked, 4 - charging, 5 - error
                 {"error", Config::Uint8(0)} //0 - OK, 1 - Unreachable, 2 - FW mismatch
             }),
-            0, 6, Config::type_id<Config::ConfObject>()
+            0, MAX_CLIENTS, Config::type_id<Config::ConfObject>()
         )}
     });
 
