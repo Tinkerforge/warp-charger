@@ -67,7 +67,7 @@ def print_warp_label(type_, version, serial_number, build_date, instances, copie
         raise Exception('Invalid copies: {0}'.format(copies))
 
     # parse type
-    m = re.match('^WARP-C(B|S|P)-(11|22)KW-(50|75)(|-CEE)$', type_)
+    m = re.match(r'^WARP-C(B|S|P)-(11|22)KW-(50|75)(|-CEE)$', type_)
 
     if m == None:
         raise Exception('Invalid type: {0}'.format(type_))
@@ -127,11 +127,11 @@ def print_warp_label(type_, version, serial_number, build_date, instances, copie
         assert False, type_model
 
     # check version
-    if re.match('^[1-9]\.(0|[1-9][0-9]*)$', version) == None:
+    if re.match(r'^1\.(0|[1-9][0-9]*)$', version) == None:
         raise Exception('Invalid version: {0}'.format(version))
 
     # check serial number
-    if re.match('^-|5[0-9]{9}$', serial_number) == None:
+    if re.match(r'^-|5[0-9]{9}$', serial_number) == None:
         raise Exception('Invalid serial number: {0}'.format(serial_number))
 
     # check build date
