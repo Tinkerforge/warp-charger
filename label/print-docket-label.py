@@ -130,7 +130,7 @@ def print_docket_label(sku, extra_supply_cable, version, serial_number, build_da
     description = sku_to_description(sku, extra_supply_cable)
 
     # check version
-    if re.match(r'^[1-9]\.(0|[1-9][0-9]*)$', version) == None:
+    if re.match(r'^1\.(0|[1-9][0-9]*)$', version) == None:
         raise Exception('Invalid version: {0}'.format(version))
 
     # check serial number
