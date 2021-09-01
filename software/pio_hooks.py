@@ -10,6 +10,7 @@ import subprocess
 import sys
 import time
 import re
+from zlib import crc32
 
 NameFlavors = namedtuple('NameFlavors', 'space lower camel headless under upper dash camel_abbrv lower_no_space camel_constant_safe')
 
@@ -137,17 +138,42 @@ def get_changelog_version(name):
     version = (str(versions[-1][0]), str(versions[-1][1]), str(versions[-1][2]))
     return version
 
+def write_firmware_info(display_name, major, minor, patch, build_time):
+    buf = bytearray([0xFF] * 4096)
+
+    # 7121CE12F0126E
+    # tink er for ge
+    buf[0:7] = bytearray.fromhex("7121CE12F0126E") # magic
+    buf[7] = 0x01 #firmware_info_version, note: a new version has to be backwards compatible
+
+    name_bytes = display_name.encode("utf-8") # firmware name, max 60 chars
+    buf[8:8 + len(name_bytes)] = name_bytes
+    buf[8 + len(name_bytes):68] = bytes(60 - len(name_bytes))
+    buf[68] = 0x00 # 0 byte to make sure string is terminated. also pads the fw version, so that the build date will be 4-byte aligned
+    buf[69] = int(major)
+    buf[70] = int(minor)
+    buf[71] = int(patch)
+    buf[72:76] = build_time.to_bytes(4, byteorder='little')
+    buf[4092:4096] = crc32(buf[0:4092]).to_bytes(4, byteorder='little')
+
+    with open(os.path.join("build", "fw_info.bin"), "wb") as f:
+        f.write(buf)
+
 def main():
     # Add build flags
     t = time.time()
     build_time_flag = '-D_BUILD_TIME_=0x{:x}'.format(int(t))
+
     name = env.GetProjectOption("name")
     display_name = env.GetProjectOption("display_name")
+    require_fw_info = env.GetProjectOption("require_fw_info")
 
     version = get_changelog_version(name)
     major_flag = '-D_MAJOR_={}'.format(version[0])
     minor_flag = '-D_MINOR_={}'.format(version[1])
     patch_flag = '-D_PATCH_={}'.format(version[2])
+
+    write_firmware_info(display_name, *version, int(t))
 
     host_prefix_flag = "-D__HOST_PREFIX__=\\\"{}\\\"".format(name)
 
@@ -160,7 +186,8 @@ def main():
             firmware_name_flag,
             major_flag,
             minor_flag,
-            patch_flag
+            patch_flag,
+            '-D__REQUIRE_FW_INFO__={}'.format(require_fw_info)
         ]
     )
 

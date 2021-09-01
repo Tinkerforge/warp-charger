@@ -36,6 +36,7 @@ env.AddPostAction(
         "python3", "merge_bins.py",
         "0x1000", "$BUILD_DIR/../../../bootloader_dio_40m.bin",
         "0x8000", "$BUILD_DIR/partitions.bin",
+        "0xd000", "$BUILD_DIR/../../../build/fw_info.bin",
         "0xe000", "$BUILD_DIR/../../../boot_app0.bin",
         "0x10000", "$BUILD_DIR/${PROGNAME}.bin",
         "$BUILD_DIR/../../../build/{}_merged.bin".format(defines.get("_FIRMWARE_NAME_"))
