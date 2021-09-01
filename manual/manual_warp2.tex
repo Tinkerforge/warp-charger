@@ -158,7 +158,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	auch Einstellungen an der Wallbox vornehmen. Du kannst über die Webseite 
 	zum Beispiel das Ladeverhalten und die maximale Ladeleistung konfigurieren.
 	Per MQTT- und HTTP-API kannst du auch aus der Ferne den aktuellen Zustand 
-	der Wallbox auslesen und die Wallbox fernsteuern. 
+	der Wallbox auslesen und sie fernsteuern.
 	Die Einbindung der Wallbox in andere System ist somit möglich.
 
 	Zusätzlich bietet dir der WARP2 Charger Smart die Möglichkeit Ladevorgänge
@@ -243,8 +243,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	permanente Erdungsüberwachung (PE). Ist die Erdung unterbrochen, so geht die
 	Wallbox in einen Fehlerzustand. Als Letztes prüft die Box bei jedem
 	Schaltvorgang, ob das verbaute Schütz korrekt schaltet. Sollte das
-	Schütz defekt sein (schaltet nicht an oder ab), geht die Wallbox
-	ebenfalls in einen Fehlerzustand.
+	Schütz nicht mehr korrekt schalten, geht die Wallbox ebenfalls in einen Fehlerzustand.
 
 	\newpage
 	\section{Montage und Installation}
@@ -312,7 +311,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 	\gfx{./img_warp2/resized/warp_cable_cut_ready}
 
-	Die Zuleitung muss für alle Varianten, wie auf dem Foto zuvor abgebildet,
+	Die Zuleitung muss für alle Varianten wie auf dem Foto oben abgebildet
 	angefertigt werden. Wir empfehlen, das Kabel dafür auf einer Länge von
 	\SI{23}{\centi\meter} abzumanteln. Für die Klemmen wird eine
 	Abisolierlänge von 10 bis \SI{12}{\milli\meter} vorgegeben.
@@ -422,8 +421,8 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		\gfx{./img_warp2/resized/warp2_rj45_2_600}
 	\end{enumerate}
 
-	\hint{Es sollte der mitgelieferte RJ45-Stecker verwendet werden. Werkzeuglose RJ45-Stecker können auf Grund der geringen
-	Platzverhältnisse im Steckeraufsatz nicht verwendet werden.}
+	\hint{Es sollte der mitgelieferte RJ45-Stecker verwendet werden. Werkzeuglose RJ45-Stecker können auf Grund des begrenzten
+	Platzes im Steckeraufsatz nicht verwendet werden.}
 	Zum Schluss wird der RJ45-Stecker in die Box eingesteckt und die Überwurfmutter
 	handfest angezogen.
 
@@ -436,7 +435,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	nach den selben Vorschriften notwendig.
 
 	Die Wallbox führt in den ersten ca. 12 Sekunden nach dem Herstellen der Stromversorgung
-	eine DC-Fehlerstromerkennungskalibrierung durch (\enquote{Wallbox-LED blinkt sehr schnell}).
+	eine DC-Fehlerstromerkennungskalibrierung durch (siehe \ref{fast_blink} \enquote{Wallbox-LED blinkt sehr schnell}).
 	Ein Ladevorgang kann erst nach dieser Kalibrierung beginnen.
 
 	Bei der Messung des Isolationswiderstands wird für L1 ein niedrigerer Wert
@@ -549,7 +548,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	Außerdem kann der Access Point komplett deaktiviert sein.
 	\hint{Wir empfehlen, den Access Point nie komplett zu deaktivieren, da sonst bei einer
 		fehlgeschlagenen Verbindung zu einem anderen Netzwek das Webinterface nicht mehr erreicht
-		werden kann. Die einzige Möglichkeit das Interface wieder zu erreichen ist dann ein Zurücksetzen auf Werkszustand, siehe \ref{reset}}
+		werden kann. Die einzige Möglichkeit das Interface wieder zu erreichen ist dann ein Zurücksetzen auf Auslieferungszustand, siehe \ref{reset}}
 	Der Modus des Access Points und weitere Einstellungen wie Netzwerkname, Passphrase usw. können
 	auf der Unterseite \enquote{WLAN-Access-Point} konfiguriert werden.
 
@@ -625,7 +624,6 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	\gfx{./img_warp2/resized/web_event_log}
 	Das Ereignis-Log zeichnet relevante Informationen des Systemstarts, sowie WLAN- und MQTT-Verbindungsabbrüche und Ladefehler auf.
 	Falls Probleme mit der Wallbox auftreten, kannst du diese mit dem Log diagnostizieren.
-	Das Log wird wenn die Unterseite geöffnet wird und danach periodisch aktualisiert.
 	Falls du ein Problem mit der Wallbox an uns melden möchtest, kannst du das Ereignis-Log,
 	sowie einen Debug-Report abrufen, die uns helfen das Problem zu verstehen und zu lösen.
 
@@ -738,7 +736,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	oder das Ladekabel vom Fahrzeug getrennt wird.
 
 	\newpage
-	\section{Lastmanagement zwischen WARP Chargern}\label{charge_manager}
+	\section{Lastmanagement\,zwischen\,WARP Chargern}\label{charge_manager}
 	\hint{In der Auslieferungsfirmware 1.0.0 ist die aktuelle Beta-Version des Lastmanagements enthalten.
 	Die fertige Version folgt mit einem Firmware-Update.}
 	Mit dem Lastmanagement ist es möglich, einen verfügbaren Gesamt-Ladestrom zwischen WARP Chargern aufzuteilen.
@@ -750,7 +748,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	Durch das Lastmanagement kontrollierte Wallboxen laden nur,
 	wenn ihnen von außen ein erlaubter Ladestrom mitgeteilt wird. Wenn eine gewisse Zeit lang
 	kein erlaubter Ladestrom erhalten wurde, stoppt die Wallbox die Ladung automatisch.
-	Der Lastmanager, stoppt seinerseits das Laden an allen kontrollierten Wallboxen,
+	Der Lastmanager stoppt seinerseits das Laden an allen kontrollierten Wallboxen,
 	wenn eine Box nicht mehr reagiert oder erreicht wird. Damit wird sichergestellt,
 	dass der verfügbare Strom nicht überschritten wird.
 
@@ -788,7 +786,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 		\item Das innere Anschlusskabel zum Deckel wurde nicht korrekt aufgesteckt (zum Beispiel am Taster \SI{180}{\degree} verdreht).
 	\end{itemize}
 
-	\subsubsection*{Wallbox-LED blinkt sehr schnell}
+	\subsubsection*{Wallbox-LED blinkt sehr schnell}\label{fast_blink}
 	Nach dem Einschalten der Stromversorgung kalibriert die Wallbox die
 	DC-Fehlerstromerkennung. Nach ca. 10 Sekunden sollte die Kalibrierung
 	abgeschlossen sein und die Wallbox-LED sollte dauerhaft leuchten
@@ -796,7 +794,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 	\subsubsection*{Wallbox-LED blinkt 2x im Intervall \\ Webinterface zeigt Schalterfehler}
 	Die Wallbox wurde nicht korrekt installiert. Die Schalter-Einstellung des Ladecontrollers ist
-	noch auf dem Werkszustand. Siehe \fullref{ladestrom_schalter}.
+	noch auf dem Auslieferungszustand. Siehe \fullref{ladestrom_schalter}.
 
 	\begin{minipage}{\linewidth} %use minipage to control footnote placement
 		\subsubsection*{Wallbox-LED blinkt 3x im Intervall \\ Webinterface zeigt DC-Fehler}
@@ -828,7 +826,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	\begin{itemize}
 		\item Es liegt ein Fehler beim Ladekabel vor (Kurzschluss, verschmutze / feuchte
 		      Kontakte o.ä.). Die Wallbox ist dann sofort außer Betrieb zu nehmen und
-		      fachmännisch in Stand zu setzen.
+		      in Stand zu setzen.
 		\item Es liegt ein technischer Defekt beim Fahrzeug vor.
 		\item Es liegt ein technischer Defekt bei der Wallbox vor (Ladecontroller defekt o.ä.)
 		\item Das Fahrzeug fordert den IEC 61851-1 Status \enquote{D – Laden mit Belüftung}
@@ -887,7 +885,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 
 	\section{Entsorgung}
 	\begin{minipage}{0.35\textwidth}
-		Die Wallbox und die Verpackung ist bei Gebrauchsende ordnungsgemäß zu
+		Wallbox und Verpackung sind bei Gebrauchsende ordnungsgemäß zu
 		entsorgen. Altgeräte dürfen nicht über den Hausmüll entsorgt werden.
 	\end{minipage}\hfill
 	\begin{minipage}{0.1\textwidth}
