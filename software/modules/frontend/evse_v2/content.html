@@ -290,16 +290,16 @@
 
     <div class="form-group row">
         <div class="col-lg-3 col-xl-2">
-            <label for="evse_gpio_enable" class="col-form-label">
-                <span class="form-label pr-2" data-i18n="evse.content.gpio_enable"></span>
-                <span class="text-muted" data-i18n="evse.content.gpio_enable_muted"></span>
+            <label for="evse_gpio_shutdown" class="col-form-label">
+                <span class="form-label pr-2" data-i18n="evse.content.gpio_shutdown"></span>
+                <span class="text-muted" data-i18n="evse.content.gpio_shutdown_muted"></span>
             </label>
         </div>
         <div class="col-lg-9 col-xl-6">
-            <select id="evse_gpio_enable" class="custom-select">
-                <option value="0" data-i18n="evse.content.gpio_enable_not_configured"></option>
-                <option value="1" data-i18n="evse.content.gpio_enable_active_open"></option>
-                <option value="2" data-i18n="evse.content.gpio_enable_active_close"></option>
+            <select id="evse_gpio_shutdown" class="custom-select">
+                <option value="0" data-i18n="evse.content.gpio_shutdown_not_configured"></option>
+                <option value="1" data-i18n="evse.content.gpio_shutdown_on_open"></option>
+                <option value="2" data-i18n="evse.content.gpio_shutdown_on_close"></option>
             </select>
         </div>
     </div>
@@ -314,7 +314,7 @@
         <div class="col-lg-9 col-xl-6">
             <select id="evse_gpio_in" class="custom-select">
                 <option value="0" data-i18n="evse.content.not_configured"></option>
-                <option value="1" data-i18n="evse.content.todo"></option>
+                <option value="1" data-i18n="evse.content.todo" disabled></option>
             </select>
         </div>
     </div>
@@ -328,8 +328,9 @@
         </div>
         <div class="col-lg-9 col-xl-6">
             <select id="evse_gpio_out" class="custom-select">
-                <option value="0" data-i18n="evse.content.not_configured"></option>
-                <option value="1" data-i18n="evse.content.todo"></option>
+                <option value="0" data-i18n="evse.content.gpio_out_low"></option>
+                <option value="1" data-i18n="evse.content.gpio_out_high"></option>
+                <option value="2" data-i18n="evse.content.todo" disabled></option>
             </select>
         </div>
     </div>

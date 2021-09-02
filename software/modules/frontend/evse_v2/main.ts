@@ -252,15 +252,31 @@ function reset_dc_fault_current() {
 }
 
 interface EVSEGPIOConfiguration {
-    enable_input: number,
+    shutdown_input: number,
     input: number,
     output: number
 }
 
 function update_evse_gpio_configuration(g: EVSEGPIOConfiguration) {
-    $('#evse_gpio_enable').val(g.enable_input);
+    $('#evse_gpio_shutdown').val(g.shutdown_input);
     $('#evse_gpio_in').val(g.input);
     $('#evse_gpio_out').val(g.output);
+}
+
+function save_evse_gpio_configuration() {
+    let payload: EVSEGPIOConfiguration = {
+        shutdown_input: parseInt($('#evse_gpio_shutdown').val().toString()),
+        input: parseInt($('#evse_gpio_in').val()),
+        output: parseInt($('#evse_gpio_out').val())
+    }
+
+    $.ajax({
+        url: '/evse/gpio_configuration_update',
+        method: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(payload),
+        error: (xhr, status, error) => util.add_alert("evse_gpio_configuration_failed", "alert-danger", __("evse.script.gpio_configuration_failed"), error + ": " + xhr.responseText),
+    });
 }
 
 interface EVSEButtonConfiguration {
@@ -445,6 +461,10 @@ export function init() {
             error: (xhr, status, error) => util.add_alert("evse_managed_update_failed", "alert-danger", __("evse.script.save_failed"), error + ": " + xhr.responseText)
         });
     });
+
+    $('#evse_gpio_shutdown').on("change", save_evse_gpio_configuration);
+    $('#evse_gpio_in').on("change", save_evse_gpio_configuration);
+    $('#evse_gpio_out').on("change", save_evse_gpio_configuration);
 
     $("#evse_reset").on("click", () => $.ajax({
         url: '/evse/reset',
@@ -653,17 +673,19 @@ export function getTranslation(lang: string) {
                     "abort": "Abbrechen",
                     "reset": "Zurücksetzen",
 
-                    "gpio_enable": "Abschalteingang",
-                    "gpio_enable_muted": "<a href=\"https://www.warp-charger.com/#documents\">siehe Betriebsanleitung für Details</a>",
-                    "gpio_enable_not_configured": "Nicht konfiguriert",
-                    "gpio_enable_active_open": "Abschalten wenn geschlossen",
-                    "gpio_enable_active_close": "Abschalten wenn geöffnet",
+                    "gpio_shutdown": "Abschalteingang",
+                    "gpio_shutdown_muted": "<a href=\"https://www.warp-charger.com/#documents\">siehe Betriebsanleitung für Details</a>",
+                    "gpio_shutdown_not_configured": "Nicht konfiguriert",
+                    "gpio_shutdown_on_open": "Abschalten wenn geschlossen",
+                    "gpio_shutdown_on_close": "Abschalten wenn geöffnet",
                     "not_configured": "Nicht konfiguriert",
-                    "todo": "TODO",
+                    "todo": "Ideen bzw. Wünsche? Schreib eine Mail an info@tinkerforge.com",
                     "gpio_in": "Konfigurierbarer Eingang",
-                    "gpio_in_muted": " ",
+                    "gpio_in_muted": "kann als GPIO 16 gelesen werden",
                     "gpio_out": "Konfigurierbarer Ausgang",
-                    "gpio_out_muted": " ",
+                    "gpio_out_muted": "<a href=\"https://de.wikipedia.org/wiki/Open-Collector-Ausgang\">Open-Collector-Ausgang</a>",
+                    "gpio_out_high": "Hochohmig",
+                    "gpio_out_low": "Verbunden mit Masse",
 
                     "button_configuration": "Tastereinstellung",
                     "button_configuration_muted": "Aktion, die bei Druck des Tasters ausgeführt wird",
@@ -705,7 +727,8 @@ export function getTranslation(lang: string) {
                     "incoming": "Zuleitung",
 
                     "save_failed": "(De-)Aktivieren des Lastmanagements fehlgeschlagen",
-                    "reset_dc_fault_current_failed": "Zurücksetzen des DC-Fehlerstromschutzmoduls fehlgeschlagen"
+                    "reset_dc_fault_current_failed": "Zurücksetzen des DC-Fehlerstromschutzmoduls fehlgeschlagen",
+                    "gpio_configuration_failed": "Speichern der GPIO-Konfiguration fehlgeschlagen"
                 }
             }
         },

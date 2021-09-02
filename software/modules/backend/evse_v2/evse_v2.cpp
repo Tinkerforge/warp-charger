@@ -143,7 +143,7 @@ EVSEV2::EVSEV2()
     });
 
     evse_gpio_configuration = Config::Object({
-        {"enable_input", Config::Uint8(0)},
+        {"shutdown_input", Config::Uint8(0)},
         {"input", Config::Uint8(0)},
         {"output", Config::Uint8(0)}
     });
@@ -334,10 +334,10 @@ String EVSEV2::get_evse_monitor_header() {
             "low_level_state,led,cp_pwm,adc_0,adc_1,adc_2,adc_3,adc_4,voltage_0,voltage_1,voltage_2,voltage_3,voltage_4,resistances_0,resistances_1,"
             "hardware_cfg,jumper,has_lock_switch,"
             "max_charging_current,configured,incoming,outgoing,"
-            "auto_start, auto_start,"
+            "auto_start,auto_start,"
             "energy_meter_values,power,energy_rel,energy_abs,"
             "dc_fault_current_state,dc_fault,"
-            "gpio_cfg, enable_input_cfg, input_cfg, output_cfg,"
+            "gpio_cfg,shutdown_input_cfg,input_cfg,output_cfg,"
             "gpios,gpio_0,gpio_1,gpio_2,gpio_3,gpio_4,gpio_5,gpio_6,gpio_7,gpio_8,gpio_9,gpio_10,gpio_11,gpio_12,gpio_13,gpio_14,gpio_15,gpio_16,gpio_17,gpio_18,gpio_19,gpio_20,gpio_21,gpio_22,gpio_23\n";
 }
 
@@ -371,7 +371,7 @@ String EVSEV2::get_evse_monitor_line() {
     uint8_t input, output;
 
     char line[300] = {0};
-    snprintf(line, sizeof(line)/sizeof(line[0]), "%lu,,%u,%u,%u,%u,%u,%u,%u,%u,%lu,%lu,,%u,%u,%u,%u,%u,%u,%u,%d,%d,%d,%d,%d,%u,%u,,%u,%c,,%u,%u,%u,%u,,%c,,%lu,%lu,%lu,,%u,,%u,%u,,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,\n",
+    snprintf(line, sizeof(line)/sizeof(line[0]), "%lu,,%u,%u,%u,%u,%u,%u,%u,%u,%lu,%lu,,%u,%u,%u,%u,%u,%u,%u,%d,%d,%d,%d,%d,%u,%u,,%u,%c,,%u,%u,%u,%u,,%c,,%lu,%lu,%lu,,%u,,%u,%u,%u,,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,\n",
         millis(),
 
         evse_state.get("iec61851_state")->asUint(),
@@ -416,7 +416,7 @@ String EVSEV2::get_evse_monitor_line() {
 
         evse_dc_fault_current_state.get("state")->asUint(),
 
-        evse_gpio_configuration.get("enable_input")->asUint(),
+        evse_gpio_configuration.get("shutdown_input")->asUint(),
         evse_gpio_configuration.get("input")->asUint(),
         evse_gpio_configuration.get("output")->asUint(),
 
@@ -476,7 +476,7 @@ void EVSEV2::register_urls()
 
     api.addState("evse/gpio_configuration", &evse_gpio_configuration, {}, 1000);
     api.addCommand("evse/gpio_configuration_update", &evse_gpio_configuration, {}, [this](){
-        is_in_bootloader(tf_evse_v2_set_gpio_configuration(&evse, evse_gpio_configuration.get("enable_input")->asUint(),
+        is_in_bootloader(tf_evse_v2_set_gpio_configuration(&evse, evse_gpio_configuration.get("shutdown_input")->asUint(),
                                                                   evse_gpio_configuration.get("input")->asUint(),
                                                                   evse_gpio_configuration.get("output")->asUint()));
     }, true);
@@ -817,10 +817,10 @@ void EVSEV2::update_evse_gpio_configuration() {
     if(!initialized)
         return;
 
-    uint8_t enable_input, input, output;
+    uint8_t shutdown_input, input, output;
 
     int rc = tf_evse_v2_get_gpio_configuration(&evse,
-        &enable_input,
+        &shutdown_input,
         &input,
         &output);
 
@@ -829,7 +829,7 @@ void EVSEV2::update_evse_gpio_configuration() {
         return;
     }
 
-    evse_gpio_configuration.get("enable_input")->updateUint(enable_input);
+    evse_gpio_configuration.get("shutdown_input")->updateUint(shutdown_input);
     evse_gpio_configuration.get("input")->updateUint(input);
     evse_gpio_configuration.get("output")->updateUint(output);
 }
