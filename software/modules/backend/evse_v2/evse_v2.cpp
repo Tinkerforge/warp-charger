@@ -165,6 +165,9 @@ EVSEV2::EVSEV2()
     evse_button_configuration = Config::Object({
         {"button", Config::Uint8(2)}
     });
+
+    evse_reflash = Config::Null();
+    evse_reset = Config::Null();
 }
 
 void EVSEV2::setup()
@@ -527,6 +530,17 @@ void EVSEV2::register_urls()
     server.on("/evse/monitor_line", HTTP_GET, [this](WebServerRequest request){
         request.send(200, "text/csv", this->get_evse_monitor_line().c_str());
     });
+
+    api.addCommand("evse/reflash", &evse_reflash, {}, [this](){
+        char uid[7] = {0};
+        find_uid_by_did(&hal, TF_EVSE_V2_DEVICE_IDENTIFIER, uid);
+        int result = ensure_matching_firmware(&hal, uid, "EVSE 2.0", "EVSE 2.0", evse_v2_firmware_version, evse_v2_bricklet_firmware_bin, evse_v2_bricklet_firmware_bin_len, &logger, true);
+    }, true);
+
+    api.addCommand("evse/reset", &evse_reset, {}, [this](){
+        tf_evse_v2_reset(&evse);
+        initialized = false;
+    }, true);
 }
 
 void EVSEV2::loop()

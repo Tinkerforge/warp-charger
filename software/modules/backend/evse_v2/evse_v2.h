@@ -79,6 +79,8 @@ private:
     Config evse_managed;
     Config evse_managed_update;
     Config evse_managed_current;
+    Config evse_reflash;
+    Config evse_reset;
 
     uint32_t last_current_update = 0;
     bool shutdown_logged = false;

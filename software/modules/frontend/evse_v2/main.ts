@@ -445,6 +445,20 @@ export function init() {
             error: (xhr, status, error) => util.add_alert("evse_managed_update_failed", "alert-danger", __("evse.script.save_failed"), error + ": " + xhr.responseText)
         });
     });
+
+    $("#evse_reset").on("click", () => $.ajax({
+        url: '/evse/reset',
+        method: 'PUT',
+        contentType: 'application/json',
+        data: "null"})
+    );
+
+    $("#evse_reflash").on("click", () => $.ajax({
+        url: '/evse/reflash',
+        method: 'PUT',
+        contentType: 'application/json',
+        data: "null"})
+    );
 }
 
 //From sdm72dm/main.ts
@@ -656,7 +670,12 @@ export function getTranslation(lang: string) {
                     "button_configuration_deactivated": "Nichts",
                     "button_configuration_start_charging": "Ladestart",
                     "button_configuration_stop_charging": "Ladestop",
-                    "button_configuration_start_and_stop_charging": "Ladestart bzw. Ladestop"
+                    "button_configuration_start_and_stop_charging": "Ladestart bzw. Ladestop",
+
+                    "reset_description": "EVSE neustarten / neuflashen",
+                    "reset_description_muted": "",
+                    "reset_evse": "Neustart",
+                    "reflash_evse": "Neu flashen",
                 },
                 "script": {
                     "error_code": "Fehlercode",
