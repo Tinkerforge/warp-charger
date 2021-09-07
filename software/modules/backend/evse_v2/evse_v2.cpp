@@ -37,6 +37,7 @@ extern WebServer server;
 
 extern API api;
 extern bool firmware_update_allowed;
+extern bool factory_reset_requested;
 
 EVSEV2::EVSEV2()
 {
@@ -176,6 +177,22 @@ void EVSEV2::setup()
     if(!evse_found)
         return;
 
+    bool gpio[24];
+
+    int rc = tf_evse_v2_get_low_level_state(&evse,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        gpio);
+
+    if (rc == TF_E_OK && gpio[6]) {
+        tf_evse_v2_set_indicator_led(&evse, 1001, 2620 * 2, nullptr);
+        factory_reset_requested = true;
+        firmware_update.loop();
+    }
+
     task_scheduler.scheduleWithFixedDelay("update_evse_state", [this](){
         update_evse_state();
     }, 0, 1000);
@@ -216,38 +233,6 @@ void EVSEV2::setup()
     task_scheduler.scheduleWithFixedDelay("update_evse_managed", [this](){
         update_evse_managed();
     }, 0, 1000);
-
-#ifdef MODULE_CM_NETWORKING_AVAILABLE
-    cm_networking.register_client([this](uint16_t current){
-        set_managed_current(current);
-    });
-
-    task_scheduler.scheduleWithFixedDelay("evse_send_cm_networking_client", [this](){
-        cm_networking.send_client_update(
-            evse_state.get("iec61851_state")->asUint(),
-            evse_state.get("vehicle_state")->asUint(),
-            evse_state.get("error_state")->asUint(),
-            evse_state.get("charge_release")->asUint(),
-            evse_state.get("uptime")->asUint(),
-            evse_state.get("allowed_charging_current")->asUint()
-        );
-    }, 1000, 1000);
-
-    task_scheduler.scheduleWithFixedDelay("evse_managed_current_watchdog", [this]() {
-        if (!deadline_elapsed(this->last_current_update + 30000))
-            return;
-        if (!evse_managed.get("managed")->asBool()) {
-            // Push back the next check for 30 seconds: If managed gets enabled,
-            // we want to wait 30 seconds before setting the current for the first time.
-            this->last_current_update = millis();
-            return;
-        }
-        if(!this->shutdown_logged)
-            logger.printfln("Got no managed current update for more than 30 seconds. Setting managed current to 0");
-        this->shutdown_logged = true;
-        is_in_bootloader(tf_evse_v2_set_managed_current(&evse, 0));
-    }, 1000, 1000);
-#endif
 }
 
 String EVSEV2::get_evse_debug_header() {
@@ -460,6 +445,39 @@ void EVSEV2::register_urls()
 {
     if (!evse_found)
         return;
+
+
+#ifdef MODULE_CM_NETWORKING_AVAILABLE
+    cm_networking.register_client([this](uint16_t current){
+        set_managed_current(current);
+    });
+
+    task_scheduler.scheduleWithFixedDelay("evse_send_cm_networking_client", [this](){
+        cm_networking.send_client_update(
+            evse_state.get("iec61851_state")->asUint(),
+            evse_state.get("vehicle_state")->asUint(),
+            evse_state.get("error_state")->asUint(),
+            evse_state.get("charge_release")->asUint(),
+            evse_state.get("uptime")->asUint(),
+            evse_state.get("allowed_charging_current")->asUint()
+        );
+    }, 1000, 1000);
+
+    task_scheduler.scheduleWithFixedDelay("evse_managed_current_watchdog", [this]() {
+        if (!deadline_elapsed(this->last_current_update + 30000))
+            return;
+        if (!evse_managed.get("managed")->asBool()) {
+            // Push back the next check for 30 seconds: If managed gets enabled,
+            // we want to wait 30 seconds before setting the current for the first time.
+            this->last_current_update = millis();
+            return;
+        }
+        if(!this->shutdown_logged)
+            logger.printfln("Got no managed current update for more than 30 seconds. Setting managed current to 0");
+        this->shutdown_logged = true;
+        is_in_bootloader(tf_evse_v2_set_managed_current(&evse, 0));
+    }, 1000, 1000);
+#endif
 
     api.addState("evse/state", &evse_state, {}, 1000);
     api.addState("evse/hardware_configuration", &evse_hardware_configuration, {}, 1000);
