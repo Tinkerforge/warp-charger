@@ -31,6 +31,8 @@
 #include "bindings/bricklet_evse_v2.h"
 #endif
 
+#include "nfc_firmware.h"
+
 #define TAG_LIST_LENGTH 8
 #define AUTHORIZED_TAG_LIST_LENGTH 8
 
@@ -77,6 +79,11 @@ NFC::NFC() {
 }
 
 bool NFC::setup_nfc() {
+    int result = ensure_matching_firmware(&hal, uid, "NFC", "NFC", nfc_firmware_version, nfc_bricklet_firmware_bin, nfc_bricklet_firmware_bin_len, &logger);
+    if(result != 0) {
+        return false;
+    }
+
     int rc = TF_E_OK;
     rc = tf_nfc_create(&nfc, uid, &hal);
     if(rc != TF_E_OK)
