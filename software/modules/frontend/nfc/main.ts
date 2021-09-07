@@ -215,7 +215,7 @@ outer_loop:
 
     for(let i = 0; i < auth_seen_tags.length; ++i) {
         $(`#nfc_authorized_tag_${auth_seen_ids[i]}_last_seen`).prop("style",  "");
-        $(`#nfc_authorized_tag_${auth_seen_ids[i]}_last_seen`).text(__("nfc.content.last_seen") + util.format_timespan(Math.floor(auth_seen_tags[i].last_seen / 1000)));
+        $(`#nfc_authorized_tag_${auth_seen_ids[i]}_last_seen`).text(__("nfc.content.last_seen") + util.format_timespan(Math.floor(auth_seen_tags[i].last_seen / 1000)) + __("nfc.content.last_seen_suffix"));
     }
 
     for (let i = 0; i < current_nfc_config.authorized_tags.length; ++i) {
@@ -243,7 +243,7 @@ outer_loop:
     for(let i = 0; i < unauth_tag_list_length; ++i) {
         $(`#nfc_seen_tag_${i}_id`).text(toHexBytes(unauth_seen_tags[i].tag_id));
         $(`#nfc_seen_tag_${i}_type`).text(__(`nfc.content.type_${unauth_seen_tags[i].tag_type}`));
-        $(`#nfc_seen_tag_${i}_last_seen`).text(__("nfc.content.last_seen") + util.format_timespan(Math.floor(unauth_seen_tags[i].last_seen / 1000)));
+        $(`#nfc_seen_tag_${i}_last_seen`).text(__("nfc.content.last_seen") + util.format_timespan(Math.floor(unauth_seen_tags[i].last_seen / 1000)) + __("nfc.content.last_seen_suffix"));
 
         $(`#nfc_seen_tag_${i}`).on("click", () => {
             $(`#nfc_config_tag_new_tag_id`).val(toHexBytes(unauth_seen_tags[i].tag_id));
@@ -329,12 +329,7 @@ export function getTranslation(lang: string) {
                 },
                 "content": {
                     "nfc": "NFC-Freischaltung",
-                    "state": "State",
-                    "state_muted": " ",
-                    "config": "Config",
-                    "config_muted": " ",
-                    "seen_tags": "Seen Tags",
-                    "seen_tags_muted": " ",
+
                     "require_tag_to_start": "Start mit Tag",
                     "require_tag_to_start_desc": "Wenn aktiviert, wird ein berechtigtes Tag zum Starten einer Ladung benötigt. Über das Webinterface kann weiterhin ohne Tag geladen werden.",
                     "require_tag_to_stop": "Stop mit Tag",
@@ -351,6 +346,7 @@ export function getTranslation(lang: string) {
                     "add_tag_modal_abort": "Verwerfen",
                     "add_tag_modal_save": "Hinzufügen",
                     "last_seen": "Erkannt vor ",
+                    "last_seen_suffix": util.emptyText(),
                     "type_0": "Mifare Classic",
                     "type_1": "NFC Forum Typ 1",
                     "type_2": "NFC Forum Typ 2",
@@ -367,7 +363,8 @@ export function getTranslation(lang: string) {
                     "add_tag": "Tag hinzufügen",
                     "tag_name": "Tag-Name",
                     "tag_type": "Tag-Typ",
-                    "last_seen_unknown": "placeholder"
+                    "last_seen_unknown": "placeholder",
+                    "save_failed": "Aktualisieren der NFC-Einstellungen fehlgeschlagen",
                 }
             }
         },
@@ -380,42 +377,42 @@ export function getTranslation(lang: string) {
                     "nfc": "NFC"
                 },
                 "content": {
-                    "nfc": "NFC",
-                    "state": "State",
-                    "state_muted": " ",
-                    "config": "Config",
-                    "config_muted": " ",
-                    "seen_tags": "Seen Tags",
-                    "seen_tags_muted": " ",
+                    "nfc": "NFC Unlock",
+                    "require_tag_to_start": "Start with tag",
+                    "require_tag_to_start_desc": "If enabled, an authorized tag is required to start charging. The web interface can still be used to charge without tag.",
+                    "require_tag_to_stop": "Stop with tag",
+                    "require_tag_to_stop_desc": "If enabled, an authorized tag is required to stop charging. The web interface cann still be used to stop charging. <b>Warning: The stop function of the wallbox button will be deactivated!</b>",
+                    "warp1_require_tag_to_stop_desc": "If enabled, an authorized tag is required to stop charging. The web interface cann still be used to stop charging. <b>Warning: The stop function of the wallbox button can not be deactivated for WARP 1 chargers!</b>",
+                    "save": "Save",
+                    "authorized_tags": "Authorized tags",
+
+                    "add_tag_modal_title": "Add authorized tag",
+                    "add_tag_modal_seen_tags": "Last seen tags",
+                    "add_tag_modal_name": "Tag name",
+                    "add_tag_modal_tag_id": "Tag ID",
+                    "add_tag_modal_tag_type": "Tag type",
+                    "add_tag_modal_abort": "Discard",
+                    "add_tag_modal_save": "Add",
+                    "last_seen": "Seen ",
+                    "last_seen_suffix": " ago",
+                    "type_0": "Mifare Classic",
+                    "type_1": "NFC Forum Type 1",
+                    "type_2": "NFC Forum Type 2",
+                    "type_3": "NFC Forum Type 3",
+                    "type_4": "NFC Forum Type 4",
+                    "add_tag_description": "Hold the new tag at the wallbox. Tag ID and type can also be typed in manually.",
+
+                    "reboot_title": "Restart to apply configuration",
+                    "reboot_content": "The modified NFC configuration will only be applied after a restart. Reboot now?",
+                    "abort": "Abort",
+                    "reboot": "Reboot",
                 },
                 "script": {
-                    "error_code": "Error code",
-                    "charging_for": "Charging for",
-                    "last_charge_took": "Last charge took",
-                    "set_charging_current_failed": "Failed to set charging current",
-                    "auto_start_charging_update": "Failed to set auto charge.",
-                    "start_charging_failed": "Failed to start charging",
-                    "stop_charging_failed": "Failed to stop charging",
-                    "tab_close_warning": "Charge log capture will be aborted if this tab is closed.",
-                    "loading_debug_report": "Loading debug report",
-                    "loading_debug_report_failed": "Loading debug reprot failed",
-                    "loading_event_log": "Loading event log",
-                    "loading_event_log_failed": "Loading event log failed",
-                    "starting_debug": "Starting charge log capture",
-                    "starting_debug_failed": "Starting charge log capture failed.",
-                    "debug_running": "Capturing. Don't close tab!",
-                    "debug_stop_failed": "Stopping charge log capture failed",
-                    "debug_stopped": "Stopped charge log capture",
-                    "debug_done": "Done",
-
-                    "by": "by",
-                    "configuration": "configuration",
-                    "management": "charge management",
-                    "outgoing": "charging cable",
-                    "incoming": "supply cable",
-
-                    "save_failed": "(De)Activating the charge mananagement failed",
-                    "managed_current_ignored": "ignored; Charge management deactivated",
+                    "add_tag": "Add tag",
+                    "tag_name": "Tag name",
+                    "tag_type": "Tag type",
+                    "last_seen_unknown": "placeholder",
+                    "save_failed": "Failed to update the NFC configuration",
                 }
             }
         }

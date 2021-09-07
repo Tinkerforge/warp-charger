@@ -653,7 +653,7 @@ export function getTranslation(lang: string) {
                     "connected": "Connected",
                     "charging": "Charging",
                     "error": "Error",
-                    "configured_charging_current": "Configurerd charging current",
+                    "configured_charging_current": "Configured charging current",
                     "allowed_charging_current": "Allowed charging current",
                     "charging_current_minimum": "6 A",
                     "charging_current_maximum": "Max",

@@ -242,7 +242,7 @@ function update_charge_manager_config(config: ChargeManagerConfig, force: boolea
         charger_configs += `<div class="col mb-4">
         <div class="card h-100">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <span class="h5" style="margin-bottom: 0">Wallbox hinzufügen</span>
+                <span class="h5" style="margin-bottom: 0">${__("charge_manager.script.add_wallbox")}</span>
                 <button type="button" class="btn btn-sm btn-outline-secondary" style="visibility: hidden;">
                         <span data-feather="trash-2"></span>
                 </button>
@@ -419,7 +419,6 @@ export function getTranslation(lang: string) {
                     "save": "Speichern",
                     "managed_boxes": "Kontrollierte Wallboxen",
                     "state": "Zustand",
-                    "charger": "Wallbox",
                     "last_update": "Letztes Update vor",
                     "uptime": "Laufzeit",
                     "supported_current": "Unterstützter Strom",
@@ -428,7 +427,6 @@ export function getTranslation(lang: string) {
                     "is_charging": "Lädt",
                     "last_sent_config": "Letzte Stromzuweisung vor",
                     "allocated_current": "zugeteilter Strom",
-                    "unchanged": "unverändert",
                     "low_level_state": "Low-Level-Zustand",
                     "low_level_state_show": "Anzeigen / Verstecken",
 
@@ -453,14 +451,16 @@ export function getTranslation(lang: string) {
                     "ampere_allocated": "Ampere zugeteilt",
                     "last_update_prefix": "Letztes Update vor ",
                     "last_update_suffix": " ",
-                    "save_failed": "Speichern der Lastmanager-Konfiguration fehlgeschlagen"
+                    "save_failed": "Speichern der Lastmanager-Konfiguration fehlgeschlagen",
+                    "set_available_current_failed": "Setzen des verfügbaren Stroms fehlgeschlagen",
+                    "add_wallbox": "Wallbox hinzufügen",
                 }
             }
         },
         "en": {
             "charge_manager": {
                 "status": {
-                    "charge_manager": "Charge Manager",
+                    "charge_manager": "Charge manager",
                     "not_configured": "Not configured",
                     "manager": "Active",
                     "error": "Error",
@@ -475,7 +475,6 @@ export function getTranslation(lang: string) {
                 "content": {
                     "charge_manager": "Charge Manager",
                     "state": "State",
-                    "charger": "Charger",
                     "last_update": "Last Update",
                     "uptime": "Uptime",
                     "supported_current": "Supported current",
@@ -515,7 +514,9 @@ export function getTranslation(lang: string) {
                     "ampere_allocated": "Ampere allocated",
                     "last_update_prefix": "Last update ",
                     "last_update_suffix": " ago",
-                    "save_failed": "Failed to save the charge manager configuration"
+                    "save_failed": "Failed to save the charge manager configuration",
+                    "set_available_current_failed": "Failed to set the available current",
+                    "add_wallbox": "Add wallbox",
                 }
             }
         }

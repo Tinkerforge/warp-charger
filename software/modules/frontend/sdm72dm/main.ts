@@ -527,8 +527,6 @@ export function getTranslation(lang: string) {
                     "energy_lifetime": "seit Herstellung des Stromzählers",
                     "phases_active": "Aktive Phasen",
                     "phases_active_desc": "L1, L2, L3",
-                    "phase_active": "Aktiv",
-                    "phase_inactive": "Inaktiv",
                     "detailed_values": "Details",
                     "detailed_values_show": "Anzeigen / Verstecken",
 
@@ -548,7 +546,7 @@ export function getTranslation(lang: string) {
                     "detailed_volt_amps_reactive_desc": "L1, L2, L3",
 
                     "detailed_power_factor": "Leistungs&shy;faktor",
-                    "detailed_power_factor_desc": "L1, L2, L3; The power factor has its sign adjusted to indicate the direction of the current. Positive refers to forward current, negative refers to reverse current.",
+                    "detailed_power_factor_desc": "L1, L2, L3; Das Vorzeichen des Leistungs&shy;faktors gibt die Richtung des Stromflusses an.",
 
                     "detailed_phase_angle": "Phasen&shy;verschiebung",
                     "detailed_phase_angle_desc": "L1, L2, L3",
@@ -559,7 +557,7 @@ export function getTranslation(lang: string) {
                     "detailed_average_line_current": "Durch&shy;schnitt&shy;licher Strom",
                     "detailed_average_line_current_desc": " ",
 
-                    "detailed_sum_of_line_currents": "Summe der Ströme",
+                    "detailed_sum_of_line_currents": "Summe der Phasenströme",
                     "detailed_sum_of_line_currents_desc": " ",
 
                     "detailed_total_system_power": "Gesamt&shy;wirk&shy;leistung",
@@ -706,7 +704,162 @@ export function getTranslation(lang: string) {
                     "power": "Power draw",
                     "energy": "Energy consumption",
                     "energy_since_reset": "since last reset",
-                    "energy_lifetime": "since manufactoring of the energy meter"
+                    "energy_lifetime": "since manufactoring of the energy meter",
+
+                    "phases_active": "Active phases",
+                    "phases_active_desc": "L1, L2, L3",
+                    "detailed_values": "Details",
+                    "detailed_values_show": "Show / Hide",
+
+                    "detailed_line_to_neutral_volts": "Voltage",
+                    "detailed_line_to_neutral_volts_desc": "to neutral; L1, L2, L3",
+
+                    "detailed_current": "Current",
+                    "detailed_current_desc": "L1, L2, L3",
+
+                    "detailed_power": "Active power",
+                    "detailed_power_desc": "L1, L2, L3",
+
+                    "detailed_volt_amps": "Apparent power",
+                    "detailed_volt_amps_desc": "L1, L2, L3",
+
+                    "detailed_volt_amps_reactive": "Reactive power",
+                    "detailed_volt_amps_reactive_desc": "L1, L2, L3",
+
+                    "detailed_power_factor": "Power factor",
+                    "detailed_power_factor_desc": "L1, L2, L3; The power factor has its sign adjusted to indicate the direction of the current. Positive refers to forward current, negative refers to reverse current.",
+
+                    "detailed_phase_angle": "Phase angle",
+                    "detailed_phase_angle_desc": "L1, L2, L3",
+
+                    "detailed_average_line_to_neutral_volts": "Average voltage",
+                    "detailed_average_line_to_neutral_volts_desc": "to neutral",
+
+                    "detailed_average_line_current": "Average current",
+                    "detailed_average_line_current_desc": " ",
+
+                    "detailed_sum_of_line_currents": "Sum of phase currents",
+                    "detailed_sum_of_line_currents_desc": " ",
+
+                    "detailed_total_system_power": "Total active power",
+                    "detailed_total_system_power_desc": " ",
+
+                    "detailed_total_system_volt_amps": "Total apparent power",
+                    "detailed_total_system_volt_amps_desc": " ",
+
+                    "detailed_total_system_var": "Total reactive power",
+                    "detailed_total_system_var_desc": " ",
+
+                    "detailed_total_system_power_factor": "Total power factor",
+                    "detailed_total_system_power_factor_desc": " ",
+
+                    "detailed_total_system_phase_angle": "Total phase angle",
+                    "detailed_total_system_phase_angle_desc": " ",
+
+                    "detailed_frequency_of_supply_voltages": "Frequency of supply voltage",
+                    "detailed_frequency_of_supply_voltages_desc": " ",
+
+                    "detailed_total_import_kwh": "Active energy (Import)",
+                    "detailed_total_import_kwh_desc": "transfered to vehicle",
+
+                    "detailed_total_export_kwh": "Active energy (Export)",
+                    "detailed_total_export_kwh_desc": "transfered from vehicle",
+
+                    "detailed_total_import_kvarh": "Reactive energy (Import)",
+                    "detailed_total_import_kvarh_desc": "transfered to vehicle",
+
+                    "detailed_total_export_kvarh": "Reactive energy (Export)",
+                    "detailed_total_export_kvarh_desc": "transfered from vehicle",
+
+                    "detailed_total_vah": "Total apparent power",
+                    "detailed_total_vah_desc": " ",
+
+                    "detailed_ah": "Transported electric charge",
+                    "detailed_ah_desc": " ",
+
+                    "detailed_total_system_power_demand": "Active power demand",
+                    "detailed_total_system_power_demand_desc": "Import - Export",
+
+                    "detailed_maximum_total_system_power_demand": "Maximum active power demand",
+                    "detailed_maximum_total_system_power_demand_desc": "",
+
+                    "detailed_total_system_va_demand": "Apparent power demand",
+                    "detailed_total_system_va_demand_desc": "Import - Export",
+
+                    "detailed_maximum_total_system_va_demand": "Maximum apparent power demand",
+                    "detailed_maximum_total_system_va_demand_desc": "",
+
+                    "detailed_neutral_current_demand": "Neutral current demand",
+                    "detailed_neutral_current_demand_desc": " ",
+
+                    "detailed_maximum_neutral_current_demand": "Maximum neutral current demand",
+                    "detailed_maximum_neutral_current_demand_desc": "",
+
+                    "detailed_line1_to_line2_volts": "L1 to L2 voltage",
+                    "detailed_line1_to_line2_volts_desc": " ",
+
+                    "detailed_line2_to_line3_volts": "L2 to L3 voltage",
+                    "detailed_line2_to_line3_volts_desc": " ",
+
+                    "detailed_line3_to_line1_volts": "L3 to L1 voltage",
+                    "detailed_line3_to_line1_volts_desc": " ",
+
+                    "detailed_average_line_to_line_volts": "Average voltage between phases",
+                    "detailed_average_line_to_line_volts_desc": " ",
+
+                    "detailed_neutral_current": "Neutral current",
+                    "detailed_neutral_current_desc": " ",
+
+                    "detailed_ln_volts_thd": "Voltage Total Harmonic Distortion (THD)",
+                    "detailed_ln_volts_thd_desc": "L1, L2, L3",
+
+                    "detailed_current_thd": "Current Total Harmonic Distortion (THD)",
+                    "detailed_current_thd_desc": "L1, L2, L3",
+
+                    "detailed_average_line_to_neutral_volts_thd": "Average voltage THD",
+                    "detailed_average_line_to_neutral_volts_thd_desc": " ",
+
+                    "detailed_current_demand": "Current demand",
+                    "detailed_current_demand_desc": "L1, L2, L3",
+
+                    "detailed_maximum_current_demand": "Maximum current demand",
+                    "detailed_maximum_current_demand_desc": "",
+
+                    "detailed_line1_to_line2_volts_thd": "Voltage THD L1 to L2",
+                    "detailed_line1_to_line2_volts_thd_desc": " ",
+
+                    "detailed_line2_to_line3_volts_thd": "Voltage THD L2 to L3",
+                    "detailed_line2_to_line3_volts_thd_desc": " ",
+
+                    "detailed_line3_to_line1_volts_thd": "Voltage THD L3 to L1",
+                    "detailed_line3_to_line1_volts_thd_desc": " ",
+
+                    "detailed_average_line_to_line_volts_thd": "Average voltage THD between phases",
+                    "detailed_average_line_to_line_volts_thd_desc": " ",
+
+                    "detailed_total_kwh_sum": "Sum of total active energies",
+                    "detailed_total_kwh_sum_desc": "Import + Export of all phases",
+
+                    "detailed_total_kvarh_sum": "Sum of total reactive energies",
+                    "detailed_total_kvarh_sum_desc": "Import + Export of all phases",
+
+                    "detailed_import_kwh": "Active energies (Import)",
+                    "detailed_import_kwh_desc": "L1, L2, L3; transfered to vehicle",
+
+                    "detailed_export_kwh": "Active energies (Export)",
+                    "detailed_export_kwh_desc": "L1, L2, L3; transfered from vehicle",
+
+                    "detailed_total_kwh": "Total active energies",
+                    "detailed_total_kwh_desc": "L1, L2, L3; Import + Export",
+
+                    "detailed_import_kvarh": "Reactive energies (Import)",
+                    "detailed_import_kvarh_desc": "L1, L2, L3; transfered to vehicle",
+
+                    "detailed_export_kvarh": "Reactive energies (Export)",
+                    "detailed_export_kvarh_desc": "L1, L2, L3; transfered from vehicle",
+
+                    "detailed_total_kvarh": "Total reactive energies",
+                    "detailed_total_kvarh_desc": "L1, L2, L3; Import + Export",
                 },
                 "script": {
                     "time": "Time of day",
