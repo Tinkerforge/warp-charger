@@ -333,8 +333,8 @@ export function getTranslation(lang: string) {
                     "require_tag_to_start": "Start mit Tag",
                     "require_tag_to_start_desc": "Wenn aktiviert, wird ein berechtigtes Tag zum Starten einer Ladung benötigt. Über das Webinterface kann weiterhin ohne Tag geladen werden.",
                     "require_tag_to_stop": "Stop mit Tag",
-                    "require_tag_to_stop_desc": "Wenn aktiviert wird ein berechtigtes Tag zum Stoppen einer Ladung benötigt. Über das Webinterface kann eine Ladung weiterhin ohne Tag abgebrochen werden. <b>Achtung: Die Stop-Funktion des Knopfes an der Wallbox wird damit deaktiviert!</b>",
-                    "warp1_require_tag_to_stop_desc": "Wenn aktiviert kann mit einem berechtigten Tag eine Ladung gestoppt werden. Über das Webinterface kann eine Ladung weiterhin ohne Tag abgebrochen werden. <b>Achtung: Die Stop-Funktion des Knopfes an der Wallbox ist bei WARP 1 nicht deaktivierbar!</b>",
+                    "require_tag_to_stop_desc": "Wenn aktiviert wird ein berechtigtes Tag zum Stoppen einer Ladung benötigt. Über das Webinterface kann eine Ladung weiterhin ohne Tag abgebrochen werden. <b>Achtung: Die Stop-Funktion des Tasters an der Wallbox wird damit deaktiviert!</b>",
+                    "warp1_require_tag_to_stop_desc": "Wenn aktiviert kann mit einem berechtigten Tag eine Ladung gestoppt werden. Über das Webinterface kann eine Ladung weiterhin ohne Tag abgebrochen werden. <b>Achtung: Die Stop-Funktion des Tasters an der Wallbox ist bei WARP 1 nicht deaktivierbar!</b>",
                     "save": "Speichern",
                     "authorized_tags": "Berechtigte Tags",
 
