@@ -85,7 +85,7 @@ function update_nfc_config(cfg: NFCConfig, force: boolean) {
                             </div>
                             <div class="form-group">
                                 <label for="nfc_authorized_tag_${i}_tag_type" class="form-label">${__("nfc.script.tag_type")}</label>
-                                <select id="nfc_authorized_tag_${i}_tag_type" class="form-control">
+                                <select id="nfc_authorized_tag_${i}_tag_type" class="form-control custom-select">
                                     <option value="0">${__("nfc.content.type_0")}</option>
                                     <option value="1">${__("nfc.content.type_1")}</option>
                                     <option value="2">${__("nfc.content.type_2")}</option>
@@ -281,6 +281,10 @@ export function init() {
 
     $('#nfc_save_tag').on("click", () => {
         let form = <HTMLFormElement>$('#nfc_add_tag_form')[0];
+        form.classList.add('was-validated');
+        event.preventDefault();
+        event.stopPropagation();
+
         if (form.checkValidity() === false) {
             return;
         }

@@ -82,10 +82,10 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                    <form id="nfc_add_tag_form">
+                    <form id="nfc_add_tag_form" class="needs-validation" novalidate>
                         <div class="form-group">
                             <label class="form-label" for="nfc_config_tag_new_name" data-i18n="nfc.content.add_tag_modal_name"></label>
-                            <input type="text" class="form-control" id="nfc_config_tag_new_name">
+                            <input type="text" class="form-control" id="nfc_config_tag_new_name" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="nfc_config_tag_new_name" data-i18n="nfc.content.add_tag_modal_seen_tags"></label>
@@ -96,11 +96,12 @@
                         <div class="form-group">
                             <label class="form-label" for="nfc_config_tag_new_tag_id" data-i18n="nfc.content.add_tag_modal_tag_id"></label>
                             <input type="text" class="form-control" id="nfc_config_tag_new_tag_id" minlength="8" maxlength="29"
-                            pattern="^([0-9a-fA-F]{2}:?){3,9}[0-9a-fA-F]{2}$">
+                            pattern="^([0-9a-fA-F]{2}:?){3,9}[0-9a-fA-F]{2}$" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="nfc_config_tag_new_tag_type" data-i18n="nfc.content.add_tag_modal_tag_type"></label>
-                            <select id="nfc_config_tag_new_tag_type" class="form-control">
+                            <select id="nfc_config_tag_new_tag_type" class="form-control custom-select" required>
+                                <option value="" data-i18n="nfc.content.select_type" disabled selected></option>
                                 <option value="0" data-i18n="nfc.content.type_0"></option>
                                 <option value="1" data-i18n="nfc.content.type_1"></option>
                                 <option value="2" data-i18n="nfc.content.type_2"></option>
