@@ -279,7 +279,12 @@ export function init() {
         save_nfc_config();
     }, false);
 
-    $('#nfc_save_tag').on("click", () => {
+    $('#nfc_save_tag').on("click", (event) => {
+        let btns = $('#nfc_seen_tags > button');
+        if ($('#nfc_config_tag_new_tag_id').val().toString() === "" && btns.length == 1) {
+            btns.first().trigger("click");
+        }
+
         let form = <HTMLFormElement>$('#nfc_add_tag_form')[0];
         form.classList.add('was-validated');
         event.preventDefault();
