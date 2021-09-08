@@ -64,6 +64,8 @@ bool EVSEV2Meter::setupEVSE() {
         return false;
     }
 
+    evse_v2.update_evse_energy_meter_state();
+
     if(!evse_v2.evse_energy_meter_state.get("available")->asBool()) {
         return false;
     }

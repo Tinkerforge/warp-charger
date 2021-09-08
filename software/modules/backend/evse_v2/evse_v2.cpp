@@ -615,8 +615,6 @@ void EVSEV2::setup_evse()
     }
 
     initialized = true;
-
-    update_evse_energy_meter_state();
 }
 
 void EVSEV2::update_evse_low_level_state() {

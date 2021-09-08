@@ -37,6 +37,9 @@ public:
 
     Config evse_energy_meter_state;
 
+    // Called in evse_v2_meter setup
+    void update_evse_energy_meter_state();
+
 private:
     void setup_evse();
     void update_evse_state();
@@ -45,7 +48,6 @@ private:
     void update_evse_auto_start_charging();
     void update_evse_managed();
     void update_evse_energy_meter_values();
-    void update_evse_energy_meter_state();
     void update_evse_dc_fault_current_state();
     void update_evse_gpio_configuration();
     void update_evse_button_configuration();
