@@ -305,6 +305,11 @@ export function init() {
 
         update_nfc_config(new_config, true);
     });
+
+    $('#nfc_add_tag_modal').on("hidden.bs.modal", () => {
+        let form = <HTMLFormElement>$('#nfc_add_tag_form')[0];
+        form.reset();
+    })
 }
 
 export function addEventListeners(source: EventSource) {
