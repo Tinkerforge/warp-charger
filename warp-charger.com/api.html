@@ -357,7 +357,8 @@
                     <li><a class="scrollto" href="#evse_current_limit">evse/current_limit</a></li>
                     <li><a class="scrollto" href="#evse_stop_charging">evse/stop_charging</a></li>
                     <li><a class="scrollto" href="#evse_start_charging">evse/start_charging</a></li>
-                    <li><a class="scrollto" href="#evse_auto_start_charging">evse/auto_start_charging_update</a></li>
+                    <li><a class="scrollto" href="#evse_reset_dc_fault_current">evse/reset_dc_fault_current</a></li>
+                    <li><a class="scrollto" href="#evse_managed_current_update">evse/managed_current_update</a></li>
                 </ul></li>
             </ul>
             <div>
@@ -534,7 +535,7 @@
                         <tbody>
                             <tr>
                                 <th scope="row">low_level_mode_enabled <br/><span class="th-details">bool</span></th>
-                                <td>Zeigt an, ob der Low-Level-Modus aktiv ist. Wird derzeit nicht unterstützt.</td>
+                                <td><b>(Nur WARP 1)</b> Zeigt an, ob der Low-Level-Modus aktiv ist. Wird derzeit nicht unterstützt.</td>
                             </tr>
                             <tr>
                                 <th scope="row">led_state <br/><span class="th-details">int</span></th>
@@ -556,27 +557,58 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">adc_values <br/><span class="th-details">int[2]</span></th>
+                                <th scope="row">adc_values <br/><span class="th-details">int[...]</span></th>
                                 <td>
-                                    16-Bit ADC-Rohwerte der PE-CP- und PE-PP-Spannungen.
+                                    16-Bit ADC-Rohwerte der Spannungsmessungen:<br>
+                                    <b>WARP 1:</b>
+                                    <ol class="ol-enum">
+                                        <li>[<b>0</b>] - CP/PE</li>
+                                        <li>[<b>1</b>] - PP/PE</li>
+                                    </ol>
+                                    <b>WARP2:</b>
+                                    <ol class="ol-enum">
+                                        <li>[<b>0</b>] - CP/PE vor Widerstand (PWM High)</li>
+                                        <li>[<b>1</b>] - CP/PE nach Widerstand (PWM High)</li>
+                                        <li>[<b>2</b>] - CP/PE vor Widerstand (PWM Low)</li>
+                                        <li>[<b>3</b>] - CP/PE nach Widerstand (PWM Low)</li>
+                                        <li>[<b>4</b>] - PP/PE</li>
+                                        <li>[<b>5</b>] - +12V Rail</li>
+                                        <li>[<b>6</b>] - -12V Rail</li>
+                                    </ol>
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">voltages <br/><span class="th-details">int[3] (<abbr title="Millivolt">mV</abbr>)</span></th>
+                                <th scope="row">voltages <br/><span class="th-details">int[...] (<abbr title="Millivolt">mV</abbr>)</span></th>
                                 <td>
-                                    Aus den ADC-Werten berechnete Spannungen: PE-CP, PE-PP und Maximalspannung von PE-EE.
+                                    Aus den ADC-Werten berechnete Spannungen:<br>
+                                    <b>WARP 1:</b>
+                                    <ol class="ol-enum">
+                                        <li>[<b>0</b>] - CP/PE</li>
+                                        <li>[<b>1</b>] - PP/PE</li>
+                                    </ol>
+                                    <b>WARP2:</b>
+                                    <ol class="ol-enum">
+                                        <li>[<b>0</b>] - CP/PE vor Widerstand (PWM High)</li>
+                                        <li>[<b>1</b>] - CP/PE nach Widerstand (PWM High)</li>
+                                        <li>[<b>2</b>] - CP/PE vor Widerstand (PWM Low)</li>
+                                        <li>[<b>3</b>] - CP/PE nach Widerstand (PWM Low)</li>
+                                        <li>[<b>4</b>] - PP/PE</li>
+                                        <li>[<b>5</b>] - +12V Rail</li>
+                                        <li>[<b>6</b>] - -12V Rail</li>
+                                    </ol>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">resistances <br/><span class="th-details">int[2] (<abbr title="Ohm">Ω</abbr>)</span></th>
                                 <td>
-                                    Aus den Spannungen berechnete Widerstände: PE-CP, PE-PP.
+                                    Aus den Spannungen berechnete Widerstände: CP/PE, PP/PE.
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">gpio <br/><span class="th-details">bool[5]</span></th>
+                                <th scope="row">gpio <br/><span class="th-details">bool[...]</span></th>
                                 <td>
-                                    Signal auf den GPIOs:
+                                    Signale auf den GPIOs:<br>
+                                    <b>WARP 1:</b>
                                     <ol class="ol-enum">
                                         <li>[<b>0</b>] - Eingang</li>
                                         <li>[<b>1</b>] - Ausgang</li>
@@ -584,12 +616,44 @@
                                         <li>[<b>3</b>] - Relais</li>
                                         <li>[<b>4</b>] - Motorfehler</li>
                                     </ol>
+                                    <b>WARP 2:</b>
+                                    <ol class="ol-enum">
+                                        <li>[<b>0</b>] - Stromkonfiguration 0</li>
+                                        <li>[<b>1</b>] - Motorfehler</li>
+                                        <li>[<b>2</b>] - Gleichstromfehler</li>
+                                        <li>[<b>3</b>] - Stromkonfiguration 1</li>
+
+                                        <li>[<b>4</b>] - DC-Fehlerstromschutz-Test</li>
+                                        <li>[<b>5</b>] - Abschaltung</li>
+                                        <li>[<b>6</b>] - Taster</li>
+                                        <li>[<b>7</b>] - CP-PWM</li>
+
+                                        <li>[<b>8</b>] - Motoreingangsschalter</li>
+                                        <li>[<b>9</b>] - Schützsteuerung</li>
+                                        <li>[<b>10</b>] - Konfigurierbarer Ausgang</li>
+                                        <li>[<b>11</b>] - CP-Trennung</li>
+
+                                        <li>[<b>12</b>] - Motor aktiv</li>
+                                        <li>[<b>13</b>] - Motor-Phase</li>
+                                        <li>[<b>14</b>] - Schützprüfung vorher</li>
+                                        <li>[<b>15</b>] - Schützprüfung nachher</li>
+
+                                        <li>[<b>16</b>] - Konfigurierbarer Eingang</li>
+                                        <li>[<b>17</b>] - DC X6</li>
+                                        <li>[<b>18</b>] - DC X30</li>
+                                        <li>[<b>19</b>] - LED</li>
+
+                                        <li>[<b>20</b>] - Nicht belegt</li>
+                                        <li>[<b>21</b>] - Nicht belegt</li>
+                                        <li>[<b>22</b>] - Nicht belegt</li>
+                                        <li>[<b>23</b>] - Nicht belegt</li>
+                                    </ol>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">hardware_version <br/><span class="th-details">int</span></th>
                                 <td>
-                                    Die von der Firmware des EVSEs detektierte Hardware-Version des EVSEs.
+                                    <b>(Nur WARP 1)</b> Die von der Firmware des EVSEs detektierte Hardware-Version des EVSEs.
                                 </td>
                             </tr>
                         </tbody>
@@ -623,6 +687,10 @@
                                 <th scope="row">max_current_outgoing_cable <br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
                                 <td>Der maximale Ladestrom des ausgehenden Kabels. Fest konfiguriert, falls das Kabel angeschlagen ist.</td>
                             </tr>
+                            <tr>
+                                <th scope="row">max_current_managed <br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
+                                <td>Der maximale Ladestrom der vom Lastmanager zugeteilt wurde. Wird ignoriert wenn Lastmanagement (Siehe  <a class="scrollto" href="#evse_managed">evse/managed</a>) deaktiviert ist.</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -654,7 +722,7 @@
             </div>
 
             <div class="pt-5">
-                <div class="h5" id="evse_user_calibration">evse/user_calibration</div>
+                <div class="h5" id="evse_user_calibration">evse/user_calibration <b>(Nur WARP 1)</b></div>
                 Erlaubt es, die werksseitige Kalibrierung des EVSEs auszulesen und zu überschreiben.
                 Dieser Wert kann über evse/user_calibration_update mit dem selben Payload aktualisiert werden.
                 Um die Kalibierung auf den Werkszustand zurückzusetzen, kann ein Payload mit user_calibration_active auf false
@@ -698,8 +766,8 @@
             </div>
 
             <div class="pt-5">
-                <div class="h5" id="evse_current_limit">evse/current_limit</div>
-                Begrenzt den Ladestrom
+                <div class="h5" id="evse_energy_meter_state">evse/energy_meter_state <b>(Nur WARP 2)</b></div>
+                Bei WARP 2 wird der Stromzähler vom Ladecontroller selbst ausgelesen. evse/energy_meter_state liefert den Zustand des Stromzählers.
                 <div class="table-responsive">
                     <table class="table table-striped table-bottom-border mt-3">
                         <thead class="thead-dark">
@@ -710,46 +778,30 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">current <br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
-                                <td>Begrenzt den Ladestrom auf den übergebenen Wert.
-                                    Der Strom hat einen Minimalwert von 6000 (6 Ampere) und einen Maximalwert von 32000 (32 Ampere).
-                                    Manche Fahrzeuge wechseln bei einem zu kleinen Ladestrom automatisch zu einphasigem Laden.</td>
+                                <th scope="row">available <br/><span class="th-details">bool</span></th>
+                                <td><b>true</b> falls ein Stromzähler gefunden wurde, sonst <b>false</b></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">error_count <br/><span class="th-details">int[6]</span></th>
+                                <td>Fehlerzähler der Kommunikation mit dem Stromzähler:
+                                    <ol class="ol-enum">
+                                        <li>[<b>0</b>] - Local Timeouts</li>
+                                        <li>[<b>1</b>] - Global Timeouts</li>
+                                        <li>[<b>2</b>] - Illegal Function</li>
+                                        <li>[<b>3</b>] - Illegal Data Access</li>
+                                        <li>[<b>4</b>] - Illegal Data Value</li>
+                                        <li>[<b>5</b>] - Slave Device Failure</li>
+                                    </ol>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+
             <div class="pt-5">
-                <div class="h5" id="evse_stop_charging">evse/stop_charging</div>
-                Beendet den laufenden Ladevorgang. Ein Ladevorgang kann mit evse/start_charging wieder gestartet werden.
-                <strong>Leerer Payload. Es muss <code>null</code> übergeben werden.</strong>
-                <strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
-            </div>
-            <div class="pt-5">
-                <div class="h5" id="evse_start_charging">evse/start_charging</div>
-                Startet einen Ladevorgang. Ein Ladevorgang kann mit evse/stop_charging wieder gestoppt werden.
-                <strong>Leerer Payload. Es muss <code>null</code> übergeben werden.</strong>
-                <strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
-            </div>
-        </section>
-        <section id="meter" class="section pt-4">
-            <header class="reference-section-header">
-                <h4>Stromzähler (Nur WARP Charger Pro)</h4>
-            </header>
-            <ul class="ul-no-bullet">
-                <li>Zustände
-                <ul>
-                    <li><a class="scrollto" href="#meter_state">meter/state</a></li>
-                    <li><a class="scrollto" href="#meter_error_counters">meter/error_counters</a></li>
-                </ul></li>
-                <li>Kommandos
-                <ul>
-                    <li><a class="scrollto" href="#meter_reset">meter/reset</a></li>
-                </ul></li>
-            </ul>
-            <div>
-                <div class="h5" id="meter_state">meter/state</div>
-                Der aktuelle Zählerstand.
+                <div class="h5" id="evse_energy_meter_values">evse/energy_meter_values <b>(Nur WARP 2)</b></div>
+                Bei WARP 2 wird der Stromzähler vom Ladecontroller selbst ausgelesen. evse/energy_meter_values liefert die zuletzt gelesenen Werte.
                 <div class="table-responsive">
                     <table class="table table-striped table-bottom-border mt-3">
                         <thead class="thead-dark">
@@ -771,12 +823,280 @@
                                 <th scope="row">energy_abs <br/><span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)</span></th>
                                 <td>Die geladene Energie seit der Herstellung des Stromzählers.</td>
                             </tr>
+                            <tr>
+                                <th scope="row">phases_active <br/><span class="th-details">bool[3]</span></th>
+                                <td>Die derzeit aktiven Phasen</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="evse_dc_fault_current_state">evse/dc_fault_current_state <b>(Nur WARP 2)</b></div>
+                Der Zustand des DC-Fehlerstrom-Schutzmoduls. Falls ein Gleichstromfehler auftritt,
+                kann nicht mehr geladen werden, bis das Schutzmodul zurückgesetzt wurde.
+                <b>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</b>
+                <a class="scrollto" href="#evse_reset_dc_fault_current">evse/reset_dc_fault_current</a> setzt das Modul zurück.
+                <div class="table-responsive">
+                    <table class="table table-striped table-bottom-border mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                            <th scope="col" style="width: 25%;">Name</th>
+                            <th scope="col">Bedeutung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">state <br/><span class="th-details">int</span></th>
+                                <td>
+                                    <ol class="ol-enum">
+                                        <li><b>0</b> - Kein Fehler</li>
+                                        <li><b>1</b> - 6 mA Fehlerstrom detektiert</li>
+                                        <li><b>2</b> - Systemfehler</li>
+                                        <li><b>3</b> - Unbekannter fehler</li>
+                                        <li><b>4</b> - Kalibrierungsfehler</li>
+                                    </ol>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="evse_gpio_configuration">evse/gpio_configuration <b>(Nur WARP 2)</b></div>
+                Die Konfiguration der konfigurierbaren Ein- und Ausgänge.  Diese kann über evse/gpio_configuration_update mit dem selben Payload aktualisiert werden.
+                <div class="table-responsive">
+                    <table class="table table-striped table-bottom-border mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                            <th scope="col" style="width: 25%;">Name</th>
+                            <th scope="col">Bedeutung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">shutdown_input <br/><span class="th-details">int</span></th>
+                                <td>
+                                    Die Konfiguration des Abschalteingangs.
+                                    <ol class="ol-enum">
+                                        <li><b>0</b> - Nicht konfiguriert</li>
+                                        <li><b>1</b> - Abschalten wenn geöffnet</li>
+                                        <li><b>2</b> - Abschalten wenn geschlossen</li>
+                                    </ol>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">input <br/><span class="th-details">int</span></th>
+                                <td>
+                                    Die Konfiguration des konfigurierbaren Eingangs.
+                                    <ol class="ol-enum">
+                                        <li><b>0</b> - Nicht konfiguriert</li>
+                                    </ol>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">output <br/><span class="th-details">int</span></th>
+                                <td>
+                                    Die Konfiguration des konfigurierbaren Ausgangs.
+                                    <ol class="ol-enum">
+                                        <li><b>0</b> - Verbunden mit Masse</li>
+                                        <li><b>1</b> - Hochohmig</li>
+                                    </ol>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="evse_button_configuration">evse/button_configuration <b>(Nur WARP 2)</b></div>
+                Die Konfiguration des Tasters in der Frontblende. Diese kann über evse/button_configuration_update mit dem selben Payload aktualisiert werden.
+                <b>Das NFC-Modul kann diese Konfiguration ändern und sperren, um sicherzustellen, dass ein NFC-Tag zum Starten/Stoppen einer Ladung notwendig ist!</b>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bottom-border mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                            <th scope="col" style="width: 25%;">Name</th>
+                            <th scope="col">Bedeutung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">button <br/><span class="th-details">int</span></th>
+                                <td>
+                                    Die Konfiguration des Buttons.
+                                    <ol class="ol-enum">
+                                        <li><b>0</b> - Deaktiviert</li>
+                                        <li><b>1</b> - Ladestart wenn gedrückt</li>
+                                        <li><b>2</b> - Ladestop wenn gedrückt</li>
+                                        <li><b>3</b> - Ladestart/stop wenn gedrückt</li>
+                                    </ol>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="evse_managed">evse/managed</div>
+                Legt fest, ob max_current_managed in die Berechnung des maximalen Ladestroms eingeht (siehe <a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a>).
+                Damit das Lastmanagement zwischen WARP Chargern funktioniert, muss dies aktiviert sein. Der Wert kann über evse/managed_update aktualisiert werden. evse/managed_update verlangt den zusätzlichen Wert
+                "password": 0x00363702 zum aktivieren, bzw. "password": 0x036370FF zum deaktivieren.
+                <div class="table-responsive">
+                    <table class="table table-striped table-bottom-border mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                            <th scope="col" style="width: 25%;">Name</th>
+                            <th scope="col">Bedeutung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">managed <br/><span class="th-details">bool</span></th>
+                                <td>
+                                    <b>true</b> wenn Lastmanagement aktiviert ist, sonst <b>false</b>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="evse_current_limit">evse/current_limit</div>
+                Begrenzt den Ladestrom
+                <div class="table-responsive">
+                    <table class="table table-striped table-bottom-border mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                            <th scope="col" style="width: 25%;">Name</th>
+                            <th scope="col">Bedeutung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">current <br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
+                                <td>Begrenzt den Ladestrom auf den übergebenen Wert.
+                                    Der Strom hat einen Minimalwert von 6000 (6 Ampere) und einen Maximalwert von 32000 (32 Ampere).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="evse_stop_charging">evse/stop_charging</div>
+                Beendet den laufenden Ladevorgang. Ein Ladevorgang kann mit evse/start_charging wieder gestartet werden.
+                <strong>Leerer Payload. Es muss <code>null</code> übergeben werden.</strong>
+                <strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="evse_start_charging">evse/start_charging</div>
+                Startet einen Ladevorgang. Ein Ladevorgang kann mit evse/stop_charging wieder gestoppt werden.
+                <strong>Leerer Payload. Es muss <code>null</code> übergeben werden.</strong>
+                <strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="evse_reset_dc_fault_current">evse/reset_dc_fault_current</div>
+                Setzt das DC-Fehlerstrom-Schutzmodul zurück.
+                <b>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</b>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bottom-border mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                            <th scope="col" style="width: 25%;">Name</th>
+                            <th scope="col">Bedeutung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">password <br/><span class="th-details">int</span></th>
+                                <td>Passwort, das zum Zurücksetzen benötigt wird. Das Passwort lautet 0xDC42FA23.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="evse_managed_current_updat">evse/managed_current_update</div>
+                Setzt eine neue Strombegrenzung des Lastmanagements.
+                <strong>Diese Funktion muss vom Lastmanager periodisch aufgerufen werden, selbst wenn sich die Strombegrenzung nicht ändert.
+                        Anderenfalls setzt der Ladecontroller den Lastmanagement-Strom nach 30 Sekunden auf 0 Ampere.</strong>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bottom-border mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                            <th scope="col" style="width: 25%;">Name</th>
+                            <th scope="col">Bedeutung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">current <br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
+                                <td>Der Strom hat einen Minimalwert von 6000 (6 Ampere) und einen Maximalwert von 32000 (32 Ampere).
+                                    Dieser Strom kann zusätzlich auf 0 gesetzt werden, um das Laden zu verbieten.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section id="meter" class="section pt-4">
+            <header class="reference-section-header">
+                <h4>Stromzähler (Nur WARP Charger Pro)</h4>
+            </header>
+            <ul class="ul-no-bullet">
+                <li>Zustände
+                <ul>
+                    <li><a class="scrollto" href="#meter_state">meter/state</a></li>
+                    <li><a class="scrollto" href="#meter_error_counters">meter/error_counters</a></li>
+                </ul></li>
+                <li>Kommandos
+                <ul>
+                    <li><a class="scrollto" href="#meter_reset">meter/reset</a></li>
+                </ul></li>
+            </ul>
+            <div>
+                <div class="h5" id="meter_state">meter/state</div>
+                Der aktuelle Zählerstand. Bei WARP 2 identisch zu <a class="scrollto" href="#evse_energy_meter_values">evse/energy_meter_values</a>.
+                <div class="table-responsive">
+                    <table class="table table-striped table-bottom-border mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                            <th scope="col" style="width: 25%;">Name</th>
+                            <th scope="col">Bedeutung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">power <br/><span class="th-details">float (<abbr title="Watt">W</abbr>)</span></th>
+                                <td>Die aktuelle Ladeleistung.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">energy_rel <br/><span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)</span></th>
+                                <td>Die geladene Energie seit dem letzten Reset.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">energy_abs <br/><span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)</span></th>
+                                <td>Die geladene Energie seit der Herstellung des Stromzählers.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">phases_active <br/><span class="th-details">bool[3] <b>(Nur WARP 2)</b></span></th>
+                                <td>Die derzeit aktiven Phasen</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="pt-5">
-                <div class="h5" id="meter_error_counters">meter/error_counters</div>
+                <div class="h5" id="meter_error_counters">meter/error_counters (Nur WARP 1)</div>
                 Fehlerzähler der Kommunikation mit dem Stromzähler.
                 <div class="table-responsive">
                     <table class="table table-striped table-bottom-border mt-3">
@@ -803,6 +1123,70 @@
                     </table>
                 </div>
             </div>
+            <div class="pt-5">
+                <div class="h5" id="meter_detailed_values">meter/detailed_values (Nur WARP 2)</div>
+                Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
+                <table class="table table-striped table-bottom-border mt-3">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col" style="width: 25%;">Index</th>
+                        <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><th scope="row">[0..2]   <span class="th-details">float (<abbr title="Volt">V</abbr>)                               </span></th><td>Spannung gegen Neutral</td></tr>
+                        <tr><th scope="row">[3..5]   <span class="th-details">float (<abbr title="Ampere">A</abbr>)                             </span></th><td>Strom</td></tr>
+                        <tr><th scope="row">[6..8]   <span class="th-details">float (<abbr title="Watt">W</abbr>)                               </span></th><td>Wirkleistung</td></tr>
+                        <tr><th scope="row">[9..11]  <span class="th-details">float (<abbr title="Voltampere">VA</abbr>)                        </span></th><td>Scheinleistung</td></tr>
+                        <tr><th scope="row">[12..14] <span class="th-details">float (<abbr title="Voltampere Reaktiv">var</abbr>)               </span></th><td>Blindleistung</td></tr>
+                        <tr><th scope="row">[15..17] <span class="th-details">float                                                             </span></th><td>Leistungsfaktor; Das Vorzeichen des Leistungsfaktors gibt die Richtung des Stromflusses an.</td></tr>
+                        <tr><th scope="row">[18..20] <span class="th-details">float (<abbr title="Grad">°</abbr>)                               </span></th><td>relative Phasenverschiebung</td></tr>
+                        <tr><th scope="row">[21]     <span class="th-details">float (<abbr title="Volt">V</abbr>)                               </span></th><td>Durchschnittliche Spannung gegen Neutral</td></tr>
+                        <tr><th scope="row">[22]     <span class="th-details">float (<abbr title="Ampere">A</abbr>)                             </span></th><td>Durchschnittlicher Strom</td></tr>
+                        <tr><th scope="row">[23]     <span class="th-details">float (<abbr title="Ampere">A</abbr>)                             </span></th><td>Summe der Phasenströme</td></tr>
+                        <tr><th scope="row">[24]     <span class="th-details">float (<abbr title="Watt">W</abbr>)                               </span></th><td>Gesamtwirkleistung</td></tr>
+                        <tr><th scope="row">[25]     <span class="th-details">float (<abbr title="Voltampere">VA</abbr>)                        </span></th><td>Gesamtscheinleistung</td></tr>
+                        <tr><th scope="row">[26]     <span class="th-details">float (<abbr title="Voltampere Reaktiv">var</abbr>)               </span></th><td>Gesamtblindleistung</td></tr>
+                        <tr><th scope="row">[27]     <span class="th-details">float                                                             </span></th><td>Gesamtleistungsfaktor</td></tr>
+                        <tr><th scope="row">[28]     <span class="th-details">float (<abbr title="Grad">°</abbr>)                               </span></th><td>Gesamtphasenverschiebung</td></tr>
+                        <tr><th scope="row">[29]     <span class="th-details">float (<abbr title="Hertz">Hz</abbr>)                             </span></th><td>Frequenz der Versorgungsspannung</td></tr>
+                        <tr><th scope="row">[30]     <span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)                   </span></th><td>Wirkenergie (Import; vom Fahrzeug aufgenommen)</td></tr>
+                        <tr><th scope="row">[31]     <span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)                   </span></th><td>Wirkenergie (Export; vom Fahrzeug abgegeben)</td></tr>
+                        <tr><th scope="row">[32]     <span class="th-details">float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)  </span></th><td>Blindenergie (Import; vom Fahrzeug aufgenommen)</td></tr>
+                        <tr><th scope="row">[33]     <span class="th-details">float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)  </span></th><td>Blindenergie (Export; vom Fahrzeug abgegeben)</td></tr>
+                        <tr><th scope="row">[34]     <span class="th-details">float (<abbr title="Kilovoltamperestunde">kVAh</abbr>)            </span></th><td>Gesamtscheinenergie</td></tr>
+                        <tr><th scope="row">[35]     <span class="th-details">float (<abbr title="Amperestunde">Ah</abbr>)                      </span></th><td>Transportierte elektrische Ladung</td></tr>
+                        <tr><th scope="row">[36]     <span class="th-details">float (<abbr title="Watt">W</abbr>)                               </span></th><td>Bezogene Wirkleistung; Entspricht Import-Export-Differenz</td></tr>
+                        <tr><th scope="row">[37]     <span class="th-details">float (<abbr title="Watt">W</abbr>)                               </span></th><td>Max. bezogene Wirkleistung; Höchster gemessener Wert</td></tr>
+                        <tr><th scope="row">[38]     <span class="th-details">float (<abbr title="Voltampere">VA</abbr>)                        </span></th><td>Bezogene Scheinleistung; Entspricht Import-Export-Differenz</td></tr>
+                        <tr><th scope="row">[39]     <span class="th-details">float (<abbr title="Voltampere">VA</abbr>)                        </span></th><td>Max. bezogene Scheinleistung; Höchster gemessener Wert</td></tr>
+                        <tr><th scope="row">[40]     <span class="th-details">float (<abbr title="Ampere">A</abbr>)                             </span></th><td>Bezogener Neutralleiterstrom</td></tr>
+                        <tr><th scope="row">[41]     <span class="th-details">float (<abbr title="Ampere">A</abbr>)                             </span></th><td>Max. bezogener Neutralleiterstrom; Höchster gemessener Wert</td></tr>
+                        <tr><th scope="row">[42]     <span class="th-details">float (<abbr title="Volt">V</abbr>)                               </span></th><td>Spannung L1 zu L2</td></tr>
+                        <tr><th scope="row">[43]     <span class="th-details">float (<abbr title="Volt">V</abbr>)                               </span></th><td>Spannung L2 zu L3</td></tr>
+                        <tr><th scope="row">[44]     <span class="th-details">float (<abbr title="Volt">V</abbr>)                               </span></th><td>Spannung L3 zu L1</td></tr>
+                        <tr><th scope="row">[45]     <span class="th-details">float (<abbr title="Volt">V</abbr>)                               </span></th><td>Durchschnittliche Spannung zwischen Phasen</td></tr>
+                        <tr><th scope="row">[46]     <span class="th-details">float (<abbr title="Ampere">A</abbr>)                             </span></th><td>Neutralleiterstrom</td></tr>
+                        <tr><th scope="row">[47..49] <span class="th-details">float (<abbr title="Prozent">%</abbr>)                            </span></th><td>Total Harmonic Distortion (THD) der Spannung</td></tr>
+                        <tr><th scope="row">[50..52] <span class="th-details">float (<abbr title="Prozent">%</abbr>)                            </span></th><td>Total Harmonic Distortion (THD) des Stroms</td></tr>
+                        <tr><th scope="row">[53]     <span class="th-details">float (<abbr title="Prozent">%</abbr>)                            </span></th><td>Durchschnittliche Spannungs-THD</td></tr>
+                        <tr><th scope="row">[54..56] <span class="th-details">float (<abbr title="Ampere">A</abbr>)                             </span></th><td>Bezogener Strom</td></tr>
+                        <tr><th scope="row">[57..59] <span class="th-details">float (<abbr title="Ampere">A</abbr>)                             </span></th><td>Max. bezogener Strom; Höchster gemessener Wert</td></tr>
+                        <tr><th scope="row">[60]     <span class="th-details">float (<abbr title="Prozent">%</abbr>)                            </span></th><td>Spannungs-THD L1 zu L2</td></tr>
+                        <tr><th scope="row">[61]     <span class="th-details">float (<abbr title="Prozent">%</abbr>)                            </span></th><td>Spannungs-THD L2 zu L3</td></tr>
+                        <tr><th scope="row">[62]     <span class="th-details">float (<abbr title="Prozent">%</abbr>)                            </span></th><td>Spannungs-THD L3 zu L1</td></tr>
+                        <tr><th scope="row">[63]     <span class="th-details">float (<abbr title="Prozent">%</abbr>)                            </span></th><td>Durchschnittliche Spannungs-THD zwischen Phasen</td></tr>
+                        <tr><th scope="row">[64]     <span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)                   </span></th><td>Summe der Gesamtwirkenergien; Import-Export-Summe aller Phasen</td></tr>
+                        <tr><th scope="row">[65]     <span class="th-details">float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)  </span></th><td>Summe der Gesamtblindenergien; Import-Export-Summe aller Phasen</td></tr>
+                        <tr><th scope="row">[66..68] <span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)                   </span></th><td>Wirkenergie (Import; vom Fahrzeug aufgenommen)</td></tr>
+                        <tr><th scope="row">[69..71] <span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)                   </span></th><td>Wirkenergie (Export; vom Fahrzeug abgegeben)</td></tr>
+                        <tr><th scope="row">[72..74] <span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)                   </span></th><td>Gesamtwirkenergie; Import-Export-Summe</td></tr>
+                        <tr><th scope="row">[75..77] <span class="th-details">float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)  </span></th><td>Blindenergie (Import; vom Fahrzeug aufgenommen)</td></tr>
+                        <tr><th scope="row">[78..80] <span class="th-details">float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)  </span></th><td>Blindenergie (Export; vom Fahrzeug abgegeben)</td></tr>
+                        <tr><th scope="row">[81..83] <span class="th-details">float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)  </span></th><td>Gesamtblindenergie; Import-Export-Summe</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
             <div class="pt-5">
                 <div class="h5" id="meter_reset">meter/reset</div>
@@ -810,6 +1194,92 @@
                 <strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
             </div>
         </section>
+
+        <section id="nfc-config" class="section pt-4">
+            <header class="reference-section-header">
+                <h4>NFC-Freischaltung</h4>
+            </header>
+            <ul class="ul-no-bullet">
+                <li>Zustände
+                <ul>
+                    <li><a class="scrollto" href="#nfc_seen_tags">nfc/seen_tags</a></li>
+                </ul></li>
+                <li>Konfigurationen
+                <ul>
+                    <li><a class="scrollto" href="#nfc_config">nfc/config</a></li>
+                </ul></li>
+            </ul>
+            <div>
+                <div class="h5" id="nfc_seen_tags">nfc/seen_tags</div>
+                Liste der zuletzt von der Wallbox gesehenen NFC-Tags. Jeder Eintrag hat das folgende Format:
+                <div class="table-responsive">
+                    <table class="table table-striped table-bottom-border mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                            <th scope="col" style="width: 25%;">Name</th>
+                            <th scope="col">Bedeutung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">tag_type <br/><span class="th-details">int</span></th>
+                                <td> Typ des Tags
+                                    <ol class="ol-enum">
+                                    <li><b>0</b> - Mifare Classic</li>
+                                    <li><b>1</b> - NFC Forum Typ 1</li>
+                                    <li><b>2</b> - NFC Forum Typ 2</li>
+                                    <li><b>3</b> - NFC Forum Typ 3</li>
+                                    <li><b>4</b> - NFC Forum Typ 4</li>
+                                </ol></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">tag_id <br/><span class="th-details">int[...]</span></th>
+                                <td>ID des Tags. Je nach Tag-Typ bis zu 10 Byte.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">last_seen <br/><span class="th-details">int (<abbr title="Volt">ms</abbr>)</span></th>
+                                <td>Zeit in Millisekunden vor der das Tag zuletzt gesehen wurde.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="pt-5">
+                <div class="h5" id="nfc_config">nfc/config</div>
+                Die NFC-Konfiguration. Diese kann über nfc/config_update mit dem selben Payload aktualisiert werden.
+                <strong>Eine aktualisierte NFC-Konfiguration wird erst nach einem Neustart des ESPs verwendet.
+                    Siehe <a class="scrollto" href="#reboot">reboot</a>.</strong>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bottom-border mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                            <th scope="col" style="width: 25%;">Name</th>
+                            <th scope="col">Bedeutung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">require_tag_to_start <br/><span class="th-details">bool</span></th>
+                                <td>true wenn eine Ladung nur mit einem NFC-Tag, oder über das Webinterface/die APi freigegeben werden kann, ansonsten false.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">require_tag_to_stop <br/><span class="th-details">bool</span></th>
+                                <td>true wenn eine Ladung nur mit einem NFC-Tag, oder über das Webinterface/die APi gestoppt werden kann, ansonsten false.
+                                    <strong>Wenn aktiviert, wird die Stop-Funktion des Buttons an der Frontplatte deaktiviert,
+                                        sowie <a class="scrollto" href="#evse_button_configuration">evse/button_configuration_update</a> blockiert!</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">authorized_tags <br/><span class="th-details">object[...]</span></th>
+                                <td>Eine Liste authorisierter Tags.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
         <section id="mqtt-config" class="section pt-4">
             <header class="reference-section-header">
                 <h4>MQTT-Konfiguration</h4>
@@ -1007,7 +1477,7 @@
                                 <td>SSID zu der sich verbunden werden soll. Maximal 32 Byte.</td>
                             </tr>
                             <tr>
-                                <th scope="row">bssid <br/><span class="th-details">string</span></th>
+                                <th scope="row">bssid <br/><span class="th-details">int[6]</span></th>
                                 <td>BSSID zu der sich verbunden werden soll. Dieser Eintrag ist optional und kann leer übergeben werden, wird aber für das bssid_lock benötigt.</td>
                             </tr>
                             <tr>
@@ -1114,6 +1584,112 @@
                 </div>
             </div>
         </section>
+
+        <section id="ethernet" class="section pt-4">
+            <header class="reference-section-header">
+                <h4>LAN-Konfiguration <b>Nur WARP 2</b></h4>
+            </header>
+            <ul class="ul-no-bullet">
+                <li>Zustände
+                <ul>
+                    <li><a class="scrollto" href="#ethernet_state">ethernet/state</a></li>
+                </ul></li>
+                <li>Konfigurationen
+                <ul>
+                    <li><a class="scrollto" href="#ethernet_config">ethernet/config</a></li>
+                </ul></li>
+            </ul>
+            <div>
+                <div class="h5" id="ethernet_state">ethernet/state</div>
+                Der aktuelle LAN-Zustand.
+                <div class="table-responsive">
+                    <table class="table table-striped table-bottom-border mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                            <th scope="col" style="width: 25%;">Name</th>
+                            <th scope="col">Bedeutung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">connection_state <br/><span class="th-details">int</span></th>
+                                <td>Zustand der Verbindung zu einem LAN:
+                                    <ol class="ol-enum">
+                                        <li><b>0</b> - Nicht konfiguriert</li>
+                                        <li><b>1</b> - Nicht verbunden</li>
+                                        <li><b>2</b> - Verbinde</li>
+                                        <li><b>3</b> - Verbunden</li>
+                                    </ol>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">ip <br/><span class="th-details">int[4]</span></th>
+                                <td>Aktuelle IP der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">full_duplex <br/><span class="th-details">bool</span></th>
+                                <td><b>true</b> bei einer Full-Duplex-Verbindung, sonst <b>false</b></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">link_speed <br/><span class="th-details">int (<abbr title="Megabit pro Sekunde">Mbit/s</abbr>)</span></th>
+                                <td>Ausgehandelte Verbindungsgeschwindigkeit.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="pt-5">
+                <div class="h5" id="ethernet_sta_config">ethernet/config</div>
+                Die LAN-Verbindungskonfiguration. Diese kann über ethernet/config_update mit dem selben Payload aktualisiert werden.
+                <strong>Eine aktualisierte LAN-Verbindungskonfiguration wird erst nach einem Neustart des ESPs verwendet.
+                    Siehe <a class="scrollto" href="#reboot">reboot</a>.</strong>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bottom-border mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                            <th scope="col" style="width: 25%;">Name</th>
+                            <th scope="col">Bedeutung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">enable_ethernet <br/><span class="th-details">bool</span></th>
+                                <td>true wenn eine LAN-Verbindung aufgebaut werden soll, ansonsten false.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">hostname <br/><span class="th-details">string</span></th>
+                                <td>Hostname den die Wallbox im konfigurierten Netz verwenden soll.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">ip <br/><span class="th-details">int[4]</span></th>
+                                <td>IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+                                Dieser Eintrag und die folgenden sind optional und können als [0, 0, 0, 0] übergeben werden,
+                                falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">gateway <br/><span class="th-details">int[4]</span></th>
+                                <td>Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">subnet <br/><span class="th-details">int[4]</span></th>
+                                <td>Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">dns <br/><span class="th-details">int[4]</span></th>
+                                <td>DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">dns2 <br/><span class="th-details">int[4]</span></th>
+                                <td>Alternative DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
         <section id="auth" class="section pt-4">
             <header class="reference-section-header">
                 <h4>Authentifizierung</h4>
