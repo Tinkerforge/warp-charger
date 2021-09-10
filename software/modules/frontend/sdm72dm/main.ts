@@ -642,7 +642,7 @@ export function getTranslation(lang: string) {
                     "detailed_current_demand_desc": "L1, L2, L3",
 
                     "detailed_maximum_current_demand": "Max. bezogener Strom",
-                    "detailed_maximum_current_demand_desc": "Höchster gemessener Wert",
+                    "detailed_maximum_current_demand_desc": "L1, L2, L3; Höchster gemessener Wert",
 
                     "detailed_line1_to_line2_volts_thd": "Spannungs-THD L1 zu L2",
                     "detailed_line1_to_line2_volts_thd_desc": " ",
