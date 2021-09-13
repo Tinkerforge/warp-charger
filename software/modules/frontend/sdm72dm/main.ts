@@ -191,6 +191,8 @@ function init_chart() {
     meter_chart_change_time(input.value);
 }
 
+let allowed_current = 32000;
+
 function update_status_chart() {
     $.get("/meter/history").done(function (values: number[]) {
         const HISTORY_MINUTE_INTERVAL = 4;
@@ -224,25 +226,16 @@ function update_status_chart() {
             ]
         };
 
-        // This is a hack in three ways:
-        // 1. We don't have any mechanism to communicate with the evse module if it is even compiled in,
-        //    so we just assume that it is and ask for the allowed current.
-        // 2. This only calculates the correct value if we charge with three phases. This is okay for the moment,
-        //    as the energy meter itself will only work correctly if powered with a three-phase current.
-        // 3. This breaks if we start shipping wallboxes that have a type 2 socket instead of a fixed cable,
-        //    because the max_current_outgoing_cable can then change.
-        $.get("/evse/max_charging_current")
-         .done((result) => {
-                let allowed_current = Math.min(result.max_current_incoming_cable, result.max_current_outgoing_cable);
-                let configured_max = allowed_current / 1000 * 3 * 230;
-                init_status_chart(0, Math.max(configured_max, Math.max(...values))),
-                status_meter_chart.update(data);
-            })
-          .fail(() => {
-                console.log("Failed to query max charging current.");
-                init_status_chart(0, Math.max(...values)),
-                status_meter_chart.update(data);
-            });
+        // We have to assume three phases even if only one or two are connected,
+        // because the other phases could be disconnected only temporarily.
+        // The only case where scaling to one phase would be useful is when
+        // the wallbox is always connected with one phase only, however
+        // we can't reliably detect this case.
+        // Maybe in the future (as in "as soon as the first customer complains about this" ;) )
+        // we could add a configuration for this.
+        let configured_max = allowed_current / 1000 * 3 * 230;
+        init_status_chart(0, Math.max(configured_max, Math.max(...values))),
+        status_meter_chart.update(data);
     });
 }
 
@@ -476,6 +469,11 @@ export function addEventListeners(source: EventSource) {
 
     source.addEventListener('meter/detailed_values', function (e: util.SSE) {
         update_evse_v2_detailed_values(<number[]>(JSON.parse(e.data)));
+    }, false);
+
+    source.addEventListener("evse/max_charging_current", function (e: util.SSE) {
+        let parsed = JSON.parse(e.data);
+        allowed_current = Math.min(parsed.max_current_incoming_cable, parsed.max_current_outgoing_cable);
     }, false);
 }
 
