@@ -32,6 +32,7 @@ interface MeterState {
     energy_rel: number,
     energy_abs: number,
     phases_active: boolean[]
+    phases_connected: boolean[]
 }
 
 function update_meter_state(state: MeterState) {
@@ -47,7 +48,8 @@ function update_meter_state(state: MeterState) {
         return;
 
     for(let i = 0; i < 3; ++i) {
-        util.update_button_group(`btn_group_meter_phase_${i}`, state.phases_active[i] ? 0 : 1);
+        util.update_button_group(`btn_group_meter_phase_active_${i}`, state.phases_active[i] ? 0 : 1);
+        util.update_button_group(`btn_group_meter_phase_connected_${i}`, state.phases_connected[i] ? 0 : 1);
     }
 }
 
@@ -394,6 +396,7 @@ function build_evse_v2_detailed_values_view() {
         entry("ln_volts_thd",                      true, "%"),
         entry("current_thd",                       true, "%"),
         entry("average_line_to_neutral_volts_thd", false, "%"),
+        entry("average_line_current_thd",          false, "%"),
         entry("current_demand",                    true, "A"),
         entry("maximum_current_demand",            true, "A"),
         entry("line1_to_line2_volts_thd",          false, "%"),
@@ -527,6 +530,8 @@ export function getTranslation(lang: string) {
                     "energy_lifetime": "seit Herstellung des Stromzählers",
                     "phases_active": "Aktive Phasen",
                     "phases_active_desc": "L1, L2, L3",
+                    "phases_connected": "Verbundene Phasen",
+                    "phases_connected_desc": "L1, L2, L3",
                     "detailed_values": "Details",
                     "detailed_values_show": "Anzeigen / Verstecken",
 
@@ -637,6 +642,9 @@ export function getTranslation(lang: string) {
 
                     "detailed_average_line_to_neutral_volts_thd": "Durch&shy;schnitt&shy;liche Spannungs-THD",
                     "detailed_average_line_to_neutral_volts_thd_desc": " ",
+
+                    "detailed_average_line_current_thd": "Durch&shy;schnitt&shy;liche Strom-THD",
+                    "detailed_average_line_current_thd_desc": " ",
 
                     "detailed_current_demand": "Bezogener Strom",
                     "detailed_current_demand_desc": "L1, L2, L3",
@@ -818,6 +826,9 @@ export function getTranslation(lang: string) {
 
                     "detailed_average_line_to_neutral_volts_thd": "Average voltage THD",
                     "detailed_average_line_to_neutral_volts_thd_desc": " ",
+
+                    "detailed_average_line_current_thd": "Average current THD",
+                    "detailed_average_line_current_thd_desc": " ",
 
                     "detailed_current_demand": "Current demand",
                     "detailed_current_demand_desc": "L1, L2, L3",

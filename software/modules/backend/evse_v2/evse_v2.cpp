@@ -118,7 +118,10 @@ EVSEV2::EVSEV2()
         {"power", Config::Float(0)},
         {"energy_rel", Config::Float(0)},
         {"energy_abs", Config::Float(0)},
-         {"phases_active", Config::Array({Config::Bool(false),Config::Bool(false),Config::Bool(false)},
+        {"phases_active", Config::Array({Config::Bool(false),Config::Bool(false),Config::Bool(false)},
+            Config::Bool(false),
+            3, 3, Config::type_id<Config::ConfBool>())},
+        {"phases_connected", Config::Array({Config::Bool(false),Config::Bool(false),Config::Bool(false)},
             Config::Bool(false),
             3, 3, Config::type_id<Config::ConfBool>())}
     });
@@ -771,13 +774,14 @@ void EVSEV2::update_evse_energy_meter_values() {
         return;
 
     float power, energy_rel, energy_abs;
-    bool phases_active[3];
+    bool phases_active[3], phases_connected[3];
 
     int rc = tf_evse_v2_get_energy_meter_values(&evse,
         &power,
         &energy_rel,
         &energy_abs,
-        phases_active);
+        phases_active,
+        phases_connected);
 
     if(rc != TF_E_OK) {
         is_in_bootloader(rc);
@@ -787,8 +791,12 @@ void EVSEV2::update_evse_energy_meter_values() {
     evse_energy_meter_values.get("power")->updateFloat(power);
     evse_energy_meter_values.get("energy_rel")->updateFloat(energy_rel);
     evse_energy_meter_values.get("energy_abs")->updateFloat(energy_abs);
+
     for(int i = 0; i < 3; ++i)
-            evse_energy_meter_values.get("phases_active")->get(i)->updateBool(phases_active[i]);
+        evse_energy_meter_values.get("phases_active")->get(i)->updateBool(phases_active[i]);
+
+    for(int i = 0; i < 3; ++i)
+        evse_energy_meter_values.get("phases_connected")->get(i)->updateBool(phases_connected[i]);
 }
 
 void EVSEV2::update_evse_energy_meter_state() {

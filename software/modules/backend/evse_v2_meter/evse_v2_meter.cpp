@@ -36,6 +36,8 @@ extern TaskScheduler task_scheduler;
 
 extern API api;
 
+#define DETAILED_VALUES_COUNT 85
+
 EVSEV2Meter::EVSEV2Meter() {
     state = Config::Object({
         {"power", Config::Float(0.0)},
@@ -43,12 +45,15 @@ EVSEV2Meter::EVSEV2Meter() {
         {"energy_abs", Config::Float(0.0)},
         {"phases_active", Config::Array({Config::Bool(false),Config::Bool(false),Config::Bool(false)},
             Config::Bool(false),
+            3, 3, Config::type_id<Config::ConfBool>())},
+        {"phases_connected", Config::Array({Config::Bool(false),Config::Bool(false),Config::Bool(false)},
+            Config::Bool(false),
             3, 3, Config::type_id<Config::ConfBool>())}
     });
 
     detailed_values = Config::Array({},
         Config::Float(0),
-        0, 84, Config::type_id<Config::ConfFloat>());
+        0, DETAILED_VALUES_COUNT, Config::type_id<Config::ConfFloat>());
 /*
     error_counters = Config::Object({
         {"meter", Config::Uint32(0)},
@@ -87,21 +92,25 @@ void EVSEV2Meter::setup() {
         power_history.push(-1);
     }
 
-    for(int i = 0; i < 84; ++i) {
+    for(int i = 0; i < DETAILED_VALUES_COUNT; ++i) {
         detailed_values.add();
     }
 
     task_scheduler.scheduleWithFixedDelay("update_evse_meter_values", [this](){
         float power, energy_rel, energy_abs;
-        bool phases_active[3];
-        if (tf_evse_v2_get_energy_meter_values(&evse_v2.evse, &power, &energy_rel, &energy_abs, phases_active) != TF_E_OK)
+        bool phases_active[3], phases_connected[3];
+        if (tf_evse_v2_get_energy_meter_values(&evse_v2.evse, &power, &energy_rel, &energy_abs, phases_active, phases_connected) != TF_E_OK)
             return;
 
         state.get("power")->updateFloat(power);
         state.get("energy_rel")->updateFloat(energy_rel);
         state.get("energy_abs")->updateFloat(energy_abs);
+
         for(int i = 0; i < 3; ++i)
             state.get("phases_active")->get(i)->updateBool(phases_active[i]);
+
+        for(int i = 0; i < 3; ++i)
+            state.get("phases_connected")->get(i)->updateBool(phases_connected[i]);
 
         int16_t val = (int16_t)min((float)INT16_MAX, power);
         interval_samples.push(val);
@@ -123,11 +132,11 @@ void EVSEV2Meter::setup() {
 
     task_scheduler.scheduleWithFixedDelay("update_evse_meter_detailed_values", [this](){
         uint16_t len;
-        float result[84] = {0};
+        float result[DETAILED_VALUES_COUNT] = {0};
         if (tf_evse_v2_get_energy_meter_detailed_values(&evse_v2.evse, result, &len) != TF_E_OK)
             return;
 
-        for(int i = 0; i < 84; ++i) {
+        for(int i = 0; i < DETAILED_VALUES_COUNT; ++i) {
             detailed_values.get(i)->updateFloat(result[i]);
         }
     }, 1000, 1000);
