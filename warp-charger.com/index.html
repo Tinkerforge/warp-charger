@@ -716,125 +716,20 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
                 <div class="col-lg-2 col-md-12"></div>
                 <div class="col-lg-8 col-md-12 mt-4">
                     <div class="text-center">
-                        <a href="firmwares/warp2_firmware_1_0_0_61389b7a_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">Firmware 1.0.0 herunterladen</a>
+                        <a href="firmwares/warp2_firmware_1_0_1_613f0f54_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">Firmware 1.0.1 herunterladen</a>
                         <div class="text-muted pt-2 pb-2">Veröffentlicht am 08.09.2021</div>
                     </div>
 
                     <ul>
-                        <li>Initiales Release</li>
+                        <li>Texte des Abschalteingangs repariert</li>
+                        <li>Verbundene Phasen zu Stromzähler-Unterseite hinzugefügt</li>
+                        <li>Fehlenden Details-Wert zu Stromzähler-Unterseite hinzugefügt</li>
                     </ul>
 
-                    <!--<table class="table mt-5">
+                    <table class="table mt-5">
                         <tbody>
                             <tr>
-                                <th scope="row"><a href="firmwares/warp_firmware_1_2_3_60c0acef_merged.bin">1.2.3</a><br/><span class="th-details">09.06.2021</span></th>
-                                <td>
-                                    <ul>
-                                        <li>Unterstützung für angepasste Kalibrierung hinzugefügt<br/>(Durch Update auf Ladecontroller-Firmware 2.0.7)</li>
-                                        <li>Webserver- und WLAN-Stabilität verbessert</li>
-                                        <li>Konfigurations-API und -Webinterface des Passwortschutzes überarbeitet</li>
-                                        <li>Englische Übersetzung verbessert, fehlende Texte ergänzt</li>
-                                        <li>Erlaubtes Maximum/Minimum zu API-Fehlern bei zu großen/kleinen Werten hinzugefügt</li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><a href="firmwares/warp_firmware_1_2_2_609a7746_merged.bin">1.2.2</a><br/><span class="th-details">11.05.2021</span></th>
-                                <td>
-                                    <ul>
-                                        <li>Möglichkeit zum Löschen von Passwörtern hinzugefügt</li>
-                                        <li>Kommunikation der WLAN-Scanergebnisse robuster gemacht</li>
-                                        <li>Verhindert, dass ein WLAN-Scan gestartet wird, während bereits ein Scan läuft</li>
-                                        <li>Logik des Maximal-Strom-Buttons repariert</li>
-                                        <li>Zustand der Kabelverriegelung versteckt, wenn keine Kabelverriegelung vorhanden ist</li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><a href="firmwares/warp_firmware_1_2_1_6054b499_merged.bin">1.2.1</a><br/><span class="th-details">19.03.2021</span></th>
-                                <td>
-                                    <ul>
-                                        <li>Ladeprotokoll hinzugefügt</li>
-                                        <li>Instabile WLAN-Verbindung falls mehrere Access Points mit dem selben Netzwerknamen verbessert</li>
-                                        <li>BSSID-Anzeige hinzugefügt, wenn mehrere Access Points mit dem selben Netzwerknamen verfügbar sind</li>
-                                        <li>BSSID zu wifi/state und dem Ereignis-Log hinzugefügt</li>
-                                        <li>MQTT-Nachrichten die retained wurden werden für Actions ignoriert</li>
-                                        <li>Unerwartetes Löschen von Passwörtern wenn andere Konfiguration geändert wurde repariert</li>
-                                        <li>Neustart-Meldung bei Firmware-Aktualisierungen repariert</li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><a href="firmwares/warp_firmware_1_2_0_6050aa83_merged.bin">1.2.0</a><br/><span class="th-details">16.03.2021</span></th>
-                                <td>
-                                    <ul>
-                                        <li>Ladefreigabe-API hinzugefügt (Durch Update auf Ladecontroller-Firmware 2.0.5)</li>
-                                        <li>Optionaler Passwortschutz hinzugefügt</li>
-                                        <li>System-Seite in Untermenü aufgeteilt</li>
-                                        <li>Duplizierte MQTT-Subscriptions entfernt</li>
-                                        <li>Fehlermeldungen bei falscher API-Verwendung verbessert</li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><a href="firmwares/warp_firmware_1_1_1_603cb633_merged.bin">1.1.1</a><br/><span class="th-details">01.03.2021</span></th>
-                                <td>
-                                    <ul>
-                                        <li>Automatisches Neuladen des Webinterfaces, wenn ein anderer User die Firmware aktualisiert hat, hinzugefügt</li>
-                                        <li>Neustart-Button hinzugefügt</li>
-                                        <li>Oberfläche des System-Abschnitts überarbeitet</li>
-                                        <li>WLAN- und MQTT-Verbindungslogik überarbeitet</li>
-                                        <li>Auto-Update für alle Graphen hinzugefügt</li>
-                                        <li>Graph-Performance verbessert</li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><a href="firmwares/warp_firmware_1_1_0_602d2c71_merged.bin">1.1.0</a><br/><span class="th-details">17.02.2021</span></th>
-                                <td>
-                                    <ul>
-                                        <li>Erlaubt, dass beim Start der Wallbox ein Auto angeschlossen ist<br>(Durch Update auf Ladecontroller-Firmware 2.0.4)</li>
-                                        <li>Automatisches Neuladen des Webinterfaces nach Neustart oder Firmware-Update hinzugefügt</li>
-                                        <li>Warnung wenn Verbindung zur Wallbox unterbrochen ist hinzugefügt</li>
-                                        <li>MQTT-Verbindungsproblem bei Verwendung der statischen IP-Konfiguration behoben</li>
-                                        <li>Ladecontroller-Fehler werden jetzt im Event-Log aufgezeichnet</li>
-                                        <li>Passphrase wird nach einem erfolgreichen Speichern nicht mehr als ungültig angezeigt</li>
-                                        <li>WLAN-Empfangsqualität zur Statusseite hinzugefügt</li>
-                                        <li>"Verbindung zu" von der Statusseite entfernt</li>
-                                        <li>Anzeige der IP "0.0.0.0" entfernt, wenn keine Verbindung aufgebaut ist</li>
-                                        <li>Beschreibung zu MQTT-Fehlercodes hinzugefügt</li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><a href="firmwares/warp_firmware_1_0_3_6023a452_merged.bin">1.0.3</a><br/><span class="th-details">10.02.2021</span></th>
-                                <td>
-                                    <ul>
-                                        <li>Timing-Problem bei der Kommunikation mit den Bricklets behoben</li>
-                                        <li>Race Condition zwischen MQTT- und WLAN-Reconnects behoben</li>
-                                        <li>Null-Messungen bei Kommunikationsfehlern mit dem Stromzähler entfernt</li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><a href="firmwares/warp_firmware_1_0_2_60213214_merged.bin">1.0.2</a><br/><span class="th-details">08.02.2021</span></th>
-                                <td>
-                                    <ul>
-                                        <li>Sichergestellt, dass manueller Ladestop nichts tut, wenn kein Auto angeschlossen ist.<br>(Durch Update auf Ladecontroller-Firmware 2.0.2)</li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><a href="firmwares/warp_firmware_1_0_1_601d09ab_merged.bin">1.0.1</a><br/><span class="th-details">05.02.2021</span></th>
-                                <td>
-                                    <ul>
-                                        <li>Buttons für manuellen Ladestart/-stop repariert</li>
-                                        <li>Fehlende Übersetzungen von Fehlermeldungen hinzugefügt</li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><a href="firmwares/warp_firmware_1_0_0_601ad477_merged.bin">1.0.0</a><br/><span class="th-details">03.02.2021</span></th>
+                                <th scope="row"><a href="firmwares/warp2_firmware_1_0_0_61389b7a_merged.bin">1.0.0</a><br/><span class="th-details">08.09.2021</span></th>
                                 <td>
                                     <ul>
                                         <li>Initiales Release</li>
@@ -842,7 +737,7 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
                                 </td>
                             </tr>
                         </tbody>
-                    </table>-->
+                    </table>
                 </div>
                 <div class="col-lg-2 col-md-12"></div>
             </div>
