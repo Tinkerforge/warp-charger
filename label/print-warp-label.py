@@ -131,7 +131,7 @@ def print_warp_label(type_, version, serial_number, build_date, instances, copie
         raise Exception('Invalid version: {0}'.format(version))
 
     # check serial number
-    if re.match(r'^-|5[0-9]{9}$', serial_number) == None:
+    if re.match(r'^(-|5[0-9]{9})$', serial_number) == None:
         raise Exception('Invalid serial number: {0}'.format(serial_number))
 
     # check build date
