@@ -206,6 +206,9 @@ void NFC::handle_evse() {
     static bool block_api_call = false;
     static uint32_t block_api_until = 0;
 
+    if (evse_state == nullptr)
+        return;
+
     if (block_api_call && !deadline_elapsed(block_api_until)) {
         return;
     }
