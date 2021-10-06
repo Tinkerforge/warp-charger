@@ -117,8 +117,19 @@ $(window).on('pageshow', (ev) => {
 
     var translator = new Translator();
 
-    // Add the language to the translator and translate the page
-    translator.add('de', translations["de"]).add('en', translations["en"]).translatePageTo();
+    translator.add('de', translations["de"]).add('en', translations["en"])
+
+    translator.config.defaultLanguage = 'en';
+    for (let l of navigator.languages) {
+        let lang = l.substr(0, 2);
+        if (translator.languages.has(lang)) {
+            translator.config.defaultLanguage = lang;
+            break;
+        }
+        console.log("Sorry, got no translation for " + l);
+    }
+
+    translator.translatePageTo();
 
     $('a[data-toggle="tab"]').on('show.bs.tab', () => {
         $('a[data-toggle="tab"]').not(<Element>event.target).removeClass("active");
