@@ -386,8 +386,15 @@ void NFC::register_urls() {
     bool nfc_stop = config_in_use.get("require_tag_to_stop")->asBool();
     if (nfc_start || nfc_stop) {
         api.blockCommand("evse/button_configuration_update", "nfc.script.nfc_controls_button");
+
+        auto btn_cfg = api.getState("evse/button_configuration")->get("button")->asUint();
+        if (nfc_start)
+            btn_cfg &= ~1;
+        if (nfc_stop)
+            btn_cfg &= ~2;
+
         api.callCommand("evse/button_configuration_update", Config::ConfUpdateObject{{
-                {"button", (!nfc_start ? 1 : 0) + (!nfc_stop ? 2 : 0)}
+            {"button", btn_cfg}
         }});
     }
 #endif
