@@ -170,6 +170,10 @@ EVSEV2::EVSEV2()
         {"button", Config::Uint8(2)}
     });
 
+    evse_button_configuration_update = Config::Object({
+        {"button", Config::Uint8(2)}
+    });
+
     evse_reflash = Config::Null();
     evse_reset = Config::Null();
 }
@@ -503,8 +507,10 @@ void EVSEV2::register_urls()
     }, true);
 
     api.addState("evse/button_configuration", &evse_button_configuration, {}, 1000);
-    api.addCommand("evse/button_configuration_update", &evse_button_configuration, {}, [this](){
-        is_in_bootloader(tf_evse_v2_set_button_configuration(&evse, evse_button_configuration.get("button")->asUint()));
+    api.addCommand("evse/button_configuration_update", &evse_button_configuration_update, {}, [this](){
+        auto cfg = evse_button_configuration_update.get("button")->asUint();
+        logger.printfln("Setting button config to %u", cfg);
+        is_in_bootloader(tf_evse_v2_set_button_configuration(&evse, cfg));
     }, true);
 
     api.addCommand("evse/auto_start_charging_update", &evse_auto_start_charging_update, {}, [this](){

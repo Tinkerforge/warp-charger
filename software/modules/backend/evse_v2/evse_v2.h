@@ -78,6 +78,7 @@ private:
     Config evse_reset_dc_fault_current;
     Config evse_gpio_configuration;
     Config evse_button_configuration;
+    Config evse_button_configuration_update;
     Config evse_managed;
     Config evse_managed_update;
     Config evse_managed_current;
