@@ -33,6 +33,7 @@ extern EventLog logger;
 extern TF_HalContext hal;
 extern WebServer server;
 extern TaskScheduler task_scheduler;
+extern Config modules;
 
 extern API api;
 
@@ -64,26 +65,16 @@ EVSEV2Meter::EVSEV2Meter() {
     energy_meter_reset = Config::Null();
 }
 
-bool EVSEV2Meter::setupEVSE() {
-    if (!evse_v2.initialized) {
-        return false;
-    }
-
+void EVSEV2Meter::setupEVSE(bool update_module_initialized) {
     evse_v2.update_evse_energy_meter_state();
 
     if(!evse_v2.evse_energy_meter_state.get("available")->asBool()) {
-        return false;
-    }
-
-    return true;
-}
-
-void EVSEV2Meter::setup() {
-    if (!setupEVSE()) {
-        initialized = false;
-        hardware_available = false;
+        task_scheduler.scheduleOnce("setup_evsev2_meter", [this](){
+            this->setupEVSE(true);
+        }, 3000);
         return;
     }
+
     hardware_available = true;
 
     for(int i = 0; i < power_history.size(); ++i) {
@@ -142,17 +133,33 @@ void EVSEV2Meter::setup() {
     }, 1000, 1000);
 
     initialized = true;
+
+    if(update_module_initialized)
+        modules.get("evse_v2_meter")->updateBool(true);
+}
+
+void EVSEV2Meter::setup() {
+    initialized = false;
+    hardware_available = false;
+
+    if (!evse_v2.initialized) {
+        // If the EVSE is not initialized, we will never be able to reach the energy meter.
+        return;
+    }
+
+    setupEVSE(false);
 }
 
 void EVSEV2Meter::register_urls() {
-    if (!hardware_available)
-        return;
-
     api.addState("meter/state", &state, {}, 1000);
     api.addState("meter/detailed_values", &detailed_values, {}, 1000);
     //api.addState("meter/error_counters", &error_counters, {}, 1000); TODO: use api.getstate
 
     api.addCommand("meter/reset", &energy_meter_reset, {}, [this](){
+        if(!initialized) {
+            return;
+        }
+
         tf_evse_v2_reset_energy_meter(&evse_v2.evse);
     }, true);
 

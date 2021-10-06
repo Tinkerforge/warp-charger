@@ -40,7 +40,7 @@ class EVSEV2Meter {
 public:
     EVSEV2Meter();
     void setup();
-    bool setupEVSE();
+    void setupEVSE(bool update_module_initialized);
     void register_urls();
     void loop();
 
