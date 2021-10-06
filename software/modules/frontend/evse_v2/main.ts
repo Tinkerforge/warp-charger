@@ -99,15 +99,15 @@ function update_evse_low_level_state(state: EVSELowLevelState) {
 
     $('#pwm_duty_cycle').val(util.toLocaleFixed(state.cp_pwm_duty_cycle / 10, 1) + " %");
 
-    for(let i = 0; i < 5; ++i) {
+    for(let i = 0; i < 7; ++i) {
         $(`#adc_value_${i}`).val(state.adc_values[i]);
     }
 
-    for(let i = 0; i < 5; ++i) {
+    for(let i = 0; i < 7; ++i) {
         $(`#voltage_${i}`).val(util.toLocaleFixed(state.voltages[i] / 1000.0, 3) + " V");
     }
 
-    for(let i = 0; i < 5; ++i) {
+    for(let i = 0; i < 2; ++i) {
         $(`#resistance_${i}`).val(state.resistances[i] + " Ω");
     }
 }
@@ -632,9 +632,9 @@ export function getTranslation(lang: string) {
                     "led_state_api": "API",
                     "cp_pwm_dc": "CP-PWM-Tastverhältnis",
                     "adc_values": "ADC-Werte",
-                    "adc_names": "PE-CP, PE-PP",
+                    "adc_names": "CP/PE vor Widerstand (PWM High), CP/PE nach Widerstand (PWM High)</br>CP/PE vor Widerstand (PWM Low), CP/PE nach Widerstand (PWM Low)</br>PP/PE, +12V Rail</br>-12V Rail",
                     "voltages": "Spannungen",
-                    "voltage_names": "PE-CP, PE-PP, Maximalspannung PE-CP",
+                    "voltage_names": "CP/PE vor Widerstand (PWM High), CP/PE nach Widerstand (PWM High)</br>CP/PE vor Widerstand (PWM Low), CP/PE nach Widerstand (PWM Low)</br>PP/PE, +12V Rail</br>-12V Rail",
                     "resistances": "Widerstände",
                     "resistance_names": "PE-CP, PE-PP",
                     "gpios": "GPIOs",
@@ -811,9 +811,9 @@ export function getTranslation(lang: string) {
                     "led_state_api": "API",
                     "cp_pwm_dc": "CP PWM duty cycle",
                     "adc_values": "ADC values",
-                    "adc_names": "PE-CP, PE-PP",
+                    "adc_names": "CP/PE before resistor (PWM high), CP/PE after resistor (PWM high)</br>CP/PE before resistor (PWM low), CP/PE after resistor (PWM low)</br>PP/PE, +12V rail</br>-12V rail",
                     "voltages": "Voltages",
-                    "voltage_names": "PE-CP, PE-PP, high voltage PE-CP",
+                    "voltage_names": "CP/PE before resistor (PWM high), CP/PE after resistor (PWM high)</br>CP/PE before resistor (PWM low), CP/PE after resistor (PWM low)</br>PP/PE, +12V rail</br>-12V rail",
                     "resistances": "Resistances",
                     "resistance_names": "PE-CP, PE-PP",
                     "gpios": "GPIOs",
