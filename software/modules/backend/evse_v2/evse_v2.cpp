@@ -37,7 +37,6 @@ extern WebServer server;
 
 extern API api;
 extern bool firmware_update_allowed;
-extern bool factory_reset_requested;
 
 EVSEV2::EVSEV2()
 {
@@ -183,22 +182,6 @@ void EVSEV2::setup()
     setup_evse();
     if(!evse_found)
         return;
-
-    bool gpio[24];
-
-    int rc = tf_evse_v2_get_low_level_state(&evse,
-        nullptr,
-        nullptr,
-        nullptr,
-        nullptr,
-        nullptr,
-        gpio);
-
-    if (rc == TF_E_OK && gpio[6]) {
-        tf_evse_v2_set_indicator_led(&evse, 1001, 2620 * 2, nullptr);
-        factory_reset_requested = true;
-        firmware_update.loop();
-    }
 
     task_scheduler.scheduleWithFixedDelay("update_evse_state", [this](){
         update_evse_state();
