@@ -201,7 +201,7 @@ void NFC::handle_event(tag_info_t *tag, bool found) {
 }
 
 void NFC::handle_evse() {
-    static Config *evse_state = api.getState("evse/state");
+    static Config *evse_state = api.getState("evse/state", false);
 
     static bool block_api_call = false;
     static uint32_t block_api_until = 0;
@@ -387,7 +387,14 @@ void NFC::register_urls() {
     if (nfc_start || nfc_stop) {
         api.blockCommand("evse/button_configuration_update", "nfc.script.nfc_controls_button");
 
-        auto btn_cfg = api.getState("evse/button_configuration")->get("button")->asUint();
+        auto button_configuration = api.getState("evse/button_configuration", false);
+        uint32_t btn_cfg = 2;
+
+        if (button_configuration == nullptr)
+            logger.printfln("No EVSE found. Disabling NFC unlock.");
+        else
+            btn_cfg = button_configuration->get("button")->asUint();
+
         if (nfc_start)
             btn_cfg &= ~1;
         if (nfc_stop)
