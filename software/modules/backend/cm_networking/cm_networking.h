@@ -34,9 +34,13 @@
 // Keep in sync with charge_manager.cpp
 #define MAX_CLIENTS 6
 
+// Increment when changing packet structs
+#define PROTOCOL_VERSION 2
+
 struct packet_header {
     uint8_t seq_num;
-    uint8_t version[3];
+    uint8_t version;
+    uint16_t padding;
 } __attribute__ ((packed));
 
 struct request_packet {
@@ -54,6 +58,7 @@ struct response_packet {
     uint8_t charge_release;
     uint32_t uptime;
     uint16_t allowed_charging_current;
+    uint16_t supported_current;
 } __attribute__ ((packed));
 
 class CMNetworking {
@@ -75,7 +80,8 @@ public:
                                              uint8_t, // error_state
                                              uint8_t, // charge_release
                                              uint32_t,// uptime
-                                             uint16_t // allowed_charging_current
+                                             uint16_t, // allowed_charging_current
+                                             uint16_t // supported_current
                                             )> manager_callback);
 
     bool send_manager_update(uint8_t client_id, uint16_t allocated_current);
@@ -86,7 +92,8 @@ public:
                             uint8_t error_state,
                             uint8_t charge_release,
                             uint32_t uptime,
-                            uint16_t allowed_charging_current);
+                            uint16_t allowed_charging_current,
+                            uint16_t supported_current);
 
 private:
     int manager_sock;

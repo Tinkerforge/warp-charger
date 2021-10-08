@@ -125,7 +125,8 @@ void ChargeManager::start_manager_task() {
             uint8_t error_state,
             uint8_t charge_release,
             uint32_t uptime,
-            uint16_t allowed_charging_current
+            uint16_t allowed_charging_current,
+            uint16_t supported_current
         ){
             Config &target = charge_manager_state.get("chargers")->asArray()[client_id];
             // Don't update if the uptimes are the same.
@@ -143,6 +144,7 @@ void ChargeManager::start_manager_task() {
             target.get("wants_to_charge")->updateBool(charge_release == 3); // CHARGE_RELEASE_CHARGE_MANAGEMENT
             target.get("is_charging")->updateBool(vehicle_state == 2); //VEHICLE_STATE_CHARGING
             target.get("allowed_current")->updateUint(allowed_charging_current);
+            target.get("supported_current")->updateUint(supported_current);
             target.get("last_update")->updateUint(millis());
             target.get("state")->updateUint(get_charge_state(vehicle_state,
                                                                 iec61851_state,

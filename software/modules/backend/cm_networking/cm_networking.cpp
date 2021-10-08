@@ -88,7 +88,8 @@ void CMNetworking::register_manager(const std::vector<String> &hosts,
                                              uint8_t, // error_state
                                              uint8_t, // charge_release
                                              uint32_t,// uptime
-                                             uint16_t // allowed_charging_current
+                                             uint16_t,// allowed_charging_current
+                                             uint16_t // supported_current
                                             )> manager_callback) {
 
     for(int i = 0; i < names.size(); ++i) {
@@ -152,14 +153,12 @@ void CMNetworking::register_manager(const std::vector<String> &hosts,
             return;
         }
 
-        if (response.header.version[0] != _MAJOR_ || response.header.version[1] != _MINOR_ || response.header.version[2] != _PATCH_) {
-            logger.printfln("Received packet from %s (%s) with incompatible firmware. Our version is %u.%u.%u, received packet had %u.%u.%u",
+        if (response.header.version != PROTOCOL_VERSION) {
+            logger.printfln("Received packet from %s (%s) with incompatible firmware. Our protocol version is %u, received packet had %u",
                 names[charger_idx].c_str(),
                 inet_ntoa(source_addr.sin_addr),
-                _MAJOR_, _MINOR_, _PATCH_,
-                response.header.version[0],
-                response.header.version[1],
-                response.header.version[2]);
+                PROTOCOL_VERSION,
+                response.header.version);
             return;
         }
 
@@ -171,7 +170,8 @@ void CMNetworking::register_manager(const std::vector<String> &hosts,
                          response.error_state,
                          response.charge_release,
                          response.uptime,
-                         response.allowed_charging_current);
+                         response.allowed_charging_current,
+                         response.supported_current);
         }, 100, 100);
 }
 
@@ -182,9 +182,7 @@ bool CMNetworking::send_manager_update(uint8_t client_id, uint16_t allocated_cur
         return true;
 
     request_packet request;
-    request.header.version[0] = _MAJOR_;
-    request.header.version[1] = _MINOR_;
-    request.header.version[2] = _PATCH_;
+    request.header.version = PROTOCOL_VERSION;
     request.header.seq_num = next_seq_num;
     ++next_seq_num;
 
@@ -242,12 +240,10 @@ void CMNetworking::register_client(std::function<void(uint16_t)> client_callback
             return;
         }
 
-        if (request.header.version[0] != _MAJOR_ || request.header.version[1] != _MINOR_ || request.header.version[2] != _PATCH_) {
-            logger.printfln("received packet from box with incompatible firmware. Our version is %u.%u.%u, received packet had %u.%u.%u",
-                _MAJOR_, _MINOR_, _PATCH_,
-                request.header.version[0],
-                request.header.version[1],
-                request.header.version[2]);
+        if (request.header.version != PROTOCOL_VERSION) {
+            logger.printfln("received packet from box with incompatible firmware. Our protocol version is %u, received packet had %u",
+                PROTOCOL_VERSION,
+                request.header.version);
             return;
         }
 
@@ -267,7 +263,8 @@ bool CMNetworking::send_client_update(uint8_t iec61851_state,
                             uint8_t error_state,
                             uint8_t charge_release,
                             uint32_t uptime,
-                            uint16_t allowed_charging_current)
+                            uint16_t allowed_charging_current,
+                            uint16_t supported_current)
 {
     static uint8_t next_seq_num = 0;
 
@@ -281,9 +278,7 @@ bool CMNetworking::send_client_update(uint8_t iec61851_state,
     response_packet response;
     response.header.seq_num = next_seq_num;
     ++next_seq_num;
-    response.header.version[0] = _MAJOR_;
-    response.header.version[1] = _MINOR_;
-    response.header.version[2] = _PATCH_;
+    response.header.version = PROTOCOL_VERSION;
 
     response.iec61851_state = iec61851_state;
     response.vehicle_state = vehicle_state;
@@ -291,6 +286,7 @@ bool CMNetworking::send_client_update(uint8_t iec61851_state,
     response.charge_release = charge_release;
     response.uptime = uptime;
     response.allowed_charging_current = allowed_charging_current;
+    response.supported_current = supported_current;
 
     int err = sendto(client_sock, &response, sizeof(response), 0, (sockaddr *)&source_addr, sizeof(source_addr));
     if (err < 0) {
