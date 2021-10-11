@@ -144,7 +144,7 @@ void SDM72DM::checkRS485State() {
         return;
     }
     if (mode != TF_RS485_MODE_MODBUS_MASTER_RTU) {
-        logger.printfln("RS485 mode invalid. Did the bricklet reset?");
+        logger.printfln("RS485 mode invalid (%u). Did the bricklet reset?", mode);
         error_counters.get("bricklet_reset")->updateUint(error_counters.get("bricklet_reset")->asUint() + 1);
         setupRS485();
     }
