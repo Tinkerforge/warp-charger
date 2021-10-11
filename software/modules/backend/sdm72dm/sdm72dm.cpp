@@ -353,15 +353,22 @@ void SDM72DM::loop()
         ++modbus_read_state;
     else {
         modbus_read_state = 0;
-        next_read_deadline_ms = next_read_deadline_ms + 500;
 
         if (last_user_data_done == UserDataDone::DONE) {
+            // Try to measure each 500 ms, but don't pile up measurements
+            // if we are already a complete slot behind.
+            next_read_deadline_ms = next_read_deadline_ms + 500;
+            if (deadline_elapsed(next_read_deadline_ms))
+                next_read_deadline_ms = millis() + 500;
+
             int16_t val = (int16_t)min((float)INT16_MAX, state.get("power")->asFloat());
             interval_samples.push(val);
             ++samples_last_interval;
         } else if (last_user_data_done == UserDataDone::ERROR) {
+            next_read_deadline_ms = millis() + 500;
             error_counters.get("meter")->updateUint(error_counters.get("meter")->asUint() + 1);
         } else {
+            next_read_deadline_ms = millis() + 500;
             error_counters.get("bricklet")->updateUint(error_counters.get("bricklet")->asUint() + 1);
         }
 
