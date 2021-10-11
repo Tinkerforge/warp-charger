@@ -40,6 +40,7 @@ SDM72DM::SDM72DM() {
         {"power", Config::Float(0.0)},
         {"energy_rel", Config::Float(0.0)},
         {"energy_abs", Config::Float(0.0)},
+        {"state", Config::Uint8(0)},
     });
 
     error_counters = Config::Object({
@@ -52,6 +53,7 @@ SDM72DM::SDM72DM() {
 
     user_data.expected_request_id = 0;
     user_data.value_to_write = nullptr;
+    user_data.state = state.get("state");
     user_data.done = SDM72DM::UserDataDone::DONE;
 }
 
@@ -91,6 +93,11 @@ void read_input_registers_handler(struct TF_RS485 *device, uint8_t request_id, i
     value.regs[0] = input_registers_chunk_data[1];
 
     ud->value_to_write->updateFloat(value.f);
+    if (ud->state->asUint() == 0 && value.f == 0)
+        ud->state->updateUint(1);
+
+    if (ud->state->asUint() != 2 && value.f != 0)
+        ud->state->updateUint(2);
     ud->done = SDM72DM::UserDataDone::DONE;
 }
 

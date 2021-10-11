@@ -55,6 +55,7 @@ public:
 
     struct UserData {
         Config *value_to_write;
+        Config *state;
         uint8_t expected_request_id;
         UserDataDone done;
     };
