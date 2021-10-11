@@ -501,7 +501,8 @@ export function updateLockState(module_init: any) {
     if (module_init.evse_v2_meter)
         build_evse_v2_detailed_values_view();
 
-    $('#meter_phases').prop('hidden', !module_init.evse_v2_meter);
+    $('#meter_phases_active').prop('hidden', !module_init.evse_v2_meter);
+    $('#meter_phases_connected').prop('hidden', !module_init.evse_v2_meter);
     $('#meter_detailed_values_container').prop('hidden', !module_init.evse_v2_meter);
 }
 
