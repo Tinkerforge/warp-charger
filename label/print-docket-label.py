@@ -139,6 +139,10 @@ def print_docket_label(sku, extra_supply_cable, version, serial_number, build_da
 
     # check build date
     parsed_build_date = datetime.strptime(build_date, '%Y-%m')
+
+    if parsed_build_date.strftime('%Y-%m') != build_date:
+        raise Exception('Invalid build date: {0}'.format(build_date))
+
     now = datetime.now()
 
     if not force_build_date and (parsed_build_date.year < now.year or (parsed_build_date.year == now.year and parsed_build_date.month < now.month)):
