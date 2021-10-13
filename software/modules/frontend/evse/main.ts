@@ -88,7 +88,8 @@ interface EVSELowLevelState {
     voltages: Int16Array,
     resistances: Uint32Array,
     gpio: boolean[],
-    hardware_version: number
+    hardware_version: number,
+    charging_time: number
 }
 
 function update_evse_low_level_state(state: EVSELowLevelState) {
@@ -110,6 +111,7 @@ function update_evse_low_level_state(state: EVSELowLevelState) {
 
     $('#resistance_0').val(state.resistances[0] + " Ω");
     $('#resistance_1').val(state.resistances[1] + " Ω");
+    $('#charging_time').val(util.format_timespan(Math.floor(state.charging_time / 1000)));
 }
 
 interface EVSEMaxChargingCurrent {
@@ -613,6 +615,7 @@ export function getTranslation(lang: string) {
                     "charge_management_description": "Lastmanagement",
                     "charge_management_description_muted": "<a href=\"https://www.warp-charger.com/#documents\">siehe Betriebsanleitung für Details</a>",
                     "charge_management_enable": "Erlaubt anderen Wallboxen diese zu steuern",
+                    "charging_time": "Lade seit"
                 },
                 "script": {
                     "error_code": "Fehlercode",
@@ -761,6 +764,7 @@ export function getTranslation(lang: string) {
                     "charge_management_description": "Charge management",
                     "charge_management_description_muted": "<a href=\"https://www.warp-charger.com/#documents\">see manual for details</a>",
                     "charge_management_enable": "Enables other chargers to control this one",
+                    "charging_time": "Charging for"
                 },
                 "script": {
                     "error_code": "Error code",

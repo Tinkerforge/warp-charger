@@ -87,6 +87,7 @@ interface EVSELowLevelState {
     voltages: Int16Array,
     resistances: Uint32Array,
     gpio: boolean[],
+    charging_time: number
 }
 
 function update_evse_low_level_state(state: EVSELowLevelState) {
@@ -110,6 +111,8 @@ function update_evse_low_level_state(state: EVSELowLevelState) {
     for(let i = 0; i < 2; ++i) {
         $(`#resistance_${i}`).val(state.resistances[i] + " Ω");
     }
+
+    $('#charging_time').val(util.format_timespan(Math.floor(state.charging_time / 1000)));
 }
 
 interface EVSEMaxChargingCurrent {
@@ -266,8 +269,8 @@ function update_evse_gpio_configuration(g: EVSEGPIOConfiguration) {
 function save_evse_gpio_configuration() {
     let payload: EVSEGPIOConfiguration = {
         shutdown_input: parseInt($('#evse_gpio_shutdown').val().toString()),
-        input: parseInt($('#evse_gpio_in').val()),
-        output: parseInt($('#evse_gpio_out').val())
+        input: parseInt($('#evse_gpio_in').val().toString()),
+        output: parseInt($('#evse_gpio_out').val().toString())
     }
 
     $.ajax({
@@ -695,6 +698,7 @@ export function getTranslation(lang: string) {
                     "reset_description_muted": "",
                     "reset_evse": "Neustart",
                     "reflash_evse": "Neu flashen",
+                    "charging_time": "Lade seit"
                 },
                 "script": {
                     "error_code": "Fehlercode",
@@ -725,7 +729,7 @@ export function getTranslation(lang: string) {
 
                     "save_failed": "(De-)Aktivieren des Lastmanagements fehlgeschlagen",
                     "reset_dc_fault_current_failed": "Zurücksetzen des DC-Fehlerstromschutzmoduls fehlgeschlagen",
-                    "gpio_configuration_failed": "Speichern der GPIO-Konfiguration fehlgeschlagen"
+                    "gpio_configuration_failed": "Speichern der GPIO-Konfiguration fehlgeschlagen",
                 }
             }
         },
@@ -875,6 +879,7 @@ export function getTranslation(lang: string) {
                     "reset_description_muted": "",
                     "reset_evse": "Restart",
                     "reflash_evse": "Reflash",
+                    "charging_time": "Charging for"
 
                 },
                 "script": {

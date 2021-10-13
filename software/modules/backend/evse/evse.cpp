@@ -79,7 +79,8 @@ EVSE::EVSE()
             }, Config::Uint32(0), 2, 2, Config::type_id<Config::ConfUint>())
         },
         {"gpio", Config::Array({Config::Bool(false),Config::Bool(false),Config::Bool(false),Config::Bool(false), Config::Bool(false)}, Config::Bool(false), 5, 5, Config::type_id<Config::ConfBool>())},
-        {"hardware_version", Config::Uint8(0)}
+        {"hardware_version", Config::Uint8(0)},
+        {"charging_time", Config::Uint32(0)},
     });
 
     evse_max_charging_current = Config::Object ({
@@ -202,7 +203,7 @@ void EVSE::setup()
 }
 
 String EVSE::get_evse_debug_header() {
-    return "\"millis,iec,vehicle,contactor,_error,charge_release,allowed_current,error,lock,t_state_change,uptime,low_level_mode_enabled,led,cp_pwm,adc_pe_cp,adc_pe_pp,voltage_pe_cp,voltage_pe_pp,voltage_pe_cp_max,resistance_pe_cp,resistance_pe_pp,gpio_in,gpio_out,gpio_motor_in,gpio_relay,gpio_motor_error,hardware_version\"";
+    return "\"millis,iec,vehicle,contactor,_error,charge_release,allowed_current,error,lock,t_state_change,uptime,low_level_mode_enabled,led,cp_pwm,adc_pe_cp,adc_pe_pp,voltage_pe_cp,voltage_pe_pp,voltage_pe_cp_max,resistance_pe_cp,resistance_pe_pp,gpio_in,gpio_out,gpio_motor_in,gpio_relay,gpio_motor_error,hardware_version,charging_time\"";
 }
 
 String EVSE::get_evse_debug_line() {
@@ -238,6 +239,7 @@ String EVSE::get_evse_debug_line() {
     uint32_t resistances[2];
     bool gpio[5];
     uint8_t hardware_version;
+    uint32_t charging_time;
 
     rc = tf_evse_get_low_level_state(&evse,
         &low_level_mode_enabled,
@@ -247,14 +249,15 @@ String EVSE::get_evse_debug_line() {
         voltages,
         resistances,
         gpio,
-        &hardware_version);
+        &hardware_version,
+        &charging_time);
 
     if(rc != TF_E_OK) {
         return String("evse_get_low_level_state failed: rc: ") + String(rc);
     }
 
     char line[150] = {0};
-    snprintf(line, sizeof(line)/sizeof(line[0]), "[%lu,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%c,%u,%u,%u,%u,%d,%d,%d,%u,%u,%c,%c,%c,%c,%c,%u]",
+    snprintf(line, sizeof(line)/sizeof(line[0]), "[%lu,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%c,%u,%u,%u,%u,%d,%d,%d,%u,%u,%c,%c,%c,%c,%c,%u,%u]",
         millis(),
         iec61851_state,
         vehicle_state,
@@ -273,7 +276,8 @@ String EVSE::get_evse_debug_line() {
         voltages[0],voltages[1],voltages[2],
         resistances[0],resistances[1],
         gpio[0] ? '1' : '0',gpio[1] ? '1' : '0',gpio[2] ? '1' : '0',gpio[3] ? '1' : '0',gpio[4] ? '1' : '0',
-        hardware_version);
+        hardware_version,
+        charging_time);
 
     return String(line);
 }
@@ -418,6 +422,7 @@ void EVSE::update_evse_low_level_state() {
     uint32_t resistances[2];
     bool gpio[5];
     uint8_t hardware_version;
+    uint32_t charging_time;
 
     int rc = tf_evse_get_low_level_state(&evse,
         &low_level_mode_enabled,
@@ -427,7 +432,8 @@ void EVSE::update_evse_low_level_state() {
         voltages,
         resistances,
         gpio,
-        &hardware_version);
+        &hardware_version,
+        &charging_time);
 
     if(rc != TF_E_OK) {
         is_in_bootloader(rc);
@@ -451,6 +457,7 @@ void EVSE::update_evse_low_level_state() {
         evse_low_level_state.get("gpio")->get(i)->updateBool(gpio[i]);
 
     evse_low_level_state.get("hardware_version")->updateUint(hardware_version);
+    evse_low_level_state.get("charging_time")->updateUint(charging_time);
 }
 
 void EVSE::update_evse_state() {

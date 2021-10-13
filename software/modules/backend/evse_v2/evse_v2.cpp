@@ -93,7 +93,8 @@ EVSEV2::EVSEV2()
             Config::Bool(false), Config::Bool(false),  Config::Bool(false),Config::Bool(false),
             Config::Bool(false), Config::Bool(false),  Config::Bool(false),Config::Bool(false),
             Config::Bool(false), Config::Bool(false),  Config::Bool(false),Config::Bool(false),
-            }, Config::Bool(false), 24, 24, Config::type_id<Config::ConfBool>())}
+            }, Config::Bool(false), 24, 24, Config::type_id<Config::ConfBool>())},
+        {"charging_time", Config::Uint32(0)}
     });
 
     evse_max_charging_current = Config::Object ({
@@ -230,7 +231,7 @@ void EVSEV2::setup()
 }
 
 String EVSEV2::get_evse_debug_header() {
-    return "millis,iec61851_state,vehicle_state,contactor_state,contactor_error,charge_release,allowed_charging_current,error_state,lock_state,time_since_state_change,uptime,led_state,cp_pwm_duty_cycle,adc_values_0,adc_values_1,adc_values_2,adc_values_3,adc_values_4,,adc_values_5,adc_values_6,voltages_0,voltages_1,voltages_2,voltages_3,voltages_4,voltages_5,voltages_6,resistances_0,resistances_1,gpio_0,gpio_1,gpio_2,gpio_3,gpio_4,gpio_5,gpio_6,gpio_7,gpio_8,gpio_9,gpio_10,gpio_11,gpio_12,gpio_13,gpio_14,gpio_15,gpio_16,gpio_17,gpio_18,gpio_19,gpio_20,gpio_21,gpio_22,gpio_23\n";
+    return "millis,iec61851_state,vehicle_state,contactor_state,contactor_error,charge_release,allowed_charging_current,error_state,lock_state,time_since_state_change,uptime,led_state,cp_pwm_duty_cycle,adc_values_0,adc_values_1,adc_values_2,adc_values_3,adc_values_4,,adc_values_5,adc_values_6,voltages_0,voltages_1,voltages_2,voltages_3,voltages_4,voltages_5,voltages_6,resistances_0,resistances_1,gpio_0,gpio_1,gpio_2,gpio_3,gpio_4,gpio_5,gpio_6,gpio_7,gpio_8,gpio_9,gpio_10,gpio_11,gpio_12,gpio_13,gpio_14,gpio_15,gpio_16,gpio_17,gpio_18,gpio_19,gpio_20,gpio_21,gpio_22,gpio_23,charging_time\n";
 }
 
 String EVSEV2::get_evse_debug_line() {
@@ -264,6 +265,7 @@ String EVSEV2::get_evse_debug_line() {
     int16_t voltages[7];
     uint32_t resistances[2];
     bool gpio[24];
+    uint32_t charging_time;
 
     rc = tf_evse_v2_get_low_level_state(&evse,
         &led_state,
@@ -271,14 +273,15 @@ String EVSEV2::get_evse_debug_line() {
         adc_values,
         voltages,
         resistances,
-        gpio);
+        gpio,
+        &charging_time);
 
     if(rc != TF_E_OK) {
         return String("evse_get_low_level_state failed: rc: ") + String(rc);
     }
 
     char line[230] = {0};
-    snprintf(line, sizeof(line)/sizeof(line[0]), "%lu,%u,%u,%u,%u,%u,%u,%u,%u,%lu,%lu,%u,%u,%u,%u,%u,%u,%u,%u,%u,%d,%d,%d,%d,%d,%d,%d,%u,%u,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c\n",
+    snprintf(line, sizeof(line)/sizeof(line[0]), "%lu,%u,%u,%u,%u,%u,%u,%u,%u,%lu,%lu,%u,%u,%u,%u,%u,%u,%u,%u,%u,%d,%d,%d,%d,%d,%d,%d,%u,%u,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%u\n",
         millis(),
         iec61851_state,
         vehicle_state,
@@ -300,7 +303,8 @@ String EVSEV2::get_evse_debug_line() {
         gpio[8] ? '1' : '0',gpio[9] ? '1' : '0',gpio[10] ? '1' : '0',gpio[11] ? '1' : '0',
         gpio[12] ? '1' : '0',gpio[13] ? '1' : '0',gpio[14] ? '1' : '0',gpio[15] ? '1' : '0',
         gpio[16] ? '1' : '0',gpio[17] ? '1' : '0',gpio[18] ? '1' : '0',gpio[19] ? '1' : '0',
-        gpio[20] ? '1' : '0',gpio[21] ? '1' : '0',gpio[22] ? '1' : '0',gpio[23] ? '1' : '0'
+        gpio[20] ? '1' : '0',gpio[21] ? '1' : '0',gpio[22] ? '1' : '0',gpio[23] ? '1' : '0',
+        charging_time
         );
 
     return String(line);
@@ -310,7 +314,7 @@ String EVSEV2::get_evse_debug_line() {
 String EVSEV2::get_evse_monitor_header() {
     return "millis,"
             "state,iec,vehicle,contactor,_error,charge_release,allowed_current,error,lock,t_state_change,uptime,"
-            "low_level_state,led,cp_pwm,adc_0,adc_1,adc_2,adc_3,adc_4,adc_5,adc_6,voltage_0,voltage_1,voltage_2,voltage_3,voltage_4,voltage_5,voltage_6,resistances_0,resistances_1,"
+            "low_level_state,led,cp_pwm,adc_0,adc_1,adc_2,adc_3,adc_4,adc_5,adc_6,voltage_0,voltage_1,voltage_2,voltage_3,voltage_4,voltage_5,voltage_6,resistances_0,resistances_1,charging_time"
             "hardware_cfg,jumper,has_lock_switch,"
             "max_charging_current,configured,incoming,outgoing,"
             "auto_start,auto_start,"
@@ -350,7 +354,7 @@ String EVSEV2::get_evse_monitor_line() {
     uint8_t input, output;
 
     char line[300] = {0};
-    snprintf(line, sizeof(line)/sizeof(line[0]), "%lu,,%u,%u,%u,%u,%u,%u,%u,%u,%lu,%lu,,%u,%u,%u,%u,%u,%u,%u,%u,%u,%d,%d,%d,%d,%d,%d,%d,%u,%u,,%u,%c,,%u,%u,%u,%u,,%c,,%lu,%lu,%lu,,%u,,%u,%u,%u,,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,\n",
+    snprintf(line, sizeof(line)/sizeof(line[0]), "%lu,,%u,%u,%u,%u,%u,%u,%u,%u,%lu,%lu,,%u,%u,%u,%u,%u,%u,%u,%u,%u,%d,%d,%d,%d,%d,%d,%d,%u,%u,%u,,%u,%c,,%u,%u,%u,%u,,%c,,%lu,%lu,%lu,,%u,,%u,%u,%u,,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,\n",
         millis(),
 
         evse_state.get("iec61851_state")->asUint(),
@@ -382,6 +386,7 @@ String EVSEV2::get_evse_monitor_line() {
         evse_low_level_state.get("voltages")->get(6)->asInt(),
         evse_low_level_state.get("resistances")->get(0)->asUint(),
         evse_low_level_state.get("resistances")->get(1)->asUint(),
+        evse_low_level_state.get("charging_time")->asUint(),
 
         evse_hardware_configuration.get("jumper_configuration")->asUint(),
         evse_hardware_configuration.get("has_lock_switch")->asBool() ? '1' : '0',
@@ -624,6 +629,7 @@ void EVSEV2::update_evse_low_level_state() {
 
     uint8_t led_state;
     uint16_t cp_pwm_duty_cycle;
+    uint32_t charging_time;
 
     uint16_t adc_values[7];
     int16_t voltages[7];
@@ -636,7 +642,8 @@ void EVSEV2::update_evse_low_level_state() {
         adc_values,
         voltages,
         resistances,
-        gpio);
+        gpio,
+        &charging_time);
 
     if(rc != TF_E_OK) {
         is_in_bootloader(rc);
@@ -645,6 +652,7 @@ void EVSEV2::update_evse_low_level_state() {
 
     evse_low_level_state.get("led_state")->updateUint(led_state);
     evse_low_level_state.get("cp_pwm_duty_cycle")->updateUint(cp_pwm_duty_cycle);
+    evse_low_level_state.get("charging_time")->updateUint(charging_time);
 
     for(int i = 0; i < sizeof(adc_values)/sizeof(adc_values[0]); ++i)
         evse_low_level_state.get("adc_values")->get(i)->updateUint(adc_values[i]);
