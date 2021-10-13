@@ -57,8 +57,10 @@ struct response_packet {
     uint8_t error_state;
     uint8_t charge_release;
     uint32_t uptime;
+    uint32_t charging_time;
     uint16_t allowed_charging_current;
     uint16_t supported_current;
+    bool managed;
 } __attribute__ ((packed));
 
 class CMNetworking {
@@ -80,8 +82,10 @@ public:
                                              uint8_t, // error_state
                                              uint8_t, // charge_release
                                              uint32_t,// uptime
-                                             uint16_t, // allowed_charging_current
-                                             uint16_t // supported_current
+                                             uint32_t,// charging_time
+                                             uint16_t,// allowed_charging_current
+                                             uint16_t,// supported_current
+                                             bool     // managed
                                             )> manager_callback);
 
     bool send_manager_update(uint8_t client_id, uint16_t allocated_current);
@@ -92,8 +96,10 @@ public:
                             uint8_t error_state,
                             uint8_t charge_release,
                             uint32_t uptime,
+                            uint32_t charging_time,
                             uint16_t allowed_charging_current,
-                            uint16_t supported_current);
+                            uint16_t supported_current,
+                            bool managed);
 
 private:
     int manager_sock;

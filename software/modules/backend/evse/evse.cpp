@@ -184,10 +184,12 @@ void EVSE::setup()
             evse_state.get("error_state")->asUint(),
             evse_state.get("charge_release")->asUint(),
             evse_state.get("uptime")->asUint(),
+            evse_low_level_state.get("charging_time")->asUint(),
             evse_state.get("allowed_charging_current")->asUint(),
             min(evse_max_charging_current.get("max_current_configured")->asUint(),
                 min(evse_max_charging_current.get("max_current_incoming_cable")->asUint(),
-                    evse_max_charging_current.get("max_current_outgoing_cable")->asUint()))
+                    evse_max_charging_current.get("max_current_outgoing_cable")->asUint())),
+            evse_managed.get("managed")->asBool()
         );
     }, 1000, 1000);
 

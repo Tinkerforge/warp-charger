@@ -88,8 +88,10 @@ void CMNetworking::register_manager(const std::vector<String> &hosts,
                                              uint8_t, // error_state
                                              uint8_t, // charge_release
                                              uint32_t,// uptime
+                                             uint32_t,// charging_time
                                              uint16_t,// allowed_charging_current
-                                             uint16_t // supported_current
+                                             uint16_t,// supported_current
+                                             bool     // managed
                                             )> manager_callback) {
 
     for(int i = 0; i < names.size(); ++i) {
@@ -170,8 +172,10 @@ void CMNetworking::register_manager(const std::vector<String> &hosts,
                          response.error_state,
                          response.charge_release,
                          response.uptime,
+                         response.charging_time,
                          response.allowed_charging_current,
-                         response.supported_current);
+                         response.supported_current,
+                         response.managed);
         }, 100, 100);
 }
 
@@ -263,8 +267,10 @@ bool CMNetworking::send_client_update(uint8_t iec61851_state,
                             uint8_t error_state,
                             uint8_t charge_release,
                             uint32_t uptime,
+                            uint32_t charging_time,
                             uint16_t allowed_charging_current,
-                            uint16_t supported_current)
+                            uint16_t supported_current,
+                            bool managed)
 {
     static uint8_t next_seq_num = 0;
 
@@ -285,8 +291,10 @@ bool CMNetworking::send_client_update(uint8_t iec61851_state,
     response.error_state = error_state;
     response.charge_release = charge_release;
     response.uptime = uptime;
+    response.charging_time = charging_time;
     response.allowed_charging_current = allowed_charging_current;
     response.supported_current = supported_current;
+    response.managed = managed;
 
     int err = sendto(client_sock, &response, sizeof(response), 0, (sockaddr *)&source_addr, sizeof(source_addr));
     if (err < 0) {
