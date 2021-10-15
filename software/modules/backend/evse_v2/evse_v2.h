@@ -38,19 +38,10 @@ public:
     Config evse_energy_meter_state;
 
     // Called in evse_v2_meter setup
-    void update_evse_energy_meter_state();
+    void update_all_data();
 
 private:
     void setup_evse();
-    void update_evse_state();
-    void update_evse_low_level_state();
-    void update_evse_max_charging_current();
-    void update_evse_auto_start_charging();
-    void update_evse_managed();
-    void update_evse_energy_meter_values();
-    void update_evse_dc_fault_current_state();
-    void update_evse_gpio_configuration();
-    void update_evse_button_configuration();
     bool is_in_bootloader(int rc);
     bool flash_firmware();
     bool flash_plugin(int regular_plugin_upto);

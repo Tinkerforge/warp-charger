@@ -66,7 +66,7 @@ EVSEV2Meter::EVSEV2Meter() {
 }
 
 void EVSEV2Meter::setupEVSE(bool update_module_initialized) {
-    evse_v2.update_evse_energy_meter_state();
+    evse_v2.update_all_data();
 
     if(!evse_v2.evse_energy_meter_state.get("available")->asBool()) {
         task_scheduler.scheduleOnce("setup_evsev2_meter", [this](){

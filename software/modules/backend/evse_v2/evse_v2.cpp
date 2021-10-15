@@ -188,45 +188,8 @@ void EVSEV2::setup()
     if(!evse_found)
         return;
 
-    task_scheduler.scheduleWithFixedDelay("update_evse_state", [this](){
-        update_evse_state();
-    }, 0, 1000);
-
-    task_scheduler.scheduleWithFixedDelay("update_evse_low_level_state", [this](){
-        update_evse_low_level_state();
-    }, 0, 1000);
-
-    task_scheduler.scheduleWithFixedDelay("update_evse_max_charging_current", [this](){
-        update_evse_max_charging_current();
-    }, 0, 1000);
-
-    task_scheduler.scheduleWithFixedDelay("update_evse_auto_start_charging", [this](){
-        update_evse_auto_start_charging();
-    }, 0, 1000);
-
-    task_scheduler.scheduleWithFixedDelay("update_evse_energy_meter_values", [this](){
-        update_evse_energy_meter_values();
-    }, 0, 1000);
-
-    task_scheduler.scheduleWithFixedDelay("update_evse_energy_meter_state", [this](){
-        update_evse_energy_meter_state();
-    }, 0, 1000);
-
-    task_scheduler.scheduleWithFixedDelay("update_evse_dc_fault_current_state", [this](){
-        update_evse_dc_fault_current_state();
-    }, 0, 1000);
-
-    task_scheduler.scheduleWithFixedDelay("update_evse_gpio_configuration", [this](){
-        update_evse_gpio_configuration();
-    }, 0, 1000);
-
-    task_scheduler.scheduleWithFixedDelay("update_evse_button_configuration", [this](){
-        update_evse_button_configuration();
-    }, 0, 1000);
-
-
-    task_scheduler.scheduleWithFixedDelay("update_evse_managed", [this](){
-        update_evse_managed();
+    task_scheduler.scheduleWithFixedDelay("update_all_data", [this](){
+        update_all_data();
     }, 0, 1000);
 }
 
@@ -600,58 +563,60 @@ void EVSEV2::setup_evse()
     initialized = true;
 }
 
-void EVSEV2::update_evse_low_level_state() {
+
+void EVSEV2::update_all_data() {
     if(!initialized)
         return;
 
+    // get_all_data_1
+    uint8_t iec61851_state;
+	uint8_t vehicle_state;
+	uint8_t contactor_state;
+	uint8_t contactor_error;
+	uint8_t charge_release;
+	uint16_t allowed_charging_current;
+	uint8_t error_state;
+	uint8_t lock_state;
+	uint32_t time_since_state_change;
+	uint32_t uptime;
+	uint8_t jumper_configuration;
+	bool has_lock_switch;
+
+    // get_all_data_2
     uint8_t led_state;
-    uint16_t cp_pwm_duty_cycle;
-    uint32_t charging_time;
+	uint16_t cp_pwm_duty_cycle;
+	uint16_t adc_values[7];
+	int16_t voltages[7];
+	uint32_t resistances[2];
+	bool gpio[24];
+	uint32_t charging_time;
+	uint16_t max_current_configured;
+	uint16_t max_current_incoming_cable;
+	uint16_t max_current_outgoing_cable;
+	uint16_t max_current_managed;
+	bool autostart;
 
-    uint16_t adc_values[7];
-    int16_t voltages[7];
-    uint32_t resistances[2];
-    bool gpio[24];
+    // get_all_data_3
+    float power;
+	float energy_relative;
+	float energy_absolute;
+	bool phases_active[3];
+	bool phases_connected[3];
+	bool available;
+	uint32_t error_count[6];
+	uint8_t dc_fault_current_state;
+	uint8_t shutdown_input_configuration;
+	uint8_t input_configuration;
+	uint8_t output_configuration;
+	bool managed;
+	int16_t indication;
+	uint16_t duration;
+	uint8_t button_configuration;
+	uint32_t button_press_time;
+	uint32_t button_release_time;
+	bool button_pressed;
 
-    int rc = tf_evse_v2_get_low_level_state(&evse,
-        &led_state,
-        &cp_pwm_duty_cycle,
-        adc_values,
-        voltages,
-        resistances,
-        gpio,
-        &charging_time);
-
-    if(rc != TF_E_OK) {
-        is_in_bootloader(rc);
-        return;
-    }
-
-    evse_low_level_state.get("led_state")->updateUint(led_state);
-    evse_low_level_state.get("cp_pwm_duty_cycle")->updateUint(cp_pwm_duty_cycle);
-    evse_low_level_state.get("charging_time")->updateUint(charging_time);
-
-    for(int i = 0; i < sizeof(adc_values)/sizeof(adc_values[0]); ++i)
-        evse_low_level_state.get("adc_values")->get(i)->updateUint(adc_values[i]);
-
-    for(int i = 0; i < sizeof(voltages)/sizeof(voltages[0]); ++i)
-        evse_low_level_state.get("voltages")->get(i)->updateInt(voltages[i]);
-
-    for(int i = 0; i < sizeof(resistances)/sizeof(resistances[0]); ++i)
-        evse_low_level_state.get("resistances")->get(i)->updateUint(resistances[i]);
-
-    for(int i = 0; i < sizeof(gpio)/sizeof(gpio[0]); ++i)
-        evse_low_level_state.get("gpio")->get(i)->updateBool(gpio[i]);
-}
-
-void EVSEV2::update_evse_state() {
-    if(!initialized)
-        return;
-    uint8_t iec61851_state, vehicle_state, contactor_state, contactor_error, charge_release, error_state, lock_state;
-    uint16_t allowed_charging_current;
-    uint32_t time_since_state_change, uptime;
-
-    int rc = tf_evse_v2_get_state(&evse,
+    int rc = tf_evse_v2_get_all_data_1(&evse,
         &iec61851_state,
         &vehicle_state,
         &contactor_state,
@@ -661,13 +626,60 @@ void EVSEV2::update_evse_state() {
         &error_state,
         &lock_state,
         &time_since_state_change,
-        &uptime);
+        &uptime,
+        &jumper_configuration,
+        &has_lock_switch);
 
     if(rc != TF_E_OK) {
         is_in_bootloader(rc);
         return;
     }
 
+    rc = tf_evse_v2_get_all_data_2(&evse,
+        &led_state,
+        &cp_pwm_duty_cycle,
+        adc_values,
+        voltages,
+        resistances,
+        gpio,
+        &charging_time,
+        &max_current_configured,
+        &max_current_incoming_cable,
+        &max_current_outgoing_cable,
+        &max_current_managed,
+        &autostart);
+
+    if(rc != TF_E_OK) {
+        is_in_bootloader(rc);
+        return;
+    }
+
+    rc = tf_evse_v2_get_all_data_3(&evse,
+        &power,
+        &energy_relative,
+        &energy_absolute,
+        phases_active,
+        phases_connected,
+        &available,
+        error_count,
+        &dc_fault_current_state,
+        &shutdown_input_configuration,
+        &input_configuration,
+        &output_configuration,
+        &managed,
+        &indication,
+        &duration,
+        &button_configuration,
+        &button_press_time,
+        &button_release_time,
+        &button_pressed);
+
+    if(rc != TF_E_OK) {
+        is_in_bootloader(rc);
+        return;
+    }
+
+    // get_state
     firmware_update_allowed = vehicle_state == 0;
 
     evse_state.get("iec61851_state")->updateUint(iec61851_state);
@@ -696,167 +708,62 @@ void EVSEV2::update_evse_state() {
             logger.printfln("EVSE: Error state cleared");
         }
     }
-}
 
-void EVSEV2::update_evse_max_charging_current() {
-    if(!initialized)
-        return;
-    uint16_t configured, incoming, outgoing, managed;
+    // get_low_level_state
+    evse_low_level_state.get("led_state")->updateUint(led_state);
+    evse_low_level_state.get("cp_pwm_duty_cycle")->updateUint(cp_pwm_duty_cycle);
+    evse_low_level_state.get("charging_time")->updateUint(charging_time);
 
-    int rc = tf_evse_v2_get_max_charging_current(&evse,
-        &configured,
-        &incoming,
-        &outgoing,
-        &managed);
+    for(int i = 0; i < sizeof(adc_values)/sizeof(adc_values[0]); ++i)
+        evse_low_level_state.get("adc_values")->get(i)->updateUint(adc_values[i]);
 
-    if(rc != TF_E_OK) {
-        is_in_bootloader(rc);
-        return;
-    }
+    for(int i = 0; i < sizeof(voltages)/sizeof(voltages[0]); ++i)
+        evse_low_level_state.get("voltages")->get(i)->updateInt(voltages[i]);
 
-    evse_max_charging_current.get("max_current_configured")->updateUint(configured);
-    evse_max_charging_current.get("max_current_incoming_cable")->updateUint(incoming);
-    evse_max_charging_current.get("max_current_outgoing_cable")->updateUint(outgoing);
-    evse_max_charging_current.get("max_current_managed")->updateUint(managed);
-}
+    for(int i = 0; i < sizeof(resistances)/sizeof(resistances[0]); ++i)
+        evse_low_level_state.get("resistances")->get(i)->updateUint(resistances[i]);
 
-void EVSEV2::update_evse_auto_start_charging() {
-    if(!initialized)
-        return;
-    bool auto_start_charging;
+    for(int i = 0; i < sizeof(gpio)/sizeof(gpio[0]); ++i)
+        evse_low_level_state.get("gpio")->get(i)->updateBool(gpio[i]);
 
-    int rc = tf_evse_v2_get_charging_autostart(&evse,
-        &auto_start_charging);
+    // get_max_charging_current
+    evse_max_charging_current.get("max_current_configured")->updateUint(max_current_configured);
+    evse_max_charging_current.get("max_current_incoming_cable")->updateUint(max_current_incoming_cable);
+    evse_max_charging_current.get("max_current_outgoing_cable")->updateUint(max_current_outgoing_cable);
+    evse_max_charging_current.get("max_current_managed")->updateUint(max_current_managed);
 
-    if(rc != TF_E_OK) {
-        is_in_bootloader(rc);
-        return;
-    }
+    // get_charging_autostart
+    evse_auto_start_charging.get("auto_start_charging")->updateBool(autostart);
 
-    evse_auto_start_charging.get("auto_start_charging")->updateBool(auto_start_charging);
-}
-
-void EVSEV2::update_evse_managed() {
-    if(!initialized)
-        return;
-    bool managed;
-
-    int rc = tf_evse_v2_get_managed(&evse,
-        &managed);
-
-    if(rc != TF_E_OK) {
-        is_in_bootloader(rc);
-        return;
-    }
-
+    // get_managed
     evse_managed.get("managed")->updateBool(managed);
-}
 
-void EVSEV2::update_evse_energy_meter_values() {
-    if(!initialized)
-        return;
-
-    float power, energy_rel, energy_abs;
-    bool phases_active[3], phases_connected[3];
-
-    int rc = tf_evse_v2_get_energy_meter_values(&evse,
-        &power,
-        &energy_rel,
-        &energy_abs,
-        phases_active,
-        phases_connected);
-
-    if(rc != TF_E_OK) {
-        is_in_bootloader(rc);
-        return;
-    }
-
+    // get_energy_meter_values
     evse_energy_meter_values.get("power")->updateFloat(power);
-    evse_energy_meter_values.get("energy_rel")->updateFloat(energy_rel);
-    evse_energy_meter_values.get("energy_abs")->updateFloat(energy_abs);
+    evse_energy_meter_values.get("energy_rel")->updateFloat(energy_relative);
+    evse_energy_meter_values.get("energy_abs")->updateFloat(energy_absolute);
 
     for(int i = 0; i < 3; ++i)
         evse_energy_meter_values.get("phases_active")->get(i)->updateBool(phases_active[i]);
 
     for(int i = 0; i < 3; ++i)
         evse_energy_meter_values.get("phases_connected")->get(i)->updateBool(phases_connected[i]);
-}
 
-void EVSEV2::update_evse_energy_meter_state() {
-    if(!initialized)
-        return;
-
-    bool available;
-    uint32_t error_count[6];
-
-    int rc = tf_evse_v2_get_energy_meter_state(&evse,
-        &available,
-        error_count);
-
-    if(rc != TF_E_OK) {
-        is_in_bootloader(rc);
-        return;
-    }
-
+    // get_energy_meter_state
     evse_energy_meter_state.get("available")->updateBool(available);
     for(int i = 0; i < sizeof(error_count)/sizeof(error_count[0]); ++i)
         evse_energy_meter_state.get("error_count")->get(i)->updateUint(error_count[i]);
-}
 
-void EVSEV2::update_evse_dc_fault_current_state() {
-    if(!initialized)
-        return;
+    // get_dc_fault_current_state
+    evse_dc_fault_current_state.get("state")->updateUint(dc_fault_current_state);
 
-    uint8_t state;
+    // get_gpio_configuration
+    evse_gpio_configuration.get("shutdown_input")->updateUint(shutdown_input_configuration);
+    evse_gpio_configuration.get("input")->updateUint(input_configuration);
+    evse_gpio_configuration.get("output")->updateUint(output_configuration);
 
-    int rc = tf_evse_v2_get_dc_fault_current_state(&evse,
-        &state);
-
-    if(rc != TF_E_OK) {
-        is_in_bootloader(rc);
-        return;
-    }
-
-    evse_dc_fault_current_state.get("state")->updateUint(state);
-}
-
-void EVSEV2::update_evse_gpio_configuration() {
-    if(!initialized)
-        return;
-
-    uint8_t shutdown_input, input, output;
-
-    int rc = tf_evse_v2_get_gpio_configuration(&evse,
-        &shutdown_input,
-        &input,
-        &output);
-
-    if(rc != TF_E_OK) {
-        is_in_bootloader(rc);
-        return;
-    }
-
-    evse_gpio_configuration.get("shutdown_input")->updateUint(shutdown_input);
-    evse_gpio_configuration.get("input")->updateUint(input);
-    evse_gpio_configuration.get("output")->updateUint(output);
-}
-
-
-void EVSEV2::update_evse_button_configuration() {
-    if(!initialized)
-        return;
-
-    uint8_t button;
-
-    int rc = tf_evse_v2_get_button_configuration(&evse,
-        &button);
-
-    if(rc != TF_E_OK) {
-        is_in_bootloader(rc);
-        return;
-    }
-
-    evse_button_configuration.get("button")->updateUint(button);
+    // get_button_configuration
+    evse_button_configuration.get("button")->updateUint(button_configuration);
 }
 
 bool EVSEV2::is_in_bootloader(int rc) {
