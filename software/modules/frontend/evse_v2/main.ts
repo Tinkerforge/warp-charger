@@ -165,7 +165,7 @@ function update_evse_max_charging_current(state: EVSEMaxChargingCurrent) {
     $('#status_charging_current_maximum').html(theoretical_maximum_str);
 
     if($('#status_charging_current_save').prop("disabled")) {
-        $('#status_charging_current').val(util.toLocaleFixed(state.max_current_configured / 1000.0, 3));
+        util.setNumericInput("status_charging_current", state.max_current_configured / 1000.0, 3);
     }
 
     last_max_charging_current = state;
@@ -780,7 +780,7 @@ export function getTranslation(lang: string) {
                     "error_switch": "Switch error",
                     "error_contactor": "Contactor error",
                     "error_communication": "Communication error",
-                    "error_dc_fault_current": "DC Fault protector error",
+                    "error_dc_fault_current": "DC fault protector error",
                     "lock_state": "Cable lock",
                     "lock_init": "Init",
                     "lock_open": "Open",

@@ -126,6 +126,19 @@ export function toLocaleFixed(i: number, fractionDigits: number) {
     });
 }
 
+export function setNumericInput(id: string, i: number, fractionDigits: number) {
+    // Firefox does not localize numbers with a fractional part correctly.
+    // OTOH Webkit based browsers (correctly) expect setting the value to a non-localized number.
+    // Unfortunately, setting the value to a localized number (i.e. with , instead of . for German)
+    // does not raise an exception, instead only a warning on the console is shown.
+    // So to make everyone happy, we use user agent detection.
+    if (navigator.userAgent.includes("Gecko/")) {
+        (<HTMLInputElement> document.getElementById(id)).value = toLocaleFixed(i, fractionDigits);
+    } else {
+        (<HTMLInputElement> document.getElementById(id)).value = i.toFixed(fractionDigits);
+    }
+}
+
 export function toggle_password_fn(input_name: string) {
     return (ev: Event) => {
         let input = <HTMLInputElement>$(input_name)[0];

@@ -164,7 +164,7 @@ function update_evse_max_charging_current(state: EVSEMaxChargingCurrent) {
     $('#status_charging_current_maximum').html(theoretical_maximum_str);
 
     if($('#status_charging_current_save').prop("disabled")) {
-        $('#status_charging_current').val(util.toLocaleFixed(state.max_current_configured / 1000.0, 3));
+        util.setNumericInput("status_charging_current", state.max_current_configured / 1000.0, 3);
     }
 
     last_max_charging_current = state;

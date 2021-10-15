@@ -205,7 +205,7 @@ function set_available_current(current: number) {
 
 function update_available_current(current: number) {
     if($('#charge_manager_status_available_current_save').prop("disabled")) {
-        $('#charge_manager_status_available_current').val(util.toLocaleFixed(current / 1000, 3));
+        util.setNumericInput("charge_manager_status_available_current", current / 1000, 3);
     }
 }
 
@@ -220,7 +220,7 @@ function update_charge_manager_config(config: ChargeManagerConfig, force: boolea
         return;
 
     $('#charge_manager_enable').prop("checked", config.enable_charge_manager);
-    $('#charge_manager_default_available_current').val(util.toLocaleFixed(config.default_available_current / 1000, 3));
+    util.setNumericInput("charge_manager_default_available_current", config.default_available_current / 1000, 3);
 
     if (config.chargers.length != charger_config_count) {
         let charger_configs = "";
