@@ -329,7 +329,6 @@ void ChargeManager::distribute_current() {
 
     int chargers_allocated_current_to = 0;
     for(int i = 0; i < chargers.size(); ++i) {
-        int idx = idx_array[i];
         auto &charger = chargers[idx_array[i]];
 
         if (!charger.get("is_charging")->asBool() && !charger.get("wants_to_charge")->asBool()) {

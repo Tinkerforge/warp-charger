@@ -328,31 +328,6 @@ String EVSEV2::get_evse_monitor_line() {
     if(!initialized)
         return "EVSE is not initialized!";
 
-    uint8_t iec61851_state, vehicle_state, contactor_state, contactor_error, charge_release, error_state, lock_state;
-    uint16_t allowed_charging_current;
-    uint32_t time_since_state_change, uptime;
-
-    uint8_t led_state;
-    uint16_t cp_pwm_duty_cycle;
-
-    uint16_t adc_values[7];
-    int16_t voltages[7];
-    uint32_t resistances[2];
-    bool gpio[24];
-
-    uint8_t jumper_configuration;
-    bool has_lock_switch;
-
-    uint16_t configured, incoming, outgoing, managed;
-
-    bool auto_start_charging;
-
-    uint32_t power, energy_rel, energy_abs;
-
-    uint8_t dc_fault_current_state;
-
-    uint8_t input, output;
-
     char line[300] = {0};
     snprintf(line, sizeof(line)/sizeof(line[0]), "%lu,,%u,%u,%u,%u,%u,%u,%u,%u,%lu,%lu,,%u,%u,%u,%u,%u,%u,%u,%u,%u,%d,%d,%d,%d,%d,%d,%d,%u,%u,%u,,%u,%c,,%u,%u,%u,%u,,%c,,%lu,%lu,%lu,,%u,,%u,%u,%u,,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,\n",
         millis(),
@@ -560,7 +535,7 @@ void EVSEV2::register_urls()
     api.addCommand("evse/reflash", &evse_reflash, {}, [this](){
         char uid[7] = {0};
         find_uid_by_did(&hal, TF_EVSE_V2_DEVICE_IDENTIFIER, uid);
-        int result = ensure_matching_firmware(&hal, uid, "EVSE 2.0", "EVSE 2.0", evse_v2_firmware_version, evse_v2_bricklet_firmware_bin, evse_v2_bricklet_firmware_bin_len, &logger, true);
+        ensure_matching_firmware(&hal, uid, "EVSE 2.0", "EVSE 2.0", evse_v2_firmware_version, evse_v2_bricklet_firmware_bin, evse_v2_bricklet_firmware_bin_len, &logger, true);
     }, true);
 
     api.addCommand("evse/reset", &evse_reset, {}, [this](){
