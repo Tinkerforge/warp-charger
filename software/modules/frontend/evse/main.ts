@@ -437,6 +437,20 @@ export function init() {
             error: (xhr, status, error) => util.add_alert("evse_managed_update_failed", "alert-danger", __("evse.script.save_failed"), error + ": " + xhr.responseText)
         });
     });
+
+    $("#evse_reset").on("click", () => $.ajax({
+        url: '/evse/reset',
+        method: 'PUT',
+        contentType: 'application/json',
+        data: "null"})
+    );
+
+    $("#evse_reflash").on("click", () => $.ajax({
+        url: '/evse/reflash',
+        method: 'PUT',
+        contentType: 'application/json',
+        data: "null"})
+    );
 }
 
 //From sdm72dm/main.ts
@@ -615,7 +629,12 @@ export function getTranslation(lang: string) {
                     "charge_management_description": "Lastmanagement",
                     "charge_management_description_muted": "<a href=\"https://www.warp-charger.com/#documents\">siehe Betriebsanleitung für Details</a>",
                     "charge_management_enable": "Erlaubt anderen Wallboxen diese zu steuern",
-                    "charging_time": "Lade seit"
+                    "charging_time": "Lade seit",
+
+                    "reset_description": "EVSE neustarten / neuflashen",
+                    "reset_description_muted": "",
+                    "reset_evse": "Neustart",
+                    "reflash_evse": "Neu flashen",
                 },
                 "script": {
                     "error_code": "Fehlercode",

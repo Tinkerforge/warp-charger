@@ -140,6 +140,8 @@ EVSE::EVSE()
                 Config::Int16(0),
             }, Config::Int16(0), 14, 14, Config::type_id<Config::ConfInt>())},
     });
+    evse_reflash = Config::Null();
+    evse_reset = Config::Null();
 }
 
 void EVSE::setup()
@@ -353,6 +355,17 @@ void EVSE::register_urls()
         request.send(200);
     });
 #endif
+
+    api.addCommand("evse/reflash", &evse_reflash, {}, [this](){
+        char uid[7] = {0};
+        find_uid_by_did(&hal, TF_EVSE_DEVICE_IDENTIFIER, uid);
+        ensure_matching_firmware(&hal, uid, "EVSE", "EVSE", evse_firmware_version, evse_bricklet_firmware_bin, evse_bricklet_firmware_bin_len, &logger, true);
+    }, true);
+
+    api.addCommand("evse/reset", &evse_reset, {}, [this](){
+        tf_evse_reset(&evse);
+        initialized = false;
+    }, true);
 }
 
 void EVSE::loop()
