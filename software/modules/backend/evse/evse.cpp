@@ -159,7 +159,7 @@ void EVSE::setup()
 
     task_scheduler.scheduleWithFixedDelay("update_all_data", [this](){
         update_all_data();
-    }, 0, 1000);
+    }, 0, 250);
 
 #ifdef MODULE_CM_NETWORKING_AVAILABLE
     cm_networking.register_client([this](uint16_t current){

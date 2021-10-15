@@ -196,7 +196,7 @@ void EVSEV2::setup()
 
     task_scheduler.scheduleWithFixedDelay("update_all_data", [this](){
         update_all_data();
-    }, 0, 1000);
+    }, 0, 250);
 }
 
 String EVSEV2::get_evse_debug_header() {
