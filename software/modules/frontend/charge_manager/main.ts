@@ -35,7 +35,8 @@ interface Charger {
     is_charging: boolean,
     last_sent_config: number,
     allocated_current: number,
-    state: number
+    state: number,
+    error: number
 }
 
 interface ChargeManagerState {
@@ -134,7 +135,7 @@ function update_charge_manager_state(state: ChargeManagerState) {
             charger_status += `
             <div class="card">
                 <h5 id="charge_manager_status_charger_${i}_name" class="card-header"></h5>
-                <div class="card-body">
+                <div id="charge_manager_status_charger_${i}_body" class="card-body">
                     <h5 id="charge_manager_status_charger_${i}_state" class="card-title"></h5>
                     <p id="charge_manager_status_charger_${i}_info" class="card-text"></p>
                 </div>
@@ -164,7 +165,14 @@ function update_charge_manager_state(state: ChargeManagerState) {
         $(`#charge_manager_content_charger_${i}_allocated_current`).val(util.toLocaleFixed(s.allocated_current / 1000.0, 3) + " A");
 
         $(`#charge_manager_status_charger_${i}_name`).text(s.name);
-        $(`#charge_manager_status_charger_${i}_state`).text(__(`charge_manager.script.charge_state_${s.state}`));
+        if (s.state != 5) {
+            $(`#charge_manager_status_charger_${i}_state`).text(__(`charge_manager.script.charge_state_${s.state}`));
+            $(`#charge_manager_status_charger_${i}_body`).removeClass("bg-danger text-white bg-disabled")
+        }
+        else {
+            $(`#charge_manager_status_charger_${i}_state`).text(__(`charge_manager.script.charge_error_${s.error}`));
+            $(`#charge_manager_status_charger_${i}_body`).addClass("bg-danger text-white bg-disabled")
+        }
 
         $(`#charge_manager_status_charger_${i}_info`).text(util.toLocaleFixed(s.allocated_current / 1000.0, 3) + " " + __("charge_manager.script.ampere_allocated"));
 
@@ -448,6 +456,16 @@ export function getTranslation(lang: string) {
                     "charge_state_3": "Laden freigegeben",
                     "charge_state_4": "Lädt",
                     "charge_state_5": "Fehler",
+                    "charge_state_6": "Laden abgeschlossen",
+
+                    "charge_error_0": "OK",
+                    "charge_error_1": "Kommunikationsfehler",
+                    "charge_error_2": "Firmware inkompatibel",
+                    "charge_error_3": "Lastmanagement deaktiviert",
+                    "charge_error_128": "Wallbox nicht erreichbar",
+                    "charge_error_129": "Ladecontroller nicht erreichbar",
+                    "charge_error_130": "Ladecontroller reagiert nicht",
+
                     "ampere_allocated": "Ampere zugeteilt",
                     "last_update_prefix": "Letztes Update vor ",
                     "last_update_suffix": " ",
@@ -464,7 +482,7 @@ export function getTranslation(lang: string) {
                     "not_configured": "Not configured",
                     "manager": "Active",
                     "error": "Error",
-                    "managed_boxes": "Managed Chargers",
+                    "managed_boxes": "Managed chargers",
                     "available_current": "Available current",
                     "available_current_minimum": "0 A",
                     "available_current_maximum": "...",

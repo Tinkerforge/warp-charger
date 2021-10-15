@@ -37,6 +37,11 @@
 // Increment when changing packet structs
 #define PROTOCOL_VERSION 2
 
+#define CM_NETWORKING_ERROR_NO_ERROR 0
+#define CM_NETWORKING_ERROR_UNREACHABLE 1
+#define CM_NETWORKING_ERROR_FW_MISMATCH 2
+#define CM_NETWORKING_ERROR_NOT_MANAGED 3
+
 struct packet_header {
     uint8_t seq_num;
     uint8_t version;
@@ -84,9 +89,9 @@ public:
                                              uint32_t,// uptime
                                              uint32_t,// charging_time
                                              uint16_t,// allowed_charging_current
-                                             uint16_t,// supported_current
-                                             bool     // managed
-                                            )> manager_callback);
+                                             uint16_t// supported_current
+                                            )> manager_callback,
+                          std::function<void(uint8_t, uint8_t)> manager_error_callback);
 
     bool send_manager_update(uint8_t client_id, uint16_t allocated_current);
 

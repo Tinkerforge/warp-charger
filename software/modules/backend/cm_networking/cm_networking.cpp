@@ -82,17 +82,17 @@ int CMNetworking::create_socket(uint16_t port) {
 
 void CMNetworking::register_manager(const std::vector<String> &hosts,
                                     const std::vector<String> &names,
-                          std::function<void(uint8_t, // client_id
-                                             uint8_t, // iec61851_state
-                                             uint8_t, // vehicle_state
-                                             uint8_t, // error_state
-                                             uint8_t, // charge_release
-                                             uint32_t,// uptime
-                                             uint32_t,// charging_time
-                                             uint16_t,// allowed_charging_current
-                                             uint16_t,// supported_current
-                                             bool     // managed
-                                            )> manager_callback) {
+                                    std::function<void(uint8_t, // client_id
+                                                        uint8_t, // iec61851_state
+                                                        uint8_t, // vehicle_state
+                                                        uint8_t, // error_state
+                                                        uint8_t, // charge_release
+                                                        uint32_t,// uptime
+                                                        uint32_t,// charging_time
+                                                        uint16_t,// allowed_charging_current
+                                                        uint16_t// supported_current
+                                                        )> manager_callback,
+                                    std::function<void(uint8_t, uint8_t)> manager_error_callback) {
 
     for(int i = 0; i < names.size(); ++i) {
         dest_addrs[i].sin_addr.s_addr = inet_addr(hosts[i].c_str());
@@ -104,7 +104,7 @@ void CMNetworking::register_manager(const std::vector<String> &hosts,
     if (manager_sock < 0)
         return;
 
-    task_scheduler.scheduleWithFixedDelay("charge_manager_receive_task", [this, names, manager_callback](){
+    task_scheduler.scheduleWithFixedDelay("charge_manager_receive_task", [this, names, manager_callback, manager_error_callback](){
         static uint8_t last_seen_seq_num[MAX_CLIENTS];
         static bool initialized = false;
         if (!initialized) {
@@ -156,6 +156,7 @@ void CMNetworking::register_manager(const std::vector<String> &hosts,
         }
 
         if (response.header.version != PROTOCOL_VERSION) {
+            manager_error_callback(charger_idx, CM_NETWORKING_ERROR_FW_MISMATCH);
             logger.printfln("Received packet from %s (%s) with incompatible firmware. Our protocol version is %u, received packet had %u",
                 names[charger_idx].c_str(),
                 inet_ntoa(source_addr.sin_addr),
@@ -166,6 +167,14 @@ void CMNetworking::register_manager(const std::vector<String> &hosts,
 
         last_seen_seq_num[charger_idx] = response.header.seq_num;
 
+        if (!response.managed) {
+            manager_error_callback(charger_idx, CM_NETWORKING_ERROR_NOT_MANAGED);
+            logger.printfln("%s (%s) reports managed is not activated!",
+                names[charger_idx].c_str(),
+                inet_ntoa(source_addr.sin_addr));
+            return;
+        }
+
         manager_callback(charger_idx,
                          response.iec61851_state,
                          response.vehicle_state,
@@ -174,8 +183,7 @@ void CMNetworking::register_manager(const std::vector<String> &hosts,
                          response.uptime,
                          response.charging_time,
                          response.allowed_charging_current,
-                         response.supported_current,
-                         response.managed);
+                         response.supported_current);
         }, 100, 100);
 }
 
