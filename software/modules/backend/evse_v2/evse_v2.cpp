@@ -178,6 +178,12 @@ EVSEV2::EVSEV2()
         {"button", Config::Uint8(2)}
     });
 
+    evse_button_state = Config::Object({
+        {"button_press_time", Config::Uint32(0)},
+        {"button_release_time", Config::Uint32(0)},
+        {"button_pressed", Config::Bool(false)},
+    });
+
     evse_reflash = Config::Null();
     evse_reset = Config::Null();
 }
@@ -469,6 +475,8 @@ void EVSEV2::register_urls()
     api.addCommand("evse/managed_update", &evse_managed_update, {"password"}, [this](){
         is_in_bootloader(tf_evse_v2_set_managed(&evse, evse_managed_update.get("managed")->asBool(), evse_managed_update.get("password")->asUint()));
     }, true);
+
+    api.addState("evse/button_state", &evse_button_state, {}, 250);
 
 #ifdef MODULE_WS_AVAILABLE
     server.on("/evse/start_debug", HTTP_GET, [this](WebServerRequest request) {
@@ -764,6 +772,11 @@ void EVSEV2::update_all_data() {
 
     // get_button_configuration
     evse_button_configuration.get("button")->updateUint(button_configuration);
+
+    // get_button_state
+    evse_button_state.get("button_press_time")->updateUint(button_press_time);
+    evse_button_state.get("button_release_time")->updateUint(button_release_time);
+    evse_button_state.get("button_pressed")->updateBool(button_pressed);
 }
 
 bool EVSEV2::is_in_bootloader(int rc) {

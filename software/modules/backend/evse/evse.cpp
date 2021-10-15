@@ -140,6 +140,13 @@ EVSE::EVSE()
                 Config::Int16(0),
             }, Config::Int16(0), 14, 14, Config::type_id<Config::ConfInt>())},
     });
+
+    evse_button_state = Config::Object({
+        {"button_press_time", Config::Uint32(0)},
+        {"button_release_time", Config::Uint32(0)},
+        {"button_pressed", Config::Bool(false)},
+    });
+
     evse_reflash = Config::Null();
     evse_reset = Config::Null();
 }
@@ -318,6 +325,8 @@ void EVSE::register_urls()
             resistance_880
             ));
     }, true);
+
+    api.addState("evse/button_state", &evse_button_state, {}, 250);
 
 #ifdef MODULE_WS_AVAILABLE
     server.on("/evse/start_debug", HTTP_GET, [this](WebServerRequest request) {
@@ -573,6 +582,11 @@ void EVSE::update_all_data() {
 
     for(int i = 0; i < sizeof(resistance_880)/sizeof(resistance_880[0]); ++i)
         evse_user_calibration.get("resistance_880")->get(i)->updateInt(resistance_880[i]);
+
+    // get_button_state
+    evse_button_state.get("button_press_time")->updateUint(button_press_time);
+    evse_button_state.get("button_release_time")->updateUint(button_release_time);
+    evse_button_state.get("button_pressed")->updateBool(button_pressed);
 }
 
 bool EVSE::is_in_bootloader(int rc) {

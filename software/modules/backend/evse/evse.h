@@ -59,6 +59,7 @@ private:
     Config evse_managed_update;
     Config evse_managed_current;
     Config evse_user_calibration;
+    Config evse_button_state;
     Config evse_reflash;
     Config evse_reset;
 
