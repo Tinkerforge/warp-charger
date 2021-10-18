@@ -173,6 +173,9 @@ def main():
     minor_flag = '-D_MINOR_={}'.format(version[1])
     patch_flag = '-D_PATCH_={}'.format(version[2])
 
+    if not os.path.isdir("build"):
+        os.makedirs("build")
+
     write_firmware_info(display_name, *version, int(t))
 
     host_prefix_flag = "-D__HOST_PREFIX__=\\\"{}\\\"".format(name)
@@ -277,6 +280,9 @@ def main():
 
     # Generate web interface
     with ChangedDirectory('web'):
+        if not os.path.isdir("node_modules"):
+            print("Web interface dependencies not installed. Installing now.")
+            subprocess.run(["npm", "install", "--save-dev"])
         subprocess.run(["npx", "gulp"])
 
     shutil.copy2("web/dist/index.html.h", "src/index.html.h")
