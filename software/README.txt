@@ -10,6 +10,5 @@ Build instructions
   or
   git clone https://github.com/Tinkerforge/esp32-brick
 
-- Run "npm install --save-dev" in web/ to install the web interface build dependencies
 - Run "platformio run -e warp" to build the firmware. The firmware can be found in .pio/build/warp/firmware.bin
 - Alternatively run "platformio run -e warp -t upload -t monitor" to build and upload the firmware to an ESP32 and start the serial monitor
