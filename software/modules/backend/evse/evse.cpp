@@ -18,7 +18,6 @@
  */
 
 #include "evse.h"
-#include "evse_firmware.h"
 
 #include "bindings/errors.h"
 
@@ -29,6 +28,8 @@
 #include "web_server.h"
 #include "modules.h"
 
+#include <functional>
+
 extern EventLog logger;
 
 extern TaskScheduler task_scheduler;
@@ -38,7 +39,7 @@ extern WebServer server;
 extern API api;
 extern bool firmware_update_allowed;
 
-EVSE::EVSE()
+EVSE::EVSE() : DeviceModule("evse", "EVSE", "EVSE", std::bind(&EVSE::setup_evse, this))
 {
     evse_state = Config::Object({
         {"iec61851_state", Config::Uint8(0)},
@@ -154,7 +155,7 @@ EVSE::EVSE()
 void EVSE::setup()
 {
     setup_evse();
-    if(!evse_found)
+    if(!device_found)
         return;
 
     task_scheduler.scheduleWithFixedDelay("update_all_data", [this](){
@@ -188,7 +189,7 @@ void EVSE::setup()
         if(!this->shutdown_logged)
             logger.printfln("Got no managed current update for more than 30 seconds. Setting managed current to 0");
         this->shutdown_logged = true;
-        is_in_bootloader(tf_evse_set_managed_current(&evse, 0));
+        is_in_bootloader(tf_evse_set_managed_current(&device, 0));
     }, 1000, 1000);
 #endif
 }
@@ -205,7 +206,7 @@ String EVSE::get_evse_debug_line() {
     uint16_t allowed_charging_current;
     uint32_t time_since_state_change, uptime;
 
-    int rc = tf_evse_get_state(&evse,
+    int rc = tf_evse_get_state(&device,
         &iec61851_state,
         &vehicle_state,
         &contactor_state,
@@ -232,7 +233,7 @@ String EVSE::get_evse_debug_line() {
     uint8_t hardware_version;
     uint32_t charging_time;
 
-    rc = tf_evse_get_low_level_state(&evse,
+    rc = tf_evse_get_low_level_state(&device,
         &low_level_mode_enabled,
         &led_state,
         &cp_pwm_duty_cycle,
@@ -274,14 +275,14 @@ String EVSE::get_evse_debug_line() {
 }
 
 void EVSE::set_managed_current(uint16_t current) {
-    is_in_bootloader(tf_evse_set_managed_current(&evse, current));
+    is_in_bootloader(tf_evse_set_managed_current(&device, current));
     this->last_current_update = millis();
     this->shutdown_logged = false;
 }
 
 void EVSE::register_urls()
 {
-    if (!evse_found)
+    if (!device_found)
         return;
 
     api.addState("evse/state", &evse_state, {}, 1000);
@@ -291,15 +292,15 @@ void EVSE::register_urls()
     api.addState("evse/auto_start_charging", &evse_auto_start_charging, {}, 1000);
 
     api.addCommand("evse/auto_start_charging_update", &evse_auto_start_charging_update, {}, [this](){
-        is_in_bootloader(tf_evse_set_charging_autostart(&evse, evse_auto_start_charging_update.get("auto_start_charging")->asBool()));
+        is_in_bootloader(tf_evse_set_charging_autostart(&device, evse_auto_start_charging_update.get("auto_start_charging")->asBool()));
     }, false);
 
     api.addCommand("evse/current_limit", &evse_current_limit, {}, [this](){
-        is_in_bootloader(tf_evse_set_max_charging_current(&evse, evse_current_limit.get("current")->asUint()));
+        is_in_bootloader(tf_evse_set_max_charging_current(&device, evse_current_limit.get("current")->asUint()));
     }, false);
 
-    api.addCommand("evse/stop_charging", &evse_stop_charging, {}, [this](){tf_evse_stop_charging(&evse);}, true);
-    api.addCommand("evse/start_charging", &evse_start_charging, {}, [this](){tf_evse_start_charging(&evse);}, true);
+    api.addCommand("evse/stop_charging", &evse_stop_charging, {}, [this](){is_in_bootloader(tf_evse_stop_charging(&device));}, true);
+    api.addCommand("evse/start_charging", &evse_start_charging, {}, [this](){is_in_bootloader(tf_evse_start_charging(&device));}, true);
 
     api.addCommand("evse/managed_current_update", &evse_managed_current, {}, [this](){
         this->set_managed_current(evse_managed_current.get("current")->asUint());
@@ -307,7 +308,7 @@ void EVSE::register_urls()
 
     api.addState("evse/managed", &evse_managed, {}, 1000);
     api.addCommand("evse/managed_update", &evse_managed_update, {"password"}, [this](){
-        is_in_bootloader(tf_evse_set_managed(&evse, evse_managed_update.get("managed")->asBool(), evse_managed_update.get("password")->asUint()));
+        is_in_bootloader(tf_evse_set_managed(&device, evse_managed_update.get("managed")->asBool(), evse_managed_update.get("password")->asUint()));
     }, true);
 
     api.addState("evse/user_calibration", &evse_user_calibration, {}, 1000);
@@ -315,7 +316,7 @@ void EVSE::register_urls()
         int16_t resistance_880[14];
         evse_user_calibration.get("resistance_880")->fillArray<int16_t, Config::ConfInt>(resistance_880, sizeof(resistance_880)/sizeof(resistance_880[0]));
 
-        is_in_bootloader(tf_evse_set_user_calibration(&evse,
+        is_in_bootloader(tf_evse_set_user_calibration(&device,
             0xCA11B4A0,
             evse_user_calibration.get("user_calibration_active")->asBool(),
             evse_user_calibration.get("voltage_diff")->asInt(),
@@ -345,26 +346,12 @@ void EVSE::register_urls()
     });
 #endif
 
-    api.addCommand("evse/reflash", &evse_reflash, {}, [this](){
-        char uid[7] = {0};
-        find_uid_by_did(&hal, TF_EVSE_DEVICE_IDENTIFIER, uid);
-        ensure_matching_firmware(&hal, uid, "EVSE", "EVSE", evse_firmware_version, evse_bricklet_firmware_bin, evse_bricklet_firmware_bin_len, &logger, true);
-    }, true);
-
-    api.addCommand("evse/reset", &evse_reset, {}, [this](){
-        tf_evse_reset(&evse);
-        initialized = false;
-    }, true);
+    this->DeviceModule::register_urls();
 }
 
 void EVSE::loop()
 {
-    static uint32_t last_check = 0;
-    if(evse_found && !initialized && deadline_elapsed(last_check + 10000)) {
-        last_check = millis();
-        if(!is_in_bootloader(TF_E_TIMEOUT))
-            setup_evse();
-    }
+    this->DeviceModule::loop();
 
 #ifdef MODULE_WS_AVAILABLE
     static uint32_t last_debug = 0;
@@ -377,28 +364,13 @@ void EVSE::loop()
 
 void EVSE::setup_evse()
 {
-    char uid[7] = {0};
-    if (!find_uid_by_did(&hal, TF_EVSE_DEVICE_IDENTIFIER, uid)) {
-        logger.printfln("No EVSE bricklet found. Disabling EVSE support.");
+    if (!this->DeviceModule::setup_device())
         return;
-    }
-    evse_found = true;
-
-    int result = ensure_matching_firmware(&hal, uid, "EVSE", "EVSE", evse_firmware_version, evse_bricklet_firmware_bin, evse_bricklet_firmware_bin_len, &logger);
-    if(result != 0) {
-        return;
-    }
-
-    result = tf_evse_create(&evse, uid, &hal);
-    if(result != TF_E_OK) {
-        logger.printfln("Failed to initialize EVSE bricklet. Disabling EVSE support.");
-        return;
-    }
 
     uint8_t jumper_configuration;
     bool has_lock_switch;
 
-    result = tf_evse_get_hardware_configuration(&evse, &jumper_configuration, &has_lock_switch);
+    int result = tf_evse_get_hardware_configuration(&device, &jumper_configuration, &has_lock_switch);
 
     if (result != TF_E_OK) {
         if(!is_in_bootloader(result)) {
@@ -459,7 +431,7 @@ void EVSE::update_all_data() {
     uint32_t button_release_time;
     bool button_pressed;
 
-    int rc = tf_evse_get_all_data_1(&evse,
+    int rc = tf_evse_get_all_data_1(&device,
         &iec61851_state,
         &vehicle_state,
         &contactor_state,
@@ -493,7 +465,7 @@ void EVSE::update_all_data() {
         return;
     }
 
-    rc = tf_evse_get_all_data_2(&evse,
+    rc = tf_evse_get_all_data_2(&device,
         &user_calibration_active,
         &voltage_diff,
         &voltage_mul,
@@ -587,21 +559,4 @@ void EVSE::update_all_data() {
     evse_button_state.get("button_press_time")->updateUint(button_press_time);
     evse_button_state.get("button_release_time")->updateUint(button_release_time);
     evse_button_state.get("button_pressed")->updateBool(button_pressed);
-}
-
-bool EVSE::is_in_bootloader(int rc) {
-    if(rc != TF_E_TIMEOUT && rc != TF_E_NOT_SUPPORTED)
-        return false;
-
-    uint8_t mode;
-    int bootloader_rc = tf_evse_get_bootloader_mode(&evse, &mode);
-    if(bootloader_rc != TF_E_OK) {
-        return false;
-    }
-
-    if(mode != TF_EVSE_BOOTLOADER_MODE_FIRMWARE) {
-        initialized = false;
-    }
-
-    return mode != TF_EVSE_BOOTLOADER_MODE_FIRMWARE;
 }

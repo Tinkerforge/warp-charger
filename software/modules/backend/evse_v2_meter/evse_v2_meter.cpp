@@ -90,7 +90,7 @@ void EVSEV2Meter::setupEVSE(bool update_module_initialized) {
     task_scheduler.scheduleWithFixedDelay("update_evse_meter_values", [this](){
         float power, energy_rel, energy_abs;
         bool phases_active[3], phases_connected[3];
-        if (tf_evse_v2_get_energy_meter_values(&evse_v2.evse, &power, &energy_rel, &energy_abs, phases_active, phases_connected) != TF_E_OK)
+        if (tf_evse_v2_get_energy_meter_values(&evse_v2.device, &power, &energy_rel, &energy_abs, phases_active, phases_connected) != TF_E_OK)
             return;
 
         state.get("power")->updateFloat(power);
@@ -124,7 +124,7 @@ void EVSEV2Meter::setupEVSE(bool update_module_initialized) {
     task_scheduler.scheduleWithFixedDelay("update_evse_meter_detailed_values", [this](){
         uint16_t len;
         float result[DETAILED_VALUES_COUNT] = {0};
-        if (tf_evse_v2_get_energy_meter_detailed_values(&evse_v2.evse, result, &len) != TF_E_OK)
+        if (tf_evse_v2_get_energy_meter_detailed_values(&evse_v2.device, result, &len) != TF_E_OK)
             return;
 
         for(int i = 0; i < DETAILED_VALUES_COUNT; ++i) {
@@ -160,7 +160,7 @@ void EVSEV2Meter::register_urls() {
             return;
         }
 
-        tf_evse_v2_reset_energy_meter(&evse_v2.evse);
+        tf_evse_v2_reset_energy_meter(&evse_v2.device);
     }, true);
 
     server.on("/meter/history", HTTP_GET, [this](WebServerRequest request) {

@@ -22,18 +22,20 @@
 #include "bindings/bricklet_evse_v2.h"
 
 #include "config.h"
+#include "device_module.h"
+#include "evse_v2_firmware.h"
 
-class EVSEV2 {
+class EVSEV2 : public DeviceModule<TF_EVSEV2,
+                                 evse_v2_bricklet_firmware_bin,
+                                 evse_v2_bricklet_firmware_bin_len,
+                                 tf_evse_v2_create,
+                                 tf_evse_v2_get_bootloader_mode,
+                                 tf_evse_v2_reset>  {
 public:
     EVSEV2();
     void setup();
     void register_urls();
     void loop();
-
-    bool evse_found = false;
-    bool initialized = false;
-
-    TF_EVSEV2 evse;
 
     Config evse_energy_meter_state;
 
@@ -42,7 +44,6 @@ public:
 
 private:
     void setup_evse();
-    bool is_in_bootloader(int rc);
     bool flash_firmware();
     bool flash_plugin(int regular_plugin_upto);
     bool wait_for_bootloader_mode(int mode);
@@ -74,8 +75,6 @@ private:
     Config evse_managed_update;
     Config evse_managed_current;
     Config evse_button_state;
-    Config evse_reflash;
-    Config evse_reset;
 
     uint32_t last_current_update = 0;
     bool shutdown_logged = false;

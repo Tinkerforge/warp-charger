@@ -22,24 +22,23 @@
 #include "bindings/bricklet_evse.h"
 
 #include "config.h"
+#include "device_module.h"
+#include "evse_firmware.h"
 
-class EVSE {
+class EVSE : public DeviceModule<TF_EVSE,
+                                 evse_bricklet_firmware_bin,
+                                 evse_bricklet_firmware_bin_len,
+                                 tf_evse_create,
+                                 tf_evse_get_bootloader_mode,
+                                 tf_evse_reset> {
 public:
     EVSE();
     void setup();
     void register_urls();
     void loop();
-
-    bool evse_found = false;
-    bool initialized = false;
-
 private:
     void setup_evse();
     void update_all_data();
-    bool is_in_bootloader(int rc);
-    bool flash_firmware();
-    bool flash_plugin(int regular_plugin_upto);
-    bool wait_for_bootloader_mode(int mode);
     String get_evse_debug_header();
     String get_evse_debug_line();
     void set_managed_current(uint16_t current);
@@ -65,6 +64,4 @@ private:
 
     uint32_t last_current_update = 0;
     bool shutdown_logged = false;
-
-    TF_EVSE evse;
 };

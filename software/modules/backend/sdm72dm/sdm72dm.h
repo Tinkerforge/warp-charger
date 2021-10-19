@@ -26,6 +26,8 @@
 #include "config.h"
 #include "ringbuffer.h"
 #include "malloc_tools.h"
+#include "device_module.h"
+#include "rs485_firmware.h"
 
 // How many hours to keep the coarse history for
 #define HISTORY_HOURS 48
@@ -40,7 +42,12 @@
 
 #define RING_BUF_SIZE (HISTORY_HOURS * (60 / HISTORY_MINUTE_INTERVAL) + 1)
 
-class SDM72DM {
+class SDM72DM : public DeviceModule<TF_RS485,
+                                    rs485_bricklet_firmware_bin,
+                                    rs485_bricklet_firmware_bin_len,
+                                    tf_rs485_create,
+                                    tf_rs485_get_bootloader_mode,
+                                    tf_rs485_reset> {
 public:
     SDM72DM();
     void setup();
@@ -60,12 +67,9 @@ public:
         UserDataDone done;
     };
 
-    bool initialized = false;
-    bool hardware_available = false;
-
 private:
     void modbus_read();
-    bool setupRS485();
+    void setupRS485();
     void checkRS485State();
 
     Config config;

@@ -22,17 +22,20 @@
 #include "bindings/bricklet_nfc.h"
 
 #include "config.h"
+#include "device_module.h"
+#include "nfc_firmware.h"
 
-
-class NFC {
+class NFC : public DeviceModule<TF_NFC,
+                                nfc_bricklet_firmware_bin,
+                                nfc_bricklet_firmware_bin_len,
+                                tf_nfc_create,
+                                tf_nfc_get_bootloader_mode,
+                                tf_nfc_reset> {
 public:
     NFC();
     void setup();
     void register_urls();
     void loop();
-
-    bool initialized = false;
-    bool hardware_available = false;
 
 private:
     struct tag_info_t {
@@ -45,7 +48,7 @@ private:
     void update_seen_tags();
     void handle_event(tag_info_t *tag, bool lost_or_found);
     void handle_evse();
-    bool setup_nfc();
+    void setup_nfc();
     void check_nfc_state();
     bool is_tag_authorized(uint8_t tag_type, uint8_t *tag_id, uint8_t tag_id_len, uint32_t last_seen, uint8_t *tag_idx);
     bool is_tag_equal(uint8_t tag_type, uint8_t *tag_id, uint8_t tag_id_len, uint32_t last_seen, Config *other_tag);
@@ -56,8 +59,6 @@ private:
     Config state;
 
     uint32_t last_action_ms = 0;
-
-    TF_NFC nfc;
 
     char uid[7] = {0};
 

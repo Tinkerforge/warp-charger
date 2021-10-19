@@ -35,7 +35,7 @@ extern TaskScheduler task_scheduler;
 
 extern API api;
 
-SDM72DM::SDM72DM() {
+SDM72DM::SDM72DM() : DeviceModule("rs485", "RS485", "energy meter", std::bind(&SDM72DM::setupRS485, this)) {
     state = Config::Object({
         {"power", Config::Float(0.0)},
         {"energy_rel", Config::Float(0.0)},
@@ -119,35 +119,49 @@ void write_multiple_registers_handler(struct TF_RS485 *device, uint8_t request_i
     ud->done = SDM72DM::UserDataDone::DONE;
 }
 
-bool SDM72DM::setupRS485() {
-    int rc = TF_E_OK;
-    rc = tf_rs485_create(&rs485, uid, &hal);
-    if(rc != TF_E_OK)
-        return false;
+void SDM72DM::setupRS485() {
+    if (!this->DeviceModule::setup_device()) {
+        return;
+    }
 
-    rc = tf_rs485_set_mode(&rs485, TF_RS485_MODE_MODBUS_MASTER_RTU);
-    if(rc != TF_E_OK)
-        return false;
+    int result = tf_rs485_set_mode(&device, TF_RS485_MODE_MODBUS_MASTER_RTU);
+    if (result != TF_E_OK) {
+        if(!is_in_bootloader(result)) {
+            logger.printfln("RS485 set mode failed (rc %d). Disabling energy meter support.", result);
+        }
+        return;
+    }
 
-    rc = tf_rs485_set_rs485_configuration(&rs485, 9600, TF_RS485_PARITY_NONE, TF_RS485_STOPBITS_1, TF_RS485_WORDLENGTH_8, TF_RS485_DUPLEX_HALF);
-    if(rc != TF_E_OK)
-        return false;
+    result = tf_rs485_set_rs485_configuration(&device, 9600, TF_RS485_PARITY_NONE, TF_RS485_STOPBITS_1, TF_RS485_WORDLENGTH_8, TF_RS485_DUPLEX_HALF);
+    if (result != TF_E_OK) {
+        if(!is_in_bootloader(result)) {
+            logger.printfln("RS485 set config failed (rc %d). Disabling energy meter support.", result);
+        }
+        return;
+    }
 
-    rc = tf_rs485_set_modbus_configuration(&rs485, 1, 1000);
-    if(rc != TF_E_OK)
-        return false;
+    result = tf_rs485_set_modbus_configuration(&device, 1, 1000);
+    if (result != TF_E_OK) {
+        if(!is_in_bootloader(result)) {
+            logger.printfln("RS485 set modbus config failed (rc %d). Disabling energy meter support.", result);
+        }
+        return;
+    }
 
-    tf_rs485_register_modbus_master_read_input_registers_response_low_level_callback(&rs485, read_input_registers_handler, &user_data);
-    tf_rs485_register_modbus_master_write_multiple_registers_response_callback(&rs485, write_multiple_registers_handler, &user_data);
-    return true;
+    tf_rs485_register_modbus_master_read_input_registers_response_low_level_callback(&device, read_input_registers_handler, &user_data);
+    tf_rs485_register_modbus_master_write_multiple_registers_response_callback(&device, write_multiple_registers_handler, &user_data);
+
+    initialized = true;
 }
 
 void SDM72DM::checkRS485State() {
     uint8_t mode = 0;
-    int rc = tf_rs485_get_mode(&rs485, &mode);
-    if(rc != TF_E_OK) {
-        logger.printfln("Failed to get RS485 mode, rc: %d", rc);
-        error_counters.get("bricklet")->updateUint(error_counters.get("bricklet")->asUint() + 1);
+    int result = tf_rs485_get_mode(&device, &mode);
+    if(result != TF_E_OK) {
+        if(!is_in_bootloader(result)) {
+            logger.printfln("Failed to get RS485 mode, rc: %d", result);
+            error_counters.get("bricklet")->updateUint(error_counters.get("bricklet")->asUint() + 1);
+        }
         return;
     }
     if (mode != TF_RS485_MODE_MODBUS_MASTER_RTU) {
@@ -164,15 +178,9 @@ void SDM72DM::setup() {
         power_history.push(-1);
     }
 
-    if (!find_uid_by_did(&hal, TF_RS485_DEVICE_IDENTIFIER, uid)) {
-        logger.printfln("No RS485 bricklet found. Disabling power meter\n");
-        initialized = false;
-        hardware_available = false;
+    setupRS485();
+    if (!device_found)
         return;
-    }
-    hardware_available = true;
-
-    initialized = setupRS485();
 
     task_scheduler.scheduleWithFixedDelay("check_rs485_config", [this](){
         this->checkRS485State();
@@ -180,7 +188,7 @@ void SDM72DM::setup() {
 }
 
 void SDM72DM::register_urls() {
-    if (!hardware_available)
+    if (!device_found)
         return;
 
     api.addState("meter/state", &state, {}, 1000);
@@ -249,10 +257,13 @@ void SDM72DM::register_urls() {
             buf_written += snprintf(buf + buf_written, buf_size - buf_written, "%s", "]}");
         request.send(200, "application/json; charset=utf-8", buf, buf_written);
     });
+
+    this->DeviceModule::register_urls();
 }
 
 void SDM72DM::loop()
 {
+    this->DeviceModule::loop();
     if(!initialized)
         return;
 
@@ -272,9 +283,10 @@ void SDM72DM::loop()
 
         user_data.done = UserDataDone::NOT_DONE;
         user_data.value_to_write = nullptr;
+        user_data.expected_request_id = 0;
 
         uint16_t payload = 0x0003;
-        tf_rs485_modbus_master_write_multiple_registers(&rs485, 1, 61457, &payload, 1, &user_data.expected_request_id);
+        is_in_bootloader(tf_rs485_modbus_master_write_multiple_registers(&device, 1, 61457, &payload, 1, &user_data.expected_request_id));
         if (user_data.expected_request_id == 0) {
             this->checkRS485State();
         }
@@ -343,9 +355,10 @@ void SDM72DM::loop()
 
     user_data.value_to_write = to_write;
     user_data.done = UserDataDone::NOT_DONE;
-    int rc = tf_rs485_modbus_master_read_input_registers(&rs485, 1, start_address, 2, &user_data.expected_request_id);
-    if(rc != TF_E_OK || user_data.expected_request_id == 0) {
-        logger.printfln("Failed to read energy meter registers starting at %u: rc %d, request_id: %u", start_address, rc, user_data.expected_request_id);
+    user_data.expected_request_id = 0;
+    is_in_bootloader(tf_rs485_modbus_master_read_input_registers(&device, 1, start_address, 2, &user_data.expected_request_id));
+    if(user_data.expected_request_id == 0) {
+        logger.printfln("Failed to read energy meter registers starting at %u: request_id: %u", start_address, user_data.expected_request_id);
         this->checkRS485State();
     }
 

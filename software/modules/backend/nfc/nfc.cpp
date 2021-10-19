@@ -31,8 +31,6 @@
 #include "bindings/bricklet_evse_v2.h"
 #endif
 
-#include "nfc_firmware.h"
-
 #define TAG_LIST_LENGTH 8
 #define AUTHORIZED_TAG_LIST_LENGTH 8
 
@@ -50,7 +48,7 @@ extern TaskScheduler task_scheduler;
 
 extern API api;
 
-NFC::NFC() {
+NFC::NFC() : DeviceModule("nfc", "NFC", "NFC", std::bind(&NFC::setup_nfc, this)) {
     seen_tags = Config::Array(
         {},
         Config::Object({
@@ -78,36 +76,40 @@ NFC::NFC() {
     });
 }
 
-bool NFC::setup_nfc() {
-    int result = ensure_matching_firmware(&hal, uid, "NFC", "NFC", nfc_firmware_version, nfc_bricklet_firmware_bin, nfc_bricklet_firmware_bin_len, &logger);
-    if(result != 0) {
-        return false;
+void NFC::setup_nfc() {
+    if (!this->DeviceModule::setup_device()) {
+        return;
     }
 
-    int rc = TF_E_OK;
-    rc = tf_nfc_create(&nfc, uid, &hal);
-    if(rc != TF_E_OK)
-        return false;
-
-    rc = tf_nfc_set_mode(&nfc, TF_NFC_MODE_SIMPLE);
-    if(rc != TF_E_OK)
-        return false;
+    int result = tf_nfc_set_mode(&device, TF_NFC_MODE_SIMPLE);
+    if (result != TF_E_OK) {
+        if(!is_in_bootloader(result)) {
+            logger.printfln("NFC set mode failed (rc %d). Disabling NFC support.", result);
+        }
+        return;
+    }
 
     uint8_t tag_id[10] = {0};
     uint8_t tag_id_len = 0;
     // clear tag list; tag_id and len can't currently be nullptr, the generator has a bug so that it assumes those are writable.
-    rc = tf_nfc_simple_get_tag_id(&nfc, 255, nullptr, tag_id, &tag_id_len, nullptr);
-    if(rc != TF_E_OK)
-        return false;
+    result = tf_nfc_simple_get_tag_id(&device, 255, nullptr, tag_id, &tag_id_len, nullptr);
+    if (result != TF_E_OK) {
+        if(!is_in_bootloader(result)) {
+            logger.printfln("Clearing NFC tag list failed (rc %d). Disabling NFC support.", result);
+        }
+        return;
+    }
 
-    return true;
+    initialized = true;
 }
 
 void NFC::check_nfc_state() {
     uint8_t mode = 0;
-    int rc = tf_nfc_get_mode(&nfc, &mode);
-    if(rc != TF_E_OK) {
-        logger.printfln("Failed to get NFC mode, rc: %d", rc);
+    int result = tf_nfc_get_mode(&device, &mode);
+    if(result != TF_E_OK) {
+        if(!is_in_bootloader(result)) {
+            logger.printfln("Failed to get NFC mode, rc: %d", result);
+        }
         return;
     }
     if (mode != TF_NFC_MODE_SIMPLE) {
@@ -172,7 +174,7 @@ void set_led(int16_t mode) {
             break;
     }
 
-    tf_evse_v2_set_indicator_led(&evse_v2.evse, mode, mode != IND_NACK ? 2620 : 3930, nullptr);
+    tf_evse_v2_set_indicator_led(&evse_v2.device, mode, mode != IND_NACK ? 2620 : 3930, nullptr);
     last_mode = mode;
     last_set = millis();
     #endif
@@ -254,9 +256,11 @@ void NFC::handle_evse() {
 
 void NFC::update_seen_tags() {
     for(int i = 0; i < TAG_LIST_LENGTH; ++i) {
-        int rc = tf_nfc_simple_get_tag_id(&nfc, i, &new_tags[i].tag_type, new_tags[i].tag_id, &new_tags[i].tag_id_len, &new_tags[i].last_seen);
-        if(rc != TF_E_OK) {
-            logger.printfln("Failed to get tag id %d, rc: %d", i, rc);
+        int result = tf_nfc_simple_get_tag_id(&device, i, &new_tags[i].tag_type, new_tags[i].tag_id, &new_tags[i].tag_id_len, &new_tags[i].last_seen);
+        if(result != TF_E_OK) {
+            if(!is_in_bootloader(result)) {
+                logger.printfln("Failed to get tag id %d, rc: %d", i, result);
+            }
             continue;
         }
 
@@ -335,13 +339,9 @@ void NFC::update_seen_tags() {
 }
 
 void NFC::setup() {
-    if (!find_uid_by_did(&hal, TF_NFC_DEVICE_IDENTIFIER, uid)) {
-        logger.printfln("No NFC bricklet found. Disabling NFC unlock\n");
-        initialized = false;
-        hardware_available = false;
+    setup_nfc();
+    if (!device_found)
         return;
-    }
-    hardware_available = true;
 
     api.restorePersistentConfig("nfc/config", &config);
     config_in_use = config;
@@ -349,8 +349,6 @@ void NFC::setup() {
     for(int i = 0; i < TAG_LIST_LENGTH; ++i) {
         seen_tags.add();
     }
-
-    initialized = setup_nfc();
 
     task_scheduler.scheduleWithFixedDelay("check_nfc_config", [this](){
         this->check_nfc_state();
@@ -367,7 +365,7 @@ void NFC::setup() {
 }
 
 void NFC::register_urls() {
-    if (!hardware_available)
+    if (!device_found)
         return;
 
     api.addState("nfc/seen_tags", &seen_tags, {}, 1000);
@@ -405,9 +403,11 @@ void NFC::register_urls() {
         }});
     }
 #endif
+
+    this->DeviceModule::register_urls();
 }
 
 void NFC::loop()
 {
-
+    this->DeviceModule::loop();
 }
