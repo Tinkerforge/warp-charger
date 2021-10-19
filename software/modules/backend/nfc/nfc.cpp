@@ -27,6 +27,9 @@
 #include "task_scheduler.h"
 #include "modules.h"
 
+#ifdef MODULE_EVSE_AVAILABLE
+#include "bindings/bricklet_evse.h"
+#endif
 #ifdef MODULE_EVSE_V2_AVAILABLE
 #include "bindings/bricklet_evse_v2.h"
 #endif
@@ -149,7 +152,7 @@ bool NFC::is_tag_authorized(uint8_t tag_type, uint8_t *tag_id, uint8_t tag_id_le
 
 
 void set_led(int16_t mode) {
-    #ifdef MODULE_EVSE_V2_AVAILABLE
+
     static int16_t last_mode = -1;
     static uint32_t last_set = 0;
 
@@ -174,10 +177,15 @@ void set_led(int16_t mode) {
             break;
     }
 
+#ifdef MODULE_EVSE_AVAILABLE
+    tf_evse_set_indicator_led(&evse.device, mode, mode != IND_NACK ? 2620 : 3930, nullptr);
+#endif
+#ifdef MODULE_EVSE_V2_AVAILABLE
     tf_evse_v2_set_indicator_led(&evse_v2.device, mode, mode != IND_NACK ? 2620 : 3930, nullptr);
+#endif
+
     last_mode = mode;
     last_set = millis();
-    #endif
 }
 
 void NFC::handle_event(tag_info_t *tag, bool found) {
