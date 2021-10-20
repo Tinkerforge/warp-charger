@@ -323,11 +323,18 @@ void ChargeManager::distribute_current() {
                           chargers_requesting_current, chargers_requesting_current == 1 ? "" : "s", chargers_requesting_current == 1 ? "s" : "", available_current, '\0');
 
     // Allocate current
-    std::sort(idx_array, idx_array + chargers.size(), [chargers](int left, int right) {
+    std::stable_sort(idx_array, idx_array + chargers.size(), [chargers](int left, int right) {
         return chargers[left].get("supported_current")->asUint() < chargers[right].get("supported_current")->asUint();
     });
 
+    std::stable_sort(idx_array, idx_array + chargers.size(), [chargers](int left, int right) {
+        bool left_charging = chargers[left].get("is_charging")->asBool();
+        bool right_charging = chargers[right].get("is_charging")->asBool();
+        return left_charging && !right_charging;
+    });
+
     int chargers_allocated_current_to = 0;
+    int chargers_handled = 0;
     for(int i = 0; i < chargers.size(); ++i) {
         auto &charger = chargers[idx_array[i]];
 
@@ -335,13 +342,15 @@ void ChargeManager::distribute_current() {
             continue;
         }
 
-        uint16_t current_per_charger = MIN(32000, MAX(6000, available_current / (chargers_requesting_current - chargers_allocated_current_to)));
-        ++chargers_allocated_current_to;
-        uint16_t current_to_set = MIN(current_per_charger, charger.get("supported_current")->asUint());
+        uint16_t current_to_set = 6000;
+        ++chargers_handled;
 
         if (available_current < 6000) {
-            available_current = 0;
             current_to_set = 0;
+        }
+
+        if (current_to_set > 0) {
+            ++chargers_allocated_current_to;
         }
 
         current_array[idx_array[i]] = current_to_set;
@@ -351,6 +360,34 @@ void ChargeManager::distribute_current() {
         local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
                                   "            stage 0: Calculated target for %s (%s) of %u mA. %u mA left. %c",
                                   charger_cfg.get("name")->asString().c_str(), charger_cfg.get("host")->asString().c_str(), current_to_set, available_current, '\0');
+    }
+
+    if (available_current > 0) {
+        local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
+                          "            %u mA still available. Recalculating targets.%c",
+                          available_current, '\0');
+
+        int chargers_reallocated = 0;
+        for(int i = 0; i < chargers.size(); ++i) {
+            if (current_array[idx_array[i]] == 0)
+                continue;
+
+            auto &charger = chargers[idx_array[i]];
+            uint16_t current_per_charger = available_current / (chargers_allocated_current_to - chargers_reallocated);
+            uint16_t current_to_add = MIN(charger.get("supported_current")->asUint() - current_array[idx_array[i]], current_per_charger);
+            local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
+                                    "            stage 0: current_per_charger %u avail %u alloc_to %u reallocd %u to_add %u%c",
+                                    current_per_charger, available_current, chargers_allocated_current_to, chargers_reallocated, current_to_add, '\0');
+            ++chargers_reallocated;
+
+            current_array[idx_array[i]] += current_to_add;
+            available_current -= current_to_add;
+
+            auto &charger_cfg = configs[idx_array[i]];
+            local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
+                                    "            stage 0: Recalculated target for %s (%s) of %u mA. %u mA left. %c",
+                                    charger_cfg.get("name")->asString().c_str(), charger_cfg.get("host")->asString().c_str(), current_array[idx_array[i]], available_current, '\0');
+        }
     }
 
     // Throttle chargers
