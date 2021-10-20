@@ -344,7 +344,7 @@ void ChargeManager::distribute_current() {
             current_to_set = 0;
         }
 
-        current_array[i] = current_to_set;
+        current_array[idx_array[i]] = current_to_set;
         available_current -= current_to_set;
 
         auto &charger_cfg = configs[idx_array[i]];
@@ -356,13 +356,13 @@ void ChargeManager::distribute_current() {
     // Throttle chargers
     bool skip_stage_2 = false;
     for (int i = 0; i < chargers.size(); ++i) {
-        auto &charger = chargers[idx_array[i]];
+        auto &charger = chargers[i];
 
         if (!charger.get("is_charging")->asBool() && !charger.get("wants_to_charge")->asBool()) {
             continue;
         }
 
-        auto &charger_cfg = configs[idx_array[i]];
+        auto &charger_cfg = configs[i];
         uint16_t current_to_set = current_array[i];
 
         bool will_throttle = current_to_set < charger.get("allocated_current")->asUint() || current_to_set < charger.get("allowed_current")->asUint();
@@ -398,13 +398,13 @@ void ChargeManager::distribute_current() {
 
     if (!skip_stage_2) {
         for (int i = 0; i < chargers.size(); ++i) {
-            auto &charger = chargers[idx_array[i]];
+            auto &charger = chargers[i];
 
              if (!charger.get("is_charging")->asBool() && !charger.get("wants_to_charge")->asBool()) {
                 continue;
             }
 
-            auto &charger_cfg = configs[idx_array[i]];
+            auto &charger_cfg = configs[i];
             uint16_t current_to_set = current_array[i];
 
             // > instead of >= to only catch chargers that were not already modified in stage 1.
