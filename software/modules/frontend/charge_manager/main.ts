@@ -166,15 +166,27 @@ function update_charge_manager_state(state: ChargeManagerState) {
 
         $(`#charge_manager_status_charger_${i}_name`).text(s.name);
         if (s.state != 5) {
-            $(`#charge_manager_status_charger_${i}_state`).text(__(`charge_manager.script.charge_state_${s.state}`));
-            $(`#charge_manager_status_charger_${i}_body`).removeClass("bg-danger text-white bg-disabled")
+            if (state.state == 2) {
+                $(`#charge_manager_status_charger_${i}_body`).addClass("bg-danger text-white bg-disabled");
+                $(`#charge_manager_status_charger_${i}_state`).text(__(`charge_manager.script.charge_state_blocked_by_other_box`));
+                $(`#charge_manager_status_charger_${i}_info`).text(__(`charge_manager.script.charge_state_blocked_by_other_box_details`));
+            } else {
+                $(`#charge_manager_status_charger_${i}_body`).removeClass("bg-danger text-white bg-disabled");
+                $(`#charge_manager_status_charger_${i}_state`).text(__(`charge_manager.script.charge_state_${s.state}`));
+                $(`#charge_manager_status_charger_${i}_info`).text(util.toLocaleFixed(s.allocated_current / 1000.0, 3) + " " + __("charge_manager.script.ampere_allocated"));
+            }
         }
         else {
-            $(`#charge_manager_status_charger_${i}_state`).text(__(`charge_manager.script.charge_error_${s.error}`));
-            $(`#charge_manager_status_charger_${i}_body`).addClass("bg-danger text-white bg-disabled")
+            if (s.error < 192)
+                $(`#charge_manager_status_charger_${i}_state`).text(__("charge_manager.script.charge_error_type_management"));
+            else
+                $(`#charge_manager_status_charger_${i}_state`).text(__("charge_manager.script.charge_error_type_client"));
+
+            $(`#charge_manager_status_charger_${i}_body`).addClass("bg-danger text-white bg-disabled");
+            $(`#charge_manager_status_charger_${i}_info`).text(__(`charge_manager.script.charge_error_${s.error}`));
         }
 
-        $(`#charge_manager_status_charger_${i}_info`).text(util.toLocaleFixed(s.allocated_current / 1000.0, 3) + " " + __("charge_manager.script.ampere_allocated"));
+
 
         let last_update = Math.floor((state.uptime - s.last_update) / 1000);
         $(`#charge_manager_status_charger_${i}_update`).text(__("charge_manager.script.last_update_prefix") +  util.format_timespan(last_update) + (__("charge_manager.script.last_update_suffix")));
@@ -458,6 +470,9 @@ export function getTranslation(lang: string) {
                     "charge_state_5": "Fehler",
                     "charge_state_6": "Laden abgeschlossen",
 
+                    "charge_error_type_management": "Managementfehler",
+                    "charge_error_type_client": "Wallbox-Fehler",
+
                     "charge_error_0": "OK",
                     "charge_error_1": "Kommunikationsfehler",
                     "charge_error_2": "Firmware inkompatibel",
@@ -465,6 +480,15 @@ export function getTranslation(lang: string) {
                     "charge_error_128": "Wallbox nicht erreichbar",
                     "charge_error_129": "Ladecontroller nicht erreichbar",
                     "charge_error_130": "Ladecontroller reagiert nicht",
+
+                    "charge_error_192": "OK",
+                    "charge_error_193": "Schalterfehler",
+                    "charge_error_194": "DC-Fehlerstromschutzfehler",
+                    "charge_error_195": "Schützfehler",
+                    "charge_error_196": "Fahrzeug-Kommunikationsfehler",
+
+                    "charge_state_blocked_by_other_box": "Blockiert",
+                    "charge_state_blocked_by_other_box_details": "Fehler bei anderer Wallbox",
 
                     "ampere_allocated": "Ampere zugeteilt",
                     "last_update_prefix": "Letztes Update vor ",

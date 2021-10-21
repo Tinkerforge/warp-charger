@@ -46,6 +46,7 @@ extern char uid[7];
 #define CHARGE_MANAGER_ERROR_CHARGER_UNREACHABLE 128
 #define CHARGE_MANAGER_ERROR_EVSE_UNREACHABLE 129
 #define CHARGE_MANAGER_ERROR_EVSE_NONREACTIVE 130
+#define CHARGE_MANAGER_CLIENT_ERROR_START 192
 
 ChargeManager::ChargeManager()
 {
@@ -150,7 +151,8 @@ void ChargeManager::start_manager_task() {
                     uptime);
                 if (deadline_elapsed(target.get("last_update")->asUint() + 10000)) {
                     target.get("state")->updateUint(5);
-                    target.get("error")->updateUint(CHARGE_MANAGER_ERROR_EVSE_UNREACHABLE);
+                    if (target.get("error")->updateUint(CHARGE_MANAGER_ERROR_EVSE_UNREACHABLE))
+                        logger.printfln("%u %u %u",__LINE__, client_id, target.get("error")->asUint());
                 }
 
                 return;
@@ -163,19 +165,30 @@ void ChargeManager::start_manager_task() {
             target.get("allowed_current")->updateUint(allowed_charging_current);
             target.get("supported_current")->updateUint(supported_current);
             target.get("last_update")->updateUint(millis());
-            target.get("state")->updateUint(get_charge_state(vehicle_state,
-                                                             iec61851_state,
-                                                             charge_release,
-                                                             charging_time,
-                                                             target.get("allocated_current")->asUint()));
+
+            if (error_state != 0) {
+                target.get("error")->updateUint(CHARGE_MANAGER_CLIENT_ERROR_START + error_state);
+            }
+
             auto current_error = target.get("error")->asUint();
-            if (current_error < 128 || current_error == CHARGE_MANAGER_ERROR_EVSE_UNREACHABLE)
-                target.get("error")->updateUint(0);
+            if (current_error < 128 || current_error == CHARGE_MANAGER_ERROR_EVSE_UNREACHABLE) {
+                if (target.get("error")->updateUint(0))
+                    logger.printfln("%u %u %u",__LINE__, client_id, target.get("error")->asUint());
+            }
+
+            current_error = target.get("error")->asUint();
+            if (current_error == 0 || current_error >= CHARGE_MANAGER_CLIENT_ERROR_START)
+                target.get("state")->updateUint(get_charge_state(vehicle_state,
+                                                                iec61851_state,
+                                                                charge_release,
+                                                                charging_time,
+                                                                target.get("allocated_current")->asUint()));
             charge_manager_state.get("uptime")->updateUint(millis());
     }, [this, chargers](uint8_t client_id, uint8_t error){
         Config &target = charge_manager_state.get("chargers")->asArray()[client_id];
         target.get("state")->updateUint(5);
-        target.get("error")->updateUint(error);
+        if (target.get("error")->updateUint(error))
+            logger.printfln("%u %u %u",__LINE__, client_id, target.get("error")->asUint());
     });
 
     task_scheduler.scheduleWithFixedDelay("charge_manager_send", [this, chargers](){
@@ -252,7 +265,8 @@ void ChargeManager::distribute_current() {
         auto charger_error = charger.get("error")->asUint();
         if (charger_error != CM_NETWORKING_ERROR_NO_ERROR &&
             charger_error != CHARGE_MANAGER_ERROR_CHARGER_UNREACHABLE &&
-            charger_error != CHARGE_MANAGER_ERROR_EVSE_NONREACTIVE) {
+            charger_error != CHARGE_MANAGER_ERROR_EVSE_NONREACTIVE &&
+            charger_error < CHARGE_MANAGER_CLIENT_ERROR_START) {
             unreachable_evse_found = true;
             local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
                                   "            stage 0: %s (%s) reports error %u.%c",
@@ -270,11 +284,15 @@ void ChargeManager::distribute_current() {
                                   "            stage 0: Can't reach EVSE of %s (%s): last_update too old.%c",
                                   charger_cfg.get("name")->asString().c_str(), charger_cfg.get("host")->asString().c_str(), '\0');
             if(chargers[i].get("state")->updateUint(5)) {
-                chargers[i].get("error")->updateUint(CHARGE_MANAGER_ERROR_CHARGER_UNREACHABLE);
+                if (chargers[i].get("error")->updateUint(CHARGE_MANAGER_ERROR_CHARGER_UNREACHABLE))
+                    logger.printfln("%u %u %u",__LINE__, i, chargers[i].get("error")->asUint());
                 print_local_log = !last_print_local_log_was_error;
                 last_print_local_log_was_error = true;
             }
             break;
+        } else if (chargers[i].get("error")->asUint() == CHARGE_MANAGER_ERROR_CHARGER_UNREACHABLE) {
+            chargers[i].get("error")->updateUint(CM_NETWORKING_ERROR_NO_ERROR);
+            logger.printfln("%u %u",__LINE__, chargers[i].get("error")->asUint());
         }
 
         // Charger did not update the charging current in time
@@ -284,10 +302,14 @@ void ChargeManager::distribute_current() {
                                   "            stage 0: EVSE of %s (%s) did not react in time.%c",
                                   charger_cfg.get("name")->asString().c_str(), charger_cfg.get("host")->asString().c_str(), '\0');
             if(chargers[i].get("state")->updateUint(5)) {
-                chargers[i].get("error")->updateUint(CHARGE_MANAGER_ERROR_EVSE_NONREACTIVE);
+                if (chargers[i].get("error")->updateUint(CHARGE_MANAGER_ERROR_EVSE_NONREACTIVE))
+                    logger.printfln("%u %u %u",__LINE__, i, chargers[i].get("error")->asUint());
                 print_local_log = !last_print_local_log_was_error;
                 last_print_local_log_was_error = true;
             }
+        } else if (chargers[i].get("error")->asUint() == CHARGE_MANAGER_ERROR_EVSE_NONREACTIVE) {
+            if (chargers[i].get("error")->updateUint(CM_NETWORKING_ERROR_NO_ERROR))
+                logger.printfln("%u %u %u",__LINE__, i, chargers[i].get("error")->asUint());
             break;
         }
     }
@@ -295,7 +317,6 @@ void ChargeManager::distribute_current() {
     if (unreachable_evse_found) {
         // Shut down everything.
         available_current = 0;
-        print_local_log = true;
         local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
                               "            stage 0: Unreachable, unreactive or misconfigured EVSE(s) found. Setting available current to 0 mA.%c", '\0');
         charge_manager_state.get("state")->updateUint(2);
