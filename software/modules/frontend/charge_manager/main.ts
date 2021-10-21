@@ -53,6 +53,7 @@ interface ChargerConfig {
 interface ChargeManagerConfig {
     enable_charge_manager: boolean,
     default_available_current: number,
+    minimum_current: number,
     chargers: ChargerConfig[]
 }
 
@@ -233,6 +234,7 @@ function update_charge_manager_config(config: ChargeManagerConfig, force: boolea
 
     $('#charge_manager_enable').prop("checked", config.enable_charge_manager);
     util.setNumericInput("charge_manager_default_available_current", config.default_available_current / 1000, 3);
+    util.setNumericInput("charge_manager_minimum_current", config.minimum_current / 1000, 3);
 
     if (config.chargers.length != charger_config_count) {
         let charger_configs = "";
@@ -310,6 +312,7 @@ function collect_charge_manager_config(new_charger: ChargerConfig = null, remove
     return {
        enable_charge_manager: $('#charge_manager_enable').is(':checked'),
        default_available_current: Math.round(<number>$('#charge_manager_default_available_current').val() * 1000),
+       minimum_current: Math.round(<number>$('#charge_manager_minimum_current').val() * 1000),
        chargers: chargers
     };
 }
@@ -435,7 +438,8 @@ export function getTranslation(lang: string) {
                     "charge_manager": "Lastmanager",
                     "enable_charge_manager": "Lastmanager aktivieren",
                     "enable_charge_manager_desc": "<a href=\"https://www.warp-charger.com/#documents\">siehe Betriebsanleitung für Details</a></span>",
-                    "default_available_current": "Verfügbarer Strom",
+                    "default_available_current": "<span class=\"form-label pr-2\">Voreingestellt verfügbarer Strom</span><span class=\"text-muted\">wird nach Neustart des Lastmanagers verwendet</span>",
+                    "minimum_current": "<span class=\"form-label pr-2\">Minimaler Ladestrom</span><span class=\"text-muted\">muss mindestens verfügbar sein, damit eine Wallbox lädt</span>",
                     "save": "Speichern",
                     "managed_boxes": "Kontrollierte Wallboxen",
                     "state": "Zustand",
