@@ -54,10 +54,19 @@ extern char uid[7];
 // validator function, so lambda capture lists have to be empty.
 static uint32_t max_avail_current = 0;
 
+
+#define TIMEOUT_MS 32000
+
+#define DISTRIBUTION_LOG_LEN 2048
+static char distribution_log[DISTRIBUTION_LOG_LEN] = {0};
+
+#define WATCHDOG_TIMEOUT_MS 30000
+
 ChargeManager::ChargeManager()
 {
     charge_manager_config = Config::Object({
         {"enable_charge_manager", Config::Bool(false)},
+        {"enable_watchdog", Config::Bool(false)},
         {"default_available_current", Config::Uint32(0)},
         {"maximum_available_current", Config::Uint32(0)},
         {"minimum_current", Config::Uint(6000, 6000, 32000)},
@@ -231,9 +240,10 @@ void ChargeManager::setup()
     if (!api.restorePersistentConfig("charge_manager/config", &charge_manager_config)) {
         charge_manager_config.get("chargers")->get(0)->get("name")->updateString(default_hostname);
     }
-    max_avail_current = charge_manager_config.get("maximum_available_current")->asUint();
 
     charge_manager_config_in_use = charge_manager_config;
+
+    max_avail_current = charge_manager_config_in_use.get("maximum_available_current")->asUint();
 
     if(!charge_manager_config_in_use.get("enable_charge_manager")->asBool() || charge_manager_config_in_use.get("chargers")->asArray().size() == 0) {
         initialized = true;
@@ -254,13 +264,30 @@ void ChargeManager::setup()
     start_manager_task();
 
     task_scheduler.scheduleWithFixedDelay("distribute current", [this](){this->distribute_current();}, 10000, 10000);
+
+    if (charge_manager_config_in_use.get("enable_watchdog")->asBool()) {
+        task_scheduler.scheduleWithFixedDelay("cm_watchdog", [this](){this->check_watchdog();}, 1000, 1000);
+    }
+
     initialized = true;
 }
 
-#define TIMEOUT_MS 32000
+void ChargeManager::check_watchdog() {
+    static bool first_update_seen = false;
+    if (!first_update_seen && last_available_current_update != 0)
+        first_update_seen = true;
 
-#define DISTRIBUTION_LOG_LEN 2048
-char distribution_log[DISTRIBUTION_LOG_LEN] = {0};
+    if (!first_update_seen || !deadline_elapsed(last_available_current_update + WATCHDOG_TIMEOUT_MS))
+        return;
+
+    logger.printfln("Charge manager watchdog triggered! Received no available current update for %d ms.\n", WATCHDOG_TIMEOUT_MS);
+    logger.printfln("Setting available current to 0 mA.");
+
+    this->charge_manager_available_current.get("current")->updateUint(0);
+
+    first_update_seen = false;
+    last_available_current_update = 0;
+}
 
 void ChargeManager::distribute_current() {
     std::lock_guard<std::mutex> lock(state_mutex);
@@ -373,7 +400,7 @@ void ChargeManager::distribute_current() {
 
     int chargers_allocated_current_to = 0;
 
-    uint16_t current_to_set = charge_manager_config.get("minimum_current")->asUint();
+    uint16_t current_to_set = charge_manager_config_in_use.get("minimum_current")->asUint();
     for(int i = 0; i < chargers.size(); ++i) {
         auto &charger = chargers[idx_array[i]];
 
@@ -532,7 +559,9 @@ void ChargeManager::register_urls()
     api.addPersistentConfig("charge_manager/config", &charge_manager_config, {"password"}, 1000);
     api.addState("charge_manager/state", &charge_manager_state, {}, 1000);
     api.addState("charge_manager/available_current", &charge_manager_available_current, {}, 1000);
-    api.addCommand("charge_manager/available_current_update", &charge_manager_available_current, {}, [](){}, false);
+    api.addCommand("charge_manager/available_current_update", &charge_manager_available_current, {}, [this](){
+        this->last_available_current_update = millis();
+    }, false);
 
 }
 

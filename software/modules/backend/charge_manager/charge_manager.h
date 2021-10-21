@@ -35,6 +35,7 @@ public:
     void send_current();
     void distribute_current();
     void start_manager_task();
+    void check_watchdog();
 
     Config charge_manager_config;
     Config charge_manager_config_in_use;
@@ -47,4 +48,6 @@ public:
     bool request_in_progress;
     uint32_t request_id;
     String buf;
+
+    uint32_t last_available_current_update = 0;
 };
