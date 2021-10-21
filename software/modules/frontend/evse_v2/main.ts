@@ -397,6 +397,7 @@ function debug_stop() {
 export function init() {
     $("#status_charging_current_minimum").on("click", () => set_charging_current(6000));
     $("#status_charging_current_maximum").on("click", () => set_charging_current(32000));
+    $("#reset_current_configured").on("click", () => set_charging_current(32000));
 
     $('#evse_reset_dc_fault_current').on("click", () => $('#evse_reset_dc_fault_modal').modal('show'));
     $('#evse_reset_dc_fault_modal_button').on("click", () => {
@@ -625,6 +626,7 @@ export function getTranslation(lang: string) {
                     "charging_current_max_incoming": "Zuleitung",
                     "charging_current_max_outgoing": "Typ-2-Ladekabel",
                     "charging_current_managed": "Lastmanagement",
+                    "reset_configured_current": "Zurücksetzen",
                     "low_level_state": "Low-Level-Zustand",
                     "low_level_state_show": "Anzeigen / Verstecken",
                     "led_state": "LED-Zustand",

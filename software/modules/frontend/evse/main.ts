@@ -362,6 +362,7 @@ function debug_stop() {
 export function init() {
     $("#status_charging_current_minimum").on("click", () => set_charging_current(6000));
     $("#status_charging_current_maximum").on("click", () => set_charging_current(32000));
+    $("#reset_current_configured").on("click", () => set_charging_current(32000));
 
     $("#status_stop_charging").on("click", stop_charging);
     $("#status_start_charging").on("click", start_charging);
@@ -586,6 +587,7 @@ export function getTranslation(lang: string) {
                     "charging_current_max_incoming": "Zuleitung",
                     "charging_current_max_outgoing": "Typ-2-Ladekabel",
                     "charging_current_managed": "Lastmanagement",
+                    "reset_configured_current": "Zurücksetzen",
                     "low_level_state": "Low-Level-Zustand",
                     "low_level_state_show": "Anzeigen / Verstecken",
                     "led_state": "LED-Zustand",
