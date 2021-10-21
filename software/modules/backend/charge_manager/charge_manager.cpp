@@ -413,10 +413,6 @@ void ChargeManager::distribute_current() {
     for (int i = 0; i < chargers.size(); ++i) {
         auto &charger = chargers[i];
 
-        if (!charger.get("is_charging")->asBool() && !charger.get("wants_to_charge")->asBool()) {
-            continue;
-        }
-
         auto &charger_cfg = configs[i];
         uint16_t current_to_set = current_array[i];
 
@@ -455,9 +451,6 @@ void ChargeManager::distribute_current() {
         for (int i = 0; i < chargers.size(); ++i) {
             auto &charger = chargers[i];
 
-             if (!charger.get("is_charging")->asBool() && !charger.get("wants_to_charge")->asBool()) {
-                continue;
-            }
 
             auto &charger_cfg = configs[i];
             uint16_t current_to_set = current_array[i];
@@ -481,26 +474,6 @@ void ChargeManager::distribute_current() {
     } else {
         local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
                                   "            Skipping stage 2%c", '\0');
-    }
-
-    // Stage 3: Block any box that does not charge right now and does not want to charge.
-    // This should be unnecessary, as the boxes automatically set their limit to 0 if
-    // they are done charging. Better safe than sorry
-    for (int i = 0; i < chargers.size(); ++i) {
-        auto &charger = chargers[i];
-        auto &charger_cfg = configs[i];
-        if (charger.get("is_charging")->asBool() || charger.get("wants_to_charge")->asBool()) {
-            continue;
-        }
-
-        local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
-                              "            stage 3: Blocking %s (%s).%c",
-                              charger_cfg.get("name")->asString().c_str(), charger_cfg.get("host")->asString().c_str(), '\0');
-
-        if(charger.get("allocated_current")->updateUint(0)) {
-            print_local_log = true;
-            charger.get("last_sent_config")->updateUint(millis());
-        }
     }
 
     if (print_local_log) {
