@@ -326,7 +326,7 @@ void ChargeManager::distribute_current() {
             local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
                                   "            stage 0: Can't reach EVSE of %s (%s): last_update too old.%c",
                                   charger_cfg.get("name")->asString().c_str(), charger_cfg.get("host")->asString().c_str(), '\0');
-            if(chargers[i].get("state")->updateUint(5)) {
+            if(chargers[i].get("state")->updateUint(5) || charger_error < CHARGE_MANAGER_CLIENT_ERROR_START) {
                 if (chargers[i].get("error")->updateUint(CHARGE_MANAGER_ERROR_CHARGER_UNREACHABLE))
                     logger.printfln("%u %u %u",__LINE__, i, chargers[i].get("error")->asUint());
                 print_local_log = !last_print_local_log_was_error;
@@ -343,7 +343,7 @@ void ChargeManager::distribute_current() {
             local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
                                   "            stage 0: EVSE of %s (%s) did not react in time.%c",
                                   charger_cfg.get("name")->asString().c_str(), charger_cfg.get("host")->asString().c_str(), '\0');
-            if(chargers[i].get("state")->updateUint(5)) {
+            if(chargers[i].get("state")->updateUint(5) || charger_error < CHARGE_MANAGER_CLIENT_ERROR_START) {
                 if (chargers[i].get("error")->updateUint(CHARGE_MANAGER_ERROR_EVSE_NONREACTIVE))
                     logger.printfln("%u %u %u",__LINE__, i, chargers[i].get("error")->asUint());
                 print_local_log = !last_print_local_log_was_error;
