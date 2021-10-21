@@ -274,7 +274,6 @@ void ChargeManager::distribute_current() {
 
             print_local_log = !last_print_local_log_was_error;
             last_print_local_log_was_error = true;
-            break;
         }
 
         // Charger does not respond anymore
@@ -289,7 +288,6 @@ void ChargeManager::distribute_current() {
                 print_local_log = !last_print_local_log_was_error;
                 last_print_local_log_was_error = true;
             }
-            break;
         } else if (chargers[i].get("error")->asUint() == CHARGE_MANAGER_ERROR_CHARGER_UNREACHABLE) {
             chargers[i].get("error")->updateUint(CM_NETWORKING_ERROR_NO_ERROR);
             logger.printfln("%u %u",__LINE__, chargers[i].get("error")->asUint());
@@ -310,7 +308,6 @@ void ChargeManager::distribute_current() {
         } else if (chargers[i].get("error")->asUint() == CHARGE_MANAGER_ERROR_EVSE_NONREACTIVE) {
             if (chargers[i].get("error")->updateUint(CM_NETWORKING_ERROR_NO_ERROR))
                 logger.printfln("%u %u %u",__LINE__, i, chargers[i].get("error")->asUint());
-            break;
         }
     }
 
