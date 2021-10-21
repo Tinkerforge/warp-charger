@@ -273,20 +273,17 @@ void ChargeManager::setup()
 }
 
 void ChargeManager::check_watchdog() {
-    static bool first_update_seen = false;
-    if (!first_update_seen && last_available_current_update != 0)
-        first_update_seen = true;
-
-    if (!first_update_seen || !deadline_elapsed(last_available_current_update + WATCHDOG_TIMEOUT_MS))
+    if (!deadline_elapsed(last_available_current_update + WATCHDOG_TIMEOUT_MS))
         return;
 
+    uint32_t default_available_current = this->charge_manager_config_in_use.get("default_available_current")->asUint();
+
     logger.printfln("Charge manager watchdog triggered! Received no available current update for %d ms.\n", WATCHDOG_TIMEOUT_MS);
-    logger.printfln("Setting available current to 0 mA.");
+    logger.printfln("Setting available current to %u mA.", default_available_current);
 
-    this->charge_manager_available_current.get("current")->updateUint(0);
+    this->charge_manager_available_current.get("current")->updateUint(default_available_current);
 
-    first_update_seen = false;
-    last_available_current_update = 0;
+    last_available_current_update = millis();
 }
 
 void ChargeManager::distribute_current() {
