@@ -48,11 +48,18 @@ extern char uid[7];
 #define CHARGE_MANAGER_ERROR_EVSE_NONREACTIVE 130
 #define CHARGE_MANAGER_CLIENT_ERROR_START 192
 
+// This is a hack to allow the validator of charge_manager_available_current
+// to access charge_manager_config["maximum_available_current"]
+// It is necessary, because configs only take a function pointer as
+// validator function, so lambda capture lists have to be empty.
+static uint32_t max_avail_current = 0;
+
 ChargeManager::ChargeManager()
 {
     charge_manager_config = Config::Object({
         {"enable_charge_manager", Config::Bool(false)},
         {"default_available_current", Config::Uint32(0)},
+        {"maximum_available_current", Config::Uint32(0)},
         {"minimum_current", Config::Uint(6000, 6000, 32000)},
         {"chargers", Config::Array(
             {
@@ -67,6 +74,13 @@ ChargeManager::ChargeManager()
             }),
             0, MAX_CLIENTS, Config::type_id<Config::ConfObject>()
         )}
+    }, [](Config::ConfObject &conf) -> String {
+        uint32_t default_available_current = conf.get("default_available_current")->asUint();
+        uint32_t maximum_available_current = conf.get("maximum_available_current")->asUint();
+
+        if (default_available_current > maximum_available_current)
+            return "default_available_current can not be greater than maximum_available_current";
+        return "";
     });
 
     charge_manager_state = Config::Object({
@@ -95,6 +109,10 @@ ChargeManager::ChargeManager()
 
     charge_manager_available_current = Config::Object({
         {"current", Config::Uint32(0)},
+    }, [](Config::ConfObject &conf) -> String {
+        if (conf.get("current")->asUint() > max_avail_current)
+            return String("Current too large: maximum available current is configured to ") + String(max_avail_current);
+        return "";
     });
 }
 
@@ -213,6 +231,7 @@ void ChargeManager::setup()
     if (!api.restorePersistentConfig("charge_manager/config", &charge_manager_config)) {
         charge_manager_config.get("chargers")->get(0)->get("name")->updateString(default_hostname);
     }
+    max_avail_current = charge_manager_config.get("maximum_available_current")->asUint();
 
     charge_manager_config_in_use = charge_manager_config;
 
@@ -402,7 +421,7 @@ void ChargeManager::distribute_current() {
                 continue;
 
             auto &charger = chargers[idx_array[i]];
-            uint16_t current_per_charger = available_current / (chargers_allocated_current_to - chargers_reallocated);
+            uint16_t current_per_charger = MIN(32000, available_current / (chargers_allocated_current_to - chargers_reallocated));
 
             uint16_t supported_current = charger.get("supported_current")->asUint();
             // Protect against overflow.
