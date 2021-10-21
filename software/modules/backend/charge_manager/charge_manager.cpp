@@ -428,7 +428,8 @@ void ChargeManager::distribute_current() {
 
         if(charger.get("allocated_current")->updateUint(current_to_set)) {
             print_local_log = true;
-            charger.get("last_sent_config")->updateUint(millis());
+            if (charger.get("error")->asUint() != CHARGE_MANAGER_ERROR_EVSE_NONREACTIVE)
+                charger.get("last_sent_config")->updateUint(millis());
         }
 
         // Skip stage 2 to wait for the charger to adapt to the now smaller limit.
@@ -451,7 +452,6 @@ void ChargeManager::distribute_current() {
         for (int i = 0; i < chargers.size(); ++i) {
             auto &charger = chargers[i];
 
-
             auto &charger_cfg = configs[i];
             uint16_t current_to_set = current_array[i];
 
@@ -468,7 +468,8 @@ void ChargeManager::distribute_current() {
 
             if(charger.get("allocated_current")->updateUint(current_to_set)) {
                 print_local_log = true;
-                charger.get("last_sent_config")->updateUint(millis());
+                if (charger.get("error")->asUint() != CHARGE_MANAGER_ERROR_EVSE_NONREACTIVE)
+                    charger.get("last_sent_config")->updateUint(millis());
             }
         }
     } else {
