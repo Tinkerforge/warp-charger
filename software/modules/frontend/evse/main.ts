@@ -313,17 +313,6 @@ function debug_start() {
         });
 }
 
-function downloadToFile(content: BlobPart, filename: string, contentType: string) {
-    const a = document.createElement('a');
-    const file = new Blob([content], {type: contentType});
-
-    a.href= URL.createObjectURL(file);
-    a.download = filename;
-    a.click();
-
-    URL.revokeObjectURL(a.href);
-};
-
 function debug_stop() {
     let status = <HTMLInputElement>$('#debug_label')[0];
 
@@ -352,7 +341,7 @@ function debug_stop() {
                             debug_log += result + "\n";
                             status.value = __("evse.script.debug_done");
 
-                            downloadToFile(debug_log, "evse-debug-log-" + (new Date()).toISOString().replace(/:/gi, "-").replace(/\./gi, "-") + ".txt", "text/plain");
+                            util.downloadToFile(debug_log, "evse-debug-log-" + (new Date()).toISOString().replace(/:/gi, "-").replace(/\./gi, "-") + ".txt", "text/plain");
                         });
                 });
         });

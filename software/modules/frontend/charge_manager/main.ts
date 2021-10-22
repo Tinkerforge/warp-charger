@@ -66,68 +66,6 @@ function update_charge_manager_state(state: ChargeManagerState) {
         let charger_content = "";
         let charger_status = "";
         for (let i = 0; i < state.chargers.length; i++) {
-            charger_content += `
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <span class="h3" id="charge_manager_content_charger_${i}_name"></span>
-                </div>
-
-                <div class="form-group row">
-                    <label for="charge_manager_content_charger_${i}_last_update" class="col-lg-3 col-xl-2 col-form-label form-label">${__("charge_manager.content.last_update")}</label>
-                    <div class="col-lg-9 col-xl-6">
-                        <input id="charge_manager_content_charger_${i}_last_update" class="form-control" type="text" placeholder="..." readonly>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="charge_manager_content_charger_${i}_uptime" class="col-lg-3 col-xl-2 col-form-label form-label">${__("charge_manager.content.uptime")}</label>
-                    <div class="col-lg-9 col-xl-6">
-                        <input id="charge_manager_content_charger_${i}_uptime" class="form-control" type="text" placeholder="..." readonly>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="charge_manager_content_charger_${i}_supported_current" class="col-lg-3 col-xl-2 col-form-label form-label">${__("charge_manager.content.supported_current")}</label>
-                    <div class="col-lg-9 col-xl-6">
-                        <input id="charge_manager_content_charger_${i}_supported_current" class="form-control" type="text" placeholder="..." readonly>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="charge_manager_content_charger_${i}_allowed_current" class="col-lg-3 col-xl-2 col-form-label form-label">${__("charge_manager.content.allowed_current")}</label>
-                    <div class="col-lg-9 col-xl-6">
-                        <input id="charge_manager_content_charger_${i}_allowed_current" class="form-control" type="text" placeholder="..." readonly>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="charge_manager_content_charger_${i}_wants_to_charge" class="col-lg-3 col-xl-2 col-form-label form-label">${__("charge_manager.content.wants_to_charge")}</label>
-                    <div class="col-lg-9 col-xl-6">
-                        <input id="charge_manager_content_charger_${i}_wants_to_charge" class="form-control" type="text" placeholder="..." readonly>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="charge_manager_content_charger_${i}_is_charging" class="col-lg-3 col-xl-2 col-form-label form-label">${__("charge_manager.content.is_charging")}</label>
-                    <div class="col-lg-9 col-xl-6">
-                        <input id="charge_manager_content_charger_${i}_is_charging" class="form-control" type="text" placeholder="..." readonly>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="charge_manager_content_charger_${i}_last_sent_config" class="col-lg-3 col-xl-2 col-form-label form-label">${__("charge_manager.content.last_sent_config")}</label>
-                    <div class="col-lg-9 col-xl-6">
-                        <input id="charge_manager_content_charger_${i}_last_sent_config" class="form-control" type="text" placeholder="..." readonly>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="charge_manager_content_charger_${i}_allocated_current" class="col-lg-3 col-xl-2 col-form-label form-label">${__("charge_manager.content.allocated_current")}</label>
-                    <div class="col-lg-9 col-xl-6">
-                        <input id="charge_manager_content_charger_${i}_allocated_current" class="form-control" type="text" placeholder="..." readonly>
-                    </div>
-                </div>`
-
             if (i % 2 == 0) {
                 if (i != 0) {
                     charger_status += '</div>';
@@ -143,7 +81,7 @@ function update_charge_manager_state(state: ChargeManagerState) {
                     <p id="charge_manager_status_charger_${i}_info" class="card-text"></p>
                 </div>
                 <div class="card-footer">
-                    <small id="charge_manager_status_charger_${i}_update" class="text-muted"></small>
+                    <small id="charge_manager_status_charger_${i}_details"></small>
                 </div>
             </div>
             `
@@ -157,15 +95,6 @@ function update_charge_manager_state(state: ChargeManagerState) {
     }
     for (let i = 0; i < state.chargers.length; i++) {
         const s = state.chargers[i];
-        $(`#charge_manager_content_charger_${i}_name`).text(s.name);
-        $(`#charge_manager_content_charger_${i}_last_update`).val(util.format_timespan(Math.floor((state.uptime - s.last_update) / 1000)));
-        $(`#charge_manager_content_charger_${i}_uptime`).val(util.format_timespan(Math.floor(s.uptime / 1000)));
-        $(`#charge_manager_content_charger_${i}_supported_current`).val(util.toLocaleFixed(s.supported_current / 1000.0, 3) + " A (wird noch ignoriert)");
-        $(`#charge_manager_content_charger_${i}_allowed_current`).val(util.toLocaleFixed(s.allowed_current / 1000.0, 3) + " A");
-        $(`#charge_manager_content_charger_${i}_wants_to_charge`).val(s.wants_to_charge.toString());
-        $(`#charge_manager_content_charger_${i}_is_charging`).val(s.is_charging.toString());
-        $(`#charge_manager_content_charger_${i}_last_sent_config`).val(util.format_timespan(Math.floor((state.uptime - s.last_sent_config) / 1000)));
-        $(`#charge_manager_content_charger_${i}_allocated_current`).val(util.toLocaleFixed(s.allocated_current / 1000.0, 3) + " A");
 
         $(`#charge_manager_status_charger_${i}_name`).text(s.name);
         if (s.state != 5) {
@@ -189,11 +118,12 @@ function update_charge_manager_state(state: ChargeManagerState) {
             $(`#charge_manager_status_charger_${i}_info`).text(__(`charge_manager.script.charge_error_${s.error}`));
         }
 
-
-
         let last_update = Math.floor((state.uptime - s.last_update) / 1000);
-        $(`#charge_manager_status_charger_${i}_update`).text(__("charge_manager.script.last_update_prefix") +  util.format_timespan(last_update) + (__("charge_manager.script.last_update_suffix")));
-        $(`#charge_manager_status_charger_${i}_update`).prop("hidden", last_update < 3);
+        let status_text = util.toLocaleFixed(s.supported_current / 1000.0, 3) + " " + __("charge_manager.script.ampere_supported");
+
+        if (last_update >= 3)
+            status_text += "; " + __("charge_manager.script.last_update_prefix") + util.format_timespan(last_update) + (__("charge_manager.script.last_update_suffix"));
+        $(`#charge_manager_status_charger_${i}_details`).text(status_text);
     }
 
     util.update_button_group("btn_group_charge_manager_state", state.state);
@@ -259,9 +189,6 @@ function update_charge_manager_config(config: ChargeManagerConfig, force: boolea
                                 <input type="text" class="form-control" id="charge_manager_config_charger_${i}_host">
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <small id="charge_manager_status_charger_${i}_update" class="text-muted">Unterstützter Strom: (noch nicht implementiert)</small>
-                        </div>
                     </div>
                 </div>`;
         }
@@ -275,9 +202,6 @@ function update_charge_manager_config(config: ChargeManagerConfig, force: boolea
             </div>
             <div class="card-body">
                 <button id="charge_manager_add_charger" type="button" class="btn btn-light btn-lg btn-block" style="height: 100%;" data-toggle="modal" data-target="#charge_manager_add_charger_modal"><span data-feather="plus-circle"></span></button>
-            </div>
-            <div class="card-footer">
-                <small class="text-muted" style="visibility: hidden;">Unterstützter Strom: (noch nicht implementiert)</small>
             </div>
         </div>
     </div>`;
@@ -464,8 +388,6 @@ export function getTranslation(lang: string) {
                     "is_charging": "Lädt",
                     "last_sent_config": "Letzte Stromzuweisung vor",
                     "allocated_current": "zugeteilter Strom",
-                    "low_level_state": "Low-Level-Zustand",
-                    "low_level_state_show": "Anzeigen / Verstecken",
 
                     "add_charger_modal_title": "Wallbox hinzufügen",
                     "add_charger_modal_name": "Anzeigename",
@@ -507,8 +429,9 @@ export function getTranslation(lang: string) {
                     "charge_state_blocked_by_other_box": "Blockiert",
                     "charge_state_blocked_by_other_box_details": "Fehler bei anderer Wallbox",
 
-                    "ampere_allocated": "Ampere zugeteilt",
-                    "last_update_prefix": "Letztes Update vor ",
+                    "ampere_allocated": "A zugeteilt",
+                    "ampere_supported": "A unterstützt",
+                    "last_update_prefix": "Gestört seit ",
                     "last_update_suffix": " ",
                     "save_failed": "Speichern der Lastmanager-Konfiguration fehlgeschlagen",
                     "set_available_current_failed": "Setzen des verfügbaren Stroms fehlgeschlagen",
@@ -542,8 +465,6 @@ export function getTranslation(lang: string) {
                     "is_charging": "Is charging",
                     "last_sent_config": "Last sent config",
                     "allocated_current": "Allocated current",
-                    "low_level_state": "Low Level State",
-                    "low_level_state_show": "Show / Hide",
 
                     "add_charger_modal_title": "Add charger",
                     "add_charger_modal_name": "Display name",

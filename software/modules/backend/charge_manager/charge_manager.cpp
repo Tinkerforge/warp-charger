@@ -179,8 +179,7 @@ void ChargeManager::start_manager_task() {
                     uptime);
                 if (deadline_elapsed(target.get("last_update")->asUint() + 10000)) {
                     target.get("state")->updateUint(5);
-                    if (target.get("error")->updateUint(CHARGE_MANAGER_ERROR_EVSE_UNREACHABLE))
-                        logger.printfln("%u %u %u",__LINE__, client_id, target.get("error")->asUint());
+                    target.get("error")->updateUint(CHARGE_MANAGER_ERROR_EVSE_UNREACHABLE);
                 }
 
                 return;
@@ -200,8 +199,7 @@ void ChargeManager::start_manager_task() {
 
             auto current_error = target.get("error")->asUint();
             if (current_error < 128 || current_error == CHARGE_MANAGER_ERROR_EVSE_UNREACHABLE) {
-                if (target.get("error")->updateUint(0))
-                    logger.printfln("%u %u %u",__LINE__, client_id, target.get("error")->asUint());
+                target.get("error")->updateUint(0);
             }
 
             current_error = target.get("error")->asUint();
@@ -215,8 +213,7 @@ void ChargeManager::start_manager_task() {
     }, [this, chargers](uint8_t client_id, uint8_t error){
         Config &target = charge_manager_state.get("chargers")->asArray()[client_id];
         target.get("state")->updateUint(5);
-        if (target.get("error")->updateUint(error))
-            logger.printfln("%u %u %u",__LINE__, client_id, target.get("error")->asUint());
+        target.get("error")->updateUint(error);
     });
 
     task_scheduler.scheduleWithFixedDelay("charge_manager_send", [this, chargers](){
@@ -278,8 +275,7 @@ void ChargeManager::check_watchdog() {
 
     uint32_t default_available_current = this->charge_manager_config_in_use.get("default_available_current")->asUint();
 
-    logger.printfln("Charge manager watchdog triggered! Received no available current update for %d ms.\n", WATCHDOG_TIMEOUT_MS);
-    logger.printfln("Setting available current to %u mA.", default_available_current);
+    logger.printfln("Charge manager watchdog triggered! Received no available current update for %d ms. Setting available current to %u mA", WATCHDOG_TIMEOUT_MS, default_available_current);
 
     this->charge_manager_available_current.get("current")->updateUint(default_available_current);
 
@@ -326,15 +322,13 @@ void ChargeManager::distribute_current() {
             local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
                                   "            stage 0: Can't reach EVSE of %s (%s): last_update too old.%c",
                                   charger_cfg.get("name")->asString().c_str(), charger_cfg.get("host")->asString().c_str(), '\0');
-            if(chargers[i].get("state")->updateUint(5)) {
-                if (chargers[i].get("error")->updateUint(CHARGE_MANAGER_ERROR_CHARGER_UNREACHABLE))
-                    logger.printfln("%u %u %u",__LINE__, i, chargers[i].get("error")->asUint());
+            if(chargers[i].get("state")->updateUint(5) || charger_error < CHARGE_MANAGER_CLIENT_ERROR_START) {
+                chargers[i].get("error")->updateUint(CHARGE_MANAGER_ERROR_CHARGER_UNREACHABLE);
                 print_local_log = !last_print_local_log_was_error;
                 last_print_local_log_was_error = true;
             }
         } else if (chargers[i].get("error")->asUint() == CHARGE_MANAGER_ERROR_CHARGER_UNREACHABLE) {
             chargers[i].get("error")->updateUint(CM_NETWORKING_ERROR_NO_ERROR);
-            logger.printfln("%u %u",__LINE__, chargers[i].get("error")->asUint());
         }
 
         // Charger did not update the charging current in time
@@ -343,15 +337,13 @@ void ChargeManager::distribute_current() {
             local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
                                   "            stage 0: EVSE of %s (%s) did not react in time.%c",
                                   charger_cfg.get("name")->asString().c_str(), charger_cfg.get("host")->asString().c_str(), '\0');
-            if(chargers[i].get("state")->updateUint(5)) {
-                if (chargers[i].get("error")->updateUint(CHARGE_MANAGER_ERROR_EVSE_NONREACTIVE))
-                    logger.printfln("%u %u %u",__LINE__, i, chargers[i].get("error")->asUint());
+            if(chargers[i].get("state")->updateUint(5) || charger_error < CHARGE_MANAGER_CLIENT_ERROR_START) {
+                chargers[i].get("error")->updateUint(CHARGE_MANAGER_ERROR_EVSE_NONREACTIVE);
                 print_local_log = !last_print_local_log_was_error;
                 last_print_local_log_was_error = true;
             }
         } else if (chargers[i].get("error")->asUint() == CHARGE_MANAGER_ERROR_EVSE_NONREACTIVE) {
-            if (chargers[i].get("error")->updateUint(CM_NETWORKING_ERROR_NO_ERROR))
-                logger.printfln("%u %u %u",__LINE__, i, chargers[i].get("error")->asUint());
+            chargers[i].get("error")->updateUint(CM_NETWORKING_ERROR_NO_ERROR);
         }
     }
 
