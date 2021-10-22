@@ -143,7 +143,7 @@ function update_charge_manager_state(state: ChargeManagerState) {
                     <p id="charge_manager_status_charger_${i}_info" class="card-text"></p>
                 </div>
                 <div class="card-footer">
-                    <small id="charge_manager_status_charger_${i}_update" class="text-muted"></small>
+                    <small id="charge_manager_status_charger_${i}_details"></small>
                 </div>
             </div>
             `
@@ -189,11 +189,12 @@ function update_charge_manager_state(state: ChargeManagerState) {
             $(`#charge_manager_status_charger_${i}_info`).text(__(`charge_manager.script.charge_error_${s.error}`));
         }
 
-
-
         let last_update = Math.floor((state.uptime - s.last_update) / 1000);
-        $(`#charge_manager_status_charger_${i}_update`).text(__("charge_manager.script.last_update_prefix") +  util.format_timespan(last_update) + (__("charge_manager.script.last_update_suffix")));
-        $(`#charge_manager_status_charger_${i}_update`).prop("hidden", last_update < 3);
+        let status_text = util.toLocaleFixed(s.supported_current / 1000.0, 3) + " " + __("charge_manager.script.ampere_supported");
+
+        if (last_update >= 3)
+            status_text += "; " + __("charge_manager.script.last_update_prefix") + util.format_timespan(last_update) + (__("charge_manager.script.last_update_suffix"));
+        $(`#charge_manager_status_charger_${i}_details`).text(status_text);
     }
 
     util.update_button_group("btn_group_charge_manager_state", state.state);
@@ -260,7 +261,7 @@ function update_charge_manager_config(config: ChargeManagerConfig, force: boolea
                             </div>
                         </div>
                         <div class="card-footer">
-                            <small id="charge_manager_status_charger_${i}_update" class="text-muted">Unterstützter Strom: (noch nicht implementiert)</small>
+                            <small id="charge_manager_status_charger_${i}_update" class="text-muted"></small>
                         </div>
                     </div>
                 </div>`;
@@ -277,7 +278,7 @@ function update_charge_manager_config(config: ChargeManagerConfig, force: boolea
                 <button id="charge_manager_add_charger" type="button" class="btn btn-light btn-lg btn-block" style="height: 100%;" data-toggle="modal" data-target="#charge_manager_add_charger_modal"><span data-feather="plus-circle"></span></button>
             </div>
             <div class="card-footer">
-                <small class="text-muted" style="visibility: hidden;">Unterstützter Strom: (noch nicht implementiert)</small>
+                <small class="text-muted" style="visibility: hidden;"></small>
             </div>
         </div>
     </div>`;
@@ -507,7 +508,8 @@ export function getTranslation(lang: string) {
                     "charge_state_blocked_by_other_box": "Blockiert",
                     "charge_state_blocked_by_other_box_details": "Fehler bei anderer Wallbox",
 
-                    "ampere_allocated": "Ampere zugeteilt",
+                    "ampere_allocated": "A zugeteilt",
+                    "ampere_supported": "A unterstützt",
                     "last_update_prefix": "Letztes Update vor ",
                     "last_update_suffix": " ",
                     "save_failed": "Speichern der Lastmanager-Konfiguration fehlgeschlagen",
