@@ -250,11 +250,18 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Im Lieferumfang der Wallbox befinden sich:
 	\begin{itemize}
 		\item Vormontierte Wallbox inkl. Deckel
-		\item Diese Betriebsanleitung
-		\item Testprotokoll der Wallbox
-		\item Bohrschablone
-		\item RJ45-Durchführung
+		\item DIN A4 Umschlag mit:
+		\begin{itemize}
+			\item Diese Betriebsanleitung
+			\item Testprotokoll der Wallbox
+			\item Bohrschablone
+		\end{itemize}
 		\item 3$\times$ NFC-Karte (nur Varianten Smart und Pro)
+		\item Umschlag mit:
+		\begin{itemize}
+			\item RJ45-Verschraubung für RJ45-Durchführung
+			\item RJ45 Crimpstecker
+		\end{itemize}
 	\end{itemize}
 
 	\subsubsection{Montageort}
@@ -285,6 +292,15 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Bohren der Befestigungslöcher kann die mitgelieferte Bohrschablone genutzt
 	werden. Bei der Montage ist auf einen ausreichend stabilen Untergrund zu
 	achten.
+
+	Wir empfehlen zur Montage den Einsatz von $\SI{5}{\milli\meter}$ oder 
+	$\SI{6}{\milli\meter}$ Schrauben. Die Schraubenlänge ist abhängig vom
+	Untergrund. Der Schraubenkopfdurchmesser darf nicht mehr wie 
+	$\SI{11}{\milli\meter}$ betragen, da ansonsten die Schraube nicht durch die
+	ensprechende Öffnung im Gehäuse passt. Bei einer Montage auf einer Steinwand
+	können als Beispiel Holzschrauben vom Typ
+	$\SI{5,0} \times \SI{80}{\milli\meter}$ mit
+	$\SI{8}\times\SI{50}{\milli\meter}$ verwendet werden.
 
 	\subsubsection{Anforderungen an die Elektroinstallation}
 	Die Wahl des Leitungsquerschnitts und der Lei\-tungs\-ab\-sicher\-ung der
@@ -397,6 +413,25 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		Installation nur von einer ausgewiesenen Elektrofachkraft unter
 		Berücksichtigung der genannten Bedingungen geändert werden!}
 
+	Der eingestellte Ladestrom ergibt abhängig vom einphasigen oder dreiphasigen
+	Anschluss der Wallbox die folgenden maximalen Ladeleistungen:
+
+	\begin{tabular}{lll}
+		%\toprule
+		\textbf{Strom}            & \textbf{1 Phasen} & \textbf{3 Phasen} \\
+		\cmidrule(lr{0.5em}){1-3}\\
+		\SI{6}{\ampere}           & \SI{1.4}{\kilo\watt}                     &		\SI{4.1}{\kilo\watt}             \\
+		\SI{10}{\ampere}          & \SI{2.3}{\kilo\watt}                     &		\SI{6.0}{\kilo\watt}             \\
+		\SI{13}{\ampere}          & \SI{3.0}{\kilo\watt}                     &		\SI{9.0}{\kilo\watt}             \\
+		\SI{16}{\ampere}          & \SI{3.7}{\kilo\watt}                     & 		\SI{11.0}{\kilo\watt}             \\
+		\SI{20}{\ampere}          & \SI{4.6}{\kilo\watt}                     &		\SI{13.8}{\kilo\watt}             \\
+		\SI{25}{\ampere}          & \SI{5.6}{\kilo\watt}                     &		\SI{17.3}{\kilo\watt}             \\
+		\SI{32}{\ampere}          & \SI{7.4}{\kilo\watt}                     &		\SI{22.0}{\kilo\watt}             \\
+		%\bottomrule
+	\end{tabular}
+
+
+
 	\subsubsection{LAN- / RJ45-Kabel anfertigen}\label{ethernet}
 
 	Auf der Unterseite der Wallbox befindet sich eine spritzwassergeschütze RJ45-Durchführung
@@ -410,7 +445,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	angefertigt werden:
 	\begin{enumerate}
 		\item LAN-Kabel durch den Aufsatz ziehen
-		\item Mitgelieferten RJ45-Stecker auf das LAN-Kabel crimpen
+		\item Mitgelieferten RJ45-Stecker auf das LAN-Kabel crimpen. Die
+		Kontaktierung erfolgt typischerweise nach TIA-568 Schema A oder B.
+		Da verwendete Schema sollte auf beiden Kabelseiten identisch sein.
 
 		\gfx{./img_warp2/resized/warp2_rj45_1_600}
 		\item Kabel im Aufsatz zurückziehen und die Zugentlastung handfest anziehen
@@ -968,7 +1005,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		17.08.2021 & 0.2     & Neue Features hinzugefügt       \\
 		23.08.2021 & 0.3     & Inhaltliche Verbesserungen      \\
 		07.09.2021 & 1.0     & Druckversion                    \\
-		12.10.2021 & 1.1     & Ersatzteilliste verfollständigt \\
+		12.10.2021 & 1.1     & Ersatzteilliste vervollständigt \\
 		\bottomrule
 	\end{tabular}
 	\newpage
