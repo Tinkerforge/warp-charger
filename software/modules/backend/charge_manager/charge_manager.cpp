@@ -68,7 +68,7 @@ ChargeManager::ChargeManager()
         {"enable_charge_manager", Config::Bool(false)},
         {"enable_watchdog", Config::Bool(false)},
         {"default_available_current", Config::Uint32(0)},
-        {"maximum_available_current", Config::Uint32(0)},
+        {"maximum_available_current", Config::Uint32(0xFFFFFFFF)},
         {"minimum_current", Config::Uint(6000, 6000, 32000)},
         {"chargers", Config::Array(
             {
@@ -86,6 +86,10 @@ ChargeManager::ChargeManager()
     }, [](Config::ConfObject &conf) -> String {
         uint32_t default_available_current = conf.get("default_available_current")->asUint();
         uint32_t maximum_available_current = conf.get("maximum_available_current")->asUint();
+
+        if (maximum_available_current == 0xFFFFFFFF) {
+            conf.get("maximum_available_current")->updateUint(default_available_current);
+        }
 
         if (default_available_current > maximum_available_current)
             return "default_available_current can not be greater than maximum_available_current";
