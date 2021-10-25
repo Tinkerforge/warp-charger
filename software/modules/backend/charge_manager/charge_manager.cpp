@@ -437,7 +437,7 @@ void ChargeManager::distribute_current() {
     }
 
     if (available_current > 0) {
-        LOCAL_LOG("%u mA still available. Recalculating targets.", available_current);
+        LOCAL_LOG("stage 0: %u mA still available. Recalculating targets.", available_current);
 
         int chargers_reallocated = 0;
         for(int i = 0; i < chargers.size(); ++i) {
@@ -454,12 +454,7 @@ void ChargeManager::distribute_current() {
 
             uint16_t current_to_add = MIN(supported_current - current_array[idx_array[i]],
                                           current_per_charger);
-            LOCAL_LOG("stage 0: current_per_charger %u avail %u alloc_to %u reallocd %u to_add %u",
-                      current_per_charger,
-                      available_current,
-                      chargers_allocated_current_to,
-                      chargers_reallocated,
-                      current_to_add);
+
             ++chargers_reallocated;
 
             current_array[idx_array[i]] += current_to_add;
