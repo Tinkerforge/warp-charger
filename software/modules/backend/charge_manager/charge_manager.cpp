@@ -41,7 +41,7 @@ extern TaskScheduler task_scheduler;
 extern char uid[7];
 
 // Keep in sync with cm_networing.h
-#define MAX_CLIENTS 6
+#define MAX_CLIENTS 10
 
 #define CHARGE_MANAGER_ERROR_CHARGER_UNREACHABLE 128
 #define CHARGE_MANAGER_ERROR_EVSE_UNREACHABLE 129
