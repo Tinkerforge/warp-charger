@@ -216,6 +216,8 @@ void ChargeManager::start_manager_task() {
         target.get("error")->updateUint(error);
     });
 
+    uint32_t cm_send_delay = 1000 / chargers.size();
+
     task_scheduler.scheduleWithFixedDelay("charge_manager_send", [this, chargers](){
         static int i = 0;
 
@@ -226,7 +228,7 @@ void ChargeManager::start_manager_task() {
         if(cm_networking.send_manager_update(i, state.get("allocated_current")->asUint()))
             ++i;
 
-    }, 1000, 1000);
+    }, cm_send_delay, cm_send_delay);
 }
 
 int idx_array[MAX_CLIENTS] = {0};
