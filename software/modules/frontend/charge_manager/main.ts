@@ -121,7 +121,7 @@ function update_charge_manager_state(state: ChargeManagerState) {
         let last_update = Math.floor((state.uptime - s.last_update) / 1000);
         let status_text = util.toLocaleFixed(s.supported_current / 1000.0, 3) + " " + __("charge_manager.script.ampere_supported");
 
-        if (last_update >= 3)
+        if (last_update >= 10)
             status_text += "; " + __("charge_manager.script.last_update_prefix") + util.format_timespan(last_update) + (__("charge_manager.script.last_update_suffix"));
         $(`#charge_manager_status_charger_${i}_details`).text(status_text);
     }
