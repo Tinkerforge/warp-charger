@@ -70,6 +70,7 @@ ChargeManager::ChargeManager()
         {"default_available_current", Config::Uint32(0)},
         {"maximum_available_current", Config::Uint32(0xFFFFFFFF)},
         {"minimum_current", Config::Uint(6000, 6000, 32000)},
+        {"verbose", Config::Bool(false)},
         {"chargers", Config::Array(
             {
                 Config::Object({
@@ -288,16 +289,19 @@ void ChargeManager::check_watchdog() {
     last_available_current_update = millis();
 }
 
-#define LOCAL_LOG(fmt, ...) local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log), "            " fmt "%c", __VA_ARGS__, '\0');
+#define LOCAL_LOG(fmt, ...) if(verbose) local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log), "    " fmt "%c", __VA_ARGS__, '\0');
 
 void ChargeManager::distribute_current() {
     std::lock_guard<std::mutex> lock(state_mutex);
     uint32_t available_current = charge_manager_available_current.get("current")->asUint();
 
+    static bool verbose = charge_manager_config_in_use.get("verbose")->asBool();
+
     static bool last_print_local_log_was_error = false;
     bool print_local_log = false;
     char *local_log = distribution_log;
-    local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log), "Redistributing current%c", '\0');
+    if (verbose)
+        local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log), "Redistributing current%c", '\0');
 
     auto &chargers = charge_manager_state.get("chargers")->asArray();
     auto &configs = charge_manager_config_in_use.get("chargers")->asArray();

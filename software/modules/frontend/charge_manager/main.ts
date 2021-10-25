@@ -53,6 +53,7 @@ interface ChargerConfig {
 interface ChargeManagerConfig {
     enable_charge_manager: boolean,
     enable_watchdog: boolean,
+    verbose: boolean,
     default_available_current: number,
     maximum_available_current: number,
     minimum_current: number,
@@ -166,6 +167,7 @@ function update_charge_manager_config(config: ChargeManagerConfig, force: boolea
 
     $('#charge_manager_enable').prop("checked", config.enable_charge_manager);
     $('#charge_manager_enable_watchdog').prop("checked", config.enable_watchdog);
+    $('#charge_manager_verbose').prop("checked", config.verbose);
     util.setNumericInput("charge_manager_default_available_current", config.default_available_current / 1000, 3);
     util.setNumericInput("charge_manager_maximum_available_current", config.maximum_available_current / 1000, 3);
     util.setNumericInput("charge_manager_minimum_current", config.minimum_current / 1000, 3);
@@ -240,6 +242,7 @@ function collect_charge_manager_config(new_charger: ChargerConfig = null, remove
     return {
        enable_charge_manager: $('#charge_manager_enable').is(':checked'),
        enable_watchdog: $('#charge_manager_enable_watchdog').is(':checked'),
+       verbose: $('#charge_manager_verbose').is(':checked'),
        default_available_current: Math.round(<number>$('#charge_manager_default_available_current').val() * 1000),
        maximum_available_current: Math.round(<number>$('#charge_manager_maximum_available_current').val() * 1000),
        minimum_current: Math.round(<number>$('#charge_manager_minimum_current').val() * 1000),
@@ -373,6 +376,8 @@ export function getTranslation(lang: string) {
                     "enable_charge_manager_desc": "<a href=\"https://www.warp-charger.com/#documents\">siehe Betriebsanleitung für Details</a></span>",
                     "enable_watchdog": "Watchdog aktivieren",
                     "enable_watchdog_desc": "Setzt den verfügbaren Strom auf die Voreinstellung, wenn er nicht spätestens alle 30 Sekunden aktualisiert wurde.",
+                    "verbose": "Stromverteilung protokollieren",
+                    "verbose_desc": "Erzeugt Einträge im Ereignislog, wenn Strom umverteilt wird.",
                     "default_available_current": "<span class=\"form-label pr-2\">Voreingestellt verfügbarer Strom</span><span class=\"text-muted\">wird nach Neustart des Lastmanagers verwendet</span>",
                     "default_available_current_invalid": "Der voreingestellt verfügbare Strom darf maximal so groß sein wie der maximale verfügbare Strom!",
                     "maximum_available_current": "<span class=\"form-label pr-2\">Maximal verfügbarer Strom</span><span class=\"text-muted\">verfügbarer Strom kann über Webinterface und API nur bis zu diesem Wert eingestellt werden</span>",
