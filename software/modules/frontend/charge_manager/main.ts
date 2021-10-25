@@ -155,7 +155,7 @@ function update_available_current(current: number) {
 }
 
 function update_charge_manager_config(config: ChargeManagerConfig, force: boolean) {
-    $('#charge_manager_status_available_current').prop("max", config.default_available_current / 1000.0);
+    $('#charge_manager_status_available_current').prop("max", config.maximum_available_current / 1000.0);
     $("#charge_manager_status_available_current_maximum").on("click", () => set_available_current(config.default_available_current));
     $('#charge_manager_status_available_current_maximum').html(util.toLocaleFixed(config.default_available_current / 1000.0, 0) + " A");
 
