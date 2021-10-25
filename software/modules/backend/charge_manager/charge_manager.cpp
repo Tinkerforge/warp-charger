@@ -282,6 +282,8 @@ void ChargeManager::check_watchdog() {
     last_available_current_update = millis();
 }
 
+#define LOCAL_LOG(fmt, ...) local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log), "            " fmt "%c", __VA_ARGS__, '\0');
+
 void ChargeManager::distribute_current() {
     std::lock_guard<std::mutex> lock(state_mutex);
     uint32_t available_current = charge_manager_available_current.get("current")->asUint();
@@ -308,9 +310,7 @@ void ChargeManager::distribute_current() {
             charger_error != CHARGE_MANAGER_ERROR_EVSE_NONREACTIVE &&
             charger_error < CHARGE_MANAGER_CLIENT_ERROR_START) {
             unreachable_evse_found = true;
-            local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
-                                  "            stage 0: %s (%s) reports error %u.%c",
-                                  charger_cfg.get("name")->asString().c_str(), charger_cfg.get("host")->asString().c_str(), charger.get("error")->asUint(), '\0');
+            LOCAL_LOG("stage 0: %s (%s) reports error %u.", charger_cfg.get("name")->asString().c_str(), charger_cfg.get("host")->asString().c_str(), charger.get("error")->asUint());
 
             print_local_log = !last_print_local_log_was_error;
             last_print_local_log_was_error = true;
@@ -319,9 +319,8 @@ void ChargeManager::distribute_current() {
         // Charger does not respond anymore
         if(deadline_elapsed(charger.get("last_update")->asUint() + TIMEOUT_MS)) {
             unreachable_evse_found = true;
-            local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
-                                  "            stage 0: Can't reach EVSE of %s (%s): last_update too old.%c",
-                                  charger_cfg.get("name")->asString().c_str(), charger_cfg.get("host")->asString().c_str(), '\0');
+            LOCAL_LOG("stage 0: Can't reach EVSE of %s (%s): last_update too old.",charger_cfg.get("name")->asString().c_str(), charger_cfg.get("host")->asString().c_str());
+
             if(chargers[i].get("state")->updateUint(5) || charger_error < CHARGE_MANAGER_CLIENT_ERROR_START) {
                 chargers[i].get("error")->updateUint(CHARGE_MANAGER_ERROR_CHARGER_UNREACHABLE);
                 print_local_log = !last_print_local_log_was_error;
@@ -334,9 +333,8 @@ void ChargeManager::distribute_current() {
         // Charger did not update the charging current in time
         if(charger.get("allocated_current")->asUint() < charger.get("allowed_current")->asUint() && deadline_elapsed(charger.get("last_sent_config")->asUint() + TIMEOUT_MS)) {
             unreachable_evse_found = true;
-            local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
-                                  "            stage 0: EVSE of %s (%s) did not react in time.%c",
-                                  charger_cfg.get("name")->asString().c_str(), charger_cfg.get("host")->asString().c_str(), '\0');
+            LOCAL_LOG("stage 0: EVSE of %s (%s) did not react in time.", charger_cfg.get("name")->asString().c_str(), charger_cfg.get("host")->asString().c_str());
+
             if(chargers[i].get("state")->updateUint(5) || charger_error < CHARGE_MANAGER_CLIENT_ERROR_START) {
                 chargers[i].get("error")->updateUint(CHARGE_MANAGER_ERROR_EVSE_NONREACTIVE);
                 print_local_log = !last_print_local_log_was_error;
@@ -350,8 +348,7 @@ void ChargeManager::distribute_current() {
     if (unreachable_evse_found) {
         // Shut down everything.
         available_current = 0;
-        local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
-                              "            stage 0: Unreachable, unreactive or misconfigured EVSE(s) found. Setting available current to 0 mA.%c", '\0');
+        LOCAL_LOG("%s", "stage 0: Unreachable, unreactive or misconfigured EVSE(s) found. Setting available current to 0 mA.");
         charge_manager_state.get("state")->updateUint(2);
     } else {
         charge_manager_state.get("state")->updateUint(1);
@@ -372,9 +369,10 @@ void ChargeManager::distribute_current() {
         ++chargers_requesting_current;
     }
 
-    local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
-                          "            %d charger%s request%s current. %u mA available.%c",
-                          chargers_requesting_current, chargers_requesting_current == 1 ? "" : "s", chargers_requesting_current == 1 ? "s" : "", available_current, '\0');
+    LOCAL_LOG("%d charger%s request%s current. %u mA available.",
+              chargers_requesting_current,
+              chargers_requesting_current == 1 ? "" : "s", chargers_requesting_current == 1 ? "s" : "",
+              available_current);
 
     // Allocate current
     std::stable_sort(idx_array, idx_array + chargers.size(), [chargers](int left, int right) {
@@ -401,16 +399,16 @@ void ChargeManager::distribute_current() {
 
         uint16_t supported_current = charger.get("supported_current")->asUint();
         if (supported_current < current_to_set) {
-            local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
-                                  "            stage 0: Can't unblock %s (%s): It only supports %u mA, but %u mA is the configured minimum current.%c",
-                                  charger_cfg.get("name")->asString().c_str(), charger_cfg.get("host")->asString().c_str(),supported_current, current_to_set, '\0');
+            LOCAL_LOG("stage 0: Can't unblock %s (%s): It only supports %u mA, but %u mA is the configured minimum current.",
+                      charger_cfg.get("name")->asString().c_str(),
+                      charger_cfg.get("host")->asString().c_str(),
+                      supported_current,
+                      current_to_set);
             continue;
         }
 
         if (available_current < current_to_set) {
-            local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
-                                  "            stage 0: %u mA left, but %u mA required to unblock another charger. Blocking all following chargers.%c",
-                                 available_current, current_to_set, '\0');
+            LOCAL_LOG("stage 0: %u mA left, but %u mA required to unblock another charger. Blocking all following chargers.",available_current, current_to_set);
             current_to_set = 0;
         }
 
@@ -421,15 +419,15 @@ void ChargeManager::distribute_current() {
         current_array[idx_array[i]] = current_to_set;
         available_current -= current_to_set;
 
-        local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
-                                  "            stage 0: Calculated target for %s (%s) of %u mA. %u mA left. %c",
-                                  charger_cfg.get("name")->asString().c_str(), charger_cfg.get("host")->asString().c_str(), current_to_set, available_current, '\0');
+        LOCAL_LOG("stage 0: Calculated target for %s (%s) of %u mA. %u mA left.",
+                  charger_cfg.get("name")->asString().c_str(),
+                  charger_cfg.get("host")->asString().c_str(),
+                  current_to_set,
+                  available_current);
     }
 
     if (available_current > 0) {
-        local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
-                          "            %u mA still available. Recalculating targets.%c",
-                          available_current, '\0');
+        LOCAL_LOG("%u mA still available. Recalculating targets.", available_current);
 
         int chargers_reallocated = 0;
         for(int i = 0; i < chargers.size(); ++i) {
@@ -446,18 +444,23 @@ void ChargeManager::distribute_current() {
 
             uint16_t current_to_add = MIN(supported_current - current_array[idx_array[i]],
                                           current_per_charger);
-            local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
-                                    "            stage 0: current_per_charger %u avail %u alloc_to %u reallocd %u to_add %u%c",
-                                    current_per_charger, available_current, chargers_allocated_current_to, chargers_reallocated, current_to_add, '\0');
+            LOCAL_LOG("stage 0: current_per_charger %u avail %u alloc_to %u reallocd %u to_add %u",
+                      current_per_charger,
+                      available_current,
+                      chargers_allocated_current_to,
+                      chargers_reallocated,
+                      current_to_add);
             ++chargers_reallocated;
 
             current_array[idx_array[i]] += current_to_add;
             available_current -= current_to_add;
 
             auto &charger_cfg = configs[idx_array[i]];
-            local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
-                                    "            stage 0: Recalculated target for %s (%s) of %u mA. %u mA left. %c",
-                                    charger_cfg.get("name")->asString().c_str(), charger_cfg.get("host")->asString().c_str(), current_array[idx_array[i]], available_current, '\0');
+            LOCAL_LOG("stage 0: Recalculated target for %s (%s) of %u mA. %u mA left.",
+                      charger_cfg.get("name")->asString().c_str(),
+                      charger_cfg.get("host")->asString().c_str(),
+                      current_array[idx_array[i]],
+                      available_current);
         }
     }
 
@@ -475,9 +478,10 @@ void ChargeManager::distribute_current() {
             continue;
         }
 
-        local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
-                              "            stage 1: Throttled %s (%s) to %d mA.%c",
-                              charger_cfg.get("name")->asString().c_str(), charger_cfg.get("host")->asString().c_str(), current_to_set, '\0');
+        LOCAL_LOG("stage 1: Throttled %s (%s) to %d mA.",
+                  charger_cfg.get("name")->asString().c_str(),
+                  charger_cfg.get("host")->asString().c_str(),
+                  current_to_set);
 
         if(charger.get("allocated_current")->updateUint(current_to_set)) {
             print_local_log = true;
@@ -493,10 +497,7 @@ void ChargeManager::distribute_current() {
         // However this is complicated and waiting a complete cycle (i.e. 10 seconds)
         // works good enough.
         if(!skip_stage_2) {
-
-            local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
-                                  "            stage 1: Throttled a charger. Skipping stage 2%c",'\0');
-
+            LOCAL_LOG("%s", "stage 1: Throttled a charger. Skipping stage 2");
             skip_stage_2 = true;
         }
     }
@@ -515,9 +516,10 @@ void ChargeManager::distribute_current() {
                 continue;
             }
 
-            local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
-                                "            stage 2: Unthrottled %s (%s) to %d mA.%c",
-                                charger_cfg.get("name")->asString().c_str(), charger_cfg.get("host")->asString().c_str(), current_to_set, '\0');
+            LOCAL_LOG("stage 2: Unthrottled %s (%s) to %d mA.",
+                      charger_cfg.get("name")->asString().c_str(),
+                      charger_cfg.get("host")->asString().c_str(),
+                      current_to_set);
 
             if(charger.get("allocated_current")->updateUint(current_to_set)) {
                 print_local_log = true;
@@ -526,8 +528,7 @@ void ChargeManager::distribute_current() {
             }
         }
     } else {
-        local_log += snprintf(local_log, DISTRIBUTION_LOG_LEN - (local_log - distribution_log),
-                                  "            Skipping stage 2%c", '\0');
+        LOCAL_LOG("%s", "Skipping stage 2");
     }
 
     if (print_local_log) {
