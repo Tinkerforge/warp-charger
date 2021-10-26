@@ -252,7 +252,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\item Vormontierte Wallbox inkl. Deckel
 		\item DIN A4 Umschlag mit:
 		\begin{itemize}
-			\item Diese Betriebsanleitung
+			\item Dieser Betriebsanleitung
 			\item Testprotokoll der Wallbox
 			\item Bohrschablone
 		\end{itemize}
@@ -260,7 +260,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\item Umschlag mit:
 		\begin{itemize}
 			\item RJ45-Verschraubung für RJ45-Durchführung
-			\item RJ45 Crimpstecker
+			\item RJ45-Crimpstecker
 		\end{itemize}
 	\end{itemize}
 
@@ -283,10 +283,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\gfx{./img_warp2/resized/warp2_button_and_gnd_600}
 
-
 	Zusätzlich muss der Erdungsstecker von der Front\-blende abgesteckt werden.
 	Erst danach kann der Deckel vollständig zur Seite gelegt werden.
-
 
 	Nach Entfernen des Deckels kann das Gehäuse an die Wand montiert werden. Zum
 	Bohren der Befestigungslöcher kann die mitgelieferte Bohrschablone genutzt
@@ -295,12 +293,11 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	Wir empfehlen zur Montage den Einsatz von $\SI{5}{\milli\meter}$ oder 
 	$\SI{6}{\milli\meter}$ Schrauben. Die Schraubenlänge ist abhängig vom
-	Untergrund. Der Schraubenkopfdurchmesser darf nicht mehr wie 
+	Untergrund. Der Schraubenkopfdurchmesser darf nicht mehr als
 	$\SI{11}{\milli\meter}$ betragen, da ansonsten die Schraube nicht durch die
 	ensprechende Öffnung im Gehäuse passt. Bei einer Montage auf einer Steinwand
-	können als Beispiel Holzschrauben vom Typ
-	$\SI{5,0} \times \SI{80}{\milli\meter}$ mit
-	$\SI{8}\times\SI{50}{\milli\meter}$ verwendet werden.
+	können beispielsweise 5$\times\SI{80}{\milli\meter}$ Holzschrauben
+	mit 8$\times\SI{50}{\milli\meter}$ Dübeln  verwendet werden.
 
 	\subsubsection{Anforderungen an die Elektroinstallation}
 	Die Wahl des Leitungsquerschnitts und der Lei\-tungs\-ab\-sicher\-ung der
@@ -393,15 +390,15 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	werden, als die Leitungsabsicherung es zulässt.
 
 	Zum Einstellen des Ladestroms muss der Deckel (siehe \fullref{wandmontage})
-	geöffnet werden.
+	geöffnet werden. Über zwei Schiebeschalter auf dem internen Ladecontroller (EVSE) wird der
+	maximale Ladestrom eingestellt.
 
 	\gfx{./img_warp2/resized/warp2_current_configure_w_caption_600}
 
-	Über zwei Schiebeschalter auf dem internen Ladecontroller (EVSE) wird der
-	maximale Ladestrom eingestellt. Die verschiedenen Schalterstellungen sind in
-	dem Foto dokumentiert. Der schwarze Block stellt dabei jeweils die Position
+	Die verschiedenen Schalterstellungen sind im obigen Foto dokumentiert.
+	Der schwarze Block stellt dabei jeweils die Position
 	des Schalters dar. Im Auslieferungszustand sind die Schalter so eingestellt,
-	dass die Wallbox inaktiv ist. Im obigen Foto ist exemplarisch der obere
+	dass die Wallbox inaktiv ist. Im Foto ist exemplarisch der obere
 	Schalter auf die linke und der untere auf die mittlere Position gestellt
 	worden. Damit wird eine maximale Ladeleistung bei einem dreiphasigen
 	Betrieb, von \SI{9}{\kilo\watt} (3$\times\SI{13}{\ampere}$) vorgegeben.
@@ -409,28 +406,24 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\SI{3}{\kilo\watt} (1$\times\SI{13}{\ampere}$) über die Wallbox vom
 	bezogen werden.
 
+    \begin{tabular}{lp{0.12\textwidth}rrr}
+		\toprule
+		\multicolumn{2}{l}{Schalterstellung} & Strom & 1-phasig & 3-phasig\\
+		\midrule
+		links  & links  & \SI{0}{\ampere}  & \SI{0}{\kilo\watt}   & \SI{0}{\kilo\watt}  \\
+		mitte  & links  & \SI{6}{\ampere}  & \SI{1.4}{\kilo\watt} & \SI{4.1}{\kilo\watt}  \\
+		rechts & links  & \SI{10}{\ampere} & \SI{2.3}{\kilo\watt} & \SI{6.0}{\kilo\watt}  \\
+		links  & mitte  & \SI{13}{\ampere} & \SI{3.0}{\kilo\watt} & \SI{9.0}{\kilo\watt}  \\
+		mitte  & mitte  & \SI{16}{\ampere} & \SI{3.7}{\kilo\watt} & \SI{11.0}{\kilo\watt} \\
+		rechts & mitte  & \SI{20}{\ampere} & \SI{4.6}{\kilo\watt} & \SI{13.8}{\kilo\watt} \\
+		links  & rechts & \SI{25}{\ampere} & \SI{5.6}{\kilo\watt} & \SI{17.3}{\kilo\watt} \\
+		mitte  & rechts & \SI{32}{\ampere} & \SI{7.4}{\kilo\watt} & \SI{22.0}{\kilo\watt} \\
+		\bottomrule
+	\end{tabular}
+
 	\hint{Die Schalterstellung und der damit verbundene maximale Ladestrom dürfen nach der
 		Installation nur von einer ausgewiesenen Elektrofachkraft unter
 		Berücksichtigung der genannten Bedingungen geändert werden!}
-
-	Der eingestellte Ladestrom ergibt abhängig vom einphasigen oder dreiphasigen
-	Anschluss der Wallbox die folgenden maximalen Ladeleistungen:
-
-	\begin{tabular}{lll}
-		%\toprule
-		\textbf{Strom}            & \textbf{1 Phasen} & \textbf{3 Phasen} \\
-		\cmidrule(lr{0.5em}){1-3}\\
-		\SI{6}{\ampere}           & \SI{1.4}{\kilo\watt}                     &		\SI{4.1}{\kilo\watt}             \\
-		\SI{10}{\ampere}          & \SI{2.3}{\kilo\watt}                     &		\SI{6.0}{\kilo\watt}             \\
-		\SI{13}{\ampere}          & \SI{3.0}{\kilo\watt}                     &		\SI{9.0}{\kilo\watt}             \\
-		\SI{16}{\ampere}          & \SI{3.7}{\kilo\watt}                     & 		\SI{11.0}{\kilo\watt}             \\
-		\SI{20}{\ampere}          & \SI{4.6}{\kilo\watt}                     &		\SI{13.8}{\kilo\watt}             \\
-		\SI{25}{\ampere}          & \SI{5.6}{\kilo\watt}                     &		\SI{17.3}{\kilo\watt}             \\
-		\SI{32}{\ampere}          & \SI{7.4}{\kilo\watt}                     &		\SI{22.0}{\kilo\watt}             \\
-		%\bottomrule
-	\end{tabular}
-
-
 
 	\subsubsection{LAN- / RJ45-Kabel anfertigen}\label{ethernet}
 
@@ -443,20 +436,22 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	Anschließend muss ein LAN-Kabel (z.B. Cat.~7) wie folgt
 	angefertigt werden:
+
 	\begin{enumerate}
 		\item LAN-Kabel durch den Aufsatz ziehen
 		\item Mitgelieferten RJ45-Stecker auf das LAN-Kabel crimpen. Die
 		Kontaktierung erfolgt typischerweise nach TIA-568 Schema A oder B.
-		Da verwendete Schema sollte auf beiden Kabelseiten identisch sein.
-
+		Das verwendete Schema sollte auf beiden Kabelseiten identisch sein.
+		\hint{Es sollte der mitgelieferte RJ45-Stecker verwendet werden. Werkzeuglose RJ45-Stecker können auf Grund des begrenzten
+		Platzes im Steckeraufsatz nicht verwendet werden.}
 		\gfx{./img_warp2/resized/warp2_rj45_1_600}
+
+		\item[] % hack to move thie next item to the next page without changing the spacing of the previous items
 		\item Kabel im Aufsatz zurückziehen und die Zugentlastung handfest anziehen
 
 		\gfx{./img_warp2/resized/warp2_rj45_2_600}
 	\end{enumerate}
 
-	\hint{Es sollte der mitgelieferte RJ45-Stecker verwendet werden. Werkzeuglose RJ45-Stecker können auf Grund des begrenzten
-	Platzes im Steckeraufsatz nicht verwendet werden.}
 	Zum Schluss wird der RJ45-Stecker in die Wallbox eingesteckt und die Überwurfmutter
 	handfest angezogen.
 
