@@ -678,9 +678,31 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Das Zurücksetzen dauert ungefähr eine Minute, danach startet das Webinterface wieder und öffnet
 	den Access-Point mit der SSID und Passphrase, die auf dem Aufkleber vermerkt sind. Die Wallbox kann jetzt wieder nach \fullref{setup} konfiguriert werden.
 
-	Falls du das Webinterface nicht mehr erreichen kannst, kannst du das Zurücksetzen auch
-	auslösen, indem du die Stromversorgung der Wallbox ausschaltest, den Taster im Deckel gedrückt hältst
-	und dann Stromversorgung wieder einschaltest.
+	Falls du das Webinterface nicht mehr erreichen kannst, musst du die Wallbox (genauer: den verbauten ESP32 Ethernet Brick) neu flashen.
+	Du benötigst dazu einen PC mit installiertem Brick Viewer 2.4.20 oder neuer. Diesen findest du unter \rurl{https://www.tinkerforge.com/de/doc/Software/Brickv.html}{tinkerforge.com/de/doc/Software/Brickv.html}.
+	Außerdem benötigst du ein USB-C-Kabel um den Brick an deinen PC anzuschließen. Brick Daemon wird nicht benötigt.
+	Gehe zum Neuflashen wie folgt vor:
+	\begin{enumerate}
+		\item Mache die Wallbox stromlos
+		\item Nimm den Deckel ab wie in \fullref{wandmontage} beschrieben.
+		\item Rechts findest du den ESP32 Ethernet Brick. Von diesem musst du das LAN-Kabel, sowie die zwei Bricklet-Kabel mit weißem Stecker
+		abziehen.
+		\item Schraube danach die vier schwarzen Kunststoffschrauben los und nimm den ESP32 Ethernet Brick aus der Wallbox
+		\item Den Brick musst du dann an deinen PC anschließen und Brick Viewer starten
+		\item Klicke links unten auf Updates / Flashing, dann oben auf Brick
+		\item Bei Serial Port musst du den Port auswählen an dem der Brick angeschlossen ist.
+		      Typischerweise sollte nur ein Port in der Liste auftauchen.
+		      Der richtige Port ist einer, an dem ein \enquote{CP2102N USB to UART Bridge Controller} aufgeführt wird.
+		\item Wähle dann unter Firmware \enquote{WARP2 Charger} aus. Die aktuelle Firmware-Version wird automatisch ausgewählt.
+		\item Klicke auf \enquote{Flash}
+		\item Der Flash-Vorgang ist erst dann beendet, wenn die Status-LED des ESP32 Ethernet Brick beginnt blau zu blinken. Dies kann bis zu eine Minute länger dauern als das eigentliche Flashen.
+		\hint{Der ESP32 Ethernet Brick darf nicht abgezogen werden, bevor die Status-LED blau blinkt. Andernfalls muss der Flash-Vorgang wiederholt werden.}
+		\item Nachdem der Brick neu geflasht wurde, kannst du ihm vom PC abziehen und wie folgt in die Wallbox einbauen
+		\item Stecke zuerst die weißen Bricklet-Stecker, sowie das LAN-Kabel wieder ein
+		\item Schraube dann den Brick mit den Kunststoffschrauben auf die entsprechenden Abstandshalter. \fxwarning{hier erwähnen, dass man die gewinde nicht töten sollte}
+		\item Schließe jetzt die Wallbox, indem du zuerst den Taster im Deckel, sowie den Erdungsstecker anschließt, den Deckel aufsetzt und die vier Schrauben festziehst
+		\item Die Wallbox kann jetzt wieder mit Strom versorgt werden. Wenn der Flash-Vorgang erfolgreich war, sollte die Wallbox jetzt wieder den WLAN-Access-Point eröffnen und kann eingerichtet werden.
+	\end{enumerate}
 
 	\newpage
 	\section{MQTT- und HTTP-Schnittstelle zur Fernsteuerung der Wallbox}
