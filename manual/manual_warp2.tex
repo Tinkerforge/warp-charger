@@ -790,9 +790,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	oder das Ladekabel vom Fahrzeug getrennt wird.
 
 	\newpage
-	\section{Lastmanagement\,zwischen\,WARP Chargern}\label{charge_manager}
-	\hint{In der Auslieferungsfirmware 1.0.0 ist die aktuelle Beta-Version des Lastmanagements enthalten.
-	Die fertige Version folgt mit einem Firmware-Update.}
+	\section{Lastmanagement zwischen mehreren WARP Chargern}\label{charge_manager}
 	Mit dem Lastmanagement ist es möglich, einen verfügbaren Gesamt-Ladestrom zwischen WARP Chargern aufzuteilen.
 	Es kann sowohl ein fester Gesamtstrom verteilt werden, um zum Beispiel den Hausanschluss nicht zu überlasten,
 	als auch der Gesamtstrom über das Webinterface und die API dynamisch gesetzt werden
@@ -818,9 +816,68 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	Auf der Wallbox, die die anderen steuern soll, müssen dann auf der Lastmanager-Unterseite
 	alle weiteren Wallboxen mit ihrer IP-Adresse hinzugefügt werden.
-	Es kann dann der verfügbare Strom konfiguriert und der Lastmanager aktiviert werden.
+	Im einfachsten Fall, in dem eine feste Menge Strom verteilt werden soll, muss nun nur noch dieser
+	Strom als \enquote{Voreingestellt verfügbarer Strom} \textbf{und} als \enquote{Maximal verfügbarer Strom}
+	konfiguriert und der Lastmanager aktiviert werden.
+
+	\subsection{Erweiterte Konfiguration}
+	Je nach Einsatzzweck (z.B. PV-Überschussladen auf mehreren Wallboxen) können die folgenden Konfigurationen hilfreich sein.
+	Diese werden für eine einfache Lastverteilung, z.B. \SI{16}{\ampere} auf zwei Wallboxen \textbf{nicht} benötigt.
 
 	\gfx{./img_warp2/resized/web_charge_manager}
+
+	\paragraph{Voreingestellt verfügbarer Strom}
+	Der voreingestellt verfügbare Strom ist der, der vom Lastmanagement verteilt werden darf, nachdem die steuernde Wallbox
+	neugestartet wurde. Der verfügbare Strom kann über die API neu gesetzt werden, nach einem Neustart der Wallbox wird aber
+	zunächst der voreingestellte verwendet. Falls beispielsweise durch eine externe Steuerung der verfügbare PV-Überschussstrom
+	gesetzt werden soll, kann der voreingestellte Strom auf \SI{0}{\ampere} konfiguriert werden, damit zwingend erst geladen wird,
+	wenn die externe Steuerung mindestens einmal den verfügbaren Strom gesetzt hat
+
+	\paragraph{Maximal verfügbarer Strom}
+	Der maximal verfügbare Strom ist das Maximum, das über das Webinterface, bzw. die API als verfügbarer Strom gesetzt werden darf.
+	Größere Ströme werden nicht akzeptiert. Falls eine externe Steuerung verwendet wird, empfehlen wir, den maximal verfügbaren Strom
+	anhand der Kapazität der Zuleitungen und des Hausanschlusses so zu beschränken, dass durch die externe Steuerung nie zu große
+	Ströme gesetzt werden können.
+
+	\paragraph{Watchdog aktivieren}
+	Der Watchdog erlaubt es der steuernden Wallbox, robust auf Ausfälle einer externen Steuerung zu reagieren. Falls über die API der Wallbox
+	nicht mindestens alle 30 Sekunden der verfügbare Strom gesetzt wird, und der Watchdog aktiv ist, wird der verfügbare Strom wieder zurück auf den
+	\enquote{Voreingestellt verfügbare Strom} gesetzt. Falls die externe Steuerung später wieder läuft, wird der Watchdog zurückgesetzt.
+
+	\paragraph{Stromverteilung protokollieren}
+	Wenn aktiv, fügt der Lastmanager dem Ereignis-Log detaillierte Ausgaben hinzu, wann immer Strom umverteilt wird. Damit kann unerwartetes Verhalten des
+	Lastmanagements untersucht werden.
+
+	\paragraph{Minimaler Ladestrom}
+	Der minimale Ladestrom ist der Strom, der für eine Wallbox zur Verfügung stehen muss, damit diese lädt. Dieser Strom muss mindestens \SI{6}{\ampere} betragen.
+	Bestimmte Fahrzeuge laden aber erst bei höheren Strömen effizient. Mit einem WARP2 Charger Pro kann der Leistungsfaktor ermittelt werden.
+
+	Mit dem minimalen Ladestrom kann zusätzlich gesteuert werden, wie viele Fahrzeuge gleichzeitig laden können.
+	Maximal sind $\frac{\text{Verfügbarer Strom}}{\text{Minimaler Ladestrom}}$ Ladevorgänge gleichzeitig möglich. Falls beispielsweise nicht möglichst viele
+	Fahrzeuge gleichzeitig, aber langsam, sondern ein Fahrzeug möglichst schnell nacheinander geladen werden soll, kann der minimale Ladestrom auf den selben Wert
+	wie der verfügbare Strom gesetzt werden.
+
+	\subsection{Fehlerbehebung}
+	Bei der Verwendung des Lastmanagements können zwei Arten von Fehlern auftreten: Wallbox-Fehler, die nur eine spezifische Wallbox betreffen und Management-Fehler,
+	bei deren Auftreten das Laden an \textbf{allen} gesteuerten Wallboxen gestoppt wird.
+
+	Wallbox-Fehler müssen an der entsprechenden Wallbox behoben werden. Hier hilft Abschnitt \fullref{fehlerbehebung}. Im folgenden wird die Diagnose von Management-Fehlern erläutert:
+
+	\paragraph{Kommunikationsfehler / Wallbox nicht erreichbar}
+	Eine Wallbox kann nicht zuverlässig erreicht werden. Eventuell liegt ein Verbindungsproblem vor. Netzwerkverbindung und IP-Konfiguration der Wallbox prüfen.
+
+	\paragraph{Firmware inkompatibel}
+	Das Lastmanagement benötigt kompatible Firmwares auf allen beteiligten Wallboxen. Die jeweils aktuellsten Firmwares sollten zueinander kompatibel sein,
+	auch wenn WARP (1) und WARP 2 Charger in einem Lastmanagementverbund verwendet werden.
+
+	\paragraph{Lastmanagement deaktiviert}
+	Bei einer der zu steuernden Wallboxen ist das Lastmanagement deaktiviert. Damit ist keine Steuerung durch den Lastmanager möglich. Das Lastmanagement kann auf der Ladecontroller-Unterseite aktiviert werden.
+
+	\paragraph{Ladecontroller nicht erreichbar}
+	Der Ladecontroller einer Wallbox kann nicht erreicht werden, die Wallbox selbst aber schon. Ereignis-Log der betroffenen Wallbox prüfen.
+
+	\paragraph{Ladecontroller reagiert nicht}
+	Der Ladecontroller einer Wallbox reagiert nicht auf Stromzuweisungen. Eventuell ist auf dieser Lastmanagement deaktiviert.
 
 	\newpage \section{Fehlerbehebung}\label{fehlerbehebung} \subsection{Fehlersuche}
 	Fehlerzustände werden von der Wallbox durch die blaue LED im Deckel
