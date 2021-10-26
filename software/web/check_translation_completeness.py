@@ -66,6 +66,7 @@ def main():
                 end = content.find(END_PATTERN)
                 json_dict = content[:end+1]
                 json_dict = re.sub(",\s*\}", "}", json_dict)
+                json_dict = json_dict.replace("util.emptyText()", '""')
                 try:
                     merge(translations, json.loads(json_dict))
                 except Exception as e:
