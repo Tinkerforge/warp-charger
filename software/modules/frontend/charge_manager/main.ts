@@ -101,8 +101,8 @@ function update_charge_manager_state(state: ChargeManagerState) {
         if (s.state != 5) {
             if (state.state == 2) {
                 $(`#charge_manager_status_charger_${i}_body`).addClass("bg-danger text-white bg-disabled");
-                $(`#charge_manager_status_charger_${i}_state`).text(__(`charge_manager.script.charge_state_blocked_by_other_box`));
-                $(`#charge_manager_status_charger_${i}_info`).text(__(`charge_manager.script.charge_state_blocked_by_other_box_details`));
+                $(`#charge_manager_status_charger_${i}_state`).text(__("charge_manager.script.charge_state_blocked_by_other_box"));
+                $(`#charge_manager_status_charger_${i}_info`).text(__("charge_manager.script.charge_state_blocked_by_other_box_details"));
             } else {
                 $(`#charge_manager_status_charger_${i}_body`).removeClass("bg-danger text-white bg-disabled");
                 $(`#charge_manager_status_charger_${i}_state`).text(__(`charge_manager.script.charge_state_${s.state}`));
@@ -373,7 +373,7 @@ export function getTranslation(lang: string) {
                 "content": {
                     "charge_manager": "Lastmanager",
                     "enable_charge_manager": "Lastmanager aktivieren",
-                    "enable_charge_manager_desc": "<a href=\"https://www.warp-charger.com/#documents\">siehe Betriebsanleitung für Details</a></span>",
+                    "enable_charge_manager_desc": "<a href=\"https://www.warp-charger.com/#documents\">siehe Betriebsanleitung für Details</a>",
                     "enable_watchdog": "Watchdog aktivieren",
                     "enable_watchdog_desc": "Setzt den verfügbaren Strom auf die Voreinstellung, wenn er nicht spätestens alle 30 Sekunden aktualisiert wurde.",
                     "verbose": "Stromverteilung protokollieren",
@@ -384,15 +384,6 @@ export function getTranslation(lang: string) {
                     "minimum_current": "<span class=\"form-label pr-2\">Minimaler Ladestrom</span><span class=\"text-muted\">muss mindestens verfügbar sein, damit eine Wallbox lädt</span>",
                     "save": "Speichern",
                     "managed_boxes": "Kontrollierte Wallboxen",
-                    "state": "Zustand",
-                    "last_update": "Letztes Update vor",
-                    "uptime": "Laufzeit",
-                    "supported_current": "Unterstützter Strom",
-                    "allowed_current": "Verfügbarer Strom",
-                    "wants_to_charge": "Wartet auf Manager",
-                    "is_charging": "Lädt",
-                    "last_sent_config": "Letzte Stromzuweisung vor",
-                    "allocated_current": "zugeteilter Strom",
 
                     "add_charger_modal_title": "Wallbox hinzufügen",
                     "add_charger_modal_name": "Anzeigename",
@@ -461,15 +452,16 @@ export function getTranslation(lang: string) {
                 },
                 "content": {
                     "charge_manager": "Charge Manager",
-                    "state": "State",
-                    "last_update": "Last Update",
-                    "uptime": "Uptime",
-                    "supported_current": "Supported current",
-                    "allowed_current": "Allowed current",
-                    "wants_to_charge": "Waiting for manager",
-                    "is_charging": "Is charging",
-                    "last_sent_config": "Last sent config",
-                    "allocated_current": "Allocated current",
+                    "enable_charge_manager": "Enable charge manager",
+                    "enable_charge_manager_desc": "<a href=\"https://www.warp-charger.com/#documents\">see manual for details</a>",
+                    "enable_watchdog": "Enable watchdog",
+                    "enable_watchdog_desc": "Sets the available current to the default value if it is not updated every 30 seconds.",
+                    "verbose": "Log current distribution",
+                    "verbose_desc": "Creates log entries whenever current is redistributed.",
+                    "default_available_current": "<span class=\"form-label pr-2\">Default available current</span><span class=\"text-muted\">will be used after charge manager reboot</span>",
+                    "default_available_current_invalid": "The default available current can at most be as much as the maximum available current!",
+                    "maximum_available_current": "<span class=\"form-label pr-2\">Maximum available current</span><span class=\"text-muted\">available current can only be set to at most this value using the API and web interface</span>",
+                    "minimum_current": "<span class=\"form-label pr-2\">Minimal charge current</span><span class=\"text-muted\">must be available to start a charger</span>",
 
                     "add_charger_modal_title": "Add charger",
                     "add_charger_modal_name": "Display name",
@@ -483,9 +475,6 @@ export function getTranslation(lang: string) {
                     "reboot": "Reboot",
                     "save": "Save",
 
-                    "default_available_current": "Available current",
-                    "enable_charge_manager": "Enable charge manager",
-                    "enable_charge_manager_desc": "<a href=\"https://www.warp-charger.com/#documents\">see manual for details</a>",
                     "managed_boxes": "Managed chargers",
 
                 },
@@ -496,9 +485,33 @@ export function getTranslation(lang: string) {
                     "charge_state_3": "Charging cleared",
                     "charge_state_4": "Charging",
                     "charge_state_5": "Error",
-                    "ampere_allocated": "Ampere allocated",
-                    "last_update_prefix": "Last update ",
-                    "last_update_suffix": " ago",
+                    "charge_state_6": "Charging done",
+
+                    "charge_error_type_management": "Management error",
+                    "charge_error_type_client": "Wallbox error",
+
+                    "charge_error_0": "OK",
+                    "charge_error_1": "Communication error",
+                    "charge_error_2": "Firmware incompatible",
+                    "charge_error_3": "Charge management deactivated",
+                    "charge_error_128": "Charger unreachable",
+                    "charge_error_129": "EVSE unreachable ",
+                    "charge_error_130": "EVSE does not react",
+
+                    "charge_error_192": "OK",
+                    "charge_error_193": "Switch error",
+                    "charge_error_194": "DC fault protector error",
+                    "charge_error_195": "Contactor error",
+                    "charge_error_196": "Vehicle communication error",
+
+                    "charge_state_blocked_by_other_box": "Blocked",
+                    "charge_state_blocked_by_other_box_details": "Error with another charger",
+
+                    "ampere_allocated": "A allocated",
+                    "ampere_supported": "A supported",
+
+                    "last_update_prefix": "Unavailable since",
+                    "last_update_suffix": "",
                     "save_failed": "Failed to save the charge manager configuration",
                     "set_available_current_failed": "Failed to set the available current",
                     "add_wallbox": "Add wallbox",

@@ -797,6 +797,7 @@ export function getTranslation(lang: string) {
                     "charging_current_max_incoming": "Supply cable",
                     "charging_current_max_outgoing": "Type 2 cable",
                     "charging_current_managed": "Managed",
+                    "reset_configured_current": "Reset",
                     "low_level_state": "Low Level State",
                     "low_level_state_show": "Show / Hide",
                     "led_state": "LED state",

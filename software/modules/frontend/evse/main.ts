@@ -732,6 +732,7 @@ export function getTranslation(lang: string) {
                     "charging_current_managed": "Managed",
                     "low_level_state": "Low Level State",
                     "low_level_state_show": "Show / Hide",
+                    "reset_configured_current": "Reset",
                     "led_state": "LED state",
                     "led_state_off": "Off",
                     "led_state_on": "On",

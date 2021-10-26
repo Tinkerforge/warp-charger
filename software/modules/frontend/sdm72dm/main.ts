@@ -715,6 +715,8 @@ export function getTranslation(lang: string) {
 
                     "phases_active": "Active phases",
                     "phases_active_desc": "L1, L2, L3",
+                    "phases_connected": "Connected phases",
+                    "phases_connected_desc": "L1, L2, L3",
                     "detailed_values": "Details",
                     "detailed_values_show": "Show / Hide",
 
@@ -788,19 +790,19 @@ export function getTranslation(lang: string) {
                     "detailed_total_system_power_demand_desc": "Import - Export",
 
                     "detailed_maximum_total_system_power_demand": "Maximum active power demand",
-                    "detailed_maximum_total_system_power_demand_desc": "",
+                    "detailed_maximum_total_system_power_demand_desc": "Highest value measured",
 
                     "detailed_total_system_va_demand": "Apparent power demand",
                     "detailed_total_system_va_demand_desc": "Import - Export",
 
                     "detailed_maximum_total_system_va_demand": "Maximum apparent power demand",
-                    "detailed_maximum_total_system_va_demand_desc": "",
+                    "detailed_maximum_total_system_va_demand_desc": "Highest value measured",
 
                     "detailed_neutral_current_demand": "Neutral current demand",
                     "detailed_neutral_current_demand_desc": " ",
 
                     "detailed_maximum_neutral_current_demand": "Maximum neutral current demand",
-                    "detailed_maximum_neutral_current_demand_desc": "",
+                    "detailed_maximum_neutral_current_demand_desc": "Highest value measured",
 
                     "detailed_line1_to_line2_volts": "L1 to L2 voltage",
                     "detailed_line1_to_line2_volts_desc": " ",
@@ -833,7 +835,7 @@ export function getTranslation(lang: string) {
                     "detailed_current_demand_desc": "L1, L2, L3",
 
                     "detailed_maximum_current_demand": "Maximum current demand",
-                    "detailed_maximum_current_demand_desc": "",
+                    "detailed_maximum_current_demand_desc": "L1, L2, L3; Highest value measured",
 
                     "detailed_line1_to_line2_volts_thd": "Voltage THD L1 to L2",
                     "detailed_line1_to_line2_volts_thd_desc": " ",
