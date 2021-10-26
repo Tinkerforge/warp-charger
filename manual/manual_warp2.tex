@@ -88,6 +88,11 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 \appto\UrlNoBreaks{\do\.\do\:\do\/\do\_}
 
+\newcommand\rurl[2]{%
+  \href{#1}{\nolinkurl{#2}}%
+}
+
+
 \usepackage{hyphenat}
 
 \hyphenation{Web-inter-face}
@@ -406,24 +411,25 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\SI{3}{\kilo\watt} (1$\times\SI{13}{\ampere}$) über die Wallbox vom
 	bezogen werden.
 
-    \begin{tabular}{lp{0.12\textwidth}rrr}
+	\hint{Die Schalterstellung und der damit verbundene maximale Ladestrom dürfen nach der
+	      Installation nur von einer ausgewiesenen Elektrofachkraft unter
+	      Berücksichtigung der genannten Bedingungen geändert werden!}
+
+	\begin{tabular}{lp{0.09\textwidth}rrr}
 		\toprule
-		\multicolumn{2}{l}{Schalterstellung} & Strom & 1-phasig & 3-phasig\\
+		\multicolumn{2}{c}{Schalterstellung} & Strom            & \multicolumn{2}{c}{Ladeleistung}             \\
+		\small{oben (1)} & \small{unten (2)} &                  & \small{einphasig}    & \small{dreiphasig}    \\
 		\midrule
-		links  & links  & \SI{0}{\ampere}  & \SI{0}{\kilo\watt}   & \SI{0}{\kilo\watt}  \\
-		mitte  & links  & \SI{6}{\ampere}  & \SI{1.4}{\kilo\watt} & \SI{4.1}{\kilo\watt}  \\
-		rechts & links  & \SI{10}{\ampere} & \SI{2.3}{\kilo\watt} & \SI{6.0}{\kilo\watt}  \\
-		links  & mitte  & \SI{13}{\ampere} & \SI{3.0}{\kilo\watt} & \SI{9.0}{\kilo\watt}  \\
-		mitte  & mitte  & \SI{16}{\ampere} & \SI{3.7}{\kilo\watt} & \SI{11.0}{\kilo\watt} \\
-		rechts & mitte  & \SI{20}{\ampere} & \SI{4.6}{\kilo\watt} & \SI{13.8}{\kilo\watt} \\
-		links  & rechts & \SI{25}{\ampere} & \SI{5.6}{\kilo\watt} & \SI{17.3}{\kilo\watt} \\
-		mitte  & rechts & \SI{32}{\ampere} & \SI{7.4}{\kilo\watt} & \SI{22.0}{\kilo\watt} \\
+		links            & links             & \SI{0}{\ampere}  & \SI{0}{\kilo\watt}   & \SI{0}{\kilo\watt}    \\
+		mitte            & links             & \SI{6}{\ampere}  & \SI{1.4}{\kilo\watt} & \SI{4.1}{\kilo\watt}  \\
+		rechts           & links             & \SI{10}{\ampere} & \SI{2.3}{\kilo\watt} & \SI{6.0}{\kilo\watt}  \\
+		links            & mitte             & \SI{13}{\ampere} & \SI{3.0}{\kilo\watt} & \SI{9.0}{\kilo\watt}  \\
+		mitte            & mitte             & \SI{16}{\ampere} & \SI{3.7}{\kilo\watt} & \SI{11.0}{\kilo\watt} \\
+		rechts           & mitte             & \SI{20}{\ampere} & \SI{4.6}{\kilo\watt} & \SI{13.8}{\kilo\watt} \\
+		links            & rechts            & \SI{25}{\ampere} & \SI{5.6}{\kilo\watt} & \SI{17.3}{\kilo\watt} \\
+		mitte            & rechts            & \SI{32}{\ampere} & \SI{7.4}{\kilo\watt} & \SI{22.0}{\kilo\watt} \\
 		\bottomrule
 	\end{tabular}
-
-	\hint{Die Schalterstellung und der damit verbundene maximale Ladestrom dürfen nach der
-		Installation nur von einer ausgewiesenen Elektrofachkraft unter
-		Berücksichtigung der genannten Bedingungen geändert werden!}
 
 	\subsubsection{LAN- / RJ45-Kabel anfertigen}\label{ethernet}
 
@@ -442,11 +448,11 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\item Mitgelieferten RJ45-Stecker auf das LAN-Kabel crimpen. Die
 		Kontaktierung erfolgt typischerweise nach TIA-568 Schema A oder B.
 		Das verwendete Schema sollte auf beiden Kabelseiten identisch sein.
+
+		\gfx{./img_warp2/resized/warp2_rj45_1_600}
 		\hint{Es sollte der mitgelieferte RJ45-Stecker verwendet werden. Werkzeuglose RJ45-Stecker können auf Grund des begrenzten
 		Platzes im Steckeraufsatz nicht verwendet werden.}
-		\gfx{./img_warp2/resized/warp2_rj45_1_600}
 
-		\item[] % hack to move thie next item to the next page without changing the spacing of the previous items
 		\item Kabel im Aufsatz zurückziehen und die Zugentlastung handfest anziehen
 
 		\gfx{./img_warp2/resized/warp2_rj45_2_600}
@@ -656,7 +662,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\subsubsection{Firmware-Update}
 	\gfx{./img_warp2/resized/web_firmware_update}
 	Hier kannst du die Firmware der Wallbox aktualisieren. Wir werden die Funktionalität
-	laufend weiterentwickeln. Aktuelle Firmwares findest du unter \url{https://warp-charger.com}.
+	laufend weiterentwickeln. Aktuelle Firmwares findest du unter \rurl{https://warp-charger.com}{warp-charger.com}.
 	Außerdem kannst du hier das Webinterface neustarten, ohne einen Ladevorgang zu unterbrechen.
 
 	\subsubsection{Zugangsdaten}
@@ -680,7 +686,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\section{MQTT- und HTTP-Schnittstelle zur Fernsteuerung der Wallbox}
 	Die Wallbox kann per MQTT oder HTTP ferngesteuert werden. Über diese Schnittstellen ist eine
 	Einbindung in Hausautomatisationssysteme wie openHAB, ioBroker, FHEM o.ä. möglich. Die aktuelle
-	Dokumentation der Schnittstellen findet sich auf \url{https://warp-charger.com/api.html}
+	Dokumentation der Schnittstellen findet sich auf \rurl{https://warp-charger.com/api.html}{warp-charger.com/api.html}
 
 	Falls du die Zugangsdaten für das Webinterface gesetzt und die Anmeldung aktiviert hast, musst du
 	für die HTTP-API die selben Zugangsdaten verwenden.
@@ -702,7 +708,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Das Webinterface startet dann neu und verbindet sich zum Broker.
 	Auf der Status-Seite wird angezeigt, ob die Verbindung aufgebaut werden konnte.
 
-	\vspace{2.5cm}
+	\newpage
 	\section{Ladefreigabe per NFC}
 	\label{NFC}
 	Der WARP2 Charger unterstützt eine Ladefreigabe per NFC. Wenn diese aktiviert ist,
@@ -726,14 +732,15 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	wird die Stop-Funktion des Knopfes an der Wallbox deaktiviert.
 	Die Ladung kann aber weiterhin am Fahrzeug deaktiviert werden.}
 
-	\gfx{./img_warp2/resized/web_nfc}
-
-	\gfx{./img_warp2/resized/web_nfc_new}
 
 	Durch Klicken auf den $\bigoplus$-Button kann ein neues Tag angelernt werden.
 	Es werden die zuletzt erkannten, aber noch nicht berechtigten Tags anzeigt,
 	durch Klicken auf eins der Tags kann es ausgewählt werden. Alternativ können
 	Tag-ID und -Typ manuell eingegeben werden. In beiden Fällen muss noch ein Tag-Name vergeben werden.
+
+	\gfx{./img_warp2/resized/web_nfc}
+
+	\gfx{./img_warp2/resized/web_nfc_new}
 
 	\subsection{Verwendung}
 	Wenn die Freigabe per NFC aktiviert ist und ein Fahrzeug angeschlossen wird,
@@ -868,69 +875,72 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\subsection{Ersatzteile}
 	\begin{tabular}{ll}
 		%\toprule
-		\textbf{Artikelnummer}                                                                                                      & \textbf{Bauteil}                                              \\
+		\textbf{Artikelnummer}                                                                                                      & \textbf{Bauteil}                     \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/warp/contactor-4-pole-din-rail-63a.html}{WARP-CON-4P-63A}                         & Schaltschütz 4 Pol,                                           \\
-		                                                                                                                            & Hutschiene, \SI{63}{\ampere}                                  \\
+		\href{https://www.tinkerforge.com/de/shop/warp/contactor-4-pole-din-rail-63a.html}{WARP-CON-4P-63A}                         & Schaltschütz 4 Pol,                  \\
+		                                                                                                                            & Hutschiene, \SI{63}{\ampere}         \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/contactor-4-pole-din-rail-63a.html}{WARP2-METER-3PH-MID}   & Zweirichtungs-                                                \\
-		                                                                                                                            & Drehstromzähler,                                              \\
-		                                                                                                                            & 3 Phasen, RS485, MID                                          \\
+		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/contactor-4-pole-din-rail-63a.html}{WARP2-METER-3PH-MID}   & Zweirichtungs-                       \\
+		                                                                                                                            & drehstromzähler,                     \\
+		                                                                                                                            & 3 Phasen, RS485, MID                 \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/type-2-plug-with-5m-cable-11kw-16a.html}{WARP-T2-5M-16A}   & Typ 2 Stecker mit                                             \\
-		                                                                                                                            & \SI{5}{\meter} Kabel \SI{11}{\kilo\watt}/\SI{16}{\ampere}     \\
+		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/type-2-plug-with-5m-cable-11kw-16a.html}{WARP-T2-5M-16A}   & Typ-2-Stecker mit                    \\
+		                                                                                                                            & \SI{5}{\meter} Kabel                 \\
+		                                                                                                                            & \SI{11}{\kilo\watt}/\SI{16}{\ampere} \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/type-2-plug-with-5m-cable-22kw-32a.html}{WARP-T2-5M-32A}   & Typ 2 Stecker mit                                             \\
-		                                                                                                                            & \SI{5}{\meter} Kabel \SI{22}{\kilo\watt}/\SI{32}{\ampere}     \\
+		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/type-2-plug-with-5m-cable-22kw-32a.html}{WARP-T2-5M-32A}   & Typ-2-Stecker mit                    \\
+		                                                                                                                            & \SI{5}{\meter} Kabel                 \\
+		                                                                                                                            & \SI{22}{\kilo\watt}/\SI{32}{\ampere} \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/type-2-plug-with-75m-cable-11kw-16a.html}{WARP-T2-75M-16A} & Typ 2 Stecker mit                                             \\
-		                                                                                                                            & \SI{7,5}{\meter} Kabel \SI{11}{\kilo\watt}/\SI{16}{\ampere}   \\
+		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/type-2-plug-with-75m-cable-11kw-16a.html}{WARP-T2-75M-16A} & Typ-2-Stecker mit                    \\
+		                                                                                                                            & \SI{7,5}{\meter} Kabel               \\
+		                                                                                                                            & \SI{11}{\kilo\watt}/\SI{16}{\ampere} \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/type-2-plug-with-75m-cable-22kw-32a.html}{WARP-T2-75M-32A} & Typ 2 Stecker mit                                             \\
-		                                                                                                                            & \SI{7,5}{\meter} Kabel \SI{22}{\kilo\watt}/\SI{32}{\ampere}   \\
+		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/type-2-plug-with-75m-cable-22kw-32a.html}{WARP-T2-75M-32A} & Typ-2-Stecker mit                    \\
+		                                                                                                                            & \SI{7,5}{\meter} Kabel               \\
+		                                                                                                                            & \SI{22}{\kilo\watt}/\SI{32}{\ampere} \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp-fuse-05a.html}{WARP-FUSE-0.5A}                        & \small{2x Feinsicherung 5x\SI{20}{\milli\meter}}              \\
-		                                                                                                                            & mittelträge \SI{0,5}{\ampere}                                 \\
+		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp-fuse-05a.html}{WARP-FUSE-0.5A}                        & 2x Feinsicherung                     \\
+		                                                                                                                            & 5x\SI{20}{\milli\meter}              \\
+		                                                                                                                            & mittelträge \SI{0,5}{\ampere}        \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp-eth-feed-through.html}{WARP-ETH-FEED-THR}             & Ethernet                                                      \\
-		                                                                                                                            & Gehäusedurchführung                                           \\
+		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp-eth-feed-through.html}{WARP-ETH-FEED-THR}             & Ethernet-                            \\
+		                                                                                                                            & gehäusedurchführung                  \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp-nfc-sticker.html}{WARP-NFC-STICKER}                   & NFC Aufkleber                                                 \\
+		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp-nfc-sticker.html}{WARP-NFC-STICKER}                   & NFC-Aufkleber                        \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp2-dc-protect.html}{WARP2-DC-PROTECT}                   & DC Fehlerstrom-                                               \\
-		                                                                                                                            & schutzmodul (6mA)                                             \\
+		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp2-dc-protect.html}{WARP2-DC-PROTECT}                   & DC-Fehlerstrom-                      \\
+		                                                                                                                            & schutzmodul (6mA)                    \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts.html}{WARP2-CASE}                                          & WARP2 Gehäuse                                                 \\
+		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts.html}{WARP2-CASE}                                          & WARP2 Gehäuse                        \\
 		\cmidrule(lr{0.5em}){1-2}
-		\small{\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp2-cable-harness.html}{WARP2-CABLE-HARNESS}}     & WARP2 Kabelbaum                                               \\
+		\small{\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp2-cable-harness.html}{WARP2-CABLE-HARNESS}}     & WARP2 Kabelbaum                      \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp2-terminal-blocks.html}{WARP2-TERMINAL-}               & WARP2 Klemmen-                                                \\
-		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp2-terminal-blocks.html}{BLOCKS}                        & Baugruppe                                                     \\
+		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp2-terminal-blocks.html}{WARP2-TERMINAL-}               & WARP2 Klemmen-                       \\
+		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp2-terminal-blocks.html}{BLOCKS}                        & Baugruppe                            \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp2-nfc-karte.html}{WARP2-NFC-CARD}                      & WARP2 NFC Karten                                              \\
-		                                                                                                                            & (3 Stück)                                                     \\
+		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp2-nfc-karte.html}{WARP2-NFC-CARD}                      & 3$\times$WARP2 NFC-Karten            \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp2-screws.html}{WARP2-SCREWS}                           & WARP2 Schraubenset                                            \\
+		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp2-screws.html}{WARP2-SCREWS}                           & WARP2 Schraubenset                   \\
 		\cmidrule(lr{0.5em}){1-2} 
-		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp2-pb-led-set.html}{WARP2-PB-LED}                       & WARP2 Taster- /                                               \\
-		                                                                                                                            & LED-Baugruppe                                                 \\
+		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp2-pb-led-set.html}{WARP2-PB-LED}                       & WARP2 Taster/LED                     \\
 		\cmidrule(lr{0.5em}){1-2} 
-		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp-res-220.html}{WARP-RES-220}                           & Widerstand \SI{220}{\ohm}                                     \\
+		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp-res-220.html}{WARP-RES-220}                           & Widerstand \SI{220}{\ohm}            \\
 		\cmidrule(lr{0.5em}){1-2} 
-		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp-res-680.html}{WARP-RES-680}                           & Widerstand \SI{680}{\ohm}                                     \\
+		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp-res-680.html}{WARP-RES-680}                           & Widerstand \SI{680}{\ohm}            \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp2-esp32-eth.html}{WARP2-ESP32-ETH}	                    & ESP32 Ethernet Brick                                          \\
-		                                                                                                                            & mit WARP2 Firmware                                            \\
+		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/warp2-esp32-eth.html}{WARP2-ESP32-ETH}	                    & ESP32 Ethernet Brick                 \\
+		                                                                                                                            & mit WARP2-Firmware                   \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/evse-v2-bricklet.html}{2167}                               & EVSE Bricklet 2.0                                             \\
+		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/evse-v2-bricklet.html}{2167}                               & EVSE Bricklet 2.0                    \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/nfc-bricklet.html}{286}                                    & NFC Bricklet                                                  \\
+		\href{https://www.tinkerforge.com/de/shop/warp/warp2-spare-parts/nfc-bricklet.html}{286}                                    & NFC Bricklet                         \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/accessories/cable/bricklet-cable-15cm-7p-7p.html}{6150}                           & Bricklet Kabel                                                \\
-		                                                                                                                            & \SI{15}{\centi\meter} (7p-7p)                                 \\
+		\href{https://www.tinkerforge.com/de/shop/accessories/cable/bricklet-cable-15cm-7p-7p.html}{6150}                           & Bricklet-Kabel                       \\
+		                                                                                                                            & \SI{15}{\centi\meter} (7p-7p)        \\
 		\cmidrule(lr{0.5em}){1-2}
-		\href{https://www.tinkerforge.com/de/shop/accessories/cable/bricklet-cable-6cm-7p-7p.html}{6149}                            & Bricklet Kabel                                                \\
-		                                                                                                                            & \SI{6}{\centi\meter} (7p-7p)                                  \\
+		\href{https://www.tinkerforge.com/de/shop/accessories/cable/bricklet-cable-6cm-7p-7p.html}{6149}                            & Bricklet-Kabel                       \\
+		                                                                                                                            & \SI{6}{\centi\meter} (7p-7p)         \\
 		%\bottomrule
 	\end{tabular}
 
@@ -1003,6 +1013,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		12.10.2021 & 1.1     & Ersatzteilliste vervollständigt \\
 		\bottomrule
 	\end{tabular}
+	\newpage
+	\pagestyle{empty}
+	\null
 	\newpage
 	\null
 	\vfill
