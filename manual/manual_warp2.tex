@@ -792,6 +792,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\newpage
 	\section{Lastmanagement zwischen mehreren WARP Chargern}\label{charge_manager}
 	Mit dem Lastmanagement ist es möglich, einen verfügbaren Gesamt-Ladestrom zwischen WARP Chargern aufzuteilen.
+	Hierbei wird eine Wallbox als Lastmanager konfiguriert, die die weiteren Wallboxen im Verbund steuert und ihnen Ladeströme
+	zuweist.
+
 	Es kann sowohl ein fester Gesamtstrom verteilt werden, um zum Beispiel den Hausanschluss nicht zu überlasten,
 	als auch der Gesamtstrom über das Webinterface und die API dynamisch gesetzt werden
 	um einen PV-Überschussstrom auf mehreren Wallboxen zu verteilen.
@@ -814,7 +817,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	das Lastmanagement aktiviert werden. Nach Aktivierung lädt eine Wallbox nur noch,
 	wenn die Ladung vom Lastmanagement freigegeben wird.
 
-	Auf der Wallbox, die die anderen steuern soll, müssen dann auf der Lastmanager-Unterseite
+	Zusätzlich müssen auf der Wallbox, die die anderen steuern soll (dem Lastmanager), auf der Lastmanager-Unterseite
 	alle weiteren Wallboxen mit ihrer IP-Adresse hinzugefügt werden.
 	Im einfachsten Fall, in dem eine feste Menge Strom verteilt werden soll, muss nun nur noch dieser
 	Strom als \enquote{Voreingestellt verfügbarer Strom} \textbf{und} als \enquote{Maximal verfügbarer Strom}
