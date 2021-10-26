@@ -243,6 +243,7 @@ void ChargeManager::setup()
     String default_hostname = String(__HOST_PREFIX__) + String("-") + String(uid);
     if (!api.restorePersistentConfig("charge_manager/config", &charge_manager_config)) {
         charge_manager_config.get("chargers")->get(0)->get("name")->updateString(default_hostname);
+        charge_manager_config.get("maximum_available_current")->updateUint(0);
     }
 
     charge_manager_config_in_use = charge_manager_config;
