@@ -493,7 +493,7 @@ export function getTranslation(lang: string) {
                     "charge_state_6": "Charging done",
 
                     "charge_error_type_management": "Management error",
-                    "charge_error_type_client": "Wallbox error",
+                    "charge_error_type_client": "Charger error",
 
                     "charge_error_0": "OK",
                     "charge_error_1": "Communication error",
@@ -519,7 +519,7 @@ export function getTranslation(lang: string) {
                     "last_update_suffix": "",
                     "save_failed": "Failed to save the charge manager configuration",
                     "set_available_current_failed": "Failed to set the available current",
-                    "add_wallbox": "Add wallbox",
+                    "add_wallbox": "Add charger",
                     "add_charger_disabled": "Only up to 10 chargers are supported."
                 }
             }
