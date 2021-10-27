@@ -204,6 +204,7 @@ function update_charge_manager_config(config: ChargeManagerConfig, force: boolea
             </div>
             <div class="card-body">
                 <button id="charge_manager_add_charger" type="button" class="btn btn-light btn-lg btn-block" style="height: 100%;" data-toggle="modal" data-target="#charge_manager_add_charger_modal"><span data-feather="plus-circle"></span></button>
+                <span id="charge_manager_add_charger_disabled" hidden>${__("charge_manager.script.add_charger_disabled")}</span>
             </div>
         </div>
     </div>`;
@@ -217,6 +218,9 @@ function update_charge_manager_config(config: ChargeManagerConfig, force: boolea
             });
         }
     }
+
+    $('#charge_manager_add_charger').prop("hidden", config.chargers.length >= 10);
+    $('#charge_manager_add_charger_disabled').prop("hidden", config.chargers.length < 10);
 
     for (let i = 0; i < config.chargers.length; i++) {
         const s = config.chargers[i];
@@ -432,6 +436,7 @@ export function getTranslation(lang: string) {
                     "save_failed": "Speichern der Lastmanager-Konfiguration fehlgeschlagen",
                     "set_available_current_failed": "Setzen des verfügbaren Stroms fehlgeschlagen",
                     "add_wallbox": "Wallbox hinzufügen",
+                    "add_charger_disabled": "Es werden nur bis zu 10 Wallboxen unterstützt."
                 }
             }
         },
@@ -515,6 +520,7 @@ export function getTranslation(lang: string) {
                     "save_failed": "Failed to save the charge manager configuration",
                     "set_available_current_failed": "Failed to set the available current",
                     "add_wallbox": "Add wallbox",
+                    "add_charger_disabled": "Only up to 10 chargers are supported."
                 }
             }
         }

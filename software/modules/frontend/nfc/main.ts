@@ -109,7 +109,8 @@ function update_nfc_config(cfg: NFCConfig, force: boolean) {
                 </button>
             </div>
             <div class="card-body">
-                <button id="nfc_add_charger" type="button" class="btn btn-light btn-lg btn-block" style="height: 100%;" data-toggle="modal" data-target="#nfc_add_tag_modal"><span data-feather="plus-circle"></span></button>
+                <button id="nfc_add_tag" type="button" class="btn btn-light btn-lg btn-block" style="height: 100%;" data-toggle="modal" data-target="#nfc_add_tag_modal"><span data-feather="plus-circle"></span></button>
+                <span id="nfc_add_tag_disabled" hidden>${__("nfc.script.add_tag_disabled")}</span>
             </div>
             <div class="card-footer">
                 <small style="visibility: hidden;">Zuletzt gesehen: blah</small>
@@ -126,6 +127,9 @@ function update_nfc_config(cfg: NFCConfig, force: boolean) {
             });
         }
     }
+
+    $('#nfc_add_tag').prop("hidden", cfg.authorized_tags.length >= 8);
+    $('#nfc_add_tag_disabled').prop("hidden", cfg.authorized_tags.length < 8);
 
     for (let i = 0; i < cfg.authorized_tags.length; i++) {
         const s = cfg.authorized_tags[i];
@@ -376,6 +380,7 @@ export function getTranslation(lang: string) {
                 },
                 "script": {
                     "add_tag": "Tag hinzufügen",
+                    "add_tag_disabled": "Es werden nur bis zu 8 Tags unterstützt.",
                     "tag_name": "Tag-Name",
                     "tag_type": "Tag-Typ",
                     "last_seen_unknown": "placeholder",
@@ -425,6 +430,7 @@ export function getTranslation(lang: string) {
                 },
                 "script": {
                     "add_tag": "Add tag",
+                    "add_tag_disabled": "Only up to 8 tags are supported.",
                     "tag_name": "Tag name",
                     "tag_type": "Tag type",
                     "last_seen_unknown": "placeholder",
