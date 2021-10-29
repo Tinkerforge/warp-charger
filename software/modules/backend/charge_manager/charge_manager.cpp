@@ -215,7 +215,7 @@ void ChargeManager::start_manager_task() {
                                                                 charging_time,
                                                                 target.get("allocated_current")->asUint()));
             charge_manager_state.get("uptime")->updateUint(millis());
-    }, [this, chargers](uint8_t client_id, uint8_t error){
+    }, [this](uint8_t client_id, uint8_t error){
         Config &target = charge_manager_state.get("chargers")->asArray()[client_id];
         target.get("state")->updateUint(5);
         target.get("error")->updateUint(error);
@@ -386,11 +386,11 @@ void ChargeManager::distribute_current() {
               available_current);
 
     // Allocate current
-    std::stable_sort(idx_array, idx_array + chargers.size(), [chargers](int left, int right) {
+    std::stable_sort(idx_array, idx_array + chargers.size(), [&chargers](int left, int right) {
         return chargers[left].get("supported_current")->asUint() < chargers[right].get("supported_current")->asUint();
     });
 
-    std::stable_sort(idx_array, idx_array + chargers.size(), [chargers](int left, int right) {
+    std::stable_sort(idx_array, idx_array + chargers.size(), [&chargers](int left, int right) {
         bool left_charging = chargers[left].get("is_charging")->asBool();
         bool right_charging = chargers[right].get("is_charging")->asBool();
         return left_charging && !right_charging;
