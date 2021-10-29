@@ -381,7 +381,7 @@ export function getTranslation(lang: string) {
                     "enable_watchdog": "Watchdog aktivieren",
                     "enable_watchdog_desc": "Setzt den verfügbaren Strom auf die Voreinstellung, wenn er nicht spätestens alle 30 Sekunden aktualisiert wurde.",
                     "verbose": "Stromverteilung protokollieren",
-                    "verbose_desc": "Erzeugt Einträge im Ereignislog, wenn Strom umverteilt wird.",
+                    "verbose_desc": "Erzeugt Einträge im Ereignis-Log, wenn Strom umverteilt wird.",
                     "default_available_current": "<span class=\"form-label pr-2\">Voreingestellt verfügbarer Strom</span><span class=\"text-muted\">wird nach Neustart des Lastmanagers verwendet</span>",
                     "default_available_current_invalid": "Der voreingestellt verfügbare Strom darf maximal so groß sein wie der maximale verfügbare Strom!",
                     "maximum_available_current": "<span class=\"form-label pr-2\">Maximal verfügbarer Strom</span><span class=\"text-muted\">verfügbarer Strom kann über Webinterface und API nur bis zu diesem Wert eingestellt werden</span>",
