@@ -206,7 +206,12 @@ bool CMNetworking::send_manager_update(uint8_t client_id, uint16_t allocated_cur
         if (errno == EAGAIN || errno == EWOULDBLOCK)
             // Intentionally don't increment here, we want to resend to this charger next.
             return false;
-        logger.printfln("Failed to send. errno: %d", errno);
+        if (errno == ENOMEM) {
+            // Ignore ENOMEM for now. Usually indicates that we don't have a network connection yet.
+            return true;
+        }
+
+        logger.printfln("Failed to send: %s %d", strerror(errno), errno);
         return true;
     }
     if (err != sizeof(request)) {
