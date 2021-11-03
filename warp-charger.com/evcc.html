@@ -247,14 +247,14 @@
             </p>
             <p>
                 EVCC kannst du von Github herunterladen: Per Browser <a href="https://github.com/andig/evcc/releases/latest">von hier</a>, oder alternativ auf der Konsole mit
-                <code style="white-space: normal; word-break: break-all;">wget https://github.com/andig/evcc/releases/download/0.53/evcc_0.53_linux_armv6.tar.gz</code>
-                <samp></samp>0.53 solltest du durch die gerade aktuelle Version ersetzen. Für den Raspberry Pi benötigst du die <samp>linux_armv6</samp>-Variante.
+                <code style="white-space: normal; word-break: break-all;">wget https://github.com/andig/evcc/releases/download/0.68/evcc_0.68_linux_armv6.tar.gz</code>
+                <samp></samp>0.68 solltest du durch die gerade aktuelle Version ersetzen. Für den Raspberry Pi benötigst du die <samp>linux_armv6</samp>-Variante.
             </p>
             <p>
                 Auf der Konsole kannst du jetzt, falls du EVCC nicht neu installierst, sondern aktualisierst, eine eventuell vorhandene alte EVCC-Installation entfernen:
                 <code>sudo rm -f /usr/local/bin/evcc*</code>
                 Danach kannst du mit
-                <code style="white-space: normal; word-break: break-all;">sudo tar xvfz ./evcc_0.53_linux_armv6.tar.gz -C /usr/local/bin/</code>
+                <code style="white-space: normal; word-break: break-all;">sudo tar xvfz ./evcc_0.68_linux_armv6.tar.gz -C /usr/local/bin/</code>
                 die gerade runtergeladene Version von EVCC installieren.
                 Mit <code>evcc -v</code> kannst du testen, ob die Installation erfolgreich war. EVCC sollte dann seine Versionsnummer ausgeben.
             </p>
@@ -344,7 +344,7 @@ chargers:
 <pre>
 meters:
 - name: gridmeter <samp># Name des Zählers. Falls du diesen änderst, musst du die site-Konfiguration auch anpassen.</samp>
-  type: default   <samp># Typ des Zählers</samp>
+  type: custom   <samp># Typ des Zählers</samp>
   power:
     <samp># Wir simulieren die Leistung über ein Shellscript, das 1000 Watt zurückgibt.
     # Positive Werte bedeuten einen Strombezug im Netz.</samp>
@@ -361,7 +361,7 @@ meters:
                 </p>
                     <pre>
 - name: pvmeter
-  type: default
+  type: custom
   power:
     type: script
     <samp># Wir simulieren hier -10000 Watt. Negative Werte bedeuten eine Einspeisung ins Netz.</samp>
@@ -541,7 +541,7 @@ WantedBy=multi-user.target</pre>
             </p>
             <p>
                 Exemplarisch binden wir im Folgenden einen Renault Zoe ein. Hierzu musst du wieder deine EVCC-Konfigurationsdatei bearbeiten.
-                Füge zunächst vor dem loadpoint-Block folgenden Block ein:
+                Füge zunächst <strong>vor dem loadpoint-Block</strong> folgenden Block ein:
             </p>
 
             <div class="row pb-2">
@@ -555,7 +555,7 @@ vehicles:
   user: user@domain.com <samp># Deine myrenault-ID</samp>
   password test123      <samp># Passwort deiner myrenault-ID</samp></pre>
                     <p>
-                        Danach kannst du den Zoe mit deinem Ladepunkt verknüpfen. Füge dazu folgendes in den loadpoint-Block ein:
+                        Danach kannst du den Zoe mit deinem Ladepunkt verknüpfen. Füge dazu folgendes <strong>in den loadpoint-Block</strong> ein:
                     </p>
                         <pre>
   vehicle: zoe <samp># Der Konfigurationsname von oben</samp>
@@ -564,13 +564,7 @@ vehicles:
       <samp># Wann soll der Ladestand abgefragt werden?</samp>
       mode: charging
       <samp># Wie oft soll der Ladestand abgefragt werden?</samp>
-      interval: 60m
-    <samp># Auswählbare Zielladestände</samp>
-    levels:
-    - 30
-    - 50
-    - 80
-    - 100</pre>
+      interval: 60m</pre>
                     <p>
                         Wenn du jetzt EVCC neu startest:
                         <code>evcc -c config.yaml</code> bzw. <code>sudo systemctl restart evcc</code>, falls du den Auto-Start schon eingerichtet hast,
