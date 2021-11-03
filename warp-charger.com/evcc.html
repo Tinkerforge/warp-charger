@@ -39,12 +39,12 @@
   </script>
 </head>
 
-<body id="api_body">
+<body data-spy="scroll" data-target="#navbar" data-offset="100">
 
   <!--==========================
     Header
   ============================-->
-  <header id="mqtt_header" class="header header-scrolled" style="position: sticky">
+  <header id="evcc_header" class="header header-scrolled" style="position: sticky;">
     <div class="container-fluid">
       <div id="logo" class="pull-left">
         <!-- Uncomment below if you prefer to use an image logo -->
@@ -55,43 +55,49 @@
         <ul class="nav-menu nav-menu-top">
           <li><a href="/">HOME</a></li>
           <li><a href="/api.html">API</a></li>
-          <li class="menu-has-children"><a href="/evcc.html">EVCC</a>
-            <ul class="push-left-outer">
-              <li><a href="#evcc_main">Einführung</a></li>
-              <li><a href="#evcc-rpi-preparation">Vorbereitung des Raspberry Pis</a></li>
-              <li><a href="#evcc-mqtt-installation">Installation des MQTT-Brokers</a></li>
-              <li><a href="#evcc-warp-mqtt">Verknüpfen des WARP Chargers</a></li>
-              <li><a href="#evcc-installation">Installation von EVCC</a></li>
-              <li class="menu-has-children"><a href="#evcc-configuration">Konfiguration von EVCC</a>
-                <ul class="push-left-inner">
-                    <li><a href="#evcc-configuration-general">Allgemeine Einstellungen</a></li>
-                    <li><a href="#evcc-configuration-warp">Konfiguration des WARP Chargers</a></li>
-                    <li><a href="#evcc-configuration-meter">Konfiguration der simulierten Stromzähler</a></li>
-                    <li><a href="#evcc-configuration-site">Site-Konfiguration</a></li>
-                    <li><a href="#evcc-configuration-chargepoint">Konfiguration des Ladepunkts</a></li>
-                    <li><a href="#evcc-configuration-test">Test der Gesamtkonfiguration</a></li>
-                    <li><a href="#evcc-configuration-complete">Gesamtkonfiguration</a></li>
-                </ul>
-              </li>
-              <li><a href="#evcc-auto-start">Automatischer Start von EVCC</a></li>
-              <li><a href="#evcc-extensions">Erweiterungsmöglichkeiten</a></li>
-            </ul>
-            <li><a href="https://www.tinkerforge.com/de/shop/warp/wallbox.html">SHOP <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></li>
-            <li><a href="https://www.tinkerforge.com/de/blog/">BLOG <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></li>
-            <li><a href="https://www.tinkerunity.org/forum/13-warp-charger/l">FORUM <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></li>
-            <li><a href="/index_warp1.html">WARP1</a></li>
-          </li>
+          <li><a href="/evcc.html">EVCC</a></li>
+          <li><a href="https://www.tinkerforge.com/de/shop/warp/wallbox.html">SHOP <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></li>
+          <li><a href="https://www.tinkerforge.com/de/blog/">BLOG <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></li>
+          <li><a href="https://www.tinkerunity.org/forum/13-warp-charger/l">FORUM <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></li>
+          <li><a href="/index_warp1.html">WARP1</a></li>
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>
   </header><!-- #header -->
+  <div class="row" style="margin-right: 0">
+    <nav id="navbar" class="navbar navbar-light navbar-test d-none d-lg-flex bg-light align-items-start">
+        <nav class="nav nav-pills flex-column ml-2">
+            <a class="navbar-brand" href="#">Inhalt</a>
+            <a class="nav-link" href="#evcc_main">Einführung</a>
+            <a class="nav-link" href="#evcc-rpi-preparation">Vorbereitung des Raspberry Pis</a>
+            <a class="nav-link" href="#evcc-mqtt-installation">Installation des MQTT-Brokers</a>
+            <a class="nav-link" href="#evcc-warp-mqtt">Verknüpfen des WARP Chargers</a>
+            <a class="nav-link" href="#evcc-installation">Installation von EVCC</a>
 
+
+            <a class="nav-link" href="#evcc-configuration">Konfiguration von EVCC</a>
+            <div class="collapse">
+                <nav class="nav nav-pills flex-column">
+                    <a class="nav-link ml-3" href="#evcc-configuration-general">Allgemeine Einstellungen</a>
+                    <a class="nav-link ml-3" href="#evcc-configuration-warp">Konfiguration des WARP Chargers</a>
+                    <a class="nav-link ml-3" href="#evcc-configuration-meter">Konfiguration der simulierten Stromzähler</a>
+                    <a class="nav-link ml-3" href="#evcc-configuration-site">Site-Konfiguration</a>
+                    <a class="nav-link ml-3" href="#evcc-configuration-chargepoint">Konfiguration des Ladepunkts</a>
+                    <a class="nav-link ml-3" href="#evcc-configuration-test">Test der Gesamtkonfiguration</a>
+                    <a class="nav-link ml-3" href="#evcc-configuration-complete">Gesamtkonfiguration</a>
+                </nav>
+            </div>
+
+            <a class="nav-link" href="#evcc-auto-start">Automatischer Start von EVCC</a>
+            <a class="nav-link" href="#evcc-extensions">Erweiterungsmöglichkeiten</a>
+        </nav>
+    </nav>
   <!--==========================
     Intro Section
   ============================-->
-  <main id="evcc_main" style="text-align: justify;">
+  <main id="evcc_main" class="col-lg-8 col-xl-9">
     <header id="start" class="reference-section-header pt-4" style="padding-left: 15px; padding-right: 15px;"><h2>PV-Überschuss&shy;laden mit EVCC</h2></header>
-    <section class="section">
+    <section id="evcc-intro" class="section">
         <div class="container">
             <header class="reference-section-header">
                 <h3>Einführung</h3>
@@ -590,7 +596,7 @@ vehicles:
         </div>
     </section>
 </main>
-
+</div>
 <!--==========================
   Footer
 ============================-->
