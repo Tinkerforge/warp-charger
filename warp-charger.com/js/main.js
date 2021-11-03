@@ -144,4 +144,15 @@ jQuery(document).ready(function( $ ) {
     'albumLabel': "Bild %1 von %2"
   })
 
+  $(window).on('activate.bs.scrollspy', function (e) {
+    setTimeout(() => {
+        $('#navbar a.active').parents("div.collapse").prev().addClass("active");
+        $('#navbar a:not(.active)').next("div").collapse('hide');
+        $('#navbar a.active').next("div").filter(":not(.show)").collapse('show');
+        }, 100);
+    });
+
+  $('#navbar a.active').parents("div.collapse").prev().addClass("active");
+  $('#navbar a:not(.active)').next("div").collapse('hide');
+  $('#navbar a.active').next("div").filter(":not(.show)").collapse('show');
 });

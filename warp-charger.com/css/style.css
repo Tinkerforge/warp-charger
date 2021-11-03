@@ -1391,8 +1391,42 @@ pre.code-example {
     }
 }
 
+#reference section > div:not(:first-of-type) {
+    padding-top: 3rem !important;
 }
+
+.table-striped tbody tr:nth-of-type(2n) {
+    background-color: rgba(0, 0, 0, 0.0125);
+}
+
+.nav-link {
+    display: block;
+    padding: .125rem 1rem;
+    margin: .125rem 0;
+}
+
 .feather {
     margin-top: 0px;
     vertical-align: top;
 }
+
+@media (min-width: 992px) {
+    .navbar-test {
+        position: sticky;
+        top: 80px;
+        height: calc(100vh - 80px);
+        z-index: 996;
+        overflow-y: auto;
+        flex-basis: 330px
+    }
+}
+/*
+@media (max-width: 992px) {
+    .navbar-test {
+        position: sticky;
+        top: 54px;
+        z-index: 996;
+        overflow-y: scroll;
+    }
+}
+*/

@@ -1,0 +1,74 @@
+from api_doc_common import *
+from mods import mods
+
+import re
+import os
+
+def specialize_template(template_filename, destination_filename, replacements, check_completeness=True, remove_template=False):
+    lines = []
+    replaced = set()
+
+    with open(template_filename, 'r') as f:
+        for line in f.readlines():
+            for key in replacements:
+                replaced_line = line.replace(key, replacements[key])
+
+                if replaced_line != line:
+                    replaced.add(key)
+
+                line = replaced_line
+
+            lines.append(line)
+
+    if check_completeness and replaced != set(replacements.keys()):
+        raise Exception('Not all replacements for {0} have been applied. Missing are {1}'.format(template_filename, ', '.join(set(replacements.keys() - replaced))))
+
+    with open(destination_filename, 'w') as f:
+        f.writelines(lines)
+
+    if remove_template:
+        os.remove(template_filename)
+
+#def generate_html(f: Func, module: str) -> str:
+#    return f.root.root_to_html(f, module)
+
+def resolve_ref(match):
+    ref = match.group(1)
+    if "/" not in ref:
+        return '<a class="scrollto text-monospace" href="#{}">{}</a>'.format(ref, ref)
+    else:
+        module, fn = ref.split("/")
+        return '<a class="scrollto text-monospace" href="#{mod}_{fn}">{mod}/{fn}</a>'.format(mod=module, fn=fn)
+
+nav_module_template = """<a class="nav-link ml-3" href="#reference-{module_name}">{module_display_name}</a>
+    <div class="collapse">
+        <nav class="nav nav-pills flex-column">
+        {functions}
+        </nav>
+    </div>"""
+nav_function_template = """<a class="nav-link" href="#{link}" style="margin-left: 2rem !important;">{link_text}</a>"""
+nav_group_template = """<span class="ml-5">{}</span>"""
+
+nav_mods = []
+for m in mods:
+    nav_fns = []
+    for group, fns in itertools.groupby(m.functions, key=lambda f: f.type_):
+        nav_fns.append(nav_group_template.format(group.name_plural()))
+        nav_fns += [nav_function_template.format(
+                link="{}_{}".format(m.name, f.name) if not m.hide_prefix else f.name,
+                link_text="{}/<wbr>{}".format(m.name, f.name) if not m.hide_prefix else f.name) for f in fns]
+    nav_mods.append(
+        nav_module_template.format(
+            module_name=m.name,
+            module_display_name=m.display_name,
+            functions="\n".join(nav_fns)))
+
+nav = "\n".join(nav_mods)
+
+reference = "\n".join([x.to_html() for x in mods])
+reference = re.sub("{{{ref:([^}]*)}}}", resolve_ref, reference)
+
+specialize_template("api.html.template", "../warp-charger.com/api.html", {
+    "{reference}": reference,
+    "{reference-nav}": nav
+})
