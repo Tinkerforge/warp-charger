@@ -211,7 +211,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", Version.ANY,[
         version=Version.WARP2_ONLY)
     ),
 
-    Func("gpio_configuration", FuncType.STATE, Elem.OBJECT("Die Konfiguration der konfigurierbaren Ein- und Ausgänge. Diese kann über {{{ref:evse/gpio_configuration_update}}} mit dem selben Payload aktualisiert werden.", members={
+    Func("gpio_configuration", FuncType.STATE, Elem.OBJECT("Die Konfiguration der konfigurierbaren Ein- und Ausgänge. Diese kann über evse/gpio_configuration_update mit dem selben Payload aktualisiert werden.", members={
             "shutdown_input": Elem.INT("Die Konfiguration des Abschalteingangs.", constants=[
                 Const(0, "Nicht konfiguriert"),
                 Const(1, "Abschalten wenn geöffnet"),
@@ -246,7 +246,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", Version.ANY,[
         })
     ),
 
-    Func("managed", FuncType.STATE, Elem.OBJECT("Legt fest, ob der Ladestrom, der vom Lastmanager zugeteilt wurde, in die Berechnung des maximalen Ladestroms eingeht (siehe {{{ref:evse/max_charging_current}}}). Damit das Lastmanagement zwischen WARP Chargern funktioniert, muss dies aktiviert sein. Der Wert kann über {{{ref:evse/managed_update}}} aktualisiert werden.", members={
+    Func("managed", FuncType.STATE, Elem.OBJECT("Legt fest, ob der Ladestrom, der vom Lastmanager zugeteilt wurde, in die Berechnung des maximalen Ladestroms eingeht (siehe {{{ref:evse/max_charging_current}}}). Damit das Lastmanagement zwischen WARP Chargern funktioniert, muss dies aktiviert sein. Der Wert kann über ref:evse/managed_update mit dem selben Payload aktualisiert werden.", members={
             "managed": Elem.BOOL("true wenn Lastmanagement aktiviert ist, sonst false"),
         })
     ),

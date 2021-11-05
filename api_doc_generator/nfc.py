@@ -21,9 +21,9 @@ nfc = Module("nfc", "NFC-Ladefreigabe", "", Version.ANY, [
                 Const(True, "Wenn eine Ladung nur mit einem NFC-Tag, oder über das Webinterface/die API freigegeben werden kann."),
                 Const(False, "Wenn kein NFC-Tag zum Laden benötigt wird.")
             ]),
-            "require_tag_to_stop": Elem.BOOL("Gibt an, ob ein Tag zum Stoppen einer Ladung benötigt wird.", constants=[
+            "require_tag_to_stop": Elem.BOOL("Gibt an, ob ein Tag zum Stoppen einer Ladung benötigt wird. <strong>Bei WARP 1 kann die Stop-Funktion des Tasters in der Frontplatte nicht deaktiviert werden</strong>", constants=[
                 Const(True, "Wenn eine Ladung nur mit einem NFC-Tag, oder über das Webinterface/die API gestoppt werden kann."),
-                Const(False, "Wenn kein NFC-Tag zum Stoppen einer Ladung benötigt wird. <strong>Wenn aktiviert, wird die Stop-Funktion des Buttons an der Frontplatte deaktiviert, sowie {{{ref:evse/button_configuration_update}}} blockiert!</strong>")
+                Const(False, "Wenn kein NFC-Tag zum Stoppen einer Ladung benötigt wird. <strong>Wenn aktiviert, wird die Stop-Funktion des Tasters in der Frontplatte deaktiviert, sowie {{{ref:evse/button_configuration_update}}} blockiert!</strong>")
             ]),
             "authorized_tags": Elem.ARRAY("Eine Liste authorisierter Tags.", members=[
                 * 8 * [

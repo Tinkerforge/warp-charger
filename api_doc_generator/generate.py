@@ -32,13 +32,24 @@ def specialize_template(template_filename, destination_filename, replacements, c
 #def generate_html(f: Func, module: str) -> str:
 #    return f.root.root_to_html(f, module)
 
-def resolve_ref(match):
+def resolve_ref(match, reference_link_texts):
     ref = match.group(1)
     if "/" not in ref:
-        return '<a class="scrollto text-monospace" href="#{}">{}</a>'.format(ref, ref)
+        anchor = ref
+        link_text = ref
     else:
         module, fn = ref.split("/")
-        return '<a class="scrollto text-monospace" href="#{mod}_{fn}">{mod}/{fn}</a>'.format(mod=module, fn=fn)
+        anchor = "{}_{}".format(module, fn)
+        link_text = "{}/{}".format(module, fn)
+
+    if anchor not in reference_link_texts:
+        if anchor.endswith("_update") and anchor.replace("_update", "") in reference_link_texts:
+            anchor = anchor.replace("_update", "")
+        else:
+            print("Can't resolve reference {} ({}).".format(link_text, anchor))
+            return 'UNRESOLVED REFERENCE {}'.format(anchor)
+
+    return '<a class="scrollto text-monospace" href="#{}">{}</a>'.format(anchor, link_text)
 
 nav_module_template = """<a class="nav-link ml-3" href="#reference-{module_name}">{module_display_name}</a>
     <div class="collapse">
@@ -49,14 +60,18 @@ nav_module_template = """<a class="nav-link ml-3" href="#reference-{module_name}
 nav_function_template = """<a class="nav-link" href="#{link}" style="margin-left: 2rem !important;">{link_text}</a>"""
 nav_group_template = """<span class="ml-5">{}</span>"""
 
+reference_link_texts = []
 nav_mods = []
 for m in mods:
     nav_fns = []
     for group, fns in itertools.groupby(m.functions, key=lambda f: f.type_):
+        fns = list(fns)
         nav_fns.append(nav_group_template.format(group.name_plural()))
         nav_fns += [nav_function_template.format(
                 link="{}_{}".format(m.name, f.name) if not m.hide_prefix else f.name,
                 link_text="{}/<wbr>{}".format(m.name, f.name) if not m.hide_prefix else f.name) for f in fns]
+
+        reference_link_texts += ["{}_{}".format(m.name, f.name) if not m.hide_prefix else f.name for f in fns]
     nav_mods.append(
         nav_module_template.format(
             module_name=m.name,
@@ -66,7 +81,7 @@ for m in mods:
 nav = "\n".join(nav_mods)
 
 reference = "\n".join([x.to_html() for x in mods])
-reference = re.sub("{{{ref:([^}]*)}}}", resolve_ref, reference)
+reference = re.sub("{{{ref:([^}]*)}}}", lambda x: resolve_ref(x, reference_link_texts), reference)
 
 specialize_template("api.html.template", "../warp-charger.com/api.html", {
     "{reference}": reference,
