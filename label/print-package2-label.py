@@ -12,8 +12,23 @@ import ssl
 PRINTER_HOST = '192.168.178.241'
 PRINTER_PORT = 9100
 
-QR_CODE_COMMAND = b'W649,209,5,2,M,8,6,50,0\r'
-QR_CODE_PADDING = b';;\r'
+EAN13_PLACEHOLDER = b'4251640704810'
+EAN13_NUMBERS = {
+    'WARP2-CB-11KW-50': b'4251640704773',
+    'WARP2-CB-11KW-75': b'4251640704780',
+    'WARP2-CB-22KW-50': b'4251640704797',
+    'WARP2-CB-22KW-75': b'4251640704803',
+
+    'WARP2-CS-11KW-50': b'4251640704810',
+    'WARP2-CS-11KW-75': b'4251640704827',
+    'WARP2-CS-22KW-50': b'4251640704834',
+    'WARP2-CS-22KW-75': b'4251640704841',
+
+    'WARP2-CP-11KW-50': b'4251640704858',
+    'WARP2-CP-11KW-75': b'4251640704865',
+    'WARP2-CP-22KW-50': b'4251640704872',
+    'WARP2-CP-22KW-75': b'4251640704889',
+}
 
 DESCRIPTION_PLACEHOLDER = b'WARP2 Charger Smart, 11 kW, 5 m'
 
@@ -24,8 +39,6 @@ VERSION_PLACEHOLDER = b'2.17'
 SERIAL_NUMBER_PLACEHOLDER = b'5000000001'
 
 BUILD_DATE_PLACEHOLDER = b'2021-01'
-
-CURRENT_PLACEHOLDER = b'16 A'
 
 COPIES_FORMAT = '^C{0}\r'
 
@@ -53,7 +66,7 @@ def get_next_serial_number():
 
     return '5{0:09}'.format(serial_number)
 
-def print_warp2_label(type_, version, serial_number, build_date, instances, copies, stdout, force_build_date):
+def print_package2_label(type_, version, serial_number, build_date, instances, copies, stdout, force_build_date):
     # check instances
     if instances < 1 or instances > 25:
         raise Exception('Invalid instances: {0}'.format(instances))
@@ -63,7 +76,7 @@ def print_warp2_label(type_, version, serial_number, build_date, instances, copi
         raise Exception('Invalid copies: {0}'.format(copies))
 
     # parse type
-    m = re.match(r'^WARP2-C(B|S|P)-(11|22)KW-(50|75)$', type_)
+    m = re.match(r'^(?:TF-)?WARP2-C(B|S|P)-(11|22)KW-(50|75)$', type_)
 
     if m == None:
         raise Exception('Invalid type: {0}'.format(type_))
@@ -124,22 +137,22 @@ def print_warp2_label(type_, version, serial_number, build_date, instances, copi
         raise Exception('Invalid build date: {0}'.format(build_date))
 
     # read EZPL file
-    with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'warp2.prn'), 'rb') as f:
+    with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'package2.prn'), 'rb') as f:
         template = f.read()
 
     if template.find(b'^H13\r') < 0:
         raise Exception('EZPL file is using wrong darkness setting')
 
-    # patch QR code
-    if template.find(QR_CODE_COMMAND) < 0:
-        raise Exception('QR code command missing in EZPL file')
+    # patch EAN13
+    if template.find(EAN13_PLACEHOLDER) < 0:
+        raise Exception('EAN13 placeholder missing in EZPL file')
 
-    offset = len(TYPE_PLACEHOLDER) - len(type_) + len(VERSION_PLACEHOLDER) - len(version)
+    base_type = type_
 
-    if offset < 0:
-        raise Exception('QR code data too long')
+    if base_type.startswith('TF-'):
+        base_type = base_type[3:]
 
-    template = template.replace(QR_CODE_PADDING, b';' * offset + QR_CODE_PADDING)
+    template = template.replace(EAN13_PLACEHOLDER, EAN13_NUMBERS[base_type])
 
     # patch description
     if template.find(DESCRIPTION_PLACEHOLDER) < 0:
@@ -164,12 +177,6 @@ def print_warp2_label(type_, version, serial_number, build_date, instances, copi
         raise Exception('Build date placeholder missing in EZPL file')
 
     template = template.replace(BUILD_DATE_PLACEHOLDER, build_date.encode('ascii'))
-
-    # patch current
-    if template.find(CURRENT_PLACEHOLDER) < 0:
-        raise Exception('Current placeholder missing in EZPL file')
-
-    template = template.replace(CURRENT_PLACEHOLDER, current)
 
     # patch copies
     copies_command = COPIES_FORMAT.format(1).encode('ascii')
@@ -218,7 +225,7 @@ def main():
     assert args.instances > 0
     assert args.copies > 0
 
-    print_warp2_label(args.type, args.version, args.serial_number, args.build_date, args.instances, args.copies, args.stdout, args.force_build_date)
+    print_package2_label(args.type, args.version, args.serial_number, args.build_date, args.instances, args.copies, args.stdout, args.force_build_date)
 
 if __name__ == '__main__':
     main()

@@ -107,8 +107,8 @@ def sku_to_description(sku, supply_cable, cee):
 
     return description
 
-def print_docket_label(sku, supply_cable, cee, version, serial_number, build_date, order_id,
-                       item, order_date, customer, instances, copies, stdout, force_build_date):
+def print_docket2_label(sku, supply_cable, cee, version, serial_number, build_date, order_id,
+                        item, order_date, customer, instances, copies, stdout, force_build_date):
     # check instances
     if instances < 1 or instances > 25:
         raise Exception('Invalid instances: {0}'.format(instances))
@@ -291,8 +291,8 @@ def main():
     assert args.instances > 0
     assert args.copies > 0
 
-    print_docket_label(args.sku, args.supply_cable, bool(args.cee), args.version, args.serial_number, args.build_date, args.order_id,
-                       args.item, args.order_date, args.customer, args.instances, args.copies, args.stdout, args.force_build_date)
+    print_docket2_label(args.sku, args.supply_cable, bool(args.cee), args.version, args.serial_number, args.build_date, args.order_id,
+                        args.item, args.order_date, args.customer, args.instances, args.copies, args.stdout, args.force_build_date)
 
 if __name__ == '__main__':
     main()
