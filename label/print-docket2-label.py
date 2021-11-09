@@ -12,7 +12,7 @@ import ssl
 PRINTER_HOST = '192.168.178.241'
 PRINTER_PORT = 9100
 
-QR_CODE_COMMAND = b'W619,119,5,2,M,8,6,85,0\r'
+QR_CODE_COMMAND = b'W552,119,5,2,M,8,6,85,0\r'
 QR_CODE_PADDING = b';;\r'
 
 DESCRIPTION_PLACEHOLDER = b'Smart, 11 kW, 5 m, ZL 12 m, CEE'
@@ -36,6 +36,8 @@ ITEM_PLACEHOLDER = b'111/222'
 ORDER_DATE_PLACEHOLDER = b'1970-01-01 00:00:00'
 
 CUSTOMER_PLACEHOLDER = b'Max Mustermann'
+
+COMMENT_PLACEHOLDER = b'Comment'
 
 COPIES_FORMAT = '^C{0}\r'
 
@@ -108,7 +110,7 @@ def sku_to_description(sku, supply_cable, cee):
     return description
 
 def print_docket2_label(sku, supply_cable, cee, version, serial_number, build_date, order_id,
-                        item, order_date, customer, instances, copies, stdout, force_build_date):
+                        item, order_date, customer, comment, instances, copies, stdout, force_build_date):
     # check instances
     if instances < 1 or instances > 25:
         raise Exception('Invalid instances: {0}'.format(instances))
@@ -238,6 +240,12 @@ def print_docket2_label(sku, supply_cable, cee, version, serial_number, build_da
 
     template = template.replace(CUSTOMER_PLACEHOLDER, customer.encode('latin1', errors='replace'))
 
+    # patch comment
+    if template.find(COMMENT_PLACEHOLDER) < 0:
+        raise Exception('Comment placeholder missing in EZPL file')
+
+    template = template.replace(COMMENT_PLACEHOLDER, comment.encode('latin1', errors='replace'))
+
     # patch copies
     copies_command = COPIES_FORMAT.format(1).encode('ascii')
 
@@ -281,6 +289,7 @@ def main():
     parser.add_argument('item')
     parser.add_argument('order_date')
     parser.add_argument('customer')
+    parser.add_argument('comment')
     parser.add_argument('-i', '--instances', type=int, default=1)
     parser.add_argument('-c', '--copies', type=int, default=1)
     parser.add_argument('-s', '--stdout', action='store_true')
@@ -292,7 +301,7 @@ def main():
     assert args.copies > 0
 
     print_docket2_label(args.sku, args.supply_cable, bool(args.cee), args.version, args.serial_number, args.build_date, args.order_id,
-                        args.item, args.order_date, args.customer, args.instances, args.copies, args.stdout, args.force_build_date)
+                        args.item, args.order_date, args.customer, args.comment, args.instances, args.copies, args.stdout, args.force_build_date)
 
 if __name__ == '__main__':
     main()
