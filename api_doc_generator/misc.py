@@ -10,7 +10,7 @@ misc = Module("misc", "Sonstiges", "", Version.ANY, [
     Func("modules", FuncType.STATE, Elem.OPAQUE("Initialisierungszustand der Firmware-Module.")),
     Func("reboot", FuncType.COMMAND, Elem.NULL("Startet den ESP neu, um beispielsweise Konfigurationsänderungen anzuwenden."), command_is_action=True),
 
-    Func("uptime", FuncType.HTTP_ONLY, Elem.OPAQUE("Die Laufzeit des ESPs seit dem letzten Neustart in Millisekunden.")),
+    Func("uptime", FuncType.HTTP_ONLY, Elem.OPAQUE("Die Laufzeit des ESPs seit dem letzten Neustart in Millisekunden.<br/><br/>Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.")),
 
     Func("debug_report", FuncType.HTTP_ONLY, Elem.OPAQUE("Generiert einen Debug-Report. Dieser besteht aus allen Zuständen und Konfigurationen, sowie den letzten empfangenen Kommandos und Konfigurationsupdates. Passwörter werden, genau wie bei Konfigurationsabfragen, zensiert.")),
 
