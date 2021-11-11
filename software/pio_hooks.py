@@ -197,19 +197,19 @@ def main():
     # Embed backend modules
     recreate_dir(os.path.join("src", "modules"))
     backend_modules = [FlavoredName(x).get() for x in env.GetProjectOption("backend_modules").splitlines()]
-    for name in backend_modules:
-        mod_path = os.path.join("modules", "backend", name.under)
+    for backend_module in backend_modules:
+        mod_path = os.path.join("modules", "backend", backend_module.under)
         if not os.path.exists(mod_path) or not os.path.isdir(mod_path):
             mod_path = os.path.join("esp32-brick", "software", mod_path)
 
         if not os.path.exists(mod_path) or not os.path.isdir(mod_path):
-            print("Backend module {} not found.".format(name.space, mod_path))
+            print("Backend module {} not found.".format(backend_module.space, mod_path))
 
         if os.path.exists(os.path.join(mod_path, "prepare.py")):
             with ChangedDirectory(mod_path):
                 subprocess.run(["python3", "prepare.py"])
 
-        shutil.copytree(os.path.join(mod_path), os.path.join("src", "modules", name.under), ignore=shutil.ignore_patterns('*ignored'))
+        shutil.copytree(os.path.join(mod_path), os.path.join("src", "modules", backend_module.under), ignore=shutil.ignore_patterns('*ignored'))
 
     specialize_template("main.cpp.template", os.path.join("src", "main.cpp"), {
         '{{{module_includes}}}': '\n'.join(['#include "modules/{0}/{0}.h"'.format(x.under) for x in backend_modules]),
@@ -236,14 +236,14 @@ def main():
     frontend_modules = [FlavoredName(x).get() for x in env.GetProjectOption("frontend_modules").splitlines()]
 
     recreate_dir(os.path.join("web", "src", "ts", "modules"))
-    for name in frontend_modules:
-        mod_path = os.path.join("modules", "frontend", name.under)
+    for frontend_module in frontend_modules:
+        mod_path = os.path.join("modules", "frontend", frontend_module.under)
 
         if not os.path.exists(mod_path) or not os.path.isdir(mod_path):
             mod_path = os.path.join("esp32-brick", "software", mod_path)
 
         if not os.path.exists(mod_path) or not os.path.isdir(mod_path):
-            print("Frontend module {} not found.".format(name.space, mod_path))
+            print("Frontend module {} not found.".format(frontend_module.space, mod_path))
             sys.exit(1)
 
         if os.path.exists(os.path.join(mod_path, 'navbar.html')):
@@ -259,8 +259,8 @@ def main():
                 status_entries.append(f.read())
 
         if os.path.exists(os.path.join(mod_path, 'main.ts')):
-            main_ts_entries.append(name)
-            shutil.copy(os.path.join(mod_path, 'main.ts'), os.path.join("web", "src", "ts", "modules", name.under + ".ts"))
+            main_ts_entries.append(frontend_module)
+            shutil.copy(os.path.join(mod_path, 'main.ts'), os.path.join("web", "src", "ts", "modules", frontend_module.under + ".ts"))
 
     specialize_template(os.path.join("web", "index.html.template"), os.path.join("web", "src", "index.html"), {
         '{{{navbar}}}': '\n                        '.join(navbar_entries),
