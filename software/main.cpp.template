@@ -107,7 +107,7 @@ void setup(void) {
     Serial.begin(115200);
 
     String firmware_version = String((uint32_t)_MAJOR_, 10) + "." +  String((uint32_t)_MINOR_, 10) + "." +  String((uint32_t)_PATCH_, 10) + "-" +  String((uint32_t)(_BUILD_TIME_), 16);
-    logger.printfln("    **** TINKERFORGE {{{display_name}}} V%s ****",firmware_version.c_str());
+    logger.printfln("    **** TINKERFORGE {{{display_name_upper}}} V%s ****",firmware_version.c_str());
     logger.printfln("         %dK RAM SYSTEM   %d HEAP BYTES FREE", ESP.getHeapSize()/1024, ESP.getFreeHeap());
     logger.printfln("READY.");
 
