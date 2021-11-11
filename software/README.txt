@@ -10,5 +10,6 @@ Build instructions
   or
   git clone https://github.com/Tinkerforge/esp32-brick
 
-- Run "platformio run -e warp" to build the firmware. The firmware can be found in .pio/build/warp/firmware.bin
-- Alternatively run "platformio run -e warp -t upload -t monitor" to build and upload the firmware to an ESP32 and start the serial monitor
+- The firmwares are organized as platformio environments: "platformio run -e warp" builds the WARP1 firmware, "platformio run -e warp2" the one for WARP2.
+- The built firmwares can be found in build/ folder.
+- You can also run "platformio run -e warp -t upload -t monitor" to build and upload the firmware to a connected ESP32 and start the serial monitor
