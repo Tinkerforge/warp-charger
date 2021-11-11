@@ -165,6 +165,7 @@ def main():
     build_time_flag = '-D_BUILD_TIME_=0x{:x}'.format(int(t))
 
     name = env.GetProjectOption("name")
+    host_prefix = env.GetProjectOption("host_prefix")
     display_name = env.GetProjectOption("display_name")
     require_fw_info = env.GetProjectOption("require_fw_info")
 
@@ -178,7 +179,7 @@ def main():
 
     write_firmware_info(display_name, *version, int(t))
 
-    host_prefix_flag = "-D__HOST_PREFIX__=\\\"{}\\\"".format(name)
+    host_prefix_flag = "-D__HOST_PREFIX__=\\\"{}\\\"".format(host_prefix)
 
     firmware_name_flag = "-D_FIRMWARE_NAME_={}_firmware_{}_{:x}".format(name, '_'.join(version), int(t))
 
