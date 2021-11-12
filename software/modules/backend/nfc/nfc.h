@@ -62,8 +62,8 @@ private:
 
     char uid[7] = {0};
 
-    tag_info_t old_tag_buffer[8] = {0};
-    tag_info_t new_tag_buffer[8] = {0};
+    tag_info_t old_tag_buffer[8] = {};
+    tag_info_t new_tag_buffer[8] = {};
     tag_info_t *old_tags = old_tag_buffer;
     tag_info_t *new_tags = new_tag_buffer;
 

@@ -108,7 +108,7 @@ public:
 
 private:
     int manager_sock;
-    struct sockaddr_in dest_addrs[MAX_CLIENTS] = {0};
+    struct sockaddr_in dest_addrs[MAX_CLIENTS] = {};
 
     int client_sock;
     bool source_addr_valid = false;

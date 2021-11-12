@@ -112,7 +112,7 @@ void CMNetworking::register_manager(const std::vector<String> &hosts,
             initialized = true;
         }
 
-        response_packet recv_buf[2] = {0};
+        response_packet recv_buf[2] = {};
         struct sockaddr_in source_addr;
         socklen_t socklen = sizeof(source_addr);
 
@@ -232,7 +232,7 @@ void CMNetworking::register_client(std::function<void(uint16_t)> client_callback
 
     task_scheduler.scheduleWithFixedDelay("cm_client_receive_task", [this, client_callback](){
         static uint8_t last_seen_seq_num = 255;
-        request_packet recv_buf[2] = {0};
+        request_packet recv_buf[2] = {};
 
         struct sockaddr_storage temp_addr;
         socklen_t socklen = sizeof(temp_addr);
