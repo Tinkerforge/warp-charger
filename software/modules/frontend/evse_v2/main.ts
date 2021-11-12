@@ -291,6 +291,28 @@ function update_evse_button_configuration(b: EVSEButtonConfiguration) {
     $('#evse_button_configuration').val(b.button);
 }
 
+interface EVSEControlPilotConfiguration {
+    control_pilot: number
+}
+
+function update_evse_control_pilot_configuration(g: EVSEControlPilotConfiguration) {
+    $('#evse_control_pilot').val(g.control_pilot);
+}
+
+function save_evse_control_pilot_configuration() {
+    let payload: EVSEControlPilotConfiguration = {
+        control_pilot: parseInt($('#evse_control_pilot').val().toString())
+    }
+
+    $.ajax({
+        url: '/evse/control_pilot_configuration_update',
+        method: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(payload),
+        error: (xhr, status, error) => util.add_alert("evse_control_pilot_configuration_failed", "alert-danger", __("evse.script.control_pilot_configuration_failed"), error + ": " + xhr.responseText),
+    });
+}
+
 
 let debug_log = "";
 let meter_chunk = "";
@@ -461,6 +483,8 @@ export function init() {
     $('#evse_gpio_in').on("change", save_evse_gpio_configuration);
     $('#evse_gpio_out').on("change", save_evse_gpio_configuration);
 
+    $('#evse_control_pilot').on("change", save_evse_control_pilot_configuration);
+
     $("#evse_reset").on("click", () => $.ajax({
         url: '/evse/reset',
         method: 'PUT',
@@ -518,6 +542,10 @@ export function addEventListeners(source: EventSource) {
 
     source.addEventListener("evse/button_configuration", function (e: util.SSE) {
         update_evse_button_configuration(<EVSEButtonConfiguration>(JSON.parse(e.data)));
+    }, false);
+
+    source.addEventListener("evse/control_pilot_configuration", function (e: util.SSE) {
+        update_evse_control_pilot_configuration(<EVSEControlPilotConfiguration>(JSON.parse(e.data)));
     }, false);
 
     source.addEventListener("evse/debug_header", function (e: util.SSE) {
@@ -691,7 +719,13 @@ export function getTranslation(lang: string) {
                     "reset_description_muted": "",
                     "reset_evse": "Neustart",
                     "reflash_evse": "Neu flashen",
-                    "charging_time": "Lade seit"
+                    "charging_time": "Lade seit",
+
+                    "control_pilot": "Control Pilot",
+                    "control_pilot_muted": "Täuscht Abziehen und Anstecken des Ladekabels vor",
+                    "control_pilot_disconnected": "Getrennt",
+                    "control_pilot_connected": "Verbunden",
+                    "control_pilot_automatic": "Automatisch"
                 },
                 "script": {
                     "error_code": "Fehlercode",

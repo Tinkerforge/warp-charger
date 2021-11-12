@@ -75,6 +75,8 @@ private:
     Config evse_managed_update;
     Config evse_managed_current;
     Config evse_button_state;
+    Config evse_control_pilot_configuration;
+    Config evse_control_pilot_configuration_update;
 
     uint32_t last_current_update = 0;
     bool shutdown_logged = false;

@@ -182,6 +182,14 @@ EVSEV2::EVSEV2() : DeviceModule("evse", "EVSE 2.0", "EVSE 2.0", std::bind(&EVSEV
         {"button_release_time", Config::Uint32(0)},
         {"button_pressed", Config::Bool(false)},
     });
+
+    evse_control_pilot_configuration = Config::Object({
+        {"control_pilot", Config::Uint8(0)}
+    });
+
+    evse_control_pilot_configuration_update = Config::Object({
+        {"control_pilot", Config::Uint8(0)}
+    });
 }
 
 void EVSEV2::setup()
@@ -474,6 +482,14 @@ void EVSEV2::register_urls()
 
     api.addState("evse/button_state", &evse_button_state, {}, 250);
 
+    api.addState("evse/control_pilot_configuration", &evse_control_pilot_configuration, {}, 1000);
+    api.addCommand("evse/control_pilot_configuration_update", &evse_control_pilot_configuration_update, {}, [this](){
+        auto cp = evse_control_pilot_configuration_update.get("control_pilot")->asUint();
+        int rc = tf_evse_v2_set_control_pilot_configuration(&device, cp);
+        logger.printfln("updating control pilot to %u. rc %d", cp, rc);
+        is_in_bootloader(rc);
+    }, true);
+
 #ifdef MODULE_WS_AVAILABLE
     server.on("/evse/start_debug", HTTP_GET, [this](WebServerRequest request) {
         task_scheduler.scheduleOnce("enable evse debug", [this](){
@@ -591,6 +607,7 @@ void EVSEV2::update_all_data() {
 	uint32_t button_press_time;
 	uint32_t button_release_time;
 	bool button_pressed;
+    uint8_t control_pilot;
 
     int rc = tf_evse_v2_get_all_data_1(&device,
         &iec61851_state,
@@ -648,7 +665,8 @@ void EVSEV2::update_all_data() {
         &button_configuration,
         &button_press_time,
         &button_release_time,
-        &button_pressed);
+        &button_pressed,
+        &control_pilot);
 
     if(rc != TF_E_OK) {
         is_in_bootloader(rc);
@@ -745,4 +763,7 @@ void EVSEV2::update_all_data() {
     evse_button_state.get("button_press_time")->updateUint(button_press_time);
     evse_button_state.get("button_release_time")->updateUint(button_release_time);
     evse_button_state.get("button_pressed")->updateBool(button_pressed);
+
+    // get_control_pilot
+    evse_control_pilot_configuration.get("control_pilot")->updateUint(control_pilot);
 }
