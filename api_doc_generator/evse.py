@@ -17,8 +17,8 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", Version.ANY,[
             ]),
             "contactor_state": Elem.INT("Schützüberwachung. Überwacht wird die Spannung vor und nach dem Schütz", constants=[
                 Const(0, "Nicht stromführend vor und nach dem Schütz"),
-                Const(1, "Nicht stromführend vor, aber stromführend nach dem Schütz"),
-                Const(2, "Stromführend vor, aber nicht stromführend nach dem Schütz"),
+                Const(1, "Stromführend vor, aber nicht stromführend nach dem Schütz"),
+                Const(2, "Nicht stromführend vor, aber stromführend nach dem Schütz"),
                 Const(3, "Stromführend vor und nach dem Schütz"),
             ]),
             "contactor_error": Elem.INT("Fehlercode der Schützüberwachung. Ein Wert ungleich 0 zeigt einen Fehler an."),
