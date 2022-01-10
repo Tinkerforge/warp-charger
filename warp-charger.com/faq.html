@@ -74,6 +74,7 @@
             <a class="nav-link" href="#setup">Montage und Installation</a>
             <a class="nav-link" href="#charge-management">Lastmanagement</a>
             <a class="nav-link" href="#web-interface">Webinterface</a>
+            <a class="nav-link" href="#mqtt">MQTT</a>
         </nav>
     </nav>
   <!--==========================
@@ -106,6 +107,25 @@
                 <dd>Technisch versierte Nutzer können eine PV-Überschusssteuerung mit EVCC einrichten.
                     <a href="/evcc.html">Die Einrichtung von EVCC wird hier beschrieben.</a>
                     Eine einfachere Lösung, spezifisch auf unsere Wallbox zugeschnitten, ist derzeit in Entwicklung. Informationen dazu haben wir in <a href="https://www.tinkerforge.com/de/blog/review-2021-outlook-2022/">diesem Blogpost veröffentlicht</a>.
+                </dd>
+            </dl>
+            <dl>
+                <dt>Kann der WARP Charger den Ladezustand eines angeschlossenen Fahrzeugs abfragen? Kann bis zu einem gewissen Ladezustand (z.B. bis 80&nbsp;%) geladen werden?</dt>
+                <dd>
+                    Nein. Es gibt aber die Möglichkeit mit EVCC über die APIs, die von vielen Fahrzeugherstellern angeboten werden, den Ladezustand abzufragen.
+                    EVCC kann dann einen WARP Charger so steuern, dass nur bis zu einem gewissen Ladezustand geladen wird.
+                    <a href="/evcc.html">Die Einrichtung von EVCC wird hier beschrieben.</a>
+                </dd>
+            </dl>
+            <dl>
+                <dt>Ist es möglich den Ladestrom auf unter 6 Ampere zu konfigurieren?</dt>
+                <dd>
+                    <p>
+                    Nicht durch den WARP Charger. Die Ladung erfolgt nach den Standard IEC 61851. Dieser Standard definiert, dass eine Wallbox, wenn sie das Laden freigibt einen Maximalstrom kommunizieren muss. Dieser Maximalstrom muss mindestens 6 Ampere betragen.
+                    </p>
+                    <p>
+                        Es gibt allerdings Fahrzeuge, die so konfiguriert werden können, dass sie weniger als den von der Wallbox vorgegebenen Maximalstrom beziehen.
+                    </p>
                 </dd>
             </dl>
             <dl>
@@ -185,7 +205,6 @@
                 <dd>Der WARP2 Charger benötigt zwingend einen Stromzähler vom Typ SDM630. Andere Stromzähler werden nicht unterstützt.
                     Der Stromzähler muss nicht unbedingt in der Wallbox verbaut sein (wie es bei der Pro-Variante der Fall ist).
                     Es existiert aber keine Durchführung im Gehäuse um einen externen Zähler anzuschließen.</dd>
-
             </dl>
         </div>
     </section>
@@ -222,21 +241,20 @@
             </dl>
         </div>
     </section>
-<!--
-    <section id="charge-management" class="section">
+
+    <section id="mqtt" class="section">
         <div class="container">
             <header class="reference-section-header">
-                <h3>WARP1</h3>
+                <h3>MQTT</h3>
             </header>
-            <p>
-                <dl>
-                    <dt>Kann ich meinen WARP1 auf WARP2 aufrüsten?</dt>
-                    <dd>Teilweise. Problemlos kann das NFC-Bricklet nachgerüstet werden. </dd>
-                </dl>
-            </p>
+            <dl>
+                <dt>Warum kann die Wallbox meinen Mosquitto MQTT-Broker nicht erreichen?</dt>
+                <dd>Häufig ist hier das Problem, dass Mosquitto seit Version 2.0.0 standardmäßig nur lokale Verbindungen zulässt. Damit Zugriffe über das Netzwerk möglich sind, muss die Konfiguration von Mosquitto angepasst werden. Details finden sich in der <a href="https://mosquitto.org/documentation/migrating-to-2-0/">Mosquitto-Dokumentation</a>
+                und in <a href="https://www.tinkerunity.org/topic/7188-keine-verbindung-zu-mqtt/#comment-38629">unserem Forum</a>
+                </dd>
+            </dl>
         </div>
     </section>
--->
 </main>
 </div>
 <!--==========================
