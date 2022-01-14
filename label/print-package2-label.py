@@ -32,7 +32,7 @@ EAN13_NUMBERS = {
 
 DESCRIPTION_PLACEHOLDER = b'WARP2 Charger Smart, 11 kW, 5 m'
 
-TYPE_PLACEHOLDER = b'WARP2-CS-11KW-50'
+SKU_PLACEHOLDER = b'WARP2-CS-11KW-50'
 
 VERSION_PLACEHOLDER = b'2.17'
 
@@ -66,7 +66,7 @@ def get_next_serial_number():
 
     return '5{0:09}'.format(serial_number)
 
-def print_package2_label(type_, version, serial_number, build_date, instances, copies, stdout, force_build_date):
+def print_package2_label(sku, version, serial_number, build_date, instances, copies, stdout, force_build_date):
     # check instances
     if instances < 1 or instances > 25:
         raise Exception('Invalid instances: {0}'.format(instances))
@@ -75,47 +75,47 @@ def print_package2_label(type_, version, serial_number, build_date, instances, c
     if copies < 1 or copies > 5:
         raise Exception('Invalid copies: {0}'.format(copies))
 
-    # parse type
-    m = re.match(r'^(?:TF-)?WARP2-C(B|S|P)-(11|22)KW-(50|75)$', type_)
+    # parse SKU
+    m = re.match(r'^(?:TF-)?WARP2-C(B|S|P)-(11|22)KW-(50|75)$', sku)
 
     if m == None:
-        raise Exception('Invalid type: {0}'.format(type_))
+        raise Exception('Invalid SKU: {0}'.format(sku))
 
-    type_model = m.group(1)
-    type_power = m.group(2)
-    type_cable = m.group(3)
+    sku_model = m.group(1)
+    sku_power = m.group(2)
+    sku_cable = m.group(3)
 
     description = b'WARP2 Charger '
 
-    if type_model == 'B':
+    if sku_model == 'B':
         description += b'Basic'
-    elif type_model == 'S':
+    elif sku_model == 'S':
         description += b'Smart'
-    elif type_model == 'P':
+    elif sku_model == 'P':
         description += b'Pro'
     else:
-        assert False, type_model
+        assert False, sku_model
 
-    if type_power == '11':
+    if sku_power == '11':
         description += b', 11 kW'
-    elif type_power == '22':
+    elif sku_power == '22':
         description += b', 22 kW'
     else:
-        assert False, type_power
+        assert False, sku_power
 
-    if type_cable == '50':
+    if sku_cable == '50':
         description += b', 5 m'
-    elif type_cable == '75':
+    elif sku_cable == '75':
         description += b', 7,5 m'
     else:
-        assert False, type_cable
+        assert False, sku_cable
 
-    if type_power == '11':
+    if sku_power == '11':
         current = b'16 A'
-    elif type_power == '22':
+    elif sku_power == '22':
         current = b'32 A'
     else:
-        assert False, type_power
+        assert False, sku_power
 
     # check version
     if re.match(r'^2\.(0|[1-9][0-9]*)$', version) == None:
@@ -147,12 +147,12 @@ def print_package2_label(type_, version, serial_number, build_date, instances, c
     if template.find(EAN13_PLACEHOLDER) < 0:
         raise Exception('EAN13 placeholder missing in EZPL file')
 
-    base_type = type_
+    base_sku = sku
 
-    if base_type.startswith('TF-'):
-        base_type = base_type[3:]
+    if base_sku.startswith('TF-'):
+        base_sku = base_sku[3:]
 
-    template = template.replace(EAN13_PLACEHOLDER, EAN13_NUMBERS[base_type])
+    template = template.replace(EAN13_PLACEHOLDER, EAN13_NUMBERS[base_sku])
 
     # patch description
     if template.find(DESCRIPTION_PLACEHOLDER) < 0:
@@ -160,11 +160,11 @@ def print_package2_label(type_, version, serial_number, build_date, instances, c
 
     template = template.replace(DESCRIPTION_PLACEHOLDER, description)
 
-    # patch type
-    if template.find(TYPE_PLACEHOLDER) < 0:
-        raise Exception('Type placeholder missing in EZPL file')
+    # patch SKU
+    if template.find(SKU_PLACEHOLDER) < 0:
+        raise Exception('SKU placeholder missing in EZPL file')
 
-    template = template.replace(TYPE_PLACEHOLDER, type_.encode('ascii'))
+    template = template.replace(SKU_PLACEHOLDER, sku.encode('ascii'))
 
     # patch version
     if template.find(VERSION_PLACEHOLDER) < 0:
@@ -211,7 +211,7 @@ def print_package2_label(type_, version, serial_number, build_date, instances, c
 def main():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('type')
+    parser.add_argument('sku')
     parser.add_argument('version')
     parser.add_argument('serial_number')
     parser.add_argument('build_date')
@@ -225,7 +225,7 @@ def main():
     assert args.instances > 0
     assert args.copies > 0
 
-    print_package2_label(args.type, args.version, args.serial_number, args.build_date, args.instances, args.copies, args.stdout, args.force_build_date)
+    print_package2_label(args.sku, args.version, args.serial_number, args.build_date, args.instances, args.copies, args.stdout, args.force_build_date)
 
 if __name__ == '__main__':
     main()

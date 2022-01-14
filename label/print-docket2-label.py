@@ -123,7 +123,7 @@ def print_docket2_label(sku, supply_cable, cee, version, serial_number, build_da
     if supply_cable < 0:
         raise Exception('Invalid supply cable: {0}'.format(supply_cable))
 
-    # parse sku
+    # parse SKU
     description = sku_to_description(sku, supply_cable, cee)
 
     # check version

@@ -12,12 +12,12 @@ import ssl
 PRINTER_HOST = '192.168.178.241'
 PRINTER_PORT = 9100
 
-QR_CODE_COMMAND = b'W649,209,5,2,M,8,6,50,0\r'
+QR_CODE_COMMAND = b'W649,209,5,2,M,8,6,54,0\r'
 QR_CODE_PADDING = b';;\r'
 
 DESCRIPTION_PLACEHOLDER = b'WARP2 Charger Smart, 11 kW, 5 m'
 
-TYPE_PLACEHOLDER = b'WARP2-CS-11KW-50'
+SKU_PLACEHOLDER = b'WARP2-CS-11KW-50'
 
 VERSION_PLACEHOLDER = b'2.17'
 
@@ -28,6 +28,8 @@ BUILD_DATE_PLACEHOLDER = b'2021-01'
 CURRENT_PLACEHOLDER = b'16 A'
 
 COPIES_FORMAT = '^C{0}\r'
+
+ACCESSORIES_FORMAT = ';A:{0};'
 
 def get_next_serial_number():
     with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'staging-password.txt'), 'r') as f:
@@ -53,7 +55,7 @@ def get_next_serial_number():
 
     return '5{0:09}'.format(serial_number)
 
-def print_warp2_label(type_, version, serial_number, build_date, instances, copies, stdout, force_build_date):
+def print_warp2_label(sku, version, serial_number, build_date, instances, copies, stdout, force_build_date, accessories):
     # check instances
     if instances < 1 or instances > 25:
         raise Exception('Invalid instances: {0}'.format(instances))
@@ -62,47 +64,47 @@ def print_warp2_label(type_, version, serial_number, build_date, instances, copi
     if copies < 1 or copies > 5:
         raise Exception('Invalid copies: {0}'.format(copies))
 
-    # parse type
-    m = re.match(r'^WARP2-C(B|S|P)-(11|22)KW-(50|75)$', type_)
+    # parse SKU
+    m = re.match(r'^WARP2-C(B|S|P)-(11|22)KW-(50|75)$', sku)
 
     if m == None:
-        raise Exception('Invalid type: {0}'.format(type_))
+        raise Exception('Invalid SKU: {0}'.format(sku))
 
-    type_model = m.group(1)
-    type_power = m.group(2)
-    type_cable = m.group(3)
+    sku_model = m.group(1)
+    sku_power = m.group(2)
+    sku_cable = m.group(3)
 
     description = b'WARP2 Charger '
 
-    if type_model == 'B':
+    if sku_model == 'B':
         description += b'Basic'
-    elif type_model == 'S':
+    elif sku_model == 'S':
         description += b'Smart'
-    elif type_model == 'P':
+    elif sku_model == 'P':
         description += b'Pro'
     else:
-        assert False, type_model
+        assert False, sku_model
 
-    if type_power == '11':
+    if sku_power == '11':
         description += b', 11 kW'
-    elif type_power == '22':
+    elif sku_power == '22':
         description += b', 22 kW'
     else:
-        assert False, type_power
+        assert False, sku_power
 
-    if type_cable == '50':
+    if sku_cable == '50':
         description += b', 5 m'
-    elif type_cable == '75':
+    elif sku_cable == '75':
         description += b', 7,5 m'
     else:
-        assert False, type_cable
+        assert False, sku_cable
 
-    if type_power == '11':
+    if sku_power == '11':
         current = b'16 A'
-    elif type_power == '22':
+    elif sku_power == '22':
         current = b'32 A'
     else:
-        assert False, type_power
+        assert False, sku_power
 
     # check version
     if re.match(r'^2\.(0|[1-9][0-9]*)$', version) == None:
@@ -134,7 +136,7 @@ def print_warp2_label(type_, version, serial_number, build_date, instances, copi
     if template.find(QR_CODE_COMMAND) < 0:
         raise Exception('QR code command missing in EZPL file')
 
-    offset = len(TYPE_PLACEHOLDER) - len(type_) + len(VERSION_PLACEHOLDER) - len(version)
+    offset = len(SKU_PLACEHOLDER) - len(sku) + len(VERSION_PLACEHOLDER) - len(version)
 
     if offset < 0:
         raise Exception('QR code data too long')
@@ -147,11 +149,11 @@ def print_warp2_label(type_, version, serial_number, build_date, instances, copi
 
     template = template.replace(DESCRIPTION_PLACEHOLDER, description)
 
-    # patch type
-    if template.find(TYPE_PLACEHOLDER) < 0:
-        raise Exception('Type placeholder missing in EZPL file')
+    # patch SKU
+    if template.find(SKU_PLACEHOLDER) < 0:
+        raise Exception('SKU placeholder missing in EZPL file')
 
-    template = template.replace(TYPE_PLACEHOLDER, type_.encode('ascii'))
+    template = template.replace(SKU_PLACEHOLDER, sku.encode('ascii'))
 
     # patch version
     if template.find(VERSION_PLACEHOLDER) < 0:
@@ -179,6 +181,14 @@ def print_warp2_label(type_, version, serial_number, build_date, instances, copi
 
     template = template.replace(copies_command, COPIES_FORMAT.format(copies).encode('ascii'))
 
+    # patch accessories
+    accessories_placeholder = ACCESSORIES_FORMAT.format('0').encode('ascii')
+
+    if template.find(accessories_placeholder) < 0:
+        raise Exception('Accessories placeholder missing in EZPL file')
+
+    template = template.replace(accessories_placeholder, ACCESSORIES_FORMAT.format('1' if accessories else '0').encode('ascii'))
+
     # patch serial number
     if template.find(SERIAL_NUMBER_PLACEHOLDER) < 0:
         raise Exception('Serial number placeholder missing in EZPL file')
@@ -204,7 +214,7 @@ def print_warp2_label(type_, version, serial_number, build_date, instances, copi
 def main():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('type')
+    parser.add_argument('sku')
     parser.add_argument('version')
     parser.add_argument('serial_number')
     parser.add_argument('build_date')
@@ -212,13 +222,14 @@ def main():
     parser.add_argument('-c', '--copies', type=int, default=1)
     parser.add_argument('-s', '--stdout', action='store_true')
     parser.add_argument('--force-build-date', action='store_true')
+    parser.add_argument('--accessories', action='store_true')
 
     args = parser.parse_args()
 
     assert args.instances > 0
     assert args.copies > 0
 
-    print_warp2_label(args.type, args.version, args.serial_number, args.build_date, args.instances, args.copies, args.stdout, args.force_build_date)
+    print_warp2_label(args.sku, args.version, args.serial_number, args.build_date, args.instances, args.copies, args.stdout, args.force_build_date, args.accessories)
 
 if __name__ == '__main__':
     main()
