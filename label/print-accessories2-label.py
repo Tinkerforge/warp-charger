@@ -20,7 +20,7 @@ SKU_PLACEHOLDER = b'WARP2-CS-11KW-50'
 SUPPLY_CABLE_PLACEHOLDER_A = b'123,4'
 SUPPLY_CABLE_PLACEHOLDER_B = b'E:123.4;'
 
-CEE_PLACEHOLDER_A = b'Jawohl'
+CEE_PLACEHOLDER_A = b'CEE Stecker: Jawohl'
 CEE_PLACEHOLDER_B = b'C:1;'
 
 COMMENT_1_PLACEHOLDER = b'Hier steht ein mehrzeiliger'
@@ -74,7 +74,7 @@ def print_accessories2_label(supply_cable, cee, comment_1, comment_2, comment_3,
     if template.find(CEE_PLACEHOLDER_A) < 0:
         raise Exception('CEE placeholder A missing in EZPL file')
 
-    template = template.replace(CEE_PLACEHOLDER_A, b'Ja' if cee else b'Nein')
+    template = template.replace(CEE_PLACEHOLDER_A, b'CEE Stecker: Ja' if cee else b'')
 
     if template.find(CEE_PLACEHOLDER_B) < 0:
         raise Exception('CEE placeholder B missing in EZPL file')
