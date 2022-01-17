@@ -250,7 +250,16 @@
             <dl>
                 <dt>Warum kann die Wallbox meinen Mosquitto MQTT-Broker nicht erreichen?</dt>
                 <dd>Häufig ist hier das Problem, dass Mosquitto seit Version 2.0.0 standardmäßig nur lokale Verbindungen zulässt. Damit Zugriffe über das Netzwerk möglich sind, muss die Konfiguration von Mosquitto angepasst werden. Details finden sich in der <a href="https://mosquitto.org/documentation/migrating-to-2-0/">Mosquitto-Dokumentation</a>
-                und in <a href="https://www.tinkerunity.org/topic/7188-keine-verbindung-zu-mqtt/#comment-38629">unserem Forum</a>
+                und in <a href="https://www.tinkerunity.org/topic/7188-keine-verbindung-zu-mqtt/#comment-38629">unserem Forum</a>.
+                </dd>
+                <dt>Warum werden Änderungskommandos nicht übernommen?</dt>
+                <dd>Typischerweise kann der zuletzt gesetzte Wert auf einem Topic gelesen werden. Beispielsweise liefert <code>warp/AbC/charge_manager/available_current</code> den aktuell für Lastmanagement zur Verfügung stehenden Strom.
+                    Kommandos müssen an das entsprechende Topic geschickt werden, das auf <code>_update</code> endet, damit sie vom WARP Charger von dessen eigenen Nachrichten unterschieden werden können. Um den verfügbaren Strom zu aktualisieren muss z.B. auf
+                    <code>warp/AbC/charge_manager/available_current_update</code> gepublisht werden.
+                </dd>
+                <dt>Warum meldet die Wallbox <samp>MQTT: Topic ... is an action. Ignoring retained message.</samp>?</dt>
+                <dd>Bestimmte Kommandos sind Aktionen, setzen also keinen dauerhaften Zustand, sondern lösen einmalige Ereignisse aus. Eine "Retained Message" wird aber auf dem MQTT-Broker dauerhaft vorgehalten.
+                    Für Aktionen sind deshalb solche Messages verboten, da diese sonst, beispielsweise nach einem Neuverbinden des WARP Chargers zum MQTT-Broker, mehr als einmal verarbeitet werden könnten.
                 </dd>
             </dl>
         </div>
