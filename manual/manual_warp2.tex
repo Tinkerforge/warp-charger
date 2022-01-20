@@ -48,6 +48,8 @@
 
 \usepackage{pdfpages}
 
+\usepackage{phonenumbers}
+
 % Word-Stealth-Modus, kann aber kein Omega
 %\usepackage[scaled]{helvet}
 
@@ -1030,9 +1032,13 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Die Wallbox ist intern über zwei 5$\times\SI{20}{\milli\meter}$ Feinsicherungen (mittelträge (m), \SI{500}{\milli\ampere}) abgesichert.
 	Tinkerforge verbaut Sicherungen vom Typ \enquote{ESKA 521.014}.
 
+	% This hack allows to fit the last line of "Kontakt" on the same page.
+	% Distribute the negative whitespace between the following sections.
+	\vspace{-0.1cm}
 	\section{Konformitätserklärung}
 	Die EU-Konformitätserklärung zur Wallbox ist in einem gesonderten Dokument verfügbar.
 
+	\vspace{-0.1cm} %see above
 	\section{Entsorgung}
 	\begin{minipage}{0.43\textwidth}
 		Wallbox und Verpackung sind bei Gebrauchsende ordnungsgemäß zu
@@ -1042,6 +1048,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\includegraphics[width=\linewidth]{./img_warp2/resized/weee.pdf}
 	\end{minipage}
 
+	\vspace{-0.1cm} %see above
 	\section{Technische Daten}
 
 	%use minipage here to control footnote placement
@@ -1079,6 +1086,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{Website}}]
 		\item[E-Mail] \href{mailto:info@tinkerforge.com}{\texttt{info@tinkerforge.com}}
 		\item[Website] \href{https://warp-charger.com}{\texttt{warp-charger.com}}
+		\item[Telefon] \phonenumber{052078998614}
 		\item[Shop] \href{https://tinkerforge.com/de/shop/warp.html}{\texttt{tinkerforge.com/de/shop/warp.html}}
 	\end{description}
 
