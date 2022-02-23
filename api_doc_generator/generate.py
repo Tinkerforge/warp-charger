@@ -3,6 +3,7 @@ from mods import mods
 
 import re
 import os
+import sys
 
 def specialize_template(template_filename, destination_filename, replacements, check_completeness=True, remove_template=False):
     lines = []
@@ -83,7 +84,8 @@ nav = "\n".join(nav_mods)
 reference = "\n".join([x.to_html() for x in mods])
 reference = re.sub("{{{ref:([^}]*)}}}", lambda x: resolve_ref(x, reference_link_texts), reference)
 
-specialize_template("api.html.template", "../warp-charger.com/api.html", {
+suffix = "" if len(sys.argv) == 1 else "_" + sys.argv[1]
+specialize_template("api.html.template", "../warp-charger.com/api{}.html".format(suffix), {
     "{reference}": reference,
     "{reference-nav}": nav
 })
