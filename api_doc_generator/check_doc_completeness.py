@@ -23,7 +23,8 @@ def typecheck(et: EType, obj, consts: Optional[list[Const]], path):
     if et == EType.INT and (not isinstance(obj, int) or isinstance(obj, bool)): # True and False are ints
         print("{}: Type mismatch: Configured INT, returned {}".format(path, type(obj)))
         return
-    if et == EType.FLOAT and not isinstance(obj, float) and not isinstance(obj, int):
+    # We have to allow None (null in JSON) for floats, because a NaN can not be represented in JSON. ArduinoJSON turns NaNs into nulls.
+    if et == EType.FLOAT and not isinstance(obj, float) and not isinstance(obj, int) and not obj is None:
         print("{}: Type mismatch: Configured FLOAT, returned {}".format(path, type(obj)))
         return
     if et == EType.BOOL and not isinstance(obj, bool):
