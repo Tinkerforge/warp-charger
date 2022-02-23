@@ -10,25 +10,52 @@ nfc = Module("nfc", "NFC-Ladefreigabe", "", Version.ANY, [
                     Const(3, "NFC Forum Typ 3"),
                     Const(4, "NFC Forum Typ 4"),
                 ]),
-                "tag_id": Elem.ARRAY("ID des Tags. Je nach Tag-Typ bis zu 10 Byte.", member_type=EType.INT),
+                "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d"),
                 "last_seen": Elem.INT("Zeit in Millisekunden vor der das Tag zuletzt gesehen wurde.", unit=Units.ms)
-            })]
+            })],
+            Elem.OBJECT("Das von {{{ref:nfc/inject_tag}}} vorgetäuschte Tag", members = {
+                "tag_type": Elem.INT("Typ des Tags", constants=[
+                    Const(0, "Mifare Classic"),
+                    Const(1, "NFC Forum Typ 1"),
+                    Const(2, "NFC Forum Typ 2"),
+                    Const(3, "NFC Forum Typ 3"),
+                    Const(4, "NFC Forum Typ 4"),
+                ]),
+                "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d"),
+                "last_seen": Elem.INT("Zeit in Millisekunden vor der das Tag zuletzt gesehen wurde.", unit=Units.ms)
+            })
         ])
     ),
 
+    Func("last_tag", FuncType.STATE, Elem.OBJECT("Das letzte Tag, dass einen Ladevorgang gestartet hat.", members={
+            "user_id": Elem.INT("ID des Nutzers dem dieses Tag zugeordnet ist, oder 0 falls es keinem Nutzer zugeordnet ist."),
+            "tag_type": Elem.INT("Typ des Tags.", constants=[
+                Const(0, "Mifare Classic"),
+                Const(1, "NFC Forum Typ 1"),
+                Const(2, "NFC Forum Typ 2"),
+                Const(3, "NFC Forum Typ 3"),
+                Const(4, "NFC Forum Typ 4"),
+            ]),
+            "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d"),
+        })
+    ),
+
+    Func("inject_tag", FuncType.COMMAND, Elem.OBJECT("Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die API ein Ladevorgang für einen bestimmten Benutzer gestartet werden. Das vorgetauschte Tag ist immer der letzte Eintrag in {{{ref:nfc/seen_tags}}}", members={
+        "tag_type": Elem.INT("Typ des Tags.", constants=[
+            Const(0, "Mifare Classic"),
+            Const(1, "NFC Forum Typ 1"),
+            Const(2, "NFC Forum Typ 2"),
+            Const(3, "NFC Forum Typ 3"),
+            Const(4, "NFC Forum Typ 4"),
+        ]),
+        "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d"),
+    }), True),
+
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die NFC-Konfiguration. Diese kann über nfc/config_update mit dem selben Payload aktualisiert werden.", members={
-            "require_tag_to_start": Elem.BOOL("Gibt an, ob ein Tag zum Starten einer Ladung benötigt wird.", constants=[
-                Const(True, "Wenn eine Ladung nur mit einem NFC-Tag, oder über das Webinterface/die API freigegeben werden kann."),
-                Const(False, "Wenn kein NFC-Tag zum Laden benötigt wird.")
-            ]),
-            "require_tag_to_stop": Elem.BOOL("Gibt an, ob ein Tag zum Stoppen einer Ladung benötigt wird. <strong>Bei WARP 1 kann die Stop-Funktion des Tasters in der Frontplatte nicht deaktiviert werden</strong>", constants=[
-                Const(True, "Wenn eine Ladung nur mit einem NFC-Tag, oder über das Webinterface/die API gestoppt werden kann."),
-                Const(False, "Wenn kein NFC-Tag zum Stoppen einer Ladung benötigt wird. <strong>Wenn aktiviert, wird die Stop-Funktion des Tasters in der Frontplatte deaktiviert, sowie {{{ref:evse/button_configuration_update}}} blockiert!</strong>")
-            ]),
             "authorized_tags": Elem.ARRAY("Eine Liste authorisierter Tags.", members=[
                 * 8 * [
                     Elem.OBJECT("Ein autorisiertes NFC-Tag", members={
-                        "tag_name": Elem.STRING("Anzeigename des Tags."),
+                        "user_id": Elem.INT("ID des Nutzers dem dieses Tag zugeordnet ist, oder 0 falls es keinem Nutzer zugeordnet ist."),
                         "tag_type": Elem.INT("Typ des Tags.", constants=[
                             Const(0, "Mifare Classic"),
                             Const(1, "NFC Forum Typ 1"),
@@ -36,10 +63,10 @@ nfc = Module("nfc", "NFC-Ladefreigabe", "", Version.ANY, [
                             Const(3, "NFC Forum Typ 3"),
                             Const(4, "NFC Forum Typ 4"),
                         ]),
-                        "tag_id": Elem.ARRAY("ID des Tags. Je nach Tag-Typ bis zu 10 Byte.", member_type=EType.INT),
+                        "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d"),
                     })
                 ]
             ]),
         })
-    )
+    ),
 ])

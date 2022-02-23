@@ -3,17 +3,18 @@ from api_doc_common import *
 evse = Module("evse", "Ladecontroller (EVSE)", "", Version.ANY,[
     Func("state", FuncType.STATE, Elem.OBJECT("Der Zustand des Ladecontrollers.", members={
             "iec61851_state": Elem.INT("Der aktuelle Zustand nach IEC 61851", constants=[
-                    Const(0, "A: Nicht verbunden (Sicht des Fahrzeugs)"),
+                    Const(0, "A: Nicht verbunden"),
                     Const(1, "B: Verbunden"),
                     Const(2, "C: Lädt"),
                     Const(3, "D: Lädt mit Belüftung (nicht unterstützt)"),
                     Const(4, "E/F: Fehler"),
             ]),
-            "vehicle_state": Elem.INT("Der aktuelle Zustand, aufbereitet vom Ladecontroller", constants=[
-                    Const(0, "Nicht verbunden (Sicht der Wallbox)"),
-                    Const(1, "Verbunden"),
-                    Const(2, "Lädt"),
-                    Const(3, "Fehler"),
+            "charger_state": Elem.INT("Der aktuelle Zustand, aufbereitet vom Ladecontroller", constants=[
+                    Const(0, "Nicht verbunden"),
+                    Const(1, "Warte auf Ladefreigabe"),
+                    Const(2, "Ladebereit"),
+                    Const(3, "Lädt"),
+                    Const(4, "Fehler"),
             ]),
             "contactor_state": Elem.INT("Schützüberwachung. Überwacht wird die Spannung vor und nach dem Schütz", constants=[
                 Const(0, "Nicht stromführend vor und nach dem Schütz"),
@@ -22,16 +23,11 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", Version.ANY,[
                 Const(3, "Stromführend vor und nach dem Schütz"),
             ]),
             "contactor_error": Elem.INT("Fehlercode der Schützüberwachung. Ein Wert ungleich 0 zeigt einen Fehler an."),
-            "charge_release": Elem.INT("Ladefreigabe. Gibt an, ob automatisch, manuell oder nicht geladen werden kann.", constants=[
-                Const(0, "Automatisch: Sobald ein Fahrzeug angeschlossen wird, kann es mit dem Laden beginnen. Dieser Modus ist aktiv, wenn {{{ref:evse/auto_start_charging}}} aktiviert ist und das Laden nicht abgebrochen wurde."),
-                Const(1, "Manuell: Wenn ein Fahrzeug angeschlossen wird, wird es erst geladen, wenn das Laden manuell freigegeben wird. Dieser Modus wird aktiviert, wenn {{{ref:evse/auto_start_charging}}} deaktiviert, der Knopf an der Wallbox gedrückt oder evse/stop_charging aufgerufen wird. Die manuelle Freigabe kann über das Webinterface, oder durch einen API-Aufruf von {{{ref:evse/start_charging}}} erfolgen."),
-                Const(2, "Deaktiviert: Das Laden ist blockiert, da die Wallbox entweder in einem Fehlerzustand ist, oder durch den Schlüsselschalter deaktiviert wurde."),
-            ]),
-            "allowed_charging_current": Elem.INT("Maximal erlaubter Ladestrom, der dem Fahrzeug zur Verfügung gestellt wird. Dieser Strom ist das Minimum folgender Ströme:<ul><li>Maximaler Strom des eingehenden Kabels</li><li>Maximaler Strom des ausgehenden Kabels</li><li>Maximaler Strom, der über MQTT oder das Webinterface konfiguriert wurde</li></ul>", unit=Units.mA),
+            "allowed_charging_current": Elem.INT("Maximal erlaubter Ladestrom, der dem Fahrzeug zur Verfügung gestellt wird. Dieser Strom ist das Minimum der Stromgrenzen aller Ladeslots.", unit=Units.mA),
             "error_state": Elem.INT('Der aktuelle Fehlerzustand. <a href="https://www.warp-charger.com/#documents">Siehe Handbuch für Details.</a>', constants=[
                 Const(0, "OK"),
                 Const(1, "Schalterfehler"),
-                Const(2, "Kalibrierungsfehler"),
+                Const(2, "DC-Fehlerstromüberwachungsfehler"),
                 Const(3, "Schützfehler"),
                 Const(4, "Kommunikationsfehler"),
             ]),
@@ -43,8 +39,13 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", Version.ANY,[
                 Const(4, "Öffnend"),
                 Const(5, "Fehler"),
             ]),
-            "time_since_state_change": Elem.INT("Zeit seit dem letzten IEC-61851-Zustandswechsel. Falls der Zustand 2 (= B: Lädt) ist, entspricht dieser Wert der Ladezeit.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms),
-            "uptime": Elem.INT("Zeit seit Starten des Ladecontrollers.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms)
+            "dc_fault_current_state": Elem.INT("Der Zustand des DC-Fehlerstrom-Schutzmoduls. Falls ein Gleichstromfehler auftritt, kann nicht mehr geladen werden, bis das Schutzmodul zurückgesetzt wurde. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong> {{{ref:evse/reset_dc_fault_current_state}}} setzt das Modul zurück.", constants=[
+                Const(0, "Kein Fehler"),
+                Const(1, "6 mA Fehlerstrom detektiert"),
+                Const(2, "Systemfehler"),
+                Const(3, "Unbekannter fehler"),
+                Const(4, "Kalibrierungsfehler"),
+            ])
         })
     ),
 
@@ -63,18 +64,92 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", Version.ANY,[
             "has_lock_switch": Elem.BOOL("Gibt an, ob die Wallbox über eine Kabelverriegelung verfügt.", constants=[
                 Const(False, "Wallbox hat fest angeschlagenes Typ-2-Ladekabel"),
                 Const(True, "Wallbox hat eine Typ-2-Dose mit Kabelverriegelung"),
+            ]),
+            "evse_version": Elem.INT("Hardware-Version des Ladecontrollers", constants=[
+                Const(20, "EVSE 2.0", Version.WARP2_ONLY)
+            ]),
+            "energy_meter_type": Elem.INT("Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!", constants=[
+                Const(0, "Kein Stromzähler verfügbar"),
+                Const(1, "SDM72", Version.WARP1_ONLY),
+                Const(2, "SDM630", Version.WARP2_ONLY),
+                Const(3, "SDM72V2", Version.WARP2_ONLY)
             ])
         })
     ),
 
+    Func("slots", FuncType.STATE, Elem.ARRAY("Der Zustand der Ladeslots. Siehe TODO LINK für Details.", members=[
+            * 10 * [Elem.OBJECT("Ein Ladeslot", members = {
+                "max_current": Elem.INT("Maximal erlaubter Ladestrom. 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockiert.", unit=Units.mA),
+                "active": Elem.BOOL("Gibt an ob dieser Slot aktiv ist.", constants=[
+                    Const(True, "Slot ist aktiv"),
+                    Const(False, "Slot ist nicht aktiv"),
+                ]),
+                "clear_on_disconnect": Elem.BOOL("Gibt an, ob der Ladestrom dieses Slots beim Abziehen eines Fahrzeugs auf 0 gesetzt wird.", constants=[
+                    Const(True, "Slot wird beim Abziehen blockieren"),
+                    Const(False, "Slot wird gesetzten Ladestrom beim Abziehen beibehalten"),
+                ]),
+            })]
+        ])
+    ),
+
+    Func("energy_meter_values", FuncType.STATE, Elem.OBJECT("Bei WARP 2 wird der Stromzähler vom Ladecontroller selbst ausgelesen. evse/energy_meter_values liefert die zuletzt gelesenen Werte.", members={
+            "power": Elem.FLOAT("Die aktuelle Ladeleistung.", unit=Units.W),
+            "energy_rel": Elem.FLOAT("Die geladene Energie seit dem letzten Reset.", unit=Units.kWh),
+            "energy_abs": Elem.FLOAT("Die geladene Energie seit der Herstellung des Stromzählers.", unit=Units.kWh),
+            "phases_active": Elem.ARRAY("Die derzeit aktiven Phasen", members=[
+                Elem.BOOL("Phase L1 aktiv"),
+                Elem.BOOL("Phase L2 aktiv"),
+                Elem.BOOL("Phase L3 aktiv"),
+            ]),
+            "phases_connected": Elem.ARRAY("Die angeschlossenen Phasen", members=[
+                Elem.BOOL("Phase L1 angeschlossen"),
+                Elem.BOOL("Phase L2 angeschlossen"),
+                Elem.BOOL("Phase L3 angeschlossen"),
+            ]),
+        },
+        version=Version.WARP2_ONLY)
+    ),
+
+    Func("energy_meter_errors", FuncType.STATE, Elem.OBJECT("Bei WARP 2 wird der Stromzähler vom Ladecontroller selbst ausgelesen. evse/energy_meter_errors liefert die Fehlerzähler der Kommunikation mit dem Stromzähler.", members={
+            "local_timeout": Elem.INT("Local Timeout"),
+            "global_timeout": Elem.INT("Global Timeout"),
+            "illegal_function": Elem.INT("Illegal Function"),
+            "illegal_data_access": Elem.INT("Illegal Data Access"),
+            "illegal_data_value": Elem.INT("Illegal Data Value"),
+            "slave_device_failure": Elem.INT("Slave Device Failure"),
+        },
+        version=Version.WARP2_ONLY)
+    ),
+
+    Func("button_state", FuncType.STATE, Elem.OBJECT("Der Zustand des Tasters in der Frontblende.", members= {
+            "button_press_time": Elem.INT("Zeit zu der zuletzt der Taster gedrückt wurde. 0 falls der Taster seit dem Start des Ladecontrollers nicht betätigt wurde.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms),
+            "button_release_time": Elem.INT("Zeit zu der zuletzt der Taster losgelassen wurde. 0 falls der Taster seit dem Start des Ladecontrollers nicht betätigt wurde.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms),
+            "button_pressed": Elem.BOOL("true, falls der Taster derzeit gedrückt ist, sonst false"),
+        })
+    ),
+
+    Func("indicator_led", FuncType.STATE, Elem.OBJECT("Der Zustand der LED im Taster", members={
+            "indication": Elem.INT("Aktuell gesetzter Zustand.", constants=[
+                Const(-1, "EVSE kontrolliert LED"),
+                Const(0, "Aus"),
+                Const("1..254", "Per PWM gedimmtes leuchten"),
+                Const(255, "An"),
+                Const(1001, "Bestätigendes Blinken (z.B: NFC-Tag wurde erkannt)"),
+                Const(1002, "Ablehnendes Blinken (z.B: NFC-Tag ist unbekannt)"),
+                Const(1003, "Aufforderndes Blinken (z.B: NFC-Tag wird zum Laden benötigt)"),
+            ]),
+            "duration": Elem.INT("Dauer für die der gesetzte Zustand erhalten bleibt.", unit=Units.ms)
+        })
+    ),
+
     Func("low_level_state", FuncType.STATE, Elem.OBJECT("Der Low-Level-Zustand des Ladecontrollers.", members={
-            "low_level_mode_enabled": Elem.BOOL("Zeigt an, ob der Low-Level-Modus aktiv ist. Wird derzeit nicht unterstützt.", version=Version.WARP1_ONLY),
             "led_state": Elem.INT("Der Zustand der am Ladecontroller angeschlossenen LED", constants=[
                     Const(0, "Aus"),
                     Const(1, "An"),
                     Const(2, "Blinkt"),
                     Const(3, "Flackert"),
                     Const(4, "Atmet"),
+                    Const(5, "API, siehe {{{ref:evse/indicator_led}}}"),
             ]),
             "cp_pwm_duty_cycle": Elem.INT("Tastverhältnis der Pulsweitenmodulation auf dem CP-Signal.", unit=Units.tenth_percent),
             "adc_values": Elem.ARRAY("16-Bit ADC-Rohwerte der Spannungsmessungen", members=[
@@ -138,16 +213,27 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", Version.ANY,[
                 Elem.BOOL("Nicht belegt", version=Version.WARP2_ONLY),
                 Elem.BOOL("Nicht belegt", version=Version.WARP2_ONLY),
             ]),
-            "hardware_version": Elem.INT("Die von der Firmware des EVSEs detektierte Hardware-Version des EVSEs.", version=Version.WARP1_ONLY),
             "charging_time": Elem.INT("Ungefähre Zeit des Ladevorgangs. Nur für Lastmanagementzwecke zu verwenden!", unit=Units.ms),
+            "time_since_state_change": Elem.INT("Zeit seit dem letzten IEC-61851-Zustandswechsel. Falls der Zustand 2 (= B: Lädt) ist, entspricht dieser Wert der Ladezeit.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms),
+            "uptime": Elem.INT("Zeit seit Starten des Ladecontrollers.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms)
         })
     ),
 
-    Func("max_charging_current", FuncType.STATE, Elem.OBJECT("Die maximalen Ladeströme des Ladecontrollers. Das Minimum dieser Ströme ist der tatsächliche maximale Ladestrom, der dem Fahrzeug bereitgestellt wird. Alle Ströme haben einen Minimalwert von 6000 (6 Ampere) und einen Maximalwert von 32000 (32 Ampere).", members={
-            "max_current_configured": Elem.INT("Der maximale konfigurierte Ladestrom. Kann durch {{{ref:evse/current_limit}}} oder das Webinterface eingestellt werden.", unit=Units.mA),
-            "max_current_incoming_cable": Elem.INT("Der maximale Ladestrom des eingehenden Kabels. Siehe {{{ref:evse/hardware_configuration}}}.", unit=Units.mA),
-            "max_current_outgoing_cable": Elem.INT("Der maximale Ladestrom des ausgehenden Kabels. Fest konfiguriert, falls das Kabel angeschlagen ist.", unit=Units.mA),
-            "max_current_managed": Elem.INT("Der maximale Ladestrom der vom Lastmanager zugeteilt wurde. Wird ignoriert wenn Lastmanagement (Siehe {{{ref:evse/managed}}}) deaktiviert ist.", unit=Units.mA),
+    Func("external_current", FuncType.STATE, Elem.OBJECT("Der von der externen Steuerung vorgegebene Ladestrom. Kann über evse/external_current_update mit dem selben Payload gesetzt werden.", members={
+            "current": Elem.INT("Der von der externen Steuerung vorgegebene Ladestrom. 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockiert.", unit=Units.mA)
+        })
+    ),
+
+    Func("external_clear_on_disconnect", FuncType.STATE, Elem.OBJECT("Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abziehen eines Fahrzeugs automatisch auf 0 gesetzt werden soll. Kann über evse/external_clear_on_disconnect_update mit dem selben Payload gesetzt werden.", members={
+            "clear_on_disconnect": Elem.BOOL("Gibt an, ob der Ladestrom dieses Slots beim Abziehen eines Fahrzeugs auf 0 gesetzt wird.", constants=[
+                Const(True, "Slot wird beim Abziehen blockieren"),
+                Const(False, "Slot wird gesetzten Ladestrom beim Abziehen beibehalten"),
+            ])
+        })
+    ),
+
+    Func("management_current", FuncType.STATE, Elem.OBJECT("Der vom Lastmanagement vorgegebene Ladestrom. Kann über evse/management_current_update mit dem selben Payload gesetzt werden.", members={
+            "current": Elem.INT("6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockieren soll.", unit=Units.mA)
         })
     ),
 
@@ -156,62 +242,36 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", Version.ANY,[
         })
     ),
 
-    Func("user_calibration", FuncType.STATE, Elem.OBJECT("Erlaubt es, die werksseitige Kalibrierung des EVSEs auszulesen und zu überschreiben. Dieser Wert kann über evse/user_calibration_update mit dem selben Payload aktualisiert werden. Um die Kalibierung auf den Werkszustand zurückzusetzen, kann ein Payload mit user_calibration_active auf false geschickt werden. Die weiteren Werte werden dann ignoriert.", members={
-            "user_calibration_active": Elem.BOOL("Gibt an, ob die werksseitige Kalibrierung überschrieben wurde."),
-            "voltage_diff": Elem.INT("Einer der Kalibrierungsparameter."),
-            "voltage_mul": Elem.INT("Einer der Kalibrierungsparameter."),
-            "voltage_div": Elem.INT("Einer der Kalibrierungsparameter."),
-            "resistance_2700": Elem.INT("Einer der Kalibrierungsparameter."),
-            "resistance_880": Elem.ARRAY("Einer der Kalibrierungsparameter.", member_type=EType.INT),
-        },
-        version=Version.WARP1_ONLY)
+    Func("global_current", FuncType.STATE, Elem.OBJECT("Der über das Webinterface vorgegebene Ladestrom. Kann über evse/global_current_update mit dem selben Payload gesetzt werden.", members={
+            "current": Elem.INT("Der über das Webinterface vorgegebene Ladestrom. 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockiert.", unit=Units.mA)
+        })
     ),
 
-    Func("energy_meter_state", FuncType.STATE, Elem.OBJECT("Bei WARP 2 wird der Stromzähler vom Ladecontroller selbst ausgelesen. evse/energy_meter_state liefert den Zustand des Stromzählers.", members={
-            "available": Elem.BOOL("Gibt an, ob ein Stromzähler gefunden wurde."),
-            "error_count": Elem.ARRAY("Fehlerzähler der Kommunikation mit dem Stromzähler", members=[
-                Elem.INT("Local Timeouts"),
-                Elem.INT("Global Timeouts"),
-                Elem.INT("Illegal Function"),
-                Elem.INT("Illegal Data Access"),
-                Elem.INT("Illegal Data Value"),
-                Elem.INT("Slave Device Failure"),
+    Func("management_enabled", FuncType.STATE, Elem.OBJECT("Gibt an, ob der Ladeslot des Lastmanagements aktiv ist. Der Wert kann über evse/management_enabled_update mit dem selben Payload aktualisiert werden.", members={
+            "enabled": Elem.BOOL("true wenn Lastmanagement aktiviert ist, sonst false")
+        })
+    ),
+
+    Func("user_slot_enabled", FuncType.STATE, Elem.OBJECT("Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist. Der Wert kann über evse/user_slot_enabled_update mit dem selben Payload aktualisiert werden.", members={
+            "enabled": Elem.BOOL("true wenn die Benutzerautorisierung aktiviert ist, sonst false")
+        })
+    ),
+
+    Func("external_enabled", FuncType.STATE, Elem.OBJECT("Gibt an, ob der Ladeslot der externen Steuerung aktiv ist. Der Wert kann über evse/external_enabled_update mit dem selben Payload aktualisiert werden.", members={
+            "enabled": Elem.BOOL("true wenn die externe Steuerung aktiviert ist, sonst false")
+        })
+    ),
+
+    Func("external_defaults", FuncType.STATE, Elem.OBJECT("Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Ladeslots der externen Steuerung. Der Wert kann über evse/external_defaults_update mit dem selben Payload aktualisiert werden.", members={
+            "current": Elem.INT("Der nach einem Neustart übernommene Maximalstrom im Ladeslot der externen Steuerung. 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockiert.", unit=Units.mA),
+            "clear_on_disconnect": Elem.BOOL("Gibt an, ob der Ladestrom dieses Slots beim Abziehen eines Fahrzeugs auf 0 gesetzt wird.", constants=[
+                Const(True, "Slot wird beim Abziehen blockieren"),
+                Const(False, "Slot wird gesetzten Ladestrom beim Abziehen beibehalten"),
             ]),
-        },
-        version=Version.WARP2_ONLY)
+        })
     ),
 
-    Func("energy_meter_values", FuncType.STATE, Elem.OBJECT("Bei WARP 2 wird der Stromzähler vom Ladecontroller selbst ausgelesen. evse/energy_meter_values liefert die zuletzt gelesenen Werte.", members={
-            "power": Elem.FLOAT("Die aktuelle Ladeleistung.", unit=Units.W),
-            "energy_rel": Elem.FLOAT("Die geladene Energie seit dem letzten Reset.", unit=Units.kWh),
-            "energy_abs": Elem.FLOAT("Die geladene Energie seit der Herstellung des Stromzählers.", unit=Units.kWh),
-            "phases_active": Elem.ARRAY("Die derzeit aktiven Phasen", members=[
-                Elem.BOOL("Phase L1 aktiv"),
-                Elem.BOOL("Phase L2 aktiv"),
-                Elem.BOOL("Phase L3 aktiv"),
-            ]),
-            "phases_connected": Elem.ARRAY("Die angeschlossenen Phasen", members=[
-                Elem.BOOL("Phase L1 angeschlossen"),
-                Elem.BOOL("Phase L2 angeschlossen"),
-                Elem.BOOL("Phase L3 angeschlossen"),
-            ]),
-        },
-        version=Version.WARP2_ONLY)
-    ),
-
-    Func("dc_fault_current_state", FuncType.STATE, Elem.OBJECT("Der Zustand des DC-Fehlerstrom-Schutzmoduls. Falls ein Gleichstromfehler auftritt, kann nicht mehr geladen werden, bis das Schutzmodul zurückgesetzt wurde. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong> {{{ref:evse/reset_dc_fault_current}}} setzt das Modul zurück.", members={
-            "state": Elem.INT("Der Zustand des DC-Fehlerstrom-Schutzmoduls", constants=[
-                Const(0, "Kein Fehler"),
-                Const(1, "6 mA Fehlerstrom detektiert"),
-                Const(2, "Systemfehler"),
-                Const(3, "Unbekannter fehler"),
-                Const(4, "Kalibrierungsfehler"),
-            ])
-        },
-        version=Version.WARP2_ONLY)
-    ),
-
-    Func("gpio_configuration", FuncType.STATE, Elem.OBJECT("Die Konfiguration der konfigurierbaren Ein- und Ausgänge. Diese kann über evse/gpio_configuration_update mit dem selben Payload aktualisiert werden.", members={
+    Func("gpio_configuration", FuncType.STATE, Elem.OBJECT("Die Konfiguration der konfigurierbaren Ein- und Ausgänge. Kann über evse/gpio_configuration_update mit dem selben Payload aktualisiert werden.", members={
             "shutdown_input": Elem.INT("Die Konfiguration des Abschalteingangs.", constants=[
                 Const(0, "Nicht konfiguriert"),
                 Const(1, "Abschalten wenn geöffnet"),
@@ -239,34 +299,26 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", Version.ANY,[
         version=Version.WARP2_ONLY)
     ),
 
-    Func("button_state", FuncType.STATE, Elem.OBJECT("Der Zustand des Tasters in der Frontblende.", members= {
-            "button_press_time": Elem.INT("Zeit zu der zuletzt der Taster gedrückt wurde. 0 falls der Taster seit dem Start des Ladecontrollers nicht betätigt wurde.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms),
-            "button_release_time": Elem.INT("Zeit zu der zuletzt der Taster losgelassen wurde. 0 falls der Taster seit dem Start des Ladecontrollers nicht betätigt wurde.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms),
-            "button_pressed": Elem.BOOL("true, falls der Taster derzeit gedrückt ist, sonst false"),
-        })
+    Func("user_calibration", FuncType.STATE, Elem.OBJECT("Erlaubt es, die werksseitige Kalibrierung des EVSEs auszulesen und zu überschreiben. Dieser Wert kann über evse/user_calibration_update mit dem selben Payload aktualisiert werden. Um die Kalibierung auf den Werkszustand zurückzusetzen, kann ein Payload mit user_calibration_active auf false geschickt werden. Die weiteren Werte werden dann ignoriert.", members={
+            "user_calibration_active": Elem.BOOL("Gibt an, ob die werksseitige Kalibrierung überschrieben wurde."),
+            "voltage_diff": Elem.INT("Einer der Kalibrierungsparameter."),
+            "voltage_mul": Elem.INT("Einer der Kalibrierungsparameter."),
+            "voltage_div": Elem.INT("Einer der Kalibrierungsparameter."),
+            "resistance_2700": Elem.INT("Einer der Kalibrierungsparameter."),
+            "resistance_880": Elem.ARRAY("Einer der Kalibrierungsparameter.", member_type=EType.INT),
+        },
+        version=Version.WARP1_ONLY)
     ),
 
-    Func("managed", FuncType.STATE, Elem.OBJECT("Legt fest, ob der Ladestrom, der vom Lastmanager zugeteilt wurde, in die Berechnung des maximalen Ladestroms eingeht (siehe {{{ref:evse/max_charging_current}}}). Damit das Lastmanagement zwischen WARP Chargern funktioniert, muss dies aktiviert sein. Der Wert kann über ref:evse/managed_update mit dem selben Payload aktualisiert werden.", members={
-            "managed": Elem.BOOL("true wenn Lastmanagement aktiviert ist, sonst false"),
-        })
-    ),
-
-    Func("current_limit", FuncType.COMMAND, Elem.OBJECT("Begrenzt den Ladestrom.", members={
-            "current": Elem.INT("Begrenzt den Ladestrom auf den übergebenen Wert. Der Strom hat einen Minimalwert von 6000 (6 Ampere) und einen Maximalwert von 32000 (32 Ampere).", unit=Units.mA)
-        })
-    ),
-
-    Func("stop_charging", FuncType.COMMAND, Elem.NULL("Beendet den laufenden Ladevorgang. Ein Ladevorgang kann mit {{{ref:evse/start_charging}}} wieder gestartet werden."), command_is_action=True),
-
-    Func("start_charging", FuncType.COMMAND, Elem.NULL("Startet einen Ladevorgang. Ein Ladevorgang kann mit {{{ref:evse/stop_charging}}} wieder gestoppt werden."), command_is_action=True),
-
-    Func("reset_dc_fault_current", FuncType.COMMAND, Elem.OBJECT("Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong>", members={
+    Func("reset_dc_fault_current_state", FuncType.COMMAND, Elem.OBJECT("Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong>", members={
             "password": Elem.INT("Passwort, das zum Zurücksetzen benötigt wird. Das Passwort lautet 0xDC42FA23.")
         })
     ),
 
-    Func("managed_current_update", FuncType.COMMAND, Elem.OBJECT("Setzt eine neue Strombegrenzung des Lastmanagements. <strong>Diese Funktion muss vom Lastmanager periodisch aufgerufen werden, selbst wenn sich die Strombegrenzung nicht ändert. Anderenfalls setzt der Ladecontroller den Lastmanagement-Strom nach 30 Sekunden auf 0 Ampere.</strong>", members={
-            "current": Elem.INT("Der Strom hat einen Minimalwert von 6000 (6 Ampere) und einen Maximalwert von 32000 (32 Ampere). Dieser Strom kann zusätzlich auf 0 gesetzt werden, um das Laden zu verbieten.", unit=Units.mA)
-        })
-    ),
+    Func("stop_charging", FuncType.COMMAND, Elem.NULL("Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit {{{ref:evse/start_charging}}} wieder gestartet werden."), command_is_action=True),
+
+    Func("start_charging", FuncType.COMMAND, Elem.NULL("Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit {{{ref:evse/stop_charging}}} wieder gestoppt werden."), command_is_action=True),
+
+    Func("start_debug", FuncType.HTTP_ONLY, Elem.OPAQUE("Startet ein Ladeprotokoll. Es werden hochfrequent Messwerte des Ladecontrollers auf die WebSockets geschrieben, bis {{{ref:evse/stop_debug}}} aufgerufen wird.")),
+    Func("stop_debug", FuncType.HTTP_ONLY, Elem.OPAQUE("Stoppt ein Ladeprotokoll. Siehe {{{ref:evse/start_debug}}} für Details."))
 ])

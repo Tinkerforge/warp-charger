@@ -1,37 +1,57 @@
 from api_doc_common import *
 
 meter = Module("meter", "Stromzähler", "Nur WARP Charger PRO!", Version.ANY, [
-    Func("state", FuncType.STATE, Elem.OBJECT("Der Zustand des Stromzählers. Bei WARP 2 identisch zu {{{ref:evse/energy_meter_values}}}", members={
+    Func("state", FuncType.STATE, Elem.OBJECT("Der Zustand des Stromzählers.", members={
             "state": Elem.INT("Zustand des Stromzählers", constants=[
                 Const(0, "Kein Stromzähler verbunden"),
                 Const(1, "Stromzähler unzuverlässig, eventuell nur einphasig verbunden."),
                 Const(2, "Stromzähler verbunden"),
-            ], version=Version.WARP1_ONLY),
+            ]),
+            "type": Elem.INT("Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!", constants=[
+                Const(0, "Kein Stromzähler verfügbar"),
+                Const(1, "SDM72", Version.WARP1_ONLY),
+                Const(2, "SDM630", Version.WARP2_ONLY),
+                Const(3, "SDM72V2", Version.WARP2_ONLY)
+            ])
+        })
+    ),
+
+    Func("values", FuncType.STATE, Elem.OBJECT("Die Messwerte des Stromzählers.", members={
             "power": Elem.FLOAT("Die aktuelle Ladeleistung.", unit=Units.W),
             "energy_rel": Elem.FLOAT("Die geladene Energie seit dem letzten Reset.", unit=Units.kWh),
             "energy_abs": Elem.FLOAT("Die geladene Energie seit der Herstellung des Stromzählers.", unit=Units.kWh),
+        })
+    ),
+
+    Func("phases", FuncType.STATE, Elem.OBJECT("Angeschlossene und aktive Phasen.", version=Version.WARP2_ONLY, members={
             "phases_active": Elem.ARRAY("Die derzeit aktiven Phasen", members=[
                 Elem.BOOL("Phase L1 aktiv"),
                 Elem.BOOL("Phase L2 aktiv"),
                 Elem.BOOL("Phase L3 aktiv"),
-            ], version=Version.WARP2_ONLY),
+            ]),
             "phases_connected": Elem.ARRAY("Die angeschlossenen Phasen", members=[
                 Elem.BOOL("Phase L1 angeschlossen"),
                 Elem.BOOL("Phase L2 angeschlossen"),
                 Elem.BOOL("Phase L3 angeschlossen"),
-            ], version=Version.WARP2_ONLY),
+            ])
         })
     ),
 
-    Func("error_counters", FuncType.STATE, Elem.OBJECT("Fehlerzähler der Kommunikation mit dem Stromzähler. Bei WARP 2 sind diese Teil von {{{ref:evse/energy_meter_state}}}", members={
-            "meter": Elem.INT("Kommunikationsfehler zwischen RS485 Bricklet und Stromzähler."),
-            "bricklet": Elem.INT("Kommunikationsfehler zwischen ESP Brick und RS485 Bricklet."),
-            "bricklet_reset": Elem.INT("Unerwartete Resets des RS485 Bricklets."),
-        },
-        version=Version.WARP1_ONLY)
+    Func("error_counters", FuncType.STATE, Elem.OBJECT("Fehlerzähler der Kommunikation mit dem Stromzähler.", members={
+            "meter": Elem.INT("Kommunikationsfehler zwischen RS485 Bricklet und Stromzähler.", version=Version.WARP1_ONLY),
+            "bricklet": Elem.INT("Kommunikationsfehler zwischen ESP Brick und RS485 Bricklet.", version=Version.WARP1_ONLY),
+            "bricklet_reset": Elem.INT("Unerwartete Resets des RS485 Bricklets.", version=Version.WARP1_ONLY),
+
+            "local_timeout": Elem.INT("Local Timeout", version=Version.WARP2_ONLY),
+            "global_timeout": Elem.INT("Global Timeout", version=Version.WARP2_ONLY),
+            "illegal_function": Elem.INT("Illegal Function", version=Version.WARP2_ONLY),
+            "illegal_data_access": Elem.INT("Illegal Data Access", version=Version.WARP2_ONLY),
+            "illegal_data_value": Elem.INT("Illegal Data Value", version=Version.WARP2_ONLY),
+            "slave_device_failure": Elem.INT("Slave Device Failure", version=Version.WARP2_ONLY),
+        })
     ),
 
-    Func("detailed_values", FuncType.STATE, Elem.ARRAY("Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.", members=[
+    Func("all_values", FuncType.STATE, Elem.ARRAY("Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.", version=Version.WARP2_ONLY, members=[
             * 3 * [Elem.FLOAT("Spannung gegen Neutral", unit=Units.V)],
             * 3 * [Elem.FLOAT("Strom", unit=Units.A)],
             * 3 * [Elem.FLOAT("Wirkleistung", unit=Units.W)],

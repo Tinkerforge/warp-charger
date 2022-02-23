@@ -8,9 +8,7 @@ ethernet = Module("ethernet", "LAN-Verbindung", "", Version.WARP2_ONLY, [
                 Const(2,"Verbinde"),
                 Const(3,"Verbunden"),
             ]),
-            "ip": Elem.ARRAY("Aktuelle IP der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.", members=[
-                * 4 * [Elem.INT("")]
-            ]),
+            "ip": Elem.STRING("Aktuelle IP der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht."),
             "full_duplex": Elem.BOOL("true bei einer Full-Duplex-Verbindung, sonst false"),
             "link_speed": Elem.INT("Ausgehandelte Verbindungsgeschwindigkeit.", unit=Units.Mbps, constants=[
                 Const(10,""),
@@ -24,22 +22,11 @@ ethernet = Module("ethernet", "LAN-Verbindung", "", Version.WARP2_ONLY, [
                 Const(True, "Wenn eine LAN-Verbindung aufgebaut werden soll."),
                 Const(False, "Wenn nicht.")
             ]),
-            "hostname": Elem.STRING("Hostname den die Wallbox im konfigurierten Netz verwenden soll."),
-            "ip": Elem.ARRAY("IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als [0, 0, 0, 0] übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.", members=[
-                * 4 * [Elem.INT("")]
-            ]),
-            "gateway": Elem.ARRAY("Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.", members=[
-                * 4 * [Elem.INT("")]
-            ]),
-            "subnet": Elem.ARRAY("Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll.", members=[
-                * 4 * [Elem.INT("")]
-            ]),
-            "dns": Elem.ARRAY("DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.", members=[
-                * 4 * [Elem.INT("")]
-            ]),
-            "dns2": Elem.ARRAY("Alternative DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.", members=[
-                * 4 * [Elem.INT("")]
-            ]),
+            "ip": Elem.STRING("IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als \"0.0.0.0\" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll."),
+            "gateway": Elem.STRING("Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll."),
+            "subnet": Elem.STRING("Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll."),
+            "dns": Elem.STRING("DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll."),
+            "dns2": Elem.STRING("Alternative DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll."),
         })
     ),
 ])
