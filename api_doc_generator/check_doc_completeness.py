@@ -38,7 +38,7 @@ def typecheck(et: EType, obj, consts: Optional[list[Const]], path):
 
 def check_elem_doc(e: Elem, obj, path):
     if e.censored:
-        if obj is not None:
+        if obj is not None and obj != "":
             print("{}: configured as censored but implementation returned value {}".format(path, obj))
         return
 
