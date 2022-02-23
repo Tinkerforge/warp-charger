@@ -101,10 +101,11 @@ class Elem:
     var_length_array_unit: Optional[Unit]
     censored: bool
     version: Version
+    type_name_override: Optional[str]
 
     @staticmethod
     def OBJECT(desc: str, *, members: dict[str, 'Elem'], censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.OBJECT, desc, None, members, None, False, None, None, censored, version)
+        return Elem(EType.OBJECT, desc, None, members, None, False, None, None, censored, version, None)
 
     @staticmethod
     def ARRAY(desc: str, *, unit: Optional[Unit] = None, members: Optional[list['Elem']] = None, member_type: Optional[EType] = None, member_unit: Optional[Unit] = None, censored: bool = False, version: Version = Version.ANY):
@@ -112,31 +113,31 @@ class Elem:
             raise Exception("Array without members and member_type is not supported!")
         if members is not None and member_type is not None and any(x.type_ != member_type for x in members):
             raise Exception("Type mismatch between members and member_type!")
-        return Elem(EType.ARRAY, desc, unit, members, None, members is None, member_type, member_unit, censored, version)
+        return Elem(EType.ARRAY, desc, unit, members, None, members is None, member_type, member_unit, censored, version, None)
 
     @staticmethod
     def STRING(desc: str, *, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.STRING, desc, None, None, constants, False, None, None, censored, version)
+        return Elem(EType.STRING, desc, None, None, constants, False, None, None, censored, version, None)
 
     @staticmethod
-    def INT(desc: str, *, unit: Optional[Unit] = None, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.INT, desc, unit, None, constants, False, None, None, censored, version)
+    def INT(desc: str, *, type_name_override: Optional[str] = None, unit: Optional[Unit] = None, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
+        return Elem(EType.INT, desc, unit, None, constants, False, None, None, censored, version, type_name_override)
 
     @staticmethod
     def FLOAT(desc: str, *, unit: Optional[Unit] = None, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.FLOAT, desc, unit, None, constants, False, None, None, censored, version)
+        return Elem(EType.FLOAT, desc, unit, None, constants, False, None, None, censored, version, None)
 
     @staticmethod
     def BOOL(desc: str, *, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.BOOL, desc, None, None, constants, False, None, None, censored, version)
+        return Elem(EType.BOOL, desc, None, None, constants, False, None, None, censored, version, None)
 
     @staticmethod
     def NULL(desc: str):
-        return Elem(EType.NULL, desc, None, None, None, False, None, None, False, Version.ANY)
+        return Elem(EType.NULL, desc, None, None, None, False, None, None, False, Version.ANY, None)
 
     @staticmethod
     def OPAQUE(desc: str):
-        return Elem(EType.OPAQUE, desc, None, None, None, False, None, None, False, Version.ANY)
+        return Elem(EType.OPAQUE, desc, None, None, None, False, None, None, False, Version.ANY, None)
 
     def get_type(self) -> str:
         if self.type_ in (EType.OBJECT,
