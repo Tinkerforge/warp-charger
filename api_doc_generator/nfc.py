@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-nfc = Module("nfc", "NFC-Ladefreigabe", "", Version.ANY, [
+nfc = Module("nfc", "NFC-Ladefreigabe", "Benötigt das Feature \"nfc\".", Version.ANY, [
     Func("seen_tags", FuncType.STATE, Elem.ARRAY("Die zuletzt von der Wallbox gesehenen NFC-Tags.", members=[
             * 8 * [Elem.OBJECT("Ein gesehenes NFC-Tag", members = {
                 "tag_type": Elem.INT("Typ des Tags", constants=[

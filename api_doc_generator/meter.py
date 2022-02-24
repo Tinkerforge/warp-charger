@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-meter = Module("meter", "Stromzähler", "Nur WARP Charger PRO!", Version.ANY, [
+meter = Module("meter", "Stromzähler", "Benötigt das Feature \"meter\".", Version.ANY, [
     Func("state", FuncType.STATE, Elem.OBJECT("Der Zustand des Stromzählers.", members={
             "state": Elem.INT("Zustand des Stromzählers", constants=[
                 Const(0, "Kein Stromzähler verbunden"),
@@ -23,7 +23,7 @@ meter = Module("meter", "Stromzähler", "Nur WARP Charger PRO!", Version.ANY, [
         })
     ),
 
-    Func("phases", FuncType.STATE, Elem.OBJECT("Angeschlossene und aktive Phasen.", version=Version.WARP2_ONLY, members={
+    Func("phases", FuncType.STATE, Elem.OBJECT("Angeschlossene und aktive Phasen. Benötigt das Feature \"meter_phases\".", version=Version.WARP2_ONLY, members={
             "phases_active": Elem.ARRAY("Die derzeit aktiven Phasen", members=[
                 Elem.BOOL("Phase L1 aktiv"),
                 Elem.BOOL("Phase L2 aktiv"),
@@ -51,7 +51,7 @@ meter = Module("meter", "Stromzähler", "Nur WARP Charger PRO!", Version.ANY, [
         })
     ),
 
-    Func("all_values", FuncType.STATE, Elem.ARRAY("Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.", version=Version.WARP2_ONLY, members=[
+    Func("all_values", FuncType.STATE, Elem.ARRAY("Alle Messwerte, die vom eingebauten Stromzähler gemessen werden.  Benötigt das Feature \"meter_all_values\". Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.", version=Version.WARP2_ONLY, members=[
             * 3 * [Elem.FLOAT("Spannung gegen Neutral", unit=Units.V)],
             * 3 * [Elem.FLOAT("Strom", unit=Units.A)],
             * 3 * [Elem.FLOAT("Wirkleistung", unit=Units.W)],

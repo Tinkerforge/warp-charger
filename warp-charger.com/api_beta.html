@@ -153,7 +153,7 @@
 <a class="nav-link" href="#meter_live" style="margin-left: 2rem !important;">meter/<wbr>live</a>
         </nav>
     </div>
-<a class="nav-link ml-3" href="#reference-charge_manager">Lastmanagement</a>
+<a class="nav-link ml-3" href="#reference-charge_manager">Lastmanager</a>
     <div class="collapse">
         <nav class="nav nav-pills flex-column">
         <span class="ml-5">Zustände</span>
@@ -253,6 +253,7 @@
         <span class="ml-5">Zustände</span>
 <a class="nav-link" href="#version" style="margin-left: 2rem !important;">version</a>
 <a class="nav-link" href="#modules" style="margin-left: 2rem !important;">modules</a>
+<a class="nav-link" href="#features" style="margin-left: 2rem !important;">features</a>
 <span class="ml-5">Kommandos</span>
 <a class="nav-link" href="#reboot" style="margin-left: 2rem !important;">reboot</a>
 <span class="ml-5">HTTP-Spezifisch</span>
@@ -537,7 +538,8 @@
 
 <section id="reference-evse" class="section any">
     <header class="reference-section-header">
-        <h4>Ladecontroller (EVSE)</h4>
+        <h4>Ladecontroller (EVSE)</h4><h5>Benötigt das Feature "evse"</h5>
+
     </header>
     <ul class="ul-no-bullet">
         <li>
@@ -936,7 +938,7 @@
 
 <div class="any">
     <div class="h5" id="evse_button_state">evse/button_state</div>
-    Der Zustand des Tasters in der Frontblende.
+    Der Zustand des Tasters in der Frontblende. Benötigt das Feature "button_config".
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1537,7 +1539,8 @@
 </section>
 <section id="reference-meter" class="section any">
     <header class="reference-section-header">
-        <h4>Stromzähler - Nur WARP Charger PRO!</h4>
+        <h4>Stromzähler</h4><h5>Benötigt das Feature "meter".</h5>
+
     </header>
     <ul class="ul-no-bullet">
         <li>
@@ -1649,7 +1652,7 @@
 
 <div class="warp2_only">
     <div class="h5" id="meter_phases">meter/phases <strong>(Nur WARP 2)</strong> </div>
-    Angeschlossene und aktive Phasen.
+    Angeschlossene und aktive Phasen. Benötigt das Feature "meter_phases".
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1752,7 +1755,7 @@
 
 <div class="warp2_only">
     <div class="h5" id="meter_all_values">meter/all_values <strong>(Nur WARP 2)</strong> </div>
-    Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
+    Alle Messwerte, die vom eingebauten Stromzähler gemessen werden.  Benötigt das Feature "meter_all_values". Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -2061,7 +2064,8 @@
 </section>
 <section id="reference-charge_manager" class="section any">
     <header class="reference-section-header">
-        <h4>Lastmanagement</h4>
+        <h4>Lastmanager</h4>
+
     </header>
     <ul class="ul-no-bullet">
         <li>
@@ -2108,7 +2112,7 @@
 
 <div class="any">
     <div class="h5" id="charge_manager_config">charge_manager/config</div>
-    Die Lastmanagement-Konfiguration. Diese kann über charge_manager/config_update mit dem selben Payload aktualisiert werden.
+    Die Lastmanager-Konfiguration. Diese kann über charge_manager/config_update mit dem selben Payload aktualisiert werden.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -2206,6 +2210,7 @@
 <section id="reference-users" class="section any">
     <header class="reference-section-header">
         <h4>Benutzerverwaltung</h4>
+
     </header>
     <ul class="ul-no-bullet">
         <li>
@@ -2468,6 +2473,7 @@
 <section id="reference-charge_tracker" class="section any">
     <header class="reference-section-header">
         <h4>Ladetracker</h4>
+
     </header>
     <ul class="ul-no-bullet">
         <li>
@@ -2620,7 +2626,8 @@
 </section>
 <section id="reference-nfc" class="section any">
     <header class="reference-section-header">
-        <h4>NFC-Ladefreigabe</h4>
+        <h4>NFC-Ladefreigabe</h4><h5>Benötigt das Feature "nfc".</h5>
+
     </header>
     <ul class="ul-no-bullet">
         <li>
@@ -2886,6 +2893,7 @@
 <section id="reference-network" class="section any">
     <header class="reference-section-header">
         <h4>Netzwerk-Konfiguration</h4>
+
     </header>
     <ul class="ul-no-bullet">
         <li>
@@ -2926,6 +2934,7 @@
 <section id="reference-wifi" class="section any">
     <header class="reference-section-header">
         <h4>WLAN-Konfiguration</h4>
+
     </header>
     <ul class="ul-no-bullet">
         <li>
@@ -3231,7 +3240,8 @@
 </section>
 <section id="reference-ethernet" class="section warp2_only">
     <header class="reference-section-header">
-        <h4>LAN-Verbindung</h4>
+        <h4>LAN-Verbindung</h4><h5>Benötigt das Feature "ethernet".</h5>
+
     </header>
     <ul class="ul-no-bullet">
         <li>
@@ -3355,6 +3365,7 @@
 <section id="reference-ntp" class="section any">
     <header class="reference-section-header">
         <h4>Zeitsynchronisierung</h4>
+
     </header>
     <ul class="ul-no-bullet">
         <li>
@@ -3438,6 +3449,7 @@
 <section id="reference-mqtt" class="section any">
     <header class="reference-section-header">
         <h4>MQTT-Verbindung</h4>
+
     </header>
     <ul class="ul-no-bullet">
         <li>
@@ -3550,6 +3562,7 @@
 <section id="reference-misc" class="section any">
     <header class="reference-section-header">
         <h4>Sonstiges</h4>
+
     </header>
     <ul class="ul-no-bullet">
         <li>
@@ -3557,6 +3570,7 @@
     <ul>
         <li><a class="scrollto text-monospace" href="#version">version</a></li>
 <li><a class="scrollto text-monospace" href="#modules">modules</a></li>
+<li><a class="scrollto text-monospace" href="#features">features</a></li>
     </ul>
 </li>
 <li>
@@ -3608,6 +3622,11 @@
 <div class="any">
     <div class="h5" id="modules">modules</div>
     Initialisierungszustand der Firmware-Module.
+</div>
+
+<div class="any">
+    <div class="h5" id="features">features</div>
+    Unterstützte Hardwarefeatures.
 </div>
 
 <div class="any">

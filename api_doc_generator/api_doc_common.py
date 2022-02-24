@@ -332,7 +332,8 @@ class Module:
     def to_html(self) -> str:
         template = """<section id="reference-{name}" class="section {version}">
     <header class="reference-section-header">
-        <h4>{display_name}{desc}</h4>
+        <h4>{display_name}</h4>{desc}
+
     </header>
     <ul class="ul-no-bullet">
         {toc}
@@ -362,7 +363,7 @@ class Module:
 
 
         return template.format(name=self.name,
-                               desc=wrap_non_empty(" - ",self.desc,""),
+                               desc=wrap_non_empty("<h5>",self.desc,"</h5>"),
                                display_name=self.display_name,
                                version=self.version.name.lower(),
                                toc="\n".join(toc),
