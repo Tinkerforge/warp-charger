@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-charge_manager = Module("charge_manager", "Lastmanagement", "", Version.ANY, [
+charge_manager = Module("charge_manager", "Lastmanager", "", Version.ANY, [
     Func("available_current", FuncType.STATE, Elem.OBJECT("Der derzeit zur Verfügung stehende Strom. Kann über charge_manager/available_current_update aktualisiert werden. Dieser Strom wird unter den konfigurierten Wallboxen aufgeteilt.", members={
             "current": Elem.INT("Der zur Verfügung stehende Strom. Darf nicht großer sein als der konfigurierte Maximalstrom maximum_available_current aus {{{ref:charge_manager/config}}}.", unit=Units.mA),
         })
@@ -8,7 +8,7 @@ charge_manager = Module("charge_manager", "Lastmanagement", "", Version.ANY, [
 
     Func("state", FuncType.STATE, Elem.OPAQUE("Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet")),
 
-    Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die Lastmanagement-Konfiguration. Diese kann über charge_manager/config_update mit dem selben Payload aktualisiert werden.", members={
+    Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die Lastmanager-Konfiguration. Diese kann über charge_manager/config_update mit dem selben Payload aktualisiert werden.", members={
             "enable_charge_manager": Elem.BOOL("Gibt an, ob der Lastmanager aktiviert sein soll.", constants=[
                 Const(True, "Wenn der Lastmanager aktiviert ist."),
                 Const(False, "Wenn der Lastmanager nicht aktiviert ist.")
