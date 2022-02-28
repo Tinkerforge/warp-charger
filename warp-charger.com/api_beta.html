@@ -342,21 +342,29 @@
                 (Den Präfix warp/ABC gegebenenfalls durch den konfigurierten ersetzen)
                 Es könnte z.B. die folgende Nachricht empfangen werden:
 
-                <samp class="samp-box">warp/ABC/<a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a> {"max_current_configured":32000, "max_current_incoming_cable":13000, "max_current_outgoing_cable":16000}</samp>
+                <samp class="samp-box">warp/ABC/<a class="scrollto" href="#evse_state">evse/state</a>
+                    {
+                        "iec61851_state":1,
+                        "charger_state":2,
+                        "contactor_state":1,
+                        "contactor_error":0,
+                        "allowed_charging_current":32000,
+                        "error_state":0,
+                        "lock_state":0,
+                        "dc_fault_current_state":0
+                }</samp>
 
-                Die Nachrichten des Topics <samp><a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a></samp> geben an,
-                welchen Limitierungen der Ladestrom unterliegt.
-                Im konkreten Fall begrenzt die Software den Ladestrom auf 32 Ampere, das zur Wallbox führende Kabel ihn auf 13, das zum Fahrzeug gehende Kabel ihn auf 16 Ampere.
-                Der maximal mögliche Ladestrom ist immer das Minimum dieser Werte, also in diesem Fall 13 Ampere.
+                Die Nachrichten des Topics <samp><a class="scrollto" href="#evse_state">evse/state</a></samp> geben einen Überblick über den Zustand des Ladecontrollers.
+                Beispielsweise liegt der erlaubte Ladestrom gerade bei 32000, also 32 Ampere.
             </p>
             <p>
-                Durch Senden der Nachricht <samp>{"current":8000}</samp> an das Topic <samp>warp/ABC/<a class="scrollto" href="#evse_current_limit">evse/current_limit</a></samp>
+                Durch Senden der Nachricht <samp>{"current":8000}</samp> an das Topic <samp>warp/ABC/<a class="scrollto" href="#evse_global_current">evse/global_current_update</a></samp>
                 kann der Ladestrom auf 8 Ampere begrenzt werden, zum Beispiel so:
-                <code>mosquitto_pub -t "warp/ABC/<a class="scrollto" href="#evse_current_limit">evse/current_limit</a>" -m "{\"current\": 8000}'</code>
+                <code>mosquitto_pub -t "warp/ABC/<a class="scrollto" href="#evse_global_current">evse/global_current_update</a>" -m "{\"current\": 8000}'</code>
                 (Damit die Beispiele auch mit cmd.exe von Windows kompatibel sind, werden nur doppelte Anführungszeichen verwendet. Anführungszeichen in JSON-Nachrichten müssen deshalb mit \ escapt werden.)
                 Der Ladestrom ist jetzt auf 8 Ampere begrenzt, was die Wallbox durch eine neue Nachricht anzeigt:
 
-                <samp class="samp-box">warp/ABC/<a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a> {"max_current_configured":8000, "max_current_incoming_cable":13000, "max_current_outgoing_cable":16000}</samp>
+                <samp class="samp-box">warp/ABC/<a class="scrollto" href="#evse_state">evse/state</a> {"iec61851_state":1, "charger_state":2, "contactor_state":1, "contactor_error":0, "allowed_charging_current":8000, "error_state":0, "lock_state":0, "dc_fault_current_state":0}</samp>
             </p>
         </div>
     </section>
@@ -380,46 +388,62 @@
                     Wenn die MQTT-API beispielsweise das Topic <code>warp/ABC/evse/state</code> verwendet,
                     kann die selbe API über die URL <code>http://[IP-Adresse oder Hostname der Wallbox]/evse/state</code> erreicht werden.
                     Die HTTP-API verfügt allerdings über <a class="scrollto" href="#http-only">fortgeschrittene Funktionen</a>, die nicht über MQTT verfügbar sind.
-                    Es können zusätzlich die <a href="https://en.wikipedia.org/wiki/Server-sent_events">Server-Sent-Events (SSE)</a> unter
-                    <code>http://[IP-Adresse oder Hostname der Wallbox]/events</code> verwendet werden,
-                    die von der Wallbox automatisch ausgelöst werden.
+                    Es können zusätzlich die <a href="https://en.wikipedia.org/wiki/WebSocket">WebSockets</a> unter
+                    <code>ws://[IP-Adresse oder Hostname der Wallbox]/ws</code> verwendet werden. Über eine WebSocket-Verbindung überträgt die Wallbox (analog zu MQTT) automatisch
+                    aktualisierte Werte.
                 </p>
                 <p>
-                    Um Analog zum MQTT-Beispiel alle von der Wallbox gesendeten Nachrichten zu empfangen, kann die Event-Verbindung
-                    genutzt werden. Hierzu und für die weiteren Beispiele wird <a href="https://curl.se/">cURL</a> verwendet und davon ausgegangen, dass
-                    die Wallbox unter der IP-Adresse 10.0.0.1 erreichbar ist.
+                    Um Analog zum MQTT-Beispiel alle von der Wallbox gesendeten Nachrichten zu empfangen, kann eine WebSocket-Verbindung benutzt werden.
+                    Hierzu und für die weiteren Beispiele werden <a href="https://github.com/vi/websocat">websocat</a> und <a href="https://curl.se/">cURL</a> verwendet
+                    und davon ausgegangen, dass die Wallbox unter der IP-Adresse 10.0.0.1 erreichbar ist.
                 </p>
                 <p>
-                    Mit <code>curl -N 10.0.0.1/events</code> könnte unter anderem folgende Nachricht empfangen werden:
-                    <samp class="samp-box">
-                        retry: 1000
-                        id: 238659782
-                        event: <a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a>
-                        data: {"max_current_configured":32000, "max_current_incoming_cable":13000, "max_current_outgoing_cable":16000}
-                    </samp>
-                    Diese Nachricht ist äquivalent zu der aus den MQTT-Grundlagen: Die Wallbox-Software begrenzt den Ladestorm auf 32 Ampere,
-                    das Anschlusskabel der Box ihn auf 13 Ampere und das zum Fahrzeug führende Kabel auf 16 Ampere. Es kann also mit 13 Ampere geladen werden.
+                    Mit <code>websocat ws://10.0.0.1/ws</code> könnte unter anderem folgende Nachricht empfangen werden:
+                    <pre class="samp-box">
+{
+    "topic":"evse/state",
+    "payload":{
+        "iec61851_state":1,
+        "charger_state":2,
+        "contactor_state":1,
+        "contactor_error":0,
+        "allowed_charging_current":32000,
+        "error_state":0,
+        "lock_state":0,
+        "dc_fault_current_state":0
+    }
+}</pre>
+                    Diese Nachricht ist äquivalent zu der aus den MQTT-Grundlagen, allerdings ist das MQTT-Topic hier Teil der JSON-Struktur, da kein vergleichbares Konzept für WebSockets existiert.
                 </p>
                 <p>
                     Wenn nur eine Information abgefragt werden soll, kann mit cURL eine einzelne URL aufgerufen werden:
                     <code class="code-box">
-                        curl -s http://10.0.0.1/<a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a>
+                        curl -s http://10.0.0.1/<a class="scrollto" href="#evse_state">evse/state</a>
                     </code>
-                    liefert die gleichen JSON-Daten:
+                    liefert äquivalente JSON-Daten:
                     <samp class="samp-box">
-                        {"max_current_configured":32000, "max_current_incoming_cable":13000, "max_current_outgoing_cable":16000}
+                        {
+                            "iec61851_state":1,
+                            "charger_state":2,
+                            "contactor_state":1,
+                            "contactor_error":0,
+                            "allowed_charging_current":32000,
+                            "error_state":0,
+                            "lock_state":0,
+                            "dc_fault_current_state":0
+                        }
                     </samp>
                     Mit <a href="https://stedolan.github.io/jq/">jq</a> können einzelne Werte aus einem JSON-Objekt extrahiert werden.
                     <code class="code-box">
-                        curl -s http://10.0.0.1/<a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a> | jq ".max_current_configured"
+                        curl -s http://10.0.0.1/<a class="scrollto" href="#evse_state">evse/state</a> | jq ".allowed_charging_current"
                     </code>
-                    gibt 32000, also den konfigurierten Ladestrom von 32 Ampere zurück.
+                    gibt 32000, also den erlaubten Ladestrom von 32 Ampere zurück.
                 </p>
                 <p>
-                    Jetzt soll der Ladestrom auf 8 Ampere begrenzt werden. Dafür wird die Nachricht <code>{"current":8000}</code> an die URL <code>http://10.0.0.1/<a class="scrollto" href="#evse_current_limit">evse/current_limit</a></code>
+                    Jetzt soll der Ladestrom auf 8 Ampere begrenzt werden. Dafür wird die Nachricht <code>{"current":8000}</code> an die URL <code>http://10.0.0.1/<a class="scrollto" href="#evse_global_current">evse/global_current_update</a></code>
                     geschickt:
                     <code class="code-box">
-                        curl -H "Content-Type: application/json" -X PUT -d "{\"current\":8000}" 10.0.0.1/<a class="scrollto" href="#evse_current_limit">evse/current_limit</a></samp>
+                        curl -H "Content-Type: application/json" -X PUT -d "{\"current\":8000}" 10.0.0.1/<a class="scrollto" href="#evse_global_current">evse/global_current_update</a></samp>
                     </code>
                     Wichtig ist hierbei, den Content-Type-Header auf application/json zu setzen, da die Anfrage sonst ignoriert wird. Es können sowohl PUT, POST, als auch PATCH verwendet werden, die API verhält sich in allen drei Fällen gleich.<br>
                 </p>
@@ -427,7 +451,7 @@
                     Zur Kontrolle:
                     <code class="code-box">
                         curl -s http://10.0.0.1/<a class="scrollto" href="#evse_state">evse/state</a> | jq ".allowed_charging_current"
-                    </code> liefert den erlaubten Ladestrom (also das Minimum der oben erlaubten Ströme), was jetzt <samp>8000</samp>, also 8 Ampere sein sollten.
+                    </code> sollte jetzt <samp>8000</samp>, also 8 Ampere zurückgeben.
                 </p>
             </div>
             <div id="http_section_auth" class="container">
@@ -453,25 +477,35 @@
         <div id="states_section_states" class="container">
         <h4>Zustände</h4>
         <p>
-            Zustände sind Statusinformationen, die die Wallbox kontinuierlich an den Broker schickt. Zustände können nicht direkt geändert werden,
+            Zustände sind Statusinformationen, die die Wallbox kontinuierlich an aktive WebSocket-Verbindungen und den MQTT-Broker schickt. Zustände können nicht direkt geändert werden,
             es ist aber möglich, dass Kommandos und Konfigurationen auf indirekte Weise Zustände beeinflussen. So kann durch Verwenden des
-            <code><a class="scrollto" href="#evse_current_limit">evse/current_limit</a></code>-Kommandos der konfigurierte Ladestrom soweit gesenkt werden,
+            <code><a class="scrollto" href="#evse_global_current_update">evse/global_current_update</a></code>-Kommandos der konfigurierte Ladestrom soweit gesenkt werden,
             dass er den erlaubten Ladestrom des
             <samp><a class="scrollto" href="#evse_state">evse/state</a></samp>-Zustands verändert. Zustände können vom Broker durch Subscriptions abgefragt werden:
-            <code>mosquitto_sub -v -t "warp/ABC/<a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a>"</code>
+            <code>mosquitto_sub -v -t "warp/ABC/<a class="scrollto" href="#evse_state">evse/state</a>"</code>
             liefert beispielsweise
 
-            <samp class="samp-box">warp/ABC/<a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a> {"max_current_configured":8000, "max_current_incoming_cable":13000, "max_current_outgoing_cable":16000}</samp>
+            <samp class="samp-box">warp/ABC/<a class="scrollto" href="#evse_state">evse/state</a>
+                {
+                    "iec61851_state":1,
+                    "charger_state":2,
+                    "contactor_state":1,
+                    "contactor_error":0,
+                    "allowed_charging_current":32000,
+                    "error_state":0,
+                    "lock_state":0,
+                    "dc_fault_current_state":0
+            }</samp>
             Für die HTTP-API funktioniert ein GET auf die entsprechende URL identisch:
             <code>
-                curl -s http://10.0.0.1/<a class="scrollto" href="#evse_max_charging_current">evse/max_charging_current</a>
-            </code>
+                curl -s http://10.0.0.1/<a class="scrollto" href="#evse_state">evse/state</a>
+            </code> liefert die selben Daten.
         </p>
         </div>
         <div id="states_section_commands" class="container">
         <h4>Kommandos</h4>
         <p>
-            Kommandos können durch publishen auf das entsprechende Topic ausgelöst werden. <strong>Der MQTT-Payload eines Kommandos muss immer gültiges JSON sein.</strong>
+            Kommandos können durch publishen auf das entsprechende Topic bzw ein HTTP-PUT auf die entsprechende URL ausgelöst werden. <strong>Der MQTT-Payload eines Kommandos muss immer gültiges JSON sein.</strong>
             Das heißt insbesondere, dass ein Kommando, das keine Informationen benötigt, nicht mit einer leeren Nachricht aufgerufen werden darf, sondern mit <code>null</code>.
             Um einen Neustart des ESPs auszulösen kann beispielsweise folgendes Kommando verwendet werden:
 
@@ -500,12 +534,12 @@
             <code class="code-box">mosquitto_sub -v -t "warp/ABC/<a class="scrollto" href="#wifi_ap_config">wifi/ap_config</a>"</code>
 
             <samp class="samp-box">
-                "warp/ABC/<a class="scrollto" href="#wifi_ap_config">wifi/ap_config</a>": {"enable_ap":true, "ap_fallback_only":false, "ssid":"warp-ABC", "hide_ssid":false, "passphrase":null, "hostname":"warp-ABC", "channel":1, "ip":[10,0,0,1], "gateway":[10,0,0,1], "subnet":[255,255,255,0]},
+                "warp/ABC/<a class="scrollto" href="#wifi_ap_config">wifi/ap_config</a>": {"enable_ap":true, "ap_fallback_only":false, "ssid":"warp-ABC", "hide_ssid":false, "passphrase":null, "channel":1, "ip":"10.0.0.1", "gateway":"10.0.0.1", "subnet":"255.255.255.0"},
             </samp>
 
             kann der Access Point danach folgendermaßen in den Fallback-Modus gebracht werden:
 
-            <code class="code-box">mosquitto_pub -t "warp/ABC/<a class="scrollto" href="#wifi_ap_config">wifi/ap_config_update</a>" -m "{<strong>\"ap_fallback_only\": true,</strong> \"enable_ap\":null, \"ssid\":null, \"hide_ssid\":null, \"passphrase\":null, \"hostname\":null, \"channel\":null, \"ip\":null, \"gateway\":null, \"subnet\":null}"</code>
+            <code class="code-box">mosquitto_pub -t "warp/ABC/<a class="scrollto" href="#wifi_ap_config">wifi/ap_config_update</a>" -m "{<strong>\"ap_fallback_only\": true,</strong> \"enable_ap\":null, \"ssid\":null, \"hide_ssid\":null, \"passphrase\":null, \"channel\":null, \"ip\":null, \"gateway\":null, \"subnet\":null}"</code>
 
             Danach muss, um die Konfiguration anzuwenden noch ein Neustart durchgeführt werden:
 
@@ -520,7 +554,7 @@
             </code>
             abgefragt werden, der Fallback-Modus mit
             <code class="code-box">
-                curl http://10.0.0.1/<a class="scrollto" href="#wifi_ap_config">wifi/ap_config_update</a> -H "Content-Type: application/json" -X PUT -d "{<strong>\"ap_fallback_only\": true,</strong> \"enable_ap\":null, \"ssid\":null, \"hide_ssid\":null, \"passphrase\":null, \"hostname\":null, \"channel\":null, \"ip\":null, \"gateway\":null, \"subnet\":null}"
+                curl http://10.0.0.1/<a class="scrollto" href="#wifi_ap_config">wifi/ap_config_update</a> -H "Content-Type: application/json" -X PUT -d "{<strong>\"ap_fallback_only\": true,</strong> \"enable_ap\":null, \"ssid\":null, \"hide_ssid\":null, \"passphrase\":null, \"channel\":null, \"ip\":null, \"gateway\":null, \"subnet\":null}"
             </code>
             aktiviert werden und danach der Neustart mit
             <code class="code-box">
@@ -3626,7 +3660,7 @@
 
 <div class="any">
     <div class="h5" id="features">features</div>
-    Unterstützte Hardwarefeatures.
+    Unterstützte Hardwarefeatures. Siehe TODO LINK für Details.
 </div>
 
 <div class="any">
