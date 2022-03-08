@@ -10,5 +10,6 @@ from ntp import ntp
 from users import users
 from charge_tracker import charge_tracker
 from misc import misc
+from info import info
 
-mods = [evse, meter, charge_manager, users, charge_tracker, nfc, network, wifi, ethernet, ntp, mqtt, misc]
+mods = [evse, meter, charge_manager, users, charge_tracker, nfc, network, wifi, ethernet, ntp, mqtt, info, misc]

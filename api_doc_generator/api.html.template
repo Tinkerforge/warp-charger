@@ -98,6 +98,21 @@
                     <a class="nav-link ml-3" href="#states_section_states">Zustände</a>
                     <a class="nav-link ml-3" href="#states_section_commands">Kommandos</a>
                     <a class="nav-link ml-3" href="#states_section_configs">Konfigurationen</a>
+                    <a class="nav-link ml-3" href="#states_section_shortcuts">Abkürzungen</a>
+                </nav>
+            </div>
+
+            <a class="nav-link" href="#features_section">Features</a>
+            <div class="collapse">
+                <nav class="nav nav-pills flex-column">
+                    <a class="nav-link ml-3" href="#features_evse">EVSE (<code>"evse"</code>)</a>
+                    <a class="nav-link ml-3" href="#features_cp_disconnect">Control Pilot Disconnect (<code>"cp_disconnect"</code>)</a>
+                    <a class="nav-link ml-3" href="#features_button_config">Button-Konfiguration (<code>"button_config"</code>)</a>
+                    <a class="nav-link ml-3" href="#features_ethernet">Ethernet (<code>"ethernet"</code>)</a>
+                    <a class="nav-link ml-3" href="#features_meter">Stromzähler (<code>"meter"</code>)</a>
+                    <a class="nav-link ml-3" href="#features_meter_phases">Stromzähler misst phasenweise (<code>"meter_phases"</code>)</a>
+                    <a class="nav-link ml-3" href="#features_meter_all_values">Stromzähler misst weitere Werte (<code>"meter_all_values"</code>)</a>
+                    <a class="nav-link ml-3" href="#features_nfc">NFC-Bricklet (<code>"nfc"</code>)</a>
                 </nav>
             </div>
 
@@ -345,8 +360,9 @@
         <div id="states_section_commands" class="container">
         <h4>Kommandos</h4>
         <p>
-            Kommandos können durch publishen auf das entsprechende Topic bzw ein HTTP-PUT auf die entsprechende URL ausgelöst werden. <strong>Der MQTT-Payload eines Kommandos muss immer gültiges JSON sein.</strong>
-            Das heißt insbesondere, dass ein Kommando, das keine Informationen benötigt, nicht mit einer leeren Nachricht aufgerufen werden darf, sondern mit <code>null</code>.
+            Kommandos können durch publishen auf das entsprechende Topic bzw ein HTTP-PUT auf die entsprechende URL ausgelöst werden. <strong>Der Payload eines Kommandos muss immer gültiges JSON sein.</strong>
+            Das heißt insbesondere, dass ein Kommando, das keine Informationen benötigt, nicht mit einer leeren Nachricht aufgerufen werden darf, sondern mit <code>null</code> oder einem der folgenden "leeren" Werte:
+            <code>""</code>, <code>false</code>, <code>0</code>, <code>[]</code> oder <code>{}</code>.
             Um einen Neustart des ESPs auszulösen kann beispielsweise folgendes Kommando verwendet werden:
 
             <code class="code-box">mosquitto_pub -t "warp/ABC/<a class="scrollto" href="#reboot">reboot</a>" -m "null"</code>
@@ -402,6 +418,81 @@
             </code>
             ausgelöst werden.
         </p>
+        </div>
+        <div id="states_section_shortcuts" class="container">
+            <h4>Abkürzungen</h4>
+            <p>
+                Die Nachrichten für Kommandos und Konfigurationen können abgekürzt werden, falls sie Objekte mit genau einem Eintrag sind. Es ist dann möglich, den Wert des Eintrags direkt zu übertragen.
+            </p>
+            <p>Um zum Beispiel den Strom einer externen Steuerung auf 13 Ampere zu aktualisieren kann entweder
+
+                <code class="code-box">mosquitto_pub -t "warp/ABC/<a class="scrollto" href="#evse_external_current">evse/external_current_update</a>" -m "{\"current\": 13000}"</code>
+
+                verwendet werden, oder es kann der neue Wert von 13000 direkt übergeben werden:
+
+                <code class="code-box">mosquitto_pub -t "warp/ABC/<a class="scrollto" href="#evse_external_current">evse/external_current_update</a>" -m "13000"</code>
+            </p>
+            </div>
+    </section>
+    <section id="features_section" class="section">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>Features</h3>
+            </header>
+          <p>
+              WARP Charger melden die jeweils unterstützten Features auf dem Topic <a class="scrollto" href="#info_features">info/features</a>.
+              Mithilfe der Features ist es möglich, dass eine Anwendung die API so verwendet, dass sie mit allen Versionen und Varianten des WARP Chargers kompatibel ist.
+              Feature-Voraussetzungen sind an API-Topics in der Referenz vermerkt.
+              Folgende Features kann eine Wallbox anbieten:
+          </p>
+        </div>
+        <div id="features_evse" class="container">
+            <h4>EVSE (<code>"evse"</code>)</h4>
+            <p>
+                Ein Ladecontroller steht zur Verfügung. Dieses Feature sollte bei allen WARP Chargern, deren Hardware funktionsfähig ist, vorhanden sein.
+            </p>
+        </div>
+        <div id="features_cp_disconnect" class="container">
+            <h4>Control Pilot Disconnect (<code>"cp_disconnect"</code>)</h4>
+            <p>
+                Der Ladecontroller kann das Control Pilot-Signal unterbrechen. <strong>Wird noch nicht unterstützt</strong>
+            </p>
+        </div>
+        <div id="features_button_config" class="container">
+            <h4>Button-Konfiguration (<code>"button_config"</code>)</h4>
+            <p>
+                Das Verhalten des Tasters an der Front der Wallbox kann umkonfiguriert werden. Bei WARP1 ist das nicht möglich, da der Taster und der Schlüsselschalter nicht voneinander unterschieden werden können.
+            </p>
+        </div>
+        <div id="features_ethernet" class="container">
+            <h4>Ethernet (<code>"ethernet"</code>)</h4>
+            <p>
+                Es ist ein ESP Ethernet Brick verbaut. Eine LAN-Verbindung ist möglich.
+            </p>
+        </div>
+        <div id="features_meter" class="container">
+            <h4>Stromzähler (<code>"meter"</code>)</h4>
+            <p>
+                Ein Stromzähler und Hardware zum Auslesen desselben über RS485 ist verfügbar. Dieses Feature wird erst gesetzt, wenn ein Stromzähler mindestens einmal erfolgreich über Modbus ausgelesen wuerde.
+            </p>
+        </div>
+        <div id="features_meter_phases" class="container">
+            <h4>Stromzähler misst phasenweise (<code>"meter_phases"</code>)</h4>
+            <p>
+                Der verbaute Stromzähler kann Energie und weitere Messwerte einzelner Phasen messen.
+            </p>
+        </div>
+        <div id="features_meter_all_values" class="container">
+            <h4>Stromzähler misst weitere Werte (<code>"meter_all_values"</code>)</h4>
+            <p>
+                Der verbaute Stromzähler kann weitere Messwerte auslesen.
+            </p>
+        </div>
+        <div id="features_nfc" class="container">
+            <h4>NFC-Bricklet (<code>"nfc"</code>)</h4>
+            <p>
+                Ein NFC-Bricklet wurde gefunden. Freischaltung per NFC ist möglich.
+            </p>
         </div>
     </section>
     <section id="reference" class="section row">

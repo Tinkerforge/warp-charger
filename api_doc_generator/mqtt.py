@@ -23,6 +23,7 @@ mqtt = Module("mqtt", "MQTT-Verbindung", "", Version.ANY, [
             "broker_password": Elem.STRING("Passwort mit dem sich zum Broker verbunden werden soll. Leer falls keine Authentisierung verwendet wird.", censored=True),
             "global_topic_prefix": Elem.STRING("Präfix der allen MQTT-Topics vorangestellt wird. Normalerweise warp/[UID der Wallbox] bzw. warp2/[UID der Wallbox]."),
             "client_name": Elem.STRING("Name unter dem sich die Wallbox beim Broker registriert. <strong>Das ist nicht der Username zur Authentisierung.</strong>"),
+            "interval": Elem.INT("Minimales Sendeintervall pro Topic in Sekunden. Nachrichten werden grundsätzlich nur verschickt, wenn Änderungen am Payload vorliegen. Durch ein Sendeintervall von x Sekunden wird alle x Sekunden höchstens eine Nachricht eines Topics verschickt. Falls sich der Inhalt in x Sekunden mehrfach ändert wird nur der aktuellste Inhalt übertragen.", unit=Units.s)
         })
     )
 ])

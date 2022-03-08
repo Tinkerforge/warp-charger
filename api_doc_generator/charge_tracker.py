@@ -1,8 +1,13 @@
 from api_doc_common import *
 
 charge_tracker = Module("charge_tracker", "Ladetracker", "", Version.ANY, [
-    Func("last_charges", FuncType.STATE, Elem.ARRAY("Die letzten (bis zu) fünf getrackten Ladungen", members=[
-        * 5 * [Elem.OBJECT("Eine getrackte Ladung", members={
+    Func("state", FuncType.STATE, Elem.OBJECT("Zustand des Ladeträckers", members={
+            "tracked_charges": Elem.INT("Anzahl der insgesamt aufgezeichneten Ladungen."),
+            "first_charge_timestamp": Elem.INT("Ein Unix-Timestamp in <strong>Minuten</strong>, der den Startzeitpunkt der <strong>ersten</strong> Ladung angibt. 0 falls zum Startzeitpunkt keine Zeitsynchronisierung verfügbar war.", unit=Units.min_)
+        })
+    ),
+    Func("last_charges", FuncType.STATE, Elem.ARRAY("Die letzten (bis zu) 30 getrackten Ladungen", members=[
+        * 30 * [Elem.OBJECT("Eine getrackte Ladung", members={
             "timestamp_minutes": Elem.INT("Ein Unix-Timestamp in <strong>Minuten</strong>, der den Startzeitpunkt der Ladung angibt. 0 falls zum Startzeitpunkt keine Zeitsynchronisierung verfügbar war.", unit=Units.min_),
             "charge_duration": Elem.INT("Dauer des Ladevorgangs.", unit=Units.s),
             "user_id": Elem.INT("ID des Benutzers der die Ladung gestartet hat. 0 falls eine Freigabe ohne Nutzerzuordnung erfolgt ist."),

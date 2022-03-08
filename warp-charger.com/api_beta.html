@@ -98,6 +98,21 @@
                     <a class="nav-link ml-3" href="#states_section_states">Zustände</a>
                     <a class="nav-link ml-3" href="#states_section_commands">Kommandos</a>
                     <a class="nav-link ml-3" href="#states_section_configs">Konfigurationen</a>
+                    <a class="nav-link ml-3" href="#states_section_shortcuts">Abkürzungen</a>
+                </nav>
+            </div>
+
+            <a class="nav-link" href="#features_section">Features</a>
+            <div class="collapse">
+                <nav class="nav nav-pills flex-column">
+                    <a class="nav-link ml-3" href="#features_evse">EVSE (<code>"evse"</code>)</a>
+                    <a class="nav-link ml-3" href="#features_cp_disconnect">Control Pilot Disconnect (<code>"cp_disconnect"</code>)</a>
+                    <a class="nav-link ml-3" href="#features_button_config">Button-Konfiguration (<code>"button_config"</code>)</a>
+                    <a class="nav-link ml-3" href="#features_ethernet">Ethernet (<code>"ethernet"</code>)</a>
+                    <a class="nav-link ml-3" href="#features_meter">Stromzähler (<code>"meter"</code>)</a>
+                    <a class="nav-link ml-3" href="#features_meter_phases">Stromzähler misst phasenweise (<code>"meter_phases"</code>)</a>
+                    <a class="nav-link ml-3" href="#features_meter_all_values">Stromzähler misst weitere Werte (<code>"meter_all_values"</code>)</a>
+                    <a class="nav-link ml-3" href="#features_nfc">NFC-Bricklet (<code>"nfc"</code>)</a>
                 </nav>
             </div>
 
@@ -181,6 +196,7 @@
     <div class="collapse">
         <nav class="nav nav-pills flex-column">
         <span class="ml-5">Zustände</span>
+<a class="nav-link" href="#charge_tracker_state" style="margin-left: 2rem !important;">charge_tracker/<wbr>state</a>
 <a class="nav-link" href="#charge_tracker_last_charges" style="margin-left: 2rem !important;">charge_tracker/<wbr>last_charges</a>
 <a class="nav-link" href="#charge_tracker_current_charge" style="margin-left: 2rem !important;">charge_tracker/<wbr>current_charge</a>
 <span class="ml-5">HTTP-Spezifisch</span>
@@ -247,17 +263,24 @@
 <a class="nav-link" href="#mqtt_config" style="margin-left: 2rem !important;">mqtt/<wbr>config</a>
         </nav>
     </div>
-<a class="nav-link ml-3" href="#reference-misc">Sonstiges</a>
+<a class="nav-link ml-3" href="#reference-info">Allgemeine Informationen</a>
     <div class="collapse">
         <nav class="nav nav-pills flex-column">
         <span class="ml-5">Zustände</span>
-<a class="nav-link" href="#version" style="margin-left: 2rem !important;">version</a>
-<a class="nav-link" href="#modules" style="margin-left: 2rem !important;">modules</a>
-<a class="nav-link" href="#features" style="margin-left: 2rem !important;">features</a>
-<span class="ml-5">Kommandos</span>
+<a class="nav-link" href="#info_version" style="margin-left: 2rem !important;">info/<wbr>version</a>
+<a class="nav-link" href="#info_modules" style="margin-left: 2rem !important;">info/<wbr>modules</a>
+<a class="nav-link" href="#info_features" style="margin-left: 2rem !important;">info/<wbr>features</a>
+<a class="nav-link" href="#info_name" style="margin-left: 2rem !important;">info/<wbr>name</a>
+<span class="ml-5">Konfigurationen</span>
+<a class="nav-link" href="#info_display_name" style="margin-left: 2rem !important;">info/<wbr>display_name</a>
+        </nav>
+    </div>
+<a class="nav-link ml-3" href="#reference-misc">Sonstiges</a>
+    <div class="collapse">
+        <nav class="nav nav-pills flex-column">
+        <span class="ml-5">Kommandos</span>
 <a class="nav-link" href="#reboot" style="margin-left: 2rem !important;">reboot</a>
 <span class="ml-5">HTTP-Spezifisch</span>
-<a class="nav-link" href="#uptime" style="margin-left: 2rem !important;">uptime</a>
 <a class="nav-link" href="#debug_report" style="margin-left: 2rem !important;">debug_report</a>
 <a class="nav-link" href="#force_reboot" style="margin-left: 2rem !important;">force_reboot</a>
 <a class="nav-link" href="#update" style="margin-left: 2rem !important;">update</a>
@@ -505,8 +528,9 @@
         <div id="states_section_commands" class="container">
         <h4>Kommandos</h4>
         <p>
-            Kommandos können durch publishen auf das entsprechende Topic bzw ein HTTP-PUT auf die entsprechende URL ausgelöst werden. <strong>Der MQTT-Payload eines Kommandos muss immer gültiges JSON sein.</strong>
-            Das heißt insbesondere, dass ein Kommando, das keine Informationen benötigt, nicht mit einer leeren Nachricht aufgerufen werden darf, sondern mit <code>null</code>.
+            Kommandos können durch publishen auf das entsprechende Topic bzw ein HTTP-PUT auf die entsprechende URL ausgelöst werden. <strong>Der Payload eines Kommandos muss immer gültiges JSON sein.</strong>
+            Das heißt insbesondere, dass ein Kommando, das keine Informationen benötigt, nicht mit einer leeren Nachricht aufgerufen werden darf, sondern mit <code>null</code> oder einem der folgenden "leeren" Werte:
+            <code>""</code>, <code>false</code>, <code>0</code>, <code>[]</code> oder <code>{}</code>.
             Um einen Neustart des ESPs auszulösen kann beispielsweise folgendes Kommando verwendet werden:
 
             <code class="code-box">mosquitto_pub -t "warp/ABC/<a class="scrollto" href="#reboot">reboot</a>" -m "null"</code>
@@ -563,6 +587,81 @@
             ausgelöst werden.
         </p>
         </div>
+        <div id="states_section_shortcuts" class="container">
+            <h4>Abkürzungen</h4>
+            <p>
+                Die Nachrichten für Kommandos und Konfigurationen können abgekürzt werden, falls sie Objekte mit genau einem Eintrag sind. Es ist dann möglich, den Wert des Eintrags direkt zu übertragen.
+            </p>
+            <p>Um zum Beispiel den Strom einer externen Steuerung auf 13 Ampere zu aktualisieren kann entweder
+
+                <code class="code-box">mosquitto_pub -t "warp/ABC/<a class="scrollto" href="#evse_external_current">evse/external_current_update</a>" -m "{\"current\": 13000}"</code>
+
+                verwendet werden, oder es kann der neue Wert von 13000 direkt übergeben werden:
+
+                <code class="code-box">mosquitto_pub -t "warp/ABC/<a class="scrollto" href="#evse_external_current">evse/external_current_update</a>" -m "13000"</code>
+            </p>
+            </div>
+    </section>
+    <section id="features_section" class="section">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>Features</h3>
+            </header>
+          <p>
+              WARP Charger melden die jeweils unterstützten Features auf dem Topic <a class="scrollto" href="#info_features">info/features</a>.
+              Mithilfe der Features ist es möglich, dass eine Anwendung die API so verwendet, dass sie mit allen Versionen und Varianten des WARP Chargers kompatibel ist.
+              Feature-Voraussetzungen sind an API-Topics in der Referenz vermerkt.
+              Folgende Features kann eine Wallbox anbieten:
+          </p>
+        </div>
+        <div id="features_evse" class="container">
+            <h4>EVSE (<code>"evse"</code>)</h4>
+            <p>
+                Ein Ladecontroller steht zur Verfügung. Dieses Feature sollte bei allen WARP Chargern, deren Hardware funktionsfähig ist, vorhanden sein.
+            </p>
+        </div>
+        <div id="features_cp_disconnect" class="container">
+            <h4>Control Pilot Disconnect (<code>"cp_disconnect"</code>)</h4>
+            <p>
+                Der Ladecontroller kann das Control Pilot-Signal unterbrechen. <strong>Wird noch nicht unterstützt</strong>
+            </p>
+        </div>
+        <div id="features_button_config" class="container">
+            <h4>Button-Konfiguration (<code>"button_config"</code>)</h4>
+            <p>
+                Das Verhalten des Tasters an der Front der Wallbox kann umkonfiguriert werden. Bei WARP1 ist das nicht möglich, da der Taster und der Schlüsselschalter nicht voneinander unterschieden werden können.
+            </p>
+        </div>
+        <div id="features_ethernet" class="container">
+            <h4>Ethernet (<code>"ethernet"</code>)</h4>
+            <p>
+                Es ist ein ESP Ethernet Brick verbaut. Eine LAN-Verbindung ist möglich.
+            </p>
+        </div>
+        <div id="features_meter" class="container">
+            <h4>Stromzähler (<code>"meter"</code>)</h4>
+            <p>
+                Ein Stromzähler und Hardware zum Auslesen desselben über RS485 ist verfügbar. Dieses Feature wird erst gesetzt, wenn ein Stromzähler mindestens einmal erfolgreich über Modbus ausgelesen wuerde.
+            </p>
+        </div>
+        <div id="features_meter_phases" class="container">
+            <h4>Stromzähler misst phasenweise (<code>"meter_phases"</code>)</h4>
+            <p>
+                Der verbaute Stromzähler kann Energie und weitere Messwerte einzelner Phasen messen.
+            </p>
+        </div>
+        <div id="features_meter_all_values" class="container">
+            <h4>Stromzähler misst weitere Werte (<code>"meter_all_values"</code>)</h4>
+            <p>
+                Der verbaute Stromzähler kann weitere Messwerte auslesen.
+            </p>
+        </div>
+        <div id="features_nfc" class="container">
+            <h4>NFC-Bricklet (<code>"nfc"</code>)</h4>
+            <p>
+                Ein NFC-Bricklet wurde gefunden. Freischaltung per NFC ist möglich.
+            </p>
+        </div>
     </section>
     <section id="reference" class="section row">
         <div class="container">
@@ -572,7 +671,7 @@
 
 <section id="reference-evse" class="section any">
     <header class="reference-section-header">
-        <h4>Ladecontroller (EVSE)</h4><h5>Benötigt das Feature "evse"</h5>
+        <h4>Ladecontroller (EVSE)</h4><h5>Benötigt das Feature <a href="#features_evse"><code>"evse"</code></a></h5>
 
     </header>
     <ul class="ul-no-bullet">
@@ -711,9 +810,9 @@
 </div></td>
 </tr>
 
-<tr class="any">
+<tr class="warp2_only">
     <th scope="row">dc_fault_current_state<br/><span class="th-details">int</span></th>
-    <td>Der Zustand des DC-Fehlerstrom-Schutzmoduls. Falls ein Gleichstromfehler auftritt, kann nicht mehr geladen werden, bis das Schutzmodul zurückgesetzt wurde. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong> <a class="scrollto text-monospace" href="#evse_reset_dc_fault_current_state">evse/reset_dc_fault_current_state</a> setzt das Modul zurück.
+    <td><strong>(Nur WARP 2)</strong> Der Zustand des DC-Fehlerstrom-Schutzmoduls. Falls ein Gleichstromfehler auftritt, kann nicht mehr geladen werden, bis das Schutzmodul zurückgesetzt wurde. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong> <a class="scrollto text-monospace" href="#evse_reset_dc_fault_current_state">evse/reset_dc_fault_current_state</a> setzt das Modul zurück.
 <div class="any">
 <ol class="ol-enum">
     <li><strong>0</strong> - Kein Fehler</li>
@@ -774,6 +873,12 @@
 <tr class="any">
     <th scope="row">evse_version<br/><span class="th-details">int</span></th>
     <td>Hardware-Version des Ladecontrollers
+<div class="warp1_only">
+<strong>WARP 1:</strong><br><ol class="ol-enum">
+    <li><strong>14</strong> - EVSE 1.4</li>
+    <li><strong>15</strong> - EVSE 1.5</li>
+</ol>
+</div>
 <div class="warp2_only">
 <strong>WARP 2:</strong><br><ol class="ol-enum">
     <li><strong>20</strong> - EVSE 2.0</li>
@@ -781,9 +886,9 @@
 </div></td>
 </tr>
 
-<tr class="any">
+<tr class="warp2_only">
     <th scope="row">energy_meter_type<br/><span class="th-details">int</span></th>
-    <td>Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!
+    <td><strong>(Nur WARP 2)</strong> Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!
 <div class="any">
 <ol class="ol-enum">
     <li><strong>0</strong> - Kein Stromzähler verfügbar</li>
@@ -972,7 +1077,7 @@
 
 <div class="any">
     <div class="h5" id="evse_button_state">evse/button_state</div>
-    Der Zustand des Tasters in der Frontblende. Benötigt das Feature "button_config".
+    Der Zustand des Tasters in der Frontblende. Benötigt das Feature <a href="#features_button_config"><code>"button_config"</code></a>.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1189,7 +1294,7 @@
 
 <div class="any">
     <div class="h5" id="evse_external_current">evse/external_current</div>
-    Der von der externen Steuerung vorgegebene Ladestrom. Kann über evse/external_current_update mit dem selben Payload gesetzt werden.
+    Der von der externen Steuerung vorgegebene Ladestrom. Kann über evse/external_current_update mit dem selben Payload gesetzt werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1211,7 +1316,7 @@
 
 <div class="any">
     <div class="h5" id="evse_external_clear_on_disconnect">evse/external_clear_on_disconnect</div>
-    Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abziehen eines Fahrzeugs automatisch auf 0 gesetzt werden soll. Kann über evse/external_clear_on_disconnect_update mit dem selben Payload gesetzt werden.
+    Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abziehen eines Fahrzeugs automatisch auf 0 gesetzt werden soll. Kann über evse/external_clear_on_disconnect_update mit dem selben Payload gesetzt werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1239,7 +1344,7 @@
 
 <div class="any">
     <div class="h5" id="evse_management_current">evse/management_current</div>
-    Der vom Lastmanagement vorgegebene Ladestrom. Kann über evse/management_current_update mit dem selben Payload gesetzt werden.
+    Der vom Lastmanagement vorgegebene Ladestrom. Kann über evse/management_current_update mit dem selben Payload gesetzt werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1261,7 +1366,7 @@
 
 <div class="any">
     <div class="h5" id="evse_auto_start_charging">evse/auto_start_charging</div>
-    Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Dieser Wert kann über evse/auto_start_charging_update mit dem selben Payload aktualisiert werden. Achtung: Ein Neustart des Ladecontrollers setzt diesen Wert zurück auf true.
+    Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Dieser Wert kann über evse/auto_start_charging_update mit dem selben Payload aktualisiert werden. Achtung: Ein Neustart des Ladecontrollers setzt diesen Wert zurück auf true.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1283,7 +1388,7 @@
 
 <div class="any">
     <div class="h5" id="evse_global_current">evse/global_current</div>
-    Der über das Webinterface vorgegebene Ladestrom. Kann über evse/global_current_update mit dem selben Payload gesetzt werden.
+    Der über das Webinterface vorgegebene Ladestrom. Kann über evse/global_current_update mit dem selben Payload gesetzt werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1305,7 +1410,7 @@
 
 <div class="any">
     <div class="h5" id="evse_management_enabled">evse/management_enabled</div>
-    Gibt an, ob der Ladeslot des Lastmanagements aktiv ist. Der Wert kann über evse/management_enabled_update mit dem selben Payload aktualisiert werden.
+    Gibt an, ob der Ladeslot des Lastmanagements aktiv ist. Der Wert kann über evse/management_enabled_update mit dem selben Payload aktualisiert werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1327,7 +1432,7 @@
 
 <div class="any">
     <div class="h5" id="evse_user_slot_enabled">evse/user_slot_enabled</div>
-    Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist. Der Wert kann über evse/user_slot_enabled_update mit dem selben Payload aktualisiert werden.
+    Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist. Der Wert kann über evse/user_slot_enabled_update mit dem selben Payload aktualisiert werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1349,7 +1454,7 @@
 
 <div class="any">
     <div class="h5" id="evse_external_enabled">evse/external_enabled</div>
-    Gibt an, ob der Ladeslot der externen Steuerung aktiv ist. Der Wert kann über evse/external_enabled_update mit dem selben Payload aktualisiert werden.
+    Gibt an, ob der Ladeslot der externen Steuerung aktiv ist. Der Wert kann über evse/external_enabled_update mit dem selben Payload aktualisiert werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1454,7 +1559,7 @@
 
 <div class="warp2_only">
     <div class="h5" id="evse_button_configuration">evse/button_configuration <strong>(Nur WARP 2)</strong> </div>
-    Die Konfiguration des Tasters in der Frontblende. Diese kann über evse/button_configuration_update mit dem selben Payload aktualisiert werden. <strong>Das NFC-Modul kann diese Konfiguration ändern und sperren, um sicherzustellen, dass ein NFC-Tag zum Starten/Stoppen einer Ladung notwendig ist!</strong>
+    Die Konfiguration des Tasters in der Frontblende. Diese kann über evse/button_configuration_update mit dem selben Payload aktualisiert werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1531,7 +1636,7 @@
 
 <div class="any">
     <div class="h5" id="evse_reset_dc_fault_current_state">evse/reset_dc_fault_current_state</div>
-    Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong>
+    Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong><br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1553,12 +1658,12 @@
 
 <div class="any">
     <div class="h5" id="evse_stop_charging">evse/stop_charging</div>
-    Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit <a class="scrollto text-monospace" href="#evse_start_charging">evse/start_charging</a> wieder gestartet werden.<br/><strong>Leerer Payload. Es muss null übergeben werden.</strong><br/><strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
+    Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit <a class="scrollto text-monospace" href="#evse_start_charging">evse/start_charging</a> wieder gestartet werden.<br/><strong>Leerer Payload. Es muss einer der folgenden Werte übergeben werden: <code>null</code>, <code>""</code>, <code>false</code>, <code>0</code>, <code>[]</code> oder <code>{}</code></strong><br/><strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
 </div>
 
 <div class="any">
     <div class="h5" id="evse_start_charging">evse/start_charging</div>
-    Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit <a class="scrollto text-monospace" href="#evse_stop_charging">evse/stop_charging</a> wieder gestoppt werden.<br/><strong>Leerer Payload. Es muss null übergeben werden.</strong><br/><strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
+    Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit <a class="scrollto text-monospace" href="#evse_stop_charging">evse/stop_charging</a> wieder gestoppt werden.<br/><strong>Leerer Payload. Es muss einer der folgenden Werte übergeben werden: <code>null</code>, <code>""</code>, <code>false</code>, <code>0</code>, <code>[]</code> oder <code>{}</code></strong><br/><strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
 </div>
 
 <div class="any">
@@ -1573,7 +1678,7 @@
 </section>
 <section id="reference-meter" class="section any">
     <header class="reference-section-header">
-        <h4>Stromzähler</h4><h5>Benötigt das Feature "meter".</h5>
+        <h4>Stromzähler</h4>
 
     </header>
     <ul class="ul-no-bullet">
@@ -1654,7 +1759,7 @@
 
 <div class="any">
     <div class="h5" id="meter_values">meter/values</div>
-    Die Messwerte des Stromzählers.
+    Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"><code>"meter"</code></a>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1686,7 +1791,7 @@
 
 <div class="warp2_only">
     <div class="h5" id="meter_phases">meter/phases <strong>(Nur WARP 2)</strong> </div>
-    Angeschlossene und aktive Phasen. Benötigt das Feature "meter_phases".
+    Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter_phases"><code>"meter_phases"</code></a>.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1789,7 +1894,7 @@
 
 <div class="warp2_only">
     <div class="h5" id="meter_all_values">meter/all_values <strong>(Nur WARP 2)</strong> </div>
-    Alle Messwerte, die vom eingebauten Stromzähler gemessen werden.  Benötigt das Feature "meter_all_values". Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
+    Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Benötigt das Feature <a href="#features_meter_all_values"><code>"meter_all_values"</code></a>. Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -2061,7 +2166,7 @@
 
 <div class="any">
     <div class="h5" id="meter_reset">meter/reset</div>
-    Setzt den Energiezähler zurück.<br/><strong>Leerer Payload. Es muss null übergeben werden.</strong><br/><strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
+    Setzt den Energiezähler zurück.<br/><strong>Leerer Payload. Es muss einer der folgenden Werte übergeben werden: <code>null</code>, <code>""</code>, <code>false</code>, <code>0</code>, <code>[]</code> oder <code>{}</code></strong><br/><strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
 </div>
 
 <div class="any">
@@ -2119,7 +2224,7 @@
     
 <div class="any">
     <div class="h5" id="charge_manager_available_current">charge_manager/available_current</div>
-    Der derzeit zur Verfügung stehende Strom. Kann über charge_manager/available_current_update aktualisiert werden. Dieser Strom wird unter den konfigurierten Wallboxen aufgeteilt.
+    Der derzeit zur Verfügung stehende Strom. Kann über charge_manager/available_current_update aktualisiert werden. Dieser Strom wird unter den konfigurierten Wallboxen aufgeteilt.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -2404,7 +2509,7 @@
 
 <div class="any">
     <div class="h5" id="users_delete">users/delete</div>
-    Löscht einen Benutzer.
+    Löscht einen Benutzer.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -2473,7 +2578,7 @@
 
 <div class="any">
     <div class="h5" id="users_http_auth_update">users/http_auth_update</div>
-    Schreibt http_auth_enabled aus <a class="scrollto text-monospace" href="#users_config">users/config</a>.
+    Schreibt http_auth_enabled aus <a class="scrollto text-monospace" href="#users_config">users/config</a>.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -2513,7 +2618,8 @@
         <li>
     Zustände
     <ul>
-        <li><a class="scrollto text-monospace" href="#charge_tracker_last_charges">charge_tracker/last_charges</a></li>
+        <li><a class="scrollto text-monospace" href="#charge_tracker_state">charge_tracker/state</a></li>
+<li><a class="scrollto text-monospace" href="#charge_tracker_last_charges">charge_tracker/last_charges</a></li>
 <li><a class="scrollto text-monospace" href="#charge_tracker_current_charge">charge_tracker/current_charge</a></li>
     </ul>
 </li>
@@ -2526,8 +2632,35 @@
     </ul>
     
 <div class="any">
+    <div class="h5" id="charge_tracker_state">charge_tracker/state</div>
+    Zustand des Ladeträckers
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">tracked_charges<br/><span class="th-details">int</span></th>
+    <td>Anzahl der insgesamt aufgezeichneten Ladungen.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">first_charge_timestamp<br/><span class="th-details">int (<abbr title="Minute">min</abbr>)</span></th>
+    <td>Ein Unix-Timestamp in <strong>Minuten</strong>, der den Startzeitpunkt der <strong>ersten</strong> Ladung angibt. 0 falls zum Startzeitpunkt keine Zeitsynchronisierung verfügbar war.</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div class="any">
     <div class="h5" id="charge_tracker_last_charges">charge_tracker/last_charges</div>
-    Die letzten (bis zu) fünf getrackten Ladungen
+    Die letzten (bis zu) 30 getrackten Ladungen
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -2539,7 +2672,7 @@
         <tbody>
 
 <tr class="any">
-    <th scope="row">[0..4]<br/><span class="th-details">object</span></th>
+    <th scope="row">[0..29]<br/><span class="th-details">object</span></th>
     <td>Eine getrackte Ladung
 <div class="table-responsive">
     <table class="table table-not-striped mt-3 table-bottom-border mt-3">
@@ -2660,7 +2793,7 @@
 </section>
 <section id="reference-nfc" class="section any">
     <header class="reference-section-header">
-        <h4>NFC-Ladefreigabe</h4><h5>Benötigt das Feature "nfc".</h5>
+        <h4>NFC-Ladefreigabe</h4><h5>Benötigt das Feature <a href="#features_nfc"><code>"nfc"</code></a>.</h5>
 
     </header>
     <ul class="ul-no-bullet">
@@ -2863,7 +2996,7 @@
 
 <div class="any">
     <div class="h5" id="nfc_config">nfc/config</div>
-    Die NFC-Konfiguration. Diese kann über nfc/config_update mit dem selben Payload aktualisiert werden.
+    Die NFC-Konfiguration. Diese kann über nfc/config_update mit dem selben Payload aktualisiert werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -3063,7 +3196,7 @@
 
 <div class="any">
     <div class="h5" id="wifi_scan">wifi/scan</div>
-    Löst einen Scan nach WLANs aus. Die Scan-Ergebnisse können derzeit nur über HTTP abgefragt werden.<br/><strong>Leerer Payload. Es muss null übergeben werden.</strong><br/><strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
+    Löst einen Scan nach WLANs aus. Die Scan-Ergebnisse können derzeit nur über HTTP abgefragt werden.<br/><strong>Leerer Payload. Es muss einer der folgenden Werte übergeben werden: <code>null</code>, <code>""</code>, <code>false</code>, <code>0</code>, <code>[]</code> oder <code>{}</code></strong><br/><strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
 </div>
 
 <div class="any">
@@ -3274,7 +3407,7 @@
 </section>
 <section id="reference-ethernet" class="section warp2_only">
     <header class="reference-section-header">
-        <h4>LAN-Verbindung</h4><h5>Benötigt das Feature "ethernet".</h5>
+        <h4>LAN-Verbindung</h4><h5>Benötigt das Feature <a href="#features_ethernet"><code>"ethernet"</code></a>.</h5>
 
     </header>
     <ul class="ul-no-bullet">
@@ -3588,46 +3721,41 @@
     <th scope="row">client_name<br/><span class="th-details">string</span></th>
     <td>Name unter dem sich die Wallbox beim Broker registriert. <strong>Das ist nicht der Username zur Authentisierung.</strong></td>
 </tr>
+
+<tr class="any">
+    <th scope="row">interval<br/><span class="th-details">int (<abbr title="Sekunde">s</abbr>)</span></th>
+    <td>Minimales Sendeintervall pro Topic in Sekunden. Nachrichten werden grundsätzlich nur verschickt, wenn Änderungen am Payload vorliegen. Durch ein Sendeintervall von x Sekunden wird alle x Sekunden höchstens eine Nachricht eines Topics verschickt. Falls sich der Inhalt in x Sekunden mehrfach ändert wird nur der aktuellste Inhalt übertragen.</td>
+</tr>
         </tbody>
     </table>
 </div>
 </div>
 </section>
-<section id="reference-misc" class="section any">
+<section id="reference-info" class="section any">
     <header class="reference-section-header">
-        <h4>Sonstiges</h4>
+        <h4>Allgemeine Informationen</h4>
 
     </header>
     <ul class="ul-no-bullet">
         <li>
     Zustände
     <ul>
-        <li><a class="scrollto text-monospace" href="#version">version</a></li>
-<li><a class="scrollto text-monospace" href="#modules">modules</a></li>
-<li><a class="scrollto text-monospace" href="#features">features</a></li>
+        <li><a class="scrollto text-monospace" href="#info_version">info/version</a></li>
+<li><a class="scrollto text-monospace" href="#info_modules">info/modules</a></li>
+<li><a class="scrollto text-monospace" href="#info_features">info/features</a></li>
+<li><a class="scrollto text-monospace" href="#info_name">info/name</a></li>
     </ul>
 </li>
 <li>
-    Kommandos
+    Konfigurationen
     <ul>
-        <li><a class="scrollto text-monospace" href="#reboot">reboot</a></li>
-    </ul>
-</li>
-<li>
-    HTTP-Spezifisch
-    <ul>
-        <li><a class="scrollto text-monospace" href="#uptime">uptime</a></li>
-<li><a class="scrollto text-monospace" href="#debug_report">debug_report</a></li>
-<li><a class="scrollto text-monospace" href="#force_reboot">force_reboot</a></li>
-<li><a class="scrollto text-monospace" href="#update">update</a></li>
-<li><a class="scrollto text-monospace" href="#flash_firmware">flash_firmware</a></li>
-<li><a class="scrollto text-monospace" href="#flash_spiffs">flash_spiffs</a></li>
+        <li><a class="scrollto text-monospace" href="#info_display_name">info/display_name</a></li>
     </ul>
 </li>
     </ul>
     
 <div class="any">
-    <div class="h5" id="version">version</div>
+    <div class="h5" id="info_version">info/version</div>
     Version der Wallbox-Firmware.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -3654,23 +3782,107 @@
 </div>
 
 <div class="any">
-    <div class="h5" id="modules">modules</div>
+    <div class="h5" id="info_modules">info/modules</div>
     Initialisierungszustand der Firmware-Module.
 </div>
 
 <div class="any">
-    <div class="h5" id="features">features</div>
-    Unterstützte Hardwarefeatures. Siehe TODO LINK für Details.
+    <div class="h5" id="info_features">info/features</div>
+    Unterstützte Hardwarefeatures. Siehe <a class="scrollto" href="#features_section">Features</a> für Details.
 </div>
 
+<div class="any">
+    <div class="h5" id="info_name">info/name</div>
+    Name und Typ der Wallbox
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">name<br/><span class="th-details">string</span></th>
+    <td>Der Name der Wallbox. Besteht aus Typ und UID der Wallbox.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">type<br/><span class="th-details">string</span></th>
+    <td>Typ der Wallbox.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>warp</strong> - Ein WARP Charger</li>
+    <li><strong>warp2</strong> - Ein WARP2 Charger</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">display_type<br/><span class="th-details">string</span></th>
+    <td>Benutzerlesbarer Typ der Wallbox. Gibt neben der Hardware-Version die Variante (Smart, Pro), die maximale Ladeleistung und eventuelle Upgrades an. z.B. "WARP2 Charger Pro 11kW +NFC"</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">uid<br/><span class="th-details">string</span></th>
+    <td>UID der Wallbox bzw. des verbauten ESP (Ethernet) Bricks.</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div class="any">
+    <div class="h5" id="info_display_name">info/display_name</div>
+    Benutzerlesbarer Name der Wallbox. Kann über info/display_name_update mit dem selben Payload gesetzt werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">display_name<br/><span class="th-details">string</span></th>
+    <td>Der Anzeigename.</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</section>
+<section id="reference-misc" class="section any">
+    <header class="reference-section-header">
+        <h4>Sonstiges</h4>
+
+    </header>
+    <ul class="ul-no-bullet">
+        <li>
+    Kommandos
+    <ul>
+        <li><a class="scrollto text-monospace" href="#reboot">reboot</a></li>
+    </ul>
+</li>
+<li>
+    HTTP-Spezifisch
+    <ul>
+        <li><a class="scrollto text-monospace" href="#debug_report">debug_report</a></li>
+<li><a class="scrollto text-monospace" href="#force_reboot">force_reboot</a></li>
+<li><a class="scrollto text-monospace" href="#update">update</a></li>
+<li><a class="scrollto text-monospace" href="#flash_firmware">flash_firmware</a></li>
+<li><a class="scrollto text-monospace" href="#flash_spiffs">flash_spiffs</a></li>
+    </ul>
+</li>
+    </ul>
+    
 <div class="any">
     <div class="h5" id="reboot">reboot</div>
-    Startet den ESP neu, um beispielsweise Konfigurationsänderungen anzuwenden.<br/><strong>Leerer Payload. Es muss null übergeben werden.</strong><br/><strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
-</div>
-
-<div class="any">
-    <div class="h5" id="uptime">uptime</div>
-    Die Laufzeit des ESPs seit dem letzten Neustart in Millisekunden.<br/><br/>Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.
+    Startet den ESP neu, um beispielsweise Konfigurationsänderungen anzuwenden.<br/><strong>Leerer Payload. Es muss einer der folgenden Werte übergeben werden: <code>null</code>, <code>""</code>, <code>false</code>, <code>0</code>, <code>[]</code> oder <code>{}</code></strong><br/><strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
 </div>
 
 <div class="any">

@@ -267,13 +267,16 @@ class Elem:
 </div>"""
 
         if self.type_ == EType.NULL:
-            table = "<br/><strong>Leerer Payload. Es muss null übergeben werden.</strong>"
+            table = "<br/><strong>Leerer Payload. Es muss einer der folgenden Werte übergeben werden: <code>null</code>, <code>\"\"</code>, <code>false</code>, <code>0</code>, <code>[]</code> oder <code>{}</code></strong>"
             if f.type_ != FuncType.COMMAND:
                 print("Function {} has a null payload but is not a command?!?".format(f.name))
             elif f.command_is_action:
                 table += "<br/><strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>"
         else:
             table = self.to_html_table(is_root=True)
+
+        if self.type_ == EType.OBJECT and len(self.val.items()) == 1:
+            table = "<br/><strong><a href=\"#states_section_shortcuts\">Kann abgekürzt werden.</a></strong>" + table
 
         return template.format(fn_id = module + "_" + f.name if module is not None else f.name,
                                fn_path = module + "/" + f.name if module is not None else f.name,

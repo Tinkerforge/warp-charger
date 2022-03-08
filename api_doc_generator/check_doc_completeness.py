@@ -90,11 +90,11 @@ if len(sys.argv) != 3:
     sys.exit(0)
 
 UNDOCUMENTED = [
+    "uptime",
     "free_heap_bytes",
     "largest_free_heap_block",
     "devices",
     "error_counters",
-    "modules",
     "debug/state",
     "proxy/devices",
     "proxy/error_counters",

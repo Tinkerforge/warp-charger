@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature \"evse\"", Version.ANY,[
+evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"#features_evse\"><code>\"evse\"</code></a>", Version.ANY,[
     Func("state", FuncType.STATE, Elem.OBJECT("Der Zustand des Ladecontrollers.", members={
             "iec61851_state": Elem.INT("Der aktuelle Zustand nach IEC 61851", constants=[
                     Const(0, "A: Nicht verbunden"),
@@ -45,7 +45,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature \"evse\"",
                 Const(2, "Systemfehler"),
                 Const(3, "Unbekannter fehler"),
                 Const(4, "Kalibrierungsfehler"),
-            ])
+            ], version=Version.WARP2_ONLY)
         })
     ),
 
@@ -66,6 +66,8 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature \"evse\"",
                 Const(True, "Wallbox hat eine Typ-2-Dose mit Kabelverriegelung"),
             ]),
             "evse_version": Elem.INT("Hardware-Version des Ladecontrollers", constants=[
+                Const(14, "EVSE 1.4", Version.WARP1_ONLY),
+                Const(15, "EVSE 1.5", Version.WARP1_ONLY),
                 Const(20, "EVSE 2.0", Version.WARP2_ONLY)
             ]),
             "energy_meter_type": Elem.INT("Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!", constants=[
@@ -73,7 +75,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature \"evse\"",
                 Const(1, "SDM72", Version.WARP1_ONLY),
                 Const(2, "SDM630", Version.WARP2_ONLY),
                 Const(3, "SDM72V2", Version.WARP2_ONLY)
-            ])
+            ], version=Version.WARP2_ONLY)
         })
     ),
 
@@ -121,7 +123,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature \"evse\"",
         version=Version.WARP2_ONLY)
     ),
 
-    Func("button_state", FuncType.STATE, Elem.OBJECT("Der Zustand des Tasters in der Frontblende. Benötigt das Feature \"button_config\".", members= {
+    Func("button_state", FuncType.STATE, Elem.OBJECT("Der Zustand des Tasters in der Frontblende. Benötigt das Feature <a href=\"#features_button_config\"><code>\"button_config\"</code></a>.", members= {
             "button_press_time": Elem.INT("Zeit zu der zuletzt der Taster gedrückt wurde. 0 falls der Taster seit dem Start des Ladecontrollers nicht betätigt wurde.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms),
             "button_release_time": Elem.INT("Zeit zu der zuletzt der Taster losgelassen wurde. 0 falls der Taster seit dem Start des Ladecontrollers nicht betätigt wurde.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms),
             "button_pressed": Elem.BOOL("true, falls der Taster derzeit gedrückt ist, sonst false"),
@@ -288,7 +290,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature \"evse\"",
         version=Version.WARP2_ONLY)
     ),
 
-    Func("button_configuration", FuncType.STATE, Elem.OBJECT("Die Konfiguration des Tasters in der Frontblende. Diese kann über evse/button_configuration_update mit dem selben Payload aktualisiert werden. <strong>Das NFC-Modul kann diese Konfiguration ändern und sperren, um sicherzustellen, dass ein NFC-Tag zum Starten/Stoppen einer Ladung notwendig ist!</strong>", members={
+    Func("button_configuration", FuncType.STATE, Elem.OBJECT("Die Konfiguration des Tasters in der Frontblende. Diese kann über evse/button_configuration_update mit dem selben Payload aktualisiert werden.", members={
             "button": Elem.INT("Die Konfiguration des Tasters in der Frontblende.", constants=[
                 Const(0, "Deaktiviert"),
                 Const(1, "Ladestart wenn gedrückt"),
