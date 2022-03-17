@@ -468,7 +468,7 @@
                     <code class="code-box">
                         curl -H "Content-Type: application/json" -X PUT -d "{\"current\":8000}" 10.0.0.1/<a class="scrollto" href="#evse_global_current">evse/global_current_update</a></samp>
                     </code>
-                    Wichtig ist hierbei, den Content-Type-Header auf application/json zu setzen, da die Anfrage sonst ignoriert wird. Es können sowohl PUT, POST, als auch PATCH verwendet werden, die API verhält sich in allen drei Fällen gleich.<br>
+                    Wichtig ist hierbei, den Content-Type-Header auf application/json zu setzen, da die Anfrage sonst ignoriert wird. Für alle Anfragen, die Nachrichten an die Wallbox schicken muss HTTP PUT benutzt werden. POST, PATCH usw. werden derzeit nicht akzeptiert.<br>
                 </p>
                 <p>
                     Zur Kontrolle:
