@@ -411,7 +411,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	worden. Damit wird eine maximale Ladeleistung bei einem dreiphasigen
 	Betrieb, von \SI{9}{\kilo\watt} (3$\times\SI{13}{\ampere}$) vorgegeben.
 	Wird die Wallbox nur einphasig angeschlossen, können maximal
-	\SI{3}{\kilo\watt} (1$\times\SI{13}{\ampere}$) über die Wallbox vom
+	\SI{3}{\kilo\watt} (1$\times\SI{13}{\ampere}$) über die Wallbox vom Hausanschluss
 	bezogen werden.
 
 	\hint{Die Schalterstellung und der damit verbundene maximale Ladestrom dürfen nach der
@@ -796,7 +796,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\item Klicke auf \enquote{Flash}
 		\item Der Flash-Vorgang ist erst dann beendet, wenn die Status-LED des ESP32 Ethernet Brick beginnt blau zu blinken. Dies kann bis zu eine Minute länger dauern als das eigentliche Flashen.
 		\hint{Der ESP32 Ethernet Brick darf nicht abgezogen werden, bevor die Status-LED blau blinkt. Andernfalls muss der Flash-Vorgang wiederholt werden.}
-		\item Nachdem der Brick neu geflasht wurde, kannst du ihm vom PC abziehen und wie folgt in die Wallbox einbauen
+		\item Nachdem der Brick neu geflasht wurde, kannst du ihn vom PC abziehen und wie folgt in die Wallbox einbauen
 		\item Stecke zuerst die weißen Bricklet-Stecker, sowie das LAN-Kabel wieder ein
 		\item Schraube dann den Brick mit den Kunststoffschrauben auf die entsprechenden Abstandshalter.
 		\item Schließe jetzt die Wallbox, indem du zuerst den Taster im Deckel, sowie den Erdungsstecker anschließt, den Deckel aufsetzt und die vier Schrauben festziehst
@@ -834,8 +834,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\newpage
 	\section{Lastmanagement zwischen mehreren WARP Chargern (Nur Smart / Pro)}\label{charge_manager}
-	Mit dem Lastmanagement ist es möglich, einen verfügbaren Gesamt-Ladestrom zwischen WARP Chargern aufzuteilen.
-	Hierbei wird eine Wallbox als Lastmanager konfiguriert, die die weiteren Wallboxen im Verbund steuert und ihnen Ladeströme
+	Mit dem Lastmanagement ist es möglich, einen verfügbaren Gesamt-Ladestrom zwischen bis zu 10 WARP Chargern aufzuteilen.
+	Hierbei wird eine Wallbox als Lastmanager konfiguriert, die die weiteren bis zu 9 Wallboxen im Verbund steuert und ihnen Ladeströme
 	zuweist.
 
 	Es kann sowohl ein fester Gesamtstrom verteilt werden, um zum Beispiel den Hausanschluss nicht zu überlasten,
@@ -875,7 +875,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\paragraph{Voreingestellt verfügbarer Strom}
 	Der voreingestellt verfügbare Strom ist der, der vom Lastmanagement verteilt werden darf, nachdem die steuernde Wallbox
 	neugestartet wurde. Der verfügbare Strom kann über die API neu gesetzt werden, nach einem Neustart der Wallbox wird aber
-	zunächst der voreingestellte verwendet. Falls beispielsweise durch eine externe Steuerung der verfügbare PV-Überschussstrom
+	zunächst der voreingestellte Strom verwendet. Falls beispielsweise durch eine externe Steuerung der verfügbare PV-Überschussstrom
 	gesetzt werden soll, kann der voreingestellte Strom auf \SI{0}{\ampere} konfiguriert werden, damit zwingend erst geladen wird,
 	wenn die externe Steuerung mindestens einmal den verfügbaren Strom gesetzt hat
 
@@ -923,7 +923,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Der Ladecontroller einer Wallbox kann nicht erreicht werden, die Wallbox selbst aber schon. Ereignis-Log der betroffenen Wallbox prüfen.
 
 	\paragraph{Ladecontroller reagiert nicht}
-	Der Ladecontroller einer Wallbox reagiert nicht auf Stromzuweisungen. Eventuell ist auf dieser Lastmanagement deaktiviert.
+	Der Ladecontroller einer Wallbox reagiert nicht auf Stromzuweisungen. Eventuell ist auf diesem das Lastmanagement deaktiviert.
 
 	\newpage
 	\section{Ladetracker (Nur Smart / Pro)}
@@ -1019,7 +1019,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	Wenn ein berechtigtes Tag erkannt wurde, sollte der Ladevorgang kurz danach
 	freigeschaltet werden. Es kann sein, dass die Ladung nicht
-	sofort beginnt, sondern erst nachdem eine Ladefreigabe z.B vom Lastmanagement erhalten wurde,
+	sofort beginnt, sondern erst nachdem eine Ladefreigabe z.B. vom Lastmanagement erhalten wurde,
 	und das Fahrzeug eine Ladung anfordert. Die NFC-Freigabe bleibt aber erhalten,
 	bis das Ladekabel vom Fahrzeug getrennt wird.
 
@@ -1171,13 +1171,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Die Wallbox ist intern über zwei 5$\times\SI{20}{\milli\meter}$ Feinsicherungen (mittelträge (m), \SI{500}{\milli\ampere}) abgesichert.
 	Tinkerforge verbaut Sicherungen vom Typ \enquote{ESKA 521.014}.
 
-	% This hack allows to fit the last line of "Kontakt" on the same page.
-	% Distribute the negative whitespace between the following sections.
-	\vspace{-0.1cm}
 	\section{Konformitätserklärung}
 	Die EU-Konformitätserklärung zur Wallbox ist in einem gesonderten Dokument verfügbar.
 
-	\vspace{-0.1cm} %see above
 	\section{Entsorgung}
 	\begin{minipage}{0.43\textwidth}
 		Wallbox und Verpackung sind bei Gebrauchsende ordnungsgemäß zu
@@ -1187,7 +1183,6 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\includegraphics[width=\linewidth]{./img_warp2/resized/weee.pdf}
 	\end{minipage}
 
-	\vspace{-0.1cm} %see above
 	\section{Technische Daten}
 
 	%use minipage here to control footnote placement
@@ -1210,16 +1205,19 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 			\item[Zuleitungsquerschnitt] \SI{2,5}{\square\milli\meter} bis
 			      \SI{10}{\square\milli\meter}
 			\item[Zugangsverriegelung]
-			      NFC~\footref{fn:1}\\Webinterface~\footref{fn:1}\\Konfigurierbare Ladezeiten~\footref{fn:1}
+			      NFC~\footref{fn:1}\\Webinterface~\footref{fn:1}
 			\item[Betriebstemperatur] \SI{-25}{\celsius}
 			      bis \SI{+50}{\celsius} (Durchschnitt in \SI{24}{\hour}: $\leq \SI{35}{\celsius}$)
 			\item[Fehlerstromerkennung] DC \SI{6}{\milli\ampere} (integriert)
 			\item[Schutzart] IP54
 			      (spritzwassergeschützt, für
 			      den Außenbereich geeignet)
+			\item[Lastmanagement] max. 10 Teilnehmer~\footref{fn:1}
+			\item[NFC-Tags] 3 im Lieferumfang\\max. 16 anlernbar~\footref{fn:1}
+			\item[Benutzer] max. 16 konfigurierbar~\footref{fn:1}
 		\end{description}
 	\end{minipage}
-
+	\newpage
 	\section{Kontakt}
 	Tinkerforge GmbH\\ Zur Brinke 7\\ 33758 Schloß Holte-Stukenbrock
 	\begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{Website}}]
@@ -1248,7 +1246,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		           &         & hinzugefügt                     \\
 		06.12.2021 & 1.1.1   & Zuleitungsaderfarben            \\
 		           &         & verbessert                      \\
-		30.03.2022 & 2.0.0   & Aktualisiert für Firmware 2.0.0 \\
+		31.03.2022 & 2.0.0   & Aktualisiert für Firmware 2.0.0 \\
 		\bottomrule
 	\end{tabular}
 	\newpage
