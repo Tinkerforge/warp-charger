@@ -3,7 +3,7 @@ from api_doc_common import *
 info = Module("info", "Allgemeine Informationen", "", Version.ANY, [
 Func("version", FuncType.STATE, Elem.OBJECT("Version der Wallbox-Firmware.", members={
             "firmware": Elem.STRING("Die Firmware-Version, die aktuell ausgeführt wird."),
-            "spiffs": Elem.STRING("Die Version der Konfiguration, die aktuell verwendet wird."),
+            "config": Elem.STRING("Die Version der Konfiguration, die aktuell verwendet wird."),
         })
     ),
 

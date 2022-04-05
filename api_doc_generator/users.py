@@ -29,7 +29,7 @@ users = Module("users", "Benutzerverwaltung", "", Version.ANY, [
         "digest_hash": Elem.STRING("HTTP-Digest-Hash des anzulegenden Nutzers. Ein leerer String verbietet das Anmelden im Webinterface.")
     }), command_is_action=True),
 
-    Func("delete", FuncType.COMMAND, Elem.OBJECT("Löscht einen Benutzer.", members={
+    Func("remove", FuncType.COMMAND, Elem.OBJECT("Löscht einen Benutzer.", members={
         "id": Elem.INT("ID des zu löschenden Nutzers")
     }), command_is_action=True),
 

@@ -123,7 +123,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
         version=Version.WARP2_ONLY)
     ),
 
-    Func("button_state", FuncType.STATE, Elem.OBJECT("Der Zustand des Tasters in der Frontblende. Benötigt das Feature <a href=\"#features_button_config\"><code>\"button_config\"</code></a>.", members= {
+    Func("button_state", FuncType.STATE, Elem.OBJECT("Der Zustand des Tasters in der Frontblende.", members= {
             "button_press_time": Elem.INT("Zeit zu der zuletzt der Taster gedrückt wurde. 0 falls der Taster seit dem Start des Ladecontrollers nicht betätigt wurde.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms),
             "button_release_time": Elem.INT("Zeit zu der zuletzt der Taster losgelassen wurde. 0 falls der Taster seit dem Start des Ladecontrollers nicht betätigt wurde.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms),
             "button_pressed": Elem.BOOL("true, falls der Taster derzeit gedrückt ist, sonst false"),
@@ -254,7 +254,12 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
         })
     ),
 
-    Func("user_slot_enabled", FuncType.STATE, Elem.OBJECT("Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist. Der Wert kann über evse/user_slot_enabled_update mit dem selben Payload aktualisiert werden.", members={
+    Func("user_current", FuncType.STATE, Elem.OBJECT("Der von der Benutzerautorisierung erlaubte Ladestrom.", members={
+            "current": Elem.INT("Der von der Benutzerautorisierung erlaubte Ladestrom. 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockiert.", unit=Units.mA)
+        })
+    ),
+
+    Func("user_enabled", FuncType.STATE, Elem.OBJECT("Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist. Der Wert kann über evse/user_enabled_update mit dem selben Payload aktualisiert werden.", members={
             "enabled": Elem.BOOL("true wenn die Benutzerautorisierung aktiviert ist, sonst false")
         })
     ),
@@ -290,7 +295,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
         version=Version.WARP2_ONLY)
     ),
 
-    Func("button_configuration", FuncType.STATE, Elem.OBJECT("Die Konfiguration des Tasters in der Frontblende. Diese kann über evse/button_configuration_update mit dem selben Payload aktualisiert werden.", members={
+    Func("button_configuration", FuncType.STATE, Elem.OBJECT("Die Konfiguration des Tasters in der Frontblende. Diese kann über evse/button_configuration_update mit dem selben Payload aktualisiert werden. Benötigt das Feature <a href=\"#features_button_configuration\"><code>\"button_configuration\"</code></a>", members={
             "button": Elem.INT("Die Konfiguration des Tasters in der Frontblende.", constants=[
                 Const(0, "Deaktiviert"),
                 Const(1, "Ladestart wenn gedrückt"),
