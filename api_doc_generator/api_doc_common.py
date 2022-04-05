@@ -180,7 +180,7 @@ class Elem:
             print("Warning: Array with more than one unit found! Those units will not be documented")
             return ''
 
-        if self.type_ == EType.OBJECT:
+        if self.type_ == EType.OBJECT or self.type_ == EType.OPAQUE:
             return ''
 
     def to_html(self, key_name) -> str:
