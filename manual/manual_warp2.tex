@@ -109,7 +109,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\Huge
 		WARP2 Charger Betriebsanleitung\\\vspace{1cm}
 		\large
-		Version 2.0.0\\\vspace{0.25cm}
+		Version 2.0.1\\\vspace{0.25cm}
 		\today
 	\end{center}
 	\vfill \gfx{./img_warp2/resized/warp_perspective_blue_ready}
@@ -886,6 +886,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Der Watchdog erlaubt es der steuernden Wallbox, robust auf Ausfälle einer externen Steuerung zu reagieren. Falls über die API der Wallbox
 	nicht mindestens alle 30 Sekunden der verfügbare Strom gesetzt wird, und der Watchdog aktiv ist, wird der verfügbare Strom wieder zurück auf den
 	\enquote{Voreingestellt verfügbare Strom} gesetzt. Falls die externe Steuerung später wieder läuft, wird der Watchdog zurückgesetzt.
+	\hint{Der Watchdog sollte nur dann aktiviert werden,
+	wenn eine selbst programmierte Steuerung den für den Wallbox-Verbund verfügbaren Strom über die API dynamisch ändern soll.
+	Für den normalen Lastmanagement-Betrieb ist der Watchdog nicht notwendig.}
 
 	\paragraph{Stromverteilung protokollieren}
 	Wenn aktiv, fügt der Lastmanager dem Ereignis-Log detaillierte Ausgaben hinzu, wann immer Strom umverteilt wird. Damit kann unerwartetes Verhalten des
@@ -1244,6 +1247,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		06.12.2021 & 1.1.1   & Zuleitungsaderfarben            \\
 		           &         & verbessert                      \\
 		31.03.2022 & 2.0.0   & Aktualisiert für Firmware 2.0.0 \\
+		06.04.2022 & 2.0.1   & Watchdog-Hinweis hinzugefügt    \\
 		\bottomrule
 	\end{tabular}
 	\newpage
