@@ -89,6 +89,7 @@ if len(sys.argv) != 3:
     print("Usage: {} [version] [path/to/debug_report.json]".format(sys.argv[0]))
     sys.exit(0)
 
+# Those may appear in a debug report, but are not documented
 UNDOCUMENTED = [
     "uptime",
     "free_heap_bytes",
@@ -109,6 +110,24 @@ UNDOCUMENTED = [
 version = int(sys.argv[1])
 
 mods = [m for m in mods if m.version == Version.ANY or m.version == version]
+
+# Those are documented, but will not appear in a debug report. Typically raw commands.
+IMPLEMENTED = [
+    "charge_tracker/remove_all_charges",
+    "users/modify"
+]
+
+all_functions = set(["{}/{}".format(m.name, f.name) if m.name != "misc" else f.name for m in mods for f in m.functions])
+
+for m in mods:
+    for f in m.functions:
+        if f.type_ == FuncType.HTTP_ONLY:
+            all_functions.discard("{}/{}".format(m.name, f.name) if m.name != "misc" else f.name)
+        if f.root.version != Version.ANY and f.root.version != version:
+            all_functions.discard("{}/{}".format(m.name, f.name) if m.name != "misc" else f.name)
+
+for x in IMPLEMENTED:
+    all_functions.discard(x)
 
 def filter_elem(e: Elem, ver: int):
     if e.val is None:
@@ -131,6 +150,8 @@ with open(sys.argv[2]) as f:
     debug_report = json.load(f)
 
 for k, v in debug_report.items():
+    all_functions.discard(k)
+
     if k in UNDOCUMENTED:
         continue
     if k.endswith("_update") and k.replace("_update", "") in debug_report:
@@ -161,3 +182,6 @@ for k, v in debug_report.items():
         continue
 
     check_elem_doc(config_func.root, v, "{mod}/{fn}".format(mod=mod, fn=fn))
+
+print("Documented functions that were not found in debug report:")
+print("   ", "\n    ".join(all_functions))
