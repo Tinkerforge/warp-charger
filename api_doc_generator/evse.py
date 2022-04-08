@@ -94,35 +94,6 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
         ])
     ),
 
-    Func("energy_meter_values", FuncType.STATE, Elem.OBJECT("Bei WARP 2 wird der Stromzähler vom Ladecontroller selbst ausgelesen. evse/energy_meter_values liefert die zuletzt gelesenen Werte.", members={
-            "power": Elem.FLOAT("Die aktuelle Ladeleistung.", unit=Units.W),
-            "energy_rel": Elem.FLOAT("Die geladene Energie seit dem letzten Reset.", unit=Units.kWh),
-            "energy_abs": Elem.FLOAT("Die geladene Energie seit der Herstellung des Stromzählers.", unit=Units.kWh),
-            "phases_active": Elem.ARRAY("Die derzeit aktiven Phasen", members=[
-                Elem.BOOL("Phase L1 aktiv"),
-                Elem.BOOL("Phase L2 aktiv"),
-                Elem.BOOL("Phase L3 aktiv"),
-            ]),
-            "phases_connected": Elem.ARRAY("Die angeschlossenen Phasen", members=[
-                Elem.BOOL("Phase L1 angeschlossen"),
-                Elem.BOOL("Phase L2 angeschlossen"),
-                Elem.BOOL("Phase L3 angeschlossen"),
-            ]),
-        },
-        version=Version.WARP2_ONLY)
-    ),
-
-    Func("energy_meter_errors", FuncType.STATE, Elem.OBJECT("Bei WARP 2 wird der Stromzähler vom Ladecontroller selbst ausgelesen. evse/energy_meter_errors liefert die Fehlerzähler der Kommunikation mit dem Stromzähler.", members={
-            "local_timeout": Elem.INT("Local Timeout"),
-            "global_timeout": Elem.INT("Global Timeout"),
-            "illegal_function": Elem.INT("Illegal Function"),
-            "illegal_data_access": Elem.INT("Illegal Data Access"),
-            "illegal_data_value": Elem.INT("Illegal Data Value"),
-            "slave_device_failure": Elem.INT("Slave Device Failure"),
-        },
-        version=Version.WARP2_ONLY)
-    ),
-
     Func("button_state", FuncType.STATE, Elem.OBJECT("Der Zustand des Tasters in der Frontblende.", members= {
             "button_press_time": Elem.INT("Zeit zu der zuletzt der Taster gedrückt wurde. 0 falls der Taster seit dem Start des Ladecontrollers nicht betätigt wurde.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms),
             "button_release_time": Elem.INT("Zeit zu der zuletzt der Taster losgelassen wurde. 0 falls der Taster seit dem Start des Ladecontrollers nicht betätigt wurde.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms),

@@ -126,8 +126,6 @@
 <a class="nav-link" href="#evse_state" style="margin-left: 2rem !important;">evse/<wbr>state</a>
 <a class="nav-link" href="#evse_hardware_configuration" style="margin-left: 2rem !important;">evse/<wbr>hardware_configuration</a>
 <a class="nav-link" href="#evse_slots" style="margin-left: 2rem !important;">evse/<wbr>slots</a>
-<a class="nav-link" href="#evse_energy_meter_values" style="margin-left: 2rem !important;">evse/<wbr>energy_meter_values</a>
-<a class="nav-link" href="#evse_energy_meter_errors" style="margin-left: 2rem !important;">evse/<wbr>energy_meter_errors</a>
 <a class="nav-link" href="#evse_button_state" style="margin-left: 2rem !important;">evse/<wbr>button_state</a>
 <a class="nav-link" href="#evse_indicator_led" style="margin-left: 2rem !important;">evse/<wbr>indicator_led</a>
 <a class="nav-link" href="#evse_low_level_state" style="margin-left: 2rem !important;">evse/<wbr>low_level_state</a>
@@ -287,7 +285,6 @@
 <a class="nav-link" href="#force_reboot" style="margin-left: 2rem !important;">force_reboot</a>
 <a class="nav-link" href="#update" style="margin-left: 2rem !important;">update</a>
 <a class="nav-link" href="#flash_firmware" style="margin-left: 2rem !important;">flash_firmware</a>
-<a class="nav-link" href="#flash_spiffs" style="margin-left: 2rem !important;">flash_spiffs</a>
         </nav>
     </div>
                 </nav>
@@ -683,8 +680,6 @@
         <li><a class="scrollto text-monospace" href="#evse_state">evse/state</a></li>
 <li><a class="scrollto text-monospace" href="#evse_hardware_configuration">evse/hardware_configuration</a></li>
 <li><a class="scrollto text-monospace" href="#evse_slots">evse/slots</a></li>
-<li><a class="scrollto text-monospace" href="#evse_energy_meter_values">evse/energy_meter_values</a></li>
-<li><a class="scrollto text-monospace" href="#evse_energy_meter_errors">evse/energy_meter_errors</a></li>
 <li><a class="scrollto text-monospace" href="#evse_button_state">evse/button_state</a></li>
 <li><a class="scrollto text-monospace" href="#evse_indicator_led">evse/indicator_led</a></li>
 <li><a class="scrollto text-monospace" href="#evse_low_level_state">evse/low_level_state</a></li>
@@ -969,109 +964,6 @@
         </tbody>
     </table>
 </div></td>
-</tr>
-        </tbody>
-    </table>
-</div>
-</div>
-
-<div class="warp2_only">
-    <div class="h5" id="evse_energy_meter_values">evse/energy_meter_values <strong>(Nur WARP 2)</strong> </div>
-    Bei WARP 2 wird der Stromzähler vom Ladecontroller selbst ausgelesen. evse/energy_meter_values liefert die zuletzt gelesenen Werte.
-<div class="table-responsive">
-    <table class="table table-striped table-bottom-border mt-3">
-        <thead class="thead-dark">
-            <tr>
-            <th scope="col" style="width: 25%">Name</th>
-            <th scope="col">Bedeutung</th>
-            </tr>
-        </thead>
-        <tbody>
-
-<tr class="any">
-    <th scope="row">power<br/><span class="th-details">float (<abbr title="Watt">W</abbr>)</span></th>
-    <td>Die aktuelle Ladeleistung.</td>
-</tr>
-
-<tr class="any">
-    <th scope="row">energy_rel<br/><span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)</span></th>
-    <td>Die geladene Energie seit dem letzten Reset.</td>
-</tr>
-
-<tr class="any">
-    <th scope="row">energy_abs<br/><span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)</span></th>
-    <td>Die geladene Energie seit der Herstellung des Stromzählers.</td>
-</tr>
-
-<tr class="any">
-    <th scope="row">phases_active<br/><span class="th-details">bool[3]</span></th>
-    <td>Die derzeit aktiven Phasen
-<div class="any">
-<ol class="ol-enum">
-    <li>[0] - Phase L1 aktiv</li>
-    <li>[1] - Phase L2 aktiv</li>
-    <li>[2] - Phase L3 aktiv</li>
-</ol>
-</div></td>
-</tr>
-
-<tr class="any">
-    <th scope="row">phases_connected<br/><span class="th-details">bool[3]</span></th>
-    <td>Die angeschlossenen Phasen
-<div class="any">
-<ol class="ol-enum">
-    <li>[0] - Phase L1 angeschlossen</li>
-    <li>[1] - Phase L2 angeschlossen</li>
-    <li>[2] - Phase L3 angeschlossen</li>
-</ol>
-</div></td>
-</tr>
-        </tbody>
-    </table>
-</div>
-</div>
-
-<div class="warp2_only">
-    <div class="h5" id="evse_energy_meter_errors">evse/energy_meter_errors <strong>(Nur WARP 2)</strong> </div>
-    Bei WARP 2 wird der Stromzähler vom Ladecontroller selbst ausgelesen. evse/energy_meter_errors liefert die Fehlerzähler der Kommunikation mit dem Stromzähler.
-<div class="table-responsive">
-    <table class="table table-striped table-bottom-border mt-3">
-        <thead class="thead-dark">
-            <tr>
-            <th scope="col" style="width: 25%">Name</th>
-            <th scope="col">Bedeutung</th>
-            </tr>
-        </thead>
-        <tbody>
-
-<tr class="any">
-    <th scope="row">local_timeout<br/><span class="th-details">int</span></th>
-    <td>Local Timeout</td>
-</tr>
-
-<tr class="any">
-    <th scope="row">global_timeout<br/><span class="th-details">int</span></th>
-    <td>Global Timeout</td>
-</tr>
-
-<tr class="any">
-    <th scope="row">illegal_function<br/><span class="th-details">int</span></th>
-    <td>Illegal Function</td>
-</tr>
-
-<tr class="any">
-    <th scope="row">illegal_data_access<br/><span class="th-details">int</span></th>
-    <td>Illegal Data Access</td>
-</tr>
-
-<tr class="any">
-    <th scope="row">illegal_data_value<br/><span class="th-details">int</span></th>
-    <td>Illegal Data Value</td>
-</tr>
-
-<tr class="any">
-    <th scope="row">slave_device_failure<br/><span class="th-details">int</span></th>
-    <td>Slave Device Failure</td>
 </tr>
         </tbody>
     </table>
@@ -3910,7 +3802,6 @@
 <li><a class="scrollto text-monospace" href="#force_reboot">force_reboot</a></li>
 <li><a class="scrollto text-monospace" href="#update">update</a></li>
 <li><a class="scrollto text-monospace" href="#flash_firmware">flash_firmware</a></li>
-<li><a class="scrollto text-monospace" href="#flash_spiffs">flash_spiffs</a></li>
     </ul>
 </li>
     </ul>
@@ -3938,11 +3829,6 @@
 <div class="any">
     <div class="h5" id="flash_firmware">flash_firmware</div>
     Nimmt ein Firmware-Update als POST entgegen, dass dann geflasht wird.
-</div>
-
-<div class="any">
-    <div class="h5" id="flash_spiffs">flash_spiffs</div>
-    Nimmt ein Update der Konfigurationspartition als POST entgegen, dass dann geflasht wird.
 </div>
 </section>
 
