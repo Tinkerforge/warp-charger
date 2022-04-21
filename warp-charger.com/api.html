@@ -771,7 +771,18 @@
 
 <tr class="any">
     <th scope="row">contactor_error<br/><span class="th-details">int</span></th>
-    <td>Fehlercode der Schützüberwachung. Ein Wert ungleich 0 zeigt einen Fehler an.</td>
+    <td>Fehlercode der Schützüberwachung. Ein Wert ungleich 0 zeigt einen Fehler an.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Kein Fehler</li>
+    <li><strong>1</strong> - Schütz sollte durchschalten.<br/><span class="pr-4"></span>Kein Strom vor Schütz, kein Strom nach Schütz.<br/><span class="pr-4"></span>Stromversorgung prüfen.</li>
+    <li><strong>2</strong> - Schütz sollte durchschalten.<br/><span class="pr-4"></span>Strom vor Schütz, kein Strom nach Schütz.<br/><span class="pr-4"></span>Schütz defekt?</li>
+    <li><strong>3</strong> - Schütz sollte durchschalten.<br/><span class="pr-4"></span>Kein Strom vor Schütz, Strom nach Schütz.<br/><span class="pr-4"></span>Verkabelung prüfen.</li>
+    <li><strong>4</strong> - Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class="pr-4"></span>Kein Strom vor Schütz, kein Strom nach Schütz.<br/><span class="pr-4"></span>Stromversorgung prüfen.</li>
+    <li><strong>5</strong> - Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class="pr-4"></span>Kein Strom vor Schütz, Strom nach Schütz.<br/><span class="pr-4"></span>Verkabelung prüfen.</li>
+    <li><strong>6</strong> - Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class="pr-4"></span>Strom vor Schütz, Strom nach Schütz.<br/><span class="pr-4"></span>Schütz defekt?</li>
+</ol>
+</div></td>
 </tr>
 
 <tr class="any">
