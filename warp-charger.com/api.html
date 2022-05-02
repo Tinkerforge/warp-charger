@@ -161,7 +161,13 @@
 <a class="nav-link" href="#meter_error_counters" style="margin-left: 2rem !important;">meter/<wbr>error_counters</a>
 <a class="nav-link" href="#meter_all_values" style="margin-left: 2rem !important;">meter/<wbr>all_values</a>
 <span class="ml-5">Kommandos</span>
+<a class="nav-link" href="#meter_state_update" style="margin-left: 2rem !important;">meter/<wbr>state_update</a>
+<a class="nav-link" href="#meter_values_update" style="margin-left: 2rem !important;">meter/<wbr>values_update</a>
+<a class="nav-link" href="#meter_phases_update" style="margin-left: 2rem !important;">meter/<wbr>phases_update</a>
+<a class="nav-link" href="#meter_all_values_update" style="margin-left: 2rem !important;">meter/<wbr>all_values_update</a>
 <a class="nav-link" href="#meter_reset" style="margin-left: 2rem !important;">meter/<wbr>reset</a>
+<span class="ml-5">Zustände</span>
+<a class="nav-link" href="#meter_last_reset" style="margin-left: 2rem !important;">meter/<wbr>last_reset</a>
 <span class="ml-5">HTTP-Spezifisch</span>
 <a class="nav-link" href="#meter_history" style="margin-left: 2rem !important;">meter/<wbr>history</a>
 <a class="nav-link" href="#meter_live" style="margin-left: 2rem !important;">meter/<wbr>live</a>
@@ -211,6 +217,8 @@
 <a class="nav-link" href="#nfc_seen_tags" style="margin-left: 2rem !important;">nfc/<wbr>seen_tags</a>
 <span class="ml-5">Kommandos</span>
 <a class="nav-link" href="#nfc_inject_tag" style="margin-left: 2rem !important;">nfc/<wbr>inject_tag</a>
+<a class="nav-link" href="#nfc_inject_tag_start" style="margin-left: 2rem !important;">nfc/<wbr>inject_tag_start</a>
+<a class="nav-link" href="#nfc_inject_tag_stop" style="margin-left: 2rem !important;">nfc/<wbr>inject_tag_stop</a>
 <span class="ml-5">Konfigurationen</span>
 <a class="nav-link" href="#nfc_config" style="margin-left: 2rem !important;">nfc/<wbr>config</a>
         </nav>
@@ -1272,7 +1280,7 @@
 
 <div class="any">
     <div class="h5" id="evse_auto_start_charging">evse/auto_start_charging</div>
-    Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Dieser Wert kann über evse/auto_start_charging_update mit dem selben Payload aktualisiert werden. Achtung: Ein Neustart des Ladecontrollers setzt diesen Wert zurück auf true.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+    Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Dieser Wert kann über evse/auto_start_charging_update mit dem selben Payload aktualisiert werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1562,8 +1570,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="evse_reset_dc_fault_current_state">evse/reset_dc_fault_current_state</div>
+<div class="warp2_only">
+    <div class="h5" id="evse_reset_dc_fault_current_state">evse/reset_dc_fault_current_state <strong>(Nur WARP 2)</strong> </div>
     Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong><br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1623,7 +1631,17 @@
 <li>
     Kommandos
     <ul>
-        <li><a class="scrollto text-monospace" href="#meter_reset">meter/reset</a></li>
+        <li><a class="scrollto text-monospace" href="#meter_state_update">meter/state_update</a></li>
+<li><a class="scrollto text-monospace" href="#meter_values_update">meter/values_update</a></li>
+<li><a class="scrollto text-monospace" href="#meter_phases_update">meter/phases_update</a></li>
+<li><a class="scrollto text-monospace" href="#meter_all_values_update">meter/all_values_update</a></li>
+<li><a class="scrollto text-monospace" href="#meter_reset">meter/reset</a></li>
+    </ul>
+</li>
+<li>
+    Zustände
+    <ul>
+        <li><a class="scrollto text-monospace" href="#meter_last_reset">meter/last_reset</a></li>
     </ul>
 </li>
 <li>
@@ -1666,17 +1684,13 @@
 <div class="any">
 <ol class="ol-enum">
     <li><strong>0</strong> - Kein Stromzähler verfügbar</li>
+    <li><strong>2</strong> - SDM630</li>
+    <li><strong>3</strong> - SDM72V2</li>
 </ol>
 </div>
 <div class="warp1_only">
 <strong>WARP 1:</strong><br><ol class="ol-enum">
     <li><strong>1</strong> - SDM72</li>
-</ol>
-</div>
-<div class="warp2_only">
-<strong>WARP 2:</strong><br><ol class="ol-enum">
-    <li><strong>2</strong> - SDM630</li>
-    <li><strong>3</strong> - SDM72V2</li>
 </ol>
 </div></td>
 </tr>
@@ -1717,8 +1731,8 @@
 </div>
 </div>
 
-<div class="warp2_only">
-    <div class="h5" id="meter_phases">meter/phases <strong>(Nur WARP 2)</strong> </div>
+<div class="any">
+    <div class="h5" id="meter_phases">meter/phases</div>
     Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter_phases"><code>"meter_phases"</code></a>.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1820,9 +1834,400 @@
 </div>
 </div>
 
-<div class="warp2_only">
-    <div class="h5" id="meter_all_values">meter/all_values <strong>(Nur WARP 2)</strong> </div>
+<div class="any">
+    <div class="h5" id="meter_all_values">meter/all_values</div>
     Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Benötigt das Feature <a href="#features_meter_all_values"><code>"meter_all_values"</code></a>. Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Index</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">[0..2]<br/><span class="th-details">float (<abbr title="Volt">V</abbr>)</span></th>
+    <td>Spannung gegen Neutral</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[3..5]<br/><span class="th-details">float (<abbr title="Ampere">A</abbr>)</span></th>
+    <td>Strom</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[6..8]<br/><span class="th-details">float (<abbr title="Watt">W</abbr>)</span></th>
+    <td>Wirkleistung</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[9..11]<br/><span class="th-details">float (<abbr title="Voltampere">VA</abbr>)</span></th>
+    <td>Scheinleistung</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[12..14]<br/><span class="th-details">float (<abbr title="Voltampere Reaktiv">var</abbr>)</span></th>
+    <td>Blindleistung</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[15..17]<br/><span class="th-details">float</span></th>
+    <td>Leistungsfaktor; Das Vorzeichen des Leistungsfaktors gibt die Richtung des Stromflusses an.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[18..20]<br/><span class="th-details">float (<abbr title="Grad">°</abbr>)</span></th>
+    <td>relative Phasenverschiebung</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[21]<br/><span class="th-details">float (<abbr title="Volt">V</abbr>)</span></th>
+    <td>Durchschnittliche Spannung gegen Neutral</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[22]<br/><span class="th-details">float (<abbr title="Ampere">A</abbr>)</span></th>
+    <td>Durchschnittlicher Strom</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[23]<br/><span class="th-details">float (<abbr title="Ampere">A</abbr>)</span></th>
+    <td>Summe der Phasenströme</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[24]<br/><span class="th-details">float (<abbr title="Watt">W</abbr>)</span></th>
+    <td>Gesamtwirkleistung</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[25]<br/><span class="th-details">float (<abbr title="Voltampere">VA</abbr>)</span></th>
+    <td>Gesamtscheinleistung</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[26]<br/><span class="th-details">float (<abbr title="Voltampere Reaktiv">var</abbr>)</span></th>
+    <td>Gesamtblindleistung</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[27]<br/><span class="th-details">float</span></th>
+    <td>Gesamtleistungsfaktor</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[28]<br/><span class="th-details">float (<abbr title="Grad">°</abbr>)</span></th>
+    <td>Gesamtphasenverschiebung</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[29]<br/><span class="th-details">float (<abbr title="Hertz">Hz</abbr>)</span></th>
+    <td>Frequenz der Versorgungsspannung</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[30]<br/><span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)</span></th>
+    <td>Wirkenergie (Import; vom Fahrzeug aufgenommen)</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[31]<br/><span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)</span></th>
+    <td>Wirkenergie (Export; vom Fahrzeug abgegeben)</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[32]<br/><span class="th-details">float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</span></th>
+    <td>Blindenergie (Import; vom Fahrzeug aufgenommen)</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[33]<br/><span class="th-details">float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</span></th>
+    <td>Blindenergie (Export; vom Fahrzeug abgegeben)</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[34]<br/><span class="th-details">float (<abbr title="Kilovoltamperestunde">kVAh</abbr>)</span></th>
+    <td>Gesamtscheinenergie</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[35]<br/><span class="th-details">float (<abbr title="Amperestunde">Ah</abbr>)</span></th>
+    <td>Transportierte elektrische Ladung</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[36]<br/><span class="th-details">float (<abbr title="Watt">W</abbr>)</span></th>
+    <td>Bezogene Wirkleistung; Entspricht Import-Export-Differenz</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[37]<br/><span class="th-details">float (<abbr title="Watt">W</abbr>)</span></th>
+    <td>Max. bezogene Wirkleistung; Höchster gemessener Wert</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[38]<br/><span class="th-details">float (<abbr title="Voltampere">VA</abbr>)</span></th>
+    <td>Bezogene Scheinleistung; Entspricht Import-Export-Differenz</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[39]<br/><span class="th-details">float (<abbr title="Voltampere">VA</abbr>)</span></th>
+    <td>Max. bezogene Scheinleistung; Höchster gemessener Wert</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[40]<br/><span class="th-details">float (<abbr title="Ampere">A</abbr>)</span></th>
+    <td>Bezogener Neutralleiterstrom</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[41]<br/><span class="th-details">float (<abbr title="Ampere">A</abbr>)</span></th>
+    <td>Max. bezogener Neutralleiterstrom; Höchster gemessener Wert</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[42]<br/><span class="th-details">float (<abbr title="Volt">V</abbr>)</span></th>
+    <td>Spannung L1 zu L2</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[43]<br/><span class="th-details">float (<abbr title="Volt">V</abbr>)</span></th>
+    <td>Spannung L2 zu L3</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[44]<br/><span class="th-details">float (<abbr title="Volt">V</abbr>)</span></th>
+    <td>Spannung L3 zu L1</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[45]<br/><span class="th-details">float (<abbr title="Volt">V</abbr>)</span></th>
+    <td>Durchschnittliche Spannung zwischen Phasen</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[46]<br/><span class="th-details">float (<abbr title="Ampere">A</abbr>)</span></th>
+    <td>Neutralleiterstrom</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[47..49]<br/><span class="th-details">float (<abbr title="Prozent">%</abbr>)</span></th>
+    <td>Total Harmonic Distortion (THD) der Spannung</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[50..52]<br/><span class="th-details">float (<abbr title="Prozent">%</abbr>)</span></th>
+    <td>Total Harmonic Distortion (THD) des Stroms</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[53]<br/><span class="th-details">float (<abbr title="Prozent">%</abbr>)</span></th>
+    <td>Durchschnittliche Spannungs-THD</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[54]<br/><span class="th-details">float (<abbr title="Prozent">%</abbr>)</span></th>
+    <td>Durchschnittliche Strom-THD</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[55..57]<br/><span class="th-details">float (<abbr title="Ampere">A</abbr>)</span></th>
+    <td>Bezogener Strom</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[58..60]<br/><span class="th-details">float (<abbr title="Ampere">A</abbr>)</span></th>
+    <td>Max. bezogener Strom; Höchster gemessener Wert</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[61]<br/><span class="th-details">float (<abbr title="Prozent">%</abbr>)</span></th>
+    <td>Spannungs-THD L1 zu L2</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[62]<br/><span class="th-details">float (<abbr title="Prozent">%</abbr>)</span></th>
+    <td>Spannungs-THD L2 zu L3</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[63]<br/><span class="th-details">float (<abbr title="Prozent">%</abbr>)</span></th>
+    <td>Spannungs-THD L3 zu L1</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[64]<br/><span class="th-details">float (<abbr title="Prozent">%</abbr>)</span></th>
+    <td>Durchschnittliche Spannungs-THD zwischen Phasen</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[65]<br/><span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)</span></th>
+    <td>Summe der Gesamtwirkenergien; Import-Export-Summe aller Phasen</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[66]<br/><span class="th-details">float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</span></th>
+    <td>Summe der Gesamtblindenergien; Import-Export-Summe aller Phasen</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[67..69]<br/><span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)</span></th>
+    <td>Wirkenergie (Import; vom Fahrzeug aufgenommen)</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[70..72]<br/><span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)</span></th>
+    <td>Wirkenergie (Export; vom Fahrzeug abgegeben)</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[73..75]<br/><span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)</span></th>
+    <td>Gesamtwirkenergie; Import-Export-Summe</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[76..78]<br/><span class="th-details">float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</span></th>
+    <td>Blindenergie (Import; vom Fahrzeug aufgenommen)</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[79..81]<br/><span class="th-details">float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</span></th>
+    <td>Blindenergie (Export; vom Fahrzeug abgegeben)</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">[82..84]<br/><span class="th-details">float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</span></th>
+    <td>Gesamtblindenergie; Import-Export-Summe</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div class="any">
+    <div class="h5" id="meter_state_update">meter/state_update</div>
+    Setzt den Stromzählerzustand. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong>
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">state<br/><span class="th-details">int</span></th>
+    <td>Zustand des Stromzählers
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Kein Stromzähler verbunden</li>
+    <li><strong>1</strong> - Stromzähler unzuverlässig, eventuell nur einphasig verbunden.</li>
+    <li><strong>2</strong> - Stromzähler verbunden</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">type<br/><span class="th-details">int</span></th>
+    <td>Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Kein Stromzähler verfügbar</li>
+    <li><strong>2</strong> - SDM630</li>
+    <li><strong>3</strong> - SDM72V2</li>
+</ol>
+</div>
+<div class="warp1_only">
+<strong>WARP 1:</strong><br><ol class="ol-enum">
+    <li><strong>1</strong> - SDM72</li>
+</ol>
+</div></td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div class="any">
+    <div class="h5" id="meter_values_update">meter/values_update</div>
+    Setzt die Messwerte des Stromzählers. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong>
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">power<br/><span class="th-details">float (<abbr title="Watt">W</abbr>)</span></th>
+    <td>Die aktuelle Ladeleistung.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">energy_rel<br/><span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)</span></th>
+    <td>Die geladene Energie seit dem letzten Reset.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">energy_abs<br/><span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)</span></th>
+    <td>Die geladene Energie seit der Herstellung des Stromzählers.</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div class="any">
+    <div class="h5" id="meter_phases_update">meter/phases_update</div>
+    Setzt die angeschlossenen und aktive Phasen. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong>
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">phases_active<br/><span class="th-details">bool[3]</span></th>
+    <td>Die derzeit aktiven Phasen
+<div class="any">
+<ol class="ol-enum">
+    <li>[0] - Phase L1 aktiv</li>
+    <li>[1] - Phase L2 aktiv</li>
+    <li>[2] - Phase L3 aktiv</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">phases_connected<br/><span class="th-details">bool[3]</span></th>
+    <td>Die angeschlossenen Phasen
+<div class="any">
+<ol class="ol-enum">
+    <li>[0] - Phase L1 angeschlossen</li>
+    <li>[1] - Phase L2 angeschlossen</li>
+    <li>[2] - Phase L3 angeschlossen</li>
+</ol>
+</div></td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div class="any">
+    <div class="h5" id="meter_all_values_update">meter/all_values_update</div>
+    Setzt alle Messwerte, die von unterstützten Stromzählern gemessen werden. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong> Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -2095,6 +2500,28 @@
 <div class="any">
     <div class="h5" id="meter_reset">meter/reset</div>
     Setzt den Energiezähler zurück.<br/><strong>Leerer Payload. Es muss einer der folgenden Werte übergeben werden: <code>null</code>, <code>""</code>, <code>false</code>, <code>0</code>, <code>[]</code> oder <code>{}</code></strong><br/><strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
+</div>
+
+<div class="any">
+    <div class="h5" id="meter_last_reset">meter/last_reset</div>
+    Der Zeitpunkt des letzten Zähler-Resets (siehe {{{meter/reset}}}) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">last_reset<br/><span class="th-details">int (<abbr title="Sekunde">s</abbr>)</span></th>
+    <td>Unix-Timestamp des Zeitpunkts des letzten Zähler-Resets.</td>
+</tr>
+        </tbody>
+    </table>
+</div>
 </div>
 
 <div class="any">
@@ -2787,6 +3214,8 @@
     Kommandos
     <ul>
         <li><a class="scrollto text-monospace" href="#nfc_inject_tag">nfc/inject_tag</a></li>
+<li><a class="scrollto text-monospace" href="#nfc_inject_tag_start">nfc/inject_tag_start</a></li>
+<li><a class="scrollto text-monospace" href="#nfc_inject_tag_stop">nfc/inject_tag_stop</a></li>
     </ul>
 </li>
 <li>
@@ -2898,7 +3327,79 @@
 
 <div class="any">
     <div class="h5" id="nfc_inject_tag">nfc/inject_tag</div>
-    Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die API ein Ladevorgang für einen bestimmten Benutzer gestartet werden. Das vorgetauschte Tag ist immer der letzte Eintrag in <a class="scrollto text-monospace" href="#nfc_seen_tags">nfc/seen_tags</a>
+    Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die API ein Ladevorgang für einen bestimmten Benutzer gestartet oder gestoppt werden. Analog zur physischen Verwendung eines Tags wird der Ladevorgang bei Aufruf der API abwechselnd freigegeben oder blockiert. Siehe <a class="scrollto text-monospace" href="#nfc_inject_tag_start">nfc/inject_tag_start</a> und <a class="scrollto text-monospace" href="#nfc_inject_tag_stop">nfc/inject_tag_stop</a> für genauere Kontrolle. Das vorgetauschte Tag ist immer der letzte Eintrag in <a class="scrollto text-monospace" href="#nfc_seen_tags">nfc/seen_tags</a>
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">tag_type<br/><span class="th-details">int</span></th>
+    <td>Typ des Tags.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Mifare Classic</li>
+    <li><strong>1</strong> - NFC Forum Typ 1</li>
+    <li><strong>2</strong> - NFC Forum Typ 2</li>
+    <li><strong>3</strong> - NFC Forum Typ 3</li>
+    <li><strong>4</strong> - NFC Forum Typ 4</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">tag_id<br/><span class="th-details">string</span></th>
+    <td>ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div class="any">
+    <div class="h5" id="nfc_inject_tag_start">nfc/inject_tag_start</div>
+    Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag darf nur zum <strong>Starten</strong> eines Ladevorgangs verwendet werden. Das vorgetauschte Tag ist immer der letzte Eintrag in <a class="scrollto text-monospace" href="#nfc_seen_tags">nfc/seen_tags</a>
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">tag_type<br/><span class="th-details">int</span></th>
+    <td>Typ des Tags.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Mifare Classic</li>
+    <li><strong>1</strong> - NFC Forum Typ 1</li>
+    <li><strong>2</strong> - NFC Forum Typ 2</li>
+    <li><strong>3</strong> - NFC Forum Typ 3</li>
+    <li><strong>4</strong> - NFC Forum Typ 4</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">tag_id<br/><span class="th-details">string</span></th>
+    <td>ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div class="any">
+    <div class="h5" id="nfc_inject_tag_stop">nfc/inject_tag_stop</div>
+    Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag darf nur zum <strong>Stoppen</strong> eines Ladevorgangs verwendet werden. Das vorgetauschte Tag ist immer der letzte Eintrag in <a class="scrollto text-monospace" href="#nfc_seen_tags">nfc/seen_tags</a>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
