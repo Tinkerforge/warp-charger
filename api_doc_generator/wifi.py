@@ -57,7 +57,7 @@ wifi = Module("wifi", "WLAN-Konfiguration", "", Version.ANY, [
             "ssid": Elem.STRING("SSID zu der sich verbunden werden soll."),
             "hide_ssid": Elem.BOOL("true falls die SSID versteckt werden soll, ansonsten false."),
             "passphrase": Elem.STRING("Die WLAN-Passphrase. Maximal 63 Byte.", censored=True),
-            "channel": Elem.INT("Channel, auf dem der Access Point erreichbar sein soll. Gültige Werte sind 1 bis 13."),
+            "channel": Elem.INT("Kanal, auf dem der Access Point erreichbar sein soll. Gültige Werte sind 1 bis 13 und 0, falls beim Start ein möglichst unbelegter Kanal ausgewählt werden soll."),
             "ip": Elem.STRING("IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als \"0.0.0.0\" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll."),
             "gateway": Elem.STRING("Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll."),
             "subnet": Elem.STRING("Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll."),
