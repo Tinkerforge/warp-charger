@@ -1,8 +1,9 @@
 from api_doc_common import *
 
 ntp = Module("ntp", "Zeitsynchronisierung", "", Version.ANY, [
-    Func("state", FuncType.STATE, Elem.OBJECT("Die Zustand der Netzwerkzeitsynchronisierung.", members={
-        "synced": Elem.BOOL("Gibt an, ob die Wallbox ihre Zeit per NTP synchronisieren konnte.")
+    Func("state", FuncType.STATE, Elem.OBJECT("Der Zustand der Netzwerkzeitsynchronisierung.", members={
+        "synced": Elem.BOOL("Gibt an, ob die Wallbox ihre Zeit per NTP synchronisieren konnte."),
+        "time": Elem.INT("Ein Unix-Timestamp in <strong>Minuten</strong>, der die aktuelle Zeit der Wallbox angibt, oder 0 falls keine Zeitsynchronisierung besteht")
     })),
 
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die Konfiguration der Netzwerkzeitsynchronisierung.", members={
