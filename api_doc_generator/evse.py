@@ -34,10 +34,10 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
             "allowed_charging_current": Elem.INT("Maximal erlaubter Ladestrom, der dem Fahrzeug zur Verfügung gestellt wird. Dieser Strom ist das Minimum der Stromgrenzen aller Ladeslots.", unit=Units.mA),
             "error_state": Elem.INT('Der aktuelle Fehlerzustand. <a href="https://www.warp-charger.com/#documents">Siehe Handbuch für Details.</a>', constants=[
                 Const(0, "OK"),
-                Const(1, "Schalterfehler"),
-                Const(2, "DC-Fehlerstromüberwachungsfehler"),
-                Const(3, "Schützfehler"),
-                Const(4, "Kommunikationsfehler"),
+                Const(2, "Schalterfehler"),
+                Const(3, "DC-Fehlerstromüberwachungsfehler"),
+                Const(4, "Schützfehler"),
+                Const(5, "Kommunikationsfehler"),
             ]),
             "lock_state": Elem.INT("Zustand der Kabelverriegelung (nur relevant für Wallboxen mit Typ-2-Dose)", constants=[
                 Const(0, "Initialisierung"),
