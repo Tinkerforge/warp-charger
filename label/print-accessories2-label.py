@@ -17,7 +17,7 @@ QR_CODE_PADDING = b';;\r'
 
 SKU_PLACEHOLDER = b'WARP2-CS-11KW-50'
 
-SUPPLY_CABLE_PLACEHOLDER_A = b'123,4'
+SUPPLY_CABLE_PLACEHOLDER_A = b'Anschlusskabel: 123,4 m'
 SUPPLY_CABLE_PLACEHOLDER_B = b'E:123.4;'
 
 CEE_PLACEHOLDER_A = b'CEE Stecker: Jawohl'
@@ -49,7 +49,7 @@ def print_accessories2_label(supply_cable, cee, comment_1, comment_2, comment_3,
     if template.find(QR_CODE_COMMAND) < 0:
         raise Exception('QR code command missing in EZPL file')
 
-    supply_cable_a = str(int(supply_cable) if int(supply_cable) == supply_cable else supply_cable).replace('.', ',')
+    supply_cable_a = 'Anschlusskabel: {0} m'.format(str(int(supply_cable) if int(supply_cable) == supply_cable else supply_cable).replace('.', ','))
     supply_cable_b = 'E:{0};'.format(supply_cable)
 
     offset = len(SUPPLY_CABLE_PLACEHOLDER_B) - len(supply_cable_b)
@@ -63,7 +63,7 @@ def print_accessories2_label(supply_cable, cee, comment_1, comment_2, comment_3,
     if template.find(SUPPLY_CABLE_PLACEHOLDER_A) < 0:
         raise Exception('Supply cable placeholder A missing in EZPL file')
 
-    template = template.replace(SUPPLY_CABLE_PLACEHOLDER_A, supply_cable_a.encode('ascii'))
+    template = template.replace(SUPPLY_CABLE_PLACEHOLDER_A, supply_cable_a.encode('ascii') if supply_cable > 0 else b'')
 
     if template.find(SUPPLY_CABLE_PLACEHOLDER_B) < 0:
         raise Exception('Supply cable placeholder B missing in EZPL file')
