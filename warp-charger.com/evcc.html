@@ -232,11 +232,12 @@
                 Falls du die Verbindung von EVCC und dem WARP Charger testen willst ohne die notwendigen Zähler einzurichten kannst du diese simulieren, wie im nächsten Abschnitt beschrieben.
             </p>
             <p>
-                Bei der Ausführung von <code>evcc configure</code> kannst du als Wallbox <code>TinkerForge WARP Charger Smart</code> bzw. <code>TinkerForge WARP Charger Pro</code> auswählen.
-                Wähle dann aus, dass Firmware v2 installiert ist (falls das nicht der Fall ist, solltest du die Firmware des WARP Chargers aktualisieren).
-                Als IP-Adresse oder Hostname musst du <strong>nicht</strong> den entsprechenden Wert der Wallbox, sondern den in vorherigen Abschnitt konfigurierten Broker-Hostname oder dessen IP-Adresse eintragen.
-                Das Topic ist der in der MQTT-Konfiguration gesetzte Topic-Präfix, z.B. warp/ABC.
-                Mit diesem beginnt das Topic jeder Nachricht, die du mit <code>mosquitto_sub -v -t 'warp/#'</code> bzw.  <code>mosquitto_sub -v -t 'warp2/#'</code> sehen kannst.
+                Bei der Ausführung von <code>evcc configure</code> kannst du als Wallbox <code>TinkerForge WARP Charger Smart</code> bzw. <code>TinkerForge WARP Charger Pro</code> auswählen und folgende Hinweise beachten:
+                <ul>
+                    <li>Wähle aus, dass Firmware v2 installiert ist (falls das nicht der Fall ist, solltest du die Firmware des WARP Chargers aktualisieren).</li>
+                    <li>Als IP-Adresse oder Hostname musst du <strong>nicht</strong> den entsprechenden Wert der Wallbox, sondern den in vorherigen Abschnitt konfigurierten Broker-Hostname oder dessen IP-Adresse eintragen.</li>
+                    <li>Das Topic ist der in der MQTT-Konfiguration gesetzte Topic-Präfix, z.B. warp/ABC. Mit diesem beginnt das Topic jeder Nachricht, die du mit <code>mosquitto_sub -v -t 'warp/#'</code> bzw. <code>mosquitto_sub -v -t 'warp2/#'</code> sehen kannst.</li>
+                </ul>
             </p>
         </div>
     </section>
