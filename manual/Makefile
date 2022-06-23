@@ -6,7 +6,7 @@ warp2-web:
 	pdflatex manual_warp2.tex
 	@# This breaks hyperref links!
 	@#ps2pdf14 -dPDFSETTINGS=/prepress manual_warp2.pdf manual_warp2_web.pdf
-	cp manual_warp2_web.pdf ../documents/WARP2_Betriebsanleitung.pdf
+	cp manual_warp2.pdf ../documents/WARP2_Betriebsanleitung.pdf
 
 warp2-print:
 	pdflatex "\def\forprint{1} \input{manual_warp2.tex}"
