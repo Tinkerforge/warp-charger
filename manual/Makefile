@@ -11,7 +11,7 @@ warp2-web:
 warp2-print:
 	pdflatex "\def\forprint{1} \input{manual_warp2.tex}"
 	pdflatex "\def\forprint{1} \input{manual_warp2.tex}"
-	ps2pdf14 -dPDFSETTINGS=/prepress manual_warp2.pdf manual_warp2_print.pdf
+	ps2pdf14 -dPDFSETTINGS=/prepress -dSubsetFonts=false -dCompressFonts=true manual_warp2.pdf manual_warp2_print.pdf
 
 warp-web:
 	pdflatex manual.tex
