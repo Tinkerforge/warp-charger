@@ -52,14 +52,14 @@ def resolve_ref(match, reference_link_texts):
 
     return '<a class="scrollto text-monospace" href="#{}">{}</a>'.format(anchor, link_text)
 
-nav_module_template = """<a class="nav-link ml-3" href="#reference-{module_name}">{module_display_name}</a>
+nav_module_template = """<a class="nav-link ms-3" href="#reference-{module_name}">{module_display_name}</a>
     <div class="collapse">
         <nav class="nav nav-pills flex-column">
         {functions}
         </nav>
     </div>"""
 nav_function_template = """<a class="nav-link" href="#{link}" style="margin-left: 2rem !important;">{link_text}</a>"""
-nav_group_template = """<span class="ml-5">{}</span>"""
+nav_group_template = """<span class="ms-5">{}</span>"""
 
 reference_link_texts = []
 nav_mods = []

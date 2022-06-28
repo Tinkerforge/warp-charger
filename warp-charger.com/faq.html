@@ -39,24 +39,25 @@
   </script>
 </head>
 
-<body data-spy="scroll" data-target="#navbar" data-offset="100">
+<body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-root-margin="-20% 0px -70%">
 
   <!--==========================
     Header
   ============================-->
-  <header id="faq_header" class="header header-scrolled" style="position: sticky;">
+  <header id="faq_header" class="header header-scrolled" style="position: sticky; overflow-y: hidden;">
     <div class="container-fluid">
       <div id="logo" class="pull-left">
         <!-- Uncomment below if you prefer to use an image logo -->
         <a href="index.html"><img src="img/logo.png" alt="" title="" /></a>
       </div>
-      
+
       <nav id="nav-menu-container">
         <ul class="nav-menu nav-menu-top">
-			<li><a href="/index.html">HOME</a></li>
+            <li><a href="/index.html">HOME</a></li>
             <li><a href="/warp2.html">WARP2</a></li>
             <li><a href="/stand.html">LADESÄULE</a></li>
             <li><a href="/energy-manager.html">WARP ENERGY MANAGER</a></li>
+            <br class="d-xxl-none"/>
             <li class="menu-active"><a href="/faq.html">FAQ</a></li>
             <li><a href="/api.html?v=2">API</a></li>
             <li><a href="/evcc.html">EVCC</a></li>
@@ -65,26 +66,30 @@
             <li><a href="https://www.tinkerunity.org/forum/13-warp-charger/l">FORUM <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></li>
           </ul>
       </nav><!-- #nav-menu-container -->
-      
-      
+
+
     </div>
   </header><!-- #header -->
   <div class="row" style="margin-right: 0">
-    <nav id="navbar" class="navbar navbar-light navbar-test d-none d-lg-flex bg-light align-items-start">
-        <nav class="nav nav-pills flex-column ml-2">
-            <a class="navbar-brand" href="#">Inhalt</a>
-            <a class="nav-link" href="#subsidy">Förderung</a>
-            <a class="nav-link" href="#features">Funktion</a>
-            <a class="nav-link" href="#setup">Montage und Installation</a>
-            <a class="nav-link" href="#charge-management">Lastmanagement</a>
-            <a class="nav-link" href="#web-interface">Webinterface</a>
-            <a class="nav-link" href="#mqtt">MQTT</a>
+    <div class="d-none d-lg-block col-auto">
+        <nav class="h-100 flex-column align-items-stretch px-2">
+            <nav id="navbar" class="navbar navbar-light navbar-test flex-column">
+                <nav class="nav nav-pills flex-column ms-2">
+                    <a class="navbar-brand" href="#">Inhalt</a>
+                    <a class="nav-link" href="#subsidy">Förderung</a>
+                    <a class="nav-link" href="#features">Funktion</a>
+                    <a class="nav-link" href="#setup">Montage und Installation</a>
+                    <a class="nav-link" href="#charge-management">Lastmanagement</a>
+                    <a class="nav-link" href="#web-interface">Webinterface</a>
+                    <a class="nav-link" href="#mqtt">MQTT</a>
+                </nav>
+            </nav>
         </nav>
-    </nav>
+    </div>
   <!--==========================
     Intro Section
   ============================-->
-  <main id="faq_main" class="col-lg-8">
+  <main id="faq_main" class="col">
     <header id="start" class="reference-section-header pt-4" style="padding-left: 15px; padding-right: 15px;"><h2>Häufig gestellte Fragen (FAQ)</h2></header>
     <section id="subsidy" class="section">
         <div class="container">
@@ -172,7 +177,7 @@
             <dl>
                 <dt>Welchen Leiterquerschnitt brauche ich für die Zuleitung zum WARP Charger?</dt>
                 <dd>Der Leiterquerschnitt sollte immer von dem Elektriker vor Ort festgelegt werden. Folgende Minimalwerte gibt es in der Praxis:
-                    <div class="pl-4">
+                    <div class="ps-4">
                         11 kW Ladeleistung
                         <ul>
                             <li>bis 20 Meter: 2,5 mm²</li>

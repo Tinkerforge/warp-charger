@@ -261,8 +261,8 @@ class Elem:
 
     def root_to_html(self, f: Func, module: str) -> str:
         template = """
-<div class="{version_class}">
-    <div class="h5" id="{fn_id}">{fn_path}{version_text}</div>
+<div  id="{fn_id}" class="{version_class}">
+    <div class="h5">{fn_path}{version_text}</div>
     {fn_desc}{fn_table}
 </div>"""
 
