@@ -1,5 +1,31 @@
-jQuery(document).ready(function( $ ) {
+function carouselNormalization() {
+    var items = $('#carouselProducts .carousel-item'), //grab all slides
+        heights = [], //create empty array to store height values
+        tallest; //create variable to make note of the tallest slide
 
+    if (items.length) {
+        function normalizeHeights() {
+            items.each(function() { //add heights to array
+                heights.push($(this).height());
+            });
+            tallest = Math.max.apply(null, heights); //cache largest value
+            items.each(function() {
+                $(this).css('min-height',tallest + 'px');
+            });
+        };
+        normalizeHeights();
+
+        $(window).on('resize orientationchange', function () {
+            tallest = 0, heights.length = 0; //reset vars
+            items.each(function() {
+                $(this).css('min-height','0'); //reset min-height
+            });
+            normalizeHeights(); //run it again
+        });
+    }
+}
+
+jQuery(document).ready(function( $ ) {
   // Back to top button
   $(window).scroll(function() {
     if ($(this).scrollTop() > 100) {
@@ -106,22 +132,25 @@ jQuery(document).ready(function( $ ) {
     }
   });
 
-  // Intro carousel
-  var introCarousel = $(".carousel");
-  var introCarouselIndicators = $(".carousel-indicators");
-  introCarousel.find(".carousel-inner").children(".carousel-item").each(function(index) {
-    (index === 0) ?
-    introCarouselIndicators.append("<li data-target='#introCarousel' data-slide-to='" + index + "' class='active'></li>") :
-    introCarouselIndicators.append("<li data-target='#introCarousel' data-slide-to='" + index + "'></li>");
-  });
 
-  $(".carousel").swipe({
-    swipe: function(event, direction, distance, duration, fingerCount, fingerData) {
-      if (direction == 'left') $(this).carousel('next');
-      if (direction == 'right') $(this).carousel('prev');
-    },
-    allowPageScroll:"vertical"
-  });
+    //intro carousel
+  const introCarousel = document.getElementById('introCarousel')
+  if (introCarousel != null) {
+    const carousel = new bootstrap.Carousel(introCarousel);
+  }
+
+  //product carousel
+  const productCarousel = document.getElementById('carouselProducts')
+  if (productCarousel != null) {
+    const carousel = new bootstrap.Carousel(productCarousel);
+
+    productCarousel.addEventListener('slide.bs.carousel', event => {
+        document.querySelector('#carouselProducts .custom-carousel-indicators .active').classList.remove("active");
+        document.querySelector(`#carouselProducts .custom-carousel-indicators [data-bs-slide-to="${event.to}`).classList.add("active");
+    });
+
+    carouselNormalization();
+  }
 
   // Impressions isotope and filter
   var impressionsIsotope = $('.impressions-container').isotope({
