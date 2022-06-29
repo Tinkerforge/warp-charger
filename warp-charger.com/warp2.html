@@ -62,12 +62,9 @@
                     <li><a href="#properties">Eigenschaften</a></li>
                     <li><a href="#impressions">Impressionen</a></li>
                     <li><a href="#documents">Dokumente</a></li>
-                    <li class="menu-has-children"><a href="#MQTT">Software</a>
-                        <ul class="push-left-inner">
-                        <li><a href="#MQTT">MQTT- und HTTP-API</a></li>
-                        <li><a href="#firmware">Firmware und Quellcode</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="#MQTT">MQTT- und HTTP-API</a></li>
+                    <li><a href="#firmware">Firmware-Updates</a></li>
+                    <li><a href="#source">Quellcode und Design-Dateien</a></li>
                     <li><a href="#contact">Kontakt</a></li>
                 </ul>
             </li>
@@ -155,94 +152,87 @@
 
         <header class="section-header pb-4">
           <h3>WARP2 Charger</h3>
-          <p>
-          </p>
-          <p>
-            Mit WARP dem "<b>W</b>all <b>A</b>ttached <b>R</b>echarge <b>P</b>oint" bietet Tinkerforge Open-Source-Ladelösungen für Elektrofahrzeuge.
-            "WARP2" die zweite Generation des WARP Chargers ist in verschiedenen Varianten als <b>11kW</b> oder <b>22kW</b> Modell erhältlich.
-            Je nach Variante verfügen die Wallboxen über eine Ladefreigabe mittels <b>NFC (RFID)</b>, die Anbindung der Wallbox per <b>LAN</b> oder <b>WLAN</b>,
-            integriertes <b>Lastmanagement</b>, <b>Ladelogbuch</b> mit Abrechnungsfunktion und sind für ein intelligentes <b>Energiemanagement</b> vorbereitet.
-            Alle WARP2 Wallboxen können ein- oder dreiphasig angeschlossen und betrieben werden.
-          </p>
         </header>
-        <div class="row">
-          <div class="col-lg-4">
-              <img class="img-fluid" src="img_warp2/wb2_free.png">
-          </div>
-          <div class="col-lg-8">
-            <p id="no-padding-bottom">
-              Der WARP2 Charger ist in den Varianten Basic, Smart und Pro erhätlich:
-            </p>
-            <div class="row">
-                <div class="col-md-10">
-                    <div class="table-responsve">
-                        <table class="table table-striped">
-                          <thead class="thead-inverse">
-                            <tr>
-                                <th class="w-50"></th>
-                                <th class="">Basic</th>
-                                <th class="">Smart</th>
-                                <th class="">Pro</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td class="w-50 option">Ladung per IEC-Typ-2</td>
-                              <td class=""><i class="fa fa-check"></i></td>
-                              <td class=""><i class="fa fa-check"></i></td>
-                              <td class=""><i class="fa fa-check"></i></td>
-                            </tr>
-                            <tr>
-                              <td class="w-50 option">Integrierter DC-Schutz</td>
-                              <td class=""><i class="fa fa-check"></i></td>
-                              <td class=""><i class="fa fa-check"></i></td>
-                              <td class=""><i class="fa fa-check"></i></td>
-                            </tr>
-                            <tr>
-                              <td class="w-50 option">Förderfähig*</td>
-                              <td class="">-</td>
-                              <td class=""><i class="fa fa-check"></i></td>
-                              <td class=""><i class="fa fa-check"></i></td>
-                            </tr>
-                            <tr>
-                              <td class="w-50 option">LAN/WLAN + Webinterface</td>
-                              <td>-</td>
-                              <td><i class="fa fa-check"></i></td>
-                              <td><i class="fa fa-check"></i></td>
-                            </tr>
-                            <tr>
-                              <td class="w-50 option">Integriertes Lastmanagement</td>
-                              <td>-</td>
-                              <td><i class="fa fa-check"></i></td>
-                              <td><i class="fa fa-check"></i></td>
-                            </tr>
-                            <tr>
-                              <td class="w-50 option">Photovoltaik-Überschussladen</td>
-                              <td>-</td>
-                              <td><i class="fa fa-check"></i></td>
-                              <td><i class="fa fa-check"></i></td>
-                            </tr>
-                            <tr>
-                              <td class="w-50 option">NFC-Freigabe inkl. Ladelogbuch</td>
-                                <td>-</td>
-                              <td><i class="fa fa-check"></i></td>
-                                <td><i class="fa fa-check"></i></td>
-                            </tr>
-                            <tr>
-                              <td class="w-50 option">Erweitertes Ladelogbuch mit Energiestatistik</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td><i class="fa fa-check"></i></td>
-                            </tr>
-                          </tbody>
-                          </table>
-                    </div>
-                <p>* Bundesland-Förderprogramme oder KfW Förderprogramme, z.B.: <a href="https://www.kfw.de/inlandsfoerderung/%C3%96ffentliche-Einrichtungen/Kommunen/Infrastruktur/F%C3%B6rderprodukte/Nachhaltige-Mobilit%C3%A4tskonzepte-(439)/">KfW 439 (Ladestationen f&uuml;r Elektrofahrzeuge - Kommunen)</a>, <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Ladestationen-f%C3%BCr-Elektroautos-Wohngeb%C3%A4ude-%28440%29/">KfW 440 (Ladestationen f&uuml;r Elektroautos - Wohngeb&auml;ude)</a> und <a href="https://www.kfw.de/inlandsfoerderung/Unternehmen/Energie-und-Umwelt/F%C3%B6rderprodukte/Ladestationen-f%C3%BCr-Elektrofahrzeuge-Unternehmen-(441)/">KfW 441 (Ladestationen f&uuml;r Elektrofahrzeuge - Unternehmen)</a></p>
-            </div> <!--row-->
-                </div> <!--col-md-10 my-4 mx-auto" -->
+        <div class="container row">
+            <div class="clearfix">
+                <img class="col col-sm-4 img-fluid float-sm-start mb-3 pe-sm-3" src="img_warp2/wb2_free.png">
+                <p>
+                    Mit WARP dem "<b>W</b>all <b>A</b>ttached <b>R</b>echarge <b>P</b>oint" bietet Tinkerforge Open-Source-Ladelösungen für Elektrofahrzeuge.
+                    "WARP2" die zweite Generation des WARP Chargers ist in verschiedenen Varianten als <b>11kW</b> oder <b>22kW</b> Modell erhältlich.
+                    Je nach Variante verfügen die Wallboxen über eine Ladefreigabe mittels <b>NFC (RFID)</b>, die Anbindung der Wallbox per <b>LAN</b> oder <b>WLAN</b>,
+                    integriertes <b>Lastmanagement</b>, <b>Ladelogbuch</b> mit Abrechnungsfunktion und sind für ein intelligentes <b>Energiemanagement</b> vorbereitet.
+                    Alle WARP2 Wallboxen können ein- oder dreiphasig angeschlossen und betrieben werden.
+                </p>
 
-          </div> <!--col-8-->
-        </div> <!--row-->
+                <p class="pb-0">
+                    Der WARP2 Charger ist in den Varianten Basic, Smart und Pro erhätlich:
+                </p>
+                <div class="col col-md-8 table-responsive float-md-end">
+                    <table class="table table-striped">
+                        <thead class="thead-inverse">
+                        <tr>
+                            <th class="w-50"></th>
+                            <th class="">Basic</th>
+                            <th class="">Smart</th>
+                            <th class="">Pro</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="w-50 option">Ladung per IEC-Typ-2</td>
+                            <td class=""><i class="fa fa-check"></i></td>
+                            <td class=""><i class="fa fa-check"></i></td>
+                            <td class=""><i class="fa fa-check"></i></td>
+                        </tr>
+                        <tr>
+                            <td class="w-50 option">Integrierter DC-Schutz</td>
+                            <td class=""><i class="fa fa-check"></i></td>
+                            <td class=""><i class="fa fa-check"></i></td>
+                            <td class=""><i class="fa fa-check"></i></td>
+                        </tr>
+                        <tr>
+                            <td class="w-50 option">Förderfähig*</td>
+                            <td class="">-</td>
+                            <td class=""><i class="fa fa-check"></i></td>
+                            <td class=""><i class="fa fa-check"></i></td>
+                        </tr>
+                        <tr>
+                            <td class="w-50 option">LAN/WLAN + Webinterface</td>
+                            <td>-</td>
+                            <td><i class="fa fa-check"></i></td>
+                            <td><i class="fa fa-check"></i></td>
+                        </tr>
+                        <tr>
+                            <td class="w-50 option">Integriertes Lastmanagement</td>
+                            <td>-</td>
+                            <td><i class="fa fa-check"></i></td>
+                            <td><i class="fa fa-check"></i></td>
+                        </tr>
+                        <tr>
+                            <td class="w-50 option">Photovoltaik-Überschussladen</td>
+                            <td>-</td>
+                            <td><i class="fa fa-check"></i></td>
+                            <td><i class="fa fa-check"></i></td>
+                        </tr>
+                        <tr>
+                            <td class="w-50 option">NFC-Freigabe inkl. Ladelogbuch</td>
+                            <td>-</td>
+                            <td><i class="fa fa-check"></i></td>
+                            <td><i class="fa fa-check"></i></td>
+                        </tr>
+                        <tr>
+                            <td class="w-50 option">Erweitertes Ladelogbuch mit Energiestatistik</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td><i class="fa fa-check"></i></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <p class="col-12 col-md-8 offset-md-4">* Bundesland-Förderprogramme oder KfW Förderprogramme, z.B.: <a href="https://www.kfw.de/inlandsfoerderung/%C3%96ffentliche-Einrichtungen/Kommunen/Infrastruktur/F%C3%B6rderprodukte/Nachhaltige-Mobilit%C3%A4tskonzepte-(439)/">KfW 439 (Ladestationen f&uuml;r Elektrofahrzeuge - Kommunen)</a>, <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Ladestationen-f%C3%BCr-Elektroautos-Wohngeb%C3%A4ude-%28440%29/">KfW 440 (Ladestationen f&uuml;r Elektroautos - Wohngeb&auml;ude)</a> und <a href="https://www.kfw.de/inlandsfoerderung/Unternehmen/Energie-und-Umwelt/F%C3%B6rderprodukte/Ladestationen-f%C3%BCr-Elektrofahrzeuge-Unternehmen-(441)/">KfW 441 (Ladestationen f&uuml;r Elektrofahrzeuge - Unternehmen)</a></p>
+      </div>
+
       </div>
     </section><!-- #overview -->
 
@@ -359,7 +349,7 @@
           <div class="col-lg-4">
                 <div class="warp-charger-col">
                     <div class="warp-charger-col-link">
-                        <div class="img">
+                        <div class="img mx-auto d-block">
                             <img src="img_warp2/warp-charger-basic.jpg?v=2" alt="" class="img-fluid">
                             <div class="icon"><i class="ion-ios-bolt-outline"></i></div>
                         </div>
@@ -395,7 +385,7 @@
           <div class="col-lg-4">
                 <div class="warp-charger-col">
                     <div class="warp-charger-col-link">
-                        <div class="img">
+                        <div class="img mx-auto d-block">
                             <img src="img_warp2/warp-charger-smart.jpg?v=2" alt="" class="img-fluid">
                             <div class="icon"><i class="ion-ios-list-outline"></i></div>
                         </div>
@@ -441,7 +431,7 @@
           <div class="col-lg-4">
                 <div class="warp-charger-col">
                     <div class="warp-charger-col-link">
-                        <div class="img">
+                        <div class="img mx-auto d-block">
                             <img src="img_warp2/warp-charger-smart.jpg?v=2" alt="" class="img-fluid">
                             <div class="icon"><i class="ion-ios-speedometer-outline"></i></div>
                         </div>
@@ -670,46 +660,46 @@
           <p>Folgende Dokumente stehen aktuell zur Verfügung:</p>
         </div>
 
-        <div class="row counters justify-content-center">
+        <div class="row counters justify-content-center gy-5">
             <div class="col-xl-2 col-lg-4 col-6 text-center">
                 <a href="documents/WARP2_Betriebsanleitung.pdf?v=2">
                 <img src="img_warp2/documents/betriebsanleitung_small.jpg?v=2" class="img-fluid img-outline" alt="Betriebsanleitung">
-                <p>Betriebs&shy;anleitung</p>
+                <div>Betriebs&shy;anleitung</div>
                 </a>
             </div>
 
             <div class="col-xl-2 col-lg-4 col-6 text-center">
                 <a href="documents/WARP2_Datenblatt_low.pdf?v=2">
                 <img src="img_warp2/documents/datenblatt_small.jpg?v=2" class="img-fluid img-outline" alt="Datenblatt">
-                <p>Datenblatt</p>
+                <div>Datenblatt</div>
                 </a>
             </div>
 
             <div class="col-xl-2 col-lg-4 col-6 text-center">
                 <a href="documents/WARP2_Broschuere_low.pdf?v=2">
                 <img src="img_warp2/documents/broschuere_small.jpg?v=2" class="img-fluid img-outline" alt="Broschüre">
-                <p>Broschüre</p>
+                <div>Broschüre</div>
                 </a>
             </div>
 
             <div class="col-xl-2 col-lg-4 col-6 text-center">
                 <a href="documents/WARP2_Konformitaet.pdf?v=2">
                 <img src="img_warp2/documents/konfirmitaetserklaerung_small.jpg?v=2" class="img-fluid img-outline" alt="Konformitätserklärung">
-                <p>Konformitäts&shy;erklärung</p>
+                <div>Konformitäts&shy;erklärung</div>
                 </a>
             </div>
 
             <div class="col-xl-2 col-lg-4 col-6 text-center">
                 <a href="documents/WARP2_Stromlaufplan.pdf">
                 <img src="img_warp2/documents/stromlaufplan_small.jpg" class="img-fluid img-outline" alt="Stromlaufplan">
-                <p>Stromlaufplan</p>
+                <div>Stromlaufplan</div>
                 </a>
             </div>
 
             <div class="col-xl-2 col-lg-4 col-6 text-center">
                 <a href="documents/WARP2_Bohrschablone.pdf?v=2">
                 <img src="img_warp2/documents/bohrschablone_small.png?v=2" class="img-fluid img-outline" alt="Bohrschablone">
-                <p>Bohrschablone</p>
+                <div>Bohrschablone</div>
                 </a>
             </div>
             <p>
@@ -787,20 +777,18 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
     <section id="firmware">
         <div class="container">
             <header class="section-header">
-                <h3>Firmware und Quellcode</h3>
+                <h3>Firmware-Updates</h3>
             </header>
 
             <div class="row">
                 <div class="col-12 text-center">
                     <p>
+                      Wir veröffentlichen regelmäßig Firmware-Updates, die neue Funktionen hinzufügen und Fehler beheben.
                       Firmware-Updates kannst du im System-Abschnitt des Webinterfaces der Wallbox einspielen.
-                      Dort findest du auch die installierte Version der Firmware.
-                    </p>
-                    <p class="text-danger">
-                        <b>Achtung, hier gibt es die Firmwares für WARP Version 2 (WARP2, Verkauf seit August 2021)!</b>
+                      Dort findest du auch die aktuell installierte Version der Firmware.
                     </p>
                     <p>
-                        <b>Firmware-Updates für WARP Version 1 (WARP1, Verkauf vor August 2021) gibt es <a href="/warp1.html?v=2#firmware">hier</a>.</b>
+                        <b class="text-danger">Achtung, hier gibt es die Firmwares für WARP Version 2 (WARP2, Verkauf seit August 2021)!</b> <b>Firmware-Updates für WARP Version 1 (WARP1, Verkauf vor August 2021) gibt es <a href="/warp1.html?v=2#firmware">hier</a>.</b>
                     </p>
                 </div>
             </div>
@@ -811,7 +799,9 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
                         <a href="firmwares/warp2_firmware_2_0_7_62a1f99c_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP2 Firmware 2.0.7 herunterladen</a>
                         <div class="text-muted pt-2 pb-2">Veröffentlicht am 09.06.2022</div>
                     </div>
-                    <table class="table mt-5">
+
+
+                    <table class="table table-borderless mb-3">
                         <tbody>
                             <tr>
                                 <th scope="row"><a href="firmwares/warp2_firmware_2_0_7_62a1f99c_merged.bin">2.0.7</a><br/><span class="th-details">09.06.2022</span><br/><a href="firmwares/warp2_firmware_2_0_7_62a1f99c_merged.bin.sha256">Prüfsumme</a></th>
@@ -822,13 +812,24 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
                                     </ul>
                                 </td>
                             </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-center">
+                        <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOlderVersions" aria-expanded="false" aria-controls="collapseOlderVersions">
+                            Ältere Firmware-Versionen
+                        </button>
+                    </div>
+
+                    <div class="collapse" id="collapseOlderVersions">
+                    <table class="table mt-3 table-borderless">
+                        <tbody>
                             <tr>
                                 <th scope="row"><a href="firmwares/warp2_firmware_2_0_6_62a05655_merged.bin">2.0.6</a><br/><span class="th-details">07.06.2022</span><br/><a href="firmwares/warp2_firmware_2_0_6_62a05655_merged.bin.sha256">Prüfsumme</a></th>
                                 <td>
                                     <ul>
                                         <li>WLAN-Scan-Timeout für Access-Point-Kanalsuche erhöht</li>
                                         <li>Aussehen der Form-Validierung repariert</li>
-                                        <li>Netzwerk-Zeitsynchronisierungszustand und aktuelle Uhrzeit auf Statusseite hinzugefügt</li>
+                                        <li>Netzwerk-Zeit&shy;synchronisierungs&shy;zustand und aktuelle Uhrzeit auf Statusseite hinzugefügt</li>
                                         <li>Sichergestellt, dass Ladevorgang nie gestartet werden kann, während Taster gedrückt ist(durch Update auf Ladecontroller-Firmware 2.1.5)</li>
                                         <li>Kompatibilität mit einigen Versionen des SDM630 erhöht (durch Update auf Ladecontroller-Firmware 2.1.5)</li>
                                     </ul>
@@ -900,7 +901,7 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
                                         <li>Download eines Logs der aufgezeichneten Ladungen hinzugefügt</li>
                                         <li>Benutzerverwaltung hinzugefügt; NFC-Tags werden jetzt Benutzern zugeordnet</li>
                                         <li>Netzwerk-Zeitsynchronisierung hinzugefügt</li>
-                                        <li>Ladestromgrenzen aufgeteilt um NFC und andere Steuerungsmöglichkeiten zu entkoppeln (durch Update auf Ladecontroller-Firmware 2.1.2)</li>
+                                        <li>Ladestromgrenzen aufgeteilt um NFC und andere Steuerungs&shy;möglichkeiten zu entkoppeln (durch Update auf Ladecontroller-Firmware 2.1.2)</li>
                                         <li>Netzwerk-Abschnitt hinzugefügt; alle Netzwerk-Interfaces verwenden jetzt den selben Hostnamen</li>
                                         <li>Konfigurierbares Sendeintervall für MQTT hinzugefügt</li>
                                         <li>Editierbaren Wallboxnamen hinzugefügt</li>
@@ -943,10 +944,10 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
                                     <ul>
                                         <li>Unnötige Logmeldungen des Logins entfernt</li>
                                         <li>Übersetzungen überarbeitet</li>
-                                        <li>Konfigurationspartition auf robusteres Dateisystem umgestellt</li>
+                                        <li>Konfigurations&shy;partition auf robusteres Dateisystem umgestellt</li>
                                         <li>Modalfenster für NFC-Karten und gesteuerte Wallboxen verbessert</li>
                                         <li>Bug der zur Anzeige eines leeren Webinterfaces führt behoben</li>
-                                        <li>Watchdog des verfügbaren Lastmanagementstroms zurückgesetzt wenn dieser über die API gesetzt wird.</li>
+                                        <li>Watchdog des verfügbaren Last&shy;management&shy;stroms zurückgesetzt wenn dieser über die API gesetzt wird.</li>
                                         <li>Recovery-Seite hinzugefügt</li>
                                         <li>Warnung vor Downgrades hinzugefügt</li>
                                         <li>Logmeldungen über mehr Netzwerkereignisse hinzugefügt</li>
@@ -965,7 +966,7 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
                                         <li>Debug-Report und Ereignis-Log zusammengelegt</li>
                                         <li>Detektion der Anzeigesprache des Webinterfaces verbessert</li>
                                         <li>Taster-API hinzugefügt</li>
-                                        <li>Stromzähler-Konfigurationsproblem behoben (durch Update auf Ladecontroller-Firmware 2.0.5)</li>
+                                        <li>Stromzähler-Konfigurations&shy;problem behoben (durch Update auf Ladecontroller-Firmware 2.0.5)</li>
                                     </ul>
                                 </td>
                             </tr>
@@ -977,7 +978,7 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
                                         <li>Deaktivierung des WLAN Access Points repariert</li>
                                         <li>Bug behoben, durch den bei einer "Ladestop durch NFC"-Konfiguration das Laden nicht mehr gestoppt werden konnte</li>
                                         <li>Initialisierung des Stromzählermoduls repariert</li>
-                                        <li>Fronttasterkonfiguration repariert</li>
+                                        <li>Fronttaster&shy;konfiguration repariert</li>
                                         <li>MQTT-Fehlerausgaben verbessert</li>
                                         <li>Sprachdetektion des Webinterfaces verbessert</li>
                                         <li>Fehlende ADC-Werte und Spannungen zu Low-Level-Zustand hinzugefügt</li>
@@ -1004,18 +1005,55 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
                             </tr>
                         </tbody>
                     </table>
+                    </div>
                 </div>
                 <div class="col-lg-2 col-md-12"></div>
             </div>
-            <div class="col-12 text-center mt-4">
-                <p>Auf Github veröffentlichen wir den Quellcode der Wallbox-Firmware:<br>
-                    <i class="icon ion-social-github pe-1" style="color:#000000"></i><a href="https://github.com/Tinkerforge/esp32-firmware"><code>Tinkerforge/esp32-firmware</code></a></p>
-                <p>sowie Hardware-Design-Dateien des ESP32 Ethernet Bricks:<br>
-                    <i class="icon ion-social-github pe-1" style="color:#000000"></i><a href="https://github.com/Tinkerforge/esp32-ethernet-brick"><code>Tinkerforge/esp32-ethernet-brick</code></a></p>
-                <p>Dort finden sich auch Firmware und Hardware-Design des Ladecontrollers:<br>
-                    <i class="icon ion-social-github pe-1" style="color:#000000"></i><a href="https://github.com/Tinkerforge/evse-v2-bricklet"><code>Tinkerforge/evse-v2-bricklet</code></a></p>
-                <p>sowie der Quellcode dieser Website, der Betriebsanleitung und mehr:<br>
-                    <i class="icon ion-social-github pe-1" style="color:#000000"></i><a href="https://github.com/Tinkerforge/warp-charger"><code>Tinkerforge/warp-charger</code></a></p>
+        </div>
+        </section>
+        <section id="source"  class="section-bg">
+            <div class="container">
+                    <header class="section-header">
+                        <h3>Quellcode und Design-dateien</h3>
+                    </header>
+
+                <div class="row">
+                    <div class="col-12">
+                        <p>
+                            Hard- und Software des WARP Chargers, sowie aller zugehöriger Materialien wie Anleitung, Dokumentation und diese Webseite sind Open Source. Auf Github findest du unter anderem:
+                        </p>
+                    </div>
+                    <div class="col-auto mx-auto table-responsive">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr><td>
+                                Den Quellcode der Wallbox-Firmware
+                            </td>
+                            <td>
+                                <i class="icon ion-social-github pe-1" style="color:#000000"></i><a href="https://github.com/Tinkerforge/esp32-firmware"><code>Tinkerforge/esp32-firmware</code></a>
+                            </td></tr>
+                            <tr><td>
+                                Hardware-Design-Dateien des ESP32 Ethernet Bricks
+                            </td>
+                            <td>
+                                <i class="icon ion-social-github pe-1" style="color:#000000"></i><a href="https://github.com/Tinkerforge/esp32-ethernet-brick"><code>Tinkerforge/esp32-ethernet-brick</code></a>
+                            </td></tr>
+                            <tr><td>
+                                Firmware und Hardware-Design des Ladecontrollers
+                            </td>
+                            <td>
+                                <i class="icon ion-social-github pe-1" style="color:#000000"></i><a href="https://github.com/Tinkerforge/evse-v2-bricklet"><code>Tinkerforge/evse-v2-bricklet</code></a>
+                            </td></tr>
+                            <tr><td>
+                                Quellcode dieser Website, der Betriebsanleitung und mehr
+                            </td>
+                            <td>
+                                <i class="icon ion-social-github pe-1" style="color:#000000"></i><a href="https://github.com/Tinkerforge/warp-charger"><code>Tinkerforge/warp-charger</code></a>
+                            </td></tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1024,7 +1062,7 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
     <!--==========================
       Contact Section
     ============================-->
-    <section id="contact" class="section-bg">
+    <section id="contact">
       <div class="container">
 
         <div class="section-header">
@@ -1046,7 +1084,7 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
             <div class="contact-phone">
               <i class="ion-ios-telephone-outline"></i>
               <h3>Telefon</h3>
-              <p><a href="tel:052078998614">05207 / 8998614</a></p>
+              <span><a href="tel:052078998614">05207 / 8998614</a></span>
             </div>
           </div>
 
@@ -1054,7 +1092,7 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
             <div class="contact-email">
               <i class="ion-ios-email-outline"></i>
               <h3>E-Mail</h3>
-              <p><a href="mailto:info@tinkerforge.com">info@tinkerforge.com</a></p>
+              <span><a href="mailto:info@tinkerforge.com">info@tinkerforge.com</a></span>
             </div>
           </div>
 
@@ -1074,9 +1112,9 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
 
           <div class="col-lg-3 col-md-6 footer-info">
             <h3>WARP</h3>
-            <p>WARP ist die Elektromobiliätssparte von Tinkerforge.
+            <span>WARP ist die Elektromobiliätssparte von Tinkerforge.
               Die Tinkerforge GmbH ist ein 2011 gegründetes Unternehmen, das echtes &bdquo;Made in Germany&ldquo; bietet.
-            </p>
+            </span>
           </div>
 
           <div class="col-lg-3 col-md-6 footer-links">
@@ -1110,11 +1148,11 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
 
           </div>
 
-          <div class="col-lg-3 col-md-6 footer-newsletter">
+          <div class="col-lg-3 col-md-6 footer-info">
             <h4>Über uns</h4>
             <p>
               Wir bei Tinkerforge sind der Meinung, dass Produkte offen sein müssen. Nur so gehören sie wirklich den
-              Nutzern. Daher folgen wir der Open‐Source‐Philosophie, indem wir die Quelltexte sowie Baupläne all unserer
+              Nutzern. Daher folgen wir der Open-Source-Philosophie, indem wir die Quelltexte sowie Baupläne all unserer
               Soft- und Hardware veröffentlichen und ermöglichen es so jedem Einzelnen, unsere Produkte nach eigenen
               Wünschen zu verändern und zu erweitern. Durch die enge Zusammenarbeit mit unserer aktiven Community
               entwickeln wir schnell kundenorientierte Lösungen.
