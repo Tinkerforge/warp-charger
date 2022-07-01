@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>WARP Charger Ladesäule</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <link href="img/favicon.png" rel="icon">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- Add non-invasive analytics. There is no cookie set and no personal data saved -->
+  <script type="text/javascript">
+    var _paq = _paq || [];
+    _paq.push(['disableCookies']);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+    var u="//www.tinkerforge.com/analytics/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+</head>
+
+<body id="main_body">
+
+  <!--==========================
+    Header
+  ============================-->
+  <header id="header" class="header">
+    <div class="container-fluid">
+
+      <div id="logo" class="pull-left">
+        <!--<h1><a href="#intro" class="scrollto">WARP</a></h1> -->
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>
+      </div>
+
+      <nav id="nav-menu-container" class="pt-xxl-3">
+        <ul class="nav-menu nav-menu-top">
+			<li><a href="/index.html">HOME</a></li>
+            <li><a href="/warp2.html">WARP Charger</a></li>
+            <li><a href="/energy-manager.html">WARP ENERGY MANAGER</a></li>
+            <li class="menu-active menu-has-children"><a href="/stand.html">WARP Ladesäule</a>
+                <ul class="push-left-outer">
+                    <li><a href="#warp-charger">WARP Ladesäule</a></li>
+                    <li><a href="#properties">Eigenschaften</a></li>
+                    <li><a href="#impressions">Impressionen</a></li>
+                    <li><a href="#documents">Dokumente</a></li>
+                    <li class="menu-has-children"><a href="#MQTT">Software</a>
+                        <ul class="push-left-inner">
+                        <li><a href="#MQTT">MQTT- und HTTP-API</a></li>
+                        <li><a href="#firmware">Firmware und Quellcode</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#contact">Kontakt</a></li>
+                </ul>
+            </li>
+            <br class="d-xxl-none">
+            <li><a href="/faq.html?v=2">FAQ</a></li>
+            <li><a href="/api.html?v=2">API</a></li>
+            <li><a href="/evcc.html?v=2">EVCC</a></li>
+            <li><a href="https://www.tinkerforge.com/de/shop/warp/wallbox.html">SHOP <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></li>
+            <li><a href="https://www.tinkerforge.com/de/blog/">BLOG <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></li>
+            <li><a href="https://www.tinkerunity.org/forum/13-warp-charger/l">FORUM <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></li>
+          </ul>
+      </nav><!-- #nav-menu-container -->
+    </div>
+  </header><!-- #header -->
+
+  <!--==========================
+    Intro Section
+  ============================-->
+  <section id="intro">
+    <div class="intro-container">
+      <div id="introCarousel" class="carousel  slide carousel-fade" data-ride="carousel">
+
+        <ol class="carousel-indicators"></ol>
+
+        <div class="carousel-inner" role="listbox">
+
+          <div class="carousel-item active" style="background-image: url('img_stand/intro-carousel/4_low_quality.jpg');">
+            <div class="carousel-container">
+              <div class="carousel-content">
+                <h2>WARP Ladesäule</h2>
+                <p>Die konfigurierbare Open Source Edelstahl Ladesäule mit ein oder zwei Ladepunkten.</p>
+                <a href="#products" class="btn-get-started scrollto"><i class="ion-chevron-down"></i></a>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </section><!-- #intro -->
+
+  <main id="main">
+    <!--==========================
+      WARP Charger Section
+    ============================-->
+    <section id="warp-charger">
+      <div class="container">
+        <header class="section-header">
+          <h3>WARP Ladesäule</h3>
+        </header>
+
+        <div class="row">
+            <div class="col-6">
+              <img class="img-fluid" src="img_stand/warp-charger-stand.png">
+            </div>
+            <div class="col-6">
+              <p>
+                Mit der WARP Ladesäule bieten wir eine Möglichkeit bis zu zwei <a href="/warp2.html">WARP2 Charger</a> freistehend aufstellen zu können.
+                Die robuste Ladesäule aus 1,5mm starken V4A Edelstahl kann auf der Vorderseite und wahlweise auf der Rückseite mit jeweils einem WARP2 Charger ausgestattet werden.
+                Dabei kann jede Ladesäule individuell mit allen Varianten bestückt werden (WARP2 Charger Basic, Smart oder Pro).
+              </p>
+              <p>
+                Die Ladesäulen werden auftragsbezogen gefertigt und können einfach montiert werden. Dazu kann die Bodenplatte über eine mitgelieferte Schablone vorbereitet werden und die Ladesäule anschließend bei der Endmontage einfach auf diese vorbereitete Bodenplatte geschraubt werden.
+                Die Ladesäule wird vorverdrahtet geliefert. Über die geteilte Rückplatte kann im unteren Teil der Säule der Anschluss erfolgen. Dazu besitzt jeder WARP2 Charger in diesem Bereich ein Verteilergehäuse mit Klemmen an dem einfach die Zuleitung angeschlossen werden kann.
+              </p>
+              <p><a class="btn btn-primary w-100 mb-2" href="https://www.tinkerforge.com/de/shop/warp/wallbox.html">Ab 1099€ inkl. MwSt.</a></p>
+            </div>
+        </div>
+      </div>
+    </section><!-- #warp-charger -->
+
+    <!--==========================
+      Properties Section
+    ============================-->
+    <section id="properties">
+      <div class="container">
+
+        <header class="section-header">
+          <h3>Eigenschaften</h3>
+          <p>Die WARP Ladesäule kann für bis zu zwei <a href="/warp2.html">WARP2 Charger</a> konfiguriert werden und bieten zusätzlich zu deren Eigenschaften Folgendes:</p>
+        </header>
+
+        <div class="row">
+
+          <div class="col-lg-4 col-md-6 box">
+            <div class="icon"><i class="ion-ios-analytics-outline"></i></div>
+            <h4 class="title">Robust und Langlebig</h4>
+            <div class="description">
+              <ul>
+                <li>1,5 mm starkes V4A Edelstahlgehäuse</li>
+                <li>Das Gehäuse ist nur gekantet und nicht geschweißt, so dass alle Materialeigenschaften erhalten bleiben</li>
+                <li>IP54, für den Außenbereich geeignet</li>
+                <li>Geteilte Rückwand mit getrennter Zugangsklappe für die Zuleitungen</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 box">
+            <div class="icon"><i class="ion-ios-lightbulb-outline"></i></div>
+            <h4 class="title">Sicher</h4>
+            <div class="description">
+              <ul>
+                <li>Hohe Sicherheit vor Diebstal und Vandalismus</li>
+                <li>Innenliegende Befestigungsschrauben für die Bodenplatte</li>
+                <li>Verschlussriegel der Rückwände wahlweise mit Schloss erhältlich</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 box">
+            <div class="icon"><i class="ion-ios-paper-outline"></i></div>
+            <h4 class="title">Einfache Installation</h4>
+            <div class="description">
+              <ul>
+                <li>Fundament kann mittels Schablone und Bodenplatte vorbereitet werden</li>
+                <li>Große Kabeldurchführung in der Bodenplatte</li>
+                <li>Einfacher elektrischer Anschluss der Ladesäule, da vorverdrahtet</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- #properties -->
+
+    <!--==========================
+      Call To Action Section
+    ============================-->
+    <section id="call-to-action">
+      <div class="container text-center">
+        <header class="section-header">
+          <h3 class="section-title">Distributoren</h3>
+        </header>
+        <p>Die WARP Ladesäule und andere WARP Produkte kannst du aktuell bei den folgenden Distributoren und Online Shops erwerben.</p>
+        <a class="cta-btn" href="https://www.tinkerforge.com/de/shop/warp/accessories.html">Tinkerforge Shop</a>
+      </div>
+    </section><!-- #call-to-action -->
+
+
+    <!--==========================
+      Impressions Section
+    ============================-->
+    <section id="impressions"  class="section-bg" >
+      <div class="container">
+
+        <header class="section-header">
+          <h3 class="section-title">Impressionen</h3>
+        </header>
+
+        <div class="row">
+          <div class="col-lg-12">
+            <ul id="impressions-flters">
+              <li data-filter="*" class="filter-active">ALLE</li>
+              <li data-filter=".filter-warp-charger-stand">AUẞENANSICHT</li> <!-- TBD -->
+            </ul>
+          </div>
+        </div>
+
+        <div class="row impressions-container">
+
+          <div class="col-lg-4 col-md-6 impressions-item filter-warp-charger-stand">
+            <div class="impressions-wrap">
+              <figure>
+                <a href="img_stand/impressions/warp-charger-stand-front.jpg" data-lightbox="impressions" data-title="Vorderseite" class="link-preview" title="Preview">
+                    <img src="img_stand/impressions/warp-charger-stand-front.jpg" class="img-fluid" alt="">
+                </a>
+              </figure>
+
+              <div class="impressions-info">
+                WARP Ladesäule
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="col-lg-4 col-md-6 impressions-item filter-warp-charger-stand">
+            <div class="impressions-wrap">
+              <figure>
+                <a href="img_stand/impressions/warp-charger-stand-side.jpg" data-lightbox="impressions" data-title="Seitenansicht" class="link-preview" title="Preview">
+                    <img src="img_stand/impressions/warp-charger-stand-side.jpg" class="img-fluid" alt="">
+                </a>
+              </figure>
+
+              <div class="impressions-info">
+                Seitenansicht
+              </div>
+            </div>
+          </div>
+
+         <div class="col-lg-4 col-md-6 impressions-item filter-warp-charger-stand">
+            <div class="impressions-wrap">
+              <figure>
+                <a href="img_stand/impressions/warp-charger-stand-charging.jpg" data-lightbox="impressions" data-title="Charging" class="link-preview" title="Preview">
+                    <img src="img_stand/impressions/warp-charger-stand-charging.jpg" class="img-fluid" alt="">
+                </a>
+              </figure>
+
+              <div class="impressions-info">
+                Charging
+              </div>
+            </div>
+          </div>
+
+         <div class="col-lg-4 col-md-6 impressions-item filter-warp-charger-stand">
+            <div class="impressions-wrap">
+              <figure>
+                <a href="img_stand/impressions/warp-charger-stand-back-closed.jpg" data-lightbox="impressions" data-title="Rückseite geschlossen" class="link-preview" title="Preview">
+                    <img src="img_stand/impressions/warp-charger-stand-back-closed.jpg" class="img-fluid" alt="">
+                </a>
+              </figure>
+
+              <div class="impressions-info">
+                Rückseite geschlossen
+              </div>
+            </div>
+          </div>
+
+         <div class="col-lg-4 col-md-6 impressions-item filter-warp-charger-stand">
+            <div class="impressions-wrap">
+              <figure>
+                <a href="img_stand/impressions/warp-charger-stand-back-opened.jpg" data-lightbox="impressions" data-title="Rückseite geöffnet" class="link-preview" title="Preview">
+                    <img src="img_stand/impressions/warp-charger-stand-back-opened.jpg" class="img-fluid" alt="">
+                </a>
+              </figure>
+
+              <div class="impressions-info">
+                Rückseite geöffnet
+              </div>
+            </div>
+          </div>
+
+         <div class="col-lg-4 col-md-6 impressions-item filter-warp-charger-stand">
+            <div class="impressions-wrap">
+              <figure>
+                <a href="img_stand/impressions/warp-charger-stand-clamps.jpg" data-lightbox="impressions" data-title="Klemmen" class="link-preview" title="Preview">
+                    <img src="img_stand/impressions/warp-charger-stand-clamps.jpg" class="img-fluid" alt="">
+                </a>
+              </figure>
+
+              <div class="impressions-info">
+                Klemmen
+              </div>
+            </div>
+          </div>
+
+         <div class="col-lg-4 col-md-6 impressions-item filter-warp-charger-stand">
+            <div class="impressions-wrap">
+              <figure>
+                <a href="img_stand/impressions/warp-charger-stand-right-car.jpg" data-lightbox="impressions" data-title="Detailansicht" class="link-preview" title="Preview">
+                    <img src="img_stand/impressions/warp-charger-stand-right-car.jpg" class="img-fluid" alt="">
+                </a>
+              </figure>
+
+              <div class="impressions-info">
+                Detailansicht
+              </div>
+            </div>
+          </div>
+
+         <div class="col-lg-4 col-md-6 impressions-item filter-warp-charger-stand">
+            <div class="impressions-wrap">
+              <figure>
+                <a href="img_stand/impressions/warp-charger-stand-key.jpg" data-lightbox="impressions" data-title="Schlüssel" class="link-preview" title="Preview">
+                    <img src="img_stand/impressions/warp-charger-stand-key.jpg" class="img-fluid" alt="">
+                </a>
+              </figure>
+
+              <div class="impressions-info">
+                Schlüssel
+              </div>
+            </div>
+          </div>
+
+         <div class="col-lg-4 col-md-6 impressions-item filter-warp-charger-stand">
+            <div class="impressions-wrap">
+              <figure>
+                <a href="img_stand/impressions/warp-charger-stand-part-open.jpg" data-lightbox="impressions" data-title="Teilweise geöffnet" class="link-preview" title="Preview">
+                    <img src="img_stand/impressions/warp-charger-stand-part-open.jpg" class="img-fluid" alt="">
+                </a>
+              </figure>
+
+              <div class="impressions-info">
+                Teilweise geöffnet
+              </div>
+            </div>
+          </div>
+
+         <div class="col-lg-4 col-md-6 impressions-item filter-warp-charger-stand">
+            <div class="impressions-wrap">
+              <figure>
+                <a href="img_stand/impressions/warp-charger-stand-eth.jpg" data-lightbox="impressions" data-title="Ethernet" class="link-preview" title="Preview">
+                    <img src="img_stand/impressions/warp-charger-stand-eth.jpg" class="img-fluid" alt="">
+                </a>
+              </figure>
+
+              <div class="impressions-info">
+                Ethernet
+              </div>
+            </div>
+          </div>
+
+         <div class="col-lg-4 col-md-6 impressions-item filter-warp-charger-stand">
+            <div class="impressions-wrap">
+              <figure>
+                <a href="img_stand/impressions/warp-charger-stand-screws.jpg" data-lightbox="impressions" data-title="Verschlüsse" class="link-preview" title="Preview">
+                    <img src="img_stand/impressions/warp-charger-stand-screws.jpg" class="img-fluid" alt="">
+                </a>
+              </figure>
+
+              <div class="impressions-info">
+                Verschlüsse
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+      </div>
+    </section><!-- #impressions -->
+
+
+    <!--==========================
+      Documents Section
+    ============================-->
+    <section id="documents">
+      <div class="container">
+        <div class="section-header">
+          <h3>Dokumente</h3>
+          <p>Folgende Dokumente stehen aktuell zur Verfügung:</p>
+        </div>
+
+        <div class="row counters">
+            <h5>Coming Soon!</h5>
+        </div>
+      </div>
+    </section>
+    <!-- #documents -->
+
+    <!--==========================
+      Contact Section
+    ============================-->
+    <section id="contact" class="section-bg">
+      <div class="container">
+
+        <div class="section-header">
+          <h3>Kontakt</h3>
+          <p>Wir freuen uns jeder Zeit über Fragen und Feedback von euch!</p>
+        </div>
+
+        <div class="row contact-info">
+
+          <div class="col-md-4">
+            <div class="contact-address">
+              <i class="ion-ios-location-outline"></i>
+              <h3>Adresse</h3>
+              <address>Tinkerforge GmbH, Zur Brinke 7,<br/>33758 Schloß Holte-Stukenbrock, Deutschland</address>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="contact-phone">
+              <i class="ion-ios-telephone-outline"></i>
+              <h3>Telefon</h3>
+              <span><a href="tel:052078998614">05207 / 8998614</a></span>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="contact-email">
+              <i class="ion-ios-email-outline"></i>
+              <h3>E-Mail</h3>
+              <span><a href="mailto:info@tinkerforge.com">info@tinkerforge.com</a></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section><!-- #contact -->
+
+  </main>
+
+  <!--==========================
+    Footer
+  ============================-->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+           <div class="col-lg-3 col-md-6 footer-info">
+            <h3>WARP</h3>
+            <span>WARP ist die Elektromobiliätssparte von Tinkerforge.
+              Die Tinkerforge GmbH ist ein 2011 gegründetes Unternehmen, das echtes &bdquo;Made in Germany&ldquo; bietet.
+            </span>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Links</h4>
+            <ul>
+              <li><i class="ion-ios-arrow-right"></i> <a href="#intro">Start</a></li>
+              <li><i class="ion-ios-arrow-right"></i> <a href="https://www.tinkerforge.com/de/shop/warp/wallbox.html">Shop</a></li>
+              <li><i class="ion-ios-arrow-right"></i> <a href="https://www.tinkerforge.com/de/home/legal_info/">Impressum</a></li>
+              <li><i class="ion-ios-arrow-right"></i> <a href="https://www.tinkerforge.com/de/home/privacy_notice/">Datenschutz</a></li>
+              <li><i class="ion-ios-arrow-right"></i> <a href="https://www.tinkerforge.com/de/home/terms_and_conditions/">AGB</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h4>Kontakt</h4>
+            <p>
+              Tinkerforge GmbH <br>
+              Zur Brinke 7 <br>
+              33758 Schloß Holte-Stukenbrock<br>
+              Deutschland <br>
+              <strong>Telefon:</strong> 05207 / 8998614<br>
+              <strong>E-Mail:</strong> info@tinkerforge.com<br>
+            </p>
+
+            <div class="social-links">
+              <a href="https://twitter.com/tinkerforge" class="twitter"><i class="fa fa-twitter"></i></a>
+              <a href="https://www.facebook.com/tinkerforge42" class="facebook"><i class="fa fa-facebook"></i></a>
+              <a href="https://www.instagram.com/tinkerforge" class="instagram"><i class="fa fa-instagram"></i></a>
+              <a href="https://www.linkedin.com/company/tinkerforge-gmbh/" class="linkedin"><i class="fa fa-linkedin"></i></a>
+            </div>
+
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-info">
+            <h4>Über uns</h4>
+            <p>
+              Wir bei Tinkerforge sind der Meinung, dass Produkte offen sein müssen. Nur so gehören sie wirklich den
+              Nutzern. Daher folgen wir der Open-Source-Philosophie, indem wir die Quelltexte sowie Baupläne all unserer
+              Soft- und Hardware veröffentlichen und ermöglichen es so jedem Einzelnen, unsere Produkte nach eigenen
+              Wünschen zu verändern und zu erweitern. Durch die enge Zusammenarbeit mit unserer aktiven Community
+              entwickeln wir schnell kundenorientierte Lösungen.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </footer><!-- #footer -->
+
+  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+  <!-- JavaScript Libraries -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/jquery/jquery-migrate.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="lib/easing/easing.min.js"></script>
+  <script src="lib/superfish/hoverIntent.js"></script>
+  <script src="lib/superfish/superfish.min.js"></script>
+
+  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+  <script src="lib/isotope/isotope.pkgd.min.js"></script>
+  <script src="lib/lightbox/js/lightbox.min.js"></script>
+  <script src="lib/touchSwipe/jquery.touchSwipe.min.js"></script>
+
+  <!-- Template Main Javascript File -->
+  <script src="js/main.js"></script>
+
+</body>
+</html>

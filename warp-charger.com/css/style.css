@@ -6,6 +6,10 @@ body {
   color: #515151;
   /*font-family: "Open Sans", sans-serif;*/
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  hyphens: auto;
+}
+th {
+    hyphens: manual;
 }
 
 .table {
@@ -15,6 +19,7 @@ body {
 a {
   color: #00AAEA;
   transition: 0.5s;
+  text-decoration: none;
 }
 
 a:hover, a:active, a:focus {
@@ -26,6 +31,7 @@ a:hover, a:active, a:focus {
 p {
   padding: 0;
   margin-bottom: 1rem;
+  text-align: justify;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -52,6 +58,10 @@ h1, h2, h3, h4, h5, h6 {
 
 th .th-details {
     font-weight: normal;
+}
+
+.container {
+    max-width: 1140px;
 }
 
 #evcc_main {
@@ -130,8 +140,8 @@ th .th-details {
 # Header
 --------------------------------------------------------------*/
 .header {
-  padding: 40px 0 0 0;
-  height: 100px;
+  padding: 18px 0 0 0;
+  height: 78px;
   position: fixed;
   left: 0;
   top: 0;
@@ -142,8 +152,6 @@ th .th-details {
 
 .header.header-scrolled {
   background: rgba(35, 35, 35, 0.9);
-  padding: 18px 0;
-  height: 78px;
   transition: all 0.5s;
 }
 
@@ -181,8 +189,8 @@ th .th-details {
 
 @media (max-width: 992px) {
   .header {
-    padding: 25px 0 0 0;
-    height: 67px;
+    padding: 12px 0;
+    height: 54px;
   }
 
   .header.header-scrolled {
@@ -219,7 +227,7 @@ th .th-details {
 
 #intro .carousel-item::before {
   content: '';
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
   height: 100%;
   width: 100%;
@@ -242,6 +250,7 @@ th .th-details {
 
 #intro .carousel-content {
   text-align: center;
+  margin-top: 15rem;
 }
 
 #intro h2 {
@@ -257,63 +266,24 @@ th .th-details {
   }
 }
 
+#intro h3 {
+  color: #fff;
+  margin-bottom: 30px;
+  font-size: 30px;
+  font-weight: 700;
+}
+
 #intro p {
   width: 80%;
   margin: 0 auto 30px auto;
   color: #fff;
+  text-align: center;
 }
 
 @media (min-width: 1024px) {
   #intro p {
     width: 100%;
   }
-}
-
-#intro .carousel-fade .carousel-inner .carousel-item {
-  -webkit-transition-property: opacity;
-  transition-property: opacity;
-}
-
-#intro .carousel-fade .carousel-inner .carousel-item,
-#intro .carousel-fade .carousel-inner .active.carousel-item-left,
-#intro .carousel-fade .carousel-inner .active.carousel-item-right {
-  opacity: 0;
-}
-
-#intro .carousel-fade .carousel-inner .active,
-#intro .carousel-fade .carousel-inner .carousel-item-next.carousel-item-left,
-#intro .carousel-fade .carousel-inner .carousel-item-prev.carousel-item-right {
-  opacity: 1;
-  transition: 0.5s;
-}
-
-#intro .carousel-fade .carousel-inner .carousel-item-next,
-#intro .carousel-fade .carousel-inner .carousel-item-prev,
-#intro .carousel-fade .carousel-inner .active.carousel-item-left,
-#intro .carousel-fade .carousel-inner .active.carousel-item-right {
-  left: 0;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-}
-
-#intro .carousel-control-prev, #intro .carousel-control-next {
-  width: 10%;
-}
-
-@media (min-width: 1024px) {
-  #intro .carousel-control-prev, #intro .carousel-control-next {
-    width: 5%;
-  }
-}
-
-#intro .carousel-control-next-icon, #intro .carousel-control-prev-icon {
-  background: none;
-  font-size: 32px;
-  line-height: 1;
-}
-
-#intro .carousel-indicators li {
-  cursor: pointer;
 }
 
 #intro .btn-get-started {
@@ -346,7 +316,7 @@ th .th-details {
 --------------------------------------------------------------*/
 /* Nav Menu Essentials */
 .nav-menu, .nav-menu * {
-  margin: 9px 0 0 0;
+  /*margin: 9px 0 0 0;*/
   padding: 0;
   list-style: none;
 }
@@ -412,8 +382,8 @@ th .th-details {
 #nav-menu-container {
   display: flex;
   float: right;
-  margin: 0;
   padding-right: 7px;
+  margin-top: -7px;
 }
 
 @media (min-width: 1280px) {
@@ -483,7 +453,7 @@ th .th-details {
   right: 0;
   top: 0;
   z-index: 999;
-  margin: 19px 25px 0 0;
+  margin: 5px 25px 0 0;
   border: 0;
   background: none;
   font-size: 30px;
@@ -735,11 +705,115 @@ body.mobile-nav-active #mobile-nav-toggle {
   background: #f7f7f7;
 }
 
+/* Philosophy
+--------------------------------*/
 
-/* About Us Section
+#philosophy {
+  background: #515151;
+  color: #fff;
+}
+
+#philosophy h3 {
+  color: #fff;
+}
+
+#philosophy h4 {
+  text-align: center;
+}
+
+#philosophy .ul-center {
+		text-align: center;
+}
+
+#philosophy .ul-center ul {
+		display: inline-block;
+		text-align: left;
+}
+
+#philosophy .ul-center ul ul{
+		display: block;
+}
+
+
+/* Lastmanagement
+--------------------------------*/
+
+#lastmanagement {
+  background: url("../img/warp-charger-bg-low-quality.jpg") center top no-repeat fixed;
+  background-size: cover;
+  position: relative;
+}
+
+#lastmanagement::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.85);
+  z-index: 9;
+}
+
+#lastmanagement .container {
+  position: relative;
+  z-index: 10;
+}
+
+/* Energiemanagement
+--------------------------------*/
+
+#energiemanagement {
+  background: url("../img/content2-bg-low-quality.jpg") center top no-repeat fixed;
+  background-size: cover;
+  position: relative;
+}
+
+#energiemanagement::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.95);
+  z-index: 9;
+}
+
+#energiemanagement .container {
+  position: relative;
+  z-index: 10;
+}
+
+/* overview
+--------------------------------*/
+
+#overview {
+  background: url("../img_warp1/warp-charger-bg-low-quality.jpg") center top no-repeat fixed;
+  background-size: cover;
+  position: relative;
+}
+
+#overview::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.92);
+  z-index: 9;
+}
+
+#overview .container {
+  position: relative;
+  z-index: 10;
+}
+
+/* warp-charger
 --------------------------------*/
 #warp-charger {
-  background: url("../img/warp-charger-bg-low-quality.jpg?v=2") center top no-repeat fixed;
+  background: url("../img_warp1/warp-charger-bg-low-quality.jpg") center top no-repeat fixed;
   background-size: cover;
   position: relative;
 }
@@ -797,16 +871,23 @@ body.mobile-nav-active #mobile-nav-toggle {
   transition: 0.3s;
 }
 
-#warp-charger .warp-charger-col:hover .icon {
+#warp-charger .warp-charger-col-link{
+    position:relative;
+}
+
+#warp-charger .warp-charger-col-link:hover .icon {
   background-color: #fff;
 }
 
-#warp-charger .warp-charger-col:hover i {
+#warp-charger .warp-charger-col-link:hover i {
   color:#00AAEA;
 }
 
+#warp-charger .warp-charger-col-link .img {
+    max-width: 40vh;
+}
 
-#warp-charger .warp-charger-col:hover .btn-primary {
+#warp-charger .warp-charger-col-link:hover .btn-primary {
   background-color: transparent;
   border-color: #00AAEA;
   color: #00AAEA;
@@ -838,6 +919,86 @@ body.mobile-nav-active #mobile-nav-toggle {
   color: #333;
   margin-bottom: 0;
   padding: 0 20px 20px 20px;
+}
+
+
+/* Products Section
+--------------------------------*/
+#products {
+  background: #f7f7f7;
+  background-size: cover;
+}
+
+#products .box {
+  margin-bottom: 30px;
+}
+
+
+#products .nav-tabs {
+    border-bottom: none;
+}
+
+#products .nav-item {
+  padding: 5px;
+}
+
+#products .nav-item button {
+  border-bottom: 4px solid rgba(0,0,0,0);
+  padding-left: calc(var(--bs-gutter-x) * .5);
+  padding-right: calc(var(--bs-gutter-x) * .5);
+}
+
+
+#products .nav-item .active{
+  border-bottom: 4px solid #00AAEA;
+  padding-left: calc(var(--bs-gutter-x) * .5);
+  padding-right: calc(var(--bs-gutter-x) * .5);
+  background-color: transparent;
+}
+
+#products .nav-link {
+  border: none;
+}
+
+#products .nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 5px; /* this pushes down the blue bottom border*/
+}
+
+#products .nav-item .icon {
+  float: left;
+  padding-right: 15px;
+}
+
+#products .nav-item .icon i {
+  color: rgba(35, 35, 35, 0.9);
+  font-size: 36px;
+  line-height: 1;
+  transition: 0.5s;
+}
+
+#products .nav-link h5 {
+  color: #515151;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1;
+  margin: 0;
+}
+
+#products #contact-nico {
+  padding-left: 40px;
+}
+
+#products #contact-nico i{
+  font-size: 26px;
+  padding-right: 10px;
+  color: #00AAEA;
+}
+
+#products #contact-nico p{
+  font-size: 20px;
 }
 
 /* Properties Section
@@ -877,7 +1038,22 @@ body.mobile-nav-active #mobile-nav-toggle {
   margin-bottom: 0;
 }
 
+.read-more {
+/*  margin-top: 40px;
+  margin-left: 40px;*/
+}
 
+.cta-btn {
+    text-align: center;
+}
+
+.read-more a{
+  font-size: 20px;
+  color: #FFFFFF;
+  background-color: #00AAEA;
+  border-radius: 25px;
+  padding: 8px 28px;
+}
 
 /* Call To Action Section
 --------------------------------*/
@@ -895,6 +1071,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 #call-to-action p {
   color: #fff;
+  text-align: center;
 }
 
 #call-to-action .cta-btn {
@@ -1378,10 +1555,11 @@ pre.code-example {
     font-size: 82%;
 }
 
-/* This prevents blue text on blue buttons when focused */
+/* This prevents blue text on blue buttons when focused
 .btn-primary.focus, .btn-primary:focus {
     color: #fff;
 }
+*/
 
 @media (min-width: 992px) {
     :target {

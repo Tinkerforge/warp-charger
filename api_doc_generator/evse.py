@@ -24,12 +24,12 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
             ]),
             "contactor_error": Elem.INT("Fehlercode der Schützüberwachung. Ein Wert ungleich 0 zeigt einen Fehler an.", constants=[
                 Const(0, "Kein Fehler"),
-                Const(1, "Schütz sollte durchschalten.<br/><span class=\"pr-4\"></span>Kein Strom vor Schütz, kein Strom nach Schütz.<br/><span class=\"pr-4\"></span>Stromversorgung prüfen."),
-                Const(2, "Schütz sollte durchschalten.<br/><span class=\"pr-4\"></span>Strom vor Schütz, kein Strom nach Schütz.<br/><span class=\"pr-4\"></span>Schütz defekt?"),
-                Const(3, "Schütz sollte durchschalten.<br/><span class=\"pr-4\"></span>Kein Strom vor Schütz, Strom nach Schütz.<br/><span class=\"pr-4\"></span>Verkabelung prüfen."),
-                Const(4, "Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class=\"pr-4\"></span>Kein Strom vor Schütz, kein Strom nach Schütz.<br/><span class=\"pr-4\"></span>Stromversorgung prüfen."),
-                Const(5, "Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class=\"pr-4\"></span>Kein Strom vor Schütz, Strom nach Schütz.<br/><span class=\"pr-4\"></span>Verkabelung prüfen."),
-                Const(6, "Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class=\"pr-4\"></span>Strom vor Schütz, Strom nach Schütz.<br/><span class=\"pr-4\"></span>Schütz defekt?"),
+                Const(1, "Schütz sollte durchschalten.<br/><span class=\"pe-4\"></span>Kein Strom vor Schütz, kein Strom nach Schütz.<br/><span class=\"pe-4\"></span>Stromversorgung prüfen."),
+                Const(2, "Schütz sollte durchschalten.<br/><span class=\"pe-4\"></span>Strom vor Schütz, kein Strom nach Schütz.<br/><span class=\"pe-4\"></span>Schütz defekt?"),
+                Const(3, "Schütz sollte durchschalten.<br/><span class=\"pe-4\"></span>Kein Strom vor Schütz, Strom nach Schütz.<br/><span class=\"pe-4\"></span>Verkabelung prüfen."),
+                Const(4, "Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class=\"pe-4\"></span>Kein Strom vor Schütz, kein Strom nach Schütz.<br/><span class=\"pe-4\"></span>Stromversorgung prüfen."),
+                Const(5, "Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class=\"pe-4\"></span>Kein Strom vor Schütz, Strom nach Schütz.<br/><span class=\"pe-4\"></span>Verkabelung prüfen."),
+                Const(6, "Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class=\"pe-4\"></span>Strom vor Schütz, Strom nach Schütz.<br/><span class=\"pe-4\"></span>Schütz defekt?"),
             ]),
             "allowed_charging_current": Elem.INT("Maximal erlaubter Ladestrom, der dem Fahrzeug zur Verfügung gestellt wird. Dieser Strom ist das Minimum der Stromgrenzen aller Ladeslots.", unit=Units.mA),
             "error_state": Elem.INT('Der aktuelle Fehlerzustand. <a href="https://www.warp-charger.com/#documents">Siehe Handbuch für Details.</a>', constants=[

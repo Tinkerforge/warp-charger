@@ -39,90 +39,95 @@
   </script>
 </head>
 
-<body data-spy="scroll" data-target="#navbar" data-offset="100">
+<body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-root-margin="-10% 0px -30%">
 
   <!--==========================
     Header
   ============================-->
-  <header id="mqtt_header" class="header header-scrolled" style="position: sticky;">
+  <header id="mqtt_header" class="header header-scrolled" style="position: sticky; overflow-y: hidden;">
     <div class="container-fluid">
       <div id="logo" class="pull-left">
         <!-- Uncomment below if you prefer to use an image logo -->
         <a href="index.html"><img src="img/logo.png" alt="" title="" /></a>
       </div>
 
-      <nav id="nav-menu-container">
+      <nav id="nav-menu-container" class="pt-xxl-3">
         <ul class="nav-menu nav-menu-top">
-            <li><a href="/">HOME</a></li>
+            <li><a href="/index.html">HOME</a></li>
+            <li><a href="/warp2.html">WARP Charger</a></li>
+            <li><a href="/stand.html">LADESÄULE</a></li>
+            <li><a href="/energy-manager.html">WARP ENERGY MANAGER</a></li>
+            <br class="d-xxl-none"/>
             <li><a href="/faq.html">FAQ</a></li>
-            <li class="menu-active"><a href="/api.html">API</a></li>
+            <li class="menu-active"><a href="/api.html?v=2">API</a></li>
             <li><a href="/evcc.html">EVCC</a></li>
             <li><a href="https://www.tinkerforge.com/de/shop/warp/wallbox.html">SHOP <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></li>
             <li><a href="https://www.tinkerforge.com/de/blog/">BLOG <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></li>
             <li><a href="https://www.tinkerunity.org/forum/13-warp-charger/l">FORUM <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></li>
-            <li><a href="/index_warp1.html">WARP1</a></li>
           </ul>
       </nav><!-- #nav-menu-container -->
     </div>
   </header><!-- #header -->
   <div class="row" style="margin-right: 0">
-    <nav id="navbar" class="navbar navbar-light navbar-test d-none d-lg-flex bg-light align-items-start">
-        <nav class="nav nav-pills flex-column ml-2">
-            <a class="navbar-brand" href="#">Inhalt</a>
-            <a class="nav-link" href="#mqtt_main">Einführung</a>
-            <div class="collapse">
-                <nav class="nav nav-pills flex-column">
-                </nav>
-            </div>
+    <div class="d-none d-lg-block col-lg-4 col-xl-3">
+       <nav class="h-100 flex-column align-items-stretch px-2">
+            <nav id="navbar" class="navbar navbar-light navbar-test flex-column">
+                <nav class="nav nav-pills flex-column ms-2">
+                    <a class="navbar-brand" href="#">Inhalt</a>
+                    <a class="nav-link" href="#mqtt_main">Einführung</a>
+                    <div class="collapse">
+                        <nav class="nav nav-pills flex-column">
+                        </nav>
+                    </div>
 
-            <a class="nav-link" href="#mqtt_section">MQTT</a>
-            <div class="collapse">
-                <nav class="nav nav-pills flex-column">
-                    <a class="nav-link ml-3" href="#mqtt_section_configuration">Konfiguration</a>
-                    <a class="nav-link ml-3" href="#mqtt_section_basics">Grundlagen</a>
-                </nav>
-            </div>
+                    <a class="nav-link" href="#mqtt_section">MQTT</a>
+                    <div class="collapse">
+                        <nav class="nav nav-pills flex-column">
+                            <a class="nav-link ms-3" href="#mqtt_section_configuration">Konfiguration</a>
+                            <a class="nav-link ms-3" href="#mqtt_section_basics">Grundlagen</a>
+                        </nav>
+                    </div>
 
-            <a class="nav-link" href="#http_section">HTTP</a>
-            <div class="collapse">
-                <nav class="nav nav-pills flex-column">
-                    <a class="nav-link ml-3" href="#http_section_configuration">Konfiguration</a>
-                    <a class="nav-link ml-3" href="#http_section_basics">Grundlagen</a>
-                    <a class="nav-link ml-3" href="#http_section_auth">Authentifizierung</a>
-                </nav>
-            </div>
+                    <a class="nav-link" href="#http_section">HTTP</a>
+                    <div class="collapse">
+                        <nav class="nav nav-pills flex-column">
+                            <a class="nav-link ms-3" href="#http_section_configuration">Konfiguration</a>
+                            <a class="nav-link ms-3" href="#http_section_basics">Grundlagen</a>
+                            <a class="nav-link ms-3" href="#http_section_auth">Authentifizierung</a>
+                        </nav>
+                    </div>
 
-            <a class="nav-link" href="#states_section">Zustände, Kommandos und Konfigurationen</a>
-            <div class="collapse">
-                <nav class="nav nav-pills flex-column">
-                    <a class="nav-link ml-3" href="#states_section_states">Zustände</a>
-                    <a class="nav-link ml-3" href="#states_section_commands">Kommandos</a>
-                    <a class="nav-link ml-3" href="#states_section_configs">Konfigurationen</a>
-                    <a class="nav-link ml-3" href="#states_section_shortcuts">Abkürzungen</a>
-                </nav>
-            </div>
+                    <a class="nav-link" href="#states_section">Zustände, Kommandos und Konfigurationen</a>
+                    <div class="collapse">
+                        <nav class="nav nav-pills flex-column">
+                            <a class="nav-link ms-3" href="#states_section_states">Zustände</a>
+                            <a class="nav-link ms-3" href="#states_section_commands">Kommandos</a>
+                            <a class="nav-link ms-3" href="#states_section_configs">Konfigurationen</a>
+                            <a class="nav-link ms-3" href="#states_section_shortcuts">Abkürzungen</a>
+                        </nav>
+                    </div>
 
-            <a class="nav-link" href="#features_section">Features</a>
-            <div class="collapse">
-                <nav class="nav nav-pills flex-column">
-                    <a class="nav-link ml-3" href="#features_evse">EVSE (<code>"evse"</code>)</a>
-                    <a class="nav-link ml-3" href="#features_cp_disconnect">Control Pilot Disconnect (<code>"cp_disconnect"</code>)</a>
-                    <a class="nav-link ml-3" href="#features_button_configuration">Button-Konfiguration (<code>"button_configuration"</code>)</a>
-                    <a class="nav-link ml-3" href="#features_ethernet">Ethernet (<code>"ethernet"</code>)</a>
-                    <a class="nav-link ml-3" href="#features_meter">Stromzähler (<code>"meter"</code>)</a>
-                    <a class="nav-link ml-3" href="#features_meter_phases">Stromzähler misst phasenweise (<code>"meter_phases"</code>)</a>
-                    <a class="nav-link ml-3" href="#features_meter_all_values">Stromzähler misst weitere Werte (<code>"meter_all_values"</code>)</a>
-                    <a class="nav-link ml-3" href="#features_nfc">NFC-Bricklet (<code>"nfc"</code>)</a>
-                </nav>
-            </div>
+                    <a class="nav-link" href="#features_section">Features</a>
+                    <div class="collapse">
+                        <nav class="nav nav-pills flex-column">
+                            <a class="nav-link ms-3" href="#features_evse">EVSE (<code>"evse"</code>)</a>
+                            <a class="nav-link ms-3" href="#features_cp_disconnect">Control Pilot Disconnect (<code>"cp_disconnect"</code>)</a>
+                            <a class="nav-link ms-3" href="#features_button_configuration">Button-Konfiguration (<code>"button_configuration"</code>)</a>
+                            <a class="nav-link ms-3" href="#features_ethernet">Ethernet (<code>"ethernet"</code>)</a>
+                            <a class="nav-link ms-3" href="#features_meter">Stromzähler (<code>"meter"</code>)</a>
+                            <a class="nav-link ms-3" href="#features_meter_phases">Stromzähler misst phasenweise (<code>"meter_phases"</code>)</a>
+                            <a class="nav-link ms-3" href="#features_meter_all_values">Stromzähler misst weitere Werte (<code>"meter_all_values"</code>)</a>
+                            <a class="nav-link ms-3" href="#features_nfc">NFC-Bricklet (<code>"nfc"</code>)</a>
+                        </nav>
+                    </div>
 
-            <a class="nav-link" href="#reference">API-Referenz</a>
-            <div class="collapse">
-                <nav class="nav nav-pills flex-column">
-                    <a class="nav-link ml-3" href="#reference-evse">Ladecontroller (EVSE)</a>
+                    <a class="nav-link" href="#reference">API-Referenz</a>
+                    <div class="collapse">
+                        <nav class="nav nav-pills flex-column">
+                            <a class="nav-link ms-3" href="#reference-evse">Ladecontroller (EVSE)</a>
     <div class="collapse">
         <nav class="nav nav-pills flex-column">
-        <span class="ml-5">Zustände</span>
+        <span class="ms-5">Zustände</span>
 <a class="nav-link" href="#evse_state" style="margin-left: 2rem !important;">evse/<wbr>state</a>
 <a class="nav-link" href="#evse_hardware_configuration" style="margin-left: 2rem !important;">evse/<wbr>hardware_configuration</a>
 <a class="nav-link" href="#evse_slots" style="margin-left: 2rem !important;">evse/<wbr>slots</a>
@@ -142,168 +147,170 @@
 <a class="nav-link" href="#evse_gpio_configuration" style="margin-left: 2rem !important;">evse/<wbr>gpio_configuration</a>
 <a class="nav-link" href="#evse_button_configuration" style="margin-left: 2rem !important;">evse/<wbr>button_configuration</a>
 <a class="nav-link" href="#evse_user_calibration" style="margin-left: 2rem !important;">evse/<wbr>user_calibration</a>
-<span class="ml-5">Kommandos</span>
+<span class="ms-5">Kommandos</span>
 <a class="nav-link" href="#evse_reset_dc_fault_current_state" style="margin-left: 2rem !important;">evse/<wbr>reset_dc_fault_current_state</a>
 <a class="nav-link" href="#evse_stop_charging" style="margin-left: 2rem !important;">evse/<wbr>stop_charging</a>
 <a class="nav-link" href="#evse_start_charging" style="margin-left: 2rem !important;">evse/<wbr>start_charging</a>
-<span class="ml-5">HTTP-Spezifisch</span>
+<span class="ms-5">HTTP-Spezifisch</span>
 <a class="nav-link" href="#evse_start_debug" style="margin-left: 2rem !important;">evse/<wbr>start_debug</a>
 <a class="nav-link" href="#evse_stop_debug" style="margin-left: 2rem !important;">evse/<wbr>stop_debug</a>
         </nav>
     </div>
-<a class="nav-link ml-3" href="#reference-meter">Stromzähler</a>
+<a class="nav-link ms-3" href="#reference-meter">Stromzähler</a>
     <div class="collapse">
         <nav class="nav nav-pills flex-column">
-        <span class="ml-5">Zustände</span>
+        <span class="ms-5">Zustände</span>
 <a class="nav-link" href="#meter_state" style="margin-left: 2rem !important;">meter/<wbr>state</a>
 <a class="nav-link" href="#meter_values" style="margin-left: 2rem !important;">meter/<wbr>values</a>
 <a class="nav-link" href="#meter_phases" style="margin-left: 2rem !important;">meter/<wbr>phases</a>
 <a class="nav-link" href="#meter_error_counters" style="margin-left: 2rem !important;">meter/<wbr>error_counters</a>
 <a class="nav-link" href="#meter_all_values" style="margin-left: 2rem !important;">meter/<wbr>all_values</a>
-<span class="ml-5">Kommandos</span>
+<span class="ms-5">Kommandos</span>
 <a class="nav-link" href="#meter_state_update" style="margin-left: 2rem !important;">meter/<wbr>state_update</a>
 <a class="nav-link" href="#meter_values_update" style="margin-left: 2rem !important;">meter/<wbr>values_update</a>
 <a class="nav-link" href="#meter_phases_update" style="margin-left: 2rem !important;">meter/<wbr>phases_update</a>
 <a class="nav-link" href="#meter_all_values_update" style="margin-left: 2rem !important;">meter/<wbr>all_values_update</a>
 <a class="nav-link" href="#meter_reset" style="margin-left: 2rem !important;">meter/<wbr>reset</a>
-<span class="ml-5">Zustände</span>
+<span class="ms-5">Zustände</span>
 <a class="nav-link" href="#meter_last_reset" style="margin-left: 2rem !important;">meter/<wbr>last_reset</a>
-<span class="ml-5">HTTP-Spezifisch</span>
+<span class="ms-5">HTTP-Spezifisch</span>
 <a class="nav-link" href="#meter_history" style="margin-left: 2rem !important;">meter/<wbr>history</a>
 <a class="nav-link" href="#meter_live" style="margin-left: 2rem !important;">meter/<wbr>live</a>
         </nav>
     </div>
-<a class="nav-link ml-3" href="#reference-charge_manager">Lastmanager</a>
+<a class="nav-link ms-3" href="#reference-charge_manager">Lastmanager</a>
     <div class="collapse">
         <nav class="nav nav-pills flex-column">
-        <span class="ml-5">Zustände</span>
+        <span class="ms-5">Zustände</span>
 <a class="nav-link" href="#charge_manager_available_current" style="margin-left: 2rem !important;">charge_manager/<wbr>available_current</a>
 <a class="nav-link" href="#charge_manager_state" style="margin-left: 2rem !important;">charge_manager/<wbr>state</a>
-<span class="ml-5">Konfigurationen</span>
+<span class="ms-5">Konfigurationen</span>
 <a class="nav-link" href="#charge_manager_config" style="margin-left: 2rem !important;">charge_manager/<wbr>config</a>
         </nav>
     </div>
-<a class="nav-link ml-3" href="#reference-users">Benutzerverwaltung</a>
+<a class="nav-link ms-3" href="#reference-users">Benutzerverwaltung</a>
     <div class="collapse">
         <nav class="nav nav-pills flex-column">
-        <span class="ml-5">Zustände</span>
+        <span class="ms-5">Zustände</span>
 <a class="nav-link" href="#users_config" style="margin-left: 2rem !important;">users/<wbr>config</a>
-<span class="ml-5">Kommandos</span>
+<span class="ms-5">Kommandos</span>
 <a class="nav-link" href="#users_add" style="margin-left: 2rem !important;">users/<wbr>add</a>
 <a class="nav-link" href="#users_remove" style="margin-left: 2rem !important;">users/<wbr>remove</a>
 <a class="nav-link" href="#users_modify" style="margin-left: 2rem !important;">users/<wbr>modify</a>
 <a class="nav-link" href="#users_http_auth_update" style="margin-left: 2rem !important;">users/<wbr>http_auth_update</a>
-<span class="ml-5">HTTP-Spezifisch</span>
+<span class="ms-5">HTTP-Spezifisch</span>
 <a class="nav-link" href="#users_all_usernames" style="margin-left: 2rem !important;">users/<wbr>all_usernames</a>
         </nav>
     </div>
-<a class="nav-link ml-3" href="#reference-charge_tracker">Ladetracker</a>
+<a class="nav-link ms-3" href="#reference-charge_tracker">Ladetracker</a>
     <div class="collapse">
         <nav class="nav nav-pills flex-column">
-        <span class="ml-5">Zustände</span>
+        <span class="ms-5">Zustände</span>
 <a class="nav-link" href="#charge_tracker_state" style="margin-left: 2rem !important;">charge_tracker/<wbr>state</a>
 <a class="nav-link" href="#charge_tracker_last_charges" style="margin-left: 2rem !important;">charge_tracker/<wbr>last_charges</a>
 <a class="nav-link" href="#charge_tracker_current_charge" style="margin-left: 2rem !important;">charge_tracker/<wbr>current_charge</a>
-<span class="ml-5">Kommandos</span>
+<span class="ms-5">Kommandos</span>
 <a class="nav-link" href="#charge_tracker_remove_all_charges" style="margin-left: 2rem !important;">charge_tracker/<wbr>remove_all_charges</a>
-<span class="ml-5">HTTP-Spezifisch</span>
+<span class="ms-5">HTTP-Spezifisch</span>
 <a class="nav-link" href="#charge_tracker_charge_log" style="margin-left: 2rem !important;">charge_tracker/<wbr>charge_log</a>
         </nav>
     </div>
-<a class="nav-link ml-3" href="#reference-nfc">NFC-Ladefreigabe</a>
+<a class="nav-link ms-3" href="#reference-nfc">NFC-Ladefreigabe</a>
     <div class="collapse">
         <nav class="nav nav-pills flex-column">
-        <span class="ml-5">Zustände</span>
+        <span class="ms-5">Zustände</span>
 <a class="nav-link" href="#nfc_seen_tags" style="margin-left: 2rem !important;">nfc/<wbr>seen_tags</a>
-<span class="ml-5">Kommandos</span>
+<span class="ms-5">Kommandos</span>
 <a class="nav-link" href="#nfc_inject_tag" style="margin-left: 2rem !important;">nfc/<wbr>inject_tag</a>
 <a class="nav-link" href="#nfc_inject_tag_start" style="margin-left: 2rem !important;">nfc/<wbr>inject_tag_start</a>
 <a class="nav-link" href="#nfc_inject_tag_stop" style="margin-left: 2rem !important;">nfc/<wbr>inject_tag_stop</a>
-<span class="ml-5">Konfigurationen</span>
+<span class="ms-5">Konfigurationen</span>
 <a class="nav-link" href="#nfc_config" style="margin-left: 2rem !important;">nfc/<wbr>config</a>
         </nav>
     </div>
-<a class="nav-link ml-3" href="#reference-network">Netzwerk-Konfiguration</a>
+<a class="nav-link ms-3" href="#reference-network">Netzwerk-Konfiguration</a>
     <div class="collapse">
         <nav class="nav nav-pills flex-column">
-        <span class="ml-5">Konfigurationen</span>
+        <span class="ms-5">Konfigurationen</span>
 <a class="nav-link" href="#network_config" style="margin-left: 2rem !important;">network/<wbr>config</a>
         </nav>
     </div>
-<a class="nav-link ml-3" href="#reference-wifi">WLAN-Konfiguration</a>
+<a class="nav-link ms-3" href="#reference-wifi">WLAN-Konfiguration</a>
     <div class="collapse">
         <nav class="nav nav-pills flex-column">
-        <span class="ml-5">Zustände</span>
+        <span class="ms-5">Zustände</span>
 <a class="nav-link" href="#wifi_state" style="margin-left: 2rem !important;">wifi/<wbr>state</a>
-<span class="ml-5">Kommandos</span>
+<span class="ms-5">Kommandos</span>
 <a class="nav-link" href="#wifi_scan" style="margin-left: 2rem !important;">wifi/<wbr>scan</a>
-<span class="ml-5">Konfigurationen</span>
+<span class="ms-5">Konfigurationen</span>
 <a class="nav-link" href="#wifi_sta_config" style="margin-left: 2rem !important;">wifi/<wbr>sta_config</a>
 <a class="nav-link" href="#wifi_ap_config" style="margin-left: 2rem !important;">wifi/<wbr>ap_config</a>
-<span class="ml-5">HTTP-Spezifisch</span>
+<span class="ms-5">HTTP-Spezifisch</span>
 <a class="nav-link" href="#wifi_scan_results" style="margin-left: 2rem !important;">wifi/<wbr>scan_results</a>
         </nav>
     </div>
-<a class="nav-link ml-3" href="#reference-ethernet">LAN-Verbindung</a>
+<a class="nav-link ms-3" href="#reference-ethernet">LAN-Verbindung</a>
     <div class="collapse">
         <nav class="nav nav-pills flex-column">
-        <span class="ml-5">Zustände</span>
+        <span class="ms-5">Zustände</span>
 <a class="nav-link" href="#ethernet_state" style="margin-left: 2rem !important;">ethernet/<wbr>state</a>
-<span class="ml-5">Konfigurationen</span>
+<span class="ms-5">Konfigurationen</span>
 <a class="nav-link" href="#ethernet_config" style="margin-left: 2rem !important;">ethernet/<wbr>config</a>
         </nav>
     </div>
-<a class="nav-link ml-3" href="#reference-ntp">Zeitsynchronisierung</a>
+<a class="nav-link ms-3" href="#reference-ntp">Zeitsynchronisierung</a>
     <div class="collapse">
         <nav class="nav nav-pills flex-column">
-        <span class="ml-5">Zustände</span>
+        <span class="ms-5">Zustände</span>
 <a class="nav-link" href="#ntp_state" style="margin-left: 2rem !important;">ntp/<wbr>state</a>
-<span class="ml-5">Konfigurationen</span>
+<span class="ms-5">Konfigurationen</span>
 <a class="nav-link" href="#ntp_config" style="margin-left: 2rem !important;">ntp/<wbr>config</a>
         </nav>
     </div>
-<a class="nav-link ml-3" href="#reference-mqtt">MQTT-Verbindung</a>
+<a class="nav-link ms-3" href="#reference-mqtt">MQTT-Verbindung</a>
     <div class="collapse">
         <nav class="nav nav-pills flex-column">
-        <span class="ml-5">Zustände</span>
+        <span class="ms-5">Zustände</span>
 <a class="nav-link" href="#mqtt_state" style="margin-left: 2rem !important;">mqtt/<wbr>state</a>
-<span class="ml-5">Konfigurationen</span>
+<span class="ms-5">Konfigurationen</span>
 <a class="nav-link" href="#mqtt_config" style="margin-left: 2rem !important;">mqtt/<wbr>config</a>
         </nav>
     </div>
-<a class="nav-link ml-3" href="#reference-info">Allgemeine Informationen</a>
+<a class="nav-link ms-3" href="#reference-info">Allgemeine Informationen</a>
     <div class="collapse">
         <nav class="nav nav-pills flex-column">
-        <span class="ml-5">Zustände</span>
+        <span class="ms-5">Zustände</span>
 <a class="nav-link" href="#info_version" style="margin-left: 2rem !important;">info/<wbr>version</a>
 <a class="nav-link" href="#info_modules" style="margin-left: 2rem !important;">info/<wbr>modules</a>
 <a class="nav-link" href="#info_features" style="margin-left: 2rem !important;">info/<wbr>features</a>
 <a class="nav-link" href="#info_name" style="margin-left: 2rem !important;">info/<wbr>name</a>
-<span class="ml-5">Konfigurationen</span>
+<span class="ms-5">Konfigurationen</span>
 <a class="nav-link" href="#info_display_name" style="margin-left: 2rem !important;">info/<wbr>display_name</a>
         </nav>
     </div>
-<a class="nav-link ml-3" href="#reference-misc">Sonstiges</a>
+<a class="nav-link ms-3" href="#reference-misc">Sonstiges</a>
     <div class="collapse">
         <nav class="nav nav-pills flex-column">
-        <span class="ml-5">Kommandos</span>
+        <span class="ms-5">Kommandos</span>
 <a class="nav-link" href="#reboot" style="margin-left: 2rem !important;">reboot</a>
-<span class="ml-5">HTTP-Spezifisch</span>
+<span class="ms-5">HTTP-Spezifisch</span>
 <a class="nav-link" href="#debug_report" style="margin-left: 2rem !important;">debug_report</a>
 <a class="nav-link" href="#force_reboot" style="margin-left: 2rem !important;">force_reboot</a>
 <a class="nav-link" href="#update" style="margin-left: 2rem !important;">update</a>
 <a class="nav-link" href="#flash_firmware" style="margin-left: 2rem !important;">flash_firmware</a>
         </nav>
     </div>
+                        </nav>
+                    </div>
                 </nav>
-            </div>
+            </nav>
         </nav>
-    </nav>
+    </div>
 
   <!--==========================
     Intro Section
   ============================-->
-  <main id="mqtt_main" class="col-lg-8">
+  <main id="mqtt_main" class="col-lg-8 col-xl-9 col-xxl-6">
     <header id="start" class="reference-section-header pt-4"><h2>MQTT- und HTTP-API</h2></header>
     <section id="api_intro" class="section">
         <div class="container">
@@ -722,9 +729,9 @@
     </ul>
 </li>
     </ul>
-    
-<div class="any">
-    <div class="h5" id="evse_state">evse/state</div>
+
+<div  id="evse_state" class="any">
+    <div class="h5">evse/state</div>
     Der Zustand des Ladecontrollers.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -783,12 +790,12 @@
 <div class="any">
 <ol class="ol-enum">
     <li><strong>0</strong> - Kein Fehler</li>
-    <li><strong>1</strong> - Schütz sollte durchschalten.<br/><span class="pr-4"></span>Kein Strom vor Schütz, kein Strom nach Schütz.<br/><span class="pr-4"></span>Stromversorgung prüfen.</li>
-    <li><strong>2</strong> - Schütz sollte durchschalten.<br/><span class="pr-4"></span>Strom vor Schütz, kein Strom nach Schütz.<br/><span class="pr-4"></span>Schütz defekt?</li>
-    <li><strong>3</strong> - Schütz sollte durchschalten.<br/><span class="pr-4"></span>Kein Strom vor Schütz, Strom nach Schütz.<br/><span class="pr-4"></span>Verkabelung prüfen.</li>
-    <li><strong>4</strong> - Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class="pr-4"></span>Kein Strom vor Schütz, kein Strom nach Schütz.<br/><span class="pr-4"></span>Stromversorgung prüfen.</li>
-    <li><strong>5</strong> - Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class="pr-4"></span>Kein Strom vor Schütz, Strom nach Schütz.<br/><span class="pr-4"></span>Verkabelung prüfen.</li>
-    <li><strong>6</strong> - Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class="pr-4"></span>Strom vor Schütz, Strom nach Schütz.<br/><span class="pr-4"></span>Schütz defekt?</li>
+    <li><strong>1</strong> - Schütz sollte durchschalten.<br/><span class="pe-4"></span>Kein Strom vor Schütz, kein Strom nach Schütz.<br/><span class="pe-4"></span>Stromversorgung prüfen.</li>
+    <li><strong>2</strong> - Schütz sollte durchschalten.<br/><span class="pe-4"></span>Strom vor Schütz, kein Strom nach Schütz.<br/><span class="pe-4"></span>Schütz defekt?</li>
+    <li><strong>3</strong> - Schütz sollte durchschalten.<br/><span class="pe-4"></span>Kein Strom vor Schütz, Strom nach Schütz.<br/><span class="pe-4"></span>Verkabelung prüfen.</li>
+    <li><strong>4</strong> - Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class="pe-4"></span>Kein Strom vor Schütz, kein Strom nach Schütz.<br/><span class="pe-4"></span>Stromversorgung prüfen.</li>
+    <li><strong>5</strong> - Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class="pe-4"></span>Kein Strom vor Schütz, Strom nach Schütz.<br/><span class="pe-4"></span>Verkabelung prüfen.</li>
+    <li><strong>6</strong> - Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class="pe-4"></span>Strom vor Schütz, Strom nach Schütz.<br/><span class="pe-4"></span>Schütz defekt?</li>
 </ol>
 </div></td>
 </tr>
@@ -845,8 +852,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="evse_hardware_configuration">evse/hardware_configuration</div>
+<div  id="evse_hardware_configuration" class="any">
+    <div class="h5">evse/hardware_configuration</div>
     Die Hardwarekonfiguration des Ladecontrollers.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -928,8 +935,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="evse_slots">evse/slots</div>
+<div  id="evse_slots" class="any">
+    <div class="h5">evse/slots</div>
     Der Zustand der Ladeslots. Siehe TODO LINK für Details.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -989,8 +996,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="evse_button_state">evse/button_state</div>
+<div  id="evse_button_state" class="any">
+    <div class="h5">evse/button_state</div>
     Der Zustand des Tasters in der Frontblende.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1021,8 +1028,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="evse_indicator_led">evse/indicator_led</div>
+<div  id="evse_indicator_led" class="any">
+    <div class="h5">evse/indicator_led</div>
     Der Zustand der LED im Taster
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1059,8 +1066,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="evse_low_level_state">evse/low_level_state</div>
+<div  id="evse_low_level_state" class="any">
+    <div class="h5">evse/low_level_state</div>
     Der Low-Level-Zustand des Ladecontrollers.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1206,8 +1213,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="evse_external_current">evse/external_current</div>
+<div  id="evse_external_current" class="any">
+    <div class="h5">evse/external_current</div>
     Der von der externen Steuerung vorgegebene Ladestrom. Kann über evse/external_current_update mit dem selben Payload gesetzt werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1228,8 +1235,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="evse_external_clear_on_disconnect">evse/external_clear_on_disconnect</div>
+<div  id="evse_external_clear_on_disconnect" class="any">
+    <div class="h5">evse/external_clear_on_disconnect</div>
     Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abziehen eines Fahrzeugs automatisch auf 0 gesetzt werden soll. Kann über evse/external_clear_on_disconnect_update mit dem selben Payload gesetzt werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1256,8 +1263,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="evse_management_current">evse/management_current</div>
+<div  id="evse_management_current" class="any">
+    <div class="h5">evse/management_current</div>
     Der vom Lastmanagement vorgegebene Ladestrom. Kann über evse/management_current_update mit dem selben Payload gesetzt werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1278,8 +1285,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="evse_auto_start_charging">evse/auto_start_charging</div>
+<div  id="evse_auto_start_charging" class="any">
+    <div class="h5">evse/auto_start_charging</div>
     Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Dieser Wert kann über evse/auto_start_charging_update mit dem selben Payload aktualisiert werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1300,8 +1307,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="evse_global_current">evse/global_current</div>
+<div  id="evse_global_current" class="any">
+    <div class="h5">evse/global_current</div>
     Der über das Webinterface vorgegebene Ladestrom. Kann über evse/global_current_update mit dem selben Payload gesetzt werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1322,8 +1329,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="evse_management_enabled">evse/management_enabled</div>
+<div  id="evse_management_enabled" class="any">
+    <div class="h5">evse/management_enabled</div>
     Gibt an, ob der Ladeslot des Lastmanagements aktiv ist. Der Wert kann über evse/management_enabled_update mit dem selben Payload aktualisiert werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1344,8 +1351,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="evse_user_current">evse/user_current</div>
+<div  id="evse_user_current" class="any">
+    <div class="h5">evse/user_current</div>
     Der von der Benutzerautorisierung erlaubte Ladestrom.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1366,8 +1373,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="evse_user_enabled">evse/user_enabled</div>
+<div  id="evse_user_enabled" class="any">
+    <div class="h5">evse/user_enabled</div>
     Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist. Der Wert kann über evse/user_enabled_update mit dem selben Payload aktualisiert werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1388,8 +1395,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="evse_external_enabled">evse/external_enabled</div>
+<div  id="evse_external_enabled" class="any">
+    <div class="h5">evse/external_enabled</div>
     Gibt an, ob der Ladeslot der externen Steuerung aktiv ist. Der Wert kann über evse/external_enabled_update mit dem selben Payload aktualisiert werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1410,8 +1417,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="evse_external_defaults">evse/external_defaults</div>
+<div  id="evse_external_defaults" class="any">
+    <div class="h5">evse/external_defaults</div>
     Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Ladeslots der externen Steuerung. Der Wert kann über evse/external_defaults_update mit dem selben Payload aktualisiert werden.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1443,8 +1450,8 @@
 </div>
 </div>
 
-<div class="warp2_only">
-    <div class="h5" id="evse_gpio_configuration">evse/gpio_configuration <strong>(Nur WARP 2)</strong> </div>
+<div  id="evse_gpio_configuration" class="warp2_only">
+    <div class="h5">evse/gpio_configuration <strong>(Nur WARP 2)</strong> </div>
     Die Konfiguration der konfigurierbaren Ein- und Ausgänge. Kann über evse/gpio_configuration_update mit dem selben Payload aktualisiert werden.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1493,8 +1500,8 @@
 </div>
 </div>
 
-<div class="warp2_only">
-    <div class="h5" id="evse_button_configuration">evse/button_configuration <strong>(Nur WARP 2)</strong> </div>
+<div  id="evse_button_configuration" class="warp2_only">
+    <div class="h5">evse/button_configuration <strong>(Nur WARP 2)</strong> </div>
     Die Konfiguration des Tasters in der Frontblende. Diese kann über evse/button_configuration_update mit dem selben Payload aktualisiert werden. Benötigt das Feature <a href="#features_button_configuration"><code>"button_configuration"</code></a><br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1523,8 +1530,8 @@
 </div>
 </div>
 
-<div class="warp1_only">
-    <div class="h5" id="evse_user_calibration">evse/user_calibration <strong>(Nur WARP 1)</strong> </div>
+<div  id="evse_user_calibration" class="warp1_only">
+    <div class="h5">evse/user_calibration <strong>(Nur WARP 1)</strong> </div>
     Erlaubt es, die werksseitige Kalibrierung des EVSEs auszulesen und zu überschreiben. Dieser Wert kann über evse/user_calibration_update mit dem selben Payload aktualisiert werden. Um die Kalibierung auf den Werkszustand zurückzusetzen, kann ein Payload mit user_calibration_active auf false geschickt werden. Die weiteren Werte werden dann ignoriert.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1570,8 +1577,8 @@
 </div>
 </div>
 
-<div class="warp2_only">
-    <div class="h5" id="evse_reset_dc_fault_current_state">evse/reset_dc_fault_current_state <strong>(Nur WARP 2)</strong> </div>
+<div  id="evse_reset_dc_fault_current_state" class="warp2_only">
+    <div class="h5">evse/reset_dc_fault_current_state <strong>(Nur WARP 2)</strong> </div>
     Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong><br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1592,23 +1599,23 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="evse_stop_charging">evse/stop_charging</div>
+<div  id="evse_stop_charging" class="any">
+    <div class="h5">evse/stop_charging</div>
     Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit <a class="scrollto text-monospace" href="#evse_start_charging">evse/start_charging</a> wieder gestartet werden.<br/><strong>Leerer Payload. Es muss einer der folgenden Werte übergeben werden: <code>null</code>, <code>""</code>, <code>false</code>, <code>0</code>, <code>[]</code> oder <code>{}</code></strong><br/><strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
 </div>
 
-<div class="any">
-    <div class="h5" id="evse_start_charging">evse/start_charging</div>
+<div  id="evse_start_charging" class="any">
+    <div class="h5">evse/start_charging</div>
     Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit <a class="scrollto text-monospace" href="#evse_stop_charging">evse/stop_charging</a> wieder gestoppt werden.<br/><strong>Leerer Payload. Es muss einer der folgenden Werte übergeben werden: <code>null</code>, <code>""</code>, <code>false</code>, <code>0</code>, <code>[]</code> oder <code>{}</code></strong><br/><strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
 </div>
 
-<div class="any">
-    <div class="h5" id="evse_start_debug">evse/start_debug</div>
+<div  id="evse_start_debug" class="any">
+    <div class="h5">evse/start_debug</div>
     Startet ein Ladeprotokoll. Es werden hochfrequent Messwerte des Ladecontrollers auf die WebSockets geschrieben, bis <a class="scrollto text-monospace" href="#evse_stop_debug">evse/stop_debug</a> aufgerufen wird.
 </div>
 
-<div class="any">
-    <div class="h5" id="evse_stop_debug">evse/stop_debug</div>
+<div  id="evse_stop_debug" class="any">
+    <div class="h5">evse/stop_debug</div>
     Stoppt ein Ladeprotokoll. Siehe <a class="scrollto text-monospace" href="#evse_start_debug">evse/start_debug</a> für Details.
 </div>
 </section>
@@ -1652,9 +1659,9 @@
     </ul>
 </li>
     </ul>
-    
-<div class="any">
-    <div class="h5" id="meter_state">meter/state</div>
+
+<div  id="meter_state" class="any">
+    <div class="h5">meter/state</div>
     Der Zustand des Stromzählers.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1699,8 +1706,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="meter_values">meter/values</div>
+<div  id="meter_values" class="any">
+    <div class="h5">meter/values</div>
     Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"><code>"meter"</code></a>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1731,8 +1738,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="meter_phases">meter/phases</div>
+<div  id="meter_phases" class="any">
+    <div class="h5">meter/phases</div>
     Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter_phases"><code>"meter_phases"</code></a>.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1772,8 +1779,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="meter_error_counters">meter/error_counters</div>
+<div  id="meter_error_counters" class="any">
+    <div class="h5">meter/error_counters</div>
     Fehlerzähler der Kommunikation mit dem Stromzähler.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -1834,8 +1841,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="meter_all_values">meter/all_values</div>
+<div  id="meter_all_values" class="any">
+    <div class="h5">meter/all_values</div>
     Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Benötigt das Feature <a href="#features_meter_all_values"><code>"meter_all_values"</code></a>. Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -2106,8 +2113,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="meter_state_update">meter/state_update</div>
+<div  id="meter_state_update" class="any">
+    <div class="h5">meter/state_update</div>
     Setzt den Stromzählerzustand. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -2152,8 +2159,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="meter_values_update">meter/values_update</div>
+<div  id="meter_values_update" class="any">
+    <div class="h5">meter/values_update</div>
     Setzt die Messwerte des Stromzählers. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -2184,8 +2191,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="meter_phases_update">meter/phases_update</div>
+<div  id="meter_phases_update" class="any">
+    <div class="h5">meter/phases_update</div>
     Setzt die angeschlossenen und aktive Phasen. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -2225,8 +2232,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="meter_all_values_update">meter/all_values_update</div>
+<div  id="meter_all_values_update" class="any">
+    <div class="h5">meter/all_values_update</div>
     Setzt alle Messwerte, die von unterstützten Stromzählern gemessen werden. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong> Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -2497,13 +2504,13 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="meter_reset">meter/reset</div>
+<div  id="meter_reset" class="any">
+    <div class="h5">meter/reset</div>
     Setzt den Energiezähler zurück.<br/><strong>Leerer Payload. Es muss einer der folgenden Werte übergeben werden: <code>null</code>, <code>""</code>, <code>false</code>, <code>0</code>, <code>[]</code> oder <code>{}</code></strong><br/><strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
 </div>
 
-<div class="any">
-    <div class="h5" id="meter_last_reset">meter/last_reset</div>
+<div  id="meter_last_reset" class="any">
+    <div class="h5">meter/last_reset</div>
     Der Zeitpunkt des letzten Zähler-Resets (siehe <a class="scrollto text-monospace" href="#meter_reset">meter/reset</a>) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -2524,13 +2531,13 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="meter_history">meter/history</div>
+<div  id="meter_history" class="any">
+    <div class="h5">meter/history</div>
     Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
 </div>
 
-<div class="any">
-    <div class="h5" id="meter_live">meter/live</div>
+<div  id="meter_live" class="any">
+    <div class="h5">meter/live</div>
     Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für <a class="scrollto text-monospace" href="#meter_history">meter/history</a> generiert.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -2576,9 +2583,9 @@
     </ul>
 </li>
     </ul>
-    
-<div class="any">
-    <div class="h5" id="charge_manager_available_current">charge_manager/available_current</div>
+
+<div  id="charge_manager_available_current" class="any">
+    <div class="h5">charge_manager/available_current</div>
     Der derzeit zur Verfügung stehende Strom. Kann über charge_manager/available_current_update aktualisiert werden. Dieser Strom wird unter den konfigurierten Wallboxen aufgeteilt.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -2599,13 +2606,13 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="charge_manager_state">charge_manager/state</div>
+<div  id="charge_manager_state" class="any">
+    <div class="h5">charge_manager/state</div>
     Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet
 </div>
 
-<div class="any">
-    <div class="h5" id="charge_manager_config">charge_manager/config</div>
+<div  id="charge_manager_config" class="any">
+    <div class="h5">charge_manager/config</div>
     Die Lastmanager-Konfiguration. Diese kann über charge_manager/config_update mit dem selben Payload aktualisiert werden.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -2729,9 +2736,9 @@
     </ul>
 </li>
     </ul>
-    
-<div class="any">
-    <div class="h5" id="users_config">users/config</div>
+
+<div  id="users_config" class="any">
+    <div class="h5">users/config</div>
     Die Benutzerkonfiguration. Kann über die nachfolgenden Kommandos modifiziert werden.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -2815,8 +2822,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="users_add">users/add</div>
+<div  id="users_add" class="any">
+    <div class="h5">users/add</div>
     Fügt einen neuen Benutzer hinzu.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -2862,8 +2869,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="users_remove">users/remove</div>
+<div  id="users_remove" class="any">
+    <div class="h5">users/remove</div>
     Löscht einen Benutzer.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -2884,8 +2891,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="users_modify">users/modify</div>
+<div  id="users_modify" class="any">
+    <div class="h5">users/modify</div>
     Modifiziert einen Benutzer.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -2931,8 +2938,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="users_http_auth_update">users/http_auth_update</div>
+<div  id="users_http_auth_update" class="any">
+    <div class="h5">users/http_auth_update</div>
     Schreibt http_auth_enabled aus <a class="scrollto text-monospace" href="#users_config">users/config</a>.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -2959,8 +2966,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="users_all_usernames">users/all_usernames</div>
+<div  id="users_all_usernames" class="any">
+    <div class="h5">users/all_usernames</div>
     Für das Ladetracking werden die Anzeigenamen gelöschter Benutzer separat im Flash gespeichert. Diese Funktion gibt alle Anzeigenamen, die möglicherweise in den getrackten Ladungen vorkommen in einem Binärformat aus.
 </div>
 </section>
@@ -2991,9 +2998,9 @@
     </ul>
 </li>
     </ul>
-    
-<div class="any">
-    <div class="h5" id="charge_tracker_state">charge_tracker/state</div>
+
+<div  id="charge_tracker_state" class="any">
+    <div class="h5">charge_tracker/state</div>
     Zustand des Ladeträckers
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -3019,8 +3026,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="charge_tracker_last_charges">charge_tracker/last_charges</div>
+<div  id="charge_tracker_last_charges" class="any">
+    <div class="h5">charge_tracker/last_charges</div>
     Die letzten (bis zu) 30 aufgezeichneten Ladungen
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -3073,8 +3080,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="charge_tracker_current_charge">charge_tracker/current_charge</div>
+<div  id="charge_tracker_current_charge" class="any">
+    <div class="h5">charge_tracker/current_charge</div>
     Information zum aktuell laufenden Ladevorgang. Falls kein Ladevorgang läuft, hat die user_id den Wert -1
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -3128,8 +3135,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="charge_tracker_remove_all_charges">charge_tracker/remove_all_charges</div>
+<div  id="charge_tracker_remove_all_charges" class="any">
+    <div class="h5">charge_tracker/remove_all_charges</div>
     Löscht alle aufgezeichneten Ladungen und die Nutzernamenhistorie. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -3156,8 +3163,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="charge_tracker_charge_log">charge_tracker/charge_log</div>
+<div  id="charge_tracker_charge_log" class="any">
+    <div class="h5">charge_tracker/charge_log</div>
     Gibt alle aufgezeichneten Ladungen in folgendem Binärformat aus. Ladeeinträge sind 16 Byte lang und werden nacheinander ausgegeben. Die folgenden Indizes sind Byte-Offsets relativ zum Start einer aufgezeichneten Ladung. Alle Werte sind im Little-Endian-Format.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -3225,9 +3232,9 @@
     </ul>
 </li>
     </ul>
-    
-<div class="any">
-    <div class="h5" id="nfc_seen_tags">nfc/seen_tags</div>
+
+<div  id="nfc_seen_tags" class="any">
+    <div class="h5">nfc/seen_tags</div>
     Die zuletzt von der Wallbox gesehenen NFC-Tags.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -3325,8 +3332,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="nfc_inject_tag">nfc/inject_tag</div>
+<div  id="nfc_inject_tag" class="any">
+    <div class="h5">nfc/inject_tag</div>
     Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die API ein Ladevorgang für einen bestimmten Benutzer gestartet oder gestoppt werden. Analog zur physischen Verwendung eines Tags wird der Ladevorgang bei Aufruf der API abwechselnd freigegeben oder blockiert. Siehe <a class="scrollto text-monospace" href="#nfc_inject_tag_start">nfc/inject_tag_start</a> und <a class="scrollto text-monospace" href="#nfc_inject_tag_stop">nfc/inject_tag_stop</a> für genauere Kontrolle. Das vorgetauschte Tag ist immer der letzte Eintrag in <a class="scrollto text-monospace" href="#nfc_seen_tags">nfc/seen_tags</a>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -3361,8 +3368,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="nfc_inject_tag_start">nfc/inject_tag_start</div>
+<div  id="nfc_inject_tag_start" class="any">
+    <div class="h5">nfc/inject_tag_start</div>
     Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Starten</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in <a class="scrollto text-monospace" href="#nfc_seen_tags">nfc/seen_tags</a>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -3397,8 +3404,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="nfc_inject_tag_stop">nfc/inject_tag_stop</div>
+<div  id="nfc_inject_tag_stop" class="any">
+    <div class="h5">nfc/inject_tag_stop</div>
     Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Stoppen</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in <a class="scrollto text-monospace" href="#nfc_seen_tags">nfc/seen_tags</a>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -3433,8 +3440,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="nfc_config">nfc/config</div>
+<div  id="nfc_config" class="any">
+    <div class="h5">nfc/config</div>
     Die NFC-Konfiguration. Diese kann über nfc/config_update mit dem selben Payload aktualisiert werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -3509,9 +3516,9 @@
     </ul>
 </li>
     </ul>
-    
-<div class="any">
-    <div class="h5" id="network_config">network/config</div>
+
+<div  id="network_config" class="any">
+    <div class="h5">network/config</div>
     Allgemeine Netzwerkeinstellungen
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -3569,9 +3576,9 @@
     </ul>
 </li>
     </ul>
-    
-<div class="any">
-    <div class="h5" id="wifi_state">wifi/state</div>
+
+<div  id="wifi_state" class="any">
+    <div class="h5">wifi/state</div>
     Der aktuelle WLAN-Zustand.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -3633,13 +3640,13 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="wifi_scan">wifi/scan</div>
+<div  id="wifi_scan" class="any">
+    <div class="h5">wifi/scan</div>
     Löst einen Scan nach WLANs aus. Die Scan-Ergebnisse können derzeit nur über HTTP abgefragt werden.<br/><strong>Leerer Payload. Es muss einer der folgenden Werte übergeben werden: <code>null</code>, <code>""</code>, <code>false</code>, <code>0</code>, <code>[]</code> oder <code>{}</code></strong><br/><strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
 </div>
 
-<div class="any">
-    <div class="h5" id="wifi_sta_config">wifi/sta_config</div>
+<div  id="wifi_sta_config" class="any">
+    <div class="h5">wifi/sta_config</div>
     Die WLAN-Verbindungskonfiguration. Diese kann über wifi/sta_config_update mit dem selben Payload aktualisiert werden.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -3717,8 +3724,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="wifi_ap_config">wifi/ap_config</div>
+<div  id="wifi_ap_config" class="any">
+    <div class="h5">wifi/ap_config</div>
     Die WLAN-Access-Point-Konfiguration. Diese kann über wifi/ap_config_update mit dem selben Payload aktualisiert werden. <strong>Achtung! Wenn der Access Point deaktiviert wird, und die WLAN-Verbindung bzw. LAN-Verbindung nicht aufgebaut werden kann, bzw. nicht konfiguriert wurde, kann der ESP nur noch durch einen Factory-Reset erreicht werden!</strong> Wir empfehlen, den Access Point immer im Fallback-Modus zu belassen.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -3791,8 +3798,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="wifi_scan_results">wifi/scan_results</div>
+<div  id="wifi_scan_results" class="any">
+    <div class="h5">wifi/scan_results</div>
     Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden. Ein Array aus Objekten des folgenden Formats:
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -3863,9 +3870,9 @@
     </ul>
 </li>
     </ul>
-    
-<div class="any">
-    <div class="h5" id="ethernet_state">ethernet/state</div>
+
+<div  id="ethernet_state" class="any">
+    <div class="h5">ethernet/state</div>
     Der aktuelle LAN-Zustand.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -3915,8 +3922,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="ethernet_config">ethernet/config</div>
+<div  id="ethernet_config" class="any">
+    <div class="h5">ethernet/config</div>
     Die LAN-Verbindungskonfiguration. Diese kann über ethernet/config_update mit dem selben Payload aktualisiert werden.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -3987,10 +3994,10 @@
     </ul>
 </li>
     </ul>
-    
-<div class="any">
-    <div class="h5" id="ntp_state">ntp/state</div>
-    Der Zustand der Netzwerkzeitsynchronisierung.
+
+<div  id="ntp_state" class="any">
+    <div class="h5">ntp/state</div>
+    Die Zustand der Netzwerkzeitsynchronisierung.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -4015,8 +4022,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="ntp_config">ntp/config</div>
+<div  id="ntp_config" class="any">
+    <div class="h5">ntp/config</div>
     Die Konfiguration der Netzwerkzeitsynchronisierung.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -4076,9 +4083,9 @@
     </ul>
 </li>
     </ul>
-    
-<div class="any">
-    <div class="h5" id="mqtt_state">mqtt/state</div>
+
+<div  id="mqtt_state" class="any">
+    <div class="h5">mqtt/state</div>
     Der aktuelle MQTT-Zustand.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -4112,8 +4119,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="mqtt_config">mqtt/config</div>
+<div  id="mqtt_config" class="any">
+    <div class="h5">mqtt/config</div>
     Die MQTT-Konfiguration. Diese kann über mqtt/config_update mit dem selben Payload aktualisiert werden.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -4197,9 +4204,9 @@
     </ul>
 </li>
     </ul>
-    
-<div class="any">
-    <div class="h5" id="info_version">info/version</div>
+
+<div  id="info_version" class="any">
+    <div class="h5">info/version</div>
     Version der Wallbox-Firmware.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -4225,18 +4232,18 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="info_modules">info/modules</div>
+<div  id="info_modules" class="any">
+    <div class="h5">info/modules</div>
     Initialisierungszustand der Firmware-Module.
 </div>
 
-<div class="any">
-    <div class="h5" id="info_features">info/features</div>
+<div  id="info_features" class="any">
+    <div class="h5">info/features</div>
     Unterstützte Hardwarefeatures. Siehe <a class="scrollto" href="#features_section">Features</a> für Details.
 </div>
 
-<div class="any">
-    <div class="h5" id="info_name">info/name</div>
+<div  id="info_name" class="any">
+    <div class="h5">info/name</div>
     Name und Typ der Wallbox
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -4278,8 +4285,8 @@
 </div>
 </div>
 
-<div class="any">
-    <div class="h5" id="info_display_name">info/display_name</div>
+<div  id="info_display_name" class="any">
+    <div class="h5">info/display_name</div>
     Benutzerlesbarer Name der Wallbox. Kann über info/display_name_update mit dem selben Payload gesetzt werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -4322,29 +4329,29 @@
     </ul>
 </li>
     </ul>
-    
-<div class="any">
-    <div class="h5" id="reboot">reboot</div>
+
+<div  id="reboot" class="any">
+    <div class="h5">reboot</div>
     Startet den ESP neu, um beispielsweise Konfigurationsänderungen anzuwenden.<br/><strong>Leerer Payload. Es muss einer der folgenden Werte übergeben werden: <code>null</code>, <code>""</code>, <code>false</code>, <code>0</code>, <code>[]</code> oder <code>{}</code></strong><br/><strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>
 </div>
 
-<div class="any">
-    <div class="h5" id="debug_report">debug_report</div>
+<div  id="debug_report" class="any">
+    <div class="h5">debug_report</div>
     Generiert einen Debug-Report. Dieser besteht aus allen Zuständen und Konfigurationen, sowie den letzten empfangenen Kommandos und Konfigurationsupdates. Passwörter werden, genau wie bei Konfigurationsabfragen, zensiert.
 </div>
 
-<div class="any">
-    <div class="h5" id="force_reboot">force_reboot</div>
+<div  id="force_reboot" class="any">
+    <div class="h5">force_reboot</div>
     Erzwingt einen sofortigen Neustart des ESPs. Nützlich, falls <a class="scrollto text-monospace" href="#reboot">reboot</a> aus irgendwelchen Gründen hängt.
 </div>
 
-<div class="any">
-    <div class="h5" id="update">update</div>
+<div  id="update" class="any">
+    <div class="h5">update</div>
     Notfall-Update-Seite mit der eine Firmware-Aktualisierung eingespielt werden kann, auch wenn das normale Webinterface nicht funktioniert.
 </div>
 
-<div class="any">
-    <div class="h5" id="flash_firmware">flash_firmware</div>
+<div  id="flash_firmware" class="any">
+    <div class="h5">flash_firmware</div>
     Nimmt ein Firmware-Update als POST entgegen, dass dann geflasht wird.
 </div>
 </section>
@@ -4361,11 +4368,11 @@
       <div class="container">
         <div class="row">
 
-          <div class="col-lg-3 col-md-6 footer-info">
+           <div class="col-lg-3 col-md-6 footer-info">
             <h3>WARP</h3>
-            <p>WARP ist die Elektromobiliätssparte von Tinkerforge.
+            <span>WARP ist die Elektromobiliätssparte von Tinkerforge.
               Die Tinkerforge GmbH ist ein 2011 gegründetes Unternehmen, das echtes &bdquo;Made in Germany&ldquo; bietet.
-            </p>
+            </span>
           </div>
 
           <div class="col-lg-3 col-md-6 footer-links">
@@ -4399,11 +4406,11 @@
 
           </div>
 
-          <div class="col-lg-3 col-md-6 footer-newsletter">
+          <div class="col-lg-3 col-md-6 footer-info">
             <h4>Über uns</h4>
             <p>
               Wir bei Tinkerforge sind der Meinung, dass Produkte offen sein müssen. Nur so gehören sie wirklich den
-              Nutzern. Daher folgen wir der Open‐Source‐Philosophie, indem wir die Quelltexte sowie Baupläne all unserer
+              Nutzern. Daher folgen wir der Open-Source-Philosophie, indem wir die Quelltexte sowie Baupläne all unserer
               Soft- und Hardware veröffentlichen und ermöglichen es so jedem Einzelnen, unsere Produkte nach eigenen
               Wünschen zu verändern und zu erweitern. Durch die enge Zusammenarbeit mit unserer aktiven Community
               entwickeln wir schnell kundenorientierte Lösungen.
