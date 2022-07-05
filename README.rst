@@ -1,9 +1,16 @@
 WARP Charger
 ============
 
-This repository contains the firmware source code and the hardware design
-files, as well as the source code of the web site, all released firmwares,
-documents and more.
+You can find more information, technical details etc. about WARP Chargers at http://warp-charger.com.
+
+This repository contains the source of this web site, all released firmwares, the manual and some additional information.
+
+The main software of WARP Chargers is running on a ESP32. It can be found found at https://github.com/Tinkerforge/esp32-firmware
+
+More information about the hardware can be found here:
+ESP32 Ethernet Brick: https://github.com/Tinkerforge/esp32-ethernet-brick
+EVSE Bricklet: https://github.com/Tinkerforge/evse-v2-bricklet
+
 
 Repository Content
 ------------------
