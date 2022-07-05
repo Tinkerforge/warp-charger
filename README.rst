@@ -9,6 +9,7 @@ The main software of WARP Chargers is running on a ESP32.
 It can be found found at https://github.com/Tinkerforge/esp32-firmware
 
 More information about the hardware can be found here:
+
 ESP32 Ethernet Brick:
  * https://github.com/Tinkerforge/esp32-ethernet-brick
 
