@@ -30,13 +30,11 @@ args = parser.parse_args()
 
 print("Screenshotting http://{}/{} to {}".format(args.host, args.element, args.output))
 
-profile = webdriver.FirefoxProfile()
-profile.set_preference("layout.css.devPixelsPerPx", str(DEVICE_PIXEL_RATIO))
-
 options = Options()
 options.headless = True
+options.set_preference("layout.css.devPixelsPerPx", str(DEVICE_PIXEL_RATIO))
 
-with webdriver.Firefox(options=options, firefox_profile=profile) as driver:
+with webdriver.Firefox(options=options) as driver:
 
     # 992 is just above the md<->lg breakpoint
     driver.set_window_size(args.width if args.width else 992, 10000)
@@ -59,7 +57,7 @@ with webdriver.Firefox(options=options, firefox_profile=profile) as driver:
     time.sleep(1)
 
     # Smile!
-    element = driver.find_element_by_css_selector(args.element) if args.element else driver.find_element_by_tag_name("body")
+    element = driver.find_element(By.CSS_SELECTOR, args.element) if args.element else driver.find_element(By.TAG_NAME, "body")
     png = element.screenshot_as_png
 
     # Crop inserted padding and (if a complete subpage is screenshotted) the header fade.
@@ -70,13 +68,13 @@ with webdriver.Firefox(options=options, firefox_profile=profile) as driver:
 
     top = 24 if args.crop else 0
     if args.first:
-        top_e = driver.find_element_by_css_selector(args.first)
+        top_e = driver.find_element(By.CSS_SELECTOR, args.first)
         top = (top_e.location["y"] - element.location["y"]) * DEVICE_PIXEL_RATIO
 
     bottom = (image.size[1])
 
     if args.last:
-        bottom_e = driver.find_element_by_css_selector(args.last)
+        bottom_e = driver.find_element(By.CSS_SELECTOR, args.last)
         y = bottom_e.location["y"] - element.location["y"]
         h = bottom_e.size["height"]
         bottom = (y + h) * DEVICE_PIXEL_RATIO

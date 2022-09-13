@@ -2,7 +2,7 @@
 python3 screenshot.py -o manual/img_warp2/resized/web_charge_manager.png -H $1 --crop -c '#sidebar-charge_manager' -e '#charge_manager'
 python3 screenshot.py -o manual/img_warp2/resized/web_ethernet.png -H $1 --crop -c '#sidebar-network-group' '#sidebar-ethernet' -e '#ethernet'
 python3 screenshot.py -o manual/img_warp2/resized/web_event_log.png -H $1 --crop -c '#sidebar-system-group' '#sidebar-event_log' -e '#event_log'
-python3 screenshot.py -o manual/img_warp2/resized/web_evse2.png -H $1 --crop -c '#sidebar-evse' -e '#evse' -f '#btn_group_iec_state' -l '#slot_8'
+python3 screenshot.py -o manual/img_warp2/resized/web_evse2.png -H $1 --crop -c '#sidebar-evse' -e '#evse' -l '#slot_8'
 python3 screenshot.py -o manual/img_warp2/resized/web_firmware_update.png -H $1 --crop -c '#sidebar-system-group' '#sidebar-flash' -e '#flash'
 python3 screenshot.py -o manual/img_warp2/resized/web_meter.png -H $1 --crop -c '#sidebar-meter' -e '#meter'
 python3 screenshot.py -o manual/img_warp2/resized/web_mqtt.png -H $1 --crop -c '#sidebar-mqtt' -e '#mqtt'
