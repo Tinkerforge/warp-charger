@@ -109,7 +109,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\Huge
 		WARP2 Charger Betriebsanleitung\\\vspace{1cm}
 		\large
-		Version 2.0.2\\\vspace{0.25cm}
+		Version 2.0.3\\\vspace{0.25cm}
 		\today
 	\end{center}
 	\vfill \gfx{./img_warp2/resized/warp_perspective_blue_ready}
@@ -586,7 +586,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Außerdem kann der Access-Point komplett deaktiviert werden.
 	\hint{Wir empfehlen, den Access-Point nie komplett zu deaktivieren, da sonst bei einer
 		fehlgeschlagenen Verbindung zu einem anderen Netzwerk das Webinterface nicht mehr erreicht
-		werden kann. Die einzige Möglichkeit das Interface wieder zu erreichen ist dann ein Zurücksetzen auf Werkszustand, siehe \ref{reset}.}
+		werden kann. Die Wallbox kann dann nur über den \fullref{recovery} oder ein Zurücksetzen auf Werkszustand, siehe \ref{reset}, erreicht werden.}
 	Der Modus des Access-Points und weitere Einstellungen wie Netzwerkname, Passphrase usw. können
 	auf der Unterseite \enquote{WLAN-Access-Point} im Abschnitt \enquote{Netzwerk} konfiguriert werden.
 
@@ -660,13 +660,6 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	kannst du mit den Informationen dieser Seite diagnostizieren. Außerdem können hier verschiedene
 	Einstellungen vorgenommen werden:
 	\begin{description}
-	 \item[Lastmanagement] Wenn das Lastmanagement aktiviert ist, erlaubt der Ladecontroller eine
-	 Ladung nur, wenn diese durch einen Lastmanager freigegeben wurde. Der Lastmanager kann auf
-	 diesem oder einem anderen WARP Charger im selben Netzwerk ausgeführt werden. Siehe \fullref{charge_manager}
-	 für Details.
-	 \item[Benutzerautorisierung] Wenn die Autorisierung aktiviert ist, müssen sich Benutzer über ein NFC-Tag
-	 ausweisen, damit eine Ladung gestartet werden darf. Der Ladetracker ordnet die Ladung dann dem Benutzer zu.
-	 Siehe \fullref{user_management} und \fullref{NFC} für Details.
 	 \item[Externe Steuerung] Wenn die externe Steuerung erlaubt ist, darf eine externe Steuerungssoftware, beispielsweise
 	 EVCC (\rurl{https://evcc.io}{evcc.io}) den WARP Charger steuern. Eine Steuerungssoftware kann auch selbst entwickelt werden, hierzu stellen
 	 wir unter \rurl{https://warp-charger.com/api.html}{warp-charger.com/api.html} eine detaillierte API-Dokumentation zur Verfügung.
@@ -684,6 +677,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Nur wenn alle aktiven Ladestromgrenzen nicht blockieren, wird eine Ladung erlaubt.
 	Der erlaubte Ladestrom ist dann das Minimum aller aktiven Grenzen. Folgende Grenzen können Teil der Berechnung sein:
 
+	\vfill
+	\ \\
 	\gfx{./img_warp2/resized/web_evse2}
 	\columnbreak
 	\begin{description}
@@ -761,6 +756,21 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	laufend weiterentwickeln. Aktuelle Firmwares findest du unter \rurl{https://warp-charger.com}{warp-charger.com}.
 	Außerdem kannst du hier das Webinterface neustarten, ohne einen Ladevorgang zu unterbrechen.
 
+	\subsection{Wiederherstellungsmodus}\label{recovery}
+	Falls die Wallbox weder ihren Access Point öffnet, noch über ein konfiguriertes Netzwerk auf das Webinterface zugegriffen werden kann,
+	kannst du wie folgt den Wiederherstellungsmodus starten:
+	\begin{enumerate}
+	 \item Mache die Wallbox stromlos
+	 \item Halte den Taster im Deckel gedrückt
+	 \item Versorge die Wallbox wieder mit Strom (ggfalls. mit einer zweiten Person)
+	 \item Halte den Taster mindestens 10, aber maximal 30 Sekunden gedrückt
+	\end{enumerate}
+	Die Wallbox startet dann im Wiederherstellungsmodus. Zunächst werden die Netzwerkeinstellungen gelöscht, sowie die Anmeldung deaktiviert.
+	Bei Erfolg sollte es jetzt möglich sein, über den Access Point wieder auf die Wallbox zuzugreifen.
+
+	Durch erneutes Trennen und Verbinden der Stromversorgung innerhalb der ersten Minute im Wiederherstellungsmodus kann ein Zurücksetzen auf Werkszustand ausgelöst werden.
+
+	\columnbreak
 	\subsection{Zurücksetzen auf Werkszustand}\label{reset}
 	Falls das Webinterface nicht korrekt funktioniert, oder die Konfiguration defekt ist,
 	kannst du auf der Firmware-Aktualisierungs-Unterseite alle Einstellungen auf den Werkszustand zurücksetzen.
@@ -771,10 +781,21 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Damit getrackte Ladungen nicht verloren gehen kann alternativ nur die Konfiguration zurückgesetzt werden.
 	Angelegte Benutzer (aber nicht der Benutzerverlauf des Ladetrackers) und NFC-Tags werden dennoch gelöscht.
 
-	Falls du das Webinterface nicht mehr erreichen kannst, musst du die Wallbox (genauer: den verbauten ESP32 Ethernet Brick) neu flashen.
-	Du benötigst dazu einen PC mit installiertem Brick Viewer 2.4.20 oder neuer. Diesen findest du unter \rurl{https://www.tinkerforge.com/de/doc/Software/Brickv.html}{tinkerforge.com/de/doc/Software/Brickv.html}.
+	Falls du das Webinterface nicht mehr erreichen kannst, bestehen folgende Optionen:
+
+	Falls eine Netzwerkverbindung aufgebaut werden kann, aber das Webinterface selbst nicht mehr funktioniert, kannst du versuchen, die Recovery-Seite zu öffnen.
+	Falls du über den Access Point der Wallbox verbunden bist, erreichst du diese unter \url{http://10.0.0.1/recovery},
+	bei einer bestehenden Verbindung zu einem LAN oder WLAN über \url{http://[konfigurierter_hostname]/recovery}, also z.B. \url{http://warp2-ABC/recovery}.
+	Über die Recovery-Seite kannst du die Wallbox neustarten, Firmware-Updates einspielen,
+	die Wallbox auf den Werkszustand zurücksetzen (Factory Reset), Debug-Reports herunterladen und die HTTP-API verwenden (siehe \fullref{api})
+
+	Alternativ kannst du die Wallbox (genauer: den verbauten ESP32 Ethernet Brick) neu flashen.
+	Du benötigst dazu einen PC mit installiertem Brick Viewer 2.4.20 oder neuer. Diesen findest du unter
+	\rurl{https://www.tinkerforge.com/de/doc/Software/Brickv.html}{tinkerforge.com/de/doc/Software/Brickv.html}.
 	Außerdem benötigst du ein USB-C-Kabel um den Brick an deinen PC anzuschließen. Brick Daemon wird nicht benötigt.
 	Gehe zum Neuflashen wie folgt vor:
+
+	\columnbreak
 	\begin{enumerate}
 		\item Mache die Wallbox stromlos.
 		\item Nimm den Deckel ab wie in \fullref{wandmontage} beschrieben.
@@ -805,7 +826,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\end{enumerate}
 
 	\newpage
-	\section{MQTT- und HTTP-Schnittstelle zur Fernsteuerung der Wallbox (Nur Smart / Pro)}
+	\section{MQTT- und HTTP-Schnittstelle zur Fernsteuerung der Wallbox (Nur Smart / Pro)}\label{api}
 	Die Wallbox kann per MQTT oder HTTP ferngesteuert werden. Über diese Schnittstellen ist eine
 	Einbindung in Hausautomatisationssysteme wie openHAB, ioBroker, FHEM o.ä. möglich. Die aktuelle
 	Dokumentation der Schnittstellen befindet sich auf \rurl{https://warp-charger.com/api.html}{warp-charger.com/api.html}
@@ -837,9 +858,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\section{Lastmanagement zwischen mehreren WARP Chargern (Nur Smart / Pro)}\label{charge_manager}
 	Mit dem Lastmanagement ist es möglich, einen verfügbaren Gesamt-Ladestrom zwischen bis zu 10 WARP Chargern aufzuteilen.
 	Hierbei wird eine Wallbox als Lastmanager konfiguriert, die die weiteren bis zu 9 Wallboxen im Verbund steuert und ihnen Ladeströme
-	zuweist.
-
-	Es kann sowohl ein fester Gesamtstrom verteilt werden, um zum Beispiel den Hausanschluss nicht zu überlasten,
+	zuweist. Es kann sowohl ein fester Gesamtstrom verteilt werden, um zum Beispiel den Hausanschluss nicht zu überlasten,
 	als auch der Gesamtstrom über das Webinterface und die API dynamisch gesetzt werden
 	um einen PV-Überschussstrom auf mehreren Wallboxen zu verteilen.
 
@@ -850,36 +869,40 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Der Lastmanager stoppt seinerseits das Laden an allen kontrollierten Wallboxen,
 	wenn eine Wallbox nicht mehr reagiert oder erreicht wird. Damit wird sichergestellt,
 	dass der verfügbare Strom nicht überschritten wird.
-
 	Der Lastmanager verteilt den verfügbaren Strom gleichmäßig zwischen allen Wallboxen, die laden bzw. ladebereit sind.
 	Falls bereits eine Wallbox lädt, und an eine zweite ein Fahrzeug angeschlossen wird,
 	wird der Ladestrom der ladenden Wallbox so beschränkt, dass für die zweite Ladung Strom verfügbar wird.
 
-	\subsection{Konfiguration}
-	Um das Lastmanagement zu verwenden, muss zunächst auf allen Wallboxen, die gesteuert werden sollen,
-	sowie auf der Wallbox, die die anderen steuern soll, auf der Ladecontroller-Unterseite
-	das Lastmanagement aktiviert werden. Nach Aktivierung lädt eine Wallbox nur noch,
-	wenn die Ladung vom Lastmanagement freigegeben wird.
+	\gfx{./img_warp2/resized/web_charge_manager}
 
-	Zusätzlich müssen auf der Wallbox, die die anderen steuern soll (dem Lastmanager), auf der Lastmanager-Unterseite
-	alle weiteren Wallboxen mit ihrer IP-Adresse hinzugefügt werden.
+	\subsection{Konfiguration}
+	Lastmanagement-Einstellungen werden für alle Wallboxen (egal ob Manager oder zu steuernde Wallbox) auf der
+	Lastmanagement-Unterseite vorgenommen.
+
+	Um das Lastmanagement zu verwenden, muss zunächst auf allen Wallboxen, die gesteuert werden sollen,
+	der Lastmanagement-Modus auf \enquote{fremdgesteuert} konfiguriert werden.
+	In diesem Modus lädt eine Wallbox nur noch, wenn die Ladung vom Lastmanager freigegeben wird.
+
+	Auf der Wallbox, die die anderen Wallboxen steuern soll (dem Lastmanager) muss zunächst der Modus \enquote{Lastmanager} gewählt werden.
+	Zusätzlich muss hier jede Wallbox, die gesteuert werden sollen, als \enquote{Kontrollierte Wallbox} hinzugefügt werden.
+	Bei Klick auf \enquote{Wallbox hinzufügen} erscheinen nach wenigen Sekunden alle Wallboxen, die vom Lastmanager erreicht werden können.
+	Durch Klicken auf eine gefundene Wallbox wird diese hinzugefügt. Wallboxen die nicht hinzugefügt werden können, werden grau hinterlegt.
+
 	Im einfachsten Fall, in dem eine feste Menge Strom verteilt werden soll, muss nun nur noch dieser
-	Strom als \enquote{Voreingestellt verfügbarer Strom} \textbf{und} als \enquote{Maximal verfügbarer Strom}
-	konfiguriert und der Lastmanager aktiviert werden.
+	Strom als \enquote{Maximal verfügbarer Strom} konfiguriert werden.
 
 	\subsection{Erweiterte Konfiguration}
 	Je nach Einsatzzweck (z.B. PV-Überschussladen auf mehreren Wallboxen) können die folgenden Konfigurationen hilfreich sein.
 	Diese werden für eine einfache Lastverteilung, z.B. \SI{16}{\ampere} auf zwei Wallboxen \textbf{nicht} benötigt.
-
-	\gfx{./img_warp2/resized/web_charge_manager}
-
+	Die Konfigurationen finden sich unter den \enquote{Experteneinstellungen}.
+	\vspace{-0.2cm}
 	\paragraph{Voreingestellt verfügbarer Strom}
 	Der voreingestellt verfügbare Strom ist der, der vom Lastmanagement verteilt werden darf, nachdem die steuernde Wallbox
 	neugestartet wurde. Der verfügbare Strom kann über die API neu gesetzt werden, nach einem Neustart der Wallbox wird aber
 	zunächst der voreingestellte Strom verwendet. Falls beispielsweise durch eine externe Steuerung der verfügbare PV-Überschussstrom
 	gesetzt werden soll, kann der voreingestellte Strom auf \SI{0}{\ampere} konfiguriert werden, damit zwingend erst geladen wird,
 	wenn die externe Steuerung mindestens einmal den verfügbaren Strom gesetzt hat
-
+	\vspace{-0.2cm}
 	\paragraph{Maximal verfügbarer Strom}
 	Der maximal verfügbare Strom ist das Maximum, das über das Webinterface, bzw. die API als verfügbarer Strom gesetzt werden darf.
 	Größere Ströme werden nicht akzeptiert. Falls eine externe Steuerung verwendet wird, empfehlen wir, den maximal verfügbaren Strom
@@ -963,16 +986,20 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\newpage
 	\section{Benutzerverwaltung (Nur Smart / Pro)} \label{user_management}
 	\gfx{./img_warp2/resized/web_users}
+	\vfill
+	\gfx{./img_warp2/resized/web_users_new}
+	\columnbreak
+
 	Auf der Unterseite \enquote{Benutzerverwaltung} im System-Abschnitt des Webinterfaces können bis zu 16 Benutzer angelegt werden.
 	Einem angelegten Benutzer, dem ein NFC-Tag zugeordnet wurde (siehe \fullref{NFC}) können vom Ladetracker Ladungen zugeordnet werden.
 	Es kann pro Benutzer ein maximaler Ladestrom festgelegt werden.
-	\gfx{./img_warp2/resized/web_users_new}
+
 
 	Außerdem kann die HTTP-Anmeldung aktiviert werden. Wenn diese aktiviert ist, muss zum Zugriff auf das Webinterface und zur Verwendung
 	der HTTP-API eine Anmeldung als einer der Benutzer durchgeführt werden. Eine HTTP-Anmeldung als ein Benutzer ist nur möglich, wenn
 	dem Benutzer ein Passwort konfiguriert wurde. Entsprechend können Benutzer erstellt werden, die nur für das Ladetracking per NFC-Tag
 	verwendet werden, aber keinen Zugriff auf das Webinterface haben sollen, indem diesen kein Passwort konfiguriert wird.
-	\hint{Wenn du die Zugangsdaten des HTTP-Anmeldung vergisst, kannst du nur nach einem Zurücksetzen auf den Werkszustand wieder darauf zugreifen.}
+	\hint{Wenn du die Zugangsdaten des HTTP-Anmeldung vergisst, kannst du nur über den Wiederherstellungsmodus \ref{recovery} oder nach einem Zurücksetzen auf den Werkszustand \ref{reset} wieder darauf zugreifen.}
 
 	\newpage
 	\section{Ladefreigabe per NFC (Nur Smart / Pro)}
@@ -995,9 +1022,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	durch Klicken auf eins der Tags kann es ausgewählt werden. Alternativ können
 	Tag-ID und -Typ manuell eingegeben werden.
 
-	Auf der Ladecontroller-Unterseite \fullref{evse} kann die Option \enquote{Benutzerautorisierung} aktiviert werden.
+	Auf der Benutzerverwaltungs-Unterseite \fullref{user_management} kann die Option \enquote{Ladefreigabe} aktiviert werden.
 	Wenn diese aktiv ist, muss ein NFC-Tag verwendet werden um eine Ladung zu starten.
-	Wenn zusätzlich die \enquote{Tastereinstellung} auf \enquote{keine Aktion} konfiguriert wird,
+	Wenn zusätzlich die \enquote{Tastereinstellung} auf der Ladecontroller-Unterseite auf \enquote{keine Aktion} konfiguriert wird,
 	muss auch zum Stoppen eines Ladevorgangs ein NFC-Tag an die Wallbox gehalten werden. Dies kann im
 	halb-öffentlichen Raum sinnvoll sein.
 
@@ -1255,6 +1282,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		23.06.2022 & 2.0.2   & Staubschutzkappen- und          \\
 		           &         & Verschraubungshinweis           \\
 		           &         & hinzugefügt.                    \\
+		14.09.2022 & 2.0.3   & Aktualisiert für Firmware 2.0.8 \\
+		           &         & Wiederherstellungsmodus         \\
+		           &         & hinzugefügt                     \\
 		\bottomrule
 	\end{tabular}
 	\newpage
