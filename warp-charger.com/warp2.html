@@ -796,18 +796,44 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
             <div class="row">
                 <div class="col-auto  mx-auto">
                     <div class="text-center">
-                        <a href="firmwares/warp2_firmware_2_0_7_62a1f99c_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP2 Firmware 2.0.7 herunterladen</a>
-                        <div class="text-muted pt-2 pb-2">Veröffentlicht am 09.06.2022</div>
+                        <a href="firmwares/warp2_firmware_2_0_8_63218f23_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP2 Firmware 2.0.8 herunterladen</a>
+                        <div class="text-muted pt-2 pb-2">Veröffentlicht am 14.09.2022</div>
                     </div>
 
                     <table class="table table-borderless mb-3">
                         <tbody>
                             <tr>
-                                <th scope="row"><a href="firmwares/warp2_firmware_2_0_7_62a1f99c_merged.bin">2.0.7</a><br/><span class="th-details">09.06.2022</span><br/><a href="firmwares/warp2_firmware_2_0_7_62a1f99c_merged.bin.sha256">Prüfsumme</a></th>
+                                <th scope="row"><a href="firmwares/warp2_firmware_2_0_8_63218f23_merged.bin">2.0.8</a><br/><span class="th-details">14.09.2022</span><br/><a href="firmwares/warp2_firmware_2_0_8_63218f23_merged.bin.sha256">Prüfsumme</a></th>
                                 <td>
                                     <ul>
+                                        <li>Lastmanagement-Konfigurationsseite überarbeitet</li>
+                                        <li>Automatische Suche nach Wallboxen via mDNS zu Lastmanagment hinzugefügt</li>
+                                        <li>Unterstützung für Hostnamen zu Lastmanagement hinzugefügt</li>
+                                        <li>Wiederherstellungsmodus über Taster hinzugefügt</li>
+                                        <li>Hinzugefügt, dass unbekannter Benutzer umbenannt werden kann</li>
+                                        <li>Auflösung des dem Auto kommunizierten Ladestroms verbessert (durch Update auf Ladecontroller-Firmware 2.1.7)</li>
+                                        <li>Verzögerung von 30 Sekunden zwischen Fehler- und Ladezuständen hinzugefügt (durch Update auf Ladecontroller-Firmware 2.1.7)</li>
+                                        <li>Berechnung der angezeigten PP/PE-Spannung verbessert (durch Update auf Ladecontroller-Firmware 2.1.7)</li>
+                                        <li>Recovery-Seite verbessert</li>
+                                        <li>Hinzugefügt, dass Firmware-Updates über die Recovery-Seite erzwungen werden, selbst wenn ein Fahrzeug angeschlossen ist</li>
+                                        <li>HTTP-API-Benutzung vereinfacht:</li>
+                                        <ul>
+                                            <li>POST für Kommandos erlaubt</li>
+                                            <li>GET und POST für Kommandos ohne Payload erlaubt</li>
+                                            <li>Aktualisierung von Konfigurationen ohne "_update"-Suffix erlaubt</li>
+                                        </ul>
+                                        <li>Mehr Prüfungen auf Fehler in der statischen IP-Konfiguration hinzugefügt</li>
+                                        <li>Darstellung der X-Achsen-Beschriftung der Stromzähler-Diagramme auf sehr kleinen Bildschirmen verbessert</li>
                                         <li>Weitere WebSocket-Verbesserungen vorgenommen</li>
-                                        <li>Behoben, dass fälschlicherweise ein SDM630 detektiert wurde, wenn kein Stromzähler angeschlossen ist (durch Update auf Ladecontroller-Firmware 2.1.6)</li>
+                                        <li>Doppelte NFC-Tag-Detektion behoben</li>
+                                        <li>Hinweis auf Neustart bei Löschen aller aufgezeichneten Ladungen hinzugefügt</li>
+                                        <li>HTTP-Fehler beim Senden aufgezeichneter Ladungen behoben</li>
+                                        <li>Behandung der Benutzer-IDs verbessert</li>
+                                        <li>Behoben dass Status-Seite kurz sichtbar war, wenn andere Unterseite neu geladen wurde</li>
+                                        <li>Zeitzonen-Datenbank aktualisiert</li>
+                                        <li>Links zu Anleitung und Firmwares repariert</li>
+                                        <li>Benutzerfreigabe-Einstellung auf Benutzer-Unterseite verschoben</li>
+                                        <li>Übersetzungen verbessert</li>
                                     </ul>
                                 </td>
                             </tr>
@@ -822,6 +848,15 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
                     <div class="collapse" id="collapseOlderVersions">
                     <table class="table mt-3">
                         <tbody>
+                            <tr>
+                                <th scope="row"><a href="firmwares/warp2_firmware_2_0_7_62a1f99c_merged.bin">2.0.7</a><br/><span class="th-details">09.06.2022</span><br/><a href="firmwares/warp2_firmware_2_0_7_62a1f99c_merged.bin.sha256">Prüfsumme</a></th>
+                                <td>
+                                    <ul>
+                                        <li>Weitere WebSocket-Verbesserungen vorgenommen</li>
+                                        <li>Behoben, dass fälschlicherweise ein SDM630 detektiert wurde, wenn kein Stromzähler angeschlossen ist (durch Update auf Ladecontroller-Firmware 2.1.6)</li>
+                                    </ul>
+                                </td>
+                            </tr>
                             <tr>
                                 <th scope="row"><a href="firmwares/warp2_firmware_2_0_6_62a05655_merged.bin">2.0.6</a><br/><span class="th-details">07.06.2022</span><br/><a href="firmwares/warp2_firmware_2_0_6_62a05655_merged.bin.sha256">Prüfsumme</a></th>
                                 <td>
