@@ -340,6 +340,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	den Varianten Basic / Smart (ohne Zähler) und Pro (mit Zähler) und ist
 	nachfolgend beschrieben.
 
+
+
 	\subsubsection{Variante Basic / Smart}
 
 	% Force non-floating figure. Floating envs are not allowed in multicol.
@@ -390,6 +392,24 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Der korrekte Sitz der Adern und die Phasenzugehörigkeit ist nach der
 	Installation zu prüfen! Fortfahren mit \fullref{ladestrom_schalter}.
 
+	\subsubsection{Kabeleinführung von der Rückseite}
+	Ab Version 2.1 des WARP Chargers kann die Kabeleinführung von der Unterseite
+	(Auslieferungszustand) umgebaut werden, so dass eine Kabeleinführung von der
+	Rückseite erfolgt.
+
+	Dazu muss die M32 Kabeleinführung für die Zuleitung (M32) und die
+	Kabeleinführung für das Netzwerkkabel vom Wallboxgehäuse abgeschraubt
+	werden. Die Bohrungen in der Rückseite der Wallbox sind im
+	Auslieferungszustand mittels Blindstopfen von innen verschlossen. 
+	Diese müssen entfernt und in die nun offenen Bohrungen an der Unterseite
+	wieder eingeschraubt werden. Die Kabeleinführungen werden anschließend von
+	der Rückseite in das Wallboxgehäuse wieder eingeschraubt werden. 
+
+	\begin{figure}[H]
+		\gfx{./img_warp2/resized/warp2_1_back_wp_600.jpg}
+		\caption*{WARP Charger 2.1 umgebaut zur Kabeleinführung von der Rückseite}
+	\end{figure}
+
 	\subsubsection{Einphasiger Betrieb}
 	Alle Wallboxen können auch einphasig angeschlossen und betrieben werden.
 	Dazu ist unbedingt Phase L1 anzuschließen, da diese Phase ebenfalls zur
@@ -438,10 +458,22 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\bottomrule
 	\end{tabular}
 
-	\subsubsection{LAN- / RJ45-Kabel anfertigen}\label{ethernet}
+	\subsubsection{LAN- / RJ45-Kabel anfertigen WARP 2.1}\label{ethernet}
 
-	Auf der Unterseite der Wallbox befindet sich eine spritzwassergeschützte RJ45-Durchführung
-	an die der in der Wallbox verbaute Controller intern
+	\gfx{./img_warp2/resized/warp2_1_ethernet_600.jpg} % Ethernetkabel
+
+	Ab Version 2.1 des WARP Chargers kann das RJ45-Kabel einfach mittels einer
+	Kabeldurchführung in die Wallbox geführt werden. In der Wallbox befindet
+	sich eine kabelgebundene RJ45-Buchse an der das eingeführte Kabel einfach
+	mittels eines am Kabel anzubringenden RJ45-Steckers angeschlossen werden
+	kann. Es können somit auch werkzeuglose oder über einen LSA Anschluss
+	verfügende RJ45 Stecker genutzt werden.
+
+
+	\subsubsection{LAN- / RJ45-Kabel anfertigen - WARP 2.0}
+
+	Bei dem WARP Charger 2.0 befindet sich eine spritzwassergeschützte
+	RJ45-Durchführung auf der Unterseite an die der in der Wallbox verbaute Controller intern
 	angeschlossen ist. Um ein LAN-Kabel anzuschließen muss der Blinddeckel
 	abgeschraubt werden.
 
