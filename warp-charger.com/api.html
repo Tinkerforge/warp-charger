@@ -144,6 +144,8 @@
 <a class="nav-link" href="#evse_user_enabled" style="margin-left: 2rem !important;">evse/<wbr>user_enabled</a>
 <a class="nav-link" href="#evse_external_enabled" style="margin-left: 2rem !important;">evse/<wbr>external_enabled</a>
 <a class="nav-link" href="#evse_external_defaults" style="margin-left: 2rem !important;">evse/<wbr>external_defaults</a>
+<a class="nav-link" href="#evse_modbus_tcp_enabled" style="margin-left: 2rem !important;">evse/<wbr>modbus_tcp_enabled</a>
+<a class="nav-link" href="#evse_ocpp_enabled" style="margin-left: 2rem !important;">evse/<wbr>ocpp_enabled</a>
 <a class="nav-link" href="#evse_gpio_configuration" style="margin-left: 2rem !important;">evse/<wbr>gpio_configuration</a>
 <a class="nav-link" href="#evse_button_configuration" style="margin-left: 2rem !important;">evse/<wbr>button_configuration</a>
 <a class="nav-link" href="#evse_user_calibration" style="margin-left: 2rem !important;">evse/<wbr>user_calibration</a>
@@ -173,6 +175,8 @@
 <a class="nav-link" href="#meter_reset" style="margin-left: 2rem !important;">meter/<wbr>reset</a>
 <span class="ms-5">Zustände</span>
 <a class="nav-link" href="#meter_last_reset" style="margin-left: 2rem !important;">meter/<wbr>last_reset</a>
+<span class="ms-5">Konfigurationen</span>
+<a class="nav-link" href="#meter_type_override" style="margin-left: 2rem !important;">meter/<wbr>type_override</a>
 <span class="ms-5">HTTP-Spezifisch</span>
 <a class="nav-link" href="#meter_history" style="margin-left: 2rem !important;">meter/<wbr>history</a>
 <a class="nav-link" href="#meter_live" style="margin-left: 2rem !important;">meter/<wbr>live</a>
@@ -213,6 +217,8 @@
 <a class="nav-link" href="#charge_tracker_remove_all_charges" style="margin-left: 2rem !important;">charge_tracker/<wbr>remove_all_charges</a>
 <span class="ms-5">HTTP-Spezifisch</span>
 <a class="nav-link" href="#charge_tracker_charge_log" style="margin-left: 2rem !important;">charge_tracker/<wbr>charge_log</a>
+<span class="ms-5">Konfigurationen</span>
+<a class="nav-link" href="#charge_tracker_config" style="margin-left: 2rem !important;">charge_tracker/<wbr>config</a>
         </nav>
     </div>
 <a class="nav-link ms-3" href="#reference-nfc">NFC-Ladefreigabe</a>
@@ -276,6 +282,15 @@
 <a class="nav-link" href="#mqtt_config" style="margin-left: 2rem !important;">mqtt/<wbr>config</a>
         </nav>
     </div>
+<a class="nav-link ms-3" href="#reference-wireguard">WireGuard-Verbindung</a>
+    <div class="collapse">
+        <nav class="nav nav-pills flex-column">
+        <span class="ms-5">Zustände</span>
+<a class="nav-link" href="#wireguard_state" style="margin-left: 2rem !important;">wireguard/<wbr>state</a>
+<span class="ms-5">Konfigurationen</span>
+<a class="nav-link" href="#wireguard_config" style="margin-left: 2rem !important;">wireguard/<wbr>config</a>
+        </nav>
+    </div>
 <a class="nav-link ms-3" href="#reference-info">Allgemeine Informationen</a>
     <div class="collapse">
         <nav class="nav nav-pills flex-column">
@@ -286,6 +301,8 @@
 <a class="nav-link" href="#info_name" style="margin-left: 2rem !important;">info/<wbr>name</a>
 <span class="ms-5">Konfigurationen</span>
 <a class="nav-link" href="#info_display_name" style="margin-left: 2rem !important;">info/<wbr>display_name</a>
+<span class="ms-5">Zustände</span>
+<a class="nav-link" href="#info_last_boots" style="margin-left: 2rem !important;">info/<wbr>last_boots</a>
         </nav>
     </div>
 <a class="nav-link ms-3" href="#reference-misc">Sonstiges</a>
@@ -567,6 +584,7 @@
             Wallbox gepublisht. Aktualisierungen werden auf dem speziellen Suffix <code>_update</code> entgegengenommen. Es können dabei nicht zu verändernde Einträge
             der Konfiguration durch <code>null</code> ausgedrückt werden.
         </p>
+        <h5>Konfigurationen setzen per MQTT</h5>
         <p>Wenn zum Beispiel die Access-Point-Konfiguration der Wallbox wie folgt abgefragt wird:
 
             <code class="code-box">mosquitto_sub -v -t "warp/ABC/<a class="scrollto" href="#wifi_ap_config">wifi/ap_config</a>"</code>
@@ -585,6 +603,7 @@
 
             Der Access Point sollte dann ab jetzt nur noch aktiv sein, wenn die Verbindung zum konfigurierten WLAN fehlgeschlagen ist.
         </p>
+        <h5>Konfigurationen setzen per HTTP</h5>
         <p>
             Mit der HTTP-API kann äquivalent die Access-Point-Konfiguration mit
             <code class="code-box">
@@ -599,6 +618,26 @@
                 curl -H "Content-Type: application/json" -X PUT -d "null" http://10.0.0.1/<a class="scrollto" href="#reboot">reboot</a>
             </code>
             ausgelöst werden.
+        </p>
+        <h5><code>_modified</code> und <code>_reset</code></h5>
+        <p>
+            Neben der eigentlichen Konfiguration und dem Kommando mit dem Suffix <code>_update</code> existiert pro Konfiguration auch ein Zustand mit dem Suffix <code>_modified</code>, sowie ein Kommando mit Suffix <code>_reset</code>.
+            Wenn beispielsweise der Access Point wie oben in den Fallback-Modus gebracht wurde, liefert
+            <code class="code-box">mosquitto_sub -v -t "warp/ABC/<a class="scrollto" href="#wifi_ap_config">wifi/ap_config_modified</a>"</code>
+
+            <samp class="samp-box">
+                "warp/ABC/<a class="scrollto" href="#wifi_ap_config">wifi/ap_config_modified</a>": {"modified": 3}
+            </samp>
+
+            Der <code>_modified</code>-Zustand gibt an, ob eine Konfiguration modifiziert wurde. Mögliche Werte sind dabei 0 bis 3:
+            <ol start="0">
+                <li>Derzeit wird die Standard-Konfiguration verwendet. Seit dem Starten wurde die Konfiguration <strong>nicht</strong> verändert.</li>
+                <li>Derzeit wird die Standard-Konfiguration verwendet. Seit dem Starten wurde die Konfiguration verändert. Damit die Veränderung wirkt, muss ein Neustart durchgeführt werden.</li>
+                <li>Derzeit wird <strong>nicht</strong> die Standard-Konfiguration verwendet. Seit dem Starten wurde die Konfiguration <strong>nicht</strong> verändert.</li>
+                <li>Derzeit wird <strong>nicht</strong> die Standard-Konfiguration verwendet. Seit dem Starten wurde die Konfiguration verändert. Damit die Veränderung wirkt, muss ein Neustart durchgeführt werden.</li>
+            </ol>
+
+            Das parameterlose Kommando mit dem Suffix <code>_reset</code> setzt die entsprechende Konfiguration auf den Standard-Zustand zurück. Danach muss ein Neustart durchgeführt werden.
         </p>
         </div>
         <div id="states_section_shortcuts" class="container">
@@ -708,6 +747,8 @@
 <li><a class="scrollto text-monospace" href="#evse_user_enabled">evse/user_enabled</a></li>
 <li><a class="scrollto text-monospace" href="#evse_external_enabled">evse/external_enabled</a></li>
 <li><a class="scrollto text-monospace" href="#evse_external_defaults">evse/external_defaults</a></li>
+<li><a class="scrollto text-monospace" href="#evse_modbus_tcp_enabled">evse/modbus_tcp_enabled</a></li>
+<li><a class="scrollto text-monospace" href="#evse_ocpp_enabled">evse/ocpp_enabled</a></li>
 <li><a class="scrollto text-monospace" href="#evse_gpio_configuration">evse/gpio_configuration</a></li>
 <li><a class="scrollto text-monospace" href="#evse_button_configuration">evse/button_configuration</a></li>
 <li><a class="scrollto text-monospace" href="#evse_user_calibration">evse/user_calibration</a></li>
@@ -949,7 +990,7 @@
         <tbody>
 
 <tr class="any">
-    <th scope="row">[0..9]<br/><span class="th-details">object</span></th>
+    <th scope="row">[0..11]<br/><span class="th-details">object</span></th>
     <td>Ein Ladeslot
 <div class="table-responsive">
     <table class="table table-not-striped mt-3 table-bottom-border mt-3">
@@ -1215,7 +1256,7 @@
 
 <div  id="evse_external_current" class="any">
     <div class="h5">evse/external_current</div>
-    Der von der externen Steuerung vorgegebene Ladestrom. Kann über evse/external_current_update mit dem selben Payload gesetzt werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+    Der von der externen Steuerung vorgegebene Ladestrom. Kann über evse/external_current_update mit dem selben Payload gesetzt werden.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1237,7 +1278,7 @@
 
 <div  id="evse_external_clear_on_disconnect" class="any">
     <div class="h5">evse/external_clear_on_disconnect</div>
-    Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abziehen eines Fahrzeugs automatisch auf 0 gesetzt werden soll. Kann über evse/external_clear_on_disconnect_update mit dem selben Payload gesetzt werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+    Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abziehen eines Fahrzeugs automatisch auf 0 gesetzt werden soll. Kann über evse/external_clear_on_disconnect_update mit dem selben Payload gesetzt werden.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1265,7 +1306,7 @@
 
 <div  id="evse_management_current" class="any">
     <div class="h5">evse/management_current</div>
-    Der vom Lastmanagement vorgegebene Ladestrom. Kann über evse/management_current_update mit dem selben Payload gesetzt werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+    Der vom Lastmanagement vorgegebene Ladestrom. Kann über evse/management_current_update mit dem selben Payload gesetzt werden.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1287,7 +1328,7 @@
 
 <div  id="evse_auto_start_charging" class="any">
     <div class="h5">evse/auto_start_charging</div>
-    Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Dieser Wert kann über evse/auto_start_charging_update mit dem selben Payload aktualisiert werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+    Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Dieser Wert kann über evse/auto_start_charging_update mit dem selben Payload aktualisiert werden.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1309,7 +1350,7 @@
 
 <div  id="evse_global_current" class="any">
     <div class="h5">evse/global_current</div>
-    Der über das Webinterface vorgegebene Ladestrom. Kann über evse/global_current_update mit dem selben Payload gesetzt werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+    Der über das Webinterface vorgegebene Ladestrom. Kann über evse/global_current_update mit dem selben Payload gesetzt werden.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1331,7 +1372,7 @@
 
 <div  id="evse_management_enabled" class="any">
     <div class="h5">evse/management_enabled</div>
-    Gibt an, ob der Ladeslot des Lastmanagements aktiv ist. Der Wert kann über evse/management_enabled_update mit dem selben Payload aktualisiert werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+    Gibt an, ob der Ladeslot des Lastmanagements aktiv ist. Der Wert kann über evse/management_enabled_update mit dem selben Payload aktualisiert werden.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1353,7 +1394,7 @@
 
 <div  id="evse_user_current" class="any">
     <div class="h5">evse/user_current</div>
-    Der von der Benutzerautorisierung erlaubte Ladestrom.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+    Der von der Benutzerautorisierung erlaubte Ladestrom.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1375,7 +1416,7 @@
 
 <div  id="evse_user_enabled" class="any">
     <div class="h5">evse/user_enabled</div>
-    Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist. Der Wert kann über evse/user_enabled_update mit dem selben Payload aktualisiert werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+    Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist. Der Wert kann über evse/user_enabled_update mit dem selben Payload aktualisiert werden.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1397,7 +1438,7 @@
 
 <div  id="evse_external_enabled" class="any">
     <div class="h5">evse/external_enabled</div>
-    Gibt an, ob der Ladeslot der externen Steuerung aktiv ist. Der Wert kann über evse/external_enabled_update mit dem selben Payload aktualisiert werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+    Gibt an, ob der Ladeslot der externen Steuerung aktiv ist. Der Wert kann über evse/external_enabled_update mit dem selben Payload aktualisiert werden.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1444,6 +1485,50 @@
     <li><strong>false</strong> - Slot wird gesetzten Ladestrom beim Abziehen beibehalten</li>
 </ol>
 </div></td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="evse_modbus_tcp_enabled" class="any">
+    <div class="h5">evse/modbus_tcp_enabled</div>
+    Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Schreibzugriff gewährt wurde). Der Wert kann über evse/modbus_tcp_enabled_update mit dem selben Payload aktualisiert werden.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">enabled<br/><span class="th-details">bool</span></th>
+    <td>true wenn die Ladeslots für Modbus-TCP aktiviert sind, sonst false</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="evse_ocpp_enabled" class="any">
+    <div class="h5">evse/ocpp_enabled</div>
+    Gibt an, ob der Ladeslot für OCPP aktiv ist. Der Wert kann über evse/ocpp_enabled_update mit dem selben Payload aktualisiert werden.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">enabled<br/><span class="th-details">bool</span></th>
+    <td>true wenn OCPP aktiviert ist, sonst false</td>
 </tr>
         </tbody>
     </table>
@@ -1502,7 +1587,7 @@
 
 <div  id="evse_button_configuration" class="warp2_only">
     <div class="h5">evse/button_configuration <strong>(Nur WARP 2)</strong> </div>
-    Die Konfiguration des Tasters in der Frontblende. Diese kann über evse/button_configuration_update mit dem selben Payload aktualisiert werden. Benötigt das Feature <a href="#features_button_configuration"><code>"button_configuration"</code></a><br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+    Die Konfiguration des Tasters in der Frontblende. Diese kann über evse/button_configuration_update mit dem selben Payload aktualisiert werden. Benötigt das Feature <a href="#features_button_configuration"><code>"button_configuration"</code></a>
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1649,6 +1734,12 @@
     Zustände
     <ul>
         <li><a class="scrollto text-monospace" href="#meter_last_reset">meter/last_reset</a></li>
+    </ul>
+</li>
+<li>
+    Konfigurationen
+    <ul>
+        <li><a class="scrollto text-monospace" href="#meter_type_override">meter/type_override</a></li>
     </ul>
 </li>
 <li>
@@ -2511,7 +2602,7 @@
 
 <div  id="meter_last_reset" class="any">
     <div class="h5">meter/last_reset</div>
-    Der Zeitpunkt des letzten Zähler-Resets (siehe <a class="scrollto text-monospace" href="#meter_reset">meter/reset</a>) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+    Der Zeitpunkt des letzten Zähler-Resets (siehe <a class="scrollto text-monospace" href="#meter_reset">meter/reset</a>) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -2525,6 +2616,37 @@
 <tr class="any">
     <th scope="row">last_reset<br/><span class="th-details">int (<abbr title="Sekunde">s</abbr>)</span></th>
     <td>Unix-Timestamp des Zeitpunkts des letzten Zähler-Resets.</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="meter_type_override" class="warp1_only">
+    <div class="h5">meter/type_override <strong>(Nur WARP 1)</strong> </div>
+    Erlaubt es den verbauten Zählertyp zu überschreiben, falls die Auto-Detektion nicht funktioniert. Der Wert kann über meter/type_override_update mit dem selben Payload aktualisiert werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">type<br/><span class="th-details">int</span></th>
+    <td>Stromzählertyp, der verwendet werden soll
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Kein Stromzähler verfügbar</li>
+    <li><strong>1</strong> - SDM72</li>
+    <li><strong>2</strong> - SDM630</li>
+    <li><strong>3</strong> - SDM72V2</li>
+    <li><strong>255</strong> - Typ-Override nicht aktiv. Stromzählertyp wird automatisch detektiert.</li>
+</ol>
+</div></td>
 </tr>
         </tbody>
     </table>
@@ -2586,7 +2708,7 @@
 
 <div  id="charge_manager_available_current" class="any">
     <div class="h5">charge_manager/available_current</div>
-    Der derzeit zur Verfügung stehende Strom. Kann über charge_manager/available_current_update aktualisiert werden. Dieser Strom wird unter den konfigurierten Wallboxen aufgeteilt.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+    Der derzeit zur Verfügung stehende Strom. Kann über charge_manager/available_current_update aktualisiert werden. Dieser Strom wird unter den konfigurierten Wallboxen aufgeteilt.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -2997,6 +3119,12 @@
         <li><a class="scrollto text-monospace" href="#charge_tracker_charge_log">charge_tracker/charge_log</a></li>
     </ul>
 </li>
+<li>
+    Konfigurationen
+    <ul>
+        <li><a class="scrollto text-monospace" href="#charge_tracker_config">charge_tracker/config</a></li>
+    </ul>
+</li>
     </ul>
 
 <div  id="charge_tracker_state" class="any">
@@ -3199,6 +3327,28 @@
 <tr class="any">
     <th scope="row">[12..15]<br/><span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)</span></th>
     <td>Zählerstand bei Ende der Ladung. NaN falls zum Endzeitpunkt kein Zähler verfügbar war.</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="charge_tracker_config" class="any">
+    <div class="h5">charge_tracker/config</div>
+    Die Ladetracker-Konfiguration. Diese kann über charge_tracker/config_update mit dem selben Payload aktualisiert werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">electricity_price<br/><span class="th-details">int (<abbr title="Hundertstel Cent pro Kilowattstunde">ct/kWh/100</abbr>)</span></th>
+    <td>Strompreis der im Webinterface und Ladelog verwendet wird um Ladekosten zu berechnen</td>
 </tr>
         </tbody>
     </table>
@@ -3997,7 +4147,7 @@
 
 <div  id="ntp_state" class="any">
     <div class="h5">ntp/state</div>
-    Die Zustand der Netzwerkzeitsynchronisierung.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+    Der Zustand der Netzwerkzeitsynchronisierung.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -4182,6 +4332,145 @@
 </div>
 </div>
 </section>
+<section id="reference-wireguard" class="section any">
+    <header class="reference-section-header">
+        <h4>WireGuard-Verbindung</h4>
+
+    </header>
+    <ul class="ul-no-bullet">
+        <li>
+    Zustände
+    <ul>
+        <li><a class="scrollto text-monospace" href="#wireguard_state">wireguard/state</a></li>
+    </ul>
+</li>
+<li>
+    Konfigurationen
+    <ul>
+        <li><a class="scrollto text-monospace" href="#wireguard_config">wireguard/config</a></li>
+    </ul>
+</li>
+    </ul>
+
+<div  id="wireguard_state" class="any">
+    <div class="h5">wireguard/state</div>
+    Der aktuelle WireGuard-Zustand.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">state<br/><span class="th-details">int</span></th>
+    <td>Zustand der Verbindung zum WireGuard-Peer
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Nicht konfiguriert</li>
+    <li><strong>1</strong> - Warte auf Zeitsynchronisierung</li>
+    <li><strong>2</strong> - Nicht verbunden</li>
+    <li><strong>3</strong> - Verbunden</li>
+</ol>
+</div></td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="wireguard_config" class="any">
+    <div class="h5">wireguard/config</div>
+    Die WireGuard-Konfiguration. Diese kann über wireguard/config_update mit dem selben Payload aktualisiert werden.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">enable<br/><span class="th-details">bool</span></th>
+    <td>Gibt an ob eine WireGuard-Verbindung zum konfigurierten Peer aufgebaut werden soll.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>true</strong> - Wenn WireGuard aktiviert ist.</li>
+    <li><strong>false</strong> - Wenn WireGuard deaktiviert ist.</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">make_default_interface<br/><span class="th-details">bool</span></th>
+    <td>Gibt an ob aller nicht-lokaler Netzwerkverkehr über WireGuard geroutet werden soll.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>true</strong> - Wenn WireGuard das Default-Interface ist: Sämtlicher nicht-lokaler Netzwerkverkehr wird über WireGuard geroutet.</li>
+    <li><strong>false</strong> - Wenn WireGuard nicht das Default-Interface ist: Nur Netzwerkverkehr im WireGuard-Subnetz wird über WireGuard geroutet.</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">internal_ip<br/><span class="th-details">string</span></th>
+    <td>IP-Adresse der Wallbox im WireGuard-Netzwerk</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">internal_subnet<br/><span class="th-details">string</span></th>
+    <td>Subnetzmaske des WireGuard-Netzwerks</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">internal_gateway<br/><span class="th-details">string</span></th>
+    <td>Gateway des WireGuard-Netzwerks</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">remote_host<br/><span class="th-details">string</span></th>
+    <td>öffentliche Adresse oder Hostname des Peers zu dem eine WireGuard-Verbindung aufgebaut werden soll</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">remote_port<br/><span class="th-details">int</span></th>
+    <td>Port des Peers zu dem eine WireGuard-Verbindung aufgebaut werden soll</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">private_key<br/><span class="th-details">string</span></th>
+    <td>Privater Schlüssel der Wallbox (44 Base64-Zeichen oder leer)</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">remote_public_key<br/><span class="th-details">string</span></th>
+    <td>Öffentlicher Schlüssel des Peers zu dem eine WireGuard-Verbindung aufgebaut werden soll (44 Base64-Zeichen oder leer)</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">preshared_key<br/><span class="th-details">string</span></th>
+    <td>Geteilter Schlüssel (PSK) der Verbindung zwischen Wallbox und Peer (44 Base64-Zeichen oder leer)</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">allowed_ip<br/><span class="th-details">string</span></th>
+    <td>Erlaubte Quell-IP von Paketen, die über die WireGuard-Verbindung empfangen werden. 0.0.0.0 damit alle empfangenen Pakete verarbeitet werden</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">allowed_subnet<br/><span class="th-details">string</span></th>
+    <td>Erlaubte Subnetzmaske von Paketen, die über die WireGuard-Verbindung empfangen werden. 0.0.0.0 damit alle empfangenen Pakete verarbeitet werden</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</section>
 <section id="reference-info" class="section any">
     <header class="reference-section-header">
         <h4>Allgemeine Informationen</h4>
@@ -4201,6 +4490,12 @@
     Konfigurationen
     <ul>
         <li><a class="scrollto text-monospace" href="#info_display_name">info/display_name</a></li>
+    </ul>
+</li>
+<li>
+    Zustände
+    <ul>
+        <li><a class="scrollto text-monospace" href="#info_last_boots">info/last_boots</a></li>
     </ul>
 </li>
     </ul>
@@ -4306,6 +4601,60 @@
     </table>
 </div>
 </div>
+
+<div  id="info_last_boots" class="any">
+    <div class="h5">info/last_boots</div>
+    Debug-Informationen über die letzten Firmware-Ausführungen
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Index</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">[0..9]<br/><span class="th-details">object</span></th>
+    <td>Debug-Informationen über eine Firmware-Ausführung
+<div class="table-responsive">
+    <table class="table table-not-striped mt-3 table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">reset_reason<br/><span class="th-details">int</span></th>
+    <td>Grund des Neustarts. Siehe <a href="https://docs.espressif.com/projects/esp-idf/en/v4.4.3/esp32/api-reference/system/system.html?highlight=esp_reset_reason#_CPPv418esp_reset_reason_t">Espressif-Dokumentation</a></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">boot_count<br/><span class="th-details">int</span></th>
+    <td>Zähler der angibt, der wievielte Neustart seit dem die Wallbox vom Strom getrennt wurde, durchgeführt wird. Ein Eintrag in last_boots wird erst fünf Minuten nach dem Start der Wallbox geschrieben um den Flash zu schonen. Falls innerhalb der ersten fünf Minuten neugestartet wird, kann ein Eintrag verloren gehen, was anhand dieses Zählers bemerkt werden kann</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">uptime<br/><span class="th-details">int (<abbr title="Millisekunde">ms</abbr>)</span></th>
+    <td>Laufzeit der Firmware-Ausführung (32-Bit).</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">uptime_overflows<br/><span class="th-details">int</span></th>
+    <td>Anzahl der Überläufe von uptime.</td>
+</tr>
+        </tbody>
+    </table>
+</div></td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
 </section>
 <section id="reference-misc" class="section any">
     <header class="reference-section-header">
@@ -4368,7 +4717,7 @@
       <div class="container">
         <div class="row">
 
-           <div class="col-lg-3 col-md-6 footer-info">
+          <div class="col-lg-3 col-md-6 footer-info">
             <h3>WARP</h3>
             <span>WARP ist die Elektromobiliätssparte von Tinkerforge.
               Die Tinkerforge GmbH ist ein 2011 gegründetes Unternehmen, das echtes &bdquo;Made in Germany&ldquo; bietet.

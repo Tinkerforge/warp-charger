@@ -104,7 +104,9 @@ UNDOCUMENTED = [
     "nfc/reflash",
     "nfc/reset",
     "rs485/reflash",
-    "rs485/reset"
+    "rs485/reset",
+    "ethernet/force_reset",
+    "charge_manager/scan"
 ]
 
 version = int(sys.argv[1])
@@ -155,6 +157,10 @@ for k, v in debug_report.items():
     if k in UNDOCUMENTED:
         continue
     if k.endswith("_update") and k.replace("_update", "") in debug_report:
+        continue
+    if k.endswith("_modified") and k.replace("_modified", "") in debug_report:
+        continue
+    if k.endswith("_reset") and k.replace("_reset", "") in debug_report:
         continue
 
     if '/' not in k:

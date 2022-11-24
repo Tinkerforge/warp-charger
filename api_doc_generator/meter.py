@@ -215,6 +215,17 @@ meter = Module("meter", "Stromzähler", "", Version.ANY, [
         })
     ),
 
+    Func("type_override", FuncType.CONFIGURATION, Elem.OBJECT("Erlaubt es den verbauten Zählertyp zu überschreiben, falls die Auto-Detektion nicht funktioniert. Der Wert kann über meter/type_override_update mit dem selben Payload aktualisiert werden.", version=Version.WARP1_ONLY, members={
+            "type": Elem.INT("Stromzählertyp, der verwendet werden soll", constants=[
+                Const(0, "Kein Stromzähler verfügbar"),
+                Const(1, "SDM72"),
+                Const(2, "SDM630"),
+                Const(3, "SDM72V2"),
+                Const(255, "Typ-Override nicht aktiv. Stromzählertyp wird automatisch detektiert.")
+            ])
+        })
+    ),
+
     Func("history", FuncType.HTTP_ONLY, Elem.OPAQUE("Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.")),
 
     Func("live", FuncType.HTTP_ONLY, Elem.OBJECT("Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für {{{ref:meter/history}}} generiert.", members={

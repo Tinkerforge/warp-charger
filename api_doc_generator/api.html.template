@@ -54,7 +54,7 @@
       <nav id="nav-menu-container" class="pt-xxl-3">
         <ul class="nav-menu nav-menu-top">
             <li><a href="/index.html">HOME</a></li>
-            <li><a href="/warp2.html">WARP2</a></li>
+            <li><a href="/warp2.html">WARP Charger</a></li>
             <li><a href="/stand.html">LADESÄULE</a></li>
             <li><a href="/energy-manager.html">WARP ENERGY MANAGER</a></li>
             <br class="d-xxl-none"/>
@@ -392,6 +392,7 @@
             Wallbox gepublisht. Aktualisierungen werden auf dem speziellen Suffix <code>_update</code> entgegengenommen. Es können dabei nicht zu verändernde Einträge
             der Konfiguration durch <code>null</code> ausgedrückt werden.
         </p>
+        <h5>Konfigurationen setzen per MQTT</h5>
         <p>Wenn zum Beispiel die Access-Point-Konfiguration der Wallbox wie folgt abgefragt wird:
 
             <code class="code-box">mosquitto_sub -v -t "warp/ABC/<a class="scrollto" href="#wifi_ap_config">wifi/ap_config</a>"</code>
@@ -410,6 +411,7 @@
 
             Der Access Point sollte dann ab jetzt nur noch aktiv sein, wenn die Verbindung zum konfigurierten WLAN fehlgeschlagen ist.
         </p>
+        <h5>Konfigurationen setzen per HTTP</h5>
         <p>
             Mit der HTTP-API kann äquivalent die Access-Point-Konfiguration mit
             <code class="code-box">
@@ -424,6 +426,26 @@
                 curl -H "Content-Type: application/json" -X PUT -d "null" http://10.0.0.1/<a class="scrollto" href="#reboot">reboot</a>
             </code>
             ausgelöst werden.
+        </p>
+        <h5><code>_modified</code> und <code>_reset</code></h5>
+        <p>
+            Neben der eigentlichen Konfiguration und dem Kommando mit dem Suffix <code>_update</code> existiert pro Konfiguration auch ein Zustand mit dem Suffix <code>_modified</code>, sowie ein Kommando mit Suffix <code>_reset</code>.
+            Wenn beispielsweise der Access Point wie oben in den Fallback-Modus gebracht wurde, liefert
+            <code class="code-box">mosquitto_sub -v -t "warp/ABC/<a class="scrollto" href="#wifi_ap_config">wifi/ap_config_modified</a>"</code>
+
+            <samp class="samp-box">
+                "warp/ABC/<a class="scrollto" href="#wifi_ap_config">wifi/ap_config_modified</a>": {"modified": 3}
+            </samp>
+
+            Der <code>_modified</code>-Zustand gibt an, ob eine Konfiguration modifiziert wurde. Mögliche Werte sind dabei 0 bis 3:
+            <ol start="0">
+                <li>Derzeit wird die Standard-Konfiguration verwendet. Seit dem Starten wurde die Konfiguration <strong>nicht</strong> verändert.</li>
+                <li>Derzeit wird die Standard-Konfiguration verwendet. Seit dem Starten wurde die Konfiguration verändert. Damit die Veränderung wirkt, muss ein Neustart durchgeführt werden.</li>
+                <li>Derzeit wird <strong>nicht</strong> die Standard-Konfiguration verwendet. Seit dem Starten wurde die Konfiguration <strong>nicht</strong> verändert.</li>
+                <li>Derzeit wird <strong>nicht</strong> die Standard-Konfiguration verwendet. Seit dem Starten wurde die Konfiguration verändert. Damit die Veränderung wirkt, muss ein Neustart durchgeführt werden.</li>
+            </ol>
+
+            Das parameterlose Kommando mit dem Suffix <code>_reset</code> setzt die entsprechende Konfiguration auf den Standard-Zustand zurück. Danach muss ein Neustart durchgeführt werden.
         </p>
         </div>
         <div id="states_section_shortcuts" class="container">
@@ -524,9 +546,9 @@
 
           <div class="col-lg-3 col-md-6 footer-info">
             <h3>WARP</h3>
-            <p>WARP ist die Elektromobiliätssparte von Tinkerforge.
+            <span>WARP ist die Elektromobiliätssparte von Tinkerforge.
               Die Tinkerforge GmbH ist ein 2011 gegründetes Unternehmen, das echtes &bdquo;Made in Germany&ldquo; bietet.
-            </p>
+            </span>
           </div>
 
           <div class="col-lg-3 col-md-6 footer-links">
@@ -560,11 +582,11 @@
 
           </div>
 
-          <div class="col-lg-3 col-md-6 footer-newsletter">
+          <div class="col-lg-3 col-md-6 footer-info">
             <h4>Über uns</h4>
             <p>
               Wir bei Tinkerforge sind der Meinung, dass Produkte offen sein müssen. Nur so gehören sie wirklich den
-              Nutzern. Daher folgen wir der Open‐Source‐Philosophie, indem wir die Quelltexte sowie Baupläne all unserer
+              Nutzern. Daher folgen wir der Open-Source-Philosophie, indem wir die Quelltexte sowie Baupläne all unserer
               Soft- und Hardware veröffentlichen und ermöglichen es so jedem Einzelnen, unsere Produkte nach eigenen
               Wünschen zu verändern und zu erweitern. Durch die enge Zusammenarbeit mit unserer aktiven Community
               entwickeln wir schnell kundenorientierte Lösungen.

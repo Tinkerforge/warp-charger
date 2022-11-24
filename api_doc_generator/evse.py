@@ -88,7 +88,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
     ),
 
     Func("slots", FuncType.STATE, Elem.ARRAY("Der Zustand der Ladeslots. Siehe TODO LINK für Details.", members=[
-            * 10 * [Elem.OBJECT("Ein Ladeslot", members = {
+            * 12 * [Elem.OBJECT("Ein Ladeslot", members = {
                 "max_current": Elem.INT("Maximal erlaubter Ladestrom. 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockiert.", unit=Units.mA),
                 "active": Elem.BOOL("Gibt an ob dieser Slot aktiv ist.", constants=[
                     Const(True, "Slot ist aktiv"),
@@ -254,6 +254,16 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
                 Const(True, "Slot wird beim Abziehen blockieren"),
                 Const(False, "Slot wird gesetzten Ladestrom beim Abziehen beibehalten"),
             ]),
+        })
+    ),
+
+    Func("modbus_tcp_enabled", FuncType.STATE, Elem.OBJECT("Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Schreibzugriff gewährt wurde). Der Wert kann über evse/modbus_tcp_enabled_update mit dem selben Payload aktualisiert werden.", members={
+            "enabled": Elem.BOOL("true wenn die Ladeslots für Modbus-TCP aktiviert sind, sonst false")
+        })
+    ),
+
+    Func("ocpp_enabled", FuncType.STATE, Elem.OBJECT("Gibt an, ob der Ladeslot für OCPP aktiv ist. Der Wert kann über evse/ocpp_enabled_update mit dem selben Payload aktualisiert werden.", members={
+            "enabled": Elem.BOOL("true wenn OCPP aktiviert ist, sonst false")
         })
     ),
 

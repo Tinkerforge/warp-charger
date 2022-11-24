@@ -44,4 +44,8 @@ charge_tracker = Module("charge_tracker", "Ladetracker", "", Version.ANY, [
         * 3 * [Elem.INT("Dauer des Ladevorgangs.", unit=Units.s, type_name_override='uint32 (3 Byte verwendet)')],
         * 4 * [Elem.FLOAT("Zählerstand bei Ende der Ladung. NaN falls zum Endzeitpunkt kein Zähler verfügbar war.", unit=Units.kWh)],
     ])),
+
+    Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die Ladetracker-Konfiguration. Diese kann über charge_tracker/config_update mit dem selben Payload aktualisiert werden.", members={
+            "electricity_price": Elem.INT("Strompreis der im Webinterface und Ladelog verwendet wird um Ladekosten zu berechnen", unit=Units.hundredth_cent_per_kWh)
+    }))
 ])

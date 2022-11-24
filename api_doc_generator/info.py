@@ -22,5 +22,15 @@ Func("version", FuncType.STATE, Elem.OBJECT("Version der Wallbox-Firmware.", mem
     Func("display_name", FuncType.CONFIGURATION, Elem.OBJECT("Benutzerlesbarer Name der Wallbox. Kann über info/display_name_update mit dem selben Payload gesetzt werden.", members={
             "display_name": Elem.STRING("Der Anzeigename.")
         })
-    )
+    ),
+
+    Func("last_boots", FuncType.STATE, Elem.ARRAY("Debug-Informationen über die letzten Firmware-Ausführungen",  members=[
+                * 10 * [Elem.OBJECT("Debug-Informationen über eine Firmware-Ausführung", members = {
+            "reset_reason": Elem.INT("Grund des Neustarts. Siehe <a href=\"https://docs.espressif.com/projects/esp-idf/en/v4.4.3/esp32/api-reference/system/system.html?highlight=esp_reset_reason#_CPPv418esp_reset_reason_t\">Espressif-Dokumentation</a>"),
+            "boot_count": Elem.INT("Zähler der angibt, der wievielte Neustart seit dem die Wallbox vom Strom getrennt wurde, durchgeführt wird. Ein Eintrag in last_boots wird erst fünf Minuten nach dem Start der Wallbox geschrieben um den Flash zu schonen. Falls innerhalb der ersten fünf Minuten neugestartet wird, kann ein Eintrag verloren gehen, was anhand dieses Zählers bemerkt werden kann"),
+            "uptime": Elem.INT("Laufzeit der Firmware-Ausführung (32-Bit).", unit=Units.ms),
+            "uptime_overflows": Elem.INT("Anzahl der Überläufe von uptime."),
+            })]
+        ])
+    ),
 ])
