@@ -118,6 +118,7 @@
                             <a class="nav-link ms-3" href="#features_meter_phases">Stromzähler misst phasenweise (<code>"meter_phases"</code>)</a>
                             <a class="nav-link ms-3" href="#features_meter_all_values">Stromzähler misst weitere Werte (<code>"meter_all_values"</code>)</a>
                             <a class="nav-link ms-3" href="#features_nfc">NFC-Bricklet (<code>"nfc"</code>)</a>
+                            <a class="nav-link ms-3" href="#features_rtc">RTC-Bricklet (<code>"rtc"</code>)</a>
                         </nav>
                     </div>
 
@@ -289,6 +290,14 @@
 <a class="nav-link" href="#wireguard_state" style="margin-left: 2rem !important;">wireguard/<wbr>state</a>
 <span class="ms-5">Konfigurationen</span>
 <a class="nav-link" href="#wireguard_config" style="margin-left: 2rem !important;">wireguard/<wbr>config</a>
+        </nav>
+    </div>
+<a class="nav-link ms-3" href="#reference-rtc">Zeiteinstellungen der Real-Time Clock</a>
+    <div class="collapse">
+        <nav class="nav nav-pills flex-column">
+        <span class="ms-5">Konfigurationen</span>
+<a class="nav-link" href="#rtc_time" style="margin-left: 2rem !important;">rtc/<wbr>time</a>
+<a class="nav-link" href="#rtc_config" style="margin-left: 2rem !important;">rtc/<wbr>config</a>
         </nav>
     </div>
 <a class="nav-link ms-3" href="#reference-info">Allgemeine Informationen</a>
@@ -713,6 +722,12 @@
             <h4>NFC-Bricklet (<code>"nfc"</code>)</h4>
             <p>
                 Ein NFC-Bricklet wurde gefunden. Freischaltung per NFC ist möglich.
+            </p>
+        </div>
+        <div id="features_rtc" class="container">
+            <h4>RTC-Bricklet (<code>"rtc"</code>)</h4>
+            <p>
+                Ein RTC-Bricklet wurde gefunden. Die Systemzeit wird auch ohne Netzwerk-Zeitsynchronisierung über Neustarts hinweg erhalten.
             </p>
         </div>
     </section>
@@ -4465,6 +4480,101 @@
 <tr class="any">
     <th scope="row">allowed_subnet<br/><span class="th-details">string</span></th>
     <td>Erlaubte Subnetzmaske von Paketen, die über die WireGuard-Verbindung empfangen werden. 0.0.0.0 damit alle empfangenen Pakete verarbeitet werden</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</section>
+<section id="reference-rtc" class="section any">
+    <header class="reference-section-header">
+        <h4>Zeiteinstellungen der Real-Time Clock</h4><h5>Benötigt das Feature <a href="#features_nfc"><code>"rtc"</code></a>.</h5>
+
+    </header>
+    <ul class="ul-no-bullet">
+        <li>
+    Konfigurationen
+    <ul>
+        <li><a class="scrollto text-monospace" href="#rtc_time">rtc/time</a></li>
+<li><a class="scrollto text-monospace" href="#rtc_config">rtc/config</a></li>
+    </ul>
+</li>
+    </ul>
+
+<div  id="rtc_time" class="any">
+    <div class="h5">rtc/time</div>
+    Die aktuelle Zeit auf der Real-Time Clock. Kann über rtc/time_update mit dem selben Payload gesetzt werden.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">year<br/><span class="th-details">int</span></th>
+    <td>Das Jahr. 2000 bis 2099</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">month<br/><span class="th-details">int</span></th>
+    <td>Der Monat. 1 bis 12</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">day<br/><span class="th-details">int</span></th>
+    <td>Der Tag. 1 bis 31</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">hour<br/><span class="th-details">int</span></th>
+    <td>Die Stunde. 0 bis 23</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">minute<br/><span class="th-details">int</span></th>
+    <td>Die Minute. 0 bis 59</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">second<br/><span class="th-details">int</span></th>
+    <td>Die Sekunde. 0 bis 59</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">weekday<br/><span class="th-details">int</span></th>
+    <td>Der Wochentag. 0 (Montag) bis 6 (Sonntag).</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="rtc_config" class="any">
+    <div class="h5">rtc/config</div>
+    Die Real-Time-Clock-Konfiguration. Diese kann über rtc/config_update mit dem selben Payload aktualisiert werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">auto_sync<br/><span class="th-details">bool</span></th>
+    <td>Gibt an, ob beim Laden des Webinterfaces automatisch die Zeit auf der RTC gestellt werden soll, falls keine Netzwerk-Zeitsynchronisierung vorliegt.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>true</strong> - Die RTC-Zeit wird automatisch auf die Systemzeit des Geräts gesetzt, dass das Webinterface aufgerufen hat.</li>
+    <li><strong>false</strong> - Die RTC-Zeit wird nur manuell gesetzt.</li>
+</ol>
+</div></td>
 </tr>
         </tbody>
     </table>

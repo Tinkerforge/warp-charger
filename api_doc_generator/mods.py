@@ -11,6 +11,7 @@ from users import users
 from charge_tracker import charge_tracker
 from misc import misc
 from info import info
-from wireguard  import wireguard
+from wireguard import wireguard
+from rtc import rtc
 
-mods = [evse, meter, charge_manager, users, charge_tracker, nfc, network, wifi, ethernet, ntp, mqtt, wireguard, info, misc]
+mods = [evse, meter, charge_manager, users, charge_tracker, nfc, network, wifi, ethernet, ntp, mqtt, wireguard, rtc, info, misc]
