@@ -552,26 +552,41 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\newpage
 	\null
 	\newpage
-	\section{Webinterface (Nur Smart / Pro)}
-	Das Webinterface der Wallbox ist nur bei den Varianten Smart und Pro verfügbar.
 
-	Über das Webinterface kannst du unter anderem das Laden steuern und überwachen.
-	Die Wallbox kann mit einem LAN-Kabel oder als WLAN-Client zu einem Netzwerk verbunden werden.
-	Außerdem kann sie als Access-Point einen eigenes WLAN eröffnen.
-	Der Betrieb mit LAN-Kabel, als WLAN-Client und als Access-Point ist parallel möglich.
+	\section{Erste Schritte (Nur Smart / Pro)}\label{setup}
 
-	\subsection{Ersteinrichtung}\label{setup}
+	Bei der Basic Variante der Wallbox sind nach der elektrischen Installation
+	keine weiteren Einstellmöglichkeiten vorhanden. Die nachfolgende
+	Beschreibung bezieht sich daher nur auf die Smart bzw. Pro Variante des WARP
+	Chargers.
+
+
+
+	Um weitere Einstellungen durchführen zu können, muss zuerst eine Verbindung
+	zur Wallbox hergestellt werden, damit diese dann über den Browser
+	konfiguriert werden kann.
+
+	\subsection{Schritt 1: Verbindung zur Wallbox herstellen}
+
+	\paragraph{Option 1: WLAN}
 	Im Werkszustand öffnet die Wallbox einen WLAN-Access-Point, über den
-	die Konfiguration des Webinterfaces vorgenommen werden kann. Außerdem verbindet sie sich automatisch
-	zum entsprechenden Netzwerk, falls ein LAN-Kabel eingesteckt ist.
+	die Konfiguration über das Webinterface der Wallbox vorgenommen werden kann. 
 
 	Die Zugangsdaten des Access-Points findest du auf dem WLAN-Zugangsdaten-Aufkleber
 	auf der Rückseite dieser Anleitung. Du kannst entweder den QR-Code des Aufklebers verwenden,
 	der das WLAN automatisch konfiguriert, oder SSID und Passphrase abschreiben.
+	Die meisten Kamera-Apps von Smartphones unterstützen das Auslesen des
+	QR-Codes und das automatische Verbinden zu dem WLAN. Somit musst du die
+	Zugangsdaten dann nicht abtippen. Wichtig ist, dass viele Smartphones
+	erkennen, dass über das WLAN der Wallbox (Access-Point) kein Zugriff auf das
+	Internet möglich ist. Dein Telefon fragt dann nach ob du zu dem WLAN
+	verbunden bleiben möchtest. Damit du weiter auf die Wallbox zugreifen
+	kannst, darfst du das WLAN nicht wieder verlassen.
 
 	\begin{minipage}{0.35\textwidth}
 		Wenn die Verbindung mit dem Access-Point der Wallbox hergestellt ist, kannst du das Webinterface
-		unter \url{http://10.0.0.1} erreichen. Alternativ kannst du den nebenstehenden QR-Code scannen.
+		unter \url{http://10.0.0.1} über einen Browser deiner Wahl erreichen.
+		Alternativ kannst du dazu den nebenstehenden QR-Code scannen.
 		Eventuell musst du deine mobile Datenverbindung deaktivieren.
 	\end{minipage}\hfill
 	\begin{minipage}{0.12\textwidth}
@@ -580,49 +595,67 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\end{flushright}
 	\end{minipage}
 
-	Die Wallbox kann jetzt in ein vorhandenes WLAN eingebunden werden.
+	\paragraph{Option 2: LAN}
+	Als Alternative zum Zugriff über den WLAN-Accesspoint verbindet sich die
+	Wallbox in den Werkseinstellungen automatisch zu einem
+	kabelgebundenen Netzwerk (LAN), wenn ein LAN-Kabel eingesteckt ist (IP Bezug
+	mittels DHCP). Die Wallbox kann dann entweder über die zugewiesene IP
+	Adresse (\url{http://[IP-der-Wallbox]}, z.B. \url{http://192.168.0.42}) 
+	oder den Hostnamen der Wallbox (\url{http://[hostname]}, z.B.
+	\url{http://warp2-ABC}) erreicht werden.
 
+	Der Hostname der Wallbox ist identisch zur SSID des WLANs. Den Hostnamen findest du
+	auf dem WLAN-Zugangsdaten-Aufkleber auf der Rückseite dieser Anleitung.
 
-	\subsubsection{Konfiguration der LAN-Verbindung}
-	\gfx{./img_warp2/resized/web_ethernet}
-	In den meisten Fällen wird eine LAN-Verbindung automatisch hergestellt, falls ein Kabel eingesteckt ist.
-	Es ist aber auf der Unterseite \enquote{LAN-Verbindung} im Abschnitt \enquote{Netzwerk} des Webinterfaces möglich,
-	eine statische IP-Konfiguration	einzutragen, oder, falls gewünscht, die LAN-Verbindung
-	komplett zu deaktivieren.
+	\paragraph{Konfiguration mittels Webinterface}
+	Ist die Wallbox nun per WLAN (Accesspoint) oder LAN im Browser erreichbar,
+	können alle weiteren Einstellungen durchgeführt werden.
+	Das Webinterface ist unter \fullref{webinterface} vollständig beschrieben.
 
-	Bei einer erfolgreichen Verbindung sollte die Wallbox jetzt im LAN unter
-	\url{http://[konfigurierter_hostname]}, z.B. \url{http://warp2-ABC} erreichbar sein.
+	\subsection{Schritt 2: Integration in das eigene Netzwerk}
+	In den allermeisten Fällen soll die Wallbox in das eigene WLAN/LAN
+	integriert werden. Dazu müssen die Netzwerkeinstellungen der Wallbox
+	angepasst werden. Wie dies funktioniert ist im Abschnitt
+	\fullref{network} beschrieben.
 
-	\subsubsection{Einbinden in ein vorhandenes WLAN}
-	\gfx{./img_warp2/resized/web_wifi_sta}
-	Auf der Unterseite \enquote{WLAN-Verbindung} im Abschnitt \enquote{Netzwerk} kannst du die Verbindung zu einem WLAN konfigurieren.
-	Durch Drücken des \enquote{Netzwerksuche}-Buttons öffnet sich ein Menü, in dem das gewünschte WLAN ausgewählt werden kann.
-	Es werden dann automatisch Netzwerkname (SSID) und BSSID eingetragen, sowie die Verbindung beim Neustart aktiviert.
-	Gegebenenfalls musst du jetzt noch die Passphrase des gewählten Netzes eintragen.
+	\subsection{Schritt 3: Weitere Optionen}
+	Generell empfehlen wir nach der Installation ein Update der Firmware der
+	Wallbox. Somit erhältst du die neusten Funktionen und ggf. Bugfixes. Wie ein
+	Firmware-Update durchgeführt wird, ist unter \fullref{firmware-update}
+	beschrieben.
 
-	Du kannst jetzt die Konfiguration mit dem Speichern-Button abspeichern.
-	Das Webinterface startet dann neu und verbindet sich zum konfigurierten WLAN. Die Statusseite zeigt
-	an, ob die Verbindung erfolgreich war. Der Access-Point bleibt weiterhin
-	geöffnet, sodass Konfigurationsfehler behoben werden können.
-	Da der Access-Point den selben Kanal wie ein eventuell verbundenes Netz verwendet,
-	kann es sein, dass du dich jetzt neu zum Access-Point verbinden musst.
+	Weitere Einstellungen hängen vom Verwendungszweck der Wallbox ab. Teilen
+	sich mehrere Wallboxen einen Stromanschluss kann die Konfiguration eines
+	Lastmanagements gewünscht sein (siehe \fullref{charge_manager}). Soll eine Ladefreigabe
+	nur mittels NFC möglich sein, Ladevorgänge Nutzern oder Fahrzeugen
+	zugeordnet werden (Ladelogbuch) oder das Webinterface mit einem Passwort
+	geschützt werden so ist dies im Abschnitt \fullref{user_management} beschrieben.
 
-	Bei einer erfolgreichen Verbindung sollte die Wallbox jetzt im konfigurierten Netzwerk unter
-	\url{http://[konfigurierter_hostname]}, z.B. \url{http://warp2-ABC} erreichbar sein.
+	Am besten du schaust die diversen Möglichkeiten im Webinterface an und
+	entscheidest selbst, welche Optionen du nutzen möchtest.
 
 	\newpage
-	\subsubsection{Konfiguration des Access-Points}
-	\gfx{./img_warp2/resized/web_wifi_ap}
-	Der Access-Point kann in einem von zwei Modi betrieben werden: Entweder kann er immer aktiv sein,
-	oder nur dann, wenn die Verbindung zu einem anderen WLAN bzw. zu einem LAN nicht konfiguriert oder fehlgeschlagen ist.
-	Außerdem kann der Access-Point komplett deaktiviert werden.
-	\hint{Wir empfehlen, den Access-Point nie komplett zu deaktivieren, da sonst bei einer
-		fehlgeschlagenen Verbindung zu einem anderen Netzwerk das Webinterface nicht mehr erreicht
-		werden kann. Die Wallbox kann dann nur über den \fullref{recovery} oder ein Zurücksetzen auf Werkszustand, siehe \ref{reset}, erreicht werden.}
-	Der Modus des Access-Points und weitere Einstellungen wie Netzwerkname, Passphrase usw. können
-	auf der Unterseite \enquote{WLAN-Access-Point} im Abschnitt \enquote{Netzwerk} konfiguriert werden.
+	\null
+	\newpage
 
-	\subsection{Startseite / Status}
+
+	\section{Webinterface (Nur Smart / Pro)}\label{webinterface}
+	Das Webinterface der Wallbox ist nur bei den Varianten Smart und Pro verfügbar.
+
+	Über das Webinterface kannst du unter anderem das Laden steuern und überwachen.
+	Die Wallbox kann mit einem LAN-Kabel oder als WLAN-Client zu einem Netzwerk verbunden werden.
+	Außerdem kann sie als Access-Point einen eigenes WLAN eröffnen.
+	Der Betrieb mit LAN-Kabel, als WLAN-Client und als Access-Point ist parallel möglich.
+	Weitere Infos dazu erhälst du im Abschnitt \fullref{setup}.
+
+	\subsection{Status (Startseite)}
+	Wenn du auf das Webinterface der Wallbox zugreifst landest du auf der
+	Startseite. Auf der rechten Seite befindet sich die Navigation, über die du
+	zu weiteren Einstellungsmöglichkeiten kommst. Auf mobilen Endgeräten wird
+	diese Navigation stattdessen versteckt unter einem Menü-Symbol oben rechts
+	neben dem WARP Logo angezeigt. Hier musst du die Navigation durch Klick auf
+	die drei Striche ausklappen.
+
 	Die Startseite des Webinterfaces zeigt kompakt den aktuellen Ladestatus der
 	Wallbox, sowie Ladezeit und -strom, und erlaubt es, die Ladung zu steuern.
 	Du kannst hier sowohl das automatische Laden (de-)aktivieren, als auch
@@ -752,14 +785,58 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\gfx{./img_warp2/resized/web_meter}
 
-	\subsection{Netzwerk}
-	Im Netzwerk-Unterabschnitt befinden sich unter anderem die in \fullref{setup} erläuterten LAN- und WLAN-Einstellungen.
+	\subsection{Netzwerk}\label{network}
+	Die Wallbox kann in dein Netzwerk per WLAN oder LAN eingebunden werden.
+	In diesem Unterabschnitt können alle dazugehörigen Einstellungen vorgenommen werden.
 
 	\subsubsection{Allgemein}
 	Hier kannst du den Hostnamen des WARP Chargers in allen verbundenen Netzwerken konfigurieren. Außerdem kann mDNS aktiviert oder deaktiviert werden.
 	Über mDNS können andere Geräte im Netzwerk den WARP Charger finden. Künftig werden wir über mDNS z.B. die Einrichtung eines Lastmanagementverbunds vereinfachen.
 
 	\gfx{./img_warp2/resized/web_network}
+
+
+	\subsubsection{WLAN-Verbindung}
+	\gfx{./img_warp2/resized/web_wifi_sta}
+	Eine Möglichkeit um die Wallbox in dein Netzwerk zu integrieren ist eine
+	Anbindung mittels WLAN. Dieses kannst du hier konfigurieren.
+	Durch Drücken des \enquote{Netzwerksuche}-Buttons öffnet sich ein Menü, in dem das gewünschte WLAN ausgewählt werden kann.
+	Es werden dann automatisch Netzwerkname (SSID) und BSSID eingetragen, sowie die Verbindung beim Neustart aktiviert.
+	Gegebenenfalls musst du jetzt noch die Passphrase des gewählten Netzes eintragen.
+
+	Du kannst jetzt die Konfiguration mit dem Speichern-Button abspeichern.
+	Das Webinterface startet dann neu und verbindet sich zum konfigurierten WLAN. Die Statusseite zeigt
+	an, ob die Verbindung erfolgreich war. Der Access-Point bleibt weiterhin
+	geöffnet, sodass Konfigurationsfehler behoben werden können.
+	Da der Access-Point den selben Kanal wie ein eventuell verbundenes Netz verwendet,
+	kann es sein, dass du dich jetzt neu zum Access-Point verbinden musst.
+
+	Bei einer erfolgreichen Verbindung sollte die Wallbox jetzt im konfigurierten Netzwerk unter
+	\url{http://[konfigurierter_hostname]}, z.B. \url{http://warp2-ABC} erreichbar sein.
+
+	\newpage
+	\subsubsection{WLAN-Access-Point}
+	\gfx{./img_warp2/resized/web_wifi_ap}
+	Der Access-Point kann in einem von zwei Modi betrieben werden: Entweder kann er immer aktiv sein,
+	oder nur dann, wenn die Verbindung zu einem anderen WLAN bzw. zu einem LAN nicht konfiguriert oder fehlgeschlagen ist.
+	Außerdem kann der Access-Point komplett deaktiviert werden.
+	\hint{Wir empfehlen, den Access-Point nie komplett zu deaktivieren, da sonst bei einer
+		fehlgeschlagenen Verbindung zu einem anderen Netzwerk das Webinterface nicht mehr erreicht
+		werden kann. Die Wallbox kann dann nur über den \fullref{recovery} oder ein Zurücksetzen auf Werkszustand, siehe \ref{reset}, erreicht werden.}
+	Die notwendigen Einstellungen, wie der Modus des Access-Points,
+	Netzwerkname, Passphrase usw. müssen dazu hier festgelegt werden.
+
+	\subsubsection{LAN-Verbindung}
+	\gfx{./img_warp2/resized/web_ethernet}
+	Alternativ zur WLAN-Verbindung kann die Wallbox auch per LAN kabelgebungen
+	ins Netzwerk integriert werden. In den meisten Fällen wird eine
+	LAN-Verbindung automatisch hergestellt, falls ein Kabel eingesteckt ist
+	(IP Adresse wird per DHCP bezogen). Es ist aber auch möglich,
+	eine statische IP-Konfiguration	einzutragen, oder, falls gewünscht, die LAN-Verbindung
+	komplett zu deaktivieren.
+
+	Bei einer erfolgreichen Verbindung sollte die Wallbox jetzt im LAN unter
+	\url{http://[konfigurierter_hostname]}, z.B. \url{http://warp2-ABC} erreichbar sein.
 
 	\subsubsection{Zeitsynchronisierung}\label{ntp}
 	Um für den Ladetracker und das Ereignis-Log die aktuelle Uhrzeit zur Verfügung zu haben, kann der WARP Charger diese per NTP über
@@ -770,6 +847,19 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	wenn in der Netzwerkkonfiguration keine statische IP-Konfiguration verwendet wurde.
 
 	\gfx{./img_warp2/resized/web_ntp}
+
+
+	\subsubsection{WireGuard}
+	Ab Firmwareversion 2.0.9 unterstützt die WARP Charger Smart und Pro  WireGuard. WireGuard
+	ist eine Möglichkeit die Wallbox in ein virtuelles privates Netzwerk (VPN)
+	mittels einer verschlüsselten Verbindung einzubinden. WireGuard wird von
+	verschiedenen Routern direkt unterstützt. Dies kann zum Beispiel genutzt
+	werden um aus der Ferne auf die Wallboxen zuzugreifen und das
+	Wallbox-Netzwerk vor einem Zugriff zu schützen. Zusätzlich kann das
+	Lastmanagement zwischen den Wallboxen per WireGuard zusätzlich abgesichert werden.
+
+	Die notwendigen Parameter sind WireGuard typisch und werden an dieser Stelle
+	nicht gesondert erläutert.
 
 	\subsection{System}
 	Im System-Unterabschnitt kannst du das Ereignis-Log einsehen und Firmware-Aktualisierungen einspielen.
@@ -782,10 +872,14 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Falls du ein Problem mit der Wallbox an uns melden möchtest, kannst du das Ereignis-Log,
 	sowie einen Debug-Report abrufen, die uns helfen das Problem zu verstehen und zu lösen.
 
-	\subsubsection{Firmware-Aktualisierung}
+	\subsubsection{Firmware-Aktualisierung}\label{firmware-update}
 	\gfx{./img_warp2/resized/web_firmware_update}
-	Hier kannst du die Firmware der Wallbox aktualisieren. Wir werden die Funktionalität
-	laufend weiterentwickeln. Aktuelle Firmwares findest du unter \rurl{https://warp-charger.com}{warp-charger.com}.
+	Hier kannst du die Firmware der Wallbox aktualisieren. Wir entwickeln die Funktionalität
+	der Wallbox laufend weiter. Bitte beachte, dass daher ggf. auch eine neue
+	Version dieser Betriebsanleitung bereitgestellt wird. 
+	Die aktuelle Firmware und die neuste Betriebsanleitung findest du unter
+	\rurl{https://warp-charger.com}{warp-charger.com} zum Download.
+
 	Außerdem kannst du hier das Webinterface neustarten, ohne einen Ladevorgang zu unterbrechen.
 
 	\subsection{Wiederherstellungsmodus}\label{recovery}
@@ -1010,10 +1104,13 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	kompatibel zu üblichen Tabellenkalkulationsprogrammen heruntergeladen werden. Außerdem kann das erzeugte Dokument
 	vorgefiltert werden, um beispielsweise nur Ladevorgänge eines bestimmten Benutzers in einem festgelegten Zeitraum zu erhalten.
 
+	Zusätzlich kannst du einen Strompreis (ct/kWh) angeben. Wenn du über einen
+	WARP Charger Pro verfügst (integrierter Stromzähler), dann kann die Wallbox
+	damit und über die ermittelte gelandene Energie die Kosten des jeweiligen
+	Ladevorgangs berechnen. Bitte beachte das eine Änderung des Strompreises
+	immer die Kosten von allen aufgezeichneten Ladevorgängen neu berechnet.
+
 	Der WARP Charger kann bis zu 7680 Ladevorgänge aufzeichnen.
-
-
-
 
 	\newpage
 	\section{Benutzerverwaltung (Nur Smart / Pro)} \label{user_management}
@@ -1023,20 +1120,42 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\columnbreak
 
 	Auf der Unterseite \enquote{Benutzerverwaltung} im System-Abschnitt des Webinterfaces können bis zu 16 Benutzer angelegt werden.
-	Einem angelegten Benutzer, dem ein NFC-Tag zugeordnet wurde (siehe \fullref{NFC}) können vom Ladetracker Ladungen zugeordnet werden.
-	Es kann pro Benutzer ein maximaler Ladestrom festgelegt werden.
+	Einem angelegten Benutzer, dem ein NFC-Tag zugeordnet wurde (siehe Abschnitt \fullref{NFC}) können vom Ladetracker Ladungen zugeordnet werden.
 
+	Ein neuer Nutzer kann mittels Klicken auf \glqq Benutzer hinzufügen\grqq~hinzugefügt werden. 
+	Anschließend öffnet sich ein kleines Fenster in dem der eigentliche Benutzername, der Anzeigename (für die Anzeige im Ladetracker)
+	und der dem Nutzer erlaube maximale Ladestrom eingestellt werden kann.
+	Zusätzlich kann dem Nutzer ein Passwort für die HTTP-Anmeldung (siehe
+	folgenden Abschnitt) vergeben werden.
 
-	Außerdem kann die HTTP-Anmeldung aktiviert werden. Wenn diese aktiviert ist, muss zum Zugriff auf das Webinterface und zur Verwendung
+	Soll nur eine Ladefreigabe mittels NFC/Benutzerfreigabe möglich sein, so
+	muss \glqq Benutzerautorisierung\grqq~aktiviert werden.
+
+	Eine weitere Funktion der Benutzerverwaltung ist die HTTP-Anmeldung. Diese
+	kann mittels \glqq Anmeldung aktiviert\grqq~aktiviert werden. Wenn diese aktiviert ist, muss zum Zugriff auf das Webinterface und zur Verwendung
 	der HTTP-API eine Anmeldung als einer der Benutzer durchgeführt werden. Eine HTTP-Anmeldung als ein Benutzer ist nur möglich, wenn
 	dem Benutzer ein Passwort konfiguriert wurde. Entsprechend können Benutzer erstellt werden, die nur für das Ladetracking per NFC-Tag
 	verwendet werden, aber keinen Zugriff auf das Webinterface haben sollen, indem diesen kein Passwort konfiguriert wird.
 	\hint{Wenn du die Zugangsdaten des HTTP-Anmeldung vergisst, kannst du nur über den Wiederherstellungsmodus \ref{recovery} oder nach einem Zurücksetzen auf den Werkszustand \ref{reset} wieder darauf zugreifen.}
+	Die Funktion ist nur aktivierbar, wenn mindestens ein Nutzer mit einem
+	aktiviertem Passwort existiert.
+	
+	Um einem Nutzer die Anmeldemöglichkeit wieder zu entziehen und sein Passwort
+	zu löschen ist bei jedem angelegten Nutzer ein Verbotsschild vorhanden. Wird
+	dieses aktiviert ist es dem Nutzer nicht mehr möglich sich anzumelden. Sein
+	Passwort wird dann zusätzlich gelöscht, so dass dieses für eine erneute
+	Anmeldung neu vergeben werden muss.
+
+	Sollen mehrere Nutzer angelegt werden, so empfehlen wir es diese
+	nacheinander anzulegen. Es muss kein Neustart der Wallbox nach jedem Nutzer
+	durchgeführt werden. Es reicht ein Speichern und Neustart der Wallbox am
+	Ende des Vorgangs.
 
 	\newpage
 	\section{Ladefreigabe per NFC (Nur Smart / Pro)}
 	\label{NFC}
-	Der WARP2 Charger unterstützt eine Ladefreigabe per NFC. Wenn diese aktiviert ist,
+	Der WARP2 Charger unterstützt eine Ladefreigabe per NFC (siehe Abschnitt
+	\fullref{user_management}). Wenn diese aktiviert ist,
 	muss zum Starten und/oder zum Stoppen einer Ladung ein NFC-Tag, das einem Benutzer zugeordnet ist, an die rechte Seite
 	der Wallbox gehalten werden. Im Lieferumfang des WARP2 Chargers sind drei NFC-Karten enthalten,
 	die bereits angelernt sind. Es können aber beliebige andere NFC-Tags der Typen 1 bis 4,
@@ -1051,8 +1170,19 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	Durch Klicken auf den \enquote{Tag hinzufügen}-Button kann ein neues Tag angelernt werden.
 	Es werden die zuletzt erkannten, aber noch nicht berechtigten Tags anzeigt,
-	durch Klicken auf eins der Tags kann es ausgewählt werden. Alternativ können
-	Tag-ID und -Typ manuell eingegeben werden.
+	durch Klicken auf eines der Tags kann dieses übernommen werden. Ein Neustart der
+	Wallbox leert diese Liste. Sollen also mehrere Tags nacheinander hinzugefügt
+	werden empfehlen wir, die Tags nacheinander an die Wallbox zu halten. Die
+	Tags werden anschließend chronologisch in der Liste aufgeführt und können
+	dann einfach nacheinander angelegt und existierenden Benutzern zugeordnet
+	werden. Wurden alle NFC Tags angelernt können die Tags gespeichert und die
+	Wallbox einmal neugestartet werden.
+
+
+	Alternativ können
+	Tag-ID und -Typ manuell eingegeben werden. Dies ist zum Beispiel sinnvoll,
+	wenn Tag-ID und -Typ mittels externer Geräte (z.B. Smartphone mit passender
+	App) ermittelt und eingetragen werden sollen.
 
 	Auf der Benutzerverwaltungs-Unterseite \fullref{user_management} kann die Option \enquote{Ladefreigabe} aktiviert werden.
 	Wenn diese aktiv ist, muss ein NFC-Tag verwendet werden um eine Ladung zu starten.
