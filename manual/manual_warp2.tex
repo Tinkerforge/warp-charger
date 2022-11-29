@@ -413,7 +413,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Stromversorgung der Wallbox genutzt wird. L2 und L3 werden von der Wallbox
 	nur durchgeschaltet und können dementsprechend unbeschaltet bleiben.
 
-	\subsubsection{Einstellen des Ladestroms (Alle Varianten)}\label{ladestrom_schalter}
+	\subsubsection{Einstellen des Ladestroms}\label{ladestrom_schalter}
 	Der maximal erlaubte Ladestrom muss abhängig von der gebäudeseitigen
 	Leitungsabsicherung eingestellt werden. Der Ladestrom darf nicht höher gewählt
 	werden, als die Leitungsabsicherung es zulässt.
@@ -455,7 +455,13 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\bottomrule
 	\end{tabular}
 
-	\subsubsection{LAN- / RJ45-Kabel anfertigen WARP 2.1}\label{ethernet}
+	\subsubsection{LAN- / RJ45-Kabel anfertigen}\label{ethernet}
+
+	Um den WARP Charger mittels LAN anzubinden muss ein LAN-/ RJ45-Kabel
+	angefertigt werden. Je nach Version der Wallbox unterscheidet sich hierbei
+	die Ausführung. 
+	
+	\paragraph{Warp 2.1}
 
 	\gfx{./img_warp2/resized/warp2_1_top_ready_1000.jpg} % Ethernetkabel
 
@@ -466,8 +472,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	kann. Es können somit auch werkzeuglose oder über einen LSA Anschluss
 	verfügende RJ45 Stecker genutzt werden.
 
-
-	\subsubsection{LAN- / RJ45-Kabel anfertigen - WARP 2.0}
+	\paragraph{Warp 2.0}
 
 	Bei dem WARP Charger 2.0 befindet sich eine spritzwassergeschützte
 	RJ45-Durchführung auf der Unterseite an die der in der Wallbox verbaute Controller intern
@@ -553,14 +558,12 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\null
 	\newpage
 
-	\section{Erste Schritte (Nur Smart / Pro)}\label{setup}
+	\section{Erste Schritte}\label{setup}
 
-	Bei der Basic Variante der Wallbox sind nach der elektrischen Installation
-	keine weiteren Einstellmöglichkeiten vorhanden. Die nachfolgende
+	Bei dem WARP Charger Basic sind nach der elektrischen Installation
+	keine weiteren Einstellmöglichkeiten möglich. Die nachfolgende
 	Beschreibung bezieht sich daher nur auf die Smart bzw. Pro Variante des WARP
 	Chargers.
-
-
 
 	Um weitere Einstellungen durchführen zu können, muss zuerst eine Verbindung
 	zur Wallbox hergestellt werden, damit diese dann über den Browser
@@ -607,9 +610,14 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Der Hostname der Wallbox ist identisch zur SSID des WLANs. Den Hostnamen findest du
 	auf dem WLAN-Zugangsdaten-Aufkleber auf der Rückseite dieser Anleitung.
 
+	Kann die per DHCP vergebene IP der Wallbox nicht ermittelt werden, so kann der
+	zuvor genannte Zugriff auf die Wallbox mittels WLAN-Access-Point genutzt
+	werden um die IP Adresse der LAN Schnittstelle zu ermitteln (\glqq
+	Status-Seite\grqq, Abschnitt \glqq LAN-Verbindung\grqq).
+
 	\paragraph{Konfiguration mittels Webinterface}
-	Ist die Wallbox nun per WLAN (Accesspoint) oder LAN im Browser erreichbar,
-	können alle weiteren Einstellungen durchgeführt werden.
+	Ist die Wallbox nun per WLAN (Accesspoint) oder LAN mittels Browser erreichbar,
+	können alle weiteren Einstellungen darüber durchgeführt werden.
 	Das Webinterface ist unter \fullref{webinterface} vollständig beschrieben.
 
 	\subsection{Schritt 2: Integration in das eigene Netzwerk}
@@ -626,10 +634,14 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	Weitere Einstellungen hängen vom Verwendungszweck der Wallbox ab. Teilen
 	sich mehrere Wallboxen einen Stromanschluss kann die Konfiguration eines
-	Lastmanagements gewünscht sein (siehe \fullref{charge_manager}). Soll eine Ladefreigabe
+	Lastmanagements gewünscht sein (siehe Abschnitt \fullref{charge_manager}).
+
+	Soll eine Ladefreigabe
 	nur mittels NFC möglich sein, Ladevorgänge Nutzern oder Fahrzeugen
 	zugeordnet werden (Ladelogbuch) oder das Webinterface mit einem Passwort
 	geschützt werden so ist dies im Abschnitt \fullref{user_management} beschrieben.
+	Bei einer Ersteinrichtung empfehlen wir zuerst die Benutzer anzulegen und
+	anschließend den Benutzern NFC Tags zuzuordnen (Abschnitt \fullref{NFC}).
 
 	Am besten du schaust die diversen Möglichkeiten im Webinterface an und
 	entscheidest selbst, welche Optionen du nutzen möchtest.
@@ -639,23 +651,23 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\newpage
 
 
-	\section{Webinterface (Nur Smart / Pro)}\label{webinterface}
+	\section{Webinterface}\label{webinterface}
 	Das Webinterface der Wallbox ist nur bei den Varianten Smart und Pro verfügbar.
 
 	Über das Webinterface kannst du unter anderem das Laden steuern und überwachen.
-	Die Wallbox kann mit einem LAN-Kabel oder als WLAN-Client zu einem Netzwerk verbunden werden.
-	Außerdem kann sie als Access-Point einen eigenes WLAN eröffnen.
-	Der Betrieb mit LAN-Kabel, als WLAN-Client und als Access-Point ist parallel möglich.
-	Weitere Infos dazu erhälst du im Abschnitt \fullref{setup}.
+	Es können diverse Einstellungen vorgenommen werden, die nachfolgend
+	dokumentiert sind.
 
-	\subsection{Status (Startseite)}
-	Wenn du auf das Webinterface der Wallbox zugreifst landest du auf der
-	Startseite. Auf der rechten Seite befindet sich die Navigation, über die du
-	zu weiteren Einstellungsmöglichkeiten kommst. Auf mobilen Endgeräten wird
-	diese Navigation stattdessen versteckt unter einem Menü-Symbol oben rechts
-	neben dem WARP Logo angezeigt. Hier musst du die Navigation durch Klick auf
-	die drei Striche ausklappen.
+	Wenn du auf das Webinterface der Wallbox mit einem Browser zugreifst
+	gelangst du auf die Start-/ Statusseite. Auf der linken Seite befindet sich 
+	die Menüleiste, über die du zu weiteren Einstellungsmöglichkeiten kommst.
 
+	Auf mobilen Endgeräten wird
+	diese Menüleiste stattdessen versteckt unter einem Menü-Symbol oben rechts
+	im grauen Balken neben dem WARP Logo angezeigt (\glqq drei Striche untereinander\grqq). 
+	Hier kannst du das Menü durch einen Klick auf das Symbol ausklappen.
+
+	\subsection{Status (Startseite)}	
 	Die Startseite des Webinterfaces zeigt kompakt den aktuellen Ladestatus der
 	Wallbox, sowie Ladezeit und -strom, und erlaubt es, die Ladung zu steuern.
 	Du kannst hier sowohl das automatische Laden (de-)aktivieren, als auch
@@ -850,16 +862,19 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 
 	\subsubsection{WireGuard}
-	Ab Firmwareversion 2.0.9 unterstützt die WARP Charger Smart und Pro  WireGuard. WireGuard
-	ist eine Möglichkeit die Wallbox in ein virtuelles privates Netzwerk (VPN)
+
+	TODO Screenshot Wireguard
+
+	WireGuard ist eine Möglichkeit die Wallbox in ein virtuelles privates Netzwerk (VPN)
 	mittels einer verschlüsselten Verbindung einzubinden. WireGuard wird von
 	verschiedenen Routern direkt unterstützt. Dies kann zum Beispiel genutzt
 	werden um aus der Ferne auf die Wallboxen zuzugreifen und das
 	Wallbox-Netzwerk vor einem Zugriff zu schützen. Zusätzlich kann das
-	Lastmanagement zwischen den Wallboxen per WireGuard zusätzlich abgesichert werden.
+	Lastmanagement zwischen den Wallboxen per WireGuard abgesichert werden.
 
 	Die notwendigen Parameter sind WireGuard typisch und werden an dieser Stelle
-	nicht gesondert erläutert.
+	nicht gesondert erläutert. Gute Dokumentation dazu findet sich auf
+	\url{https://www.wireguard.com/}.
 
 	\subsection{System}
 	Im System-Unterabschnitt kannst du das Ereignis-Log einsehen und Firmware-Aktualisierungen einspielen.
@@ -913,7 +928,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Falls du über den Access Point der Wallbox verbunden bist, erreichst du diese unter \url{http://10.0.0.1/recovery},
 	bei einer bestehenden Verbindung zu einem LAN oder WLAN über \url{http://[konfigurierter_hostname]/recovery}, also z.B. \url{http://warp2-ABC/recovery}.
 	Über die Recovery-Seite kannst du die Wallbox neustarten, Firmware-Updates einspielen,
-	die Wallbox auf den Werkszustand zurücksetzen (Factory Reset), Debug-Reports herunterladen und die HTTP-API verwenden (siehe \fullref{api})
+	die Wallbox auf den Werkszustand zurücksetzen (Factory Reset), Debug-Reports
+	herunterladen und die HTTP-API verwenden (siehe \fullref{http-interface})
 
 	Alternativ kannst du die Wallbox (genauer: den verbauten ESP32 Ethernet Brick) neu flashen.
 	Du benötigst dazu einen PC mit installiertem Brick Viewer 2.4.20 oder neuer. Diesen findest du unter
@@ -952,7 +968,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\end{enumerate}
 
 	\newpage
-	\section{MQTT- und HTTP-Schnittstelle zur Fernsteuerung der Wallbox (Nur Smart / Pro)}\label{api}
+	\section{Schnittstellen zur Fernsteuerung der Wallbox}\label{interfaces}
+	\subsection{MQTT- und HTTP}\label{http-interface}\label{mqtt-interface}
 	Die Wallbox kann per MQTT oder HTTP ferngesteuert werden. Über diese Schnittstellen ist eine
 	Einbindung in Hausautomatisationssysteme wie openHAB, ioBroker, FHEM o.ä. möglich. Die aktuelle
 	Dokumentation der Schnittstellen befindet sich auf \rurl{https://warp-charger.com/api.html}{warp-charger.com/api.html}
@@ -980,8 +997,11 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Das Webinterface startet dann neu und verbindet sich zum Broker.
 	Auf der Status-Seite wird angezeigt, ob die Verbindung aufgebaut werden konnte.
 
+	\subsection{Modbus TCP}
+	\subsection{OCPP}
+
 	\newpage
-	\section{Lastmanagement zwischen mehreren WARP Chargern (Nur Smart / Pro)}\label{charge_manager}
+	\section{Lastmanagement zwischen mehreren WARP Chargern}\label{charge_manager}
 	Mit dem Lastmanagement ist es möglich, einen verfügbaren Gesamt-Ladestrom zwischen bis zu 10 WARP Chargern aufzuteilen.
 	Hierbei wird eine Wallbox als Lastmanager konfiguriert, die die weiteren bis zu 9 Wallboxen im Verbund steuert und ihnen Ladeströme
 	zuweist. Es kann sowohl ein fester Gesamtstrom verteilt werden, um zum Beispiel den Hausanschluss nicht zu überlasten,
@@ -1079,7 +1099,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Der Ladecontroller einer Wallbox reagiert nicht auf Stromzuweisungen. Eventuell ist auf diesem das Lastmanagement deaktiviert.
 
 	\newpage
-	\section{Ladetracker (Nur Smart / Pro)}
+	\section{Ladetracker}
 	\gfx{./img_warp2/resized/web_charge_tracker}
 	Seit Firmware 2.0.0 zeichnet der WARP Charger alle durchgeführten Ladevorgänge auf. Pro Ladung werden die folgenden Informationen gespeichert:
 	\begin{itemize}
@@ -1113,7 +1133,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Der WARP Charger kann bis zu 7680 Ladevorgänge aufzeichnen.
 
 	\newpage
-	\section{Benutzerverwaltung (Nur Smart / Pro)} \label{user_management}
+	\section{Benutzerverwaltung} \label{user_management}
 	\gfx{./img_warp2/resized/web_users}
 	\vfill
 	\gfx{./img_warp2/resized/web_users_new}
@@ -1121,6 +1141,10 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	Auf der Unterseite \enquote{Benutzerverwaltung} im System-Abschnitt des Webinterfaces können bis zu 16 Benutzer angelegt werden.
 	Einem angelegten Benutzer, dem ein NFC-Tag zugeordnet wurde (siehe Abschnitt \fullref{NFC}) können vom Ladetracker Ladungen zugeordnet werden.
+
+	In der Werkseinstellung sind exemplarisch drei Nutzer bereits angelegt,
+	denen jeweils eine NFC Karte (mitgeliefert) zugeordnet wurde. Diese können
+	umbenannt oder gelöscht werden.
 
 	Ein neuer Nutzer kann mittels Klicken auf \glqq Benutzer hinzufügen\grqq~hinzugefügt werden. 
 	Anschließend öffnet sich ein kleines Fenster in dem der eigentliche Benutzername, der Anzeigename (für die Anzeige im Ladetracker)
@@ -1139,20 +1163,26 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\hint{Wenn du die Zugangsdaten des HTTP-Anmeldung vergisst, kannst du nur über den Wiederherstellungsmodus \ref{recovery} oder nach einem Zurücksetzen auf den Werkszustand \ref{reset} wieder darauf zugreifen.}
 	Die Funktion ist nur aktivierbar, wenn mindestens ein Nutzer mit einem
 	aktiviertem Passwort existiert.
-	
+
+	Standardmäßig können sich Benutzer nicht am Webinterface anmelden. Dies wird
+	im Passwort-Feld des Nutzers angezeigt indem das Verbotsschild aktiviert
+	ist. Wird einem Nutzer ein Passwort vergeben, so ist das Verbotsschild
+	deaktiviert. Der Nutzer kann sich mit seinem Nutzernamen und Passwort im
+	Webinterface anmelden, wenn die Option \glqq
+	Benutzerautorisierung\grqq~aktiviert wurde (siehe Abschnitt zuvor).
 	Um einem Nutzer die Anmeldemöglichkeit wieder zu entziehen und sein Passwort
-	zu löschen ist bei jedem angelegten Nutzer ein Verbotsschild vorhanden. Wird
-	dieses aktiviert ist es dem Nutzer nicht mehr möglich sich anzumelden. Sein
-	Passwort wird dann zusätzlich gelöscht, so dass dieses für eine erneute
-	Anmeldung neu vergeben werden muss.
+	zu löschen muss einfach das Verbottschild aktiviert werden. Das Passwort des
+	Nutzers wird dann gelöscht und die Anmeldung deaktiviert. Der Nutzer kann
+	aber nach wie vor eine Ladung per NFC Tag freigeben, wenn ihm ein Tag
+	zugeordnet wurde. Um den Nutzer wieder eine Anmeldung zu ermöglichen, muss
+	sein Passwort neu gesetzt werden.
 
 	Sollen mehrere Nutzer angelegt werden, so empfehlen wir es diese
-	nacheinander anzulegen. Es muss kein Neustart der Wallbox nach jedem Nutzer
-	durchgeführt werden. Es reicht ein Speichern und Neustart der Wallbox am
-	Ende des Vorgangs.
+	nacheinander anzulegen. Anschließend müssen die Änderungen gespeichert und
+	die Wallbox neugestartet werden, damit die Änderungen übernommen werden.
 
 	\newpage
-	\section{Ladefreigabe per NFC (Nur Smart / Pro)}
+	\section{Ladefreigabe per NFC}
 	\label{NFC}
 	Der WARP2 Charger unterstützt eine Ladefreigabe per NFC (siehe Abschnitt
 	\fullref{user_management}). Wenn diese aktiviert ist,
@@ -1166,17 +1196,18 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	Auf der NFC-Unterseite des Webinterfaces kannst du die berechtigten Tags konfigurieren.
 	Im Werkszustand sind die drei mitgelieferten NFC-Karten angelernt,
-	das Starten und Stoppen einer Ladung ist aber ohne Tag möglich.
+	das Starten und Stoppen einer Ladung ist aber so konfiguriert, dass eine
+	Freigabe ohne Tag möglich ist.
 
 	Durch Klicken auf den \enquote{Tag hinzufügen}-Button kann ein neues Tag angelernt werden.
-	Es werden die zuletzt erkannten, aber noch nicht berechtigten Tags anzeigt,
-	durch Klicken auf eines der Tags kann dieses übernommen werden. Ein Neustart der
-	Wallbox leert diese Liste. Sollen also mehrere Tags nacheinander hinzugefügt
+	Es werden die zuletzt erkannten, aber noch nicht berechtigten Tags in einer
+	Liste anzeigt, durch Klicken auf eines der Tags kann dieses übernommen werden. Ein Neustart der
+	Wallbox leert die Liste. Sollen also mehrere Tags nacheinander hinzugefügt
 	werden empfehlen wir, die Tags nacheinander an die Wallbox zu halten. Die
 	Tags werden anschließend chronologisch in der Liste aufgeführt und können
 	dann einfach nacheinander angelegt und existierenden Benutzern zugeordnet
-	werden. Wurden alle NFC Tags angelernt können die Tags gespeichert und die
-	Wallbox einmal neugestartet werden.
+	werden. Wurden alle NFC Tags angelernt können die Einstellungen gespeichert und die
+	Wallbox neugestartet werden.
 
 
 	Alternativ können
