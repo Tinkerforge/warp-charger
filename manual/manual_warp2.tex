@@ -95,6 +95,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 }
 
 
+\newcommand{\tdesc}[1]{\multicolumn{3}{l}{\footnotesize #1}}
+
 \usepackage{hyphenat}
 
 \hyphenation{Web-inter-face}
@@ -168,7 +170,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	zugreifen. Auf diesem kannst du den aktuellen Ladezustand einsehen und
 	Einstellungen an der Wallbox vornehmen. Du kannst über das Webinterface
 	zum Beispiel das Ladeverhalten und die maximale Ladeleistung konfigurieren.
-	Per MQTT- und HTTP-API kannst du aus der Ferne den aktuellen Zustand
+	Über verschiedene Schnittstellen (siehe \fullref{interfaces}) kannst du aus der Ferne den aktuellen Zustand
 	der Wallbox kontrollieren. Die Einbindung der Wallbox in andere System ist somit möglich.
 
 	Zusätzlich bietet dir der WARP2 Charger Smart die Möglichkeit Ladevorgänge
@@ -181,15 +183,18 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Zusätzlich ist diese Wallbox mit einem MID-geeichten Zähler
 	ausgestattet, der misst, wie viel Energie (\SI{}{\kWh}) geladen
 	wurde. Außerdem bietet der Zähler dir Statistiken mit denen du einen Überblick über deine
-	Stromkosten erhältst. Zukünftig wird es auch möglich sein eine Statistik
-	bezogen auf die jeweiligen NFC-Tags zu erhalten. Damit wird es dann möglich
-	sein eine Ladestatistik pro Nutzer aufzubauen.
+	Stromkosten erhältst. Es ist auch möglich eine Statistik
+	bezogen auf die jeweiligen NFC-Tags zu erhalten. Damit ist es dann möglich
+	eine Ladestatistik pro Nutzer aufzubauen. Diese Statistik kann als .CSV
+	heruntergeladen und somit z.B. in Excel verarbeitet werden.
 
 	Alle Wallboxen werden mit einem fest angeschlossenen
 	\SI{5}{\meter}- oder \SI{7,5}{\meter}-Ladekabel mit Typ-2-Stecker geliefert.
 	In der Standardausführung werden alle WARP2 Charger ohne Anschlusskabel
 	(Zuleitung zur Wallbox) ausgeliefert. In diesem Fall muss bei der Installation
 	ein Anschlusskabel bereitgestellt und in der Wallbox angeschlossen werden.
+	Die Einführung des Anschlusskabels kann dabei entweder von unten oder von
+	der Rückseite der Wallbox erfolgen.
 
 	Als Option können alle Wallboxen mit einem bereits ab Werk
 	installierten Anschlusskabel bestellt werden. Es besteht zusätzlich die
@@ -572,8 +577,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\subsection{Schritt 1: Verbindung zur Wallbox herstellen}
 
 	\paragraph{Option 1: WLAN}
-	Im Werkszustand öffnet die Wallbox einen WLAN-Access-Point, über den
-	die Konfiguration über das Webinterface der Wallbox vorgenommen werden kann. 
+	Im Werkszustand öffnet die Wallbox einen WLAN-Access-Point. Über diesen kann
+	die Konfiguration der Wallbox vorgenommen werden, indem auf das
+	das Webinterface der Wallbox zugegriffen wird. 
 
 	Die Zugangsdaten des Access-Points findest du auf dem WLAN-Zugangsdaten-Aufkleber
 	auf der Rückseite dieser Anleitung. Du kannst entweder den QR-Code des Aufklebers verwenden,
@@ -582,7 +588,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	QR-Codes und das automatische Verbinden zu dem WLAN. Somit musst du die
 	Zugangsdaten dann nicht abtippen. Wichtig ist, dass viele Smartphones
 	erkennen, dass über das WLAN der Wallbox (Access-Point) kein Zugriff auf das
-	Internet möglich ist. Dein Telefon fragt dann nach ob du zu dem WLAN
+	Internet möglich ist. Dein Telefon fragt dann nach, ob du zu dem WLAN
 	verbunden bleiben möchtest. Damit du weiter auf die Wallbox zugreifen
 	kannst, darfst du das WLAN nicht wieder verlassen.
 
@@ -590,7 +596,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		Wenn die Verbindung mit dem Access-Point der Wallbox hergestellt ist, kannst du das Webinterface
 		unter \url{http://10.0.0.1} über einen Browser deiner Wahl erreichen.
 		Alternativ kannst du dazu den nebenstehenden QR-Code scannen.
-		Eventuell musst du deine mobile Datenverbindung deaktivieren.
+		Eventuell musst du deine mobile Datenverbindung (z.B. LTE) deaktivieren.
 	\end{minipage}\hfill
 	\begin{minipage}{0.12\textwidth}
 		\begin{flushright}
@@ -673,8 +679,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Du kannst hier sowohl das automatische Laden (de-)aktivieren, als auch
 	manuell eine Ladung starten oder stoppen.
 
-	Außerdem werden die letzten drei Ladungen, sowie der Status weiterer Features wie
-	des Lastmanagements und der Netzwerk- und MQTT-Verbindungen angezeigt.
+	Außerdem wird der aktuell laufende Ladevorgang, die letzten drei
+	Ladevorgänge, sowie der Status weiterer Features angezeigt.
 	In der Variante Pro mit verbautem Stromzähler wird zusätzlich der Ladeverlauf
 	über die letzten 48 Stunden und die aktuelle Leistungsaufnahme gezeigt.
 
@@ -684,9 +690,12 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Fahrzeug mit der Wallbox verbunden ist und ob dieses geladen wird.
 
 	Die \textbf{Ladesteuerung} ermöglicht es dir, manuell einen Ladevorgang zu
-	starten oder zu stoppen. Wenn du \textbf{Autostart}
-	einschaltest, startet der Ladevorgang automatisch, sobald ein Fahrzeug
-	angeschlossen wird.
+	starten oder zu stoppen. Wenn \textbf{Autostart} deaktiviert ist, wird die
+	Wallbox niemals einen Ladevorgang automatisch starten. In diesem Fall hast du
+	manuell die Kontrolle mittels Start/Stop. Ist Autostart aktiviert, 
+	startet der Ladevorgang automatisch, sobald ein Fahrzeug
+	angeschlossen wird und keine weiteren Freigabemechanismen (z.B. NFC) den
+	direkten Start verhindern.
 
 	Der \textbf{konfigurierte Ladestrom} bietet eine einfache Möglichkeit, den Ladestrom, der
 	einem Fahrzeug erlaubt wird, einzustellen. Minimal können \SI{6}{\ampere} eingestellt werden.
@@ -1029,7 +1038,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Sollen Fremdgeräte den WARP Charger fernsteuern, kann ggf. eine der
 	kompatiblen Registertabellen verwendet werden.
 
-	Die WARP Charger Registertabelle findest du hier TODODODODO
+	Die WARP Charger Registertabelle findest du in Abschnitt \fullref{modbus_tcp_registertabelle}
 	oder auf \rurl{https://warp-charger.com/api.html}{warp-charger.com/api.html}.
 
 	\subsection{OCPP}
@@ -1226,7 +1235,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	zugeordnet wurde. Um den Nutzer wieder eine Anmeldung zu ermöglichen, muss
 	sein Passwort neu gesetzt werden.
 
-	Sollen mehrere Nutzer angelegt werden, so empfehlen wir es diese
+	Sollen mehrere Nutzer angelegt werden, so empfehlen wir diese direkt
 	nacheinander anzulegen. Anschließend müssen die Änderungen gespeichert und
 	die Wallbox neugestartet werden, damit die Änderungen übernommen werden.
 
@@ -1370,7 +1379,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\subsection{Ersatzteile}
 	\begin{tabular}{ll}
-		%\toprule
+		\toprule
 		\textbf{Artikelnummer}                                                                                                      & \textbf{Bauteil}                     \\
 		\cmidrule(lr{0.5em}){1-2}
 		\href{https://www.tinkerforge.com/de/shop/warp/contactor-4-pole-din-rail-63a.html}{WARP-CON-4P-63A}                         & Schaltschütz 4 Pol,                  \\
@@ -1437,7 +1446,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\cmidrule(lr{0.5em}){1-2}
 		\href{https://www.tinkerforge.com/de/shop/accessories/cable/bricklet-cable-6cm-7p-7p.html}{6149}                            & Bricklet-Kabel                       \\
 		                                                                                                                            & \SI{6}{\centi\meter} (7p-7p)         \\
-		%\bottomrule
+		\bottomrule
 	\end{tabular}
 
 	\subsection{Sicherungswechsel}
@@ -1455,6 +1464,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\begin{minipage}{0.045\textwidth}
 		\includegraphics[width=\linewidth]{./img_warp2/resized/weee.pdf}
 	\end{minipage}
+\end{multicols*}
 
 	\section{Technische Daten}
 
@@ -1488,6 +1498,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 			\item[Lastmanagement] max. 10 Teilnehmer~\footref{fn:1}
 			\item[NFC-Tags] 3 im Lieferumfang\\max. 16 anlernbar~\footref{fn:1}
 			\item[Benutzer] max. 16 konfigurierbar~\footref{fn:1}
+			\item[Schnittstellen] HTTP, MQTT, Modbus/TCP, OCPP~\footref{fn:1}
 		\end{description}
 	\end{minipage}
 	\newpage
@@ -1499,6 +1510,121 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\item[Telefon] \phonenumber{052078998614}
 		\item[Shop] \href{https://tinkerforge.com/de/shop/warp.html}{\texttt{tinkerforge.com/de/shop/warp.html}}
 	\end{description}
+
+
+\section{Modbus/TCP Registertabelle}
+\label{modbus_tcp_registertabelle}
+Nachfolgend die Registertabelle für Modbus/TCP für die Einstellung \textbf{WARP
+Charger}.
+
+Input Registers können nur gelesen werden und liefern Informationen über den
+Zustand der Wallbox. Gewisse Register sind nur verfügbar, wenn das dazu
+angegebene \textbf{Feature} verfügbar ist. So sind zum Beispiel die
+Informationen zur Ladeleistung, Energie usw. nur verfügbar, wenn die Wallbox
+über ein \textbf{meter} verfügt. Das heißt ein WARP2 Charger Pro (Version mit
+Stromzähler) liefert diese Werte. Ein WARP2 Charger Smart (Version ohne
+Stromzähler) nicht.
+
+Welche Features die Wallbox bietet kann über \textbf{Discrete Inputs} ausgelesen
+werden. Eine Steuerung der Wallbox ist über die \textbf{Holding Registers}
+möglich.
+
+\subsection{Input Registers}
+\begin{tabularx}{\textwidth}{rXll} \toprule
+    \textbf{Register-} & \textbf{Name}& \textbf{Typ} & \textbf{Benötigtes}                                                      \\
+    \textbf{adresse}   &              &              & \textbf{Feature}                                                         \\ \midrule
+0             & Version der Registertabelle             & uint32       & ---                                     \\
+              & \tdesc{Aktuelle Version: 1}                                                                                     \\ \cmidrule{2-4}
+2             & Firmware-Version                       & uint32 (x4)       & ---                                                    \\
+              & \tdesc{Major, Minor, Patch, Zeitstempel jeweils uint32. Beispielsweise 2, 0, 8, 0x63218f23 für}                 \\
+              & \tdesc{Firmware 2.0.8-63218f23. 0x63218f23 ist der Unix-Zeitstempel des 14. September 2022 08:21:55 UTC.}       \\ \cmidrule{2-4}
+10            & Charger-ID                              & uint32       & ---                                                    \\
+              & \tdesc{Dekodierte Form der Base58-UID, die für Standard-Hostnamen, -SSID usw. genutzt wird.}                    \\
+              & \tdesc{Zum Beispiel 185460 für X8A}                                                                             \\ \cmidrule{2-4}
+12            & Uptime (s)                              & uint32       & ---                                                    \\
+              & \tdesc{Zeit in Sekunden seit dem Start der Wallbox-Firmware.}                                                   \\ \cmidrule{2-4}
+1000          & IEC-61851-Zustand                       & uint32       & evse                                                   \\
+              & \tdesc{0-A, 1-B, 2-C, 3-D, 4-E/F}                                                                               \\ \cmidrule{2-4}
+1002          & Fahrzeugstatus                          & uint32       & evse                                                   \\
+              & \tdesc{0-Nicht verbunden, 1-Warte auf Freigabe, 2-Ladebereit, 3-Lädt, 4-Fehler}                                 \\ \cmidrule{2-4}
+1004          & User-ID                                 & uint32       & evse                                                   \\
+              & \tdesc{ID des Benutzers der den Ladevorgang gestartet hat. 0 falls eine Freigabe}                               \\
+              & \tdesc{ohne Nutzerzuordnung erfolgt ist. 0xFFFFFFFF falls gerade kein Ladevorgang läuft.}                       \\ \cmidrule{2-4}
+1006          & Start-Zeitstempel (min)                 & uint32       & evse                                                   \\
+              & \tdesc{Ein Unix-Timestamp in Minuten, der den Startzeitpunkt des Ladevorgangs angibt.}                          \\
+              & \tdesc{0 falls zum Startzeitpunkt keine Zeitsynchronisierung verfügbar war.}                                    \\ \cmidrule{2-4}
+1008          & Ladedauer (s)                           & uint32       & evse                                                   \\
+              & \tdesc{Dauer des laufenden Ladevorgangs in Sekunden. Auch ohne Zeitsynchronisierung verfügbar}                  \\ \cmidrule{2-4}
+1010          & Erlaubter Ladestrom                     & uint32       & evse                                                   \\
+              & \tdesc{Maximal erlaubter Ladestrom, der dem Fahrzeug zur Verfügung gestellt wird.}                              \\
+              & \tdesc{Dieser Strom ist das Minimum der Stromgrenzen aller Ladeslots.}                                          \\ \cmidrule{2-4}
+1012          & Ladestromgrenzen (mA)                   & uint32 (x20) & evse                                                   \\
+              & \tdesc{Aktueller Wert der Ladestromgrenzen in Milliampere. 0xFFFFFFFF falls eine Stromgrenze nicht aktiv ist.}  \\
+              & \tdesc{0 falls eine Stromgrenze blockiert. Sonst zwischen 6000 (6A) und 32000 (32A).}                           \\ \cmidrule{2-4}
+2000          & Stromzählertyp                          & uint32       & meter                                                  \\
+              & \tdesc{0-Kein Stromzähler verfügbar, 1-SDM72 (nur WARP1), 2-SDM630, 3-SDM72 V2}                                 \\ \cmidrule{2-4}
+2002          & Ladeleistung (W)                        & float        & meter                                                  \\
+              & \tdesc{Die aktuelle Ladeleistung in Watt}                                                                       \\ \cmidrule{2-4}
+2004          & absolute Energie (kWh)                  & float        & meter                                                  \\
+              & \tdesc{Die geladene Energie seit der Herstellung des Stromzählers.}                                             \\ \cmidrule{2-4}
+2006          & relative Energie (kWh)                  & float        & meter                                                  \\
+              & \tdesc{Die geladene Energie seit dem letzten Reset. (siehe Holding Register 2000)}                              \\ \cmidrule{2-4}
+2008          & Energie des Ladevorgangs                & float        & meter                                                  \\
+              & \tdesc{Die während des laufenden Ladevorgangs geladene Energie}                                                 \\ \cmidrule{2-4}
+2100          & weitere Stromzähler-Werte               & float (x85)  & all\_values                                            \\
+              & \tdesc{Siehe API-Dokumentation}                                                                                 \\ \cmidrule{2-4}
+3000          & CP-Unterbrechung                        & uint32       & cp\_disc                                               \\
+              & \tdesc{Noch nicht implementiert!}                                                                               \\ \bottomrule
+\end{tabularx}
+
+\subsection{Holding Registers}
+\begin{tabularx}{\textwidth}{rXll} \toprule
+    \textbf{Register-} & \textbf{Name} & \textbf{Typ} & \textbf{Benötigtes}                                                     \\
+    \textbf{adresse}   &      &     & \textbf{Feature}                                                                          \\ \midrule
+0             & Reboot                                  & uint32       & ---                                                    \\
+              & \tdesc{Startet die Wallbox (bzw. den ESP-Brick) neu, um beispielsweise Konfigurationsänderungen anzuwenden.}    \\
+              & \tdesc{Password 0x012EB007}                                                                                     \\ \cmidrule{2-4}
+1000          & Ladefreigabe                            & uint32       & evse                                                   \\
+              & \tdesc{0 zum Blockieren des Ladevorgangs; ein Wert != 0 zum Freigeben}                                          \\ \cmidrule{2-4}
+1002          & Erlaubter Ladestrom (mA)                & uint32       & evse                                                   \\
+              & \tdesc{0mA oder 6000mA bis 32000 mA. Andere Ladestromgrenzen können den Strom weiter verringern!}               \\ \cmidrule{2-4}
+2000          & Relative Energie zurücksetzen           & uint32       & meter                                                  \\
+              & \tdesc{Setzt den relativen Energiewert zurück (Input Register 2006). Password 0x3E12E5E7}                       \\ \cmidrule{2-4}
+3000          & CP-Trennung auslösen                    & uint32       & cp\_disc                                               \\
+              & \tdesc{Noch nicht implementiert!}                                                                               \\ \bottomrule
+\end{tabularx}
+
+\subsection{Discrete Inputs}
+\begin{tabularx}{\textwidth}{rXll} \toprule
+    \textbf{Register-} & \textbf{Name} & \textbf{Typ} & \textbf{Benötigtes}                                                     \\
+    \textbf{adresse}   &      &     & \textbf{Feature}                                                                          \\ \midrule
+0             & Feature \enquote{evse} verfügbar        & bool         & ---                                                    \\
+              & \tdesc{Ein Ladecontroller steht zur Verfügung. Dieses Feature sollte bei allen WARP Chargern,}                  \\
+              & \tdesc{deren Hardware funktionsfähig ist, vorhanden sein.}                                                      \\ \cmidrule{2-4}
+1             & Feature \enquote{meter} verfügbar       & bool         & ---                                                    \\
+              & \tdesc{Ein Stromzähler und Hardware zum Auslesen desselben über RS485 ist verfügbar. Dieses Feature wird }      \\
+              & \tdesc{erst gesetzt, wenn ein Stromzähler mindestens einmal erfolgreich über Modbus ausgelesen wurde.}          \\ \cmidrule{2-4}
+2             & Feature \enquote{phases} verfügbar      & bool         & ---                                                    \\
+              & \tdesc{Der verbaute Stromzähler kann Energie und weitere Messwerte einzelner Phasen messen.}                    \\ \cmidrule{2-4}
+3             & Feature \enquote{all\_values} verfügbar & bool         & ---                                                    \\
+              & \tdesc{Der verbaute Stromzähler kann weitere Messwerte auslesen.}                                               \\ \cmidrule{2-4}
+4             & Feature \enquote{cp\_disc} verfügbar    & bool         & ---                                                    \\
+              & \tdesc{Noch nicht implementiert!}                                                                               \\ \cmidrule{2-4}
+2100          & Phase L1 angeschlossen                  & bool         & phases                                                 \\
+              & \tdesc{}                                                                                                        \\ \cmidrule{2-4}
+2101          & Phase L2 angeschlossen                  & bool         & phases                                                 \\
+              & \tdesc{}                                                                                                        \\ \cmidrule{2-4}
+2102          & Phase L3 angeschlossen                  & bool         & phases                                                 \\
+              & \tdesc{}                                                                                                        \\ \cmidrule{2-4}
+2103          & Phase L1 aktiv                          & bool         & phases                                                 \\
+              & \tdesc{}                                                                                                        \\ \cmidrule{2-4}
+2104          & Phase L2 aktiv                          & bool         & phases                                                 \\
+              & \tdesc{}                                                                                                        \\ \cmidrule{2-4}
+2105          & Phase L3 aktiv                          & bool         & phases                                                 \\
+              & \tdesc{}                                                                                                        \\ \bottomrule
+   \end{tabularx}
+	\begin{multicols*}{2}
+
 
 
 	\section{Dokumentversionen}
