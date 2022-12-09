@@ -931,7 +931,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	die Wallbox auf den Werkszustand zurücksetzen (Factory Reset), Debug-Reports
 	herunterladen und die HTTP-API verwenden (siehe \fullref{http-interface})
 
-	Alternativ kannst du die Wallbox (genauer: den verbauten ESP32 Ethernet Brick) neu flashen.
+	Alternativ kannst du die Wallbox (genauer: den verbauten ESP32 Ethernet
+	Brick) neu flashen.
 	Du benötigst dazu einen PC mit installiertem Brick Viewer 2.4.20 oder neuer. Diesen findest du unter
 	\rurl{https://www.tinkerforge.com/de/doc/Software/Brickv.html}{tinkerforge.com/de/doc/Software/Brickv.html}.
 	Außerdem benötigst du ein USB-C-Kabel um den Brick an deinen PC anzuschließen. Brick Daemon wird nicht benötigt.
@@ -969,13 +970,19 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\newpage
 	\section{Schnittstellen zur Fernsteuerung der Wallbox}\label{interfaces}
-	\subsection{MQTT- und HTTP}\label{http-interface}\label{mqtt-interface}
-	Die Wallbox kann per MQTT oder HTTP ferngesteuert werden. Über diese Schnittstellen ist eine
-	Einbindung in Hausautomatisationssysteme wie openHAB, ioBroker, FHEM o.ä. möglich. Die aktuelle
-	Dokumentation der Schnittstellen befindet sich auf \rurl{https://warp-charger.com/api.html}{warp-charger.com/api.html}
+	Die Wallbox kann per HTTP, MQTT, Modbus/TCP und OCPP ferngesteuert werden. Über diese Schnittstellen ist eine
+	Einbindung in Hausautomatisationssysteme wie openHAB, ioBroker, FHEM o.ä.
+	möglich. Auch eine Verwendung mit Lastmanagern oder Energiemanagern von Fremdanbietern
+	ist darüber ebenfalls möglich.
 
-	Falls du die Zugangsdaten für das Webinterface gesetzt und die Anmeldung aktiviert hast, musst du
+	\subsection{HTTP}\label{http-interface}
+	Eine Möglichkeit die Wallbox fernzusteuern ist HTTP. Dazu ist keine
+	spezielle Konfiguration notwendig. Falls du die Zugangsdaten für das Webinterface gesetzt und die Anmeldung aktiviert hast, musst du
 	für die HTTP-API die selben Zugangsdaten verwenden.
+	Weitere Informationen über die HTTP-API der Wallbox befinden sich auf \rurl{https://warp-charger.com/api.html}{warp-charger.com/api.html}
+
+
+	\subsection{MQTT}\label{mqtt-interface}
 
 	\gfx{./img_warp2/resized/web_mqtt}
 	Auf der MQTT-Unterseite kannst du die Verbindung zu einem MQTT-Broker konfigurieren. Folgende Einstellungen können vorgenommen werden:
@@ -997,8 +1004,50 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Das Webinterface startet dann neu und verbindet sich zum Broker.
 	Auf der Status-Seite wird angezeigt, ob die Verbindung aufgebaut werden konnte.
 
-	\subsection{Modbus TCP}
+	Weitere Informationen über die MQTT-API der Wallbox findest du auf \rurl{https://warp-charger.com/api.html}{warp-charger.com/api.html}
+
+	\subsection{Modbus/TCP}
+
+	Todo Screenshot
+
+	Mittels Modbus/TCP kann auf Funktionen der Wallbox zugegriffen werden.
+	Als erstes muss mittels \textbf{Modbus/TCP-Modus} die Funktion aktiviert
+	werden. Dazu kann entweder ein reiner Lesezugriff, d.h. ohne eine
+	Steuerungsmöglickeit von außen oder ein vollständiger Lese-/Schreibzugriff
+	konfiguriert werden. Der \textbf{Port} über dem die Funktion bereit gestellt
+	wird, kann ebenfalls konfiguriert werden. Abschließend muss eine
+	Registertabelle gewählt werden. Diese definiert, welche Funktionen unter
+	welchen Registern bereit gestellt werden. Leider gibt es hier keinen
+	allgemein nutzbaren Standard. Daher werden drei Möglichkeiten geboten:
+
+	\begin{itemize}
+		\item \textbf{WARP Charger} Diese Registertabelle bietet einen nahezu vollständigen Zugriff auf die Wallbox.
+		\item \textbf{Kompatibilität zu Bender CC613} Kompatible Registertabelle zum Bender CC613 Laderegler.
+		\item \textbf{Kompatibilität zu Keba C Series} Kompatible Registertabelle zu Wallboxen der C Serie von Firma Keba.
+	\end{itemize}
+
+	Sollen Fremdgeräte den WARP Charger fernsteuern, kann ggf. eine der
+	kompatiblen Registertabellen verwendet werden.
+
+	Die WARP Charger Registertabelle findest du hier TODODODODO
+	oder auf \rurl{https://warp-charger.com/api.html}{warp-charger.com/api.html}.
+
 	\subsection{OCPP}
+
+	TODO Screenshot
+
+	OCPP (Open Charge Point Protocol) ist ein standardisiertes Kommunikationsprotokoll zwischen
+	Ladestationen und einem zentralen Managementsystem. Der WARP Charger
+	unterstützt OCPPJ 1.6 Core Profile und Smart Charging Profile.
+
+	\hint{08.12.2022: OCPP befindet sich zur Zeit in der Entwicklung und ist als
+	Beta-Firmware verfügbar wird aber zeitnah Einzug in die offizielle Firmware
+	halten. Bitte prüfe ob eine neue Firmware und eine neue Version dieser
+	Betriebsanleitung verfügbar ist (siehe \fullref{firmware-update}).}
+
+	Um OCPP zu nutzen muss auf der Konfigurationsseite nur OCPP aktiviert und die
+	Endpoint-URL des Managementsystems eingetragen werden. 
+
 
 	\newpage
 	\section{Lastmanagement zwischen mehreren WARP Chargern}\label{charge_manager}
