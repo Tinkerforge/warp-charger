@@ -785,35 +785,29 @@ client<span style='color:#808030; '>.</span>loop_forever<span style='color:#8080
             </div>
 
             <div class="col-lg-12 col-xl-4">
-                <pre class="code-example" style='color:#000000;background:#ffffff;'><span style='color:#696969; '># Abfrage über Modbus/TCP (Auszug)</span>
-                  <table class="table table-bordered table-sm">
+                <pre class="code-example" style='color:#000000;background:#ffffff;'><span style='color:#696969; '># Abfrage/Steuerung über Modbus/TCP (Auszug)</span><table class="table table-bordered table-sm">
                     <thead><tr><th colspan="5">Input Registers</th></tr></thead>
                     <tbody>
                       <tr><td>1002</td><td>Fahrzeugstatus</td></tr>
                       <tr><td>1004</td><td>User-ID</td></tr>
                       <tr><td>1008</td><td>Ladedauer (s)</td></tr>
-                      <tr><td>1010</td><td>Erlaubter Ladestrom</td></tr>
+                      <tr><td>1010</td><td>Ladestrom (mA)</td></tr>
                       <tr><td>2002</td><td>Ladeleistung (W)</td></tr>
-                      <tr><td>2004</td><td>absolute Energie (kWh)</td></tr>
-                      <tr><td>2006</td><td>relative Energie (kWh)</td></tr>
-                      <tr><td>2008</td><td>Energie des Ladevorgangs</td></tr>
+                      <tr><td>2008</td><td>geladene Energie (kWh)</td></tr>
                       <tr><td>...</td></tr>
                     </tbody>
                     <thead><tr><th colspan="5">Holding Registers</th></tr></thead>
                     <tbody>
+                      <tr><td>1000</td><td>Ladefreigabe</td></tr>
+                      <tr><td>1002</td><td>Erlaubter Ladestrom (mA)</td></tr>
                       <tr><td>...</td></tr>
                     </tbody>
                     <thead><tr><th colspan="5">Discrete Inputs</th></tr></thead>
                     <tbody>
                       <tr><td>...</td></tr>
                     </tbody>
-                  </table>
-                </pre>
+                  </table></pre>
             </div>
-
-            <!-- <div class="col-lg-12 col-xl-4">
-                <b>TODO:Hier ein Node-RED-Beispiel-Flow?</b>
-            </div>-->
         </div>
       </div>
     </section>
