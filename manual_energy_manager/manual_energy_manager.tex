@@ -1,0 +1,538 @@
+\documentclass[a4paper,10pt]{article}
+\ifdefined\forprint
+    \usepackage[width=21.6cm,height=30.3cm,center]{crop}
+\fi
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2cm,headheight=26pt,includeheadfoot]{geometry}
+
+\usepackage[german]{babel}
+\usepackage[german=quotes]{csquotes}
+
+\usepackage{nameref}
+\usepackage{microtype}
+\usepackage{float}
+\usepackage{siunitx}
+\sisetup{
+    locale = DE,
+    binary-units,
+    detect-all,
+    per-mode = symbol %enables m/s instead of ms^-1
+}
+\AtBeginDocument{\DeclareSIUnit{\kWh}{kWh}}
+
+\usepackage{caption} %for \caption*
+\usepackage{hhline}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{calc}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{textcomp}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setlength{\headheight}{48pt}
+\renewcommand{\headrulewidth}{0pt}
+
+\usepackage{xcolor,colortbl}
+\usepackage{makecell}
+
+\usepackage[symbol*]{footmisc}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\renewcommand{\thempfootnote}{\fnsymbol{mpfootnote}}
+
+\usepackage{color}
+\usepackage{enumitem}
+
+\usepackage{pdfpages}
+
+\usepackage{phonenumbers}
+
+% Word-Stealth-Modus, kann aber kein Omega
+%\usepackage[scaled]{helvet}
+
+\usepackage[inline,nomargin]{fixme}
+\fxsetup{
+    author=,
+    layout=inline,
+    theme=color
+}
+
+\definecolor{fxnote}{rgb}{0.8000,0.0000,0.0000}
+\colorlet{fxnotebg}{yellow}
+
+\definecolor{boxgray}{rgb}{0.33,0.33,0.33}
+\usepackage{tcolorbox}
+\title{}
+\author{}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\newcommand{\hint}[1]{\begin{tcolorbox}[colback=boxgray,colframe=black,coltext=
+white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tcolorbox}}
+
+\newcommand{\gfx}[1]{\includegraphics[width=\linewidth]{#1}}
+
+\newcommand*{\fullref}[1]{\hyperref[{#1}]{\ref*{#1}~\nameref*{#1}}}
+
+\fancyhf{}
+\fancyhead{\colorbox{boxgray}{
+    \makebox[\dimexpr\linewidth-2\fboxsep][l]{
+        \includegraphics[height=1cm]{./img/resized/logo}\hfill\color{white}\Huge\raisebox{.5ex}{\thepage}
+        }
+    }
+}
+
+\usepackage{hyperref}
+\usepackage{qrcode}
+
+\appto\UrlNoBreaks{\do\.\do\:\do\/\do\_}
+
+\newcommand\rurl[2]{%
+  \href{#1}{\nolinkurl{#2}}%
+}
+
+
+\newcommand{\tdesc}[1]{\multicolumn{3}{l}{\footnotesize #1}}
+
+\usepackage{hyphenat}
+
+\hyphenation{Web-inter-face}
+
+\begin{document}
+\pagestyle{empty}
+\begin{titlepage}
+	\vspace*{-3.08cm}
+	\colorbox{boxgray}{\makebox[\dimexpr\linewidth-2\fboxsep][c]{\includegraphics[width=0.6\textwidth]{./img/resized/logo}}}
+	\vfill
+	\begin{center}
+		\Huge
+		WARP Energy Manager Betriebsanleitung\\\vspace{1cm}
+		\large
+		Version 1.0.0\\\vspace{0.25cm}
+		24.01.2023
+	\end{center}
+	\vfill \gfx{./img/resized/warp-energy-manager.png}
+\end{titlepage}
+\newpage
+\null
+\newpage
+\pagestyle{fancy}
+\begin{multicols*}{2}
+	\tableofcontents
+	\newpage
+	\section{Einführung}
+	\subsection{Vorwort} Vielen Dank, dass du
+	dich für einen WARP Energy Manager von Tinkerforge entschieden hast!
+
+	\enquote{WARP} steht
+	für \textbf{W}all \textbf{A}ttached
+	\textbf{R}echarge \textbf{P}oint. Mit dem WARP Energy Manager
+	erhältst du unseren Energiemanager zur Schaltschrankmontage, mit dem du die
+	Energieverbrauch zu Hause überwachen und steuern kannst. 
+
+	In Verbindung mit unseren WARP Charger Wallboxen kannst du das Laden von
+	Elektrofahrzeugen abhängig von deinem Strombezug oder -Einspeisung steuern.
+
+	\subsection{Funktionsweise}
+	\vspace{-0.1cm}
+	Der WARP Energy Manager misst über einen dreiphasigen bidirektionalen 
+	Stromzähler laufend die Leistung am Stromnetzanschluss (Hausanschluss).
+	Es werden verschiedene Zählertypen und Anschlussarten unterstützt.
+
+	\subsubsection{Energiemonitoring}
+	Die Messwerte vom Stromzähler stellt dir der WARP Energy Manager in seinem
+	Webinterface dar. Er zeigt dir an, wie groß die Leistung ist, die aus dem Stromnetz
+	bezogen wird. Besitzt du eine Photovoltaik-Anlage kann es sein, dass du
+	keine Leistung aus dem Netz beziehst, sondern Leistung einspeist. 
+	Wie groß diese ist wird dir dann natürlich ebenfalls dargestellt. Die Werte
+	werden dir Live auf dem Webinterface dargestellt.
+
+	Im fünf Minutentakt werden die Messwerte lokal auf dem 
+	Energiemanager gespeichert. Damit bist du unabhängig von irgendwelchen
+	Datenaufzeichnungen auf Cloud-Servern.
+
+	Für jeden Tag kannst du dir den Verlauf deines Strombezugs oder die
+	Einspeisung in einem Graphen anzeigen lassen.
+
+	Zusätzlich werden auf Tagesebene dein Energiebezug und -einspeisung
+	aufgezeichnet. Damit kannst du deinen Energieverbrauch auf Tages, Monats und
+	Jahresebene analysieren.
+
+	\subsubsection{Steuerung von Wallboxen}
+	Verfügst du über mindestens eine WARP Charger Wallbox, so kann der WARP Energy Manager
+	diese verbrauchsabhängig steuern. Bis zu XXX Wallboxen vom Typ WARP Charger Smart, WARP Charger
+	Pro, WARP2 Charger Smart und WARP2 Charger Pro werden unterstützt. Die
+	Steuerung erfolgt über ein gemeinsames Netzwerk (LAN, WLAN) in dem die
+	Wallboxen und der WARP Energy Manager sich befinden.
+
+	\hint{WARP Charger Pro (1. Generation) Wallboxen unterstützen leider nicht die
+	Phasenumschaltung, da der verbaute Stromzähler keinen einphasigen Betrieb
+	unterstützt.}
+
+	Du kannst verschiedene Einstellungen vornehmen, mit denen du einstellen
+	kannst unter welchen Bedingungen ein Fahrzeug geladen wird.
+
+	\subsubsection{Phasenumschaltung}
+	Mittels eines externen Schützes kann der WARP Energy Manager daran
+	angeschlossene Wallboxen zwischen einem 1- und 3-phasigem Betrieb
+	umschalten. 
+	Dies hat den Vorteil, dass die minimale Ladeleistung von ca.
+	\SI{4.1}{\kilo\watt}~bei einem dreiphasigem Betrieb (minimaler Ladestrom
+	\SI{6}{\ampere}~auf ca. \SI{1.4}{\kilo\watt}~reduziert werden kann. Somit
+	kann auch ein geringer Leistungsüberschuss in ein Fahrzeug geladen werden,
+	anstatt dass dieser entweder ins Netz eingespeist wird, oder aber
+	zusätzlicher Strom aus dem Netz bezogen werden muss.
+
+	\subsubsection{Eingänge für potentialfreie Kontakte}
+	Der WARP Energy Manager verfügt über zwei Eingänge für potentialfreie
+	Schaltkontakte. Wird die Phasenumschaltung genutzt, so wird einer dieser
+	Eingänge fest zur Schützüberwachung genutzt. Ansonsten kann das Verhalten
+	des Energiemanagers auf die Eingänge konfiguriert werden. Es kann zum
+	Beispiel darüber eine generelle Ladefreigabe realisiert werden, oder der
+	Ladestrom der Wallboxen reduziert werden.
+
+	\subsubsection{Potentialfreier Relaisausgang}
+	Ein Relaisschaltausgang (potentialfrei) auf dem WARP Energy Manager kann
+	genutzt werden um externe Verbraucher o.ä. zu schalten. Der Ausgang kann
+	konfiguriert werden und zum Beispiel abhängig von der verfügbaren Leistung,
+	des momentanen Netzbezuges oder einer erfolgten Phasenumschaltung geschaltet
+	werden.
+
+	\section{Typische Anwendungen}
+
+	\subsubsection{PV-Überschussladen}
+	Besitzt du eine Photovoltaik-Anlage, so möchtest du vermutlich einen
+	möglichst hohen Anteil deines produzierten Stroms selbst nutzen. Abhängig
+	von deiner Konfiguration des WARP Energy Managers kannst du ein reines
+	PV-Überschussladen realisieren, bei dem nur überschüssige Energie ins
+	Fahrzeug geladen wird. Du kannst aber auch einen anteiligen Netzbezug
+	definieren um eine garantierte Ladung zu erzielen.
+
+	\subsubsection{Dynamisches Lastmanagement}
+	Bei manchen Immobilien ist es notwendig ein dynamisches Lastmanagement zu
+	realisieren. Als Beispiel kommt es bei Mietobjekten oftmals vor, dass der
+	Stromnetzanschluss der Immobilie es nicht zulässt, dass mehrere Wallboxen
+	zu jeder Zeit parallel betrieben werden können. Die Absicherung des
+	Stromnetzanschlusses lässt nur einen bestimmten Phasenstrom zu.
+	
+	In diesem Fall kann der WARP Energy Manager genutzt werden um
+	die überschüssige Leistung, die noch aus dem Netz bezogen werden darf zu
+	nutzen, ohne das die Sicherungen des Stromnetzanschlusses auslösen. Da der
+	Strombezug der Immobilie sich laufend ändert (eingeschaltete Elektrogeräte
+	etc.) ändert sich die überschüssige Leistung dauernd. Die Ladeleistung
+	angeschlossener Wallboxen werden daher permanent vom Energiemanager
+	geregelt.
+
+	\newpage
+	\section{Sicherheitshinweise}
+	Der WARP Energy Manager ist so konstruiert, dass ein sicherer Betrieb gewährleistet ist,
+	wenn er korrekt installiert wurde, in einem einwandfreien technischen Zustand
+	ist und diese Betriebsanleitung befolgt wird. \hint{Der WARP Energy Manager darf nur von einer ausgewiesenen Elektrofachkraft installiert
+		werden.}
+
+	\subsection{Bestimmungsgemäße Verwendung}
+	Mit dem WARP Energy Manager kann in Verbindung mit einem externen
+	Stromzähler ein Energie-Monitoring realisiert werden. In Verbindung mit WARP
+	Charger Wallboxen kann somit eine leistungsbezogene Ladevorgangsteuerung von
+	Elektrofahrzeugen realisiert werden. Für andere Anwendungen ist der
+	Energiemanagernicht geeignet. Eine Verwendung
+	an Orten, an denen explosionsfähige oder brennbare Substanzen lagern, ist nicht
+	zulässig. Jegliche Modifikation des Managers und ein unsachgemäßer Betrieb ist verboten. 
+	Der Energy Manager ist in einem geeigneten Verteilerschrank zu installieren
+	und vor Beschädigungen, Feuchtigkeit/Verschmutzungen und unsachgemäßigem
+	Zugriff zu 	schützen. Er darf nicht genutzt werden, wenn kein sicherer Betrieb
+	gewährleistet werden kann.
+
+	\subsection{Gerätestörung / Technischer Defekt}
+	Sollte es Anzeichen für einen technischen Defekt geben, ist sofort die
+	Stromversorgung des Energiemanagers durch Abschalten seiner Sicherung im Verteilerkasten zu trennen.
+	Die Sicherung ist mit dem Hinweis, dass sie nicht wieder eingeschaltet weden darf, zu markieren.
+	Danach ist eine Elektrofachkraft zu informieren.
+
+	\newpage
+	\section{Montage und Installation}
+	\subsection{Montage}
+	\subsubsection{Lieferumfang}
+	Im Lieferumfang des WARP Energy Managers befinden sich:
+	\begin{itemize}
+		\item WARP Energy Manager (Hutschienenmodul)
+		\item gesteckte Schraubklemmen
+		\begin{itemize}
+			\item 2 pol 5mm Schraubklemme zur 230V Stromversorgung (L+N)
+			\item 2 pol 5mm Schraubklemme zum Schütz-Anschluss
+			\item 4 pol 3.5mm Schraubklemme für die Eingänge
+			\item 2 pol 3.5mm Schraubklemme für Relaisausgang
+			\item 4 pol 3.5mm Schraubklemme für RS485 Modbus-RTU
+		\end{itemize}
+		\item DIN A4 Umschlag mit:
+		\begin{itemize}
+			\item Dieser Betriebsanleitung
+		\end{itemize}
+	\end{itemize}
+
+	\subsubsection{Montageort}
+	Der WARP Energy Manager darf nur in einem geeigneten Verteilerschrank
+	installiert werden und ist vor Witterungseinflüssen zu schützen. Es sollte
+	eine LAN-Verbindung zum WARP Energy Manager gelegt werden, da in vielen
+	Fällen eine Anbindung des WARP Energy Managers mittels WLAN nicht stabil
+	möglich ist (Metallabschirmung).
+
+	\subsubsection{Montage}\label{wandmontage}
+	Zur Montage der Wallbox muss der Deckel entfernt werden. Dazu müssen die
+	vier Kreuzschlitzschrauben gelöst werden.
+
+	Nach Lösen der Schrauben des Deckels kann dieser von der Wallbox herunter genommen
+	werden.
+
+	\newpage
+	\subsection{Elektrischer Anschluss}
+	\hint{Die in diesem Kapitel beschriebenen Arbeiten dürfen nur von einer ausgewiesenen
+		Elektrofachkraft durchgeführt werden.}
+
+	Nachdem die Wallbox montiert wurde, kann sie nun angeschlossen werden. Dazu
+	muss der Deckel (siehe \fullref{wandmontage}) entfernt werden.
+
+	\subsection{Sicherungswechsel}
+	Die Wallbox ist intern über zwei 5$\times\SI{20}{\milli\meter}$ Feinsicherungen (mittelträge (m), \SI{500}{\milli\ampere}) abgesichert.
+	Tinkerforge verbaut Sicherungen vom Typ \enquote{ESKA 521.014}.
+
+	\section{Konformitätserklärung}
+	Die EU-Konformitätserklärung zur Wallbox ist in einem gesonderten Dokument verfügbar.
+
+	\section{Entsorgung}
+	\begin{minipage}{0.43\textwidth}
+		Wallbox und Verpackung sind bei Gebrauchsende ordnungsgemäß zu
+		entsorgen. Altgeräte dürfen nicht über den Hausmüll entsorgt werden.
+	\end{minipage}\hfill
+	\begin{minipage}{0.045\textwidth}
+		\includegraphics[width=\linewidth]{./img/resized/weee.pdf}
+	\end{minipage}
+
+	\section{Technische Daten}
+
+	%use minipage here to control footnote placement
+	\begin{minipage}{\linewidth}
+
+		\begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{Fehlerstromerkennung}}]
+			\setlength{\itemsep}{3pt}
+			\item[Ladestandard] DIN EN 61851‐1
+			\item[Ladeleistung] einstellbar
+			      bis \SI{11}{\kilo\watt} / \SI{22}{\kilo\watt}~\footnote[7]{\label{fn:1} je nach Variante}
+			\item[Fahrzeugladestecker] Typ 2
+			\item[Abmessungen] 280 × 215 × \SI{95}{\milli\meter} (B/H/T)
+			\item[Nennspannung] \SI{230}{\volt} / \SI{400}{\volt} / 1/3
+			      AC$\sim$~\footref{fn:1}
+			\item[Nennfrequenz] \SI{50}{\hertz}
+			\item[Nennstrom] \SI{16}{\ampere} / \SI{32}{\ampere}
+			      \footref{fn:1}
+			\item[Standby, WLAN an] Basic/Smart $\leq\SI{3}{\watt}$; Pro $\leq\SI{5}{\watt}$
+			\item[Ladekabellänge] \SI{5}{\meter} / \SI{7,5}{\meter}~\footref{fn:1}
+			\item[Zuleitungsquerschnitt] \SI{2,5}{\square\milli\meter} bis
+			      \SI{10}{\square\milli\meter}
+			\item[Zugangsverriegelung]
+			      NFC~\footref{fn:1}\\Webinterface~\footref{fn:1}
+			\item[Betriebstemperatur] \SI{-25}{\celsius}
+			      bis \SI{+50}{\celsius} (Durchschnitt in \SI{24}{\hour}: $\leq \SI{35}{\celsius}$)
+			\item[Fehlerstromerkennung] DC \SI{6}{\milli\ampere} (integriert)
+			\item[Schutzart] IP54
+			      (spritzwassergeschützt, für
+			      den Außenbereich geeignet)
+			\item[Lastmanagement] max. 10 Teilnehmer~\footref{fn:1}
+			\item[NFC-Tags] 3 im Lieferumfang\\max. 16 anlernbar~\footref{fn:1}
+			\item[Benutzer] max. 16 konfigurierbar~\footref{fn:1}
+			\item[Schnittstellen] HTTP, MQTT, Modbus/TCP, OCPP~\footref{fn:1}
+		\end{description}
+	\end{minipage}
+
+	\newpage
+
+	\section{Kontakt}
+	Tinkerforge GmbH\\ Zur Brinke 7\\ 33758 Schloß Holte-Stukenbrock
+	\begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{Website}}]
+		\item[E-Mail] \href{mailto:info@tinkerforge.com}{\texttt{info@tinkerforge.com}}
+		\item[Website] \href{https://warp-charger.com}{\texttt{warp-charger.com}}
+		\item[Telefon] \phonenumber{052078998614}
+		\item[Shop] \href{https://tinkerforge.com/de/shop/warp.html}{\texttt{tinkerforge.com/de/shop/warp.html}}
+	\end{description}
+
+	\section{Dokumentversionen}
+	\begin{tabular}{lll}
+		\toprule
+		Datum      & Version & Kommentar                       \\
+		\midrule
+		09.08.2021 & 0.1     & Initialversion                  \\
+		17.08.2021 & 0.2     & Neue Features hinzugefügt       \\
+		23.08.2021 & 0.3     & Inhaltliche Verbesserungen      \\
+		07.09.2021 & 1.0     & Druckversion                    \\
+		12.10.2021 & 1.0.1   & Ersatzteilliste vervollständigt \\
+		26.10.2021 & 1.1     & Montage-, Ladestrom- und        \\
+		           &         & Lastmanagement-                 \\
+		           &         & beschreibung verbessert;        \\
+		           &         & Zurücksetzen auf Werks-         \\
+		           &         & einstellung per Brick Viewer    \\
+		           &         & hinzugefügt                     \\
+		06.12.2021 & 1.1.1   & Zuleitungsaderfarben            \\
+		           &         & verbessert                      \\
+		31.03.2022 & 2.0.0   & Aktualisiert für Firmware 2.0.0 \\
+		06.04.2022 & 2.0.1   & Watchdog-Hinweis hinzugefügt    \\
+		23.06.2022 & 2.0.2   & Staubschutzkappen- und          \\
+		           &         & Verschraubungshinweis           \\
+		           &         & hinzugefügt.                    \\
+		14.09.2022 & 2.0.3   & Aktualisiert für Firmware 2.0.8 \\
+		           &         & Wiederherstellungsmodus         \\
+		           &         & hinzugefügt                     \\
+		11.11.2022 & 2.0.4   & Aktualisiert für WARP2.1        \\
+		           &         & mit neuer Kabelführung          \\
+		09.12.2022 & 2.0.5   & Modbus-TCP, OCPP und            \\
+		           &         & Wireguard hinzugefügt           \\
+		           &         & \enquote{Erste Schritte} überarbeitet \\
+		\bottomrule
+	\end{tabular}
+
+	\vfill
+	\null
+
+	\columnbreak
+\appendix
+
+\section{Modbus/TCP Registertabelle}
+\label{modbus_tcp_registertabelle}
+Nachfolgend die Registertabelle für Modbus/TCP für die Einstellung \textbf{WARP
+Charger}.
+
+Input Registers können nur gelesen werden und liefern Informationen über den
+Zustand der Wallbox. Gewisse Register sind nur verfügbar, wenn das dazu
+angegebene \textbf{Feature} verfügbar ist. So sind zum Beispiel die
+Informationen zur Ladeleistung, Energie usw. nur verfügbar, wenn die Wallbox
+über ein \textbf{meter} verfügt. Das heißt ein WARP2 Charger Pro (Version mit
+Stromzähler) liefert diese Werte. Ein WARP2 Charger Smart (Version ohne
+Stromzähler) nicht.
+
+Welche Features die Wallbox bietet kann über \textbf{Discrete Inputs} ausgelesen
+werden. Eine Steuerung der Wallbox ist über die \textbf{Holding Registers}
+möglich.
+
+\end{multicols*}
+
+\subsection{Input Registers}
+\begin{tabularx}{\textwidth}{rXll} \toprule
+    \textbf{Register-} & \textbf{Name}& \textbf{Typ} & \textbf{Benötigtes}                                                      \\
+    \textbf{adresse}   &              &              & \textbf{Feature}                                                         \\ \midrule
+0             & Version der Registertabelle             & uint32       & ---                                     \\
+              & \tdesc{Aktuelle Version: 1}                                                                                     \\ \cmidrule{2-4}
+2             & Firmware-Version                       & uint32 (x4)       & ---                                                    \\
+              & \tdesc{Major, Minor, Patch, Zeitstempel jeweils uint32. Beispielsweise 2, 0, 8, 0x63218f23 für}                 \\
+              & \tdesc{Firmware 2.0.8-63218f23. 0x63218f23 ist der Unix-Zeitstempel des 14. September 2022 08:21:55 UTC.}       \\ \cmidrule{2-4}
+10            & Charger-ID                              & uint32       & ---                                                    \\
+              & \tdesc{Dekodierte Form der Base58-UID, die für Standard-Hostnamen, -SSID usw. genutzt wird.}                    \\
+              & \tdesc{Zum Beispiel 185460 für X8A}                                                                             \\ \cmidrule{2-4}
+12            & Uptime (s)                              & uint32       & ---                                                    \\
+              & \tdesc{Zeit in Sekunden seit dem Start der Wallbox-Firmware.}                                                   \\ \cmidrule{2-4}
+1000          & IEC-61851-Zustand                       & uint32       & evse                                                   \\
+              & \tdesc{0-A, 1-B, 2-C, 3-D, 4-E/F}                                                                               \\ \cmidrule{2-4}
+1002          & Fahrzeugstatus                          & uint32       & evse                                                   \\
+              & \tdesc{0-Nicht verbunden, 1-Warte auf Freigabe, 2-Ladebereit, 3-Lädt, 4-Fehler}                                 \\ \cmidrule{2-4}
+1004          & User-ID                                 & uint32       & evse                                                   \\
+              & \tdesc{ID des Benutzers der den Ladevorgang gestartet hat. 0 falls eine Freigabe}                               \\
+              & \tdesc{ohne Nutzerzuordnung erfolgt ist. 0xFFFFFFFF falls gerade kein Ladevorgang läuft.}                       \\ \cmidrule{2-4}
+1006          & Start-Zeitstempel (min)                 & uint32       & evse                                                   \\
+              & \tdesc{Ein Unix-Timestamp in Minuten, der den Startzeitpunkt des Ladevorgangs angibt.}                          \\
+              & \tdesc{0 falls zum Startzeitpunkt keine Zeitsynchronisierung verfügbar war.}                                    \\ \cmidrule{2-4}
+1008          & Ladedauer (s)                           & uint32       & evse                                                   \\
+              & \tdesc{Dauer des laufenden Ladevorgangs in Sekunden. Auch ohne Zeitsynchronisierung verfügbar}                  \\ \cmidrule{2-4}
+1010          & Erlaubter Ladestrom                     & uint32       & evse                                                   \\
+              & \tdesc{Maximal erlaubter Ladestrom, der dem Fahrzeug zur Verfügung gestellt wird.}                              \\
+              & \tdesc{Dieser Strom ist das Minimum der Stromgrenzen aller Ladeslots.}                                          \\ \cmidrule{2-4}
+1012          & Ladestromgrenzen (mA)                   & uint32 (x20) & evse                                                   \\
+              & \tdesc{Aktueller Wert der Ladestromgrenzen in Milliampere. 0xFFFFFFFF falls eine Stromgrenze nicht aktiv ist.}  \\
+              & \tdesc{0 falls eine Stromgrenze blockiert. Sonst zwischen 6000 (6A) und 32000 (32A).}                           \\ \cmidrule{2-4}
+2000          & Stromzählertyp                          & uint32       & meter                                                  \\
+              & \tdesc{0-Kein Stromzähler verfügbar, 1-SDM72 (nur WARP1), 2-SDM630, 3-SDM72 V2}                                 \\ \cmidrule{2-4}
+2002          & Ladeleistung (W)                        & float        & meter                                                  \\
+              & \tdesc{Die aktuelle Ladeleistung in Watt}                                                                       \\ \cmidrule{2-4}
+2004          & absolute Energie (kWh)                  & float        & meter                                                  \\
+              & \tdesc{Die geladene Energie seit der Herstellung des Stromzählers.}                                             \\ \cmidrule{2-4}
+2006          & relative Energie (kWh)                  & float        & meter                                                  \\
+              & \tdesc{Die geladene Energie seit dem letzten Reset. (siehe Holding Register 2000)}                              \\ \cmidrule{2-4}
+2008          & Energie des Ladevorgangs                & float        & meter                                                  \\
+              & \tdesc{Die während des laufenden Ladevorgangs geladene Energie}                                                 \\ \cmidrule{2-4}
+2100          & weitere Stromzähler-Werte               & float (x85)  & all\_values                                            \\
+              & \tdesc{Siehe \rurl{https://www.warp-charger.com/api.html\#meter\_all\_values}{warp-charger.com/api.html\#meter\_all\_values}} \\ \cmidrule{2-4}
+3000          & CP-Unterbrechung                        & uint32       & cp\_disc                                               \\
+              & \tdesc{Noch nicht implementiert!}                                                                               \\ \bottomrule
+\end{tabularx}
+
+\subsection{Holding Registers}
+\begin{tabularx}{\textwidth}{rXll} \toprule
+    \textbf{Register-} & \textbf{Name} & \textbf{Typ} & \textbf{Benötigtes}                                                     \\
+    \textbf{adresse}   &      &     & \textbf{Feature}                                                                          \\ \midrule
+0             & Reboot                                  & uint32       & ---                                                    \\
+              & \tdesc{Startet die Wallbox (bzw. den ESP-Brick) neu, um beispielsweise Konfigurationsänderungen anzuwenden.}    \\
+              & \tdesc{Password 0x012EB007}                                                                                     \\ \cmidrule{2-4}
+1000          & Ladefreigabe                            & uint32       & evse                                                   \\
+              & \tdesc{0 zum Blockieren des Ladevorgangs; ein Wert != 0 zum Freigeben}                                          \\ \cmidrule{2-4}
+1002          & Erlaubter Ladestrom (mA)                & uint32       & evse                                                   \\
+              & \tdesc{0mA oder 6000mA bis 32000 mA. Andere Ladestromgrenzen können den Strom weiter verringern!}               \\ \cmidrule{2-4}
+2000          & Relative Energie zurücksetzen           & uint32       & meter                                                  \\
+              & \tdesc{Setzt den relativen Energiewert zurück (Input Register 2006). Password 0x3E12E5E7}                       \\ \cmidrule{2-4}
+3000          & CP-Trennung auslösen                    & uint32       & cp\_disc                                               \\
+              & \tdesc{Noch nicht implementiert!}                                                                               \\ \bottomrule
+\end{tabularx}
+
+\subsection{Discrete Inputs}
+\begin{tabularx}{\textwidth}{rXll} \toprule
+    \textbf{Register-} & \textbf{Name} & \textbf{Typ} & \textbf{Benötigtes}                                                     \\
+    \textbf{adresse}   &      &     & \textbf{Feature}                                                                          \\ \midrule
+0             & Feature \enquote{evse} verfügbar        & bool         & ---                                                    \\
+              & \tdesc{Ein Ladecontroller steht zur Verfügung. Dieses Feature sollte bei allen WARP Chargern,}                  \\
+              & \tdesc{deren Hardware funktionsfähig ist, vorhanden sein.}                                                      \\ \cmidrule{2-4}
+1             & Feature \enquote{meter} verfügbar       & bool         & ---                                                    \\
+              & \tdesc{Ein Stromzähler und Hardware zum Auslesen desselben über RS485 ist verfügbar. Dieses Feature wird }      \\
+              & \tdesc{erst gesetzt, wenn ein Stromzähler mindestens einmal erfolgreich über Modbus ausgelesen wurde.}          \\ \cmidrule{2-4}
+2             & Feature \enquote{phases} verfügbar      & bool         & ---                                                    \\
+              & \tdesc{Der verbaute Stromzähler kann Energie und weitere Messwerte einzelner Phasen messen.}                    \\ \cmidrule{2-4}
+3             & Feature \enquote{all\_values} verfügbar & bool         & ---                                                    \\
+              & \tdesc{Der verbaute Stromzähler kann weitere Messwerte auslesen.}                                               \\ \cmidrule{2-4}
+4             & Feature \enquote{cp\_disc} verfügbar    & bool         & ---                                                    \\
+              & \tdesc{Noch nicht implementiert!}                                                                               \\ \cmidrule{2-4}
+2100          & Phase L1 angeschlossen                  & bool         & phases                                                 \\
+              & \tdesc{}                                                                                                        \\ \cmidrule{2-4}
+2101          & Phase L2 angeschlossen                  & bool         & phases                                                 \\
+              & \tdesc{}                                                                                                        \\ \cmidrule{2-4}
+2102          & Phase L3 angeschlossen                  & bool         & phases                                                 \\
+              & \tdesc{}                                                                                                        \\ \cmidrule{2-4}
+2103          & Phase L1 aktiv                          & bool         & phases                                                 \\
+              & \tdesc{}                                                                                                        \\ \cmidrule{2-4}
+2104          & Phase L2 aktiv                          & bool         & phases                                                 \\
+              & \tdesc{}                                                                                                        \\ \cmidrule{2-4}
+2105          & Phase L3 aktiv                          & bool         & phases                                                 \\
+              & \tdesc{}                                                                                                        \\ \bottomrule
+   \end{tabularx}
+	\begin{multicols*}{2}
+
+
+
+
+	\newpage
+	\pagestyle{empty}
+	\null
+	\vfill
+	WLAN-Zugangsdaten
+	\begin{tcolorbox}[width=4.2cm,height=2.7cm, boxrule=0.25mm]
+
+	\end{tcolorbox}
+	Dieser Aufkleber befindet sich\\ auch im Inneren der Wallbox.
+	\columnbreak
+
+	\null
+	\vfill
+	Typenschild
+	\begin{tcolorbox}[width=7.8cm,height=4.1cm, boxrule=0.25mm]
+
+	\end{tcolorbox}
+	Dieser Aufkleber befindet sich auch auf der Unterseite\\ der Wallbox.
+\end{multicols*}
+\end{document}
