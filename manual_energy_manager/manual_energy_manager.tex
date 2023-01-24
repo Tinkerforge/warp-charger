@@ -240,7 +240,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Elektrofahrzeugen realisiert werden. Für andere Anwendungen ist der
 	Energiemanagernicht geeignet. Eine Verwendung
 	an Orten, an denen explosionsfähige oder brennbare Substanzen lagern, ist nicht
-	zulässig. Jegliche Modifikation des Managers und ein unsachgemäßer Betrieb ist verboten. 
+	zulässig. Jegliche Modifikation des Managers oder unsachgemäßer Betrieb ist verboten. 
 	Der Energy Manager ist in einem geeigneten Verteilerschrank zu installieren
 	und vor Beschädigungen, Feuchtigkeit/Verschmutzungen und unsachgemäßigem
 	Zugriff zu 	schützen. Er darf nicht genutzt werden, wenn kein sicherer Betrieb
@@ -270,41 +270,76 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\item DIN A4 Umschlag mit:
 		\begin{itemize}
 			\item Dieser Betriebsanleitung
+			\item RJ45 LAN- Winkeladapter
 		\end{itemize}
 	\end{itemize}
 
 	\subsubsection{Montageort}
-	Der WARP Energy Manager darf nur in einem geeigneten Verteilerschrank
-	installiert werden und ist vor Witterungseinflüssen zu schützen. Es sollte
+	Der WARP Energy Manager darf nur in einem geeigneten Verteilerschrank im
+	Innenbereich installiert werden. Er ist vor Staub, Nässe und unsachgemäßigem
+	Zugriff zu schützen. Es sollte
 	eine LAN-Verbindung zum WARP Energy Manager gelegt werden, da in vielen
 	Fällen eine Anbindung des WARP Energy Managers mittels WLAN nicht stabil
-	möglich ist (Metallabschirmung).
+	möglich ist (Metallabschirmung der Verteilung).
 
-	\subsubsection{Montage}\label{wandmontage}
-	Zur Montage der Wallbox muss der Deckel entfernt werden. Dazu müssen die
-	vier Kreuzschlitzschrauben gelöst werden.
+	Es muss ausreichend Platz vorhanden sein. Es darf kein Druck auf die Kabel
+	ausgeübt werden, insbesondere nicht auf die LAN Verbindung. Aus diesem Grund
+	empfehlen wir die Verwendung des mitgelieferten LAN-Winkeladapters.
 
-	Nach Lösen der Schrauben des Deckels kann dieser von der Wallbox herunter genommen
-	werden.
+	\subsubsection{Montage}
+	Zur Montage des WARP Energy Managers muss dieser einfach auf die Hutschiene
+	gesetzt werden. Das Gehäuse muss so installiert werden, dass die Anschlüsse
+	nach unten zeigen.
 
+	Zuerst wird die obere Halterung aufgesetzt und anschließend
+	die Untere. Er sollte selbstständig verriegeln.
+	\par
+	Soll der WARP Energy Manager wieder von der Hutschiene entfernt werden, so
+	müssen zuerst alle Zuleitungen entfernt werden (Spannungsfreiheit
+	sicherstellen!). Anschließend kann mittels Schlitz-Schraubendreher die schwarze
+	Federverriegelung gezogen werden und der Energy Manager von der Hutschiene
+	gehoben werden.
 	\newpage
 	\subsection{Elektrischer Anschluss}
 	\hint{Die in diesem Kapitel beschriebenen Arbeiten dürfen nur von einer ausgewiesenen
 		Elektrofachkraft durchgeführt werden.}
 
-	Nachdem die Wallbox montiert wurde, kann sie nun angeschlossen werden. Dazu
-	muss der Deckel (siehe \fullref{wandmontage}) entfernt werden.
+	Nachdem der WARP Energy Manager montiert wurde, kann dieser nun angeschlossen werden.
+	Die Schraubklemmen sind steckbar, so dass der elektrische Anschluss
+	außerhalb erfolgen kann. Anschließend können die Schraubklemmen wieder in
+	den WARP Energy Manager gesteckt werden.
+
+	Die Stromversorgung des WARP Energy Managers erfolgt über eine 2-polige
+	Schraubklemme (L+N). Die Zuleitung ist mit einem max. 16A Leitungsschutzschalter mit
+	B-Charakteristik abzusichern.
+
+	Der weitere Anschluss ist in der nachfolgenden Darstellung ersichtlich.
+
+	TODO Schematic
+
 
 	\subsection{Sicherungswechsel}
-	Die Wallbox ist intern über zwei 5$\times\SI{20}{\milli\meter}$ Feinsicherungen (mittelträge (m), \SI{500}{\milli\ampere}) abgesichert.
-	Tinkerforge verbaut Sicherungen vom Typ \enquote{ESKA 521.014}.
+	Der WARP Energy Manager ist intern über zwei 5$\times\SI{20}{\milli\meter}$ Feinsicherungen (mittelträge (m), \SI{500}{\milli\ampere}) abgesichert.
+	Tinkerforge verbaut Sicherungen vom Typ \enquote{ESKA 521.014}. Die eine
+	Sicherung befindet sich im Eingangspfad der 230V Stromversorgung (L). Die
+	andere Sicherung befindet sich im Schaltausgang der Schützsteuerung.
+
+	\section{Erste Schritte}
+
+	\section{Webinterface}
+
+	\section{Konfiguration Energiemanagement}
+
+	\section{Schnittstellen zur Fernsteuerung}
+
+	\section{Fehlerbehebung}
 
 	\section{Konformitätserklärung}
-	Die EU-Konformitätserklärung zur Wallbox ist in einem gesonderten Dokument verfügbar.
+	Die EU-Konformitätserklärung zum WARP Energy Manager ist in einem gesonderten Dokument verfügbar.
 
 	\section{Entsorgung}
 	\begin{minipage}{0.43\textwidth}
-		Wallbox und Verpackung sind bei Gebrauchsende ordnungsgemäß zu
+		WARP Energy Manager und Verpackung sind bei Gebrauchsende ordnungsgemäß zu
 		entsorgen. Altgeräte dürfen nicht über den Hausmüll entsorgt werden.
 	\end{minipage}\hfill
 	\begin{minipage}{0.045\textwidth}
@@ -363,32 +398,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\toprule
 		Datum      & Version & Kommentar                       \\
 		\midrule
-		09.08.2021 & 0.1     & Initialversion                  \\
-		17.08.2021 & 0.2     & Neue Features hinzugefügt       \\
-		23.08.2021 & 0.3     & Inhaltliche Verbesserungen      \\
-		07.09.2021 & 1.0     & Druckversion                    \\
-		12.10.2021 & 1.0.1   & Ersatzteilliste vervollständigt \\
-		26.10.2021 & 1.1     & Montage-, Ladestrom- und        \\
-		           &         & Lastmanagement-                 \\
-		           &         & beschreibung verbessert;        \\
-		           &         & Zurücksetzen auf Werks-         \\
-		           &         & einstellung per Brick Viewer    \\
-		           &         & hinzugefügt                     \\
-		06.12.2021 & 1.1.1   & Zuleitungsaderfarben            \\
-		           &         & verbessert                      \\
-		31.03.2022 & 2.0.0   & Aktualisiert für Firmware 2.0.0 \\
-		06.04.2022 & 2.0.1   & Watchdog-Hinweis hinzugefügt    \\
-		23.06.2022 & 2.0.2   & Staubschutzkappen- und          \\
-		           &         & Verschraubungshinweis           \\
-		           &         & hinzugefügt.                    \\
-		14.09.2022 & 2.0.3   & Aktualisiert für Firmware 2.0.8 \\
-		           &         & Wiederherstellungsmodus         \\
-		           &         & hinzugefügt                     \\
-		11.11.2022 & 2.0.4   & Aktualisiert für WARP2.1        \\
-		           &         & mit neuer Kabelführung          \\
-		09.12.2022 & 2.0.5   & Modbus-TCP, OCPP und            \\
-		           &         & Wireguard hinzugefügt           \\
-		           &         & \enquote{Erste Schritte} überarbeitet \\
+		24.01.2023 & 1.0     & Initialversion                  \\
 		\bottomrule
 	\end{tabular}
 
@@ -400,8 +410,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 \section{Modbus/TCP Registertabelle}
 \label{modbus_tcp_registertabelle}
+TODO
 Nachfolgend die Registertabelle für Modbus/TCP für die Einstellung \textbf{WARP
-Charger}.
+Energy Manager}.
 
 Input Registers können nur gelesen werden und liefern Informationen über den
 Zustand der Wallbox. Gewisse Register sind nur verfügbar, wenn das dazu
@@ -524,7 +535,8 @@ möglich.
 	\begin{tcolorbox}[width=4.2cm,height=2.7cm, boxrule=0.25mm]
 
 	\end{tcolorbox}
-	Dieser Aufkleber befindet sich\\ auch im Inneren der Wallbox.
+	Dieser Aufkleber befindet sich\\ auch unter dem Deckel des WARP Energy
+	Managers.
 	\columnbreak
 
 	\null
@@ -533,6 +545,6 @@ möglich.
 	\begin{tcolorbox}[width=7.8cm,height=4.1cm, boxrule=0.25mm]
 
 	\end{tcolorbox}
-	Dieser Aufkleber befindet sich auch auf der Unterseite\\ der Wallbox.
+	Dieser Aufkleber befindet sich auch an der Seite\\ des WARP Energy Managers.
 \end{multicols*}
 \end{document}
