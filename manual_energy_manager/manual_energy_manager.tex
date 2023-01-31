@@ -136,7 +136,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	In Verbindung mit unseren WARP Charger Wallboxen kannst du das Laden von
 	Elektrofahrzeugen abhängig von deinem Strombezug oder -Einspeisung steuern.
 
-	\subsection{Funktionsweise}
+	\subsection{Features}
 	\vspace{-0.1cm}
 	Der WARP Energy Manager misst über einen dreiphasigen bidirektionalen 
 	Stromzähler laufend die Leistung am Stromnetzanschluss (Hausanschluss).
@@ -304,6 +304,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\hint{Die in diesem Kapitel beschriebenen Arbeiten dürfen nur von einer ausgewiesenen
 		Elektrofachkraft durchgeführt werden.}
 
+	TODO Übersicht
+
+	\subsubsection{230V Stromversorgung}
 	Nachdem der WARP Energy Manager montiert wurde, kann dieser nun angeschlossen werden.
 	Die Schraubklemmen sind steckbar, so dass der elektrische Anschluss
 	außerhalb erfolgen kann. Anschließend können die Schraubklemmen wieder in
@@ -318,11 +321,42 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	TODO Schematic
 
 
-	\subsection{Sicherungswechsel}
-	Der WARP Energy Manager ist intern über zwei 5$\times\SI{20}{\milli\meter}$ Feinsicherungen (mittelträge (m), \SI{500}{\milli\ampere}) abgesichert.
-	Tinkerforge verbaut Sicherungen vom Typ \enquote{ESKA 521.014}. Die eine
-	Sicherung befindet sich im Eingangspfad der 230V Stromversorgung (L). Die
-	andere Sicherung befindet sich im Schaltausgang der Schützsteuerung.
+
+
+	\subsubsection{Schütz zur Phasenumschaltung}
+	\hint{Es muss kein Schütz installiert werden. Dieser Schritt ist optional}
+	Ein externes Schütz kann zur Phasenumschaltung, das heißt der Umschaltung
+	zwischen 1-phasiger und 3-phasiger Fahrzeugladung, installiert werden. Das
+	Schütz wird mittels 230V Schaltausgang vom WARP Energy Manager gesteuert.
+	Der minimale Phasenstrom für das Typ2 Laden beträgt $\SI{6}{\ampere}$. Somit
+	kann die Minimale Ladeleistung von $\SI{4.1}{\kilo\watt}$ auf
+	$\SI{1.4}{\kilo\watt}$ reduziert werden.
+
+	TODO Schematic
+
+	\subsubsection{Eingänge}
+	Der WARP Energy Manager besitzt zwei Eingänge für potentialfreie Kontakte.
+	An diesen können Schließer/Öffner angeschlossen werden. Das Verhalten des
+	Energy Managers auf diese Eingänge kann im Webinterface konfiguriert werden.
+	
+	Wird ein Schütz zur Phasenumschaltung installiert, so ist Eingang 3 fest zur
+	Schützüberwachung konfiguriert. Es muss ein Schließer, welcher parallel mit
+	dem Schütz geschaltet wird, installiert werden.
+
+	TODO Schematic
+
+	\subsubsection{RS485 Modbus Stromzähler}
+	\hint{Es muss kein RS485 Modbus Stromzähler installiert werden. Dieser
+	Schritt ist optional, wenn ein anderer unterstützer Stromzähler zur Verfügung steht.}
+
+	Der WARP Energy Manager benötigt einen Stromzähler um den Leistungsbezug regeln zu 
+	können. Eine Möglichkeit dafür ist die Installation eines RS485 Modbus
+	Stromzählers vom Typ Eastron SDM72DM, SDM72CTM oder SDM630Modbus.
+	
+	Die Steckerbelegung ist 12V, A, B, GND. 12V dürfen nicht belegt werden.
+	A (+), B (-), GND sind entsprechend am Stromzähler anzuschließen.
+
+	TODO Schematic
 
 	\section{Erste Schritte}
 
@@ -333,6 +367,12 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\section{Schnittstellen zur Fernsteuerung}
 
 	\section{Fehlerbehebung}
+
+	\subsection{Sicherungswechsel}
+	Der WARP Energy Manager ist intern über zwei 5$\times\SI{20}{\milli\meter}$ Feinsicherungen (mittelträge (m), \SI{500}{\milli\ampere}) abgesichert.
+	Tinkerforge verbaut Sicherungen vom Typ \enquote{ESKA 521.014}. Die eine
+	Sicherung befindet sich im Eingangspfad der 230V Stromversorgung (L). Die
+	andere Sicherung befindet sich im Schaltausgang der Schützsteuerung.
 
 	\section{Konformitätserklärung}
 	Die EU-Konformitätserklärung zum WARP Energy Manager ist in einem gesonderten Dokument verfügbar.
