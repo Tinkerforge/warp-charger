@@ -135,11 +135,13 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	In Verbindung mit unseren WARP Charger Wallboxen kannst du das Laden von
 	Elektrofahrzeugen abhängig von deinem Strombezug oder -Einspeisung steuern.
+	Unter anderem ist damit ein PV-Überschussladen oder ein dynamisches
+	Lastmanagement möglich.
 
 	\subsection{Features}
 	\vspace{-0.1cm}
 	Der WARP Energy Manager misst über einen dreiphasigen bidirektionalen 
-	Stromzähler laufend die Leistung am Stromnetzanschluss (Hausanschluss).
+	Stromzähler laufend die Leistung am Stromnetzanschluss (z.B. Hausanschluss).
 	Es werden verschiedene Zählertypen und Anschlussarten unterstützt.
 
 	\subsubsection{Energiemonitoring}
@@ -148,23 +150,23 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	bezogen wird. Besitzt du eine Photovoltaik-Anlage kann es sein, dass du
 	keine Leistung aus dem Netz beziehst, sondern Leistung einspeist. 
 	Wie groß diese ist wird dir dann natürlich ebenfalls dargestellt. Die Werte
-	werden dir Live auf dem Webinterface dargestellt.
+	werden dir live auf dem Webinterface dargestellt.
 
 	Im fünf Minutentakt werden die Messwerte lokal auf dem 
-	Energiemanager gespeichert. Damit bist du unabhängig von irgendwelchen
-	Datenaufzeichnungen auf Cloud-Servern.
+	Energiemanager gespeichert. Damit iser der WARP Energy Manager unabhängig 
+	von irgendwelchen Datenaufzeichnungen auf Cloud-Servern.
 
 	Für jeden Tag kannst du dir den Verlauf deines Strombezugs oder die
 	Einspeisung in einem Graphen anzeigen lassen.
 
 	Zusätzlich werden auf Tagesebene dein Energiebezug und -einspeisung
-	aufgezeichnet. Damit kannst du deinen Energieverbrauch auf Tages, Monats und
+	aufgezeichnet. Damit kannst du deinen Energieverbrauch auf Tages-, Monats- und
 	Jahresebene analysieren.
 
 	\subsubsection{Steuerung von Wallboxen}
-	Verfügst du über mindestens eine WARP Charger Wallbox, so kann der WARP Energy Manager
-	diese verbrauchsabhängig steuern. Bis zu XXX Wallboxen vom Typ WARP Charger Smart, WARP Charger
-	Pro, WARP2 Charger Smart und WARP2 Charger Pro werden unterstützt. Die
+	Verfügst du über eine WARP Charger Wallbox, so kann der WARP Energy Manager
+	diese verbrauchsabhängig steuern. Bis zu XXX Wallboxen vom Typ WARP Charger Smart, 
+	WARP Charger Pro, WARP2 Charger Smart und WARP2 Charger Pro werden unterstützt. Die
 	Steuerung erfolgt über ein gemeinsames Netzwerk (LAN, WLAN) in dem die
 	Wallboxen und der WARP Energy Manager sich befinden.
 
@@ -172,27 +174,27 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Phasenumschaltung, da der verbaute Stromzähler keinen einphasigen Betrieb
 	unterstützt.}
 
-	Du kannst verschiedene Einstellungen vornehmen, mit denen du einstellen
+	Du kannst verschiedene Einstellungen vornehmen, mit denen du definieren
 	kannst unter welchen Bedingungen ein Fahrzeug geladen wird.
 
 	\subsubsection{Phasenumschaltung}
-	Mittels eines externen Schützes kann der WARP Energy Manager daran
+	Mittels eines externen Schützes kann der WARP Energy Manager
 	angeschlossene Wallboxen zwischen einem 1- und 3-phasigem Betrieb
 	umschalten. 
 	Dies hat den Vorteil, dass die minimale Ladeleistung von ca.
 	\SI{4.1}{\kilo\watt}~bei einem dreiphasigem Betrieb (minimaler Ladestrom
-	\SI{6}{\ampere}~auf ca. \SI{1.4}{\kilo\watt}~reduziert werden kann. Somit
+	\SI{6}{\ampere}) auf ca. \SI{1.4}{\kilo\watt}~reduziert werden kann. Somit
 	kann auch ein geringer Leistungsüberschuss in ein Fahrzeug geladen werden,
 	anstatt dass dieser entweder ins Netz eingespeist wird, oder aber
-	zusätzlicher Strom aus dem Netz bezogen werden muss.
+	zusätzliche Leistung aus dem Netz bezogen werden muss.
 
 	\subsubsection{Eingänge für potentialfreie Kontakte}
 	Der WARP Energy Manager verfügt über zwei Eingänge für potentialfreie
 	Schaltkontakte. Wird die Phasenumschaltung genutzt, so wird einer dieser
-	Eingänge fest zur Schützüberwachung genutzt. Ansonsten kann das Verhalten
+	Eingänge fest zur Schützüberwachung verwendet. Ansonsten kann das Verhalten
 	des Energiemanagers auf die Eingänge konfiguriert werden. Es kann zum
 	Beispiel darüber eine generelle Ladefreigabe realisiert werden, oder der
-	Ladestrom der Wallboxen reduziert werden.
+	Ladestrom der Wallboxen begrenzt werden.
 
 	\subsubsection{Potentialfreier Relaisausgang}
 	Ein Relaisschaltausgang (potentialfrei) auf dem WARP Energy Manager kann
@@ -201,6 +203,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	des momentanen Netzbezuges oder einer erfolgten Phasenumschaltung geschaltet
 	werden.
 
+	\textbf{Achtung mit dem Relais kann keine Netzspannung (230V) geschaltet
+	werden. Es können bis zu 30V/1A geschaltet werden.}
+
 	\section{Typische Anwendungen}
 
 	\subsubsection{PV-Überschussladen}
@@ -208,23 +213,39 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	möglichst hohen Anteil deines produzierten Stroms selbst nutzen. Abhängig
 	von deiner Konfiguration des WARP Energy Managers kannst du ein reines
 	PV-Überschussladen realisieren, bei dem nur überschüssige Energie ins
-	Fahrzeug geladen wird. Du kannst aber auch einen anteiligen Netzbezug
-	definieren um eine garantierte Ladung zu erzielen.
+	Fahrzeug geladen wird. Du kannst aber auch einen erlaubten anteiligen Netzbezug
+	definieren. Dies ist dann sinnvoll, wenn die selbst produzierte Leistung
+	nicht ausreichen würde um einen Ladevorgang zu beginnen, du aber dennoch
+	laden möchtest.
 
 	\subsubsection{Dynamisches Lastmanagement}
-	Bei manchen Immobilien ist es notwendig ein dynamisches Lastmanagement zu
-	realisieren. Als Beispiel kommt es bei Mietobjekten oftmals vor, dass der
+	In manchen Situationen ist es notwendig ein Lastmanagement zu realisieren. 
+	Als Beispiel kommt es bei Mietobjekten oftmals vor, dass der
 	Stromnetzanschluss der Immobilie es nicht zulässt, dass mehrere Wallboxen
 	zu jeder Zeit parallel betrieben werden können. Die Absicherung des
 	Stromnetzanschlusses lässt nur einen bestimmten Phasenstrom zu.
-	
-	In diesem Fall kann der WARP Energy Manager genutzt werden um
-	die überschüssige Leistung, die noch aus dem Netz bezogen werden darf zu
-	nutzen, ohne das die Sicherungen des Stromnetzanschlusses auslösen. Da der
-	Strombezug der Immobilie sich laufend ändert (eingeschaltete Elektrogeräte
-	etc.) ändert sich die überschüssige Leistung dauernd. Die Ladeleistung
-	angeschlossener Wallboxen werden daher permanent vom Energiemanager
-	geregelt.
+
+	Im einfachsten Fall kann definiert werden, dass für alle Wallboxen ein
+	gewisser Phasenstrom immer garantiert werden kann. In diesem Fall können
+	die Wallboxen untereinander ein statisches Lastmanagement durchführen, bei
+	dem der eingestellte Phasenstrom einfach zwischen allen WARP Chargern
+	aufgeteilt wird.
+
+	Oftmals kann aber ein bestimmter Phasenstrom nicht zu jeder Zeit garantiert
+	werden, da sich die Wallboxen einen Stromnetzanschluss mit anderen
+	Verbrauchern teilen. Da diese Verbraucher ein- und ausgeschaltet werden
+	können ändert sich der für die Wallboxen zur Verfügung stehende Phasenstrom
+	permanent. In diesem Fall ist ein dynamisches Lastmanagement notwendig um
+	sicherzustellen, dass der maximale Phasenstrom nicht überschritten wird und
+	keine Sicherung auslöst. 
+
+	Der WARP Energy Manager kann ein dynamisches Lastmanagement durchführen,
+	wenn ein Stromzähler am Stromnetzanschluss vorhanden ist, der vom Energy Manager
+	ausgewertet werden kann. Dabei regelt er die Leistung der Wallboxen in Abhängigkeit 
+	zu dem noch zur Verfügung stehenden Phasenstrom vom Netzanschluss. Er stellt somit sicher,
+	dass die Sicherungen nicht auslösen. Ist eine Photovoltaik-Anlage vorhanden
+	und produziert diese, so erhöht diese ganz automatisch die zur Verfügung stehende
+	Leistung für den Energy Manager.
 
 	\newpage
 	\section{Sicherheitshinweise}
@@ -238,7 +259,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Stromzähler ein Energie-Monitoring realisiert werden. In Verbindung mit WARP
 	Charger Wallboxen kann somit eine leistungsbezogene Ladevorgangsteuerung von
 	Elektrofahrzeugen realisiert werden. Für andere Anwendungen ist der
-	Energiemanagernicht geeignet. Eine Verwendung
+	Energiemanagernicht nicht geeignet. Eine Verwendung
 	an Orten, an denen explosionsfähige oder brennbare Substanzen lagern, ist nicht
 	zulässig. Jegliche Modifikation des Managers oder unsachgemäßer Betrieb ist verboten. 
 	Der Energy Manager ist in einem geeigneten Verteilerschrank zu installieren
@@ -248,9 +269,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\subsection{Gerätestörung / Technischer Defekt}
 	Sollte es Anzeichen für einen technischen Defekt geben, ist sofort die
-	Stromversorgung des Energiemanagers durch Abschalten seiner Sicherung im Verteilerkasten zu trennen.
-	Die Sicherung ist mit dem Hinweis, dass sie nicht wieder eingeschaltet weden darf, zu markieren.
-	Danach ist eine Elektrofachkraft zu informieren.
+	Stromversorgung des Energiemanagers zu trennen und gegen erneutes Einschalten zu
+	sichern. Danach ist eine Elektrofachkraft zu informieren.
 
 	\newpage
 	\section{Montage und Installation}
@@ -261,16 +281,16 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\item WARP Energy Manager (Hutschienenmodul)
 		\item gesteckte Schraubklemmen
 		\begin{itemize}
-			\item 2 pol 5mm Schraubklemme zur 230V Stromversorgung (L+N)
-			\item 2 pol 5mm Schraubklemme zum Schütz-Anschluss
-			\item 4 pol 3.5mm Schraubklemme für die Eingänge
-			\item 2 pol 3.5mm Schraubklemme für Relaisausgang
-			\item 4 pol 3.5mm Schraubklemme für RS485 Modbus-RTU
+			\item 2 pol 5mm Schraubklemme (230V Stromversorgung (L+N))
+			\item 2 pol 5mm Schraubklemme (Schütz)
+			\item 4 pol 3.5mm Schraubklemme (Eingänge)
+			\item 2 pol 3.5mm Schraubklemme (Relaisausgang)
+			\item 4 pol 3.5mm Schraubklemme (RS485 Modbus-RTU)
 		\end{itemize}
 		\item DIN A4 Umschlag mit:
 		\begin{itemize}
-			\item Dieser Betriebsanleitung
-			\item RJ45 LAN- Winkeladapter
+			\item Dieser Betriebsanleitung inkl. WLAN Zugangsdaten
+			\item RJ45 LAN-Winkeladapter
 		\end{itemize}
 	\end{itemize}
 
@@ -287,24 +307,28 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	empfehlen wir die Verwendung des mitgelieferten LAN-Winkeladapters.
 
 	\subsubsection{Montage}
-	Zur Montage des WARP Energy Managers muss dieser einfach auf die Hutschiene
+	Zur Montage des WARP Energy Managers muss dieser auf die Hutschiene
 	gesetzt werden. Das Gehäuse muss so installiert werden, dass die Anschlüsse
 	nach unten zeigen.
 
-	Zuerst wird die obere Halterung aufgesetzt und anschließend
-	die Untere. Er sollte selbstständig verriegeln.
+	Zuerst wird die obere Halterung auf die Hutschiene aufgesetzt werden und anschließend
+	die Untere. Er sollte selbstständig verriegeln. Falls nicht kann mit einem
+	Schraubendreher an der schwarzen Verriegelung auf der Unterseite
+	nachgeholfen werden.
 	\par
 	Soll der WARP Energy Manager wieder von der Hutschiene entfernt werden, so
-	müssen zuerst alle Zuleitungen entfernt werden (Spannungsfreiheit
-	sicherstellen!). Anschließend kann mittels Schlitz-Schraubendreher die schwarze
+	müssen zuerst alle Zuleitungen entfernt werden (\textbf{Achtung: Spannungsfreiheit
+	sicherstellen!}). Anschließend kann mittels Schlitz-Schraubendreher die schwarze
 	Federverriegelung gezogen werden und der Energy Manager von der Hutschiene
-	gehoben werden.
+	gehoben werden. Dabei wird zuerst die untere Halterung angehoben,
+	anschließend die Obere.
 	\newpage
 	\subsection{Elektrischer Anschluss}
 	\hint{Die in diesem Kapitel beschriebenen Arbeiten dürfen nur von einer ausgewiesenen
 		Elektrofachkraft durchgeführt werden.}
 
-	TODO Übersicht
+	\gfx{./img/wem_connections.jpg}
+
 
 	\subsubsection{230V Stromversorgung}
 	Nachdem der WARP Energy Manager montiert wurde, kann dieser nun angeschlossen werden.
@@ -313,50 +337,58 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	den WARP Energy Manager gesteckt werden.
 
 	Die Stromversorgung des WARP Energy Managers erfolgt über eine 2-polige
-	Schraubklemme (L+N). Die Zuleitung ist mit einem max. 16A Leitungsschutzschalter mit
+	Schraubklemme (\textbf{L}+\textbf{N}). Die Zuleitung ist mit einem max. 16A Leitungsschutzschalter mit
 	B-Charakteristik abzusichern.
 
-	Der weitere Anschluss ist in der nachfolgenden Darstellung ersichtlich.
-
-	TODO Schematic
-
-
-
+	Die Stromversorgung des Energy Managers ist zusätzlich intern über eine Glassicherung 
+	abgesichert.
 
 	\subsubsection{Schütz zur Phasenumschaltung}
 	\hint{Es muss kein Schütz installiert werden. Dieser Schritt ist optional}
+
 	Ein externes Schütz kann zur Phasenumschaltung, das heißt der Umschaltung
 	zwischen 1-phasiger und 3-phasiger Fahrzeugladung, installiert werden. Das
-	Schütz wird mittels 230V Schaltausgang vom WARP Energy Manager gesteuert.
+	Schütz wird mittels 230V Schaltausgang vom WARP Energy Manager gesteuert
+	(\textbf{Lsw}).
 	Der minimale Phasenstrom für das Typ2 Laden beträgt $\SI{6}{\ampere}$. Somit
 	kann die Minimale Ladeleistung von $\SI{4.1}{\kilo\watt}$ auf
 	$\SI{1.4}{\kilo\watt}$ reduziert werden.
 
-	TODO Schematic
+	Zu Ansteuerung wird \textbf{N} und \textbf{Lsw} nach außen geführt. Der
+	\textbf{Lsw}-Schaltausgang ist intern über eine Glassicherung abgesichert.
+
 
 	\subsubsection{Eingänge}
 	Der WARP Energy Manager besitzt zwei Eingänge für potentialfreie Kontakte.
 	An diesen können Schließer/Öffner angeschlossen werden. Das Verhalten des
 	Energy Managers auf diese Eingänge kann im Webinterface konfiguriert werden.
 	
-	Wird ein Schütz zur Phasenumschaltung installiert, so ist Eingang 3 fest zur
-	Schützüberwachung konfiguriert. Es muss ein Schließer, welcher parallel mit
-	dem Schütz geschaltet wird, installiert werden.
+	Wird ein Schütz zur Phasenumschaltung installiert, so ist der Eingang
+	\textbf{3}~fest zur
+	Schützüberwachung konfiguriert. Es muss ein Schließer, welcher vom
+	dem zu überwachenden Schütz geschaltet wird, zwischen \textbf{12V}~und
+	\textbf{3}~installiert werden.
 
-	TODO Schematic
+	Wird kein Schütz zur Phasenumschaltung verwendet, kann Eingang \textbf{3}~für
+	andere Zwecke verwendet werden (konfigurierbar). Eingang \textbf{4}~ steht immer
+	für eigene Zwecke zur Verfügung. Die Eingänge sind so ausgelegt, dass ein potentialfreier
+	Kontakt extern angeschlossen werden kann (Schalter als Öffner/Schließer, Relais etc.).
+	Die \textbf{12V} Anschlüsse der Eingänge sind hochohmig ausgelegt, liefern
+	keine Leistung und sind daher nicht zur Stromversorgung anderer Verbraucher
+	geeignet.
 
 	\subsubsection{RS485 Modbus Stromzähler}
 	\hint{Es muss kein RS485 Modbus Stromzähler installiert werden. Dieser
-	Schritt ist optional, wenn ein anderer unterstützer Stromzähler zur Verfügung steht.}
+	Schritt ist optional, wenn ein anderer unterstützer Stromzähler konfiguriert
+	wird.}
 
 	Der WARP Energy Manager benötigt einen Stromzähler um den Leistungsbezug regeln zu 
 	können. Eine Möglichkeit dafür ist die Installation eines RS485 Modbus
-	Stromzählers vom Typ Eastron SDM72DM, SDM72CTM oder SDM630Modbus.
+	Stromzählers vom Typ Eastron SDM72DM, SDM630MCT oder SDM630Modbus.
 	
-	Die Steckerbelegung ist 12V, A, B, GND. 12V dürfen nicht belegt werden.
-	A (+), B (-), GND sind entsprechend am Stromzähler anzuschließen.
-
-	TODO Schematic
+	Die Steckerbelegung ist \textbf{12V, A, B, GND}. Der Anschluss \textbf{12V}
+	darf nicht belegt werden. \textbf{A (+), B (-), GND} sind entsprechend 
+	am jeweiligen Stromzähler anzuschließen.
 
 	\section{Erste Schritte}
 
