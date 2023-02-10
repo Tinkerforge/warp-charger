@@ -392,6 +392,74 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\section{Erste Schritte}
 
+	Nach der elektrischen Installation kann der WARP Energy Manager konfiguriert
+	werden. Dazu muss zuerst eine Verbindung zum Energy Manager hergestellt werden, 
+	damit diese dann über den Browser konfiguriert werden kann.
+
+	\subsection{Schritt 1: Verbindung herstellen}
+
+
+	\hint{Wir empfehlen unbedingt eine Anbindung des WARP Energy Managers per
+	LAN. Auch wenn technisch eine Anbindung mittels WLAN möglich ist, so muss
+	sichergestellt werden, dass diese Verbindung dauerhaft stabil ist. Gerade in
+	Schaltschränken gestaltet sich dies meist schwierig.}
+
+	\paragraph{Option 1: WLAN}
+
+	Im Werkszustand öffnet der WARP Energy Manager einen WLAN-Access-Point. Über diesen kann
+	die Konfiguration vorgenommen werden, indem auf das das Webinterface des
+	Energy Managers zugegriffen wird.
+
+	Die Zugangsdaten des Access-Points findest du auf dem WLAN-Zugangsdaten-Aufkleber
+	auf der Rückseite dieser Anleitung. Du kannst entweder den QR-Code des Aufklebers verwenden,
+	der das WLAN automatisch konfiguriert, oder SSID und Passphrase abschreiben.
+	Die meisten Kamera-Apps von Smartphones unterstützen das Auslesen des
+	QR-Codes und das automatische Verbinden zu dem WLAN. Somit musst du die
+	Zugangsdaten dann nicht abtippen. Wichtig ist, dass viele Smartphones
+	erkennen, dass über das WLAN des Energy Managers (Access-Point) kein Zugriff auf das
+	Internet möglich ist. Dein Telefon fragt dann nach, ob du zu dem WLAN
+	verbunden bleiben möchtest. Damit du weiter auf den Energy Manager zugreifen
+	kannst, darfst du das WLAN nicht wieder verlassen.
+
+	\begin{minipage}{0.35\textwidth}
+		Wenn die Verbindung mit dem Access-Point des Energy Managers hergestellt ist, kannst du das Webinterface
+		unter \url{http://10.0.0.1} über einen Browser deiner Wahl erreichen.
+		Alternativ kannst du dazu den nebenstehenden QR-Code scannen.
+		Eventuell musst du deine mobile Datenverbindung (z.B. LTE) deaktivieren.
+	\end{minipage}\hfill
+	\begin{minipage}{0.12\textwidth}
+		\begin{flushright}
+			\qrcode{http://10.0.0.1}
+		\end{flushright}
+	\end{minipage}
+
+	\paragraph{Option 2: LAN}
+	Als Alternative zum Zugriff über den WLAN-Accesspoint verbindet sich der
+	Energy Manager in den Werkseinstellungen automatisch zu einem
+	kabelgebundenen Netzwerk (LAN), wenn ein LAN-Kabel eingesteckt ist (IP Bezug
+	mittels DHCP). Der Energy Manager kann dann entweder über die zugewiesene IP
+	Adresse (\url{http://[IP-des-Energy-Managers]}, z.B. \url{http://192.168.0.42})
+	oder den Hostnamen (\url{http://[hostname]}, z.B. \url{http://warp2-ABC}) erreicht werden.
+
+	Der Hostname des Energy Managers ist identisch zur SSID des WLANs. Den Hostnamen findest du
+	auf dem WLAN-Zugangsdaten-Aufkleber auf der Rückseite dieser Anleitung.
+
+	Kann die per DHCP vergebene IP des Energy Managers nicht ermittelt werden, so kann der
+	zuvor genannte Zugriff auf den Energy Manager mittels WLAN-Access-Point genutzt
+	werden um die IP Adresse der LAN Schnittstelle zu ermitteln (\glqq
+	Status-Seite\grqq, Abschnitt \glqq LAN-Verbindung\grqq).
+
+
+	\subsection{Schritt 2: Konfiguration mittels Webinterface}
+	Generell empfehlen wir nach der Installation ein Update der Firmware des
+	Energy Managers. Somit erhältst du die neusten Funktionen und ggf. Bugfixes. Wie ein
+	Firmware-Update durchgeführt wird, ist unter \fullref{firmware-update}
+	beschrieben.
+
+	Anschließend kann der WARP Energy Manager über das Webinterface konfiguriert
+	werden. Die Einstellungen etc. hängen vom Anwendungsfall ab. 
+	Das Webinterface ist unter \fullref{webinterface} vollständig beschrieben.
+
 	\section{Webinterface}
 
 	\section{Konfiguration Energiemanagement}
