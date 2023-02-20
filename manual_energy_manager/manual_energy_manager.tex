@@ -218,6 +218,12 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	nicht ausreichen würde um einen Ladevorgang zu beginnen, du aber dennoch
 	laden möchtest.
 
+	Todo hier beschrieben, Leistungsregelung, Saldierender Stromzähler
+
+	\subsubsection{Statisches Lastmanagement}
+
+	Todo hier beschrieben, Stromregelung
+
 	\subsubsection{Dynamisches Lastmanagement}
 	In manchen Situationen ist es notwendig ein Lastmanagement zu realisieren. 
 	Als Beispiel kommt es bei Mietobjekten oftmals vor, dass der
@@ -246,6 +252,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	dass die Sicherungen nicht auslösen. Ist eine Photovoltaik-Anlage vorhanden
 	und produziert diese, so erhöht diese ganz automatisch die zur Verfügung stehende
 	Leistung für den Energy Manager.
+
+	Todo hier beschrieben, Stromregelung
 
 	\newpage
 	\section{Sicherheitshinweise}
@@ -461,6 +469,140 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Das Webinterface ist unter \fullref{webinterface} vollständig beschrieben.
 
 	\section{Webinterface}
+
+	Über das Webinterface kannst du den Energieverbrauch, Überwachen und 
+	unter anderem das Laden der kontrollierten Wallboxen steuern und überwachen.
+	Es können diverse Einstellungen vorgenommen werden, die nachfolgend
+	dokumentiert sind.
+
+	Wenn du auf das Webinterface der Wallbox mit einem Browser zugreifst
+	gelangst du auf die Start-/ Statusseite. Auf der linken Seite befindet sich
+	die Menüleiste, über die du zu weiteren Einstellungsmöglichkeiten kommst.
+
+	Auf mobilen Endgeräten wird
+	diese Menüleiste stattdessen versteckt unter einem Menü-Symbol oben rechts
+	im grauen Balken neben dem WARP Logo angezeigt (\glqq drei Striche untereinander\grqq).
+	Hier kannst du das Menü durch einen Klick auf das Symbol ausklappen.
+
+	\vspace{-0.2cm}
+	\subsection{Status (Startseite)}
+	Die Startseite des Webinterfaces bietet Einstellmöglichkeiten und zeigt
+	Statusinformationen.
+
+	Mittels Schaltflächen kann zwischen verschiedenen Lademodi der angeschlossenen 
+	Wallboxen gewechselt werden:
+	\begin{description}
+	\item[\textbf{PV}-Überschussladen] \glqq 100\% Eigener Strom\grqq. Ob ein
+	Ladevorgang startet ist davon abhängig, ob die Minimale Ladeleistung
+	als Überschuss zur Verfügung steht. Ist dies nicht der Fall, so
+	wird keine Ladung gestartet.
+	\item[\textbf{Min+PV}-Laden] Es wird sicher mit einer Ladung begonnen, indem 
+	die minimale Ladeleistung sichergestellt wird. Zur Not erfolgt diese als
+	Netzbezug. Wird genügend Leistung produziert (Netzeinspeisung), so wird
+	der Ladestrom soweit erhöht bis keine Einspeisung ins Stromnetz mehr
+	erfolgt, oder aber die maximale Ladeleistung erreicht wird.
+	\item[\textbf{Schnell}-Laden] Alle Wallboxen laden mit der maximal möglichen
+	Ladeleistung ohne Beachtung einer Netzeinspeisung bzw. eines Netzbezugs.
+	\item[\textbf{Aus}] Die kontrollierten Wallboxen sind deaktiviert. Es kann
+	nicht geladen werden.
+	\end{description}
+	Die PV-Optionen sind nur verfügbar, wenn PV-Überschussladen aktiviert wurde.
+
+	Als nächstes wird eine Übersicht der \textbf{kontrollierten Wallboxen} und deren
+	Zustand angezeigt. Zu diesem zählt unter anderem der zugeordnete Ladestrom.
+
+	Am Ende wird der Zustand der verwendeten Schnittstellen angezeigt.
+
+	%\gfx{./img_warp2/resized/web_status}
+
+
+	\subsection{Energiebilanz}
+	\subsection{Energiemanager}
+	\subsubsection{Einstellungen}
+	Alle Einstellungen bezüglich des Energiemanagements werden hier vorgenommen.
+
+	Als erstes muss der \textbf{Standard-Lademodus} definiert werden. Die
+	verschiedenen Modi wurden bereits hier TODO erklärt. Wird die Einstellung
+	auf der Statusseite geändert, so ist diese Einstellung permanent.
+	Mittels \textbf{Täglich zurücksetzen} kann die Einstellung aber auch 
+	automatisch täglich wieder auf den Standard-Lademodus zurückgesetzt werden.
+
+	Unter dem Abschnitt \textbf{Dynamisches Lastmanagement} werden zukünftig
+	alle Einstellungen zum dynamischen Lastmanagement zu finden sein. Diese
+	Funktion wird mittels Firmware-Update zur Verfügung gestellt.
+
+	Hierbei misst der WARP Energy Manager laufend mittels eines Stromzählers die
+	Ströme aller Phasen am Stromnetzanschluss. Der noch rechnerisch zur
+	Verfügung stehende Strom kann für jede Phase unterschiedlich sein und ändert
+	sich laufend auf Grund des Zu- und Abschaltens von Verbrauchern. Aber auch eine
+	parallel angeschlosse PV-Anlage beeinflusst die Phasenströme. Der WARP
+	Energy Manager kann somit laufend den noch rechnisch zur Verfügung stehenden
+	Phasenstrom ermitteln und diesen den angeschlossenen Wallboxen bereit
+	stellen. Dabei wird sicher gestellt, dass der Strom keiner Phase
+	überschritten wird und keine Sicherung ausgelöst wird.
+
+
+	\subsubsection{Stromzähler}
+	\subsubsection{Wallboxen}
+	Hier werden die vom Energy Manager kontrollierten Wallboxen konfiguriert.
+	Die hier vorgenommenen Einstellungen beeinflussen das Lastmanagement
+	zwischen den Wallboxen.
+
+	Typ2 Wallboxen kommunizieren den angeschlossenen Fahrzeugen den maximal zur
+	Verfügung stehenden Ladestrom. Das Fahrzeug entscheidet ob dieser Ladestrom
+	voll ausgenutzt wird und ob eine Ladung 1- / 2- oder 3-phasig durchgeführt
+	wird.
+
+	Als erste Einstellung muss mittels \textbf{Maximaler Gesamtstrom} der 
+	zulässige Maximalstrom der Zuleitung zu den Wallboxen konfiguriert werden. 
+	Der Energy Manager stellt sicher, dass dieser
+	Strom auf keiner Phase überschritten wird, indem in Summe niemals mehr als
+	dieser Strom an die Wallboxen verteilt wird. Besitzen alle Wallboxen
+	ausreichend dimensionierte getrennte Zuleitungen kann dieser Strom auch so
+	hoch eingestellt werden, dass alle Wallboxen sicher ihren Maximalstrom
+	erhalten. Damit wird diese Begrenzung außer Kraft gesetzt. Alle andere
+	Komponenten, wie zum Beispiel der Netzanschluss, müssen dann aber den
+	angeforderten Storm liefern können. 
+
+	\hint{Hierbei handelt es sich um ein statisches Lastmanagement, bei dem
+	davon ausgegangen wird, dass der eingestellte Strom auf jeder Phase
+	zu jeder Zeit zur Verfügung steht. Andere Verbraucher als WARP Charger, 
+	welche vom Energy Manager nicht gesteuert werden können, werden nicht
+	berücksichtigt!}
+
+	Der individuelle Maximalstrom jeder Wallbox bleibt hiervon unberührt
+	(Zuleitung der Wallbox - Schiebeschaltereinstellung innerhalb der Wallbox).
+
+	Eine typische Anwendung hierfür ist, die Strombegrenzung, 
+	wenn die Wallboxen über eine gemeinsame Zuleitung verfügen.
+
+	Mit der Einstellung \textbf{Minimaler Ladestrom} kann der minimale Ladestrom
+	angehoben werden. Der Typ2-Ladestandard setzt als Minimum 6A voraus. Eine
+	Einstellung darunter ist nicht möglich. Allerdings gibt es Fahrzeuge, welche 
+	bei 6A nicht mit einer Ladung beginnen. Falls notwendig kann hier ein höherer 
+	Ladestrom definiert werden. In den allermeisten Fällen kann die Einstellung
+	bei 6A belassen werden.
+
+	Am Ende der Seite werden die \textbf{Kontrollierte
+	Wallboxen} dargestellt. Weitere Wallboxen können mittels Klick auf
+	\textbf{Wallbox hinzufügen} der Steuerung durch den WARP Energy Manager
+	hinzugefügt werden. Dazu muss der Anzeigename und die IP-Adresse oder der
+	Hostname der Wallbox eingetragen werden und mittels Klick auf \glqq
+	hinzufügen\grqq~übernommen werden.
+
+	Automatisch ermittelte Wallboxen, die noch nicht dem Energy Manager
+	angehören, werden als Liste dargestellt. Die Einstellungen dazu können
+	mittels Klick übernommen werden und anschließend ebenfalls mittels \glqq
+	hinzufügen\grqq~übernommen werden.
+
+	Alle geänderte Einstellungen müssen mittels \glqq Speichern\grqq übernommen 
+	werden.
+
+
+	\subsection{Netzwerk}
+	\subsection{MQTT}
+	\subsection{System}
+
 
 	\section{Konfiguration Energiemanagement}
 
