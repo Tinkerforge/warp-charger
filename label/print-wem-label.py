@@ -12,35 +12,16 @@ import ssl
 PRINTER_HOST = '192.168.178.241'
 PRINTER_PORT = 9100
 
-EAN13_PLACEHOLDER = b'4251640704810'
-EAN13_NUMBERS = {
-    'WARP2-CB-11KW-50': b'4251640704773',
-    'WARP2-CB-11KW-75': b'4251640704780',
-    'WARP2-CB-22KW-50': b'4251640704797',
-    'WARP2-CB-22KW-75': b'4251640704803',
-
-    'WARP2-CS-11KW-50': b'4251640704810',
-    'WARP2-CS-11KW-75': b'4251640704827',
-    'WARP2-CS-22KW-50': b'4251640704834',
-    'WARP2-CS-22KW-75': b'4251640704841',
-
-    'WARP2-CP-11KW-50': b'4251640704858',
-    'WARP2-CP-11KW-75': b'4251640704865',
-    'WARP2-CP-22KW-50': b'4251640704872',
-    'WARP2-CP-22KW-75': b'4251640704889',
-
-    'WARP-EM':          b'4251640705381',
-}
-
-DESCRIPTION_PLACEHOLDER = b'WARP2 Charger Smart, 11 kW, 5 m'
-
-SKU_PLACEHOLDER = b'WARP2-CS-11KW-50'
+QR_CODE_COMMAND = b'W649,209,5,2,M,8,6,65,0\r'
+QR_CODE_PADDING = b';;\r'
 
 VERSION_PLACEHOLDER = b'2.17'
 
-SERIAL_NUMBER_PLACEHOLDER = b'5000000001'
+SERIAL_NUMBER_PLACEHOLDER = b'6000000001'
 
-BUILD_DATE_PLACEHOLDER = b'2021-01'
+BUILD_DATE_PLACEHOLDER = b'2023-01'
+
+MAC_ADDRESS_PLACEHOLDER = b'11:22:33:44:55:66'
 
 COPIES_FORMAT = '^C{0}\r'
 
@@ -66,9 +47,9 @@ def get_next_serial_number():
 
     serial_number = int(urllib.request.urlopen('https://stagingwww.tinkerforge.com/warpsn', timeout=15).read())
 
-    return '5{0:09}'.format(serial_number)
+    return '6{0:09}'.format(serial_number)
 
-def print_package2_label(sku, version, serial_number, build_date, instances, copies, stdout, force_build_date):
+def print_wem_label(version, serial_number, build_date, mac_address, instances, copies, stdout, force_build_date):
     # check instances
     if instances < 1 or instances > 25:
         raise Exception('Invalid instances: {0}'.format(instances))
@@ -77,54 +58,12 @@ def print_package2_label(sku, version, serial_number, build_date, instances, cop
     if copies < 1 or copies > 5:
         raise Exception('Invalid copies: {0}'.format(copies))
 
-    # parse SKU
-    if sku == 'WARP-EM':
-        description = b'WARP Energy Manager'#
-        version_major = 1
-        serial_number_kind = 6
-    else:
-        m = re.match(r'^(?:TF-)?WARP2-C(B|S|P)-(11|22)KW-(50|75)$', sku)
-
-        if m == None:
-            raise Exception('Invalid SKU: {0}'.format(sku))
-
-        sku_model = m.group(1)
-        sku_power = m.group(2)
-        sku_cable = m.group(3)
-
-        description = b'WARP2 Charger '
-        version_major = 2
-        serial_number_kind = 5
-
-        if sku_model == 'B':
-            description += b'Basic'
-        elif sku_model == 'S':
-            description += b'Smart'
-        elif sku_model == 'P':
-            description += b'Pro'
-        else:
-            assert False, sku_model
-
-        if sku_power == '11':
-            description += b', 11 kW'
-        elif sku_power == '22':
-            description += b', 22 kW'
-        else:
-            assert False, sku_power
-
-        if sku_cable == '50':
-            description += b', 5 m'
-        elif sku_cable == '75':
-            description += b', 7,5 m'
-        else:
-            assert False, sku_cable
-
     # check version
-    if re.match(r'^{0}\.(0|[1-9][0-9]*)$'.format(version_major), version) == None:
+    if re.match(r'^1\.(0|[1-9][0-9]*)$', version) == None:
         raise Exception('Invalid version: {0}'.format(version))
 
     # check serial number
-    if re.match(r'^(-|{0}[0-9]{{9}})$'.format(serial_number_kind), serial_number) == None:
+    if re.match(r'^(-|6[0-9]{9})$', serial_number) == None:
         raise Exception('Invalid serial number: {0}'.format(serial_number))
 
     # check build date
@@ -138,35 +77,27 @@ def print_package2_label(sku, version, serial_number, build_date, instances, cop
     if not force_build_date and (parsed_build_date.year < now.year or (parsed_build_date.year == now.year and parsed_build_date.month < now.month)):
         raise Exception('Invalid build date: {0}'.format(build_date))
 
+    # check MAC address
+    if re.match(r'^[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}$', mac_address) == None:
+        raise Exception('Invalid MAC addressr: {0}'.format(mac_address))
+
     # read EZPL file
-    with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'package2.prn'), 'rb') as f:
+    with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'wem.prn'), 'rb') as f:
         template = f.read()
 
     if template.find(b'^H13\r') < 0:
         raise Exception('EZPL file is using wrong darkness setting')
 
-    # patch EAN13
-    if template.find(EAN13_PLACEHOLDER) < 0:
-        raise Exception('EAN13 placeholder missing in EZPL file')
+    # patch QR code
+    if template.find(QR_CODE_COMMAND) < 0:
+        raise Exception('QR code command missing in EZPL file')
 
-    base_sku = sku
+    offset = len(MAC_ADDRESS_PLACEHOLDER) - len(mac_address) + len(VERSION_PLACEHOLDER) - len(version)
 
-    if base_sku.startswith('TF-'):
-        base_sku = base_sku[3:]
+    if offset < 0:
+        raise Exception('QR code data too long')
 
-    template = template.replace(EAN13_PLACEHOLDER, EAN13_NUMBERS[base_sku])
-
-    # patch description
-    if template.find(DESCRIPTION_PLACEHOLDER) < 0:
-        raise Exception('Description placeholder missing in EZPL file')
-
-    template = template.replace(DESCRIPTION_PLACEHOLDER, description)
-
-    # patch SKU
-    if template.find(SKU_PLACEHOLDER) < 0:
-        raise Exception('SKU placeholder missing in EZPL file')
-
-    template = template.replace(SKU_PLACEHOLDER, sku.encode('ascii'))
+    template = template.replace(QR_CODE_PADDING, b';' * offset + QR_CODE_PADDING)
 
     # patch version
     if template.find(VERSION_PLACEHOLDER) < 0:
@@ -179,6 +110,12 @@ def print_package2_label(sku, version, serial_number, build_date, instances, cop
         raise Exception('Build date placeholder missing in EZPL file')
 
     template = template.replace(BUILD_DATE_PLACEHOLDER, build_date.encode('ascii'))
+
+    # patch MAC address
+    if template.find(MAC_ADDRESS_PLACEHOLDER) < 0:
+        raise Exception('MAC address placeholder missing in EZPL file')
+
+    template = template.replace(MAC_ADDRESS_PLACEHOLDER, mac_address.encode('ascii'))
 
     # patch copies
     copies_command = COPIES_FORMAT.format(1).encode('ascii')
@@ -213,10 +150,10 @@ def print_package2_label(sku, version, serial_number, build_date, instances, cop
 def main():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('sku')
     parser.add_argument('version')
     parser.add_argument('serial_number')
     parser.add_argument('build_date')
+    parser.add_argument('mac_address')
     parser.add_argument('-i', '--instances', type=int, default=1)
     parser.add_argument('-c', '--copies', type=int, default=1)
     parser.add_argument('-s', '--stdout', action='store_true')
@@ -227,7 +164,7 @@ def main():
     assert args.instances > 0
     assert args.copies > 0
 
-    print_package2_label(args.sku, args.version, args.serial_number, args.build_date, args.instances, args.copies, args.stdout, args.force_build_date)
+    print_wem_label(args.version, args.serial_number, args.build_date, args.mac_address, args.instances, args.copies, args.stdout, args.force_build_date)
 
 if __name__ == '__main__':
     main()
