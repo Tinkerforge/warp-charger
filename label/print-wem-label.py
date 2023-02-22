@@ -47,7 +47,7 @@ def get_next_serial_number():
 
     serial_number = int(urllib.request.urlopen('https://stagingwww.tinkerforge.com/warpsn', timeout=15).read())
 
-    return '6{0:09}'.format(serial_number)
+    return '7{0:09}'.format(serial_number)
 
 def print_wem_label(version, serial_number, build_date, mac_address, instances, copies, stdout, force_build_date):
     # check instances
@@ -63,7 +63,7 @@ def print_wem_label(version, serial_number, build_date, mac_address, instances, 
         raise Exception('Invalid version: {0}'.format(version))
 
     # check serial number
-    if re.match(r'^(-|6[0-9]{9})$', serial_number) == None:
+    if re.match(r'^(-|7[0-9]{9})$', serial_number) == None:
         raise Exception('Invalid serial number: {0}'.format(serial_number))
 
     # check build date

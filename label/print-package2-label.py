@@ -81,7 +81,7 @@ def print_package2_label(sku, version, serial_number, build_date, instances, cop
     if sku == 'WARP-EM':
         description = b'WARP Energy Manager'#
         version_major = 1
-        serial_number_kind = 6
+        serial_number_kind = 7
     else:
         m = re.match(r'^(?:TF-)?WARP2-C(B|S|P)-(11|22)KW-(50|75)$', sku)
 
