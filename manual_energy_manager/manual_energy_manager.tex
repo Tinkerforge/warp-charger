@@ -669,8 +669,6 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\item[Moduswechsel] Hier kann konfiguriert werden in welchen Lademodus
 		beim Schließen/Öffnen des Eingangs gewechselt werden soll.
 	\end{description}
-	\paragraph{Experteneinstellungen}\ \\
-
 
 	\subsubsection{Stromzähler}
 	\label{stromzaehler}
@@ -924,12 +922,15 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 			\item[Montageart] Tragschiene
 			\item[Nennspannung] \SI{230}{\volt} AC
 			\item[Nennfrequenz] \SI{50}{\hertz}
-			\item[Eigenverbrauch] TBD \SI{1}{\watt}
+			\item[Eigenverbrauch min.] \SI{1.1}{\watt}\footnote[1]{LAN aktiv, WLAN
+			Fallback, Relais aus, LED aus}
+			\item[Eigenverbrauch max.] $\sim$\SI{2}{\watt}\footnote[2]{LAN aktiv, WLAN
+			ein, Relais ein, LED ein}
 			\item[Betriebstemperatur] \SI{0}{\celsius}
 			      bis \SI{+30}{\celsius}
 			\item[Schutzklasse] II
-			\item[PV-Überschussladen] max. 10 WARP Charger\footnote{\label{fn:1} WARP
-			Charger/WARP Charger 2 in Varianten Smart oder Pro}
+			\item[PV-Überschussladen] max. 10 WARP Charger\footnote[3]{\label{fn:1} WARP
+			Charger/WARP Charger 2 in Varianten Smart/Pro}
 			\item[stat./dyn. Lastmanagement] max. 10 WARP Charger\footref{fn:1}
 			\item[Netzwerk] LAN, WLAN
 			\item[Schnittstellen] HTTP, MQTT
