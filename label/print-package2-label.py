@@ -44,7 +44,7 @@ BUILD_DATE_PLACEHOLDER = b'2021-01'
 
 COPIES_FORMAT = '^C{0}\r'
 
-def get_next_serial_number():
+def get_next_serial_number(kind):
     with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'staging-password.txt'), 'r') as f:
         staging_password = f.read().strip()
 
@@ -66,7 +66,7 @@ def get_next_serial_number():
 
     serial_number = int(urllib.request.urlopen('https://stagingwww.tinkerforge.com/warpsn', timeout=15).read())
 
-    return '5{0:09}'.format(serial_number)
+    return '{0}{1:09}'.format(kind, serial_number)
 
 def print_package2_label(sku, version, serial_number, build_date, instances, copies, stdout, force_build_date):
     # check instances
@@ -196,7 +196,7 @@ def print_package2_label(sku, version, serial_number, build_date, instances, cop
 
     for _ in range(instances):
         if serial_number == '-':
-            actual_serial_number = get_next_serial_number()
+            actual_serial_number = get_next_serial_number(serial_number_kind)
         else:
             actual_serial_number = serial_number
 
