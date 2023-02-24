@@ -30,6 +30,7 @@ Func("version", FuncType.STATE, Elem.OBJECT("Version der Wallbox-Firmware.", mem
             "boot_count": Elem.INT("Zähler der angibt, der wievielte Neustart seit dem die Wallbox vom Strom getrennt wurde, durchgeführt wird. Ein Eintrag in last_boots wird erst fünf Minuten nach dem Start der Wallbox geschrieben um den Flash zu schonen. Falls innerhalb der ersten fünf Minuten neugestartet wird, kann ein Eintrag verloren gehen, was anhand dieses Zählers bemerkt werden kann"),
             "uptime": Elem.INT("Laufzeit der Firmware-Ausführung (32-Bit).", unit=Units.ms),
             "uptime_overflows": Elem.INT("Anzahl der Überläufe von uptime."),
+            "timestamp_min": Elem.INT("Unix-Timestamp in Minuten der Firmware-Ausführung.")
             })]
         ])
     ),

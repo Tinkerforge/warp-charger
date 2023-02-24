@@ -150,6 +150,9 @@
 <a class="nav-link" href="#evse_gpio_configuration" style="margin-left: 2rem !important;">evse/<wbr>gpio_configuration</a>
 <a class="nav-link" href="#evse_button_configuration" style="margin-left: 2rem !important;">evse/<wbr>button_configuration</a>
 <a class="nav-link" href="#evse_user_calibration" style="margin-left: 2rem !important;">evse/<wbr>user_calibration</a>
+<a class="nav-link" href="#evse_ev_wakeup" style="margin-left: 2rem !important;">evse/<wbr>ev_wakeup</a>
+<a class="nav-link" href="#evse_control_pilot_disconnect" style="margin-left: 2rem !important;">evse/<wbr>control_pilot_disconnect</a>
+<a class="nav-link" href="#evse_boost_mode" style="margin-left: 2rem !important;">evse/<wbr>boost_mode</a>
 <span class="ms-5">Kommandos</span>
 <a class="nav-link" href="#evse_reset_dc_fault_current_state" style="margin-left: 2rem !important;">evse/<wbr>reset_dc_fault_current_state</a>
 <a class="nav-link" href="#evse_stop_charging" style="margin-left: 2rem !important;">evse/<wbr>stop_charging</a>
@@ -281,6 +284,22 @@
 <a class="nav-link" href="#mqtt_state" style="margin-left: 2rem !important;">mqtt/<wbr>state</a>
 <span class="ms-5">Konfigurationen</span>
 <a class="nav-link" href="#mqtt_config" style="margin-left: 2rem !important;">mqtt/<wbr>config</a>
+        </nav>
+    </div>
+<a class="nav-link ms-3" href="#reference-modbus_tcp">Modbus/TCP</a>
+    <div class="collapse">
+        <nav class="nav nav-pills flex-column">
+        <span class="ms-5">Konfigurationen</span>
+<a class="nav-link" href="#modbus_tcp_config" style="margin-left: 2rem !important;">modbus_tcp/<wbr>config</a>
+        </nav>
+    </div>
+<a class="nav-link ms-3" href="#reference-ocpp">OCPP-Verbindung</a>
+    <div class="collapse">
+        <nav class="nav nav-pills flex-column">
+        <span class="ms-5">Konfigurationen</span>
+<a class="nav-link" href="#ocpp_config" style="margin-left: 2rem !important;">ocpp/<wbr>config</a>
+<span class="ms-5">Kommandos</span>
+<a class="nav-link" href="#ocpp_reset" style="margin-left: 2rem !important;">ocpp/<wbr>reset</a>
         </nav>
     </div>
 <a class="nav-link ms-3" href="#reference-wireguard">WireGuard-Verbindung</a>
@@ -767,6 +786,9 @@
 <li><a class="scrollto text-monospace" href="#evse_gpio_configuration">evse/gpio_configuration</a></li>
 <li><a class="scrollto text-monospace" href="#evse_button_configuration">evse/button_configuration</a></li>
 <li><a class="scrollto text-monospace" href="#evse_user_calibration">evse/user_calibration</a></li>
+<li><a class="scrollto text-monospace" href="#evse_ev_wakeup">evse/ev_wakeup</a></li>
+<li><a class="scrollto text-monospace" href="#evse_control_pilot_disconnect">evse/control_pilot_disconnect</a></li>
+<li><a class="scrollto text-monospace" href="#evse_boost_mode">evse/boost_mode</a></li>
     </ul>
 </li>
 <li>
@@ -1671,6 +1693,72 @@
 <tr class="any">
     <th scope="row">resistance_880<br/><span class="th-details">int[..]</span></th>
     <td>Einer der Kalibrierungsparameter.</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="evse_ev_wakeup" class="warp2_only">
+    <div class="h5">evse/ev_wakeup <strong>(Nur WARP 2)</strong> </div>
+    Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus einem Energiesparmodus zu wecken, indem ein Abziehen und Anstecken des Ladekabels vorgetäuscht wird. (Control-Pilot-Trennung/CP-Trennung) Dieser Wert kann über evse/ev_wakeup_update mit dem selben Payload aktualisiert werden. Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">enabled<br/><span class="th-details">bool</span></th>
+    <td>true wenn die Ladeelektronik des Fahrzeugs geweckt werden soll</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="evse_control_pilot_disconnect" class="warp2_only">
+    <div class="h5">evse/control_pilot_disconnect <strong>(Nur WARP 2)</strong> </div>
+    Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) Dieser Wert kann über evse/control_pilot_disconnect_update mit dem selben Payload aktualisiert werden. <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe <a class="scrollto text-monospace" href="#evse_management_enabled">evse/management_enabled</a>.  Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">disconnect<br/><span class="th-details">bool</span></th>
+    <td>true CP getrennt ist, sonst false</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="evse_boost_mode" class="any">
+    <div class="h5">evse/boost_mode</div>
+    Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Ladestrom vorgibt (+ 0,24 A) um Messfehler der Ladeelektronik zu kompensieren. Nur Verwenden, falls ein Fahrzeug mit einem kleineren als dem erlaubten Ladestrom lädt! Dieser Wert kann über evse/boost_mode_update mit dem selben Payload aktualisiert werden.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">enabled<br/><span class="th-details">bool</span></th>
+    <td>true CP getrennt ist, sonst false</td>
 </tr>
         </tbody>
     </table>
@@ -2745,7 +2833,7 @@
 
 <div  id="charge_manager_state" class="any">
     <div class="h5">charge_manager/state</div>
-    Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet
+    Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Object werden nicht als API-Bruch betrachtet!</strong>
 </div>
 
 <div  id="charge_manager_config" class="any">
@@ -4347,6 +4435,126 @@
 </div>
 </div>
 </section>
+<section id="reference-modbus_tcp" class="section any">
+    <header class="reference-section-header">
+        <h4>Modbus/TCP</h4>
+
+    </header>
+    <ul class="ul-no-bullet">
+        <li>
+    Konfigurationen
+    <ul>
+        <li><a class="scrollto text-monospace" href="#modbus_tcp_config">modbus_tcp/config</a></li>
+    </ul>
+</li>
+    </ul>
+
+<div  id="modbus_tcp_config" class="any">
+    <div class="h5">modbus_tcp/config</div>
+    Konfiguration des Modbus/TCP-Servers
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">enable<br/><span class="th-details">bool</span></th>
+    <td>Gibt an, ob der Modbus/TCP-Server aktiv ist. Damit nicht nur das Auslesen des Zustands, sondern zusätzlich eine Steuerung möglich ist, muss außerdem <a class="scrollto text-monospace" href="#evse_modbus_tcp_enabled">evse/modbus_tcp_enabled</a> true sein.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">port<br/><span class="th-details">int</span></th>
+    <td>Port auf dem der Modbus/TCP-Server auf eingehende Verbindungen wartet. Typischerweise 502.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">table<br/><span class="th-details">int</span></th>
+    <td>Registertabelle, die vom Modbus/TCP-Server verwendet wird.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - WARP-Charger-Registertabelle</li>
+    <li><strong>1</strong> - Registertabelle kompatibel zu Bender CC612/613</li>
+    <li><strong>2</strong> - Registertabelle kompatibel zu Keba C-Series</li>
+</ol>
+</div></td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</section>
+<section id="reference-ocpp" class="section warp2_only">
+    <header class="reference-section-header">
+        <h4>OCPP-Verbindung</h4>
+
+    </header>
+    <ul class="ul-no-bullet">
+        <li>
+    Konfigurationen
+    <ul>
+        <li><a class="scrollto text-monospace" href="#ocpp_config">ocpp/config</a></li>
+    </ul>
+</li>
+<li>
+    Kommandos
+    <ul>
+        <li><a class="scrollto text-monospace" href="#ocpp_reset">ocpp/reset</a></li>
+    </ul>
+</li>
+    </ul>
+
+<div  id="ocpp_config" class="any">
+    <div class="h5">ocpp/config</div>
+    Konfiguration der OCPP-Verbindung
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">enable<br/><span class="th-details">bool</span></th>
+    <td>Gibt an, ob eine Verbindung zum konfigurierten OCPP-Server aufgebaut werden soll. Damit nicht nur das Auslesen des Zustands, sondern zusätzlich eine Steuerung möglich ist, muss außerdem <a class="scrollto text-monospace" href="#evse_ocpp_enabled">evse/ocpp_enabled</a> true sein.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">url<br/><span class="th-details">string</span></th>
+    <td>Endpoint-URL des OCPP-Servers. Muss mit dem Schema ws:// (unverschlüsselt!) oder wss:// (TLS-Verschlüsselt) beginnen und darf <strong>nicht</strong> auf / enden.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">identity<br/><span class="th-details">string</span></th>
+    <td>Identität der Wallbox. Wird an die Endpoint-URL angehangen und als Benutzername für die Autorisierung verwendet</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">enable_auth<br/><span class="th-details">bool</span></th>
+    <td>Gibt an, dass eine Autorisierung per HTTP-Basic-Auth durchgeführt werden soll.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">pass<br/><span class="th-details">string</span></th>
+    <td>HTTP-Basic-Auth Passwort. Wenn das Passwort exakt 40 Zeichen lang ist und nur aus Hex-Zeichen (0-9, A-F, a-f) besteht, wird es als hexadezimale Repräsentation eines 20 Byte langen Authorization-Keys betrachtet.</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="ocpp_reset" class="any">
+    <div class="h5">ocpp/reset</div>
+    Setzt den OCPP-Zustand zurück. <strong>Nicht gesendete Transaktionsdaten gehen verloren!</strong><br/><strong>Leerer Payload. Es muss einer der folgenden Werte übergeben werden: <code>null</code>, <code>""</code>, <code>false</code>, <code>0</code>, <code>[]</code> oder <code>{}</code></strong>
+</div>
+</section>
 <section id="reference-wireguard" class="section any">
     <header class="reference-section-header">
         <h4>WireGuard-Verbindung</h4>
@@ -4756,6 +4964,11 @@
 <tr class="any">
     <th scope="row">uptime_overflows<br/><span class="th-details">int</span></th>
     <td>Anzahl der Überläufe von uptime.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">timestamp_min<br/><span class="th-details">int</span></th>
+    <td>Unix-Timestamp in Minuten der Firmware-Ausführung.</td>
 </tr>
         </tbody>
     </table>
