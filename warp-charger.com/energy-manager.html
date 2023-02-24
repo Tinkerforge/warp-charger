@@ -105,6 +105,7 @@
               </div>
             </div>
           </div>
+        </div>
       </div>
     </div>
   </section><!-- #intro -->
@@ -251,7 +252,7 @@
     <!--==========================
       Energiemanagement Section
     ============================-->
-    <section id="energiemanagement">
+    <section id="lastmanagement">
       <div class="container">
         <div class="section-header">
           <h3>Lastmanagement</h3>
@@ -260,7 +261,7 @@
         <div class="container">
             <div class="clearfix">
               <h4>Verbraucher intelligent steuern</h4>
-              <img class="col col-sm-6 img-fluid float-sm-start mb-3 pe-sm-3" src="img/photovoltaik.jpg">
+              <img class="col col-sm-6 img-fluid float-sm-start mb-3 pe-sm-3" src="img/load-balance.jpg">
 
               <h5>Statisches Lastmanagement</h5>
               <p>
@@ -332,7 +333,12 @@
           <h3 class="section-title">Distributoren</h3>
         </header>
         <p>Den WARP Energy Manager und andere WARP Produkte kannst du aktuell bei den folgenden Distributoren und Online Shops erwerben.</p>
-        <a class="cta-btn">Coming soon</a>
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-3">
+                <a class="cta-btn" href="">Tinkerforge Shop (Coming soon)</a>
+            </div>
+        </div>
+
       </div>
     </section><!-- #call-to-action -->
 
@@ -418,8 +424,13 @@
           <p>Folgende Dokumente stehen aktuell zur Verfügung:</p>
         </div>
 
-        <div class="row counters">
-            <h5>Coming Soon!</h5>
+        <div class="row counters justify-content-center gy-5">
+            <div class="col-xl-2 col-lg-4 col-6 text-center">
+                <a href="">
+                <img src="img_energy/documents/betriebsanleitung_wem_small.jpg" class="img-fluid img-outline" alt="Betriebsanleitung">
+                <div>Betriebs&shy;anleitung (Coming soon)</div>
+                </a>
+            </div>
         </div>
       </div>
     </section>
@@ -433,11 +444,67 @@
       <div class="container">
 
         <header class="section-header">
-          <h3>MQTT- und HTTP-API</h3>
+          <h3>HTTP-, MQTT- und Modbus/TCP-API</h3>
         </header>
 
         <div class="row">
-          <h5>Coming Soon!</h5>
+            <div class="col-12 text-center">
+                <p>Der WARP Energy Manager kann über HTTP, MQTT und Modbus/TCP (coming soon) den aktuellen Zustand melden und gesteuert werden:</p>
+                <a href="api.html?v=2" class="btn btn-lg btn-primary mb-4">API-Dokumentation</a>
+            </div>
+            <div class="col-lg-12 col-xl-4">
+                <pre class="code-example" style='color:#000000;background:#ffffff;'><span style='color:#696969; '># Abfrage über die HTTP-API</span>
+pi@raspberrypi<span style='color:#808030; '>:</span>~ <span style='color:#797997; '>$</span>
+<span style='color:#696969; '># Auslesen des Energie-Werts seit Reset</span>
+curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:</span><span style='color:#40015a; '>/</span><span style='color:#40015a; '>/10.0.0.1/meter/values</span> ↵
+<span style='color:#e34adc; '>|</span> jq <span style='color:#0000e6; '>'.energy_rel'</span>
+<span style='color:#696969; '># Ergebnis in kWh</span>
+<span style='color:#008c00; '>706</span><span style='color:#800000; font-weight:bold; '>.</span><span style='color:#008c00; '>289978</span>
+</pre>
+            </div>
+
+            <div class="col-lg-12 col-xl-4">
+                <pre class="code-example" style='color:#000000;background:#ffffff;'><span style='color:#696969; '># Verwendung der MQTT-API mit Python</span>
+<span style='color:#800000; font-weight:bold; '>import</span> paho<span style='color:#808030; '>.</span>mqtt<span style='color:#808030; '>.</span>client <span style='color:#800000; font-weight:bold; '>as</span> mqtt
+<span style='color:#800000; font-weight:bold; '>import</span> json
+
+<span style='color:#696969; '># Ausgabe des Ladestroms</span>
+<span style='color:#696969; '># wenn eine Zustandsmeldung</span>
+<span style='color:#696969; '># des Ladecontrollers eintrifft</span>
+<span style='color:#800000; font-weight:bold; '>def</span> on_message<span style='color:#808030; '>(</span>client<span style='color:#808030; '>,</span> userdata<span style='color:#808030; '>,</span> msg<span style='color:#808030; '>)</span><span style='color:#808030; '>:</span>
+  state <span style='color:#808030; '>=</span> json<span style='color:#808030; '>.</span>loads<span style='color:#808030; '>(</span>msg<span style='color:#808030; '>.</span>payload<span style='color:#808030; '>)</span>
+  amp <span style='color:#808030; '>=</span> state<span style='color:#808030; '>[</span><span style='color:#0000e6; '>"allowed_charging_current"</span><span style='color:#808030; '>]</span>
+  <span style='color:#800000; font-weight:bold; '>print</span><span style='color:#808030; '>(</span><span style='color:#0000e6; '>"Ladestrom: {} mA"</span><span style='color:#808030; '>.</span>format<span style='color:#808030; '>(</span>amp<span style='color:#808030; '>)</span><span style='color:#808030; '>)</span>
+
+<span style='color:#696969; '># Verbinden zum MQTT-Broker</span>
+client <span style='color:#808030; '>=</span> mqtt<span style='color:#808030; '>.</span>Client<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span>
+client<span style='color:#808030; '>.</span>on_message <span style='color:#808030; '>=</span> on_message
+client<span style='color:#808030; '>.</span>connect<span style='color:#808030; '>(</span><span style='color:#0000e6; '>"localhost"</span><span style='color:#808030; '>)</span>
+
+<span style='color:#696969; '># Reagiere auf Zustandsmeldungen</span>
+<span style='color:#696969; '># des Ladecontrollers</span>
+client<span style='color:#808030; '>.</span>subscribe<span style='color:#808030; '>(</span><span style='color:#0000e6; '>"warp/ABC/evse/state"</span><span style='color:#808030; '>)</span>
+
+client<span style='color:#808030; '>.</span>loop_forever<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span>
+</pre>
+            </div>
+
+            <div class="col-lg-12 col-xl-4">
+                <pre class="code-example" style='color:#000000;background:#ffffff;'><span style='color:#696969; '># Abfrage/Steuerung über Modbus/TCP</span><table class="table table-bordered table-sm">
+                    <thead><tr><th colspan="5">Input Registers</th></tr></thead>
+                    <tbody>
+                      <tr><td>...</td></tr>
+                    </tbody>
+                    <thead><tr><th colspan="5">Holding Registers</th></tr></thead>
+                    <tbody>
+                      <tr><td>...</td></tr>
+                    </tbody>
+                    <thead><tr><th colspan="5">Discrete Inputs</th></tr></thead>
+                    <tbody>
+                      <tr><td>...</td></tr>
+                    </tbody>
+                  </table></pre>
+            </div>
         </div>
       </div>
     </section>
@@ -450,14 +517,87 @@
     <section id="firmware">
         <div class="container">
             <header class="section-header">
-                <h3>Firmware und Quellcode</h3>
+                <h3>Firmware-Updates</h3>
             </header>
 
             <div class="row">
-              <h5>Coming Soon!</h5>
+                <div class="col-12 text-center">
+                    <p>
+                      Wir veröffentlichen regelmäßig Firmware-Updates, die neue Funktionen hinzufügen und Fehler beheben.
+                      Firmware-Updates kannst du im System-Abschnitt des Webinterfaces der WARP Energy Managers einspielen.
+                      Dort findest du auch die aktuell installierte Version der Firmware.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-auto  mx-auto">
+                    <div class="text-center">
+                        <a href="" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP Energy Manager Firmware 1.0.0 herunterladen</a>
+                        <div class="text-muted pt-2 pb-2">Veröffentlicht am 28.02.2023</div>
+                    </div>
+
+                    <table class="table table-borderless mb-3">
+                        <tbody>
+                            <tr>
+                                <th scope="row"><a href="">1.0.0</a><br/><span class="th-details">28.02.2023</span><br/><a href="">Prüfsumme</a></th>
+                                <td>
+                                    <ul>
+                                        <li>Initiales Release</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </section>
+        </section>
+
+        <section id="source"  class="section-bg">
+            <div class="container">
+                    <header class="section-header">
+                        <h3>Quellcode und Design-dateien</h3>
+                    </header>
+
+                <div class="row">
+                    <div class="col-12">
+                        <p>
+                            Hard- und Software des WARP Chargers, sowie aller zugehöriger Materialien wie Anleitung, Dokumentation und diese Webseite sind Open Source. Auf Github findest du unter anderem:
+                        </p>
+                    </div>
+                    <div class="col-auto mx-auto table-responsive">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr><td>
+                                Den Quellcode der Wallbox-Firmware
+                            </td>
+                            <td>
+                                <i class="icon ion-social-github pe-1" style="color:#000000"></i><a href="https://github.com/Tinkerforge/esp32-firmware"><code>Tinkerforge/esp32-firmware</code></a>
+                            </td></tr>
+                            <tr><td>
+                                Hardware-Design-Dateien des ESP32 Ethernet Bricks
+                            </td>
+                            <td>
+                                <i class="icon ion-social-github pe-1" style="color:#000000"></i><a href="https://github.com/Tinkerforge/esp32-ethernet-brick"><code>Tinkerforge/esp32-ethernet-brick</code></a>
+                            </td></tr>
+                            <tr><td>
+                                Firmware und Hardware-Design des Energy Manager Bricklet Controllers
+                            </td>
+                            <td>
+                                <i class="icon ion-social-github pe-1" style="color:#000000"></i><a href="https://github.com/Tinkerforge/warp-energy-manager-bricklet"><code>Tinkerforge/warp-energy-manager-bricklet</code></a>
+                            </td></tr>
+                            <tr><td>
+                                Quellcode dieser Website, der Betriebsanleitung und mehr
+                            </td>
+                            <td>
+                                <i class="icon ion-social-github pe-1" style="color:#000000"></i><a href="https://github.com/Tinkerforge/warp-charger"><code>Tinkerforge/warp-charger</code></a>
+                            </td></tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+      </section>
     <!-- #firmware -->
 
     <!--==========================
