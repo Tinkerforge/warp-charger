@@ -468,13 +468,13 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
 <span style='color:#800000; font-weight:bold; '>import</span> paho<span style='color:#808030; '>.</span>mqtt<span style='color:#808030; '>.</span>client <span style='color:#800000; font-weight:bold; '>as</span> mqtt
 <span style='color:#800000; font-weight:bold; '>import</span> json
 
-<span style='color:#696969; '># Ausgabe des Ladestroms</span>
+<span style='color:#696969; '># Ausgabe des Stroms am Netzanschluss</span>
 <span style='color:#696969; '># wenn eine Zustandsmeldung</span>
-<span style='color:#696969; '># des Ladecontrollers eintrifft</span>
+<span style='color:#696969; '># des Energy Managers eintrifft</span>
 <span style='color:#800000; font-weight:bold; '>def</span> on_message<span style='color:#808030; '>(</span>client<span style='color:#808030; '>,</span> userdata<span style='color:#808030; '>,</span> msg<span style='color:#808030; '>)</span><span style='color:#808030; '>:</span>
   state <span style='color:#808030; '>=</span> json<span style='color:#808030; '>.</span>loads<span style='color:#808030; '>(</span>msg<span style='color:#808030; '>.</span>payload<span style='color:#808030; '>)</span>
-  amp <span style='color:#808030; '>=</span> state<span style='color:#808030; '>[</span><span style='color:#0000e6; '>"allowed_charging_current"</span><span style='color:#808030; '>]</span>
-  <span style='color:#800000; font-weight:bold; '>print</span><span style='color:#808030; '>(</span><span style='color:#0000e6; '>"Ladestrom: {} mA"</span><span style='color:#808030; '>.</span>format<span style='color:#808030; '>(</span>amp<span style='color:#808030; '>)</span><span style='color:#808030; '>)</span>
+  amp <span style='color:#808030; '>=</span> state<span style='color:#808030; '>[</span><span style='color:#0000e6; '>"energy_meter_power"</span><span style='color:#808030; '>]</span>
+  <span style='color:#800000; font-weight:bold; '>print</span><span style='color:#808030; '>(</span><span style='color:#0000e6; '>"Strom: {} mA"</span><span style='color:#808030; '>.</span>format<span style='color:#808030; '>(</span>amp<span style='color:#808030; '>)</span><span style='color:#808030; '>)</span>
 
 <span style='color:#696969; '># Verbinden zum MQTT-Broker</span>
 client <span style='color:#808030; '>=</span> mqtt<span style='color:#808030; '>.</span>Client<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span>
@@ -482,8 +482,8 @@ client<span style='color:#808030; '>.</span>on_message <span style='color:#80803
 client<span style='color:#808030; '>.</span>connect<span style='color:#808030; '>(</span><span style='color:#0000e6; '>"localhost"</span><span style='color:#808030; '>)</span>
 
 <span style='color:#696969; '># Reagiere auf Zustandsmeldungen</span>
-<span style='color:#696969; '># des Ladecontrollers</span>
-client<span style='color:#808030; '>.</span>subscribe<span style='color:#808030; '>(</span><span style='color:#0000e6; '>"warp/ABC/evse/state"</span><span style='color:#808030; '>)</span>
+<span style='color:#696969; '># des Energy Managers</span>
+client<span style='color:#808030; '>.</span>subscribe<span style='color:#808030; '>(</span><span style='color:#0000e6; '>"wem/ABC/energy_manager/state"</span><span style='color:#808030; '>)</span>
 
 client<span style='color:#808030; '>.</span>loop_forever<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span>
 </pre>
