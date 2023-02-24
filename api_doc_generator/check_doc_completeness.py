@@ -106,7 +106,12 @@ UNDOCUMENTED = [
     "rs485/reflash",
     "rs485/reset",
     "ethernet/force_reset",
-    "charge_manager/scan"
+    "charge_manager/scan",
+    "info/ws",
+    "ocpp/state",
+    "ocpp/configuration",
+    "rtc/reflash",
+    "rtc/reset"
 ]
 
 version = int(sys.argv[1])
