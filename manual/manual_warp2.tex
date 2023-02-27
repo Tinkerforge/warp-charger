@@ -32,7 +32,7 @@
 \usepackage{textcomp}
 
 \usepackage{fancyhdr}
-\pagestyle{fancy} 
+\pagestyle{fancy}
 \setlength{\headheight}{48pt}
 \renewcommand{\headrulewidth}{0pt}
 
@@ -111,8 +111,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\Huge
 		WARP2 Charger Betriebsanleitung\\\vspace{1cm}
 		\large
-		Version 2.0.5\\\vspace{0.25cm}
-		09.12.2022
+		Version 2.1.0\\\vspace{0.25cm}
+		28.02.2023
 	\end{center}
 	\vfill \gfx{./img_warp2/resized/warp_perspective_blue_ready}
 \end{titlepage}
@@ -269,11 +269,6 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 			\item Bohrschablone
 		\end{itemize}
 		\item 3$\times$ NFC-Karte (nur Varianten Smart und Pro)
-		\item Umschlag mit: % yes even the basic gets the envelope
-		\begin{itemize}
-			\item RJ45-Verschraubung für RJ45-Durchführung
-			\item RJ45-Crimpstecker
-		\end{itemize}
 	\end{itemize}
 
 	\subsubsection{Montageort}
@@ -571,7 +566,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Chargers.
 
 	Um weitere Einstellungen durchführen zu können, muss zuerst eine Verbindung
-	zur Wallbox hergestellt werden, damit diese dann über den Browser
+	zur Wallbox hergestellt werden, damit diese über den Web-Browser
 	konfiguriert werden kann.
 
 	\subsection{Schritt 1: Verbindung zur Wallbox herstellen}
@@ -668,8 +663,10 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	im grauen Balken neben dem WARP Logo angezeigt (\glqq drei Striche untereinander\grqq).
 	Hier kannst du das Menü durch einen Klick auf das Symbol ausklappen.
 
-	\vspace{-0.2cm}
+	\gfx{./img_warp2/resized/web_status}
+
 	\subsection{Status (Startseite)}
+
 	Die Startseite des Webinterfaces zeigt kompakt den aktuellen Ladestatus der
 	Wallbox, sowie Ladezeit und -strom, und erlaubt es, die Ladung zu steuern.
 	Du kannst hier sowohl das automatische Laden (de-)aktivieren, als auch
@@ -680,13 +677,17 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	In der Variante Pro mit verbautem Stromzähler wird zusätzlich der Ladeverlauf
 	über die letzten 48 Stunden und die aktuelle Leistungsaufnahme gezeigt.
 
+	Bestimmte Einträge werden auf der Statusseite nur anzeigt, wenn die entsprechende
+	Funktionalität konfiguriert ist. Beispielsweise wird der Zustand einer OCPP-Verbindung
+	nur dann angezeigt, wenn eine OCPP-Verbindung konfiguriert und aktiviert ist.
+
 	Der \textbf{Fahrzeugstatus} gibt dir die Information, ob aktuell ein
 	Fahrzeug mit der Wallbox verbunden ist und ob dieses geladen wird.
 
 	Die \textbf{Ladesteuerung} ermöglicht es dir, manuell einen Ladevorgang zu
-	starten oder zu stoppen. Wenn \textbf{Autostart} deaktiviert ist, wird die
+	starten oder zu stoppen. Wenn die manuelle Ladefreigabe (siehe \fullref{evse-settings}) aktiviert ist, wird die
 	Wallbox niemals einen Ladevorgang automatisch starten. In diesem Fall hast du
-	manuell die Kontrolle mittels Start/Stop. Ist Autostart aktiviert,
+	manuell die Kontrolle mittels Start/Stop. Ist die manuelle Ladefreigabe deaktiviert,
 	startet der Ladevorgang automatisch, sobald ein Fahrzeug
 	angeschlossen wird und keine weiteren Freigabemechanismen (z.B. NFC) den
 	direkten Start verhindern.
@@ -698,13 +699,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Der \textbf{erlaubte Ladestrom} gibt an, welcher Ladestrom derzeit einem Fahrzeug erlaubt
 	wird beziehungsweise würde. Der Ladestrom ist das Minimum aller begrenzenden Faktoren wie
 	beispielsweise dem Anschluss der Wallbox, eventuellen Grenzen pro konfiguriertem Benutzer,
-	dem Lastmanagement usw.
-
-	\gfx{./img_warp2/resized/web_status}
-
-	\textbf{Lastmanager} zeigt den aktuellen Zustand des Lastmanagers an, falls diese Wallbox
-	andere Wallboxen steuert. Hier kannst du den \textbf{verfügbare Strom} des Lastmanagement-Verbunds
-	einstellen und der Zustand der \textbf{kontrollierten Wallboxen} wird angezeigt.
+	dem Lastmanagement und auch dem oben gesetzen konfigurierten Ladestrom.
 
 	\textbf{Ladeverlauf} und \textbf{Leistungsaufnahme} sind nur in der Variante Pro
 	vorhanden. Hier werden dir die aktuelle Leistungsaufnahme und ein Diagramm über
@@ -712,7 +707,11 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\textbf{Letzte Ladevorgänge} zeigt einen Verlauf der zuletzt durchgeführten Ladevorgänge an.
 	Je nach Variante der Wallbox und Konfiguration können Ladevorgänge Benutzern zugeordnet sein
-	und der geladene Strom kann aufgezeichnet werden.
+	und der geladene Strom kann aufgezeichnet werden. Falls gerade ein Ladevorgang läuft, wird über den letzten Ladevorgängen der \textbf{aktuelle Ladevorgang} angezeigt.
+
+	\textbf{Lastmanager} zeigt den aktuellen Zustand des Lastmanagers an, falls diese Wallbox
+	andere Wallboxen steuert. Hier kannst du den \textbf{verfügbare Strom} des Lastmanagement-Verbunds
+	einstellen und der Zustand der \textbf{kontrollierten Wallboxen} wird angezeigt.
 
 	\textbf{WLAN-Verbindung} zeigt an, ob eine Verbindung konfiguriert ist, ob sie erfolgreich aufgebaut wurde und
 	unter welcher IP-Adresse die Wallbox per WLAN erreichbar ist.
@@ -733,23 +732,21 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\textbf{MQTT-Verbindung} zeigt den aktuellen Status der MQTT-Verbindung
 	zum konfigurierten Broker an.
 
-	\subsection{Ladecontroller}\label{evse}
-	Die Unterseite des Ladecontrollers gibt detaillierte Auskunft über den Zustand
+	\textbf{OCPP-Verbindung} zeigt den aktuellen Status der Verbindung zum konfigurierten OCPP-Server an.
+	Darunter wird textuell der Zustand des WARP Chargers aus Sicht des Servers angezeigt.
+
+	\vfill
+	\null
+
+	\columnbreak
+
+	\subsection{Wallbox}
+	Die Wallbox-Gruppe enthält Unterseiten mit Zustand und Einstellungen des Ladecontrollers, Stromzählers, Lastmanagements und Ladetrackers.
+
+	\subsubsection{Ladestatus}\label{evse}
+	Die Unterseite \enquote{Ladestatus} gibt detaillierte Auskunft über den Zustand
 	des Ladecontrollers (EVSE) und dessen Hardware-Konfiguration. Probleme beim Laden
-	kannst du mit den Informationen dieser Seite diagnostizieren. Außerdem können hier verschiedene
-	Einstellungen vorgenommen werden:
-	\begin{description}
-	 \item[Externe Steuerung] Wenn die externe Steuerung erlaubt ist, darf eine externe Steuerungssoftware, beispielsweise
-	 EVCC (\rurl{https://evcc.io}{evcc.io}) den WARP Charger steuern. Eine Steuerungssoftware kann auch selbst entwickelt werden, hierzu stellen
-	 wir unter \rurl{https://warp-charger.com/api.html}{warp-charger.com/api.html} eine detaillierte API-Dokumentation zur Verfügung.
-	 \item[Tastereinstellung] Hiermit wird konfiguriert, welche Funktion der Taster an der Front
-	 des WARP Chargers ausführen soll. Im halb-öffentlichen Raum kann es beispielsweise sinnvoll sein,
-	 den Ladestop per Taster zu verbieten.
-	 \item[Abschalteingang] Am Abschalteingang kann zum Beispiel ein Rundsteuerempfänger angeschlossen werden.
-	 Hier kann eingestellt werden, wie auf Änderungen am Abschalteingang reagiert werden soll.
-	 \item[Konfigurierbarer Eingang] Der konfigurierbare Eingang kann über die API abgefragt werden.
-	 \item[Konfigurierbarer Ausgang] Der konfigurierbare Ausgang kann über die API gesteuert werden.
-	\end{description}
+	kannst du mit den Informationen dieser Seite diagnostizieren.
 
 	Auf dieser Unterseite werden außerdem die aktuellen Ladestromgrenzen angezeigt. Alle Grenzen, die
 	derzeit aktiv sind, werden zur Entscheidung, ob ein Ladevorgang erlaubt ist und zur Berechnung des maximalen Ladestroms einbezogen:
@@ -789,7 +786,33 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	 \item[\textbf{\textcolor{myred}{Rot}}] Diese Ladestromgrenze ist aktiv und blockiert die Ladung.
 	\end{itemize}
 
-	\subsection{Stromzähler (Nur Pro)}
+	\subsubsection{Ladeeinstellungen}\label{evse-settings}
+	\gfx{./img_warp2/resized/web_evse2_settings}
+
+	Auf dieser Unterseite können verschiedene Einstellungen des Ladecontrollers verändert werden:
+
+	\begin{description}
+	 \item[Manuelle Ladefreigabe] Wenn die manuelle Ladefreigabe aktiviert wird, wird ein Ladevorgang niemals automatisch begonnen. Jeder Ladevorgang muss über das Webinterface, die API oder (je nach Tastereinstellung) den Taster gestartet werden. Die manuelle Ladefreigabe blockiert \textbf{zusätzlich} zu eventuell anderen aktiven Ladestromgrenzen. Das heißt, dass sie \textbf{nicht} aktiviert werden muss, wenn Ladevorgänge beispielsweise mit der Benutzerfreigabe per NFC-Tag, oder der Steuerung per OCPP kontrolliert werden.
+	 \item[Externe Steuerung] Wenn die externe Steuerung erlaubt ist, darf eine externe Steuerungssoftware, beispielsweise
+	 EVCC (\rurl{https://evcc.io}{evcc.io}) den WARP Charger steuern. Eine Steuerungssoftware kann auch selbst entwickelt werden, hierzu stellen
+	 wir unter \rurl{https://warp-charger.com/api.html}{warp-charger.com/api.html} eine detaillierte API-Dokumentation zur Verfügung.
+	 \item[Tastereinstellung] Hiermit wird konfiguriert, welche Funktion der Taster an der Front
+	 des WARP Chargers ausführen soll. Im halb-öffentlichen Raum kann es beispielsweise sinnvoll sein,
+	 den Ladestop per Taster zu verbieten.
+	 \item[Abschalteingang] Am Abschalteingang kann zum Beispiel ein Rundsteuerempfänger angeschlossen werden.
+	 Hier kann eingestellt werden, wie auf Änderungen am Abschalteingang reagiert werden soll.
+	 \item[Konfigurierbarer Eingang] Der konfigurierbare Eingang kann über die API abgefragt werden.
+	 \item[Konfigurierbarer Ausgang] Der konfigurierbare Ausgang kann über die API gesteuert werden.
+	 \item[Fahrzeug-Weckruf] Die Ladeelektronik mancher Fahrzeuge wechselt in einen Energiesparmodus, falls ein Ladevorgang nicht innerhalb einer gewissen Zeit gestartet wird. Der Fahrzeug-Weckruf versucht solche Ladeelektroniken automatisch zu wecken, falls das Fahrzeug nicht innerhalb von 30 Sekunden reagiert, wenn Strom zur Verfügung steht. Umgesetzt wird das durch eine kurzzeitige Trennung des Control-Pilot- bzw. CP-Signals.
+	 \item[Boost-Modus] Die Ladeelektronik mancher Fahrzeuge interpretiert einen vom WARP Charger vorgeschriebenen Ladestrom zu niedrig. Der Boost-Modus versucht diesen Effekt auszugleichen, indem ein leicht höherer Ladestrom kommuniziert wird.
+	\end{description}
+
+	 \vfill
+	 \null
+
+	\columnbreak
+
+	\subsubsection{Stromzähler (Nur Pro)}
 	Auf der Seite siehst du ein Diagramm der Leistungsaufnahme der letzten 48 Stunden und Statistiken dazu.
 	Außerdem wird angezeigt, auf welchen Phasen gerade geladen wird.
 	Die Detail-Ansicht zeigt eine Vielzahl an Messwerten, beispielsweise Leistungswerte und -faktoren,
@@ -797,8 +820,13 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\gfx{./img_warp2/resized/web_meter}
 
-	\newpage
-
+	\vspace{-0.4cm}
+	\subsubsection{Ladetracker}
+	Siehe \fullref{charge_tracker}.
+	\vspace{-0.2cm}
+	\subsubsection{Lastmanagement}
+	Siehe \fullref{charge_manager}.
+	 \vspace{-0.2cm}
 	\subsection{Netzwerk}\label{network}
 	Die Wallbox kann in dein Netzwerk per WLAN oder LAN eingebunden werden.
 	In diesem Unterabschnitt können alle dazugehörigen Einstellungen vorgenommen werden.
@@ -818,6 +846,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Es werden dann automatisch Netzwerkname (SSID) und BSSID eingetragen, sowie die Verbindung beim Neustart aktiviert.
 	Gegebenenfalls musst du jetzt noch die Passphrase des gewählten Netzes eintragen.
 
+	\vspace{-0.1cm}
 	Du kannst jetzt die Konfiguration mit dem Speichern-Button abspeichern.
 	Das Webinterface startet dann neu und verbindet sich zum konfigurierten WLAN. Die Statusseite zeigt
 	an, ob die Verbindung erfolgreich war. Der Access-Point bleibt weiterhin
@@ -825,19 +854,23 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Da der Access-Point den selben Kanal wie ein eventuell verbundenes Netz verwendet,
 	kann es sein, dass du dich jetzt neu zum Access-Point verbinden musst.
 
+	\vspace{-0.1cm}
 	Bei einer erfolgreichen Verbindung sollte die Wallbox jetzt im konfigurierten Netzwerk unter
 	\url{http://[konfigurierter_hostname]}, z.B. \url{http://warp2-ABC} erreichbar sein.
 
+	\vspace{-0.4cm}
 	\subsubsection{WLAN-Access-Point}
-	\gfx{./img_warp2/resized/web_wifi_ap}
+	\vspace{-0.1cm}
 	Der Access-Point kann in einem von zwei Modi betrieben werden: Entweder kann er immer aktiv sein,
 	oder nur dann, wenn die Verbindung zu einem anderen WLAN bzw. zu einem LAN nicht konfiguriert oder fehlgeschlagen ist.
 	Außerdem kann der Access-Point komplett deaktiviert werden.
 	\hint{Wir empfehlen, den Access-Point nie komplett zu deaktivieren, da sonst bei einer
 		fehlgeschlagenen Verbindung zu einem anderen Netzwerk das Webinterface nicht mehr erreicht
 		werden kann. Die Wallbox kann dann nur über den \fullref{recovery} oder ein Zurücksetzen auf Werkszustand, siehe \ref{reset}, erreicht werden.}
-	Die notwendigen Einstellungen, wie der Modus des Access-Points,
-	Netzwerkname, Passphrase usw. müssen dazu hier festgelegt werden.
+
+	Der Modus des Access-Points, Netzwerkname, Passphrase usw. können hier festgelegt werden.
+
+	\gfx{./img_warp2/resized/web_wifi_ap}
 
 	\subsubsection{LAN-Verbindung}
 	\gfx{./img_warp2/resized/web_ethernet}
@@ -850,16 +883,6 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	Bei einer erfolgreichen Verbindung sollte die Wallbox jetzt im LAN unter
 	\url{http://[konfigurierter_hostname]}, z.B. \url{http://warp2-ABC} erreichbar sein.
-
-	\subsubsection{Zeitsynchronisierung}\label{ntp}
-	Um für den Ladetracker und das Ereignis-Log die aktuelle Uhrzeit zur Verfügung zu haben, kann der WARP Charger diese per NTP über
-	eine Netzwerkverbindung synchronisieren. Auf dieser Unterseite kannst du NTP aktivieren oder deaktivieren und die Zeitzone, in der sich
-	der WARP Charger befindet konfigurieren.
-
-	Außerdem ist es möglich, zusätzlich zum konfigurierten Zeitserver einen Zeitserver zu verwenden, der von deinem Router per DHCP gesetzt wird. Dies funktioniert allerdings nur,
-	wenn in der Netzwerkkonfiguration keine statische IP-Konfiguration verwendet wurde.
-
-	\gfx{./img_warp2/resized/web_ntp}
 
 	\subsubsection{WireGuard}
 
@@ -876,14 +899,28 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\gfx{./img_warp2/resized/web_wireguard}
 
+	\subsection{Schnittstellen}
+	Siehe \fullref{interfaces}
+
+	\subsection{Benutzer}
+	Siehe \fullref{user_management} und \fullref{NFC}
+
 	\subsection{System}
 	Im System-Unterabschnitt kannst du das Ereignis-Log einsehen und Firmware-Aktualisierungen einspielen.
 	Außerdem können hier die Benutzer der WARP Chargers verwaltet werden (Siehe \ref{user_management}).
 
+	\subsubsection{Zeitsynchronisierung}\label{ntp}
+	Um für den Ladetracker und das Ereignis-Log die aktuelle Uhrzeit zur Verfügung zu haben, kann der WARP Charger diese per NTP über
+	eine Netzwerkverbindung synchronisieren. Auf dieser Unterseite kannst du NTP aktivieren oder deaktivieren und die Zeitzone, in der sich
+	der WARP Charger befindet konfigurieren.
+
+	Außerdem ist es möglich, zusätzlich zum konfigurierten Zeitserver einen Zeitserver zu verwenden, der von deinem Router per DHCP gesetzt wird. Dies funktioniert allerdings nur,
+	wenn in der Netzwerkkonfiguration keine statische IP-Konfiguration verwendet wurde.
+
+	\gfx{./img_warp2/resized/web_ntp}
+
 	\subsubsection{Ereignis-Log}
 	\gfx{./img_warp2/resized/web_event_log}
-
-	\newpage
 
 	Das Ereignis-Log zeichnet relevante Informationen des Systemstarts, sowie WLAN- und MQTT-Verbindungsabbrüche und Ladefehler auf.
 	Falls Probleme mit der Wallbox auftreten, kannst du diese mit dem Log diagnostizieren.
@@ -891,12 +928,13 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	sowie einen Debug-Report abrufen, die uns helfen das Problem zu verstehen und zu lösen.
 
 	\subsubsection{Firmware-Aktualisierung}\label{firmware-update}
-	\gfx{./img_warp2/resized/web_firmware_update}
 	Hier kannst du die Firmware der Wallbox aktualisieren. Wir entwickeln die Funktionalität
 	der Wallbox laufend weiter. Bitte beachte, dass daher ggf. auch eine neue
 	Version dieser Betriebsanleitung bereitgestellt wird.
 	Die aktuelle Firmware und die neuste Betriebsanleitung findest du unter
 	\rurl{https://warp-charger.com}{warp-charger.com} zum Download.
+
+	\gfx{./img_warp2/resized/web_firmware_update}
 
 	Außerdem kannst du hier das Webinterface neustarten, ohne einen Ladevorgang zu unterbrechen.
 
@@ -913,6 +951,10 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Bei Erfolg sollte es jetzt möglich sein, über den Access Point wieder auf die Wallbox zuzugreifen.
 
 	Durch erneutes Trennen und Verbinden der Stromversorgung innerhalb der ersten Minute im Wiederherstellungsmodus kann ein Zurücksetzen auf Werkszustand ausgelöst werden.
+
+	\vfill
+	\null
+	\columnbreak
 
 	\subsection{Zurücksetzen auf Werkszustand}\label{reset}
 	Falls das Webinterface nicht korrekt funktioniert, oder die Konfiguration defekt ist,
@@ -940,7 +982,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Außerdem benötigst du ein USB-C-Kabel um den Brick an deinen PC anzuschließen. Brick Daemon wird nicht benötigt.
 	Gehe zum Neuflashen wie folgt vor:
 
-	\columnbreak
+
 	\begin{enumerate}
 		\item Mache die Wallbox stromlos.
 		\item Nimm den Deckel ab wie in \fullref{wandmontage} beschrieben.
@@ -970,8 +1012,6 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\item Die Wallbox kann jetzt wieder mit Strom versorgt werden. Wenn der Flash-Vorgang erfolgreich war, sollte die Wallbox jetzt wieder den WLAN-Access-Point eröffnen und kann eingerichtet werden.
 	\end{enumerate}
 
-	\newpage
-	\null
 	\newpage
 
 	\section{Schnittstellen zur Fernsteuerung der Wallbox}\label{interfaces}
@@ -1045,14 +1085,18 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Ladestationen und einem zentralen Managementsystem. Der WARP Charger
 	unterstützt OCPPJ 1.6 Core Profile und Smart Charging Profile.
 
-	\hint{08.12.2022: OCPP befindet sich zur Zeit in der Entwicklung und ist als
-	Beta-Firmware verfügbar wird aber zeitnah Einzug in die offizielle Firmware
-	halten. Bitte prüfe ob eine neue Firmware und eine neue Version dieser
-	Betriebsanleitung verfügbar ist (siehe \fullref{firmware-update}).}
+	Um OCPP zu nutzen muss auf der Konfigurationsseite OCPP aktiviert und die
+	Endpoint-URL des Managementsystems eingetragen werden. Zusätzlich kann die Ladepunkt-Identität
+	geändert werden. Diese wird sowohl an die Endpoint-URL angehangen, als auch gegebenenfalls zum
+	Anmelden per HTTP-Basic-Auth am OCPP-Server verwendet.
 
-	Um OCPP zu nutzen muss auf der Konfigurationsseite nur OCPP aktiviert und die
-	Endpoint-URL des Managementsystems eingetragen werden.
+	Falls eine Anmeldung durchgeführt werden soll, muss die Autorisierung aktiviert werden
+	und ein Passwort oder Hex-Key gesetzt werden. Wenn das eingegebene Passwort exakt 40 Zeichen lang ist,
+	und nur aus Hexadezimal-Zeichen (0-9, A-F, a-f) besteht, wird es als Hex-Key interpretiert, der ein 20
+	Byte langen Schlüssel kodiert.
 
+	Unter den Punkten Debug und Konfigurationen finden sich weiterführende Informationen mit denen Probleme
+	bei der Interaktion mit einem OCPP-Server diagnostiziert werden können.
 
 	\newpage
 	\section{Lastmanagement zwischen mehreren WARP Chargern}\label{charge_manager}
@@ -1153,14 +1197,21 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Der Ladecontroller einer Wallbox reagiert nicht auf Stromzuweisungen. Eventuell ist auf diesem das Lastmanagement deaktiviert.
 
 	\newpage
-	\section{Ladetracker}
+	\section{Ladetracker}\label{charge_tracker}
 	\gfx{./img_warp2/resized/web_charge_tracker}
 	Seit Firmware 2.0.0 zeichnet der WARP Charger alle durchgeführten Ladevorgänge auf. Pro Ladung werden die folgenden Informationen gespeichert:
 	\begin{itemize}
 	 \item Startdatum und Zeit der Ladung, falls Datum und Zeit bekannt sind. Siehe \fullref{ntp}.
 	 \item Benutzer, der die Ladung gestartet hat, falls bekannt.
+	 \item Zählerstand beim Start und Ende der Ladung (nur WARP Charger Pro). Hieraus wird die geladene Energie in \SI{}{\kWh} berechnet.
+	 \item Dauer der Ladung
 	\end{itemize}
-	\hint{Damit Ladungen einem Benutzer zugeordnet werden können muss
+
+	\vfill
+	\null
+	\columnbreak
+
+	\hint{Damit Ladungen einem Benutzer zugeordnet werden können, muss
 		\begin{itemize}
 			\item die Benutzerautorisierung des Ladecontrollers aktiviert sein (Siehe \fullref{evse})
 			\item mindestens ein Benutzer angelegt sein (Siehe \fullref{user_management})
@@ -1168,15 +1219,21 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\end{itemize}
 		Im Werkszustand sind drei Benutzer mit jeweils einem NFC-Tag eingerichtet. Es muss dann nur die Benutzerautorisierung aktiviert werden.
 	}
-	\begin{itemize}
-	 \item Zählerstand beim Start und Ende der Ladung (nur WARP Charger Pro). Hieraus wird die geladene Energie in \SI{}{\kWh} berechnet.
-	 \item Dauer der Ladung
-	\end{itemize}
 
 	Diese Informationen werden \textbf{nur} auf dem WARP Charger gespeichert.
-	Aufgezeichnete Ladevorgänge können im Webinterface auf der Ladetracker-Unterseite als ein CSV-Dokument,
+	Aufgezeichnete Ladevorgänge können im Webinterface auf der Ladetracker-Unterseite entweder als PDF, oder als ein CSV-Dokument,
 	kompatibel zu üblichen Tabellenkalkulationsprogrammen heruntergeladen werden. Außerdem kann das erzeugte Dokument
 	vorgefiltert werden, um beispielsweise nur Ladevorgänge eines bestimmten Benutzers in einem festgelegten Zeitraum zu erhalten.
+
+	Wenn du die Ladevorgänge als PDF herunterlädst, kannst du zusätzlich einen Briefkopf angeben. Dieser kann maximal 6 Zeilen zu je 50 Zeichen
+	umfassen. Der Briefkopf wird in der PDF so hinterlegt, dass er bei üblicher Faltung im Fenster eines Briefumschlags sichtbar ist.
+
+	Wenn du die Ladevorgänge als CSV herunterlädst, kannst du zwischen zwei Formaten wählen:
+	\begin{description}
+	 \item[Excel-kompatibel] Erzeugt eine CSV-Datei, die ohne Importkonfiguration von Excel geladen werden kann. Der Feldtrenner ist ein Semikolon, in der ersten Zeile wird dies (für andere Sprachversionen) mit sep=; markiert. Die Datei wird Windows-1252 kodiert, deshalb sind möglicherweise nicht alle Benutzernamen darstellbar.
+	 \item[RFC4180] Erzeugt eine CSV-Datei die nach RFC4180 formatiert ist. Der Feldtrenner ist ein Komma, die Datei wird UTF-8 kodiert.
+	\end{description}
+
 
 	Zusätzlich kannst du einen Strompreis (ct/kWh) angeben. Wenn du über einen
 	WARP Charger Pro verfügst (integrierter Stromzähler), dann kann die Wallbox
@@ -1230,13 +1287,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	nacheinander anzulegen. Anschließend müssen die Änderungen gespeichert und
 	die Wallbox neugestartet werden, damit die Änderungen übernommen werden.
 
-	\vfill
-	\
-	\columnbreak
-
 	\gfx{./img_warp2/resized/web_users}
-	\vfill
-	\gfx{./img_warp2/resized/web_users_new}
 
 	\newpage
 	\section{Ladefreigabe per NFC}
@@ -1540,6 +1591,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		09.12.2022 & 2.0.5   & Modbus-TCP, OCPP und            \\
 		           &         & Wireguard hinzugefügt           \\
 		           &         & \enquote{Erste Schritte} überarbeitet \\
+		28.02.2023 & 2.1.0   & Aktualisiert für Firmware 2.1.0 \\
 		\bottomrule
 	\end{tabular}
 
