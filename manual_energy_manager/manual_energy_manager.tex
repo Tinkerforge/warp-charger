@@ -460,6 +460,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\newpage
 	\section{Erste Schritte}
+	\label{setup}
 
 	Nach der elektrischen Installation kann der WARP Energy Manager konfiguriert
 	werden. Dazu muss zuerst eine Verbindung zum Energy Manager hergestellt werden, 
@@ -678,16 +679,20 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	der WARP Energy Manager die Funktionen \fullref{pv_ueberschussladen} oder 
 	\fullref{dynamisches_lastmanagement} ausführen soll.
 
-	Mit der Einstellung \textbf{SDM630*/SDM72*} werden folgende Stromzähler
-	unterstützt:
+	Mit der Einstellung \textbf{SDM630*/SDM72*} werden folgende
+	RS485 (Modbus RTU) Stromzähler unterstützt:
 	\begin{itemize}
 		\item Eastron SDM630
 		\item Eastron SDM72DM V2
 		\item Eastron SDM630MCT V2
 	\end{itemize}
-
+	
+	\par
 	Mit der Einstellung \textbf{Benutzerdefinierter Zähler MQTT/HTTP}
-	\hint{TODO!}
+	können anstatt eines direkt per RS485 (Modbus RTU) angeschlossenen
+	Stromzählers, Stromzählerwerte dem WARP Energy Manager per API übergeben
+	werden.
+
 
 	\subsubsection{Wallboxen}
 	Hier werden die vom Energy Manager kontrollierten Wallboxen konfiguriert.
@@ -844,9 +849,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Weitere Informationen über die MQTT-API des WARP Energy Managers findest du auf \rurl{https://warp-charger.com/api.html}{warp-charger.com/api.html}
 
 	\subsection{System}
-	Im System-Unterabschnitt kannst du das Ereignis-Log einsehen und Firmware-Aktualisierungen einspielen.
-	Außerdem können hier ein Benutzer der WARP Energy Managers angelegt werden,
-	um den Zugriff auf das Webinterface zu sperren (siehe \ref{zugangsdaten}).
+	Im System-Unterabschnitt kannst du Einstellungen zur Zeitsynchronisation
+	vornehmen, die interne SD Karte formatieren und diverse Debug informationen
+	bekommen. Auch das Aktualisieren der Firmware ist hier möglich.
 
 	\subsubsection{Zeitsynchronisierung}\label{ntp}
 	Um für den Ladetracker und das Ereignis-Log die aktuelle Uhrzeit zur
@@ -859,10 +864,25 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	%\gfx{./img_warp2/resized/web_ntp}
 
+	\subsubsection{SD-Karte}
+	Die Daten des WARP Energy Managers werden intern auf eine SD Karte
+	aufgezeichnet. Hier werden Informationen dazu ausgegeben. Die SD Karte kann
+	hier auch formatiert werden. Damit werden alle aufgezeichneten Informationen
+	gelöscht!
+
+	\subsubsection{Debug}
+	Auf der Debug Seite kann ein Energy Manager-Protokoll erstellt werden. Dies
+	ist hilfreich um etwaige Probleme bei der Energieverteilung aufzudecken. Um
+	ein Protokoll zu erzeugen muss einfach nur auf \textbf{Start} geklickt
+	werden. Der Energy Manager beginnt dann hochfrequent alle Zustände
+	aufzuzeichnen. Mit \textbf{Stop+Download} kann die Aufzeichnung gestoppt und
+	das erstellte Protokoll heruntergeladen werden.
+
+	Im \textbf{Low-Level-Zustand} werden alle Zustände vom Energy Manager
+	dargestellt.
+
 	\subsubsection{Ereignis-Log}
 	%\gfx{./img_warp2/resized/web_event_log}
-
-	\newpage
 
 	Das Ereignis-Log zeichnet relevante Informationen des Systemstarts, sowie WLAN- und MQTT-Verbindungsabbrüche und Ladefehler auf.
 	Falls Probleme mit der Energy Manager auftreten, kannst du diese mit dem Log diagnostizieren.
@@ -880,15 +900,6 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Außerdem kannst du hier das Webinterface neustarten.
 
 
-	\subsubsection{Zugangsdaten}\label{zugangsdaten}
-	\subsubsection{Energy Manager SD-KarteZugangsdaten}\label{zugangsdaten}
-	Die Daten des WARP Energy Managers werden intern auf eine SD Karte
-	aufgezeichnet. Hier werden Informationen dazu ausgegeben. Die SD Karte kann
-	hier auch formatiert werden. Damit werden alle aufgezeichneten Informationen
-	gelöscht!
-
-	\subsubsection{}\label{zugangsdaten}
-
 	\newpage
 	\section{Fehlerbehebung}
 
@@ -897,6 +908,49 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Tinkerforge verbaut Sicherungen vom Typ \enquote{ESKA 521.014}. Die eine
 	Sicherung befindet sich im Eingangspfad der 230V Stromversorgung (L). Die
 	andere Sicherung befindet sich im Schaltausgang der Schützsteuerung.
+
+
+	\subsection{Wiederherstellungsmodus}\label{recovery}
+	Falls der WARP Energy Manager weder seinen Access Point öffnet, noch über ein konfiguriertes Netzwerk auf das Webinterface zugegriffen werden kann,
+	kannst du wie folgt den Wiederherstellungsmodus starten:
+	\begin{enumerate}
+	 \item Mache den WARP Energy Manager stromlos
+	 \item Entferne die Frontplatte (bedruckt) mit einem Schraubendreher
+	 \item Halte den 
+	 \item Versorge die Wallbox wieder mit Strom (ggfalls. mit einer zweiten Person)
+	 \item Halte den Taster mindestens 10, aber maximal 30 Sekunden gedrückt
+	\end{enumerate}
+	Der WARP Energy Manager startet dann im Wiederherstellungsmodus. Zunächst werden die Netzwerkeinstellungen gelöscht, sowie die Anmeldung deaktiviert.
+	Bei Erfolg sollte es jetzt möglich sein, über den Access Point wieder auf
+	den Energy Manager zuzugreifen.
+
+	Durch erneutes Trennen und Verbinden der Stromversorgung innerhalb der ersten Minute im Wiederherstellungsmodus kann ein Zurücksetzen auf Werkszustand ausgelöst werden.
+
+	\subsection{Zurücksetzen auf Werkszustand}\label{reset}
+	Falls das Webinterface nicht korrekt funktioniert, oder die Konfiguration defekt ist,
+	kannst du auf der Firmware-Aktualisierungs-Unterseite alle Einstellungen auf den Werkszustand zurücksetzen.
+	\hint{Durch das Zurücksetzen auf Werkszustand gehen \mbox{\textbf{alle}} Konfigurationen verloren.}
+	Nach dem Zurücksetzen startet das Webinterface wieder und öffnet
+	den Access-Point mit der SSID und Passphrase, die auf dem Aufkleber vermerkt
+	sind. Der WARP Energy Manager kann jetzt wieder nach \fullref{setup} konfiguriert werden.
+
+	Falls du das Webinterface nicht mehr erreichen kannst, bestehen folgende Optionen:
+
+	Falls eine Netzwerkverbindung aufgebaut werden kann, aber das Webinterface selbst nicht mehr funktioniert, kannst du versuchen, die Recovery-Seite zu öffnen.
+	Falls du über den Access Point der Wallbox verbunden bist, erreichst du diese unter \url{http://10.0.0.1/recovery},
+	bei einer bestehenden Verbindung zu einem LAN oder WLAN über
+	\url{http://[konfigurierter_hostname]/recovery}, also z.B. \url{http://wem-ABC/recovery}.
+	Über die Recovery-Seite kannst du den WARP Energy Manager neustarten, Firmware-Updates einspielen,
+	den Energy Manager auf den Werkszustand zurücksetzen (Factory Reset) und Debug-Reports
+	herunterladen.
+
+	Alternativ kannst du den Energy Manager (genauer: den verbauten ESP32 Ethernet
+	Brick) neu flashen.
+	Du benötigst dazu einen PC mit installiertem Brick Viewer 2.4.20 oder neuer. Diesen findest du unter
+	\rurl{https://www.tinkerforge.com/de/doc/Software/Brickv.html}{tinkerforge.com/de/doc/Software/Brickv.html}.
+	Außerdem benötigst du ein USB-C-Kabel um den Brick an deinen PC anzuschließen. Brick Daemon wird nicht benötigt.
+	Dazu muss der ESP32 Ethernet Brick aus dem Gehäuse ausgebaut und das USB-C
+	Kabel eingesteckt werden.
 
 	\section{Konformitätserklärung}
 	Die EU-Konformitätserklärung zum WARP Energy Manager ist in einem gesonderten Dokument verfügbar.
