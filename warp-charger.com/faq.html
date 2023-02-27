@@ -201,19 +201,16 @@
                 <dt>Kann ich einen WARP Charger von außen deaktivieren? Wie schließe ich einen Rundsteuerempfänger an?</dt>
                 <dd>Es gibt verschiedene Möglichkeiten, die Ladefunktion einen WARP Chargers zu kontrollieren:
                     <ul>
-                        <li>Es kann ein Rundsteuerempfänger oder ähnlicher Abschalter angeschlossen werden. Hierzu gibt es in der Wallbox einen konfigurierbaren Abschalteingang.
-                            <strong>TODO: Dokumentieren wie der funktioniert.</strong> Eventuell muss zur Durchführung des Abschalters ein Loch in das Gehäuse der Wallbox gebohrt werden.</li>
-                        <li>In den nächsten Monaten veröffentlichen wir den WARP Energy Manager,
-                            dass unter anderem zur Kontrolle des Ladens von WARP Chargern verwendet werden kann.
-                            Dieses Modul kontrolliert Wallboxen über eine Netzwerkverbindung.</li>
-                        <li>Über HTTP bzw. MQTT kann die Wallbox gesteuert werden. Siehe <a href="/api.html">API-Dokumentation</a></li>
+                        <li>Über HTTP, MQTT, OCPP bzw. Modbus/TCP kann die Wallbox gesteuert werden. Siehe auch <a href="/api.html">API-Dokumentation</a></li>
+                        <li>Das Verhalten auf die Eingänge des WARP Energy Managers können konfiguriert werden. Unter anderem ist eine Reduktion der Ladeleistung/Abschaltung möglich.
+                            Der WARP Energy Manager steuert die Wallboxen über eine (WLAN/LAN-)Netzwerkverbindung, so dass eine Steuerung aus der Ferne möglich ist.</li>
+                        <li>Bastler können einen Rundsteuerempfänger oder ähnlichen Abschalter direkt an die Wallbox anschließen. Hierzu gibt es in der Wallbox einen konfigurierbaren Abschalteingang.
+                            Eventuell muss zur Durchführung des Abschalters ein Loch in das Gehäuse der Wallbox gebohrt werden.</li>
                     </ul>
                 </dd>
 
                 <dt>Kann ein bereits vorhandener/anderer Stromzähler verwendet werden?</dt>
-                <dd>Der WARP2 Charger benötigt zwingend einen Stromzähler vom Typ SDM630. Andere Stromzähler werden nicht unterstützt.
-                    Der Stromzähler muss nicht unbedingt in der Wallbox verbaut sein (wie es bei der Pro-Variante der Fall ist).
-                    Es existiert aber keine Durchführung im Gehäuse um einen externen Zähler anzuschließen.</dd>
+                <dd>Der WARP2 Charger benötigt einen Stromzähler vom Typ SDM630 oder SDM72 V2 (Modbus). Andere Stromzähler werden nicht unterstützt.</dd>
             </dl>
         </div>
     </section>
@@ -225,7 +222,7 @@
             </header>
             <dl>
                 <dt>Wie viele Teilnehmer werden vom Lastmanager unterstützt?</dt>
-                <dd>Der Lastmanager kann maximal 10 Wallboxen kontrollieren. Die Wallbox auf der der Lastmanager läuft ist dabei eingeschlossen, es können also 9 weitere Wallboxen gesteuert werden.</dd>
+                <dd>Der Lastmanager kann maximal 10 Wallboxen kontrollieren. Die Wallbox auf der der Lastmanager läuft ist dabei eingeschlossen, es können also 9 weitere Wallboxen gesteuert werden. Der WARP Energy Manager kann ein statisches/dynamisches Lastmanagement mit Phasenumschaltung für bis zu 10 Wallboxen duchführen.</dd>
             </dl>
         </div>
     </section>
