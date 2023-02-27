@@ -223,16 +223,15 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\subsubsection{PV-Überschussladen}
 	\label{pv_ueberschussladen}
 
-	Besitzt du eine Photovoltaik-Anlage, so möchtest du vermutlich einen
-	möglichst hohen Anteil deines produzierten Stroms selbst nutzen. Abhängig
-	von deiner Konfiguration des WARP Energy Managers kannst du ein reines
-	PV-Überschussladen realisieren, bei dem nur überschüssige Energie ins
-	Fahrzeug geladen wird. Du kannst aber auch einen erlaubten anteiligen Netzbezug
-	definieren. Dies ist dann sinnvoll, wenn die selbst produzierte Leistung
-	nicht ausreichen würde um einen Ladevorgang zu beginnen, du aber dennoch
-	laden möchtest.
+	Besitzt du eine Photovoltaik-Anlage, möchtest du vermutlich möglichst viel
+	von deinem produzierten Strom selbst nutzen. Der WARP Energy Manager kann
+	dir dabei helfen, indem er ein reines PV-Überschussladen ermöglicht, bei
+	dem nur überschüssige Energie ins Fahrzeug geladen wird. Alternativ kannst
+	du auch einen erlaubten anteiligen Netzbezug definieren. Dies ist sinnvoll,
+	wenn die selbst produzierte Leistung nicht ausreicht, um einen Ladevorgang
+	zu starten, du aber dennoch laden möchtest.
 
-	Von technischer Seite her benötigt der WARP Energy Manager einen Stromzähler
+	Für das PV-Überschussladen benötigt der WARP Energy Manager einen Stromzähler
 	an deinem Stromnetzanschluss um einen Überschuss, d.h. die Einspeisung von
 	elektrischer Leistung ins Stromnetz, zu ermitteln. Der WARP Energy Manager
 	steuert dann die Wallboxen so, dass keine Leistung ins Netz eingespeist wird
@@ -257,40 +256,37 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Der WARP Energy Manager kann das statische Lastmanagement für die Wallboxen
 	übernehmen. Hierbei ist kein Stromzähler notwendig. Es ist einfach der
 	Maximalstrom der Zuleitung zu definierieren. Dieser Strom muss jederzeit zur
-	Verfügung stehen. Der Energy Manager verteilt diesen Strom dann dynamisch,
-	d.h. je nach Anforderung, an die kontrollierten Wallboxen.
+	Verfügung stehen. Der Energy Manager verteilt diesen Strom dynamisch
+	je nach Anforderung an die kontrollierten Wallboxen.
 
 	\subsubsection{Dynamisches Lastmanagement}
 	\label{dynamisches_lastmanagement}
 
-	In manchen Situationen ist es notwendig ein dynamisches Lastmanagement,
-	welches auf Phasenstromebene regelt, zu realisieren. 
-	Als Beispiel kommt es bei Mietobjekten oftmals vor, dass der
-	Stromnetzanschluss der Immobilie es nicht zulässt, dass mehrere Wallboxen
-	zu jeder Zeit parallel betrieben werden können. Die Absicherung des
-	Stromnetzanschlusses lässt nur einen bestimmten Phasenstrom zu.
+	In manchen Fällen ist ein dynamisches Lastmanagement auf Phasenstromebene erforderlich.
+	Ein typisches Beispiel dafür sind Mietobjekte, bei denen der Stromnetzanschluss der
+	Immobilie nicht ausreicht, um mehrere Wallboxen gleichzeitig zu betreiben.
+	Die Absicherung des Stromnetzanschlusses beschränkt den zulässigen Phasenstrom.
 
-	Im einfachsten Fall kann definiert werden, dass für alle Wallboxen ein
-	gewisser Phasenstrom immer garantiert werden kann. In diesem Fall können
-	die Wallboxen untereinander ein statisches Lastmanagement durchführen, bei
-	dem der eingestellte Phasenstrom einfach zwischen allen WARP Chargern
-	aufgeteilt wird (siehe \fullref{statisches_lastmanagement}).
+	Im einfachsten Fall kann für alle Wallboxen ein bestimmter Phasenstrom garantiert werden.
+	In diesem Fall können die Wallboxen ein statisches Lastmanagement durchführen,
+	bei dem der verfügbare Phasenstrom zwischen den WARP Chargern aufgeteilt wird. (siehe \fullref{statisches_lastmanagement}).
 
-	Oftmals kann aber ein bestimmter Phasenstrom nicht zu jeder Zeit garantiert
-	werden, da sich die Wallboxen einen Stromnetzanschluss mit anderen
-	Verbrauchern teilen. Da diese Verbraucher ein- und ausgeschaltet werden
-	können ändert sich der für die Wallboxen zur Verfügung stehende Phasenstrom
-	permanent. In diesem Fall ist ein dynamisches Lastmanagement notwendig um
+	Oftmals kann jedoch nicht garantiert werden, dass ein bestimmter Phasenstrom jederzeit
+	zur Verfügung steht, da sich die Wallboxen den Stromanschluss mit anderen Verbrauchern teilen.
+	Wenn diese Verbraucher ein- und ausgeschaltet werden
+	ändert sich der für die Wallboxen zur Verfügung stehende Phasenstrom
+	ständig. In diesem Fall ist ein dynamisches Lastmanagement notwendig um
 	sicherzustellen, dass der maximale Phasenstrom nicht überschritten wird und
 	keine Sicherung auslöst. 
 
-	Der WARP Energy Manager kann ein dynamisches Lastmanagement durchführen.
-	Dazu ist ein Stromzähler am Stromnetzanschluss notwendig, der vom Energy Manager
-	ausgewertet werden kann. Der Energy Manager regelt dann die Leistung der Wallboxen 
-	in Abhängigkeit zu dem noch zur Verfügung stehenden Phasenstrom vom Netzanschluss. 
-	Er stellt somit sicher, dass die Sicherungen nicht auslösen. Ist eine 
-	Photovoltaik-Anlage vorhanden und produziert diese, so erhöht diese ganz automatisch 
-	die zur Verfügung stehende Leistung für den Energy Manager.
+	Der WARP Energy Manager ermöglicht ein dynamisches Lastmanagement auf Phasenstromebene.
+	Dazu ist ein Stromzähler am Stromnetzanschluss erforderlich, der vom Energy Manager
+	ausgewertet werden kann. Der Energy Manager überwacht den zur Verfügung stehenden
+	Phasenstrom vom Netzanschluss und regelt die Leistung der Wallboxen entsprechend.
+	Dadurch wird sichergestellt, dass der maximale Phasenstrom nicht überschritten wird
+	und keine Sicherung auslöst. Wenn eine Photovoltaik-Anlage vorhanden ist und Energie
+	produziert, erhöht sie automatisch die zur Verfügung stehende Leistung für den
+	Energy Manager, um die Ladung der Elektrofahrzeuge zu optimieren.
 
 	\subsubsection{Kombination PV + Lastmanagement}
 	PV-Überschussladen und ein statisches/dynamisches Lastmanagement können
