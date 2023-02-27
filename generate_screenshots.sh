@@ -22,4 +22,4 @@ python3 screenshot.py -o manual/img_warp2/resized/web_users_new.png -H $1 --crop
 cp manual/img_warp2/resized/web_status.png warp-charger.com/img_warp2/impressions/web3.png
 cp manual/img_warp2/resized/web_meter.png warp-charger.com/img_warp2/impressions/web1.png
 cp manual/img_warp2/resized/web_wifi_sta.png warp-charger.com/img_warp2/impressions/web2.png
-echo "Manually crop web_users_new.png and web_nfc_new.png"
+echo "Manually crop web_users_new.png"
