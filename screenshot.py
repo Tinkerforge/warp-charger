@@ -31,7 +31,7 @@ args = parser.parse_args()
 print("Screenshotting http://{}/{} to {}".format(args.host, args.element, args.output))
 
 options = Options()
-options.headless = True
+options.add_argument('-headless')
 options.set_preference("layout.css.devPixelsPerPx", str(DEVICE_PIXEL_RATIO))
 
 with webdriver.Firefox(options=options) as driver:
