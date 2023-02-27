@@ -18,7 +18,6 @@ python3 screenshot.py -o manual/img_warp2/resized/web_modbus_tcp.png -H $1 --cro
 python3 screenshot.py -o manual/img_warp2/resized/web_ocpp.png -H $1 --crop -c '#sidebar-ocpp' -e '#ocpp'
 python3 screenshot.py -o manual/img_warp2/resized/web_users.png -H $1 --crop -c '#sidebar-system-group' '#sidebar-users' -e '#users'
 python3 screenshot.py -o manual/img_warp2/resized/web_users_new.png -H $1 --crop -c '#sidebar-system-group' '#sidebar-users' '#users_add_user' -e '#users_add_user_modal .modal-dialog' --style "#users_add_user_modal {height: 600px}" -w 2560
-python3 screenshot.py -o manual/img_warp2/resized/web_nfc_new.png -H $1 --crop -c '#sidebar-nfc' '#nfc_add_tag' -e '#nfc_add_tag_modal .modal-dialog' --style "#nfc_add_tag_modal {height: 630px}" -w 2560
 cp manual/img_warp2/resized/web_status.png warp-charger.com/img_warp2/impressions/web3.png
 cp manual/img_warp2/resized/web_meter.png warp-charger.com/img_warp2/impressions/web1.png
 cp manual/img_warp2/resized/web_wifi_sta.png warp-charger.com/img_warp2/impressions/web2.png
