@@ -25,6 +25,7 @@ parser.add_argument("-f", "--first", nargs='?')
 parser.add_argument("-l", "--last", nargs='?')
 parser.add_argument("-s", "--style", nargs='?')
 parser.add_argument("-w", "--width", nargs='?')
+parser.add_argument("-p", "--page", action="store_true")
 
 args = parser.parse_args()
 
@@ -55,6 +56,12 @@ with webdriver.Firefox(options=options) as driver:
 
     # Await fade transition
     time.sleep(1)
+
+    if args.page:
+        print("Screenshoting complete page")
+        with open(args.output, "wb") as f:
+            f.write(driver.get_screenshot_as_png())
+        sys.exit(0)
 
     # Smile!
     element = driver.find_element(By.CSS_SELECTOR, args.element) if args.element else driver.find_element(By.TAG_NAME, "body")
