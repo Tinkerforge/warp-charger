@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from enum import Enum, IntEnum
+from enum import Enum, IntEnum, IntFlag, auto
 from typing import Union, Optional
 import itertools
 
@@ -79,10 +79,31 @@ class EType(IntEnum):
     NULL = 6
     OPAQUE = 7
 
-class Version(IntEnum):
-    ANY = 0
-    WARP1_ONLY = 1
-    WARP2_ONLY = 2
+class Version(IntFlag):
+    # -1 in two's complement has all bits set, so ANY matches any version
+    # Also -1 is sorted before the specific versions, which is required for
+    # the layout of generated constant lists.
+    ANY = -1
+    WARP1 = 1
+    WARP2 = 2
+    WARPEM = 4
+
+    def css_classes(self):
+        if self == Version.ANY:
+            return Version.ANY.name.lower()
+        return " ".join([x.name for x in Version if x in self]).lower()
+
+    def label(self, row=False):
+        if self == Version.ANY:
+            return ""
+        prefix = "<strong>" if not row else "<strong>(Nur "
+        suffix = ":</strong><br>" if not row else ")</strong> "
+        return prefix + ",".join([{
+            Version.WARP1: "WARP 1",
+            Version.WARP2: "WARP 2",
+            Version.WARPEM: "Energy Manager",
+        }[x] for x in Version if x in self]) + suffix
+
 
 @dataclass
 class Const:
@@ -218,8 +239,8 @@ class Elem:
                 if len(consts) == 0:
                     continue
 
-                desc += constants_template.format(version_class= version.name.lower(),
-                                                  version_label={Version.ANY:"", Version.WARP1_ONLY: "<strong>WARP 1:</strong><br>", Version.WARP2_ONLY: "<strong>WARP 2:</strong><br>"}[version],
+                desc += constants_template.format(version_class=version.css_classes(),
+                                                  version_label=version.label(),
                                                   entries='\n    '.join(consts))
 
         if self.type_ == EType.ARRAY and self.val is not None:
@@ -246,8 +267,8 @@ class Elem:
                     if len(mems) == 0:
                         continue
 
-                    result += constants_template.format(version_class= version.name.lower(),
-                                                    version_label={Version.ANY:"", Version.WARP1_ONLY: "<strong>WARP 1:</strong><br>", Version.WARP2_ONLY: "<strong>WARP 2:</strong><br>"}[version],
+                    result += constants_template.format(version_class=version.css_classes(),
+                                                    version_label=version.label(),
                                                     entries='\n    '.join(mems))
                 return result
             desc = get_desc(desc)
@@ -255,9 +276,9 @@ class Elem:
         if self.type_ == EType.OBJECT:
             desc += self.to_html_table(is_root=False)
 
-        return row_template.format(version_class=self.version.name.lower(),
+        return row_template.format(version_class=self.version.css_classes(),
                                    name=name,
-                                   version_prefix={Version.ANY:"", Version.WARP1_ONLY: "<strong>(Nur WARP 1)</strong> ", Version.WARP2_ONLY: "<strong>(Nur WARP 2)</strong> "}[self.version],
+                                   version_prefix=self.version.label(row=True),
                                    desc=desc)
 
     def root_to_html(self, f: Func, module: str) -> str:
@@ -283,8 +304,8 @@ class Elem:
                                fn_path = module + "/" + f.name if module is not None else f.name,
                                fn_desc = self.desc,
                                fn_table = table,
-                               version_class=self.version.name.lower(),
-                               version_text={Version.ANY:"", Version.WARP1_ONLY: " <strong>(Nur WARP 1)</strong> ", Version.WARP2_ONLY: " <strong>(Nur WARP 2)</strong> "}[self.version])
+                               version_class=self.version.css_classes(),
+                               version_text={Version.ANY:"", Version.WARP1: " <strong>(Nur WARP 1)</strong> ", Version.WARP2: " <strong>(Nur WARP 2)</strong> "}[self.version])
 
     def to_html_table(self, is_root) -> str:
         table_template = """
@@ -369,6 +390,6 @@ class Module:
         return template.format(name=self.name,
                                desc=wrap_non_empty("<h5>",self.desc,"</h5>"),
                                display_name=self.display_name,
-                               version=self.version.name.lower(),
+                               version=self.version.css_classes(),
                                toc="\n".join(toc),
                                functions="\n".join(functions))

@@ -9,7 +9,7 @@ meter = Module("meter", "Stromzähler", "", Version.ANY, [
             ]),
             "type": Elem.INT("Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!", constants=[
                 Const(0, "Kein Stromzähler verfügbar"),
-                Const(1, "SDM72", Version.WARP1_ONLY),
+                Const(1, "SDM72", Version.WARP1),
                 Const(2, "SDM630", Version.ANY),
                 Const(3, "SDM72V2", Version.ANY)
             ])
@@ -38,16 +38,16 @@ meter = Module("meter", "Stromzähler", "", Version.ANY, [
     ),
 
     Func("error_counters", FuncType.STATE, Elem.OBJECT("Fehlerzähler der Kommunikation mit dem Stromzähler.", members={
-            "meter": Elem.INT("Kommunikationsfehler zwischen RS485 Bricklet und Stromzähler.", version=Version.WARP1_ONLY),
-            "bricklet": Elem.INT("Kommunikationsfehler zwischen ESP Brick und RS485 Bricklet.", version=Version.WARP1_ONLY),
-            "bricklet_reset": Elem.INT("Unerwartete Resets des RS485 Bricklets.", version=Version.WARP1_ONLY),
+            "meter": Elem.INT("Kommunikationsfehler zwischen RS485 Bricklet und Stromzähler.", version=Version.WARP1),
+            "bricklet": Elem.INT("Kommunikationsfehler zwischen ESP Brick und RS485 Bricklet.", version=Version.WARP1),
+            "bricklet_reset": Elem.INT("Unerwartete Resets des RS485 Bricklets.", version=Version.WARP1),
 
-            "local_timeout": Elem.INT("Local Timeout", version=Version.WARP2_ONLY),
-            "global_timeout": Elem.INT("Global Timeout", version=Version.WARP2_ONLY),
-            "illegal_function": Elem.INT("Illegal Function", version=Version.WARP2_ONLY),
-            "illegal_data_access": Elem.INT("Illegal Data Access", version=Version.WARP2_ONLY),
-            "illegal_data_value": Elem.INT("Illegal Data Value", version=Version.WARP2_ONLY),
-            "slave_device_failure": Elem.INT("Slave Device Failure", version=Version.WARP2_ONLY),
+            "local_timeout": Elem.INT("Local Timeout", version=Version.WARP2),
+            "global_timeout": Elem.INT("Global Timeout", version=Version.WARP2),
+            "illegal_function": Elem.INT("Illegal Function", version=Version.WARP2),
+            "illegal_data_access": Elem.INT("Illegal Data Access", version=Version.WARP2),
+            "illegal_data_value": Elem.INT("Illegal Data Value", version=Version.WARP2),
+            "slave_device_failure": Elem.INT("Slave Device Failure", version=Version.WARP2),
         })
     ),
 
@@ -120,7 +120,7 @@ meter = Module("meter", "Stromzähler", "", Version.ANY, [
             ]),
             "type": Elem.INT("Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!", constants=[
                 Const(0, "Kein Stromzähler verfügbar"),
-                Const(1, "SDM72", Version.WARP1_ONLY),
+                Const(1, "SDM72", Version.WARP1),
                 Const(2, "SDM630", Version.ANY),
                 Const(3, "SDM72V2", Version.ANY)
             ])
@@ -215,7 +215,7 @@ meter = Module("meter", "Stromzähler", "", Version.ANY, [
         })
     ),
 
-    Func("type_override", FuncType.CONFIGURATION, Elem.OBJECT("Erlaubt es den verbauten Zählertyp zu überschreiben, falls die Auto-Detektion nicht funktioniert. Der Wert kann über meter/type_override_update mit dem selben Payload aktualisiert werden.", version=Version.WARP1_ONLY, members={
+    Func("type_override", FuncType.CONFIGURATION, Elem.OBJECT("Erlaubt es den verbauten Zählertyp zu überschreiben, falls die Auto-Detektion nicht funktioniert. Der Wert kann über meter/type_override_update mit dem selben Payload aktualisiert werden.", version=Version.WARP1, members={
             "type": Elem.INT("Stromzählertyp, der verwendet werden soll", constants=[
                 Const(0, "Kein Stromzähler verfügbar"),
                 Const(1, "SDM72"),

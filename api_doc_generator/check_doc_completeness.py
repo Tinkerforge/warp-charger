@@ -114,9 +114,9 @@ UNDOCUMENTED = [
     "rtc/reset"
 ]
 
-version = int(sys.argv[1])
+version = Version(int(sys.argv[1]))
 
-mods = [m for m in mods if m.version == Version.ANY or m.version == version]
+mods = [m for m in mods if version in m.version]
 
 # Those are documented, but will not appear in a debug report. Typically raw commands.
 IMPLEMENTED = [
@@ -130,7 +130,7 @@ for m in mods:
     for f in m.functions:
         if f.type_ == FuncType.HTTP_ONLY:
             all_functions.discard("{}/{}".format(m.name, f.name) if m.name != "misc" else f.name)
-        if f.root.version != Version.ANY and f.root.version != version:
+        if version not in f.root.version:
             all_functions.discard("{}/{}".format(m.name, f.name) if m.name != "misc" else f.name)
 
 for x in IMPLEMENTED:
@@ -141,15 +141,15 @@ def filter_elem(e: Elem, ver: int):
         return e
 
     if isinstance(e.val, list):
-        e.val = [filter_elem(x, ver) for x in e.val if x.version == Version.ANY or x.version == ver]
+        e.val = [filter_elem(x, ver) for x in e.val if ver in x.version]
 
     if isinstance(e.val, dict):
-        e.val = {k: filter_elem(v, ver) for k, v in e.val.items() if v.version == Version.ANY or v.version == ver}
+        e.val = {k: filter_elem(v, ver) for k, v in e.val.items() if ver in v.version}
 
     return e
 
 for m in mods:
-    m.functions = [f for f in m.functions if f.root.version == Version.ANY or f.root.version == version]
+    m.functions = [f for f in m.functions if version in f.root.version]
     for f in m.functions:
         f.root = filter_elem(f.root, version)
 

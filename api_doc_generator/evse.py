@@ -53,7 +53,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
                 Const(2, "Systemfehler"),
                 Const(3, "Unbekannter fehler"),
                 Const(4, "Kalibrierungsfehler"),
-            ], version=Version.WARP2_ONLY)
+            ], version=Version.WARP2)
         })
     ),
 
@@ -74,16 +74,16 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
                 Const(True, "Wallbox hat eine Typ-2-Dose mit Kabelverriegelung"),
             ]),
             "evse_version": Elem.INT("Hardware-Version des Ladecontrollers", constants=[
-                Const(14, "EVSE 1.4", Version.WARP1_ONLY),
-                Const(15, "EVSE 1.5", Version.WARP1_ONLY),
-                Const(20, "EVSE 2.0", Version.WARP2_ONLY)
+                Const(14, "EVSE 1.4", Version.WARP1),
+                Const(15, "EVSE 1.5", Version.WARP1),
+                Const(20, "EVSE 2.0", Version.WARP2)
             ]),
             "energy_meter_type": Elem.INT("Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!", constants=[
                 Const(0, "Kein Stromzähler verfügbar"),
-                Const(1, "SDM72", Version.WARP1_ONLY),
-                Const(2, "SDM630", Version.WARP2_ONLY),
-                Const(3, "SDM72V2", Version.WARP2_ONLY)
-            ], version=Version.WARP2_ONLY)
+                Const(1, "SDM72", Version.WARP1),
+                Const(2, "SDM630", Version.WARP2),
+                Const(3, "SDM72V2", Version.WARP2)
+            ], version=Version.WARP2)
         })
     ),
 
@@ -134,65 +134,65 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
             ]),
             "cp_pwm_duty_cycle": Elem.INT("Tastverhältnis der Pulsweitenmodulation auf dem CP-Signal.", unit=Units.tenth_percent),
             "adc_values": Elem.ARRAY("16-Bit ADC-Rohwerte der Spannungsmessungen", members=[
-                Elem.INT("CP/PE", version=Version.WARP1_ONLY),
-                Elem.INT("PP/PE", version=Version.WARP1_ONLY),
+                Elem.INT("CP/PE", version=Version.WARP1),
+                Elem.INT("PP/PE", version=Version.WARP1),
 
-                Elem.INT("CP/PE vor Widerstand (PWM High)", version=Version.WARP2_ONLY),
-                Elem.INT("CP/PE nach Widerstand (PWM High)", version=Version.WARP2_ONLY),
-                Elem.INT("CP/PE vor Widerstand (PWM Low)", version=Version.WARP2_ONLY),
-                Elem.INT("CP/PE nach Widerstand (PWM Low)", version=Version.WARP2_ONLY),
-                Elem.INT("PP/PE", version=Version.WARP2_ONLY),
-                Elem.INT("+12V Rail", version=Version.WARP2_ONLY),
-                Elem.INT("-12V Rail", version=Version.WARP2_ONLY),
+                Elem.INT("CP/PE vor Widerstand (PWM High)", version=Version.WARP2),
+                Elem.INT("CP/PE nach Widerstand (PWM High)", version=Version.WARP2),
+                Elem.INT("CP/PE vor Widerstand (PWM Low)", version=Version.WARP2),
+                Elem.INT("CP/PE nach Widerstand (PWM Low)", version=Version.WARP2),
+                Elem.INT("PP/PE", version=Version.WARP2),
+                Elem.INT("+12V Rail", version=Version.WARP2),
+                Elem.INT("-12V Rail", version=Version.WARP2),
             ]),
             "voltages": Elem.ARRAY("Aus den ADC-Werten berechnete Spannungen", unit=Units.mV, members=[
-                Elem.INT("CP/PE", version=Version.WARP1_ONLY),
-                Elem.INT("PP/PE", version=Version.WARP1_ONLY),
-                Elem.INT("Maximalspannung CP/PE", version=Version.WARP1_ONLY),
+                Elem.INT("CP/PE", version=Version.WARP1),
+                Elem.INT("PP/PE", version=Version.WARP1),
+                Elem.INT("Maximalspannung CP/PE", version=Version.WARP1),
 
-                Elem.INT("CP/PE vor Widerstand (PWM High)", version=Version.WARP2_ONLY),
-                Elem.INT("CP/PE nach Widerstand (PWM High)", version=Version.WARP2_ONLY),
-                Elem.INT("CP/PE vor Widerstand (PWM Low)", version=Version.WARP2_ONLY),
-                Elem.INT("CP/PE nach Widerstand (PWM Low)", version=Version.WARP2_ONLY),
-                Elem.INT("PP/PE", version=Version.WARP2_ONLY),
-                Elem.INT("+12V Rail", version=Version.WARP2_ONLY),
-                Elem.INT("-12V Rail", version=Version.WARP2_ONLY),
+                Elem.INT("CP/PE vor Widerstand (PWM High)", version=Version.WARP2),
+                Elem.INT("CP/PE nach Widerstand (PWM High)", version=Version.WARP2),
+                Elem.INT("CP/PE vor Widerstand (PWM Low)", version=Version.WARP2),
+                Elem.INT("CP/PE nach Widerstand (PWM Low)", version=Version.WARP2),
+                Elem.INT("PP/PE", version=Version.WARP2),
+                Elem.INT("+12V Rail", version=Version.WARP2),
+                Elem.INT("-12V Rail", version=Version.WARP2),
             ]),
             "resistances": Elem.ARRAY("Aus den Spannungen berechnete Widerstände", unit=Units.ohm, members=[
                 Elem.INT("CP/PE"),
                 Elem.INT("PP/PE"),
             ]),
             "gpio": Elem.ARRAY("Signale auf den GPIOs", members=[
-                Elem.BOOL("Eingang", version=Version.WARP1_ONLY),
-                Elem.BOOL("Ausgang", version=Version.WARP1_ONLY),
-                Elem.BOOL("Motoreingangsschalter", version=Version.WARP1_ONLY),
-                Elem.BOOL("Relais", version=Version.WARP1_ONLY),
-                Elem.BOOL("Motorfehler", version=Version.WARP1_ONLY),
+                Elem.BOOL("Eingang", version=Version.WARP1),
+                Elem.BOOL("Ausgang", version=Version.WARP1),
+                Elem.BOOL("Motoreingangsschalter", version=Version.WARP1),
+                Elem.BOOL("Relais", version=Version.WARP1),
+                Elem.BOOL("Motorfehler", version=Version.WARP1),
 
-                Elem.BOOL("Stromkonfiguration 0", version=Version.WARP2_ONLY),
-                Elem.BOOL("Motorfehler", version=Version.WARP2_ONLY),
-                Elem.BOOL("Gleichstromfehler", version=Version.WARP2_ONLY),
-                Elem.BOOL("Stromkonfiguration 1", version=Version.WARP2_ONLY),
-                Elem.BOOL("DC-Fehlerstromschutz-Test", version=Version.WARP2_ONLY),
-                Elem.BOOL("Abschaltung", version=Version.WARP2_ONLY),
-                Elem.BOOL("Taster", version=Version.WARP2_ONLY),
-                Elem.BOOL("CP-PWM", version=Version.WARP2_ONLY),
-                Elem.BOOL("Motoreingangsschalter", version=Version.WARP2_ONLY),
-                Elem.BOOL("Schützsteuerung", version=Version.WARP2_ONLY),
-                Elem.BOOL("Konfigurierbarer Ausgang", version=Version.WARP2_ONLY),
-                Elem.BOOL("CP-Trennung", version=Version.WARP2_ONLY),
-                Elem.BOOL("Motor aktiv", version=Version.WARP2_ONLY),
-                Elem.BOOL("Motor-Phase", version=Version.WARP2_ONLY),
-                Elem.BOOL("Schützprüfung vorher", version=Version.WARP2_ONLY),
-                Elem.BOOL("Schützprüfung nachher", version=Version.WARP2_ONLY),
-                Elem.BOOL("Konfigurierbarer Eingang", version=Version.WARP2_ONLY),
-                Elem.BOOL("DC X6", version=Version.WARP2_ONLY),
-                Elem.BOOL("DC X30", version=Version.WARP2_ONLY),
-                Elem.BOOL("LED", version=Version.WARP2_ONLY),
-                Elem.BOOL("Nicht belegt", version=Version.WARP2_ONLY),
-                Elem.BOOL("Nicht belegt", version=Version.WARP2_ONLY),
-                Elem.BOOL("Nicht belegt", version=Version.WARP2_ONLY),
-                Elem.BOOL("Nicht belegt", version=Version.WARP2_ONLY),
+                Elem.BOOL("Stromkonfiguration 0", version=Version.WARP2),
+                Elem.BOOL("Motorfehler", version=Version.WARP2),
+                Elem.BOOL("Gleichstromfehler", version=Version.WARP2),
+                Elem.BOOL("Stromkonfiguration 1", version=Version.WARP2),
+                Elem.BOOL("DC-Fehlerstromschutz-Test", version=Version.WARP2),
+                Elem.BOOL("Abschaltung", version=Version.WARP2),
+                Elem.BOOL("Taster", version=Version.WARP2),
+                Elem.BOOL("CP-PWM", version=Version.WARP2),
+                Elem.BOOL("Motoreingangsschalter", version=Version.WARP2),
+                Elem.BOOL("Schützsteuerung", version=Version.WARP2),
+                Elem.BOOL("Konfigurierbarer Ausgang", version=Version.WARP2),
+                Elem.BOOL("CP-Trennung", version=Version.WARP2),
+                Elem.BOOL("Motor aktiv", version=Version.WARP2),
+                Elem.BOOL("Motor-Phase", version=Version.WARP2),
+                Elem.BOOL("Schützprüfung vorher", version=Version.WARP2),
+                Elem.BOOL("Schützprüfung nachher", version=Version.WARP2),
+                Elem.BOOL("Konfigurierbarer Eingang", version=Version.WARP2),
+                Elem.BOOL("DC X6", version=Version.WARP2),
+                Elem.BOOL("DC X30", version=Version.WARP2),
+                Elem.BOOL("LED", version=Version.WARP2),
+                Elem.BOOL("Nicht belegt", version=Version.WARP2),
+                Elem.BOOL("Nicht belegt", version=Version.WARP2),
+                Elem.BOOL("Nicht belegt", version=Version.WARP2),
+                Elem.BOOL("Nicht belegt", version=Version.WARP2),
             ]),
             "charging_time": Elem.INT("Ungefähre Zeit des Ladevorgangs. Nur für Lastmanagementzwecke zu verwenden!", unit=Units.ms),
             "time_since_state_change": Elem.INT("Zeit seit dem letzten IEC-61851-Zustandswechsel. Falls der Zustand 2 (= B: Lädt) ist, entspricht dieser Wert der Ladezeit.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms),
@@ -281,7 +281,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
                 Const(1, "Hochohmig"),
             ]),
         },
-        version=Version.WARP2_ONLY)
+        version=Version.WARP2)
     ),
 
     Func("button_configuration", FuncType.STATE, Elem.OBJECT("Die Konfiguration des Tasters in der Frontblende. Diese kann über evse/button_configuration_update mit dem selben Payload aktualisiert werden. Benötigt das Feature <a href=\"#features_button_configuration\"><code>\"button_configuration\"</code></a>", members={
@@ -292,7 +292,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
                 Const(3, "Ladestart/stop wenn gedrückt"),
             ]),
         },
-        version=Version.WARP2_ONLY)
+        version=Version.WARP2)
     ),
 
     Func("user_calibration", FuncType.STATE, Elem.OBJECT("Erlaubt es, die werksseitige Kalibrierung des EVSEs auszulesen und zu überschreiben. Dieser Wert kann über evse/user_calibration_update mit dem selben Payload aktualisiert werden. Um die Kalibierung auf den Werkszustand zurückzusetzen, kann ein Payload mit user_calibration_active auf false geschickt werden. Die weiteren Werte werden dann ignoriert.", members={
@@ -303,15 +303,15 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
             "resistance_2700": Elem.INT("Einer der Kalibrierungsparameter."),
             "resistance_880": Elem.ARRAY("Einer der Kalibrierungsparameter.", member_type=EType.INT),
         },
-        version=Version.WARP1_ONLY)
+        version=Version.WARP1)
     ),
 
-    Func("ev_wakeup", FuncType.STATE, Elem.OBJECT("Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus einem Energiesparmodus zu wecken, indem ein Abziehen und Anstecken des Ladekabels vorgetäuscht wird. (Control-Pilot-Trennung/CP-Trennung) Dieser Wert kann über evse/ev_wakeup_update mit dem selben Payload aktualisiert werden. Benötigt das Feature <a href=\"#features_cp_disconnect\"><code>\"cp_disconnect\"</code></a>", version=Version.WARP2_ONLY, members={
+    Func("ev_wakeup", FuncType.STATE, Elem.OBJECT("Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus einem Energiesparmodus zu wecken, indem ein Abziehen und Anstecken des Ladekabels vorgetäuscht wird. (Control-Pilot-Trennung/CP-Trennung) Dieser Wert kann über evse/ev_wakeup_update mit dem selben Payload aktualisiert werden. Benötigt das Feature <a href=\"#features_cp_disconnect\"><code>\"cp_disconnect\"</code></a>", version=Version.WARP2, members={
             "enabled": Elem.BOOL("true wenn die Ladeelektronik des Fahrzeugs geweckt werden soll")
         })
     ),
 
-    Func("control_pilot_disconnect", FuncType.STATE, Elem.OBJECT("Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) Dieser Wert kann über evse/control_pilot_disconnect_update mit dem selben Payload aktualisiert werden. <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe {{{ref:evse/management_enabled}}}.  Benötigt das Feature <a href=\"#features_cp_disconnect\"><code>\"cp_disconnect\"</code></a>", version=Version.WARP2_ONLY, members={
+    Func("control_pilot_disconnect", FuncType.STATE, Elem.OBJECT("Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) Dieser Wert kann über evse/control_pilot_disconnect_update mit dem selben Payload aktualisiert werden. <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe {{{ref:evse/management_enabled}}}.  Benötigt das Feature <a href=\"#features_cp_disconnect\"><code>\"cp_disconnect\"</code></a>", version=Version.WARP2, members={
             "disconnect": Elem.BOOL("true CP getrennt ist, sonst false")
         })
     ),
@@ -321,7 +321,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
         })
     ),
 
-    Func("reset_dc_fault_current_state", FuncType.COMMAND, Elem.OBJECT("Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong>", version=Version.WARP2_ONLY, members={
+    Func("reset_dc_fault_current_state", FuncType.COMMAND, Elem.OBJECT("Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong>", version=Version.WARP2, members={
             "password": Elem.INT("Passwort, das zum Zurücksetzen benötigt wird. Das Passwort lautet 0xDC42FA23.")
         })
     ),
