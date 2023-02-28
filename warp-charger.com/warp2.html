@@ -473,7 +473,7 @@
                     <p>
                       Im Gegensatz zur Smart Variante des WARP2 Chargers zeigt das Ladelogbuch dann für jeden Ladevorgang neben dem Nutzer, dem Ladebeginn und der Ladedauer zusätzlich die
                       <b>geladene Energiemenge</b> und bei Eingabe eines Strombezugpreises auch die <b>Kosten</b> des Ladevorgangs an. Somit ist es möglich, wenn mehrere Fahrzeuge an einer Wallbox geladen werden, deren Anteil am Strombezug zu bestimmen. Über den <b>.CSV Export</b> kann diese Funktion
-                      zum Beispiel dazu genutzt werden um die zu Hause geladene Energiemenge mit dem Arbeitgeber abzurechnen. Zusätzlich steht auch ein direkter <b>.PDF Export</b> zur Verfügung. Bei diesem kann vom Nutzer ein individueller Briefkopf definiert werden um zum Beispiel das Schreiben direkt 
+                      zum Beispiel dazu genutzt werden um die zu Hause geladene Energiemenge mit dem Arbeitgeber abzurechnen. Zusätzlich steht auch ein direkter <b>.PDF Export</b> zur Verfügung. Bei diesem kann vom Nutzer ein individueller Briefkopf definiert werden um zum Beispiel das Schreiben direkt
                       an den Arbeitgeber schicken zu können.
                     </p>
                 </div>
@@ -847,11 +847,64 @@ client<span style='color:#808030; '>.</span>loop_forever<span style='color:#8080
             <div class="row">
                 <div class="col-auto  mx-auto">
                     <div class="text-center">
-                        <a href="firmwares/warp2_firmware_2_0_11_639c76c2_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP2 Firmware 2.0.11 herunterladen</a>
-                        <div class="text-muted pt-2 pb-2">Veröffentlicht am 16.12.2022</div>
+                        <a href="firmwares/warp2_firmware_2_1_0_63fddc77_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP2 Firmware 2.1.0 herunterladen</a>
+                        <div class="text-muted pt-2 pb-2">Veröffentlicht am 28.02.2023</div>
                     </div>
 
                     <table class="table table-borderless mb-3">
+                        <tbody>
+                            <tr>
+                                <th scope="row"><a href="firmwares/warp2_firmware_2_1_0_63fddc77_merged.bin">2.1.0</a><br/><span class="th-details">28.02.2023</span><br/><a href="firmwares/warp2_firmware_2_1_0_63fddc77_merged.bin.sha256">Prüfsumme</a></th>
+                                <td>
+                                    <ul>
+                                        <li>OCPP-Unterstützung hinzugefügt (OCPPJ 1.6 Core und Smart Charging Profile)</li>
+                                        <li>PDF-Export für Ladetracker hinzugefügt</li>
+                                        <li>CSV-Export des Ladetrackers in "Excel-Kompatibel" und "nach RFC4180" aufgeteilt</li>
+                                        <li>Menüstruktur des Webinterfaces neu organisiert</li>
+                                        <li>Ladecontroller-Unterseite in Ladestaus und Ladeeinstellungen unterteilt</li>
+                                        <li>Auto-Start in manuelle Ladefreigabe umbenannt und in Ladeeinstellungen verschoben</li>
+                                        <li>Lastmanagement-Protokoll durch neue, vorwärts-kompatible Version ersetzt <strong>Alle Wallboxen eines Lastmanagement-Verbunds müssen auf Firmware 2.1.0 oder höher aktualisiert werden!</strong></li>
+                                        <li>Implementierung des Stromzähler-Graphen ausgetauscht</li>
+                                        <li>Übersetzungen verbessert</li>
+                                        <li>Watchdog als Schutz gegen hängende Firmware hinzugefügt</li>
+                                        <li>Behoben, dass WLAN-Verbindungskonfiguration nicht gespeichert werden konnte, wenn nur das gewählte Netzwerk geändert wurde</li>
+                                        <li>Behoben, dass Zahländerungen nicht angewandt wurden, wenn per Enter-Druck im Zahl-Eingabefeld gespeichert wurde</li>
+                                        <li>Enter-Druck in Modalfenstern repariert</li>
+                                        <li>Prüfung auf reservierte, Broad- und Multicast-IPs in Lastmanager-Konfiguration hinzugefügt</li>
+                                        <li>Behoben, dass Lastmanagement-Fehlerdauer nicht anstieg, wenn keine gesteuerte Wallbox antwortet</li>
+                                        <li>Behoben, dass Start- und End-Datumsauswahl nicht die Zeitzone des Nutzers berücksichtigt hat</li>
+                                        <li>Labelbreite auf der Statusseite auf kleinen Bildschirmen angepasst</li>
+                                        <li>Standard-NTP-Server für höhere Zuverlässigkeit geändert</li>
+                                        <li>Behandlung der RTC-Zeit im Fehlerfall repariert</li>
+                                        <li>"Charged Energy"-Register im Keba-Emulationsmodus repariert</li>
+                                        <li>API-Fehlermeldungen verbessert</li>
+                                        <li>Ermöglicht, dass mehr als eine API-Fehlermeldung geschickt werden kann</li>
+                                        <li>Validierung der Benutzerkonfiguration repariert</li>
+                                        <li>Behoben, dass NFC-Tag ausgewählt werden musste, wenn exakt ein Tag erkannt wurde</li>
+                                        <li>Behoben, dass immer Login-Seite angezeigt wurde, falls beim Prüfen des Anmeldestatus ein Timeout auftrat</li>
+                                        <li>Behoben, dass Benutzerkonfiguration bzw. -API bis zu einem Neustart gesperrt wurde</li>
+                                        <li>Verschränkte Stromgrenzenbeschränkungen in der Lastmanager-Konfiguration behoben</li>
+                                        <li>WLAN-Verbindungsaufbau beschleunigt</li>
+                                        <li>Boost-Modus hinzugefügt (durch Update auf Ladecontroller-Firmware 2.1.9)</li>
+                                        <li>Fahrzeug-Weckruf hinzugefügt (durch Update auf Ladecontroller-Firmware 2.1.9)</li>
+                                        <li>CP-Trennungs-API finalisiert (durch Update auf Ladecontroller-Firmware 2.1.9)</li>
+                                        <li>Sichergestellt, dass Schütz nicht unter Last geschaltet wird, wenn das Fahrzeug den Ladevorgang stoppt (durch Update auf Ladecontroller-Firmware 2.1.9)</li>
+                                        <li>Behoben, dass bei einer Notabschaltung wegen DC-Fehler zusätzlich ein Schützfehler gemeldet wurde (durch Update auf Ladecontroller-Firmware 2.1.10)</li>
+                                        <li>Behoben, dass Stromzählereinstellungen kontinuierlich geschrieben wurden (durch Update auf Ladecontroller-Firmware 2.1.10)</li>
+                                        <li>Ausgabe des letzten Stromzählerwerts repariert (durch Update auf Ladecontroller-Firmware 2.1.10)</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-center">
+                        <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOlderVersions" aria-expanded="false" aria-controls="collapseOlderVersions">
+                            Ältere Firmware-Versionen
+                        </button>
+                    </div>
+
+                    <div class="collapse" id="collapseOlderVersions">
+                    <table class="table mt-3">
                         <tbody>
                             <tr>
                                 <th scope="row"><a href="firmwares/warp2_firmware_2_0_11_639c76c2_merged.bin">2.0.11</a><br/><span class="th-details">16.12.2022</span><br/><a href="firmwares/warp2_firmware_2_0_11_639c76c2_merged.bin.sha256">Prüfsumme</a></th>
@@ -872,18 +925,7 @@ client<span style='color:#808030; '>.</span>loop_forever<span style='color:#8080
                                         <li>Löschen noch nicht gespeicherter Benutzer repariert</li>
                                     </ul>
                                 </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="text-center">
-                        <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOlderVersions" aria-expanded="false" aria-controls="collapseOlderVersions">
-                            Ältere Firmware-Versionen
-                        </button>
-                    </div>
-
-                    <div class="collapse" id="collapseOlderVersions">
-                    <table class="table mt-3">
-                        <tbody>
+                            </tr
                             <tr>
                                 <th scope="row"><a href="firmwares/warp2_firmware_2_0_10_6384a220_merged.bin">2.0.10</a><br/><span class="th-details">28.11.2022</span><br/><a href="firmwares/warp2_firmware_2_0_10_6384a220_merged.bin.sha256">Prüfsumme</a></th>
                                 <td>
