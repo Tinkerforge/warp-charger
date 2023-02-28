@@ -133,6 +133,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	erhältst du unseren Energiemanager zur Schaltschrankmontage, mit dem du den
 	Energieverbrauch zu Hause überwachen, steuern und optimieren kannst. 
 
+	\gfx{./img/resized/warp-energy-manager.png}\vspace{-0.3cm}
+
 	In Verbindung mit unseren WARP Charger Wallboxen kannst du das Laden von
 	Elektrofahrzeugen abhängig von deinem Strombezug und deiner Stromeinspeisung steuern.
 	Unter anderem ist damit ein PV-Überschussladen oder ein dynamisches
@@ -476,7 +478,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Energy Managers zugegriffen wird.
 
 	Die Zugangsdaten des Access-Points findest du auf dem WLAN-Zugangsdaten-Aufkleber
-	auf der Rückseite dieser Anleitung. Du kannst entweder den QR-Code des Aufklebers verwenden,
+	auf der Rückseite dieser Anleitung. Ein weiterer identischer Aufkleber
+	befindet sich auf der Rückseite der Frontplatte des WARP Energy Managers.
+	Du kannst entweder den QR-Code des Aufklebers verwenden,
 	der das WLAN automatisch konfiguriert, oder SSID und Passphrase abschreiben.
 	Die meisten Kamera-Apps von Smartphones unterstützen das Auslesen des
 	QR-Codes und das automatische Verbinden zu dem WLAN. Somit musst du die
@@ -542,8 +546,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	diese Menüleiste stattdessen versteckt unter einem Menü-Symbol oben rechts
 	im grauen Balken neben dem WARP Logo angezeigt (\glqq drei Striche untereinander\grqq).
 	Hier kannst du das Menü durch einen Klick auf das Symbol ausklappen.
+	\gfx{./img/resized/web_status}
 
-	\vspace{-0.2cm}
 	\subsection{Status (Startseite)}
 	\label{status}
 	Die Startseite des Webinterfaces bietet Einstellen und zeigt Statusinformationen.
@@ -572,16 +576,19 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	Am Ende wird der Zustand der verwendeten Schnittstellen angezeigt.
 
-	%\gfx{./img_warp2/resized/web_status}
-
-
 	\subsection{Energiebilanz}
+
+	\gfx{./img/resized/web_em_energy_analysis}
 	Die Seite Energiebilanz stellt Informationen zum Energiebezug zur Verfügung.
 	Die Daten werden lokal auf dem WARP Energy Manager gespeichert. Die Daten
 	können auf Stunden-, Tages-, Wochen- oder Monatsbasis betrachtet werden.
 
+	Die Funktion wird erst mit dem kommenden Firmwareupdate veröffentlicht.
+
 	\subsection{Energiemanager}
 	\subsubsection{Einstellungen}
+
+	\gfx{./img/resized/web_em_settings}
 	Alle Einstellungen bezüglich des Energiemanagements werden hier vorgenommen.
 
 	Als erstes muss der \textbf{Standard-Lademodus} definiert werden. Die
@@ -669,6 +676,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\subsubsection{Stromzähler}
 	\label{stromzaehler}
 
+	\gfx{./img/resized/web_em_meter_config}
+
 	Als Stromzähler am Netzanschluss können verschiedene Stromzähler-Typen
 	konfiguriert werden. Hier muss ein Stromzähler konfiguriert werden, wenn 
 	der WARP Energy Manager die Funktionen \fullref{pv_ueberschussladen} oder 
@@ -690,6 +699,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 
 	\subsubsection{Wallboxen}
+
+	\gfx{./img/resized/web_charge_manager}
 	Hier werden die vom Energy Manager kontrollierten Wallboxen konfiguriert.
 	Die hier vorgenommenen Einstellungen beeinflussen das Lastmanagement
 	zwischen den Wallboxen.
@@ -754,11 +765,12 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Hier kannst du den Hostnamen des WARP Energy Managers in allen verbundenen Netzwerken konfigurieren. Außerdem kann mDNS aktiviert oder deaktiviert werden.
 	Über mDNS können andere Geräte im Netzwerk den WARP Energy Manager finden.
 
-	%\gfx{./img_warp2/resized/web_network}
+	\gfx{./img/resized/web_network}
 
 
 	\subsubsection{WLAN-Verbindung}
-	%\gfx{./img_warp2/resized/web_wifi_sta}
+	\gfx{./img/resized/web_wifi_sta}
+
 	Es Besteht die Möglichkeit den WARP Energy Manager in dein Netzwerk mittels
 	WLAN zu integrieren. \textbf{Diese Option empfehlen wir aber ausdrücklich
 	nicht!} Das WLAN kannst du hier konfigurieren.
@@ -777,7 +789,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\url{http://[konfigurierter_hostname]}, z.B. \url{http://wem-ABC} erreichbar sein.
 
 	\subsubsection{WLAN-Access-Point}
-	%\gfx{./img_warp2/resized/web_wifi_ap}
+	\gfx{./img/resized/web_wifi_ap}
 	Der Access-Point kann in einem von zwei Modi betrieben werden: Entweder kann er immer aktiv sein,
 	oder nur dann, wenn die Verbindung zu einem anderen WLAN bzw. zu einem LAN nicht konfiguriert oder fehlgeschlagen ist.
 	Außerdem kann der Access-Point komplett deaktiviert werden.
@@ -788,7 +800,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Netzwerkname, Passphrase usw. müssen dazu hier festgelegt werden.
 
 	\subsubsection{LAN-Verbindung}
-	%\gfx{./img_warp2/resized/web_ethernet}
+	\gfx{./img/resized/web_ethernet}
 	Wir empfehlen die Anbindung mittels kabelgebundenen LAN ins Netzwerk.
 	In den meisten Fällen wird eine
 	LAN-Verbindung automatisch hergestellt, falls ein Kabel eingesteckt ist
@@ -813,13 +825,13 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	nicht gesondert erläutert. Weitere Informationen finden sich auf
 	\url{https://www.wireguard.com/}.
 
-	%\gfx{./img_warp2/resized/web_wireguard}
+	\gfx{./img/resized/web_wireguard}
 
 	\subsection{Schnittstellen}
 	\subsubsection{MQTT}
 	\label{mqtt-interface}
 
-	%\gfx{./img_warp2/resized/web_mqtt}
+	\gfx{./img/resized/web_mqtt}
 	Auf der MQTT-Unterseite kannst du die Verbindung zu einem MQTT-Broker konfigurieren. Folgende Einstellungen können vorgenommen werden:
 	\begin{itemize}
 		\item \textbf{Broker-Hostname oder -IP-Adresse} Der Host\-name oder die
@@ -857,7 +869,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Außerdem ist es möglich, zusätzlich zum konfigurierten Zeitserver einen Zeitserver zu verwenden, der von deinem Router per DHCP gesetzt wird. Dies funktioniert allerdings nur,
 	wenn in der Netzwerkkonfiguration keine statische IP-Konfiguration verwendet wurde.
 
-	%\gfx{./img_warp2/resized/web_ntp}
+	\gfx{./img/resized/web_ntp}
 
 	\subsubsection{SD-Karte}
 	Die Daten des WARP Energy Managers werden intern auf eine SD Karte
@@ -877,15 +889,16 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	dargestellt.
 
 	\subsubsection{Ereignis-Log}
-	%\gfx{./img_warp2/resized/web_event_log}
+	\gfx{./img/resized/web_event_log}
 
 	Das Ereignis-Log zeichnet relevante Informationen des Systemstarts, sowie WLAN- und MQTT-Verbindungsabbrüche und Ladefehler auf.
 	Falls Probleme mit der Energy Manager auftreten, kannst du diese mit dem Log diagnostizieren.
 	Falls du ein Problem mit der WARP Energy Manager an uns melden möchtest, kannst du das Ereignis-Log,
 	sowie einen Debug-Report abrufen, die uns helfen das Problem zu verstehen und zu lösen.
 
-	\subsubsection{Firmware-Aktualisierung}\label{firmware-update}
-	%\gfx{./img_warp2/resized/web_firmware_update}
+	\subsubsection{Firmware-Aktualisierung}
+	\label{firmware-update}
+	\gfx{./img/resized/web_firmware_update}
 	Hier kannst du die Firmware des Energy Managers aktualisieren. Wir entwickeln die Funktionalität
 	des Energy Managers laufend weiter. Bitte beachte, dass daher ggf. auch eine neue
 	Version dieser Betriebsanleitung bereitgestellt wird.
@@ -894,32 +907,22 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	Außerdem kannst du hier das Webinterface neustarten.
 
-
-	\newpage
-	\section{Fehlerbehebung}
-
-	\subsection{Sicherungswechsel}
-	Der WARP Energy Manager ist intern über zwei 5$\times\SI{20}{\milli\meter}$ Feinsicherungen (mittelträge (m), \SI{500}{\milli\ampere}) abgesichert.
-	Tinkerforge verbaut Sicherungen vom Typ \enquote{ESKA 521.014}. Die eine
-	Sicherung befindet sich im Eingangspfad der 230V Stromversorgung (L). Die
-	andere Sicherung befindet sich im Schaltausgang der Schützsteuerung.
-
-
-	\subsection{Wiederherstellungsmodus}\label{recovery}
+	\subsection{Wiederherstellungsmodus}
+	\label{recovery}
 	Falls der WARP Energy Manager weder seinen Access Point öffnet, noch über ein konfiguriertes Netzwerk auf das Webinterface zugegriffen werden kann,
 	kannst du wie folgt den Wiederherstellungsmodus starten:
 	\begin{enumerate}
-	 \item Mache den WARP Energy Manager stromlos
-	 \item Entferne die Frontplatte (bedruckt) mit einem Schraubendreher
-	 \item Halte den 
-	 \item Versorge die Wallbox wieder mit Strom (ggfalls. mit einer zweiten Person)
-	 \item Halte den Taster mindestens 10, aber maximal 30 Sekunden gedrückt
+	 \item Suche dir einen elektrisch nicht leitenden Stift (Kugelschreiber o.ä.) und einen kleinen Schlitz-Schraubendreher (z.B. Phasenprüfer o.ä.)
+	 \item Entferne die Frontplatte (bedruckt) mit dem Schraubendreher (Öffne den Energy Manager)
+	 \item Lokalisiere die zwei kleinen Taster auf der vorderen Platine (Beschriftet mit \textbf{EN} und \textbf{IO0})
+	 \item Drücke mit dem Stift einmal kurz auf \textbf{EN}. Die blaue LED fängt an zu blitzen. 
+	 \item Drücke anschließend mit dem Stift \textbf{IO0} und halte diesen gedrückt. Die blaue LED fängt an schnell zu blinken. 
+	 \item Halte \textbf{IO0} ca. 8 Sekunden gedrückt, bis die LED dauerhaft leuchtet.
+	 \item Sobald die blaue LED dauerhaft leuchtet ist der Vorgang abgeschlossen.
+	 \item Sollte die LED währenddessen ausgehen, so war der Vorgang nicht erfolgreich und muss wiederholt werden.
 	\end{enumerate}
 	Der WARP Energy Manager startet dann im Wiederherstellungsmodus. Zunächst werden die Netzwerkeinstellungen gelöscht, sowie die Anmeldung deaktiviert.
-	Bei Erfolg sollte es jetzt möglich sein, über den Access Point wieder auf
-	den Energy Manager zuzugreifen.
-
-	Durch erneutes Trennen und Verbinden der Stromversorgung innerhalb der ersten Minute im Wiederherstellungsmodus kann ein Zurücksetzen auf Werkszustand ausgelöst werden.
+	Bei Erfolg sollte es jetzt möglich sein, über den Access Point wieder auf den Energy Manager zuzugreifen.
 
 	\subsection{Zurücksetzen auf Werkszustand}\label{reset}
 	Falls das Webinterface nicht korrekt funktioniert, oder die Konfiguration defekt ist,
@@ -942,10 +945,23 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Alternativ kannst du den Energy Manager (genauer: den verbauten ESP32 Ethernet
 	Brick) neu flashen.
 	Du benötigst dazu einen PC mit installiertem Brick Viewer 2.4.20 oder neuer. Diesen findest du unter
-	\rurl{https://www.tinkerforge.com/de/doc/Software/Brickv.html}{tinkerforge.com/de/doc/Software/Brickv.html}.
+	 \rurl{https://www.tinkerforge.com/de/doc/Software/Brickv.html}{tinkerforge.com/de/doc/Software/Brickv.html}.
 	Außerdem benötigst du ein USB-C-Kabel um den Brick an deinen PC anzuschließen. Brick Daemon wird nicht benötigt.
 	Dazu muss der ESP32 Ethernet Brick aus dem Gehäuse ausgebaut und das USB-C
 	Kabel eingesteckt werden.
+
+
+
+	\newpage
+	\section{Fehlerbehebung}
+
+	\subsection{Sicherungswechsel}
+	Der WARP Energy Manager ist intern über zwei 5$\times\SI{20}{\milli\meter}$ Feinsicherungen (mittelträge (m), \SI{500}{\milli\ampere}) abgesichert.
+	Tinkerforge verbaut Sicherungen vom Typ \enquote{ESKA 521.014}. Die eine
+	Sicherung befindet sich im Eingangspfad der 230V Stromversorgung (L). Die
+	andere Sicherung befindet sich im Schaltausgang der Schützsteuerung.
+
+
 
 	\section{Konformitätserklärung}
 	Die EU-Konformitätserklärung zum WARP Energy Manager ist in einem gesonderten Dokument verfügbar.
@@ -1022,7 +1038,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\begin{tcolorbox}[width=4.2cm,height=2.7cm, boxrule=0.25mm]
 
 	\end{tcolorbox}
-	Dieser Aufkleber befindet sich\\ auch unter der Frontplatte des WARP Eergy
+	Dieser Aufkleber befindet sich\\ auch unter der Frontplatte des WARP Energy
 	Managers.
 	\columnbreak
 
