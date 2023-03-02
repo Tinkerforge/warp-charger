@@ -15,5 +15,7 @@ from wireguard import wireguard
 from rtc import rtc
 from modbus_tcp import modbus_tcp
 from ocpp import ocpp
+from authentication import authentication
+from energy_manager import energy_manager
 
-mods = [evse, meter, charge_manager, users, charge_tracker, nfc, network, wifi, ethernet, ntp, mqtt, modbus_tcp, ocpp, wireguard, rtc, info, misc]
+mods = [evse, meter, charge_manager, users, charge_tracker, nfc, network, wifi, ethernet, ntp, mqtt, modbus_tcp, ocpp, wireguard, rtc, info, authentication, misc, energy_manager]

@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"#features_evse\"><code>\"evse\"</code></a>", Version.ANY,[
+evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"#features_evse\"><code>\"evse\"</code></a>", Version.WARP1 | Version.WARP2,[
     Func("state", FuncType.STATE, Elem.OBJECT("Der Zustand des Ladecontrollers.", members={
             "iec61851_state": Elem.INT("Der aktuelle Zustand nach IEC 61851", constants=[
                     Const(0, "A: Nicht verbunden"),

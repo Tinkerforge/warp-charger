@@ -14,6 +14,7 @@ Func("version", FuncType.STATE, Elem.OBJECT("Version der Wallbox-Firmware.", mem
             "type": Elem.STRING("Typ der Wallbox.", constants=[
                 Const("warp", "Ein WARP Charger"),
                 Const("warp2", "Ein WARP2 Charger"),
+                Const("wem", "Ein WARP Energy Manager"),
             ]),
             "display_type": Elem.STRING("Benutzerlesbarer Typ der Wallbox. Gibt neben der Hardware-Version die Variante (Smart, Pro), die maximale Ladeleistung und eventuelle Upgrades an. z.B. \"WARP2 Charger Pro 11kW +NFC\""),
             "uid": Elem.STRING("UID der Wallbox bzw. des verbauten ESP (Ethernet) Bricks.")

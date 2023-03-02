@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-charge_tracker = Module("charge_tracker", "Ladetracker", "", Version.ANY, [
+charge_tracker = Module("charge_tracker", "Ladetracker", "", Version.WARP1 | Version.WARP2, [
     Func("state", FuncType.STATE, Elem.OBJECT("Zustand des Ladeträckers", members={
             "tracked_charges": Elem.INT("Anzahl der insgesamt aufgezeichneten Ladungen."),
             "first_charge_timestamp": Elem.INT("Ein Unix-Timestamp in <strong>Minuten</strong>, der den Startzeitpunkt der <strong>ersten</strong> Ladung angibt. 0 falls zum Startzeitpunkt keine Zeitsynchronisierung verfügbar war.", unit=Units.min_)

@@ -111,7 +111,10 @@ UNDOCUMENTED = [
     "ocpp/state",
     "ocpp/configuration",
     "rtc/reflash",
-    "rtc/reset"
+    "rtc/reset",
+    "energy_manager/reflash",
+    "energy_manager/reset",
+    "energy_manager/debug_config",
 ]
 
 version = Version(int(sys.argv[1]))

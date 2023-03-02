@@ -11,7 +11,9 @@ meter = Module("meter", "Stromzähler", "", Version.ANY, [
                 Const(0, "Kein Stromzähler verfügbar"),
                 Const(1, "SDM72", Version.WARP1),
                 Const(2, "SDM630", Version.ANY),
-                Const(3, "SDM72V2", Version.ANY)
+                Const(3, "SDM72V2", Version.ANY),
+                Const(4, "SDM72CTM", Version.WARPEM),
+                Const(5, "SDM72MCT", Version.WARPEM)
             ])
         })
     ),
@@ -42,12 +44,12 @@ meter = Module("meter", "Stromzähler", "", Version.ANY, [
             "bricklet": Elem.INT("Kommunikationsfehler zwischen ESP Brick und RS485 Bricklet.", version=Version.WARP1),
             "bricklet_reset": Elem.INT("Unerwartete Resets des RS485 Bricklets.", version=Version.WARP1),
 
-            "local_timeout": Elem.INT("Local Timeout", version=Version.WARP2),
-            "global_timeout": Elem.INT("Global Timeout", version=Version.WARP2),
-            "illegal_function": Elem.INT("Illegal Function", version=Version.WARP2),
-            "illegal_data_access": Elem.INT("Illegal Data Access", version=Version.WARP2),
-            "illegal_data_value": Elem.INT("Illegal Data Value", version=Version.WARP2),
-            "slave_device_failure": Elem.INT("Slave Device Failure", version=Version.WARP2),
+            "local_timeout": Elem.INT("Local Timeout", version=Version.WARP2 | Version.WARPEM),
+            "global_timeout": Elem.INT("Global Timeout", version=Version.WARP2 | Version.WARPEM),
+            "illegal_function": Elem.INT("Illegal Function", version=Version.WARP2 | Version.WARPEM),
+            "illegal_data_access": Elem.INT("Illegal Data Access", version=Version.WARP2 | Version.WARPEM),
+            "illegal_data_value": Elem.INT("Illegal Data Value", version=Version.WARP2 | Version.WARPEM),
+            "slave_device_failure": Elem.INT("Slave Device Failure", version=Version.WARP2 | Version.WARPEM),
         })
     ),
 
