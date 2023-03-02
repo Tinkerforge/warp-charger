@@ -144,6 +144,7 @@ energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", Ve
                 Elem.INT("Grün"),
                 Elem.INT("Blau"),
             ]),
+            "uptime": Elem.INT("Zeit seit Starten des Energy Manager Bricklets.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms)
         })
     ),
     Func("charge_mode", FuncType.STATE, Elem.OBJECT("Aktuell verwendeter Lademodus. Kann über energy_manager/charge_mode_update mit dem selben Payload aktualisiert werden.", members={
@@ -156,9 +157,36 @@ energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", Ve
         })
     ),
     Func("sdcard_state", FuncType.STATE, Elem.OBJECT("Informationen über die eingelegte MicroSD-Karte.", members={
-            "sd_status": Elem.INT("Status der SD-Karte", constants=[]),
-            "lfs_status": Elem.INT("Status des Dateisystems (LittleFS) auf der SD-Karte", constants=[]),
-            "card_type": Elem.INT("SD-Kartentyp", constants=[]),
+            "sd_status": Elem.INT("Status der SD-Karte", constants=[
+                Const(0, "OK"),
+                Const(1, "READ_BLOCK_TIMEOUT"),
+                Const(2, "WRITE_BLOCK_TIMEOUT"),
+                Const(3, "RESPONSE_TIMEOUT"),
+                Const(11, "ERROR_INIT_TYPE"),
+                Const(12, "ERROR_INIT_VER_OR_VOLTAGE"),
+                Const(13, "ERROR_INIT_ACMD41"),
+                Const(14, "ERROR_INIT_CMD58"),
+                Const(15, "ERROR_INIT_CMD0"),
+                Const(21, "ERROR_CID_START"),
+                Const(22, "ERROR_CID_CMD10"),
+                Const(31, "ERROR_CSD_START"),
+                Const(32, "ERROR_CSD_CMD9"),
+                Const(41, "ERROR_COUNT_TO_HIGH"),
+                Const(51, "ERROR_NO_CARD"),
+                Const(255, "ERROR_API_FAILURE"),
+            ]),
+            "lfs_status": Elem.INT("Status des Dateisystems (LittleFS) auf der SD-Karte", constants=[
+                Const(0, "OK"),
+                Const(255, "ERROR_API_FAILURE"),
+                Const(256, "SD-Karte wird gerade formatiert")
+            ]),
+            "card_type": Elem.INT("SD-Kartentyp", constants=[
+                Const(0, "Keine SD-Karte gefunden"),
+                Const(1, "MMC"),
+                Const(2, "SD"),
+                Const(4, "SDSC"),
+                Const(12, "SDHC/SDXC"),
+            ]),
             "sector_count": Elem.INT("Größe der SD-Karte in Sektoren"),
             "sector_size": Elem.INT("Größe eines Sektors"),
             "manufacturer_id": Elem.INT("Hersteller-ID"),
