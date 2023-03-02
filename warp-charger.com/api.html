@@ -333,6 +333,13 @@
 <a class="nav-link" href="#info_last_boots" style="margin-left: 2rem !important;">info/<wbr>last_boots</a>
         </nav>
     </div>
+<a class="nav-link ms-3" href="#reference-authentication">Zugangsdaten</a>
+    <div class="collapse">
+        <nav class="nav nav-pills flex-column">
+        <span class="ms-5">Konfigurationen</span>
+<a class="nav-link" href="#authentication_config" style="margin-left: 2rem !important;">authentication/<wbr>config</a>
+        </nav>
+    </div>
 <a class="nav-link ms-3" href="#reference-misc">Sonstiges</a>
     <div class="collapse">
         <nav class="nav nav-pills flex-column">
@@ -343,6 +350,19 @@
 <a class="nav-link" href="#force_reboot" style="margin-left: 2rem !important;">force_reboot</a>
 <a class="nav-link" href="#update" style="margin-left: 2rem !important;">update</a>
 <a class="nav-link" href="#flash_firmware" style="margin-left: 2rem !important;">flash_firmware</a>
+        </nav>
+    </div>
+<a class="nav-link ms-3" href="#reference-energy_manager">Energy-Manager-Konfiguration</a>
+    <div class="collapse">
+        <nav class="nav nav-pills flex-column">
+        <span class="ms-5">Konfigurationen</span>
+<a class="nav-link" href="#energy_manager_config" style="margin-left: 2rem !important;">energy_manager/<wbr>config</a>
+<a class="nav-link" href="#energy_manager_meter_config" style="margin-left: 2rem !important;">energy_manager/<wbr>meter_config</a>
+<span class="ms-5">Zustände</span>
+<a class="nav-link" href="#energy_manager_state" style="margin-left: 2rem !important;">energy_manager/<wbr>state</a>
+<a class="nav-link" href="#energy_manager_low_level_state" style="margin-left: 2rem !important;">energy_manager/<wbr>low_level_state</a>
+<a class="nav-link" href="#energy_manager_charge_mode" style="margin-left: 2rem !important;">energy_manager/<wbr>charge_mode</a>
+<a class="nav-link" href="#energy_manager_sdcard_state" style="margin-left: 2rem !important;">energy_manager/<wbr>sdcard_state</a>
         </nav>
     </div>
                         </nav>
@@ -756,7 +776,7 @@
               <h3>API-Referenz</h3>
           </header>
 
-<section id="reference-evse" class="section any">
+<section id="reference-evse" class="section warp1 warp2">
     <header class="reference-section-header">
         <h4>Ladecontroller (EVSE)</h4><h5>Benötigt das Feature <a href="#features_evse"><code>"evse"</code></a></h5>
 
@@ -912,7 +932,7 @@
 </div></td>
 </tr>
 
-<tr class="warp2_only">
+<tr class="warp2">
     <th scope="row">dc_fault_current_state<br/><span class="th-details">int</span></th>
     <td><strong>(Nur WARP 2)</strong> Der Zustand des DC-Fehlerstrom-Schutzmoduls. Falls ein Gleichstromfehler auftritt, kann nicht mehr geladen werden, bis das Schutzmodul zurückgesetzt wurde. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong> <a class="scrollto text-monospace" href="#evse_reset_dc_fault_current_state">evse/reset_dc_fault_current_state</a> setzt das Modul zurück.
 <div class="any">
@@ -975,20 +995,20 @@
 <tr class="any">
     <th scope="row">evse_version<br/><span class="th-details">int</span></th>
     <td>Hardware-Version des Ladecontrollers
-<div class="warp1_only">
+<div class="warp1">
 <strong>WARP 1:</strong><br><ol class="ol-enum">
     <li><strong>14</strong> - EVSE 1.4</li>
     <li><strong>15</strong> - EVSE 1.5</li>
 </ol>
 </div>
-<div class="warp2_only">
+<div class="warp2">
 <strong>WARP 2:</strong><br><ol class="ol-enum">
     <li><strong>20</strong> - EVSE 2.0</li>
 </ol>
 </div></td>
 </tr>
 
-<tr class="warp2_only">
+<tr class="warp2">
     <th scope="row">energy_meter_type<br/><span class="th-details">int</span></th>
     <td><strong>(Nur WARP 2)</strong> Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!
 <div class="any">
@@ -996,12 +1016,12 @@
     <li><strong>0</strong> - Kein Stromzähler verfügbar</li>
 </ol>
 </div>
-<div class="warp1_only">
+<div class="warp1">
 <strong>WARP 1:</strong><br><ol class="ol-enum">
     <li><strong>1</strong> - SDM72</li>
 </ol>
 </div>
-<div class="warp2_only">
+<div class="warp2">
 <strong>WARP 2:</strong><br><ol class="ol-enum">
     <li><strong>2</strong> - SDM630</li>
     <li><strong>3</strong> - SDM72V2</li>
@@ -1180,13 +1200,13 @@
 <tr class="any">
     <th scope="row">adc_values<br/><span class="th-details">int[..]</span></th>
     <td>16-Bit ADC-Rohwerte der Spannungsmessungen
-<div class="warp1_only">
+<div class="warp1">
 <strong>WARP 1:</strong><br><ol class="ol-enum">
     <li>[0] - CP/PE</li>
     <li>[1] - PP/PE</li>
 </ol>
 </div>
-<div class="warp2_only">
+<div class="warp2">
 <strong>WARP 2:</strong><br><ol class="ol-enum">
     <li>[0] - CP/PE vor Widerstand (PWM High)</li>
     <li>[1] - CP/PE nach Widerstand (PWM High)</li>
@@ -1202,14 +1222,14 @@
 <tr class="any">
     <th scope="row">voltages<br/><span class="th-details">int[..] (<abbr title="Millivolt">mV</abbr>)</span></th>
     <td>Aus den ADC-Werten berechnete Spannungen
-<div class="warp1_only">
+<div class="warp1">
 <strong>WARP 1:</strong><br><ol class="ol-enum">
     <li>[0] - CP/PE</li>
     <li>[1] - PP/PE</li>
     <li>[2] - Maximalspannung CP/PE</li>
 </ol>
 </div>
-<div class="warp2_only">
+<div class="warp2">
 <strong>WARP 2:</strong><br><ol class="ol-enum">
     <li>[0] - CP/PE vor Widerstand (PWM High)</li>
     <li>[1] - CP/PE nach Widerstand (PWM High)</li>
@@ -1236,7 +1256,7 @@
 <tr class="any">
     <th scope="row">gpio<br/><span class="th-details">bool[..]</span></th>
     <td>Signale auf den GPIOs
-<div class="warp1_only">
+<div class="warp1">
 <strong>WARP 1:</strong><br><ol class="ol-enum">
     <li>[0] - Eingang</li>
     <li>[1] - Ausgang</li>
@@ -1245,7 +1265,7 @@
     <li>[4] - Motorfehler</li>
 </ol>
 </div>
-<div class="warp2_only">
+<div class="warp2">
 <strong>WARP 2:</strong><br><ol class="ol-enum">
     <li>[0] - Stromkonfiguration 0</li>
     <li>[1] - Motorfehler</li>
@@ -1572,7 +1592,7 @@
 </div>
 </div>
 
-<div  id="evse_gpio_configuration" class="warp2_only">
+<div  id="evse_gpio_configuration" class="warp2">
     <div class="h5">evse/gpio_configuration <strong>(Nur WARP 2)</strong> </div>
     Die Konfiguration der konfigurierbaren Ein- und Ausgänge. Kann über evse/gpio_configuration_update mit dem selben Payload aktualisiert werden.
 <div class="table-responsive">
@@ -1622,7 +1642,7 @@
 </div>
 </div>
 
-<div  id="evse_button_configuration" class="warp2_only">
+<div  id="evse_button_configuration" class="warp2">
     <div class="h5">evse/button_configuration <strong>(Nur WARP 2)</strong> </div>
     Die Konfiguration des Tasters in der Frontblende. Diese kann über evse/button_configuration_update mit dem selben Payload aktualisiert werden. Benötigt das Feature <a href="#features_button_configuration"><code>"button_configuration"</code></a>
 <div class="table-responsive">
@@ -1652,7 +1672,7 @@
 </div>
 </div>
 
-<div  id="evse_user_calibration" class="warp1_only">
+<div  id="evse_user_calibration" class="warp1">
     <div class="h5">evse/user_calibration <strong>(Nur WARP 1)</strong> </div>
     Erlaubt es, die werksseitige Kalibrierung des EVSEs auszulesen und zu überschreiben. Dieser Wert kann über evse/user_calibration_update mit dem selben Payload aktualisiert werden. Um die Kalibierung auf den Werkszustand zurückzusetzen, kann ein Payload mit user_calibration_active auf false geschickt werden. Die weiteren Werte werden dann ignoriert.
 <div class="table-responsive">
@@ -1699,7 +1719,7 @@
 </div>
 </div>
 
-<div  id="evse_ev_wakeup" class="warp2_only">
+<div  id="evse_ev_wakeup" class="warp2">
     <div class="h5">evse/ev_wakeup <strong>(Nur WARP 2)</strong> </div>
     Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus einem Energiesparmodus zu wecken, indem ein Abziehen und Anstecken des Ladekabels vorgetäuscht wird. (Control-Pilot-Trennung/CP-Trennung) Dieser Wert kann über evse/ev_wakeup_update mit dem selben Payload aktualisiert werden. Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
 <div class="table-responsive">
@@ -1721,7 +1741,7 @@
 </div>
 </div>
 
-<div  id="evse_control_pilot_disconnect" class="warp2_only">
+<div  id="evse_control_pilot_disconnect" class="warp2">
     <div class="h5">evse/control_pilot_disconnect <strong>(Nur WARP 2)</strong> </div>
     Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) Dieser Wert kann über evse/control_pilot_disconnect_update mit dem selben Payload aktualisiert werden. <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe <a class="scrollto text-monospace" href="#evse_management_enabled">evse/management_enabled</a>.  Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
 <div class="table-responsive">
@@ -1765,7 +1785,7 @@
 </div>
 </div>
 
-<div  id="evse_reset_dc_fault_current_state" class="warp2_only">
+<div  id="evse_reset_dc_fault_current_state" class="warp2">
     <div class="h5">evse/reset_dc_fault_current_state <strong>(Nur WARP 2)</strong> </div>
     Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong><br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
@@ -1889,9 +1909,15 @@
     <li><strong>3</strong> - SDM72V2</li>
 </ol>
 </div>
-<div class="warp1_only">
+<div class="warp1">
 <strong>WARP 1:</strong><br><ol class="ol-enum">
     <li><strong>1</strong> - SDM72</li>
+</ol>
+</div>
+<div class="warpem">
+<strong>Energy Manager:</strong><br><ol class="ol-enum">
+    <li><strong>4</strong> - SDM72CTM</li>
+    <li><strong>5</strong> - SDM72MCT</li>
 </ol>
 </div></td>
 </tr>
@@ -1986,49 +2012,49 @@
         </thead>
         <tbody>
 
-<tr class="warp1_only">
+<tr class="warp1">
     <th scope="row">meter<br/><span class="th-details">int</span></th>
     <td><strong>(Nur WARP 1)</strong> Kommunikationsfehler zwischen RS485 Bricklet und Stromzähler.</td>
 </tr>
 
-<tr class="warp1_only">
+<tr class="warp1">
     <th scope="row">bricklet<br/><span class="th-details">int</span></th>
     <td><strong>(Nur WARP 1)</strong> Kommunikationsfehler zwischen ESP Brick und RS485 Bricklet.</td>
 </tr>
 
-<tr class="warp1_only">
+<tr class="warp1">
     <th scope="row">bricklet_reset<br/><span class="th-details">int</span></th>
     <td><strong>(Nur WARP 1)</strong> Unerwartete Resets des RS485 Bricklets.</td>
 </tr>
 
-<tr class="warp2_only">
+<tr class="warp2 warpem">
     <th scope="row">local_timeout<br/><span class="th-details">int</span></th>
-    <td><strong>(Nur WARP 2)</strong> Local Timeout</td>
+    <td><strong>(Nur WARP 2,Energy Manager)</strong> Local Timeout</td>
 </tr>
 
-<tr class="warp2_only">
+<tr class="warp2 warpem">
     <th scope="row">global_timeout<br/><span class="th-details">int</span></th>
-    <td><strong>(Nur WARP 2)</strong> Global Timeout</td>
+    <td><strong>(Nur WARP 2,Energy Manager)</strong> Global Timeout</td>
 </tr>
 
-<tr class="warp2_only">
+<tr class="warp2 warpem">
     <th scope="row">illegal_function<br/><span class="th-details">int</span></th>
-    <td><strong>(Nur WARP 2)</strong> Illegal Function</td>
+    <td><strong>(Nur WARP 2,Energy Manager)</strong> Illegal Function</td>
 </tr>
 
-<tr class="warp2_only">
+<tr class="warp2 warpem">
     <th scope="row">illegal_data_access<br/><span class="th-details">int</span></th>
-    <td><strong>(Nur WARP 2)</strong> Illegal Data Access</td>
+    <td><strong>(Nur WARP 2,Energy Manager)</strong> Illegal Data Access</td>
 </tr>
 
-<tr class="warp2_only">
+<tr class="warp2 warpem">
     <th scope="row">illegal_data_value<br/><span class="th-details">int</span></th>
-    <td><strong>(Nur WARP 2)</strong> Illegal Data Value</td>
+    <td><strong>(Nur WARP 2,Energy Manager)</strong> Illegal Data Value</td>
 </tr>
 
-<tr class="warp2_only">
+<tr class="warp2 warpem">
     <th scope="row">slave_device_failure<br/><span class="th-details">int</span></th>
-    <td><strong>(Nur WARP 2)</strong> Slave Device Failure</td>
+    <td><strong>(Nur WARP 2,Energy Manager)</strong> Slave Device Failure</td>
 </tr>
         </tbody>
     </table>
@@ -2342,7 +2368,7 @@
     <li><strong>3</strong> - SDM72V2</li>
 </ol>
 </div>
-<div class="warp1_only">
+<div class="warp1">
 <strong>WARP 1:</strong><br><ol class="ol-enum">
     <li><strong>1</strong> - SDM72</li>
 </ol>
@@ -2725,7 +2751,7 @@
 </div>
 </div>
 
-<div  id="meter_type_override" class="warp1_only">
+<div  id="meter_type_override" class="warp1">
     <div class="h5">meter/type_override <strong>(Nur WARP 1)</strong> </div>
     Erlaubt es den verbauten Zählertyp zu überschreiben, falls die Auto-Detektion nicht funktioniert. Der Wert kann über meter/type_override_update mit dem selben Payload aktualisiert werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
 <div class="table-responsive">
@@ -2933,7 +2959,7 @@
 </div>
 </div>
 </section>
-<section id="reference-users" class="section any">
+<section id="reference-users" class="section warp1 warp2">
     <header class="reference-section-header">
         <h4>Benutzerverwaltung</h4>
 
@@ -3196,7 +3222,7 @@
     Für das Ladetracking werden die Anzeigenamen gelöschter Benutzer separat im Flash gespeichert. Diese Funktion gibt alle Anzeigenamen, die möglicherweise in den getrackten Ladungen vorkommen in einem Binärformat aus.
 </div>
 </section>
-<section id="reference-charge_tracker" class="section any">
+<section id="reference-charge_tracker" class="section warp1 warp2">
     <header class="reference-section-header">
         <h4>Ladetracker</h4>
 
@@ -3458,7 +3484,7 @@
 </div>
 </div>
 </section>
-<section id="reference-nfc" class="section any">
+<section id="reference-nfc" class="section warp1 warp2">
     <header class="reference-section-header">
         <h4>NFC-Ladefreigabe</h4><h5>Benötigt das Feature <a href="#features_nfc"><code>"nfc"</code></a>.</h5>
 
@@ -4104,7 +4130,7 @@
 </div>
 </div>
 </section>
-<section id="reference-ethernet" class="section warp2_only">
+<section id="reference-ethernet" class="section warp2 warpem">
     <header class="reference-section-header">
         <h4>LAN-Verbindung</h4><h5>Benötigt das Feature <a href="#features_ethernet"><code>"ethernet"</code></a>.</h5>
 
@@ -4165,6 +4191,7 @@
     <td>Ausgehandelte Verbindungsgeschwindigkeit.
 <div class="any">
 <ol class="ol-enum">
+    <li><strong>0</strong> - nicht verbunden</li>
     <li><strong>10</strong> - </li>
     <li><strong>100</strong> - </li>
 </ol>
@@ -4435,7 +4462,7 @@
 </div>
 </div>
 </section>
-<section id="reference-modbus_tcp" class="section any">
+<section id="reference-modbus_tcp" class="section warp1 warp2">
     <header class="reference-section-header">
         <h4>Modbus/TCP</h4>
 
@@ -4488,7 +4515,7 @@
 </div>
 </div>
 </section>
-<section id="reference-ocpp" class="section warp2_only">
+<section id="reference-ocpp" class="section warp2">
     <header class="reference-section-header">
         <h4>OCPP-Verbindung</h4>
 
@@ -4694,7 +4721,7 @@
 </div>
 </div>
 </section>
-<section id="reference-rtc" class="section any">
+<section id="reference-rtc" class="section warp1 warp2">
     <header class="reference-section-header">
         <h4>Zeiteinstellungen der Real-Time Clock</h4><h5>Benötigt das Feature <a href="#features_nfc"><code>"rtc"</code></a>.</h5>
 
@@ -4880,6 +4907,7 @@
 <ol class="ol-enum">
     <li><strong>warp</strong> - Ein WARP Charger</li>
     <li><strong>warp2</strong> - Ein WARP2 Charger</li>
+    <li><strong>wem</strong> - Ein WARP Energy Manager</li>
 </ol>
 </div></td>
 </tr>
@@ -4979,6 +5007,58 @@
 </div>
 </div>
 </section>
+<section id="reference-authentication" class="section warpem">
+    <header class="reference-section-header">
+        <h4>Zugangsdaten</h4>
+
+    </header>
+    <ul class="ul-no-bullet">
+        <li>
+    Konfigurationen
+    <ul>
+        <li><a class="scrollto text-monospace" href="#authentication_config">authentication/config</a></li>
+    </ul>
+</li>
+    </ul>
+
+<div  id="authentication_config" class="any">
+    <div class="h5">authentication/config</div>
+    Zugangsdaten, die für die Verwendung von Webinterface und HTTP-API abgefragt werden sollen.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">enable_auth<br/><span class="th-details">bool</span></th>
+    <td>Gibt an ob zur Verwendung von Webinterface und HTTP-API Zugangsdaten nötig sein sollen.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>true</strong> - Falls Zugangsdaten verlangt werden sollen.</li>
+    <li><strong>false</strong> - Wenn nicht.</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">username<br/><span class="th-details">string</span></th>
+    <td>Der Benutzername, dem Zugriff auf Webinterface und HTTP-API gewährt werden.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">digest_hash<br/><span class="th-details">string</span></th>
+    <td>Der <a href="https://en.wikipedia.org/wiki/Digest_access_authentication">Digest Hash</a>, dem Zugriff auf Webinterface und HTTP-API gewährt werden.</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</section>
 <section id="reference-misc" class="section any">
     <header class="reference-section-header">
         <h4>Sonstiges</h4>
@@ -5025,6 +5105,541 @@
 <div  id="flash_firmware" class="any">
     <div class="h5">flash_firmware</div>
     Nimmt ein Firmware-Update als POST entgegen, dass dann geflasht wird.
+</div>
+</section>
+<section id="reference-energy_manager" class="section warpem">
+    <header class="reference-section-header">
+        <h4>Energy-Manager-Konfiguration</h4>
+
+    </header>
+    <ul class="ul-no-bullet">
+        <li>
+    Konfigurationen
+    <ul>
+        <li><a class="scrollto text-monospace" href="#energy_manager_config">energy_manager/config</a></li>
+<li><a class="scrollto text-monospace" href="#energy_manager_meter_config">energy_manager/meter_config</a></li>
+    </ul>
+</li>
+<li>
+    Zustände
+    <ul>
+        <li><a class="scrollto text-monospace" href="#energy_manager_state">energy_manager/state</a></li>
+<li><a class="scrollto text-monospace" href="#energy_manager_low_level_state">energy_manager/low_level_state</a></li>
+<li><a class="scrollto text-monospace" href="#energy_manager_charge_mode">energy_manager/charge_mode</a></li>
+<li><a class="scrollto text-monospace" href="#energy_manager_sdcard_state">energy_manager/sdcard_state</a></li>
+    </ul>
+</li>
+    </ul>
+
+<div  id="energy_manager_config" class="any">
+    <div class="h5">energy_manager/config</div>
+    Konfiguration des Energy Managers
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">default_mode<br/><span class="th-details">int</span></th>
+    <td>Der nach einem Neustart des Energy Managers verwendete Lademodus
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Schnell. Lädt Fahrzeuge so schnell wie möglich, selbst wenn dafür Netzbezug notwendig ist.</li>
+    <li><strong>1</strong> - Aus. Fahrzeuge werden nicht geladen.</li>
+    <li><strong>2</strong> - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung wenn excess_charging_enable true ist.</li>
+    <li><strong>3</strong> - Min+PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet.  Steht nur zur Verfügung wenn excess_charging_enable true ist.</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">auto_reset_mode<br/><span class="th-details">bool</span></th>
+    <td>Gibt an, ob der Lademodus (siehe <a class="scrollto text-monospace" href="#energy_manager_charge_mode">energy_manager/charge_mode</a>) täglich auf den default_mode zurückgesetzt werden soll.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">auto_reset_time<br/><span class="th-details">int (<abbr title="Minute">min</abbr>)</span></th>
+    <td>Die Zeit, zu der der Lademodus auf den default_mode zurückgesetzt wird, falls auto_reset_mode true ist. Wird als Minute des Tages angegeben, z.B. 134 = 02:14</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">excess_charging_enable<br/><span class="th-details">bool</span></th>
+    <td>Wenn aktiviert, regelt der Energy Manager die an ihn angeschlossenen Verbraucher abhängig vom Über­schuss einer vorhandenen Photovoltaikanlage. Wenn deaktiviert, wird die maximale Leistung unter Einhaltung der maximale Strombelastbarkeit der Zuleitungen erlaubt.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">contactor_installed<br/><span class="th-details">bool</span></th>
+    <td>Gibt an, ob ein Schütz angeschlossen ist, mit dem die gesteuerten Wallboxen zwischem dreiphasigem und einphasigem Betrieb umschalten kann. Eingang 4 wird dann automatisch zur Schützüberwachung verwendet.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">phase_switching_mode<br/><span class="th-details">int</span></th>
+    <td>
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Automatischer Wechsel zwischen drei- und einphasigem Laden. Nur möglich, wenn contactor_installed true ist.</li>
+    <li><strong>1</strong> - Immer einphasig</li>
+    <li><strong>2</strong> - Immer dreiphasig</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">guaranteed_power<br/><span class="th-details">int (<abbr title="Watt">W</abbr>)</span></th>
+    <td>Mindest-Ladeleistung, die für den Min+PV-Lademodus verwendet wird. Diese Leistung wird bei unzureichendem PV-Überschuss (teilweise) aus dem Netz bezogen.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">relay_config<br/><span class="th-details">int</span></th>
+    <td>
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Manuelles Schalten. Das Relais kann über API (siehe TODO) und Webinterface geschaltet werden.</li>
+    <li><strong>1</strong> - Regelbasiertes Schalten. Wenn die konfigurierte Bedingung 'relay_rule_when' den Wert 'relay_rule_is' annimmt, wird das Relais geschlossen.</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">relay_rule_when<br/><span class="th-details">int</span></th>
+    <td>Wert der gegen relay_rule_is geprüft werden soll. Es sind nur bestimmte relay_rule_when-Werte mit bestimmten relay_rule_is-Werten erlaubt.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Eingang 3. Erlaubte relay_rule_is-Werte: 0 (Eingang geöffnet), 1 (Eingang geschlossen)</li>
+    <li><strong>1</strong> - Eingang 4. Erlaubte relay_rule_is-Werte: 0 (Eingang geöffnet), 1 (Eingang geschlossen)</li>
+    <li><strong>2</strong> - Phasenumschaltung. Erlaubte relay_rule_is-Werte: 2 (Einphasig), 3 (Dreiphasig)</li>
+    <li><strong>3</strong> - Schützüberwachung. Erlaubte relay_rule_is-Werte: 4 (Schützfehler), 5 (Schütz OK)</li>
+    <li><strong>4</strong> - Leistung verfügbar. Erlaubte relay_rule_is-Werte: 6 (Leistung verfügbar), 7 (Leistung nicht verfügbar)</li>
+    <li><strong>5</strong> - Netzbezug. Erlaubte relay_rule_is-Werte: 8 (Netzbezug) , 9 (Netzeinspeisung)</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">relay_rule_is<br/><span class="th-details">int</span></th>
+    <td>Wert gegen den relay_rule_when geprüft wird.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Eingang geöffnet. Erlaubte relay_rule_when-Werte: 0 (Eingang 3), 1 (Eingang 4)</li>
+    <li><strong>1</strong> - Eingang geschlossen. Erlaubte relay_rule_when-Werte:  0 (Eingang 3), 1 (Eingang 4)</li>
+    <li><strong>2</strong> - Einphasig. Erlaubter relay_rule_when-Wert: 2 (Phasenumschaltung)</li>
+    <li><strong>3</strong> - Dreiphasig. Erlaubter relay_rule_when-Wert: 2 (Phasenumschaltung)</li>
+    <li><strong>4</strong> - Schützfehler. Erlaubter relay_rule_when-Wert: 3 (Schützüberwachung)</li>
+    <li><strong>5</strong> - Schütz OK. Erlaubter relay_rule_when-Wert: 3 (Schützüberwachung)</li>
+    <li><strong>6</strong> - Genügend Leistung für einen Ladevorgang verfügbar. Erlaubter relay_rule_when-Wert: 4 (Leistung verfügbar)</li>
+    <li><strong>7</strong> - Nicht genügend Leistung für einen Ladevorgang verfügbar. Erlaubter relay_rule_when-Wert: 4 (Leistung verfügbar)</li>
+    <li><strong>8</strong> - Netzbezug. Erlaubter relay_rule_when-Wert: 5 (Netzbezug)</li>
+    <li><strong>9</strong> - Netzeinspeisung. Erlaubter relay_rule_when-Wert: 5 (Netzbezug)</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">input3_rule_then<br/><span class="th-details">int</span></th>
+    <td>Verhalten des Eingangs 3. Die hier konfigurierte Aktion wird durchgeführt, wenn Eingang 3 den in input3_rule_is konfigurierten Wert hat.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Deaktiviert.</li>
+    <li><strong>2</strong> - Laden blockieren.</li>
+    <li><strong>3</strong> - Ladestrom begrenzen. Der Ladestrom wird auf den in input3_rule_then_limit gesetzten Wert begrenzt, wenn die Bedingung zutrifft. Wenn die Bedingung nicht (mehr) zutrifft, wird das Ladestrom-Limit wieder entfernt.</li>
+    <li><strong>4</strong> - Lademodus wechseln. input3_rule_is wird nicht berücksichtigt. Wenn Eingang 3 geschlossen wird, wird auf den in input3_rule_then_on_high konfigurierten Modus gewechselt. Wenn Eingang 3 geöffnet wird, ird auf den in input3_rule_then_on_low konfigurierten Modus gewechselt.</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">input3_rule_is<br/><span class="th-details">int</span></th>
+    <td>Wert den Eingang 3 annehmen muss, damit die in input3_rule_then konfigurierte Aktion ausgeführt wird.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Geschlossen</li>
+    <li><strong>1</strong> - Offen</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">input3_rule_then_limit<br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
+    <td>Ladestrom-Limit, dass gesetzt wird, falls input3_rule_then auf 3 (Ladestrom begrenzen) konfiguriert ist und Eingang 3 den in input3_rule_is konfigurierten Wert hat.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">input3_rule_then_on_high<br/><span class="th-details">int</span></th>
+    <td>Lademodus, in den gewechselt wird, falls input3_rule_then auf 4 (Moduswechsel) konfiguriert ist und Eingang 3 geschlossen wird.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Schnell.</li>
+    <li><strong>1</strong> - Aus.</li>
+    <li><strong>2</strong> - PV.</li>
+    <li><strong>3</strong> - Min+PV.</li>
+    <li><strong>255</strong> - Lademodus nicht wechseln.</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">input3_rule_then_on_low<br/><span class="th-details">int</span></th>
+    <td>Lademodus, in den gewechselt wird, falls input3_rule_then auf 4 (Moduswechsel) konfiguriert ist und Eingang 3 geöffnet wird.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Schnell.</li>
+    <li><strong>1</strong> - Aus.</li>
+    <li><strong>2</strong> - PV.</li>
+    <li><strong>3</strong> - Min+PV.</li>
+    <li><strong>255</strong> - Lademodus nicht wechseln.</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">input4_rule_then<br/><span class="th-details">int</span></th>
+    <td>Verhalten des Eingangs 4. Die hier konfigurierte Aktion wird durchgeführt, wenn Eingang 4 den in input4_rule_is konfigurierten Wert hat.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Deaktiviert.</li>
+    <li><strong>1</strong> - Schützüberwachung. Eingang wird zur Überwachung des Schützes verwendet, das die konfigurierten Wallboxen zwischen einphasigem und dreiphasigem Betrieb umschaltet.</li>
+    <li><strong>2</strong> - Laden blockieren.</li>
+    <li><strong>3</strong> - Ladestrom begrenzen. Der Ladestrom wird auf den in input4_rule_then_limit gesetzten Wert begrenzt, wenn die Bedingung zutrifft. Wenn die Bedingung nicht (mehr) zutrifft, wird das Ladestrom-Limit wieder entfernt.</li>
+    <li><strong>4</strong> - Lademodus wechseln. input4_rule_is wird nicht berücksichtigt. Wenn Eingang 4 geschlossen wird, wird auf den in input4_rule_then_on_high konfigurierten Modus gewechselt. Wenn Eingang 4 geöffnet wird, ird auf den in input4_rule_then_on_low konfigurierten Modus gewechselt.</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">input4_rule_is<br/><span class="th-details">int</span></th>
+    <td>Wert den Eingang 4 annehmen muss, damit die in input4_rule_then konfigurierte Aktion ausgeführt wird.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Geschlossen</li>
+    <li><strong>1</strong> - Offen</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">input4_rule_then_limit<br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
+    <td>Ladestrom-Limit, dass gesetzt wird, falls input4_rule_then auf 4 (Ladestrom begrenzen) konfiguriert ist und Eingang 4 den in input4_rule_is konfigurierten Wert hat.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">input4_rule_then_on_high<br/><span class="th-details">int</span></th>
+    <td>Lademodus, in den gewechselt wird, falls input4_rule_then auf 4 (Moduswechsel) konfiguriert ist und Eingang 4 geschlossen wird.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Schnell.</li>
+    <li><strong>1</strong> - Aus.</li>
+    <li><strong>2</strong> - PV.</li>
+    <li><strong>3</strong> - Min+PV.</li>
+    <li><strong>255</strong> - Lademodus nicht wechseln.</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">input4_rule_then_on_low<br/><span class="th-details">int</span></th>
+    <td>Lademodus, in den gewechselt wird, falls input4_rule_then auf 4 (Moduswechsel) konfiguriert ist und Eingang 4 geöffnet wird.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Schnell.</li>
+    <li><strong>1</strong> - Aus.</li>
+    <li><strong>2</strong> - PV.</li>
+    <li><strong>3</strong> - Min+PV.</li>
+    <li><strong>255</strong> - Lademodus nicht wechseln.</li>
+</ol>
+</div></td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="energy_manager_meter_config" class="any">
+    <div class="h5">energy_manager/meter_config</div>
+    TODO<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">meter_source<br/><span class="th-details">int</span></th>
+    <td>Quelle der Stromzählerdaten
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Keine Quelle konfiguriert</li>
+    <li><strong>1</strong> - SDM630*/SDM72* am WARP Energy Manager</li>
+    <li><strong>100</strong> - Benutzerdefiniter Zähler per MQTT/HTTP-API</li>
+</ol>
+</div></td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="energy_manager_state" class="any">
+    <div class="h5">energy_manager/state</div>
+    Zustand des Energy Managers
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">phases_switched<br/><span class="th-details">int</span></th>
+    <td>Zustand der Phasenumschaltung
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>1</strong> - Eine Phase verbunden</li>
+    <li><strong>3</strong> - Drei Phasen verbunden</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">input3_state<br/><span class="th-details">bool</span></th>
+    <td>Zustand des Eingangs 3
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>true</strong> - Eingang geschlossen</li>
+    <li><strong>false</strong> - Eingang geöffnet</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">input4_state<br/><span class="th-details">bool</span></th>
+    <td>Zustand des Eingangs 4
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>true</strong> - Eingang geschlossen</li>
+    <li><strong>false</strong> - Eingang geöffnet</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">relay_state<br/><span class="th-details">bool</span></th>
+    <td>Zustand des Relais
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>true</strong> - Relais geschlossen</li>
+    <li><strong>false</strong> - Relais geöffnet</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">error_flags<br/><span class="th-details">int</span></th>
+    <td>TODO
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - TODO</li>
+</ol>
+</div></td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="energy_manager_low_level_state" class="any">
+    <div class="h5">energy_manager/low_level_state</div>
+    Low-Level-Zustand des Energy Managers
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">contactor<br/><span class="th-details">bool</span></th>
+    <td>Vom Energy Manager gesetzter Zustand des Schützes
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>true</strong> - Schütz geschlossen</li>
+    <li><strong>false</strong> - Schütz geöffnet</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">contactor_check_state<br/><span class="th-details">int</span></th>
+    <td>Zustand der Schützprüfung
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - TODO</li>
+    <li><strong>1</strong> - TODO</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">input_voltage<br/><span class="th-details">int (<abbr title="Millivolt">mV</abbr>)</span></th>
+    <td>Eingangsspannung in Millivolt.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">led_rgb<br/><span class="th-details">int[3]</span></th>
+    <td>Farbe der Status-LED
+<div class="any">
+<ol class="ol-enum">
+    <li>[0] - Rot</li>
+    <li>[1] - Grün</li>
+    <li>[2] - Blau</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">uptime<br/><span class="th-details">int (<abbr title="Millisekunde">ms</abbr>)</span></th>
+    <td>Zeit seit Starten des Energy Manager Bricklets.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="energy_manager_charge_mode" class="any">
+    <div class="h5">energy_manager/charge_mode</div>
+    Aktuell verwendeter Lademodus. Kann über energy_manager/charge_mode_update mit dem selben Payload aktualisiert werden.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">mode<br/><span class="th-details">int</span></th>
+    <td>
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Schnell. Lädt Fahrzeuge so schnell wie möglich, selbst wenn dafür Netzbezug notwendig ist.</li>
+    <li><strong>1</strong> - Aus. Fahrzeuge werden nicht geladen.</li>
+    <li><strong>2</strong> - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung wenn excess_charging_enable true ist.</li>
+    <li><strong>3</strong> - Min+PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet.  Steht nur zur Verfügung wenn excess_charging_enable true ist.</li>
+</ol>
+</div></td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="energy_manager_sdcard_state" class="any">
+    <div class="h5">energy_manager/sdcard_state</div>
+    Informationen über die eingelegte MicroSD-Karte.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">sd_status<br/><span class="th-details">int</span></th>
+    <td>Status der SD-Karte
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - OK</li>
+    <li><strong>1</strong> - READ_BLOCK_TIMEOUT</li>
+    <li><strong>2</strong> - WRITE_BLOCK_TIMEOUT</li>
+    <li><strong>3</strong> - RESPONSE_TIMEOUT</li>
+    <li><strong>11</strong> - ERROR_INIT_TYPE</li>
+    <li><strong>12</strong> - ERROR_INIT_VER_OR_VOLTAGE</li>
+    <li><strong>13</strong> - ERROR_INIT_ACMD41</li>
+    <li><strong>14</strong> - ERROR_INIT_CMD58</li>
+    <li><strong>15</strong> - ERROR_INIT_CMD0</li>
+    <li><strong>21</strong> - ERROR_CID_START</li>
+    <li><strong>22</strong> - ERROR_CID_CMD10</li>
+    <li><strong>31</strong> - ERROR_CSD_START</li>
+    <li><strong>32</strong> - ERROR_CSD_CMD9</li>
+    <li><strong>41</strong> - ERROR_COUNT_TO_HIGH</li>
+    <li><strong>51</strong> - ERROR_NO_CARD</li>
+    <li><strong>255</strong> - ERROR_API_FAILURE</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">lfs_status<br/><span class="th-details">int</span></th>
+    <td>Status des Dateisystems (LittleFS) auf der SD-Karte
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - OK</li>
+    <li><strong>255</strong> - ERROR_API_FAILURE</li>
+    <li><strong>256</strong> - SD-Karte wird gerade formatiert</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">card_type<br/><span class="th-details">int</span></th>
+    <td>SD-Kartentyp
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Keine SD-Karte gefunden</li>
+    <li><strong>1</strong> - MMC</li>
+    <li><strong>2</strong> - SD</li>
+    <li><strong>4</strong> - SDSC</li>
+    <li><strong>12</strong> - SDHC/SDXC</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">sector_count<br/><span class="th-details">int</span></th>
+    <td>Größe der SD-Karte in Sektoren</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">sector_size<br/><span class="th-details">int</span></th>
+    <td>Größe eines Sektors</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">manufacturer_id<br/><span class="th-details">int</span></th>
+    <td>Hersteller-ID</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">product_rev<br/><span class="th-details">int</span></th>
+    <td>Produktrevision</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">product_name<br/><span class="th-details">string</span></th>
+    <td>Produktname</td>
+</tr>
+        </tbody>
+    </table>
+</div>
 </div>
 </section>
 
