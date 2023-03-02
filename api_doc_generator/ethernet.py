@@ -11,6 +11,7 @@ ethernet = Module("ethernet", "LAN-Verbindung", "Benötigt das Feature <a href=\
             "ip": Elem.STRING("Aktuelle IP der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht."),
             "full_duplex": Elem.BOOL("true bei einer Full-Duplex-Verbindung, sonst false"),
             "link_speed": Elem.INT("Ausgehandelte Verbindungsgeschwindigkeit.", unit=Units.Mbps, constants=[
+                Const(0,"nicht verbunden"),
                 Const(10,""),
                 Const(100,""),
             ])
