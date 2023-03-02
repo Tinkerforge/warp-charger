@@ -219,6 +219,23 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Als Beispiel können oftmals SG Ready-Steuereingänge von Wärmepumpen mit
 	diesem Relaisausgang gesteuert werden.
 
+	
+	\subsubsection{Status LED}
+	Der WARP Energy Manager besitzt auf der Frontseite eine Status-LED.
+
+	Ist PV-Überschussladen aktiviert (siehe \ref{pv_ueberschussladen}), dann visualisiert diese LED 
+	den Zustand am Netzanschluss. Die LED Farben sind wie folgt:
+	\begin{description}
+		\item[Grün:] Leistung wird ins Netz eingespeist
+		\item[Gelb:] Leistung wird aus dem Netz bezogen
+		\item[Blau:] \glqq Keine\grqq~Leistung am Netzanschluss (+- $\SI{200}{\watt}$)
+	\end{description}
+
+	Wenn PV-Überschussladen nicht aktiviert ist, dann leuchtet die LED grün.
+
+	In Fehlerfällen leuchtet die Status-LED gelb oder rot (siehe
+	\ref{fehlerbehebung}).
+
 
 	\section{Typische Anwendungen}
 
@@ -952,6 +969,20 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\newpage
 	\section{Fehlerbehebung}
+	\label{fehlerbehebung}
+
+	\subsection{Status LED gelb}
+	Ist PV-Überschussladen aktiviert, leuchtet die Status LED gelb sobald Strom
+	aus dem Netz bezogen wird. Dies ist kein Fehlerzustand.
+	Sollte PV-Überschussladen nicht aktiv sein und leuchtet die Status LED gelb,
+	dann verfügt der WARP Energy Manager über keine funktionale
+	Netzwerkverbindung (kein WLAN verbunden und keine LAN Verbindung).
+
+	\subsection{Status LED rot}
+	Leuchtet die Status LED rot, so ist der WARP Energy Manager in einem
+	Fehlerfall. Gründe können eine fehlgeschlagene Schützüberwachung oder ein
+	interner Fehler sein.
+
 
 	\subsection{Sicherungswechsel}
 	Der WARP Energy Manager ist intern über zwei 5$\times\SI{20}{\milli\meter}$ Feinsicherungen (mittelträge (m), \SI{500}{\milli\ampere}) abgesichert.
