@@ -7,7 +7,7 @@ authentication = Module("authentication", "Zugangsdaten", "", Version.ANY, [
                 Const(False, "Wenn nicht.")
             ]),
             "username": Elem.STRING("Der Benutzername, dem Zugriff auf Webinterface und HTTP-API gewährt werden."),
-            "password": Elem.STRING("Das Passwort, dem Zugriff auf Webinterface und HTTP-API gewährt werden.", censored=True),
+            "digest_hash": Elem.STRING("Der <a href=\"https://en.wikipedia.org/wiki/Digest_access_authentication\">Digest Hash</a>, dem Zugriff auf Webinterface und HTTP-API gewährt werden.", censored=True),
         })
     ),
 ])
