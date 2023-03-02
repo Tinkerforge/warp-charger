@@ -8,7 +8,7 @@ energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", Ve
                 Const(2, "PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung wenn excess_charging_enable true ist."),
                 Const(3, "Min+PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet.  Steht nur zur Verfügung wenn excess_charging_enable true ist."),
             ]),
-            "auto_reset_mode": Elem.BOOL("Gibt an, ob der Lademodus (siehe {{{ref:energy_manager/runtime_config}}}) täglich auf den default_mode zurückgesetzt werden soll."),
+            "auto_reset_mode": Elem.BOOL("Gibt an, ob der Lademodus (siehe {{{ref:energy_manager/charge_mode}}}) täglich auf den default_mode zurückgesetzt werden soll."),
             "auto_reset_time": Elem.INT("Die Zeit, zu der der Lademodus auf den default_mode zurückgesetzt wird, falls auto_reset_mode true ist. Wird als Minute des Tages angegeben, z.B. 134 = 02:14", unit=Units.min_),
             "excess_charging_enable": Elem.BOOL("Wenn aktiviert, regelt der Energy Manager die an ihn angeschlossenen Verbraucher abhängig vom Über­schuss einer vorhandenen Photovoltaikanlage. Wenn deaktiviert, wird die maximale Leistung unter Einhaltung der maximale Strombelastbarkeit der Zuleitungen erlaubt."),
             "contactor_installed": Elem.BOOL("Gibt an, ob ein Schütz angeschlossen ist, mit dem die gesteuerten Wallboxen zwischem dreiphasigem und einphasigem Betrieb umschalten kann. Eingang 4 wird dann automatisch zur Schützüberwachung verwendet."),
