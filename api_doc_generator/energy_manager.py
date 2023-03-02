@@ -5,29 +5,31 @@ energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", Ve
             "default_mode": Elem.INT("Der nach einem Neustart des Energy Managers verwendete Lademodus", constants=[
                 Const(0, "Schnell. Lädt Fahrzeuge so schnell wie möglich, selbst wenn dafür Netzbezug notwendig ist."),
                 Const(1, "Aus. Fahrzeuge werden nicht geladen."),
-                Const(2, "PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung wenn excess_charging_enable true ist."),
-                Const(3, "Min+PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet.  Steht nur zur Verfügung wenn excess_charging_enable true ist."),
+                Const(2, "PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist."),
+                Const(3, "Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist."),
             ]),
             "auto_reset_mode": Elem.BOOL("Gibt an, ob der Lademodus (siehe {{{ref:energy_manager/charge_mode}}}) täglich auf den default_mode zurückgesetzt werden soll."),
             "auto_reset_time": Elem.INT("Die Zeit, zu der der Lademodus auf den default_mode zurückgesetzt wird, falls auto_reset_mode true ist. Wird als Minute des Tages angegeben, z.B. 134 = 02:14", unit=Units.min_),
-            "excess_charging_enable": Elem.BOOL("Wenn aktiviert, regelt der Energy Manager die an ihn angeschlossenen Verbraucher abhängig vom Über­schuss einer vorhandenen Photovoltaikanlage. Wenn deaktiviert, wird die maximale Leistung unter Einhaltung der maximale Strombelastbarkeit der Zuleitungen erlaubt."),
-            "contactor_installed": Elem.BOOL("Gibt an, ob ein Schütz angeschlossen ist, mit dem die gesteuerten Wallboxen zwischem dreiphasigem und einphasigem Betrieb umschalten kann. Eingang 4 wird dann automatisch zur Schützüberwachung verwendet."),
+            "excess_charging_enable": Elem.BOOL("Wenn aktiviert, regelt der Energy Manager die an ihn angeschlossenen Verbraucher abhängig vom Überschuss einer vorhandenen Photovoltaikanlage. Wenn deaktiviert, wird die maximale Leistung unter Einhaltung der maximale Strombelastbarkeit der Zuleitungen erlaubt."),
+            "contactor_installed": Elem.BOOL("Gibt an, ob ein Schütz angeschlossen ist, mit dem die gesteuerten Wallboxen zwischen dreiphasigem und einphasigem Betrieb umgeschaltet werden können. Eingang 4 wird dann automatisch zur Schützüberwachung verwendet."),
             "phase_switching_mode": Elem.INT("", constants=[
                 Const(0, "Automatischer Wechsel zwischen drei- und einphasigem Laden. Nur möglich, wenn contactor_installed true ist."),
                 Const(1, "Immer einphasig"),
                 Const(2, "Immer dreiphasig")
             ]),
-            "guaranteed_power": Elem.INT("Mindest-Ladeleistung, die für den Min+PV-Lademodus verwendet wird. Diese Leistung wird bei unzureichendem PV-Überschuss (teilweise) aus dem Netz bezogen.", unit=Units.W),
+            "guaranteed_power": Elem.INT("Mindest-Ladeleistung, die für den Min + PV-Lademodus verwendet wird. Diese Leistung wird bei unzureichendem PV-Überschuss (teilweise) aus dem Netz bezogen.", unit=Units.W),
+
+
             "relay_config": Elem.INT("", constants=[
                 Const(0, "Manuelles Schalten. Das Relais kann über API (siehe TODO) und Webinterface geschaltet werden."),
                 Const(1, "Regelbasiertes Schalten. Wenn die konfigurierte Bedingung 'relay_rule_when' den Wert 'relay_rule_is' annimmt, wird das Relais geschlossen."),
             ]),
-            "relay_rule_when": Elem.INT("Wert der gegen relay_rule_is geprüft werden soll. Es sind nur bestimmte relay_rule_when-Werte mit bestimmten relay_rule_is-Werten erlaubt.", constants=[
+            "relay_rule_when": Elem.INT("Wert, gegen den relay_rule_is geprüft werden soll. Es sind nur bestimmte relay_rule_when-Werte mit bestimmten relay_rule_is-Werten erlaubt.", constants=[
                 Const(0, "Eingang 3. Erlaubte relay_rule_is-Werte: 0 (Eingang geöffnet), 1 (Eingang geschlossen)"),
                 Const(1, "Eingang 4. Erlaubte relay_rule_is-Werte: 0 (Eingang geöffnet), 1 (Eingang geschlossen)"),
-                Const(2, "Phasenumschaltung. Erlaubte relay_rule_is-Werte: 2 (Einphasig), 3 (Dreiphasig)"),
+                Const(2, "Phasenumschaltung. Erlaubte relay_rule_is-Werte: 2 (einphasig), 3 (dreiphasig)"),
                 Const(3, "Schützüberwachung. Erlaubte relay_rule_is-Werte: 4 (Schützfehler), 5 (Schütz OK)"),
-                Const(4, "Leistung verfügbar. Erlaubte relay_rule_is-Werte: 6 (Leistung verfügbar), 7 (Leistung nicht verfügbar)"),
+                Const(4, "Leistung verfügbar. Erlaubte relay_rule_is-Werte: 6 (genügend Leistung für einen Ladevorgang verfügbar), 7 (nicht genügend Leistung für einen Ladevorgang verfügbar)"),
                 Const(5, "Netzbezug. Erlaubte relay_rule_is-Werte: 8 (Netzbezug) , 9 (Netzeinspeisung)")
             ]),
             "relay_rule_is": Elem.INT("Wert gegen den relay_rule_when geprüft wird.", constants=[
@@ -39,62 +41,62 @@ energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", Ve
                 Const(5, "Schütz OK. Erlaubter relay_rule_when-Wert: 3 (Schützüberwachung)"),
                 Const(6, "Genügend Leistung für einen Ladevorgang verfügbar. Erlaubter relay_rule_when-Wert: 4 (Leistung verfügbar)"),
                 Const(7, "Nicht genügend Leistung für einen Ladevorgang verfügbar. Erlaubter relay_rule_when-Wert: 4 (Leistung verfügbar)"),
-                Const(8, "Netzbezug. Erlaubter relay_rule_when-Wert: 5 (Netzbezug)"),
-                Const(9, "Netzeinspeisung. Erlaubter relay_rule_when-Wert: 5 (Netzbezug)"),
+                Const(8, "Netzbezug. Es wird aktuell Energie aus dem Netz bezogen. Erlaubter relay_rule_when-Wert: 5 (Netzbezug)"),
+                Const(9, "Netzeinspeisung. Es wird aktuell Energie ins Netz eingespeist. Erlaubter relay_rule_when-Wert: 5 (Netzbezug)"),
             ]),
 
 
             "input3_rule_then": Elem.INT("Verhalten des Eingangs 3. Die hier konfigurierte Aktion wird durchgeführt, wenn Eingang 3 den in input3_rule_is konfigurierten Wert hat.", constants=[
-                Const(0, "Deaktiviert."),
-                Const(2, "Laden blockieren."),
-                Const(3, "Ladestrom begrenzen. Der Ladestrom wird auf den in input3_rule_then_limit gesetzten Wert begrenzt, wenn die Bedingung zutrifft. Wenn die Bedingung nicht (mehr) zutrifft, wird das Ladestrom-Limit wieder entfernt."),
-                Const(4, "Lademodus wechseln. input3_rule_is wird nicht berücksichtigt. Wenn Eingang 3 geschlossen wird, wird auf den in input3_rule_then_on_high konfigurierten Modus gewechselt. Wenn Eingang 3 geöffnet wird, ird auf den in input3_rule_then_on_low konfigurierten Modus gewechselt."),
+                Const(0, "Nicht verwendet."),
+                Const(2, "Laden blockieren. Laufende Ladevorgänge werden unterbrochen und keine neuen Ladevorgänge freigegeben, solange die Bedingung zutrifft."),
+                Const(3, "Ladestrom begrenzen. Der Ladestrom wird auf den in input3_rule_then_limit gesetzten Wert begrenzt, solange die Bedingung zutrifft. Wenn die Bedingung nicht (mehr) zutrifft, wird das Ladestrom-Limit wieder entfernt."),
+                Const(4, "Lademodus wechseln. input3_rule_is wird nicht berücksichtigt. Wenn Eingang 3 geschlossen wird, wird auf den in input3_rule_then_on_high konfigurierten Modus gewechselt. Wenn Eingang 3 geöffnet wird, wird auf den in input3_rule_then_on_low konfigurierten Modus gewechselt."),
             ]),
-            "input3_rule_is": Elem.INT("Wert den Eingang 3 annehmen muss, damit die in input3_rule_then konfigurierte Aktion ausgeführt wird.", constants=[
+            "input3_rule_is": Elem.INT("Wert, den Eingang 3 annehmen muss, damit die in input3_rule_then konfigurierte Aktion ausgeführt wird.", constants=[
                 Const(0, "Geschlossen"),
                 Const(1, "Offen"),
             ]),
-            "input3_rule_then_limit": Elem.INT("Ladestrom-Limit, dass gesetzt wird, falls input3_rule_then auf 3 (Ladestrom begrenzen) konfiguriert ist und Eingang 3 den in input3_rule_is konfigurierten Wert hat.", unit=Units.mA),
+            "input3_rule_then_limit": Elem.INT("Ladestrom-Limit, das gesetzt wird, falls input3_rule_then auf 3 (Ladestrom begrenzen) konfiguriert ist und Eingang 3 den in input3_rule_is konfigurierten Wert hat.", unit=Units.mA),
             "input3_rule_then_on_high": Elem.INT("Lademodus, in den gewechselt wird, falls input3_rule_then auf 4 (Moduswechsel) konfiguriert ist und Eingang 3 geschlossen wird.", constants=[
                 Const(0, "Schnell."),
                 Const(1, "Aus."),
                 Const(2, "PV."),
-                Const(3, "Min+PV."),
+                Const(3, "Min + PV."),
                 Const(255, "Lademodus nicht wechseln."),
             ]),
             "input3_rule_then_on_low": Elem.INT("Lademodus, in den gewechselt wird, falls input3_rule_then auf 4 (Moduswechsel) konfiguriert ist und Eingang 3 geöffnet wird.", constants=[
                 Const(0, "Schnell."),
                 Const(1, "Aus."),
                 Const(2, "PV."),
-                Const(3, "Min+PV."),
+                Const(3, "Min + PV."),
                 Const(255, "Lademodus nicht wechseln."),
             ]),
 
 
             "input4_rule_then": Elem.INT("Verhalten des Eingangs 4. Die hier konfigurierte Aktion wird durchgeführt, wenn Eingang 4 den in input4_rule_is konfigurierten Wert hat.", constants=[
-                Const(0, "Deaktiviert."),
+                Const(0, "Nicht verwendet."),
                 Const(1, "Schützüberwachung. Eingang wird zur Überwachung des Schützes verwendet, das die konfigurierten Wallboxen zwischen einphasigem und dreiphasigem Betrieb umschaltet."),
-                Const(2, "Laden blockieren."),
-                Const(3, "Ladestrom begrenzen. Der Ladestrom wird auf den in input4_rule_then_limit gesetzten Wert begrenzt, wenn die Bedingung zutrifft. Wenn die Bedingung nicht (mehr) zutrifft, wird das Ladestrom-Limit wieder entfernt."),
-                Const(4, "Lademodus wechseln. input4_rule_is wird nicht berücksichtigt. Wenn Eingang 4 geschlossen wird, wird auf den in input4_rule_then_on_high konfigurierten Modus gewechselt. Wenn Eingang 4 geöffnet wird, ird auf den in input4_rule_then_on_low konfigurierten Modus gewechselt."),
+                Const(2, "Laden blockieren. Laufende Ladevorgänge werden unterbrochen und keine neuen Ladevorgänge freigegeben, solange die Bedingung zutrifft."),
+                Const(3, "Ladestrom begrenzen. Der Ladestrom wird auf den in input4_rule_then_limit gesetzten Wert begrenzt, solange die Bedingung zutrifft. Wenn die Bedingung nicht (mehr) zutrifft, wird das Ladestrom-Limit wieder entfernt."),
+                Const(4, "Lademodus wechseln. input4_rule_is wird nicht berücksichtigt. Wenn Eingang 4 geschlossen wird, wird auf den in input4_rule_then_on_high konfigurierten Modus gewechselt. Wenn Eingang 4 geöffnet wird, wird auf den in input4_rule_then_on_low konfigurierten Modus gewechselt."),
             ]),
-            "input4_rule_is": Elem.INT("Wert den Eingang 4 annehmen muss, damit die in input4_rule_then konfigurierte Aktion ausgeführt wird.", constants=[
+            "input4_rule_is": Elem.INT("Wert, den Eingang 4 annehmen muss, damit die in input4_rule_then konfigurierte Aktion ausgeführt wird.", constants=[
                 Const(0, "Geschlossen"),
                 Const(1, "Offen"),
             ]),
-            "input4_rule_then_limit": Elem.INT("Ladestrom-Limit, dass gesetzt wird, falls input4_rule_then auf 4 (Ladestrom begrenzen) konfiguriert ist und Eingang 4 den in input4_rule_is konfigurierten Wert hat.", unit=Units.mA),
+            "input4_rule_then_limit": Elem.INT("Ladestrom-Limit, das gesetzt wird, falls input4_rule_then auf 3 (Ladestrom begrenzen) konfiguriert ist und Eingang 4 den in input4_rule_is konfigurierten Wert hat.", unit=Units.mA),
             "input4_rule_then_on_high": Elem.INT("Lademodus, in den gewechselt wird, falls input4_rule_then auf 4 (Moduswechsel) konfiguriert ist und Eingang 4 geschlossen wird.", constants=[
                 Const(0, "Schnell."),
                 Const(1, "Aus."),
                 Const(2, "PV."),
-                Const(3, "Min+PV."),
+                Const(3, "Min + PV."),
                 Const(255, "Lademodus nicht wechseln."),
             ]),
             "input4_rule_then_on_low": Elem.INT("Lademodus, in den gewechselt wird, falls input4_rule_then auf 4 (Moduswechsel) konfiguriert ist und Eingang 4 geöffnet wird.", constants=[
                 Const(0, "Schnell."),
                 Const(1, "Aus."),
                 Const(2, "PV."),
-                Const(3, "Min+PV."),
+                Const(3, "Min + PV."),
                 Const(255, "Lademodus nicht wechseln."),
             ]),
         })
@@ -124,35 +126,39 @@ energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", Ve
                 Const(True, "Relais geschlossen"),
                 Const(False, "Relais geöffnet"),
             ]),
-            "error_flags": Elem.INT("TODO", constants=[
-                Const(0, "TODO"),
+            "error_flags": Elem.INT("Aktive Fehlerzustände des Energy Managers. Es handelt sich hierbei um eine Bitmaske, sodass sämtliche Kombinationen aus Fehlerwerten auftreten können.", constants=[
+                Const(0, "Kein Fehler"),
+                Const(0x00000002, "Keine Netzwerkverbindung (LAN/WLAN)"),
+                Const(0x00010000, "Schützüberwachung hat ausgelöst"),
+                Const(0x01000000, "Interner Fehler, Bricklet nicht erreichbar"),
+                Const(0x02000000, "Interner Fehler, SD-Karten-Fehler"),
             ])
         })
     ),
     Func("low_level_state", FuncType.STATE, Elem.OBJECT("Low-Level-Zustand des Energy Managers", members={
             "contactor": Elem.BOOL("Vom Energy Manager gesetzter Zustand des Schützes", constants=[
                 Const(True, "Schütz geschlossen"),
-                Const(False,  "Schütz geöffnet"),
+                Const(False, "Schütz geöffnet"),
             ]),
             "contactor_check_state": Elem.INT("Zustand der Schützprüfung", constants=[
-                Const(0, "TODO"),
-                Const(1, "TODO"),
+                Const(0, "Schützüberwachung hat ausgelöst (Schütz defekt)"),
+                Const(1, "Kein Schützfehler bekannt (Schütz in Ordnung)"),
             ]),
-            "input_voltage": Elem.INT("Eingangsspannung in Millivolt.", unit=Units.mV),
+            "input_voltage": Elem.INT("Interne Versorgungsspannung in Millivolt.", unit=Units.mV),
             "led_rgb": Elem.ARRAY("Farbe der Status-LED", members=[
-                Elem.INT("Rot"),
-                Elem.INT("Grün"),
-                Elem.INT("Blau"),
+                Elem.INT("Rot: 0 (aus) bis 255 (maximale Intensität)"),
+                Elem.INT("Grün: 0 (aus) bis 255 (maximale Intensität)"),
+                Elem.INT("Blau: 0 (aus) bis 255 (maximale Intensität)"),
             ]),
-            "uptime": Elem.INT("Zeit seit Starten des Energy Manager Bricklets.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms)
+            "uptime": Elem.INT("Zeit seit Starten des Energy Manager Bricklets.<br/><br/>Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms)
         })
     ),
     Func("charge_mode", FuncType.STATE, Elem.OBJECT("Aktuell verwendeter Lademodus. Kann über energy_manager/charge_mode_update mit dem selben Payload aktualisiert werden.", members={
             "mode": Elem.INT("", constants=[
                 Const(0, "Schnell. Lädt Fahrzeuge so schnell wie möglich, selbst wenn dafür Netzbezug notwendig ist."),
                 Const(1, "Aus. Fahrzeuge werden nicht geladen."),
-                Const(2, "PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung wenn excess_charging_enable true ist."),
-                Const(3, "Min+PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet.  Steht nur zur Verfügung wenn excess_charging_enable true ist."),
+                Const(2, "PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist."),
+                Const(3, "Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist."),
             ])
         })
     ),

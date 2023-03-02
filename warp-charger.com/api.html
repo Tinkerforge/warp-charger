@@ -5151,8 +5151,8 @@
 <ol class="ol-enum">
     <li><strong>0</strong> - Schnell. Lädt Fahrzeuge so schnell wie möglich, selbst wenn dafür Netzbezug notwendig ist.</li>
     <li><strong>1</strong> - Aus. Fahrzeuge werden nicht geladen.</li>
-    <li><strong>2</strong> - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung wenn excess_charging_enable true ist.</li>
-    <li><strong>3</strong> - Min+PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet.  Steht nur zur Verfügung wenn excess_charging_enable true ist.</li>
+    <li><strong>2</strong> - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist.</li>
+    <li><strong>3</strong> - Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist.</li>
 </ol>
 </div></td>
 </tr>
@@ -5169,12 +5169,12 @@
 
 <tr class="any">
     <th scope="row">excess_charging_enable<br/><span class="th-details">bool</span></th>
-    <td>Wenn aktiviert, regelt der Energy Manager die an ihn angeschlossenen Verbraucher abhängig vom Über­schuss einer vorhandenen Photovoltaikanlage. Wenn deaktiviert, wird die maximale Leistung unter Einhaltung der maximale Strombelastbarkeit der Zuleitungen erlaubt.</td>
+    <td>Wenn aktiviert, regelt der Energy Manager die an ihn angeschlossenen Verbraucher abhängig vom Überschuss einer vorhandenen Photovoltaikanlage. Wenn deaktiviert, wird die maximale Leistung unter Einhaltung der maximale Strombelastbarkeit der Zuleitungen erlaubt.</td>
 </tr>
 
 <tr class="any">
     <th scope="row">contactor_installed<br/><span class="th-details">bool</span></th>
-    <td>Gibt an, ob ein Schütz angeschlossen ist, mit dem die gesteuerten Wallboxen zwischem dreiphasigem und einphasigem Betrieb umschalten kann. Eingang 4 wird dann automatisch zur Schützüberwachung verwendet.</td>
+    <td>Gibt an, ob ein Schütz angeschlossen ist, mit dem die gesteuerten Wallboxen zwischen dreiphasigem und einphasigem Betrieb umgeschaltet werden können. Eingang 4 wird dann automatisch zur Schützüberwachung verwendet.</td>
 </tr>
 
 <tr class="any">
@@ -5191,7 +5191,7 @@
 
 <tr class="any">
     <th scope="row">guaranteed_power<br/><span class="th-details">int (<abbr title="Watt">W</abbr>)</span></th>
-    <td>Mindest-Ladeleistung, die für den Min+PV-Lademodus verwendet wird. Diese Leistung wird bei unzureichendem PV-Überschuss (teilweise) aus dem Netz bezogen.</td>
+    <td>Mindest-Ladeleistung, die für den Min + PV-Lademodus verwendet wird. Diese Leistung wird bei unzureichendem PV-Überschuss (teilweise) aus dem Netz bezogen.</td>
 </tr>
 
 <tr class="any">
@@ -5207,14 +5207,14 @@
 
 <tr class="any">
     <th scope="row">relay_rule_when<br/><span class="th-details">int</span></th>
-    <td>Wert der gegen relay_rule_is geprüft werden soll. Es sind nur bestimmte relay_rule_when-Werte mit bestimmten relay_rule_is-Werten erlaubt.
+    <td>Wert, gegen den relay_rule_is geprüft werden soll. Es sind nur bestimmte relay_rule_when-Werte mit bestimmten relay_rule_is-Werten erlaubt.
 <div class="any">
 <ol class="ol-enum">
     <li><strong>0</strong> - Eingang 3. Erlaubte relay_rule_is-Werte: 0 (Eingang geöffnet), 1 (Eingang geschlossen)</li>
     <li><strong>1</strong> - Eingang 4. Erlaubte relay_rule_is-Werte: 0 (Eingang geöffnet), 1 (Eingang geschlossen)</li>
-    <li><strong>2</strong> - Phasenumschaltung. Erlaubte relay_rule_is-Werte: 2 (Einphasig), 3 (Dreiphasig)</li>
+    <li><strong>2</strong> - Phasenumschaltung. Erlaubte relay_rule_is-Werte: 2 (einphasig), 3 (dreiphasig)</li>
     <li><strong>3</strong> - Schützüberwachung. Erlaubte relay_rule_is-Werte: 4 (Schützfehler), 5 (Schütz OK)</li>
-    <li><strong>4</strong> - Leistung verfügbar. Erlaubte relay_rule_is-Werte: 6 (Leistung verfügbar), 7 (Leistung nicht verfügbar)</li>
+    <li><strong>4</strong> - Leistung verfügbar. Erlaubte relay_rule_is-Werte: 6 (genügend Leistung für einen Ladevorgang verfügbar), 7 (nicht genügend Leistung für einen Ladevorgang verfügbar)</li>
     <li><strong>5</strong> - Netzbezug. Erlaubte relay_rule_is-Werte: 8 (Netzbezug) , 9 (Netzeinspeisung)</li>
 </ol>
 </div></td>
@@ -5233,8 +5233,8 @@
     <li><strong>5</strong> - Schütz OK. Erlaubter relay_rule_when-Wert: 3 (Schützüberwachung)</li>
     <li><strong>6</strong> - Genügend Leistung für einen Ladevorgang verfügbar. Erlaubter relay_rule_when-Wert: 4 (Leistung verfügbar)</li>
     <li><strong>7</strong> - Nicht genügend Leistung für einen Ladevorgang verfügbar. Erlaubter relay_rule_when-Wert: 4 (Leistung verfügbar)</li>
-    <li><strong>8</strong> - Netzbezug. Erlaubter relay_rule_when-Wert: 5 (Netzbezug)</li>
-    <li><strong>9</strong> - Netzeinspeisung. Erlaubter relay_rule_when-Wert: 5 (Netzbezug)</li>
+    <li><strong>8</strong> - Netzbezug. Es wird aktuell Energie aus dem Netz bezogen. Erlaubter relay_rule_when-Wert: 5 (Netzbezug)</li>
+    <li><strong>9</strong> - Netzeinspeisung. Es wird aktuell Energie ins Netz eingespeist. Erlaubter relay_rule_when-Wert: 5 (Netzbezug)</li>
 </ol>
 </div></td>
 </tr>
@@ -5244,17 +5244,17 @@
     <td>Verhalten des Eingangs 3. Die hier konfigurierte Aktion wird durchgeführt, wenn Eingang 3 den in input3_rule_is konfigurierten Wert hat.
 <div class="any">
 <ol class="ol-enum">
-    <li><strong>0</strong> - Deaktiviert.</li>
-    <li><strong>2</strong> - Laden blockieren.</li>
-    <li><strong>3</strong> - Ladestrom begrenzen. Der Ladestrom wird auf den in input3_rule_then_limit gesetzten Wert begrenzt, wenn die Bedingung zutrifft. Wenn die Bedingung nicht (mehr) zutrifft, wird das Ladestrom-Limit wieder entfernt.</li>
-    <li><strong>4</strong> - Lademodus wechseln. input3_rule_is wird nicht berücksichtigt. Wenn Eingang 3 geschlossen wird, wird auf den in input3_rule_then_on_high konfigurierten Modus gewechselt. Wenn Eingang 3 geöffnet wird, ird auf den in input3_rule_then_on_low konfigurierten Modus gewechselt.</li>
+    <li><strong>0</strong> - Nicht verwendet.</li>
+    <li><strong>2</strong> - Laden blockieren. Laufende Ladevorgänge werden unterbrochen und keine neuen Ladevorgänge freigegeben, solange die Bedingung zutrifft.</li>
+    <li><strong>3</strong> - Ladestrom begrenzen. Der Ladestrom wird auf den in input3_rule_then_limit gesetzten Wert begrenzt, solange die Bedingung zutrifft. Wenn die Bedingung nicht (mehr) zutrifft, wird das Ladestrom-Limit wieder entfernt.</li>
+    <li><strong>4</strong> - Lademodus wechseln. input3_rule_is wird nicht berücksichtigt. Wenn Eingang 3 geschlossen wird, wird auf den in input3_rule_then_on_high konfigurierten Modus gewechselt. Wenn Eingang 3 geöffnet wird, wird auf den in input3_rule_then_on_low konfigurierten Modus gewechselt.</li>
 </ol>
 </div></td>
 </tr>
 
 <tr class="any">
     <th scope="row">input3_rule_is<br/><span class="th-details">int</span></th>
-    <td>Wert den Eingang 3 annehmen muss, damit die in input3_rule_then konfigurierte Aktion ausgeführt wird.
+    <td>Wert, den Eingang 3 annehmen muss, damit die in input3_rule_then konfigurierte Aktion ausgeführt wird.
 <div class="any">
 <ol class="ol-enum">
     <li><strong>0</strong> - Geschlossen</li>
@@ -5265,7 +5265,7 @@
 
 <tr class="any">
     <th scope="row">input3_rule_then_limit<br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
-    <td>Ladestrom-Limit, dass gesetzt wird, falls input3_rule_then auf 3 (Ladestrom begrenzen) konfiguriert ist und Eingang 3 den in input3_rule_is konfigurierten Wert hat.</td>
+    <td>Ladestrom-Limit, das gesetzt wird, falls input3_rule_then auf 3 (Ladestrom begrenzen) konfiguriert ist und Eingang 3 den in input3_rule_is konfigurierten Wert hat.</td>
 </tr>
 
 <tr class="any">
@@ -5276,7 +5276,7 @@
     <li><strong>0</strong> - Schnell.</li>
     <li><strong>1</strong> - Aus.</li>
     <li><strong>2</strong> - PV.</li>
-    <li><strong>3</strong> - Min+PV.</li>
+    <li><strong>3</strong> - Min + PV.</li>
     <li><strong>255</strong> - Lademodus nicht wechseln.</li>
 </ol>
 </div></td>
@@ -5290,7 +5290,7 @@
     <li><strong>0</strong> - Schnell.</li>
     <li><strong>1</strong> - Aus.</li>
     <li><strong>2</strong> - PV.</li>
-    <li><strong>3</strong> - Min+PV.</li>
+    <li><strong>3</strong> - Min + PV.</li>
     <li><strong>255</strong> - Lademodus nicht wechseln.</li>
 </ol>
 </div></td>
@@ -5301,18 +5301,18 @@
     <td>Verhalten des Eingangs 4. Die hier konfigurierte Aktion wird durchgeführt, wenn Eingang 4 den in input4_rule_is konfigurierten Wert hat.
 <div class="any">
 <ol class="ol-enum">
-    <li><strong>0</strong> - Deaktiviert.</li>
+    <li><strong>0</strong> - Nicht verwendet.</li>
     <li><strong>1</strong> - Schützüberwachung. Eingang wird zur Überwachung des Schützes verwendet, das die konfigurierten Wallboxen zwischen einphasigem und dreiphasigem Betrieb umschaltet.</li>
-    <li><strong>2</strong> - Laden blockieren.</li>
-    <li><strong>3</strong> - Ladestrom begrenzen. Der Ladestrom wird auf den in input4_rule_then_limit gesetzten Wert begrenzt, wenn die Bedingung zutrifft. Wenn die Bedingung nicht (mehr) zutrifft, wird das Ladestrom-Limit wieder entfernt.</li>
-    <li><strong>4</strong> - Lademodus wechseln. input4_rule_is wird nicht berücksichtigt. Wenn Eingang 4 geschlossen wird, wird auf den in input4_rule_then_on_high konfigurierten Modus gewechselt. Wenn Eingang 4 geöffnet wird, ird auf den in input4_rule_then_on_low konfigurierten Modus gewechselt.</li>
+    <li><strong>2</strong> - Laden blockieren. Laufende Ladevorgänge werden unterbrochen und keine neuen Ladevorgänge freigegeben, solange die Bedingung zutrifft.</li>
+    <li><strong>3</strong> - Ladestrom begrenzen. Der Ladestrom wird auf den in input4_rule_then_limit gesetzten Wert begrenzt, solange die Bedingung zutrifft. Wenn die Bedingung nicht (mehr) zutrifft, wird das Ladestrom-Limit wieder entfernt.</li>
+    <li><strong>4</strong> - Lademodus wechseln. input4_rule_is wird nicht berücksichtigt. Wenn Eingang 4 geschlossen wird, wird auf den in input4_rule_then_on_high konfigurierten Modus gewechselt. Wenn Eingang 4 geöffnet wird, wird auf den in input4_rule_then_on_low konfigurierten Modus gewechselt.</li>
 </ol>
 </div></td>
 </tr>
 
 <tr class="any">
     <th scope="row">input4_rule_is<br/><span class="th-details">int</span></th>
-    <td>Wert den Eingang 4 annehmen muss, damit die in input4_rule_then konfigurierte Aktion ausgeführt wird.
+    <td>Wert, den Eingang 4 annehmen muss, damit die in input4_rule_then konfigurierte Aktion ausgeführt wird.
 <div class="any">
 <ol class="ol-enum">
     <li><strong>0</strong> - Geschlossen</li>
@@ -5323,7 +5323,7 @@
 
 <tr class="any">
     <th scope="row">input4_rule_then_limit<br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
-    <td>Ladestrom-Limit, dass gesetzt wird, falls input4_rule_then auf 4 (Ladestrom begrenzen) konfiguriert ist und Eingang 4 den in input4_rule_is konfigurierten Wert hat.</td>
+    <td>Ladestrom-Limit, das gesetzt wird, falls input4_rule_then auf 3 (Ladestrom begrenzen) konfiguriert ist und Eingang 4 den in input4_rule_is konfigurierten Wert hat.</td>
 </tr>
 
 <tr class="any">
@@ -5334,7 +5334,7 @@
     <li><strong>0</strong> - Schnell.</li>
     <li><strong>1</strong> - Aus.</li>
     <li><strong>2</strong> - PV.</li>
-    <li><strong>3</strong> - Min+PV.</li>
+    <li><strong>3</strong> - Min + PV.</li>
     <li><strong>255</strong> - Lademodus nicht wechseln.</li>
 </ol>
 </div></td>
@@ -5348,7 +5348,7 @@
     <li><strong>0</strong> - Schnell.</li>
     <li><strong>1</strong> - Aus.</li>
     <li><strong>2</strong> - PV.</li>
-    <li><strong>3</strong> - Min+PV.</li>
+    <li><strong>3</strong> - Min + PV.</li>
     <li><strong>255</strong> - Lademodus nicht wechseln.</li>
 </ol>
 </div></td>
@@ -5446,10 +5446,14 @@
 
 <tr class="any">
     <th scope="row">error_flags<br/><span class="th-details">int</span></th>
-    <td>TODO
+    <td>Aktive Fehlerzustände des Energy Managers. Es handelt sich hierbei um eine Bitmaske, sodass sämtliche Kombinationen aus Fehlerwerten auftreten können.
 <div class="any">
 <ol class="ol-enum">
-    <li><strong>0</strong> - TODO</li>
+    <li><strong>0</strong> - Kein Fehler</li>
+    <li><strong>2</strong> - Keine Netzwerkverbindung (LAN/WLAN)</li>
+    <li><strong>65536</strong> - Schützüberwachung hat ausgelöst</li>
+    <li><strong>16777216</strong> - Interner Fehler, Bricklet nicht erreichbar</li>
+    <li><strong>33554432</strong> - Interner Fehler, SD-Karten-Fehler</li>
 </ol>
 </div></td>
 </tr>
@@ -5487,15 +5491,15 @@
     <td>Zustand der Schützprüfung
 <div class="any">
 <ol class="ol-enum">
-    <li><strong>0</strong> - TODO</li>
-    <li><strong>1</strong> - TODO</li>
+    <li><strong>0</strong> - Schützüberwachung hat ausgelöst (Schütz defekt)</li>
+    <li><strong>1</strong> - Kein Schützfehler bekannt (Schütz in Ordnung)</li>
 </ol>
 </div></td>
 </tr>
 
 <tr class="any">
     <th scope="row">input_voltage<br/><span class="th-details">int (<abbr title="Millivolt">mV</abbr>)</span></th>
-    <td>Eingangsspannung in Millivolt.</td>
+    <td>Interne Versorgungsspannung in Millivolt.</td>
 </tr>
 
 <tr class="any">
@@ -5503,16 +5507,16 @@
     <td>Farbe der Status-LED
 <div class="any">
 <ol class="ol-enum">
-    <li>[0] - Rot</li>
-    <li>[1] - Grün</li>
-    <li>[2] - Blau</li>
+    <li>[0] - Rot: 0 (aus) bis 255 (maximale Intensität)</li>
+    <li>[1] - Grün: 0 (aus) bis 255 (maximale Intensität)</li>
+    <li>[2] - Blau: 0 (aus) bis 255 (maximale Intensität)</li>
 </ol>
 </div></td>
 </tr>
 
 <tr class="any">
     <th scope="row">uptime<br/><span class="th-details">int (<abbr title="Millisekunde">ms</abbr>)</span></th>
-    <td>Zeit seit Starten des Energy Manager Bricklets.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.</td>
+    <td>Zeit seit Starten des Energy Manager Bricklets.<br/><br/>Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.</td>
 </tr>
         </tbody>
     </table>
@@ -5539,8 +5543,8 @@
 <ol class="ol-enum">
     <li><strong>0</strong> - Schnell. Lädt Fahrzeuge so schnell wie möglich, selbst wenn dafür Netzbezug notwendig ist.</li>
     <li><strong>1</strong> - Aus. Fahrzeuge werden nicht geladen.</li>
-    <li><strong>2</strong> - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung wenn excess_charging_enable true ist.</li>
-    <li><strong>3</strong> - Min+PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet.  Steht nur zur Verfügung wenn excess_charging_enable true ist.</li>
+    <li><strong>2</strong> - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist.</li>
+    <li><strong>3</strong> - Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist.</li>
 </ol>
 </div></td>
 </tr>
