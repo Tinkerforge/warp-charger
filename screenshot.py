@@ -26,6 +26,7 @@ parser.add_argument("-l", "--last", nargs='?', help="CSS selector of last elemen
 parser.add_argument("-s", "--style", nargs='?', help="CSS to inject before taking the screenshot")
 parser.add_argument("-w", "--width", nargs='?', help="Width of virtual window.")
 parser.add_argument("-p", "--page", action="store_true", help="Ignore other arguments and take screenshot of complete page")
+parser.add_argument("--full", nargs='?', help="Additionally take screenshot with top and navbar visible. Stored as ..._full.png")
 
 args = parser.parse_args()
 
@@ -92,3 +93,33 @@ with webdriver.Firefox(options=options) as driver:
         print("WARNING: Screenshot aspect ratio {} too low. Will not fit in one manual column!".format(image.size[0] / image.size[1]))
 
     image.save(args.output)
+
+    if args.full:
+        driver.set_window_size(args.full, 10000)
+        #await resize
+        time.sleep(0.5)
+        element = driver.find_element(By.TAG_NAME, "body")
+        png = element.screenshot_as_png
+
+        # Crop inserted padding and (if a complete subpage is screenshotted) the header fade.
+        image = Image.open(io.BytesIO(png))
+
+        left = 0
+        right = left + (image.size[0])
+
+        top = 0
+
+        bottom = (image.size[1])
+
+        if args.last:
+            bottom_e = driver.find_element(By.CSS_SELECTOR, args.last)
+            y = bottom_e.location["y"] - element.location["y"]
+            h = bottom_e.size["height"]
+            bottom = (y + h) * DEVICE_PIXEL_RATIO
+
+        image = image.crop((left, top, right, bottom))
+
+        if image.size[0] / image.size[1] < MANUAL_COLUMN_ASPECT_RATIO:
+            print("WARNING: Screenshot aspect ratio {} too low. Will not fit in one manual column!".format(image.size[0] / image.size[1]))
+
+        image.save(args.output.replace(".png", "_full.png"))
