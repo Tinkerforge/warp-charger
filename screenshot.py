@@ -16,16 +16,16 @@ DEVICE_PIXEL_RATIO = 2.0
 MANUAL_COLUMN_ASPECT_RATIO = 0.358 # estimated by screenshot
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-o", "--output")
-parser.add_argument("-H", "--host")
-parser.add_argument("--crop", action="store_true")
-parser.add_argument("-e", "--element", nargs='?')
-parser.add_argument("-c", "--click", nargs='*')
-parser.add_argument("-f", "--first", nargs='?')
-parser.add_argument("-l", "--last", nargs='?')
-parser.add_argument("-s", "--style", nargs='?')
-parser.add_argument("-w", "--width", nargs='?')
-parser.add_argument("-p", "--page", action="store_true")
+parser.add_argument("-o", "--output", help="Path to write the screenshot to.")
+parser.add_argument("-H", "--host", help="Host to connect to.")
+parser.add_argument("--crop", action="store_true", help="crop top 24 pixels. Use this when screenshoting sub-pages to remove top bar shadow")
+parser.add_argument("-e", "--element", nargs='?', help="CSS selector of element to screenshot. Omit to screenshot complete page.")
+parser.add_argument("-c", "--click", nargs='*', help="List of CSS selectors to click before taking the screenshot.")
+parser.add_argument("-f", "--first", nargs='?', help="CSS selector of first element to be visible.")
+parser.add_argument("-l", "--last", nargs='?', help="CSS selector of last element to be visible.")
+parser.add_argument("-s", "--style", nargs='?', help="CSS to inject before taking the screenshot")
+parser.add_argument("-w", "--width", nargs='?', help="Width of virtual window.")
+parser.add_argument("-p", "--page", action="store_true", help="Ignore other arguments and take screenshot of complete page")
 
 args = parser.parse_args()
 
