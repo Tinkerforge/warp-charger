@@ -589,22 +589,63 @@ client<span style='color:#808030; '>.</span>loop_forever<span style='color:#8080
             <div class="row">
                 <div class="col-auto  mx-auto">
                     <div class="text-center">
-                        <a href="firmwares/energy_manager_firmware_1_0_0_6400c60d_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP Energy Manager Firmware 1.0.0 herunterladen</a>
-                        <div class="text-muted pt-2 pb-2">Veröffentlicht am 02.03.2023</div>
+                        <a href="firmwares/energy_manager_firmware_1_0_1_64131430_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP Energy Manager Firmware 1.0.1 herunterladen</a>
+                        <div class="text-muted pt-2 pb-2">Veröffentlicht am 16.03.2023</div>
                     </div>
 
                     <table class="table table-borderless mb-3">
                         <tbody>
                             <tr>
-                                <th scope="row"><a href="firmwares/energy_manager_firmware_1_0_0_6400c60d_merged.bin">1.0.0</a><br/><span class="th-details">02.03.2023</span><br/><a href="firmwares/energy_manager_firmware_1_0_0_6400c60d_merged.bin.sha256">Prüfsumme</a></th>
+                                <th scope="row"><a href="firmwares/energy_manager_firmware_1_0_1_64131430_merged.bin">1.0.1</a><br/><span class="th-details">16.03.2023</span><br/><a href="firmwares/energy_manager_firmware_1_0_1_64131430_merged.bin.sha256">Prüfsumme</a></th>
                                 <td>
                                     <ul>
-                                        <li>Initiales Release</li>
+                                        <li>Energiebilanz hinzugefügt</li>
+                                        <li>LED-Blinken in Magenta bei Konfigurationsfehlern hinzugefügt</li>
+                                        <li>Aggressives/Konservatives Regelverhalten hinzugefügt.</li>
+                                        <li>Phasenumschaltungs-Zustand zur Statusseite hinzugefügt</li>
+                                        <li>Anzeige interner Zustände zur Debug-Ansicht hinzugefügt</li>
+                                        <li>Core Dump zu Debug-Report hinzugefügt</li>
+                                        <li>Aussehen der Lademodus-Buttons verbessert</li>
+                                        <li>Veraltete Statuswerte nach Trennung der WLAN-Verbindung entfernt</li>
+                                        <li>Übersetzungen verbessert</li>
+                                        <li>Sichergestellt, dass Min­dest­lade­leistung für Min + PV-Modus nicht weniger als die für einen Ladevorgang notwendige Leistung sein kann</li>
+                                        <li>Nicht unterstützten SDM72CTM von der Stromzählerseite entfernt</li>
+                                        <li>Kontrollierte Wallboxen auf Statusseite zu klickbaren Links umgewandelt</li>
+                                        <li>Sichergestellt, dass keine duplizierten Hosts in Konfiguration kontrollierter Wallboxen akzeptiert werden</li>
+                                        <li>mDNS-Antworten die nicht von WARP Chargern gesendet wurden gefiltert</li>
+                                        <li>Zeichnen negativer und großer Leistungswerte behoben</li>
+                                        <li>Längenprüfung in Text- und Passwortfeldern repariert</li>
+                                        <li>Häufige Ereignis-Log-Meldungen behoben</li>
+                                        <li>Fehler-Feedback von Textfeldern repariert</li>
+                                        <li>Passwort-Platzhaltertext der WLAN-Verbindungsseite repariert</li>
+                                        <li>Löschen des WLAN-Verbindungspassworts repariert</li>
+                                        <li>Fehlende Stromzählerwerte auf Stromzähler-Unterseite repariert</li>
                                     </ul>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+
+                    <div class="text-center">
+                        <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOlderVersions" aria-expanded="false" aria-controls="collapseOlderVersions">
+                            Ältere Firmware-Versionen
+                        </button>
+                    </div>
+
+                    <div class="collapse" id="collapseOlderVersions">
+                        <table class="table mt-3">
+                            <tbody>
+                                <tr>
+                                    <th scope="row"><a href="firmwares/energy_manager_firmware_1_0_0_6400c60d_merged.bin">1.0.0</a><br/><span class="th-details">02.03.2023</span><br/><a href="firmwares/energy_manager_firmware_1_0_0_6400c60d_merged.bin.sha256">Prüfsumme</a></th>
+                                    <td>
+                                        <ul>
+                                            <li>Initiales Release</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -613,7 +654,7 @@ client<span style='color:#808030; '>.</span>loop_forever<span style='color:#8080
         <section id="source"  class="section-bg">
             <div class="container">
                     <header class="section-header">
-                        <h3>Quellcode und Design-dateien</h3>
+                        <h3>Quellcode und Design-Dateien</h3>
                     </header>
 
                 <div class="row">
