@@ -12,26 +12,26 @@ def typecheck(et: EType, obj, consts: Optional[list[Const]], path):
         return
 
     if et == EType.OBJECT and not isinstance(obj, dict):
-        print("{}: Type mismatch: Configured OBJECT, returned {}".format(path, type(obj)))
+        print("{}: Type mismatch: Documented OBJECT, returned {}".format(path, type(obj)))
         return
     if et == EType.ARRAY and not isinstance(obj, list):
-        print("{}: Type mismatch: Configured ARRAY, returned {}".format(path, type(obj)))
+        print("{}: Type mismatch: Documented ARRAY, returned {}".format(path, type(obj)))
         return
     if et == EType.STRING and not isinstance(obj, str):
-        print("{}: Type mismatch: Configured STRING, returned {}".format(path, type(obj)))
+        print("{}: Type mismatch: Documented STRING, returned {}".format(path, type(obj)))
         return
     if et == EType.INT and (not isinstance(obj, int) or isinstance(obj, bool)): # True and False are ints
-        print("{}: Type mismatch: Configured INT, returned {}".format(path, type(obj)))
+        print("{}: Type mismatch: Documented INT, returned {}".format(path, type(obj)))
         return
     # We have to allow None (null in JSON) for floats, because a NaN can not be represented in JSON. ArduinoJSON turns NaNs into nulls.
     if et == EType.FLOAT and not isinstance(obj, float) and not isinstance(obj, int) and not obj is None:
-        print("{}: Type mismatch: Configured FLOAT, returned {}".format(path, type(obj)))
+        print("{}: Type mismatch: Documented FLOAT, returned {}".format(path, type(obj)))
         return
     if et == EType.BOOL and not isinstance(obj, bool):
-        print("{}: Type mismatch: Configured BOOL, returned {}".format(path, type(obj)))
+        print("{}: Type mismatch: Documented BOOL, returned {}".format(path, type(obj)))
         return
     if et == EType.NULL and not obj is None:
-        print("{}: Type mismatch: Configured NULL, returned {}".format(path, type(obj)))
+        print("{}: Type mismatch: Documented NULL, returned {}".format(path, type(obj)))
         return
     if et == EType.OPAQUE:
         return
@@ -39,12 +39,12 @@ def typecheck(et: EType, obj, consts: Optional[list[Const]], path):
 def check_elem_doc(e: Elem, obj, path):
     if e.censored:
         if obj is not None and obj != "":
-            print("{}: configured as censored but implementation returned value {}".format(path, obj))
+            print("{}: Documented as censored but implementation returned value {}".format(path, obj))
         return
 
     if e.type_ == EType.OBJECT:
         if not isinstance(obj, dict):
-            print("{}: configured as object but implementation returned value {}".format(path, obj))
+            print("{}: Documented as object but implementation returned value {}".format(path, obj))
             return
 
         if set(e.val.keys()) != set(obj.keys()):
@@ -52,11 +52,11 @@ def check_elem_doc(e: Elem, obj, path):
             impl_but_not_conf = set(obj.keys()) - set(e.val.keys())
 
             if len(conf_but_not_impl) != 0 and len(impl_but_not_conf) != 0:
-                print("{}: key mismatch. Implementation misses: {} Configuration misses {}".format(path, conf_but_not_impl, impl_but_not_conf))
+                print("{}: key mismatch. Implementation misses: {} Documentation misses {}".format(path, conf_but_not_impl, impl_but_not_conf))
             elif len(conf_but_not_impl) != 0:
                 print("{}: key mismatch. Implementation misses: {}".format(path, conf_but_not_impl))
             elif len(impl_but_not_conf) != 0:
-                print("{}: key mismatch. Configuration misses: {}".format(path, impl_but_not_conf))
+                print("{}: key mismatch. Documentation misses: {}".format(path, impl_but_not_conf))
             return
 
         for k in obj.keys():
@@ -65,12 +65,12 @@ def check_elem_doc(e: Elem, obj, path):
 
     if e.type_ == EType.ARRAY:
         if not isinstance(obj, list):
-            print("{}: configured as array but implementation returned value {}".format(path, obj))
+            print("{}: Documented as array but implementation returned value {}".format(path, obj))
             return
 
         if e.val is not None:
             if len(e.val) != len(obj):
-                print("{}: Array length mismatch config {} implementation {}".format(path, len(e.val), len(obj)))
+                print("{}: Array length mismatch: Documentation {} implementation {}".format(path, len(e.val), len(obj)))
                 return
 
             for i in range(len(obj)):
@@ -183,7 +183,7 @@ for k, v in debug_report.items():
         config_mod = m
         break
     else:
-        print("Implemented function {mod}/{fn}: Module {mod} not found in config!".format(mod=mod, fn=fn))
+        print("Implemented function {mod}/{fn}: Module {mod} not found in documentation!".format(mod=mod, fn=fn))
         continue
 
     for f in config_mod.functions:
@@ -192,7 +192,7 @@ for k, v in debug_report.items():
         config_func = f
         break
     else:
-        print("Implemented function {mod}/{fn}: Function {fn} not found in config module {mod}!".format(mod=mod, fn=fn))
+        print("Implemented function {mod}/{fn}: Function {fn} not found in documentation module {mod}!".format(mod=mod, fn=fn))
         continue
 
     check_elem_doc(config_func.root, v, "{mod}/{fn}".format(mod=mod, fn=fn))
