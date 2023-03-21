@@ -284,6 +284,7 @@
 <a class="nav-link" href="#mqtt_state" style="margin-left: 2rem !important;">mqtt/<wbr>state</a>
 <span class="ms-5">Konfigurationen</span>
 <a class="nav-link" href="#mqtt_config" style="margin-left: 2rem !important;">mqtt/<wbr>config</a>
+<a class="nav-link" href="#mqtt_auto_discovery_config" style="margin-left: 2rem !important;">mqtt/<wbr>auto_discovery_config</a>
         </nav>
     </div>
 <a class="nav-link ms-3" href="#reference-modbus_tcp">Modbus/TCP</a>
@@ -363,6 +364,20 @@
 <a class="nav-link" href="#energy_manager_low_level_state" style="margin-left: 2rem !important;">energy_manager/<wbr>low_level_state</a>
 <a class="nav-link" href="#energy_manager_charge_mode" style="margin-left: 2rem !important;">energy_manager/<wbr>charge_mode</a>
 <a class="nav-link" href="#energy_manager_sdcard_state" style="margin-left: 2rem !important;">energy_manager/<wbr>sdcard_state</a>
+        </nav>
+    </div>
+<a class="nav-link ms-3" href="#reference-charge_limits">Ladezeit- und -energielimits</a>
+    <div class="collapse">
+        <nav class="nav nav-pills flex-column">
+        <span class="ms-5">Zustände</span>
+<a class="nav-link" href="#charge_limits_state" style="margin-left: 2rem !important;">charge_limits/<wbr>state</a>
+<span class="ms-5">Konfigurationen</span>
+<a class="nav-link" href="#charge_limits_default_limits" style="margin-left: 2rem !important;">charge_limits/<wbr>default_limits</a>
+<span class="ms-5">Zustände</span>
+<a class="nav-link" href="#charge_limits_active_limits" style="margin-left: 2rem !important;">charge_limits/<wbr>active_limits</a>
+<span class="ms-5">Kommandos</span>
+<a class="nav-link" href="#charge_limits_override_duration" style="margin-left: 2rem !important;">charge_limits/<wbr>override_duration</a>
+<a class="nav-link" href="#charge_limits_override_energy" style="margin-left: 2rem !important;">charge_limits/<wbr>override_energy</a>
         </nav>
     </div>
                         </nav>
@@ -1047,7 +1062,7 @@
         <tbody>
 
 <tr class="any">
-    <th scope="row">[0..11]<br/><span class="th-details">object</span></th>
+    <th scope="row">[0..12]<br/><span class="th-details">object</span></th>
     <td>Ein Ladeslot
 <div class="table-responsive">
     <table class="table table-not-striped mt-3 table-bottom-border mt-3">
@@ -1623,6 +1638,22 @@
 <div class="any">
 <ol class="ol-enum">
     <li><strong>0</strong> - Nicht konfiguriert</li>
+    <li><strong>1</strong> - Blockiert wenn geschlossen</li>
+    <li><strong>2</strong> - Limitiert auf 6 A wenn geschlossen</li>
+    <li><strong>3</strong> - Limitiert auf 8 A wenn geschlossen</li>
+    <li><strong>4</strong> - Limitiert auf 10 A wenn geschlossen</li>
+    <li><strong>5</strong> - Limitiert auf 13 A wenn geschlossen</li>
+    <li><strong>6</strong> - Limitiert auf 16 A wenn geschlossen</li>
+    <li><strong>7</strong> - Limitiert auf 20 A wenn geschlossen</li>
+    <li><strong>8</strong> - Limitiert auf 25 A wenn geschlossen</li>
+    <li><strong>9</strong> - Blockiert wenn geöffnet</li>
+    <li><strong>10</strong> - Limitiert auf 6 A wenn geöffnet</li>
+    <li><strong>11</strong> - Limitiert auf 8 A wenn geöffnet</li>
+    <li><strong>12</strong> - Limitiert auf 10 A wenn geöffnet</li>
+    <li><strong>13</strong> - Limitiert auf 13 A wenn geöffnet</li>
+    <li><strong>14</strong> - Limitiert auf 16 A wenn geöffnet</li>
+    <li><strong>15</strong> - Limitiert auf 20 A wenn geöffnet</li>
+    <li><strong>16</strong> - Limitiert auf 25 A wenn geöffnet</li>
 </ol>
 </div></td>
 </tr>
@@ -4360,6 +4391,7 @@
     Konfigurationen
     <ul>
         <li><a class="scrollto text-monospace" href="#mqtt_config">mqtt/config</a></li>
+<li><a class="scrollto text-monospace" href="#mqtt_auto_discovery_config">mqtt/auto_discovery_config</a></li>
     </ul>
 </li>
     </ul>
@@ -4456,6 +4488,40 @@
 <tr class="any">
     <th scope="row">interval<br/><span class="th-details">int (<abbr title="Sekunde">s</abbr>)</span></th>
     <td>Minimales Sendeintervall pro Topic in Sekunden. Nachrichten werden grundsätzlich nur verschickt, wenn Änderungen am Payload vorliegen. Durch ein Sendeintervall von x Sekunden wird alle x Sekunden höchstens eine Nachricht eines Topics verschickt. Falls sich der Inhalt in x Sekunden mehrfach ändert wird nur der aktuellste Inhalt übertragen.</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="mqtt_auto_discovery_config" class="any">
+    <div class="h5">mqtt/auto_discovery_config</div>
+    Die Konfiguration der MQTT Auto Discovery. Diese kann über mqtt/auto_discovery_config_update mit dem selben Payload aktualisiert werden.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">auto_discovery_mode<br/><span class="th-details">int</span></th>
+    <td>Gibt an ob eine MQTT-Verbindung zum konfigurierten Broker aufgebaut werden soll.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Auto Discovery deaktiviert</li>
+    <li><strong>1</strong> - Auto Discovery im generischen Modus; Kompatibel zu z.B. openHAB und Domoticz</li>
+    <li><strong>2</strong> - Auto Discovery im Home-Assistant-Modus</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">auto_discovery_prefix<br/><span class="th-details">string</span></th>
+    <td>Präfix auf den die für Auto Discovery verwendeten Informationen gesendet werden. Typischerweise homeassistent</td>
 </tr>
         </tbody>
     </table>
@@ -5640,6 +5706,219 @@
 <tr class="any">
     <th scope="row">product_name<br/><span class="th-details">string</span></th>
     <td>Produktname</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</section>
+<section id="reference-charge_limits" class="section any">
+    <header class="reference-section-header">
+        <h4>Ladezeit- und -energielimits</h4>
+
+    </header>
+    <ul class="ul-no-bullet">
+        <li>
+    Zustände
+    <ul>
+        <li><a class="scrollto text-monospace" href="#charge_limits_state">charge_limits/state</a></li>
+    </ul>
+</li>
+<li>
+    Konfigurationen
+    <ul>
+        <li><a class="scrollto text-monospace" href="#charge_limits_default_limits">charge_limits/default_limits</a></li>
+    </ul>
+</li>
+<li>
+    Zustände
+     <ul>
+        <li><a class="scrollto text-monospace" href="#charge_limits_active_limits">charge_limits/active_limits</a></li>
+    </ul>
+</li>
+<li>
+    Kommandos
+    <ul>
+        <li><a class="scrollto text-monospace" href="#charge_limits_override_duration">charge_limits/override_duration</a></li>
+<li><a class="scrollto text-monospace" href="#charge_limits_override_energy">charge_limits/override_energy</a></li>
+    </ul>
+</li>
+    </ul>
+
+<div  id="charge_limits_state" class="any">
+    <div class="h5">charge_limits/state</div>
+    Aktueller Zustand der Zeit- und Energielimits
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">start_timestamp_ms<br/><span class="th-details">int (<abbr title="Millisekunde">ms</abbr>)</span></th>
+    <td>Startzeitstempel des aktuellen Ladevorgangs. 0 falls kein Ladevorgang läuft.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">target_timestamp_ms<br/><span class="th-details">int (<abbr title="Millisekunde">ms</abbr>)</span></th>
+    <td>Zielzeitstempel des aktuellen Ladevorgangs. 0 falls kein Ladevorgang läuft. Gleich dem Startzeitstempel, falls kein Zeitlimit gesetzt ist.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">start_energy_kwh<br/><span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)</span></th>
+    <td>Startzählerwert des aktuellen Ladevorgangs. null falls kein Ladevorgang läuft, oder kein Stromzähler zur Verfügung steht.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">target_energy_kwh<br/><span class="th-details">float (<abbr title="Kilowattstunde">kWh</abbr>)</span></th>
+    <td>Zielzählerwert des aktuellen Ladevorgangs. null falls kein Ladevorgang läuft, oder kein Stromzähler zur Verfügung steht. Gleich dem Startzählerwert, falls kein Energiewert gesetzt ist.</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="charge_limits_default_limits" class="any">
+    <div class="h5">charge_limits/default_limits</div>
+    Konfiguration der Zeit- und Energielimits für Ladevorgänge. Diese kann über charge_limits/default_limits_update mit dem selben Payload aktualisiert werden.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">duration<br/><span class="th-details">int</span></th>
+    <td>Zeitlimit eines Ladevorgangs. Nach Ablaufen des Zeitlimits wird der Ladevorgang gestoppt.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Unbegrenzt</li>
+    <li><strong>1</strong> - 15 Minuten</li>
+    <li><strong>2</strong> - 30 Minuten</li>
+    <li><strong>3</strong> - 45 Minuten</li>
+    <li><strong>4</strong> - 1 Stunde</li>
+    <li><strong>5</strong> - 2 Stunden</li>
+    <li><strong>6</strong> - 3 Stunden</li>
+    <li><strong>7</strong> - 4 Stunden</li>
+    <li><strong>8</strong> - 6 Stunden</li>
+    <li><strong>9</strong> - 8 Stunden</li>
+    <li><strong>10</strong> - 12 Stunden</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">energy_wh<br/><span class="th-details">int (<abbr title="Wattstunde">Wh</abbr>)</span></th>
+    <td>Energielimit eines Ladevorgangs. Nach Ablaufen des Energielimits wird der Ladevorgang gestoppt.</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="charge_limits_active_limits" class="any">
+    <div class="h5">charge_limits/active_limits</div>
+    Aktive Zeit- und Energielimits für den aktuellen oder nächsten Ladevorgang. Können über <a class="scrollto text-monospace" href="#charge_limits_override_duration">charge_limits/override_duration</a> und <a class="scrollto text-monospace" href="#charge_limits_override_energy">charge_limits/override_energy</a> aktualisiert werden.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">duration<br/><span class="th-details">int</span></th>
+    <td>Zeitlimit eines Ladevorgangs. Nach Ablaufen des Zeitlimits wird der Ladevorgang gestoppt.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Unbegrenzt</li>
+    <li><strong>1</strong> - 15 Minuten</li>
+    <li><strong>2</strong> - 30 Minuten</li>
+    <li><strong>3</strong> - 45 Minuten</li>
+    <li><strong>4</strong> - 1 Stunde</li>
+    <li><strong>5</strong> - 2 Stunden</li>
+    <li><strong>6</strong> - 3 Stunden</li>
+    <li><strong>7</strong> - 4 Stunden</li>
+    <li><strong>8</strong> - 6 Stunden</li>
+    <li><strong>9</strong> - 8 Stunden</li>
+    <li><strong>10</strong> - 12 Stunden</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">energy_wh<br/><span class="th-details">int (<abbr title="Wattstunde">Wh</abbr>)</span></th>
+    <td>Energielimit eines Ladevorgangs. Nach Ablaufen des Energielimits wird der Ladevorgang gestoppt.</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="charge_limits_override_duration" class="any">
+    <div class="h5">charge_limits/override_duration</div>
+    Überschreibt das Zeitlimit für den aktuellen oder nächsten Ladevorgang.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">duration<br/><span class="th-details">int</span></th>
+    <td>Zeitlimit eines Ladevorgangs. Nach Ablaufen des Zeitlimits wird der Ladevorgang gestoppt.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Unbegrenzt</li>
+    <li><strong>1</strong> - 15 Minuten</li>
+    <li><strong>2</strong> - 30 Minuten</li>
+    <li><strong>3</strong> - 45 Minuten</li>
+    <li><strong>4</strong> - 1 Stunde</li>
+    <li><strong>5</strong> - 2 Stunden</li>
+    <li><strong>6</strong> - 3 Stunden</li>
+    <li><strong>7</strong> - 4 Stunden</li>
+    <li><strong>8</strong> - 6 Stunden</li>
+    <li><strong>9</strong> - 8 Stunden</li>
+    <li><strong>10</strong> - 12 Stunden</li>
+</ol>
+</div></td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="charge_limits_override_energy" class="any">
+    <div class="h5">charge_limits/override_energy</div>
+    Überschreibt das Energielimit für den aktuellen oder nächsten Ladevorgang.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">energy_wh<br/><span class="th-details">int (<abbr title="Wattstunde">Wh</abbr>)</span></th>
+    <td>Energielimit eines Ladevorgangs. Nach Ablaufen des Energielimits wird der Ladevorgang gestoppt.</td>
 </tr>
         </tbody>
     </table>

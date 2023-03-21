@@ -25,5 +25,15 @@ mqtt = Module("mqtt", "MQTT-Verbindung", "", Version.ANY, [
             "client_name": Elem.STRING("Name unter dem sich die Wallbox beim Broker registriert. <strong>Das ist nicht der Username zur Authentisierung.</strong>"),
             "interval": Elem.INT("Minimales Sendeintervall pro Topic in Sekunden. Nachrichten werden grundsätzlich nur verschickt, wenn Änderungen am Payload vorliegen. Durch ein Sendeintervall von x Sekunden wird alle x Sekunden höchstens eine Nachricht eines Topics verschickt. Falls sich der Inhalt in x Sekunden mehrfach ändert wird nur der aktuellste Inhalt übertragen.", unit=Units.s)
         })
+    ),
+
+    Func("auto_discovery_config", FuncType.CONFIGURATION, Elem.OBJECT("Die Konfiguration der MQTT Auto Discovery. Diese kann über mqtt/auto_discovery_config_update mit dem selben Payload aktualisiert werden.", members={
+            "auto_discovery_mode": Elem.INT("Gibt an ob eine MQTT-Verbindung zum konfigurierten Broker aufgebaut werden soll.", constants=[
+                Const(0, "Auto Discovery deaktiviert"),
+                Const(1, "Auto Discovery im generischen Modus; Kompatibel zu z.B. openHAB und Domoticz"),
+                Const(2, "Auto Discovery im Home-Assistant-Modus")
+            ]),
+            "auto_discovery_prefix": Elem.STRING("Präfix auf den die für Auto Discovery verwendeten Informationen gesendet werden. Typischerweise homeassistent")
+        })
     )
 ])

@@ -38,6 +38,7 @@ class Units:
     VA = Unit("Voltampere", "VA")
     var = Unit("Voltampere Reaktiv", "var")
     W = Unit("Watt", "W")
+    Wh = Unit("Wattstunde", "Wh")
     hundredth_cent_per_kWh = Unit("Hundertstel Cent pro Kilowattstunde", "ct/kWh/100")
 
 class FuncType(IntEnum):

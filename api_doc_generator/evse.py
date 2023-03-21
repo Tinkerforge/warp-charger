@@ -88,7 +88,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
     ),
 
     Func("slots", FuncType.STATE, Elem.ARRAY("Der Zustand der Ladeslots. Siehe TODO LINK für Details.", members=[
-            * 12 * [Elem.OBJECT("Ein Ladeslot", members = {
+            * 13 * [Elem.OBJECT("Ein Ladeslot", members = {
                 "max_current": Elem.INT("Maximal erlaubter Ladestrom. 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockiert.", unit=Units.mA),
                 "active": Elem.BOOL("Gibt an ob dieser Slot aktiv ist.", constants=[
                     Const(True, "Slot ist aktiv"),
@@ -275,6 +275,22 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
             ]),
             "input": Elem.INT("Die Konfiguration des konfigurierbaren Eingangs.", constants=[
                 Const(0, "Nicht konfiguriert"),
+                Const(1, "Blockiert wenn geschlossen"),
+                Const(2, "Limitiert auf 6 A wenn geschlossen"),
+                Const(3, "Limitiert auf 8 A wenn geschlossen"),
+                Const(4, "Limitiert auf 10 A wenn geschlossen"),
+                Const(5, "Limitiert auf 13 A wenn geschlossen"),
+                Const(6, "Limitiert auf 16 A wenn geschlossen"),
+                Const(7, "Limitiert auf 20 A wenn geschlossen"),
+                Const(8, "Limitiert auf 25 A wenn geschlossen"),
+                Const(9, "Blockiert wenn geöffnet"),
+                Const(10, "Limitiert auf 6 A wenn geöffnet"),
+                Const(11, "Limitiert auf 8 A wenn geöffnet"),
+                Const(12, "Limitiert auf 10 A wenn geöffnet"),
+                Const(13, "Limitiert auf 13 A wenn geöffnet"),
+                Const(14, "Limitiert auf 16 A wenn geöffnet"),
+                Const(15, "Limitiert auf 20 A wenn geöffnet"),
+                Const(16, "Limitiert auf 25 A wenn geöffnet"),
             ]),
             "output": Elem.INT("Die Konfiguration des konfigurierbaren Ausgangs.", constants=[
                 Const(0, "Verbunden mit Masse"),
