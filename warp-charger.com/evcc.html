@@ -184,6 +184,18 @@
                 kann mit <code style="white-space: normal; word-break: break-word;">sudo apt install mosquitto mosquitto-clients</code> der <a href="https://mosquitto.org/">Mosquitto</a>-MQTT-Broker installiert werden.
                 Mosquitto startet sofort und bei jedem Start des Systems automatisch.
             </p>
+            <p>
+                Seit Mosquitto 2.0.0 muss explizit erlaubt werden, dass Mosquitto auf Netzwerk-Interfaces Verbindungen annimmt.
+                Hierzu musst du eine neue Konfigurationsdatei namens <code>/etc/mosquitto/conf.d/default.conf</code> mit einem Texteditor deiner Wahl, auf der Konsole zum Beispiel mit <code>nano</code><a href="https://xkcd.com/378/">*</a> anlegen und folgenden Inhalt einfügen:
+            </p>
+<pre>listener 1883</pre>
+            <p>
+                Außerdem erlaubt Mosquitto 2.0.0 standardmäßig nur Verbindungen konfigurierter Benutzer. Einen Benutzer kannst du mit <a href="https://mosquitto.org/man/mosquitto_passwd-1.html"><code>mosquitto_passwd</code></a> anlegen. Alternativ kannst du in <code>/etc/mosquitto/conf.d/default.conf</code> zusätzlich
+            </p>
+<pre>allow_anonymous true</pre>
+            <p>
+                einfügen, um Verbindungen ohne Benutzername und Kennwort zu erlauben.
+            </p>
         </div>
     </section>
 
@@ -198,7 +210,7 @@
                         (Mehr Informationen zur MQTT-Konfiguration findest du in der <a href="https://www.warp-charger.com/api.html">API-Dokumentation</a>)
                     </p>
                     <p>
-                        Im Webinterface des WARP Chargers kannst du jetzt die Verbindung zum MQTT-Broker konfigurieren. Hierzu musst du unter <code>MQTT</code>
+                        Im Webinterface des WARP Chargers kannst du jetzt die Verbindung zum MQTT-Broker konfigurieren. Hierzu musst du unter <code>Schnittstellen -> MQTT</code>
                         die Verbindung aktivieren und den Host eintragen (<code>raspberrypi</code> falls du ihn nicht geändert hast). Alternativ kannst du die IP-Adresse
                         des Pis verwenden. Diese kannst du in der Konsole mit <code>ip -brief a</code> auslesen: unter <samp>eth0</samp> die der LAN-Verbindung, oder unter <samp>wlan0</samp> die der WLAN-Verbindung.
                         Danach kannst du die Konfigurationsänderung durch Klicken auf Speichern anwenden. Das Webinterface startet dann neu.
@@ -208,6 +220,9 @@
                         Status der MQTT-Verbindung sollte auf <samp>Verbunden</samp> stehen. Falls das nicht der Fall ist, kannst du im Ereignislog nachsehen,
                         was das Problem ist. Als weiteren Test kannst du in der Konsole des Pis die empfangenen Nachrichten mitlesen:
                         <code>mosquitto_sub -v -t 'warp/#'</code> bzw. bei einem WARP2 Charger <code>mosquitto_sub -v -t 'warp2/#'</code> liefert empfangene Nachrichten aller Wallboxen, die mit dem Broker verbunden sind.
+                    </p>
+                    <p>
+                        Damit EVCC später den WARP Charger steuern darf, musst du unter <code>Wallbox -> Ladeeinstellungen</code> die externe Steuerung erlauben.
                     </p>
                 </div>
                 <div class="col-md-12 col-lg-6">
