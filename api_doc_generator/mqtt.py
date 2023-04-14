@@ -9,6 +9,8 @@ mqtt = Module("mqtt", "MQTT-Verbindung", "", Version.ANY, [
                 Const(3, "Fehler"),
             ]),
             "last_error": Elem.INT("Der zuletzt aufgetretene Fehler. -1 falls kein Fehler aufgetreten ist."),
+            "connection_start": Elem.INT("Zeit in Millisekunden zu der die letzte Verbindung aufgebaut wurde.", unit=Units.ms),
+            "connection_end": Elem.INT("Zeit in Millisekunden zu der die letzte Verbindung getrennt wurde.", unit=Units.ms)
         })
     ),
 

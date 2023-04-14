@@ -7,7 +7,9 @@ wireguard = Module("wireguard", "WireGuard-Verbindung", "", Version.ANY, [
                 Const(1, "Warte auf Zeitsynchronisierung"),
                 Const(2, "Nicht verbunden"),
                 Const(3, "Verbunden"),
-            ])
+            ]),
+            "connection_start": Elem.INT("Zeit in Millisekunden zu der die letzte Verbindung aufgebaut wurde.", unit=Units.ms),
+            "connection_end": Elem.INT("Zeit in Millisekunden zu der die letzte Verbindung getrennt wurde.", unit=Units.ms)
         })
     ),
 

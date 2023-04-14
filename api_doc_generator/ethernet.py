@@ -14,7 +14,9 @@ ethernet = Module("ethernet", "LAN-Verbindung", "Benötigt das Feature <a href=\
                 Const(0,"nicht verbunden"),
                 Const(10,""),
                 Const(100,""),
-            ])
+            ]),
+            "connection_start": Elem.INT("Zeit in Millisekunden zu der die letzte Verbindung aufgebaut wurde.", unit=Units.ms),
+            "connection_end": Elem.INT("Zeit in Millisekunden zu der die letzte Verbindung getrennt wurde.", unit=Units.ms)
         })
     ),
 
