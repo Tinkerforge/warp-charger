@@ -285,7 +285,7 @@
             <div class="description">
               <ul>
                 <li>1,5 mm starke V4A Edelstahlfront</li>
-                <li>Edelstahlfront optional im Farbton DB703 pulverbeschichtet</li>
+                <li>Edelstahlfront optional zusätzlich im Farbton DB703 pulverbeschichtet</li>
                 <li>Glasfaserverstärktes Polyestergehäuse mit dicker Wandung</li>
                 <li>IP54, für den Außenbereich geeignet</li>
                 <li>Wandmontage</li>
@@ -300,11 +300,11 @@
             <h4 class="title">Vernetzt und MID-konform</h4>
             <div class="description">
               <ul>
-                <li>Per HTTP‐, MQTT-, Modbus/TCP- und OCPP)-Schnittstelle fernsteuerbar</li>
-                <li>Einbindung in Smart‐Home‐Lösungen wie openHAB, ioBroker, FHEM o.ä. möglich</li>
+                <li>Per HTTP‐, MQTT-, Modbus/TCP- und OCPP-Schnittstelle fernsteuerbar</li>
+                <li>Einbindung in Smart‐Home‐Lösungen wie openHAB, ioBroker, FHEM, EVCC o.ä. möglich</li>
                 <li>Schnittstellen für diverse Programmiersprachen vorhanden</li>
                 <li>LAN und WLAN (Client oder Access Point), Webinterface zur Konfiguration und Statusanzeige, WireGuard</li>
-                <li>In den Varianten WARP2 Charger Pro ist ein MID‐konformer Stromzähler integriert</li>
+                <li>In der Variante WARP2 Charger Pro ist ein MID‐konformer Stromzähler integriert</li>
               </ul>
             </div>
           </div>
@@ -354,7 +354,7 @@
             <div class="description">
               <ul>
                 <li>Hardware und Software sind Open Source</li>
-                <li>Hardware‐Plaform von WARP2 Charger Smart und Pro basiert auf dem ESP32 (WLAN und LAN)</li>
+                <li>Hardware‐Plattform von WARP2 Charger Smart und Pro basiert auf dem ESP32 (WLAN und LAN)</li>
                 <li>Low-Level-Daten wie CP/PE Widerstand, phasenweise Strom, Spannung, Leistung, Leistungsfaktor u.v.m. auslesbar</li>
               </ul>
             </div>
@@ -397,7 +397,8 @@
                       Die Einstiegsvariante stellt der <b>WARP2 Charger Basic</b> dar, mit dem Elektrofahrzeuge mittels eines EN 62196 Typ-2-Stecker
                       geladen werden können. Die Wallbox ist vergleichsweise <b>klein</b> (nur 28cm × 21,5cm × 9,5cm) und <b>sehr robust</b>. Sie
                       verfügt über ein glasfaserverstärktes Polyestergehäuse mit dicker Wandung. Die Front der Wallbox
-                      besteht aus einer einer 1,5mm starken V4A Edelstahlfront. Diese ist umlaufend überstehend und kann genutzt werden
+                      besteht aus einer einer 1,5mm starken V4A Edelstahlfront und kann wahlweise pulverbeschichtet werden.
+                      Diese ist umlaufend überstehend und kann genutzt werden
                       um das Ladekabel zu verstauen. In der Front befindet sich ein Taster, mit dem ein aktiver Ladevorgang abgebrochen
                       werden kann. Der blaue LED-Ring des Tasters zeigt Status- und Fehlerzustände der Wallbox an.
                     </p>
@@ -409,7 +410,7 @@
                       überwacht die Wallbox permanent ihre Erdung und die fehlerfreie Kommunikation mit dem angeschlossenen Fahrzeug.
                     </p>
                     <p>
-                     Die Einführung der Zuleitung und des LAN-Kabels kann wahlweise von der Unterseite der Wallbox oder der Rückseite erfolgen.
+                     Die Einführung der Strom-Zuleitung und des LAN-Kabels kann wahlweise von der Unterseite der Wallbox oder der Rückseite erfolgen.
                     </p>
                     <p>
                       Jede Wallbox wird fertig montiert und getestet geliefert. Das jeweilige Testprotokoll nach DGUV A3 mit den
@@ -441,25 +442,33 @@
                     <p>
                       Über WLAN oder LAN kann auf das <b>Webinterface</b> der Wallbox zugegriffen werden. Das Webinterface der
                       Wallbox gibt Informationen zum aktuellen Zustand, ermöglicht Einstellungen (z.B. maximaler Ladestrom) und
-                      bietet die Möglichkeit von Softwareupdates. Per offener Schnittstellen kann die Wallbox darüber auch ferngesteuert und
-                      in andere Systeme eingebunden werden.
+                      bietet die Möglichkeit von Softwareupdates. Per <b>MQTT-, HTTP-</b> und <b>Modbus/TCP</b> kann die Wallbox auch ferngesteuert und
+                      in andere System eingebunden werden. Eine Steuerung mittels <b>Open charge point protocol (OCPP)</b> ist ebenfalls möglich 
+                      (OCPP 1.6 J Core- und Smart Charging Profile).
                     </p>
                     <p>
-                      Per Webinterface kann das Laden an der Wallbox deaktiviert werden. Zusätzlich verfügt die "Smart" Variante
+                      Über das Webinterface kann das Laden an der Wallbox auch deaktiviert werden. Zusätzlich verfügt die "Smart" Variante
                       über <b>NFC (RFID)</b>. Mittels der drei mitgelieferten NFC-Karten, kann die Ladung freigeschaltet werden. Es können
-                      beliebige andere NFC-Karten oder -Tags angelernt werden. Jeder Ladevorgang kann in einem <b>Ladelogbuch</b> aufgezeichnet werden
-                      (Nutzer, Lade-Beginn, Ladedauer). Dieses kann auch als .CSV oder als .PDF heruntergeladen werden.
+                      beliebige andere NFC-Karten oder -Tags angelernt werden.Die Wallbox unterstützt NFC Forum Type 1, 2, 3, 4 und Mifare Classic.
+                      Bis zu 16 NFC Karten können angelernt werden. Jeder NFC Karte kann ein Benutzer zugeordnet werden.
                     </p>
                     <p>
-                      Mehrere WARP Charger der Varianten Smart und Pro können sich den verfügbaren Strom eines Anschlusses per <b>Lastmanagement</b> aufteilen:
-                      Eine der Wallboxen steuert die Ladeleistung der weiteren über WLAN oder LAN und stellt so sicher, dass die maximal zulässige
-                      Leistung des Stromanschlusses nicht überschritten wird. Der verfügbare Strom kann per <b>MQTT-, HTTP-</b> und <b>Modbus/TCP</b> dynamisch geändert werden.
+                      Sollen mehrere Wallboxen an einem Stromanschluss betrieben werden, können WARP2 Smart Charger ein sogenanntes <b>statisches Lastmanagement</b> durchführen.
+                      Dabei teilt ein WARP Charger allen WARP Chargern seines Lastmanagement-Netzwerks mit, mit welcher Ladeleistung jeweils geladen werden darf. Dies erfolgt 
+                      dynamisch über die jeweiligen Ladeanforderungen der Wallboxen und es wird sichergestellt, dass die maximal zulässige Leistung des Stromanschlusses nicht 
+                      überschritten wird. Der Datenaustausch zwischen den Wallboxen erfolgt per WLAN oder LAN.
                     </p>
                     <p>
-                    Ab der Variante WARP2 Charger Smart ist auch ein Photovoltaik-Überschussladen möglich.
-                    Mittels <a href="energy-manager.html">WARP Energy Manager</a> wird eine direkt installierbare Lösung angeboten. Eine Alternative dazu stellt
-                    der Einsatz von der <a href="evcc.html">EVCC</a> Software dar. Sollen WARP2 Charger in das eigene System integriert werden, so ist dies mittels
-                    der offenen Schnittstellen ebenfalls möglich (siehe <a href="api.html">API</a>).
+                      Jeder Ladevorgang kann in einem <b>Ladelogbuch</b> erfasst werden. Dabei werden Datum und Uhrzeit des Ladebeginns, die eigentliche Ladedauer und der 
+                      zugeordnete Benutzer erfasst. Das erstellte Ladelogbuch kann als <b>.CSV</b> oder <b>.PDF</b> heruntergeladen werden. 
+                      Beim PDF kann vom Nutzer ein individueller Briefkopf definiert werden um zum Beispiel das Schreiben direkt an den Arbeitgeber schicken zu können.
+                      Die Dokumente werden im Webinterface der Wallbox generiert. Eine Cloudverbindung o.ä. ist nicht notwendig. Der WARP2 Charger ist vollständig autark.
+                    </p>
+                    <p>
+                      Ab der Variante WARP2 Charger Smart ist auch ein Photovoltaik-Überschussladen möglich.
+                      Mittels <a href="energy-manager.html">WARP Energy Manager</a> wird eine direkt installierbare Lösung angeboten. Eine Alternative dazu stellt
+                      der Einsatz von der <a href="evcc.html">EVCC</a> Software dar. Sollen WARP2 Charger in das eigene System integriert werden, so ist dies mittels
+                      der offenen Schnittstellen ebenfalls möglich (siehe <a href="api.html">API</a>).
                     </p>
                 </div>
           </div>
@@ -487,9 +496,8 @@
                     </p>
                     <p>
                       Im Gegensatz zur Smart Variante des WARP2 Chargers zeigt das Ladelogbuch dann für jeden Ladevorgang neben dem Nutzer, dem Ladebeginn und der Ladedauer zusätzlich die
-                      <b>geladene Energiemenge</b> und bei Eingabe eines Strombezugpreises auch die <b>Kosten</b> des Ladevorgangs an. Somit ist es möglich, wenn mehrere Fahrzeuge an einer Wallbox geladen werden, deren Anteil am Strombezug zu bestimmen. Über den <b>.CSV Export</b> kann diese Funktion
-                      zum Beispiel dazu genutzt werden um die zu Hause geladene Energiemenge mit dem Arbeitgeber abzurechnen. Zusätzlich steht auch ein direkter <b>.PDF Export</b> zur Verfügung. Bei diesem kann vom Nutzer ein individueller Briefkopf definiert werden um zum Beispiel das Schreiben direkt
-                      an den Arbeitgeber schicken zu können.
+                      <b>geladene Energiemenge</b> und bei Eingabe eines Strombezugpreises auch die <b>Kosten</b> des Ladevorgangs an. Somit ist es möglich, wenn mehrere Fahrzeuge an einer Wallbox geladen werden, deren Anteil am Strombezug zu bestimmen. Über den <b>.CSV Export</b> bzw. <b>.PDF Export</b> 
+                      kann diese Funktion zum Beispiel dazu genutzt werden um die zu Hause geladene Energiemenge mit dem Arbeitgeber abzurechnen. 
                     </p>
                 </div>
           </div>
@@ -515,7 +523,7 @@
               <h4>V4A Frontblende wahlweise zusätzlich Pulverbeschichtet</h4>
               <img class="col col-sm-6 img-fluid float-sm-start mb-3 pe-sm-3" src="img_warp2/front_plates.jpg">
               <p>
-              Die Frontblende der Wallbox besteht immer aus 1,5mm starkem V4A Edelstahl. Optional kann diese Frontblende zusätzlich im Farbton <b>DB703 "Eisenglimmerlack"</b> pulverbeschichtet werden.
+              Die Frontblende des WARP Chargers besteht immer aus 1,5mm starkem V4A Edelstahl. Optional kann diese Frontblende zusätzlich im Farbton <b>DB703 "Eisenglimmerlack"</b> pulverbeschichtet werden.
               </p>
               <p>
               Der dunkelgraue Farbton DB703 "Eisenglimmerlack" beinhaltet ein Effektpigment, welches der Oberfläche einen schwachen Metallglanz verleiht. Mit diesem Farbton bieten wir eine ebenfalls sehr edel aussehende Alternative zur reinen Edelstahlfront. In Kombination mit
