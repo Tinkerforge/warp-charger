@@ -12,11 +12,28 @@ import ssl
 PRINTER_HOST = '192.168.178.241'
 PRINTER_PORT = 9100
 
-QR_CODE_COMMAND = b'W649,209,5,2,M,8,6,58,0\r'
+QR_CODE_COMMAND = b'W649,209,5,2,M,8,6,57,0\r'
 QR_CODE_PADDING = b';;\r'
 
 STAND_PLACEHOLDER_A = b'Lades\xc3\xa4ule: Bitte'
 STAND_PLACEHOLDER_B = b'S:1;'
+
+STAND_DISPLAY_NAME = {
+    '0': 'Nein',
+    '1': '1x',
+    '2': '2x',
+    '1-PC': '1x, pulverbeschichtet',
+    '2-PC': '2x, pulverbeschichtet',
+}
+
+STAND_WIRING_PLACEHOLDER_A = b'Verkabelung: Was?'
+STAND_WIRING_PLACEHOLDER_B = b'W:1;'
+
+STAND_WIRING_DISPLAY_NAME = {
+    '0': 'Nein',
+    '1': '1x',
+    '2': '2x',
+}
 
 SUPPLY_CABLE_PLACEHOLDER_A = b'Anschlusskabel: 123,4 m'
 SUPPLY_CABLE_PLACEHOLDER_B = b'E:123.4;'
@@ -30,7 +47,7 @@ COMMENT_3_PLACEHOLDER = b'Hinweise.'
 
 COPIES_FORMAT = '^C{0}\r'
 
-def print_accessories2_label(stand, supply_cable, cee, comment_1, comment_2, comment_3, copies, stdout):
+def print_accessories2_label(stand, stand_wiring, supply_cable, cee, comment_1, comment_2, comment_3, copies, stdout):
     # check copies
     if copies < 1 or copies > 5:
         raise Exception('Invalid copies: {0}'.format(copies))
@@ -64,12 +81,23 @@ def print_accessories2_label(stand, supply_cable, cee, comment_1, comment_2, com
     if template.find(STAND_PLACEHOLDER_A) < 0:
         raise Exception('Stand placeholder A missing in EZPL file')
 
-    template = template.replace(STAND_PLACEHOLDER_A, b'Lades\xc3\xa4ule: Ja' if stand else b'')
+    template = template.replace(STAND_PLACEHOLDER_A, 'Ladesäule: {0}'.format(STAND_DISPLAY_NAME[stand]).encode('utf-8') if stand != '0' else b'')
 
     if template.find(STAND_PLACEHOLDER_B) < 0:
         raise Exception('Stand placeholder B missing in EZPL file')
 
-    template = template.replace(STAND_PLACEHOLDER_B, 'S:{0};'.format(int(stand)).encode('ascii'))
+    template = template.replace(STAND_PLACEHOLDER_B, 'S:{0};'.format(stand).encode('ascii'))
+
+    # patch stand wiring
+    if template.find(STAND_WIRING_PLACEHOLDER_A) < 0:
+        raise Exception('Stand wiring placeholder A missing in EZPL file')
+
+    template = template.replace(STAND_WIRING_PLACEHOLDER_A, 'Verkabelung: {0}'.format(STAND_WIRING_DISPLAY_NAME[stand_wiring]).encode('ascii') if stand_wiring != '0' else b'')
+
+    if template.find(STAND_WIRING_PLACEHOLDER_B) < 0:
+        raise Exception('Stand wiring placeholder B missing in EZPL file')
+
+    template = template.replace(STAND_WIRING_PLACEHOLDER_B, 'W:{0};'.format(stand_wiring).encode('ascii'))
 
     # patch supply cable
     if template.find(SUPPLY_CABLE_PLACEHOLDER_A) < 0:
@@ -130,7 +158,8 @@ def print_accessories2_label(stand, supply_cable, cee, comment_1, comment_2, com
 def main():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('stand', type=int, choices=[1, 0])
+    parser.add_argument('stand', choices=['0', '1', '2', '1-PC', '2-PC'])
+    parser.add_argument('stand_wiring', choices=['0', '1', '2'])
     parser.add_argument('supply_cable', type=float)
     parser.add_argument('cee', type=int, choices=[1, 0])
     parser.add_argument('comment_1')
@@ -143,7 +172,7 @@ def main():
 
     assert args.copies > 0
 
-    print_accessories2_label(bool(args.stand), args.supply_cable, bool(args.cee), args.comment_1, args.comment_2, args.comment_3, args.copies, args.stdout)
+    print_accessories2_label(args.stand, args.stand_wiring, args.supply_cable, bool(args.cee), args.comment_1, args.comment_2, args.comment_3, args.copies, args.stdout)
 
 if __name__ == '__main__':
     main()

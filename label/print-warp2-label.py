@@ -12,12 +12,12 @@ import ssl
 PRINTER_HOST = '192.168.178.241'
 PRINTER_PORT = 9100
 
-QR_CODE_COMMAND = b'W649,209,5,2,M,8,6,54,0\r'
+QR_CODE_COMMAND = b'W649,209,5,2,M,8,6,57,0\r'
 QR_CODE_PADDING = b';;\r'
 
-DESCRIPTION_PLACEHOLDER = b'WARP2 Charger Smart, 11 kW, 5 m'
+DESCRIPTION_PLACEHOLDER = b'WARP2 Charger Smart, 11 kW, 5 m, pulverbeschichtet'
 
-SKU_PLACEHOLDER = b'WARP2-CS-11KW-50'
+SKU_PLACEHOLDER = b'WARP2-CS-11KW-50-PC'
 
 VERSION_PLACEHOLDER = b'2.17'
 
@@ -65,7 +65,7 @@ def print_warp2_label(sku, version, serial_number, build_date, instances, copies
         raise Exception('Invalid copies: {0}'.format(copies))
 
     # parse SKU
-    m = re.match(r'^WARP2-C(B|S|P)-(11|22)KW-(50|75)$', sku)
+    m = re.match(r'^WARP2-C(B|S|P)-(11|22)KW-(50|75)(-PC)?$', sku)
 
     if m == None:
         raise Exception('Invalid SKU: {0}'.format(sku))
@@ -73,6 +73,7 @@ def print_warp2_label(sku, version, serial_number, build_date, instances, copies
     sku_model = m.group(1)
     sku_power = m.group(2)
     sku_cable = m.group(3)
+    sku_material = m.group(4)
 
     description = b'WARP2 Charger '
 
@@ -98,6 +99,13 @@ def print_warp2_label(sku, version, serial_number, build_date, instances, copies
         description += b', 7,5 m'
     else:
         assert False, sku_cable
+
+    if sku_material == None:
+        pass
+    elif sku_material == '-PC':
+        description += b', pulverbeschichtet'
+    else:
+        assert False, sku_material
 
     if sku_power == '11':
         current = b'16 A'

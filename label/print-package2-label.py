@@ -12,7 +12,7 @@ import ssl
 PRINTER_HOST = '192.168.178.241'
 PRINTER_PORT = 9100
 
-EAN13_PLACEHOLDER = b'4251640704810'
+EAN13_PLACEHOLDER = b'4251640705480'
 EAN13_NUMBERS = {
     'WARP2-CB-11KW-50': b'4251640704773',
     'WARP2-CB-11KW-75': b'4251640704780',
@@ -29,12 +29,27 @@ EAN13_NUMBERS = {
     'WARP2-CP-22KW-50': b'4251640704872',
     'WARP2-CP-22KW-75': b'4251640704889',
 
-    'WARP-EM':          b'4251640705381',
+    'WARP2-CB-11KW-50-PC': b'4251640705442',
+    'WARP2-CB-11KW-75-PC': b'4251640705459',
+    'WARP2-CB-22KW-50-PC': b'4251640705466',
+    'WARP2-CB-22KW-75-PC': b'4251640705473',
+
+    'WARP2-CS-11KW-50-PC': b'4251640705480',
+    'WARP2-CS-11KW-75-PC': b'4251640705497',
+    'WARP2-CS-22KW-50-PC': b'4251640705503',
+    'WARP2-CS-22KW-75-PC': b'4251640705510',
+
+    'WARP2-CP-11KW-50-PC': b'4251640705527',
+    'WARP2-CP-11KW-75-PC': b'4251640705534',
+    'WARP2-CP-22KW-50-PC': b'4251640705541',
+    'WARP2-CP-22KW-75-PC': b'4251640705558',
+
+    'WARP-EM': b'4251640705381',
 }
 
-DESCRIPTION_PLACEHOLDER = b'WARP2 Charger Smart, 11 kW, 5 m'
+DESCRIPTION_PLACEHOLDER = b'WARP2 Charger Smart, 11 kW, 5 m, pulverbeschichtet'
 
-SKU_PLACEHOLDER = b'WARP2-CS-11KW-50'
+SKU_PLACEHOLDER = b'WARP2-CS-11KW-50-PC'
 
 VERSION_PLACEHOLDER = b'2.17'
 
@@ -83,7 +98,7 @@ def print_package2_label(sku, version, serial_number, build_date, instances, cop
         version_major = 1
         serial_number_kind = 7
     else:
-        m = re.match(r'^(?:TF-)?WARP2-C(B|S|P)-(11|22)KW-(50|75)$', sku)
+        m = re.match(r'^(?:TF-)?WARP2-C(B|S|P)-(11|22)KW-(50|75)(-PC)?$', sku)
 
         if m == None:
             raise Exception('Invalid SKU: {0}'.format(sku))
@@ -91,6 +106,7 @@ def print_package2_label(sku, version, serial_number, build_date, instances, cop
         sku_model = m.group(1)
         sku_power = m.group(2)
         sku_cable = m.group(3)
+        sku_material = m.group(4)
 
         description = b'WARP2 Charger '
         version_major = 2
@@ -118,6 +134,13 @@ def print_package2_label(sku, version, serial_number, build_date, instances, cop
             description += b', 7,5 m'
         else:
             assert False, sku_cable
+
+        if sku_material == None:
+            pass
+        elif sku_material == '-PC':
+            description += b', pulverbeschichtet'
+        else:
+            assert False, sku_material
 
     # check version
     if re.match(r'^{0}\.(0|[1-9][0-9]*)$'.format(version_major), version) == None:
