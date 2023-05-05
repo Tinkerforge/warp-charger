@@ -2,12 +2,8 @@
 
 import os
 import sys
-import re
 import argparse
 import socket
-from datetime import datetime
-import urllib.request
-import ssl
 
 
 QR_CODE_COMMAND = b'W649,209,5,2,M,8,6,57,0\r'
@@ -18,10 +14,10 @@ STAND_PLACEHOLDER_B = b'S:1;'
 
 STAND_DISPLAY_NAME = {
     '0': 'Nein',
-    '1': '1x',
-    '2': '2x',
-    '1-PC': '1x, pulverbeschichtet',
-    '2-PC': '2x, pulverbeschichtet',
+    '1': 'Einfach',
+    '2': 'Doppelt',
+    '1-PC': 'Einfach, pulverbeschichtet',
+    '2-PC': 'Doppelt, pulverbeschichtet',
 }
 
 STAND_WIRING_PLACEHOLDER_A = b'Verkabelung: Was?'
@@ -29,8 +25,8 @@ STAND_WIRING_PLACEHOLDER_B = b'W:1;'
 
 STAND_WIRING_DISPLAY_NAME = {
     '0': 'Nein',
-    '1': '1x',
-    '2': '2x',
+    '1': 'Einfach',
+    '2': 'Doppelt',
 }
 
 SUPPLY_CABLE_PLACEHOLDER_A = b'Anschlusskabel: 123,4 m'
