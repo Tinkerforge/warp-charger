@@ -9,8 +9,6 @@ from datetime import datetime
 import urllib.request
 import ssl
 
-PRINTER_HOST = '192.168.178.241'
-PRINTER_PORT = 9100
 
 QR_CODE_COMMAND = b'W649,209,5,2,M,8,6,53,0\r'
 QR_CODE_PADDING = b';;\r'
@@ -32,6 +30,52 @@ CURRENT_PLACEHOLDER = b'16 A'
 CONDUCTOR_PLACEHOLDER = b'1P / 3P'
 
 COPIES_FORMAT = '^C{0}\r'
+
+
+def get_tf_printer_host(task):
+    import re
+    import os
+    import sys
+    import tkinter.messagebox
+
+    path = '~/tf_printer_host.txt'
+    x = re.compile(r'^([A-Za-z0-9_-]+)\s+([0-9\.]+)$')
+
+    try:
+        with open(os.path.expanduser(path), 'r', encoding='utf-8') as f:
+            for line in f.readlines():
+                line = line.strip()
+
+                if len(line) == 0 or line.startswith('#'):
+                    continue
+
+                m = x.match(line)
+
+                if m == None:
+                    message = 'WARNING: Invalid line in {0}: {1}'.format(path, repr(line))
+
+                    print(message)
+                    tkinter.messagebox.showerror(title=path, message=message)
+
+                    continue
+
+                other_task = m.group(1)
+                other_host = m.group(2)
+
+                if other_task != task:
+                    continue
+
+                return other_host
+    except FileNotFoundError:
+        pass
+
+    message = 'ERROR: Printer host for task {0} not found in {1}'.format(task, path)
+
+    print(message)
+    tkinter.messagebox.showerror(title=path, message=message)
+
+    sys.exit(1)
+
 
 def get_next_serial_number():
     with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'staging-password.txt'), 'r') as f:
@@ -56,6 +100,7 @@ def get_next_serial_number():
     serial_number = int(urllib.request.urlopen('https://stagingwww.tinkerforge.com/warpsn', timeout=15).read())
 
     return '5{0:09}'.format(serial_number)
+
 
 def print_warp_label(type_, version, serial_number, build_date, instances, copies, stdout, force_build_date):
     # check instances
@@ -232,8 +277,9 @@ def print_warp_label(type_, version, serial_number, build_date, instances, copie
         sys.stdout.buffer.write(data)
         sys.stdout.buffer.flush()
     else:
-        with socket.create_connection((PRINTER_HOST, PRINTER_PORT)) as s:
+        with socket.create_connection((get_tf_printer_host('warp-docket'), 9100)) as s:
             s.send(data)
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -253,6 +299,7 @@ def main():
     assert args.copies > 0
 
     print_warp_label(args.type, args.version, args.serial_number, args.build_date, args.instances, args.copies, args.stdout, args.force_build_date)
+
 
 if __name__ == '__main__':
     main()

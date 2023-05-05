@@ -9,8 +9,6 @@ from datetime import datetime
 import urllib.request
 import ssl
 
-PRINTER_HOST = '192.168.178.241'
-PRINTER_PORT = 9100
 
 QR_CODE_COMMAND = b'W649,209,5,2,M,8,6,57,0\r'
 QR_CODE_PADDING = b';;\r'
@@ -46,6 +44,52 @@ COMMENT_2_PLACEHOLDER = b'Kommentar f\xC3\xBCr sonstige'
 COMMENT_3_PLACEHOLDER = b'Hinweise.'
 
 COPIES_FORMAT = '^C{0}\r'
+
+
+def get_tf_printer_host(task):
+    import re
+    import os
+    import sys
+    import tkinter.messagebox
+
+    path = '~/tf_printer_host.txt'
+    x = re.compile(r'^([A-Za-z0-9_-]+)\s+([0-9\.]+)$')
+
+    try:
+        with open(os.path.expanduser(path), 'r', encoding='utf-8') as f:
+            for line in f.readlines():
+                line = line.strip()
+
+                if len(line) == 0 or line.startswith('#'):
+                    continue
+
+                m = x.match(line)
+
+                if m == None:
+                    message = 'WARNING: Invalid line in {0}: {1}'.format(path, repr(line))
+
+                    print(message)
+                    tkinter.messagebox.showerror(title=path, message=message)
+
+                    continue
+
+                other_task = m.group(1)
+                other_host = m.group(2)
+
+                if other_task != task:
+                    continue
+
+                return other_host
+    except FileNotFoundError:
+        pass
+
+    message = 'ERROR: Printer host for task {0} not found in {1}'.format(task, path)
+
+    print(message)
+    tkinter.messagebox.showerror(title=path, message=message)
+
+    sys.exit(1)
+
 
 def print_accessories2_label(stand, stand_wiring, supply_cable, cee, comment_1, comment_2, comment_3, copies, stdout):
     # check copies
@@ -152,8 +196,9 @@ def print_accessories2_label(stand, stand_wiring, supply_cable, cee, comment_1, 
         sys.stdout.buffer.write(template)
         sys.stdout.buffer.flush()
     else:
-        with socket.create_connection((PRINTER_HOST, PRINTER_PORT)) as s:
+        with socket.create_connection((get_tf_printer_host('warp-docket'), 9100)) as s:
             s.send(template)
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -173,6 +218,7 @@ def main():
     assert args.copies > 0
 
     print_accessories2_label(args.stand, args.stand_wiring, args.supply_cable, bool(args.cee), args.comment_1, args.comment_2, args.comment_3, args.copies, args.stdout)
+
 
 if __name__ == '__main__':
     main()

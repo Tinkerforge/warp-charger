@@ -9,9 +9,6 @@ from datetime import datetime
 import urllib.request
 import ssl
 
-PRINTER_HOST = '192.168.178.241'
-PRINTER_PORT = 9100
-
 QR_CODE_COMMAND = b'W552,119,5,2,M,8,6,85,0\r'
 QR_CODE_PADDING = b';;\r'
 
@@ -41,6 +38,52 @@ COMMENT_PLACEHOLDER = b'Comment'
 
 COPIES_FORMAT = '^C{0}\r'
 
+
+def get_tf_printer_host(task):
+    import re
+    import os
+    import sys
+    import tkinter.messagebox
+
+    path = '~/tf_printer_host.txt'
+    x = re.compile(r'^([A-Za-z0-9_-]+)\s+([0-9\.]+)$')
+
+    try:
+        with open(os.path.expanduser(path), 'r', encoding='utf-8') as f:
+            for line in f.readlines():
+                line = line.strip()
+
+                if len(line) == 0 or line.startswith('#'):
+                    continue
+
+                m = x.match(line)
+
+                if m == None:
+                    message = 'WARNING: Invalid line in {0}: {1}'.format(path, repr(line))
+
+                    print(message)
+                    tkinter.messagebox.showerror(title=path, message=message)
+
+                    continue
+
+                other_task = m.group(1)
+                other_host = m.group(2)
+
+                if other_task != task:
+                    continue
+
+                return other_host
+    except FileNotFoundError:
+        pass
+
+    message = 'ERROR: Printer host for task {0} not found in {1}'.format(task, path)
+
+    print(message)
+    tkinter.messagebox.showerror(title=path, message=message)
+
+    sys.exit(1)
+
+
 def get_next_serial_number():
     with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'staging-password.txt'), 'r') as f:
         staging_password = f.read().strip()
@@ -64,6 +107,7 @@ def get_next_serial_number():
     serial_number = int(urllib.request.urlopen('https://stagingwww.tinkerforge.com/warpsn', timeout=15).read())
 
     return '5{0:09}'.format(serial_number)
+
 
 def sku_to_description(sku, supply_cable, cee):
     assert isinstance(sku, str)
@@ -108,6 +152,7 @@ def sku_to_description(sku, supply_cable, cee):
         description += b', CEE'
 
     return description
+
 
 def print_docket2_label(sku, supply_cable, cee, version, serial_number, build_date, order_id,
                         item, order_date, customer, comment, instances, copies, stdout, force_build_date):
@@ -273,8 +318,9 @@ def print_docket2_label(sku, supply_cable, cee, version, serial_number, build_da
         sys.stdout.buffer.write(data)
         sys.stdout.buffer.flush()
     else:
-        with socket.create_connection((PRINTER_HOST, PRINTER_PORT)) as s:
+        with socket.create_connection((get_tf_printer_host('warp-docket'), 9100)) as s:
             s.send(data)
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -302,6 +348,7 @@ def main():
 
     print_docket2_label(args.sku, args.supply_cable, bool(args.cee), args.version, args.serial_number, args.build_date, args.order_id,
                         args.item, args.order_date, args.customer, args.comment, args.instances, args.copies, args.stdout, args.force_build_date)
+
 
 if __name__ == '__main__':
     main()

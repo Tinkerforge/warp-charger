@@ -9,9 +9,6 @@ from datetime import datetime
 import urllib.request
 import ssl
 
-PRINTER_HOST = '192.168.178.241'
-PRINTER_PORT = 9100
-
 EAN13_PLACEHOLDER = b'4251640705480'
 EAN13_NUMBERS = {
     'WARP2-CB-11KW-50': b'4251640704773',
@@ -59,6 +56,52 @@ BUILD_DATE_PLACEHOLDER = b'2021-01'
 
 COPIES_FORMAT = '^C{0}\r'
 
+
+def get_tf_printer_host(task):
+    import re
+    import os
+    import sys
+    import tkinter.messagebox
+
+    path = '~/tf_printer_host.txt'
+    x = re.compile(r'^([A-Za-z0-9_-]+)\s+([0-9\.]+)$')
+
+    try:
+        with open(os.path.expanduser(path), 'r', encoding='utf-8') as f:
+            for line in f.readlines():
+                line = line.strip()
+
+                if len(line) == 0 or line.startswith('#'):
+                    continue
+
+                m = x.match(line)
+
+                if m == None:
+                    message = 'WARNING: Invalid line in {0}: {1}'.format(path, repr(line))
+
+                    print(message)
+                    tkinter.messagebox.showerror(title=path, message=message)
+
+                    continue
+
+                other_task = m.group(1)
+                other_host = m.group(2)
+
+                if other_task != task:
+                    continue
+
+                return other_host
+    except FileNotFoundError:
+        pass
+
+    message = 'ERROR: Printer host for task {0} not found in {1}'.format(task, path)
+
+    print(message)
+    tkinter.messagebox.showerror(title=path, message=message)
+
+    sys.exit(1)
+
+
 def get_next_serial_number(kind):
     with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'staging-password.txt'), 'r') as f:
         staging_password = f.read().strip()
@@ -82,6 +125,7 @@ def get_next_serial_number(kind):
     serial_number = int(urllib.request.urlopen('https://stagingwww.tinkerforge.com/warpsn', timeout=15).read())
 
     return '{0}{1:09}'.format(kind, serial_number)
+
 
 def print_package2_label(sku, version, serial_number, build_date, instances, copies, stdout, force_build_date):
     # check instances
@@ -230,8 +274,9 @@ def print_package2_label(sku, version, serial_number, build_date, instances, cop
         sys.stdout.buffer.write(data)
         sys.stdout.buffer.flush()
     else:
-        with socket.create_connection((PRINTER_HOST, PRINTER_PORT)) as s:
+        with socket.create_connection((get_tf_printer_host('warp-docket'), 9100)) as s:
             s.send(data)
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -251,6 +296,7 @@ def main():
     assert args.copies > 0
 
     print_package2_label(args.sku, args.version, args.serial_number, args.build_date, args.instances, args.copies, args.stdout, args.force_build_date)
+
 
 if __name__ == '__main__':
     main()
