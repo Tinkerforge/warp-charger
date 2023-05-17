@@ -2950,8 +2950,35 @@
 </tr>
 
 <tr class="any">
+    <th scope="row">minimum_current_auto<br/><span class="th-details">bool</span></th>
+    <td>Gibt an, ob der Minimal-Ladestrom anhand des gewählten Fahrzeugtypes (minimum_current_vehicle_type) gesetzt wird.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>true</strong> - Minimal-Ladestrom wird anhand des gewählten Fahrzeugtypes gesetzt. minimum_current und minimum_current_1p werden ignoriert, bzw. überschrieben.</li>
+    <li><strong>false</strong> - minimum_current und minimum_current_1p bestimmen den Minimal-Ladestrom.</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">minimum_current_vehicle_type<br/><span class="th-details">int</span></th>
+    <td>Fahrzeugtyp für den der Minimal-Ladestrom gewählt wird.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Kein spezifischer Fahrzeugtyp gewählt.</li>
+    <li><strong>1</strong> - Renault Twingo Z.E., Renault ZOE R110 oder R135</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
     <th scope="row">minimum_current<br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
-    <td>Kleinste Strommenge, die einer Wallbox zugeteilt werden soll, damit diese einen Ladevorgang beginnt. Hiermit kann beeinflusst werden wie viele Wallboxen gleichzeitig laden.</td>
+    <td>Kleinste Strommenge, die einer Wallbox im dreiphasigen Betrieb zugeteilt werden soll, damit diese einen Ladevorgang beginnt. Hiermit kann beeinflusst werden wie viele Wallboxen gleichzeitig laden.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">minimum_current_1p<br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
+    <td>Kleinste Strommenge, die einer Wallbox im einphasigen Betrieb zugeteilt werden soll, damit diese einen Ladevorgang beginnt. Hiermit kann beeinflusst werden wie viele Wallboxen gleichzeitig laden.</td>
 </tr>
 
 <tr class="any">
@@ -3849,6 +3876,11 @@
     <th scope="row">enable_mdns<br/><span class="th-details">bool</span></th>
     <td>Gibt an, ob die Wallbox das Webinterface per mDNS im Netzwerk bekanntgeben soll. Per mDNS wird das Webinterface unter http://[hostname].local (z.B. http://warp2-AbC.local) erreichbar sein.</td>
 </tr>
+
+<tr class="any">
+    <th scope="row">web_server_port<br/><span class="th-details">int</span></th>
+    <td>Listen-Port des Webinterfaces. Typischerweise 80</td>
+</tr>
         </tbody>
     </table>
 </div>
@@ -3944,6 +3976,16 @@
 <tr class="any">
     <th scope="row">sta_bssid<br/><span class="th-details">string</span></th>
     <td>Die BSSID der Gegenstelle, zu der die Wallbox verbunden ist.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">connection_start<br/><span class="th-details">int (<abbr title="Millisekunde">ms</abbr>)</span></th>
+    <td>Zeit in Millisekunden zu der die letzte Verbindung aufgebaut wurde.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">connection_end<br/><span class="th-details">int (<abbr title="Millisekunde">ms</abbr>)</span></th>
+    <td>Zeit in Millisekunden zu der die letzte Verbindung getrennt wurde.</td>
 </tr>
         </tbody>
     </table>
@@ -4228,6 +4270,16 @@
 </ol>
 </div></td>
 </tr>
+
+<tr class="any">
+    <th scope="row">connection_start<br/><span class="th-details">int (<abbr title="Millisekunde">ms</abbr>)</span></th>
+    <td>Zeit in Millisekunden zu der die letzte Verbindung aufgebaut wurde.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">connection_end<br/><span class="th-details">int (<abbr title="Millisekunde">ms</abbr>)</span></th>
+    <td>Zeit in Millisekunden zu der die letzte Verbindung getrennt wurde.</td>
+</tr>
         </tbody>
     </table>
 </div>
@@ -4426,6 +4478,16 @@
     <th scope="row">last_error<br/><span class="th-details">int</span></th>
     <td>Der zuletzt aufgetretene Fehler. -1 falls kein Fehler aufgetreten ist.</td>
 </tr>
+
+<tr class="any">
+    <th scope="row">connection_start<br/><span class="th-details">int (<abbr title="Millisekunde">ms</abbr>)</span></th>
+    <td>Zeit in Millisekunden zu der die letzte Verbindung aufgebaut wurde.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">connection_end<br/><span class="th-details">int (<abbr title="Millisekunde">ms</abbr>)</span></th>
+    <td>Zeit in Millisekunden zu der die letzte Verbindung getrennt wurde.</td>
+</tr>
         </tbody>
     </table>
 </div>
@@ -4494,8 +4556,8 @@
 </div>
 </div>
 
-<div  id="mqtt_auto_discovery_config" class="any">
-    <div class="h5">mqtt/auto_discovery_config</div>
+<div  id="mqtt_auto_discovery_config" class="warp1 warp2">
+    <div class="h5">mqtt/auto_discovery_config <strong>(Nur WARP 1 und WARP 2)</strong> </div>
     Die Konfiguration der MQTT Auto Discovery. Diese kann über mqtt/auto_discovery_config_update mit dem selben Payload aktualisiert werden.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
@@ -4693,6 +4755,16 @@
 </ol>
 </div></td>
 </tr>
+
+<tr class="any">
+    <th scope="row">connection_start<br/><span class="th-details">int (<abbr title="Millisekunde">ms</abbr>)</span></th>
+    <td>Zeit in Millisekunden zu der die letzte Verbindung aufgebaut wurde.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">connection_end<br/><span class="th-details">int (<abbr title="Millisekunde">ms</abbr>)</span></th>
+    <td>Zeit in Millisekunden zu der die letzte Verbindung getrennt wurde.</td>
+</tr>
         </tbody>
     </table>
 </div>
@@ -4787,7 +4859,7 @@
 </div>
 </div>
 </section>
-<section id="reference-rtc" class="section warp1 warp2">
+<section id="reference-rtc" class="section any">
     <header class="reference-section-header">
         <h4>Zeiteinstellungen der Real-Time Clock</h4><h5>Benötigt das Feature <a href="#features_nfc"><code>"rtc"</code></a>.</h5>
 
@@ -5256,8 +5328,26 @@
 </tr>
 
 <tr class="any">
+    <th scope="row">target_power_from_grid<br/><span class="th-details">int (<abbr title="Watt">W</abbr>)</span></th>
+    <td>Soll-Netzbezug für Überschussregelung. Gibt den gewünschten Netzbezug (positive Werte) bzw. Netzeinspeisung (negative Werte) im PV-Lademodus vor. Damit kann auch die Priorität gegenüber einem Batteriespeicher beeinflusst werden.</td>
+</tr>
+
+<tr class="any">
     <th scope="row">guaranteed_power<br/><span class="th-details">int (<abbr title="Watt">W</abbr>)</span></th>
     <td>Mindest-Ladeleistung, die für den Min + PV-Lademodus verwendet wird. Diese Leistung wird bei unzureichendem PV-Überschuss (teilweise) aus dem Netz bezogen.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">cloud_filter_mode<br/><span class="th-details">int</span></th>
+    <td>Modus des Wolkenfilters, um im PV-Lademodus Überreaktionen bei kurzzeitiger Änderung der Bewölkung zu vermeiden.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Kein Wolkenfilter.</li>
+    <li><strong>1</strong> - Schwacher Wolkenfilter.</li>
+    <li><strong>2</strong> - Mittlerer Wolkenfilter.</li>
+    <li><strong>3</strong> - Starker Wolkenfilter.</li>
+</ol>
+</div></td>
 </tr>
 
 <tr class="any">
@@ -5516,10 +5606,25 @@
 <div class="any">
 <ol class="ol-enum">
     <li><strong>0</strong> - Kein Fehler</li>
-    <li><strong>2</strong> - Keine Netzwerkverbindung (LAN/WLAN)</li>
-    <li><strong>65536</strong> - Schützüberwachung hat ausgelöst</li>
-    <li><strong>16777216</strong> - Interner Fehler, Bricklet nicht erreichbar</li>
-    <li><strong>33554432</strong> - Interner Fehler, SD-Karten-Fehler</li>
+    <li><strong>0x00000002</strong> - Keine Netzwerkverbindung (LAN/WLAN)</li>
+    <li><strong>0x00010000</strong> - Schützüberwachung hat ausgelöst</li>
+    <li><strong>0x01000000</strong> - Interner Fehler, Bricklet nicht erreichbar</li>
+    <li><strong>0x02000000</strong> - Interner Fehler, SD-Karten-Fehler</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">config_error_flags<br/><span class="th-details">int</span></th>
+    <td>Aktive Konfigurationsfehler des Energy Managers. Es handelt sich hierbei um eine Bitmaske, sodass sämtliche Kombinationen aus Konfigurationsfehlern auftreten können.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Kein Fehler</li>
+    <li><strong>0x00000001</strong> - Phasenumschaltung oder Schütz nicht konfiguriert</li>
+    <li><strong>0x00000002</strong> - Maximaler Gesamtstrom der Wallboxen nicht konfiguriert</li>
+    <li><strong>0x00000004</strong> - Keine Wallboxen konfiguriert</li>
+    <li><strong>0x00000008</strong> - Überschussladen aktiviert aber kein Stromzähler eingerichtet</li>
+    <li><strong>0x00000010</strong> - Lastmanagement nicht verfügbar</li>
 </ol>
 </div></td>
 </tr>
@@ -5540,6 +5645,173 @@
             </tr>
         </thead>
         <tbody>
+
+<tr class="any">
+    <th scope="row">power_at_meter<br/><span class="th-details">float (<abbr title="Watt">W</abbr>)</span></th>
+    <td>Gemessene Leistung am Hausanschluss</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">power_at_meter_filtered<br/><span class="th-details">float (<abbr title="Watt">W</abbr>)</span></th>
+    <td>Geglättete gemessene Leistung am Hausanschluss</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">power_available<br/><span class="th-details">int (<abbr title="Watt">W</abbr>)</span></th>
+    <td>Zum Laden verfügbare Leistung. Dies ist ein virtueller Wert, der nicht direkt der Ladeleistung entspricht.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">power_available_filtered<br/><span class="th-details">int (<abbr title="Watt">W</abbr>)</span></th>
+    <td>Geglättete zum Laden verfügbare Leistung. Dies ist ein virtueller Wert, der nicht direkt der Ladeleistung entspricht.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">overall_min_power<br/><span class="th-details">int (<abbr title="Watt">W</abbr>)</span></th>
+    <td>Ladeleistung, die der Energy Manager in der aktuellen Konfiguration minimal einstellen kann, abhängig von Phasenanzahl und minimalem Ladestrom.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">threshold_3to1<br/><span class="th-details">int (<abbr title="Watt">W</abbr>)</span></th>
+    <td>Grenzwert der Ladeleistung, unter der der Energy Manager vom dreiphasigen in den einphasigen Modus wechseln möchte.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">threshold_1to3<br/><span class="th-details">int (<abbr title="Watt">W</abbr>)</span></th>
+    <td>Grenzwert der Ladeleistung, über der der Energy Manager vom einphasigen Modus in den dreiphasigen Modus wechseln möchte.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">charge_manager_allocated_current<br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
+    <td>Ladestrom, der aktuell vom Lastmanager an Wallboxen verteilt wurde.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">max_current_limited<br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
+    <td>Maximaler Ladestrom unter Beachtung externer Strombegrenzung</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">uptime_past_hysteresis<br/><span class="th-details">bool</span></th>
+    <td>Zeitraum nach einem Start des Energy Managers, in dem ohne Wartezeit umgeschaltet werden kann.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>true</strong> - Startphase beendet, Wartezeiten müssen eingehalten werden</li>
+    <li><strong>false</strong> - Startphase läuft, Wartezeiten werden ignoriert</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">is_3phase<br/><span class="th-details">bool</span></th>
+    <td>Zustand der Phasenumschaltung
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>true</strong> - Kontrollierte Wallboxen werden dreiphasig versorgt</li>
+    <li><strong>false</strong> - Kontrollierte Wallboxen werden einphasig versorgt</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">wants_3phase<br/><span class="th-details">bool</span></th>
+    <td>Entscheidung der Phasenumschaltung
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>true</strong> - Dreiphasiger Betrieb erwünscht</li>
+    <li><strong>false</strong> - Einphasiger Betrieb erwünscht</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">wants_3phase_last<br/><span class="th-details">bool</span></th>
+    <td>Vorige Entscheidung der Phasenumschaltung
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>true</strong> - Dreiphasiger Betrieb war erwünscht</li>
+    <li><strong>false</strong> - Einphasiger Betrieb war erwünscht</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">is_on_last<br/><span class="th-details">bool</span></th>
+    <td>Voriger Zustand der Stromfreigabe
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>true</strong> - Ladestrom für Wallboxen war freigegeben</li>
+    <li><strong>false</strong> - Ladestrom für Wallboxen war nicht freigegeben</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">wants_on_last<br/><span class="th-details">bool</span></th>
+    <td>Vorige Entscheidung der Stromfreigabe
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>true</strong> - Freigabe für Ladestrom für Wallboxen war erwünscht</li>
+    <li><strong>false</strong> - Freigabe für Ladestrom für Wallboxen war nicht erwünscht</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">phase_state_change_blocked<br/><span class="th-details">bool</span></th>
+    <td>Blockierung der Phasenumschaltung aufgrund von Lastschwankungen
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>true</strong> - Phasenumschaltung ist aufgrund kürzlicher Laständerungen blockiert</li>
+    <li><strong>false</strong> - Phasenumschaltung ist nicht blockiert</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">phase_state_change_delay<br/><span class="th-details">int (<abbr title="Millisekunde">ms</abbr>)</span></th>
+    <td>Wartezeit, bis die Phasenumschaltung nicht mehr blockiert ist</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">on_state_change_blocked<br/><span class="th-details">bool</span></th>
+    <td>Blockierung der Ladestromfreigabe aufgrund von Lastschwankungen
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>true</strong> - Ladestrom darf aufgrund kürzlicher Laständerungen nicht freigegeben oder blockiert werden</li>
+    <li><strong>false</strong> - Ladestrom darf freigegeben oder blockiert werden</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">on_state_change_delay<br/><span class="th-details">int (<abbr title="Millisekunde">ms</abbr>)</span></th>
+    <td>Wartezeit, bis die Ladestromfreigabe nicht mehr blockiert ist</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">charging_blocked<br/><span class="th-details">int</span></th>
+    <td>Ladefreigabe wird extern blockiert, falls Wert nicht 0.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">switching_state<br/><span class="th-details">int</span></th>
+    <td>Interne Automatenzustände der Phasenumschaltung
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Es wird gerade keine Phasenumschaltung durchgeführt. Strom und Leistung werden überwacht.</li>
+    <li><strong>1</strong> - Ladevorgänge aller Wallboxen werden beendet</li>
+    <li><strong>2</strong> - Alle Wallboxen führen CP-Trennung durch</li>
+    <li><strong>3</strong> - Schütz wird geschaltet</li>
+    <li><strong>4</strong> - Alle Wallboxen heben CP-Trennung auf</li>
+</ol>
+</div></td>
+</tr>
+
+<tr class="any">
+    <th scope="row">consecutive_bricklet_errors<br/><span class="th-details">int</span></th>
+    <td>Anzahl aufeinander folgender interner Kommunikationsfehler</td>
+</tr>
 
 <tr class="any">
     <th scope="row">contactor<br/><span class="th-details">bool</span></th>
@@ -5712,7 +5984,7 @@
 </div>
 </div>
 </section>
-<section id="reference-charge_limits" class="section any">
+<section id="reference-charge_limits" class="section warp1 warp2">
     <header class="reference-section-header">
         <h4>Ladezeit- und -energielimits</h4>
 
@@ -5732,7 +6004,7 @@
 </li>
 <li>
     Zustände
-     <ul>
+    <ul>
         <li><a class="scrollto text-monospace" href="#charge_limits_active_limits">charge_limits/active_limits</a></li>
     </ul>
 </li>
