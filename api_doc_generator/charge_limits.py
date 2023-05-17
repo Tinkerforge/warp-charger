@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-charge_limits = Module("charge_limits", "Ladezeit- und -energielimits", "", Version.ANY, [
+charge_limits = Module("charge_limits", "Ladezeit- und -energielimits", "", Version.WARP1 | Version.WARP2, [
     Func("state", FuncType.STATE, Elem.OBJECT("Aktueller Zustand der Zeit- und Energielimits", members={
             "start_timestamp_ms": Elem.INT("Startzeitstempel des aktuellen Ladevorgangs. 0 falls kein Ladevorgang läuft.", unit=Units.ms),
             "target_timestamp_ms": Elem.INT("Zielzeitstempel des aktuellen Ladevorgangs. 0 falls kein Ladevorgang läuft. Gleich dem Startzeitstempel, falls kein Zeitlimit gesetzt ist.", unit=Units.ms),

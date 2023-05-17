@@ -23,7 +23,16 @@ charge_manager = Module("charge_manager", "Lastmanager", "", Version.ANY, [
             ]),
             "default_available_current": Elem.INT("Strom der nach Neustart des Lastmanagers zur Verfügung stehen soll. Beim Auslösen setzt der Watchdog den verfügbaren Strom auf diesen Strom zurück.", unit=Units.mA),
             "maximum_available_current": Elem.INT("Maximum, das über die API und das Webinterface jeweils als verfügbarer Strom gesetzt werden darf. Sollte auf den maximal erlaubten Strom der Anbindung des Wallbox-Verbunds konfiguriert werden, der z.b. durch Hausanschlusses, die Absicherung oder die Zuleitung begrenzt ist.", unit=Units.mA),
-            "minimum_current": Elem.INT("Kleinste Strommenge, die einer Wallbox zugeteilt werden soll, damit diese einen Ladevorgang beginnt. Hiermit kann beeinflusst werden wie viele Wallboxen gleichzeitig laden.", unit=Units.mA),
+            "minimum_current_auto": Elem.BOOL("Gibt an, ob der Minimal-Ladestrom anhand des gewählten Fahrzeugtypes (minimum_current_vehicle_type) gesetzt wird.", constants=[
+                Const(True, "Minimal-Ladestrom wird anhand des gewählten Fahrzeugtypes gesetzt. minimum_current und minimum_current_1p werden ignoriert, bzw. überschrieben."),
+                Const(False, "minimum_current und minimum_current_1p bestimmen den Minimal-Ladestrom.")
+            ]),
+            "minimum_current_vehicle_type": Elem.INT("Fahrzeugtyp für den der Minimal-Ladestrom gewählt wird.", constants=[
+                Const(0, "Kein spezifischer Fahrzeugtyp gewählt."),
+                Const(1, "Renault Twingo Z.E., Renault ZOE R110 oder R135")
+            ]),
+            "minimum_current": Elem.INT("Kleinste Strommenge, die einer Wallbox im dreiphasigen Betrieb zugeteilt werden soll, damit diese einen Ladevorgang beginnt. Hiermit kann beeinflusst werden wie viele Wallboxen gleichzeitig laden.", unit=Units.mA),
+            "minimum_current_1p": Elem.INT("Kleinste Strommenge, die einer Wallbox im einphasigen Betrieb zugeteilt werden soll, damit diese einen Ladevorgang beginnt. Hiermit kann beeinflusst werden wie viele Wallboxen gleichzeitig laden.", unit=Units.mA),
             "chargers": Elem.ARRAY("Wallboxen, die vom Lastmanager gesteuert werden sollen.", members=[
                 * 10 * [Elem.OBJECT("Eine zu steuernde Wallbox", members = {
                     "host": Elem.STRING("IP-Adresse der zu steuernden Wallbox"),
