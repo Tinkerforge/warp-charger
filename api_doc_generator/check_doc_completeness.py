@@ -166,7 +166,13 @@ for m in mods:
         f.root = filter_elem(f.root, version)
 
 with open(sys.argv[2]) as f:
-    debug_report = json.load(f)
+    content = f.readlines()[3:]
+    for i, x in enumerate(content):
+        if x.endswith("}}\n"):
+            content = content[:i+1]
+            break
+
+    debug_report = json.loads("".join(content))
 
 for k, v in debug_report.items():
     all_functions.discard(k)
