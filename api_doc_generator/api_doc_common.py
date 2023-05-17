@@ -306,7 +306,10 @@ class Elem:
                                fn_desc = self.desc,
                                fn_table = table,
                                version_class=self.version.css_classes(),
-                               version_text={Version.ANY:"", Version.WARP1: " <strong>(Nur WARP 1)</strong> ", Version.WARP2: " <strong>(Nur WARP 2)</strong> "}[self.version])
+                               version_text={Version.ANY:"",
+                                             Version.WARP1: " <strong>(Nur WARP 1)</strong> ",
+                                             Version.WARP2: " <strong>(Nur WARP 2)</strong> ",
+                                             Version.WARP1 | Version.WARP2: " <strong>(Nur WARP 1 und WARP 2)</strong> "}[self.version])
 
     def to_html_table(self, is_root) -> str:
         table_template = """
