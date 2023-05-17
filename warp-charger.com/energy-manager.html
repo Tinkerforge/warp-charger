@@ -605,37 +605,43 @@ client<span style='color:#808030; '>.</span>loop_forever<span style='color:#8080
             <div class="row">
                 <div class="col-auto  mx-auto">
                     <div class="text-center">
-                        <a href="firmwares/energy_manager_firmware_1_0_1_64131430_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP Energy Manager Firmware 1.0.1 herunterladen</a>
-                        <div class="text-muted pt-2 pb-2">Veröffentlicht am 16.03.2023</div>
+                        <a href="firmwares/energy_manager_firmware_1_0_2_6464bb48_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP Energy Manager Firmware 1.0.2 herunterladen</a>
+                        <div class="text-muted pt-2 pb-2">Veröffentlicht am 17.05.2023</div>
                     </div>
 
                     <table class="table table-borderless mb-3">
                         <tbody>
                             <tr>
-                                <th scope="row"><a href="firmwares/energy_manager_firmware_1_0_1_64131430_merged.bin">1.0.1</a><br/><span class="th-details">16.03.2023</span><br/><a href="firmwares/energy_manager_firmware_1_0_1_64131430_merged.bin.sha256">Prüfsumme</a></th>
+                                <th scope="row"><a href="firmwares/energy_manager_firmware_1_0_2_6464bb48_merged.bin">1.0.2</a><br/><span class="th-details">17.05.2023</span><br/><a href="firmwares/energy_manager_firmware_1_0_2_6464bb48_merged.bin.sha256">Prüfsumme</a></th>
                                 <td>
                                     <ul>
-                                        <li>Energiebilanz hinzugefügt</li>
-                                        <li>LED-Blinken in Magenta bei Konfigurationsfehlern hinzugefügt</li>
-                                        <li>Aggressives/Konservatives Regelverhalten hinzugefügt.</li>
-                                        <li>Phasenumschaltungs-Zustand zur Statusseite hinzugefügt</li>
-                                        <li>Anzeige interner Zustände zur Debug-Ansicht hinzugefügt</li>
-                                        <li>Core Dump zu Debug-Report hinzugefügt</li>
-                                        <li>Aussehen der Lademodus-Buttons verbessert</li>
-                                        <li>Veraltete Statuswerte nach Trennung der WLAN-Verbindung entfernt</li>
+                                        <li>Wolkenfilter hinzugefügt</li>
+                                        <li>Support für PWA-artige Lesezeichen hinzugefügt</li>
+                                        <li>Monatsgraph zur Energiebilanz hinzugefügt</li>
+                                        <li>Statistiken zur Energiebilanz hinzugefügt</li>
+                                        <li>Minimalen Ladestrom für ein- und dreiphasiges Laden aufgeteilt</li>
+                                        <li>Einstellung des minimalen Ladestroms anhand des konfigurierten Fahrzeugtyps hinzugefügt</li>
+                                        <li>Verwendung der RTC des Energy-Manager-Bricklets hinzugefügt</li>
+                                        <li>Füllung für Stromzählerplot hinzugefügt</li>
+                                        <li>Konfiguration des Web-Interface-Ports hinzugefügt</li>
+                                        <li>WLAN-Empfangsqualität durch Deaktivierung des HT40-Modus und 11b verbessert</li>
+                                        <li>Robustheit der Stromzähler-Initialisierung verbessert</li>
+                                        <li>Robustheit der statischen IP-Konfiguration der LAN-Schnittstelle verbessert</li>
+                                        <li>Löschen kontrollierter Wallboxen auf der Lastmanagement-Konfigurationsseite repariert</li>
                                         <li>Übersetzungen verbessert</li>
-                                        <li>Sichergestellt, dass Min­dest­lade­leistung für Min + PV-Modus nicht weniger als die für einen Ladevorgang notwendige Leistung sein kann</li>
-                                        <li>Nicht unterstützten SDM72CTM von der Stromzählerseite entfernt</li>
-                                        <li>Kontrollierte Wallboxen auf Statusseite zu klickbaren Links umgewandelt</li>
-                                        <li>Sichergestellt, dass keine duplizierten Hosts in Konfiguration kontrollierter Wallboxen akzeptiert werden</li>
-                                        <li>mDNS-Antworten die nicht von WARP Chargern gesendet wurden gefiltert</li>
-                                        <li>Zeichnen negativer und großer Leistungswerte behoben</li>
-                                        <li>Längenprüfung in Text- und Passwortfeldern repariert</li>
-                                        <li>Häufige Ereignis-Log-Meldungen behoben</li>
-                                        <li>Fehler-Feedback von Textfeldern repariert</li>
-                                        <li>Passwort-Platzhaltertext der WLAN-Verbindungsseite repariert</li>
-                                        <li>Löschen des WLAN-Verbindungspassworts repariert</li>
-                                        <li>Fehlende Stromzählerwerte auf Stromzähler-Unterseite repariert</li>
+                                        <li>Zeitzonen-Datenbank aktualisiert</li>
+                                        <li>Ausgabe der Verbindungsdauer bei Verlust einer LAN-, WLAN-, MQTT- oder WireGuard-Verbindung hinzugefügt</li>
+                                        <li>Defekte Links auf der Status-Seite entfernt, falls Lastmanagement-Konfiguration geändert, aber nicht angewandt wurde</li>
+                                        <li>MQTT-Timeout erhöht</li>
+                                        <li>NetBIOS-Unterstützung entfernt</li>
+                                        <li>DNS-Cache vergrößert</li>
+                                        <li>Fehlermeldungen von Texteingabefeldern repariert</li>
+                                        <li>Längenprüfung von Text- und Passworteingabefeldern repariert</li>
+                                        <li>Klickbare Links für kontrollierte Wallboxen auf der Statusseite hinzugefügt</li>
+                                        <li>Prüfung auf duplizierte Wallbox-Hostnamen bzw. IPs in der Lastmanagement-Konfiguration hinzugefügt</li>
+                                        <li>Auflösung von .local-Hostnamen via mDNS-Scan hinzugefügt</li>
+                                        <li>Veraltete WLAN-Empfangsqualitäts- und IP-Werte entfernt wenn WLAN-Verbindung verloren wird</li>
+                                        <li>MQTT-Fehlermeldungen verbessert</li>
                                     </ul>
                                 </td>
                             </tr>
@@ -651,6 +657,34 @@ client<span style='color:#808030; '>.</span>loop_forever<span style='color:#8080
                     <div class="collapse" id="collapseOlderVersions">
                         <table class="table mt-3">
                             <tbody>
+                                <tr>
+                                    <th scope="row"><a href="firmwares/energy_manager_firmware_1_0_1_64131430_merged.bin">1.0.1</a><br/><span class="th-details">16.03.2023</span><br/><a href="firmwares/energy_manager_firmware_1_0_1_64131430_merged.bin.sha256">Prüfsumme</a></th>
+                                    <td>
+                                        <ul>
+                                            <li>Energiebilanz hinzugefügt</li>
+                                            <li>LED-Blinken in Magenta bei Konfigurationsfehlern hinzugefügt</li>
+                                            <li>Aggressives/Konservatives Regelverhalten hinzugefügt.</li>
+                                            <li>Phasenumschaltungs-Zustand zur Statusseite hinzugefügt</li>
+                                            <li>Anzeige interner Zustände zur Debug-Ansicht hinzugefügt</li>
+                                            <li>Core Dump zu Debug-Report hinzugefügt</li>
+                                            <li>Aussehen der Lademodus-Buttons verbessert</li>
+                                            <li>Veraltete Statuswerte nach Trennung der WLAN-Verbindung entfernt</li>
+                                            <li>Übersetzungen verbessert</li>
+                                            <li>Sichergestellt, dass Min­dest­lade­leistung für Min + PV-Modus nicht weniger als die für einen Ladevorgang notwendige Leistung sein kann</li>
+                                            <li>Nicht unterstützten SDM72CTM von der Stromzählerseite entfernt</li>
+                                            <li>Kontrollierte Wallboxen auf Statusseite zu klickbaren Links umgewandelt</li>
+                                            <li>Sichergestellt, dass keine duplizierten Hosts in Konfiguration kontrollierter Wallboxen akzeptiert werden</li>
+                                            <li>mDNS-Antworten die nicht von WARP Chargern gesendet wurden gefiltert</li>
+                                            <li>Zeichnen negativer und großer Leistungswerte behoben</li>
+                                            <li>Längenprüfung in Text- und Passwortfeldern repariert</li>
+                                            <li>Häufige Ereignis-Log-Meldungen behoben</li>
+                                            <li>Fehler-Feedback von Textfeldern repariert</li>
+                                            <li>Passwort-Platzhaltertext der WLAN-Verbindungsseite repariert</li>
+                                            <li>Löschen des WLAN-Verbindungspassworts repariert</li>
+                                            <li>Fehlende Stromzählerwerte auf Stromzähler-Unterseite repariert</li>
+                                        </ul>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <th scope="row"><a href="firmwares/energy_manager_firmware_1_0_0_6400c60d_merged.bin">1.0.0</a><br/><span class="th-details">02.03.2023</span><br/><a href="firmwares/energy_manager_firmware_1_0_0_6400c60d_merged.bin.sha256">Prüfsumme</a></th>
                                     <td>
