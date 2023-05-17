@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from api_doc_common import *
 from mods import mods
 

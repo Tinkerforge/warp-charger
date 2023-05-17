@@ -17,7 +17,14 @@ energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", Ve
                 Const(1, "Immer einphasig"),
                 Const(2, "Immer dreiphasig")
             ]),
+            "target_power_from_grid": Elem.INT("Soll-Netzbezug für Überschussregelung. Gibt den gewünschten Netzbezug (positive Werte) bzw. Netzeinspeisung (negative Werte) im PV-Lademodus vor. Damit kann auch die Priorität gegenüber einem Batteriespeicher beeinflusst werden.", unit=Units.W),
             "guaranteed_power": Elem.INT("Mindest-Ladeleistung, die für den Min + PV-Lademodus verwendet wird. Diese Leistung wird bei unzureichendem PV-Überschuss (teilweise) aus dem Netz bezogen.", unit=Units.W),
+            "cloud_filter_mode": Elem.INT("Modus des Wolkenfilters, um im PV-Lademodus Überreaktionen bei kurzzeitiger Änderung der Bewölkung zu vermeiden.", constants=[
+                Const(0, "Kein Wolkenfilter."),
+                Const(1, "Schwacher Wolkenfilter."),
+                Const(2, "Mittlerer Wolkenfilter."),
+                Const(3, "Starker Wolkenfilter."),
+            ]),
 
 
             "relay_config": Elem.INT("", constants=[
@@ -132,10 +139,71 @@ energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", Ve
                 Const(0x00010000, "Schützüberwachung hat ausgelöst"),
                 Const(0x01000000, "Interner Fehler, Bricklet nicht erreichbar"),
                 Const(0x02000000, "Interner Fehler, SD-Karten-Fehler"),
-            ])
+            ]),
+            "config_error_flags": Elem.INT("Aktive Konfigurationsfehler des Energy Managers. Es handelt sich hierbei um eine Bitmaske, sodass sämtliche Kombinationen aus Konfigurationsfehlern auftreten können.", constants=[
+                Const(0, "Kein Fehler"),
+                Const(0x00000001, "Phasenumschaltung oder Schütz nicht konfiguriert"),
+                Const(0x00000002, "Maximaler Gesamtstrom der Wallboxen nicht konfiguriert"),
+                Const(0x00000004, "Keine Wallboxen konfiguriert"),
+                Const(0x00000008, "Überschussladen aktiviert aber kein Stromzähler eingerichtet"),
+                Const(0x00000010, "Lastmanagement nicht verfügbar"),
+            ]),
         })
     ),
     Func("low_level_state", FuncType.STATE, Elem.OBJECT("Low-Level-Zustand des Energy Managers", members={
+            "power_at_meter": Elem.FLOAT("Gemessene Leistung am Hausanschluss", unit=Units.W),
+            "power_at_meter_filtered": Elem.FLOAT("Geglättete gemessene Leistung am Hausanschluss", unit=Units.W),
+            "power_available": Elem.INT("Zum Laden verfügbare Leistung. Dies ist ein virtueller Wert, der nicht direkt der Ladeleistung entspricht.", unit=Units.W),
+            "power_available_filtered": Elem.INT("Geglättete zum Laden verfügbare Leistung. Dies ist ein virtueller Wert, der nicht direkt der Ladeleistung entspricht.", unit=Units.W),
+            "overall_min_power": Elem.INT("Ladeleistung, die der Energy Manager in der aktuellen Konfiguration minimal einstellen kann, abhängig von Phasenanzahl und minimalem Ladestrom.", unit=Units.W),
+            "threshold_3to1": Elem.INT("Grenzwert der Ladeleistung, unter der der Energy Manager vom dreiphasigen in den einphasigen Modus wechseln möchte.", unit=Units.W),
+            "threshold_1to3": Elem.INT("Grenzwert der Ladeleistung, über der der Energy Manager vom einphasigen Modus in den dreiphasigen Modus wechseln möchte.", unit=Units.W),
+            "charge_manager_allocated_current": Elem.INT("Ladestrom, der aktuell vom Lastmanager an Wallboxen verteilt wurde.", unit=Units.mA),
+            "max_current_limited": Elem.INT("Maximaler Ladestrom unter Beachtung externer Strombegrenzung", unit=Units.mA),
+            "uptime_past_hysteresis": Elem.BOOL("Zeitraum nach einem Start des Energy Managers, in dem ohne Wartezeit umgeschaltet werden kann.", constants=[
+                Const(True, "Startphase beendet, Wartezeiten müssen eingehalten werden"),
+                Const(False, "Startphase läuft, Wartezeiten werden ignoriert"),
+            ]),
+            "is_3phase": Elem.BOOL("Zustand der Phasenumschaltung", constants=[
+                Const(True, "Kontrollierte Wallboxen werden dreiphasig versorgt"),
+                Const(False, "Kontrollierte Wallboxen werden einphasig versorgt"),
+            ]),
+            "wants_3phase": Elem.BOOL("Entscheidung der Phasenumschaltung", constants=[
+                Const(True, "Dreiphasiger Betrieb erwünscht"),
+                Const(False, "Einphasiger Betrieb erwünscht"),
+            ]),
+            "wants_3phase_last": Elem.BOOL("Vorige Entscheidung der Phasenumschaltung", constants=[
+                Const(True, "Dreiphasiger Betrieb war erwünscht"),
+                Const(False, "Einphasiger Betrieb war erwünscht"),
+            ]),
+            "is_on_last": Elem.BOOL("Voriger Zustand der Stromfreigabe", constants=[
+                Const(True, "Ladestrom für Wallboxen war freigegeben"),
+                Const(False, "Ladestrom für Wallboxen war nicht freigegeben"),
+            ]),
+            "wants_on_last": Elem.BOOL("Vorige Entscheidung der Stromfreigabe", constants=[
+                Const(True, "Freigabe für Ladestrom für Wallboxen war erwünscht"),
+                Const(False, "Freigabe für Ladestrom für Wallboxen war nicht erwünscht"),
+            ]),
+            "phase_state_change_blocked": Elem.BOOL("Blockierung der Phasenumschaltung aufgrund von Lastschwankungen", constants=[
+                Const(True, "Phasenumschaltung ist aufgrund kürzlicher Laständerungen blockiert"),
+                Const(False, "Phasenumschaltung ist nicht blockiert"),
+            ]),
+            "phase_state_change_delay": Elem.INT("Wartezeit, bis die Phasenumschaltung nicht mehr blockiert ist", unit=Units.ms),
+            "on_state_change_blocked": Elem.BOOL("Blockierung der Ladestromfreigabe aufgrund von Lastschwankungen", constants=[
+                Const(True, "Ladestrom darf aufgrund kürzlicher Laständerungen nicht freigegeben oder blockiert werden"),
+                Const(False, "Ladestrom darf freigegeben oder blockiert werden"),
+            ]),
+            "on_state_change_delay": Elem.INT("Wartezeit, bis die Ladestromfreigabe nicht mehr blockiert ist", unit=Units.ms),
+            "charging_blocked": Elem.INT("Ladefreigabe wird extern blockiert, falls Wert nicht 0."),
+            "switching_state": Elem.INT("Interne Automatenzustände der Phasenumschaltung", constants=[
+                Const(0, "Es wird gerade keine Phasenumschaltung durchgeführt. Strom und Leistung werden überwacht."),
+                Const(1, "Ladevorgänge aller Wallboxen werden beendet"),
+                Const(2, "Alle Wallboxen führen CP-Trennung durch"),
+                Const(3, "Schütz wird geschaltet"),
+                Const(4, "Alle Wallboxen heben CP-Trennung auf"),
+            ]),
+            "consecutive_bricklet_errors": Elem.INT("Anzahl aufeinander folgender interner Kommunikationsfehler"),
+
             "contactor": Elem.BOOL("Vom Energy Manager gesetzter Zustand des Schützes", constants=[
                 Const(True, "Schütz geschlossen"),
                 Const(False, "Schütz geöffnet"),
