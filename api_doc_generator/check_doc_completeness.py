@@ -120,6 +120,10 @@ UNDOCUMENTED = [
     "energy_manager/reflash",
     "energy_manager/reset",
     "energy_manager/debug_config",
+    "energy_manager/history_wallbox_5min",
+    "energy_manager/history_wallbox_daily",
+    "energy_manager/history_energy_manager_5min",
+    "energy_manager/history_energy_manager_daily",
 ]
 
 version = Version(int(sys.argv[1]))
