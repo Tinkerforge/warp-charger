@@ -55,7 +55,7 @@ def main():
                         response = resp.read()
                     values = json.loads(response)
                     value_count = len(values)
-                    f.write(f"{time.time() - start:.3f},{current},{','.join([str(x) for x in values])}\n")
+                    f.write(f"{time.time() - start:.3f},{current / 1000.0:.3f},{','.join([str(x) for x in values])}\n")
                 except URLError:
                     f.write(f"{time.time() - start:.3f}{',' * (value_count + 1)}\n")
                 print(f"\r{current / 1000.0:.3f}A ~{datetime.timedelta(seconds=int(end - time.time()))} {'.' * (i + 1)}", end="")
