@@ -6,6 +6,11 @@ charge_manager = Module("charge_manager", "Lastmanager", "", Version.ANY, [
         })
     ),
 
+    Func("available_phases", FuncType.STATE, Elem.OBJECT("Anzahl der derzeit verbundenen Phasen der Wallboxen. Kann über charge_manager/available_phases_update aktualisiert werden.", members={
+            "phases": Elem.INT("Anzahl der verbundenen Phasen. Legt fest, ob der einphasige oder dreiphasige minimale Ladestrom für die Stromverteilung beachtet wird. Wird üblicherweise durch die Phasenumschaltung des Energy Managers vorgegeben.", unit=Units.mA),
+        })
+    ),
+
     Func("state", FuncType.STATE, Elem.OPAQUE("Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Object werden nicht als API-Bruch betrachtet!</strong>")),
 
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die Lastmanager-Konfiguration. Diese kann über charge_manager/config_update mit dem selben Payload aktualisiert werden.", members={

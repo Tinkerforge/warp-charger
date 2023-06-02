@@ -15,7 +15,8 @@ energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", Ve
             "phase_switching_mode": Elem.INT("", constants=[
                 Const(0, "Automatischer Wechsel zwischen drei- und einphasigem Laden. Nur möglich, wenn contactor_installed true ist."),
                 Const(1, "Immer einphasig"),
-                Const(2, "Immer dreiphasig")
+                Const(2, "Immer dreiphasig"),
+                Const(4, "Einphasiger PV-Modus, dreiphasiger Schnell-Modus"),
             ]),
             "target_power_from_grid": Elem.INT("Soll-Netzbezug für Überschussregelung. Gibt den gewünschten Netzbezug (positive Werte) bzw. Netzeinspeisung (negative Werte) im PV-Lademodus vor. Damit kann auch die Priorität gegenüber einem Batteriespeicher beeinflusst werden.", unit=Units.W),
             "guaranteed_power": Elem.INT("Mindest-Ladeleistung, die für den Min + PV-Lademodus verwendet wird. Diese Leistung wird bei unzureichendem PV-Überschuss (teilweise) aus dem Netz bezogen.", unit=Units.W),
@@ -158,6 +159,7 @@ energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", Ve
             "overall_min_power": Elem.INT("Ladeleistung, die der Energy Manager in der aktuellen Konfiguration minimal einstellen kann, abhängig von Phasenanzahl und minimalem Ladestrom.", unit=Units.W),
             "threshold_3to1": Elem.INT("Grenzwert der Ladeleistung, unter der der Energy Manager vom dreiphasigen in den einphasigen Modus wechseln möchte.", unit=Units.W),
             "threshold_1to3": Elem.INT("Grenzwert der Ladeleistung, über der der Energy Manager vom einphasigen Modus in den dreiphasigen Modus wechseln möchte.", unit=Units.W),
+            "charge_manager_available_current": Elem.INT("Ladestrom, den der Energy Manager dem Lastmanagement aktuell zur Verfügung stellt.", unit=Units.mA),
             "charge_manager_allocated_current": Elem.INT("Ladestrom, der aktuell vom Lastmanager an Wallboxen verteilt wurde.", unit=Units.mA),
             "max_current_limited": Elem.INT("Maximaler Ladestrom unter Beachtung externer Strombegrenzung", unit=Units.mA),
             "uptime_past_hysteresis": Elem.BOOL("Zeitraum nach einem Start des Energy Managers, in dem ohne Wartezeit umgeschaltet werden kann.", constants=[
