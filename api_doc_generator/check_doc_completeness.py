@@ -212,5 +212,5 @@ for k, v in debug_report.items():
 
     check_elem_doc(config_func.root, v, "{mod}/{fn}".format(mod=mod, fn=fn))
 
-print("Documented functions that were not found in debug report:")
+print("\nDocumented functions that were not found in debug report:")
 print("   ", "\n    ".join(all_functions))
