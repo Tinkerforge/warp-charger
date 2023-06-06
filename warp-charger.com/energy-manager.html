@@ -605,32 +605,19 @@ client<span style='color:#808030; '>.</span>loop_forever<span style='color:#8080
             <div class="row">
                 <div class="col-auto  mx-auto">
                     <div class="text-center">
-                        <a href="firmwares/energy_manager_firmware_1_0_3_647de464_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP Energy Manager Firmware 1.0.3 herunterladen</a>
+                        <a href="firmwares/energy_manager_firmware_1_0_4_647f3505_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP Energy Manager Firmware 1.0.4 herunterladen</a>
                         <div class="text-muted pt-2 pb-2">Veröffentlicht am 05.06.2023</div>
                     </div>
 
                     <table class="table table-borderless mb-3">
                         <tbody>
                             <tr>
-                                <th scope="row"><a href="firmwares/energy_manager_firmware_1_0_3_647de464_merged.bin">1.0.3</a><br/><span class="th-details">05.06.2023</span><br/><a href="firmwares/energy_manager_firmware_1_0_3_647de464_merged.bin.sha256">Prüfsumme</a></th>
+                                <th scope="row"><a href="firmwares/energy_manager_firmware_1_0_4_647f3505_merged.bin">1.0.4</a><br/><span class="th-details">06.06.2023</span><br/><a href="firmwares/energy_manager_firmware_1_0_4_647f3505_merged.bin.sha256">Prüfsumme</a></th>
                                 <td>
                                     <ul>
-                                        <li>Neuen Phasenumschaltungs-Modus "Einphasig PV/Dreiphasig schnell" hinzugefügt</li>
-                                        <li>Anzeige des Zustands der Phasenumschaltung bei externer Kontrolle hinzugefügt</li>
-                                        <li>Prüfung auf überlappende Netzwerkbereiche bei IP-Konfiguration von LAN, WLAN und WireGuard hinzugefügt</li>
-                                        <li>Übersetzungen verbessert</li>
-                                        <li>Sofortiger Start des WLAN Access Points hinzugefügt, falls keine WLAN-Verbindung konfiguriert und kein Ethernet-Kabel verbunden ist</li>
-                                        <li>Sichtbarkeit der Nulllinie verbessert</li>
-                                        <li>Alle 48h-Graphen auf mindestens 1500 Watt skaliert</li>
-                                        <li>Minimalhöhe der Monatsübersicht auf 10 kWh reduziert</li>
-                                        <li>Ereignis-Log-Meldungen überarbeitet</li>
-                                        <li>Generierung des Energie-Manager-Protokolls repariert</li>
-                                        <li>Verwendung des falschen Minimalstroms bei einphasigem Laden repariert</li>
-                                        <li>Plötzlichen Ladestop bei geringer PV-Produktion behoben</li>
-                                        <li>Instabiles Verhalten am Anfang eines Ladevorganges bei teilweise bewölktem Wetter behoben</li>
-                                        <li>Behoben, dass Daten der dritten und weiterer Wallboxen nicht aufgezeichnet worden</li>
-                                        <li>Überlappende Balken in Monatsübersicht behoben</li>
-                                        <li>Abgeschnittenen ersten und letzten Balken in Monatsübersicht behoben</li>
+                                        <li>Initialiserungsfehler behoben, der auftrat, wenn Stromzähler direkt mit dem Energy Manager verbunden ist</li>
+                                        <li>Zurücksetzen auf Werkszustand per Knopfdruck repariert</li>
+                                        <li>Race Condition während des Starts des Webservers behoben</li>
                                     </ul>
                                 </td>
                             </tr>
@@ -646,6 +633,29 @@ client<span style='color:#808030; '>.</span>loop_forever<span style='color:#8080
                     <div class="collapse" id="collapseOlderVersions">
                         <table class="table mt-3">
                             <tbody>
+                                <tr>
+                                    <th scope="row"><a href="firmwares/energy_manager_firmware_1_0_3_647de464_merged.bin">1.0.3</a><br/><span class="th-details">05.06.2023</span><br/><a href="firmwares/energy_manager_firmware_1_0_3_647de464_merged.bin.sha256">Prüfsumme</a></th>
+                                    <td>
+                                        <ul>
+                                            <li>Neuen Phasenumschaltungs-Modus "Einphasig PV/Dreiphasig schnell" hinzugefügt</li>
+                                            <li>Anzeige des Zustands der Phasenumschaltung bei externer Kontrolle hinzugefügt</li>
+                                            <li>Prüfung auf überlappende Netzwerkbereiche bei IP-Konfiguration von LAN, WLAN und WireGuard hinzugefügt</li>
+                                            <li>Übersetzungen verbessert</li>
+                                            <li>Sofortiger Start des WLAN Access Points hinzugefügt, falls keine WLAN-Verbindung konfiguriert und kein Ethernet-Kabel verbunden ist</li>
+                                            <li>Sichtbarkeit der Nulllinie verbessert</li>
+                                            <li>Alle 48h-Graphen auf mindestens 1500 Watt skaliert</li>
+                                            <li>Minimalhöhe der Monatsübersicht auf 10 kWh reduziert</li>
+                                            <li>Ereignis-Log-Meldungen überarbeitet</li>
+                                            <li>Generierung des Energie-Manager-Protokolls repariert</li>
+                                            <li>Verwendung des falschen Minimalstroms bei einphasigem Laden repariert</li>
+                                            <li>Plötzlichen Ladestop bei geringer PV-Produktion behoben</li>
+                                            <li>Instabiles Verhalten am Anfang eines Ladevorganges bei teilweise bewölktem Wetter behoben</li>
+                                            <li>Behoben, dass Daten der dritten und weiterer Wallboxen nicht aufgezeichnet worden</li>
+                                            <li>Überlappende Balken in Monatsübersicht behoben</li>
+                                            <li>Abgeschnittenen ersten und letzten Balken in Monatsübersicht behoben</li>
+                                        </ul>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <th scope="row"><a href="firmwares/energy_manager_firmware_1_0_2_6464bb48_merged.bin">1.0.2</a><br/><span class="th-details">17.05.2023</span><br/><a href="firmwares/energy_manager_firmware_1_0_2_6464bb48_merged.bin.sha256">Prüfsumme</a></th>
                                     <td>
