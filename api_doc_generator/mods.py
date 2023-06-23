@@ -18,5 +18,6 @@ from ocpp import ocpp
 from authentication import authentication
 from energy_manager import energy_manager
 from charge_limits import charge_limits
+from require_meter import require_meter
 
-mods = [evse, meter, charge_manager, users, charge_tracker, nfc, network, wifi, ethernet, ntp, mqtt, modbus_tcp, ocpp, wireguard, rtc, info, authentication, misc, energy_manager, charge_limits]
+mods = [evse, meter, require_meter, charge_manager, users, charge_tracker, nfc, network, wifi, ethernet, ntp, mqtt, modbus_tcp, ocpp, wireguard, rtc, info, authentication, misc, energy_manager, charge_limits]

@@ -3,7 +3,7 @@ from api_doc_common import *
 users = Module("users", "Benutzerverwaltung", "", Version.WARP1 | Version.WARP2, [
     Func("config", FuncType.STATE, Elem.OBJECT("Die Benutzerkonfiguration. Kann über die nachfolgenden Kommandos modifiziert werden.", members={
             "users": Elem.ARRAY("Die Benutzer", members=[
-                * 8 * [Elem.OBJECT("Ein Benutzer", members={
+                * 17 * [Elem.OBJECT("Ein Benutzer", members={
                     "id": Elem.INT("ID des Benutzers (1-255)"),
                     "roles": Elem.INT("Berechtigungen des Benutzers. Wird noch nicht verwendet."),
                     "current": Elem.INT("Diesem Benutzer erlaubter Ladestrom 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 um diesem Nutzer das Laden zu verbieten", unit=Units.mA),

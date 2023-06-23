@@ -88,7 +88,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
     ),
 
     Func("slots", FuncType.STATE, Elem.ARRAY("Der Zustand der Ladeslots. Siehe TODO LINK für Details.", members=[
-            * 13 * [Elem.OBJECT("Ein Ladeslot", members = {
+            * 14 * [Elem.OBJECT("Ein Ladeslot", members = {
                 "max_current": Elem.INT("Maximal erlaubter Ladestrom. 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockiert.", unit=Units.mA),
                 "active": Elem.BOOL("Gibt an ob dieser Slot aktiv ist.", constants=[
                     Const(True, "Slot ist aktiv"),
@@ -109,7 +109,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
         })
     ),
 
-    Func("indicator_led", FuncType.STATE, Elem.OBJECT("Der Zustand der LED im Taster", members={
+    Func("indicator_led", FuncType.STATE, Elem.OBJECT("Der Zustand der LED im Taster. Kann über {{{ref:evse/indicator_led_update}}} mit dem selben Payload geschrieben werden, falls die LED-Steuerung per API (siehe {{{ref:evse/led_configuration}}}) erlaubt wurde.", members={
             "indication": Elem.INT("Aktuell gesetzter Zustand.", constants=[
                 Const(-1, "EVSE kontrolliert LED"),
                 Const(0, "Aus"),
@@ -118,6 +118,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
                 Const(1001, "Bestätigendes Blinken (z.B: NFC-Tag wurde erkannt)"),
                 Const(1002, "Ablehnendes Blinken (z.B: NFC-Tag ist unbekannt)"),
                 Const(1003, "Aufforderndes Blinken (z.B: NFC-Tag wird zum Laden benötigt)"),
+                Const("2001..2010", "Fehler-Blinken 1 bis 10."),
             ]),
             "duration": Elem.INT("Dauer für die der gesetzte Zustand erhalten bleibt.", unit=Units.ms)
         })
@@ -196,7 +197,8 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
             ]),
             "charging_time": Elem.INT("Ungefähre Zeit des Ladevorgangs. Nur für Lastmanagementzwecke zu verwenden!", unit=Units.ms),
             "time_since_state_change": Elem.INT("Zeit seit dem letzten IEC-61851-Zustandswechsel. Falls der Zustand 2 (= B: Lädt) ist, entspricht dieser Wert der Ladezeit.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms),
-            "uptime": Elem.INT("Zeit seit Starten des Ladecontrollers.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms)
+            "uptime": Elem.INT("Zeit seit Starten des Ladecontrollers.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms),
+            "time_since_dc_fault_check": Elem.INT("Zeit seit dem letzten Test des DC-Fehlerstrom-Schutzmoduls. Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms, version=Version.WARP2),
         })
     ),
 
@@ -311,6 +313,14 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
         version=Version.WARP2)
     ),
 
+    Func("led_configuration", FuncType.STATE, Elem.OBJECT("Die Konfiguration der LED des Tasters in der Frontblende. Diese kann über evse/led_configuration_update mit dem selben Payload aktualisiert werden.", members={
+            "enable_api": Elem.BOOL("Legt fest, ob die LED über die {{{ref:evse/indicator_led_update}}}-API oder über Modbus TCP gesteuert werden darf.", constants=[
+                Const(False, "LED darf nicht gesteuert werden. Aufrufe von {{{ref:evse/indicator_led_update}}} werden ignoriert"),
+                Const(True, "LED darf gesteuert werden. Aufrufe von {{{ref:evse/indicator_led_update}}} werden nur dann ignoriert, wenn das EVSE einen Fehlerzustand anzeigen möchte.")
+            ]),
+        })
+    ),
+
     Func("user_calibration", FuncType.STATE, Elem.OBJECT("Erlaubt es, die werksseitige Kalibrierung des EVSEs auszulesen und zu überschreiben. Dieser Wert kann über evse/user_calibration_update mit dem selben Payload aktualisiert werden. Um die Kalibierung auf den Werkszustand zurückzusetzen, kann ein Payload mit user_calibration_active auf false geschickt werden. Die weiteren Werte werden dann ignoriert.", members={
             "user_calibration_active": Elem.BOOL("Gibt an, ob die werksseitige Kalibrierung überschrieben wurde."),
             "voltage_diff": Elem.INT("Einer der Kalibrierungsparameter."),
@@ -339,6 +349,16 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
 
     Func("reset_dc_fault_current_state", FuncType.COMMAND, Elem.OBJECT("Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong>", version=Version.WARP2, members={
             "password": Elem.INT("Passwort, das zum Zurücksetzen benötigt wird. Das Passwort lautet 0xDC42FA23.")
+        })
+    ),
+
+    Func("trigger_dc_fault_test", FuncType.COMMAND, Elem.NULL("Startet einen Test des DC-Fehlerstrom-Schutzmoduls.", version=Version.WARP2)),
+
+    Func("gp_output", FuncType.STATE, Elem.OBJECT("Der aktuelle Wert des konfigurierbaren Ausgangs. Dieser Wert kann über evse/gp_output_update mit dem selben Payload aktualisiert werden.", version=Version.WARP2, members={
+            "gp_output": Elem.INT("Der aktuelle Wert des konfigurierbaren Ausgangs.", constants=[
+                Const(0, "Verbunden mit Masse"),
+                Const(1, "Hochohmig"),
+            ]),
         })
     ),
 

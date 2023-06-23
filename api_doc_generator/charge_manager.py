@@ -38,6 +38,8 @@ charge_manager = Module("charge_manager", "Lastmanager", "", Version.ANY, [
             ]),
             "minimum_current": Elem.INT("Kleinste Strommenge, die einer Wallbox im dreiphasigen Betrieb zugeteilt werden soll, damit diese einen Ladevorgang beginnt. Hiermit kann beeinflusst werden wie viele Wallboxen gleichzeitig laden.", unit=Units.mA),
             "minimum_current_1p": Elem.INT("Kleinste Strommenge, die einer Wallbox im einphasigen Betrieb zugeteilt werden soll, damit diese einen Ladevorgang beginnt. Hiermit kann beeinflusst werden wie viele Wallboxen gleichzeitig laden.", unit=Units.mA),
+            "requested_current_threshold": Elem.INT("Wallboxen mit einem Stromzähler, der Phasenströme misst, werden requested_current_threshold Sekunden nach dem Ladestart auf den größten Phasenstrom plus den konfigurierten Spielraum limitiert. Damit kann der verfügbare Strom effizienter auf mehrere Wallboxen verteilt werden.", unit=Units.s),
+            "requested_current_margin": Elem.INT("Spielraum, der auf den größten gemessenen Phasenstrom aufgeschlagen wird.", unit=Units.mA),
             "chargers": Elem.ARRAY("Wallboxen, die vom Lastmanager gesteuert werden sollen.", members=[
                 * 10 * [Elem.OBJECT("Eine zu steuernde Wallbox", members = {
                     "host": Elem.STRING("IP-Adresse der zu steuernden Wallbox"),

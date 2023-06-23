@@ -62,7 +62,7 @@ nfc = Module("nfc", "NFC-Ladefreigabe", "Benötigt das Feature <a href=\"#featur
 
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die NFC-Konfiguration. Diese kann über nfc/config_update mit dem selben Payload aktualisiert werden.", members={
             "authorized_tags": Elem.ARRAY("Eine Liste authorisierter Tags.", members=[
-                * 8 * [
+                * 16 * [
                     Elem.OBJECT("Ein autorisiertes NFC-Tag", members={
                         "user_id": Elem.INT("ID des Nutzers dem dieses Tag zugeordnet ist, oder 0 falls es keinem Nutzer zugeordnet ist."),
                         "tag_type": Elem.INT("Typ des Tags.", constants=[
