@@ -637,11 +637,56 @@ curl <span style='color:#44aadd; '>-s</span> http<span style='color:#808030; '>:
                 <div class="col-lg-2 col-md-12"></div>
                 <div class="col-lg-8 col-md-12 mt-4">
                     <div class="text-center">
-                        <a href="firmwares/warp_firmware_2_1_2_6439406f_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP Firmware 2.1.2 herunterladen</a>
+                        <a href="firmwares/warp_firmware_2_1_3_64959d82_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP Firmware 2.1.3 herunterladen</a>
                         <div class="text-muted pt-2 pb-2">Veröffentlicht am 14.04.2023</div>
                     </div>
                     <table class="table mt-5">
                         <tbody>
+                            <tr>
+                                <th scope="row"><a href="firmwares/warp_firmware_2_1_3_64959d82_merged.bin">2.1.3</a><br/><span class="th-details">23.06.2023</span><br/><a href="firmwares/warp_firmware_2_1_3_64959d82_merged.bin.sha256">Prüfsumme</a></th>
+                                <td>
+                                    <ul>
+                                        <li>Nutzer- und NFC-Tag-Limit auf 16 erhöht</li>
+                                        <li>Energie-Limit-Einstellung auf Dropdown-Box umgestellt</li>
+                                        <li>Zählerüberwachung hinzugefügt</li>
+                                        <li>Lastmanagement: Effizienz verbessert, wenn gesteuerte Wallbox über einen Stromzähler verfügt, der Phasenströme misst. (WARP2 Pro oder WARP1 mit nachgerüstetem SDM630 oder SDM72 V2). </li>
+                                        <li>Lastmanagement: Hinzugefügt, dass Hostnamen von nicht mehr erreichbaren Wallboxen neu aufgelöst werden</li>
+                                        <li>Lastmanagement: Duplizierte und springende Einträge in den Scan-Ergebnissen zu kontrollierender Wallboxen behoben</li>
+                                        <li>Lastmanagement: Behandlung von niedrig priorisierten Wallboxen behoben</li>
+                                        <li>Lastmanagement: Hinzugefügt, dass Wallboxen, die weniger als den erlaubten Minimalstrom unterstützen als niedrig priorisiert behandelt werden</li>
+                                        <li>Lastmanagement: Performance bei genau 10 gesteuerten Wallboxen verbessert</li>
+                                        <li>Zuletzt gesehenes NFC-Tag zu Modbus-TCP-Registern hinzugefügt</li>
+                                        <li>Front-Taster-LED-Steuerung über API und Modbus-TCP-Register hinzugefügt</li>
+                                        <li>Unbekannten Benutzer aus der Limitierung auf 16 Benutzer ausgenommen</li>
+                                        <li>NetBIOS-Unterstützung entfernt</li>
+                                        <li>Zeitzonen-Datenbank aktualisiert</li>
+                                        <li>DNS-Cache-Größe erhöht</li>
+                                        <li>Modbus-TCP-Dokumentation verbessert</li>
+                                        <li>Lokalisierung von Gleitkommazahlen im Webinterface repariert</li>
+                                        <li>Anzeige von Ladecontroller-Firmware- und Hardware-Version hinzugefügt</li>
+                                        <li>Sichergestellt, dass Downgrades (auf diese Firmware oder neuer) funktionieren, selbst wenn künftig neue Ladestromgrenzen hinzugefügt werden</li>
+                                        <li>Repariert, dass sporadisch Einträge in APIs fehlten</li>
+                                        <li>Repariert, dass die Benutzerfreigabe bei einem Neustart der Wallbox, während der Ladevorgang pausiert ist, verloren ging</li>
+                                        <li>Reparatur von Ladelog-Einträgen, bei denen entweder der Start- oder End-Zählerwert fehlt, hinzugefügt</li>
+                                        <li>Absturz, wenn NFC-Logik für mehr als eine Sekunde blockiert wurde, behoben</li>
+                                        <li>NFC-Tag-Detektionsschwelle auf 2 Sekunden angehoben</li>
+                                        <li>Prüfung auf überlappende Netzwerkbereiche bei IP-Konfiguration von WLAN und WireGuard hinzugefügt</li>
+                                        <li>Übersetzungen verbessert</li>
+                                        <li>Sofortigen Start des WLAN Access Points hinzugefügt, falls keine WLAN-Verbindung konfiguriert ist</li>
+                                        <li>Sichtbarkeit der Nulllinie in Graphen verbessert</li>
+                                        <li>Race Condition während des Starts des Webservers behoben</li>
+                                        <li>Race Condition während des Starts des MQTT-Clients behoben</li>
+                                        <li>Crash bei gleichzeitigen Zugriffen von mehreren APIs behoben</li>
+                                        <li>Webinterface-Fehler durch falsche Reihenfolge von Websocket-Nachrichten behoben</li>
+                                        <li>Websocket-Verbindungsabbrüche durch zu große Stromzählerwerte behoben</li>
+                                        <li>Ladeprotokolllänge auf (letzte) 20000 Zeilen begrenzt</li>
+                                        <li>Springende Y-Achse in Graphen bei Doppelklick behoben</li>
+                                        <li>Alle 48h-Graphen auf mindestens 1500 Watt skaliert</li>
+                                        <li>Ereignis-Log-Meldungen überarbeitet</li>
+                                        <li>Falsche Berechnung der 48-Stunden-Werte des Stromzähler-Graphen, falls Messwerte schneller als alle 500 ms ankommen, behoben</li>
+                                    </ul>
+                                </td>
+                            </tr>
                             <tr>
                                 <th scope="row"><a href="firmwares/warp_firmware_2_1_2_6439406f_merged.bin">2.1.2</a><br/><span class="th-details">14.04.2023</span><br/><a href="firmwares/warp_firmware_2_1_2_6439406f_merged.bin.sha256">Prüfsumme</a></th>
                                 <td>
