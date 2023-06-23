@@ -155,8 +155,8 @@ class Elem:
         return Elem(EType.BOOL, desc, None, None, constants, False, None, None, censored, version, None)
 
     @staticmethod
-    def NULL(desc: str):
-        return Elem(EType.NULL, desc, None, None, None, False, None, None, False, Version.ANY, None)
+    def NULL(desc: str, version: Version = Version.ANY):
+        return Elem(EType.NULL, desc, None, None, None, False, None, None, False, version, None)
 
     @staticmethod
     def OPAQUE(desc: str):
