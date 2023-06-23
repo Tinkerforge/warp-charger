@@ -149,6 +149,12 @@ energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", Ve
                 Const("0x00000008", "Überschussladen aktiviert aber kein Stromzähler eingerichtet"),
                 Const("0x00000010", "Lastmanagement nicht verfügbar"),
             ]),
+            "external_control": Elem.INT("Status der externen Steuerung zur Phasenumschaltung.", constants=[
+                Const("0", "Externe Steuerung bereit für Kommandos."),
+                Const("1", "Externe Steuerung über die Einstellungen deaktiviert."),
+                Const("2", "Externe Steuerung ist aktiviert aber aktuell nicht verfügbar. Gründe sind unter anderem: ausgelöste Schützüberwachung, eine oder mehrere Wallboxen nicht erreichbar oder unterstützen keine CP-Trennung, Ladung blockiert durch Eingang 3."),
+                Const("3", "Phasenumschaltung wird gerade durchgeführt; ankommende Kommandos werden ignoriert."),
+            ]),
         })
     ),
     Func("low_level_state", FuncType.STATE, Elem.OBJECT("Low-Level-Zustand des Energy Managers", members={
@@ -229,6 +235,14 @@ energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", Ve
                 Const(1, "Aus. Fahrzeuge werden nicht geladen."),
                 Const(2, "PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist."),
                 Const(3, "Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist."),
+            ])
+        })
+    ),
+    Func("external_control", FuncType.STATE, Elem.OBJECT("Phasenanforderung für externe Steuerung. Nimmt über energy_manager/external_control_update Kommandos zur Phasenumschaltung an, wenn external_control in energy_manager/state 0 ist.", members={
+            "phases_wanted": Elem.INT("", constants=[
+                Const(0, "Keine Phasen angefordert, keine Stromfreigabe."),
+                Const(1, "Eine Phase angefordert."),
+                Const(3, "Drei Phasen angefordert."),
             ])
         })
     ),
