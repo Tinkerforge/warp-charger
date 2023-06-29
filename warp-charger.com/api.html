@@ -149,12 +149,17 @@
 <a class="nav-link" href="#evse_ocpp_enabled" style="margin-left: 2rem !important;">evse/<wbr>ocpp_enabled</a>
 <a class="nav-link" href="#evse_gpio_configuration" style="margin-left: 2rem !important;">evse/<wbr>gpio_configuration</a>
 <a class="nav-link" href="#evse_button_configuration" style="margin-left: 2rem !important;">evse/<wbr>button_configuration</a>
+<a class="nav-link" href="#evse_led_configuration" style="margin-left: 2rem !important;">evse/<wbr>led_configuration</a>
 <a class="nav-link" href="#evse_user_calibration" style="margin-left: 2rem !important;">evse/<wbr>user_calibration</a>
 <a class="nav-link" href="#evse_ev_wakeup" style="margin-left: 2rem !important;">evse/<wbr>ev_wakeup</a>
 <a class="nav-link" href="#evse_control_pilot_disconnect" style="margin-left: 2rem !important;">evse/<wbr>control_pilot_disconnect</a>
 <a class="nav-link" href="#evse_boost_mode" style="margin-left: 2rem !important;">evse/<wbr>boost_mode</a>
 <span class="ms-5">Kommandos</span>
 <a class="nav-link" href="#evse_reset_dc_fault_current_state" style="margin-left: 2rem !important;">evse/<wbr>reset_dc_fault_current_state</a>
+<a class="nav-link" href="#evse_trigger_dc_fault_test" style="margin-left: 2rem !important;">evse/<wbr>trigger_dc_fault_test</a>
+<span class="ms-5">Zustände</span>
+<a class="nav-link" href="#evse_gp_output" style="margin-left: 2rem !important;">evse/<wbr>gp_output</a>
+<span class="ms-5">Kommandos</span>
 <a class="nav-link" href="#evse_stop_charging" style="margin-left: 2rem !important;">evse/<wbr>stop_charging</a>
 <a class="nav-link" href="#evse_start_charging" style="margin-left: 2rem !important;">evse/<wbr>start_charging</a>
 <span class="ms-5">HTTP-Spezifisch</span>
@@ -186,11 +191,19 @@
 <a class="nav-link" href="#meter_live" style="margin-left: 2rem !important;">meter/<wbr>live</a>
         </nav>
     </div>
+<a class="nav-link ms-3" href="#reference-require_meter">Zählerüberwachung</a>
+    <div class="collapse">
+        <nav class="nav nav-pills flex-column">
+        <span class="ms-5">Konfigurationen</span>
+<a class="nav-link" href="#require_meter_config" style="margin-left: 2rem !important;">require_meter/<wbr>config</a>
+        </nav>
+    </div>
 <a class="nav-link ms-3" href="#reference-charge_manager">Lastmanager</a>
     <div class="collapse">
         <nav class="nav nav-pills flex-column">
         <span class="ms-5">Zustände</span>
 <a class="nav-link" href="#charge_manager_available_current" style="margin-left: 2rem !important;">charge_manager/<wbr>available_current</a>
+<a class="nav-link" href="#charge_manager_available_phases" style="margin-left: 2rem !important;">charge_manager/<wbr>available_phases</a>
 <a class="nav-link" href="#charge_manager_state" style="margin-left: 2rem !important;">charge_manager/<wbr>state</a>
 <span class="ms-5">Konfigurationen</span>
 <a class="nav-link" href="#charge_manager_config" style="margin-left: 2rem !important;">charge_manager/<wbr>config</a>
@@ -363,6 +376,7 @@
 <a class="nav-link" href="#energy_manager_state" style="margin-left: 2rem !important;">energy_manager/<wbr>state</a>
 <a class="nav-link" href="#energy_manager_low_level_state" style="margin-left: 2rem !important;">energy_manager/<wbr>low_level_state</a>
 <a class="nav-link" href="#energy_manager_charge_mode" style="margin-left: 2rem !important;">energy_manager/<wbr>charge_mode</a>
+<a class="nav-link" href="#energy_manager_external_control" style="margin-left: 2rem !important;">energy_manager/<wbr>external_control</a>
 <a class="nav-link" href="#energy_manager_sdcard_state" style="margin-left: 2rem !important;">energy_manager/<wbr>sdcard_state</a>
         </nav>
     </div>
@@ -820,6 +834,7 @@
 <li><a class="scrollto text-monospace" href="#evse_ocpp_enabled">evse/ocpp_enabled</a></li>
 <li><a class="scrollto text-monospace" href="#evse_gpio_configuration">evse/gpio_configuration</a></li>
 <li><a class="scrollto text-monospace" href="#evse_button_configuration">evse/button_configuration</a></li>
+<li><a class="scrollto text-monospace" href="#evse_led_configuration">evse/led_configuration</a></li>
 <li><a class="scrollto text-monospace" href="#evse_user_calibration">evse/user_calibration</a></li>
 <li><a class="scrollto text-monospace" href="#evse_ev_wakeup">evse/ev_wakeup</a></li>
 <li><a class="scrollto text-monospace" href="#evse_control_pilot_disconnect">evse/control_pilot_disconnect</a></li>
@@ -830,7 +845,19 @@
     Kommandos
     <ul>
         <li><a class="scrollto text-monospace" href="#evse_reset_dc_fault_current_state">evse/reset_dc_fault_current_state</a></li>
-<li><a class="scrollto text-monospace" href="#evse_stop_charging">evse/stop_charging</a></li>
+<li><a class="scrollto text-monospace" href="#evse_trigger_dc_fault_test">evse/trigger_dc_fault_test</a></li>
+    </ul>
+</li>
+<li>
+    Zustände
+    <ul>
+        <li><a class="scrollto text-monospace" href="#evse_gp_output">evse/gp_output</a></li>
+    </ul>
+</li>
+<li>
+    Kommandos
+    <ul>
+        <li><a class="scrollto text-monospace" href="#evse_stop_charging">evse/stop_charging</a></li>
 <li><a class="scrollto text-monospace" href="#evse_start_charging">evse/start_charging</a></li>
     </ul>
 </li>
@@ -1062,7 +1089,7 @@
         <tbody>
 
 <tr class="any">
-    <th scope="row">[0..12]<br/><span class="th-details">object</span></th>
+    <th scope="row">[0..13]<br/><span class="th-details">object</span></th>
     <td>Ein Ladeslot
 <div class="table-responsive">
     <table class="table table-not-striped mt-3 table-bottom-border mt-3">
@@ -1143,7 +1170,7 @@
 
 <div  id="evse_indicator_led" class="any">
     <div class="h5">evse/indicator_led</div>
-    Der Zustand der LED im Taster
+    Der Zustand der LED im Taster. Kann über <a class="scrollto text-monospace" href="#evse_indicator_led">evse/indicator_led_update</a> mit dem selben Payload geschrieben werden, falls die LED-Steuerung per API (siehe <a class="scrollto text-monospace" href="#evse_led_configuration">evse/led_configuration</a>) erlaubt wurde.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -1166,6 +1193,7 @@
     <li><strong>1001</strong> - Bestätigendes Blinken (z.B: NFC-Tag wurde erkannt)</li>
     <li><strong>1002</strong> - Ablehnendes Blinken (z.B: NFC-Tag ist unbekannt)</li>
     <li><strong>1003</strong> - Aufforderndes Blinken (z.B: NFC-Tag wird zum Laden benötigt)</li>
+    <li><strong>2001..2010</strong> - Fehler-Blinken 1 bis 10.</li>
 </ol>
 </div></td>
 </tr>
@@ -1320,6 +1348,11 @@
 <tr class="any">
     <th scope="row">uptime<br/><span class="th-details">int (<abbr title="Millisekunde">ms</abbr>)</span></th>
     <td>Zeit seit Starten des Ladecontrollers.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.</td>
+</tr>
+
+<tr class="warp2">
+    <th scope="row">time_since_dc_fault_check<br/><span class="th-details">int (<abbr title="Millisekunde">ms</abbr>)</span></th>
+    <td><strong>(Nur WARP 2)</strong> Zeit seit dem letzten Test des DC-Fehlerstrom-Schutzmoduls. Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.</td>
 </tr>
         </tbody>
     </table>
@@ -1703,6 +1736,34 @@
 </div>
 </div>
 
+<div  id="evse_led_configuration" class="any">
+    <div class="h5">evse/led_configuration</div>
+    Die Konfiguration der LED des Tasters in der Frontblende. Diese kann über evse/led_configuration_update mit dem selben Payload aktualisiert werden.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">enable_api<br/><span class="th-details">bool</span></th>
+    <td>Legt fest, ob die LED über die <a class="scrollto text-monospace" href="#evse_indicator_led">evse/indicator_led_update</a>-API oder über Modbus TCP gesteuert werden darf.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>false</strong> - LED darf nicht gesteuert werden. Aufrufe von <a class="scrollto text-monospace" href="#evse_indicator_led">evse/indicator_led_update</a> werden ignoriert</li>
+    <li><strong>true</strong> - LED darf gesteuert werden. Aufrufe von <a class="scrollto text-monospace" href="#evse_indicator_led">evse/indicator_led_update</a> werden nur dann ignoriert, wenn das EVSE einen Fehlerzustand anzeigen möchte.</li>
+</ol>
+</div></td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
 <div  id="evse_user_calibration" class="warp1">
     <div class="h5">evse/user_calibration <strong>(Nur WARP 1)</strong> </div>
     Erlaubt es, die werksseitige Kalibrierung des EVSEs auszulesen und zu überschreiben. Dieser Wert kann über evse/user_calibration_update mit dem selben Payload aktualisiert werden. Um die Kalibierung auf den Werkszustand zurückzusetzen, kann ein Payload mit user_calibration_active auf false geschickt werden. Die weiteren Werte werden dann ignoriert.
@@ -1832,6 +1893,39 @@
 <tr class="any">
     <th scope="row">password<br/><span class="th-details">int</span></th>
     <td>Passwort, das zum Zurücksetzen benötigt wird. Das Passwort lautet 0xDC42FA23.</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="evse_trigger_dc_fault_test" class="warp2">
+    <div class="h5">evse/trigger_dc_fault_test <strong>(Nur WARP 2)</strong> </div>
+    Startet einen Test des DC-Fehlerstrom-Schutzmoduls.<br/><strong>Leerer Payload. Es muss einer der folgenden Werte übergeben werden: <code>null</code>, <code>""</code>, <code>false</code>, <code>0</code>, <code>[]</code> oder <code>{}</code></strong>
+</div>
+
+<div  id="evse_gp_output" class="warp2">
+    <div class="h5">evse/gp_output <strong>(Nur WARP 2)</strong> </div>
+    Der aktuelle Wert des konfigurierbaren Ausgangs. Dieser Wert kann über evse/gp_output_update mit dem selben Payload aktualisiert werden.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">gp_output<br/><span class="th-details">int</span></th>
+    <td>Der aktuelle Wert des konfigurierbaren Ausgangs.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Verbunden mit Masse</li>
+    <li><strong>1</strong> - Hochohmig</li>
+</ol>
+</div></td>
 </tr>
         </tbody>
     </table>
@@ -2845,6 +2939,49 @@
 </div>
 </div>
 </section>
+<section id="reference-require_meter" class="section warp1 warp2">
+    <header class="reference-section-header">
+        <h4>Zählerüberwachung</h4>
+
+    </header>
+    <ul class="ul-no-bullet">
+        <li>
+    Konfigurationen
+    <ul>
+        <li><a class="scrollto text-monospace" href="#require_meter_config">require_meter/config</a></li>
+    </ul>
+</li>
+    </ul>
+
+<div  id="require_meter_config" class="any">
+    <div class="h5">require_meter/config</div>
+    Die Konfiguration der Zählerüberwachung. Kann über require_meter/config_update mit dem selben Payload aktualisiert werden.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">config<br/><span class="th-details">int</span></th>
+    <td>Konfiguration der Zählerüberwachung.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Es wurde noch nie ein Stromzähler gesehen. Zählerüberwachung deaktiviert. Sobald das erste Mal ein Stromzähler erkannt wird, wird dieser Wert automatisch auf 1 geändert.</li>
+    <li><strong>1</strong> - Es wurde bereits einmal ein Stromzähler gesehen. Zählerüberwachung aktiviert.</li>
+    <li><strong>2</strong> - Es wurde bereits einmal ein Stromzähler gesehen. Zählerüberwachung deaktiviert.</li>
+</ol>
+</div></td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</section>
 <section id="reference-charge_manager" class="section any">
     <header class="reference-section-header">
         <h4>Lastmanager</h4>
@@ -2855,6 +2992,7 @@
     Zustände
     <ul>
         <li><a class="scrollto text-monospace" href="#charge_manager_available_current">charge_manager/available_current</a></li>
+<li><a class="scrollto text-monospace" href="#charge_manager_available_phases">charge_manager/available_phases</a></li>
 <li><a class="scrollto text-monospace" href="#charge_manager_state">charge_manager/state</a></li>
     </ul>
 </li>
@@ -2882,6 +3020,28 @@
 <tr class="any">
     <th scope="row">current<br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
     <td>Der zur Verfügung stehende Strom. Darf nicht großer sein als der konfigurierte Maximalstrom maximum_available_current aus <a class="scrollto text-monospace" href="#charge_manager_config">charge_manager/config</a>.</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="charge_manager_available_phases" class="any">
+    <div class="h5">charge_manager/available_phases</div>
+    Anzahl der derzeit verbundenen Phasen der Wallboxen. Kann über charge_manager/available_phases_update aktualisiert werden.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">phases<br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
+    <td>Anzahl der verbundenen Phasen. Legt fest, ob der einphasige oder dreiphasige minimale Ladestrom für die Stromverteilung beachtet wird. Wird üblicherweise durch die Phasenumschaltung des Energy Managers vorgegeben.</td>
 </tr>
         </tbody>
     </table>
@@ -2982,6 +3142,16 @@
 </tr>
 
 <tr class="any">
+    <th scope="row">requested_current_threshold<br/><span class="th-details">int (<abbr title="Sekunde">s</abbr>)</span></th>
+    <td>Wallboxen mit einem Stromzähler, der Phasenströme misst, werden requested_current_threshold Sekunden nach dem Ladestart auf den größten Phasenstrom plus den konfigurierten Spielraum limitiert. Damit kann der verfügbare Strom effizienter auf mehrere Wallboxen verteilt werden.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">requested_current_margin<br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
+    <td>Spielraum, der auf den größten gemessenen Phasenstrom aufgeschlagen wird.</td>
+</tr>
+
+<tr class="any">
     <th scope="row">chargers<br/><span class="th-details">object[10]</span></th>
     <td>Wallboxen, die vom Lastmanager gesteuert werden sollen.
 <div class="any">
@@ -3060,11 +3230,11 @@
         <tbody>
 
 <tr class="any">
-    <th scope="row">users<br/><span class="th-details">object[8]</span></th>
+    <th scope="row">users<br/><span class="th-details">object[17]</span></th>
     <td>Die Benutzer
 <div class="any">
 <ol class="ol-enum">
-    <li>[0..7] - Ein Benutzer
+    <li>[0..16] - Ein Benutzer
 <div class="table-responsive">
     <table class="table table-not-striped mt-3 table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -3791,11 +3961,11 @@
         <tbody>
 
 <tr class="any">
-    <th scope="row">authorized_tags<br/><span class="th-details">object[8]</span></th>
+    <th scope="row">authorized_tags<br/><span class="th-details">object[16]</span></th>
     <td>Eine Liste authorisierter Tags.
 <div class="any">
 <ol class="ol-enum">
-    <li>[0..7] - Ein autorisiertes NFC-Tag
+    <li>[0..15] - Ein autorisiertes NFC-Tag
 <div class="table-responsive">
     <table class="table table-not-striped mt-3 table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -5005,6 +5175,11 @@
     <th scope="row">config<br/><span class="th-details">string</span></th>
     <td>Die Version der Konfiguration, die aktuell verwendet wird.</td>
 </tr>
+
+<tr class="any">
+    <th scope="row">config_type<br/><span class="th-details">string</span></th>
+    <td>Typ der auf diesem Gerät gespeicherten Konfiguration.</td>
+</tr>
         </tbody>
     </table>
 </div>
@@ -5264,6 +5439,7 @@
         <li><a class="scrollto text-monospace" href="#energy_manager_state">energy_manager/state</a></li>
 <li><a class="scrollto text-monospace" href="#energy_manager_low_level_state">energy_manager/low_level_state</a></li>
 <li><a class="scrollto text-monospace" href="#energy_manager_charge_mode">energy_manager/charge_mode</a></li>
+<li><a class="scrollto text-monospace" href="#energy_manager_external_control">energy_manager/external_control</a></li>
 <li><a class="scrollto text-monospace" href="#energy_manager_sdcard_state">energy_manager/sdcard_state</a></li>
     </ul>
 </li>
@@ -5323,6 +5499,7 @@
     <li><strong>0</strong> - Automatischer Wechsel zwischen drei- und einphasigem Laden. Nur möglich, wenn contactor_installed true ist.</li>
     <li><strong>1</strong> - Immer einphasig</li>
     <li><strong>2</strong> - Immer dreiphasig</li>
+    <li><strong>4</strong> - Einphasiger PV-Modus, dreiphasiger Schnell-Modus</li>
 </ol>
 </div></td>
 </tr>
@@ -5628,6 +5805,19 @@
 </ol>
 </div></td>
 </tr>
+
+<tr class="any">
+    <th scope="row">external_control<br/><span class="th-details">int</span></th>
+    <td>Status der externen Steuerung zur Phasenumschaltung.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Externe Steuerung bereit für Kommandos.</li>
+    <li><strong>1</strong> - Externe Steuerung über die Einstellungen deaktiviert.</li>
+    <li><strong>2</strong> - Externe Steuerung ist aktiviert aber aktuell nicht verfügbar. Gründe sind unter anderem: ausgelöste Schützüberwachung, eine oder mehrere Wallboxen nicht erreichbar oder unterstützen keine CP-Trennung, Ladung blockiert durch Eingang 3.</li>
+    <li><strong>3</strong> - Phasenumschaltung wird gerade durchgeführt; ankommende Kommandos werden ignoriert.</li>
+</ol>
+</div></td>
+</tr>
         </tbody>
     </table>
 </div>
@@ -5679,6 +5869,11 @@
 <tr class="any">
     <th scope="row">threshold_1to3<br/><span class="th-details">int (<abbr title="Watt">W</abbr>)</span></th>
     <td>Grenzwert der Ladeleistung, über der der Energy Manager vom einphasigen Modus in den dreiphasigen Modus wechseln möchte.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">charge_manager_available_current<br/><span class="th-details">int (<abbr title="Milliampere">mA</abbr>)</span></th>
+    <td>Ladestrom, den der Energy Manager dem Lastmanagement aktuell zur Verfügung stellt.</td>
 </tr>
 
 <tr class="any">
@@ -5883,6 +6078,35 @@
     <li><strong>1</strong> - Aus. Fahrzeuge werden nicht geladen.</li>
     <li><strong>2</strong> - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist.</li>
     <li><strong>3</strong> - Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist.</li>
+</ol>
+</div></td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="energy_manager_external_control" class="any">
+    <div class="h5">energy_manager/external_control</div>
+    Phasenanforderung für externe Steuerung. Nimmt über energy_manager/external_control_update Kommandos zur Phasenumschaltung an, wenn external_control in energy_manager/state 0 ist.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">phases_wanted<br/><span class="th-details">int</span></th>
+    <td>
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>0</strong> - Keine Phasen angefordert, keine Stromfreigabe.</li>
+    <li><strong>1</strong> - Eine Phase angefordert.</li>
+    <li><strong>3</strong> - Drei Phasen angefordert.</li>
 </ol>
 </div></td>
 </tr>
