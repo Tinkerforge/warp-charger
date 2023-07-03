@@ -16,6 +16,7 @@ wifi = Module("wifi", "WLAN-Konfiguration", "", Version.ANY, [
             ]),
             "ap_bssid": Elem.STRING("BSSID des WLAN-Access-Points."),
             "sta_ip": Elem.STRING("Aktuelle IP der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht."),
+            "sta_subnet": Elem.STRING("Aktuelle Subnetzmaske der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht."),
             "sta_rssi": Elem.INT("Die aktuelle Empfangsqualität. 0 falls keine Verbindung besteht, sonst negativ. Werte näher 0 entsprechen einem besseren Empfang."),
             "sta_bssid": Elem.STRING("Die BSSID der Gegenstelle, zu der die Wallbox verbunden ist."),
             "connection_start": Elem.INT("Zeit in Millisekunden zu der die letzte Verbindung aufgebaut wurde.", unit=Units.ms),
