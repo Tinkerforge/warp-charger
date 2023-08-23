@@ -135,14 +135,14 @@ energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", Ve
                 Const(False, "Relais geöffnet"),
             ]),
             "error_flags": Elem.INT("Aktive Fehlerzustände des Energy Managers. Es handelt sich hierbei um eine Bitmaske, sodass sämtliche Kombinationen aus Fehlerwerten auftreten können.", constants=[
-                Const("0", "Kein Fehler"),
+                Const(0, "Kein Fehler"),
                 Const("0x00000002", "Keine Netzwerkverbindung (LAN/WLAN)"),
                 Const("0x00010000", "Schützüberwachung hat ausgelöst"),
                 Const("0x01000000", "Interner Fehler, Bricklet nicht erreichbar"),
                 Const("0x02000000", "Interner Fehler, SD-Karten-Fehler"),
             ]),
             "config_error_flags": Elem.INT("Aktive Konfigurationsfehler des Energy Managers. Es handelt sich hierbei um eine Bitmaske, sodass sämtliche Kombinationen aus Konfigurationsfehlern auftreten können.", constants=[
-                Const("0", "Kein Fehler"),
+                Const(0, "Kein Fehler"),
                 Const("0x00000001", "Phasenumschaltung oder Schütz nicht konfiguriert"),
                 Const("0x00000002", "Maximaler Gesamtstrom der Wallboxen nicht konfiguriert"),
                 Const("0x00000004", "Keine Wallboxen konfiguriert"),
@@ -150,10 +150,10 @@ energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", Ve
                 Const("0x00000010", "Lastmanagement nicht verfügbar"),
             ]),
             "external_control": Elem.INT("Status der externen Steuerung zur Phasenumschaltung.", constants=[
-                Const("0", "Externe Steuerung bereit für Kommandos."),
-                Const("1", "Externe Steuerung über die Einstellungen deaktiviert."),
-                Const("2", "Externe Steuerung ist aktiviert aber aktuell nicht verfügbar. Gründe sind unter anderem: ausgelöste Schützüberwachung, eine oder mehrere Wallboxen nicht erreichbar oder unterstützen keine CP-Trennung, Ladung blockiert durch Eingang 3."),
-                Const("3", "Phasenumschaltung wird gerade durchgeführt; ankommende Kommandos werden ignoriert."),
+                Const(0, "Externe Steuerung bereit für Kommandos."),
+                Const(1, "Externe Steuerung über die Einstellungen deaktiviert."),
+                Const(2, "Externe Steuerung ist aktiviert aber aktuell nicht verfügbar. Gründe sind unter anderem: ausgelöste Schützüberwachung, eine oder mehrere Wallboxen nicht erreichbar oder unterstützen keine CP-Trennung, Ladung blockiert durch Eingang 3."),
+                Const(3, "Phasenumschaltung wird gerade durchgeführt; ankommende Kommandos werden ignoriert."),
             ]),
         })
     ),
