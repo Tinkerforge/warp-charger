@@ -939,13 +939,53 @@ client<span style='color:#808030; '>.</span>loop_forever<span style='color:#8080
                 </div>
             </div>
             <div class="row">
-                <div class="col-auto  mx-auto">
-                    <div class="text-center">
-                        <a href="firmwares/warp2_firmware_2_1_3_64959d5b_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP2 Firmware 2.1.3 herunterladen</a>
-                        <div class="text-muted pt-2 pb-2">Veröffentlicht am 23.06.2023</div>
-                    </div>
-
+                <div class="text-center">
+                    <a href="firmwares/warp2_firmware_2_1_4_64e60ce2_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP2 Firmware 2.1.4 herunterladen</a>
+                    <div class="text-muted pt-2 pb-2">Veröffentlicht am 23.08.2023</div>
+                </div>
+                <div class="col-auto">
                     <table class="table table-borderless mb-3">
+                        <tbody>
+                            <tr>
+                                <th scope="row"><a href="firmwares/warp2_firmware_2_1_4_64e60ce2_merged.bin">2.1.4</a><br/><span class="th-details">23.08.2023</span><br/><a href="firmwares/warp2_firmware_2_1_4_64e60ce2_merged.bin.sha256">Prüfsumme</a></th>
+                                <td>
+                                    <ul>
+                                        <li>Fehlende Messung der Phasenspannungen resultieren nicht mehr in zu niedrigen Ladeströmen im Lastmanagement</li>
+                                        <li>Potentiellen Deadlock beim Aufruf von API-Befehlen beseitigt</li>
+                                        <li>Y-Achsen Beschreibung zum Stromzähler-Graphen hinzugefügt</li>
+                                        <li>Laden der RTC-Zeit an Sonntagen repariert</li>
+                                        <li>Erstellungszeit der Firmware besser lesbar gemacht</li>
+                                        <li>Subnetzmaske zum WLAN- und Netzwerk-Zustand hinzugefügt</li>
+                                        <li>Auswahl der vollen Subnetzmaske (/0 bis /32) für WireGuard erlaubt</li>
+                                        <li>Abweichung in der Serialisierung zwischen current_charge und last_charges beseitigt</li>
+                                        <li>NFC-Tag-Injection-API repariert im Falle, dass ein bereits bekannter Tag injectet wurde</li>
+                                        <li>Überflüssigen Freigabe-Knopf für den globalen Ladestromslot entfernt</li>
+                                        <li>Verwendung von Platzhaltern in Auswahlfeldern verbessert</li>
+                                        <li>LED blinkt nicht mehr fälschlicherweise bei deaktivierter Benutzerfreigabe</li>
+                                        <li>Verhalten bei zu schnellem OCPP-Verbindungsverlust verbessert</li>
+                                        <li>Lastmanagement, NFC und Benutzerverwaltung auf tabellarische Darstellung umgestellt</li>
+                                        <li>Payloads für Recovery-API-Aufruf repariert</li>
+                                        <li>Fehleranzeige bei fehlender Auswahl einer Subnetzmaske repariert</li>
+                                        <li>Inkonsistenzen zwischen SDM630 und SDM72 V2 im OCPP Modul behoben</li>
+                                        <li>Aktualisierung des last_value_change Wertes im API-Meter repariert</li>
+                                        <li>DC-Fehlerstromprüfung wird nur noch bei geschlossenem Schütz durchgeführt (durch Update auf Ladecontroller-Firmware 2.1.6)</li>
+                                        <li>Boost-Modus nach Start repariert (durch Update auf Ladecontroller-Firmware 2.1.14)</li>
+                                        <li>Das Schütz bleibt mindestens 30 Sekunden lang nach Verlassen von Zustand D ausgeschaltet (durch Update auf Ladecontroller-Firmware 2.1.14)</li>
+                                        <li>Das Schütz bleibt mindestens 5 Sekunden lang nach Ende des Ladevorgangs ausgeschaltet (durch Update auf Ladecontroller-Firmware 2.1.14)</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOlderVersions" aria-expanded="false" aria-controls="collapseOlderVersions">
+                        Ältere Firmware-Versionen
+                    </button>
+                </div>
+                <div class="col-auto">
+                    <div class="collapse" id="collapseOlderVersions">
+                    <table class="table mt-3">
                         <tbody>
                             <tr>
                                 <th scope="row"><a href="firmwares/warp2_firmware_2_1_3_64959d5b_merged.bin">2.1.3</a><br/><span class="th-details">23.06.2023</span><br/><a href="firmwares/warp2_firmware_2_1_3_64959d5b_merged.bin.sha256">Prüfsumme</a></th>
@@ -995,17 +1035,6 @@ client<span style='color:#808030; '>.</span>loop_forever<span style='color:#8080
                                     </ul>
                                 </td>
                             </tr>
-                        </tbody>
-                    </table>
-                    <div class="text-center">
-                        <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOlderVersions" aria-expanded="false" aria-controls="collapseOlderVersions">
-                            Ältere Firmware-Versionen
-                        </button>
-                    </div>
-
-                    <div class="collapse" id="collapseOlderVersions">
-                    <table class="table mt-3">
-                        <tbody>
                             <tr>
                                 <th scope="row"><a href="firmwares/warp2_firmware_2_1_2_64394038_merged.bin">2.1.2</a><br/><span class="th-details">14.04.2023</span><br/><a href="firmwares/warp2_firmware_2_1_2_64394038_merged.bin.sha256">Prüfsumme</a></th>
                                 <td>

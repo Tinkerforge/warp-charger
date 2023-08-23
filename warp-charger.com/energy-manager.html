@@ -634,49 +634,71 @@ client<span style='color:#808030; '>.</span>loop_forever<span style='color:#8080
                 </div>
             </div>
             <div class="row">
-                <div class="col-auto  mx-auto">
-                    <div class="text-center">
-                        <a href="firmwares/energy_manager_firmware_1_0_6_64959dc4_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP Energy Manager Firmware 1.0.6 herunterladen</a>
-                        <div class="text-muted pt-2 pb-2">Veröffentlicht am 07.06.2023</div>
-                    </div>
-
+                <div class="text-center">
+                    <a href="firmwares/energy_manager_firmware_1_0_7_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP Energy Manager Firmware 1.0.7 herunterladen</a>
+                    <div class="text-muted pt-2 pb-2">Veröffentlicht am 23.08.2023</div>
+                </div>
+                <div class="col-auto">
                     <table class="table table-borderless mb-3">
                         <tbody>
                             <tr>
-                                <th scope="row"><a href="firmwares/energy_manager_firmware_1_0_6_64959dc4_merged.bin">1.0.6</a><br/><span class="th-details">23.06.2023</span><br/><a href="firmwares/energy_manager_firmware_1_0_6_64959dc4_merged.bin.sha256">Prüfsumme</a></th>
+                                <th scope="row"><a href="firmwares/energy_manager_firmware_1_0_7_merged.bin">1.0.7</a><br/><span class="th-details">23.08.2023</span><br/><a href="firmwares/energy_manager_firmware_1_0_7_merged.bin.sha256">Prüfsumme</a></th>
                                 <td>
                                     <ul>
-                                        <li>Status-Ansicht zur Tagesansicht der Energiebilanz hinzugefügt</li>
-                                        <li>Lastmanagement: Effizienz verbessert, wenn gesteuerte Wallbox über einen Stromzähler verfügt, der Phasenströme misst. (WARP2 Pro oder WARP1 mit nachgerüstetem SDM630 oder SDM72 V2). </li>
-                                        <li>Lastmanagement: Hinzugefügt, dass Hostnamen von nicht mehr erreichbaren Wallboxen neu aufgelöst werden</li>
-                                        <li>Lastmanagement: Duplizierte und springende Einträge in den Scan-Ergebnissen zu kontrollierender Wallboxen behoben</li>
-                                        <li>Lastmanagement: Behandlung von niedrig priorisierten Wallboxen behoben</li>
-                                        <li>Lastmanagement: Hinzugefügt, dass Wallboxen, die weniger als den erlaubten Minimalstrom unterstützen als niedrig priorisiert behandelt werden</li>
-                                        <li>Lastmanagement: Performance bei genau 10 gesteuerten Wallboxen verbessert</li>
-                                        <li>Race Condition während des Starts des MQTT-Clients behoben</li>
-                                        <li>Crash bei gleichzeitigen Zugriffen von mehreren APIs behoben</li>
-                                        <li>Websocket-Verbindungsabbrüche durch zu große Stromzählerwerte behoben</li>
-                                        <li>Übersetzungen verbessert</li>
-                                        <li>Firmware-Aktualisierungen blockiert, wenn am Energy Manager ein Schütz und an einer kontrollierten Wallbox ein Fahrzeug angeschlossen ist</li>
-                                        <li>Reihenfolge der gestapelten Graphen in der Tagesansicht der Energiebilanz repariert</li>
-                                        <li>Falsche Berechnung der 48-Stunden-Werte des Stromzähler-Graphen, falls Messwerte schneller als alle 500 ms ankommen, behoben</li>
-                                        <li>Debug-Protokolllänge auf (letzte) 20000 Zeilen begrenzt</li>
-                                        <li>Springende Y-Achse in Graphen bei Doppelklick behoben</li>
+                                        <li>Fehlende Messung der Phasenspannungen resultieren nicht mehr in zu niedrigen Ladeströmen im Lastmanagement</li>
+                                        <li>64k-Spitze in der Energiebilanz beim Neustart einer kontrollierten Wallbox beseitigt</li>
+                                        <li>Y-Achsen Beschreibung zum Energiebilanz- und Stromzähler-Graphen hinzugefügt</li>
+                                        <li>Identische Legendeneinträge im Energiebilanz-Graphen zusammengefasst</li>
+                                        <li>Größenberechnung des Energiebilanz-Graphen repariert</li>
+                                        <li>Laden der RTC-Zeit an Sonntagen repariert</li>
+                                        <li>Erstellungszeit der Firmware besser lesbar gemacht</li>
+                                        <li>Subnetzmaske zum WLAN- und Netzwerk-Zustand hinzugefügt</li>
+                                        <li>Auswahl der vollen Subnetzmaske (/0 bis /32) für WireGuard erlaubt</li>
+                                        <li>Abweichung in der Serialisierung zwischen current_charge und last_charges beseitigt</li>
+                                        <li>Lastmanagement auf tabellarische Darstellung umgestellt</li>
+                                        <li>Verwendung von Platzhaltern in Auswahlfeldern verbessert</li>
+                                        <li>Payloads für Recovery-API-Aufruf repariert</li>
+                                        <li>Fehleranzeige bei fehlender Auswahl einer Subnetzmaske repariert</li>
+                                        <li>Potentiellen Deadlock beim Aufruf von API-Befehlen beseitigt</li>
+                                        <li>Aktualisierung des last_value_change Wertes im API-Meter repariert</li>
                                     </ul>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-
-                    <div class="text-center">
-                        <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOlderVersions" aria-expanded="false" aria-controls="collapseOlderVersions">
-                            Ältere Firmware-Versionen
-                        </button>
-                    </div>
-
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOlderVersions" aria-expanded="false" aria-controls="collapseOlderVersions">
+                        Ältere Firmware-Versionen
+                    </button>
+                </div>
+                <div class="col-auto">
                     <div class="collapse" id="collapseOlderVersions">
                         <table class="table mt-3">
                             <tbody>
+                              <tr>
+                                  <th scope="row"><a href="firmwares/energy_manager_firmware_1_0_6_64959dc4_merged.bin">1.0.6</a><br/><span class="th-details">23.06.2023</span><br/><a href="firmwares/energy_manager_firmware_1_0_6_64959dc4_merged.bin.sha256">Prüfsumme</a></th>
+                                  <td>
+                                      <ul>
+                                          <li>Status-Ansicht zur Tagesansicht der Energiebilanz hinzugefügt</li>
+                                          <li>Lastmanagement: Effizienz verbessert, wenn gesteuerte Wallbox über einen Stromzähler verfügt, der Phasenströme misst. (WARP2 Pro oder WARP1 mit nachgerüstetem SDM630 oder SDM72 V2). </li>
+                                          <li>Lastmanagement: Hinzugefügt, dass Hostnamen von nicht mehr erreichbaren Wallboxen neu aufgelöst werden</li>
+                                          <li>Lastmanagement: Duplizierte und springende Einträge in den Scan-Ergebnissen zu kontrollierender Wallboxen behoben</li>
+                                          <li>Lastmanagement: Behandlung von niedrig priorisierten Wallboxen behoben</li>
+                                          <li>Lastmanagement: Hinzugefügt, dass Wallboxen, die weniger als den erlaubten Minimalstrom unterstützen als niedrig priorisiert behandelt werden</li>
+                                          <li>Lastmanagement: Performance bei genau 10 gesteuerten Wallboxen verbessert</li>
+                                          <li>Race Condition während des Starts des MQTT-Clients behoben</li>
+                                          <li>Crash bei gleichzeitigen Zugriffen von mehreren APIs behoben</li>
+                                          <li>Websocket-Verbindungsabbrüche durch zu große Stromzählerwerte behoben</li>
+                                          <li>Übersetzungen verbessert</li>
+                                          <li>Firmware-Aktualisierungen blockiert, wenn am Energy Manager ein Schütz und an einer kontrollierten Wallbox ein Fahrzeug angeschlossen ist</li>
+                                          <li>Reihenfolge der gestapelten Graphen in der Tagesansicht der Energiebilanz repariert</li>
+                                          <li>Falsche Berechnung der 48-Stunden-Werte des Stromzähler-Graphen, falls Messwerte schneller als alle 500 ms ankommen, behoben</li>
+                                          <li>Debug-Protokolllänge auf (letzte) 20000 Zeilen begrenzt</li>
+                                          <li>Springende Y-Achse in Graphen bei Doppelklick behoben</li>
+                                      </ul>
+                                  </td>
+                              </tr>
                                 <tr>
                                     <th scope="row"><a href="firmwares/energy_manager_firmware_1_0_5_64807a1b_merged.bin">1.0.5</a><br/><span class="th-details">07.06.2023</span><br/><a href="firmwares/energy_manager_firmware_1_0_5_64807a1b_merged.bin.sha256">Prüfsumme</a></th>
                                     <td>
