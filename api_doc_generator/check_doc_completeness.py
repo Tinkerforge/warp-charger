@@ -124,6 +124,7 @@ UNDOCUMENTED = [
     "energy_manager/history_wallbox_daily",
     "energy_manager/history_energy_manager_5min",
     "energy_manager/history_energy_manager_daily",
+    "coredump/state",
 ]
 
 version = Version(int(sys.argv[1]))
