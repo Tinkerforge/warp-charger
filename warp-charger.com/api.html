@@ -2910,6 +2910,28 @@
 <div  id="meter_history" class="any">
     <div class="h5">meter/history</div>
     Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">offset<br/><span class="th-details">float (<abbr title="Sekunde">s</abbr>)</span></th>
+    <td>Das Alter des zuletzt gemessenen Wertes.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">samples<br/><span class="th-details">int[..]</span></th>
+    <td>Die gemessenen Werte.</td>
+</tr>
+        </tbody>
+    </table>
+</div>
 </div>
 
 <div  id="meter_live" class="any">
@@ -2924,6 +2946,11 @@
             </tr>
         </thead>
         <tbody>
+
+<tr class="any">
+    <th scope="row">offset<br/><span class="th-details">float (<abbr title="Sekunde">s</abbr>)</span></th>
+    <td>Das Alter des zuletzt gemessenen Wertes.</td>
+</tr>
 
 <tr class="any">
     <th scope="row">samples_per_second<br/><span class="th-details">float (<abbr title="Hertz">Hz</abbr>)</span></th>
