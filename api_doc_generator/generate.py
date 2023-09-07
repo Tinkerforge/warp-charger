@@ -26,11 +26,15 @@ def specialize_template(template_filename, destination_filename, replacements, c
     if check_completeness and replaced != set(replacements.keys()):
         raise Exception('Not all replacements for {0} have been applied. Missing are {1}'.format(template_filename, ', '.join(set(replacements.keys() - replaced))))
 
-    with open(destination_filename, 'w') as f:
-        f.writelines(lines)
+    if destination_filename != None:
+        with open(destination_filename, 'w') as f:
+            f.writelines(lines)
 
     if remove_template:
         os.remove(template_filename)
+
+    if destination_filename == None:
+        return ''.join(lines)
 
 #def generate_html(f: Func, module: str) -> str:
 #    return f.root.root_to_html(f, module)
@@ -87,7 +91,10 @@ reference = "\n".join([x.to_html() for x in mods])
 reference = re.sub("{{{ref:([^}]*)}}}", lambda x: resolve_ref(x, reference_link_texts), reference)
 
 suffix = "" if len(sys.argv) == 1 else "_" + sys.argv[1]
-specialize_template("api.html.template", "../warp-charger.com/api{}.html".format(suffix), {
+api_html = specialize_template("api.html.template", None, {
     "{reference}": reference,
     "{reference-nav}": nav
 })
+
+with open("../warp-charger.com/api{}.html".format(suffix), "w") as f:
+    f.write('\n'.join([line.rstrip() for line in api_html.split('\n')]))
