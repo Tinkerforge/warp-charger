@@ -97,14 +97,57 @@
                 <h3>Förderung</h3>
             </header>
             <dl>
-                <dt>Ist ein WARP Charger mit 22 kW Ladeleistung förderfähig nach KfW 439, 440 oder 441?</dt>
-                <dd>Ja, bei allen drei Förderungen ist auch die 22 kW-Variante der Wallbox förderfähig.
-                    Bei der KfW 440 muss der WARP Charger aber für den in den Förderungsbedingungen festgelegten Zeitraum auf 11 kW gedrosselt werden.
-                    Bei der Montage können hierzu Schiebeschalter in der Wallbox eingestellt werden. Wir empfehlen die Drosselung vom Elektriker auf der Rechnung schriftlich bestätigen zu lassen.
+                <dt>Ist ein WARP Charger förderfähig nach KfW 442?</dt>
+                <dd>Die Varianten Smart und Pro stehen auf der Liste der KfW und werden mit 600€ gefördert.
+                </dd>
+            </dl>
+
+
+        </div>
+    </section>
+
+    <section id="bidirectional" class="section">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>Bidirektionales Laden, V2G oder V2H</h3>
+            </header>
+ 
+
+            <dl>
+                <dt>Unterstützt der WARP Charger das bidirektionale Laden, Vehicle-to-Grid (V2G) oder Vehicle-to-Home (V2H)? Kann ein Fahrzeug über die Wallbox Strom zurück ins Netz bzw. ins Haus einspeisen?</dt>
+                <dd>
+                    <p>Nein.</p>
+                    <p>
+                        Es gibt diverse Pilotprojekte bei denen V2G- oder V2H-Konzepte auch mit AC-Wallboxen unterstützt werden.
+                        Die meisten Neuigkeiten zu dem Thema sind derzeit aber nur Ankündigungen, es gibt zur Zeit keine konkreten Produkte.
+                        Die technischen und gesetzlichen Rahmenbedingungen sind aktuell noch nicht vollständig geklärt. Selbst wenn ein Produkt auf dem Markt verfügbar wäre, so dürfte es nicht in Betrieb genommen werden. 
+                    </p>
+                    <p>
+                    <b>Erläuterung:</b>
+                    </p>
+                    <p>
+                        Da der Fahrzeugakku immer mit Gleichspannung (DC) arbeitet, muss zwischen diesem und dem Stromnetz ein Wechselrichter (DC->AC) installiert sein.
+                        Es gibt Fahrzeuge bei denen dieser Wechselrichter bereits im Fahrzeug installiert ist.
+                        Damit wäre es prinzipiell denkbar eine Rückspeisung über das Typ2 Ladekabel, welches für die Übertragung von Wechselspannung gedacht ist, durchzuführen.
+                    </p>
+                    <p>
+                        Die meisten Ankündigungen betreffen aber Fahrzeuge, bei denen über die DC-Kontakte in der Fahrzeugbuchse (Combined Charging System; CCS-Stecker) auf den Akku zugegriffen werden kann.
+                        AC-Wallboxen, wie auch unsere WARP Charger, haben keine Möglichkeit auf diese DC-Spannung zuzugreifen, da die Wallbox über keinen CCS-Stecker verfügt.
+                        Zusätzlich fehlt den Wallboxen der notwendige Wechselrichter um aus der Gleichspannung wieder eine Wechselspannung zu erzeugen.
+                        Es gibt DC-Wallboxen am Markt, die die technische Möglichkeiten bieten, diese liegen aber in einem ganz anderen Preisbereich.
+                        Neben diesen technischen Problemen gibt es weitere offene Fragen:
+                        Dazu zählen die eigentliche Steuerung der Rückspeisung (Kommunikation zwischen Wallbox und Fahrzeug) aber auch ungeklärte regulatorische und steuerrechtliche Fragen.
+                        Zusätzlich involviert das Thema andere Gebiete, wie das Ausrollen des Smart-Meter-Gateways, die Steuerung durch die Netzbetreiber etc.
+                    </p>
+                    <p>
+                        Aus unserer Sicht ist es deshalb nicht seriös damit zu werben, dass eine AC-Wallbox zukünftig V2G oder V2H unterstützt, da die zuvor genannten technischen und rechtlichen Fragestellungen noch überhaupt nicht geklärt sind.
+                        Sollte eine Nachrüstung unserer Wallboxen auf Grund unseres modularen Konzepts möglich sein, so werden wir dies zukünftig sicherlich anbieten.
+                    </p>
                 </dd>
             </dl>
         </div>
     </section>
+
 
     <section id="features" class="section">
         <div class="container">
@@ -113,9 +156,8 @@
             </header>
             <dl>
                 <dt>(Wie) ist PV-Überschussladen möglich?</dt>
-                <dd>Technisch versierte Nutzer können eine PV-Überschusssteuerung mit EVCC einrichten.
+                <dd>Ja, mittels des <a href="/energy-manager.html">WARP Energy Managers</a> kann ein automatisiertes PV Überschussladen realisiert werden. Technisch versierte Nutzer können alternativ eine PV-Überschusssteuerung mit EVCC einrichten.
                     <a href="/evcc.html">Die Einrichtung von EVCC wird hier beschrieben.</a>
-                    Eine einfachere Lösung, spezifisch auf unsere Wallbox zugeschnitten, ist derzeit in Entwicklung. Informationen dazu haben wir in <a href="https://www.tinkerforge.com/de/blog/review-2021-outlook-2022/">diesem Blogpost veröffentlicht</a>.
                 </dd>
             </dl>
             <dl>
@@ -137,35 +179,7 @@
                     </p>
                 </dd>
             </dl>
-            <dl>
-                <dt>Unterstützt der WARP Charger Vehicle-to-Grid (V2G) oder Vehicle-to-Home (V2H)? Kann ein Fahrzeug über die Wallbox Strom zurück ins Netz bzw. ins Haus einspeisen?</dt>
-                <dd>
-                    <p>Nein.</p>
-                    <p>
-                        Es gibt diverse Pilotprojekte bei denen V2G- oder V2H-Konzepte unterstützt werden.
-                        Die meisten Neuigkeiten zu dem Thema sind derzeit aber nur Ankündigungen, keine konkreten Produkte.
-                        Die technischen und gesetzlichen Rahmenbedingungen sind aus unserer Sicht aktuell noch nicht vollständig geklärt.
-                    </p>
-                    <p>
-                        Da der Fahrzeugakku immer mit Gleichspannung (DC) arbeitet, muss zwischen diesem und dem Stromnetz ein Wechselrichter (DC->AC) installiert sein.
-                        Es gibt Fahrzeuge bei denen dieser Wechselrichter bereits im Fahrzeug installiert ist.
-                        Damit wäre es prinzipiell denkbar eine Rückspeisung über das Typ2 Ladekabel, welches für die Übertragung von Wechselspannung gedacht ist, durchzuführen.
-                    </p>
-                    <p>
-                        Die meisten Ankündigungen betreffen aber Fahrzeuge, bei denen über die DC-Kontakte in der Fahrzeugbuchse (Combined Charging System; CCS-Stecker) auf den Akku zugegriffen werden kann.
-                        AC-Wallboxen, wie auch unsere WARP Charger, haben keine Möglichkeit auf diese DC-Spannung zuzugreifen, da die Wallbox über keinen CCS-Stecker verfügt.
-                        Zusätzlich fehlt den Wallboxen der notwendige Wechselrichter um aus der Gleichspannung wieder eine Wechselspannung zu erzeugen.
-                        Es gibt DC-Wallboxen am Markt, die die technische Möglichkeiten bieten, diese liegen aber in einem ganz anderen Preisbereich.
-                        Neben diesen technischen Problemen gibt es weitere offene Fragen:
-                        Dazu zählen die eigentliche Steuerung der Rückspeisung (Standardisierung, wer steuert überhaupt? etc.) aber auch ungeklärte regulatorische und steuerrechtliche Fragen.
-                        Zusätzlich involviert das Thema andere Gebiete, wie das Ausrollen des Smart-Meter-Gateways, die Steuerung durch die Netzbetreiber etc.
-                    </p>
-                    <p>
-                        Aus unserer Sicht ist es deshalb nicht seriös damit zu werben, dass eine AC-Wallbox zukünftig V2G oder V2H unterstützt, da die zuvor genannten technischen und rechtlichen Fragestellungen noch überhaupt nicht geklärt sind.
-                        Sollte eine Nachrüstung unserer Wallboxen auf Grund unseres modularen Konzepts möglich sein, so werden wir dies zukünftig sicherlich anbieten.
-                    </p>
-                </dd>
-            </dl>
+
         </div>
     </section>
 
