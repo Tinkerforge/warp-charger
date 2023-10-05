@@ -6,7 +6,7 @@ stand-web:
 	pdflatex manual_stand.tex
 	@# This breaks hyperref links!
 	@#ps2pdf14 -dPDFSETTINGS=/prepress manual_stand.pdf manual_stand_web.pdf
-	cp manual_stand.pdf ../documents/stand_Betriebsanleitung.pdf
+	cp manual_stand.pdf ../documents/WARP_Ladesaeule_Betriebsanleitung.pdf
 
 stand-print:
 	pdflatex "\def\forprint{1} \input{manual_stand.tex}"
