@@ -78,6 +78,7 @@
             <a class="nav-link" href="#evcc-rpi-preparation">Vorbereitung des Raspberry Pis</a>
             <a class="nav-link" href="#evcc-mqtt-installation">Installation des MQTT-Brokers</a>
             <a class="nav-link" href="#evcc-warp-mqtt">Verknüpfen des WARP Chargers</a>
+            <a class="nav-link" href="#evcc-wem-mqtt">Verknüpfen des WARP Energy Managers</a>
             <a class="nav-link" href="#evcc-installation">Installation von EVCC</a>
             <a class="nav-link" href="#evcc-meter-sim">Simulation von Stromzählern</a>
         </nav>
@@ -246,6 +247,43 @@
         </div>
     </section>
 
+    <section class="section" id="evcc-wem-mqtt">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>Verknüpfen des WARP Energy Managers (optional)</h3>
+            </header>
+            <div class="row pb-2">
+                <div class="col-md-12 col-lg-6">
+                    <p>
+                        Falls du einen WARP Energy Manager und das zugehörige Schütz zur Phasenumschaltung installiert hast, kannst du EVCC die Phasenumschaltung steuern lassen, um deinen PV-Überschuss besser auszunutzen.
+                    </p>
+                    <p>
+                        Hierzu musst du zuerst, analog zum WARP Charger, die MQTT-Verbindung des Energy Managers konfigurieren. Die Verbindung kannst du wieder in der Konsole des Pis testen:
+                        <code>mosquitto_sub -v -t 'wem/#'</code> liefert empfangene Nachrichten aller Energy Manager, die mit dem Broker verbunden sind.
+                    </p>
+                    <p>
+                        Damit EVCC später den WARP Energy Manager steuern darf, musst du unter <code>Energiemanager -> Einstellungen</code> den Umschaltungsmodus auf <samp>externe Steuerung (EVCC)</samp> ändern.
+                        Das PV-Überschussladen des Energy Managers wird dann deaktiviert, da EVCC diese Aufgabe übernehmen soll.
+                    </p>
+                </div>
+                <div class="col-md-12 col-lg-6">
+                    <div class="impressions-container">
+                        <div class="impressions-item filter-warp-charger" style="height: auto;">
+                            <figure style="height: auto;">
+                                <a href="img/evcc/evcc_wem.png" data-lightbox="impressions" data-title="Energy-Manager-Konfiguration" class="link-preview" title="Preview">
+                                    <img src="img/evcc/evcc_wem.png" class="img-fluid" alt="">
+                                </a>
+                            </figure>
+                            <div class="impressions-info">
+                                Energy-Manager-Konfiguration
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="section" id="evcc-installation">
         <div class="container">
             <header class="reference-section-header">
@@ -259,9 +297,9 @@
             <p>
                 Bei der Ausführung von <code>evcc configure</code> kannst du als Wallbox <code>TinkerForge WARP Charger Smart</code> bzw. <code>TinkerForge WARP Charger Pro</code> auswählen und folgende Hinweise beachten:
                 <ul>
-                    <li>Wähle aus, dass Firmware v2 installiert ist (falls das nicht der Fall ist, solltest du die Firmware des WARP Chargers aktualisieren).</li>
                     <li>Als IP-Adresse oder Hostname musst du <strong>nicht</strong> den entsprechenden Wert der Wallbox, sondern den in vorherigen Abschnitt konfigurierten Broker-Hostname oder dessen IP-Adresse eintragen.</li>
                     <li>Das Topic ist der in der MQTT-Konfiguration gesetzte Topic-Präfix, z.B. warp/ABC. Mit diesem beginnt das Topic jeder Nachricht, die du mit <code>mosquitto_sub -v -t 'warp/#'</code> bzw. <code>mosquitto_sub -v -t 'warp2/#'</code> sehen kannst.</li>
+                    <li>Wenn du wie oben beschrieben einen WARP Energy Manager zur Phasenumschaltung verwenden möchtest, musst du den MQTT-Topic-Präfix des Energy Managers (z.B. wem/XYZ) angeben, wenn <code>evcc configure</code> nach <samp>energymanager</samp> fragt.</li>
                 </ul>
             </p>
         </div>
@@ -331,8 +369,9 @@ chargers:
   template: tinkerforge-warp
   host: 192.168.178.72
   port: 1883
-  topic: warp/Sx7
+  topic: warp/ABC
   timeout: 30s
+  energymanager: wem/XYZ # EnergyManager MQTT Topic (falls installiert) (optional)
   name: wallbox1
 
 loadpoints:
