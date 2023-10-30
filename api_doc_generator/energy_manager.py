@@ -140,6 +140,7 @@ energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", Ve
                 Const("0x00010000", "Schützüberwachung hat ausgelöst"),
                 Const("0x01000000", "Interner Fehler, Bricklet nicht erreichbar"),
                 Const("0x02000000", "Interner Fehler, SD-Karten-Fehler"),
+                Const("0x80000000", "Ungültige Konfiguration, Details in config_error_flags"),
             ]),
             "config_error_flags": Elem.INT("Aktive Konfigurationsfehler des Energy Managers. Es handelt sich hierbei um eine Bitmaske, sodass sämtliche Kombinationen aus Konfigurationsfehlern auftreten können.", constants=[
                 Const(0, "Kein Fehler"),
@@ -147,7 +148,6 @@ energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", Ve
                 Const("0x00000002", "Maximaler Gesamtstrom der Wallboxen nicht konfiguriert"),
                 Const("0x00000004", "Keine Wallboxen konfiguriert"),
                 Const("0x00000008", "Überschussladen aktiviert aber kein Stromzähler eingerichtet"),
-                Const("0x00000010", "Lastmanagement nicht verfügbar"),
             ]),
             "external_control": Elem.INT("Status der externen Steuerung zur Phasenumschaltung.", constants=[
                 Const(0, "Externe Steuerung bereit für Kommandos."),
