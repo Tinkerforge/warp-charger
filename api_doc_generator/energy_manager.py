@@ -284,4 +284,12 @@ energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", Ve
             "product_name": Elem.STRING("Produktname"),
         })
     ),
+
+    Func("sdcard_format", FuncType.COMMAND, Elem.OBJECT("Formatiert die eingelegte SD-Karte und löscht damit die Historie der Energiebilanz. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.", members={
+        "do_i_know_what_i_am_doing": Elem.BOOL("Gibt an ob die SD-Karte formatiert werden soll", constants=[
+                Const(True, "SD-Karte formatieren"),
+                Const(False, "Keine Aktion durchführen"),
+            ]
+        )
+    })),
 ])

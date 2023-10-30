@@ -333,6 +333,17 @@
 <a class="nav-link" href="#rtc_config" style="margin-left: 2rem !important;">rtc/<wbr>config</a>
         </nav>
     </div>
+<a class="nav-link ms-3" href="#reference-certs">TLS-Zertifikatsverwaltung</a>
+    <div class="collapse">
+        <nav class="nav nav-pills flex-column">
+        <span class="ms-5">Zustände</span>
+<a class="nav-link" href="#certs_state" style="margin-left: 2rem !important;">certs/<wbr>state</a>
+<span class="ms-5">Kommandos</span>
+<a class="nav-link" href="#certs_add" style="margin-left: 2rem !important;">certs/<wbr>add</a>
+<a class="nav-link" href="#certs_modify" style="margin-left: 2rem !important;">certs/<wbr>modify</a>
+<a class="nav-link" href="#certs_remove" style="margin-left: 2rem !important;">certs/<wbr>remove</a>
+        </nav>
+    </div>
 <a class="nav-link ms-3" href="#reference-info">Allgemeine Informationen</a>
     <div class="collapse">
         <nav class="nav nav-pills flex-column">
@@ -364,6 +375,9 @@
 <a class="nav-link" href="#force_reboot" style="margin-left: 2rem !important;">force_reboot</a>
 <a class="nav-link" href="#update" style="margin-left: 2rem !important;">update</a>
 <a class="nav-link" href="#flash_firmware" style="margin-left: 2rem !important;">flash_firmware</a>
+<span class="ms-5">Kommandos</span>
+<a class="nav-link" href="#config_reset" style="margin-left: 2rem !important;">config_reset</a>
+<a class="nav-link" href="#factory_reset" style="margin-left: 2rem !important;">factory_reset</a>
         </nav>
     </div>
 <a class="nav-link ms-3" href="#reference-energy_manager">Energy-Manager-Konfiguration</a>
@@ -378,6 +392,8 @@
 <a class="nav-link" href="#energy_manager_charge_mode" style="margin-left: 2rem !important;">energy_manager/<wbr>charge_mode</a>
 <a class="nav-link" href="#energy_manager_external_control" style="margin-left: 2rem !important;">energy_manager/<wbr>external_control</a>
 <a class="nav-link" href="#energy_manager_sdcard_state" style="margin-left: 2rem !important;">energy_manager/<wbr>sdcard_state</a>
+<span class="ms-5">Kommandos</span>
+<a class="nav-link" href="#energy_manager_sdcard_format" style="margin-left: 2rem !important;">energy_manager/<wbr>sdcard_format</a>
         </nav>
     </div>
 <a class="nav-link ms-3" href="#reference-charge_limits">Ladezeit- und -energielimits</a>
@@ -3649,7 +3665,7 @@
 
 <div  id="charge_tracker_remove_all_charges" class="any">
     <div class="h5">charge_tracker/remove_all_charges</div>
-    Löscht alle aufgezeichneten Ladungen und die Nutzernamenhistorie. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+    Löscht alle aufgezeichneten Ladungen und die Nutzernamenhistorie. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
 <div class="table-responsive">
     <table class="table table-striped table-bottom-border mt-3">
         <thead class="thead-dark">
@@ -4890,7 +4906,7 @@
 
 <tr class="any">
     <th scope="row">url<br/><span class="th-details">string</span></th>
-    <td>Endpoint-URL des OCPP-Servers. Muss mit dem Schema ws:// (unverschlüsselt!) oder wss:// (TLS-Verschlüsselt) beginnen und darf <strong>nicht</strong> auf / enden.</td>
+    <td>Endpoint-URL des OCPP-Servers. Muss mit dem Schema ws:// (unverschlüsselt!) oder wss:// (TLS-verschlüsselt) beginnen und darf <strong>nicht</strong> auf / enden.</td>
 </tr>
 
 <tr class="any">
@@ -4906,6 +4922,17 @@
 <tr class="any">
     <th scope="row">pass<br/><span class="th-details">string</span></th>
     <td>HTTP-Basic-Auth Passwort. Wenn das Passwort exakt 40 Zeichen lang ist und nur aus Hex-Zeichen (0-9, A-F, a-f) besteht, wird es als hexadezimale Repräsentation eines 20 Byte langen Authorization-Keys betrachtet.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">cert_id<br/><span class="th-details">int</span></th>
+    <td>ID des TLS-Zertifikats, dass zum Aufbau einer TLS-verschlüsselten Verbindung verwendet werden soll.
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>-1</strong> - Verwende eingebettetes Zertifikatsbundle</li>
+    <li><strong>>= 0</strong> - Verwende Zertifikat mit dieser ID</li>
+</ol>
+</div></td>
 </tr>
         </tbody>
     </table>
@@ -5155,6 +5182,163 @@
     <li><strong>false</strong> - Die RTC-Zeit wird nur manuell gesetzt.</li>
 </ol>
 </div></td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</section>
+<section id="reference-certs" class="section warp2">
+    <header class="reference-section-header">
+        <h4>TLS-Zertifikatsverwaltung</h4>
+
+    </header>
+    <ul class="ul-no-bullet">
+        <li>
+    Zustände
+    <ul>
+        <li><a class="scrollto text-monospace" href="#certs_state">certs/state</a></li>
+    </ul>
+</li>
+<li>
+    Kommandos
+    <ul>
+        <li><a class="scrollto text-monospace" href="#certs_add">certs/add</a></li>
+<li><a class="scrollto text-monospace" href="#certs_modify">certs/modify</a></li>
+<li><a class="scrollto text-monospace" href="#certs_remove">certs/remove</a></li>
+    </ul>
+</li>
+    </ul>
+
+<div  id="certs_state" class="any">
+    <div class="h5">certs/state</div>
+    Der aktuelle Zustand der TLS-Zertifikatsverwaltung.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">certs<br/><span class="th-details">object[8]</span></th>
+    <td>Bekannte TLS-Zertifikate.
+<div class="any">
+<ol class="ol-enum">
+    <li>[0..7] - Ein TLS-Zertifikat
+<div class="table-responsive">
+    <table class="table table-not-striped mt-3 table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">id<br/><span class="th-details">int</span></th>
+    <td>ID des Zertifikats</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">name<br/><span class="th-details">string</span></th>
+    <td>Anzeigename des Zertifikats</td>
+</tr>
+        </tbody>
+    </table>
+</div></li>
+</ol>
+</div></td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="certs_add" class="any">
+    <div class="h5">certs/add</div>
+    Fügt ein neues TLS-Zertifikat hinzu.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">id<br/><span class="th-details">int</span></th>
+    <td>ID des Zertifikats, dass hinzugefügt werden soll. Darf nicht bereits von einem Zertifikat verwendet werden.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">name<br/><span class="th-details">string</span></th>
+    <td>Anzeigename des Zertifikats.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">cert<br/><span class="th-details">string</span></th>
+    <td>Zertifikatsdatei im PEM-Format</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="certs_modify" class="any">
+    <div class="h5">certs/modify</div>
+    Modifiziert ein vorhandenes TLS-Zertifikat.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">id<br/><span class="th-details">int</span></th>
+    <td>ID des Zertifikats, dass modifiziert werden soll.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">name<br/><span class="th-details">string</span></th>
+    <td>Anzeigename des Zertifikats.</td>
+</tr>
+
+<tr class="any">
+    <th scope="row">cert<br/><span class="th-details">string</span></th>
+    <td>Zertifikatsdatei im PEM-Format</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="certs_remove" class="any">
+    <div class="h5">certs/remove</div>
+    Löscht ein vorhandenes TLS-Zertifikat.<br/><strong><a href="#states_section_shortcuts">Kann abgekürzt werden.</a></strong>
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">id<br/><span class="th-details">int</span></th>
+    <td>ID des Zertifikats, dass gelöscht werden soll.</td>
 </tr>
         </tbody>
     </table>
@@ -5430,6 +5614,13 @@
 <li><a class="scrollto text-monospace" href="#flash_firmware">flash_firmware</a></li>
     </ul>
 </li>
+<li>
+    Kommandos
+    <ul>
+        <li><a class="scrollto text-monospace" href="#config_reset">config_reset</a></li>
+<li><a class="scrollto text-monospace" href="#factory_reset">factory_reset</a></li>
+    </ul>
+</li>
     </ul>
 
 <div  id="reboot" class="any">
@@ -5456,6 +5647,62 @@
     <div class="h5">flash_firmware</div>
     Nimmt ein Firmware-Update als POST entgegen, dass dann geflasht wird.
 </div>
+
+<div  id="config_reset" class="any">
+    <div class="h5">config_reset</div>
+    Setzt alle Einstellungen zurück aber behält aufgezeichnete Ladevorgänge und die Nutzernamenhistorie. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">do_i_know_what_i_am_doing<br/><span class="th-details">bool</span></th>
+    <td>Gibt an ob der Löschvorgang ausgeführt werden soll
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>true</strong> - Alle Einstellungen löschen</li>
+    <li><strong>false</strong> - Keine Aktion durchführen</li>
+</ol>
+</div></td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="factory_reset" class="any">
+    <div class="h5">factory_reset</div>
+    Setzt alle Einstellungen zurück und löscht alle aufgezeichneten Ladevorgänge. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">do_i_know_what_i_am_doing<br/><span class="th-details">bool</span></th>
+    <td>Gibt an ob der Löschvorgang ausgeführt werden soll
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>true</strong> - Alle Einstellungen, aufgezeichneten Ladungen und die Nutzernamenhistorie löschen</li>
+    <li><strong>false</strong> - Keine Aktion durchführen</li>
+</ol>
+</div></td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
 </section>
 <section id="reference-energy_manager" class="section warpem">
     <header class="reference-section-header">
@@ -5478,6 +5725,12 @@
 <li><a class="scrollto text-monospace" href="#energy_manager_charge_mode">energy_manager/charge_mode</a></li>
 <li><a class="scrollto text-monospace" href="#energy_manager_external_control">energy_manager/external_control</a></li>
 <li><a class="scrollto text-monospace" href="#energy_manager_sdcard_state">energy_manager/sdcard_state</a></li>
+    </ul>
+</li>
+<li>
+    Kommandos
+    <ul>
+        <li><a class="scrollto text-monospace" href="#energy_manager_sdcard_format">energy_manager/sdcard_format</a></li>
     </ul>
 </li>
     </ul>
@@ -6239,6 +6492,34 @@
 <tr class="any">
     <th scope="row">product_name<br/><span class="th-details">string</span></th>
     <td>Produktname</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div  id="energy_manager_sdcard_format" class="any">
+    <div class="h5">energy_manager/sdcard_format</div>
+    Formatiert die eingelegte SD-Karte und löscht damit die Historie der Energiebilanz. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
+<div class="table-responsive">
+    <table class="table table-striped table-bottom-border mt-3">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col" style="width: 25%">Name</th>
+            <th scope="col">Bedeutung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<tr class="any">
+    <th scope="row">do_i_know_what_i_am_doing<br/><span class="th-details">bool</span></th>
+    <td>Gibt an ob die SD-Karte formatiert werden soll
+<div class="any">
+<ol class="ol-enum">
+    <li><strong>true</strong> - SD-Karte formatieren</li>
+    <li><strong>false</strong> - Keine Aktion durchführen</li>
+</ol>
+</div></td>
 </tr>
         </tbody>
     </table>

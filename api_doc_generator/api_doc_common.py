@@ -298,7 +298,7 @@ class Elem:
         else:
             table = self.to_html_table(is_root=True)
 
-        if f.type_ != FuncType.STATE and self.type_ == EType.OBJECT and len(self.val.items()) == 1:
+        if f.type_ != FuncType.STATE and self.type_ == EType.OBJECT and len(self.val.items()) == 1 and not "do_i_know_what_i_am_doing" in self.val:
             table = "<br/><strong><a href=\"#states_section_shortcuts\">Kann abgekürzt werden.</a></strong>" + table
 
         return template.format(fn_id = module + "_" + f.name if module is not None else f.name,

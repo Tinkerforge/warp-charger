@@ -9,4 +9,20 @@ misc = Module("misc", "Sonstiges", "", Version.ANY, [
 
     Func("update", FuncType.HTTP_ONLY, Elem.OPAQUE("Notfall-Update-Seite mit der eine Firmware-Aktualisierung eingespielt werden kann, auch wenn das normale Webinterface nicht funktioniert.")),
     Func("flash_firmware", FuncType.HTTP_ONLY, Elem.OPAQUE("Nimmt ein Firmware-Update als POST entgegen, dass dann geflasht wird.")),
+
+    Func("config_reset", FuncType.COMMAND, Elem.OBJECT("Setzt alle Einstellungen zurück aber behält aufgezeichnete Ladevorgänge und die Nutzernamenhistorie. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.", members={
+        "do_i_know_what_i_am_doing": Elem.BOOL("Gibt an ob der Löschvorgang ausgeführt werden soll", constants=[
+                Const(True, "Alle Einstellungen löschen"),
+                Const(False, "Keine Aktion durchführen"),
+            ]
+        )
+    })),
+
+    Func("factory_reset", FuncType.COMMAND, Elem.OBJECT("Setzt alle Einstellungen zurück und löscht alle aufgezeichneten Ladevorgänge. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.", members={
+        "do_i_know_what_i_am_doing": Elem.BOOL("Gibt an ob der Löschvorgang ausgeführt werden soll", constants=[
+                Const(True, "Alle Einstellungen, aufgezeichneten Ladungen und die Nutzernamenhistorie löschen"),
+                Const(False, "Keine Aktion durchführen"),
+            ]
+        )
+    })),
 ], hide_prefix=True)
