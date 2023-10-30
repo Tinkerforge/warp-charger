@@ -635,32 +635,31 @@ client<span style='color:#808030; '>.</span>loop_forever<span style='color:#8080
             </div>
             <div class="row">
                 <div class="text-center">
-                    <a href="firmwares/energy_manager_firmware_1_0_7_64e60e8c_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP Energy Manager Firmware 1.0.7 herunterladen</a>
-                    <div class="text-muted pt-2 pb-2">Veröffentlicht am 23.08.2023</div>
+                    <a href="firmwares/energy_manager_firmware_1_0_8_653faee7_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP Energy Manager Firmware 1.0.8 herunterladen</a>
+                    <div class="text-muted pt-2 pb-2">Veröffentlicht am 30.10.2023</div>
                 </div>
                 <div class="col-auto">
                     <table class="table table-borderless mb-3">
                         <tbody>
                             <tr>
-                                <th scope="row"><a href="firmwares/energy_manager_firmware_1_0_7_64e60e8c_merged.bin">1.0.7</a><br/><span class="th-details">23.08.2023</span><br/><a href="firmwares/energy_manager_firmware_1_0_7_64e60e8c_merged.bin.sha256">Prüfsumme</a></th>
+                                <th scope="row"><a href="firmwares/energy_manager_firmware_1_0_8_653faee7_merged.bin">1.0.8</a><br/><span class="th-details">30.10.2023</span><br/><a href="firmwares/energy_manager_firmware_1_0_8_653faee7_merged.bin.sha256">Prüfsumme</a></th>
                                 <td>
                                     <ul>
-                                        <li>Fehlende Messung der Phasenspannungen resultieren nicht mehr in zu niedrigen Ladeströmen im Lastmanagement</li>
-                                        <li>64k-Spitze in der Energiebilanz beim Neustart einer kontrollierten Wallbox beseitigt</li>
-                                        <li>Y-Achsen Beschreibung zum Energiebilanz- und Stromzähler-Graphen hinzugefügt</li>
-                                        <li>Identische Legendeneinträge im Energiebilanz-Graphen zusammengefasst</li>
-                                        <li>Größenberechnung des Energiebilanz-Graphen repariert</li>
-                                        <li>Laden der RTC-Zeit an Sonntagen repariert</li>
-                                        <li>Erstellungszeit der Firmware besser lesbar gemacht</li>
-                                        <li>Subnetzmaske zum WLAN- und Netzwerk-Zustand hinzugefügt</li>
-                                        <li>Auswahl der vollen Subnetzmaske (/0 bis /32) für WireGuard erlaubt</li>
-                                        <li>Abweichung in der Serialisierung zwischen current_charge und last_charges beseitigt</li>
-                                        <li>Lastmanagement auf tabellarische Darstellung umgestellt</li>
-                                        <li>Verwendung von Platzhaltern in Auswahlfeldern verbessert</li>
-                                        <li>Payloads für Recovery-API-Aufruf repariert</li>
-                                        <li>Fehleranzeige bei fehlender Auswahl einer Subnetzmaske repariert</li>
-                                        <li>Potentiellen Deadlock beim Aufruf von API-Befehlen beseitigt</li>
-                                        <li>Aktualisierung des last_value_change Wertes im API-Meter repariert</li>
+                                        <li>Support für Reverse-Proxys verbessert</li>
+                                        <li>Konfiguration des alternativen DNS-Servers repariert</li>
+                                        <li>Anleitung des API-Aufrufs auf der Recovery-Seite repariert</li>
+                                        <li>Verlorene MQTT-Subscriptions und Nachrichten nach Verbindungsaufbau repariert</li>
+                                        <li>Sichergestellt, dass Konfigurationen nicht über MQTT durch einen nicht-standardkonformen Broker zurückgesetzt werden</li>
+                                        <li>Sichergestellt, dass API bei gleichzeitigem Zugriff über verschiedene Backends (MQTT, HTTP) konsistent bleibt</li>
+                                        <li>Zuverlässigkeit und Performance des WebSocket-Verbindungsaufbaus verbessert</li>
+                                        <li>Sichergestellt, dass externe Steuerung bei Aktivierung auf freigegeben (32 Ampere) gesetzt wird</li>
+                                        <li>Performance des Flash-Speichers verbessert</li>
+                                        <li>Hinzugefügt, dass Ereignis-Log-Nachrichten sofort angezeigt und im Browser gesammelt werden</li>
+                                        <li>Auto-Scrolling zu Ereignis-Log hinzugefügt</li>
+                                        <li>Problem mit der Größenberechnung von Tabellen in Firefox behoben</li>
+                                        <li>Übersetzungen verbessert</li>
+                                        <li>Sichergestellt, dass Nulllinie nicht außerhalb eines Graphen gezeichnet wird</li>
+                                        <li>Lücke in der Datenaufzeichnung direkt nach Neustart behoben</li>
                                     </ul>
                                 </td>
                             </tr>
@@ -676,6 +675,29 @@ client<span style='color:#808030; '>.</span>loop_forever<span style='color:#8080
                     <div class="collapse" id="collapseOlderVersions">
                         <table id="firmware_old" class="table mt-3">
                             <tbody>
+                                <tr>
+                                    <th scope="row"><a href="firmwares/energy_manager_firmware_1_0_7_64e60e8c_merged.bin">1.0.7</a><br/><span class="th-details">23.08.2023</span><br/><a href="firmwares/energy_manager_firmware_1_0_7_64e60e8c_merged.bin.sha256">Prüfsumme</a></th>
+                                    <td>
+                                        <ul>
+                                            <li>Fehlende Messung der Phasenspannungen resultieren nicht mehr in zu niedrigen Ladeströmen im Lastmanagement</li>
+                                            <li>64k-Spitze in der Energiebilanz beim Neustart einer kontrollierten Wallbox beseitigt</li>
+                                            <li>Y-Achsen Beschreibung zum Energiebilanz- und Stromzähler-Graphen hinzugefügt</li>
+                                            <li>Identische Legendeneinträge im Energiebilanz-Graphen zusammengefasst</li>
+                                            <li>Größenberechnung des Energiebilanz-Graphen repariert</li>
+                                            <li>Laden der RTC-Zeit an Sonntagen repariert</li>
+                                            <li>Erstellungszeit der Firmware besser lesbar gemacht</li>
+                                            <li>Subnetzmaske zum WLAN- und Netzwerk-Zustand hinzugefügt</li>
+                                            <li>Auswahl der vollen Subnetzmaske (/0 bis /32) für WireGuard erlaubt</li>
+                                            <li>Abweichung in der Serialisierung zwischen current_charge und last_charges beseitigt</li>
+                                            <li>Lastmanagement auf tabellarische Darstellung umgestellt</li>
+                                            <li>Verwendung von Platzhaltern in Auswahlfeldern verbessert</li>
+                                            <li>Payloads für Recovery-API-Aufruf repariert</li>
+                                            <li>Fehleranzeige bei fehlender Auswahl einer Subnetzmaske repariert</li>
+                                            <li>Potentiellen Deadlock beim Aufruf von API-Befehlen beseitigt</li>
+                                            <li>Aktualisierung des last_value_change Wertes im API-Meter repariert</li>
+                                        </ul>
+                                    </td>
+                                </tr>
                               <tr>
                                   <th scope="row"><a href="firmwares/energy_manager_firmware_1_0_6_64959dc4_merged.bin">1.0.6</a><br/><span class="th-details">23.06.2023</span><br/><a href="firmwares/energy_manager_firmware_1_0_6_64959dc4_merged.bin.sha256">Prüfsumme</a></th>
                                   <td>
