@@ -64,7 +64,7 @@ def get_tf_printer_host(task):
     import tkinter.messagebox
 
     path = '~/tf_printer_host.txt'
-    x = re.compile(r'^([A-Za-z0-9_-]+)\s+([0-9\.]+)$')
+    x = re.compile(r'^([A-Za-z0-9_-]+)\s+([A-Za-z0-9_\.-]+)$')
 
     try:
         with open(os.path.expanduser(path), 'r', encoding='utf-8') as f:
