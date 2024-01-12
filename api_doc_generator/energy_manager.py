@@ -152,7 +152,7 @@ energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", Ve
             "external_control": Elem.INT("Status der externen Steuerung zur Phasenumschaltung.", constants=[
                 Const(0, "Externe Steuerung bereit für Kommandos."),
                 Const(1, "Externe Steuerung über die Einstellungen deaktiviert."),
-                Const(2, "Externe Steuerung ist aktiviert aber aktuell nicht verfügbar. Gründe sind unter anderem: ausgelöste Schützüberwachung, eine oder mehrere Wallboxen nicht erreichbar oder unterstützen keine CP-Trennung, Ladung blockiert durch Eingang 3."),
+                Const(2, "Externe Steuerung ist aktiviert aber aktuell nicht verfügbar. Gründe sind unter anderem: ausgelöste Schützüberwachung, eine oder mehrere Wallboxen nicht erreichbar oder unterstützen keine CP-Trennung, Ladevorgang blockiert durch Eingang 3."),
                 Const(3, "Phasenumschaltung wird gerade durchgeführt; ankommende Kommandos werden ignoriert."),
             ]),
         })

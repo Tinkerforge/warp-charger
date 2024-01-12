@@ -20,7 +20,7 @@ misc = Module("misc", "Sonstiges", "", Version.ANY, [
 
     Func("factory_reset", FuncType.COMMAND, Elem.OBJECT("Setzt alle Einstellungen zurück und löscht alle aufgezeichneten Ladevorgänge. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.", members={
         "do_i_know_what_i_am_doing": Elem.BOOL("Gibt an ob der Löschvorgang ausgeführt werden soll", constants=[
-                Const(True, "Alle Einstellungen, aufgezeichneten Ladungen und die Nutzernamenhistorie löschen"),
+                Const(True, "Alle Einstellungen, aufgezeichneten Ladevorgänge und die Nutzernamenhistorie löschen"),
                 Const(False, "Keine Aktion durchführen"),
             ]
         )

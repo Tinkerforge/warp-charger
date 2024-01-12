@@ -7,7 +7,7 @@ ntp = Module("ntp", "Zeitsynchronisierung", "", Version.ANY, [
     })),
 
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die Konfiguration der Netzwerkzeitsynchronisierung.", members={
-        "enable": Elem.BOOL("Gibt an, ob die Wallbox per NTP ihre Zeit synchronisieren soll. Die erhaltene Zeit wird zur Bestimmung der Startzeitpunkte von getrackten Ladungen und im Ereignislog verwendet."),
+        "enable": Elem.BOOL("Gibt an, ob die Wallbox per NTP ihre Zeit synchronisieren soll. Die erhaltene Zeit wird zur Bestimmung der Startzeitpunkte von getrackten Ladevorgängen und im Ereignislog verwendet."),
         "use_dhcp":  Elem.BOOL("Gibt an, ob die Wallbox NTP-Server per DHCP empfangen soll. Funktioniert nur, wenn DHCP zur IP-Addressvergabe verwendet wird."),
         "timezone":  Elem.STRING("Die Zeitzone, in der sich die Wallbox befindet. z.B. \"Europe/Berlin\""),
         "server":  Elem.STRING("IP-Adresse oder Hostname des zu verwendenden Zeitservers"),

@@ -49,5 +49,5 @@ users = Module("users", "Benutzerverwaltung", "", Version.WARP1 | Version.WARP2,
         ]),
     }), command_is_action=True),
 
-    Func("all_usernames", FuncType.HTTP_ONLY, Elem.OPAQUE("Für das Ladetracking werden die Anzeigenamen gelöschter Benutzer separat im Flash gespeichert. Diese Funktion gibt alle Anzeigenamen, die möglicherweise in den getrackten Ladungen vorkommen in einem Binärformat aus."))
+    Func("all_usernames", FuncType.HTTP_ONLY, Elem.OPAQUE("Für das Ladetracking werden die Anzeigenamen gelöschter Benutzer separat im Flash gespeichert. Diese Funktion gibt alle Anzeigenamen, die möglicherweise in den getrackten Ladevorgängen vorkommen in einem Binärformat aus."))
 ])

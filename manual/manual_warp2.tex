@@ -543,8 +543,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	werden. Dazu wird die Schutzkappe vom Ladestecker entfernt und den Stecker in die
 	Ladebuchse des Elektrofahrzeugs gesteckt. Nach einer kurzen Zeit sollte hörbar
 	das Schütz in der Wallbox schalten und das Fahrzeug sollte den Beginn
-	der Ladung anzeigen. Die blaue LED \enquote{atmet} während des
-	Ladevorgangs. Ist die Ladung beendet, so leuchtet die LED permanent. Nach ca.
+	des Ladevorgangs anzeigen. Die blaue LED \enquote{atmet} während des
+	Ladevorgangs. Ist der Ladevorgang beendet, so leuchtet die LED permanent. Nach ca.
 	15 Minuten Inaktivität schaltet sich die LED aus.
 
 	\subsection{Bedienelemente}\label{lockswitch}
@@ -668,9 +668,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\subsection{Status (Startseite)}
 
 	Die Startseite des Webinterfaces zeigt kompakt den aktuellen Ladestatus der
-	Wallbox, sowie Ladezeit und -strom, und erlaubt es, die Ladung zu steuern.
+	Wallbox, sowie Ladezeit und -strom, und erlaubt es, den Ladevorgang zu steuern.
 	Du kannst hier sowohl das automatische Laden (de-)aktivieren, als auch
-	manuell eine Ladung starten oder stoppen.
+	manuell einen Ladevorgang starten oder stoppen.
 
 	Außerdem wird der aktuell laufende Ladevorgang, die letzten drei
 	Ladevorgänge, sowie der Status weiterer Features angezeigt.
@@ -750,7 +750,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	Auf dieser Unterseite werden außerdem die aktuellen Ladestromgrenzen angezeigt. Alle Grenzen, die
 	derzeit aktiv sind, werden zur Entscheidung, ob ein Ladevorgang erlaubt ist und zur Berechnung des maximalen Ladestroms einbezogen:
-	Nur wenn alle aktiven Ladestromgrenzen nicht blockieren, wird eine Ladung erlaubt.
+	Nur wenn alle aktiven Ladestromgrenzen nicht blockieren, wird ein Ladevorgang erlaubt.
 	Der erlaubte Ladestrom ist dann das Minimum aller aktiven Grenzen. Folgende Grenzen können Teil der Berechnung sein:
 
 	\begin{description}
@@ -762,7 +762,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\item[Autostart bzw. Taster] Die Autostart-Einstellung bzw. das Drücken des Tasters können diese Ladestromgrenze blockieren oder freigeben.
 		\item[Konfiguration] Diese Ladestromgrenze wird durch das Eingabefeld auf der Statusseite eingestellt.
 			Durch den \enquote{Freigeben}-Button wird eine eventuell eingetragene Ladestromgrenze komplett aufgehoben.
-		\item[Benutzer] Falls die Benutzerautorisierung aktiviert ist blockiert diese Ladestromgrenze bis ein Benutzer die Ladung durch ein NFC-Tag freigibt.
+		\item[Benutzer] Falls die Benutzerautorisierung aktiviert ist blockiert diese Ladestromgrenze bis ein Benutzer den Ladevorgang durch ein NFC-Tag freigibt.
 			Danach wird die diesem Benutzer zugeordnete Ladestromgrenze eingetragen.
 		\item[Lastmanagement] Empfangene Nachrichten des Lastmanagers steuern diese Ladestromgrenze, falls das Lastmanagement aktiviert ist.
 		\item[Externe Steuerung] Diese Ladestromgrenze wird durch eine externe Steuerung über die API, beispielsweise EVCC gesteuert.
@@ -779,11 +779,11 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\definecolor{myred}{RGB}{220, 53, 69}
 	Die Farbmarkierung neben einer Grenze haben folgende Bedeutung:
 	\begin{itemize}
-	 \item[\textbf{\textcolor{mygray}{Grau}}] Diese Ladestromgrenze ist nicht aktiv. Sie kann die Ladung nicht blockieren und geht nicht in Berechnung des erlaubten Ladestroms ein.
+	 \item[\textbf{\textcolor{mygray}{Grau}}] Diese Ladestromgrenze ist nicht aktiv. Sie kann den Ladevorgang nicht blockieren und geht nicht in Berechnung des erlaubten Ladestroms ein.
 	 \item[\textbf{\textcolor{mygreen}{Grün}}] Diese Ladestromgrenze ist aktiv, beschränkt den erlaubten Ladestrom aber nicht.
 	 \item[\textbf{\textcolor{myblue}{Blau}}] Diese Ladestromgrenze ist aktiv und gibt ein Ladestromlimit vor. Es gibt aber andere aktive Grenzen, die den Ladestrom stärker limitieren.
-	 \item[\textbf{\textcolor{myorange}{Gelb}}] Diese Ladestromgrenze ist aktiv, blockiert die Ladung nicht, gibt aber die aktuell stärkste Limitierung des Ladestroms vor.
-	 \item[\textbf{\textcolor{myred}{Rot}}] Diese Ladestromgrenze ist aktiv und blockiert die Ladung.
+	 \item[\textbf{\textcolor{myorange}{Gelb}}] Diese Ladestromgrenze ist aktiv, blockiert den Ladevorgang nicht, gibt aber die aktuell stärkste Limitierung des Ladestroms vor.
+	 \item[\textbf{\textcolor{myred}{Rot}}] Diese Ladestromgrenze ist aktiv und blockiert den Ladevorgang.
 	\end{itemize}
 
 	\subsubsection{Ladeeinstellungen}\label{evse-settings}
@@ -959,11 +959,11 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\subsection{Zurücksetzen auf Werkszustand}\label{reset}
 	Falls das Webinterface nicht korrekt funktioniert, oder die Konfiguration defekt ist,
 	kannst du auf der Firmware-Aktualisierungs-Unterseite alle Einstellungen auf den Werkszustand zurücksetzen.
-	\hint{Durch das Zurücksetzen auf Werkszustand gehen \mbox{\textbf{alle}} Konfigurationen, angelegte Benutzer, angelernte NFC-Tags und getrackte Ladungen verloren.}
+	\hint{Durch das Zurücksetzen auf Werkszustand gehen \mbox{\textbf{alle}} Konfigurationen, angelegte Benutzer, angelernte NFC-Tags und getrackte Ladevorgänge verloren.}
 	Nach dem Zurücksetzen startet das Webinterface wieder und öffnet
 	den Access-Point mit der SSID und Passphrase, die auf dem Aufkleber vermerkt sind. Die Wallbox kann jetzt wieder nach \fullref{setup} konfiguriert werden.
 
-	Damit getrackte Ladungen nicht verloren gehen kann alternativ nur die Konfiguration zurückgesetzt werden.
+	Damit getrackte Ladevorgänge nicht verloren gehen kann alternativ nur die Konfiguration zurückgesetzt werden.
 	Angelegte Benutzer (aber nicht der Benutzerverlauf des Ladetrackers) und NFC-Tags werden dennoch gelöscht.
 
 	Falls du das Webinterface nicht mehr erreichen kannst, bestehen folgende Optionen:
@@ -1111,13 +1111,13 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\subsection{Funktionsweise}
 	Durch das Lastmanagement kontrollierte Wallboxen laden nur,
 	wenn ihnen von außen ein erlaubter Ladestrom mitgeteilt wird. Wenn eine gewisse Zeit lang
-	kein erlaubter Ladestrom empfangen wurde, stoppt die Wallbox die Ladung automatisch.
+	kein erlaubter Ladestrom empfangen wurde, stoppt die Wallbox den Ladevorgang automatisch.
 	Der Lastmanager stoppt seinerseits das Laden an allen kontrollierten Wallboxen,
 	wenn eine Wallbox nicht mehr reagiert oder erreicht wird. Damit wird sichergestellt,
 	dass der verfügbare Strom nicht überschritten wird.
 	Der Lastmanager verteilt den verfügbaren Strom gleichmäßig zwischen allen Wallboxen, die laden bzw. ladebereit sind.
 	Falls bereits eine Wallbox lädt, und an eine zweite ein Fahrzeug angeschlossen wird,
-	wird der Ladestrom der ladenden Wallbox so beschränkt, dass für die zweite Ladung Strom verfügbar wird.
+	wird der Ladestrom der ladenden Wallbox so beschränkt, dass für den zweiten Ladevorgang Strom verfügbar wird.
 
 	\subsection{Konfiguration}
 	Lastmanagement-Einstellungen werden für alle Wallboxen (egal ob Manager oder zu steuernde Wallbox) auf der
@@ -1125,7 +1125,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	Um das Lastmanagement zu verwenden, muss zunächst auf allen Wallboxen, die gesteuert werden sollen,
 	der Lastmanagement-Modus auf \enquote{fremdgesteuert} konfiguriert werden.
-	In diesem Modus lädt eine Wallbox nur noch, wenn die Ladung vom Lastmanager freigegeben wird.
+	In diesem Modus lädt eine Wallbox nur noch, wenn der Ladevorgang vom Lastmanager freigegeben wird.
 
 	Auf der Wallbox, die die anderen Wallboxen steuern soll (dem Lastmanager) muss zunächst der Modus \enquote{Lastmanager} gewählt werden.
 	Zusätzlich muss hier jede Wallbox, die gesteuert werden sollen, als \enquote{Kontrollierte Wallbox} hinzugefügt werden.
@@ -1199,19 +1199,19 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\newpage
 	\section{Ladetracker}\label{charge_tracker}
 	\gfx{./img_warp2/resized/web_charge_tracker}
-	Seit Firmware 2.0.0 zeichnet der WARP Charger alle durchgeführten Ladevorgänge auf. Pro Ladung werden die folgenden Informationen gespeichert:
+	Seit Firmware 2.0.0 zeichnet der WARP Charger alle durchgeführten Ladevorgänge auf. Pro Ladevorgang werden die folgenden Informationen gespeichert:
 	\begin{itemize}
-	 \item Startdatum und Zeit der Ladung, falls Datum und Zeit bekannt sind. Siehe \fullref{ntp}.
-	 \item Benutzer, der die Ladung gestartet hat, falls bekannt.
-	 \item Zählerstand beim Start und Ende der Ladung (nur WARP Charger Pro). Hieraus wird die geladene Energie in \SI{}{\kWh} berechnet.
-	 \item Dauer der Ladung
+	 \item Startdatum und Zeit des Ladevorgangs, falls Datum und Zeit bekannt sind. Siehe \fullref{ntp}.
+	 \item Benutzer, der den Ladevorgang gestartet hat, falls bekannt.
+	 \item Zählerstand beim Start und Ende des Ladevorgangs (nur WARP Charger Pro). Hieraus wird die geladene Energie in \SI{}{\kWh} berechnet.
+	 \item Dauer des Ladevorgangs
 	\end{itemize}
 
 	\vfill
 	\null
 	\columnbreak
 
-	\hint{Damit Ladungen einem Benutzer zugeordnet werden können, muss
+	\hint{Damit Ladevorgänge einem Benutzer zugeordnet werden können, muss
 		\begin{itemize}
 			\item die Benutzerautorisierung des Ladecontrollers aktiviert sein (Siehe \fullref{evse})
 			\item mindestens ein Benutzer angelegt sein (Siehe \fullref{user_management})
@@ -1246,7 +1246,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\section{Benutzerverwaltung} \label{user_management}
 
 	Auf der Unterseite \enquote{Benutzerverwaltung} im System-Abschnitt des Webinterfaces können bis zu 16 Benutzer angelegt werden.
-	Einem angelegten Benutzer, dem ein NFC-Tag zugeordnet wurde (siehe Abschnitt \fullref{NFC}) können vom Ladetracker Ladungen zugeordnet werden.
+	Einem angelegten Benutzer, dem ein NFC-Tag zugeordnet wurde (siehe Abschnitt \fullref{NFC}) können vom Ladetracker Ladevorgänge zugeordnet werden.
 
 	In der Werkseinstellung sind exemplarisch drei Nutzer bereits angelegt,
 	denen jeweils eine NFC Karte (mitgeliefert) zugeordnet wurde. Diese können
@@ -1279,7 +1279,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Um einem Nutzer die Anmeldemöglichkeit wieder zu entziehen und sein Passwort
 	zu löschen muss einfach das Verbottschild aktiviert werden. Das Passwort des
 	Nutzers wird dann gelöscht und die Anmeldung deaktiviert. Der Nutzer kann
-	aber nach wie vor eine Ladung per NFC Tag freigeben, wenn ihm ein Tag
+	aber nach wie vor einen Ladevorgang per NFC Tag freigeben, wenn ihm ein Tag
 	zugeordnet wurde. Um den Nutzer wieder eine Anmeldung zu ermöglichen, muss
 	sein Passwort neu gesetzt werden.
 
@@ -1294,7 +1294,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\label{NFC}
 	Der WARP2 Charger unterstützt eine Ladefreigabe per NFC (siehe Abschnitt
 	\fullref{user_management}). Wenn diese aktiviert ist,
-	muss zum Starten und/oder zum Stoppen einer Ladung ein NFC-Tag, das einem Benutzer zugeordnet ist, an die rechte Seite
+	muss zum Starten und/oder zum Stoppen eines Ladevorgangs ein NFC-Tag, das einem Benutzer zugeordnet ist, an die rechte Seite
 	der Wallbox gehalten werden. Im Lieferumfang des WARP2 Chargers sind drei NFC-Karten enthalten,
 	die bereits angelernt sind. Es können aber beliebige andere NFC-Tags der Typen 1 bis 4,
 	sowie Mifare Classic angelernt werden. Der WARP2 Charger unterstützt bis zu 16 angelernte Tags.
@@ -1304,7 +1304,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	Auf der NFC-Unterseite des Webinterfaces kannst du die berechtigten Tags konfigurieren.
 	Im Werkszustand sind die drei mitgelieferten NFC-Karten angelernt,
-	das Starten und Stoppen einer Ladung ist aber so konfiguriert, dass eine
+	das Starten und Stoppen eines Ladevorgangs ist aber so konfiguriert, dass eine
 	Freigabe ohne Tag möglich ist.
 
 	Durch Klicken auf den \enquote{Tag hinzufügen}-Button kann ein neues Tag angelernt werden.
@@ -1324,7 +1324,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	App) ermittelt und eingetragen werden sollen.
 
 	Auf der Benutzerverwaltungs-Unterseite \fullref{user_management} kann die Option \enquote{Ladefreigabe} aktiviert werden.
-	Wenn diese aktiv ist, muss ein NFC-Tag verwendet werden um eine Ladung zu starten.
+	Wenn diese aktiv ist, muss ein NFC-Tag verwendet werden um einen Ladevorgang zu starten.
 	Wenn zusätzlich die \enquote{Tastereinstellung} auf der Ladecontroller-Unterseite auf \enquote{keine Aktion} konfiguriert wird,
 	muss auch zum Stoppen eines Ladevorgangs ein NFC-Tag an die Wallbox gehalten werden. Dies kann im
 	halb-öffentlichen Raum sinnvoll sein.
@@ -1348,9 +1348,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\gfx{./img_warp2/resized/blink_nack}
 
 	Wenn ein berechtigtes Tag erkannt wurde, sollte der Ladevorgang kurz danach
-	freigeschaltet werden. Es kann sein, dass die Ladung nicht
+	freigeschaltet werden. Es kann sein, dass der Ladevorgang nicht
 	sofort beginnt, sondern erst nachdem eine Ladefreigabe z.B. vom Lastmanagement erhalten wurde,
-	und das Fahrzeug eine Ladung anfordert. Die NFC-Freigabe bleibt aber erhalten,
+	und das Fahrzeug einen Ladevorgang anfordert. Die NFC-Freigabe bleibt aber erhalten,
 	bis das Ladekabel vom Fahrzeug getrennt wird.
 
 	\newpage \section{Fehlerbehebung}\label{fehlerbehebung} \subsection{Fehlersuche}
@@ -1362,7 +1362,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Für diesen Fehlerzustand gibt es verschiedene mögliche Ursachen:
 	\begin{itemize}
 		\item Die blaue LED geht nach etwa 15 Minuten Inaktivität aus. Das Drücken des Tasters
-		      oder das Anschließen eines Elektrofahrzeugs zur Ladung weckt die Wallbox wieder
+		      oder das Anschließen eines Elektrofahrzeugs weckt die Wallbox wieder
 		      und die LED sollte wieder dauerhaft leuchten.
 		\item Die Wallbox ist nicht mit Strom versorgt. Mögliche Ursachen: Stromausfall,
 		      Sicherung oder Fehlerstrom\-schutzschalter haben ausgelöst

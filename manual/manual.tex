@@ -405,8 +405,8 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	werden. Dazu wird die Schutzkappe vom Ladestecker entfernt und den Stecker in die
 	Ladebuchse des Elektrofahrzeugs gesteckt. Nach einer kurzen Zeit sollte hörbar
 	das Schütz in der Wallbox schalten und das Elektrofahrzeug sollte den Beginn
-	der Ladung anzeigen. Die Wallbox-LED \enquote{atmet} während des
-	Ladevorgangs. Ist die Ladung beendet, so leuchtet die LED permanent. Nach ca.
+	des Ladevorgangs anzeigen. Die Wallbox-LED \enquote{atmet} während des
+	Ladevorgangs. Ist der Ladevorgang beendet, so leuchtet die LED permanent. Nach ca.
 	15 Minuten Inaktivität schaltet sich die LED aus.
 
 	\subsection{Bedienelemente}\label{lockswitch}
@@ -481,9 +481,9 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	\subsection{Startseite / Status}
 	\gfx{./img/resized/web_status}
 	Die Startseite des Webinterfaces zeigt kompakt den aktuellen Ladestatus der
-	Wallbox, sowie Ladezeit und -strom, und erlaubt es, die Ladung zu steuern.
+	Wallbox, sowie Ladezeit und -strom, und erlaubt es, des Ladevorgangs zu steuern.
 	Du kannst hier sowohl das automatische Laden (de-)aktivieren, als auch
-	manuell eine Ladung starten oder stoppen.
+	manuell einen Ladevorgang starten oder stoppen.
 
 	In der Variante Pro mit verbautem Stromzähler wird zusätzlich der Ladeverlauf
 	über die letzten 48 Stunden und die aktuelle Leistungsaufnahme gezeigt.
@@ -610,20 +610,20 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	\subsection{Funktionsweise}
 	Durch das Lastmanagement kontrollierte Wallboxen laden nur,
 	wenn ihnen von außen ein erlaubter Ladestrom mitgeteilt wird. Wenn eine gewisse Zeit lang
-	kein erlaubter Ladestrom empfangen wurde, stoppt die Wallbox die Ladung automatisch.
+	kein erlaubter Ladestrom empfangen wurde, stoppt die Wallbox den Ladevorgang automatisch.
 	Der Lastmanager stoppt seinerseits das Laden an allen kontrollierten Wallboxen,
 	wenn eine Wallbox nicht mehr reagiert oder erreicht wird. Damit wird sichergestellt,
 	dass der verfügbare Strom nicht überschritten wird.
 
 	Der Lastmanager verteilt den verfügbaren Strom gleichmäßig zwischen allen Wallboxen, die laden bzw. ladebereit sind.
 	Falls bereits eine Wallbox lädt, und an eine zweite ein Fahrzeug angeschlossen wird,
-	wird der Ladestrom der ladenden Wallbox so beschränkt, dass für die zweite Ladung Strom verfügbar wird.
+	wird der Ladestrom der ladenden Wallbox so beschränkt, dass für den zweiten Ladevorgang Strom verfügbar wird.
 
 	\subsection{Konfiguration}
 	Um das Lastmanagement zu verwenden, muss zunächst auf allen Wallboxen, die gesteuert werden sollen,
 	sowie auf der Wallbox, die die anderen steuern soll, auf der Ladecontroller-Unterseite
 	das Lastmanagement aktiviert werden. Nach Aktivierung lädt eine Wallbox nur noch,
-	wenn die Ladung vom Lastmanagement freigegeben wird.
+	wenn der Ladevorgang vom Lastmanagement freigegeben wird.
 
 	Zusätzlich müssen auf der Wallbox, die die anderen steuern soll (dem Lastmanager), auf der Lastmanager-Unterseite
 	alle weiteren Wallboxen mit ihrer IP-Adresse hinzugefügt werden.
@@ -700,7 +700,7 @@ white,title=Hinweis]#1\end{tcolorbox}}
 	\begin{itemize}
 		\item Die Wallbox ist über den Schlüsselschalter deaktiviert. Siehe \fullref{lockswitch}.
 		\item Die Wallbox-LED geht nach etwa 15 Minuten Inaktivität aus. Das Drücken des Tasters
-		      oder das Anschließen eines Elektrofahrzeugs zur Ladung weckt die Wallbox wieder
+		      oder das Anschließen eines Elektrofahrzeugs weckt die Wallbox wieder
 		      und die LED sollte wieder dauerhaft leuchten.
 		\item Die Wallbox ist nicht mit Strom versorgt. Mögliche Ursachen: Stromausfall,
 		      Sicherung oder Fehlerstrom-schutzschalter haben ausgelöst
