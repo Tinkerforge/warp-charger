@@ -169,7 +169,7 @@ for m in mods:
 with open(sys.argv[2]) as f:
     content = f.readlines()[3:]
     for i, x in enumerate(content):
-        if x.endswith("}}\n"):
+        if x.endswith("}\n"):
             content = content[:i+1]
             break
 
