@@ -41,6 +41,36 @@ EAN13_NUMBERS = {
     'WARP2-CP-22KW-50-PC': b'4251640705541',
     'WARP2-CP-22KW-75-PC': b'4251640705558',
 
+    'WARP3-CB-11KW-50': b'4200000000000',
+    'WARP3-CB-11KW-75': b'4200000000000',
+    'WARP3-CB-22KW-50': b'4200000000000',
+    'WARP3-CB-22KW-75': b'4200000000000',
+
+    'WARP3-CS-11KW-50': b'4200000000000',
+    'WARP3-CS-11KW-75': b'4200000000000',
+    'WARP3-CS-22KW-50': b'4200000000000',
+    'WARP3-CS-22KW-75': b'4200000000000',
+
+    'WARP3-CP-11KW-50': b'4200000000000',
+    'WARP3-CP-11KW-75': b'4200000000000',
+    'WARP3-CP-22KW-50': b'4200000000000',
+    'WARP3-CP-22KW-75': b'4200000000000',
+
+    'WARP3-CB-11KW-50-PC': b'4200000000000',
+    'WARP3-CB-11KW-75-PC': b'4200000000000',
+    'WARP3-CB-22KW-50-PC': b'4200000000000',
+    'WARP3-CB-22KW-75-PC': b'4200000000000',
+
+    'WARP3-CS-11KW-50-PC': b'4200000000000',
+    'WARP3-CS-11KW-75-PC': b'4200000000000',
+    'WARP3-CS-22KW-50-PC': b'4200000000000',
+    'WARP3-CS-22KW-75-PC': b'4200000000000',
+
+    'WARP3-CP-11KW-50-PC': b'4200000000000',
+    'WARP3-CP-11KW-75-PC': b'4200000000000',
+    'WARP3-CP-22KW-50-PC': b'4200000000000',
+    'WARP3-CP-22KW-75-PC': b'4200000000000',
+
     'WARP-EM': b'4251640705381',
 }
 
@@ -138,23 +168,30 @@ def print_package2_label(sku, version, serial_number, build_date, instances, cop
 
     # parse SKU
     if sku == 'WARP-EM':
-        description = b'WARP Energy Manager'#
+        description = b'WARP Energy Manager'
         version_major = 1
         serial_number_kind = 7
     else:
-        m = re.match(r'^(?:TF-)?WARP2-C(B|S|P)-(11|22)KW-(50|75)(-PC)?$', sku)
+        m = re.match(r'^(?:TF-)?WARP(2|3)-C(B|S|P)-(11|22)KW-(50|75)(-PC)?$', sku)
 
         if m == None:
             raise Exception('Invalid SKU: {0}'.format(sku))
 
-        sku_model = m.group(1)
-        sku_power = m.group(2)
-        sku_cable = m.group(3)
-        sku_material = m.group(4)
+        sku_gen = m.group(1)
+        sku_model = m.group(2)
+        sku_power = m.group(3)
+        sku_cable = m.group(4)
+        sku_material = m.group(5)
 
-        description = b'WARP2 Charger '
-        version_major = 2
+        version_major = int(sku_gen)
         serial_number_kind = 5
+
+        if sku_gen == '2':
+            description = b'WARP2 Charger '
+        elif sku_gen == '3':
+            description = b'WARP3 Charger '
+        else:
+            assert False, sku_gen
 
         if sku_model == 'B':
             description += b'Basic'
