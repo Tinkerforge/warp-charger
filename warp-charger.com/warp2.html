@@ -954,11 +954,73 @@ client<span style='color:#808030; '>.</span>loop_forever<span style='color:#8080
             </div>
             <div class="row">
                 <div class="text-center">
-                    <a href="firmwares/warp2_firmware_2_1_5_653faf69_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP2 Firmware 2.1.5 herunterladen</a>
-                    <div class="text-muted pt-2 pb-2">Veröffentlicht am 30.10.2023</div>
+                    <a href="firmwares/warp2_firmware_2_2_0_65b14170_merged.bin" class="btn btn-primary btn-lg" id="download_latest_firmware">WARP2 Firmware 2.2.0 herunterladen</a>
+                    <div class="text-muted pt-2 pb-2">Veröffentlicht am 24.01.2024</div>
                 </div>
                 <div class="col-auto">
                     <table class="table table-borderless mb-3">
+                        <tbody>
+                            <tr>
+                                <th scope="row"><a href="firmwares/warp2_firmware_2_2_0_65b14170_merged.bin">2.2.0</a><br/><span class="th-details">24.01.2024</span><br/><a href="firmwares/warp2_firmware_2_2_0_65b14170_merged.bin.sha256">Prüfsumme</a></th>
+                                <td>
+                                    <ul>
+                                        <li><strong><a href="https://www.tinkerforge.com/de/blog/">Blogpost über die neuen Features</a>, sowie aktualisierte <a href="https://www.warp-charger.com/api.html">API-Dokumentation</a> folgen in Kürze.</strong></li>
+                                        <li>Automatisierung hinzugefügt</li>
+                                        <li>Unterstützung für WPA Enterprise (EAP-TLS, EAP-PEAP und EAP-TTLS) hinzugefügt</li>
+                                        <li>Stromzähler-Implementierung überarbeitet:
+                                        <ul>
+                                            <li>meters-API und Unterstützung von bis zu zwei Stromzählern hinzugefügt</li>
+                                            <li>Auslesen von SunSpec-Stromzählern und -Wechselrichtern hinzugefügt</li>
+                                            <li>Konfigurierbaren API-Stromzähler hinzugefügt</li>
+                                            <li>Unterstützung der Eltako DSZ15DZMOD und YTL DEM4A Stromzähler hinzugefügt (durch Update auf Ladecontroller-Firmware 2.2.0)</li>
+                                            <li>Zurücksetzbare Energie-Import- und -Export-Werte hinzugefügt</li>
+                                            <li><strong>Ladetracker usw. verwenden jetzt Energie-Import- statt wie bisher Import+Export-Wert.</strong> Wechsel findet beim nächsten Löschen der Ladevorgänge statt.</li>
+                                            <li>Fehlenden "Durchschnittliche Spannung gegen Neutralleiter"-Messwert des SDM72v2 hinzugefügt</li>
+                                        </ul>
+                                        <li>Maximum der (lastgemanagten) Wallboxen, NFC-Tags und Benutzern auf 32 erhöht</li>
+                                        <li>API um Ladelimits neuzustarten hinzugefügt</li>
+                                        <li>Ausgabe im Ereignislog für Zählerüberwachung hinzugefügt</li>
+                                        <li>OCPP-Transaktions-ID zu gemeldeten Stromzählerwerten hinzugefügt</li>
+                                        <li>Übersetzungen verbessert</li>
+                                        <li>MQTT-Performance verbessert</li>
+                                        <li>OCPP-Nutzerinterface verbessert</li>
+                                        <li>WLAN-Access-Point-Performance, falls gleichzeitig eine WLAN-Verbindung aufgebaut wird, verbessert</li>
+                                        <li>Fehlermeldungen in Eingabefeldern verbessert</li>
+                                        <li>DC-Fehler-Nutzerinterface verbessert. Unterstützung für X804-Sensor hinzugefügt (durch Update auf Ladecontroller-Firmware 2.2.0)</li>
+                                        <li>Diodenprüfung verbessert (durch Update auf Ladecontroller-Firmware 2.2.0)</li>
+                                        <li>Schütz- und PE-Fehler getrennt</li>
+                                        <li>Unterstützung von TLS-Versionen vor 1.2 entfernt</li>
+                                        <li>Hinzugefügt, dass WLAN-Access-Point bei instabiler WLAN-Verbindung länger geöffnet bleibt</li>
+                                        <li>Sichergestellt, dass zum WLAN-AP mit der besten Empfangsqualität verbunden wird</li>
+                                        <li>Subnetz-Konfiguration des WLAN-Access-Points repariert</li>
+                                        <li>Sichergestellt, dass Lastmanagement erst Strom verteilt, wenn alle gesteuerten Wallboxen erreichbar sind</li>
+                                        <li>Sichergestellt, dass WLAN-HT40-Modus immer deaktiviert bleibt</li>
+                                        <li>RFID-Tag-Register im Keba-Emulationsmodus ohne Stromzähler repariert</li>
+                                        <li>Web-Interface-Labels die fehlende IDs referenzieren entfernt</li>
+                                        <li>Änderung eines konfigurierten TLS-Zertifikats repariert</li>
+                                        <li>Reparatur der Zuordnung von NFC-Tags zu Nutzern beim Start der Wallbox hinzugefügt</li>
+                                        <li>Funktion des Zurück-Buttons bei Aufruf des Webinterfaces repariert</li>
+                                        <li>Tastatureingabe in Datumsfeldern repariert</li>
+                                        <li>Gemeldetes Intervall des Ladestroms in der MQTT-Auto-Discovery repariert</li>
+                                        <li>Zeitzonen-Datenbank aktualisiert</li>
+                                        <li>Anzeige der maximalen Anzahl von aufgezeichneten Ladevorgängen (7680) hinzugefügt</li>
+                                        <li>Repariert, dass Watchdog des verfügbaren Stroms des Lastmanagements permanent auslöste</li>
+                                        <li>Anzeige von LED-Blinkmustern während des Ladevorgangs erlaubt (durch Update auf Ladecontroller-Firmware 2.2.0)</li>
+                                        <li>Sichergestellt, dass Ladevorgang nicht sofort blockiert wird, wenn die externe Steuerung aktiviert wird (durch Update auf Ladecontroller-Firmware 2.2.0)</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOlderVersions" aria-expanded="false" aria-controls="collapseOlderVersions">
+                        Ältere Firmware-Versionen
+                    </button>
+                </div>
+                <div class="col-auto">
+                    <div class="collapse" id="collapseOlderVersions">
+                    <table id="firmware_old" class="table mt-3">
                         <tbody>
                             <tr>
                                 <th scope="row"><a href="firmwares/warp2_firmware_2_1_5_653faf69_merged.bin">2.1.5</a><br/><span class="th-details">30.10.2023</span><br/><a href="firmwares/warp2_firmware_2_1_5_653faf69_merged.bin.sha256">Prüfsumme</a></th>
@@ -984,18 +1046,6 @@ client<span style='color:#808030; '>.</span>loop_forever<span style='color:#8080
                                     </ul>
                                 </td>
                             </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="text-center">
-                    <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOlderVersions" aria-expanded="false" aria-controls="collapseOlderVersions">
-                        Ältere Firmware-Versionen
-                    </button>
-                </div>
-                <div class="col-auto">
-                    <div class="collapse" id="collapseOlderVersions">
-                    <table id="firmware_old" class="table mt-3">
-                        <tbody>
                             <tr>
                                 <th scope="row"><a href="firmwares/warp2_firmware_2_1_4_64e60ce2_merged.bin">2.1.4</a><br/><span class="th-details">23.08.2023</span><br/><a href="firmwares/warp2_firmware_2_1_4_64e60ce2_merged.bin.sha256">Prüfsumme</a></th>
                                 <td>
