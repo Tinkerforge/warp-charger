@@ -299,6 +299,8 @@ class Elem:
                 print("Function {} has a null payload but is not a command?!?".format(f.name))
             elif f.command_is_action:
                 table += "<br/><strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>"
+        elif self.type_ == EType.ARRAY and self.is_var_length_array:
+            table = ""
         else:
             table = self.to_html_table(is_root=True)
 
