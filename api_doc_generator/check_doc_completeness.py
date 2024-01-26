@@ -97,6 +97,10 @@ UNDOCUMENTED = [
     "devices",
     "error_counters",
     "debug/state",
+    "debug/state_static",
+    "debug/state_fast",
+    "debug/state_slow",
+    "debug/state_hwm",
     "proxy/devices",
     "proxy/error_counters",
     "evse/identity",
@@ -125,6 +129,7 @@ UNDOCUMENTED = [
     "energy_manager/history_energy_manager_5min",
     "energy_manager/history_energy_manager_daily",
     "coredump/state",
+    "meters_sun_spec/scan"
 ]
 
 version = Version(int(sys.argv[1]))
@@ -133,7 +138,6 @@ mods = [m for m in mods if version in m.version]
 
 # Those are documented, but will not appear in a debug report. Typically raw commands.
 IMPLEMENTED = [
-    "charge_tracker/remove_all_charges",
     "users/modify"
 ]
 

@@ -45,6 +45,23 @@ wifi = Module("wifi", "WLAN-Konfiguration", "", "", Version.ANY, [
             "subnet": Elem.STRING("Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll."),
             "dns": Elem.STRING("DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll."),
             "dns2": Elem.STRING("Alternative DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll."),
+            "wpa_eap_config": Elem.UNION("WPA-Enterprise-Konfiguration", members={
+                0: Elem.NULL("WPA Personal"),
+                1: Elem.OBJECT("EAP-TLS", members={
+                    "ca_cert_id": Elem.INT("ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe {{{ref:certs/state}}}"),
+                    "identity": Elem.STRING("Anonyme Identität für dem Verbindungsaufbau zum RADIUS-Server. (Optional) <a href=\"https://security.stackexchange.com/a/201848\">Siehe hier für Details</a>"),
+                    "client_cert_id": Elem.INT("ID des Client-Zertifikats mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe {{{ref:certs/state}}}"),
+                    "client_key_id": Elem.INT("ID des Zertifikats-Keys mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe {{{ref:certs/state}}}"),
+                }),
+                2: Elem.OBJECT("EAP-PEAP oder EAP-TTLS", members={
+                    "ca_cert_id": Elem.INT("ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe {{{ref:certs/state}}}"),
+                    "identity": Elem.STRING("Anonyme Identität für dem Verbindungsaufbau zum RADIUS-Server. (Optional) <a href=\"https://security.stackexchange.com/a/201848\">Siehe hier für Details</a>"),
+                    "username": Elem.STRING("Benutzername"),
+                    "password": Elem.STRING("Passwort", censored=True),
+                    "client_cert_id": Elem.INT("ID des Client-Zertifikats mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe {{{ref:certs/state}}}"),
+                    "client_key_id": Elem.INT("ID des Zertifikats-Keys mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe {{{ref:certs/state}}}"),
+                }),
+            })
         })
     ),
 

@@ -88,7 +88,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
     ),
 
     Func("slots", FuncType.STATE, Elem.ARRAY("Der Zustand der Ladeslots. Siehe TODO LINK für Details.", members=[
-            * 14 * [Elem.OBJECT("Ein Ladeslot", members = {
+            * 15 * [Elem.OBJECT("Ein Ladeslot", members = {
                 "max_current": Elem.INT("Maximal erlaubter Ladestrom. 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockiert.", unit=Units.mA),
                 "active": Elem.BOOL("Gibt an ob dieser Slot aktiv ist.", constants=[
                     Const(True, "Slot ist aktiv"),
@@ -199,6 +199,11 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
             "time_since_state_change": Elem.INT("Zeit seit dem letzten IEC-61851-Zustandswechsel. Falls der Zustand 2 (= B: Lädt) ist, entspricht dieser Wert der Ladezeit.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms),
             "uptime": Elem.INT("Zeit seit Starten des Ladecontrollers.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms),
             "time_since_dc_fault_check": Elem.INT("Zeit seit dem letzten Test des DC-Fehlerstrom-Schutzmoduls. Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms, version=Version.WARP2),
+            "dc_fault_sensor_type": Elem.INT("Typ des DC-Fehlerstrom-Sensors", version=Version.WARP2, constants=[
+                Const(0, "X904"),
+                Const(0, "X804")
+            ]),
+            "dc_fault_pins": Elem.INT("Zustand der Pins des DC-Schutzmodul beim letzten Fehler, falls ein Fehler aufgetreten ist. Kalibrierungsfehlercode, falls ein Kalibrierungsfehler aufgetreten ist.", version=Version.WARP2)
         })
     ),
 
@@ -266,6 +271,11 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
 
     Func("ocpp_enabled", FuncType.STATE, Elem.OBJECT("Gibt an, ob der Ladeslot für OCPP aktiv ist. Der Wert kann über evse/ocpp_enabled_update mit dem selben Payload aktualisiert werden.", members={
             "enabled": Elem.BOOL("true wenn OCPP aktiviert ist, sonst false")
+        })
+    ),
+
+    Func("automation_current", FuncType.STATE, Elem.OBJECT("Der von der Automatisierung erlaubte Ladestrom. Kann über evse/automation_current_update mit dem selben Payload aktualisiert werden.", members={
+            "current": Elem.INT("Der von der Automatisierung erlaubte Ladestrom. 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockiert.", unit=Units.mA)
         })
     ),
 
@@ -367,5 +377,9 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
     Func("start_charging", FuncType.COMMAND, Elem.NULL("Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit {{{ref:evse/stop_charging}}} wieder gestoppt werden."), command_is_action=True),
 
     Func("start_debug", FuncType.HTTP_ONLY, Elem.OPAQUE("Startet ein Ladeprotokoll. Es werden hochfrequent Messwerte des Ladecontrollers auf die WebSockets geschrieben, bis {{{ref:evse/stop_debug}}} aufgerufen wird.")),
-    Func("stop_debug", FuncType.HTTP_ONLY, Elem.OPAQUE("Stoppt ein Ladeprotokoll. Siehe {{{ref:evse/start_debug}}} für Details."))
+    Func("stop_debug", FuncType.HTTP_ONLY, Elem.OPAQUE("Stoppt ein Ladeprotokoll. Siehe {{{ref:evse/start_debug}}} für Details.")),
+
+    Func("meter_config", FuncType.CONFIGURATION, Elem.OBJECT("Gibt an, welcher Stromzähler für Berechnungen im Zusammenhang mit Ladevorgängen verwendet werden soll. (z.B. Ladetracker, Ladelimits, usw.)", members={
+        "slot": Elem.INT("Stromzählerslot, der verwendet werden soll")
+    }))
 ])

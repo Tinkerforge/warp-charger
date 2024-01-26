@@ -20,5 +20,9 @@ from energy_manager import energy_manager
 from charge_limits import charge_limits
 from require_meter import require_meter
 from certs import certs
+from automation import automation
+from meters import meters
+from meters_legacy_api import meters_legacy_api
+from power_manager import power_manager
 
-mods = [evse, meter, require_meter, charge_manager, users, charge_tracker, nfc, network, wifi, ethernet, ntp, mqtt, modbus_tcp, ocpp, wireguard, rtc, certs, info, authentication, misc, energy_manager, charge_limits]
+mods = [evse, meters, require_meter, charge_manager, users, charge_tracker, nfc, network, wifi, ethernet, ntp, mqtt, modbus_tcp, ocpp, wireguard, rtc, certs, info, authentication, misc, energy_manager, power_manager, charge_limits, automation, meters_legacy_api, meter]

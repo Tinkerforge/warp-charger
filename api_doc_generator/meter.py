@@ -9,11 +9,13 @@ meter = Module("meter", "Veraltete Stromzähler-API", "Bei Neuentwicklungen stat
             ]),
             "type": Elem.INT("Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!", constants=[
                 Const(0, "Kein Stromzähler verfügbar"),
-                Const(1, "SDM72", Version.WARP1),
-                Const(2, "SDM630", Version.ANY),
-                Const(3, "SDM72V2", Version.ANY),
-                Const(4, "SDM72CTM", Version.WARPEM),
-                Const(5, "SDM72MCT", Version.WARPEM)
+                Const(1, "Eastron SDM72", Version.WARP1),
+                Const(2, "Eastron SDM630", Version.ANY),
+                Const(3, "Eastron SDM72V2", Version.ANY),
+                Const(4, "Eastron SDM72CTM", Version.WARP2 | Version.WARPEM),
+                Const(5, "Eastron SDM630MCT", Version.WARP2 | Version.WARPEM),
+                Const(6, "Eltako DSZ15DZMOD", Version.WARP2 | Version.WARPEM),
+                Const(7, "YTL DEM4A", Version.WARP2 | Version.WARPEM),
             ])
         })
     ),

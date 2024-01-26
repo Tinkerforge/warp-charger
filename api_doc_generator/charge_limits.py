@@ -66,4 +66,7 @@ charge_limits = Module("charge_limits", "Ladezeit- und -energielimits", "", "", 
             "energy_wh": Elem.INT("Energielimit eines Ladevorgangs. Nach Ablaufen des Energielimits wird der Ladevorgang gestoppt.", unit=Units.Wh),
         })
     ),
+
+    Func("restart", FuncType.COMMAND, Elem.NULL("Setzt die Ladelimits zurück, so als ob ein neuer Ladevorgang begonnen hätte, behält aber die überschriebenen Ladelimits bei. Mit dieser API und {{{ref:charge_limits/override_duration}}} und {{{ref:charge_limits/override_energy}}} kann zu einem beliebigen Zeitpunkt ein neues \"absolutes\" Ladelimit gesetzt werden.")
+    ),
 ])

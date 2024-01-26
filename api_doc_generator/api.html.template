@@ -114,13 +114,16 @@
                             <a class="nav-link ms-3" href="#features_cp_disconnect">Control Pilot Disconnect (<code>"cp_disconnect"</code>)</a>
                             <a class="nav-link ms-3" href="#features_button_configuration">Button-Konfiguration (<code>"button_configuration"</code>)</a>
                             <a class="nav-link ms-3" href="#features_ethernet">Ethernet (<code>"ethernet"</code>)</a>
-                            <a class="nav-link ms-3" href="#features_meter">Stromzähler (<code>"meter"</code>)</a>
-                            <a class="nav-link ms-3" href="#features_meter_phases">Stromzähler misst phasenweise (<code>"meter_phases"</code>)</a>
-                            <a class="nav-link ms-3" href="#features_meter_all_values">Stromzähler misst weitere Werte (<code>"meter_all_values"</code>)</a>
+                            <a class="nav-link ms-3" href="#features_meters">Stromzähler (<code>"meters"</code>)</a>
                             <a class="nav-link ms-3" href="#features_nfc">NFC-Bricklet (<code>"nfc"</code>)</a>
                             <a class="nav-link ms-3" href="#features_rtc">RTC-Bricklet (<code>"rtc"</code>)</a>
+                            <a class="nav-link ms-3" href="#features_meter">(veraltete API) Stromzähler (<code>"meter"</code>)</a>
+                            <a class="nav-link ms-3" href="#features_meter_phases">(veraltete API) Stromzähler misst phasenweise (<code>"meter_phases"</code>)</a>
+                            <a class="nav-link ms-3" href="#features_meter_all_values">(veraltete API) Stromzähler misst weitere Werte (<code>"meter_all_values"</code>)</a>
                         </nav>
                     </div>
+
+                    <a class="nav-link" href="#unions_section">Unions</a>
 
                     <a class="nav-link" href="#reference">API-Referenz</a>
                     <div class="collapse">
@@ -500,22 +503,10 @@
                 Es ist ein ESP Ethernet Brick verbaut. Eine LAN-Verbindung ist möglich.
             </p>
         </div>
-        <div id="features_meter" class="container">
-            <h4>Stromzähler (<code>"meter"</code>)</h4>
+        <div id="features_meters" class="container">
+            <h4>Stromzähler (<code>"meters"</code>)</h4>
             <p>
-                Ein Stromzähler und Hardware zum Auslesen desselben über RS485 ist verfügbar. Dieses Feature wird erst gesetzt, wenn ein Stromzähler mindestens einmal erfolgreich über Modbus ausgelesen wuerde.
-            </p>
-        </div>
-        <div id="features_meter_phases" class="container">
-            <h4>Stromzähler misst phasenweise (<code>"meter_phases"</code>)</h4>
-            <p>
-                Der verbaute Stromzähler kann Energie und weitere Messwerte einzelner Phasen messen.
-            </p>
-        </div>
-        <div id="features_meter_all_values" class="container">
-            <h4>Stromzähler misst weitere Werte (<code>"meter_all_values"</code>)</h4>
-            <p>
-                Der verbaute Stromzähler kann weitere Messwerte auslesen.
+                Von mindestens einem Stromzähler konnten erfolgreich Werte gelesen werden.
             </p>
         </div>
         <div id="features_nfc" class="container">
@@ -530,7 +521,41 @@
                 Ein RTC-Bricklet wurde gefunden. Die Systemzeit wird auch ohne Netzwerk-Zeitsynchronisierung über Neustarts hinweg erhalten.
             </p>
         </div>
+        <div id="features_meter" class="container">
+            <h4>(veraltete API) Stromzähler (<code>"meter"</code>)</h4>
+            <p>
+                Ein Stromzähler und Hardware zum Auslesen desselben über RS485 ist verfügbar. Dieses Feature wird erst gesetzt, wenn ein Stromzähler mindestens einmal erfolgreich über Modbus ausgelesen wuerde.
+            </p>
+        </div>
+        <div id="features_meter_phases" class="container">
+            <h4>(veraltete API) Stromzähler misst phasenweise (<code>"meter_phases"</code>)</h4>
+            <p>
+                Der verbaute Stromzähler kann Energie und weitere Messwerte einzelner Phasen messen.
+            </p>
+        </div>
+        <div id="features_meter_all_values" class="container">
+            <h4(veraltete API) >Stromzähler misst weitere Werte (<code>"meter_all_values"</code>)</h4>
+            <p>
+                Der verbaute Stromzähler kann weitere Messwerte auslesen.
+            </p>
+        </div>
     </section>
+
+    <section id="unions_section" class="section">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>Unions</h3>
+            </header>
+            <p>
+                Verschiedene APIs des WARP Chargers benutzen <a href="https://de.wikipedia.org/wiki/Verbund_(Datentyp)#Unions">Unions</a>
+                (auch bekannt als <a href="https://de.wikipedia.org/wiki/Algebraischer_Datentyp#Summentyp">Summentypen</a>), um veränderliche Objekte auszudrücken.
+                Eine Union besteht aus deren Daten, sowie einem Tag, dass angibt welche Variante der Daten verwendet wird. Als Tag wird immer eine Zahl verwendet. Tag und Daten werden in einem JSON-Array mit immer genau zwei Einträgen dargestellt.
+                Ein Wert der entweder ein Objekt mit zwei Einträgen oder eine Zeichenkette sein soll, könnte z.B. so ausgedrückt werden:
+                <samp>[0, {"entry_a": 123, "entry_b": "abc"}]</samp> bzw. <samp>[1, "Hello World"]</samp>.
+            </p>
+        </div>
+    </section>
+
     <section id="reference" class="section row">
         <div class="container">
           <header class="reference-section-header">
