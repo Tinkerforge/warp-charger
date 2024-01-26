@@ -155,7 +155,7 @@ class Elem:
         return Elem(EType.BOOL, desc, None, None, constants, False, None, None, censored, version, None)
 
     @staticmethod
-    def NULL(desc: str, version: Version = Version.ANY):
+    def NULL(desc: str, *, version: Version = Version.ANY):
         return Elem(EType.NULL, desc, None, None, None, False, None, None, False, version, None)
 
     @staticmethod
