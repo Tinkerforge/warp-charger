@@ -41,13 +41,17 @@ def specialize_template(template_filename, destination_filename, replacements, c
 
 def resolve_ref(match, reference_link_texts):
     ref = match.group(1)
+    label = None
+    if ":" in ref:
+        ref, label = ref.split(":", 1)
+
     module, fn = parse_api_name(ref)
     if module == "misc":
         anchor = ref
-        link_text = ref
+        link_text = ref if label is None else label
     else:
         anchor = "{}_{}".format(module, fn)
-        link_text = "{}/{}".format(module, fn)
+        link_text = "{}/{}".format(module, fn) if label is None else label
 
     if anchor not in reference_link_texts:
         if anchor.endswith("_update") and anchor.replace("_update", "") in reference_link_texts:
