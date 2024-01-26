@@ -3,11 +3,23 @@ from enum import Enum, IntEnum, IntFlag, auto
 from typing import Union, Optional
 import itertools
 
+import re
+
 def wrap_non_empty(prefix, middle, suffix):
     if len(middle) == 0:
         return ''
 
     return prefix + middle + suffix
+
+def parse_api_name(api_name):
+    if '/' not in api_name:
+        mod = "misc"
+        fn = api_name
+    else:
+        mod, fn = api_name.split("/", 1)
+
+    fn = re.sub(r"^\d+/", "X/", fn, count=1)
+    return mod, fn
 
 @dataclass
 class Unit:
@@ -307,7 +319,7 @@ class Elem:
         if f.type_ != FuncType.STATE and self.type_ == EType.OBJECT and len(self.val.items()) == 1 and not "do_i_know_what_i_am_doing" in self.val:
             table = "<br/><strong><a href=\"#states_section_shortcuts\">Kann abgekürzt werden.</a></strong>" + table
 
-        return template.format(fn_id = module + "_" + f.name if module is not None else f.name,
+        return template.format(fn_id = (module + "/" + f.name if module is not None else f.name).replace("/", "_"),
                                fn_path = module + "/" + f.name if module is not None else f.name,
                                fn_desc = self.desc,
                                fn_table = table,

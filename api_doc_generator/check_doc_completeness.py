@@ -187,11 +187,7 @@ for k, v in debug_report.items():
     if k.endswith("_reset") and k.replace("_reset", "") in debug_report:
         continue
 
-    if '/' not in k:
-        mod = "misc"
-        fn = k
-    else:
-        mod, fn = k.split("/")
+    mod, fn = parse_api_name(k)
 
     for m in mods:
         if m.name != mod:

@@ -41,11 +41,11 @@ def specialize_template(template_filename, destination_filename, replacements, c
 
 def resolve_ref(match, reference_link_texts):
     ref = match.group(1)
-    if "/" not in ref:
+    module, fn = parse_api_name(ref)
+    if module == "misc":
         anchor = ref
         link_text = ref
     else:
-        module, fn = ref.split("/")
         anchor = "{}_{}".format(module, fn)
         link_text = "{}/{}".format(module, fn)
 
@@ -75,7 +75,7 @@ for m in mods:
         fns = list(fns)
         nav_fns.append(nav_group_template.format(group.name_plural()))
         nav_fns += [nav_function_template.format(
-                link="{}_{}".format(m.name, f.name) if not m.hide_prefix else f.name,
+                link=("{}/{}".format(m.name, f.name) if not m.hide_prefix else f.name).replace("/", "_"),
                 link_text="{}/<wbr>{}".format(m.name, f.name) if not m.hide_prefix else f.name) for f in fns]
 
         reference_link_texts += ["{}_{}".format(m.name, f.name) if not m.hide_prefix else f.name for f in fns]
