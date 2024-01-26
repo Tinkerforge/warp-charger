@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-ocpp = Module("ocpp", "OCPP-Verbindung", "", Version.WARP2, [
+ocpp = Module("ocpp", "OCPP-Verbindung", "", "", Version.WARP2, [
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Konfiguration der OCPP-Verbindung", members={
         "enable": Elem.BOOL("Gibt an, ob eine Verbindung zum konfigurierten OCPP-Server aufgebaut werden soll. Damit nicht nur das Auslesen des Zustands, sondern zusätzlich eine Steuerung möglich ist, muss außerdem {{{ref:evse/ocpp_enabled}}} true sein."),
         "url": Elem.STRING("Endpoint-URL des OCPP-Servers. Muss mit dem Schema ws:// (unverschlüsselt!) oder wss:// (TLS-verschlüsselt) beginnen und darf <strong>nicht</strong> auf / enden."),

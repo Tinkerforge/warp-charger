@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-misc = Module("misc", "Sonstiges", "", Version.ANY, [
+misc = Module("misc", "Sonstiges", "", "", Version.ANY, [
     Func("reboot", FuncType.COMMAND, Elem.NULL("Startet den ESP neu, um beispielsweise Konfigurationsänderungen anzuwenden."), command_is_action=True),
 
     Func("debug_report", FuncType.HTTP_ONLY, Elem.OPAQUE("Generiert einen Debug-Report. Dieser besteht aus allen Zuständen und Konfigurationen, sowie den letzten empfangenen Kommandos und Konfigurationsupdates. Passwörter werden, genau wie bei Konfigurationsabfragen, zensiert.")),

@@ -353,6 +353,7 @@ class Elem:
 class Module:
     name: str
     display_name: str
+    subheader: str
     desc: str
     version: Version
     functions: list[Func]
@@ -361,9 +362,10 @@ class Module:
     def to_html(self) -> str:
         template = """<section id="reference-{name}" class="section {version}">
     <header class="reference-section-header">
-        <h4>{display_name}</h4>{desc}
-
+        <h4>{display_name}</h4>{subheader}
+        {desc}
     </header>
+
     <ul class="ul-no-bullet">
         {toc}
     </ul>
@@ -390,9 +392,9 @@ class Module:
                 group_name=group.name_plural(),
                 links='\n'.join("<li>{{{ref:" + ("{}/{}".format(self.name, x.name) if not self.hide_prefix else x.name) + "}}}</li>" for x in fns)))
 
-
         return template.format(name=self.name,
-                               desc=wrap_non_empty("<h5>",self.desc,"</h5>"),
+                               subheader=wrap_non_empty("<h5>",self.subheader,"</h5>"),
+                               desc=wrap_non_empty("", self.desc, "<br><br>"),
                                display_name=self.display_name,
                                version=self.version.css_classes(),
                                toc="\n".join(toc),

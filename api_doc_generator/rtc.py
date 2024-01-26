@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-rtc = Module("rtc", "Zeiteinstellungen der Real-Time Clock", "Benötigt das Feature <a href=\"#features_nfc\"><code>\"rtc\"</code></a>.", Version.ANY, [
+rtc = Module("rtc", "Zeiteinstellungen der Real-Time Clock", "Benötigt das Feature <a href=\"#features_nfc\"><code>\"rtc\"</code></a>.", "", Version.ANY, [
     Func("time", FuncType.CONFIGURATION, Elem.OBJECT("Die aktuelle Zeit auf der Real-Time Clock. Kann über rtc/time_update mit dem selben Payload gesetzt werden.", members={
             "year": Elem.INT("Das Jahr. 2000 bis 2099"),
             "month": Elem.INT("Der Monat. 1 bis 12"),

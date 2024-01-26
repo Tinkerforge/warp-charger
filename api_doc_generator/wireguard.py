@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-wireguard = Module("wireguard", "WireGuard-Verbindung", "", Version.ANY, [
+wireguard = Module("wireguard", "WireGuard-Verbindung", "", "", Version.ANY, [
     Func("state", FuncType.STATE, Elem.OBJECT("Der aktuelle WireGuard-Zustand.", members={
             "state": Elem.INT("Zustand der Verbindung zum WireGuard-Peer", constants=[
                 Const(0, "Nicht konfiguriert"),

@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-authentication = Module("authentication", "Zugangsdaten", "", Version.WARPEM, [
+authentication = Module("authentication", "Zugangsdaten", "", "", Version.WARPEM, [
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Zugangsdaten, die für die Verwendung von Webinterface und HTTP-API abgefragt werden sollen.", members={
             "enable_auth": Elem.BOOL("Gibt an ob zur Verwendung von Webinterface und HTTP-API Zugangsdaten nötig sein sollen.", constants=[
                 Const(True, "Falls Zugangsdaten verlangt werden sollen."),

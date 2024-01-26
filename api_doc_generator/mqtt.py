@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-mqtt = Module("mqtt", "MQTT-Verbindung", "", Version.ANY, [
+mqtt = Module("mqtt", "MQTT-Verbindung", "", "", Version.ANY, [
     Func("state", FuncType.STATE, Elem.OBJECT("Der aktuelle MQTT-Zustand.", members={
             "connection_state": Elem.INT("Zustand der Verbindung zum MQTT-Broker", constants=[
                 Const(0, "Nicht konfiguriert"),

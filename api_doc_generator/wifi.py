@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-wifi = Module("wifi", "WLAN-Konfiguration", "", Version.ANY, [
+wifi = Module("wifi", "WLAN-Konfiguration", "", "", Version.ANY, [
     Func("state", FuncType.STATE, Elem.OBJECT("Der aktuelle WLAN-Zustand.", members={
             "connection_state": Elem.INT("Zustand der Verbindung zum konfigurierten WLAN. Siehe {{{ref:wifi/sta_config}}}", constants=[
                 Const(0,"Nicht konfiguriert"),

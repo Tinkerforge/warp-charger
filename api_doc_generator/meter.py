@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-meter = Module("meter", "Stromzähler", "", Version.ANY, [
+meter = Module("meter", "Veraltete Stromzähler-API", "Bei Neuentwicklungen stattdessen <a href=\"#reference-meters\">meters<a> verwenden!", "", Version.ANY, [
     Func("state", FuncType.STATE, Elem.OBJECT("Der Zustand des Stromzählers.", members={
             "state": Elem.INT("Zustand des Stromzählers", constants=[
                 Const(0, "Kein Stromzähler verbunden"),

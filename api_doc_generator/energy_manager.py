@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", Version.WARPEM, [
+energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", "", Version.WARPEM, [
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Konfiguration des Energy Managers", members={
             "default_mode": Elem.INT("Der nach einem Neustart des Energy Managers verwendete Lademodus", constants=[
                 Const(0, "Schnell. Lädt Fahrzeuge so schnell wie möglich, selbst wenn dafür Netzbezug notwendig ist."),
