@@ -79,6 +79,7 @@ class EType(IntEnum):
     BOOL = 5
     NULL = 6
     OPAQUE = 7
+    UNION = 8
 
 class Version(IntFlag):
     # -1 in two's complement has all bits set, so ANY matches any version
@@ -117,7 +118,7 @@ class Elem:
     type_: EType
     desc: str
     unit: Optional[Unit]
-    val: Optional[Union[list['Elem'], dict[str, 'Elem']]]
+    val: Optional[Union[list['Elem'], dict[str, 'Elem'], dict[int, 'Elem']]]
     constants: Optional[list[Const]]
     is_var_length_array: bool
     var_length_array_type: Optional[EType]
@@ -162,12 +163,18 @@ class Elem:
     def OPAQUE(desc: str):
         return Elem(EType.OPAQUE, desc, None, None, None, False, None, None, False, Version.ANY, None)
 
+    @staticmethod
+    def UNION(desc: str, *, members: dict[int, 'Elem'], censored: bool = False, version: Version = Version.ANY):
+        return Elem(EType.UNION, desc, None, members, None, False, None, None, censored, version, None)
+
     def get_type(self) -> str:
         if self.type_ in (EType.OBJECT,
                           EType.STRING,
                           EType.INT,
                           EType.FLOAT,
-                          EType.BOOL):
+                          EType.BOOL,
+                          EType.UNION,
+                          EType.NULL):
             return self.type_.name.lower()
 
         if self.type_ == EType.ARRAY:
@@ -179,15 +186,15 @@ class Elem:
 
             return self.val[0].get_type() + "[{}]".format(len(self.val))
 
-        if self.type_ == EType.OBJECT:
-            return "object"
-
     def get_unit(self) -> str:
         if self.type_ in (EType.OBJECT,
                           EType.STRING,
                           EType.INT,
                           EType.FLOAT,
-                          EType.BOOL):
+                          EType.BOOL,
+                          EType.OPAQUE,
+                          EType.UNION,
+                          EType.NULL):
             return self.unit.to_html() if self.unit is not None else ''
 
         if self.type_ == EType.ARRAY:
@@ -201,9 +208,6 @@ class Elem:
                 return self.val[0].get_unit()
 
             print("Warning: Array with more than one unit found! Those units will not be documented")
-            return ''
-
-        if self.type_ == EType.OBJECT or self.type_ == EType.OPAQUE:
             return ''
 
     def to_html(self, key_name) -> str:
@@ -274,7 +278,7 @@ class Elem:
                 return result
             desc = get_desc(desc)
 
-        if self.type_ == EType.OBJECT:
+        if self.type_ == EType.OBJECT or self.type_ == EType.UNION:
             desc += self.to_html_table(is_root=False)
 
         return row_template.format(version_class=self.version.css_classes(),
@@ -331,6 +335,9 @@ class Elem:
 
         if self.type_ == EType.OBJECT:
             return table_template.format(name_or_index="Name", striped=striped, rows='\n'.join([v.to_html(k) for k, v in self.val.items()]))
+
+        if self.type_ == EType.UNION:
+            return table_template.format(name_or_index="Tag", striped=striped, rows='\n'.join([v.to_html(k) for k, v in self.val.items()]))
 
         if self.type_ == EType.ARRAY:
             idx = 0
