@@ -97,7 +97,7 @@ power_manager = Module("power_manager", "Konfiguration des PV-Überschussladens"
             ])
         })
     ),
-    Func("charge_mode", FuncType.STATE, Elem.OBJECT("Aktuell verwendeter Lademodus. Kann über energy_manager/charge_mode_update mit dem selben Payload aktualisiert werden.", members={
+    Func("charge_mode", FuncType.STATE, Elem.OBJECT("Aktuell verwendeter Lademodus. Kann über power_manager/charge_mode_update mit dem selben Payload aktualisiert werden.", members={
             "mode": Elem.INT("", constants=[
                 Const(0, "Schnell. Lädt Fahrzeuge so schnell wie möglich, selbst wenn dafür Netzbezug notwendig ist."),
                 Const(1, "Aus. Fahrzeuge werden nicht geladen."),
