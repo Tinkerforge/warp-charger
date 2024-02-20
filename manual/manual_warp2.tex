@@ -985,6 +985,11 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Im System-Unterabschnitt kannst du das Ereignis-Log einsehen und Firmware-Aktualisierungen einspielen.
 	Außerdem können hier die Benutzer der WARP Chargers verwaltet werden (Siehe \ref{user_management}).
 
+	\subsubsection{TLS-Zertifikate}\label{tls}
+	Hier können bis zu acht TLS-Zertifikate hochgeladen werden. Diese Zertifikate können
+	dann für OCPP, MQTT oder in den WLAN Einstellungen genutzt werden. Ansonsten
+	wird das \glqq ESP x509 Certificate Bundle\grqq~genutzt.
+
 	\subsubsection{Zeitsynchronisierung}\label{ntp}
 	Um für den Ladetracker und das Ereignis-Log die aktuelle Uhrzeit zur Verfügung zu haben, kann der WARP Charger diese per NTP über
 	eine Netzwerkverbindung synchronisieren. Auf dieser Unterseite kannst du NTP aktivieren oder deaktivieren und die Zeitzone, in der sich
@@ -1013,80 +1018,6 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\gfx{./img_warp2/resized/web_firmware_update}
 
 	Außerdem kannst du hier das Webinterface neustarten, ohne einen Ladevorgang zu unterbrechen.
-
-	\subsection{Wiederherstellungsmodus}\label{recovery}
-	Falls die Wallbox weder ihren Access Point öffnet, noch über ein konfiguriertes Netzwerk auf das Webinterface zugegriffen werden kann,
-	kannst du wie folgt den Wiederherstellungsmodus starten:
-	\begin{enumerate}
-	 \item Mache die Wallbox stromlos
-	 \item Halte den Taster im Deckel gedrückt
-	 \item Versorge die Wallbox wieder mit Strom (ggfalls. mit einer zweiten Person)
-	 \item Halte den Taster mindestens 10, aber maximal 30 Sekunden gedrückt
-	\end{enumerate}
-	Die Wallbox startet dann im Wiederherstellungsmodus. Zunächst werden die Netzwerkeinstellungen gelöscht, sowie die Anmeldung deaktiviert.
-	Bei Erfolg sollte es jetzt möglich sein, über den Access Point wieder auf die Wallbox zuzugreifen.
-
-	Durch erneutes Trennen und Verbinden der Stromversorgung innerhalb der ersten Minute im Wiederherstellungsmodus kann ein Zurücksetzen auf Werkszustand ausgelöst werden.
-
-	\vfill
-	\null
-	\columnbreak
-
-	\subsection{Zurücksetzen auf Werkszustand}\label{reset}
-	Falls das Webinterface nicht korrekt funktioniert, oder die Konfiguration defekt ist,
-	kannst du auf der Firmware-Aktualisierungs-Unterseite alle Einstellungen auf den Werkszustand zurücksetzen.
-	\hint{Durch das Zurücksetzen auf Werkszustand gehen \mbox{\textbf{alle}} Konfigurationen, angelegte Benutzer, angelernte NFC-Tags und getrackte Ladevorgänge verloren.}
-	Nach dem Zurücksetzen startet das Webinterface wieder und öffnet
-	den Access-Point mit der SSID und Passphrase, die auf dem Aufkleber vermerkt sind. Die Wallbox kann jetzt wieder nach \fullref{setup} konfiguriert werden.
-
-	Damit getrackte Ladevorgänge nicht verloren gehen kann alternativ nur die Konfiguration zurückgesetzt werden.
-	Angelegte Benutzer (aber nicht der Benutzerverlauf des Ladetrackers) und NFC-Tags werden dennoch gelöscht.
-
-	Falls du das Webinterface nicht mehr erreichen kannst, bestehen folgende Optionen:
-
-	Falls eine Netzwerkverbindung aufgebaut werden kann, aber das Webinterface selbst nicht mehr funktioniert, kannst du versuchen, die Recovery-Seite zu öffnen.
-	Falls du über den Access Point der Wallbox verbunden bist, erreichst du diese unter \url{http://10.0.0.1/recovery},
-	bei einer bestehenden Verbindung zu einem LAN oder WLAN über \url{http://[konfigurierter_hostname]/recovery}, also z.B. \url{http://warp2-ABC/recovery}.
-	Über die Recovery-Seite kannst du die Wallbox neustarten, Firmware-Updates einspielen,
-	die Wallbox auf den Werkszustand zurücksetzen (Factory Reset), Debug-Reports
-	herunterladen und die HTTP-API verwenden (siehe \fullref{http-interface})
-
-	Alternativ kannst du die Wallbox (genauer: den verbauten ESP32 Ethernet
-	Brick) neu flashen.
-	Du benötigst dazu einen PC mit installiertem Brick Viewer 2.4.20 oder neuer. Diesen findest du unter
-	\rurl{https://www.tinkerforge.com/de/doc/Software/Brickv.html}{tinkerforge.com/de/doc/Software/Brickv.html}.
-	Außerdem benötigst du ein USB-C-Kabel um den Brick an deinen PC anzuschließen. Brick Daemon wird nicht benötigt.
-	Gehe zum Neuflashen wie folgt vor:
-
-
-	\begin{enumerate}
-		\item Mache die Wallbox stromlos.
-		\item Nimm den Deckel ab wie in \fullref{wandmontage} beschrieben.
-		\item Rechts findest du den ESP32 Ethernet Brick. Schraube von diesem die vier schwarzen Kunststoffschrauben los (1) und ziehe das LAN-Kabel, sowie die zwei Bricklet-Kabel mit weißem Stecker
-		ab (2). Danach kannst du den ESP32 Ethernet Brick aus der Wallbox nehmen.
-	\end{enumerate}
-	\gfx{./img_warp2/resized/warp_factory_reset_cropped}
-	\begin{enumerate}
-		\setcounter{enumi}{3}
-		\item Den Brick musst du dann per USB-C an deinen PC anschließen und Brick Viewer starten
-		\item Klicke links unten auf Updates / Flashing, dann oben auf Brick
-	\end{enumerate}
-	\gfx{./img_warp2/resized/warp_factory_flash}
-	\begin{enumerate}
-		\setcounter{enumi}{5}
-		\item Bei Serial Port musst du den Port auswählen an dem der Brick angeschlossen ist.
-		      Typischerweise sollte nur ein Port in der Liste auftauchen.
-		      Der richtige Port ist einer, an dem ein \enquote{CP2102N USB to UART Bridge Controller} bzw. ein \enquote{ESP32 Ethernet Brick} aufgeführt wird.
-		\item Wähle dann unter Firmware \enquote{WARP2 Charger} aus. Die aktuelle Firmware-Version wird automatisch ausgewählt.
-		\item Klicke auf \enquote{Flash}
-		\item Der Flash-Vorgang ist erst dann beendet, wenn die Status-LED des ESP32 Ethernet Brick beginnt blau zu blinken. Dies kann bis zu eine Minute länger dauern als das eigentliche Flashen.
-		\hint{Der ESP32 Ethernet Brick darf nicht abgezogen werden, bevor die Status-LED blau blinkt. Andernfalls muss der Flash-Vorgang wiederholt werden.}
-		\item Nachdem der Brick neu geflasht wurde, kannst du ihn vom PC abziehen und wie folgt in die Wallbox einbauen
-		\item Stecke zuerst die weißen Bricklet-Stecker, sowie das LAN-Kabel wieder ein
-		\item Schraube dann den Brick mit den Kunststoffschrauben auf die entsprechenden Abstandshalter.
-		\item Schließe jetzt die Wallbox, indem du zuerst den Taster im Deckel, sowie den Erdungsstecker anschließt, den Deckel aufsetzt und die vier Schrauben festziehst
-		\item Die Wallbox kann jetzt wieder mit Strom versorgt werden. Wenn der Flash-Vorgang erfolgreich war, sollte die Wallbox jetzt wieder den WLAN-Access-Point eröffnen und kann eingerichtet werden.
-	\end{enumerate}
 
 	\newpage
 
@@ -1431,7 +1362,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\newpage \section{Fehlerbehebung}\label{fehlerbehebung} \subsection{Fehlersuche}
 	Fehlerzustände werden von der Wallbox durch die blaue LED im Deckel
-	dargestellt. Bei den Varianten WARP2 Charger Smart und WARP2 Charger Pro gibt die Statusseite des Ladecontrollers
+	dargestellt. Bei den Varianten WARP2 Charger Smart und WARP2 Charger Pro
+	gibt das Webinterface bzw. die Statusseite des Ladecontrollers
 	weitere Informationen.
 
 	\subsubsection*{Blaue LED ist aus}
@@ -1500,6 +1432,103 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	gegangen ist. Wie im Werkszustand eröffnet die Wallbox dann ein eigenes
 	WLAN. Wenn die Zugangsdaten nicht geändert wurden, entsprechen sie den Werkseinstellungen und sind dem
 	Aufkleber auf der Rückseite der Anleitung zu entnehmen.
+
+
+	\subsection{Wiederherstellungsmodus}\label{recovery}
+	Falls die Wallbox weder ihren Access Point öffnet, noch über ein konfiguriertes Netzwerk auf das Webinterface zugegriffen werden kann,
+	kannst du wie folgt den Wiederherstellungsmodus starten:
+	\begin{enumerate}
+	 \item Mache die Wallbox stromlos
+	 \item Halte den Taster im Deckel gedrückt
+	 \item Schalte den Strom der Wallbox wieder ein (ggf. mittels einer zweiten Person)
+	 \item Halte den Taster mindestens 10, aber maximal 30 Sekunden gedrückt
+	\end{enumerate}
+	Die Wallbox startet dann im Wiederherstellungsmodus. Zunächst werden die Netzwerkeinstellungen gelöscht, sowie die Anmeldung deaktiviert.
+	Anschließend sollte es wieder möglich sein, über den Access Point wieder auf die Wallbox zuzugreifen.
+
+	Durch erneutes Trennen und Verbinden der Stromversorgung innerhalb der ersten Minute im Wiederherstellungsmodus kann ein Zurücksetzen auf Werkszustand ausgelöst werden.
+
+	\subsection{Zurücksetzen auf Werkszustand}\label{reset}
+	Falls das Webinterface nicht korrekt funktioniert, oder die Konfiguration defekt ist,
+	kannst du auf der Firmware-Aktualisierungs-Unterseite alle Einstellungen auf den Werkszustand zurücksetzen.
+	\hint{Durch das Zurücksetzen auf Werkszustand gehen \mbox{\textbf{alle}} Konfigurationen, angelegte Benutzer, angelernte NFC-Tags und getrackte Ladevorgänge verloren.}
+	Nach dem Zurücksetzen startet das Webinterface wieder und öffnet
+	den Access-Point mit der SSID und Passphrase, die auf dem Aufkleber vermerkt sind. Die Wallbox kann jetzt wieder nach \fullref{setup} konfiguriert werden.
+
+	Damit getrackte Ladevorgänge nicht verloren gehen kann alternativ nur die Konfiguration zurückgesetzt werden.
+	Angelegte Benutzer (aber nicht der Benutzerverlauf des Ladetrackers) und NFC-Tags werden dennoch gelöscht.
+
+	Falls du das Webinterface nicht mehr erreichen kannst, bestehen folgende Optionen:
+
+	Falls eine Netzwerkverbindung aufgebaut werden kann, aber das Webinterface selbst nicht mehr funktioniert, kannst du versuchen, die Recovery-Seite zu öffnen.
+	Falls du über den Access Point der Wallbox verbunden bist, erreichst du diese unter \url{http://10.0.0.1/recovery},
+	bei einer bestehenden Verbindung zu einem LAN oder WLAN über \url{http://[konfigurierter_hostname]/recovery}, also z.B. \url{http://warp2-ABC/recovery}.
+	Über die Recovery-Seite kannst du die Wallbox neustarten, Firmware-Updates einspielen,
+	die Wallbox auf den Werkszustand zurücksetzen (Factory Reset), Debug-Reports
+	herunterladen und die HTTP-API verwenden (siehe \fullref{http-interface})
+
+	Alternativ kannst du die Wallbox (genauer: den verbauten ESP32 Ethernet
+	Brick) neu flashen.
+	Du benötigst dazu einen PC mit installiertem Brick Viewer 2.4.20 oder neuer. Diesen findest du unter
+	\rurl{https://www.tinkerforge.com/de/doc/Software/Brickv.html}{tinkerforge.com/de/doc/Software/Brickv.html}.
+	Außerdem benötigst du ein USB-C-Kabel um den Brick an deinen PC anzuschließen. Brick Daemon wird nicht benötigt.
+	Gehe zum Neuflashen wie folgt vor:
+
+
+	\begin{enumerate}
+		\item Mache die Wallbox stromlos.
+		\item Nimm den Deckel ab wie in \fullref{wandmontage} beschrieben.
+		\item Rechts findest du den ESP32 Ethernet Brick. Schraube von diesem die vier schwarzen Kunststoffschrauben los (1) und ziehe das LAN-Kabel, sowie die zwei Bricklet-Kabel mit weißem Stecker
+		ab (2). Danach kannst du den ESP32 Ethernet Brick aus der Wallbox nehmen.
+	\end{enumerate}
+	\gfx{./img_warp2/resized/warp_factory_reset_cropped}
+	\begin{enumerate}
+		\setcounter{enumi}{3}
+		\item Den Brick musst du dann per USB-C an deinen PC anschließen und Brick Viewer starten
+		\item Klicke links unten auf Updates / Flashing, dann oben auf Brick
+	\end{enumerate}
+	\gfx{./img_warp2/resized/warp_factory_flash}
+	\begin{enumerate}
+		\setcounter{enumi}{5}
+		\item Bei Serial Port musst du den Port auswählen an dem der Brick angeschlossen ist.
+		      Typischerweise sollte nur ein Port in der Liste auftauchen.
+		      Der richtige Port ist einer, an dem ein \enquote{CP2102N USB to UART Bridge Controller} bzw. ein \enquote{ESP32 Ethernet Brick} aufgeführt wird.
+		\item Wähle dann unter Firmware \enquote{WARP2 Charger} aus. Die aktuelle Firmware-Version wird automatisch ausgewählt.
+		\item Klicke auf \enquote{Flash}
+		\item Der Flash-Vorgang ist erst dann beendet, wenn die Status-LED des ESP32 Ethernet Brick beginnt blau zu blinken. Dies kann bis zu eine Minute länger dauern als das eigentliche Flashen.
+		\hint{Der ESP32 Ethernet Brick darf nicht abgezogen werden, bevor die Status-LED blau blinkt. Andernfalls muss der Flash-Vorgang wiederholt werden.}
+		\item Nachdem der Brick neu geflasht wurde, kannst du ihn vom PC abziehen und wie folgt in die Wallbox einbauen
+		\item Stecke zuerst die weißen Bricklet-Stecker, sowie das LAN-Kabel wieder ein
+		\item Schraube dann den Brick mit den Kunststoffschrauben auf die entsprechenden Abstandshalter.
+		\item Schließe jetzt die Wallbox, indem du zuerst den Taster im Deckel, sowie den Erdungsstecker anschließt, den Deckel aufsetzt und die vier Schrauben festziehst
+		\item Die Wallbox kann jetzt wieder mit Strom versorgt werden. Wenn der Flash-Vorgang erfolgreich war, sollte die Wallbox jetzt wieder den WLAN-Access-Point eröffnen und kann eingerichtet werden.
+	\end{enumerate}
+
+	\subsection{Probleme bei Ladevorgängen lösen}
+	Treten Ladeabbrüche auf, so kann dies verschiedene Ursachen haben. Mögliche
+	Ursachen können eine fehlerhafte Installation der Wallbox oder ein
+	technischer Defekt der Wallbox oder des Fahrzeugs sein. 
+
+	Folgende Punkte sollten überprüft werden:
+	\begin{description}
+		\item[Sitz des Typ2 Steckers] Es klingt banal, aber manchmal ist der
+		Typ2 Stecker einfach nicht korrekt im Fahrzeug eingesteckt. Das	Fahrzeug
+		lädt dann ggf. gar nicht oder befindet sich in einem Notlademodus, in
+		dem es nur mit minimaler Leistung lädt. Ein Indiz kann hier sein, dass
+		das Fahrzeug den Typ2 Stecker nicht korrekt verriegelt.
+		\item[Inspektion aller Komponenten] Es sollten alle Komponenten
+		auf Beschädigungen und Nässe optisch kontrolliert werden.
+		\item[Webinterface der Wallbox] Steht nur bei den Varianten Smart und
+		Pro zur Verfügung. Die Statusseite (siehe TODO) gibt den Ladestatus aus
+		Sicht der Wallbox an. Zusätzlich wird der erlaubte Ladestrom
+		dargestellt. Gegebenenfalls verhindert eine Konfiguration die Ladung
+		oder schränkt den Ladestrom ein. Detailliertere Informationen gibt die
+		Unterseite Ladestatus (siehe Todo). Hier kann auch ein Ladeprotokoll
+		erzeugt werden, welches alle Werte des Ladevorgangs aufzeichnet.
+		\item[Messung durch einen Elektriker] Elektrische Probleme können von
+		einem Elektriker diagnostiziert werden. Er kann prüfen ob alle Leiter
+		korrekt angeschlossen sind.
+	\end{description}
 
 	\subsection{Ersatzteile}
 	\begin{tabular}{ll}
@@ -1670,6 +1699,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		           &         & \enquote{Erste Schritte} überarbeitet \\
 		28.02.2023 & 2.1.0   & Aktualisiert für Firmware 2.1.0 \\
 		11.09.2023 & 2.1.1   & Hinweis EU-Messgeräterichtlinie 2014/32/EU hinzugefügt\\
+		19.02.2024 & 2.2.0   & Aktualisiert für Firmware 2.2.0 \\
 		\bottomrule
 	\end{tabular}
 
