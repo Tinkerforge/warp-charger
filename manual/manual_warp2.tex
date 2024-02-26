@@ -470,6 +470,32 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\gfx{./img_warp2/resized/warp2_ethernet4_600} % Montiert
 
+	\subsection{Steuerbare Verbrauchseinrichtung S14a EnWG}
+	Wallboxen gehören nach S14a EnWG zu sogenannten Steuerbaren
+	Verbrauchseinrichtungen, da deren Anschlussleistung über 4,2kW beträgt.
+
+	WARP Charger können auf verschiedenen Wegen vom Netzbetreiber herunter
+	geregelt werden. Welche Möglichkeit genutzt werden kann, hängt von den
+	Vorgaben des örtlichen Netzbetreiber ab.
+
+	\begin{description}
+		\item{Schnittstellen (OCPP, Modbus TCP)} Generell kann die Wallbox über
+		alle Schnittstellen gesteuert werden. Im Rahmen der Steuerung der
+		Leistung durch den Netzbereiber sind aber wohl am ehesten OCPP und
+		Modbus TCP geeignet.
+		\item{Rundsteuerempfänger/Steuerbox} An den Abschalteingang innerhalb
+		der Wallbox kann ein potentialfreier Kontakt angeschlossen werden. Dazu
+		muss eine Steuerleitung vom Rundsteuerempfänger oder der Steuerbox des
+		Netzbetreibers in die Wallbox gelegt werden.
+		\item{Rundsteuerempfänger/Steuerbox (mittels WARP Energy Manager)}
+		Anstatt eine Steuerleitung bis in die Wallbox zu legen, besteht auch die
+		Möglichkeit, die Eingänge des WARP Energy Managers
+		(Schaltschrank-Hutschienenmodul) mit dem Rundsteuerempfänger oder der
+		Steuerbox zu verbinden. Der WARP Energy Manager steuert dann die
+		Leistung der Wallbox über das Netzwerk (LAN/WLAN). Eine gesonderte
+		Steuerleitung bis zur Wallbox entfällt somit.
+	\end{description}
+
 	\subsection{Prüfungen}\label{tests}
 	Im Werk wurde jede Wallbox einzeln nach IEC 60364-6 sowie den entsprechenden gültigen
 	nationalen Vorschriften geprüft, das jeweilige Messprotokoll liegt bei.
