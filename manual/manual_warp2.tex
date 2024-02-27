@@ -507,6 +507,61 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\gfx{./img_warp2/resized/warp2_ethernet4_600} % Montiert
 
+    \subsection{Steuerbare Verbrauchseinrichtung S14a EnWG}
+    Wallboxen gehören nach S14a EnWG zu sogenannten Steuerbaren
+    Verbrauchseinrichtungen, da deren Anschlussleistung über 4,2kW beträgt.
+
+    WARP Charger können auf verschiedenen Arten vom Netzbetreiber herunter
+    geregelt werden. Welche Möglichkeit genutzt werden kann, hängt von den
+    Vorgaben des örtlichen Netzbetreiber ab.
+
+    \begin{description}
+        \item{Schnittstellen (OCPP, Modbus TCP)} Generell kann die Wallbox über
+        alle Schnittstellen gesteuert werden. Im Rahmen der Steuerung der
+        Leistung durch den Netzbereiber sind aber wohl am ehesten OCPP und
+        Modbus TCP geeignet. Weitere Informationen zu den Schnittstellen findet
+		man in Kapitel \fullref{interfaces}.
+        \item{Rundsteuerempfänger/Steuerbox} An dem Abschalteingang innerhalb
+        der Wallbox kann ein potentialfreier Kontakt (spannungsfreier Schaltkontakt) 
+		angeschlossen werden. Dazu muss eine Steuerleitung vom Rundsteuerempfänger 
+		oder der Steuerbox des Netzbetreibers in die Wallbox gelegt werden. Dazu
+		muss an dem Ladecontroller (untere Platine) an dem 3 poligen Stecker
+		(mit \glqq Enable\grqq beschriftet). Dabei ist ein Schalter zwischen Pin
+		1 und Pin 2 anzuschließen.
+
+		Soll die Ladung beim Schließen des Schalters unterbrochen werden, so
+		kann einfach unter den Ladeeinstellungen
+
+		Soll der Ladestrom auf 4.2kW begrenzt werden, so kann unter
+		Automatisierung eine Regel angelegt werden. Diese muss lauten:
+
+		\begin{description}
+			\item{Bedingung:} \glqq Abschalteingang geschaltet\grqq - \glqq auf geöffnet\grqq.
+			\item{Aktion:} \glqq Steuere Ladevorgang\grqq - \glqq Ladestrom begrenzen\grqq.
+			\item{Erlaubter Ladestrom:} 6,000A
+		\end{description}
+
+        \item{Rundsteuerempfänger/Steuerbox (mittels WARP Energy Manager)}
+        Anstatt eine Steuerleitung bis in die Wallbox zu legen, besteht auch die
+        Möglichkeit, die Eingänge des WARP Energy Managers
+        (Schaltschrank-Hutschienenmodul) mit dem Rundsteuerempfänger oder der
+        Steuerbox zu verbinden. Der WARP Energy Manager steuert dann die
+        Leistung der Wallbox über das Netzwerk (LAN/WLAN). Eine gesonderte
+        Steuerleitung bis zur Wallbox entfällt somit.
+
+		Dazu muss der WARP Energy Manager als Lastmanager für die betreffende
+		Wallbox konfiguriert werden. Anschließend muss in der Automatisierung
+		vom WARP Energy Manager folgende Regel angelegt werden:
+
+		\begin{description}
+			\item{Bedingung:} \glqq Eingang 4 geschaltet\grqq (Es kann auch Eingang 3 verwendet werden).
+			\item{Zustand:} \glqq geschlossen\grqq (Es kann auch Eingang 3 verwendet werden).
+			\item{Aktion:} \glqq Steuere Ladevorgang\grqq - \glqq Ladestrom begrenzen\grqq.
+			\item{Erlaubter Ladestrom:} 6,000A
+		\end{description}
+    \end{description}
+
+
 	\newpage
 	\subsection{Prüfungen}\label{tests}
 	Im Werk wurde jede Wallbox einzeln nach IEC 60364-6 sowie den entsprechenden gültigen
