@@ -526,7 +526,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		angeschlossen werden. Dazu muss eine Steuerleitung vom Rundsteuerempfänger
 		oder der Steuerbox des Netzbetreibers in die Wallbox gelegt werden. Dazu
 		muss an dem Ladecontroller (untere Platine) an dem 3 poligen Stecker
-		(mit \glqq Enable\grqq beschriftet). Dabei ist ein Schalter zwischen Pin
+		(mit \enquote{Enable} beschriftet). Dabei ist ein Schalter zwischen Pin
 		1 und Pin 2 anzuschließen.
 
 		Soll die Ladung beim Schließen des Schalters unterbrochen werden, so
@@ -536,8 +536,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		Automatisierung eine Regel angelegt werden. Diese muss lauten:
 
 		\begin{description}
-			\item{Bedingung:} \glqq Abschalteingang geschaltet\grqq - \glqq auf geöffnet\grqq.
-			\item{Aktion:} \glqq Steuere Ladevorgang\grqq - \glqq Ladestrom begrenzen\grqq.
+			\item{Bedingung:} \enquote{Abschalteingang geschaltet} - \enquote{auf geöffnet}.
+			\item{Aktion:} \enquote{Steuere Ladevorgang} - \enquote{Ladestrom begrenzen}.
 			\item{Erlaubter Ladestrom:} 6,000A
 		\end{description}
 
@@ -554,9 +554,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		vom WARP Energy Manager folgende Regel angelegt werden:
 
 		\begin{description}
-			\item{Bedingung:} \glqq Eingang 4 geschaltet\grqq (Es kann auch Eingang 3 verwendet werden).
-			\item{Zustand:} \glqq geschlossen\grqq (Es kann auch Eingang 3 verwendet werden).
-			\item{Aktion:} \glqq Steuere Ladevorgang\grqq - \glqq Ladestrom begrenzen\grqq.
+			\item{Bedingung:} \enquote{Eingang 4 geschaltet} (Es kann auch Eingang 3 verwendet werden).
+			\item{Zustand:} \enquote{geschlossen} (Es kann auch Eingang 3 verwendet werden).
+			\item{Aktion:} \enquote{Steuere Ladevorgang} - \enquote{Ladestrom begrenzen}.
 			\item{Erlaubter Ladestrom:} 6,000A
 		\end{description}
     \end{description}
@@ -668,8 +668,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	Kann die per DHCP vergebene IP der Wallbox nicht ermittelt werden, so kann der
 	zuvor genannte Zugriff auf die Wallbox mittels WLAN-Access-Point genutzt
-	werden um die IP Adresse der LAN Schnittstelle zu ermitteln (\glqq
-	Status-Seite\grqq, Abschnitt \glqq LAN-Verbindung\grqq).
+	werden um die IP Adresse der LAN Schnittstelle zu ermitteln (\enquote{Status-Seite},
+    Abschnitt \enquote{LAN-Verbindung}).
 
 	\paragraph{Konfiguration mittels Webinterface}
 	Ist die Wallbox nun per WLAN (Accesspoint) oder LAN mittels Browser erreichbar,
@@ -714,7 +714,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	Auf mobilen Endgeräten wird
 	diese Menüleiste stattdessen versteckt unter einem Menü-Symbol oben rechts
-	im grauen Balken neben dem WARP Logo angezeigt (\glqq drei Striche untereinander\grqq).
+	im grauen Balken neben dem WARP Logo angezeigt (\enquote{drei Striche untereinander}).
 	Hier kannst du das Menü durch einen Klick auf das Symbol ausklappen.
 
 	\gfx{./img_warp2/resized/web_status}
@@ -836,12 +836,12 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 			Danach wird die diesem Benutzer zugeordnete Ladestromgrenze eingetragen.
 		\item[Lastmanagement] Empfangene Nachrichten des Lastmanagers steuern diese Ladestromgrenze, falls das Lastmanagement aktiviert ist.
 		\item[Externe Steuerung] Diese Ladestromgrenze wird durch eine externe Steuerung über die API, beispielsweise EVCC gesteuert.
-		\item[Modbus TCP-Strom] Bei aktivierter Modbus TCP Schnittstelle: \glqq	Ladestromgrenze\grqq.
-		\item[Modbus TCP-Freigabe] Bei aktivierter Modbus TCP Schnittstelle: \glqq Ladefreigabe\grqq.
+		\item[Modbus TCP-Strom] Bei aktivierter Modbus TCP Schnittstelle: \enquote{Ladestromgrenze}.
+		\item[Modbus TCP-Freigabe] Bei aktivierter Modbus TCP Schnittstelle: \enquote{Ladefreigabe}.
 		\item[OCPP] Bei aktivierter OCPP Schnittstelle: Freigabe durch OCPP
 		\item[Energie/Zeitlimit] Begrenzung durch konfigurierte Energie- oder Zeitlimits.
 		\item[Zählerüberwachung] Ist die Zählerüberwachung eingeschaltet und ist keine Kommunikation mit dem Stromzähler möglich, so wird die Ladung blockiert.
-		\item[Automatisierung] Begrenzung durch eine Regel im Bereich \glqq Automatisierung\grqq.
+		\item[Automatisierung] Begrenzung durch eine Regel im Bereich \enquote{Automatisierung}.
 	\end{description}
 
 
@@ -873,9 +873,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	Um ein Ladeprotokoll aufzuzeichnen empfiehlt sich folgendes Vorgehen:
 	\begin{itemize}
-		\item Ladeprotokoll im Browser starten (\glqq Start\grqq), Browserfenster geöffnet halten.
+		\item Ladeprotokoll im Browser starten (\enquote{Start}), Browserfenster geöffnet halten.
 		\item Fahrzeug an Wallbox anschließen und Ladung wie gewünscht starten
-		\item Nach Auftreten des Fehlers \glqq Stop+Download\grqq~klicken. Es
+		\item Nach Auftreten des Fehlers \enquote{Stop+Download}~klicken. Es
 		sollte eine Textdatei herunter geladen werden.
 		\item Textdatei mit einer Problembeschreibung an info@tinkerforge.com
 		senden.
@@ -1056,7 +1056,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\subsubsection{TLS-Zertifikate}\label{tls}
 	Hier können bis zu acht TLS-Zertifikate hochgeladen werden. Diese Zertifikate können
 	dann für OCPP, MQTT oder in den WLAN Einstellungen genutzt werden. Ansonsten
-	wird das \glqq ESP x509 Certificate Bundle\grqq~genutzt.
+	wird das \enquote{ESP x509 Certificate Bundle}~genutzt.
 
 	\subsubsection{Zeitsynchronisierung}\label{ntp}
 	Um im Ladetracker und dem Ereignis-Log die aktuelle Uhrzeit anzeigen zu
@@ -1254,7 +1254,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	stehenden Phasenstrom einzuregeln.
 
 	\paragraph{Minimaler Ladestrom}
-	Dieser kann vom System automatisch eingestellt werden. Wir empfehlen die automatische Einstellung des Ladestroms und die Wahl des Fahrzeugmodells (\glqq Standard\grqq).
+	Dieser kann vom System automatisch eingestellt werden. Wir empfehlen die automatische Einstellung des Ladestroms und die Wahl des Fahrzeugmodells (\enquote{Standard}).
 	Der Strom kann aber auch individuell festgelegt werden.
 	Der minimale Ladestrom ist der Strom, der für eine Wallbox zur Verfügung stehen muss, damit diese lädt. Dieser Strom muss mindestens \SI{6}{\ampere} betragen.
 	Bestimmte Fahrzeuge laden aber erst bei höheren Strömen effizient. Mit einem WARP2 Charger Pro kann der Leistungsfaktor ermittelt werden.
@@ -1345,17 +1345,17 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	denen jeweils eine NFC Karte (mitgeliefert) zugeordnet wurde. Diese können
 	umbenannt oder gelöscht werden.
 
-	Ein neuer Nutzer kann mittels Klicken auf \glqq Benutzer hinzufügen\grqq~hinzugefügt werden.
+	Ein neuer Nutzer kann mittels Klicken auf \enquote{Benutzer hinzufügen}~hinzugefügt werden.
 	Anschließend öffnet sich ein kleines Fenster in dem der eigentliche Benutzername, der Anzeigename (für die Anzeige im Ladetracker)
 	und der dem Nutzer erlaube maximale Ladestrom eingestellt werden kann.
 	Zusätzlich kann dem Nutzer ein Passwort für die HTTP-Anmeldung (siehe
 	folgenden Abschnitt) vergeben werden.
 
 	Soll nur eine Ladefreigabe mittels NFC/Benutzerfreigabe möglich sein, so
-	muss \glqq Benutzerautorisierung\grqq~aktiviert werden.
+	muss \enquote{Benutzerautorisierung}~aktiviert werden.
 
 	Eine weitere Funktion der Benutzerverwaltung ist die HTTP-Anmeldung. Diese
-	kann mittels \glqq Anmeldung aktiviert\grqq~aktiviert werden. Wenn diese aktiviert ist, muss zum Zugriff auf das Webinterface und zur Verwendung
+	kann mittels \enquote{Anmeldung aktiviert}~aktiviert werden. Wenn diese aktiviert ist, muss zum Zugriff auf das Webinterface und zur Verwendung
 	der HTTP-API eine Anmeldung als einer der Benutzer durchgeführt werden. Eine HTTP-Anmeldung als ein Benutzer ist nur möglich, wenn
 	dem Benutzer ein Passwort konfiguriert wurde. Entsprechend können Benutzer erstellt werden, die nur für das Ladetracking per NFC-Tag
 	verwendet werden, aber keinen Zugriff auf das Webinterface haben sollen, indem diesen kein Passwort konfiguriert wird.
@@ -1369,8 +1369,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	im Passwort-Feld des Nutzers angezeigt indem das Verbotsschild aktiviert
 	ist. Wird einem Nutzer ein Passwort vergeben, so ist das Verbotsschild
 	deaktiviert. Der Nutzer kann sich mit seinem Nutzernamen und Passwort im
-	Webinterface anmelden, wenn die Option \glqq
-	Benutzerautorisierung\grqq~aktiviert wurde (siehe Abschnitt zuvor).
+	Webinterface anmelden, wenn die Option \enquote{Benutzerautorisierung}
+	~aktiviert wurde (siehe Abschnitt zuvor).
 	Um einem Nutzer die Anmeldemöglichkeit wieder zu entziehen und sein Passwort
 	zu löschen muss einfach das Verbotsschild aktiviert werden. Das Passwort des
 	Nutzers wird dann gelöscht und die Anmeldung deaktiviert. Der Nutzer kann
