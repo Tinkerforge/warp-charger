@@ -507,58 +507,46 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     \gfx{./img_warp2/resized/warp2_ethernet4_600} % Montiert
 
-    \subsection{Steuerbare Verbrauchseinrichtung S14a EnWG}
-    Wallboxen gehören nach S14a EnWG zu sogenannten Steuerbaren
-    Verbrauchseinrichtungen, da deren Anschlussleistung über 4,2kW beträgt.
+    \subsection{Steuerbare Verbrauchseinrichtung \S14a EnWG}
+    Wallboxen gehören nach \S14a EnWG zu sogenannten Steuerbaren
+    Verbrauchseinrichtungen, da deren Anschlussleistung über \SI{4,2}{\kilo\watt} beträgt.
 
     WARP Charger können auf verschiedenen Arten vom Netzbetreiber herunter
     geregelt werden. Welche Möglichkeit genutzt werden kann, hängt von den
-    Vorgaben des örtlichen Netzbetreiber ab.
+    Vorgaben des örtlichen Netzbetreibers ab.
 
+    \paragraph*{Schnittstellen (OCPP, Modbus TCP, HTTP, MQTT)}
+    Generell kann die Ladeleistung der Wallbox über alle implementierten Schnittstellen gesteuert werden.
+    Netzbetreiber setzen zur Steuerung typischerweise OCPP oder Modbus TCP ein.
+    Weitere Informationen zu den Schnittstellen findet sich im \fullref{interfaces}.
+
+    \paragraph*{Rundsteuerempfänger/Steuerbox}
+    Am Abschalteingang innerhalb der Wallbox kann ein potentialfreier Kontakt (spannungsfreier Schaltkontakt)
+    angeschlossen werden. Dazu muss eine Steuerleitung vom Rundsteuerempfänger
+    oder der Steuerbox des Netzbetreibers in die Wallbox gelegt werden und am Ladecontroller (untere Platine)
+    am mit \enquote{Enable} beschrifteten, dreipoligen Stecker an Pin 1 und Pin 2 angeschlossen werden.
+
+    Damit die Wallbox abschaltet, muss unter Wallbox $\rightarrow$ Ladeeinstellungen die Einstellung \enquote{Abschalteingang} auf \enquote{Begrenzen auf 4300 W wenn geschlossen} bzw. \enquote{wenn geöffnet} konfiguriert werden.
+
+    \paragraph*{Rundsteuerempfänger/Steuerbox (mittels WARP Energy Manager)}
+    Anstatt eine Steuerleitung bis in die Wallbox zu legen, besteht auch die
+    Möglichkeit, die Eingänge des WARP Energy Managers
+    (Schaltschrank-Hutschienenmodul)\fxnote{$\leftarrow$ das raus?} mit dem Rundsteuerempfänger oder der
+    Steuerbox zu verbinden. Der WARP Energy Manager steuert dann die
+    Leistung der Wallbox über das Netzwerk (LAN/WLAN). Eine gesonderte
+    Steuerleitung bis zur Wallbox entfällt.
+
+    Der WARP Energy Manager muss hierfür als Lastmanager der betreffenden Wallbox(en) konfiguriert werden.
+
+    Anschließend muss in \enquote{Energiemanager} $\rightarrow$ \enquote{Automatisierung}
+    folgende Regel angelegt werden:
+
+    \fxwarning{Beschreibungstexte fixen wenn das im WEM angepasst ist!}
     \begin{description}
-        \item{Schnittstellen (OCPP, Modbus TCP)} Generell kann die Wallbox über
-        alle Schnittstellen gesteuert werden. Im Rahmen der Steuerung der
-        Leistung durch den Netzbereiber sind aber wohl am ehesten OCPP und
-        Modbus TCP geeignet. Weitere Informationen zu den Schnittstellen findet
-        man in \fullref{interfaces}.
-        \item{Rundsteuerempfänger/Steuerbox} An dem Abschalteingang innerhalb
-        der Wallbox kann ein potentialfreier Kontakt (spannungsfreier Schaltkontakt)
-        angeschlossen werden. Dazu muss eine Steuerleitung vom Rundsteuerempfänger
-        oder der Steuerbox des Netzbetreibers in die Wallbox gelegt werden. Dazu
-        muss an dem Ladecontroller (untere Platine) an dem 3 poligen Stecker
-        (mit \enquote{Enable} beschriftet). Dabei ist ein Schalter zwischen Pin
-        1 und Pin 2 anzuschließen.
-
-        Soll die Ladung beim Schließen des Schalters unterbrochen werden, so
-        kann einfach unter den Ladeeinstellungen
-
-        Soll der Ladestrom auf 4.2kW begrenzt werden, so kann unter
-        Automatisierung eine Regel angelegt werden. Diese muss lauten:
-
-        \begin{description}
-            \item{Bedingung:} \enquote{Abschalteingang geschaltet} - \enquote{auf geöffnet}.
-            \item{Aktion:} \enquote{Steuere Ladevorgang} - \enquote{Ladestrom begrenzen}.
-            \item{Erlaubter Ladestrom:} 6,000A
-        \end{description}
-
-        \item{Rundsteuerempfänger/Steuerbox (mittels WARP Energy Manager)}
-        Anstatt eine Steuerleitung bis in die Wallbox zu legen, besteht auch die
-        Möglichkeit, die Eingänge des WARP Energy Managers
-        (Schaltschrank-Hutschienenmodul) mit dem Rundsteuerempfänger oder der
-        Steuerbox zu verbinden. Der WARP Energy Manager steuert dann die
-        Leistung der Wallbox über das Netzwerk (LAN/WLAN). Eine gesonderte
-        Steuerleitung bis zur Wallbox entfällt somit.
-
-        Dazu muss der WARP Energy Manager als Lastmanager für die betreffende
-        Wallbox konfiguriert werden. Anschließend muss in der Automatisierung
-        vom WARP Energy Manager folgende Regel angelegt werden:
-
-        \begin{description}
-            \item{Bedingung:} \enquote{Eingang 4 geschaltet} (Es kann auch Eingang 3 verwendet werden).
-            \item{Zustand:} \enquote{geschlossen} (Es kann auch Eingang 3 verwendet werden).
-            \item{Aktion:} \enquote{Steuere Ladevorgang} - \enquote{Ladestrom begrenzen}.
-            \item{Erlaubter Ladestrom:} 6,000A
-        \end{description}
+        \item{Bedingung:} \enquote{Eingang 3 geschaltet} (Es kann auch Eingang 4 verwendet werden, wenn kein Schütz am Energy Manager installiert ist).
+        \item{Zustand:} \enquote{geschlossen} (Es kann auch Eingang 3 verwendet werden).
+        \item{Aktion:} \enquote{Steuere Ladevorgang} - \enquote{Ladestrom begrenzen}.
+        \item{Erlaubter Ladestrom:} 6,000A
     \end{description}
 
 
@@ -755,17 +743,15 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     beispielsweise dem Anschluss der Wallbox, eventuellen Grenzen pro konfiguriertem Benutzer,
     dem Lastmanagement und auch dem oben gesetzen konfigurierten Ladestrom.
 
-    \textbf{Zeitlimit} gibt die zur Verfügung stehende Restzeit für den nächsten
-    Ladevorgang an. Über die Drop Down Box kann die Einstellung geändert werden.
-    Ist bereits ein Ladevorgang aktiv, so wird als Bezugszeit die Startzeit des
-    aktuellen Ladevorgangs genommen. Werden zum Beispiel 30 Minuten eingestellt
-    und der Ladevorgang läuft bereits seit 20 Minuten, so beträgt die restliche
-    Laufzeit noch 10 Minuten. Nach Ablauf der Zeit wird der Ladevorgang
+    \textbf{Zeitlimit} gibt die zur Verfügung stehende Ladezeit für den nächsten oder laufenden
+    Ladevorgang an. Die Ladezeit kann hier überschrieben werden, sodass der nächste oder laufende
+    Ladevorgang die gewählte Zeit zur Verfügung bekommt, nach diesem wird die Ladezeit zurück auf den
+    in den Ladeeinstellungen gewählten Wert gesetzt. Nach Ablauf der erlaubten Ladezeit wird der Ladevorgang
     unterbrochen.
 
     \textbf{Energielimit} gibt die zur Verfügung stehende Restenergie für den
-    Ladevorgang an. Über die Drop Down Box kann die Einstellung geändert werden.
-    Diese Einstellung ist analog dem Zeitlimit zu verwenden und nur für die Pro Wallboxen verfügbar.
+    Ladevorgang an. Diese Einstellung ist analog zum Zeitlimit zu verwenden, aber
+    nur mit der Variante Pro verfügbar.
 
     \textbf{Ladeverlauf} und \textbf{Leistung} sind nur in der Variante Pro
     vorhanden. Hier werden dir die aktuelle Leistungsaufnahme und ein Diagramm über
@@ -779,9 +765,6 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     andere Wallboxen steuert. Hier kannst du den \textbf{verfügbare Strom} des Lastmanagement-Verbunds
     einstellen und der Zustand der \textbf{kontrollierten Wallboxen} wird angezeigt.
 
-    \textbf{WLAN-Verbindung} zeigt an, ob eine Verbindung konfiguriert ist, ob sie erfolgreich aufgebaut wurde und
-    unter welcher IP-Adresse die Wallbox per WLAN erreichbar ist. Ein Symbol
-    zeigt die Signalstärke des WLANs an.
 
     Der \textbf{WLAN-Access-Point}-Status bildet den Status des Access-Points ab.
     \enquote{Deaktiviert} beziehungsweise \enquote{Aktiviert} zeigt den Zustand, wenn der Access-Point nicht
@@ -790,12 +773,16 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Beim Status \enquote{Fallback aktiv} ist der Aufbau der WLAN-Verbindung fehlgeschlagen und der
     Access-Point wurde deshalb aktiviert.
 
+    \textbf{WLAN-Verbindung} zeigt an, ob eine Verbindung konfiguriert ist, ob sie erfolgreich aufgebaut wurde und
+    unter welcher IP-Adresse die Wallbox per WLAN erreichbar ist. Ein Symbol
+    zeigt die Signalstärke des WLANs an.
+
     \textbf{LAN-Verbindung} zeigt analog an, ob eine LAN-Verbindung besteht und unter welcher IP-Adresse die Wallbox erreichbar ist.
 
     \textbf{MQTT-Verbindung} zeigt den aktuellen Status der MQTT-Verbindung
     zum konfigurierten Broker an.
 
-    \textbf{OCPP-Verbindung} und \textbf{OCPP-Status} zeigt den aktuellen Status der Verbindung zum konfigurierten OCPP-Server an.
+    \textbf{OCPP-Verbindung} und \textbf{OCPP-Status} zeigen den aktuellen Status der Verbindung zum konfigurierten OCPP-Server an.
     Darunter wird textuell der Zustand des WARP Chargers aus Sicht des Servers angezeigt.
 
     \textbf{Zeitsynchronisierung} zeigt an, ob Datum und Uhrzeit per Netzwerk-Zeitsynchronisierung (NTP) aktualisiert werden konnten.
@@ -823,7 +810,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Nur wenn alle aktiven Ladestromgrenzen nicht blockieren, wird ein Ladevorgang erlaubt.
     Der erlaubte Ladestrom ist dann das Minimum aller aktiven Grenzen. Folgende Grenzen können Teil der Berechnung sein:
 
-    \begin{description}
+    \begin{description}[labelindent=0.5cm]
         \item[Zuleitung] Der Maximalstrom der Zuleitung zum WARP Charger.
             Wird über die Schalter auf dem Ladecontroller konfiguriert. Siehe \fullref{ladestrom_schalter}.
         \item[Typ-2-Ladekabel] Der Maximalstrom des Typ-2-Ladekabels. Wird durch einen festen Widerstand im Kabel vorgegeben.
@@ -852,31 +839,29 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \definecolor{myorange}{RGB}{255, 193, 7}
     \definecolor{myred}{RGB}{220, 53, 69}
     Die Farbmarkierung neben einer Grenze haben folgende Bedeutung:
-    \begin{itemize}
+    \begin{description}[labelindent=0.5cm]
      \item[\textbf{\textcolor{mygray}{Grau}}] Diese Ladestromgrenze ist nicht aktiv. Sie kann den Ladevorgang nicht blockieren und geht nicht in Berechnung des erlaubten Ladestroms ein.
      \item[\textbf{\textcolor{mygreen}{Grün}}] Diese Ladestromgrenze ist aktiv, beschränkt den erlaubten Ladestrom aber nicht.
      \item[\textbf{\textcolor{myblue}{Blau}}] Diese Ladestromgrenze ist aktiv und gibt ein Ladestromlimit vor. Es gibt aber andere aktive Grenzen, die den Ladestrom stärker limitieren.
      \item[\textbf{\textcolor{myorange}{Gelb}}] Diese Ladestromgrenze ist aktiv, blockiert den Ladevorgang nicht, gibt aber die aktuell stärkste Limitierung des Ladestroms vor.
      \item[\textbf{\textcolor{myred}{Rot}}] Diese Ladestromgrenze ist aktiv und blockiert den Ladevorgang.
-    \end{itemize}
+    \end{description}
 
 
+    \paragraph{Hardware-Konfiguration}
     Unter der Überschrift \enquote{Hardware-Konfiguration} werden Informationen
     zur verbauten Hardware aufgeführt. Beim WARP Charger Pro wird die Version
     des intern verbauten Stromzählers angezeigt.
 
     \paragraph{Ladeprotokoll}
-    Die Funktion ermöglicht die Aufzeichnung eines Ladeprotokolls.
-    Dabei werden alle Daten der Wallbox im Browser aufgezeichnet. Ein
-    Ladeprotokoll kann dabei helfen die Fehlerursachen zu ermitteln, sollte es
-    zu Ladeabbrüchen o.ä. kommen.
-
-    Um ein Ladeprotokoll aufzuzeichnen empfiehlt sich folgendes Vorgehen:
+    Bei Problemen beim Ladestart, Ladeabbrüchen o.Ä. kann ein Ladeprotokoll
+    helfen, die Ursache eines Fehlers zu ermitteln. Ein Ladeprotokoll kann
+    wie folgt aufgezeichnet werden:
     \begin{itemize}
         \item Ladeprotokoll im Browser starten (\enquote{Start}), Browserfenster geöffnet halten.
-        \item Fahrzeug an Wallbox anschließen und Ladung wie gewünscht starten
-        \item Nach Auftreten des Fehlers \enquote{Stop+Download}~klicken. Es
-        sollte eine Textdatei herunter geladen werden.
+        \item Fahrzeug an Wallbox anschließen und Ladevorgang starten
+        \item Nach Auftreten des Fehlers \enquote{Stop+Download} klicken. Es
+        sollte eine Textdatei heruntergeladen werden.
         \item Textdatei mit einer Problembeschreibung an info@tinkerforge.com
         senden.
     \end{itemize}
@@ -893,11 +878,11 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
      \item[Externe Steuerung] Wenn die externe Steuerung erlaubt ist, darf eine externe Steuerungssoftware, beispielsweise
      EVCC (\rurl{https://evcc.io}{evcc.io}) den WARP Charger steuern. Eine Steuerungssoftware kann auch selbst entwickelt werden, hierzu stellen
      wir unter \rurl{https://warp-charger.com/api.html}{warp-charger.com/api.html} eine detaillierte API-Dokumentation zur Verfügung.
-     \item[Status-LED-Steuerung] Ermöglicht die Steuerung der Front-LED mittels externer Steuerung (API).
+     \item[Status-LED-Steuerung] Ermöglicht die Steuerung der Front-LED mit einer externen Steuerung oder über die API. Typischerweise nur notwendig, wenn über die externe Steuerung beispielsweise die Freigabe mit einem NFC-Tag umgesetzt wird.
      \item[Boost-Modus] Die Ladeelektronik mancher Fahrzeuge interpretiert einen vom WARP Charger vorgeschriebenen Ladestrom zu niedrig. Der Boost-Modus versucht diesen Effekt auszugleichen, indem ein leicht höherer Ladestrom kommuniziert wird.
-     \item[Zählerüberwachung] In einem WARP Charger Pro ist ein Stromzähler verbaut. Wenn diese Option aktiviert ist, wird ein Ladevorgang unterbrochen bzw. nicht freigegeben, wenn mit diesem Stromzähler nicht kommuniziert werden kann. Mit aktivierter Option wird sichergestellt, dass jeder Ladevorgang inkl. der geladenen Energie aufgezeichnet wird.
-     \item[Zeitlimit] Setzt ein generelles Zeitlimit für Ladevorgänge. Nach Ablaufen der Zeit muss ein Fahrzeug abgesteckt werden um einen erneuten Ladevorgang zu ermöglichen.
-     \item[Energielimit] Setzt ein generelles Energielimit für Ladevorgänge (nur Pro Wallbox). Ist die definierte Energie aufgebraucht, muss ein Fahrzeug abgesteckt werden um einen erneuten Ladevorgang zu ermöglichen.
+     \item[Zählerüberwachung] Im WARP Charger Pro ist ein Stromzähler verbaut. Wenn diese Option aktiviert ist, wird ein Ladevorgang unterbrochen bzw. nicht freigegeben, falls der Stromzähler, bzw. die Kommunikation mit diesem gestört zu sein scheint. Wenn die Zählerüberwachung aktiviert ist, wird also sichergestellt, dass die geladene Energie zu jedem aufgezeichneten Ladevorgang erfasst wird.
+     \item[Zeitlimit] Setzt ein generelles Zeitlimit für Ladevorgänge. Nach Ablaufen der Zeit muss ein Fahrzeug abgesteckt werden um einen erneuten Ladevorgang zu ermöglichen. Das Zeitlimit kann für den nächsten oder laufenden Ladevorgang auf der Status-Seite überschrieben werden.
+     \item[Energielimit] Setzt ein generelles Energielimit für Ladevorgänge (nur Pro Wallbox). Ist die definierte Energie aufgebraucht, muss ein Fahrzeug abgesteckt werden um einen erneuten Ladevorgang zu ermöglichen. Das Energielimit kann für den nächsten oder laufenden Ladevorgang auf der Status-Seite überschrieben werden.
      \item[Tastereinstellung] Hiermit wird konfiguriert, welche Funktion der Taster an der Front
      des WARP Chargers ausführen soll. Im halb-öffentlichen Raum kann es beispielsweise sinnvoll sein,
      den Ladestop per Taster zu verbieten.
@@ -914,22 +899,15 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \columnbreak
 
     \subsubsection{Stromzähler}
-    Auf dieser Seite können Stromzähler konfiguriert werden. Ist in der Wallbox
-    bereits ein Stromzähler installiert (Pro Variante), so ist einer von zwei
-    Zählern bereits konfiguriert. Es wird die Leistungsaufnahme der letzten 48
-    Stunden angezeigt. Nach Ausklappen des Zählers werden Statistiken und
-    Messwerte des Stromzählers angezeigt.
+    Auf dieser Unterseite kann die Kommunikation mit Stromzählern konfiguriert werden.
+    Da der WARP Charger Pro über einen eingebauten Stromzähler verfügt, ist dieser bei allen WARP Chargern vorkonfiguriert.
+    Beim WARP Charger Smart kann dieser Zähler entfernt werden.
+    Im Graph wird die gemessene Leistung aller konfigurierten Stromzähler angezeigt, entweder als Verlauf über die letzten \SI{48}{\hour} oder als Live-Ansicht. Jeder Zähler kann aufgeklappt werden, um weitere Statistiken und
+    Messwerte anzuzeigen.
 
-    Es kann aber ein weiterer eigener Stromzähler konfiguriert werden. Dies kann
-    ein SunSpec (Modbus TCP) Stromzähler sein. In diesem Fall fragt die Wallbox
-    den angegebenen Host ab und erkennt das Modell automatisch (SunSpec Modell).
-    Abhängig von den Fähigkeiten des SunSpec Modells werden die verschiedenen
-    Messwerte abgerufen.
-
-    Als Alternative kann auch ein API Stromzähler definiert werden. Hierbei muss
-    der simulierte Typ konfiguriert werden und die jeweiligen Messwerte per API
-    an die Wallbox übermittelt werden.
-
+    Es können insgesamt zwei Stromzähler konfiguriert werden, beispielsweise SunSpec-Zähler oder -Wechselrichter,
+    sowie Stromzähler, die über die API befüllt werden können. SunSpec-(Modbus-TCP)-Geräte können nach Angabe des Hosts
+    automatisch erkannt werden. Abhängig von den Fähigkeiten des SunSpec-Geräts werden verschiedene Messwerte abgerufen.
 
     \gfx{./img_warp2/resized/web_meter}
 
@@ -941,26 +919,25 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Siehe \fullref{charge_manager}.
      \vspace{-0.2cm}
     \subsubsection{Automatisierung}
-    Es können bis zu 14 Regeln definiert werden um Vorgänge zu automatisieren.
-    Dazu ist jeweils eine Bedingung und die Aktion der Wallbox bei Erfüllung der
-    Bedingung zu definieren. Es stehen diverse Optionen zur Verfügung. So kann
-    zu gewissen Zeitpunkten das Laden gesperrt, freigegeben oder der Ladestrom
-    begrenzt werden. Es können MQTT Nachrichten verschickt oder Ladelimits
-    aktiviert werden.
+    Der WARP Charger kann automatisiert Regeln ausführen. So kann beispielsweise
+    der Empfang von MQTT-Nachrichten, das Auslesen eines NFC-Tags, oder eine andere Bedingung
+    Regeln ausführen, die beispielsweise Ladevorgänge steuern, MQTT-Nachrichten schicken, oder
+    den konfigurierbaren Ausgang schalten.
+    Es können bis zu 14 Regeln definiert werden um Vorgänge zu automatisieren,
+    dazu ist jeweils eine Bedingung und die Aktion der Wallbox bei Erfüllung der
+    Bedingung zu definieren.
 
-    \paragraph{Beispiel: Wallboxen zu Uhrzeiten deaktivieren}
-    Hierbei muss als Bedingung \enquote{Zeitpunkt} gewählt werden. Anschließend
+    \paragraph{Beispiel: Ladevorgänge nur zu bestimmten Uhrzeiten zulassen}
+    Hierzu muss als Bedingung \enquote{Zeitpunkt} gewählt werden. Anschließend
     kann über die Einstellung Tag und Uhrzeit ein Zeitpunkt definiert werden an
-    dem die Wallbox eine Aktion ausführt. In diesem Fall wählen wir die Aktion
+    dem die Wallbox eine Aktion ausführt. Wähle in diesem Fall die Aktion
     \enquote{Steuere Ladevorgang} und \enquote{Laden blockieren}. Nach
     Hinzufügen der Regel blockiert die Wallbox nun jedes mal zum definierten
-    Zeitpunkt das Laden bis auf weiteres. Damit diese Regel sinnvoll ist, sollte
-    zu einem anderen Zeitpunkt das Laden wieder freigegeben werden. Dazu fügen
-    wir also eine zweite Regel ein, definieren den Zeitpunkt und wählen
+    Zeitpunkt das Laden bis auf weiteres. Mit einer weiteren Regel kann
+    das Laden zu einem anderen Zeitpunkt wieder freigegeben werden. Füge dazu
+    eine zweite Regel ein, definiere den Zeitpunkt und wähle
     \enquote{Laden freigeben}. Mittels dieser zwei Regeln kann also die Ladung
     an gewissen Tagen und oder Uhrzeiten eingeschränkt werden.
-
-
 
     \subsection{Netzwerk}\label{network}
     Die Wallbox kann in dein Netzwerk per WLAN oder LAN eingebunden werden.
@@ -970,7 +947,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Hier kannst du den Hostnamen des WARP Chargers in allen verbundenen Netzwerken konfigurieren. Außerdem kann mDNS aktiviert oder deaktiviert werden.
     Über mDNS können andere Geräte im Netzwerk den WARP Charger finden. Damit
     wird zum Beispiel das Einrichten eines Lastmanagementverbunds vereinfacht.
-    Zusätzlich kann der Port für das Webinterface geändert werden (Standard ist
+    Zusätzlich kann der Port, auf dem das Webinterface erreichbar ist, geändert werden (Standard ist
     Port 80).
 
     \gfx{./img_warp2/resized/web_network}
@@ -1023,9 +1000,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Bei einer erfolgreichen Verbindung sollte die Wallbox jetzt im LAN unter
     \url{http://[konfigurierter_hostname]}, z.B. \url{http://warp2-ABC} erreichbar sein.
 
-    \hint{Es sollte niemals WLAN und LAN parallel betrieben werden. In diesem
-    Fall könnte es zu Verbindungsabbrüchen kommen, da es zwei aktive Routen
-    gibt.}
+    \hint{Die LAN- und WLAN-Verbindung sollten nicht gleichzeitig zum selben Netzwerk bzw. IP-Bereich verbunden sein,
+    da es sonst zu Verbindungsproblemen kommen kann.}
 
     \subsubsection{WireGuard}
 
@@ -1046,7 +1022,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Siehe \fullref{interfaces}.
 
     \subsection{Benutzer}
-    Siehe die \fullref{user_management} und \fullref{NFC}.
+    Siehe \fullref{user_management} und \fullref{NFC}.
 
     \subsection{System}
     Im System-Unterabschnitt kannst du das Ereignis-Log einsehen und Firmware-Aktualisierungen einspielen.
@@ -1055,17 +1031,17 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     \subsubsection{TLS-Zertifikate}\label{tls}
     Hier können bis zu acht TLS-Zertifikate hochgeladen werden. Diese Zertifikate können
-    dann für OCPP, MQTT oder in den WLAN Einstellungen genutzt werden. Ansonsten
-    wird das \enquote{ESP x509 Certificate Bundle}~genutzt.
+    für OCPP- und MQTT-Verbindungen, sowie zum Aufbau einer WiFi-Enterprise-Verbindung genutzt werden.
 
     \subsubsection{Zeitsynchronisierung}\label{ntp}
-    Um im Ladetracker und dem Ereignis-Log die aktuelle Uhrzeit anzeigen zu
-    können, kann der WARP Charger diese per NTP über
-    eine Netzwerkverbindung synchronisieren. Auf dieser Unterseite kannst du NTP aktivieren oder deaktivieren und die Zeitzone, in der sich
+    Der WARP Charger kann die aktuelle Uhrzeit per NTP über das Netzwerk empfangen.
+    Die Uhrzeit ist notwendig, um diese im im Ladetracker und dem Ereignis-Log anzeigen zu können und
+    WireGuard-Verbindungen aufbauen zu können.
+
+    Auf dieser Unterseite kannst du NTP aktivieren oder deaktivieren und die Zeitzone, in der sich
     der WARP Charger befindet konfigurieren.
 
-    Außerdem ist es möglich, zusätzlich zum konfigurierten Zeitserver einen Zeitserver zu verwenden, der von deinem Router per DHCP gesetzt wird. Dies funktioniert allerdings nur,
-    wenn in der Netzwerkkonfiguration keine statische IP-Konfiguration verwendet wurde.
+    Außerdem ist es möglich, zusätzlich zum konfigurierten Zeitserver einen Zeitserver zu verwenden, der vom Router per DHCP gesetzt wird. Das funktioniert allerdings nur, wenn in der Netzwerkkonfiguration keine statische IP-Konfiguration verwendet wurde.
 
     \gfx{./img_warp2/resized/web_ntp}
 
@@ -1254,11 +1230,10 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     stehenden Phasenstrom einzuregeln.
 
     \paragraph{Minimaler Ladestrom}
-    Dieser kann vom System automatisch eingestellt werden. Wir empfehlen die automatische Einstellung des Ladestroms und die Wahl des Fahrzeugmodells (\enquote{Standard}).
-    Der Strom kann aber auch individuell festgelegt werden.
     Der minimale Ladestrom ist der Strom, der für eine Wallbox zur Verfügung stehen muss, damit diese lädt. Dieser Strom muss mindestens \SI{6}{\ampere} betragen.
     Bestimmte Fahrzeuge laden aber erst bei höheren Strömen effizient. Mit einem WARP2 Charger Pro kann der Leistungsfaktor ermittelt werden.
 
+    \hint{Wir empfehlen die automatische Einstellung des minimalen Ladestroms, die sich nach der Wahl des Fahrzeugmodells richtet.}
     Mit dem minimalen Ladestrom kann zusätzlich gesteuert werden, wie viele Fahrzeuge gleichzeitig laden können.
     Maximal sind $\frac{\text{Verfügbarer Strom}}{\text{Minimaler Ladestrom}}$ Ladevorgänge gleichzeitig möglich. Falls beispielsweise nicht möglichst viele
     Fahrzeuge gleichzeitig, aber langsam, sondern ein Fahrzeug möglichst schnell nacheinander geladen werden soll, kann der minimale Ladestrom auf den selben Wert
@@ -1296,8 +1271,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
      \item Benutzer, der den Ladevorgang gestartet hat, falls bekannt.
      \item Zählerstand beim Start und Ende des Ladevorgangs (nur WARP Charger Pro). Hieraus wird die geladene Energie in \SI{}{\kWh} berechnet.
      \item Dauer des Ladevorgangs
-     \item Kosten des Ladevorgangs (nur WARP Charger Pro), wenn ct/kWh eingetragen werden.
     \end{itemize}
+    Aus diesen Informationen können die Kosten der Ladevorgänge berechnet werden, wenn der Strompreis konfiguriert wird. \hint{Die Kosten werden nicht pro Ladevorgang aufgezeichnet, sondern anhand des konfigurierten Strompreises berechnet. Das heißt insbesondere, dass, wenn der Strompreis geändert wird, auch die angezeiten Kosten älterer Ladevorgänge geändert werden}
 
     \vfill
     \null
@@ -1305,12 +1280,12 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     \hint{Damit Ladevorgänge einem Benutzer zugeordnet werden können, muss
         \begin{itemize}
-            \item die Benutzerautorisierung des Ladecontrollers aktiviert sein
-            (Siehe \fullref{evse})
+            \item die Lade­freigabe der Benutzerverwaltung aktiviert sein
+            (Siehe \fullref{user_management})
             \item mindestens ein Benutzer angelegt sein (Siehe \fullref{user_management})
             \item dem Benutzer ein NFC-Tag zugeordnet sein (Siehe \fullref{NFC})
         \end{itemize}
-        Im Werkszustand sind drei Benutzer mit jeweils einem NFC-Tag eingerichtet. Es muss dann nur die Benutzerautorisierung aktiviert werden.
+        Im Werkszustand sind drei Benutzer mit jeweils einem NFC-Tag eingerichtet. Es muss dann nur die Lade­freigabe unter System $\rightarrow$  Benutzerverwaltung aktiviert werden.
     }
 
     Diese Informationen werden \textbf{nur} auf dem WARP Charger gespeichert.
@@ -1334,7 +1309,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Ladevorgangs berechnen. Bitte beachte das eine Änderung des Strompreises
     immer die Kosten von allen aufgezeichneten Ladevorgängen neu berechnet.
 
-    Der WARP Charger kann intern bis zu 7680 Ladevorgänge aufzeichnen.
+    Der WARP Charger kann bis zu 7680 Ladevorgänge aufzeichnen.
 
     \section{Benutzerverwaltung} \label{user_management}
 
