@@ -1217,12 +1217,33 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     zunächst der voreingestellte Strom verwendet. Falls beispielsweise durch eine externe Steuerung der verfügbare PV-Überschussstrom
     gesetzt werden soll, kann der voreingestellte Strom auf \SI{0}{\ampere} konfiguriert werden, damit zwingend erst geladen wird,
     wenn die externe Steuerung mindestens einmal den verfügbaren Strom gesetzt hat
-    \fxnote{TODO Erik: Startphase + Spielraum besser erklären}
-    \paragraph{Länge der Startphase}
-    WARP Charger Pro Wallboxen können den Phasenstrom anhand des realen Bezugs regeln, da dieser
-    intern gemessen werden kann. Diese Regelung wird erst nach Ablauf einer
-    Wartezeit nach Beginn eines Ladevorgangs aktiv. Diese Zeit wird hier als
-    Länge der Startphase eingestellt.
+
+    \paragraph{Länge der Startphase + Spielraum des Phasenstroms}
+    WARP Charger Pro können den realen Strombezug des Fahrzeugs pro Phase messen.
+    Mit dieser Information kann das Lastmanagement effizienter Strom verteilen: Falls beispielsweise
+    der Strombezug eines Fahrzeug sinkt, weil der Akku bald voll ist, oder ein Fahrzeug, dass nur mit \SI{16}{\ampere}
+    laden kann an einer \SI{32}{\ampere} Wallbox angeschlossen ist, kann der übrige Strom auf andere Wallboxen
+    im Lastmanagementverbund verteilt werden.
+
+    Damit ein Fahrzeug mehr Strom anfordern kann, darf das Lastmanagement eine Wallbox nicht exakt
+    auf den realen Strombezug (den maximalen Phasenstrom) limitieren, sondern muss einen gewissen Spielraum
+    mehr zuteilen, damit Fahrzeug und Lastmanager nachregeln können.
+
+    Für WARP Charger Smart sind diese Einstellungen nicht relevant,
+    der Lastmanager nimmt bei Wallboxen ohne Stromzähler immer an, dass der zugeteilte Strom komplett vom Fahrzeug verwendet wird.
+
+    \textbf{Länge der Startphase} gibt an, wie lange der reale Strombezug eines Fahrzeugs ignoriert wird,
+    einer Wallbox also der maximal verfügbare Strom zugewiesen wird. Die Länge der Startphase sollte also
+    länger sein, als die Startverzögerung eines angeschlossenen Fahrzeugs, damit dieses beim Ladebeginn
+    sofort den präferierten Strom beziehen kann.
+
+    \textbf{Spielraum des Phasenstroms} gibt an, wie viel mehr Strom als der reale Strombezug des Fahrzeugs
+    einer Wallbox zugeteilt werden soll, sobald die Startphase beendet ist. Dieser Spielraum ist notwendig, damit
+    das Fahrzeug mehr Strom anfordern kann.
+
+    Viele Fahrzeuge laden nicht exakt mit dem vorgegebenen Ladestrom sondern unterstützen nur Abstufungen, von beispielsweise \SI{0,5}{\ampere}.
+    Ein solches Fahrzeug würde also bei einer Stromvorgabe von \SI{6,23}{\ampere} nur mit \SI{6}{\ampere} laden und müsste mehr als \SI{6,5}{\ampere} zugeteilt bekommen, damit es von der Stufe \SI{6}{\ampere} auf die Stufe \SI{6,5}{\ampere} springt.
+    Damit dieses Fahrzeug mehr Strom anfordern kann, müsste der Spielraum also mehr als \SI{0,5}{\ampere} betragen.
 
     \paragraph{Spielraum des Phasenstroms}
     Für die oben genannte Startphase wird eine Stromerhöhung definiert, die es
