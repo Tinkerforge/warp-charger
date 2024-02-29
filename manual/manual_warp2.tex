@@ -1234,32 +1234,11 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Bestimmte Fahrzeuge laden aber erst bei höheren Strömen effizient. Mit einem WARP2 Charger Pro kann der Leistungsfaktor ermittelt werden.
 
     \hint{Wir empfehlen die automatische Einstellung des minimalen Ladestroms, die sich nach der Wahl des Fahrzeugmodells richtet.}
+
     Mit dem minimalen Ladestrom kann zusätzlich gesteuert werden, wie viele Fahrzeuge gleichzeitig laden können.
     Maximal sind $\frac{\text{Verfügbarer Strom}}{\text{Minimaler Ladestrom}}$ Ladevorgänge gleichzeitig möglich. Falls beispielsweise nicht möglichst viele
     Fahrzeuge gleichzeitig, aber langsam, sondern ein Fahrzeug möglichst schnell nacheinander geladen werden soll, kann der minimale Ladestrom auf den selben Wert
     wie der verfügbare Strom gesetzt werden.
-
-    \subsection{Fehlerbehebung}
-    Bei der Verwendung des Lastmanagements können zwei Arten von Fehlern auftreten: Wallbox-Fehler, die nur eine spezifische Wallbox betreffen und Management-Fehler,
-    bei deren Auftreten das Laden an \textbf{allen} gesteuerten Wallboxen gestoppt wird.
-
-    Wallbox-Fehler müssen an der entsprechenden Wallbox behoben werden. Hier hilft \fullref{fehlerbehebung}. Im folgenden wird die Diagnose von Management-Fehlern erläutert:
-
-    \paragraph{Kommunikationsfehler / Wallbox nicht erreichbar}
-    Eine Wallbox kann nicht zuverlässig erreicht werden. Eventuell liegt ein Verbindungsproblem vor. Netzwerkverbindung bzw. Netzwerkkabel und IP-Konfiguration der Wallbox prüfen.
-
-    \paragraph{Firmware inkompatibel}
-    Das Lastmanagement benötigt kompatible Firmwares auf allen beteiligten Wallboxen. Die jeweils aktuellsten Firmwares sollten zueinander kompatibel sein,
-    auch wenn WARP (1) und WARP 2 Charger in einem Lastmanagementverbund verwendet werden.
-
-    \paragraph{Lastmanagement deaktiviert}
-    Bei einer der zu steuernden Wallboxen ist das Lastmanagement deaktiviert. Damit ist keine Steuerung durch den Lastmanager möglich. Das Lastmanagement kann auf der Ladecontroller-Unterseite aktiviert werden.
-
-    \paragraph{Ladecontroller nicht erreichbar}
-    Der Ladecontroller einer Wallbox kann nicht erreicht werden, die Wallbox selbst aber schon. Ereignis-Log der betroffenen Wallbox prüfen.
-
-    \paragraph{Ladecontroller reagiert nicht}
-    Der Ladecontroller einer Wallbox reagiert nicht auf Stromzuweisungen. Eventuell ist auf diesem das Lastmanagement deaktiviert.
 
     \newpage
     \section{Ladetracker}\label{charge_tracker}
@@ -1593,6 +1572,28 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
         einem Elektriker diagnostiziert werden. Er kann prüfen ob alle Leiter
         korrekt angeschlossen sind.
     \end{description}
+
+    \subsection{Lastmanagementfehler}
+    Bei der Verwendung des Lastmanagements können zwei Arten von Fehlern auftreten: Wallbox-Fehler, die nur eine spezifische Wallbox betreffen und Management-Fehler,
+    bei deren Auftreten das Laden an \textbf{allen} gesteuerten Wallboxen gestoppt wird.
+
+    Wallbox-Fehler müssen an der entsprechenden Wallbox behoben werden. Hier hilft \fullref{fehlerbehebung}. Im folgenden wird die Diagnose von Management-Fehlern erläutert:
+
+    \paragraph{Kommunikationsfehler / Wallbox nicht erreichbar}
+    Eine Wallbox kann nicht zuverlässig erreicht werden. Eventuell liegt ein Verbindungsproblem vor. Netzwerkverbindung bzw. Netzwerkkabel und IP-Konfiguration der Wallbox prüfen.
+
+    \paragraph{Firmware inkompatibel}
+    Das Lastmanagement benötigt kompatible Firmwares auf allen beteiligten Wallboxen. Die jeweils aktuellsten Firmwares sollten zueinander kompatibel sein,
+    auch wenn WARP (1) und WARP 2 Charger in einem Lastmanagementverbund verwendet werden.
+
+    \paragraph{Lastmanagement deaktiviert}
+    Bei einer der zu steuernden Wallboxen ist das Lastmanagement deaktiviert. Damit ist keine Steuerung durch den Lastmanager möglich. Das Lastmanagement kann auf der Ladecontroller-Unterseite aktiviert werden.
+
+    \paragraph{Ladecontroller nicht erreichbar}
+    Der Ladecontroller einer Wallbox kann nicht erreicht werden, die Wallbox selbst aber schon. Ereignis-Log der betroffenen Wallbox prüfen.
+
+    \paragraph{Ladecontroller reagiert nicht}
+    Der Ladecontroller einer Wallbox reagiert nicht auf Stromzuweisungen. Eventuell ist auf diesem das Lastmanagement deaktiviert.
 
     \subsection{Ersatzteile}
     \begin{tabular}{ll}
