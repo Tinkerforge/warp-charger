@@ -79,7 +79,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 \fancyhf{}
 \fancyhead{\colorbox{boxgray}{
-    \makebox[\dimexpr\linewidth-2\fboxsep][l]{
+    \makebox[\dimexpr\linewidth-2\fboxsep - 2.17mm][l]{
         \includegraphics[height=1cm]{./img_warp2/resized/logo}\hfill\color{white}\Huge\raisebox{.5ex}{\thepage}
         }
     }
@@ -112,7 +112,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
         WARP2 Charger Betriebsanleitung\\\vspace{1cm}
         \large
         Version 2.2.0\\\vspace{0.25cm}
-        19.02.2024
+        01.03.2024
     \end{center}
     \vfill \gfx{./img_warp2/resized/warp_perspective_blue_ready}
 \end{titlepage}
@@ -275,17 +275,18 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Nach Möglichkeit sollte die Wallbox vor Witterungseinflüssen geschützt
     installiert werden. Direkte Sonneneinstrahlung ist zu vermeiden, um ein
     unnötiges Aufheizen der Wallbox zu verhindern. Auf eine ausreichende Belüftung
-    ist zu achten. Die Staubschutzkappe des Typ2 Steckers sollte nicht aufgesteckt
+    ist zu achten. Die Staubschutzkappe des Typ-2-Steckers sollte nicht aufgesteckt
     werden, wenn diese durch Regen o.ä. mit Wasser voll laufen könnte. In diesem Fall
-    droht ansonsten eine Korrosion der Kontakte des Typ2 Steckers.
+    droht ansonsten eine Korrosion der Kontakte des Typ-2-Steckers.
 
     \subsubsection{Wandmontage}\label{wandmontage}
     Zur Montage der Wallbox muss der Deckel entfernt werden. Dazu müssen die
     vier Kreuzschlitzschrauben gelöst werden.
-
-    \gfx{./img_warp2/resized/warp_screw_points_ready}
     Nach Lösen der Schrauben des Deckels kann dieser von der Wallbox herunter genommen
     werden.
+
+    \gfx{./img_warp2/resized/warp_screw_points_ready}
+
 
     \hint{Der Taster im Deckel ist über ein Anschlusskabel verbunden und muss
         durch Drücken der Raste vom Kabel gelöst werden.}
@@ -511,47 +512,42 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Wallboxen gehören nach \S14a EnWG zu sogenannten Steuerbaren
     Verbrauchseinrichtungen, da deren Anschlussleistung über \SI{4,2}{\kilo\watt} beträgt.
 
-    WARP Charger können auf verschiedenen Arten vom Netzbetreiber herunter
-    geregelt werden. Welche Möglichkeit genutzt werden kann, hängt von den
-    Vorgaben des örtlichen Netzbetreibers ab.
+    WARP Charger können auf verschiedenen Arten vom Netzbetreiber gesteuert werden.
+    Welche Möglichkeit genutzt werden kann, hängt von den Vorgaben des örtlichen Netzbetreibers ab.
 
+    \vspace{-0.3cm}
     \paragraph*{Schnittstellen (OCPP, Modbus TCP, HTTP, MQTT)}
-    Generell kann die Ladeleistung der Wallbox über alle implementierten Schnittstellen gesteuert werden.
+    Generell kann die Ladeleistung der Wallbox über alle implementierten Schnittstellen gesteuert werden, siehe \fullref{interfaces}.
     Netzbetreiber setzen zur Steuerung typischerweise OCPP oder Modbus TCP ein.
-    Weitere Informationen zu den Schnittstellen findet sich im \fullref{interfaces}.
 
+    \vspace{-0.3cm}
     \paragraph*{Rundsteuerempfänger/Steuerbox}
     Am Abschalteingang innerhalb der Wallbox kann ein potentialfreier Kontakt (spannungsfreier Schaltkontakt)
     angeschlossen werden. Dazu muss eine Steuerleitung vom Rundsteuerempfänger
     oder der Steuerbox des Netzbetreibers in die Wallbox gelegt werden und am Ladecontroller (untere Platine)
     am mit \enquote{Enable} beschrifteten, dreipoligen Stecker an Pin 1 und Pin 2 angeschlossen werden.
-
     Damit die Wallbox abschaltet, muss unter Wallbox $\rightarrow$ Ladeeinstellungen die Einstellung \enquote{Abschalteingang} auf \enquote{Begrenzen auf 4300 W wenn geschlossen} bzw. \enquote{wenn geöffnet} konfiguriert werden.
 
+    \vspace{-0.3cm}
     \paragraph*{Rundsteuerempfänger/Steuerbox (mittels WARP Energy Manager)}
     Anstatt eine Steuerleitung bis in die Wallbox zu legen, besteht auch die
-    Möglichkeit, die Eingänge des WARP Energy Managers
-    (Schaltschrank-Hutschienenmodul)\fxnote{$\leftarrow$ das raus?} mit dem Rundsteuerempfänger oder der
+    Möglichkeit, die Eingänge des WARP Energy Managers mit dem Rundsteuerempfänger oder der
     Steuerbox zu verbinden. Der WARP Energy Manager steuert dann die
-    Leistung der Wallbox über das Netzwerk (LAN/WLAN). Eine gesonderte
-    Steuerleitung bis zur Wallbox entfällt.
-
+    Leistung der Wallbox(en) über das Netzwerk (LAN/WLAN). Eine gesonderte
+    Steuerleitung entfällt.
     Der WARP Energy Manager muss hierfür als Lastmanager der betreffenden Wallbox(en) konfiguriert werden.
-
     Anschließend muss in \enquote{Energiemanager} $\rightarrow$ \enquote{Automatisierung}
     folgende Regel angelegt werden:
 
-    \fxwarning{Beschreibungstexte fixen wenn das im WEM angepasst ist!}
-    \begin{description}
-        \item{Bedingung:} \enquote{Eingang 3 geschaltet} (Es kann auch Eingang 4 verwendet werden, wenn kein Schütz am Energy Manager installiert ist).
-        \item{Zustand:} \enquote{geschlossen} (Es kann auch Eingang 3 verwendet werden).
-        \item{Aktion:} \enquote{Steuere Ladevorgang} - \enquote{Ladestrom begrenzen}.
-        \item{Erlaubter Ladestrom:} 6,000A
+    \begin{description}[labelindent=0.5cm]
+        \item[Bedingung] \enquote{Eingang 3 geschaltet} (bzw. Eingang 4)\\\hphantom{\textbf{Bedingung}}\hspace{-0.5cm} $\rightarrow$ \enquote{auf geschlossen}
+        \item[Aktion] \enquote{Begrenze maximalen Gesamtstrom}.
+        \item[Maximaler Gesamtstrom] \SI{6}{\ampere} (bzw. \SI{18}{\ampere} bei einphasigem Anschluss)
     \end{description}
 
-
-    \newpage
+    \vspace{-0.2cm}
     \subsection{Prüfungen}\label{tests}
+    \vspace{-0.1cm}
     Im Werk wurde jede Wallbox einzeln nach IEC 60364-6 sowie den entsprechenden gültigen
     nationalen Vorschriften geprüft, das jeweilige Messprotokoll liegt bei.
     Vor der ersten Inbetriebnahme ist dennoch eine Prüfung der Gesamtinstallation
@@ -789,28 +785,24 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     \textbf{WireGuard-Verbindung} zeigt an, ob die konfigurierte WireGuard-VPN-Verbindung aufgebaut werden konnte. Hierfür ist eine bestehende Zeitsynchronisierung eine zwingende Voraussetzung.
 
-
-
-    \vfill
-    \null
-
-    \columnbreak
-
     \subsection{Wallbox}
     Die Wallbox-Gruppe enthält Unterseiten mit Zustand und Einstellungen des Ladecontrollers, Stromzählers, Lastmanagements und Ladetrackers.
 
+    \vspace{-0.3cm}
     \subsubsection{Ladestatus}\label{evse}
+    \vspace{-0.1cm}
     Die Unterseite \enquote{Ladestatus} gibt detaillierte Auskunft über den Zustand
     des Ladecontrollers (EVSE) und dessen Hardware-Konfiguration. Probleme beim Laden
     kannst du mit den Informationen dieser Seite diagnostizieren.
 
+    \vspace{-0.4cm}
     \paragraph{Ladestromgrenzen}
     In diesem Abschnitt werden die aktuellen Ladestromgrenzen angezeigt. Alle Grenzen, die
     derzeit aktiv sind, werden zur Entscheidung, ob ein Ladevorgang erlaubt ist und zur Berechnung des maximalen Ladestroms einbezogen:
     Nur wenn alle aktiven Ladestromgrenzen nicht blockieren, wird ein Ladevorgang erlaubt.
     Der erlaubte Ladestrom ist dann das Minimum aller aktiven Grenzen. Folgende Grenzen können Teil der Berechnung sein:
 
-    \begin{description}[labelindent=0.5cm]
+    \begin{description}[labelindent=0.5cm, leftmargin=0.5cm]
         \item[Zuleitung] Der Maximalstrom der Zuleitung zum WARP Charger.
             Wird über die Schalter auf dem Ladecontroller konfiguriert. Siehe \fullref{ladestrom_schalter}.
         \item[Typ-2-Ladekabel] Der Maximalstrom des Typ-2-Ladekabels. Wird durch einen festen Widerstand im Kabel vorgegeben.
@@ -847,12 +839,13 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
      \item[\textbf{\textcolor{myred}{Rot}}] Diese Ladestromgrenze ist aktiv und blockiert den Ladevorgang.
     \end{description}
 
-
+    \vspace{-0.1cm}
     \paragraph{Hardware-Konfiguration}
     Unter der Überschrift \enquote{Hardware-Konfiguration} werden Informationen
     zur verbauten Hardware aufgeführt. Beim WARP Charger Pro wird die Version
-    des intern verbauten Stromzählers angezeigt.
+    des verbauten Stromzählers angezeigt.
 
+    \vspace{-0.1cm}
     \paragraph{Ladeprotokoll}
     Bei Problemen beim Ladestart, Ladeabbrüchen o.Ä. kann ein Ladeprotokoll
     helfen, die Ursache eines Fehlers zu ermitteln. Ein Ladeprotokoll kann
@@ -873,16 +866,16 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     Auf dieser Unterseite können verschiedene Einstellungen des Ladecontrollers verändert werden:
 
-    \begin{description}
+    \begin{description}[leftmargin=0.5cm]
      \item[Manuelle Ladefreigabe] Wenn die manuelle Ladefreigabe aktiviert wird, wird ein Ladevorgang niemals automatisch begonnen. Jeder Ladevorgang muss über das Webinterface, die API oder (je nach Tastereinstellung) den Taster gestartet werden. Die manuelle Ladefreigabe blockiert \textbf{zusätzlich} zu eventuell anderen aktiven Ladestromgrenzen. Das heißt, dass sie \textbf{nicht} aktiviert werden muss, wenn Ladevorgänge beispielsweise mit der Benutzerfreigabe per NFC-Tag, oder der Steuerung per OCPP kontrolliert werden.
      \item[Externe Steuerung] Wenn die externe Steuerung erlaubt ist, darf eine externe Steuerungssoftware, beispielsweise
      EVCC (\rurl{https://evcc.io}{evcc.io}) den WARP Charger steuern. Eine Steuerungssoftware kann auch selbst entwickelt werden, hierzu stellen
      wir unter \rurl{https://warp-charger.com/api.html}{warp-charger.com/api.html} eine detaillierte API-Dokumentation zur Verfügung.
-     \item[Status-LED-Steuerung] Ermöglicht die Steuerung der Front-LED mit einer externen Steuerung oder über die API. Typischerweise nur notwendig, wenn über die externe Steuerung beispielsweise die Freigabe mit einem NFC-Tag umgesetzt wird.
+     \item[Status-LED-Steuerung] Ermöglicht die Steuerung der Front-LED mit einer externen Steuerung oder über die API, z.B. für eine externe NFC-Freigabe.
      \item[Boost-Modus] Die Ladeelektronik mancher Fahrzeuge interpretiert einen vom WARP Charger vorgeschriebenen Ladestrom zu niedrig. Der Boost-Modus versucht diesen Effekt auszugleichen, indem ein leicht höherer Ladestrom kommuniziert wird.
      \item[Zählerüberwachung] Im WARP Charger Pro ist ein Stromzähler verbaut. Wenn diese Option aktiviert ist, wird ein Ladevorgang unterbrochen bzw. nicht freigegeben, falls der Stromzähler, bzw. die Kommunikation mit diesem gestört zu sein scheint. Wenn die Zählerüberwachung aktiviert ist, wird also sichergestellt, dass die geladene Energie zu jedem aufgezeichneten Ladevorgang erfasst wird.
      \item[Zeitlimit] Setzt ein generelles Zeitlimit für Ladevorgänge. Nach Ablaufen der Zeit muss ein Fahrzeug abgesteckt werden um einen erneuten Ladevorgang zu ermöglichen. Das Zeitlimit kann für den nächsten oder laufenden Ladevorgang auf der Status-Seite überschrieben werden.
-     \item[Energielimit] Setzt ein generelles Energielimit für Ladevorgänge (nur Pro Wallbox). Ist die definierte Energie aufgebraucht, muss ein Fahrzeug abgesteckt werden um einen erneuten Ladevorgang zu ermöglichen. Das Energielimit kann für den nächsten oder laufenden Ladevorgang auf der Status-Seite überschrieben werden.
+     \item[Energielimit] Setzt ein generelles Energielimit für Ladevorgänge (nur Pro Wallbox). Funktion analog zum Zeitlimit.
      \item[Tastereinstellung] Hiermit wird konfiguriert, welche Funktion der Taster an der Front
      des WARP Chargers ausführen soll. Im halb-öffentlichen Raum kann es beispielsweise sinnvoll sein,
      den Ladestop per Taster zu verbieten.
@@ -892,11 +885,6 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
      \item[Konfigurierbarer Ausgang] Der konfigurierbare Ausgang kann über die API gesteuert werden.
      \item[Fahrzeug-Weckruf] Die Ladeelektronik mancher Fahrzeuge wechselt in einen Energiesparmodus, falls ein Ladevorgang nicht innerhalb einer gewissen Zeit gestartet wird. Der Fahrzeug-Weckruf versucht solche Ladeelektroniken automatisch zu wecken, falls das Fahrzeug nicht innerhalb von 30 Sekunden reagiert, wenn Strom zur Verfügung steht. Umgesetzt wird das durch eine kurzzeitige Trennung des Control-Pilot- bzw. CP-Signals.
     \end{description}
-
-     \vfill
-     \null
-
-    \columnbreak
 
     \subsubsection{Stromzähler}
     Auf dieser Unterseite kann die Kommunikation mit Stromzählern konfiguriert werden.
@@ -954,14 +942,14 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 
     \subsubsection{WLAN-Verbindung}
-    \gfx{./img_warp2/resized/web_wifi_sta}
     Eine Möglichkeit um die Wallbox in dein Netzwerk zu integrieren ist eine
     Anbindung mittels WLAN. Dieses kannst du hier konfigurieren.
     Durch Drücken des \enquote{Netzwerksuche}-Buttons öffnet sich ein Menü, in dem das gewünschte WLAN ausgewählt werden kann.
     Es werden dann automatisch Netzwerkname (SSID) und BSSID eingetragen, sowie die Verbindung beim Neustart aktiviert.
     Gegebenenfalls musst du jetzt noch die Passphrase des gewählten Netzes eintragen.
 
-    \vspace{-0.1cm}
+    \gfx{./img_warp2/resized/web_wifi_sta}
+
     Du kannst jetzt die Konfiguration mit dem Speichern-Button abspeichern.
     Das Webinterface startet dann neu und verbindet sich zum konfigurierten WLAN. Die Statusseite zeigt
     an, ob die Verbindung erfolgreich war. Der Access-Point bleibt weiterhin
@@ -969,13 +957,12 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Da der Access-Point den selben Kanal wie ein eventuell verbundenes Netz verwendet,
     kann es sein, dass du dich jetzt neu zum Access-Point verbinden musst.
 
-    \vspace{-0.1cm}
     Bei einer erfolgreichen Verbindung sollte die Wallbox jetzt im konfigurierten Netzwerk unter
     \url{http://[konfigurierter_hostname]}, z.B. \url{http://warp2-ABC} erreichbar sein.
 
-    \vspace{-0.4cm}
     \subsubsection{WLAN-Access-Point}
-    \vspace{-0.1cm}
+    \gfx{./img_warp2/resized/web_wifi_ap}
+
     Der Access-Point kann in einem von zwei Modi betrieben werden: Entweder kann er immer aktiv sein,
     oder nur dann, wenn die Verbindung zu einem anderen WLAN bzw. zu einem LAN nicht konfiguriert oder fehlgeschlagen ist.
     Außerdem kann der Access-Point komplett deaktiviert werden.
@@ -985,8 +972,6 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
         (Abschnitt \ref{recovery}) oder ein Zurücksetzen auf Werkszustand, siehe Abschnitt \ref{reset}, erreicht werden.}
 
     Der Modus des Access-Points, Netzwerkname, Passphrase usw. können hier festgelegt werden.
-
-    \gfx{./img_warp2/resized/web_wifi_ap}
 
     \subsubsection{LAN-Verbindung}
     \gfx{./img_warp2/resized/web_ethernet}
@@ -1048,6 +1033,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \subsubsection{Ereignis-Log}
     \gfx{./img_warp2/resized/web_event_log}
 
+    \newpage
     Das Ereignis-Log zeichnet relevante Informationen des Systemstarts, sowie WLAN- und MQTT-Verbindungsabbrüche und Ladefehler auf.
     Falls Probleme mit der Wallbox auftreten, kannst du diese mit dem Log diagnostizieren.
     Falls du ein Problem mit der Wallbox an uns melden möchtest, kannst du das Ereignis-Log,
@@ -1173,6 +1159,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     wird der Ladestrom der ladenden Wallbox so beschränkt, dass für den zweiten Ladevorgang Strom verfügbar wird.
 
     \subsection{Konfiguration}
+    \vspace{-0.1cm}
     Lastmanagement-Einstellungen werden für alle Wallboxen (egal ob Manager oder zu steuernde Wallbox) auf der
     Lastmanagement-Unterseite vorgenommen.
 
@@ -1188,19 +1175,24 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Im einfachsten Fall, in dem eine feste Menge Strom verteilt werden soll, muss nun nur noch dieser
     Strom als \enquote{Maximal verfügbarer Strom} konfiguriert werden.
 
-    \subsection{Erweiterte Konfiguration}
+    \vspace{-0.2cm}
+    \subsection{Experteneinstellungen}
+    \vspace{-0.1cm}
     Je nach Einsatzzweck (z.B. PV-Überschussladen auf mehreren Wallboxen) können die folgenden Konfigurationen hilfreich sein.
     Diese werden für eine einfache Lastverteilung, z.B. \SI{16}{\ampere} auf zwei Wallboxen \textbf{nicht} benötigt.
     Die Konfigurationen finden sich unter den \enquote{Experteneinstellungen}.
+
     \vspace{-0.2cm}
     \paragraph{Stromverteilungsprotokoll aktiviert}
     Wenn aktiv, fügt der Lastmanager dem Ereignis-Log detaillierte Ausgaben hinzu, wann immer Strom umverteilt wird. Damit kann unerwartetes Verhalten des
     Lastmanagements untersucht werden.
 
+    \vspace{-0.2cm}
     \paragraph{Watchdog aktiviert}
     Der Watchdog erlaubt es der steuernden Wallbox, robust auf Ausfälle einer externen Steuerung zu reagieren. Falls über die API der Wallbox
     nicht mindestens alle 30 Sekunden der verfügbare Strom gesetzt wird, und der Watchdog aktiv ist, wird der verfügbare Strom wieder zurück auf den
     \enquote{Voreingestellt verfügbare Strom} gesetzt. Falls die externe Steuerung später wieder läuft, wird der Watchdog zurückgesetzt.
+
     \hint{Der Watchdog sollte nur dann aktiviert werden,
     wenn eine selbst programmierte Steuerung den für den Wallbox-Verbund verfügbaren Strom über die API dynamisch ändern soll.
     Für den normalen Lastmanagement-Betrieb ist der Watchdog nicht notwendig.}
@@ -1272,20 +1264,14 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
      \item Zählerstand beim Start und Ende des Ladevorgangs (nur WARP Charger Pro). Hieraus wird die geladene Energie in \SI{}{\kWh} berechnet.
      \item Dauer des Ladevorgangs
     \end{itemize}
-    Aus diesen Informationen können die Kosten der Ladevorgänge berechnet werden, wenn der Strompreis konfiguriert wird. \hint{Die Kosten werden nicht pro Ladevorgang aufgezeichnet, sondern anhand des konfigurierten Strompreises berechnet. Das heißt insbesondere, dass, wenn der Strompreis geändert wird, auch die angezeiten Kosten älterer Ladevorgänge geändert werden}
-
-    \vfill
-    \null
-    \columnbreak
+    Aus diesen Informationen und dem konfigurierten Strompreis werden die Kosten der Ladevorgänge berechnet. Die Kosten werden nicht pro Ladevorgang aufgezeichnet, sondern anhand des konfigurierten Strompreises berechnet. Das heißt insbesondere, dass, wenn der Strompreis geändert wird, auch die angezeiten Kosten älterer Ladevorgänge geändert werden.
 
     \hint{Damit Ladevorgänge einem Benutzer zugeordnet werden können, muss
         \begin{itemize}
-            \item die Lade­freigabe der Benutzerverwaltung aktiviert sein
-            (Siehe \fullref{user_management})
-            \item mindestens ein Benutzer angelegt sein (Siehe \fullref{user_management})
+            \item mindestens ein Benutzer angelegt sein und die Lade­freigabe der Benutzerverwaltung aktiviert sein (Siehe \fullref{user_management})
             \item dem Benutzer ein NFC-Tag zugeordnet sein (Siehe \fullref{NFC})
         \end{itemize}
-        Im Werkszustand sind drei Benutzer mit jeweils einem NFC-Tag eingerichtet. Es muss dann nur die Lade­freigabe unter System $\rightarrow$  Benutzerverwaltung aktiviert werden.
+        Im Werkszustand sind drei Benutzer mit je einem NFC-Tag eingerichtet. Es muss dann nur die Lade­freigabe unter System $\rightarrow$  Benutzerverwaltung aktiviert werden.
     }
 
     Diese Informationen werden \textbf{nur} auf dem WARP Charger gespeichert.
@@ -1302,14 +1288,11 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
      \item[RFC4180] Erzeugt eine CSV-Datei die nach RFC4180 formatiert ist. Der Feldtrenner ist ein Komma, die Datei wird UTF-8 kodiert.
     \end{description}
 
-
-    Zusätzlich kannst du einen Strompreis (ct/kWh) angeben. Wenn du über einen
-    WARP Charger Pro verfügst (integrierter Stromzähler), dann kann die Wallbox
-    damit und über die ermittelte gelandene Energie die Kosten des jeweiligen
-    Ladevorgangs berechnen. Bitte beachte das eine Änderung des Strompreises
-    immer die Kosten von allen aufgezeichneten Ladevorgängen neu berechnet.
-
     Der WARP Charger kann bis zu 7680 Ladevorgänge aufzeichnen.
+
+    \vfill
+    \null
+    \newpage
 
     \section{Benutzerverwaltung} \label{user_management}
 
@@ -1558,9 +1541,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
               Typischerweise sollte nur ein Port in der Liste auftauchen.
               Der richtige Port ist einer, an dem ein \enquote{CP2102N USB to UART Bridge Controller} bzw. ein \enquote{ESP32 Ethernet Brick} aufgeführt wird.
         \item Wähle dann unter Firmware \enquote{WARP2 Charger} aus. Die aktuelle Firmware-Version wird automatisch ausgewählt.
-        \item Klicke auf \enquote{Flash}
-        \item Der Flash-Vorgang ist erst dann beendet, wenn die Status-LED des ESP32 Ethernet Brick beginnt blau zu blinken. Dies kann bis zu eine Minute länger dauern als das eigentliche Flashen.
-        \hint{Der ESP32 Ethernet Brick darf nicht abgezogen werden, bevor die Status-LED blau blinkt. Andernfalls muss der Flash-Vorgang wiederholt werden.}
+        \item Klicke auf \enquote{Flash} Der Flash-Vorgang ist beendet, wenn die Status-LED des ESP32 Ethernet Brick beginnt blau zu blinken.
         \item Nachdem der Brick neu geflasht wurde, kannst du ihn vom PC abziehen und wie folgt in die Wallbox einbauen
         \item Stecke zuerst die weißen Bricklet-Stecker, sowie das LAN-Kabel wieder ein
         \item Schraube dann den Brick mit den Kunststoffschrauben auf die entsprechenden Abstandshalter.
@@ -1568,33 +1549,32 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
         \item Die Wallbox kann jetzt wieder mit Strom versorgt werden. Wenn der Flash-Vorgang erfolgreich war, sollte die Wallbox jetzt wieder den WLAN-Access-Point eröffnen und kann eingerichtet werden.
     \end{enumerate}
 
+    \vspace{-0.2cm}
     \subsection{Probleme bei Ladevorgängen lösen}
+    \vspace{-0.1cm}
     Treten Ladeabbrüche auf, so kann dies verschiedene Ursachen haben. Mögliche
     Ursachen können eine fehlerhafte Installation der Wallbox oder ein
     technischer Defekt der Wallbox oder des Fahrzeugs sein.
-
     Folgende Punkte sollten überprüft werden:
-    \begin{description}
-        \item[Sitz des Typ2 Steckers] Es klingt banal, aber manchmal ist der
-        Typ2 Stecker einfach nicht korrekt im Fahrzeug eingesteckt. Das    Fahrzeug
-        lädt dann ggf. gar nicht oder befindet sich in einem Notlademodus, in
-        dem es nur mit minimaler Leistung lädt. Ein Indiz kann hier sein, dass
-        das Fahrzeug den Typ2 Stecker nicht korrekt verriegelt.
-        \item[Inspektion aller Komponenten] Es sollten alle Komponenten
+
+    \vspace{-0.2cm}
+    \paragraph*{Sitz des Typ-2-Steckers} Ein nicht vollständig eingesteckter Typ-2-Stecker kann dazu führen,
+        dass ein Fahrzeug nicht, oder nur in einem Notlademodus mit minimaler Leistung lädt. Ein Indiz kann hier sein, dass
+        das Fahrzeug den Typ-2-Stecker nicht korrekt verriegelt.
+    \paragraph{Inspektion aller Komponenten} Es sollten alle Komponenten
         auf Beschädigungen und Nässe optisch kontrolliert werden.
-        \item[Webinterface der Wallbox] Steht nur bei den Varianten Smart und
-        Pro zur Verfügung. Die Statusseite gibt den Ladestatus aus
-        Sicht der Wallbox an. Zusätzlich wird der erlaubte Ladestrom
-        dargestellt. Gegebenenfalls verhindert eine Konfiguration die Ladung
-        oder schränkt den Ladestrom ein. Detailliertere Informationen gibt die
+    \paragraph{Webinterface der Wallbox} Steht nur bei den Varianten Smart und
+        Pro zur Verfügung. Die Statusseite gibt den Ladestatus, erlaubten Ladestrom und den Grund für eventuelle Limitierungen aus
+        Sicht der Wallbox an. Detailliertere Informationen gibt die
         Unterseite Ladestatus. Hier kann auch ein Ladeprotokoll
         erzeugt werden, welches alle Werte des Ladevorgangs aufzeichnet.
-        \item[Messung durch einen Elektriker] Elektrische Probleme können von
+    \paragraph{Messung durch einen Elektriker} Elektrische Probleme können von
         einem Elektriker diagnostiziert werden. Er kann prüfen ob alle Leiter
         korrekt angeschlossen sind.
-    \end{description}
 
+    \vspace{-0.2cm}
     \subsection{Lastmanagementfehler}
+    \vspace{-0.1cm}
     Bei der Verwendung des Lastmanagements können zwei Arten von Fehlern auftreten: Wallbox-Fehler, die nur eine spezifische Wallbox betreffen und Management-Fehler,
     bei deren Auftreten das Laden an \textbf{allen} gesteuerten Wallboxen gestoppt wird.
 
@@ -1755,7 +1735,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \section{Dokumentversionen}
     \begin{tabular}{lll}
         \toprule
-        Datum      & Version & Kommentar                       \\
+        Datum      & Version\hspace{-0.2pt} & Kommentar        \\
         \midrule
         09.08.2021 & 0.1     & Initialversion                  \\
         17.08.2021 & 0.2     & Neue Features hinzugefügt       \\
@@ -1770,22 +1750,25 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
                    &         & hinzugefügt                     \\
         06.12.2021 & 1.1.1   & Zuleitungsaderfarben            \\
                    &         & verbessert                      \\
-        31.03.2022 & 2.0.0   & Aktualisiert für Firmware 2.0.0 \\
-        06.04.2022 & 2.0.1   & Watchdog-Hinweis hinzugefügt    \\
+        31.03.2022 & 2.0.0   & Aktualisierung Firmware 2.0.0   \\
+        06.04.2022 & 2.0.1   & Watchdog-Hinweis                \\
+                   &         & hinzugefügt                     \\
         23.06.2022 & 2.0.2   & Staubschutzkappen- und          \\
                    &         & Verschraubungshinweis           \\
                    &         & hinzugefügt.                    \\
-        14.09.2022 & 2.0.3   & Aktualisiert für Firmware 2.0.8 \\
+        14.09.2022 & 2.0.3   & Aktualisierung Firmware 2.0.8   \\
                    &         & Wiederherstellungsmodus         \\
                    &         & hinzugefügt                     \\
-        11.11.2022 & 2.0.4   & Aktualisiert für WARP2.1        \\
+        11.11.2022 & 2.0.4   & Aktualisierung für WARP2.1      \\
                    &         & mit neuer Kabelführung          \\
         09.12.2022 & 2.0.5   & Modbus-TCP, OCPP und            \\
                    &         & Wireguard hinzugefügt           \\
                    &         & \enquote{Erste Schritte} überarbeitet \\
-        28.02.2023 & 2.1.0   & Aktualisiert für Firmware 2.1.0 \\
-        11.09.2023 & 2.1.1   & Hinweis EU-Messgeräterichtlinie 2014/32/EU hinzugefügt\\
-        19.02.2024 & 2.2.0   & Aktualisiert für Firmware 2.2.0 \\
+        28.02.2023 & 2.1.0   & Aktualisierung Firmware 2.1.0   \\
+        11.09.2023 & 2.1.1   & Hinweis EU-Messgeräte-          \\
+                   &         & richtlinie 2014/32/EU           \\
+                   &         & hinzugefügt                     \\
+        01.03.2024 & 2.2.0   & Aktualisierung Firmware 2.2.0   \\
         \bottomrule
     \end{tabular}
 
