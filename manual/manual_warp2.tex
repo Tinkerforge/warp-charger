@@ -1809,17 +1809,17 @@ Stromzähler) liefert diese Werte. Ein WARP2 Charger Smart (Version ohne
 Stromzähler) nicht.
 
 Welche Features die Wallbox bietet kann über \textbf{Discrete Inputs} ausgelesen
-werden. Eine Steuerung der Wallbox ist über die \textbf{Holding Registers}
+werden. Eine Steuerung der Wallbox ist über die \textbf{Holding Registers} und \textbf{Coils}
 möglich.
-
 \end{multicols*}
 
 \subsection{Input Registers}
+\small
 \begin{tabularx}{\textwidth}{rXll} \toprule
     \textbf{Register-} & \textbf{Name}& \textbf{Typ} & \textbf{Benötigtes}                                                      \\
     \textbf{adresse}   &              &              & \textbf{Feature}                                                         \\ \midrule
 0             & Version der Registertabelle             & uint32       & ---                                     \\
-              & \tdesc{Aktuelle Version: 1}                                                                                     \\ \cmidrule{2-4}
+              & \tdesc{Aktuelle Version: 2}                                                                                     \\ \cmidrule{2-4}
 2             & Firmware-Version                       & uint32 (x4)       & ---                                                    \\
               & \tdesc{Major, Minor, Patch, Zeitstempel jeweils uint32. Beispielsweise 2, 0, 8, 0x63218f23 für}                 \\
               & \tdesc{Firmware 2.0.8-63218f23. 0x63218f23 ist der Unix-Zeitstempel des 14. September 2022 08:21:55 UTC.}       \\ \cmidrule{2-4}
@@ -1859,8 +1859,15 @@ möglich.
 2100          & weitere Stromzähler-Werte               & float (x85)  & all\_values                                            \\
               & \tdesc{Siehe \rurl{https://www.warp-charger.com/api.html\#meter\_all\_values}{warp-charger.com/api.html\#meter\_all\_values}} \\ \cmidrule{2-4}
 3000          & CP-Unterbrechung                        & uint32       & cp\_disc                                               \\
-              & \tdesc{Noch nicht implementiert!}                                                                               \\ \bottomrule
+              & \tdesc{Noch nicht implementiert!}                                                                               \\ \cmidrule{2-4}
+4000          & ID des letzten NFC-Tags (ASCII-kodierter Hex-String) & uint32 (x5)  & nfc                                       \\ \cmidrule{2-4}
+4010          & Alter des letzten NFC-Tags              & uint32       & nfc                                                    \\
+              & \tdesc{Zeit in Milli­sekunden seitdem das zuletzt erkannten NFC-Tag das letzte mal erkannt wurde.}               \\
+              & \tdesc{Zeiten $< \SI{1000}{\milli\second}$ bedeuten typischer­weise, dass das Tag gerade an die Wallbox gehalten wird.}             \\ \bottomrule
 \end{tabularx}
+\normalsize
+
+\newpage
 
 \subsection{Holding Registers}
 \begin{tabularx}{\textwidth}{rXll} \toprule
@@ -1870,14 +1877,31 @@ möglich.
               & \tdesc{Startet die Wallbox (bzw. den ESP-Brick) neu, um beispielsweise Konfigurationsänderungen anzuwenden.}    \\
               & \tdesc{Password 0x012EB007}                                                                                     \\ \cmidrule{2-4}
 1000          & Ladefreigabe                            & uint32       & evse                                                   \\
+              & \tdesc{\textbf{Veraltet! Stattdessen Coil 1000 benutzen!}}                                                      \\
               & \tdesc{0 zum Blockieren des Ladevorgangs; ein Wert != 0 zum Freigeben}                                          \\ \cmidrule{2-4}
 1002          & Erlaubter Ladestrom (mA)                & uint32       & evse                                                   \\
               & \tdesc{0mA oder 6000mA bis 32000 mA. Andere Ladestromgrenzen können den Strom weiter verringern!}               \\ \cmidrule{2-4}
+1004          & Front-LED-Blinkmuster                   & uint32       & evse                                                   \\
+              & \tdesc{Steuert die LED des Fronttasters}                                                                        \\
+              & \begin{description}
+                    \item[-1] EVSE kontrolliert LED
+                    \item[0] LED aus
+                    \item[1-254] LED gedimmt
+                    \item[255] LED an
+                    \item[1001] bekanntes NFC-Tag erkannt
+                    \item[1002] unbekanntes NFC-Tag erkannt
+                    \item[1003] NFC-Tag notwendig
+                    \item[2001-2010] Fehlerblinken 1-10 mal
+                \end{description} & &               \\ \cmidrule{2-4}
+1006          & Front-LED-Blinkdauer                    & uint32       & evse                                                   \\
+              & \tdesc{Die Dauer in Millisekunden, die das in Register 1004 gesetzte Blinkmuster angezeigt werden soll. Max. \SI{65535}{\milli\second}}               \\ \cmidrule{2-4}
 2000          & Relative Energie zurücksetzen           & uint32       & meter                                                  \\
               & \tdesc{Setzt den relativen Energiewert zurück (Input Register 2006). Password 0x3E12E5E7}                       \\ \cmidrule{2-4}
 3000          & CP-Trennung auslösen                    & uint32       & cp\_disc                                               \\
               & \tdesc{Noch nicht implementiert!}                                                                               \\ \bottomrule
 \end{tabularx}
+
+\newpage
 
 \subsection{Discrete Inputs}
 \begin{tabularx}{\textwidth}{rXll} \toprule
@@ -1908,12 +1932,25 @@ möglich.
 2105          & Phase L3 aktiv                          & bool         & phases                                                 \\
               & \tdesc{}                                                                                                        \\ \bottomrule
    \end{tabularx}
-    \begin{multicols*}{2}
 
+\newpage
 
+\subsection{Coils}
+\begin{tabularx}{\textwidth}{rXll} \toprule
+    \textbf{Register-} & \textbf{Name} & \textbf{Typ} & \textbf{Benötigtes}                                                     \\
+    \textbf{adresse}   &      &     & \textbf{Feature}                                                                          \\ \midrule
+1000          & Ladefreigabe        & bool         & evse                                                                       \\
+              & \tdesc{false bzw. 0 zum blockieren, true bzw. 1 zum Freigeben.}                                                 \\
+              & \tdesc{(Identisch zu Holding Register 1000)}                                                                     \\ \cmidrule{2-4}
+2105          & Manuelle Ladefreigabe                   & bool         & evse                                                 \\
+              & \tdesc{false bzw. 0 zum blockieren, true bzw. 1 zum Freigeben.}                                               \\
+              & \tdesc{Setzt die Lade­freigabe, die auch (je nach Kon­figura­tion) vom Taster, den Start/Stop-Buttons}            \\
+              & \tdesc{auf der Web­inter­face-Status­seite und der evse/[start/stop]\_charging-API verwendet wird.}                                                                                                                                                                             \\ \bottomrule
+   \end{tabularx}
 
+   \newpage
 
-    \newpage
+   \begin{multicols*}{2}
     \pagestyle{empty}
     \null
     \vfill
