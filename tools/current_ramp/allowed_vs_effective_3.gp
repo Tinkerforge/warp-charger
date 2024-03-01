@@ -17,6 +17,8 @@ plot x                                                  						lc rgbcolor hsv2rg
      "zoe_ze50_r135_one_phase.csv"				using ($2):($27/$3)			with lines	lc rgbcolor hsv2rgb( 60/360.0,1.0,1.0)	title "Wirkstrom R135? 1P",\
      "zoe_ze50_r135_three_phases.csv"				using ($2):($25)			with lines	lc rgbcolor hsv2rgb(120/360.0,0.5,1.0)	title "Scheinstrom R135 3P",\
      "zoe_ze50_r135_three_phases.csv"				using ($2):($27/($48/sqrt(3))/3)	with lines	lc rgbcolor hsv2rgb(120/360.0,1.0,1.0)	title "Wirkstrom R135 3P",\
+     "model_3_three_phases.csv" 				using ($2):($25)			with lines	lc rgbcolor hsv2rgb(150/360.0,0.5,1.0)	title "Scheinstrom Model 3 3P",\
+     "model_3_three_phases.csv"				using ($2):($27/($48/sqrt(3))/3)	with lines	lc rgbcolor hsv2rgb(150/360.0,1.0,1.0)	title "Wirkstrom Model 3 3P",\
      "enyaq_iv_60_three_phases.csv"				using ($2):($25)			with lines	lc rgbcolor hsv2rgb(180/360.0,0.5,1.0)	title "Scheinstrom Enyaq 3P",\
      "enyaq_iv_60_three_phases.csv"				using ($2):($27/($48/sqrt(3))/3)	with lines	lc rgbcolor hsv2rgb(180/360.0,1.0,1.0)	title "Wirkstrom Enyaq 3P",\
      "corsa_e_one_phase_three_connected.csv"			using ($2):($6) 			with lines	lc rgbcolor hsv2rgb(210/360.0,0.5,1.0)	title "Scheinstrom eCorsa 1P",\
