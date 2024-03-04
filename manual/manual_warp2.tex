@@ -176,15 +176,16 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     Zusätzlich bietet dir der WARP2 Charger Smart die Möglichkeit Ladevorgänge
     per NFC (RFID) freizuschalten. Über die Webseite kannst du dazu NFC-Tags
-    anlernen und verwalten. Mehrere WARP Charger können sich einen
-    Stromanschluss durch da eingebauten Lastmanagement teilen optimal nutzen.
+    anlernen und verwalten. Sollen sich mehrere WARP Charger einen
+	Stromanschluss teilen, so ist dies mittels dem eingebauten Lastmanagement 
+	möglich.
 
     Die Variante \textbf{WARP Charger Pro} bietet dir alle Funktionen des WARP Chargers Smart.
     Zusätzlich ist diese Wallbox mit einem MID-geeichten Stromzähler (EU-Messgeräterichtlinie 2014/32/EU)
     ausgestattet, der misst, wie viel Energie (\SI{}{\kWh}) geladen
     wurde. Außerdem bietet der Zähler dir Statistiken mit denen du einen Überblick über deine
     Stromkosten erhältst. Die Statistiken können pro NFC-Tag bzw. Benutzer aufgezeichnet,
-    und im zu üblichen Tabellenkalkulationsprogrammen kompatiblen CSV-Format
+    und im Tabellenkalkulationsprogrammen kompatiblen CSV-Format
     heruntergeladen werden.
 
     Alle Wallboxen werden mit einem fest angeschlossenen
@@ -1237,11 +1238,6 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Ein solches Fahrzeug würde also bei einer Stromvorgabe von \SI{6,23}{\ampere} nur mit \SI{6}{\ampere} laden und müsste mehr als \SI{6,5}{\ampere} zugeteilt bekommen, damit es von der Stufe \SI{6}{\ampere} auf die Stufe \SI{6,5}{\ampere} springt.
     Damit dieses Fahrzeug mehr Strom anfordern kann, müsste der Spielraum also mehr als \SI{0,5}{\ampere} betragen.
 
-    \paragraph{Spielraum des Phasenstroms}
-    Für die oben genannte Startphase wird eine Stromerhöhung definiert, die es
-    dem WARP Charger Pro ermöglicht das Fahrzeug genauer auf den zur Verfügung
-    stehenden Phasenstrom einzuregeln.
-
     \paragraph{Minimaler Ladestrom}
     Der minimale Ladestrom ist der Strom, der für eine Wallbox zur Verfügung stehen muss, damit diese lädt. Dieser Strom muss mindestens \SI{6}{\ampere} betragen.
     Bestimmte Fahrzeuge laden aber erst bei höheren Strömen effizient. Mit einem WARP2 Charger Pro kann der Leistungsfaktor ermittelt werden.
@@ -1419,7 +1415,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
               oder das Anschließen eines Elektrofahrzeugs weckt die Wallbox wieder
               und die LED sollte wieder dauerhaft leuchten.
         \item Die Wallbox ist nicht mit Strom versorgt. Mögliche Ursachen: Stromausfall,
-              Sicherung oder Fehlerstrom\-schutzschalter haben ausgelöst
+              Sicherung oder Fehlerstrom\-schutzschalter haben ausgelöst.
         \item Der interne Ladecontroller ist ohne Strom. Die Wallbox verfügt intern über zwei
               Feinsicherungen, gegebenenfalls ist eine defekt.
         \item Das innere Anschlusskabel zum Deckel wurde nicht korrekt aufgesteckt (zum Beispiel am Taster \SI{180}{\degree} verdreht).
@@ -1466,7 +1462,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
               Kontakte o.ä.). Die Wallbox ist dann sofort außer Betrieb zu nehmen und
               in Stand zu setzen.
         \item Es liegt ein technischer Defekt beim Fahrzeug vor.
-        \item Es liegt ein technischer Defekt bei der Wallbox vor (Ladecontroller defekt o.ä.)
+        \item Es liegt ein technischer Defekt bei der Wallbox vor
+			(Ladecontroller defekt o.ä.).
         \item Das Fahrzeug fordert den IEC 61851-1 Status \enquote{D – Laden mit Belüftung}
               an. Dieser Modus wird von der Wallbox nicht unterstützt.
         \item Das Fahrzeug übermittelt den IEC 61851-1 Status E oder F. In beiden Fällen
@@ -1484,10 +1481,10 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Falls die Wallbox weder ihren Access Point öffnet, noch über ein konfiguriertes Netzwerk auf das Webinterface zugegriffen werden kann,
     kannst du wie folgt den Wiederherstellungsmodus starten:
     \begin{enumerate}
-     \item Mache die Wallbox stromlos
-     \item Halte den Taster im Deckel gedrückt
-     \item Schalte den Strom der Wallbox wieder ein (ggf. mittels einer zweiten Person)
-     \item Halte den Taster mindestens 10, aber maximal 30 Sekunden gedrückt
+     \item Mache die Wallbox stromlos.
+     \item Halte den Taster im Deckel gedrückt.
+     \item Schalte den Strom der Wallbox wieder ein (ggf. mittels einer zweiten Person).
+     \item Halte den Taster mindestens 10, aber maximal 30 Sekunden gedrückt.
     \end{enumerate}
     Die Wallbox startet dann im Wiederherstellungsmodus. Zunächst werden die Netzwerkeinstellungen gelöscht, sowie die Anmeldung deaktiviert.
     Anschließend sollte es wieder möglich sein, über den Access Point wieder auf die Wallbox zuzugreifen.
@@ -1545,7 +1542,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
         \item Nachdem der Brick neu geflasht wurde, kannst du ihn vom PC abziehen und wie folgt in die Wallbox einbauen
         \item Stecke zuerst die weißen Bricklet-Stecker, sowie das LAN-Kabel wieder ein
         \item Schraube dann den Brick mit den Kunststoffschrauben auf die entsprechenden Abstandshalter.
-        \item Schließe jetzt die Wallbox, indem du zuerst den Taster im Deckel, sowie den Erdungsstecker anschließt, den Deckel aufsetzt und die vier Schrauben festziehst
+        \item Schließe jetzt die Wallbox, indem du zuerst den Taster im Deckel, sowie den Erdungsstecker anschließt, den Deckel aufsetzt und die vier Schrauben festziehst.
         \item Die Wallbox kann jetzt wieder mit Strom versorgt werden. Wenn der Flash-Vorgang erfolgreich war, sollte die Wallbox jetzt wieder den WLAN-Access-Point eröffnen und kann eingerichtet werden.
     \end{enumerate}
 
@@ -1724,7 +1721,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \newpage
 
     \section{Kontakt}
-    Tinkerforge GmbH\\ Zur Brinke 7\\ 33758 Schloß Holte-Stukenbrock
+    Tinkerforge GmbH\\ Helleforthstraße 22-28\\ 33758 Schloß Holte-Stukenbrock
     \begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{Website}}]
         \item[E-Mail] \href{mailto:info@tinkerforge.com}{\texttt{info@tinkerforge.com}}
         \item[Website] \href{https://warp-charger.com}{\texttt{warp-charger.com}}
@@ -1787,7 +1784,7 @@ Input Registers können nur gelesen werden und liefern Informationen über den
 Zustand der Wallbox. Gewisse Register sind nur verfügbar, wenn das dazu
 angegebene \textbf{Feature} verfügbar ist. So sind zum Beispiel die
 Informationen zur Ladeleistung, Energie usw. nur verfügbar, wenn die Wallbox
-über ein \textbf{meter} verfügt. Das heißt ein WARP2 Charger Pro (Version mit
+über ein \textbf{Meter} verfügt. Das heißt ein WARP2 Charger Pro (Version mit
 Stromzähler) liefert diese Werte. Ein WARP2 Charger Smart (Version ohne
 Stromzähler) nicht.
 
