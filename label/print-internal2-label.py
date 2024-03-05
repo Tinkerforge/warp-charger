@@ -21,10 +21,12 @@ def get_tf_printer_host(task):
     import re
     import os
     import sys
+    import socket
     import tkinter.messagebox
 
     path = '~/tf_printer_host.txt'
     x = re.compile(r'^([A-Za-z0-9_-]+)\s+([A-Za-z0-9_\.-]+)$')
+    host = None
 
     try:
         with open(os.path.expanduser(path), 'r', encoding='utf-8') as f:
@@ -50,11 +52,21 @@ def get_tf_printer_host(task):
                 if other_task != task:
                     continue
 
-                return other_host
+                host = other_host
+                break
     except FileNotFoundError:
         pass
 
-    message = 'ERROR: Printer host for task {0} not found in {1}'.format(task, path)
+    if host == None:
+        message = 'ERROR: Printer host for task {0} not found in {1}'.format(task, path)
+    else:
+        try:
+            with socket.create_connection((host, 9100)) as s:
+                pass
+
+            return host
+        except:
+            message = 'ERROR: Coould not connect to printer at {0} for task {1}'.format(host, path)
 
     print(message)
     tkinter.messagebox.showerror(title=path, message=message)
