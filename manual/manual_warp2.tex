@@ -844,7 +844,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \definecolor{myorange}{RGB}{255, 193, 7}
     \definecolor{myred}{RGB}{220, 53, 69}
     Die Farbmarkierung neben einer Grenze hat folgende Bedeutung:
-    \begin{description}[labelindent=0.5cm]
+    \begin{description}[labelindent=0.5cm, leftmargin=0.5cm]
      \item[\textbf{\textcolor{mygray}{Grau}}] Diese Ladestromgrenze ist nicht aktiv. Sie kann den Ladevorgang nicht blockieren und geht nicht in Berechnung des erlaubten Ladestroms ein.
      \item[\textbf{\textcolor{mygreen}{Grün}}] Diese Ladestromgrenze ist aktiv, beschränkt den erlaubten Ladestrom aber nicht.
      \item[\textbf{\textcolor{myblue}{Blau}}] Diese Ladestromgrenze ist aktiv und gibt ein Ladestromlimit vor. Es gibt aber andere aktive Grenzen, die den Ladestrom stärker limitieren.
@@ -862,13 +862,13 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Bei Ladeabbrüchen kann ein Ladeprotokoll
     helfen, die Ursache eines Fehlers zu ermitteln. Ein Ladeprotokoll kann
     wie folgt aufgezeichnet werden:
-    \begin{itemize}
+    \begin{enumerate}
         \item Ladeprotokoll im Browser starten (\enquote{Start}), Browserfenster geöffnet halten.
         \item Fahrzeug an Wallbox anschließen und Ladevorgang starten
         \item Nach Auftreten des Fehlers \enquote{Stop+Download} klicken. Es
         sollte eine Textdatei heruntergeladen werden.
         \item Die Textdatei mit einer Problembeschreibung an \nohyphens{info@tinkerforge.com} senden.
-    \end{itemize}
+    \end{enumerate}
 
     \gfx{./img_warp2/resized/web_evse2}
 
@@ -877,7 +877,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     Auf dieser Unterseite können verschiedene Einstellungen des Ladecontrollers verändert werden:
 
-    \begin{description}[leftmargin=0.5cm]
+    \begin{description}[labelindent=0.5cm, leftmargin=0.5cm]
      \item[Manuelle Ladefreigabe] Wenn die manuelle Ladefreigabe aktiviert wird, wird ein Ladevorgang niemals automatisch begonnen. Jeder Ladevorgang muss über das Webinterface, die API oder (je nach Tastereinstellung) den Taster gestartet werden. Die manuelle Ladefreigabe blockiert \textbf{zusätzlich} zu eventuell anderen aktiven Ladestromgrenzen. Das heißt, dass sie \textbf{nicht} aktiviert werden muss, wenn Ladevorgänge beispielsweise mit der Benutzerfreigabe per NFC-Tag, oder der Steuerung per OCPP kontrolliert werden.
      \item[Externe Steuerung] Wenn die externe Steuerung erlaubt ist, darf eine externe Steuerungssoftware, beispielsweise
      EVCC (\rurl{https://evcc.io}{evcc.io}) den WARP Charger steuern. Eine Steuerungssoftware kann auch selbst entwickelt werden, hierzu stellen
@@ -1050,6 +1050,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \subsubsection{Ereignis-Log}
     \gfx{./img_warp2/resized/web_event_log}
 
+    \newpage
     Das Ereignis-Log zeichnet relevante Informationen des Systemstarts, sowie WLAN- und MQTT-Verbindungsabbrüche und Ladefehler auf.
     Falls Probleme mit der Wallbox auftreten, kannst du diese mit dem Log diagnostizieren.
     Falls du ein Problem mit der Wallbox an uns melden möchtest, kannst du das Ereignis-Log
@@ -1085,20 +1086,20 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     \gfx{./img_warp2/resized/web_mqtt}
     Auf der MQTT-Unterseite kannst du die Verbindung zu einem MQTT-Broker konfigurieren. Folgende Einstellungen können vorgenommen werden:
-    \begin{itemize}
-        \item \textbf{Broker-Hostname oder -IP-Adresse} Definiert den Hostname oder die IP-Adresse des Brokers, zu dem sich die Wallbox verbinden soll.
-        \item \textbf{Broker-Port} Definiert den Port, unter dem der Broker erreichbar ist. Der typische MQTT-Port 1883 ist voreingestellt.
-        \item \textbf{Broker-Benutzername} und \textbf{-Passwort} Manche Broker unterstützen eine Authentifizierung mit Benutzername und Passwort.
-        \item \textbf{Topic-Präfix} Dieses Präfix wird allen Topics vorangestellt, die die Wallbox verwendet.
+    \begin{description}[labelindent=0.48cm, leftmargin=0.48cm] % not 0.5 to put MQTT- in the first line
+        \item[Broker-Hostname oder -IP-Adresse] Definiert den Hostname oder die IP-Adresse des Brokers, zu dem sich die Wallbox verbinden soll.
+        \item[Broker-Port] Definiert den Port, unter dem der Broker erreichbar ist. Der typische MQTT-Port 1883 ist voreingestellt.
+        \item[Broker-Benutzername und -Passwort] Manche Broker unterstützen eine Authentifizierung mit Benutzername und Passwort.
+        \item[Topic-Präfix] Dieses Präfix wird allen Topics vorangestellt, die die Wallbox verwendet.
               Voreingestellt ist warp/ABC, wobei ABC eine eindeutige Kennung pro Wallbox ist,
               es sind aber andere Präfixe wie z.B. garage\_links möglich.
               Falls mehrere Wallboxen mit dem selben Broker kommunizieren,
               müssen eindeutige Präfixe pro Wallbox gewählt werden.
-        \item \textbf{Client-ID} Mit dieser ID registriert sich die Wallbox beim Broker.
-        \item \textbf{Sendeintervall} Der WARP Charger verschickt MQTT-Nachrichten nur, wenn sich die beinhalteten Daten geändert haben.
+        \item[Client-ID] Mit dieser ID registriert sich die Wallbox beim Broker.
+        \item[Sendeintervall] Der WARP Charger verschickt MQTT-Nachrichten nur, wenn sich die beinhalteten Daten geändert haben.
             Es gibt aber Teile der API, deren Daten sich sekündlich ändern. Das Sendeintervall kann hier reduziert werden, wenn weniger Netzwerktraffic
             erzeugt werden soll.
-    \end{itemize}
+    \end{description}
     Nachdem die Konfiguration gesetzt und der \enquote{MQTT aktivieren}-Schalter aktiviert ist, kann die Konfiguration gespeichert werden.
     Das Webinterface startet dann neu und verbindet sich zum Broker.
     Auf der Status-Seite wird angezeigt, ob die Verbindung aufgebaut werden konnte.
@@ -1121,19 +1122,20 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     welchen Registern bereit gestellt werden. Leider gibt es hier keinen
     allgemein nutzbaren Standard. Daher werden drei Möglichkeiten geboten:
 
-    \begin{itemize}
-        \item \textbf{WARP Charger} Diese Registertabelle bietet einen nahezu vollständigen Zugriff auf die Wallbox.
+    \begin{description}[labelindent=0.5cm, leftmargin=0.5cm]
+        \item[WARP Charger] Diese Registertabelle bietet einen nahezu vollständigen Zugriff auf die Wallbox.
                 Du findest sie im \fullref{modbus_tcp_registertabelle}, auf \rurl{https://warp-charger.com/api.html}{warp-charger.com/api.html} oder
                 jeweils passend zur ausgeführten Firmware auf der Modbus/TCP-Unterseite des Webinterfaces.
-        \item \textbf{Kompatibilität zu Bender CC613} Mit dieser Registertabelle emuliert der WARP Charger einen Bender CC613 Ladecontroller. Dieser wird in vielen Wallboxen verschiedener Hersteller verbaut.
-        \item \textbf{Kompatibilität zu Keba C Series} Mit dieser Registertabelle emuliert der WARP Charger eine Wallbox der C-Series von Keba.
-    \end{itemize}
+        \item[Kompatibilität zu Bender CC613] Mit dieser Registertabelle emuliert der WARP Charger einen Bender CC613 Ladecontroller. Dieser wird in vielen Wallboxen verschiedener Hersteller verbaut.
+        \item[Kompatibilität zu Keba C Series] Mit dieser Registertabelle emuliert der WARP Charger eine Wallbox der C-Series von Keba.
+    \end{description}
 
     Sollen Fremdgeräte den WARP Charger fernsteuern, kann gegebenenfalls eine der
     kompatiblen Registertabellen verwendet werden.
 
-    \subsection{OCPP}
+    \vspace*{-0.1cm}
 
+    \subsection{OCPP}
     \gfx{./img_warp2/resized/web_ocpp}
 
     OCPP (Open Charge Point Protocol) ist ein standardisiertes Kommunikationsprotokoll zwischen
@@ -1367,6 +1369,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     der Wallbox gehalten werden. Es können beliebige andere NFC-Tags der Typen 1 bis 4
     sowie Mifare Classic angelernt werden. Der WARP2 Charger unterstützt bis zu 32 angelernte Tags.
 
+    \vspace*{-0.1cm}
+
     \subsection{Konfiguration}
     \gfx{./img_warp2/resized/web_nfc}
 
@@ -1384,8 +1388,6 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     dann einfach nacheinander angelegt und existierenden Benutzern zugeordnet
     werden. Wurden alle NFC Tags angelernt, können die Einstellungen gespeichert und die
     Wallbox neugestartet werden.
-
-    \columnbreak
 
     Alternativ können Tag-ID und -Typ manuell eingegeben werden. Dies ist zum Beispiel sinnvoll,
     wenn Tag-ID und -Typ mittels externer Geräte (z.B. Smartphone mit passender
@@ -1795,7 +1797,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
         11.09.2023 & 2.1.1   & Hinweis EU-Messgeräte-          \\
                    &         & richtlinie 2014/32/EU           \\
                    &         & hinzugefügt                     \\
-        14.03.2024 & 2.2.0   & Aktualisierung zur Firmware 2.2.0   \\
+        14.03.2024 & 2.2.0   & Aktualisierung Firmware 2.2.0   \\
         \bottomrule
     \end{tabular}
 
