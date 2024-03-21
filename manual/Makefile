@@ -1,6 +1,14 @@
 clean:
 	latexmk -c
 
+
+warp3-web:
+	pdflatex manual_warp3.tex
+	pdflatex manual_warp3.tex
+	@# This breaks hyperref links!
+	@#ps2pdf14 -dPDFSETTINGS=/prepress manual_warp2.pdf manual_warp2_web.pdf
+	cp manual_warp3.pdf ../documents/WARP3_Betriebsanleitung.pdf
+
 warp2-web:
 	pdflatex manual_warp2.tex
 	pdflatex manual_warp2.tex
