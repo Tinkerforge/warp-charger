@@ -578,12 +578,26 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     zu starten, muss in beiden Fällen die Verbindung zum Fahrzeug getrennt und
     anschließend erneut hergestellt werden (Kabel aus- und wieder einstecken).
 
+    \gfx{./img_warp3/resized/led_button.jpg} 
+
     Zusätzlich verfügen die Wallbox-Varianten Smart und Pro über ein NFC-Modul
 	wodurch eine Ladefreigabe z.B. per Chipkarte möglich ist. Eine
     genaue Beschreibung befindet sich im \fullref{NFC}.
 
-	\subsection{Abschalteingang}
-	\todo{Dokumentieren}
+	\subsection{EVSE Klemmblock / Abschalteingang}
+	Rechts in der Wallbox befindet sich der Ladecontroller. Neben dem DIP
+	Schalter, an dem der maximale Ladestrom eingestellt wird, befindet sich ein
+	Klemmblock. An diesem ist die CP Leitung des Typ2 Ladekabels angeschlossen,
+	aber auch der PP Widerstand mit dem der maximale Strom des Ladekabels
+	definiert wird.
+	\par
+	Zusätzlich befindet sich hier ein Anschluss für ein Freigabesignal (\glqq EN\grqq).
+	Dieses Signal muss mit PE kurzgeschlossen werden um aktiv zu sein. Das
+	Verhalten der Wallbox kann unter \glqq Wallbox\grqq, \glqq
+	Ladeeinstellungen\grqq~unter dem Punkt \glqq Abschalteingang\grqq~definiert
+	werden.
+
+    \gfx{./img_warp3/resized/evse_clamp.jpg} 
 
     \newpage
     \section{Erste Schritte}\label{setup}
