@@ -743,6 +743,14 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     beispielsweise dem Anschluss der Wallbox, eventuellen Grenzen pro konfiguriertem Benutzer,
     dem Lastmanagement und auch dem oben gesetzten konfigurierten Ladestrom.
 
+	\textbf{Phasenumschaltung} zeigt dir an, ob die Wallbox dem Fahrzeug eine
+	1-phasige oder 3-phasige Ladung anbietet. Ist kein PV-Überschussladen
+	aktiviert, dann kannst du mittels Klicken auf die jeweilige Schaltfläche
+	zwischen 1-phasiger und 3-phasiger Ladung umschalten. Die Einstellung ist
+	wichtig, da somit eine maximale Ladeleistung von ca. \SI{1.4}{\kilo\watt}
+	(1-phasig \SI{6}{\ampere}) bis ca. \SI{22}{\kilo\watt}
+	(3-phasig \SI{32}{\ampere}) einstellbar ist.
+
     \textbf{Zeitlimit} gibt die noch zur Verfügung stehende Ladezeit an.
 	Die Ladezeit kann hier auch gesetzt werden. Ist kein Ladevorgang
 	aktiv, dann gilt die Ladezeit für den nächsten Ladevorgang. Nach Ablauf des
@@ -793,7 +801,45 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \textbf{WireGuard-Verbindung} zeigt an, ob die konfigurierte WireGuard-VPN-Verbindung aufgebaut werden konnte. Hierfür ist eine bestehende Zeitsynchronisierung eine zwingende Voraussetzung.
 
     \subsection{Wallbox}
-    Die Wallbox-Gruppe enthält Unterseiten mit Zustand und Einstellungen des Ladecontrollers, Stromzählers, Lastmanagements und Ladetrackers.
+    Die Wallbox-Gruppe enthält Unterseiten mit Einstellungen des
+	Ladecontrollers, Ladestatus, Ladetracker und Automatisierung.
+
+    \subsubsection{Einstellungen}\label{evse-settings}
+    \gfx{./img_warp2/resized/web_evse2_settings}
+
+    Auf dieser Unterseite können verschiedene Einstellungen des Ladecontrollers verändert werden:
+
+    \begin{description}[labelindent=0.5cm, leftmargin=0.5cm]
+     \item[Manuelle Ladefreigabe] Wenn die manuelle Ladefreigabe aktiviert wird, wird ein Ladevorgang niemals automatisch begonnen. Jeder Ladevorgang muss über das Webinterface, die API oder (je nach Tastereinstellung) den Taster gestartet werden. Die manuelle Ladefreigabe blockiert \textbf{zusätzlich} zu eventuell anderen aktiven Ladestromgrenzen. Das heißt, dass sie \textbf{nicht} aktiviert werden muss, wenn Ladevorgänge beispielsweise mit der Benutzerfreigabe per NFC-Tag, oder der Steuerung per OCPP kontrolliert werden.
+     \item[Externe Steuerung] Wenn die externe Steuerung erlaubt ist, darf eine externe Steuerungssoftware, beispielsweise
+     EVCC (\rurl{https://evcc.io}{evcc.io}) den WARP Charger steuern. Eine Steuerungssoftware kann auch selbst entwickelt werden, hierzu stellen
+     wir unter \rurl{https://warp-charger.com/api.html}{warp-charger.com/api.html} eine detaillierte API-Dokumentation zur Verfügung.
+     \item[Status-LED-Steuerung] Ermöglicht die Steuerung der Front-LED mit einer externen Steuerung oder über die API, z.B. für eine externe NFC-Freigabe.
+     \item[Boost-Modus] Die Ladeelektronik mancher Fahrzeuge interpretiert einen vom WARP Charger vorgeschriebenen Ladestrom zu niedrig. Der Boost-Modus versucht diesen Effekt auszugleichen, indem ein leicht höherer Ladestrom kommuniziert wird.
+     \item[Zählerüberwachung] Im WARP Charger Pro ist ein Stromzähler verbaut. Wenn diese Option aktiviert ist, wird ein Ladevorgang unterbrochen bzw. nicht freigegeben, falls der Stromzähler, bzw. die Kommunikation mit diesem gestört zu sein scheint. Wenn die Zählerüberwachung aktiviert ist, wird also sichergestellt, dass die geladene Energie zu jedem aufgezeichneten Ladevorgang erfasst wird.
+     \item[Zeitlimit] Setzt ein generelles Zeitlimit für Ladevorgänge. Nach Ablaufen der Zeit muss ein Fahrzeug abgesteckt werden um einen erneuten Ladevorgang zu ermöglichen. Das Zeitlimit kann für den nächsten oder laufenden Ladevorgang auf der Status-Seite überschrieben werden.
+     \item[Energielimit] Setzt bei den Pro Wallboxen ein generelles Energielimit für Ladevorgänge. Diese Funktion wird analog zum Zeitlimit eingerichtet.
+     \item[Tastereinstellung] Hiermit wird konfiguriert, welche Funktion der Taster an der Front
+     des WARP Chargers ausführen soll. Im halb-öffentlichen Raum kann es beispielsweise sinnvoll sein,
+     den Ladestop per Taster zu verbieten.
+     \item[Abschalteingang] Am Abschalteingang kann zum Beispiel ein Rundsteuerempfänger angeschlossen werden.
+     Hier kann eingestellt werden, wie auf Änderungen am Abschalteingang
+	 reagiert werden soll. Eine Begrenzung auf \SI{4300}{\watt} zum Einhalten
+	 der \S14 EnWG kann direkt als Option gewählt werden.
+     \item[Fahrzeug-Weckruf] Die Ladeelektronik mancher Fahrzeuge wechselt in
+	 einen Energiesparmodus, falls ein Ladevorgang nicht innerhalb einer
+	 gewissen Zeit gestartet wird. Der Fahrzeug-Weckruf versucht, solche Ladeelektroniken automatisch zu wecken, falls das Fahrzeug nicht innerhalb von 30 Sekunden reagiert, wenn Strom zur Verfügung steht. Umgesetzt wird das durch eine kurzzeitige Trennung des Control-Pilot- bzw. CP-Signals.
+	 \item[Automatischer Phasenwechsel] Diese Option steht nur für die WARP3
+	 Charger Pro zur Verfügung. Ist die Option aktiviert wird bei einer
+	 laufenden Ladung mit dem internen Stromzähler ermittelt ob das ladende
+	 Fahrzeug nur einphasig lädt (z.B. typisch bei Plugin-Hybrid-Fahrzeugen).
+	 Ist dies der Fall, dann schaltet die Wallbox automatisch auf 1-phasiges
+	 Laden um.
+	 \item[Zuleitung] konfiguriert, ob die Wallbox
+	 \glqq dreiphasig\grqq~oder \glqq einphasig\grqq~angeschlossen ist. Ist die
+	 Wallbox nur einphasig angeschlossen und hier auch so konfiguriert, wird das zweite
+	 Schütz für die Phasen L2+L3 nie geschaltet.
+    \end{description}
 
     \vspace{-0.3cm}
     \subsubsection{Ladestatus}\label{evse}
@@ -868,55 +914,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     \gfx{./img_warp2/resized/web_evse2}
 
-    \subsubsection{Ladeeinstellungen}\label{evse-settings}
-    \gfx{./img_warp2/resized/web_evse2_settings}
-
-    Auf dieser Unterseite können verschiedene Einstellungen des Ladecontrollers verändert werden:
-
-    \begin{description}[labelindent=0.5cm, leftmargin=0.5cm]
-     \item[Manuelle Ladefreigabe] Wenn die manuelle Ladefreigabe aktiviert wird, wird ein Ladevorgang niemals automatisch begonnen. Jeder Ladevorgang muss über das Webinterface, die API oder (je nach Tastereinstellung) den Taster gestartet werden. Die manuelle Ladefreigabe blockiert \textbf{zusätzlich} zu eventuell anderen aktiven Ladestromgrenzen. Das heißt, dass sie \textbf{nicht} aktiviert werden muss, wenn Ladevorgänge beispielsweise mit der Benutzerfreigabe per NFC-Tag, oder der Steuerung per OCPP kontrolliert werden.
-     \item[Externe Steuerung] Wenn die externe Steuerung erlaubt ist, darf eine externe Steuerungssoftware, beispielsweise
-     EVCC (\rurl{https://evcc.io}{evcc.io}) den WARP Charger steuern. Eine Steuerungssoftware kann auch selbst entwickelt werden, hierzu stellen
-     wir unter \rurl{https://warp-charger.com/api.html}{warp-charger.com/api.html} eine detaillierte API-Dokumentation zur Verfügung.
-     \item[Status-LED-Steuerung] Ermöglicht die Steuerung der Front-LED mit einer externen Steuerung oder über die API, z.B. für eine externe NFC-Freigabe.
-     \item[Boost-Modus] Die Ladeelektronik mancher Fahrzeuge interpretiert einen vom WARP Charger vorgeschriebenen Ladestrom zu niedrig. Der Boost-Modus versucht diesen Effekt auszugleichen, indem ein leicht höherer Ladestrom kommuniziert wird.
-     \item[Zählerüberwachung] Im WARP Charger Pro ist ein Stromzähler verbaut. Wenn diese Option aktiviert ist, wird ein Ladevorgang unterbrochen bzw. nicht freigegeben, falls der Stromzähler, bzw. die Kommunikation mit diesem gestört zu sein scheint. Wenn die Zählerüberwachung aktiviert ist, wird also sichergestellt, dass die geladene Energie zu jedem aufgezeichneten Ladevorgang erfasst wird.
-     \item[Zeitlimit] Setzt ein generelles Zeitlimit für Ladevorgänge. Nach Ablaufen der Zeit muss ein Fahrzeug abgesteckt werden um einen erneuten Ladevorgang zu ermöglichen. Das Zeitlimit kann für den nächsten oder laufenden Ladevorgang auf der Status-Seite überschrieben werden.
-     \item[Energielimit] Setzt bei den Pro Wallboxen ein generelles Energielimit für Ladevorgänge. Diese Funktion wird analog zum Zeitlimit eingerichtet.
-     \item[Tastereinstellung] Hiermit wird konfiguriert, welche Funktion der Taster an der Front
-     des WARP Chargers ausführen soll. Im halb-öffentlichen Raum kann es beispielsweise sinnvoll sein,
-     den Ladestop per Taster zu verbieten.
-     \item[Abschalteingang] Am Abschalteingang kann zum Beispiel ein Rundsteuerempfänger angeschlossen werden.
-     Hier kann eingestellt werden, wie auf Änderungen am Abschalteingang reagiert werden soll.
-     \item[Konfigurierbarer Eingang] Der konfigurierbare Eingang kann über die API abgefragt werden.
-     \item[Konfigurierbarer Ausgang] Der konfigurierbare Ausgang kann über die API gesteuert werden.
-     \item[Fahrzeug-Weckruf] Die Ladeelektronik mancher Fahrzeuge wechselt in
-	 einen Energiesparmodus, falls ein Ladevorgang nicht innerhalb einer
-	 gewissen Zeit gestartet wird. Der Fahrzeug-Weckruf versucht, solche Ladeelektroniken automatisch zu wecken, falls das Fahrzeug nicht innerhalb von 30 Sekunden reagiert, wenn Strom zur Verfügung steht. Umgesetzt wird das durch eine kurzzeitige Trennung des Control-Pilot- bzw. CP-Signals.
-    \end{description}
-
-    \subsubsection{Stromzähler}
-    Auf dieser Unterseite kann die Kommunikation mit Stromzählern konfiguriert werden.
-    Da der WARP Charger Pro über einen eingebauten Stromzähler verfügt, ist dieser bei allen WARP Chargern vorkonfiguriert.
-    Beim WARP Charger Smart kann dieser Zähler entfernt werden.
-    Im Graph wird die gemessene Leistung aller konfigurierten Stromzähler
-	angezeigt, entweder als Verlauf über die letzten \SI{48}{\hour} oder als
-	Live-Ansicht. Die Ansicht jeders Zählers kann aufgeklappt werden, um weitere Statistiken und Messwerte anzuzeigen. Dazu muss auf den
-	jeweiligen blauen Pfeil geklickt werden.
-
-    Es können insgesamt zwei Stromzähler konfiguriert werden, beispielsweise SunSpec-Zähler oder -Wechselrichter
-    sowie Stromzähler, die über die API befüllt werden können. SunSpec-(Modbus-TCP)-Geräte können nach Angabe des Hosts
-    automatisch erkannt werden. Abhängig von den Fähigkeiten des SunSpec-Geräts werden verschiedene Messwerte abgerufen.
-
-    \gfx{./img_warp2/resized/web_meter}
-
-    \vspace{-0.4cm}
     \subsubsection{Ladetracker}
     Siehe \fullref{charge_tracker}.
-    \vspace{-0.2cm}
-    \subsubsection{Lastmanagement}
-    Siehe \fullref{charge_manager}.
-     \vspace{-0.2cm}
+
     \subsubsection{Automatisierung}
     Der WARP Charger kann automatisiert Regeln ausführen. So kann beispielsweise
     der Empfang von MQTT-Nachrichten, das Auslesen eines NFC-Tags oder eine andere Bedingung
@@ -937,6 +937,48 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     eine zweite Regel ein, definiere den Zeitpunkt und wähle
     \enquote{Laden freigeben}. Mittels dieser zwei Regeln kann also die Ladung
     an gewissen Tagen und oder Uhrzeiten eingeschränkt werden.
+
+
+	\subsection{Energiemanagement}\label{energiemanagement}
+
+
+
+	\subsubsection{Stromzähler}\label{meter}
+    Auf dieser Unterseite kann die Kommunikation mit Stromzählern konfiguriert werden.
+    Da der WARP Charger Pro über einen eingebauten Stromzähler verfügt, ist dieser bei allen WARP Chargern vorkonfiguriert.
+    Beim WARP Charger Smart kann dieser Zähler entfernt werden.
+    Im Graph wird die gemessene Leistung aller konfigurierten Stromzähler
+	angezeigt, entweder als Verlauf über die letzten \SI{48}{\hour} oder als
+	Live-Ansicht. Die Ansicht jeders Zählers kann aufgeklappt werden, um weitere Statistiken und Messwerte anzuzeigen. Dazu muss auf den
+	jeweiligen blauen Pfeil geklickt werden.
+
+    Es können insgesamt zwei Stromzähler konfiguriert werden, beispielsweise SunSpec-Zähler oder -Wechselrichter
+    sowie virtuelle Stromzähler, die über die API befüllt werden können. Für das
+	Photovoltaik-Überschussladen (siehe \fullref{pv_charge}) ist es notwendig
+	einen Stromzähler auf dessen Werte geregelt werden soll anzulegen. SunSpec-(Modbus-TCP)-Geräte können nach Angabe des Hosts
+    automatisch erkannt werden. Abhängig von den Fähigkeiten des SunSpec-Geräts werden verschiedene Messwerte abgerufen.
+
+    \gfx{./img_warp2/resized/web_meter}
+
+	\subsubsection{Wallboxen}
+	Wird die Wallbox zusammen mit anderen Wallboxen im Rahmen eines
+	Lastmanagements oder von PV-Überschussladen eingesetzt, so wird hier
+	eingestellt wie die Wallbox sich verhält. Es gibt folgende Möglichkeiten bei
+	der Option Fremdsteuerung:
+	\begin{itemize}
+		\item[Deaktiviert] Die Wallbox ist eigenständig
+		\item[Fremdgesteuert] Eine andere Wallbox steuert diese Wallbox
+		\item[Lastmanager] Das Energiemanagement dieser Wallbox steuert andere
+		Wallboxen und sich selbst. Die anderen Wallboxen müssen dazu in dem
+		Abschnitt \glqq Kontrollierte Wallboxen\grqq~hinzugefügt werden.
+	\end{itemize}
+
+
+    \subsubsection{PV-Überschussladen}
+    Siehe \fullref{pv_charge}.
+
+    \subsubsection{Lastmanagement}
+    Siehe \fullref{charge_manager}.
 
     \subsection{Netzwerk}\label{network}
     Die Wallbox kann in dein Netzwerk per WLAN oder LAN eingebunden werden.
@@ -1150,6 +1192,53 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     Unter den Punkten Debug und Konfigurationen finden sich weiterführende Informationen mit denen Probleme
     bei der Interaktion mit einem OCPP-Server diagnostiziert werden können.
+
+	\newpage
+	\section{Photovoltaik-Überschussladen}\label{pv_charge}
+	Beim Photovoltaik-Überschussladen ist das Ziel die nicht selbst genutzte Leistung einer
+	Photovoltaikanlage nicht in das Stromnetz einzuspeisen sondern in ein
+	Elektrofahrzeug zu laden. Die Maximierung der Eigenstromnutzung steht hier
+	im Vordergrund.
+
+	\subsection{Funktionsweise}
+	Steht ein entsprechender Stromzähler zur Verfügung, kann die Wallbox den
+	Ladevorgang so steuern, dass auf einen Soll-Netzbezug geregelt wird.
+	\par
+	Typischerweise handelt es sich um einen Stromzähler am Hausanschluss der auf
+	einen Bezug von \SI{0}{\watt} geregelt werden soll. Das heißt die gesamte
+	PV-Leistung soll in das Fahrzeug geladen werden ohne das ein Netzbezug
+	stattfindet (\glqq PV-Überschuss\grqq).
+	\par
+	WARP3 Charger Smart und Pro sind mit zwei getrennten Schützen
+	ausgestattet und können somit intern zwischen einem einphasigen und dreiphasigen
+	Ladevorgang umschalten. Das Umschalten auf eine einphasige Ladung bietet den Vorteil, dass auch geringe
+	Leistungsüberschüsse in ein Fahrzeug geladen werden können (ab ca.
+	\SI{1.4}{\kilo\watt}). Wohingegen ein dreiphasiger Ladevorgang die jeweilige
+	Maximalleistung der Wallbox ermöglicht (\SI{11}{\kilo\watt} oder
+	\SI{22}{\kilo\watt}).
+	\subsection{Konfiguration}
+	Folgende Einstellungen müssen vorgenommen werden:
+	\begin{description}
+		\item[Überschussladen aktiviert] Hier wird das PV-Überschussladen eingeschaltet.
+		\item[Umschaltungsmodus] Das Verhalten der Phasenumschaltung kann mit dieser Einstellung definiert werden.
+		\item[Standardlademodus] Dies ist der Lademodus der als Voreinstellung genommen wird.
+		\item[Stromzähler] Hier muss der Stromzähler ausgewählt werrden, mit dessen Werten die eigentliche PV-Überschussregelung stattfindet. Der Stromzähler muss vorher in dem \fullref{meter} angelegt werden.
+		\item[Min+PV: Mindestladeleistung] Mit dieser Einstellung wird festgelegt welche Leistung in dem \glqq Min+PV\grqq~Lademodus aus dem Netz bezogen werden darf.
+		\item[Soll-Netzbezug] Diese Einstellung legt fest, auf welchen
+		Netzbezug geregelt werden soll.
+		\item[Wolkenfilter] Der Wolkenfilter stellt die Trägheit der Regelung
+		ein. Bei wechselnd bewölktem Wetter ist es sinnvoll, dass die Regelung
+		träge reagiert, damit nicht laufend eine Phasenumschaltung stattfindet.
+	\end{description}
+
+
+	\subsection{Experteneinstellungen}
+	In den Experteneinstellungen kann die Hysterese-Zeit für die
+	Wartezeit zwischen Phasenumschaltungen modifiziert werden. Ein kurze Zeit
+	führt zu einer schnellen Phasenumschaltung des Systems sollte der PV-Überschuss
+	zwischen im Grenzbereich zwischen gering (1-phasiger Betrieb) und groß
+	(3-phasiger Betrieb) wechseln. Die Ladung des Fahrzeugs wird dann oft
+	abgebrochen und neugestartet und das Schütz schaltet oft.
 
     \newpage
     \section{Lastmanagement zwischen mehreren WARP Chargern}\label{charge_manager}
