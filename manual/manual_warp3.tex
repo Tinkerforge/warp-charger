@@ -171,7 +171,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \vspace{-0.1cm}
     Nach dem Einstecken des Typ-2-Ladesteckers in
     dein Fahrzeug zeigt dir die RGB-LED auf der Frontblende der Wallbox den
-    Ladezustand deines Fahrzeugs an. Innerhalb der LED befindet sich ein Taster,
+    Ladezustand deines Fahrzeugs an. Im inneren des LED Rings befindet sich ein Taster,
 	der mit verschiedenen Funktionen belegt werden kann.
 
 	\subsubsection*{WARP3 Charger Smart}
@@ -208,16 +208,16 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Wallboxen dynamisch begrenzen.
 
 	Das integrierte Energiemanagement ermöglicht die Anbindung der Wallbox
-	direkt an Photovoltaik-Wechselrichter oder Stromzähler und ermöglicht eine
+	direkt an Photovoltaik-Wechselrichter oder Stromzähler und ermöglicht ein
 	Photovoltaik geführtes Überschussladen. Die Wallbox kann dazu selbstständig
 	zwischen einer 1-phasigen und einer 3-phasigen Ladung intern umschalten.
-	Damit können bereits Leistungen ab 1.4kW in ein Elektrofahrzeug geladen
+	Damit können bereits Leistungen ab \SI{1,4}{\kilo\watt} in ein Elektrofahrzeug geladen
 	werden (1-phasige Ladung mit 6A Ladestrom).
 
 	Mittels Automatisierungsregeln kannst du deine eigenen Ideen umsetzen. 
 	Die Regeln basieren auf einer Bedingung und einer damit verknüpften
 	Aktion. Als Beispiel kannst du damit Ladezeiten definieren oder abhängig von 
-	der erkannte NFC Karte oder einer empfangenen MQTT Nachricht 
+	der erkannten NFC Karte oder einer empfangenen MQTT Nachricht 
 	zwischen verschiedenen Lademodi wechseln.
 
 	\subsubsection*{WARP3 Charger Pro}
@@ -476,7 +476,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Damit wird eine maximale Ladeleistung bei einem dreiphasigen
     Betrieb, von ca. \SI{4}{\kilo\watt} (3$\times\SI{6}{\ampere}$) vorgegeben.
     Wird die Wallbox nur einphasig angeschlossen, können maximal
-    \SI{1.4}{\kilo\watt} (1$\times\SI{6}{\ampere}$) über die Wallbox vom Hausanschluss
+    \SI{1,4}{\kilo\watt} (1$\times\SI{6}{\ampere}$) über die Wallbox vom Hausanschluss
     bezogen werden.
 
     \hint{Die Schalterstellung und der damit verbundene maximale Ladestrom dürfen nach der
@@ -571,14 +571,23 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Ladevorgangs. Ist der Ladevorgang beendet, so leuchtet die LED permanent. Nach ca.
     15 Minuten Inaktivität schaltet sich die LED aus.
 
-    \subsection{Bedienelemente}\label{lockswitch}
-    Das Drücken des Tasters auf der Frontseite unterbricht einen aktiven Ladevorgang
-    sofort. Alternativ kann das Ladekabel vom Elektrofahrzeug entriegelt werden,
+	Das Drücken des Tasters auf der Frontseite unterbricht einen 
+	aktiven Ladevorgang sofort (Standardeinstellung). Alternativ kann das Ladekabel vom Elektrofahrzeug entriegelt werden,
     wodurch der Ladevorgang ebenfalls unterbrochen wird. Um den Ladevorgang erneut
     zu starten, muss in beiden Fällen die Verbindung zum Fahrzeug getrennt und
     anschließend erneut hergestellt werden (Kabel aus- und wieder einstecken).
 
-    \gfx{./img_warp3/resized/led_button.jpg} 
+
+    \subsection{Bedienelemente}\label{lockswitch}
+	Die in der Wallboxfront verbaute im Taster verbaute RGB-LED kann je nach Betriebszustand
+	verschiedene Farben annehmen. 
+    \begin{figure}[H]
+    	\gfx{./img_warp3/resized/led_button.jpg} 
+        \caption*{Verschiedene Anzeigefarben des LED Tasters.}
+    \end{figure}
+
+	Das Verhalten auf einen Tastendruck kann im Webinterface der Wallbox
+	konfiguriert werden.
 
     Zusätzlich verfügen die Wallbox-Varianten Smart und Pro über ein NFC-Modul
 	wodurch eine Ladefreigabe z.B. per Chipkarte möglich ist. Eine
@@ -709,7 +718,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \subsection{Status (Startseite)}
 
     Die Startseite des Webinterfaces zeigt kompakt den aktuellen Ladestatus der
-    Wallbox sowie Ladezeit und -Strom und erlaubt es, den Ladevorgang zu steuern.
+    Wallbox sowie Ladezeit und -strom und erlaubt es, den Ladevorgang zu steuern.
     Du kannst hier sowohl das automatische Laden (de-)aktivieren, als auch
     manuell einen Ladevorgang starten oder stoppen.
 
@@ -747,7 +756,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	1-phasige oder 3-phasige Ladung anbietet. Ist kein PV-Überschussladen
 	aktiviert, dann kannst du mittels Klicken auf die jeweilige Schaltfläche
 	zwischen 1-phasiger und 3-phasiger Ladung umschalten. Die Einstellung ist
-	wichtig, da somit eine maximale Ladeleistung von ca. \SI{1.4}{\kilo\watt}
+	wichtig, da somit eine maximale Ladeleistung von ca. \SI{1,4}{\kilo\watt}
 	(1-phasig \SI{6}{\ampere}) bis ca. \SI{22}{\kilo\watt}
 	(3-phasig \SI{32}{\ampere}) einstellbar ist.
 
@@ -817,7 +826,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
      \item[Status-LED-Steuerung] Ermöglicht die Steuerung der Front-LED mit einer externen Steuerung oder über die API, z.B. für eine externe NFC-Freigabe.
      \item[Boost-Modus] Die Ladeelektronik mancher Fahrzeuge interpretiert einen vom WARP Charger vorgeschriebenen Ladestrom zu niedrig. Der Boost-Modus versucht diesen Effekt auszugleichen, indem ein leicht höherer Ladestrom kommuniziert wird.
      \item[Zählerüberwachung] Im WARP Charger Pro ist ein Stromzähler verbaut. Wenn diese Option aktiviert ist, wird ein Ladevorgang unterbrochen bzw. nicht freigegeben, falls der Stromzähler, bzw. die Kommunikation mit diesem gestört zu sein scheint. Wenn die Zählerüberwachung aktiviert ist, wird also sichergestellt, dass die geladene Energie zu jedem aufgezeichneten Ladevorgang erfasst wird.
-     \item[Zeitlimit] Setzt ein generelles Zeitlimit für Ladevorgänge. Nach Ablaufen der Zeit muss ein Fahrzeug abgesteckt werden um einen erneuten Ladevorgang zu ermöglichen. Das Zeitlimit kann für den nächsten oder laufenden Ladevorgang auf der Status-Seite überschrieben werden.
+     \item[Zeitlimit] Setzt ein generelles Zeitlimit für Ladevorgänge. Nach Ablauf der Zeit muss ein Fahrzeug abgesteckt werden um einen erneuten Ladevorgang zu ermöglichen. Das Zeitlimit kann für den nächsten oder laufenden Ladevorgang auf der Statusseite überschrieben werden.
      \item[Energielimit] Setzt bei den Pro Wallboxen ein generelles Energielimit für Ladevorgänge. Diese Funktion wird analog zum Zeitlimit eingerichtet.
      \item[Tastereinstellung] Hiermit wird konfiguriert, welche Funktion der Taster an der Front
      des WARP Chargers ausführen soll. Im halb-öffentlichen Raum kann es beispielsweise sinnvoll sein,
@@ -1075,7 +1084,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     \subsubsection{Zeitsynchronisierung}\label{ntp}
     Der WARP Charger kann die aktuelle Uhrzeit per NTP über das Netzwerk empfangen.
-    Die Uhrzeit ist notwendig, um diese im im Ladetracker und dem Ereignis-Log anzeigen zu können und
+    Die Uhrzeit ist notwendig, um diese im Ladetracker und dem Ereignis-Log anzeigen zu können und
     WireGuard-Verbindungen aufbauen zu können.
 
     Auf dieser Unterseite kann NTP aktiviert oder deaktiviert und die Zeitzone, in der sich
@@ -1109,7 +1118,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     \section{Schnittstellen zur Fernsteuerung der Wallbox}\label{interfaces}
     Die Wallbox kann per HTTP, MQTT, Modbus/TCP und OCPP ferngesteuert werden. Über diese Schnittstellen ist eine
-    Einbindung in Hausautomatisationssysteme wie openHAB, ioBroker, FHEM o.ä.
+    Einbindung in Hausautomatisierungssysteme wie openHAB, ioBroker, FHEM o.ä.
     möglich. Auch eine Verwendung mit Lastmanagern oder Energiemanagern von Fremdanbietern
     ist darüber ebenfalls möglich.
 
@@ -1140,7 +1149,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \end{description}
     Nachdem die Konfiguration gesetzt und der \enquote{MQTT aktivieren}-Schalter aktiviert ist, kann die Konfiguration gespeichert werden.
     Das Webinterface startet dann neu und verbindet sich zum Broker.
-    Auf der Status-Seite wird angezeigt, ob die Verbindung aufgebaut werden konnte.
+    Auf der Statusseite wird angezeigt, ob die Verbindung aufgebaut werden konnte.
 
     Weitere Informationen über die MQTT-API der Wallbox findest du auf
 	\rurl{https://warp-charger.com/api.html}{warp-charger.com/api.html}.
@@ -1213,7 +1222,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	ausgestattet und können somit intern zwischen einem einphasigen und dreiphasigen
 	Ladevorgang umschalten. Das Umschalten auf eine einphasige Ladung bietet den Vorteil, dass auch geringe
 	Leistungsüberschüsse in ein Fahrzeug geladen werden können (ab ca.
-	\SI{1.4}{\kilo\watt}). Wohingegen ein dreiphasiger Ladevorgang die jeweilige
+	\SI{1,4}{\kilo\watt}). Wohingegen ein dreiphasiger Ladevorgang die jeweilige
 	Maximalleistung der Wallbox ermöglicht (\SI{11}{\kilo\watt} oder
 	\SI{22}{\kilo\watt}).
 	\subsection{Konfiguration}
@@ -1235,8 +1244,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\subsection{Experteneinstellungen}
 	In den Experteneinstellungen kann die Hysterese-Zeit für die
 	Wartezeit zwischen Phasenumschaltungen modifiziert werden. Ein kurze Zeit
-	führt zu einer schnellen Phasenumschaltung des Systems sollte der PV-Überschuss
-	zwischen im Grenzbereich zwischen gering (1-phasiger Betrieb) und groß
+	führt zu einer schnellen Phasenumschaltung des Systems, sollte der PV-Überschuss
+	im Grenzbereich zwischen gering (1-phasiger Betrieb) und groß
 	(3-phasiger Betrieb) wechseln. Die Ladung des Fahrzeugs wird dann oft
 	abgebrochen und neugestartet und das Schütz schaltet oft.
 
