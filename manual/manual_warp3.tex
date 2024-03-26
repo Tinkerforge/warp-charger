@@ -605,12 +605,15 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	definiert wird.
 	\par
 	Zusätzlich befindet sich hier ein Anschluss für ein Freigabesignal (\glqq EN\grqq).
-	Dieses Signal muss mit PE kurzgeschlossen werden um aktiv zu sein. Das
+	Dieses Signal muss mit PE kurzgeschlossen werden um aktiv zu sein. PE ist
+	mehrfach auf dem Klemmblock vorhanden. Das
 	Verhalten der Wallbox kann unter \glqq Wallbox\grqq, \glqq
 	Ladeeinstellungen\grqq~unter dem Punkt \glqq Abschalteingang\grqq~definiert
 	werden.
-
-    \gfx{./img_warp3/resized/evse_clamp.jpg} 
+    \begin{figure}[H]
+    	\gfx{./img_warp3/resized/evse_clamp.jpg} 
+        \caption*{EVSE Klemmblock-Belegung}
+    \end{figure}
 
     \newpage
     \section{Erste Schritte}\label{setup}
@@ -1688,76 +1691,82 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Der Ladecontroller einer Wallbox reagiert nicht auf Stromzuweisungen. Eventuell ist auf diesem das Lastmanagement deaktiviert.
 
     \subsection{Ersatzteile}
-	\todo{fix and add spare parts links}
-	\par
+	\small{
     \begin{tabular}{ll}
         \toprule
         \textbf{Artikelnummer}                                                                                                      & \textbf{Bauteil}                     \\
         \cmidrule(lr{0.5em}){1-2}
-        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/contactor-2-pole-din-rail-63a.html}{WARP-CON-2P-63A}		& Schaltschütz 2 Pol,                  \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{WARP-CON-2P-63A}											& Schaltschütz 2 Pol,                  \\
                                                                                                                                     & Hutschiene, \SI{63}{\ampere} (2x)\\
         \cmidrule(lr{0.5em}){1-2}
-        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/contactor-4-pole-din-rail-63a.html}{WARP3-METER-3PH-MID}	& Eltako DSZ15DZMOD-3x80A               \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{WARP3-METER-3PH-MID}										& Eltako DSZ15DZMOD-3x80A               \\
                                                                                                                                     & Zweirichtungsdrehstromzähler,                     \\
                                                                                                                                     & 3	Phasen, RS485, MID geeicht\\
         \cmidrule(lr{0.5em}){1-2}
-        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/type-2-plug-with-5m-cable-11kw-16a.html}{WARP-T2-5M-16A}   & Typ-2-Stecker mit                    \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{WARP-T2-5M-16A}											& Typ-2-Stecker mit                    \\
                                                                                                                                     & \SI{5}{\meter} Kabel                 \\
                                                                                                                                     & \SI{11}{\kilo\watt}/\SI{16}{\ampere} \\
         \cmidrule(lr{0.5em}){1-2}
-        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/type-2-plug-with-5m-cable-22kw-32a.html}{WARP-T2-5M-32A}   & Typ-2-Stecker mit                    \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{WARP-T2-5M-32A}			   								& Typ-2-Stecker mit                    \\
                                                                                                                                     & \SI{5}{\meter} Kabel                 \\
                                                                                                                                     & \SI{22}{\kilo\watt}/\SI{32}{\ampere} \\
         \cmidrule(lr{0.5em}){1-2}
-        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/type-2-plug-with-75m-cable-11kw-16a.html}{WARP-T2-75M-16A} & Typ-2-Stecker mit                    \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{WARP-T2-75M-16A} 										& Typ-2-Stecker mit                    \\
                                                                                                                                     & \SI{7,5}{\meter} Kabel               \\
                                                                                                                                     & \SI{11}{\kilo\watt}/\SI{16}{\ampere} \\
         \cmidrule(lr{0.5em}){1-2}
-        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/type-2-plug-with-75m-cable-22kw-32a.html}{WARP-T2-75M-32A} & Typ-2-Stecker mit                    \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{WARP-T2-75M-32A} 										& Typ-2-Stecker mit                    \\
                                                                                                                                     & \SI{7,5}{\meter} Kabel               \\
                                                                                                                                     & \SI{22}{\kilo\watt}/\SI{32}{\ampere} \\
         \cmidrule(lr{0.5em}){1-2}
-        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/warp-fuse-2a.html}{WARP3-FUSE-2A}                          & Feinsicherung                     \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{WARP3-FUSE-2A}                          					& Feinsicherung                     \\
                                                                                                                                     & 5x\SI{20}{\milli\meter}              \\
                                                                                                                                     & träge \SI{2}{\ampere}        \\
         \cmidrule(lr{0.5em}){1-2}
-        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/warp-nfc-sticker.html}{WARP-NFC-STICKER}                   & NFC-Aufkleber                        \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{WARP-NFC-STICKER}                   						& NFC-Aufkleber                        \\
         \cmidrule(lr{0.5em}){1-2}
-        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/warp3-dc-protect.html}{WARP3-DC-PROTECT}					& WARP3 DC-Fehlerstrom-                      \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{WARP3-DC-PROTECT}										& WARP3 DC-Fehlerstrom-                      \\
                                                                                                                                     & schutzmodul (6mA)                    \\
         \cmidrule(lr{0.5em}){1-2}
-        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts.html}{WARP3-CASE}											& WARP3 Gehäuse                        \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{WARP3-CASE} 												& WARP3 Gehäuse mit\\
+																																	& Edelstahlfrontblende                        \\
         \cmidrule(lr{0.5em}){1-2}
-        \small{\href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/warp3-cable-harness.html}{WARP3-CABLE-HARNESS}}		& WARP3 Kabelbaum                      \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{WARP3-CASE-PC}											& WARP3 Gehäuse mit\\
+																																	& Edelstahlfrontblende DB703 \\
+																																	& pulverbeschichtet \\
         \cmidrule(lr{0.5em}){1-2}
-        \small{\href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/warp3-cable-harness.html}{WARP-DSZ15-CABLE}}		& Anschlusskabel für DSZ15                      \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{WARP3-CABLE-HARNESS}										& WARP3 Kabelbaum (Basic, Smart, Pro)           \\
         \cmidrule(lr{0.5em}){1-2}
-        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/warp3-terminal-blocks.html}{WARP3-TERMINAL-}				& WARP3 Klemmen-                       \\
-        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/warp3-terminal-blocks.html}{BLOCKS}                        & Baugruppe                            \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{WARP-DSZ15-CABLE}										& Anschlusskabel für DSZ15                      \\
         \cmidrule(lr{0.5em}){1-2}
-        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/warp2-nfc-karte.html}{WARP2-NFC-CARD}						& 3$\times$WARP2/3 NFC-Karten            \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{WARP3-TERMINAL-}											& WARP3 Klemmen-                       \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{BLOCKS}  							                    & Baugruppe                            \\
         \cmidrule(lr{0.5em}){1-2}
-        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/warp3-pcb-set.html}{WARP3-PCB-SET}							& WARP3 EVSE/ESP PCB Set\\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{WARP2-NFC-CARD}											& 3$\times$WARP2/3 NFC-Karten            \\
         \cmidrule(lr{0.5em}){1-2}
-        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/warp3-pb-led-set.html}{WARP3-PB-LED}						& Fronttaster mit RGB LED                     \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{WARP3-ISO-SET}											& WARP3 EVSE/ESP Isolator Set\\
         \cmidrule(lr{0.5em}){1-2}
-        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/warp-res-220.html}{WARP-RES-220}							& Widerstand \SI{220}{\ohm} (22kW)           \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{WARP3-PB-LED}											& Fronttaster mit RGB LED,                     \\
+																																	& Anschlusskabel, Befestigungsmaterial			\\
         \cmidrule(lr{0.5em}){1-2}
-        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/warp-res-680.html}{WARP-RES-680}							& Widerstand \SI{680}{\ohm} (11kW)            \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{WARP-RES-220}											& Widerstand \SI{220}{\ohm} (22kW)           \\
         \cmidrule(lr{0.5em}){1-2}
-        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/warp3-esp32-eth.html}{117}									& WARP ESP32 Ethernet Brick                 \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{WARP-RES-680}											& Widerstand \SI{680}{\ohm} (11kW)            \\
         \cmidrule(lr{0.5em}){1-2}
-        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/evse-v3-bricklet.html}{2177}								& EVSE Bricklet 3.5                    \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{117}														& WARP ESP32 Ethernet Brick                 \\
         \cmidrule(lr{0.5em}){1-2}
-        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/nfc-bricklet.html}{286}                                    & NFC Bricklet                         \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{2177}													& EVSE Bricklet 3.5                    \\
         \cmidrule(lr{0.5em}){1-2}
-        \href{https://www.tinkerforge.com/de/shop/accessories/cable/bricklet-cable-15cm-7p-7p.html}{6150}							& Bricklet-Kabel                       \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{286}  				                                    & NFC Bricklet                         \\
+        \cmidrule(lr{0.5em}){1-2}
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{6150}													& Bricklet-Kabel                       \\
                                                                                                                                     & \SI{15}{\centi\meter} (7p-7p)        \\
         \cmidrule(lr{0.5em}){1-2}
-        \href{https://www.tinkerforge.com/de/shop/accessories/cable/bricklet-cable-6cm-7p-7p.html}{6149}							& Bricklet-Kabel                       \\
+        \href{https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/}{6149}													& Bricklet-Kabel                       \\
                                                                                                                                     & \SI{6}{\centi\meter} (7p-7p) (2x)\\
         \bottomrule
     \end{tabular}
+	}
 
     \subsection{Sicherungswechsel}
     Die Wallbox ist intern über eine 5$\times\SI{20}{\milli\meter}$
