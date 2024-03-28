@@ -351,14 +351,14 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     \subsubsection{Anforderungen an die Elektroinstallation}
     Die Wahl des Leitungsquerschnitts und der Lei\-tungs\-ab\-sicher\-ung der
-    Wallboxzuleitung muss in Übereinstimmung mit den nationalen Vorschriften
+    Wallbox-Zuleitung muss in Übereinstimmung mit den nationalen Vorschriften
     erfolgen. Üblicherweise erfolgt der Anschluss der Wallbox dreiphasig.
     Dafür sollte ein dreiphasiger Leitungsschutzschalter mit C-Charakteristik
     verwendet werden. Bei einem einphasigen Betrieb der Wallbox ist
     dementsprechend ein einphasiger Leitungsschutzschalter einzusetzen.
     Die Wallbox verfügt über eine interne DC-Fehlerstromerkennung, welche
     bei einem DC-Fehlerstrom $\geq \SI{6}{\milli\ampere}$ den Ladevorgang
-    unterbricht. Daher ist nur ein vorgeschalteter Typ-A \SI{30}{\milli\ampere}-Fehlerstromschutzschalter (RCCB)
+    unterbricht. Daher ist nur ein vorgeschalteter Typ-A \SI{30}{\milli\ampere}-AC-Fehlerstromschutzschalter (RCCB)
     notwendig.
     Die Wallbox darf nur in einem TN~/~TT-Netz angeschlossen werden.
 
@@ -374,7 +374,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     Die Zuleitung sollte für alle Varianten wie auf dem Foto oben abgebildet
     angefertigt werden. Wir empfehlen, das Kabel dafür auf einer Länge von
-	mindestens \SI{13}{\centi\meter} abzumanteln. Für die Klemmen wird eine
+	mindestens \SI{130}{\milli\meter} abzumanteln. Für die Klemmen wird eine
     Abisolierlänge von 10 bis \SI{12}{\milli\meter} vorgegeben.
 
     Die Zuleitung wird am internen Klemmenblock
@@ -389,21 +389,21 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     hat einen Klemmbereich von \SI{11}{\milli\meter} bis \SI{22}{\milli\meter} und soll laut Hersteller mit
     \SI{10}{\newton{}\meter} angezogen werden.
 
-    Der korrekte Sitz der Adern und die Phasenzugehörigkeit ist nach der
+    Der korrekte Sitz der Adern und die Phasenzugehörigkeit sind nach der
     Installation zu prüfen! Alle Verschraubungen innerhalb der Wallbox sind nachzuziehen.
-    Als nächstes muss der maximale Ladestrom eingestellt werden, siehe
+    Als Nächstes muss der maximale Ladestrom eingestellt werden, siehe
 	\fullref{ladestrom_schalter}.
 
     \subsubsection{Kabeleinführung von der Rückseite}
     Die Kabeleinführung des WARP3 Chargers von der Unterseite
     (Auslieferungszustand) kann umgebaut werden, so dass eine Kabeleinführung von der
     Rückseite erfolgt. Dazu müssen die Kabeleinführung (M32) für die Zuleitung und die
-    Kabeleinführung für das Netzwerkkabel vom Wallboxgehäuse abgeschraubt
+    Kabeleinführung für das Netzwerkkabel vom Wallbox-Gehäuse abgeschraubt
     werden. Die Bohrungen in der Rückseite der Wallbox sind im
     Auslieferungszustand von innen mit Blindstopfen verschlossen.
     Diese müssen entfernt und in die nun offenen Bohrungen an der Unterseite
     eingeschraubt werden. Die Kabeleinführungen werden anschließend von
-    der Rückseite in das Wallboxgehäuse eingeschraubt.
+    der Rückseite in das Wallbox-Gehäuse eingeschraubt.
 
     \gfx{./img_warp3/resized/warp3_back.jpg}
 
@@ -414,21 +414,21 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     muss diese außerhalb der Wallbox verbunden werden. Die Farben sind nach DIN belegt und wie
     folgt zugeordnet: L1~braun, L2~schwarz, L3~grau, N~blau, PE~gelb/grün.
 
-    Der korrekte Sitz der Adern und die Phasenzugehörigkeit ist nach der
+    Der korrekte Sitz der Adern und die Phasenzugehörigkeit sind nach der
     Installation zu prüfen!
     Danach muss der maximale Ladestrom eingestellt werden, siehe
 	\fullref{ladestrom_schalter}.
 
     \subsubsection{Einphasiger Betrieb}
     Alle Wallboxen können auch einphasig angeschlossen und betrieben werden.
-    Dazu ist unbedingt Phase L1 anzuschließen, da diese ebenfalls zur
+    Dazu ist unbedingt die Phase L1 anzuschließen, da diese ebenfalls zur
     Stromversorgung der Wallbox genutzt wird. L2 und L3 werden von der Wallbox
     nur durchgeschaltet und können dementsprechend unangeschlossen bleiben.
     \hint{Ein WARP3 Charger Smart oder Pro sollte im Webinterface auf den
     einphasigen Betrieb konfiguriert werden.}
 
     \subsubsection{Einstellen des Ladestroms}\label{ladestrom_schalter}
-    Der maximal erlaubte Ladestrom muss abhängig von der gebäudeseitigen
+    Der maximal erlaubte Ladestrom muss abhängig von der hausseitigen
     Leitungsabsicherung eingestellt werden. Der Ladestrom darf nicht höher gewählt
     werden, als es die Zuleitung bzw. Leitungsabsicherung zulässt.
 
@@ -440,8 +440,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     Die verschiedenen Schalterstellungen sind im nachfolgenden Foto dokumentiert.
     Im Werkszustand sind die Schalter so eingestellt, dass die Wallbox inaktiv
-	ist (\enquote{invalid}).
-	Als Beispiel ist in der zweiten Zeile der erste Schalter auf \enquote{ON} und die Schalter zwei, drei und vier auf \enquote{OFF} gestellt.
+	ist (\enquote{ungültig}).
+	Als Beispiel ist in der zweiten Zeile Schalter 1 auf \enquote{ON} und die Schalter 2, 3 und 4 auf \enquote{OFF} gestellt.
     Damit wird bei einem dreiphasigen
     Betrieb eine maximale Ladeleistung von ca. \SI{4}{\kilo\watt} (3$\times\SI{6}{\ampere}$) vorgegeben.
     Wird die Wallbox nur einphasig angeschlossen, können vom Fahrzeug maximal
@@ -453,7 +453,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
           Installation nur von einer ausgewiesenen Elektrofachkraft unter
           Berücksichtigung der genannten Bedingungen geändert werden!}
 
-    \subsubsection{LAN- / RJ45-Kabel anfertigen}\label{ethernet}
+    \subsubsection{LAN- / RJ45-Kabel anfertigen}\label{ethernet} \fxnote{Alle / benutzungen entweder mit oder ohne Leerzeichen}
 
     Um den WARP3 Charger mittels LAN anzubinden, muss ein LAN- / RJ45-Kabel
     angefertigt werden. Das RJ45-Kabel kann mittels einer
@@ -495,11 +495,12 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Anschließend muss in \texttt{Energiemanager} $\rightarrow$ \texttt{Automatisierung}
     folgende Regel angelegt werden:
 
-    \begin{description}[labelindent=0.5cm]
-        \item[Bedingung] \enquote{Eingang 3 geschaltet} (bzw. Eingang 4)\\\hphantom{\textbf{Bedingung}}\hspace{-0.5cm} $\rightarrow$ \enquote{auf geschlossen}
-        \item[Aktion] \enquote{Begrenze maximalen Gesamtstrom}
-        \item[Maximaler Gesamtstrom] \SI{6}{\ampere} (bzw. \SI{18}{\ampere} bei einphasigem Anschluss)
+    \begin{description}[labelindent=0.5cm, leftmargin=0.5cm]
+        \item[Bedingung]\ \\ \enquote{Eingang 3 geschaltet} (bzw. 4) $\rightarrow$ \enquote{auf geschlossen}
+        \item[Aktion]\ \\\enquote{Begrenze maximalen Gesamtstrom}
+        \item[Maximaler Gesamtstrom]\ \\ \SI{6}{\ampere} (bzw. \SI{18}{\ampere} bei einphasigem Anschluss)
     \end{description}
+    \vspace{-0.2cm}
 
     \subsection{Prüfungen}\label{tests}
     Im Werk wurde jede Wallbox einzeln nach IEC~60364-6 sowie den entsprechenden gültigen
@@ -521,7 +522,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     und die korrekte elektrische Installation überprüft wurde, kann die Wallbox in
     Betrieb genommen werden.
     Im ersten Schritt wird die Stromversorgung zur Wallbox eingeschaltet. Die
-    LED blinkt anschließend sehr schnell magenta (siehe \ref{fast_blink}). Die Wallbox führt
+    LED blinkt anschließend sehr schnell magenta. Die Wallbox führt
     in den ersten drei Sekunden eine Kalibrierung der
     DC-Fehlerstromerkennung durch. Nach Abschluss dieser Kalibrierung
     leuchtet die LED dauerhaft. Die Wallbox ist nun betriebsbereit. Sollte die LED jetzt
@@ -532,17 +533,17 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	wird in die Ladebuchse des Elektrofahrzeugs gesteckt. Nach wenigen Sekunden sollte hörbar
     ein Schütz in der Wallbox schalten und das Fahrzeug den Beginn
     des Ladevorgangs anzeigen. Während des Ladevorgangs \enquote{atmet} die LED blau.
-    Ist der Ladevorgang beendet, so leuchtet die LED permanent. Nach ca.
+    Ist der Ladevorgang beendet, so leuchtet sie permanent. Nach ca.
     15 Minuten Inaktivität wird die LED abgeschaltet.
 
-	Mittels des Tasters auf der Frontseite kann ein Ladevorgang sofort unterbrochen werden(Standardeinstellung). Alternativ kann das Ladekabel vom Elektrofahrzeug entriegelt werden,
+	Mittels des Fronttasters kann ein Ladevorgang sofort unterbrochen werden (Standardeinstellung). Alternativ kann das Ladekabel vom Elektrofahrzeug entriegelt werden,
     wodurch der Ladevorgang ebenfalls unterbrochen wird. Um den Ladevorgang erneut
     zu starten, muss in beiden Fällen die Verbindung zum Fahrzeug getrennt und
     anschließend erneut hergestellt (Kabel aus- und wieder einstecken) oder der Ladevorgang über das Webinterface neugestartet werden.
 
     \vspace{-0.1cm}
     \subsection{Bedienelemente}\label{lockswitch}
-	Die im Taster in der Wallboxfront RGB-LED kann je nach Betriebszustand
+	Die im Fronttaster verbaute RGB-LED kann je nach Betriebszustand
 	verschiedene Farben annehmen.
 	Das Verhalten bei einem Tastendruck kann im Webinterface der Wallbox konfiguriert werden.
 
@@ -625,7 +626,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Das Webinterface ist im \fullref{webinterface} vollständig beschrieben.
 
     \subsection{Schritt 2: Integration in das eigene Netzwerk}
-    In den allermeisten Fällen soll die Wallbox in das eigene WLAN/LAN
+    In den allermeisten Fällen soll die Wallbox in das eigene Netzwerk
     integriert werden. Dazu müssen die Netzwerkeinstellungen der Wallbox
     angepasst werden, siehe \fullref{network}.
 
