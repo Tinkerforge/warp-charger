@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>WARP Charger</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <link href="img/favicon.png" rel="icon">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- Add non-invasive analytics. There is no cookie set and no personal data saved -->
+  <script type="text/javascript">
+    var _paq = _paq || [];
+    _paq.push(['disableCookies']);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+    var u="//www.tinkerforge.com/analytics/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-root-margin="-20% 0px -70%">
+
+  <!--==========================
+    Header
+  ============================-->
+
+  <div class="row" style="margin-right: 0">
+    <div class="d-none d-lg-block col-lg-4 col-xl-3">
+        <nav class="h-100 flex-column align-items-stretch">
+            <nav id="navbar" class="navbar navbar-light navbar-test flex-column">
+                <nav class="nav nav-pills flex-column ms-2">
+                    <a class="navbar-brand" href="#">Inhalt</a>
+                    <a class="nav-link" href="#subsidy">Förderung</a>
+                    <a class="nav-link" href="#features">Funktion</a>
+                    <a class="nav-link" href="#setup">Montage und Installation</a>
+                    <a class="nav-link" href="#charge-management">Lastmanagement</a>
+                    <a class="nav-link" href="#web-interface">Webinterface</a>
+                    <a class="nav-link" href="#mqtt">MQTT</a>
+                </nav>
+            </nav>
+        </nav>
+    </div>
+  <!--==========================
+    Intro Section
+  ============================-->
+  <main id="faq_main" class="col-lg-8 col-xl-9 col-xxl-6">
+    <header id="start" class="reference-section-header pt-4" style="padding-left: 15px; padding-right: 15px;"><h2>Häufig gestellte Fragen (FAQ)</h2></header>
+    <section id="subsidy" class="section">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>Förderung</h3>
+            </header>
+            <dl>
+                <dt>Ist ein WARP Charger förderfähig nach KfW 442?</dt>
+                <dd>Die Varianten Smart und Pro stehen auf der Liste der KfW und werden mit 600€ gefördert.
+                </dd>
+            </dl>
+
+
+        </div>
+    </section>
+
+    <section id="bidirectional" class="section">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>Bidirektionales Laden, V2G oder V2H</h3>
+            </header>
+
+
+            <dl>
+                <dt>Unterstützt der WARP Charger das bidirektionale Laden, Vehicle-to-Grid (V2G) oder Vehicle-to-Home (V2H)? Kann ein Fahrzeug über die Wallbox Strom zurück ins Netz bzw. ins Haus einspeisen?</dt>
+                <dd>
+                    <p>Nein.</p>
+                    <p>
+                        Es gibt diverse Pilotprojekte bei denen V2G- oder V2H-Konzepte auch mit AC-Wallboxen unterstützt werden.
+                        Die meisten Neuigkeiten zu dem Thema sind derzeit aber nur Ankündigungen, es gibt zur Zeit keine konkreten Produkte.
+                        Die technischen und gesetzlichen Rahmenbedingungen sind aktuell noch nicht vollständig geklärt. Selbst wenn ein Produkt auf dem Markt verfügbar wäre, so dürfte es nicht in Betrieb genommen werden.
+                    </p>
+                    <p>
+                    <b>Erläuterung:</b>
+                    </p>
+                    <p>
+                        Da der Fahrzeugakku immer mit Gleichspannung (DC) arbeitet, muss zwischen diesem und dem Stromnetz ein Wechselrichter (DC->AC) installiert sein.
+                        Es gibt Fahrzeuge bei denen dieser Wechselrichter bereits im Fahrzeug installiert ist.
+                        Damit wäre es prinzipiell denkbar eine Rückspeisung über das Typ2 Ladekabel, welches für die Übertragung von Wechselspannung gedacht ist, durchzuführen.
+                    </p>
+                    <p>
+                        Die meisten Ankündigungen betreffen aber Fahrzeuge, bei denen über die DC-Kontakte in der Fahrzeugbuchse (Combined Charging System; CCS-Stecker) auf den Akku zugegriffen werden kann.
+                        AC-Wallboxen, wie auch unsere WARP Charger, haben keine Möglichkeit auf diese DC-Spannung zuzugreifen, da die Wallbox über keinen CCS-Stecker verfügt.
+                        Zusätzlich fehlt den Wallboxen der notwendige Wechselrichter um aus der Gleichspannung wieder eine Wechselspannung zu erzeugen.
+                        Es gibt DC-Wallboxen am Markt, die die technische Möglichkeiten bieten, diese liegen aber in einem ganz anderen Preisbereich.
+                        Neben diesen technischen Problemen gibt es weitere offene Fragen:
+                        Dazu zählen die eigentliche Steuerung der Rückspeisung (Kommunikation zwischen Wallbox und Fahrzeug) aber auch ungeklärte regulatorische und steuerrechtliche Fragen.
+                        Zusätzlich involviert das Thema andere Gebiete, wie das Ausrollen des Smart-Meter-Gateways, die Steuerung durch die Netzbetreiber etc.
+                    </p>
+                    <p>
+                        Aus unserer Sicht ist es deshalb nicht seriös damit zu werben, dass eine AC-Wallbox zukünftig V2G oder V2H unterstützt, da die zuvor genannten technischen und rechtlichen Fragestellungen noch überhaupt nicht geklärt sind.
+                        Sollte eine Nachrüstung unserer Wallboxen auf Grund unseres modularen Konzepts möglich sein, so werden wir dies zukünftig sicherlich anbieten.
+                    </p>
+                </dd>
+            </dl>
+        </div>
+    </section>
+
+
+    <section id="features" class="section">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>Funktion</h3>
+            </header>
+            <dl>
+                <dt>(Wie) ist PV-Überschussladen möglich?</dt>
+                <dd>Ja, mittels des <a href="/energy-manager.html">WARP Energy Managers</a> kann ein automatisiertes PV Überschussladen realisiert werden. Technisch versierte Nutzer können alternativ eine PV-Überschusssteuerung mit EVCC einrichten.
+                    <a href="/evcc.html">Die Einrichtung von EVCC wird hier beschrieben.</a>
+                </dd>
+            </dl>
+            <dl>
+                <dt>Kann der WARP Charger den Ladezustand eines angeschlossenen Fahrzeugs abfragen? Kann bis zu einem gewissen Ladezustand (z.B. bis 80&nbsp;%) geladen werden?</dt>
+                <dd>
+                    Nein. Es gibt aber die Möglichkeit mit EVCC über die APIs, die von vielen Fahrzeugherstellern angeboten werden, den Ladezustand abzufragen.
+                    EVCC kann dann einen WARP Charger so steuern, dass nur bis zu einem gewissen Ladezustand geladen wird.
+                    <a href="/evcc.html">Die Einrichtung von EVCC wird hier beschrieben.</a>
+                </dd>
+            </dl>
+            <dl>
+                <dt>Ist es möglich den Ladestrom auf unter 6 Ampere zu konfigurieren?</dt>
+                <dd>
+                    <p>
+                    Nicht durch den WARP Charger. Die Ladung erfolgt nach den Standard IEC 61851. Dieser Standard definiert, dass eine Wallbox, wenn sie das Laden freigibt einen Maximalstrom kommunizieren muss. Dieser Maximalstrom muss mindestens 6 Ampere betragen.
+                    </p>
+                    <p>
+                        Es gibt allerdings Fahrzeuge, die so konfiguriert werden können, dass sie weniger als den von der Wallbox vorgegebenen Maximalstrom beziehen.
+                    </p>
+                </dd>
+            </dl>
+
+        </div>
+    </section>
+
+    <section id="setup" class="section">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>Montage und Installation</h3>
+            </header>
+            <dl>
+                <dt>Welchen Leiterquerschnitt brauche ich für die Zuleitung zum WARP Charger?</dt>
+                <dd>Der Leiterquerschnitt sollte immer von dem Elektriker vor Ort festgelegt werden. Folgende Minimalwerte gibt es in der Praxis:
+                    <div class="ps-4">
+                        11 kW Ladeleistung
+                        <ul>
+                            <li>bis 20 Meter: 2,5 mm²</li>
+                            <li>bis 40 Meter: 4,0 mm²</li>
+                            <li>bis 70 Meter: 6,0 mm²</li>
+                        </ul>
+                        22 kW Ladeleistung
+                        <ul>
+                            <li>bis 25 Meter: 6,0 mm²</li>
+                            <li>bis 50 Meter: 10,0 mm²</li>
+                            <li>bis 100 Meter: 16,0 mm²</li>
+                        </ul>
+                    </div>
+                </dd>
+
+                <dt>Können mehrere Wallboxen an einem Hausanschluss betrieben werden? Kann sichergestellt werden, dass eine vorgegebene maximale Stromaufnahme nicht überschritten wird?</dt>
+                <dd>Ja. WARP Charger können sich über das eingebaute Lastmanagement einen Hausanschluss teilen, ohne dass dieser überlastet wird.
+                    Das Lastmanagement stellt sicher, dass eine vorgegebene Stromaufnahme nicht überschritten wird und verteilt den verfügbaren Ladestrom auf mehrere WARP Charger.
+                    Damit WARP Charger über das Lastmanagement gesteuert werden können müssen sie im selben Netzwerk betrieben werden.</dd>
+
+                <dt>Kann ich einen WARP Charger von außen deaktivieren? Wie schließe ich einen Rundsteuerempfänger an?</dt>
+                <dd>Es gibt verschiedene Möglichkeiten, die Ladefunktion einen WARP Chargers zu kontrollieren:
+                    <ul>
+                        <li>Über HTTP, MQTT, OCPP bzw. Modbus/TCP kann die Wallbox gesteuert werden. Siehe auch <a href="/api.html">API-Dokumentation</a></li>
+                        <li>Das Verhalten auf die Eingänge des WARP Energy Managers können konfiguriert werden. Unter anderem ist eine Reduktion der Ladeleistung/Abschaltung möglich.
+                            Der WARP Energy Manager steuert die Wallboxen über eine (WLAN/LAN-)Netzwerkverbindung, so dass eine Steuerung aus der Ferne möglich ist.</li>
+                        <li>Bastler können einen Rundsteuerempfänger oder ähnlichen Abschalter direkt an die Wallbox anschließen. Hierzu gibt es in der Wallbox einen konfigurierbaren Abschalteingang.
+                            Eventuell muss zur Durchführung des Abschalters ein Loch in das Gehäuse der Wallbox gebohrt werden.</li>
+                    </ul>
+                </dd>
+
+                <dt>Kann ein bereits vorhandener/anderer Stromzähler verwendet werden?</dt>
+                <dd>Der WARP2 Charger benötigt einen Stromzähler vom Typ SDM630 oder SDM72 V2 (Modbus). Andere Stromzähler werden nicht unterstützt.</dd>
+            </dl>
+        </div>
+    </section>
+
+    <section id="charge-management" class="section">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>Lastmanagement</h3>
+            </header>
+            <dl>
+                <dt>Wie viele Teilnehmer werden vom Lastmanager unterstützt?</dt>
+                <dd>Der Lastmanager kann maximal 10 Wallboxen kontrollieren. Die Wallbox auf der der Lastmanager läuft ist dabei eingeschlossen, es können also 9 weitere Wallboxen gesteuert werden. Der WARP Energy Manager kann ein statisches/dynamisches Lastmanagement mit Phasenumschaltung für bis zu 10 Wallboxen duchführen.</dd>
+            </dl>
+        </div>
+    </section>
+
+    <section id="web-interface" class="section">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>Webinterface</h3>
+            </header>
+            <dl>
+                <dt>Warum kann ich von meinem Handy/Tablet das Webinterface über den Access Point der Wallbox nicht erreichen?</dt>
+                <dd>Typischerweise ist das Problem, dass auf dem Handy/Tablet neben der WLAN-Verbindung zum
+                    Access Point der Wallbox außerdem auch die mobile Datenverbindung aktiv ist.
+                    Wenn die mobile Datenverbindung deaktiviert ist, sollte das Webinterface unter
+                    <a href="http://10.0.0.1">http://10.0.0.1</a> erreichbar sein.</dd>
+            </dl>
+            <dl>
+                <dt>Warum kann ich von meinem Samsung-Gerät das Webinterface nicht erreichen?</dt>
+                <dd>Der auf Samsung-Geräten vorinstallierte Browser "Samsung Internet" scheint die vom Webinterface
+                    verwendeten Websockets nicht korrekt zu unterstützen. Mit einem anderen Browser,
+                    z.B. Firefox oder Chrome sollte das Webinterface erreichbar sein.</dd>
+            </dl>
+        </div>
+    </section>
+
+    <section id="mqtt" class="section">
+        <div class="container">
+            <header class="reference-section-header">
+                <h3>MQTT</h3>
+            </header>
+            <dl>
+                <dt>Warum kann die Wallbox meinen Mosquitto MQTT-Broker nicht erreichen?</dt>
+                <dd>Häufig ist hier das Problem, dass Mosquitto seit Version 2.0.0 standardmäßig nur lokale Verbindungen zulässt. Damit Zugriffe über das Netzwerk möglich sind, muss die Konfiguration von Mosquitto angepasst werden. Details finden sich in der <a href="https://mosquitto.org/documentation/migrating-to-2-0/">Mosquitto-Dokumentation</a>
+                und in <a href="https://www.tinkerunity.org/topic/7188-keine-verbindung-zu-mqtt/#comment-38629">unserem Forum</a>.
+                </dd>
+                <dt>Warum werden Änderungskommandos nicht übernommen?</dt>
+                <dd>Typischerweise kann der zuletzt gesetzte Wert auf einem Topic gelesen werden. Beispielsweise liefert <code>warp/AbC/charge_manager/available_current</code> den aktuell für Lastmanagement zur Verfügung stehenden Strom.
+                    Kommandos müssen an das entsprechende Topic geschickt werden, das auf <code>_update</code> endet, damit sie vom WARP Charger von dessen eigenen Nachrichten unterschieden werden können. Um den verfügbaren Strom zu aktualisieren muss z.B. auf
+                    <code>warp/AbC/charge_manager/available_current_update</code> gepublisht werden.
+                </dd>
+                <dt>Warum meldet die Wallbox <samp>MQTT: Topic ... is an action. Ignoring retained message.</samp>?</dt>
+                <dd>Bestimmte Kommandos sind Aktionen, setzen also keinen dauerhaften Zustand, sondern lösen einmalige Ereignisse aus. Eine "Retained Message" wird aber auf dem MQTT-Broker dauerhaft vorgehalten.
+                    Für Aktionen sind deshalb solche Messages verboten, da diese sonst, beispielsweise nach einem Neuverbinden des WARP Chargers zum MQTT-Broker, mehr als einmal verarbeitet werden könnten.
+                </dd>
+            </dl>
+        </div>
+    </section>
+</main>
+</div>
+<!--==========================
+  Footer
+============================-->
+<footer id="footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="row">
+
+         <div class="col-lg-3 col-md-6 footer-info">
+            <h3>WARP</h3>
+            <span>WARP ist die Elektromobiliätssparte von Tinkerforge.
+              Die Tinkerforge GmbH ist ein 2011 gegründetes Unternehmen, das echtes &bdquo;Made in Germany&ldquo; bietet.
+            </span>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Links</h4>
+            <ul>
+              <li><i class="ion-ios-arrow-right"></i> <a href="#intro">Start</a></li>
+              <li><i class="ion-ios-arrow-right"></i> <a href="https://www.tinkerforge.com/de/shop/warp/wallbox.html">Shop</a></li>
+              <li><i class="ion-ios-arrow-right"></i> <a href="https://www.tinkerforge.com/de/home/legal_info/">Impressum</a></li>
+              <li><i class="ion-ios-arrow-right"></i> <a href="https://www.tinkerforge.com/de/home/privacy_notice/">Datenschutz</a></li>
+              <li><i class="ion-ios-arrow-right"></i> <a href="https://www.tinkerforge.com/de/home/terms_and_conditions/">AGB</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h4>Kontakt</h4>
+            <p>
+              Tinkerforge GmbH <br>
+              Helleforthstraße 22-28 <br>
+              33758 Schloß Holte-Stukenbrock<br>
+              Deutschland <br>
+              <strong>Telefon:</strong> 05207 / 897300-0<br>
+              <strong>E-Mail:</strong> info@tinkerforge.com<br>
+            </p>
+
+            <div class="social-links">
+              <a href="https://twitter.com/tinkerforge" class="twitter"><i class="fa fa-twitter"></i></a>
+              <a href="https://www.facebook.com/tinkerforge42" class="facebook"><i class="fa fa-facebook"></i></a>
+              <a href="https://www.instagram.com/tinkerforge" class="instagram"><i class="fa fa-instagram"></i></a>
+              <a href="https://www.linkedin.com/company/tinkerforge-gmbh/" class="linkedin"><i class="fa fa-linkedin"></i></a>
+            </div>
+
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-info">
+            <h4>Über uns</h4>
+            <p>
+              Wir bei Tinkerforge sind der Meinung, dass Produkte offen sein müssen. Nur so gehören sie wirklich den
+              Nutzern. Daher folgen wir der Open-Source-Philosophie, indem wir die Quelltexte sowie Baupläne all unserer
+              Soft- und Hardware veröffentlichen und ermöglichen es so jedem Einzelnen, unsere Produkte nach eigenen
+              Wünschen zu verändern und zu erweitern. Durch die enge Zusammenarbeit mit unserer aktiven Community
+              entwickeln wir schnell kundenorientierte Lösungen.
+            </p>
+          </div>
+
+      </div>
+    </div>
+  </div>
+</footer><!-- #footer -->
+
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+<!-- JavaScript Libraries -->
+<script src="lib/jquery/jquery.min.js"></script>
+<script src="lib/jquery/jquery-migrate.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/superfish/hoverIntent.js"></script>
+<script src="lib/superfish/superfish.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/isotope/isotope.pkgd.min.js"></script>
+<script src="lib/lightbox/js/lightbox.min.js"></script>
+<script src="lib/touchSwipe/jquery.touchSwipe.min.js"></script>
+
+<!-- Template Main Javascript File -->
+<script src="js/main.js"></script>
+
+</body>
+</html>
+
