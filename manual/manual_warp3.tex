@@ -1681,14 +1681,10 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \end{tabular}
 	}
 
-	\vspace{-0.1cm}
     \section{Konformitätserklärung}
-    \vspace{-0.1cm}
     Die EU-Konformitätserklärung zur Wallbox ist in einem gesonderten Dokument verfügbar.
 
-    \vspace{-0.1cm}
     \section{Entsorgung}
-    \vspace{-0.1cm}
     \begin{minipage}{0.43\textwidth}
         Wallbox und Verpackung sind bei Gebrauchsende ordnungsgemäß zu
         entsorgen. Altgeräte dürfen nicht über den Hausmüll entsorgt werden.
@@ -1697,47 +1693,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
         \includegraphics[width=\linewidth]{./img_warp3/resized/weee.pdf}
     \end{minipage}
 
-    \vspace{-0.1cm}
-    \section{Technische Daten}
-    \vspace{-0.1cm}
-    %use minipage here to control footnote placement
-    \begin{minipage}{\linewidth}
 
-        \begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{Fehlerstromerkennung}}]
-            \setlength{\itemsep}{3pt}
-            \item[Ladestandard] DIN EN 61851‐1
-            \item[Ladeleistung] einstellbar von \SI{1,4}{\kilo\watt}
-                  bis \SI{11}{\kilo\watt} / \SI{22}{\kilo\watt}~\footnote[7]{\label{fn:1} je nach Variante}
-            \item[Fahrzeugladestecker] Typ 2
-            \item[Abmessungen] 280 × 215 × \SI{95}{\milli\meter} (B/H/T)
-            \item[Nennspannung] \SI{230}{\volt} / \SI{400}{\volt} / 1/3
-                  AC$\sim$~\footref{fn:1}
-            \item[Nennfrequenz] \SI{50}{\hertz}
-            \item[Nennstrom] \SI{16}{\ampere} / \SI{32}{\ampere}
-                  \footref{fn:1}
-            \item[Standby, WLAN an] Basic/Smart $\leq\SI{3}{\watt}$; Pro $\leq\SI{5}{\watt}$
-            \item[Ladekabellänge] \SI{5}{\meter} / \SI{7,5}{\meter}~\footref{fn:1}
-            \item[Zuleitungsquerschnitt] \SI{2,5}{\square\milli\meter} bis
-                  \SI{10}{\square\milli\meter}
-            \item[Zugangsverriegelung]
-                  NFC~\footref{fn:1}\\Webinterface~\footref{fn:1}
-            \item[Betriebstemperatur] \SI{-25}{\celsius}
-                  bis \SI{+50}{\celsius} (Durchschnitt in \SI{24}{\hour}: $\leq \SI{35}{\celsius}$)
-            \item[Fehlerstromerkennung] DC \SI{6}{\milli\ampere} (integriert)
-            \item[Schutzart] IP54
-                  (spritzwassergeschützt, für
-                  den Außenbereich geeignet)
-            \item[Strommessung] integrierter MID-geeichter Strom\-zähler nach EU-Messgeräterichtlinie 2014/32/EU~\footref{fn:1}
-            \item[Lastmanagement] max. 32 Teilnehmer~\footref{fn:1}
-            \item[NFC-Tags] 3 im Lieferumfang\\max. 32 anlernbar~\footref{fn:1}
-            \item[Benutzer] max. 32 konfigurierbar~\footref{fn:1}
-            \item[Schnittstellen~\footref{fn:1}] HTTP, MQTT, Modbus TCP, OCPP
-        \end{description}
-    \end{minipage}
-
-    \vspace{-0.1cm}
     \section{Kontakt}
-    \vspace{-0.1cm}
     Tinkerforge GmbH\\ Helleforthstraße 22-28\\ 33758 Schloß Holte-Stukenbrock
     \begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{Website}}]
         \item[E-Mail] \href{mailto:info@tinkerforge.com}{\texttt{info@tinkerforge.com}}
@@ -1745,6 +1702,55 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
         \item[Telefon] \phonenumber{+49 5207 897300-0}
         \item[Shop] \href{https://tinkerforge.com/de/shop/warp.html}{\texttt{tinkerforge.com/de/shop/warp.html}}
     \end{description}
+
+    \vfill
+    \null
+    \columnbreak
+    \section{Technische Daten}
+    %use minipage here to control footnote placement
+    \begin{minipage}{\linewidth}
+
+        \begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{Fehlerstromerkennung}}]
+            \setlength{\itemsep}{3pt}
+            \item[Ladestandard] DIN EN 61851‐1
+            \item[Ladeleistung] Einstellbar von \SI{1,4}{\kilo\watt}
+                  bis \SI{11}{\kilo\watt} / \SI{22}{\kilo\watt}~\footnote[7]{\label{fn:1} je nach Variante}
+            \item[Fahrzeugladestecker] Typ 2
+            \item[Nennspannung] \SI{230}{\volt} / \SI{400}{\volt} / 1/3
+                  AC~\footref{fn:1}
+            \item[Nennfrequenz] \SI{50}{\hertz}
+            \item[Nennstrom] \SI{16}{\ampere} / \SI{32}{\ampere}
+                  \footref{fn:1}
+            \item[Ladekabellänge] \SI{5}{\meter} / \SI{7,5}{\meter}~\footref{fn:1}
+            \item[Zuleitungsquerschnitt] \SI{2,5}{\square\milli\meter} bis
+                  \SI{10}{\square\milli\meter}
+            \item[Zuleitungseinführung] Von der Unterseite und Rückseite möglich
+            \item[Betriebstemperatur] \SI{-25}{\celsius}
+                  bis \SI{+50}{\celsius} (Durchschnitt in \SI{24}{\hour}: $< \SI{35}{\celsius}$)
+            \item[Fehlerstromerkennung] DC \SI{6}{\milli\ampere} (integriert)
+            \item[Abmessungen] 280 × 215 × \SI{95}{\milli\meter} (B/H/T)
+            \item[Gewicht] Je nach Kabellänge, ca. \SI{8}{\kilo\gram}~\footref{fn:1}
+            \item[Schutzart] IP54
+                  (spritzwassergeschützt, für
+                  den Außenbereich geeignet)
+            \item[Phasenumschaltung] Intern zwischen ein- und dreiphasig
+            \item[Zugangsverriegelung]
+                  NFC (RFID)~\footref{fn:1}\\Webinterface~\footref{fn:1}\\API~\footref{fn:1}
+            \item[Lastmanagement] Max. 32 WARP, WARP2 und/oder WARP3 Charger~\footref{fn:1}
+            \item[NFC-Tags] 3 im Lieferumfang\\max. 32 anlernbar~\footref{fn:1}
+            \item[Benutzer] Max. 32 konfigurierbar~\footref{fn:1}
+            \item[Schnittstellen] HTTP, MQTT, Modbus TCP, OCPP, SunSpec~\footref{fn:1}
+            \item[\S14a EnWG steuerbar] Mittels internen Abschalteingang, über Schnittstellen oder WARP Energy Manager
+            \item[Lieferumfang] Wallbox, Betriebsanleitung inkl. Installationsanleitung, Bohrschablone, Prüfprotokoll, 3 NFC-Karten
+
+            \item[Standby, WLAN an] Basic/Smart $\leq\SI{3}{\watt}$; Pro $\leq\SI{5}{\watt}$
+            \item[Strommessung] Integrierter MID-geeichter Strom\-zähler nach EU-Messgeräterichtlinie 2014/32/EU~\footref{fn:1}
+
+
+
+
+        \end{description}
+    \end{minipage}
 
     \section{Dokumentversionen}
     \begin{tabular}{lll}
