@@ -214,7 +214,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     ausgestattet, der misst, wie viel Energie (\SI{}{\kWh}) geladen
     wurde. Die geladene Energie wird bei aktiviertem Ladelogbuch bei jedem
 	Ladevorgang erfasst und ermöglicht somit zum Beispiel die Abrechnung von Ladevorgängen für
-	Dienstwagen. Der auf der Hutschiene im WARP Charger Pro montierte Stromzähler der Firma Eltako ist ein MID-geeichtes deutsches Markenprodukt.
+	Dienstwagen. Der auf der Hutschiene im WARP3 Charger Pro montierte Stromzähler des Herstellers Eltako ist ein MID-geeichtes deutsches Markenprodukt.
 
 	\subsubsection*{Optionale Ausstattung}
     Alle Wallboxen werden mit einem fest angeschlossenen
@@ -273,15 +273,15 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \subsection{Schutzeinrichtungen der Wallbox}\label{dcerrorhint}
     Der AC-Fehlerstromschutz wird über den hausseitig verbauten
     Typ-A AC-Fehlerstromschutzschalter (RCCB) oder einem eigens dafür installierten
-    Typ-A \SI{30}{\milli\ampere}-Fehlerstromschutzschalter gewährleistet. Die Wallbox ist
+    Typ-A \SI{30}{\milli\ampere}-AC-Fehlerstromschutzschalter gewährleistet. Die Wallbox ist
     mit einer integrierten DC-Fehlerstromüberwachung ausgestattet.
     Ein DC-Fehlerstrom $\geq \SI{6}{\milli\ampere}$ wird von der Wallbox erkannt und die Verbindung zum Fahrzeug sofort
-    unterbrochen (Schütz schaltet ab). Die Wallbox befindet sich dann in einem
+    unterbrochen (Schütze schalten ab). Die Wallbox befindet sich dann in einem
     Fehlerzustand und kann nur durch Aus- und Einschalten der
     Stromversorgung oder über das Webinterface zurückgesetzt werden.
-    \hint{Tritt ein DC-Fehlerstrom auf, ist unbedingt die Ursache zu
+    \hint{Tritt ein DC-Fehlerstrom auf, ist unbedingt dessen Ursache zu
     ermitteln! Ein DC-Fehlerstrom kann den vorgeschalteten Fehlerstromschutzschalter
-    \enquote{erblinden} lassen, so dass dann auch Wechselspannungs-(AC)-Fehlerströme
+    \enquote{erblinden} lassen, so dass dann auch AC-Fehlerströme
     nicht mehr korrekt erkannt werden!}
 
     Darüber hinaus bietet die Wallbox weitere Schutzeinrichtungen: Dazu zählt eine
@@ -395,7 +395,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\fullref{ladestrom_schalter}.
 
     \subsubsection{Kabeleinführung von der Rückseite}
-    Die Kabeleinführung des WARP Chargers von der Unterseite
+    Die Kabeleinführung des WARP3 Chargers von der Unterseite
     (Auslieferungszustand) kann umgebaut werden, so dass eine Kabeleinführung von der
     Rückseite erfolgt. Dazu müssen die Kabeleinführung (M32) für die Zuleitung und die
     Kabeleinführung für das Netzwerkkabel vom Wallboxgehäuse abgeschraubt
@@ -455,7 +455,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     \subsubsection{LAN- / RJ45-Kabel anfertigen}\label{ethernet}
 
-    Um den WARP Charger mittels LAN anzubinden, muss ein LAN- / RJ45-Kabel
+    Um den WARP3 Charger mittels LAN anzubinden, muss ein LAN- / RJ45-Kabel
     angefertigt werden. Das RJ45-Kabel kann mittels einer
     Kabeldurchführung in die Wallbox geführt werden. Auf dem Ladecontroller
 	(rechts in der Wallbox) befindet sich eine RJ45-Buchse, an der das
@@ -470,7 +470,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Wallboxen gehören nach \S14a EnWG zu sogenannten Steuerbaren
     Verbrauchseinrichtungen, da deren Anschlussleistung mehr als \SI{4,2}{\kilo\watt} beträgt.
 
-    WARP Charger können auf verschiedenen Arten vom Netzbetreiber gesteuert werden.
+    WARP3 Charger können auf verschiedenen Arten vom Netzbetreiber gesteuert werden.
     Welche Möglichkeit genutzt werden kann, hängt von den Vorgaben des örtlichen Netzbetreibers ab.
 
     \paragraph*{Schnittstellen (OCPP, Modbus TCP, HTTP, MQTT)}
@@ -530,7 +530,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Als Nächstes kann ein Elektrofahrzeug zum Laden mit der Wallbox verbunden
     werden. Dazu wird die Schutzkappe vom Ladestecker entfernt und der Stecker
 	wird in die Ladebuchse des Elektrofahrzeugs gesteckt. Nach wenigen Sekunden sollte hörbar
-    das Schütz in der Wallbox schalten und das Fahrzeug den Beginn
+    ein Schütz in der Wallbox schalten und das Fahrzeug den Beginn
     des Ladevorgangs anzeigen. Während des Ladevorgangs \enquote{atmet} die LED blau.
     Ist der Ladevorgang beendet, so leuchtet die LED permanent. Nach ca.
     15 Minuten Inaktivität wird die LED abgeschaltet.
@@ -567,7 +567,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \newpage
     \section{Erste Schritte}\label{setup}
 
-    Beim WARP Charger Basic können nach der elektrischen Installation
+    Beim WARP3 Charger Basic können nach der elektrischen Installation
     keine weiteren Einstellungen vorgenommen werden. Die nachfolgende
     Beschreibung bezieht sich daher nur auf die Smart- bzw. Pro-Variante des WARP
     Chargers.
@@ -743,7 +743,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     zum konfigurierten Broker an.
 
     \textbf{OCPP-Verbindung} und der \textbf{OCPP-Status} zeigen den aktuellen Status der Verbindung zum konfigurierten OCPP-Server an.
-    Darunter wird textuell der Zustand des WARP Chargers aus Sicht des Servers angezeigt.
+    Darunter wird textuell der Zustand des WARP3 Chargers aus Sicht des Servers angezeigt.
 
     \textbf{Zeitsynchronisierung} zeigt an, ob Datum und Uhrzeit per Netzwerk-Zeitsynchronisierung (NTP) aktualisiert werden konnten.
 
@@ -762,15 +762,15 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \begin{description}[labelindent=0.5cm, leftmargin=0.5cm]
      \item[Manuelle Ladefreigabe] Wenn die manuelle Ladefreigabe aktiviert wird, wird ein Ladevorgang niemals automatisch begonnen. Jeder Ladevorgang muss über das Webinterface, die API oder (je nach Tastereinstellung) den Taster gestartet werden. Die manuelle Ladefreigabe blockiert \textit{zusätzlich} zu eventuell anderen aktiven Ladestromgrenzen. Das heißt, dass sie \textit{nicht} aktiviert werden muss, wenn Ladevorgänge beispielsweise mit der Benutzerfreigabe per NFC-Tag, oder der Steuerung per OCPP kontrolliert werden.
      \item[Externe Steuerung] Wenn die externe Steuerung erlaubt ist, darf eine externe Steuerungssoftware, beispielsweise
-     EVCC (\rurl{https://evcc.io}{evcc.io}), den WARP Charger steuern. Eine Steuerungssoftware kann auch selbst entwickelt werden, hierzu stellen
+     EVCC (\rurl{https://evcc.io}{evcc.io}), den WARP3 Charger steuern. Eine Steuerungssoftware kann auch selbst entwickelt werden, hierzu stellen
      wir unter \rurl{https://warp-charger.com/api.html}{warp-charger.com/api.html} eine detaillierte API-Dokumentation zur Verfügung.
      \item[Status-LED-Steuerung] Ermöglicht die Steuerung der Front-LED mit einer externen Steuerung oder über die API, z.B. für eine externe NFC-Freigabe.
-     \item[Boost-Modus] Die Ladeelektronik mancher Fahrzeuge interpretiert einen vom WARP Charger vorgeschriebenen Ladestrom zu niedrig. Der Boost-Modus versucht, diesen Effekt auszugleichen, indem ein leicht höherer Ladestrom kommuniziert wird.
-     \item[Zählerüberwachung] Im WARP Charger Pro ist ein Stromzähler verbaut. Wenn diese Option aktiviert ist, wird ein Ladevorgang unterbrochen bzw. nicht freigegeben, falls der Stromzähler bzw. die Kommunikation mit diesem gestört zu sein scheint. Wenn die Zählerüberwachung aktiviert ist, wird somit sichergestellt, dass die geladene Energie zu jedem aufgezeichneten Ladevorgang erfasst wird.
+     \item[Boost-Modus] Die Ladeelektronik mancher Fahrzeuge interpretiert einen vom WARP3 Charger vorgeschriebenen Ladestrom zu niedrig. Der Boost-Modus versucht, diesen Effekt auszugleichen, indem ein leicht höherer Ladestrom kommuniziert wird.
+     \item[Zählerüberwachung] Im WARP3 Charger Pro ist ein Stromzähler verbaut. Wenn diese Option aktiviert ist, wird ein Ladevorgang unterbrochen bzw. nicht freigegeben, falls der Stromzähler bzw. die Kommunikation mit diesem gestört zu sein scheint. Wenn die Zählerüberwachung aktiviert ist, wird somit sichergestellt, dass die geladene Energie zu jedem aufgezeichneten Ladevorgang erfasst wird.
      \item[Zeitlimit] Setzt ein generelles Zeitlimit für Ladevorgänge. Nach Ablauf des Limits muss ein Fahrzeug abgezogen werden, um einen erneuten Ladevorgang zu ermöglichen. Das Zeitlimit kann für den nächsten oder laufenden Ladevorgang auf der Statusseite überschrieben werden.
      \item[Energielimit] Setzt beim WARP3 Charger Pro ein generelles Energielimit für Ladevorgänge. Diese Funktion wird analog zum Zeitlimit eingerichtet.
      \item[Tastereinstellung] Hiermit wird konfiguriert, welche Funktion der Taster an der Front
-     des WARP Chargers haben soll. Im halb-öffentlichen Raum kann es beispielsweise sinnvoll sein,
+     des WARP3 Chargers haben soll. Im halb-öffentlichen Raum kann es beispielsweise sinnvoll sein,
      den Ladestop per Taster zu verbieten.
      \item[Abschalteingang] Am Abschalteingang kann zum Beispiel ein Rundsteuerempfänger angeschlossen werden.
      Hier kann eingestellt werden, wie auf Änderungen am Abschalteingang
@@ -802,7 +802,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Der erlaubte Ladestrom ist dann das Minimum aller aktiven Grenzen. Folgende Grenzen können Teil der Berechnung sein:
 
     \begin{description}[labelindent=0.5cm, leftmargin=0.5cm]
-        \item[Zuleitung] Maximalstrom der Zuleitung zum WARP Charger.
+        \item[Zuleitung] Maximalstrom der Zuleitung zum WARP3 Charger.
             Dieser wird über die Schalter auf dem Ladecontroller konfiguriert, siehe \fullref{ladestrom_schalter}.
         \item[Typ-2-Ladekabel] Maximalstrom des Typ-2-Lade\-kabels.
         \item[Abschalteingang] Blockiert oder gibt den Ladevorgang frei, je nach Konfiguration des Abschalteingangs.
@@ -860,7 +860,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Siehe \fullref{charge_tracker}.
 
     \subsubsection{Automatisierung}
-    Der WARP Charger kann automatisiert Regeln ausführen. So kann etwa
+    Der WARP3 Charger kann automatisiert Regeln ausführen. So kann etwa
     der Empfang von MQTT-Nachrichten, das Auslesen eines NFC-Tags oder eine andere Bedingung
     Regeln ausführen, die beispielsweise Ladevorgänge steuern, MQTT-Nachrichten schicken oder
     den konfigurierbaren Ausgang schalten.
@@ -889,8 +889,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\subsubsection{Stromzähler}\label{meter}
     Auf dieser Unterseite kann die Kommunikation mit Stromzählern konfiguriert werden.
-    Da der WARP Charger Pro über einen eingebauten Stromzähler verfügt, ist dieser bei allen WARP Chargern vorkonfiguriert.
-    Beim WARP Charger Smart kann dieser Zähler entfernt werden.
+    Da der WARP3 Charger Pro über einen eingebauten Stromzähler verfügt, ist dieser bei allen WARP3 Chargern vorkonfiguriert.
+    Beim WARP3 Charger Smart kann dieser Zähler entfernt werden.
     Im Graph wird die gemessene Leistung aller konfigurierten Stromzähler
 	angezeigt, entweder als Verlauf über die letzten \SI{48}{\hour} oder als
 	Live-Ansicht. Die Ansicht jeders Zählers kann aufgeklappt werden, um weitere Statistiken und Messwerte anzuzeigen. Dazu muss auf den
@@ -932,8 +932,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     In diesem Unterabschnitt können alle dazugehörigen Einstellungen vorgenommen werden.
 
     \subsubsection{Einstellungen}
-    Hier kann der Hostname des WARP Chargers in allen verbundenen Netzwerken konfiguriert werden. Außerdem kann mDNS aktiviert oder deaktiviert werden.
-    Über mDNS können andere Geräte im Netzwerk den WARP Charger finden. Damit
+    Hier kann der Hostname des WARP3 Chargers in allen verbundenen Netzwerken konfiguriert werden. Außerdem kann mDNS aktiviert oder deaktiviert werden.
+    Über mDNS können andere Geräte im Netzwerk den WARP3 Charger finden. Damit
     wird zum Beispiel das Einrichten eines Lastmanagementverbunds vereinfacht.
     Zusätzlich kann der Port, auf dem das Webinterface erreichbar ist, geändert werden (Standard ist
     Port 80).
@@ -1011,7 +1011,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \subsection{System}
     Im System-Unterabschnitt können das Ereignis-Log eingesehen und
 	Firmware-Aktualisierungen eingespielt werden.
-    Außerdem können hier die Benutzer des WARP Chargers verwaltet werden (Siehe
+    Außerdem können hier die Benutzer des WARP3 Chargers verwaltet werden (Siehe
     Abschnitt \ref{user_management}).
 
     \vspace{-0.2cm}
@@ -1029,7 +1029,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     WireGuard-Verbindungen aufbauen zu können.
 
     Auf dieser Unterseite kann NTP aktiviert oder deaktiviert und die Zeitzone, in der sich
-    der WARP Charger befindet, konfiguriert werden. Außerdem ist es möglich, zusätzlich zu den konfigurierten Zeitservern einen weiteren zu verwenden, der vom Router per DHCP gesetzt wird. Das funktioniert allerdings nur, wenn keine statische IP-Konfiguration verwendet wird.
+    der WARP3 Charger befindet, konfiguriert werden. Außerdem ist es möglich, zusätzlich zu den konfigurierten Zeitservern einen weiteren zu verwenden, der vom Router per DHCP gesetzt wird. Das funktioniert allerdings nur, wenn keine statische IP-Konfiguration verwendet wird.
 
     \vspace{-0.2cm}
     \subsubsection{Echtzeituhr}
@@ -1105,7 +1105,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\begin{description}[labelindent=0.5cm, leftmargin=0.5cm]
 		\item[Überschussladen aktiviert] Schaltet den PV-Über\-schuss\-regler ein oder aus.
 		\item[Umschaltungsmodus] Definiert das Verhalten der Phasenumschaltung.
-		\item[Standardlademodus] Der Lademodus, der bei einem Neustart des WARP Chargers verwendet wird.
+		\item[Standardlademodus] Der Lademodus, der bei einem Neustart des WARP3 Chargers verwendet wird.
 		\item[Stromzähler] Der Stromzähler, mit dem der PV-Überschuss gemessen wird. Dieser Stromzähler muss vorher entsprechend \fullref{meter} angelegt werden.
 		\item[Min+PV: Mindestladeleistung] Legt fest, welche Leistung im \enquote{Min+PV}-Lademodus aus dem Netz bezogen werden darf.
 		\item[Regelverhalten] Legt fest, auf welchen
@@ -1761,9 +1761,13 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
         \bottomrule
     \end{tabular}
 
+
+\end{multicols*}
+
 \appendix
 
-\section{Modbus TCP Registertabelle}
+\begin{minipage}{0.49\linewidth}
+ \section{Modbus TCP Registertabelle}
 \label{modbus_tcp_registertabelle}
 Nachfolgend die Registertabelle für Modbus TCP für die Einstellung \enquote{WARP
 Charger}
@@ -1779,7 +1783,42 @@ Stromzähler) nicht.
 Welche Features die Wallbox bietet, kann über \textit{Discrete Inputs} ausgelesen
 werden. Eine Steuerung der Wallbox ist über die \textit{Holding Registers} und \textit{Coils}
 möglich.
-\end{multicols*}
+\end{minipage}
+
+
+\subsection*{Holding Registers}
+\begin{tabularx}{\textwidth}{rXll} \toprule
+    \textbf{Register-} & \textbf{Name} & \textbf{Typ} & \textbf{Benötigtes}                                                     \\
+    \textbf{adresse}   &      &     & \textbf{Feature}                                                                          \\ \midrule
+0             & Reboot                                  & uint32       & ---                                                    \\
+              & \tdesc{Startet die Wallbox (bzw. den ESP-Brick) neu, um beispielsweise Konfigurationsänderungen anzuwenden.}    \\
+              & \tdesc{Password 0x012EB007}                                                                                     \\ \cmidrule{2-4}
+1000          & Ladefreigabe                            & uint32       & evse                                                   \\
+              & \tdesc{\textbf{Veraltet! Stattdessen Coil 1000 benutzen!}}                                                      \\
+              & \tdesc{0 zum Blockieren des Ladevorgangs; ein Wert != 0 zum Freigeben}                                          \\ \cmidrule{2-4}
+1002          & Erlaubter Ladestrom (mA)                & uint32       & evse                                                   \\
+              & \tdesc{0mA oder 6000mA bis 32000 mA. Andere Ladestromgrenzen können den Strom weiter verringern!}               \\ \cmidrule{2-4}
+1004          & Front-LED-Blinkmuster                   & uint32       & evse                                                   \\
+              & \tdesc{Steuert die LED des Fronttasters}                                                                        \\
+              & \begin{description}
+                    \item[-1] EVSE kontrolliert LED
+                    \item[0] LED aus
+                    \item[1-254] LED gedimmt
+                    \item[255] LED an
+                    \item[1001] bekanntes NFC-Tag erkannt
+                    \item[1002] unbekanntes NFC-Tag erkannt
+                    \item[1003] NFC-Tag notwendig
+                    \item[2001-2010] Fehlerblinken 1-10 mal
+                \end{description} & &               \\ \cmidrule{2-4}
+1006          & Front-LED-Blinkdauer                    & uint32       & evse                                                   \\
+              & \tdesc{Die Dauer in Millisekunden, die das in Register 1004 gesetzte Blinkmuster angezeigt werden soll. Max. \SI{65535}{\milli\second}}               \\ \cmidrule{2-4}
+2000          & Relative Energie zurücksetzen           & uint32       & meter                                                  \\
+              & \tdesc{Setzt den relativen Energiewert zurück (Input Register 2006). Password 0x3E12E5E7}                       \\ \cmidrule{2-4}
+3000          & CP-Trennung auslösen                    & uint32       & cp\_disc                                               \\
+              & \tdesc{Noch nicht implementiert!}                                                                               \\ \bottomrule
+\end{tabularx}
+
+\newpage
 
 \subsection*{Input Registers}
 \small
@@ -1834,40 +1873,6 @@ möglich.
               & \tdesc{Zeiten $< \SI{1000}{\milli\second}$ bedeuten typischer­weise, dass das Tag gerade an die Wallbox gehalten wird.}             \\ \bottomrule
 \end{tabularx}
 \normalsize
-
-\newpage
-
-\subsection*{Holding Registers}
-\begin{tabularx}{\textwidth}{rXll} \toprule
-    \textbf{Register-} & \textbf{Name} & \textbf{Typ} & \textbf{Benötigtes}                                                     \\
-    \textbf{adresse}   &      &     & \textbf{Feature}                                                                          \\ \midrule
-0             & Reboot                                  & uint32       & ---                                                    \\
-              & \tdesc{Startet die Wallbox (bzw. den ESP-Brick) neu, um beispielsweise Konfigurationsänderungen anzuwenden.}    \\
-              & \tdesc{Password 0x012EB007}                                                                                     \\ \cmidrule{2-4}
-1000          & Ladefreigabe                            & uint32       & evse                                                   \\
-              & \tdesc{\textbf{Veraltet! Stattdessen Coil 1000 benutzen!}}                                                      \\
-              & \tdesc{0 zum Blockieren des Ladevorgangs; ein Wert != 0 zum Freigeben}                                          \\ \cmidrule{2-4}
-1002          & Erlaubter Ladestrom (mA)                & uint32       & evse                                                   \\
-              & \tdesc{0mA oder 6000mA bis 32000 mA. Andere Ladestromgrenzen können den Strom weiter verringern!}               \\ \cmidrule{2-4}
-1004          & Front-LED-Blinkmuster                   & uint32       & evse                                                   \\
-              & \tdesc{Steuert die LED des Fronttasters}                                                                        \\
-              & \begin{description}
-                    \item[-1] EVSE kontrolliert LED
-                    \item[0] LED aus
-                    \item[1-254] LED gedimmt
-                    \item[255] LED an
-                    \item[1001] bekanntes NFC-Tag erkannt
-                    \item[1002] unbekanntes NFC-Tag erkannt
-                    \item[1003] NFC-Tag notwendig
-                    \item[2001-2010] Fehlerblinken 1-10 mal
-                \end{description} & &               \\ \cmidrule{2-4}
-1006          & Front-LED-Blinkdauer                    & uint32       & evse                                                   \\
-              & \tdesc{Die Dauer in Millisekunden, die das in Register 1004 gesetzte Blinkmuster angezeigt werden soll. Max. \SI{65535}{\milli\second}}               \\ \cmidrule{2-4}
-2000          & Relative Energie zurücksetzen           & uint32       & meter                                                  \\
-              & \tdesc{Setzt den relativen Energiewert zurück (Input Register 2006). Password 0x3E12E5E7}                       \\ \cmidrule{2-4}
-3000          & CP-Trennung auslösen                    & uint32       & cp\_disc                                               \\
-              & \tdesc{Noch nicht implementiert!}                                                                               \\ \bottomrule
-\end{tabularx}
 
 \newpage
 
