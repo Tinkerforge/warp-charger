@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"#features_evse\"><code>\"evse\"</code></a>", "", Version.WARP1 | Version.WARP2,[
+evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"#features_evse\"><code>\"evse\"</code></a>", "", Version.CHARGER,[
     Func("state", FuncType.STATE, Elem.OBJECT("Der Zustand des Ladecontrollers.", members={
             "iec61851_state": Elem.INT("Der aktuelle Zustand nach IEC 61851", constants=[
                     Const(0, "A: Nicht verbunden"),
@@ -16,20 +16,40 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
                     Const(3, "Lädt"),
                     Const(4, "Fehler"),
             ]),
-            "contactor_state": Elem.INT("Schützüberwachung. Überwacht wird die Spannung vor und nach dem Schütz", constants=[
-                Const(0, "Nicht stromführend vor und nach dem Schütz"),
-                Const(1, "Stromführend vor, aber nicht stromführend nach dem Schütz"),
-                Const(2, "Nicht stromführend vor, aber stromführend nach dem Schütz"),
-                Const(3, "Stromführend vor und nach dem Schütz"),
+            "contactor_state": Elem.INT("Schützüberwachung. Überwacht wird die Spannung vor und nach dem Schütz (WARP1, WARP2) bzw. der Zustand der Schütze (WARP3)", constants=[
+                Const(0, "Nicht stromführend vor und nach dem Schütz", version=Version.WARP1 | Version.WARP2),
+                Const(1, "Stromführend vor, aber nicht stromführend nach dem Schütz", version=Version.WARP1 | Version.WARP2),
+                Const(2, "Nicht stromführend vor, aber stromführend nach dem Schütz", version=Version.WARP1 | Version.WARP2),
+                Const(3, "Stromführend vor und nach dem Schütz", version=Version.WARP1 | Version.WARP2),
+                Const("00000..11111", """Bitmaske, die den Schützzustand angibt. Von Bit 0 bis Bit 4:
+                <ol start="0"><li>Schütz-L1+N-Hilfskontakt: (gibt an ob das Schütz geschaltet ist) 1 = geschlossen; 0 = geöffnet</li>
+                 <li>Schütz L2+L3-Hilfskontakt: (gibt an ob das Schütz geschaltet ist) 1 = geschlossen; 0 = geöffnet</li>
+                 <li>Schützfehler: (siehe contactor_error) 1 = Fehler; 0 = kein Fehler</li>
+                 <li>Schütz-Spulenanschluss: 1 = Ein oder beide Schütze sollen geschaltet sein (siehe Zustand der Phasenumschaltung) 0 = Kein Schütz soll geschaltet sein</li>
+                 <li>Zustand der Phasenumschaltung (gibt an, welche Schütze geschaltet werden wenn das Spulenanschluss-Bit 1 ist). 1 = Beide Schütze werden geschaltet; dreiphasig. 0 = Nur das L1+N-Schütz wird geschaltet; einphasig</li></ol> """, version=Version.WARP3)
             ]),
             "contactor_error": Elem.INT("Fehlercode der Schützüberwachung. Ein Wert ungleich 0 zeigt einen Fehler an.", constants=[
                 Const(0, "Kein Fehler"),
-                Const(1, "Schütz sollte durchschalten.<br/><span class=\"pe-4\"></span>Kein Strom vor Schütz, kein Strom nach Schütz.<br/><span class=\"pe-4\"></span>Stromversorgung prüfen."),
-                Const(2, "Schütz sollte durchschalten.<br/><span class=\"pe-4\"></span>Strom vor Schütz, kein Strom nach Schütz.<br/><span class=\"pe-4\"></span>Schütz defekt?"),
-                Const(3, "Schütz sollte durchschalten.<br/><span class=\"pe-4\"></span>Kein Strom vor Schütz, Strom nach Schütz.<br/><span class=\"pe-4\"></span>Verkabelung prüfen."),
-                Const(4, "Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class=\"pe-4\"></span>Kein Strom vor Schütz, kein Strom nach Schütz.<br/><span class=\"pe-4\"></span>Stromversorgung prüfen."),
-                Const(5, "Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class=\"pe-4\"></span>Kein Strom vor Schütz, Strom nach Schütz.<br/><span class=\"pe-4\"></span>Verkabelung prüfen."),
-                Const(6, "Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class=\"pe-4\"></span>Strom vor Schütz, Strom nach Schütz.<br/><span class=\"pe-4\"></span>Schütz defekt?"),
+                Const(1, "Schütz sollte durchschalten.<br/><span class=\"pe-4\"></span>Kein Strom vor Schütz, kein Strom nach Schütz.<br/><span class=\"pe-4\"></span>Stromversorgung prüfen.", version=Version.WARP1 | Version.WARP2),
+                Const(2, "Schütz sollte durchschalten.<br/><span class=\"pe-4\"></span>Strom vor Schütz, kein Strom nach Schütz.<br/><span class=\"pe-4\"></span>Schütz defekt?", version=Version.WARP1 | Version.WARP2),
+                Const(3, "Schütz sollte durchschalten.<br/><span class=\"pe-4\"></span>Kein Strom vor Schütz, Strom nach Schütz.<br/><span class=\"pe-4\"></span>Verkabelung prüfen.", version=Version.WARP1 | Version.WARP2),
+                Const(4, "Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class=\"pe-4\"></span>Kein Strom vor Schütz, kein Strom nach Schütz.<br/><span class=\"pe-4\"></span>Stromversorgung prüfen.", version=Version.WARP1 | Version.WARP2),
+                Const(5, "Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class=\"pe-4\"></span>Kein Strom vor Schütz, Strom nach Schütz.<br/><span class=\"pe-4\"></span>Verkabelung prüfen.", version=Version.WARP1 | Version.WARP2),
+                Const(6, "Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class=\"pe-4\"></span>Strom vor Schütz, Strom nach Schütz.<br/><span class=\"pe-4\"></span>Schütz defekt?", version=Version.WARP1 | Version.WARP2),
+
+                Const(1, "Schütz L2+L3 nicht durchgeschaltet.<br/><span class=\"pe-4\"></span>Beide Schütze sollten durchgeschaltet sein.", version=Version.WARP3),
+                Const(2, "Schütz L1+N nicht durchgeschaltet.<br/><span class=\"pe-4\"></span>Beide Schütze sollten durchgeschaltet sein.", version=Version.WARP3),
+                Const(3, "Beide Schütze nicht durchgeschaltet.<br/><span class=\"pe-4\"></span>Beide Schütze sollten durchgeschaltet sein.", version=Version.WARP3),
+                Const(4, "Schütz L2+L3 durchgeschaltet.<br/><span class=\"pe-4\"></span>Nur Schütz L1+N sollte durchgeschaltet sein.", version=Version.WARP3),
+                Const(5, "Schütz L2+L3 durchgeschaltet, Schütz L1+N nicht durchgeschaltet.<br/><span class=\"pe-4\"></span>Nur Schütz L1+N sollte durchgeschaltet sein.", version=Version.WARP3),
+                Const(6, "Beide Schütze durchgeschaltet.<br/><span class=\"pe-4\"></span>Nur Schütz L1+N sollte durchgeschaltet sein.", version=Version.WARP3),
+                Const(7, "Beide Schütze durchgeschaltet.<br/><span class=\"pe-4\"></span>Kein Schütz sollte durchgeschaltet sein.", version=Version.WARP3),
+                Const(8, "Schütz L1+N durchgeschaltet.<br/><span class=\"pe-4\"></span>Kein Schütz sollte durchgeschaltet sein.", version=Version.WARP3),
+                Const(9, "Schütz L2+L3 durchgeschaltet.<br/><span class=\"pe-4\"></span>Kein Schütz sollte durchgeschaltet sein.", version=Version.WARP3),
+                Const(10, "Beide Schütze durchgeschaltet.<br/><span class=\"pe-4\"></span>Kein Schütz sollte durchgeschaltet sein.", version=Version.WARP3),
+                Const(11, "Schütz L1+N durchgeschaltet.<br/><span class=\"pe-4\"></span>Kein Schütz sollte durchgeschaltet sein.", version=Version.WARP3),
+                Const(12, "Schütz L2+L3 durchgeschaltet.<br/><span class=\"pe-4\"></span>Kein Schütz sollte durchgeschaltet sein.", version=Version.WARP3),
+                Const(13, "Reserviert.", version=Version.WARP3),
             ]),
             "allowed_charging_current": Elem.INT("Maximal erlaubter Ladestrom, der dem Fahrzeug zur Verfügung gestellt wird. Dieser Strom ist das Minimum der Stromgrenzen aller Ladeslots.", unit=Units.mA),
             "error_state": Elem.INT('Der aktuelle Fehlerzustand. <a href="https://www.warp-charger.com/#documents">Siehe Handbuch für Details.</a>', constants=[
@@ -53,7 +73,9 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
                 Const(2, "Systemfehler"),
                 Const(3, "Unbekannter fehler"),
                 Const(4, "Kalibrierungsfehler"),
-            ], version=Version.WARP2)
+                Const(5, "AC-Fehler"),
+                Const(6, "AC- und DC-Fehler"),
+            ], version=Version.WARP2 | Version.WARP3)
         })
     ),
 
@@ -76,14 +98,19 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
             "evse_version": Elem.INT("Hardware-Version des Ladecontrollers", constants=[
                 Const(14, "EVSE 1.4", Version.WARP1),
                 Const(15, "EVSE 1.5", Version.WARP1),
-                Const(20, "EVSE 2.0", Version.WARP2)
+                Const(20, "EVSE 2.0", Version.WARP2),
+                Const(30, "EVSE 2.0", Version.WARP3)
             ]),
             "energy_meter_type": Elem.INT("Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!", constants=[
                 Const(0, "Kein Stromzähler verfügbar"),
                 Const(1, "SDM72", Version.WARP1),
-                Const(2, "SDM630", Version.WARP2),
-                Const(3, "SDM72V2", Version.WARP2)
-            ], version=Version.WARP2)
+                Const(2, "SDM630", Version.WARP2 | Version.WARP3),
+                Const(3, "SDM72V2", Version.WARP2 | Version.WARP3),
+                Const(4, "Eastron SDM72CTM", Version.WARP2 | Version.WARP3),
+                Const(5, "Eastron SDM630MCT", Version.WARP2 | Version.WARP3),
+                Const(6, "Eltako DSZ15DZMOD", Version.WARP2 | Version.WARP3),
+                Const(7, "YTL DEM4A", Version.WARP2 | Version.WARP3)
+            ], version=Version.WARP2 | Version.WARP3)
         })
     ),
 
@@ -109,7 +136,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
         })
     ),
 
-    Func("indicator_led", FuncType.STATE, Elem.OBJECT("Der Zustand der LED im Taster. Kann über {{{ref:evse/indicator_led_update}}} mit dem selben Payload geschrieben werden, falls die LED-Steuerung per API (siehe {{{ref:evse/led_configuration}}}) erlaubt wurde.", members={
+    Func("indicator_led", FuncType.STATE, Elem.OBJECT("Der Zustand der LED im Taster. Kann über {{{ref:evse/indicator_led_update}}} mit dem selben Payload geschrieben werden, falls die LED-Steuerung per API (siehe {{{ref:evse/led_configuration}}}) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.", members={
             "indication": Elem.INT("Aktuell gesetzter Zustand.", constants=[
                 Const(-1, "EVSE kontrolliert LED"),
                 Const(0, "Aus"),
@@ -120,7 +147,10 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
                 Const(1003, "Aufforderndes Blinken (z.B: NFC-Tag wird zum Laden benötigt)"),
                 Const("2001..2010", "Fehler-Blinken 1 bis 10."),
             ]),
-            "duration": Elem.INT("Dauer für die der gesetzte Zustand erhalten bleibt.", unit=Units.ms)
+            "duration": Elem.INT("Dauer für die der gesetzte Zustand erhalten bleibt.", unit=Units.ms),
+            "color_h": Elem.INT('Farbwert der LED im <a href="https://de.wikipedia.org/wiki/HSV-Farbraum">HSV-Farbraum</a>.'),
+            "color_s": Elem.INT('Farbsättigung der LED im <a href="https://de.wikipedia.org/wiki/HSV-Farbraum">HSV-Farbraum</a>.'),
+            "color_v": Elem.INT('Helligkeit der LED im <a href="https://de.wikipedia.org/wiki/HSV-Farbraum">HSV-Farbraum</a>. Eine Helligkeit von 0 überlässt die Farbwahl dem Ladecontroller.'),
         })
     ),
 
@@ -138,26 +168,26 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
                 Elem.INT("CP/PE", version=Version.WARP1),
                 Elem.INT("PP/PE", version=Version.WARP1),
 
-                Elem.INT("CP/PE vor Widerstand (PWM High)", version=Version.WARP2),
-                Elem.INT("CP/PE nach Widerstand (PWM High)", version=Version.WARP2),
-                Elem.INT("CP/PE vor Widerstand (PWM Low)", version=Version.WARP2),
-                Elem.INT("CP/PE nach Widerstand (PWM Low)", version=Version.WARP2),
-                Elem.INT("PP/PE", version=Version.WARP2),
-                Elem.INT("+12V Rail", version=Version.WARP2),
-                Elem.INT("-12V Rail", version=Version.WARP2),
+                Elem.INT("CP/PE vor Widerstand (PWM High)", version=Version.WARP2 | Version.WARP3),
+                Elem.INT("CP/PE nach Widerstand (PWM High)", version=Version.WARP2 | Version.WARP3),
+                Elem.INT("CP/PE vor Widerstand (PWM Low)", version=Version.WARP2 | Version.WARP3),
+                Elem.INT("CP/PE nach Widerstand (PWM Low)", version=Version.WARP2 | Version.WARP3),
+                Elem.INT("PP/PE", version=Version.WARP2 | Version.WARP3),
+                Elem.INT("+12V Rail", version=Version.WARP2 | Version.WARP3),
+                Elem.INT("-12V Rail", version=Version.WARP2 | Version.WARP3),
             ]),
             "voltages": Elem.ARRAY("Aus den ADC-Werten berechnete Spannungen", unit=Units.mV, members=[
                 Elem.INT("CP/PE", version=Version.WARP1),
                 Elem.INT("PP/PE", version=Version.WARP1),
                 Elem.INT("Maximalspannung CP/PE", version=Version.WARP1),
 
-                Elem.INT("CP/PE vor Widerstand (PWM High)", version=Version.WARP2),
-                Elem.INT("CP/PE nach Widerstand (PWM High)", version=Version.WARP2),
-                Elem.INT("CP/PE vor Widerstand (PWM Low)", version=Version.WARP2),
-                Elem.INT("CP/PE nach Widerstand (PWM Low)", version=Version.WARP2),
-                Elem.INT("PP/PE", version=Version.WARP2),
-                Elem.INT("+12V Rail", version=Version.WARP2),
-                Elem.INT("-12V Rail", version=Version.WARP2),
+                Elem.INT("CP/PE vor Widerstand (PWM High)", version=Version.WARP2 | Version.WARP3),
+                Elem.INT("CP/PE nach Widerstand (PWM High)", version=Version.WARP2 | Version.WARP3),
+                Elem.INT("CP/PE vor Widerstand (PWM Low)", version=Version.WARP2 | Version.WARP3),
+                Elem.INT("CP/PE nach Widerstand (PWM Low)", version=Version.WARP2 | Version.WARP3),
+                Elem.INT("PP/PE", version=Version.WARP2 | Version.WARP3),
+                Elem.INT("+12V Rail", version=Version.WARP2 | Version.WARP3),
+                Elem.INT("-12V Rail", version=Version.WARP2 | Version.WARP3),
             ]),
             "resistances": Elem.ARRAY("Aus den Spannungen berechnete Widerstände", unit=Units.ohm, members=[
                 Elem.INT("CP/PE"),
@@ -175,7 +205,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
                 Elem.BOOL("Gleichstromfehler", version=Version.WARP2),
                 Elem.BOOL("Stromkonfiguration 1", version=Version.WARP2),
                 Elem.BOOL("DC-Fehlerstromschutz-Test", version=Version.WARP2),
-                Elem.BOOL("Abschaltung", version=Version.WARP2),
+                Elem.BOOL("Abschalteingang", version=Version.WARP2),
                 Elem.BOOL("Taster", version=Version.WARP2),
                 Elem.BOOL("CP-PWM", version=Version.WARP2),
                 Elem.BOOL("Motoreingangsschalter", version=Version.WARP2),
@@ -194,16 +224,64 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
                 Elem.BOOL("Nicht belegt", version=Version.WARP2),
                 Elem.BOOL("Nicht belegt", version=Version.WARP2),
                 Elem.BOOL("Nicht belegt", version=Version.WARP2),
+
+                Elem.BOOL("DC X30", version=Version.WARP3),
+                Elem.BOOL("DC X6", version=Version.WARP3),
+                Elem.BOOL("DC-Fehler", version=Version.WARP3),
+                Elem.BOOL("DC-Fehlerstromschutz-Test", version=Version.WARP3),
+                Elem.BOOL("EVSE-Status-LED", version=Version.WARP3),
+                Elem.BOOL("Taster", version=Version.WARP3),
+                Elem.BOOL("LED rot", version=Version.WARP3),
+                Elem.BOOL("LED blau", version=Version.WARP3),
+                Elem.BOOL("LED grün", version=Version.WARP3),
+                Elem.BOOL("CP-PWM", version=Version.WARP3),
+                Elem.BOOL("Schütz 1", version=Version.WARP3),
+                Elem.BOOL("Schütz 0", version=Version.WARP3),
+                Elem.BOOL("Schütz 1 Feedback", version=Version.WARP3),
+                Elem.BOOL("Schütz 0 Feedback", version=Version.WARP3),
+                Elem.BOOL("PE-Prüfung", version=Version.WARP3),
+                Elem.BOOL("Stromkonfiguration 1", version=Version.WARP3),
+                Elem.BOOL("CP-Trennung", version=Version.WARP3),
+                Elem.BOOL("Stromkonfiguration 0", version=Version.WARP3),
+                Elem.BOOL("Abschalteingang", version=Version.WARP3),
+                Elem.BOOL("Versionsdetektion", version=Version.WARP3),
+                Elem.BOOL("Nicht belegt", version=Version.WARP3),
+                Elem.BOOL("Nicht belegt", version=Version.WARP3),
+                Elem.BOOL("Nicht belegt", version=Version.WARP3),
+                Elem.BOOL("Nicht belegt", version=Version.WARP3),
             ]),
             "charging_time": Elem.INT("Ungefähre Zeit des Ladevorgangs. Nur für Lastmanagementzwecke zu verwenden!", unit=Units.ms),
             "time_since_state_change": Elem.INT("Zeit seit dem letzten IEC-61851-Zustandswechsel. Falls der Zustand 2 (= B: Lädt) ist, entspricht dieser Wert der Ladezeit.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms),
             "uptime": Elem.INT("Zeit seit Starten des Ladecontrollers.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms),
-            "time_since_dc_fault_check": Elem.INT("Zeit seit dem letzten Test des DC-Fehlerstrom-Schutzmoduls. Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms, version=Version.WARP2),
-            "dc_fault_sensor_type": Elem.INT("Typ des DC-Fehlerstrom-Sensors", version=Version.WARP2, constants=[
+            "time_since_dc_fault_check": Elem.INT("Zeit seit dem letzten Test des DC-Fehlerstrom-Schutzmoduls. Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", unit=Units.ms, version=Version.WARP2 | Version.WARP3),
+            "dc_fault_sensor_type": Elem.INT("Typ des DC-Fehlerstrom-Sensors", version=Version.WARP2 | Version.WARP3, constants=[
                 Const(0, "X904"),
-                Const(0, "X804")
+                Const(1, "X804")
             ]),
-            "dc_fault_pins": Elem.INT("Zustand der Pins des DC-Schutzmodul beim letzten Fehler, falls ein Fehler aufgetreten ist. Kalibrierungsfehlercode, falls ein Kalibrierungsfehler aufgetreten ist.", version=Version.WARP2)
+            "dc_fault_pins": Elem.INT("Zustand der Pins des DC-Schutzmodul beim letzten Fehler, falls ein Fehler aufgetreten ist. Kalibrierungsfehlercode, falls ein Kalibrierungsfehler aufgetreten ist.", version=Version.WARP2 | Version.WARP3),
+            "phases_current": Elem.INT("Aktueller Zustand der Phasenumschaltung", version=Version.WARP3, constants=[
+                Const(1, "einphasig"),
+                Const(3, "dreiphasig")
+            ]),
+            "phases_requested": Elem.INT("Angeforderter Zustand der Phasenumschaltung", version=Version.WARP3, constants=[
+                Const(1, "einphasig"),
+                Const(3, "dreiphasig")
+            ]),
+            "phases_state": Elem.INT("Zustand der Phasenumschaltung", version=Version.WARP3, constants=[
+                Const(0, "Derzeit wird keine Umschaltung durchgeführt"),
+                Const(1, "Stoppe Ladevorgang, warte auf Abschaltung durch Fahrzeug"),
+                Const(2, "Ladevorgang angehalten. Schalte Schütz ab"),
+                Const(3, "Schütz abgeschaltet. Trenne Control Pilot."),
+                Const(4, "Control Pilot getrennt. Wechsle zwischen drei- und einphasig."),
+                Const(5, "Phasen gewechselt. Verbinde Control Pilot."),
+                Const(6, "Control Pilot verbunden. Starte Ladevorgang, warte auf Stromanforderung durch Fahrzeug"),
+                Const(7, "Fahrzeug fordert Strom an. Schalte Schütz."),
+            ]),
+            "phases_info": Elem.INT("Weitere Informationen zur Phasenumschaltung", version=Version.WARP3, constants=[
+                Const(0, "Umschaltungszustand normal"),
+                Const(1, "Ladecontroller hat automatische Umschaltung von drei- auf einphasig durchgeführt. Siehe {{{ref:evse/phase_auto_switch}}}")
+            ]),
+            "temperature": Elem.INT("Temperatur des Ladecontrollers", version=Version.WARP3, unit=Units.hundreth_degree_celsius)
         })
     ),
 
@@ -280,12 +358,14 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
     ),
 
     Func("gpio_configuration", FuncType.STATE, Elem.OBJECT("Die Konfiguration der konfigurierbaren Ein- und Ausgänge. Kann über evse/gpio_configuration_update mit dem selben Payload aktualisiert werden.", members={
-            "shutdown_input": Elem.INT("Die Konfiguration des Abschalteingangs.", constants=[
+            "shutdown_input": Elem.INT("Die Konfiguration des Abschalteingangs.", version=Version.WARP2 | Version.WARP3, constants=[
                 Const(0, "Nicht konfiguriert"),
                 Const(1, "Abschalten wenn geöffnet"),
                 Const(2, "Abschalten wenn geschlossen"),
+                Const(3, "Begrenzen auf 4200 W wenn geöffnet (§14 EnWG)"),
+                Const(4, "Begrenzen auf 4200 W wenn geschlossen (§14 EnWG)"),
             ]),
-            "input": Elem.INT("Die Konfiguration des konfigurierbaren Eingangs.", constants=[
+            "input": Elem.INT("Die Konfiguration des konfigurierbaren Eingangs. Wird bei WARP3 ignoriert.", version=Version.WARP2 | Version.WARP3, constants=[
                 Const(0, "Nicht konfiguriert"),
                 Const(1, "Blockiert wenn geschlossen"),
                 Const(2, "Limitiert auf 6 A wenn geschlossen"),
@@ -304,12 +384,11 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
                 Const(15, "Limitiert auf 20 A wenn geöffnet"),
                 Const(16, "Limitiert auf 25 A wenn geöffnet"),
             ]),
-            "output": Elem.INT("Die Konfiguration des konfigurierbaren Ausgangs.", constants=[
+            "output": Elem.INT("Die Konfiguration des konfigurierbaren Ausgangs. Wird bei WARP3 ignoriert.", version=Version.WARP2 | Version.WARP3, constants=[
                 Const(0, "Verbunden mit Masse"),
                 Const(1, "Hochohmig"),
             ]),
-        },
-        version=Version.WARP2)
+        })
     ),
 
     Func("button_configuration", FuncType.STATE, Elem.OBJECT("Die Konfiguration des Tasters in der Frontblende. Diese kann über evse/button_configuration_update mit dem selben Payload aktualisiert werden. Benötigt das Feature <a href=\"#features_button_configuration\"><code>\"button_configuration\"</code></a>", members={
@@ -320,7 +399,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
                 Const(3, "Ladestart/stop wenn gedrückt"),
             ]),
         },
-        version=Version.WARP2)
+        version=Version.WARP2 | Version.WARP3)
     ),
 
     Func("led_configuration", FuncType.STATE, Elem.OBJECT("Die Konfiguration der LED des Tasters in der Frontblende. Diese kann über evse/led_configuration_update mit dem selben Payload aktualisiert werden.", members={
@@ -342,27 +421,41 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
         version=Version.WARP1)
     ),
 
-    Func("ev_wakeup", FuncType.STATE, Elem.OBJECT("Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus einem Energiesparmodus zu wecken, indem ein Abziehen und Anstecken des Ladekabels vorgetäuscht wird. (Control-Pilot-Trennung/CP-Trennung) Dieser Wert kann über evse/ev_wakeup_update mit dem selben Payload aktualisiert werden. Benötigt das Feature <a href=\"#features_cp_disconnect\"><code>\"cp_disconnect\"</code></a>", version=Version.WARP2, members={
+    Func("ev_wakeup", FuncType.STATE, Elem.OBJECT("Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus einem Energiesparmodus zu wecken, indem ein Abziehen und Anstecken des Ladekabels vorgetäuscht wird. (Control-Pilot-Trennung/CP-Trennung) Dieser Wert kann über evse/ev_wakeup_update mit dem selben Payload aktualisiert werden. Benötigt das Feature <a href=\"#features_cp_disconnect\"><code>\"cp_disconnect\"</code></a>", version=Version.WARP2 | Version.WARP3, members={
             "enabled": Elem.BOOL("true wenn die Ladeelektronik des Fahrzeugs geweckt werden soll")
         })
     ),
 
-    Func("control_pilot_disconnect", FuncType.STATE, Elem.OBJECT("Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) Dieser Wert kann über evse/control_pilot_disconnect_update mit dem selben Payload aktualisiert werden. <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe {{{ref:evse/management_enabled}}}.  Benötigt das Feature <a href=\"#features_cp_disconnect\"><code>\"cp_disconnect\"</code></a>", version=Version.WARP2, members={
-            "disconnect": Elem.BOOL("true CP getrennt ist, sonst false")
+    Func("control_pilot_disconnect", FuncType.STATE, Elem.OBJECT("Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) Dieser Wert kann über evse/control_pilot_disconnect_update mit dem selben Payload aktualisiert werden. <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe {{{ref:evse/management_enabled}}}.  Benötigt das Feature <a href=\"#features_cp_disconnect\"><code>\"cp_disconnect\"</code></a>", version=Version.WARP2 | Version.WARP3, members={
+            "disconnect": Elem.BOOL("true falls CP getrennt ist, sonst false")
         })
     ),
 
-     Func("boost_mode", FuncType.STATE, Elem.OBJECT("Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Ladestrom vorgibt (+ 0,24 A) um Messfehler der Ladeelektronik zu kompensieren. Nur Verwenden, falls ein Fahrzeug mit einem kleineren als dem erlaubten Ladestrom lädt! Dieser Wert kann über evse/boost_mode_update mit dem selben Payload aktualisiert werden.", members={
-            "enabled": Elem.BOOL("true CP getrennt ist, sonst false")
+    Func("boost_mode", FuncType.STATE, Elem.OBJECT("Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Ladestrom vorgibt (+ 0,24 A) um Messfehler der Ladeelektronik zu kompensieren. Nur Verwenden, falls ein Fahrzeug mit einem kleineren als dem erlaubten Ladestrom lädt! Dieser Wert kann über evse/boost_mode_update mit dem selben Payload aktualisiert werden.", members={
+            "enabled": Elem.BOOL("true falls der Boost-Modus aktiviert ist, sonst false")
         })
     ),
 
-    Func("reset_dc_fault_current_state", FuncType.COMMAND, Elem.OBJECT("Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong>", version=Version.WARP2, members={
+    Func("phase_auto_switch", FuncType.STATE, Elem.OBJECT("Konfiguriert, ob ein WARP3 Charger Pro automatisch von drei- auf einphasiges Laden wechseln soll, wenn ein Fahrzeug angeschlossen ist, dass nur auf L1 Strom bezieht. Dieser Wert kann über evse/phase_auto_switch mit dem selben Payload aktualisiert werden.", version=Version.WARP3, members={
+            "enabled": Elem.BOOL("true falls die automatische Umschaltung aktiviert ist, sonst false")
+        })
+    ),
+
+    Func("phases_connected", FuncType.STATE, Elem.OBJECT("Konfiguriert, ob die Wallbox fest ein- oder dreiphasig angeschlossen ist. Damit wird z.B. die 4200 W-Limitierung nach §14 EnWG berechnet", version=Version.WARP2 | Version.WARP3, members={
+            "phases": Elem.INT("Maximale Anzahl der angeschlossenen Phasen. Eine Wallbox hinter einem Phasenumschaltungsschütz (z.B mit dem WARP Energy Manager) ist dreiphasig angeschlossen.", constants=[
+                Const(1, "Wallbox ist fest einphasig angeschlossen"),
+                Const(3, "Wallbox ist fest dreiphasig, oder hinter einem Phasenumschaltungsschütz angeschlossen")
+            ])
+        })
+    ),
+
+
+    Func("reset_dc_fault_current_state", FuncType.COMMAND, Elem.OBJECT("Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong>", version=Version.WARP2 | Version.WARP3, members={
             "password": Elem.INT("Passwort, das zum Zurücksetzen benötigt wird. Das Passwort lautet 0xDC42FA23.")
         })
     ),
 
-    Func("trigger_dc_fault_test", FuncType.COMMAND, Elem.NULL("Startet einen Test des DC-Fehlerstrom-Schutzmoduls.", version=Version.WARP2)),
+    Func("trigger_dc_fault_test", FuncType.COMMAND, Elem.NULL("Startet einen Test des DC-Fehlerstrom-Schutzmoduls.", version=Version.WARP2 | Version.WARP3)),
 
     Func("gp_output", FuncType.STATE, Elem.OBJECT("Der aktuelle Wert des konfigurierbaren Ausgangs. Dieser Wert kann über evse/gp_output_update mit dem selben Payload aktualisiert werden.", version=Version.WARP2, members={
             "gp_output": Elem.INT("Der aktuelle Wert des konfigurierbaren Ausgangs.", constants=[

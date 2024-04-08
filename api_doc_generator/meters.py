@@ -42,7 +42,7 @@ meters = Module("meters", "Stromzähler", "",
                 Const(255, "Typ-Override nicht aktiv. Stromzählertyp wird automatisch detektiert.")
             ])
         }),
-        2: Elem.OBJECT("Interner Stromzähler (an EVSE-2.0-Bricklet)", version=Version.WARP2, members={
+        2: Elem.OBJECT("Interner Stromzähler (an EVSE-2.0-Bricklet)", version=Version.WARP2 | Version.WARP3, members={
             "display_name": Elem.STRING("Anzeigename des Stromzählers")
         }),
         3: Elem.OBJECT("Stromzähler angeschlossen am WARP Energy Manager", version=Version.WARPEM, members={
@@ -85,12 +85,12 @@ meters = Module("meters", "Stromzähler", "",
                 "bricklet": Elem.INT("Kommunikationsfehler zwischen ESP Brick und RS485 Bricklet.", version=Version.WARP1),
                 "bricklet_reset": Elem.INT("Unerwartete Resets des RS485 Bricklets.", version=Version.WARP1),
 
-                "local_timeout": Elem.INT("Local Timeout", version=Version.WARP2 | Version.WARPEM),
-                "global_timeout": Elem.INT("Global Timeout", version=Version.WARP2 | Version.WARPEM),
-                "illegal_function": Elem.INT("Illegal Function", version=Version.WARP2 | Version.WARPEM),
-                "illegal_data_access": Elem.INT("Illegal Data Access", version=Version.WARP2 | Version.WARPEM),
-                "illegal_data_value": Elem.INT("Illegal Data Value", version=Version.WARP2 | Version.WARPEM),
-                "slave_device_failure": Elem.INT("Slave Device Failure", version=Version.WARP2 | Version.WARPEM),
+                "local_timeout": Elem.INT("Local Timeout", version=Version.WARP2 | Version.WARP3 | Version.WARPEM),
+                "global_timeout": Elem.INT("Global Timeout", version=Version.WARP2 | Version.WARP3 | Version.WARPEM),
+                "illegal_function": Elem.INT("Illegal Function", version=Version.WARP2 | Version.WARP3 | Version.WARPEM),
+                "illegal_data_access": Elem.INT("Illegal Data Access", version=Version.WARP2 | Version.WARP3 | Version.WARPEM),
+                "illegal_data_value": Elem.INT("Illegal Data Value", version=Version.WARP2 | Version.WARP3 | Version.WARPEM),
+                "slave_device_failure": Elem.INT("Slave Device Failure", version=Version.WARP2 | Version.WARP3 | Version.WARPEM),
             }),
             4: Elem.NULL("Fehlerzähler des API-Stromzählers. Im Moment leer."),
             5: Elem.NULL("Fehlerzähler des SunSpec-Stromzählers. Im Moment leer."),

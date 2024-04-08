@@ -52,6 +52,7 @@ class Units:
     W = Unit("Watt", "W")
     Wh = Unit("Wattstunde", "Wh")
     hundredth_cent_per_kWh = Unit("Hundertstel Cent pro Kilowattstunde", "ct/kWh/100")
+    hundreth_degree_celsius = Unit("Hundertstel Grad Celsius", "°/100")
 
 class FuncType(IntEnum):
     STATE = 0
@@ -100,7 +101,9 @@ class Version(IntFlag):
     ANY = -1
     WARP1 = 1
     WARP2 = 2
-    WARPEM = 4
+    WARP3 = 4
+    CHARGER = WARP1 | WARP2 | WARP3
+    WARPEM = 8
 
     def css_classes(self):
         if self == Version.ANY:
@@ -112,12 +115,12 @@ class Version(IntFlag):
             return ""
         prefix = "<strong>" if not row else "<strong>(Nur "
         suffix = ":</strong><br>" if not row else ")</strong> "
-        return prefix + ",".join([{
+        return prefix + " und ".join([{
             Version.WARP1: "WARP 1",
             Version.WARP2: "WARP 2",
+            Version.WARP3: "WARP 3",
             Version.WARPEM: "Energy Manager",
         }[x] for x in Version if x in self]) + suffix
-
 
 @dataclass
 class Const:
@@ -324,10 +327,7 @@ class Elem:
                                fn_desc = self.desc,
                                fn_table = table,
                                version_class=self.version.css_classes(),
-                               version_text={Version.ANY:"",
-                                             Version.WARP1: " <strong>(Nur WARP 1)</strong> ",
-                                             Version.WARP2: " <strong>(Nur WARP 2)</strong> ",
-                                             Version.WARP1 | Version.WARP2: " <strong>(Nur WARP 1 und WARP 2)</strong> "}[self.version])
+                               version_text=self.version.label(row=True))
 
     def to_html_table(self, is_root) -> str:
         table_template = """

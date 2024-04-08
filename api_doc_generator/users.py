@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-users = Module("users", "Benutzerverwaltung", "", "", Version.WARP1 | Version.WARP2, [
+users = Module("users", "Benutzerverwaltung", "", "", Version.CHARGER, [
     Func("config", FuncType.STATE, Elem.OBJECT("Die Benutzerkonfiguration. Kann über die nachfolgenden Kommandos modifiziert werden.", members={
             "users": Elem.ARRAY("Die Benutzer", members=[
                 * 17 * [Elem.OBJECT("Ein Benutzer", members={

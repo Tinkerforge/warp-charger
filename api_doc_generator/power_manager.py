@@ -1,8 +1,12 @@
 from api_doc_common import *
 
-power_manager = Module("power_manager", "Konfiguration des PV-Überschussladens", "", "", Version.WARPEM, [
-    Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Konfiguration des Energy Managers", members={
-            "default_mode": Elem.INT("Der nach einem Neustart des Energy Managers verwendete Lademodus", constants=[
+power_manager = Module("power_manager", "Konfiguration des PV-Überschussladens", "", "", Version.WARP3 | Version.WARPEM, [
+    Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Konfiguration des Power Managers", members={
+        "enabled": Elem.BOOL("Gibt an ob der Power Manager aktiviert ist.", constants=[
+                Const(True, "Wenn der Power Manager aktiviert ist."),
+                Const(False, "Wenn der Power Manager deaktiviert ist.")
+            ]),
+            "default_mode": Elem.INT("Der nach einem Neustart des Power Managers verwendete Lademodus", constants=[
                 Const(0, "Schnell. Lädt Fahrzeuge so schnell wie möglich, selbst wenn dafür Netzbezug notwendig ist."),
                 Const(1, "Aus. Fahrzeuge werden nicht geladen."),
                 Const(2, "PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist."),
@@ -26,8 +30,8 @@ power_manager = Module("power_manager", "Konfiguration des PV-Überschussladens"
             "meter_slot_grid_power": Elem.INT("Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird")
         })
     ),
-    Func("state", FuncType.STATE, Elem.OBJECT("Zustand des Energy Managers", members={
-            "config_error_flags": Elem.INT("Aktive Konfigurationsfehler des Energy Managers. Es handelt sich hierbei um eine Bitmaske, sodass sämtliche Kombinationen aus Konfigurationsfehlern auftreten können.", constants=[
+    Func("state", FuncType.STATE, Elem.OBJECT("Zustand des Power Managers", members={
+            "config_error_flags": Elem.INT("Aktive Konfigurationsfehler des Power Managers. Es handelt sich hierbei um eine Bitmaske, sodass sämtliche Kombinationen aus Konfigurationsfehlern auftreten können.", constants=[
                 Const(0, "Kein Fehler"),
                 Const("0x00000001", "Phasenumschaltung oder Schütz nicht konfiguriert"),
                 Const("0x00000002", "Maximaler Gesamtstrom der Wallboxen nicht konfiguriert"),
@@ -42,7 +46,7 @@ power_manager = Module("power_manager", "Konfiguration des PV-Überschussladens"
             ]),
         })
     ),
-    Func("low_level_state", FuncType.STATE, Elem.OBJECT("Low-Level-Zustand des Energy Managers", members={
+    Func("low_level_state", FuncType.STATE, Elem.OBJECT("Low-Level-Zustand des Power Managers", members={
             "power_at_meter": Elem.FLOAT("Gemessene Leistung am Hausanschluss", unit=Units.W),
             "power_at_meter_filtered": Elem.FLOAT("Geglättete gemessene Leistung am Hausanschluss", unit=Units.W),
             "power_available": Elem.INT("Zum Laden verfügbare Leistung. Dies ist ein virtueller Wert, der nicht direkt der Ladeleistung entspricht.", unit=Units.W),
@@ -53,7 +57,7 @@ power_manager = Module("power_manager", "Konfiguration des PV-Überschussladens"
             "charge_manager_available_current": Elem.INT("Ladestrom, den der Energy Manager dem Lastmanagement aktuell zur Verfügung stellt.", unit=Units.mA),
             "charge_manager_allocated_current": Elem.INT("Ladestrom, der aktuell vom Lastmanager an Wallboxen verteilt wurde.", unit=Units.mA),
             "max_current_limited": Elem.INT("Maximaler Ladestrom unter Beachtung externer Strombegrenzung", unit=Units.mA),
-            "uptime_past_hysteresis": Elem.BOOL("Zeitraum nach einem Start des Energy Managers, in dem ohne Wartezeit umgeschaltet werden kann.", constants=[
+            "uptime_past_hysteresis": Elem.BOOL("Zeitraum nach einem Start des Power Managers, in dem ohne Wartezeit umgeschaltet werden kann.", constants=[
                 Const(True, "Startphase beendet, Wartezeiten müssen eingehalten werden"),
                 Const(False, "Startphase läuft, Wartezeiten werden ignoriert"),
             ]),
@@ -106,7 +110,7 @@ power_manager = Module("power_manager", "Konfiguration des PV-Überschussladens"
             ])
         })
     ),
-    Func("external_control", FuncType.STATE, Elem.OBJECT("Phasenanforderung für externe Steuerung. Nimmt über energy_manager/external_control_update Kommandos zur Phasenumschaltung an, wenn external_control in energy_manager/state 0 ist.", members={
+    Func("external_control", FuncType.STATE, Elem.OBJECT("Phasenanforderung für externe Steuerung. Nimmt über power_manager/external_control_update Kommandos zur Phasenumschaltung an, wenn external_control in power_manager/state 0 ist.", members={
             "phases_wanted": Elem.INT("", constants=[
                 Const(0, "Keine Phasen angefordert, keine Stromfreigabe."),
                 Const(1, "Eine Phase angefordert."),
