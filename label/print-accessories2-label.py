@@ -9,6 +9,8 @@ import socket
 QR_CODE_COMMAND = b'W649,209,5,2,M,8,6,57,0\r'
 QR_CODE_PADDING = b';;\r'
 
+HEADER_PLACEHOLDER = b'WARP2 Extras'
+
 STAND_PLACEHOLDER_A = b'Lades\xc3\xa4ule: Bitte'
 STAND_PLACEHOLDER_B = b'S:1;'
 
@@ -99,7 +101,7 @@ def get_tf_printer_host(task):
     sys.exit(1)
 
 
-def print_accessories2_label(stand, stand_wiring, supply_cable, cee, comment_1, comment_2, comment_3, copies, stdout):
+def print_accessories2_label(header, stand, stand_wiring, supply_cable, cee, comment_1, comment_2, comment_3, copies, stdout):
     # check copies
     if copies < 1 or copies > 5:
         raise Exception('Invalid copies: {0}'.format(copies))
@@ -128,6 +130,12 @@ def print_accessories2_label(stand, stand_wiring, supply_cable, cee, comment_1, 
         raise Exception('QR code data too long')
 
     template = template.replace(QR_CODE_PADDING, b';' * offset + QR_CODE_PADDING)
+
+    # patch header
+    if template.find(HEADER_PLACEHOLDER) < 0:
+        raise Exception('Header placeholder missing in EZPL file')
+
+    template = template.replace(HEADER_PLACEHOLDER, header.encode('latin1', errors='replace'))
 
     # patch stand
     if template.find(STAND_PLACEHOLDER_A) < 0:
@@ -211,6 +219,7 @@ def print_accessories2_label(stand, stand_wiring, supply_cable, cee, comment_1, 
 def main():
     parser = argparse.ArgumentParser()
 
+    parser.add_argument('header')
     parser.add_argument('stand', choices=['0', '1', '2', '1-PC', '2-PC'])
     parser.add_argument('stand_wiring', choices=['0', '1', '2'])
     parser.add_argument('supply_cable', type=float)
@@ -225,7 +234,7 @@ def main():
 
     assert args.copies > 0
 
-    print_accessories2_label(args.stand, args.stand_wiring, args.supply_cable, bool(args.cee), args.comment_1, args.comment_2, args.comment_3, args.copies, args.stdout)
+    print_accessories2_label(args.header, args.stand, args.stand_wiring, args.supply_cable, bool(args.cee), args.comment_1, args.comment_2, args.comment_3, args.copies, args.stdout)
 
 
 if __name__ == '__main__':
