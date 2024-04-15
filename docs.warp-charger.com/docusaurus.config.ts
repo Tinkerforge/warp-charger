@@ -52,10 +52,11 @@ const config: Config = {
     // image: '',
     navbar: {
       style: 'dark',
-      title: 'WARP Dokumentation',
+      title: 'Dokumentation',
       logo: {
         alt: 'WARP Logo',
-        src: 'img/favicon.png',
+        src: 'img/logo.png',
+        height: '25px',
       },
       items: [
         {
