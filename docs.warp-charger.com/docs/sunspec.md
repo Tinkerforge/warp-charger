@@ -6,7 +6,7 @@ sidebar_position: 8
 
 [SunSpec](https://sunspec.org/sunspec-modbus-specifications/) ist ein offener Kommunikationsstandard, der gemeinsame Parameter und Einstellungen für die Überwachung und Steuerung von dezentralen Energieerzeugungsanlagen festlegt.
 
-Ist ein Wechselrichter oder Energiemanager vorhanden der Zugriff auf einen Stromzähler am Hausanschluss hat, kann dieser oft über SunSpec ausgelesen werden. Es gibt auch Stromzähler welche direkt SunSpec unterstützen.
+Ist ein Wechselrichter oder Energiemanager vorhanden der Zugriff auf einen Stromzähler am Hausanschluss hat, kann dieser oft über SunSpec per Modbus/TCP ausgelesen werden. Es gibt auch Stromzähler welche direkt SunSpec unterstützen.
 
 Der WARP Charger und der WARP Energy Manager können über SunSpec diese Stromzähler auslesen. So ist es möglich [PV-Überschlussladen](https://warp-charger.com/pv-ueberschussladen/) umzusetzen ohne das zusätzliche Hardware installiert werden muss!
 
