@@ -6,7 +6,7 @@ sidebar_position: 9
 
 ## Förderung
 
-Ist ein WARP Charger förderfähig nach KfW 442?
+### Ist ein WARP Charger förderfähig nach KfW 442?
 
 Die Varianten Smart und Pro stehen auf der Liste der KfW und werden mit 600€ gefördert.
 
