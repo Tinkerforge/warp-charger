@@ -83,7 +83,7 @@ const config: Config = {
           title: 'Links',
           items: [
             {
-              label: 'Home',
+              label: 'Dokumentation',
               to: '/docs/home',
             },
             {
