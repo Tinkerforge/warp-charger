@@ -1,0 +1,292 @@
+import MultilineTabs from '@site/src/components/MultilineTabs';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
+
+# EVSE (Handgeschrieben)
+
+Blah blah Beschreibung des Moduls
+
+## `evse/state` {#evse_state}
+
+Der Zustand des Ladecontrollers.
+
+<details>
+    <summary>Beispiel</summary>
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+            ```bash
+            curl http://warp3-aBcD/evse/state
+            ```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            ```bash
+            mosquitto_sub -C 1 -h broker -t warp3/aBcD/evse/state
+            ```
+        </TabItem>
+    </Tabs>
+
+    ```jsx
+    {
+        "iec61851_state":0,
+        "charger_state":0,
+        "contactor_state":20,
+        "contactor_error":0,
+        "allowed_charging_current":6000,
+        "error_state":0,
+        "lock_state":0,
+        "dc_fault_current_state":0
+    }
+    ```
+</details>
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">`iec61851_state`<br/>int</th>
+            <td>
+                Der aktuelle Zustand nach IEC 61851
+
+                - **0** - A: Nicht verbunden
+                - **1** - B: Verbunden
+                - **2** - C: Lädt
+                - **3** - D: Lädt mit Belüftung (nicht unterstützt)
+                - **4** - E/F: Fehler
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">`allowed_charging_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+            <td>
+                Maximal erlaubter Ladestrom, der dem Fahrzeug zur Verfügung gestellt wird. Dieser Strom ist das Minimum der Stromgrenzen aller Ladeslots.
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">`contactor_state`<br/>int</th>
+            <td>
+                Schützüberwachung. Überwacht wird die Spannung vor und nach dem Schütz (WARP1, WARP2) bzw. der Zustand der Schütze (WARP3)
+
+                **WARP 1 und WARP 2**
+
+                    - **0** - Nicht stromführend vor und nach dem Schütz
+                    - **1** - Stromführend vor, aber nicht stromführend nach dem Schütz
+                    - **2** - Nicht stromführend vor, aber stromführend nach dem Schütz
+                    - **3** - Stromführend vor und nach dem Schütz
+
+                **WARP 3**
+
+                - **00000..11111** - Bitmaske, die den Schützzustand angibt. Von Bit 0 bis Bit 4:
+                    - **00001** - Schütz-L1+N-Hilfskontakt: (gibt an ob das Schütz geschaltet ist) 1 = geschlossen; 0 = geöffnet
+                    - **00010** - Schütz L2+L3-Hilfskontakt: (gibt an ob das Schütz geschaltet ist) 1 = geschlossen; 0 = geöffnet
+                    - **00100** - Schützfehler: (siehe contactor_error) 1 = Fehler; 0 = kein Fehler
+                    - **01000** - Schütz-Spulenanschluss: 1 = Ein oder beide Schütze sollen geschaltet sein (siehe Zustand der Phasenumschaltung) 0 = Kein Schütz soll geschaltet sein
+                    - **10000** - Zustand der Phasenumschaltung (gibt an, welche Schütze geschaltet werden wenn das Spulenanschluss-Bit 1 ist). 1 = Beide Schütze werden geschaltet; dreiphasig. 0 = Nur das L1+N-Schütz wird geschaltet; einphasig
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">`error_state`<br/>int</th>
+            <td>
+                Der aktuelle Fehlerzustand. <a href="https://www.warp-charger.com/#documents">Siehe Handbuch für Details.</a>
+
+                - **0** - OK
+                - **2** - Schalterfehler
+                - **3** - DC-Fehlerstromüberwachungsfehler
+                - **4** - Schützfehler
+                - **5** - Kommunikationsfehler
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">`dc_fault_current_state`<br/>int</th>
+            <td>
+                **(Nur WARP 2 und WARP 3)** Der Zustand des DC-Fehlerstrom-Schutzmoduls. Falls ein Gleichstromfehler auftritt, kann nicht mehr geladen werden, bis das Schutzmodul zurückgesetzt wurde. **Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!** <a href="#evse_reset_dc_fault_current_state">evse/reset_dc_fault_current_state</a> setzt das Modul zurück.
+                    - **0** - Kein Fehler
+                    - **1** - 6 mA Fehlerstrom detektiert
+                    - **2** - Systemfehler
+                    - **3** - Unbekannter fehler
+                    - **4** - Kalibrierungsfehler
+                    - **5** - AC-Fehler
+                    - **6** - AC- und DC-Fehler
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+## `automation/config` {#automation_config}
+
+Blahblahblah.
+
+<Tabs groupId="apiType" queryString>
+    <TabItem value="http" label="HTTP (curl)">
+        ```bash
+        curl http://warp3-aBcD/automation/config
+        ```
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        ```bash
+        mosquitto_sub -C 1 -h broker -t warp3/aBcD/automation/config
+        ```
+    </TabItem>
+</Tabs>
+
+<details>
+    <summary>Beispielpayload</summary>
+```jsx
+{
+  "tasks": [
+    {
+      "trigger": [1, { "mday": -1, "wday": -1, "hour": -1, "minute": 0 }],
+      "action": [1, { "message": "Ping" }]
+    },
+    {
+      "trigger": [4, null],
+      "action": [
+        2,
+        {
+          "topic": "foo/bar",
+          "payload": "button_pressed",
+          "retain": false,
+          "use_prefix": false
+        }
+      ]
+    }
+  ]
+}
+```
+</details>
+
+<table >
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">`tasks`<br/>object[14]</th>
+            <td>
+                Eine Automatisierungsregel
+
+                <table >
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">`trigger`<br/>union</th>
+                            <td>
+                                Bedingung, die zutreffen muss, damit eine Aktion ausgeführt wird
+
+                                <MultilineTabs groupId="automation_config_trigger" queryString className="unique-tabs">
+                                    <TabItem value="0" label="0 - Keine">
+                                        Keine Bedingung konfiguriert. Regel wird nie ausgeführt
+                                    </TabItem>
+                                    <TabItem value="1" label="1 - Zeitpunkt">
+                                        Zu einem bestimmten Zeitpunkt.
+
+                                        <table >
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Bedeutung</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">`mday`<br/>int</th>
+                                                    <td>
+                                                        Tag des Monats (1 bis 31 oder -1, 0, 32)
+
+                                                        - **-1** - Jeder Tag des Monats
+                                                        - **0** - Jeder Tag des Monats
+                                                        - **1..31** 1. bis 31. Tag des Monats
+                                                        - **32** Letzter Tag des Monats
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">`wday`<br/>int</th>
+                                                    <td>
+                                                        Wochentag
+
+                                                        - **-1** - Jeder Tag der Woche
+                                                        - **0** - Sonntag
+                                                        - **1** - Montag
+                                                        - **2** - Dienstag
+                                                        - **3** - Mittwoch
+                                                        - **4** - Donnerstag
+                                                        - **5** - Freitag
+                                                        - **6** - Samstag
+                                                        - **7** - Sonntag
+                                                        - **8** - Wochentags (Montag bis Freitag)
+                                                        - **9** - Am Wochenende (Samstag und Sonntag)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">`hour`<br/>int</th>
+                                                    <td>
+                                                        Stunde des Tages
+
+                                                        - **-1** - Jede Stunde
+                                                        - **0-23** - 0. bis 23. Stunde
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">`minute`<br/>int</th>
+                                                    <td>
+                                                        Minute der Stunde
+
+                                                        - **-1** - Jede Minute
+                                                        - **0-59** - 0. bis 59. Minute
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </TabItem>
+                                    <TabItem value="2" label="2 - Ladestatus"></TabItem>
+                                    <TabItem value="3" label="3 - MQTT-Nachricht"></TabItem>
+                                    <TabItem value="4" label="4 - Fronttaster"></TabItem>
+                                    <TabItem value="5" label="5 - NFC-Tag"></TabItem>
+                                    <TabItem value="6" label="6 - Zeit-/Energie-Limit"></TabItem>
+                                    <TabItem value="8" label="8 - konfigurierbarer Eingang"></TabItem>
+                                    <TabItem value="9" label="9 - Watchdog der externen Steuerung"></TabItem>
+                                    <TabItem value="10" label="10 - Zählerüberwachung"></TabItem>
+                                    <TabItem value="11" label="11 - Watchdogs des Lastmanagements."></TabItem>
+                                    <TabItem value="12" label="12 - Eingang 3"></TabItem>
+                                    <TabItem value="13" label="13 - Eingang 4"></TabItem>
+                                    <TabItem value="14" label="14 - Phasenumschaltung"></TabItem>
+                                    <TabItem value="15" label="15 - Schützüberwachung"></TabItem>
+                                    <TabItem value="16" label="16 - Strom verfügbar"></TabItem>
+                                    <TabItem value="17" label="17 - Netzbezug- oder Einspeisung"></TabItem>
+                                </MultilineTabs>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">`action`<br/>union</th>
+                            <td>
+                                Aktion, die ausgeführt werden soll
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
