@@ -26,4 +26,4 @@ Generell sollte jedes SunSpec-kompatible Gerät ausgelesen werden können. Mit d
 * Sunny Boy 2.5
 * Sunny Boy 3.6
 
-Wenn du einen Wechselrichter oder Energiemanager mit SunSpec-Unterstützung hast der bei dir funktionert und noch nicht in der Liste ist, schicke uns doch eine Email an [info@tinkerforge.com](info@tinkerforge.com) damit wir die Liste aktualisieren können.
+Wenn du einen Wechselrichter oder Energiemanager mit SunSpec-Unterstützung hast der bei dir funktionert und noch nicht in der Liste ist, schicke uns doch eine Email an [info@tinkerforge.com](mailto://info@tinkerforge.com) damit wir die Liste aktualisieren können.
