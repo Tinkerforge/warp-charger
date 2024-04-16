@@ -25,15 +25,30 @@ export default function DocItemTOCDesktop(props: Props): JSX.Element {
     // We are in the API documentation.
     // Show the api/hardwareType tabs and filter the TOC.
 
-    const filterToC = (toc: readonly TOCItem[], hardwareType: string) =>
-        toc.filter(x => !("hardwareType" in x)
-            || x.hardwareType as string == hardwareType
-            || x.hardwareType == "all"
-            || hardwareType == "all")
-            .map(x => (!("children" in x)
-                || (x.children as TOCItem[]).length == 0)
-                ? x
-                : { ...x, children: filterToC(x.children as TOCItem[], hardwareType) })
+    const filterToC = (toc: readonly TOCItem[], hardwareType: string) => {
+        let level_filter = -1;
+        let result: TOCItem[] = [];
+
+        for(let x of toc) {
+            if (level_filter != -1 && x.level > level_filter)
+                continue;
+
+            if (level_filter != -1 && x.level <= level_filter)
+                level_filter = -1;
+
+            if ("hardwareType" in x
+                && x.hardwareType as string != hardwareType
+                && x.hardwareType != "all"
+                && hardwareType != "all") {
+                level_filter = x.level;
+                continue;
+            }
+
+            result.push(x);
+        }
+
+        return result;
+    }
 
     const tocprops = {
         minHeadingLevel: frontMatter.toc_min_heading_level,
