@@ -36,10 +36,9 @@ export default function DocItemTOCDesktop(props: Props): JSX.Element {
             if (level_filter != -1 && x.level <= level_filter)
                 level_filter = -1;
 
-            if ("hardwareType" in x
-                && x.hardwareType as string != hardwareType
-                && x.hardwareType != "all"
-                && hardwareType != "all") {
+            if (hardwareType != "all"
+                && "hardwareType" in x
+                && (x.hardwareType as string[]).indexOf(hardwareType) == -1) {
                 level_filter = x.level;
                 continue;
             }
