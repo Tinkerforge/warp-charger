@@ -13,6 +13,8 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import { TOCItem } from '@docusaurus/mdx-loader/lib/remark/toc/types';
 
+import styles from '@docusaurus/theme-classic/src/theme/TOC/styles.module.css';
+
 type Props = WrapperProps<typeof DesktopType>;
 
 export default function DocItemTOCDesktop(props: Props): JSX.Element {
@@ -55,7 +57,7 @@ export default function DocItemTOCDesktop(props: Props): JSX.Element {
         className: ThemeClassNames.docs.docTocDesktop
     };
 
-    return <>
+    return <div className={styles.tableOfContents}>
         <MultilineTabs groupId="apiType" queryString className='unique-tabs'>
             <TabItem value="http" label="HTTP (curl)"> </TabItem>
             <TabItem value="mqtt" label="MQTT (mosquitto)"> </TabItem>
@@ -106,5 +108,5 @@ export default function DocItemTOCDesktop(props: Props): JSX.Element {
                 <TOC toc={toc} {...tocprops} />
             </TabItem>
         </Tabs>
-    </>;
+    </div>;
 }
