@@ -60,21 +60,21 @@ class FuncType(IntEnum):
     CONFIGURATION = 2
     HTTP_ONLY = 3
 
-    def name_singular(self):
-        return {
-            FuncType.STATE: "Zustand",
-            FuncType.COMMAND: "Kommando",
-            FuncType.CONFIGURATION: "Konfiguration",
-            FuncType.HTTP_ONLY: "HTTP-Spezifisch"
-        }[self]
+    # def name_singular(self):
+    #     return {
+    #         FuncType.STATE: "Zustand",
+    #         FuncType.COMMAND: "Kommando",
+    #         FuncType.CONFIGURATION: "Konfiguration",
+    #         FuncType.HTTP_ONLY: "HTTP-Spezifisch"
+    #     }[self]
 
-    def name_plural(self):
-        return {
-            FuncType.STATE: "Zustände",
-            FuncType.COMMAND: "Kommandos",
-            FuncType.CONFIGURATION: "Konfigurationen",
-            FuncType.HTTP_ONLY: "HTTP-Spezifisch"
-        }[self]
+    # def name_plural(self):
+    #     return {
+    #         FuncType.STATE: "Zustände",
+    #         FuncType.COMMAND: "Kommandos",
+    #         FuncType.CONFIGURATION: "Konfigurationen",
+    #         FuncType.HTTP_ONLY: "HTTP-Spezifisch"
+    #     }[self]
 
 @dataclass
 class Func:
@@ -82,6 +82,9 @@ class Func:
     type_: FuncType
     root: 'Elem'
     command_is_action: bool = False
+
+    def api_name(self, module):
+        return module + "/" + self.name if module is not None else self.name
 
 class EType(IntEnum):
     OBJECT = 0
@@ -93,9 +96,10 @@ class EType(IntEnum):
     NULL = 6
     OPAQUE = 7
     UNION = 8
+    HIDDEN_UNION = 9 # something that behaves as if it was a union, but the tag is not a part of this element.
 
 class Version(IntFlag):
-    # -1 in two's complement has all bits set, so ANY matches any version
+    # -1 in two's complement has all bits set, so ALL matches any version
     # Also -1 is sorted before the specific versions, which is required for
     # the layout of generated constant lists.
     ANY = -1
@@ -103,7 +107,10 @@ class Version(IntFlag):
     WARP2 = 2
     WARP3 = 4
     CHARGER = WARP1 | WARP2 | WARP3
-    WARPEM = 8
+    WEM = 8
+
+    def __init__(self, *args, **kwargs):
+        self.desc = None
 
     def css_classes(self):
         if self == Version.ANY:
@@ -114,13 +121,17 @@ class Version(IntFlag):
         if self == Version.ANY:
             return ""
         prefix = "<strong>" if not row else "<strong>(Nur "
-        suffix = ":</strong><br>" if not row else ")</strong> "
+        suffix = ":</strong><br/>" if not row else ")</strong> "
         return prefix + " und ".join([{
             Version.WARP1: "WARP 1",
             Version.WARP2: "WARP 2",
             Version.WARP3: "WARP 3",
-            Version.WARPEM: "Energy Manager",
+            Version.WEM: "Energy Manager",
         }[x] for x in Version if x in self]) + suffix
+
+    def with_desc(self, desc):
+        self.desc = desc
+        return self
 
 @dataclass
 class Const:
@@ -141,10 +152,11 @@ class Elem:
     censored: bool
     version: Version
     type_name_override: Optional[str]
+    union_tab_id: Optional[str]
 
     @staticmethod
     def OBJECT(desc: str, *, members: dict[str, 'Elem'], censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.OBJECT, desc, None, members, None, False, None, None, censored, version, None)
+        return Elem(EType.OBJECT, desc, None, members, None, False, None, None, censored, version, None, None)
 
     @staticmethod
     def ARRAY(desc: str, *, unit: Optional[Unit] = None, members: Optional[list['Elem']] = None, member_type: Optional[EType] = None, member_unit: Optional[Unit] = None, censored: bool = False, version: Version = Version.ANY):
@@ -152,37 +164,41 @@ class Elem:
             raise Exception("Array without members and member_type is not supported!")
         if members is not None and member_type is not None and any(x.type_ != member_type for x in members):
             raise Exception("Type mismatch between members and member_type!")
-        return Elem(EType.ARRAY, desc, unit, members, None, members is None, member_type, member_unit, censored, version, None)
+        return Elem(EType.ARRAY, desc, unit, members, None, members is None, member_type, member_unit, censored, version, None, None)
 
     @staticmethod
     def STRING(desc: str, *, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.STRING, desc, None, None, constants, False, None, None, censored, version, None)
+        return Elem(EType.STRING, desc, None, None, constants, False, None, None, censored, version, None, None)
 
     @staticmethod
     def INT(desc: str, *, type_name_override: Optional[str] = None, unit: Optional[Unit] = None, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.INT, desc, unit, None, constants, False, None, None, censored, version, type_name_override)
+        return Elem(EType.INT, desc, unit, None, constants, False, None, None, censored, version, type_name_override, None)
 
     @staticmethod
     def FLOAT(desc: str, *, unit: Optional[Unit] = None, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.FLOAT, desc, unit, None, constants, False, None, None, censored, version, None)
+        return Elem(EType.FLOAT, desc, unit, None, constants, False, None, None, censored, version, None, None)
 
     @staticmethod
     def BOOL(desc: str, *, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.BOOL, desc, None, None, constants, False, None, None, censored, version, None)
+        return Elem(EType.BOOL, desc, None, None, constants, False, None, None, censored, version, None, None)
 
     @staticmethod
     def NULL(desc: str, *, version: Version = Version.ANY):
-        return Elem(EType.NULL, desc, None, None, None, False, None, None, False, version, None)
+        return Elem(EType.NULL, desc, None, None, None, False, None, None, False, version, None, None)
 
     @staticmethod
     def OPAQUE(desc: str):
-        return Elem(EType.OPAQUE, desc, None, None, None, False, None, None, False, Version.ANY, None)
+        return Elem(EType.OPAQUE, desc, None, None, None, False, None, None, False, Version.ANY, None, None)
 
     @staticmethod
-    def UNION(desc: str, *, members: dict[int, 'Elem'], censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.UNION, desc, None, members, None, False, None, None, censored, version, None)
+    def UNION(desc: str, *, members: dict[int, 'Elem'], censored: bool = False, version: Version = Version.ANY, tab_id = None):
+        return Elem(EType.UNION, desc, None, members, None, False, None, None, censored, version, None, tab_id)
 
-    def get_type(self) -> str:
+    @staticmethod
+    def HIDDEN_UNION(desc: str, *, members: dict[int, 'Elem'], censored: bool = False, version: Version = Version.ANY, tab_id = None):
+        return Elem(EType.HIDDEN_UNION, desc, None, members, None, False, None, None, censored, version, None, tab_id)
+
+    def get_type(self, version=Version.ANY) -> str:
         if self.type_ in (EType.OBJECT,
                           EType.STRING,
                           EType.INT,
@@ -192,14 +208,17 @@ class Elem:
                           EType.NULL):
             return self.type_.name.lower()
 
+        if self.type_ == EType.HIDDEN_UNION:
+            raise Exception("not supported")
+
         if self.type_ == EType.ARRAY:
             if self.is_var_length_array:
                 return self.var_length_array_type.name.lower() + "[..]"
 
-            if len(set([x.version for x in self.val])) > 1:
-                return self.val[0].get_type() + "[..]"
+            if len(set([x.version for x in self.val if version in x.version or version == Version.ANY])) > 1:
+                return [x for x in self.val if version in x.version or version == Version.ANY][0].get_type() + "[..]"
 
-            return self.val[0].get_type() + "[{}]".format(len(self.val))
+            return [x for x in self.val if version in x.version or version == Version.ANY][0].get_type() + "[{}]".format(len([x for x in self.val if version in x.version or version == Version.ANY]))
 
     def get_unit(self) -> str:
         if self.type_ in (EType.OBJECT,
@@ -211,6 +230,9 @@ class Elem:
                           EType.UNION,
                           EType.NULL):
             return self.unit.to_html() if self.unit is not None else ''
+
+        if self.type_ == EType.HIDDEN_UNION:
+            raise Exception("not supported")
 
         if self.type_ == EType.ARRAY:
             if self.is_var_length_array:
@@ -225,49 +247,53 @@ class Elem:
             print("Warning: Array with more than one unit found! Those units will not be documented")
             return ''
 
-    def to_html(self, key_name) -> str:
+    def to_table_row(self, key_name: str, version: Version) -> str:
         row_template = """
-<tr class="{version_class}">
-    <th scope="row">{name}</th>
-    <td>{version_prefix}{desc}</td>
+<tr>
+    <th scope="row" style={{{{whiteSpace: "nowrap"}}}}>{name}</th>
+    <td>
+        {version_prefix}{desc}
+    </td>
 </tr>"""
 
         constants_template = """
-<div class="{version_class}">
-{version_label}<ol class="ol-enum">
-    {entries}
-</ol>
-</div>"""
-        constant_entry_template = """<li>{val} - {desc}</li>"""
+{version_label}{entries}"""
+        constant_entry_template = """- **{val}** - {desc}"""
 
-        name = '{name}<br/><span class="th-details">{type}{unit}</span>'.format(
+        name = '`{name}`<br/>{type}{unit}'.format(
                     name=key_name,
-                    type=self.get_type(),
+                    type=self.get_type(version=version),
                     unit=wrap_non_empty(' ', self.get_unit(), ''))
 
         desc = self.desc
 
         if self.constants is not None:
-            for version, constants in itertools.groupby(sorted(self.constants, key=lambda c: c.version), key=lambda c: c.version):
+            for ver, constants in itertools.groupby(sorted(self.constants, key=lambda c: c.version), key=lambda c: c.version):
+                if version != Version.ANY and version not in ver:
+                    continue
+
                 consts = []
                 for c in constants:
                     val = c.val
                     if self.type_ == EType.BOOL:
                         val = str(val).lower()
-                    consts.append(constant_entry_template.format(val="<strong>{}</strong>".format(val), desc=c.desc))
+                    consts.append(constant_entry_template.format(val=val, desc=c.desc))
 
                 if len(consts) == 0:
                     continue
 
-                desc += constants_template.format(version_class=version.css_classes(),
-                                                  version_label=version.label(),
-                                                  entries='\n    '.join(consts))
+                desc += constants_template.format(version_label=("\n" + ver.label() + "\n\n") if version == Version.ANY else "",
+                                                  entries='\n'.join(consts))
 
         if self.type_ == EType.ARRAY and self.val is not None:
             # Python has no break with labels. Use function with return to "break" out of the outer loop
             def get_desc(desc):
                 result = desc
-                for version, members in itertools.groupby(sorted(self.val, key=lambda c: c.version), key=lambda c: c.version):
+                for ver, members in itertools.groupby(sorted(self.val, key=lambda c: c.version), key=lambda c: c.version):
+                    if version != Version.ANY and version not in ver:
+                        continue
+
+
                     members = list(members)
                     mems = []
                     idx = 0
@@ -280,94 +306,167 @@ class Elem:
                                 return result
 
                         if m.type_ == EType.OBJECT:
-                            d += m.to_html_table(False)
+                            d += m.to_table(False, version)
                         mems.append(constant_entry_template.format(val="[{}]".format(idx) if count == 1 else "[{}..{}]".format(idx, idx + count - 1), desc=d))
                         idx += count
 
                     if len(mems) == 0:
                         continue
 
-                    result += constants_template.format(version_class=version.css_classes(),
-                                                    version_label=version.label(),
-                                                    entries='\n    '.join(mems))
+                    result += constants_template.format(version_label=("\n" + ver.label() + "\n\n") if version == Version.ANY else "",
+                                                        entries='\n'.join(mems))
                 return result
             desc = get_desc(desc)
 
-        if self.type_ == EType.OBJECT or self.type_ == EType.UNION:
-            desc += self.to_html_table(is_root=False)
+        if self.type_ == EType.OBJECT:
+            desc += self.to_table(is_root=False, version=version)
+        elif self.type_ == EType.UNION or self.type_ == EType.HIDDEN_UNION:
+            desc += "\n" + self.to_tabs(is_root=False, version=version)
 
         return row_template.format(version_class=self.version.css_classes(),
                                    name=name,
                                    version_prefix=self.version.label(row=True),
-                                   desc=desc)
+                                   desc=desc.replace("\n", "\n        "))
 
-    def root_to_html(self, f: Func, module: str) -> str:
-        template = """
-<div  id="{fn_id}" class="{version_class}">
-    <div class="h5">{fn_path}{version_text}</div>
-    {fn_desc}{fn_table}
-</div>"""
+    def to_tabs(self, is_root: bool, version: Version):
+        groupId = ""
+        if self.union_tab_id is not None:
+            groupId = f' groupId="{self.union_tab_id}"'
+
+        if self.type_ == EType.UNION:
+            result = f'<MultilineTabs className="unique-tabs"{groupId}>\n'
+        elif self.type_ == EType.HIDDEN_UNION:
+            result = f'<Tabs className="hidden-tabs"{groupId}>\n'
+
+        if self.version != Version.ANY and all(v.version == self.version for k, v in self.val.items()):
+            print(f"Union element '{self.desc}' and all its children specify the same version {self.version.name}. Remove version from children!")
+
+        members = []
+        for k, v in self.val.items():
+            if not(version in v.version or version == Version.ANY):
+                continue
+
+            members.append(f"""<TabItem value="{k}" label="{k} - {v.desc}">
+{v.to_table(False, version)}
+</TabItem>
+""")
+
+        if len(members) == 0:
+            print(f"Union element '{self.desc}' is empty in version {version.name} but is marked as supported in this version!")
+
+        result += "\n".join(members)
+
+        if self.type_ == EType.UNION:
+            result += f'</MultilineTabs>\n'
+        elif self.type_ == EType.HIDDEN_UNION:
+            result += f'</Tabs>\n'
+
+        return result
+
+
+    def root_to_md(self, f: Func, module: str, version: Version) -> str:
+        if not(version in self.version or version == Version.ANY):
+            return ""
+
+        version_desc = ""
+        if version == Version.ANY:
+            version_desc = self.version.desc if hasattr(self.version, "desc") and self.version.desc is not None else self.version.label(row=True)
+
+        content = f"""<br/><br/><br/>
+## `{f.api_name(module)}` {{#{(f.api_name(module)).replace("/", "_") + "_" + version.name.lower()}}}
+{version_desc}
+{self.desc}
+"""
 
         if self.type_ == EType.NULL:
-            table = "<br/><strong>Leerer Payload. Es muss einer der folgenden Werte übergeben werden: <code>null</code>, <code>\"\"</code>, <code>false</code>, <code>0</code>, <code>[]</code> oder <code>{}</code></strong>"
+            table = '**Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**'
             if f.type_ != FuncType.COMMAND:
                 print("Function {} has a null payload but is not a command?!?".format(f.name))
             elif f.command_is_action:
-                table += "<br/><strong>Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.</strong>"
+                table += "\n\n**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**"
         elif self.type_ == EType.ARRAY and self.is_var_length_array:
             table = ""
+        elif self.type_ == EType.UNION or self.type_ == EType.HIDDEN_UNION:
+            table = self.to_tabs(is_root=True, version=version)
         else:
-            table = self.to_html_table(is_root=True)
+            table = self.to_table(is_root=True, version=version)
 
         if f.type_ != FuncType.STATE and self.type_ == EType.OBJECT and len(self.val.items()) == 1 and not "do_i_know_what_i_am_doing" in self.val:
-            table = "<br/><strong><a href=\"#states_section_shortcuts\">Kann abgekürzt werden.</a></strong>" + table
+            table = "\n\n**<a href=\"#states_section_shortcuts\">Kann abgekürzt werden.</a>**" + table
 
-        return template.format(fn_id = (module + "/" + f.name if module is not None else f.name).replace("/", "_"),
-                               fn_path = module + "/" + f.name if module is not None else f.name,
-                               fn_desc = self.desc,
-                               fn_table = table,
-                               version_class=self.version.css_classes(),
-                               version_text=self.version.label(row=True))
+        return content + "\n" + table + "\n"
 
-    def to_html_table(self, is_root) -> str:
+    def to_table(self, is_root: bool, version: Version) -> str:
         table_template = """
-<div class="table-responsive">
-    <table class="table {striped} table-bottom-border mt-3">
-        <thead class="thead-dark">
-            <tr>
-            <th scope="col" style="width: 25%">{name_or_index}</th>
+<table>
+    <thead>
+        <tr>
+            <th scope="col">{name_or_index}</th>
             <th scope="col">Bedeutung</th>
-            </tr>
-        </thead>
-        <tbody>
+        </tr>
+    </thead>
+    <tbody>
 {rows}
-        </tbody>
-    </table>
-</div>"""
+    </tbody>
+</table>"""
 
-        striped = "table-striped" if is_root else "table-not-striped mt-3"
+        if self.type_ == EType.UNION or self.type_ == EType.HIDDEN_UNION:
+            raise Exception("Don't document union as table!")
 
         if self.type_ == EType.OBJECT:
-            return table_template.format(name_or_index="Name", striped=striped, rows='\n'.join([v.to_html(k) for k, v in self.val.items()]))
-
-        if self.type_ == EType.UNION:
-            return table_template.format(name_or_index="Tag", striped=striped, rows='\n'.join([v.to_html(k) for k, v in self.val.items()]))
+            if self.version != Version.ANY and all(v.version == self.version for k, v in self.val.items()):
+                print(f"Object element '{self.desc}' and all its children specify the same version {self.version.name}. Remove version from children!")
+            rows = [v.to_table_row(k, version) for k, v in self.val.items() if version in v.version or version == Version.ANY]
+            if len(rows) == 0:
+                print(f"Object element '{self.desc}' is empty in version {version.name} but is marked as supported in this version!")
+            return table_template.format(name_or_index="Name", rows='\n'.join(rows))
 
         if self.type_ == EType.ARRAY:
             idx = 0
             rows = []
             for group, elements in itertools.groupby(self.val):
+                if version not in group.version and version != Version.ANY:
+                    continue
+
                 count = len(list(elements))
-                rows.append(group.to_html("[{}]".format(idx) if count == 1 else "[{}..{}]".format(idx, idx + count - 1)))
+                rows.append(group.to_table_row("[{}]".format(idx) if count == 1 else "[{}..{}]".format(idx, idx + count - 1), version))
                 idx += count
 
-            return table_template.format(name_or_index="Index", striped=striped, rows='\n'.join(rows))
+            return table_template.format(name_or_index="Index", rows='\n'.join(rows))
 
         if self.type_ == EType.OPAQUE:
             return ""
 
-        print("primitive roots not implemented yet!")
-        return None
+        # primitive
+
+        result = '{type}{unit}: {desc}'.format(
+                    type=self.get_type(version=version),
+                    unit=wrap_non_empty(' ', self.get_unit(), ''),
+                    desc=self.desc)
+
+        constants_template = """
+{version_label}{entries}"""
+        constant_entry_template = """- **{val}** - {desc}"""
+
+        if self.constants is not None:
+            for ver, constants in itertools.groupby(sorted(self.constants, key=lambda c: c.version), key=lambda c: c.version):
+                if version != Version.ANY and version not in ver:
+                    continue
+
+                consts = []
+                for c in constants:
+                    val = c.val
+                    if self.type_ == EType.BOOL:
+                        val = str(val).lower()
+                    consts.append(constant_entry_template.format(val=val, desc=c.desc))
+
+                if len(consts) == 0:
+                    continue
+
+                result += constants_template.format(version_label=("\n" + ver.label() + "\n\n") if version == Version.ANY else "",
+                                                  entries='\n'.join(consts))
+
+        return result
 
 
 @dataclass
@@ -380,43 +479,61 @@ class Module:
     functions: list[Func]
     hide_prefix: bool = False
 
-    def to_html(self) -> str:
-        template = """<section id="reference-{name}" class="section {version}">
-    <header class="reference-section-header">
-        <h4>{display_name}</h4>{subheader}
-        {desc}
-    </header>
+    def to_md(self) -> str:
+        result = f"""{{/* This file is autogenerated. Edit warp-charger/api_doc_generator/{self.name}.py! */}}
+import MultilineTabs from '@site/src/components/MultilineTabs';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-    <ul class="ul-no-bullet">
-        {toc}
-    </ul>
-    {functions}
-</section>"""
+# {self.display_name}
+"""
 
-        toc_group_template = """<li>
-    {group_name}
-    <ul>
-        {links}
-    </ul>
-</li>"""
+        result += f"**{self.subheader}**\n" if len(self.subheader) > 0 else ""
+        result += self.desc + "\n"
+
+        # Just create all versions in separate tabs for now.
+        # This is inefficient because modules that are the same in every firmware
+        # are generated 5 times.
+
+        result += '<Tabs groupId="hardwareType" queryString className="hidden-tabs">\n'
+
+        for ver in list(Version) + [Version.ANY]:
+            result += f'<TabItem value="{ver.name.lower()}">\n'
+
+            if ver not in self.version and ver != Version.ANY:
+                result += 'Auf dieser Hardware nicht unterstützt!\n</TabItem>\n'
+                continue
+
+            functions = []
+
+            for group, fns in itertools.groupby(self.functions, key=lambda f: f.type_):
+                fns = list(fns)
+
+                for f in fns:
+                    functions.append(f.root.root_to_md(f, self.name if not self.hide_prefix else None, ver))
+
+            result += "\n\n".join(functions)
+            result += '</TabItem>\n'
+
+        result += '</Tabs>\n'
 
         toc = []
-        functions = []
 
         for group, fns in itertools.groupby(self.functions, key=lambda f: f.type_):
             fns = list(fns)
 
             for f in fns:
-                functions.append(f.root.root_to_html(f, self.name if not self.hide_prefix else None))
+                toc.append(f"""{{
+    "value": "{"{}/{}".format(self.name, f.name) if not self.hide_prefix else f.name}",
+    "id": "{"{}_{}".format(self.name, f.name.replace("/", "_")) if not self.hide_prefix else f.name}",
+    "level": 2,
+    {"" if f.root.version == Version.ANY else ('"hardwareType": ["' + '","'.join(f.root.version.css_classes().split(" ")) + '"]')}
+}},""")
 
-            toc.append(toc_group_template.format(
-                group_name=group.name_plural(),
-                links='\n'.join("<li>{{{ref:" + ("{}/{}".format(self.name, x.name) if not self.hide_prefix else x.name) + "}}}</li>" for x in fns)))
+        result += f"""
+export const toc = [
+    {"".join(toc)}
+];
+"""
 
-        return template.format(name=self.name,
-                               subheader=wrap_non_empty("<h5>",self.subheader,"</h5>"),
-                               desc=wrap_non_empty("", self.desc, "<br><br>"),
-                               display_name=self.display_name,
-                               version=self.version.css_classes(),
-                               toc="\n".join(toc),
-                               functions="\n".join(functions))
+        return result

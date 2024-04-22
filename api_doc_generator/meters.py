@@ -8,7 +8,8 @@ meters = Module("meters", "Stromzähler", "",
     Beispielsweise können die Messwerte des ersten Stromzählers (der die Stromzählernummer 0 besitzt) unter meters/0/values gelesen werden.
     Außerdem hat jeder Zähler die APIs {{{ref:meters/X/config}}}, {{{ref:meters/X/state}}} und {{{ref:meters/X/errors}}}, deren Inhalt von der Klasse des Stromzählers abhängt.
     Die Stromzählerklasse wird als das <a href="#unions_section">Union</a>-Tag von {{{ref:meters/X/config}}} angegeben.
-    <br><br>
+
+
     Jeder Stromzähler meldet seine Messwerte unter {{{ref:meters/X/values}}} als ein Array von Floats.
     Welcher Messwert wie zu interpretieren ist, kann unter {{{ref:meters/X/value_ids}}} (einem Array von Ints, den sogenannten MeterValueIDs) ausgelesen werden:
     Wenn beispielsweise an Index 3 in {{{ref:meters/X/value_ids}}} die MeterValueID 13 gelesen wird, dann ist der {{{ref:meters/X/values}}}-Wert an Index 3 als der Phasenstrom auf L1 zu interpretieren.
@@ -30,7 +31,7 @@ meters = Module("meters", "Stromzähler", "",
         "samples": Elem.ARRAY("Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.", unit=Units.W, member_type=EType.INT)
     })),
 
-    Func("X/config", FuncType.CONFIGURATION, Elem.UNION("Die Konfiguration des X. Stromzählers. Das Union-Tag gibt die Zählerklasse an.", members={
+    Func("X/config", FuncType.CONFIGURATION, Elem.UNION("Die Konfiguration des X. Stromzählers. Das Union-Tag gibt die Zählerklasse an.", tab_id="metersXConfig", members={
         0: Elem.NULL("Kein Stromzähler konfiguriert."),
         1: Elem.OBJECT("Interner Stromzähler (an RS485-Bricklet)", version=Version.WARP1, members={
             "display_name": Elem.STRING("Anzeigename des Stromzählers"),
@@ -45,7 +46,7 @@ meters = Module("meters", "Stromzähler", "",
         2: Elem.OBJECT("Interner Stromzähler (an EVSE-2.0-Bricklet)", version=Version.WARP2 | Version.WARP3, members={
             "display_name": Elem.STRING("Anzeigename des Stromzählers")
         }),
-        3: Elem.OBJECT("Stromzähler angeschlossen am WARP Energy Manager", version=Version.WARPEM, members={
+        3: Elem.OBJECT("Stromzähler angeschlossen am WARP Energy Manager", version=Version.WEM, members={
             "display_name": Elem.STRING("Anzeigename des Stromzählers"),
         }),
         4: Elem.OBJECT("API-Stromzähler", members={
@@ -61,37 +62,47 @@ meters = Module("meters", "Stromzähler", "",
         })
     })),
 
-    Func("X/state", FuncType.STATE, Elem.OBJECT("Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in {{{ref:meters/X/config}}} konfiguriert wurde.", members={
+    Func("X/state", FuncType.STATE, Elem.HIDDEN_UNION("Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in {{{ref:meters/X/config}}} konfiguriert wurde.", tab_id="metersXConfig", members={
             0: Elem.NULL("Kein Stromzähler konfiguriert."),
-            "1, 2, 3": Elem.OBJECT("Zustand des internen Stromzählers", members={
+            1: Elem.OBJECT("Zustand des internen Stromzählers", members={
                 "type": Elem.INT("Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jedem Gerät unterstützt!", constants=[
                     Const(0, "Kein Stromzähler verfügbar"),
-                    Const(1, "SDM72", Version.WARP1),
-                    Const(2, "SDM630", Version.ANY),
-                    Const(3, "SDM72V2", Version.ANY),
-                    Const(4, "SDM72CTM", Version.WARPEM),
-                    Const(5, "SDM630MCT", Version.WARPEM)
-                ]),
+                    Const(1, "SDM72"),
+                    Const(2, "SDM630"),
+                    Const(3, "SDM72V2")
+                ])
             }),
+            **{x: Elem.OBJECT("Zustand des internen Stromzählers", members={
+                "type": Elem.INT("Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jedem Gerät unterstützt!", constants=[
+                    Const(0, "Kein Stromzähler verfügbar"),
+                    Const(2, "SDM630"),
+                    Const(3, "SDM72V2"),
+                    Const(4, "SDM72CTM"),
+                    Const(5, "SDM630MCT"),
+                    Const(6, "DSZ15DZMOD"),
+                    Const(7, "DEM4A"),
+                ]),
+            }) for x in [2, 3]},
             4: Elem.NULL("Zustand des API-Stromzählers. Im Moment leer."),
             5: Elem.NULL("Zustand des SunSpec-Stromzählers. Im Moment leer.")
         })
     ),
 
-    Func("X/errors", FuncType.STATE, Elem.OBJECT("Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in {{{ref:meters/X/config}}} konfiguriert wurde.", members={
+    Func("X/errors", FuncType.STATE, Elem.HIDDEN_UNION("Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in {{{ref:meters/X/config}}} konfiguriert wurde.", tab_id="metersXConfig", members={
              0: Elem.NULL("Kein Stromzähler konfiguriert."),
-             "1, 2, 3": Elem.OBJECT("Fehlerzähler des internen Stromzählers", members={
-                "meter": Elem.INT("Kommunikationsfehler zwischen RS485 Bricklet und Stromzähler.", version=Version.WARP1),
-                "bricklet": Elem.INT("Kommunikationsfehler zwischen ESP Brick und RS485 Bricklet.", version=Version.WARP1),
-                "bricklet_reset": Elem.INT("Unerwartete Resets des RS485 Bricklets.", version=Version.WARP1),
-
-                "local_timeout": Elem.INT("Local Timeout", version=Version.WARP2 | Version.WARP3 | Version.WARPEM),
-                "global_timeout": Elem.INT("Global Timeout", version=Version.WARP2 | Version.WARP3 | Version.WARPEM),
-                "illegal_function": Elem.INT("Illegal Function", version=Version.WARP2 | Version.WARP3 | Version.WARPEM),
-                "illegal_data_access": Elem.INT("Illegal Data Access", version=Version.WARP2 | Version.WARP3 | Version.WARPEM),
-                "illegal_data_value": Elem.INT("Illegal Data Value", version=Version.WARP2 | Version.WARP3 | Version.WARPEM),
-                "slave_device_failure": Elem.INT("Slave Device Failure", version=Version.WARP2 | Version.WARP3 | Version.WARPEM),
-            }),
+             1: Elem.OBJECT("Fehlerzähler des internen Stromzählers", members={
+                "meter": Elem.INT("Kommunikationsfehler zwischen RS485 Bricklet und Stromzähler."),
+                "bricklet": Elem.INT("Kommunikationsfehler zwischen ESP Brick und RS485 Bricklet."),
+                "bricklet_reset": Elem.INT("Unerwartete Resets des RS485 Bricklets.")
+             }),
+             **{x: Elem.OBJECT("Fehlerzähler des internen Stromzählers", members={
+                "local_timeout": Elem.INT("Local Timeout"),
+                "global_timeout": Elem.INT("Global Timeout"),
+                "illegal_function": Elem.INT("Illegal Function"),
+                "illegal_data_access": Elem.INT("Illegal Data Access"),
+                "illegal_data_value": Elem.INT("Illegal Data Value"),
+                "slave_device_failure": Elem.INT("Slave Device Failure"),
+            }) for x in [2, 3]},
             4: Elem.NULL("Fehlerzähler des API-Stromzählers. Im Moment leer."),
             5: Elem.NULL("Fehlerzähler des SunSpec-Stromzählers. Im Moment leer."),
         })

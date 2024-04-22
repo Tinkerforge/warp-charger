@@ -99,6 +99,6 @@ wifi = Module("wifi", "WLAN-Konfiguration", "", "", Version.ANY, [
                 Const(5, "WPA2-Enterprise"),
                 Const(6, "Unbekannt")
             ])
-        }).to_html_table(True)
+        }).to_table(True, Version.ANY)
     ))
 ])

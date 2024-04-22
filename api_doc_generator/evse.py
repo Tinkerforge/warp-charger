@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"#features_evse\"><code>\"evse\"</code></a>", "", Version.CHARGER,[
+evse = Module("evse", "Ladecontroller (EVSE)", "", "", Version.CHARGER.with_desc('**Benötigt das Feature <a href="#features_evse"><code>"evse"</code></a>**'),[
     Func("state", FuncType.STATE, Elem.OBJECT("Der Zustand des Ladecontrollers.", members={
             "iec61851_state": Elem.INT("Der aktuelle Zustand nach IEC 61851", constants=[
                     Const(0, "A: Nicht verbunden"),
@@ -16,17 +16,17 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
                     Const(3, "Lädt"),
                     Const(4, "Fehler"),
             ]),
-            "contactor_state": Elem.INT("Schützüberwachung. Überwacht wird die Spannung vor und nach dem Schütz (WARP1, WARP2) bzw. der Zustand der Schütze (WARP3)", constants=[
+            "contactor_state": Elem.INT("Zustand der Schützüberwachung.", constants=[
                 Const(0, "Nicht stromführend vor und nach dem Schütz", version=Version.WARP1 | Version.WARP2),
                 Const(1, "Stromführend vor, aber nicht stromführend nach dem Schütz", version=Version.WARP1 | Version.WARP2),
                 Const(2, "Nicht stromführend vor, aber stromführend nach dem Schütz", version=Version.WARP1 | Version.WARP2),
                 Const(3, "Stromführend vor und nach dem Schütz", version=Version.WARP1 | Version.WARP2),
                 Const("00000..11111", """Bitmaske, die den Schützzustand angibt. Von Bit 0 bis Bit 4:
-                <ol start="0"><li>Schütz-L1+N-Hilfskontakt: (gibt an ob das Schütz geschaltet ist) 1 = geschlossen; 0 = geöffnet</li>
-                 <li>Schütz L2+L3-Hilfskontakt: (gibt an ob das Schütz geschaltet ist) 1 = geschlossen; 0 = geöffnet</li>
-                 <li>Schützfehler: (siehe contactor_error) 1 = Fehler; 0 = kein Fehler</li>
-                 <li>Schütz-Spulenanschluss: 1 = Ein oder beide Schütze sollen geschaltet sein (siehe Zustand der Phasenumschaltung) 0 = Kein Schütz soll geschaltet sein</li>
-                 <li>Zustand der Phasenumschaltung (gibt an, welche Schütze geschaltet werden wenn das Spulenanschluss-Bit 1 ist). 1 = Beide Schütze werden geschaltet; dreiphasig. 0 = Nur das L1+N-Schütz wird geschaltet; einphasig</li></ol> """, version=Version.WARP3)
+                - **0** - Schütz-L1+N-Hilfskontakt: (gibt an ob das Schütz geschaltet ist) 1 = geschlossen; 0 = geöffnet
+                - **1** - Schütz L2+L3-Hilfskontakt: (gibt an ob das Schütz geschaltet ist) 1 = geschlossen; 0 = geöffnet
+                - **2** - Schützfehler: (siehe contactor_error) 1 = Fehler; 0 = kein Fehler
+                - **3** - Schütz-Spulenanschluss: 1 = Ein oder beide Schütze sollen geschaltet sein (siehe Zustand der Phasenumschaltung) 0 = Kein Schütz soll geschaltet sein
+                - **4** - Zustand der Phasenumschaltung (gibt an, welche Schütze geschaltet werden wenn das Spulenanschluss-Bit 1 ist). 1 = Beide Schütze werden geschaltet; dreiphasig. 0 = Nur das L1+N-Schütz wird geschaltet; einphasig """, version=Version.WARP3)
             ]),
             "contactor_error": Elem.INT("Fehlercode der Schützüberwachung. Ein Wert ungleich 0 zeigt einen Fehler an.", constants=[
                 Const(0, "Kein Fehler"),
@@ -99,7 +99,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
                 Const(14, "EVSE 1.4", Version.WARP1),
                 Const(15, "EVSE 1.5", Version.WARP1),
                 Const(20, "EVSE 2.0", Version.WARP2),
-                Const(30, "EVSE 2.0", Version.WARP3)
+                Const(30, "EVSE 3.0", Version.WARP3)
             ]),
             "energy_meter_type": Elem.INT("Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!", constants=[
                 Const(0, "Kein Stromzähler verfügbar"),
@@ -357,15 +357,15 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
         })
     ),
 
-    Func("gpio_configuration", FuncType.STATE, Elem.OBJECT("Die Konfiguration der konfigurierbaren Ein- und Ausgänge. Kann über evse/gpio_configuration_update mit dem selben Payload aktualisiert werden.", members={
-            "shutdown_input": Elem.INT("Die Konfiguration des Abschalteingangs.", version=Version.WARP2 | Version.WARP3, constants=[
+    Func("gpio_configuration", FuncType.STATE, Elem.OBJECT("Die Konfiguration der konfigurierbaren Ein- und Ausgänge. Kann über evse/gpio_configuration_update mit dem selben Payload aktualisiert werden.", version=Version.WARP2 | Version.WARP3, members={
+            "shutdown_input": Elem.INT("Die Konfiguration des Abschalteingangs.", constants=[
                 Const(0, "Nicht konfiguriert"),
                 Const(1, "Abschalten wenn geöffnet"),
                 Const(2, "Abschalten wenn geschlossen"),
                 Const(3, "Begrenzen auf 4200 W wenn geöffnet (§14 EnWG)"),
                 Const(4, "Begrenzen auf 4200 W wenn geschlossen (§14 EnWG)"),
             ]),
-            "input": Elem.INT("Die Konfiguration des konfigurierbaren Eingangs. Wird bei WARP3 ignoriert.", version=Version.WARP2 | Version.WARP3, constants=[
+            "input": Elem.INT("Die Konfiguration des konfigurierbaren Eingangs. Wird bei WARP3 ignoriert.", constants=[
                 Const(0, "Nicht konfiguriert"),
                 Const(1, "Blockiert wenn geschlossen"),
                 Const(2, "Limitiert auf 6 A wenn geschlossen"),
@@ -384,7 +384,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "Benötigt das Feature <a href=\"
                 Const(15, "Limitiert auf 20 A wenn geöffnet"),
                 Const(16, "Limitiert auf 25 A wenn geöffnet"),
             ]),
-            "output": Elem.INT("Die Konfiguration des konfigurierbaren Ausgangs. Wird bei WARP3 ignoriert.", version=Version.WARP2 | Version.WARP3, constants=[
+            "output": Elem.INT("Die Konfiguration des konfigurierbaren Ausgangs. Wird bei WARP3 ignoriert.", constants=[
                 Const(0, "Verbunden mit Masse"),
                 Const(1, "Hochohmig"),
             ]),

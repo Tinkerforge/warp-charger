@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", "", Version.WARPEM, [
+energy_manager = Module("energy_manager", "Energy-Manager-Konfiguration", "", "", Version.WEM, [
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Konfiguration des Energy Managers", members={
             "contactor_installed": Elem.BOOL("Gibt an, ob ein Schütz angeschlossen ist, mit dem die gesteuerten Wallboxen zwischen dreiphasigem und einphasigem Betrieb umgeschaltet werden können. Eingang 4 wird dann automatisch zur Schützüberwachung verwendet.")
         })

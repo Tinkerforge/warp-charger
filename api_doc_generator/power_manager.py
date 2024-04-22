@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-power_manager = Module("power_manager", "Konfiguration des PV-Überschussladens", "", "", Version.WARP3 | Version.WARPEM, [
+power_manager = Module("power_manager", "Konfiguration des PV-Überschussladens", "", "", Version.WARP3 | Version.WEM, [
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Konfiguration des Power Managers", members={
         "enabled": Elem.BOOL("Gibt an ob der Power Manager aktiviert ist.", constants=[
                 Const(True, "Wenn der Power Manager aktiviert ist."),
