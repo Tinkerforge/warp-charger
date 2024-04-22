@@ -83,7 +83,7 @@ const config: Config = {
           title: 'Links',
           items: [
             {
-              label: 'Dokumentation',
+              label: 'WARP Dokumentation',
               to: '/docs/home',
             },
             {
