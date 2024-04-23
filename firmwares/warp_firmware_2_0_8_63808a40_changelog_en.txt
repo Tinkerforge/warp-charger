@@ -1,0 +1,24 @@
+2022-11-25: 2.0.8 (9dbdd9f5)
+- Add WireGuard
+- Add RTC support (via Real-Time Clock 2.0 Bricklet)
+- Add "are you sure"-dialog to meter reset
+- Add config reset API
+- Add reset button to configuration pages
+- Add electricity price configuration; show cost of charge in web interface and charge log
+- Add meter/type_override
+- Add EVSE communication watchdog (through EVSE Bricklet firmware 2.1.5)
+- Fix error message if firmware update is too small
+- Fix EVSE low level value labels
+- Fix HTTP GET for payload-less commands
+- Fix losing current limits when reenabling already enabled slot
+- Fix firmware hanging after 2^32 ms (~ 49 days 17 hours)
+- Fix softAP as fallback not starting correctly
+- Fix deserialization errors not being returned via HTTP
+- Fix evse/(start/stop)_charging behaviour if not connected
+- Retry flashing Bricklets once; continue gracefully if this fails
+- Improve firmware update error handling in web interface
+- Improve network timeout handing in web interface
+- Disable current reset buttons if already 32A
+- Update timezone database
+- Improve translations
+- Web interface: Allow saving if only a +/- button was clicked

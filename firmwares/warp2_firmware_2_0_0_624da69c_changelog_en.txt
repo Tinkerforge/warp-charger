@@ -1,0 +1,63 @@
+2022-04-06: 2.0.0 (a019ae6c)
+- Break API
+- Use charging slots to decouple NFC and other controls (through EVSE 2.0 Bricklet firmware 2.1.1)
+- Add NTP time sync prototype
+- Add user management
+- Add charge tracker
+- Map NFC tags to users
+- Add network subcategory and module to configure hostname
+- Use same hostname for all network interfaces
+- Rework current configuration UI
+- Merge login page and main page
+- Fix WebSocket connection loss caused by wrong PING handling
+- Fix browser caching
+- Fix firmware compilation on Windows and macOS
+- Log WiFi MAC address
+- Add greyed out bars and RSSI alt text to WiFi reception icon
+- Log reboot reason
+- Allow passing integer values for float API values
+- Use strings in APIs for NFC tag ids and IP addresses
+- Optimize user modification
+- Add features API
+- Add delay to prevent accidental charge stops immediately after a start via NFC
+- Allow passing the value of single-member commands directly
+- Accept falsy values for null configs
+- Fix handling of missing meter on charge start and end
+- Add configurable send interval to MQTT
+- Add longer list of last charges to charge tracker page
+- Show latest charge first in list of last charges
+- Add user and time filters to charge tracker page
+- Add editable name UI to web interface
+- Add NTP page
+- Fix reported heap sizes in debug report
+- Move misc APIs to info/
+- Add NTP timezone lookup
+- Fix MQTT not publishing to some topics
+- Add username to charge log
+- Enforce unique usernames
+- Don't allow enabling HTTP Auth if no user with password is configured
+- Report correct EVSE version
+- Scroll back to top when changing sub-page
+- Improve translations
+- Refine new API
+- Add configuration migration
+- Add warning when disabling the WiFi AP
+- Fix WebSocket connections through SSL proxy
+- Fix charge tracker edge cases
+- Fix web interface error message hide logic
+- Fix MQTT payload length limit calculation
+- Fix spurious firmware update flash failures
+- Fix crash when starting without plugged in EVSE
+- Add remove all charges: Removes tracked charges but keeps configuration
+- Add config reset: removes configuration but keeps tracked charges
+- Rework UI of cards used for chargers, tags and users
+- Fix passphrase requirement when configuring another AP of the same network
+- Improve translations
+- Improve users modification performance and robustness
+- Fix event log sometimes not being shown
+- Add default NTP servers
+- Enforce unique usernames in configuration and tracked charges
+- Add usable anchors and support browser history
+- Fix tracked charge change triggered by ESP reset
+- Allow switching to another NFC tag while vehicle is plugged in
+- Add charge manager watchdog hint

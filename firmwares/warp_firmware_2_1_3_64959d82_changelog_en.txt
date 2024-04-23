@@ -1,0 +1,46 @@
+2023-06-23: 2.1.3 (0771049a)
+- Increase user and NFC tag limits to 16
+- Don't count unknown user against the limit of 16 users
+- Change energy limit setting to drop-down box
+- Add PWA-style bookmark support
+- Add option to require up-to-date meter value when starting a charge; automatically enabled the first time a meter is found
+- Improve charge management efficiency by using line currents if available
+- Add last seen NFC tag to Modbus TCP
+- Add API and Modbus TCP registers to control front button LED
+- Add identity API to device modules
+- Add charging slots to EVSE debug protocol
+- Remove NetBIOS support
+- Update timezone database
+- Increase DNS cache size
+- Re-resolve controlled charger hostnames when unresponsive
+- Improve charge manager performance when controlling ten chargers
+- MQTT auto discovery: Add availability flag to current limit
+- Improve Modbus TCP type documentation
+- Fix localization of float numbers in web interface
+- Show EVSE firmware and hardware version
+- Make sure downgrades (to at least this firmware) will work if new charging slots are added in the future
+- Fix charge management scan list order changing and containing duplicated entries
+- Fix API states sporadically missing some entries
+- Fix user authentication being lost if ESP restarts while charge is paused
+- Repair charge records with either the start or end meter value missing
+- Fix crash if NFC logic is blocked for more than one second
+- Increase NFC detection threshold to two seconds; should make duplicated detection less likely
+- Make local charger link clickable
+- Check for overlapping networks between WiFi or WireGuard IPs
+- Improve translations
+- Immediately start WiFi AP if no WiFi configured
+- Improve zero line visibility
+- Consistently scale all 48h graphs to at least 1500 W
+- Don't log if optional devices are missing
+- Clarify event log messages
+- Fix race condition in web server initialization
+- Fix charge manager handling of low priority chargers
+- Handle chargers that only support less than the minimum current as low priority
+- Fix ESP crash when accessing API concurrently
+- Fix web interface errors caused by wrong web socket message order
+- Fix race condition in MQTT initialization
+- Fix non-UTF-8 web socket payload by clamping sampled meter values into expected range
+- Fix wrong meter history calculation if samples arrive faster than every 500 ms
+- Limit debug protocol to last 20000 lines
+- Fix y-axis jump on double click in graphs
+- Auto-scale graph y-axis based on tick text width

@@ -1,0 +1,31 @@
+2022-09-14: 2.0.8 (3eb8c6ac)
+- Rework charge manager configuration UI
+- Add charger auto-detection via mDNS to charge manager
+- Add host name resolution to charge manager
+- Add staged factory reset via front panel button
+- Allow renaming the unknown user
+- Improve resolution of communicated current (through EVSE 2.0 Bricklet firmware 2.1.7)
+- Add minimum delay of 30s between error and charging states (through EVSE 2.0 Bricklet firmware 2.1.7)
+- Fix PP/PE voltage reported in EVSE low level state (through EVSE 2.0 Bricklet firmware 2.1.7)
+- Improve recovery page
+- Allow forcing a firmware update via the recovery page
+- Allow HTTP POST for commands
+- Allow HTTP GET/POST for payload-less commands
+- Support config updates without "_update" suffix (only via HTTP)
+- Check static IP configuration for common mistakes
+- Fix energy meter x-axis labels on really small screens
+- Fix WebSockets blocking the web server if a connection stays active over weeks
+- Fix duplicated NFC tag detections
+- Add reboot hint when removing all charges
+- Show spinner if saving the user config takes a long time
+- Fix HTTP error when sending tracked charges
+- Print reason for last firmware restart to event log
+- Add uptime tracker for debug purposes
+- Fix user ID overflow
+- Block creating new users if all IDs are in use
+- Reflash Bricklets stuck in bootloader mode
+- Fix status page showing up before the correct sub-page when reloading the web interface
+- Update timezone database
+- Fix manual and firmware URLs
+- Move "require user authorization to charge" to users sub-page
+- Improve translations

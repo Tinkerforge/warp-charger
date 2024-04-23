@@ -1,0 +1,42 @@
+2023-06-23: 2.1.3 (0771049a)
+- Zählerüberwachung hinzugefügt
+- Automatischen Test des DC-Fehlerstrom-Schutzmoduls mindestens alle 24 Stunden und nach Ende eines Ladevorgangs hinzugefügt (durch Update auf Ladecontroller-Firmware 2.1.13)
+- Sichergestellt, dass aktive CP-Unterbrechung nicht durch Lastmanagement oder API-Aufrufe gestört wird (durch Update auf Ladecontroller-Firmware 2.1.13)
+- Lastmanagement: Effizienz verbessert, wenn gesteuerte Wallbox über einen Stromzähler verfügt, der Phasenströme misst. (WARP2 Pro oder WARP1 mit nachgerüstetem SDM630 oder SDM72 V2)
+- Lastmanagement: Hinzugefügt, dass Hostnamen von nicht mehr erreichbaren Wallboxen neu aufgelöst werden
+- Lastmanagement: Duplizierte und springende Einträge in den Scan-Ergebnissen zu kontrollierender Wallboxen behoben
+- Lastmanagement: Behandlung von niedrig priorisierten Wallboxen behoben
+- Lastmanagement: Hinzugefügt, dass Wallboxen, die weniger als den erlaubten Minimalstrom unterstützen als niedrig priorisiert behandelt werden
+- Lastmanagement: Performance bei genau 10 gesteuerten Wallboxen verbessert
+- Button zum Testen des DC-Fehlerstrom-Schutzmoduls hinzugefügt
+- Zuletzt gesehenes NFC-Tag zu Modbus-TCP-Registern hinzugefügt
+- Front-Taster-LED-Steuerung über API und Modbus-TCP-Register hinzugefügt
+- API zum Steuern des konfigurierbaren Ausgangs hinzugefügt
+- Unbekannten Benutzer aus der Limitierung auf 16 Benutzer ausgenommen
+- NetBIOS-Unterstützung entfernt
+- Zeitzonen-Datenbank aktualisiert
+- DNS-Cache-Größe erhöht
+- Modbus-TCP-Dokumentation verbessert
+- Lokalisierung von Gleitkommazahlen im Webinterface repariert
+- Robustheit der IP-Konfiguration bei 10MBit LAN-Verbindungen verbessert
+- Anzeige von Ladecontroller-Firmware- und Hardware-Version hinzugefügt
+- Sichergestellt, dass Downgrades (auf diese Firmware oder neuer) funktionieren, selbst wenn künftig neue Ladestromgrenzen hinzugefügt werden
+- Repariert, dass sporadisch Einträge in APIs fehlten
+- Repariert, dass die Benutzerfreigabe bei einem Neustart der Wallbox, während der Ladevorgang pausiert ist, verloren ging
+- Reparatur von Ladelog-Einträgen, bei denen entweder der Start- oder End-Zählerwert fehlt, hinzugefügt
+- Absturz, wenn NFC-Logik für mehr als eine Sekunde blockiert wurde, behoben
+- NFC-Tag-Detektionsschwelle auf 2 Sekunden angehoben
+- Prüfung auf überlappende Netzwerkbereiche bei IP-Konfiguration von LAN, WLAN und WireGuard hinzugefügt
+- Übersetzungen verbessert
+- Sofortigen Start des WLAN Access Points hinzugefügt, falls keine WLAN-Verbindung konfiguriert und kein Ethernet-Kabel verbunden ist
+- Sichtbarkeit der Nulllinie in Graphen verbessert
+- Race Condition während des Starts des Webservers behoben
+- Race Condition während des Starts des MQTT-Clients behoben
+- Crash bei gleichzeitigen Zugriffen von mehreren APIs behoben
+- Webinterface-Fehler durch falsche Reihenfolge von Websocket-Nachrichten behoben
+- Websocket-Verbindungsabbrüche durch zu große Stromzählerwerte behoben
+- Ladeprotokolllänge auf (letzte) 20000 Zeilen begrenzt
+- Springende Y-Achse in Graphen bei Doppelklick behoben
+- Alle 48h-Graphen auf mindestens 1500 Watt skaliert
+- Ereignis-Log-Meldungen überarbeitet
+- Falsche Berechnung der 48-Stunden-Werte des Stromzähler-Graphen, falls Messwerte schneller als alle 500 ms ankommen, behoben

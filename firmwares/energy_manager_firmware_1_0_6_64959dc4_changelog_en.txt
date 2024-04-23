@@ -1,0 +1,17 @@
+2023-06-23: 1.0.6 (0771049a)
+- Log device found/not found message at most once
+- Improve translations
+- Fix charge manager handling of low priority chargers
+- Handle chargers that only support less than the minimum current as low priority
+- Fix ESP crash when accessing API concurrently
+- Fix web interface errors caused by wrong web socket message order
+- Fix race condition in MQTT initialization
+- Improve charge management efficiency by using line currents if available
+- Fix non-UTF-8 web socket payload by clamping sampled meter values into expected range
+- Add status bar to energy analysis day view
+- Block firmware updates if a vehicle is connected to a controlled charger and a contactor is installed
+- Fix stacked series order in day view
+- Fix wrong meter history calculation if samples arrive faster than every 500 ms
+- Limit debug protocol to last 20000 lines
+- Fix y-axis jump on double click in graphs
+- Auto-scale graph y-axis based on tick text width

@@ -1,0 +1,37 @@
+2023-02-28: 2.1.0 (17f4001d)
+- [b][a:https://www.tinkerforge.com/de/blog/new-functions-for-warp-charger-and-warp-energy-manager/]Blogpost über die neuen Features[/a][b]
+- OCPP-Unterstützung hinzugefügt (OCPPJ 1.6 Core und Smart Charging Profile)
+- PDF-Export für Ladetracker hinzugefügt
+- CSV-Export des Ladetrackers in "Excel-Kompatibel" und "nach RFC4180" aufgeteilt
+- Menüstruktur des Webinterfaces neu organisiert
+- Ladecontroller-Unterseite in Ladestatus und Ladeeinstellungen unterteilt
+- Auto-Start in manuelle Ladefreigabe umbenannt und in Ladeeinstellungen verschoben
+- Lastmanagement-Protokoll durch neue, vorwärts-kompatible Version ersetzt. [b]Alle Wallboxen eines Lastmanagement-Verbunds müssen auf Firmware 2.1.0 oder höher aktualisiert werden![/b]
+- Implementierung des Stromzähler-Graphen ausgetauscht
+- Übersetzungen verbessert
+- Watchdog als Schutz gegen hängende Firmware hinzugefügt
+- Behoben, dass WLAN-Verbindungskonfiguration nicht gespeichert werden konnte, wenn nur das gewählte Netzwerk geändert wurde
+- Behoben, dass Zahländerungen nicht angewandt wurden, wenn per Enter-Druck im Zahl-Eingabefeld gespeichert wurde
+- Enter-Druck in Modalfenstern repariert
+- Prüfung auf reservierte, Broad- und Multicast-IPs in Lastmanager-Konfiguration hinzugefügt
+- Behoben, dass Lastmanagement-Fehlerdauer nicht anstieg, wenn keine gesteuerte Wallbox antwortet
+- Behoben, dass Start- und End-Datumsauswahl nicht die Zeitzone des Nutzers berücksichtigt hat
+- Labelbreite auf der Statusseite auf kleinen Bildschirmen angepasst
+- Standard-NTP-Server für höhere Zuverlässigkeit geändert
+- Behandlung der RTC-Zeit im Fehlerfall repariert
+- "Charged Energy"-Register im Keba-Emulationsmodus repariert
+- API-Fehlermeldungen verbessert
+- Ermöglicht, dass mehr als eine API-Fehlermeldung geschickt werden kann
+- Validierung der Benutzerkonfiguration repariert
+- Behoben, dass NFC-Tag ausgewählt werden musste, wenn exakt ein Tag erkannt wurde
+- Behoben, dass immer Login-Seite angezeigt wurde, falls beim Prüfen des Anmeldestatus ein Timeout auftrat
+- Behoben, dass Benutzerkonfiguration bzw. -API bis zu einem Neustart gesperrt wurde
+- Verschränkte Stromgrenzenbeschränkungen in der Lastmanager-Konfiguration behoben
+- WLAN-Verbindungsaufbau beschleunigt
+- Boost-Modus hinzugefügt (durch Update auf Ladecontroller-Firmware 2.1.9)
+- Fahrzeug-Weckruf hinzugefügt (durch Update auf Ladecontroller-Firmware 2.1.9)
+- CP-Trennungs-API finalisiert (durch Update auf Ladecontroller-Firmware 2.1.9)
+- Sichergestellt, dass Schütz nicht unter Last geschaltet wird, wenn das Fahrzeug den Ladevorgang stoppt (durch Update auf Ladecontroller-Firmware 2.1.9)
+- Behoben, dass bei einer Notabschaltung wegen DC-Fehler zusätzlich ein Schützfehler gemeldet wurde (durch Update auf Ladecontroller-Firmware 2.1.10)
+- Behoben, dass Stromzählereinstellungen kontinuierlich geschrieben wurden (durch Update auf Ladecontroller-Firmware 2.1.10)
+- Ausgabe des letzten Stromzählerwerts repariert (durch Update auf Ladecontroller-Firmware 2.1.10)

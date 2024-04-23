@@ -1,0 +1,43 @@
+2024-01-24: 2.2.0 (32abaf21)
+- [b][a:https://www.tinkerforge.com/de/blog/new-features-in-warp2-221-and-wem-202/]Blogpost über die neuen Features[/a][/b]
+- [b]Aktualisierte [a:https://warp-charger.com/documentation/api.html]API-Dokumentation[/a][/b]
+- Automatisierung hinzugefügt
+- Unterstützung für WPA Enterprise (EAP-TLS, EAP-PEAP und EAP-TTLS) hinzugefügt
+- Stromzähler-Implementierung überarbeitet:
+- meters-API und Unterstützung von bis zu zwei Stromzählern hinzugefügt
+- Auslesen von SunSpec-Stromzählern und -Wechselrichtern hinzugefügt
+- Konfigurierbaren API-Stromzähler hinzugefügt
+- Unterstützung der Eltako DSZ15DZMOD und YTL DEM4A Stromzähler hinzugefügt (durch Update auf Ladecontroller-Firmware 2.2.0)
+- Zurücksetzbare Energie-Import- und -Export-Werte hinzugefügt
+- [b]Ladetracker usw. verwenden jetzt Energie-Import- statt wie bisher Import+Export-Wert.[/b] Wechsel findet beim nächsten Löschen der Ladevorgänge statt
+- Fehlenden "Durchschnittliche Spannung gegen Neutralleiter"-Messwert des SDM72v2 hinzugefügt
+- Maximum der (lastgemanagten) Wallboxen, NFC-Tags und Benutzern auf 32 erhöht
+- API um Ladelimits neuzustarten hinzugefügt
+- Ausgabe im Ereignislog für Zählerüberwachung hinzugefügt
+- OCPP-Transaktions-ID zu gemeldeten Stromzählerwerten hinzugefügt
+- Übersetzungen verbessert
+- MQTT-Performance verbessert
+- OCPP-Nutzerinterface verbessert
+- WLAN-Access-Point-Performance, falls gleichzeitig eine WLAN-Verbindung aufgebaut wird, verbessert
+- Fehlermeldungen in Eingabefeldern verbessert
+- DC-Fehler-Nutzerinterface verbessert. Unterstützung für X804-Sensor hinzugefügt (durch Update auf Ladecontroller-Firmware 2.2.0)
+- Diodenprüfung verbessert (durch Update auf Ladecontroller-Firmware 2.2.0)
+- Schütz- und PE-Fehler getrennt
+- Unterstützung von TLS-Versionen vor 1.2 entfernt
+- Hinzugefügt, dass WLAN-Access-Point bei instabiler WLAN-Verbindung länger geöffnet bleibt
+- Sichergestellt, dass zum WLAN-AP mit der besten Empfangsqualität verbunden wird
+- Subnetz-Konfiguration des WLAN-Access-Points repariert
+- Sichergestellt, dass Lastmanagement erst Strom verteilt, wenn alle gesteuerten Wallboxen erreichbar sind
+- Sichergestellt, dass WLAN-HT40-Modus immer deaktiviert bleibt
+- RFID-Tag-Register im Keba-Emulationsmodus ohne Stromzähler repariert
+- Web-Interface-Labels die fehlende IDs referenzieren entfernt
+- Änderung eines konfigurierten TLS-Zertifikats repariert
+- Reparatur der Zuordnung von NFC-Tags zu Nutzern beim Start der Wallbox hinzugefügt
+- Funktion des Zurück-Buttons bei Aufruf des Webinterfaces repariert
+- Tastatureingabe in Datumsfeldern repariert
+- Gemeldetes Intervall des Ladestroms in der MQTT-Auto-Discovery repariert
+- Zeitzonen-Datenbank aktualisiert
+- Anzeige der maximalen Anzahl von aufgezeichneten Ladevorgängen (7680) hinzugefügt
+- Repariert, dass Watchdog des verfügbaren Stroms des Lastmanagements permanent auslöste
+- Anzeige von LED-Blinkmustern während des Ladevorgangs erlaubt (durch Update auf Ladecontroller-Firmware 2.2.0)
+- Sichergestellt, dass Ladevorgang nicht sofort blockiert wird, wenn die externe Steuerung aktiviert wird (durch Update auf Ladecontroller-Firmware 2.2.0)

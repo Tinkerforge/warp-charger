@@ -1,0 +1,23 @@
+2023-08-23: 2.1.4 (2efbe7c5)
+- Add y-axis label to meter plot
+- Fix loading of RTC time on Sundays
+- Show firmware build time in human readable format
+- Fix charge limit blocking a charge forever
+- Add subnet mask to WiFi and network state
+- Allow full subnet mask (/0 to /32) for WireGuard
+- Fix serialization mismatch between current_charge and last_charges
+- Fix NFC tag injection API in case of injecting a tag that has already been seen before
+- Remove unnecessary release button from global current slot
+- Stop using disabled items in InputSelect as placeholder
+- Don't blink LED if user slot is not active
+- Switch from cards to table in charge manager, NFC and users UI
+- Fix recovery API call payloads
+- Fix invalid feedback if no subnet mask is selected
+- Fix potential deadlock when calling API commands
+- Fix handling of missing line currents in charge manager resulting in too low charging currents
+- Fix API meter not updating last_value_change
+- Fix boost mode after startup (through EVSE Bricklet firmware 2.1.8)
+- Make ID.3 mode work for state changes that go from C directly to A (through EVSE Bricklet firmware 2.1.8)
+- Wait for at least 30 seconds until contactor is turned on again after leaving state D (through EVSE Bricklet firmware 2.1.8)
+- Wait for at least 5 seconds until contactor is turned on again after charging was stopped (through EVSE Bricklet firmware 2.1.8)
+- Fix WireGuard crashing after a multiple of 7 days

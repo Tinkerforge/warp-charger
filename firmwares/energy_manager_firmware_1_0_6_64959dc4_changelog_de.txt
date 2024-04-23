@@ -1,0 +1,17 @@
+2023-06-23: 1.0.6 (0771049a)
+- Status-Ansicht zur Tagesansicht der Energiebilanz hinzugefügt
+- Lastmanagement: Effizienz verbessert, wenn gesteuerte Wallbox über einen Stromzähler verfügt, der Phasenströme misst. (WARP2 Pro oder WARP1 mit nachgerüstetem SDM630 oder SDM72 V2)
+- Lastmanagement: Hinzugefügt, dass Hostnamen von nicht mehr erreichbaren Wallboxen neu aufgelöst werden
+- Lastmanagement: Duplizierte und springende Einträge in den Scan-Ergebnissen zu kontrollierender Wallboxen behoben
+- Lastmanagement: Behandlung von niedrig priorisierten Wallboxen behoben
+- Lastmanagement: Hinzugefügt, dass Wallboxen, die weniger als den erlaubten Minimalstrom unterstützen als niedrig priorisiert behandelt werden
+- Lastmanagement: Performance bei genau 10 gesteuerten Wallboxen verbessert
+- Race Condition während des Starts des MQTT-Clients behoben
+- Crash bei gleichzeitigen Zugriffen von mehreren APIs behoben
+- Websocket-Verbindungsabbrüche durch zu große Stromzählerwerte behoben
+- Übersetzungen verbessert
+- Firmware-Aktualisierungen blockiert, wenn am Energy Manager ein Schütz und an einer kontrollierten Wallbox ein Fahrzeug angeschlossen ist
+- Reihenfolge der gestapelten Graphen in der Tagesansicht der Energiebilanz repariert
+- Falsche Berechnung der 48-Stunden-Werte des Stromzähler-Graphen, falls Messwerte schneller als alle 500 ms ankommen, behoben
+- Debug-Protokolllänge auf (letzte) 20000 Zeilen begrenzt
+- Springende Y-Achse in Graphen bei Doppelklick behoben

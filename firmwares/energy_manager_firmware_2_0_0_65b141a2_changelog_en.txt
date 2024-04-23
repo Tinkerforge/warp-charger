@@ -1,0 +1,41 @@
+2024-01-24: 2.0.0 (32abaf21)
+- Add automation
+- Add WPA Enterprise EAP-TLS, EAP-PEAP and EAP-TTLS support
+- Add SunSpec meter/inverter support
+- Rework meter handling. Support 7 energy meters. Add meters API
+- Add configurable API meter
+- Support Eltako DSZ15DZMOD and YTL DEM4A
+- Add resettable import/export energy values
+- Support up to 32 managed chargers, NFC tags and users
+- Add API to restart charge limits
+- Add event log message when meter becomes stuck or unreachable
+- Add warning to event log if Ethernet and WiFi station are used at the same time
+- Improve translations
+- Improve charge manager packet burst robustness
+- Improve performance when sending lots of data over MQTT
+- Improve OCPP UI
+- Improve WiFi softAP performance while connecting to WiFi network
+- Improve error feedback in web interface forms
+- Separate Contactor/PE errors
+- Show hint if capslock is enabled when entering passwords
+- Remove support of TLS versions older than 1.2
+- Keep WiFi softAP open for five minutes if connection establishment takes some time
+- Make sure to connect to AP with best RSSI
+- Allow /24 to /30 subnets for softAP
+- Charge manager: Don't distribute current if not all chargers are known yet
+- Make sure that WiFi HT40 mode is always disabled
+- Fix RFID tag registers in Keba emulation when no energy meter is available
+- Fix available power calculation in fast mode
+- Fix cloud filter
+- Fix web interface labels referencing non-existing IDs
+- Fix modification of certificates
+- Fix NFC tag to user mapping on boot-up
+- Fix 0% progress bar width
+- Fix missing "average line to neutral voltage"-value of SDM72DMv2
+- Fix browser's back button not working when accessing web interface main page
+- Fix date input keyboard entry
+- Fix reported range of external current in MQTT auto discovery
+- Only hide analysis subplots if both have no data
+- Split energy_manager API into energy_manager and power_manager
+- Support Eltako DSZ15DZMOD and YTL DEM4A (through WARP Energy Manager Bricklet firmware 2.0.5)
+- Add resettable import/export energy values

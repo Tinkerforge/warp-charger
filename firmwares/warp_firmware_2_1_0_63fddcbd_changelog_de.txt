@@ -1,0 +1,24 @@
+2023-02-28: 2.1.0 (17f4001d)
+- [b][a:https://www.tinkerforge.com/de/blog/new-functions-for-warp-charger-and-warp-energy-manager/]Blogpost über die neuen Features[/a][/b]
+- PDF-Export für Ladetracker hinzugefügt
+- CSV-Export des Ladetrackers in "Excel-Kompatibel" und "nach RFC4180" aufgeteilt
+- Menüstruktur des Webinterfaces neu organisiert
+- Ladecontroller-Unterseite in Ladestaus und Ladeeinstellungen unterteilt
+- Auto-Start in manuelle Ladefreigabe umbenannt und in Ladeeinstellungen verschoben
+- Lastmanagement-Protokoll durch neue, vorwärts-kompatible Version ersetzt Alle Wallboxen eines Lastmanagement-Verbunds müssen auf Firmware 2.1.0 oder höher aktualisiert werden!
+- Implementierung des Stromzähler-Graphen ausgetauscht
+- Übersetzungen verbessert
+- Watchdog als Schutz gegen hängende Firmware hinzugefügt
+- Behoben, dass WLAN-Verbindungskonfiguration nicht gespeichert werden konnte, wenn nur das gewählte Netzwerk geändert wurde
+- Behoben, dass Zahländerungen nicht angewandt wurden, wenn per Enter-Druck im Zahl-Eingabefeld gespeichert wurde
+- Enter-Druck in Modalfenstern repariert
+- Prüfung auf reservierte, Broad- und Multicast-IPs in Lastmanager-Konfiguration hinzugefügt
+- Behoben, dass Lastmanagement-Fehlerdauer nicht anstieg, wenn keine gesteuerte Wallbox antwortet
+- Behoben, dass Start- und End-Datumsauswahl nicht die Zeitzone des Nutzers berücksichtigt hat
+- Labelbreite auf der Statusseite auf kleinen Bildschirmen angepasst
+- Standard-NTP-Server für höhere Zuverlässigkeit geändert
+- Behandlung der RTC-Zeit im Fehlerfall repariert
+- Bei WARP1 nicht verwendbare Ladestromslots für konfigurierbaren Eingang und Abschalteingang versteckt
+- "Charged Energy"-Register im Keba-Emulationsmodus repariert
+- Sichergestellt, dass Schütz nicht unter Last geschaltet wird, wenn das Fahrzeug den Ladevorgang stoppt (durch Update auf Ladecontroller-Firmware 2.1.6)
+- Boost-Modus hinzugefügt (durch Update auf Ladecontroller-Firmware 2.1.6)

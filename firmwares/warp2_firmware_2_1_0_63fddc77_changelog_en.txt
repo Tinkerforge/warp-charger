@@ -1,0 +1,45 @@
+2023-02-28: 2.1.0 (17f4001d)
+- Add finished OCPP implementation
+- Improve API error messages
+- Show multiple API errors in one response
+- Fix user configuration validation
+- Add NFC tag if exactly one tag was seen
+- Fix login page being shown if login check times out
+- Fix user API being blocked until reboot on error
+- Fix charge manager current configuration interdependencies
+- Improve WiFi connection establishment speed
+- Add support for OCPP basic authentication
+- Add boost mode (through EVSE 2.0 Bricklet firmware 2.1.9)
+- Add EV wakeup (through EVSE 2.0 Bricklet firmware 2.1.9)
+- Fix CP disconnect API (through EVSE 2.0 Bricklet firmware 2.1.9)
+- Make sure contactor is not turned off under load (through EVSE 2.0 Bricklet firmware 2.1.9)
+- Silence confusing web socket error message
+- Send NFC tag IDs without ':' to OCPP server
+- Improve OCPP basic auth support
+- Fix OCPP connections without basic auth
+- Fix OCPP servers unexpectedly closing connections by sending web socket pings
+- Add OCPP status bar
+- Send Energy.Active.Import.Register via OCPP by default
+- Add PDF export for charge logs
+- Add CSV export flavors
+- Reorganize web interface menu structure
+- Split EVSE subpage into status and settings subpages
+- Move auto start charging into EVSE settings
+- Replace charge management protocol with new forwards-compatible version
+- Replace meter graph implementation
+- Improve translations
+- Add API to retrieve core dump
+- Add watchdog protecting against firmware lock-ups
+- Fix WiFi not allowing configuration to be saved if only the selected network has changed
+- Fix float configuration values being dropped if configuration is saved by pressing enter in float input
+- Fix charge manager, NFC and users modal form submission
+- Add check for reserved, broadcast and multicast IP addresses in charge manager configuration
+- Fix charge manager error duration not increasing if all chargers don't send packets anymore
+- Fix start/end date selection of charge tracker log export not considering the user's timezone
+- Fix status page label widths
+- Change default NTP server for improved reliability
+- Fix RTC time handling
+- Fix charged energy register in Modbus/TCP Keba emulation mode
+- Don't report contactor check error in case of emergency shutdown (through EVSE 2.0 Bricklet firmware 2.1.10)
+- Don't set energy meter configuration continuously (through EVSE 2.0 Bricklet firmware 2.1.10)
+- Fix last meter value always being reported as 0 (through EVSE 2.0 Bricklet firmware 2.1.10)

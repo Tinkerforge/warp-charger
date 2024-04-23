@@ -1,0 +1,25 @@
+2023-02-28: 2.1.0 (17f4001d)
+- Don't show shutdown and GP input current slots
+- Add PDF export for charge logs
+- Add CSV export flavors
+- Add boost mode (through EVSE Bricklet firmware 2.1.6)
+- Make sure contactor is not turned off under load (through EVSE Bricklet firmware 2.1.6)
+- Reorganize web interface menu structure
+- Split EVSE subpage into status and settings subpages
+- Move auto start charging into EVSE settings
+- Replace charge management protocol with new forwards-compatible version
+- Replace meter graph implementation
+- Improve translations
+- Add API to retrieve core dump
+- Add watchdog protecting against firmware lock-ups
+- Improve WiFi connection establishment speed
+- Fix WiFi not allowing configuration to be saved if only the selected network has changed
+- Fix float configuration values being dropped if configuration is saved by pressing enter in float input
+- Fix charge manager, NFC and users modal form submission
+- Add check for reserved, broadcast and multicast IP addresses in charge manager configuration
+- Fix charge manager error duration not increasing if all chargers don't send packets anymore
+- Fix start/end date selection of charge tracker log export not considering the user's timezone
+- Fix status page label widths
+- Change default NTP server for improved reliability
+- Fix RTC time handling
+- Fix charged energy register in Modbus/TCP Keba emulation mode
