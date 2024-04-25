@@ -372,8 +372,7 @@ class Elem:
         if version == Version.ANY:
             version_desc = self.version.desc if hasattr(self.version, "desc") and self.version.desc is not None else self.version.label(row=True)
 
-        content = f"""<br/><br/><br/>
-## `{f.api_name(module)}` {{#{(f.api_name(module)).replace("/", "_") + "_" + version.name.lower()}}}
+        content = f"""## `{f.api_name(module)}` {{#{(f.api_name(module)).replace("/", "_") + "_" + version.name.lower()}}}
 {version_desc}
 {self.desc}
 """
@@ -512,7 +511,7 @@ import TabItem from '@theme/TabItem';
                 for f in fns:
                     functions.append(f.root.root_to_md(f, self.name if not self.hide_prefix else None, ver))
 
-            result += "\n\n".join(functions)
+            result += "\n<br/><br/><br/>\n".join(functions)
             result += '</TabItem>\n'
 
         result += '</Tabs>\n'
