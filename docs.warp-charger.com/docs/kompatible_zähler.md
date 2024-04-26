@@ -2,7 +2,11 @@
 sidebar_position: 9
 ---
 
-# SunSpec
+# Kompatible Zähler
+
+TODO: Allgemeine Beschreibung wofür brauchen wir zähler
+
+## Sunspec
 
 [SunSpec](https://sunspec.org/sunspec-modbus-specifications/) ist ein offener Kommunikationsstandard, der gemeinsame Parameter und Einstellungen für die Überwachung und Steuerung von dezentralen Energieerzeugungsanlagen festlegt.
 
@@ -27,3 +31,19 @@ Generell sollte jedes SunSpec-kompatible Gerät ausgelesen werden können. Mit d
 * Sunny Boy 3.6
 
 Wenn du einen Wechselrichter oder Energiemanager mit SunSpec-Unterstützung hast der bei dir funktionert und noch nicht in der Liste ist, schicke uns doch eine Email an [info@tinkerforge.com](mailto://info@tinkerforge.com) damit wir die Liste aktualisieren können.
+
+## SMA (Speedwire)
+
+TODO
+
+## Sungrow (Modbus/TCP)
+
+TODO
+
+## Shelly
+
+TODO
+
+## Push-API (HTTP/MQTT)
+
+TODO
