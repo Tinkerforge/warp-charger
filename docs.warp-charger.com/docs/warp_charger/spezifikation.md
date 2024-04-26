@@ -47,6 +47,7 @@ Der WARP3 Charger zeichnet sich durch folgende technische Spezifikation aus:
 | NFC Typen | NFC Forum Typ1, Typ2, Typ3 und Mifare Classic unterstützt (auch eigene Karten anlernbar) |
 | Benutzer | Max. 32 konfigurierbar |
 | Schnittstellen | HTTP, MQTT, Modbus/TCP, OCPP, SunSpec |
+| Modbus-Register | WARP Charger Tabelle und Simulation von Bender CC613 und Keba C-Series |
 
 (*) Je nach Variante der Wallbox (Basic/Smart/Pro, 5m/7,5m, 11kW/22kW).
 

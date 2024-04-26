@@ -15,7 +15,7 @@ from pymodbus.client    import ModbusTcpClient
 from pymodbus.constants import Endian
 from pymodbus.payload   import BinaryPayloadDecoder
 
-# Register for power in Watt.
+# Register for power in Watt
 REGISTER_POWER = 2002
 
 # Create client object and connect to it
