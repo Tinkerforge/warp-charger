@@ -36,7 +36,7 @@ manual/:
  * LaTeX source and used resources for the manual
 
 warp-charger.com/:
- * The source of the WARP Charger web site
+ * The source of the WARP Charger web site (this site is deprecated, the old hand-written html site has been moved to a wordpress)
 
 Firmwares
 ---------
