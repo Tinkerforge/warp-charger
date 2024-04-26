@@ -18,7 +18,7 @@ Generell kann die Ladeleistung der Wallbox über alle implementierten
 Schnittstellen gesteuert werden. Netzbetreiber setzen
 zur Steuerung typischerweise OCPP oder Modbus TCP ein.
 
-### Rundsteuerempfänger/Steuerbox
+### Rundsteuerempfänger/Steuerbox direkt am WARP Charger
 
 Am Abschalteingang innerhalb der Wallbox kann ein potentialfreier
 Kontakt (spannungsfreier Schaltkontakt) angeschlossen werden. Dazu muss
@@ -34,7 +34,7 @@ werden.
 
 ![image](/img/first_steps/14enwg_input.png)
 
-### Rundsteuerempfänger/Steuerbox (mittels WARP Energy Manager) 
+### Rundsteuerempfänger/Steuerbox mittels WARP Energy Manager
 
 Anstatt eine Steuerleitung in die Wallbox zu legen, besteht auch die
 Möglichkeit, die Eingänge des WARP Energy Managers mit dem
