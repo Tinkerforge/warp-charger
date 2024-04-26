@@ -2,7 +2,7 @@
 sidebar_position: 9
 ---
 
-# Kompatible Zähler
+# Kompatible Stromzähler
 
 TODO: Allgemeine Beschreibung wofür brauchen wir zähler
 
