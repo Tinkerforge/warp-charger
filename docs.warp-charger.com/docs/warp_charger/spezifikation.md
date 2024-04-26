@@ -1,8 +1,8 @@
 ---
-sidebar_position: 3
+sidebar_position: 9
 ---
 
-# WARP3 Charger
+# Spezifikation
 
 Der WARP3 Charger zeichnet sich durch folgende technische Spezifikation aus:
 
