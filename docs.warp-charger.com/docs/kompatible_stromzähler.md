@@ -54,8 +54,8 @@ Der WARP Energy Manager kann Stromzähler per Modbus/RTU auslesen. Dies ist vor 
 Zähler am Hausanschluss vorhanden ist. In dem Fall kann ein WARP Energy Manager sowie einer der folgenden
 kompatiblen Modbus/RTU-Stromzähler gesetzt werden:
 
-* Eastron SMD72V2
-* Eastron SMD630
+* Eastron SDM72V2
+* Eastron SDM630
 * Eastron SDM630MCTV2 (Wandler-Stromzähler)
 * Eltako DSZ15DZMOD
 * YTL DEM4A

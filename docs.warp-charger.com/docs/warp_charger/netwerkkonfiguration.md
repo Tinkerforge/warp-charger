@@ -22,7 +22,7 @@ kann die Konfiguration der Wallbox vorgenommen werden, indem auf das
 Webinterface der Wallbox zugegriffen wird.
 
 Die Zugangsdaten des Access-Points finden sich auf dem
-WLAN-Zugangsdaten-Aufkleber auf der Rückseite dieser Anleitung. Es kann
+WLAN-Zugangsdaten-Aufkleber auf der Rückseite der Betriebsanleitung. Es kann
 entweder der QR-Code des Aufklebers, der das WLAN automatisch
 konfiguriert, oder die SSID und Passphrase verwendet werden. Die meisten
 Kamera-Apps von Smartphones unterstützen das Auslesen des QR-Codes und
@@ -55,7 +55,7 @@ kann der zuvor genannte Zugriff auf das Webinterface über den
 WLAN-Access-Point genutzt werden, um die IP-Adresse der
 LAN-Schnittstelle zu ermitteln.
 
-## Schritt 2: Integration in das eigene Netzwerk 
+## Schritt 2: Integration in das eigene Netzwerk
 
 Die Wallbox kann per WLAN oder LAN in ein Netzwerk eingebunden werden.
 Im Menüpunkt Netzwerk finden sich alle Einstellungsmöglichkeiten:
@@ -74,7 +74,7 @@ das Webinterface erreichbar ist, geändert werden (Standard ist Port 80).
 
 Eine Möglichkeit, um die Wallbox in ein Netzwerk zu integrieren, ist
 mittels WLAN. Durch Drücken des "Netzwerksuche"-Buttons öffnet sich ein
-Menü, in dem das gewünschte WLAN ausgewählt werden kann. 
+Menü, in dem das gewünschte WLAN ausgewählt werden kann.
 
 ![image](/img/first_steps/network_wifi_search.png)
 
@@ -94,7 +94,7 @@ gleichen Kanal wie ein eventuell verbundenes Netz verwendet, kann es
 sein, dass die Verbindung zum Access-Point neu aufgebaut werden muss.
 
 Bei einer erfolgreichen Verbindung sollte die Wallbox jetzt im
-konfigurierten Netzwerk unter 
+konfigurierten Netzwerk unter
 http://[konfigurierter_hostname, z.B. http://warp3-ABC erreichbar sein.
 
 ### WLAN-Access-Point
