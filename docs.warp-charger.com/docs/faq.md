@@ -85,7 +85,7 @@ Der WARP3 Charger wird mit einem DSZ15DZMOD-3x80A von Eltako ausgeliefert. Zusä
 
 ### Wie viele Teilnehmer werden vom Lastmanager unterstützt?
 
-Ein WARP3 Charger kann als Lastmanager konfiguriert werden. Dieser kann in Summe (inkl. sich selbst) maximal 32 Wallboxen kontrollieren. 
+Ein WARP3 Charger kann als Lastmanager konfiguriert werden. Dieser kann in Summe (inkl. sich selbst) maximal 32 Wallboxen kontrollieren.
 
 Eine andere Möglichkeit ist es den WARP Energy Manager als Lastmanager zu konfigurieren. Dieser kann dann auch bis zu 32 Wallboxen kontrollieren.
 
