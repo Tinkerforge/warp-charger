@@ -1,7 +1,7 @@
 from api_doc_common import *
 
 users = Module("users", "Benutzerverwaltung", "", "", Version.CHARGER, [
-    Func("config", FuncType.STATE, Elem.OBJECT("Die Benutzerkonfiguration. Kann über die nachfolgenden Kommandos modifiziert werden.", members={
+    Func("config", FuncType.STATE, Elem.OBJECT("Die Benutzerkonfiguration. Kann mit {{{ref:users/add}}}, {{{ref:users/modify}}}, {{{ref:users/remove}}} und {{{ref:users/http_auth_update}}} aktualisiert werden.", members={
             "users": Elem.ARRAY("Die Benutzer", members=[
                 * 17 * [Elem.OBJECT("Ein Benutzer", members={
                     "id": Elem.INT("ID des Benutzers (1-255)"),

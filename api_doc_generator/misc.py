@@ -7,7 +7,6 @@ misc = Module("misc", "Sonstiges", "", "", Version.ANY, [
 
     Func("force_reboot", FuncType.HTTP_ONLY, Elem.OPAQUE("Erzwingt einen sofortigen Neustart des ESPs. Nützlich, falls {{{ref:reboot}}} aus irgendwelchen Gründen hängt.")),
 
-    Func("update", FuncType.HTTP_ONLY, Elem.OPAQUE("Notfall-Update-Seite mit der eine Firmware-Aktualisierung eingespielt werden kann, auch wenn das normale Webinterface nicht funktioniert.")),
     Func("flash_firmware", FuncType.HTTP_ONLY, Elem.OPAQUE("Nimmt ein Firmware-Update als POST entgegen, dass dann geflasht wird.")),
 
     Func("config_reset", FuncType.COMMAND, Elem.OBJECT("Setzt alle Einstellungen zurück aber behält aufgezeichnete Ladevorgänge und die Nutzernamenhistorie. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.", members={

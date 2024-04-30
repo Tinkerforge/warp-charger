@@ -25,12 +25,12 @@ meters = Module("meters", "Stromzähler", "",
     Func("X/value_ids", FuncType.STATE, Elem.ARRAY("Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus {{{ref:meters/X/values}}} an. <a href=\"https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv\">Dokumentation der MeterValueIDs</a>", member_type=EType.INT)),
 
     Func("X/history", FuncType.HTTP_ONLY, Elem.OBJECT("Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.", members={
-        "offset": Elem.FLOAT("Das Alter des zuletzt gemessenen Wertes.", unit=Units.s),
+        "offset": Elem.INT("Das Alter des zuletzt gemessenen Wertes.", unit=Units.ms),
         "samples": Elem.ARRAY("Die gemessenen Werte.", unit=Units.W, member_type=EType.INT)
     })),
 
     Func("X/live", FuncType.HTTP_ONLY, Elem.OBJECT("Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für {{{ref:meters/X/history}}} generiert.", members={
-        "offset": Elem.FLOAT("Das Alter des zuletzt gemessenen Wertes.", unit=Units.s),
+        "offset": Elem.INT("Das Alter des zuletzt gemessenen Wertes.", unit=Units.ms),
         "samples_per_second": Elem.FLOAT("Die Anzahl der gemessenen Werte pro Sekunde.", unit=Units.Hz),
         "samples": Elem.ARRAY("Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.", unit=Units.W, member_type=EType.INT)
     })),
@@ -120,17 +120,19 @@ meters = Module("meters", "Stromzähler", "",
 
 
     Func("history", FuncType.HTTP_ONLY, Elem.OBJECT("Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.", members={
-        "offset": Elem.FLOAT("Das Alter des zuletzt gemessenen Wertes.", unit=Units.s),
-        "samples": Elem.ARRAY("Die gemessenen Werte aller Stromzähler. Die Größe des Arrays ist 2 bei WARP1 und WARP2, 7 beim WARP Energy Manager.", members=
-            2 * [Elem.ARRAY("Die gemessenen Werte des jeweiligen Stromzählers", unit=Units.W, member_type=EType.INT)]
+        "offset": Elem.INT("Das Alter des zuletzt gemessenen Wertes.", unit=Units.ms),
+        "samples": Elem.ARRAY("Die gemessenen Werte aller Stromzähler.", members=
+              (2 * [Elem.ARRAY("Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.", unit=Units.W, member_type=EType.INT, version=Version.CHARGER)])
+            + (7 * [Elem.ARRAY("Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.", unit=Units.W, member_type=EType.INT, version=Version.WEM)])
         )
     })),
 
-    Func("live", FuncType.HTTP_ONLY, Elem.OBJECT("Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für {{{ref:meters/history}}} generiert.", members={
-        "offset": Elem.FLOAT("Das Alter des zuletzt gemessenen Wertes.", unit=Units.s),
+    Func("live", FuncType.HTTP_ONLY, Elem.OBJECT("Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für {{{ref:meters/history}}} generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.", members={
+        "offset": Elem.INT("Das Alter des zuletzt gemessenen Wertes.", unit=Units.ms),
         "samples_per_second": Elem.FLOAT("Die Anzahl der gemessenen Werte pro Sekunde.", unit=Units.Hz),
-        "samples": Elem.ARRAY("Die gemessenen Werte aller Stromzähler. Die Größe des Arrays ist 2 bei WARP1 und WARP2, 7 beim WARP Energy Manager..", members=
-            2 * [Elem.ARRAY("Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.", unit=Units.W, member_type=EType.INT)]
+        "samples": Elem.ARRAY("Die gemessenen Werte aller Stromzähler.", members=
+             (2 * [Elem.ARRAY("Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.", unit=Units.W, member_type=EType.INT, version=Version.CHARGER)]
+            + 7 * [Elem.ARRAY("Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.", unit=Units.W, member_type=EType.INT, version=Version.WEM)])
         )
     }))
 ])

@@ -84,7 +84,7 @@ wifi = Module("wifi", "WLAN-Konfiguration", "", "", Version.ANY, [
         })
     ),
 
-    Func("scan_results", FuncType.HTTP_ONLY, Elem.OPAQUE("Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden. Ein Array aus Objekten des folgenden Formats:" +
+    Func("scan_results", FuncType.HTTP_ONLY, Elem.ARRAY("Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden.", is_var_length_array=True, members=[
             Elem.OBJECT("", members={
             "ssid": Elem.STRING("SSID des gefundenen WLANs. Leer bei versteckten Access Points."),
             "bssid": Elem.STRING("BSSID des gefundenen WLANs."),
@@ -99,6 +99,6 @@ wifi = Module("wifi", "WLAN-Konfiguration", "", "", Version.ANY, [
                 Const(5, "WPA2-Enterprise"),
                 Const(6, "Unbekannt")
             ])
-        }).to_table(True, Version.ANY)
-    ))
+            })
+    ]))
 ])

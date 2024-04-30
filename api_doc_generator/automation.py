@@ -5,12 +5,12 @@ automation = Module("automation", "Automatisierung", "", "", Version.ANY, [
         "registered_triggers": Elem.ARRAY("Dieser Firmware bekannte Bedingungen (Union-Tags des Triggers einer Regel aus {{{ref:automation/config}}})", members=[
             * 18 * [Elem.INT("Eine bekannte Bedingung.")]]),
         "registered_actions": Elem.ARRAY("Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus {{{ref:automation/config}}})", members=[
-            * 15 * [Elem.INT("Eine bekannte Bedingung.")]]),
+            * 15 * [Elem.INT("Eine bekannte Aktion.")]]),
 
         "enabled_triggers": Elem.ARRAY("Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus {{{ref:automation/config}}})", members=[
-            * 18 * [Elem.INT("Eine bekannte Bedingung.")]]),
+            * 18 * [Elem.INT("Eine ausführbare Bedingung.")]]),
         "enabled_actions": Elem.ARRAY("Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus {{{ref:automation/config}}})", members=[
-            * 15 * [Elem.INT("Eine bekannte Bedingung.")]]),
+            * 15 * [Elem.INT("Eine ausführbare Aktion.")]]),
     })),
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die Konfiguration der Automatisierung.", members={
             "tasks": Elem.ARRAY("Konfigurierte Regeln", members=[
