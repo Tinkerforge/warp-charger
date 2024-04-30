@@ -5,6 +5,28 @@ import itertools
 
 import re
 
+import os
+
+def get_example_from_file(api: str, prefix_version: str):
+    if prefix_version == "warp":
+        prefix_version = "warp1"
+
+    try:
+        path = f'./examples/{api}.jsonc'
+
+        _dir, file = api.rsplit("/", 1)
+        versioned_dir = f'./examples/{_dir}'
+        for x in os.listdir(versioned_dir):
+            if x.startswith(file) and f'.{prefix_version}.' in x and x.endswith('.jsonc'):
+                path = os.path.join(versioned_dir, x)
+                break
+
+        with open(path, 'r') as f:
+            return f.read().strip()
+    except Exception as e:
+        print(f"Failed to load example for {api} ({prefix_version}): {e}")
+        return None
+
 def wrap_non_empty(prefix, middle, suffix):
     if len(middle) == 0:
         return ''
@@ -364,6 +386,167 @@ class Elem:
 
         return result
 
+    def get_examples(self, f: Func, module: str, version: Version) -> str:
+        prefix_version = version
+        if version == Version.ANY:
+            if self.version == Version.ANY:
+                prefix_version = Version.WARP1
+            else:
+                prefix_version = next(x for x in self.version)
+        if prefix_version == Version.WARP1:
+            prefix_version = "warp"
+        else:
+            prefix_version = prefix_version.name.lower()
+
+        example_state_template = f""":::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. {prefix_version}-AbCd
+```
+            #### Lesen
+```bash
+curl http://$HOST/{f.api_name(module)}
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. {prefix_version}/AbCd
+```
+            #### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/{f.api_name(module)}
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{{payload}}
+```
+:::
+"""
+
+        example_command_template = f""":::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. {prefix_version}-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/{f.api_name(module)} -d '{{payload}}'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. {prefix_version}/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/{f.api_name(module)} -m '{{payload}}'
+```
+        </TabItem>
+    </Tabs>
+:::
+"""
+
+        example_config_template = f""":::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. {prefix_version}-AbCd
+```
+
+            #### Lesen
+```bash
+curl http://$HOST/{f.api_name(module)}
+```
+```jsx
+{{read_payload}}
+```
+
+            #### Schreiben
+
+```bash
+curl http://$HOST/{f.api_name(module)} -d '{{write_payload}}'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. {prefix_version}/AbCd
+```
+
+            #### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/{f.api_name(module)}
+```
+```jsx
+{{read_payload}}
+```
+
+            #### Schreiben
+            Mit MQTT auf <code>$PREFIX/{f.api_name(module)}<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/{f.api_name(module)}_update -m '{{write_payload}}'
+```
+        </TabItem>
+    </Tabs>
+:::
+"""
+
+        example_http_only_template = f""":::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. {prefix_version}-AbCd
+```
+```bash
+curl http://$HOST/{f.api_name(module)}
+```
+```jsx
+{{payload}}
+```
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
+"""
+
+        if f.type_ == FuncType.STATE:
+            payload = get_example_from_file(f.api_name(module), prefix_version)
+            if payload is not None:
+                return example_state_template.format(payload=payload)
+            return ""
+        elif f.type_ == FuncType.COMMAND:
+            payload = get_example_from_file(f.api_name(module), prefix_version)
+            if payload is not None:
+                return example_command_template.format(payload=payload)
+            if f.root.type_ == EType.NULL:
+                return example_command_template.format(payload="null")
+
+            return ""
+        elif f.type_ == FuncType.CONFIGURATION:
+            read_payload = get_example_from_file(f.api_name(module), prefix_version)
+            write_payload = get_example_from_file(f.api_name(module) + "_update", prefix_version)
+            if read_payload is not None and write_payload is not None:
+                return example_config_template.format(read_payload=read_payload,
+                                                      write_payload=write_payload)
+            return ""
+        elif f.type_ == FuncType.HTTP_ONLY:
+            payload = get_example_from_file(f.api_name(module), prefix_version)
+            if payload is not None:
+                return example_http_only_template.format(payload=payload)
+            return ""
+        else:
+            print(f"Function type {f.type_} not supported for examples yet!")
+            return ""
 
     def root_to_md(self, f: Func, module: str, version: Version) -> str:
         if not(version in self.version or version == Version.ANY):
@@ -373,19 +556,31 @@ class Elem:
         if version == Version.ANY:
             version_desc = self.version.desc if hasattr(self.version, "desc") and self.version.desc is not None else self.version.label(row=True)
 
-        content = f"""## `{f.api_name(module)}` {{#{(f.api_name(module)).replace("/", "_") + "_" + version.name.lower()}}}
+        content = f'## `{f.api_name(module)}` {{#{(f.api_name(module)).replace("/", "_") + "_" + version.name.lower()}}}\n'
+
+        if f.type_ == FuncType.HTTP_ONLY:
+            content += """<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+"""
+        content += f"""
 {version_desc}
 {self.desc}
 """
 
         if self.type_ == EType.NULL:
-            table = '**Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**'
+            content += '**Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**\n'
             if f.type_ != FuncType.COMMAND:
                 print("Function {} has a null payload but is not a command?!?".format(f.name))
-            elif f.command_is_action:
-                table += "\n\n**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**"
-        elif self.type_ == EType.ARRAY and self.is_var_length_array:
+
+        if f.command_is_action:
+            content += '<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>\n'
+
+        content += self.get_examples(f, module, version)
+
+        if self.type_ == EType.NULL:
             table = ""
+        elif self.type_ == EType.ARRAY and self.is_var_length_array:
+            table = self.to_table(is_root=True, version=version)
         elif self.type_ == EType.UNION or self.type_ == EType.HIDDEN_UNION:
             table = self.to_tabs(is_root=True, version=version)
         else:
@@ -394,7 +589,17 @@ class Elem:
         if f.type_ != FuncType.STATE and self.type_ == EType.OBJECT and len(self.val.items()) == 1 and not "do_i_know_what_i_am_doing" in self.val:
             table = "\n\n**<a href=\"#states_section_shortcuts\">Kann abgekürzt werden.</a>**" + table
 
-        return content + "\n" + table + "\n"
+        content += "\n" + table + "\n"
+
+        if f.type_ == FuncType.HTTP_ONLY:
+            content += """    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
+"""
+
+        return content
 
     def to_table(self, is_root: bool, version: Version) -> str:
         table_template = """
@@ -424,12 +629,18 @@ class Elem:
         if self.type_ == EType.ARRAY:
             idx = 0
             rows = []
+            if self.is_var_length_array and self.val is None:
+                return ""
             for group, elements in itertools.groupby(self.val):
                 if version not in group.version and version != Version.ANY:
                     continue
 
                 count = len(list(elements))
-                rows.append(group.to_table_row("[{}]".format(idx) if count == 1 else "[{}..{}]".format(idx, idx + count - 1), version))
+                if self.is_var_length_array:
+                    length = "[..]"
+                else:
+                    length = "[{}]".format(idx) if count == 1 else "[{}..{}]".format(idx, idx + count - 1)
+                rows.append(group.to_table_row(length, version))
                 idx += count
 
             return table_template.format(name_or_index="Index", rows='\n'.join(rows))
@@ -484,6 +695,7 @@ class Module:
 import MultilineTabs from '@site/src/components/MultilineTabs';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
 
 # {self.display_name}
 """
