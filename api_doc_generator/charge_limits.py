@@ -9,7 +9,7 @@ charge_limits = Module("charge_limits", "Ladezeit- und -energielimits", "", "", 
         })
     ),
 
-    Func("default_limits", FuncType.CONFIGURATION, Elem.OBJECT("Konfiguration der Zeit- und Energielimits für Ladevorgänge. Diese kann über charge_limits/default_limits_update mit dem selben Payload aktualisiert werden.", members={
+    Func("default_limits", FuncType.CONFIGURATION, Elem.OBJECT("Konfiguration der Zeit- und Energielimits für Ladevorgänge.", members={
             "duration": Elem.INT("Zeitlimit eines Ladevorgangs. Nach Ablaufen des Zeitlimits wird der Ladevorgang gestoppt.", constants=[
                 Const(0, "Unbegrenzt"),
                 Const(1, "15 Minuten"),

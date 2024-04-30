@@ -26,7 +26,7 @@ wifi = Module("wifi", "WLAN-Konfiguration", "", "", Version.ANY, [
 
     Func("scan", FuncType.COMMAND, Elem.NULL("Löst einen Scan nach WLANs aus. Die Scan-Ergebnisse können derzeit nur über HTTP abgefragt werden."), command_is_action=True),
 
-    Func("sta_config", FuncType.CONFIGURATION, Elem.OBJECT("Die WLAN-Verbindungskonfiguration. Diese kann über wifi/sta_config_update mit dem selben Payload aktualisiert werden.", members={
+    Func("sta_config", FuncType.CONFIGURATION, Elem.OBJECT("Die WLAN-Verbindungskonfiguration.", members={
             "enable_sta": Elem.BOOL("Gibt an ob eine WLAN-Verbindung zum konfigurierten Netzwerk aufgebaut werden soll.", constants=[
                 Const(True, "Wenn eine WLAN-Verbindung aufgebaut werden soll."),
                 Const(False, "Wenn nicht.")
@@ -65,7 +65,7 @@ wifi = Module("wifi", "WLAN-Konfiguration", "", "", Version.ANY, [
         })
     ),
 
-    Func("ap_config", FuncType.CONFIGURATION, Elem.OBJECT("Die WLAN-Access-Point-Konfiguration. Diese kann über wifi/ap_config_update mit dem selben Payload aktualisiert werden. <strong>Achtung! Wenn der Access Point deaktiviert wird, und die WLAN-Verbindung bzw. LAN-Verbindung nicht aufgebaut werden kann, bzw. nicht konfiguriert wurde, kann der ESP nur noch durch einen Factory-Reset erreicht werden!</strong> Wir empfehlen, den Access Point immer im Fallback-Modus zu belassen.", members={
+    Func("ap_config", FuncType.CONFIGURATION, Elem.OBJECT("Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deaktiviert wird, und die WLAN-Verbindung bzw. LAN-Verbindung nicht aufgebaut werden kann, bzw. nicht konfiguriert wurde, kann der ESP nur noch durch einen Factory-Reset erreicht werden!</strong> Wir empfehlen, den Access Point immer im Fallback-Modus zu belassen.", members={
             "enable_ap": Elem.BOOL("Gibt an ob der Access Point aktiviert werden soll.", constants=[
                 Const(True, "Der AP soll aktiviert werden. Ggfalls. nur als Fallback (siehe ap_fallback_only)"),
                 Const(False, "Der AP soll immer deaktiviert bleiben.")

@@ -22,7 +22,7 @@ info = Module("info", "Allgemeine Informationen", "", "", Version.ANY, [
             "uid": Elem.STRING("UID der Wallbox bzw. des verbauten ESP (Ethernet) Bricks.")
         })
     ),
-    Func("display_name", FuncType.CONFIGURATION, Elem.OBJECT("Benutzerlesbarer Name der Wallbox. Kann über info/display_name_update mit dem selben Payload gesetzt werden.", members={
+    Func("display_name", FuncType.CONFIGURATION, Elem.OBJECT("Benutzerlesbarer Name der Wallbox.", members={
             "display_name": Elem.STRING("Der Anzeigename.")
         })
     ),

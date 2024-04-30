@@ -13,7 +13,7 @@ wireguard = Module("wireguard", "WireGuard-Verbindung", "", "", Version.ANY, [
         })
     ),
 
-    Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die WireGuard-Konfiguration. Diese kann über wireguard/config_update mit dem selben Payload aktualisiert werden.", members={
+    Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die WireGuard-Konfiguration.", members={
             "enable": Elem.BOOL("Gibt an ob eine WireGuard-Verbindung zum konfigurierten Peer aufgebaut werden soll.", constants=[
                 Const(True, "Wenn WireGuard aktiviert ist."),
                 Const(False, "Wenn WireGuard deaktiviert ist.")

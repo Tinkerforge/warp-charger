@@ -101,7 +101,7 @@ power_manager = Module("power_manager", "Konfiguration des PV-Überschussladens"
             ])
         })
     ),
-    Func("charge_mode", FuncType.STATE, Elem.OBJECT("Aktuell verwendeter Lademodus. Kann über power_manager/charge_mode_update mit dem selben Payload aktualisiert werden.", members={
+    Func("charge_mode", FuncType.CONFIGURATION, Elem.OBJECT("Aktuell verwendeter Lademodus.", members={
             "mode": Elem.INT("", constants=[
                 Const(0, "Schnell. Lädt Fahrzeuge so schnell wie möglich, selbst wenn dafür Netzbezug notwendig ist."),
                 Const(1, "Aus. Fahrzeuge werden nicht geladen."),
@@ -110,7 +110,7 @@ power_manager = Module("power_manager", "Konfiguration des PV-Überschussladens"
             ])
         })
     ),
-    Func("external_control", FuncType.STATE, Elem.OBJECT("Phasenanforderung für externe Steuerung. Nimmt über power_manager/external_control_update Kommandos zur Phasenumschaltung an, wenn external_control in power_manager/state 0 ist.", members={
+    Func("external_control", FuncType.CONFIGURATION, Elem.OBJECT("Phasenanforderung für externe Steuerung. Kann geschrieben werden, wenn external_control in {{{ref:power_manager/state}}} 0 ist.", members={
             "phases_wanted": Elem.INT("", constants=[
                 Const(0, "Keine Phasen angefordert, keine Stromfreigabe."),
                 Const(1, "Eine Phase angefordert."),

@@ -136,7 +136,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", "", Version.CHARGER.with_desc
         })
     ),
 
-    Func("indicator_led", FuncType.STATE, Elem.OBJECT("Der Zustand der LED im Taster. Kann über {{{ref:evse/indicator_led_update}}} mit dem selben Payload geschrieben werden, falls die LED-Steuerung per API (siehe {{{ref:evse/led_configuration}}}) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.", members={
+    Func("indicator_led", FuncType.CONFIGURATION, Elem.OBJECT("Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung per API (siehe {{{ref:evse/led_configuration}}}) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.", members={
             "indication": Elem.INT("Aktuell gesetzter Zustand.", constants=[
                 Const(-1, "EVSE kontrolliert LED"),
                 Const(0, "Aus"),
@@ -285,12 +285,12 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", "", Version.CHARGER.with_desc
         })
     ),
 
-    Func("external_current", FuncType.STATE, Elem.OBJECT("Der von der externen Steuerung vorgegebene Ladestrom. Kann über evse/external_current_update mit dem selben Payload gesetzt werden.", members={
+    Func("external_current", FuncType.CONFIGURATION, Elem.OBJECT("Der von der externen Steuerung vorgegebene Ladestrom.", members={
             "current": Elem.INT("Der von der externen Steuerung vorgegebene Ladestrom. 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockiert.", unit=Units.mA)
         })
     ),
 
-    Func("external_clear_on_disconnect", FuncType.STATE, Elem.OBJECT("Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abziehen eines Fahrzeugs automatisch auf 0 gesetzt werden soll. Kann über evse/external_clear_on_disconnect_update mit dem selben Payload gesetzt werden.", members={
+    Func("external_clear_on_disconnect", FuncType.CONFIGURATION, Elem.OBJECT("Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abziehen eines Fahrzeugs automatisch auf 0 gesetzt werden soll.", members={
             "clear_on_disconnect": Elem.BOOL("Gibt an, ob der Ladestrom dieses Slots beim Abziehen eines Fahrzeugs auf 0 gesetzt wird.", constants=[
                 Const(True, "Slot wird beim Abziehen blockieren"),
                 Const(False, "Slot wird gesetzten Ladestrom beim Abziehen beibehalten"),
@@ -298,22 +298,22 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", "", Version.CHARGER.with_desc
         })
     ),
 
-    Func("management_current", FuncType.STATE, Elem.OBJECT("Der vom Lastmanagement vorgegebene Ladestrom. Kann über evse/management_current_update mit dem selben Payload gesetzt werden.", members={
+    Func("management_current", FuncType.CONFIGURATION, Elem.OBJECT("Der vom Lastmanagement vorgegebene Ladestrom.", members={
             "current": Elem.INT("6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockieren soll.", unit=Units.mA)
         })
     ),
 
-    Func("auto_start_charging", FuncType.STATE, Elem.OBJECT("Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Dieser Wert kann über evse/auto_start_charging_update mit dem selben Payload aktualisiert werden.", members={
+    Func("auto_start_charging", FuncType.CONFIGURATION, Elem.OBJECT("Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird.", members={
             "auto_start_charging": Elem.BOOL("Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Falls aktiviert, beginnt sofort, wenn das Fahrzeug angeschlossen wird der Ladevorgang. Falls deaktiviert, kann das Laden mit {{{ref:evse/start_charging}}} gestartet werden."),
         })
     ),
 
-    Func("global_current", FuncType.STATE, Elem.OBJECT("Der über das Webinterface vorgegebene Ladestrom. Kann über evse/global_current_update mit dem selben Payload gesetzt werden.", members={
+    Func("global_current", FuncType.CONFIGURATION, Elem.OBJECT("Der über das Webinterface vorgegebene Ladestrom.", members={
             "current": Elem.INT("Der über das Webinterface vorgegebene Ladestrom. 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockiert.", unit=Units.mA)
         })
     ),
 
-    Func("management_enabled", FuncType.STATE, Elem.OBJECT("Gibt an, ob der Ladeslot des Lastmanagements aktiv ist. Der Wert kann über evse/management_enabled_update mit dem selben Payload aktualisiert werden.", members={
+    Func("management_enabled", FuncType.CONFIGURATION, Elem.OBJECT("Gibt an, ob der Ladeslot des Lastmanagements aktiv ist.", members={
             "enabled": Elem.BOOL("true wenn Lastmanagement aktiviert ist, sonst false")
         })
     ),
@@ -323,17 +323,17 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", "", Version.CHARGER.with_desc
         })
     ),
 
-    Func("user_enabled", FuncType.STATE, Elem.OBJECT("Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist. Der Wert kann über evse/user_enabled_update mit dem selben Payload aktualisiert werden.", members={
+    Func("user_enabled", FuncType.CONFIGURATION, Elem.OBJECT("Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist.", members={
             "enabled": Elem.BOOL("true wenn die Benutzerautorisierung aktiviert ist, sonst false")
         })
     ),
 
-    Func("external_enabled", FuncType.STATE, Elem.OBJECT("Gibt an, ob der Ladeslot der externen Steuerung aktiv ist. Der Wert kann über evse/external_enabled_update mit dem selben Payload aktualisiert werden.", members={
+    Func("external_enabled", FuncType.CONFIGURATION, Elem.OBJECT("Gibt an, ob der Ladeslot der externen Steuerung aktiv ist.", members={
             "enabled": Elem.BOOL("true wenn die externe Steuerung aktiviert ist, sonst false")
         })
     ),
 
-    Func("external_defaults", FuncType.STATE, Elem.OBJECT("Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Ladeslots der externen Steuerung. Der Wert kann über evse/external_defaults_update mit dem selben Payload aktualisiert werden.", members={
+    Func("external_defaults", FuncType.CONFIGURATION, Elem.OBJECT("Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Ladeslots der externen Steuerung.", members={
             "current": Elem.INT("Der nach einem Neustart übernommene Maximalstrom im Ladeslot der externen Steuerung. 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockiert.", unit=Units.mA),
             "clear_on_disconnect": Elem.BOOL("Gibt an, ob der Ladestrom dieses Slots beim Abziehen eines Fahrzeugs auf 0 gesetzt wird.", constants=[
                 Const(True, "Slot wird beim Abziehen blockieren"),
@@ -342,22 +342,22 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", "", Version.CHARGER.with_desc
         })
     ),
 
-    Func("modbus_tcp_enabled", FuncType.STATE, Elem.OBJECT("Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Schreibzugriff gewährt wurde). Der Wert kann über evse/modbus_tcp_enabled_update mit dem selben Payload aktualisiert werden.", members={
+    Func("modbus_tcp_enabled", FuncType.CONFIGURATION, Elem.OBJECT("Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Schreibzugriff gewährt wurde).", members={
             "enabled": Elem.BOOL("true wenn die Ladeslots für Modbus-TCP aktiviert sind, sonst false")
         })
     ),
 
-    Func("ocpp_enabled", FuncType.STATE, Elem.OBJECT("Gibt an, ob der Ladeslot für OCPP aktiv ist. Der Wert kann über evse/ocpp_enabled_update mit dem selben Payload aktualisiert werden.", members={
+    Func("ocpp_enabled", FuncType.CONFIGURATION, Elem.OBJECT("Gibt an, ob der Ladeslot für OCPP aktiv ist.", members={
             "enabled": Elem.BOOL("true wenn OCPP aktiviert ist, sonst false")
         })
     ),
 
-    Func("automation_current", FuncType.STATE, Elem.OBJECT("Der von der Automatisierung erlaubte Ladestrom. Kann über evse/automation_current_update mit dem selben Payload aktualisiert werden.", members={
+    Func("automation_current", FuncType.CONFIGURATION, Elem.OBJECT("Der von der Automatisierung erlaubte Ladestrom.", members={
             "current": Elem.INT("Der von der Automatisierung erlaubte Ladestrom. 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockiert.", unit=Units.mA)
         })
     ),
 
-    Func("gpio_configuration", FuncType.STATE, Elem.OBJECT("Die Konfiguration der konfigurierbaren Ein- und Ausgänge. Kann über evse/gpio_configuration_update mit dem selben Payload aktualisiert werden.", version=Version.WARP2 | Version.WARP3, members={
+    Func("gpio_configuration", FuncType.CONFIGURATION, Elem.OBJECT("Die Konfiguration der konfigurierbaren Ein- und Ausgänge.", version=Version.WARP2 | Version.WARP3, members={
             "shutdown_input": Elem.INT("Die Konfiguration des Abschalteingangs.", constants=[
                 Const(0, "Nicht konfiguriert"),
                 Const(1, "Abschalten wenn geöffnet"),
@@ -391,7 +391,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", "", Version.CHARGER.with_desc
         })
     ),
 
-    Func("button_configuration", FuncType.STATE, Elem.OBJECT("Die Konfiguration des Tasters in der Frontblende. Diese kann über evse/button_configuration_update mit dem selben Payload aktualisiert werden. Benötigt das Feature <a href=\"#features_button_configuration\"><code>\"button_configuration\"</code></a>", members={
+    Func("button_configuration", FuncType.CONFIGURATION, Elem.OBJECT("Die Konfiguration des Tasters in der Frontblende. Benötigt das Feature <a href=\"#features_button_configuration\"><code>\"button_configuration\"</code></a>", members={
             "button": Elem.INT("Die Konfiguration des Tasters in der Frontblende.", constants=[
                 Const(0, "Deaktiviert"),
                 Const(1, "Ladestart wenn gedrückt"),
@@ -402,15 +402,15 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", "", Version.CHARGER.with_desc
         version=Version.WARP2 | Version.WARP3)
     ),
 
-    Func("led_configuration", FuncType.STATE, Elem.OBJECT("Die Konfiguration der LED des Tasters in der Frontblende. Diese kann über evse/led_configuration_update mit dem selben Payload aktualisiert werden.", members={
-            "enable_api": Elem.BOOL("Legt fest, ob die LED über die {{{ref:evse/indicator_led_update}}}-API oder über Modbus TCP gesteuert werden darf.", constants=[
-                Const(False, "LED darf nicht gesteuert werden. Aufrufe von {{{ref:evse/indicator_led_update}}} werden ignoriert"),
-                Const(True, "LED darf gesteuert werden. Aufrufe von {{{ref:evse/indicator_led_update}}} werden nur dann ignoriert, wenn das EVSE einen Fehlerzustand anzeigen möchte.")
+    Func("led_configuration", FuncType.CONFIGURATION, Elem.OBJECT("Die Konfiguration der LED des Tasters in der Frontblende.", members={
+            "enable_api": Elem.BOOL("Legt fest, ob die LED über die {{{ref:evse/indicator_led}}}-API oder über Modbus TCP gesteuert werden darf.", constants=[
+                Const(False, "LED darf nicht gesteuert werden. Aufrufe von {{{ref:evse/indicator_led}}} werden ignoriert"),
+                Const(True, "LED darf gesteuert werden. Aufrufe von {{{ref:evse/indicator_led}}} werden nur dann ignoriert, wenn das EVSE einen Fehlerzustand anzeigen möchte.")
             ]),
         })
     ),
 
-    Func("user_calibration", FuncType.STATE, Elem.OBJECT("Erlaubt es, die werksseitige Kalibrierung des EVSEs auszulesen und zu überschreiben. Dieser Wert kann über evse/user_calibration_update mit dem selben Payload aktualisiert werden. Um die Kalibierung auf den Werkszustand zurückzusetzen, kann ein Payload mit user_calibration_active auf false geschickt werden. Die weiteren Werte werden dann ignoriert.", members={
+    Func("user_calibration", FuncType.CONFIGURATION, Elem.OBJECT("Erlaubt es, die werksseitige Kalibrierung des EVSEs auszulesen und zu überschreiben. Um die Kalibierung auf den Werkszustand zurückzusetzen, kann ein Payload mit user_calibration_active auf false geschickt werden. Die weiteren Werte werden dann ignoriert.", members={
             "user_calibration_active": Elem.BOOL("Gibt an, ob die werksseitige Kalibrierung überschrieben wurde."),
             "voltage_diff": Elem.INT("Einer der Kalibrierungsparameter."),
             "voltage_mul": Elem.INT("Einer der Kalibrierungsparameter."),
@@ -421,27 +421,27 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", "", Version.CHARGER.with_desc
         version=Version.WARP1)
     ),
 
-    Func("ev_wakeup", FuncType.STATE, Elem.OBJECT("Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus einem Energiesparmodus zu wecken, indem ein Abziehen und Anstecken des Ladekabels vorgetäuscht wird. (Control-Pilot-Trennung/CP-Trennung) Dieser Wert kann über evse/ev_wakeup_update mit dem selben Payload aktualisiert werden. Benötigt das Feature <a href=\"#features_cp_disconnect\"><code>\"cp_disconnect\"</code></a>", version=Version.WARP2 | Version.WARP3, members={
+    Func("ev_wakeup", FuncType.CONFIGURATION, Elem.OBJECT("Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus einem Energiesparmodus zu wecken, indem ein Abziehen und Anstecken des Ladekabels vorgetäuscht wird. (Control-Pilot-Trennung/CP-Trennung) Benötigt das Feature <a href=\"#features_cp_disconnect\"><code>\"cp_disconnect\"</code></a>", version=Version.WARP2 | Version.WARP3, members={
             "enabled": Elem.BOOL("true wenn die Ladeelektronik des Fahrzeugs geweckt werden soll")
         })
     ),
 
-    Func("control_pilot_disconnect", FuncType.STATE, Elem.OBJECT("Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) Dieser Wert kann über evse/control_pilot_disconnect_update mit dem selben Payload aktualisiert werden. <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe {{{ref:evse/management_enabled}}}.  Benötigt das Feature <a href=\"#features_cp_disconnect\"><code>\"cp_disconnect\"</code></a>", version=Version.WARP2 | Version.WARP3, members={
+    Func("control_pilot_disconnect", FuncType.CONFIGURATION, Elem.OBJECT("Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe {{{ref:evse/management_enabled}}}.  Benötigt das Feature <a href=\"#features_cp_disconnect\"><code>\"cp_disconnect\"</code></a>", version=Version.WARP2 | Version.WARP3, members={
             "disconnect": Elem.BOOL("true falls CP getrennt ist, sonst false")
         })
     ),
 
-    Func("boost_mode", FuncType.STATE, Elem.OBJECT("Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Ladestrom vorgibt (+ 0,24 A) um Messfehler der Ladeelektronik zu kompensieren. Nur Verwenden, falls ein Fahrzeug mit einem kleineren als dem erlaubten Ladestrom lädt! Dieser Wert kann über evse/boost_mode_update mit dem selben Payload aktualisiert werden.", members={
+    Func("boost_mode", FuncType.CONFIGURATION, Elem.OBJECT("Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Ladestrom vorgibt (+ 0,24 A) um Messfehler der Ladeelektronik zu kompensieren. Nur Verwenden, falls ein Fahrzeug mit einem kleineren als dem erlaubten Ladestrom lädt!", members={
             "enabled": Elem.BOOL("true falls der Boost-Modus aktiviert ist, sonst false")
         })
     ),
 
-    Func("phase_auto_switch", FuncType.STATE, Elem.OBJECT("Konfiguriert, ob ein WARP3 Charger Pro automatisch von drei- auf einphasiges Laden wechseln soll, wenn ein Fahrzeug angeschlossen ist, dass nur auf L1 Strom bezieht. Dieser Wert kann über evse/phase_auto_switch mit dem selben Payload aktualisiert werden.", version=Version.WARP3, members={
+    Func("phase_auto_switch", FuncType.CONFIGURATION, Elem.OBJECT("Konfiguriert, ob ein WARP3 Charger Pro automatisch von drei- auf einphasiges Laden wechseln soll, wenn ein Fahrzeug angeschlossen ist, dass nur auf L1 Strom bezieht.", version=Version.WARP3, members={
             "enabled": Elem.BOOL("true falls die automatische Umschaltung aktiviert ist, sonst false")
         })
     ),
 
-    Func("phases_connected", FuncType.STATE, Elem.OBJECT("Konfiguriert, ob die Wallbox fest ein- oder dreiphasig angeschlossen ist. Damit wird z.B. die 4200 W-Limitierung nach §14 EnWG berechnet", version=Version.WARP2 | Version.WARP3, members={
+    Func("phases_connected", FuncType.CONFIGURATION, Elem.OBJECT("Konfiguriert, ob die Wallbox fest ein- oder dreiphasig angeschlossen ist. Damit wird z.B. die 4200 W-Limitierung nach §14 EnWG berechnet", version=Version.WARP2 | Version.WARP3, members={
             "phases": Elem.INT("Maximale Anzahl der angeschlossenen Phasen. Eine Wallbox hinter einem Phasenumschaltungsschütz (z.B mit dem WARP Energy Manager) ist dreiphasig angeschlossen.", constants=[
                 Const(1, "Wallbox ist fest einphasig angeschlossen"),
                 Const(3, "Wallbox ist fest dreiphasig, oder hinter einem Phasenumschaltungsschütz angeschlossen")
@@ -457,7 +457,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", "", Version.CHARGER.with_desc
 
     Func("trigger_dc_fault_test", FuncType.COMMAND, Elem.NULL("Startet einen Test des DC-Fehlerstrom-Schutzmoduls.", version=Version.WARP2 | Version.WARP3)),
 
-    Func("gp_output", FuncType.STATE, Elem.OBJECT("Der aktuelle Wert des konfigurierbaren Ausgangs. Dieser Wert kann über evse/gp_output_update mit dem selben Payload aktualisiert werden.", version=Version.WARP2, members={
+    Func("gp_output", FuncType.CONFIGURATION, Elem.OBJECT("Der aktuelle Wert des konfigurierbaren Ausgangs.", version=Version.WARP2, members={
             "gp_output": Elem.INT("Der aktuelle Wert des konfigurierbaren Ausgangs.", constants=[
                 Const(0, "Verbunden mit Masse"),
                 Const(1, "Hochohmig"),

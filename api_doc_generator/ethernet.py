@@ -21,7 +21,7 @@ ethernet = Module("ethernet", "LAN-Verbindung", "Benötigt das Feature <a href=\
         })
     ),
 
-    Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die LAN-Verbindungskonfiguration. Diese kann über ethernet/config_update mit dem selben Payload aktualisiert werden.", members={
+    Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die LAN-Verbindungskonfiguration.", members={
             "enable_ethernet": Elem.BOOL("Gibt an ob eine LAN-Verbindung zum konfigurierten Netzwerk aufgebaut werden soll.", constants=[
                 Const(True, "Wenn eine LAN-Verbindung aufgebaut werden soll."),
                 Const(False, "Wenn nicht.")

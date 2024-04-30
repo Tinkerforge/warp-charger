@@ -1,24 +1,24 @@
 from api_doc_common import *
 
 charge_manager = Module("charge_manager", "Lastmanager", "", "", Version.ANY, [
-    Func("available_current", FuncType.STATE, Elem.OBJECT("Der derzeit zur Verfügung stehende Strom. Kann über charge_manager/available_current_update aktualisiert werden. Dieser Strom wird unter den konfigurierten Wallboxen aufgeteilt.", members={
+    Func("available_current", FuncType.CONFIGURATION, Elem.OBJECT("Der derzeit zur Verfügung stehende Strom. Dieser Strom wird unter den konfigurierten Wallboxen aufgeteilt.", members={
             "current": Elem.INT("Der zur Verfügung stehende Strom. Darf nicht großer sein als der konfigurierte Maximalstrom maximum_available_current aus {{{ref:charge_manager/config}}}.", unit=Units.mA),
         })
     ),
 
-    Func("available_phases", FuncType.STATE, Elem.OBJECT("Anzahl der derzeit verbundenen Phasen der Wallboxen. Kann über charge_manager/available_phases_update aktualisiert werden.", members={
+    Func("available_phases", FuncType.CONFIGURATION, Elem.OBJECT("Anzahl der derzeit verbundenen Phasen der Wallboxen.", members={
             "phases": Elem.INT("Anzahl der verbundenen Phasen. Legt fest, ob der einphasige oder dreiphasige minimale Ladestrom für die Stromverteilung beachtet wird. Wird üblicherweise durch die Phasenumschaltung des Energy Managers vorgegeben.", unit=Units.mA),
         })
     ),
 
     Func("state", FuncType.STATE, Elem.OPAQUE("Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Object werden nicht als API-Bruch betrachtet!</strong>")),
 
-    Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die Lastmanager-Konfiguration. Diese kann über charge_manager/config_update mit dem selben Payload aktualisiert werden.", members={
+    Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die Lastmanager-Konfiguration.", members={
             "enable_charge_manager": Elem.BOOL("Gibt an, ob der Lastmanager aktiviert sein soll.", constants=[
                 Const(True, "Wenn der Lastmanager aktiviert ist."),
                 Const(False, "Wenn der Lastmanager nicht aktiviert ist.")
             ]),
-            "enable_watchdog": Elem.BOOL("Gibt an, ob der Watchdog aktiviert sein soll. Der Watchdog setzt, wenn 30 Sekunden lang keine Nachricht auf {{{ref:charge_manager/available_current_update}}} einging, den verfügbaren Strom auf die Default-Einstellung (default_available_current). Damit kann die Robustheit gegen Ausfall einer externen Steuerung, z.B. bei PV-Überschussladung erhöht werden.", constants=[
+            "enable_watchdog": Elem.BOOL("Gibt an, ob der Watchdog aktiviert sein soll. Der Watchdog setzt, wenn 30 Sekunden lang keine Nachricht auf {{{ref:charge_manager/available_current}}} einging, den verfügbaren Strom auf die Default-Einstellung (default_available_current). Damit kann die Robustheit gegen Ausfall einer externen Steuerung, z.B. bei PV-Überschussladung erhöht werden.", constants=[
                 Const(True, "Wenn der Watchdog aktiviert ist."),
                 Const(False, "Wenn der Watchdog nicht aktiviert ist.")
             ]),
