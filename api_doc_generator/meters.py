@@ -1,5 +1,9 @@
 from api_doc_common import *
 
+def meters_x_get_tag_fn(api: str, info: list):
+    meter = api.rsplit("/", 1)[0]
+    return next(x for x in info if x["path"] == meter + "/config")["content"]["tag"]
+
 meters = Module("meters", "Stromzähler", "",
     """WARP Charger und Energy Manager unterstützen mehrere Stromzähler.
     Die Stromzähler-API ist aufgeteilt in einem allgemeinen Teil unter meters/...
@@ -62,7 +66,7 @@ meters = Module("meters", "Stromzähler", "",
         })
     })),
 
-    Func("X/state", FuncType.STATE, Elem.HIDDEN_UNION("Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in {{{ref:meters/X/config}}} konfiguriert wurde.", tab_id="metersXConfig", members={
+    Func("X/state", FuncType.STATE, Elem.HIDDEN_UNION("Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in {{{ref:meters/X/config}}} konfiguriert wurde.", tab_id="metersXConfig", get_tag_fn=meters_x_get_tag_fn, members={
             0: Elem.NULL("Kein Stromzähler konfiguriert."),
             1: Elem.OBJECT("Zustand des internen Stromzählers", members={
                 "type": Elem.INT("Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jedem Gerät unterstützt!", constants=[
@@ -88,7 +92,7 @@ meters = Module("meters", "Stromzähler", "",
         })
     ),
 
-    Func("X/errors", FuncType.STATE, Elem.HIDDEN_UNION("Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in {{{ref:meters/X/config}}} konfiguriert wurde.", tab_id="metersXConfig", members={
+    Func("X/errors", FuncType.STATE, Elem.HIDDEN_UNION("Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in {{{ref:meters/X/config}}} konfiguriert wurde.", tab_id="metersXConfig", get_tag_fn=meters_x_get_tag_fn, members={
              0: Elem.NULL("Kein Stromzähler konfiguriert."),
              1: Elem.OBJECT("Fehlerzähler des internen Stromzählers", members={
                 "meter": Elem.INT("Kommunikationsfehler zwischen RS485 Bricklet und Stromzähler."),

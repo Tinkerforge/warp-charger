@@ -6,214 +6,313 @@ from mods import mods
 import json
 import sys
 
-def typecheck(et: EType, obj, consts: Optional[list[Const]], path):
-    if consts is not None and obj not in [x.val for x in consts]:
-        print("{}: Implementation value {} not in list of constants".format(path, obj))
-        return
-
-    if et == EType.OBJECT and not isinstance(obj, dict):
-        print("{}: Type mismatch: Documented OBJECT, returned {}".format(path, type(obj)))
-        return
-    if et == EType.ARRAY and not isinstance(obj, list):
-        print("{}: Type mismatch: Documented ARRAY, returned {}".format(path, type(obj)))
-        return
-    if et == EType.STRING and not isinstance(obj, str):
-        print("{}: Type mismatch: Documented STRING, returned {}".format(path, type(obj)))
-        return
-    if et == EType.INT and (not isinstance(obj, int) or isinstance(obj, bool)): # True and False are ints
-        print("{}: Type mismatch: Documented INT, returned {}".format(path, type(obj)))
-        return
-    # We have to allow None (null in JSON) for floats, because a NaN can not be represented in JSON. ArduinoJSON turns NaNs into nulls.
-    if et == EType.FLOAT and not isinstance(obj, float) and not isinstance(obj, int) and not obj is None:
-        print("{}: Type mismatch: Documented FLOAT, returned {}".format(path, type(obj)))
-        return
-    if et == EType.BOOL and not isinstance(obj, bool):
-        print("{}: Type mismatch: Documented BOOL, returned {}".format(path, type(obj)))
-        return
-    if et == EType.NULL and not obj is None:
-        print("{}: Type mismatch: Documented NULL, returned {}".format(path, type(obj)))
-        return
-    if et == EType.OPAQUE:
-        return
-
-def check_elem_doc(e: Elem, obj, path):
-    if e.censored:
-        if obj is not None and obj != "":
-            print("{}: Documented as censored but implementation returned value {}".format(path, obj))
-        return
-
-    if e.type_ == EType.OBJECT:
-        if not isinstance(obj, dict):
-            print("{}: Documented as object but implementation returned value {}".format(path, obj))
-            return
-
-        if set(e.val.keys()) != set(obj.keys()):
-            conf_but_not_impl = set(e.val.keys()) - set(obj.keys())
-            impl_but_not_conf = set(obj.keys()) - set(e.val.keys())
-
-            if len(conf_but_not_impl) != 0 and len(impl_but_not_conf) != 0:
-                print("{}: key mismatch. Implementation misses: {} Documentation misses {}".format(path, conf_but_not_impl, impl_but_not_conf))
-            elif len(conf_but_not_impl) != 0:
-                print("{}: key mismatch. Implementation misses: {}".format(path, conf_but_not_impl))
-            elif len(impl_but_not_conf) != 0:
-                print("{}: key mismatch. Documentation misses: {}".format(path, impl_but_not_conf))
-            return
-
-        for k in obj.keys():
-            check_elem_doc(e.val[k], obj[k], "{}[{}]".format(path, k))
-        return
-
-    if e.type_ == EType.ARRAY:
-        if not isinstance(obj, list):
-            print("{}: Documented as array but implementation returned value {}".format(path, obj))
-            return
-
-        if e.val is not None:
-            if len(e.val) != len(obj):
-                print("{}: Array length mismatch: Documentation {} implementation {}".format(path, len(e.val), len(obj)))
-                return
-
-            for i in range(len(obj)):
-                check_elem_doc(e.val[i], obj[i], "{}[{}]".format(path, i))
-            return
-
-        if e.is_var_length_array:
-            for i, x in enumerate(obj):
-                typecheck(e.var_length_array_type, x, e.constants, "{}(var-length)[{}]".format(path, i))
-            return
-
-    return typecheck(e.type_, obj, e.constants, path)
-
-
-if len(sys.argv) != 3:
-    print("Usage: {} [version] [path/to/debug_report.json]".format(sys.argv[0]))
-    sys.exit(0)
-
-# Those may appear in a debug report, but are not documented
-UNDOCUMENTED = [
-    "uptime",
-    "free_heap_bytes",
-    "largest_free_heap_block",
-    "devices",
-    "error_counters",
-    "debug/state",
-    "debug/state_static",
-    "debug/state_fast",
-    "debug/state_slow",
-    "debug/state_hwm",
-    "proxy/devices",
-    "proxy/error_counters",
-    "ethernet/force_reset",
-    "charge_manager/scan",
-    "info/ws",
-    "ocpp/state",
-    "ocpp/configuration",
-    "energy_manager/debug_config",
-    "energy_manager/history_wallbox_5min",
-    "energy_manager/history_wallbox_daily",
-    "energy_manager/history_energy_manager_5min",
-    "energy_manager/history_energy_manager_daily",
-    "coredump/state",
-    "meters_sun_spec/scan",
-
-    #DeviceModule API
-    "evse/identity",
-    "evse/reflash",
-    "evse/reset",
-    "nfc/identity",
-    "nfc/reflash",
-    "nfc/reset",
-    "rs485/identity",
-    "rs485/reflash",
-    "rs485/reset",
-    "rtc/identity",
-    "rtc/reflash",
-    "rtc/reset",
-    "energy_manager/identity",
-    "energy_manager/reflash",
-    "energy_manager/reset",
+UNDOCUMENTED_MODULES = [
+    "automation_trigger", # This is a HTTP wildcard handler. We currently can't document those
+    "debug",
+    "hidden_proxy"
 ]
 
-version = Version(int(sys.argv[1]))
 
-mods = [m for m in mods if version in m.version]
+UNDOCUMENTED_FUNCTIONS = [
+    # Maybe document in the future
+        "http_only charge_tracker/pdf",
+        "state info/ws", # Web socket debug info. Maybe document as opaque?
+        "http_only check_firmware", # Document if we document how to flash a firmware via HTTP
+        "http_only event_log",
+        "state ocpp/configuration",
+        "state ocpp/state",
 
-# Those are documented, but will not appear in a debug report. Typically raw commands.
-IMPLEMENTED = [
-    "users/modify"
+        "state power_manager/debug_config",
+        "state power_manager/debug_config_modified",
+        "command power_manager/debug_config_reset",
+        "command power_manager/debug_config_update",
+    # End maybe document in the future
+
+
+    # Don't document
+        # Page handlers
+            "http_only ",
+            "http_only manifest.json",
+            "http_only recovery",
+        # End page handlers
+
+        "http_only *", # API HTTP handler
+
+        "http_only api_info", # Only usable if DEBUG_FS_ENABLE is defined
+
+        "command charge_manager/scan",
+        "http_only charge_manager/scan_result",
+
+        "command ethernet/force_reset", # Maybe remove this API in the future
+
+        "http_only credential_check", # Only required for the web interface to show a nice login dialogue
+        "http_only login_state", # Only required for the web interface to show a nice login dialogue
+    # End don't document
+
+    # DeviceModule API
+    "state evse/identity",
+    "command evse/reflash",
+    "command evse/reset",
+    "state nfc/identity",
+    "command nfc/reflash",
+    "command nfc/reset",
+    "state rs485/identity",
+    "command rs485/reflash",
+    "command rs485/reset",
+    "state rtc/identity",
+    "command rtc/reflash",
+    "command rtc/reset",
+    "state energy_manager/identity",
+    "command energy_manager/reflash",
+    "command energy_manager/reset",
 ]
 
-all_functions = set(["{}/{}".format(m.name, f.name) if m.name != "misc" else f.name for m in mods for f in m.functions])
+colors = {"off":"\x1b[00m",
+          "blue":   "\x1b[34m",
+          "cyan":   "\x1b[36m",
+          "green":  "\x1b[32m",
+          "red":    "\x1b[31m",
+          "gray": "\x1b[90m",
+          "yellow": "\x1b[33m",
+          "blink": "\x1b[5m"}
 
-for m in mods:
-    for f in m.functions:
-        if f.type_ == FuncType.HTTP_ONLY:
-            all_functions.discard("{}/{}".format(m.name, f.name) if m.name != "misc" else f.name)
-        if version not in f.root.version:
-            all_functions.discard("{}/{}".format(m.name, f.name) if m.name != "misc" else f.name)
+def red(s):
+    return colors["red"]+s+colors["off"]
 
-for x in IMPLEMENTED:
-    all_functions.discard(x)
+def yellow(s):
+    return colors['yellow']+s+colors["off"]
 
-def filter_elem(e: Elem, ver: int):
-    if e.val is None:
-        return e
+pedantic = False
+def print_pedantic(s):
+    global pedantic
+    if pedantic:
+        print(colors['gray'] + s + colors['off'])
 
-    if isinstance(e.val, list):
-        e.val = [filter_elem(x, ver) for x in e.val if ver in x.version]
+def check_element(elem: Elem, info: dict, name: str, path: str, keys_to_censor: list[str], version: Version, api_info: list):
+    type_dict = {
+        "array": EType.ARRAY,
+        "bool": EType.BOOL,
+        "float": EType.FLOAT,
+        "int": EType.INT,
+        "null": EType.NULL,
+        "object": EType.OBJECT,
+        "string": EType.STRING,
+        "uint": EType.INT,
+        "union": EType.UNION
+    }
 
-    if isinstance(e.val, dict):
-        e.val = {k: filter_elem(v, ver) for k, v in e.val.items() if ver in v.version}
+    if elem.type_ == EType.OPAQUE:
+        return
 
-    return e
+    if elem.type_ != EType.HIDDEN_UNION and elem.type_ != type_dict[info["type"]]:
+        print(red(f'Type mismatch: {path} is implemented as {info["type"]} but documented as {elem.type_.name}'))
+        return
 
-for m in mods:
-    m.functions = [f for f in m.functions if version in f.root.version]
-    for f in m.functions:
-        f.root = filter_elem(f.root, version)
+    if (name in keys_to_censor) != elem.censored:
+        print(yellow(f'{path} is {"" if name in keys_to_censor else "not "}censored, but documented as {"" if elem.censored else "not "}censored'))
 
-with open(sys.argv[2]) as f:
-    content = f.readlines()[3:]
-    for i, x in enumerate(content):
-        if x.endswith("}\n"):
-            content = content[:i+1]
-            break
+    if elem.type_ == EType.OBJECT:
+        doc_missing = set(x["key"] for x in info["entries"]).difference(k for k, v in elem.val.items() if version in v.version)
+        impl_missing = set(k for k, v in elem.val.items() if version in v.version).difference(x["key"] for x in info["entries"])
 
-    debug_report = json.loads("".join(content))
+        if len(doc_missing) > 0:
+            print(red(f"{path} undocumented keys\n"), "\t" + "\n\t".join(sorted(doc_missing)))
 
-for k, v in debug_report.items():
-    all_functions.discard(k)
+        if len(impl_missing) > 0:
+            print(red(f"{path} documented, but unimplemented keys\n"), "\t" + "\n\t".join(sorted(impl_missing)))
 
-    if k in UNDOCUMENTED:
-        continue
-    if k.endswith("_update") and k.replace("_update", "") in debug_report:
-        continue
-    if k.endswith("_modified") and k.replace("_modified", "") in debug_report:
-        continue
-    if k.endswith("_reset") and k.replace("_reset", "") in debug_report:
-        continue
+        for k, v in elem.val.items():
+            if version not in v.version or k in impl_missing:
+                continue
 
-    mod, fn = parse_api_name(k)
+            check_element(v, next(x["value"] for x in info["entries"] if x["key"] == k), k, f'{path}["{k}"]', keys_to_censor, version, api_info)
+    if elem.type_ == EType.ARRAY:
+        variant_type = {
+            0: EType.NULL,
+            1: EType.STRING,
+            2: EType.FLOAT,
+            3: EType.INT,
+            4: EType.INT,
+            5: EType.BOOL,
+            6: EType.ARRAY,
+            7: EType.OBJECT,
+            8: EType.UNION
+        }[info["variantType"]]
 
-    for m in mods:
-        if m.name != mod:
+        if not elem.is_var_length_array and info["minElements"] != info["maxElements"]:
+            print_pedantic(f'Length mismatch: {path} is not documented as variable length array but implementation minElements {info["minElements"]} != maxElements {info["maxElements"]}')
+
+        if not elem.is_var_length_array and elem.val is not None and sum(1 for x in elem.val if version in x.version) != info["maxElements"]:
+            print(red(f'Length mismatch: {path} is documented as having {sum(1 for x in elem.val if version in x.version)} entries but implementation maxElements are {info["maxElements"]}'))
+
+        if elem.var_length_array_type is not None and elem.var_length_array_type != variant_type:
+            print(red(f'Type mismatch: {path} is documented as having array members of type {elem.var_length_array_type.name} but implementation has variantType {variant_type.name}'))
+
+        if elem.val is not None and any(m.type_ != variant_type for m in elem.val if version in m.version):
+            print(red(f'Type mismatch: {path} implementation has variantType {variant_type.name} but some documented members have other types. Offending members:\n'), "\t" + "\n\t".join(f'[{i}]: {m.desc}' for i, m in enumerate(elem.val) if version in m.version and m.type_ != variant_type))
+
+        if elem.val is not None:
+            for i, m in enumerate(elem.val[:len(info["content"])]):
+                if version not in m.version:
+                    continue
+
+                check_element(m, info["content"][i], str(i), path + f"[{i}]", keys_to_censor, version, api_info)
+    if elem.type_ == EType.INT or elem.type_ == EType.FLOAT or elem.type_ == EType.STRING or elem.type_ == EType.BOOL:
+        if elem.constants is not None:
+            for c in elem.constants:
+                if version not in c.version:
+                    continue
+                if c.val == info["val"]:
+                    break
+            else:
+                print(red(f'{path} documented constants did not contain implementation value {info["val"]}'))
+
+            if (elem.type_ == EType.INT and all(isinstance(c.val, int) for c in elem.constants)) or (elem.type_ == EType.FLOAT and all(isinstance(c.val, float) for c in elem.constants)) :
+                min_const = min([c for c in elem.constants], key=lambda c: c.val)
+                max_const = max([c for c in elem.constants], key=lambda c: c.val)
+                if info["min"] != min_const.val:
+                    print_pedantic(f'{path} smallest documented constant {min_const} is not implementation minimum value {info["min"]}')
+                if info["max"] != max_const.val:
+                    print_pedantic(f'{path} largest documented constant {max_const} is not implementation maximum value {info["max"]}')
+    if elem.type_ == EType.NULL:
+        pass # Nothing to do here
+    if elem.type_ == EType.OPAQUE:
+        pass # Nothing to do here
+    if elem.type_ == EType.UNION:
+        doc_missing = set(x["tag"] for x in info["prototypes"]).difference(k for k, v in elem.val.items() if version in v.version)
+        impl_missing = set(k for k, v in elem.val.items() if version in v.version).difference(x["tag"] for x in info["prototypes"])
+
+        if len(doc_missing) > 0:
+            print(red(f"{path} undocumented union variants\n"), "\t" + "\n\t".join(str(x) for x in sorted(doc_missing)))
+
+        if len(impl_missing) > 0:
+            print(red(f"{path} documented, but unimplemented union variants\n"), "\t" + "\n\t".join(str(x) for x in sorted(impl_missing)))
+
+        for k, v in elem.val.items():
+            if version not in v.version or k in impl_missing:
+                continue
+
+            check_element(v, next(x["value"] for x in info["prototypes"] if x["tag"] == k), k, f'{path}({k})', keys_to_censor, version, api_info)
+
+    if elem.type_ == EType.HIDDEN_UNION:
+        tag = elem.hidden_union_get_tag(re.split(r"[\[\(]", path)[0], api_info)
+        if tag not in elem.val:
+            print(red(f"{path} undocumented union variant {tag}"))
+        else:
+            check_element(elem.val[tag], info, tag, f'{path}({tag})', keys_to_censor, version, api_info)
+
+
+def main():
+    if "--pedantic" in sys.argv:
+        global pedantic
+        pedantic = True
+        sys.argv.remove("--pedantic")
+
+    with open(sys.argv[1]) as f:
+        api_info = json.load(f)
+
+    info_name = next(x for x in api_info if x["path"] == "info/name")
+    firmware_type_name = next(x for x in info_name["content"]["entries"] if x["key"] == "type")["value"]["val"]
+    if firmware_type_name == "warp":
+        firmware_type_name = "warp1"
+
+    impl_version = next(x for x in Version if x.name.lower() == firmware_type_name)
+
+    undocumented_modules = set()
+    undocumented_functions = set()
+
+    documented_functions = {}
+
+    for mod in mods:
+        if impl_version not in mod.version:
             continue
-        config_mod = m
-        break
-    else:
-        print("Implemented function {mod}/{fn}: Module {mod} not found in documentation!".format(mod=mod, fn=fn))
-        continue
 
-    for f in config_mod.functions:
-        if f.name != fn:
+        for fn in mod.functions:
+            if impl_version not in fn.root.version:
+                continue
+            documented_functions[fn.api_name(mod.name)] = fn
+
+    for impl_fn in api_info:
+        if "/" not in impl_fn["path"]:
+            impl_mod_name, impl_fn_name = "misc", impl_fn["path"]
+        else:
+            impl_mod_name, impl_fn_name = impl_fn["path"].split("/", 1)
+
+        if impl_mod_name == "meters" and re.match(r"\d/", impl_fn_name):
+            impl_fn_name = "X/" + impl_fn_name[2:]
+
+        try:
+            doc_mod = next(m for m in mods if m.name == impl_mod_name)
+        except StopIteration:
+            undocumented_modules.add(impl_mod_name)
             continue
-        config_func = f
-        break
-    else:
-        print("Implemented function {mod}/{fn}: Function {fn} not found in documentation module {mod}!".format(mod=mod, fn=fn))
-        continue
 
-    check_elem_doc(config_func.root, v, "{mod}/{fn}".format(mod=mod, fn=fn))
+        try:
+            doc_fn = next(f for f in doc_mod.functions if f.name == impl_fn_name)
+        except StopIteration:
+            if impl_fn_name.endswith("_update") and impl_fn["type"] == "command":
+                try:
+                    doc_fn = next(f for f in doc_mod.functions if f.name == impl_fn_name.removesuffix("_update") and f.type_ == FuncType.CONFIGURATION)
+                except:
+                    undocumented_functions.add(f'{impl_fn["type"]} {impl_fn["path"]}')
+                    continue
+            elif impl_fn_name.endswith("_modified") and impl_fn["type"] == "state":
+                try:
+                    doc_fn = next(f for f in doc_mod.functions if f.name == impl_fn_name.removesuffix("_modified") and f.type_ == FuncType.CONFIGURATION)
+                    # _modified is documented once, not per config
+                    continue
+                except:
+                    undocumented_functions.add(f'{impl_fn["type"]} {impl_fn["path"]}')
+                    continue
+            elif impl_fn_name.endswith("_reset") and impl_fn["type"] == "command":
+                try:
+                    doc_fn = next(f for f in doc_mod.functions if f.name == impl_fn_name.removesuffix("_reset") and f.type_ == FuncType.CONFIGURATION)
+                    # _reset is documented once, not per config
+                    continue
+                except:
+                    undocumented_functions.add(f'{impl_fn["type"]} {impl_fn["path"]}')
+                    continue
+            else:
+                undocumented_functions.add(f'{impl_fn["type"]} {impl_fn["path"]}')
+                continue
 
-print("\nDocumented functions that were not found in debug report:")
-print("   ", "\n    ".join(all_functions))
+        documented_functions.pop(doc_fn.api_name(doc_mod.name), None)
+
+        if impl_version not in doc_mod.version:
+            print(red(f'{impl_fn["path"]} part of module {doc_mod.name} that is documented as not supporting {impl_version.name.lower()} but implementation supports it'))
+
+        if impl_version not in doc_fn.root.version:
+            print(red(f'{impl_fn["path"]} documented as not supporting {impl_version.name.lower()} but implementation supports it'))
+
+        impl_type = {
+            "state": FuncType.STATE,
+            "command": FuncType.COMMAND,
+            "response": FuncType.HTTP_ONLY,
+            "raw_command": FuncType.COMMAND,
+            "http_only": FuncType.HTTP_ONLY
+        }[impl_fn["type"]]
+
+        if impl_type != doc_fn.type_:
+            if impl_type == FuncType.STATE and doc_fn.type_ == FuncType.CONFIGURATION:
+                pass # TODO: Look for _update command
+            elif impl_type == FuncType.COMMAND and doc_fn.type_ == FuncType.CONFIGURATION:
+                pass # TODO: Check suffix
+            else:
+                print(red(f'{impl_fn["path"]}: Type mismatch. Implementation {impl_type.name}({impl_fn["type"]}) Documentation {doc_fn.type_.name}'))
+
+        if impl_fn["type"] == "raw_command" or impl_type == FuncType.HTTP_ONLY:
+            continue
+
+        check_element(doc_fn.root, impl_fn["content"], "[ROOT]", impl_fn["path"], impl_fn["keys_to_censor"], impl_version, api_info)
+
+    if len(undocumented_modules) > 0:
+        print(red("Undocumented modules\n"), "\t" + "\n\t".join(sorted(undocumented_modules.difference(UNDOCUMENTED_MODULES))))
+
+    if len(undocumented_functions) > 0:
+        print(red("Undocumented functions\n"), "\t" + "\n\t".join(sorted(undocumented_functions.difference(UNDOCUMENTED_FUNCTIONS))))
+
+    if len(documented_functions) > 0:
+        print(red("Documented, but unimplemented functions\n"), "\t" + "\n\t".join(sorted(documented_functions.keys())))
+
+if __name__ == "__main__":
+    main()

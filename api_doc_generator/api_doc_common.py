@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum, IntEnum, IntFlag, auto
-from typing import Union, Optional
+from typing import Union, Optional, Callable
 import itertools
 
 import re
@@ -153,50 +153,51 @@ class Elem:
     version: Version
     type_name_override: Optional[str]
     union_tab_id: Optional[str]
+    hidden_union_get_tag: Optional[Callable[[str, dict], int]]
 
     @staticmethod
     def OBJECT(desc: str, *, members: dict[str, 'Elem'], censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.OBJECT, desc, None, members, None, False, None, None, censored, version, None, None)
+        return Elem(EType.OBJECT, desc, None, members, None, False, None, None, censored, version, None, None, None)
 
     @staticmethod
-    def ARRAY(desc: str, *, unit: Optional[Unit] = None, members: Optional[list['Elem']] = None, member_type: Optional[EType] = None, member_unit: Optional[Unit] = None, censored: bool = False, version: Version = Version.ANY):
+    def ARRAY(desc: str, *, unit: Optional[Unit] = None, members: Optional[list['Elem']] = None, member_type: Optional[EType] = None, member_unit: Optional[Unit] = None, censored: bool = False, version: Version = Version.ANY, is_var_length_array: bool = False):
         if members is None and member_type is None:
             raise Exception("Array without members and member_type is not supported!")
         if members is not None and member_type is not None and any(x.type_ != member_type for x in members):
             raise Exception("Type mismatch between members and member_type!")
-        return Elem(EType.ARRAY, desc, unit, members, None, members is None, member_type, member_unit, censored, version, None, None)
+        return Elem(EType.ARRAY, desc, unit, members, None, is_var_length_array or (members is None), member_type if member_type is not None else members[0].type_, member_unit, censored, version, None, None, None)
 
     @staticmethod
     def STRING(desc: str, *, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.STRING, desc, None, None, constants, False, None, None, censored, version, None, None)
+        return Elem(EType.STRING, desc, None, None, constants, False, None, None, censored, version, None, None, None)
 
     @staticmethod
     def INT(desc: str, *, type_name_override: Optional[str] = None, unit: Optional[Unit] = None, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.INT, desc, unit, None, constants, False, None, None, censored, version, type_name_override, None)
+        return Elem(EType.INT, desc, unit, None, constants, False, None, None, censored, version, type_name_override, None, None)
 
     @staticmethod
     def FLOAT(desc: str, *, unit: Optional[Unit] = None, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.FLOAT, desc, unit, None, constants, False, None, None, censored, version, None, None)
+        return Elem(EType.FLOAT, desc, unit, None, constants, False, None, None, censored, version, None, None, None)
 
     @staticmethod
     def BOOL(desc: str, *, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.BOOL, desc, None, None, constants, False, None, None, censored, version, None, None)
+        return Elem(EType.BOOL, desc, None, None, constants, False, None, None, censored, version, None, None, None)
 
     @staticmethod
     def NULL(desc: str, *, version: Version = Version.ANY):
-        return Elem(EType.NULL, desc, None, None, None, False, None, None, False, version, None, None)
+        return Elem(EType.NULL, desc, None, None, None, False, None, None, False, version, None, None, None)
 
     @staticmethod
     def OPAQUE(desc: str):
-        return Elem(EType.OPAQUE, desc, None, None, None, False, None, None, False, Version.ANY, None, None)
+        return Elem(EType.OPAQUE, desc, None, None, None, False, None, None, False, Version.ANY, None, None, None)
 
     @staticmethod
     def UNION(desc: str, *, members: dict[int, 'Elem'], censored: bool = False, version: Version = Version.ANY, tab_id = None):
-        return Elem(EType.UNION, desc, None, members, None, False, None, None, censored, version, None, tab_id)
+        return Elem(EType.UNION, desc, None, members, None, False, None, None, censored, version, None, tab_id, None)
 
     @staticmethod
-    def HIDDEN_UNION(desc: str, *, members: dict[int, 'Elem'], censored: bool = False, version: Version = Version.ANY, tab_id = None):
-        return Elem(EType.HIDDEN_UNION, desc, None, members, None, False, None, None, censored, version, None, tab_id)
+    def HIDDEN_UNION(desc: str, *, members: dict[int, 'Elem'], get_tag_fn: Optional[Callable[[str, dict], int]], censored: bool = False, version: Version = Version.ANY, tab_id = None):
+        return Elem(EType.HIDDEN_UNION, desc, None, members, None, False, None, None, censored, version, None, tab_id, get_tag_fn)
 
     def get_type(self, version=Version.ANY) -> str:
         if self.type_ in (EType.OBJECT,
