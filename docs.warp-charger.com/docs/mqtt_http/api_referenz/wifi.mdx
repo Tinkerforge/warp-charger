@@ -2,13 +2,14 @@
 import MultilineTabs from '@site/src/components/MultilineTabs';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
 
 # WLAN-Konfiguration
 
 <Tabs groupId="hardwareType" queryString className="hidden-tabs">
 <TabItem value="warp1">
-<br/><br/><br/>
 ## `wifi/state` {#wifi_state_warp1}
+
 
 Der aktuelle WLAN-Zustand.
 
@@ -95,21 +96,44 @@ Der aktuelle WLAN-Zustand.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `wifi/scan` {#wifi_scan_warp1}
 
+
 Löst einen Scan nach WLANs aus. Die Scan-Ergebnisse können derzeit nur über HTTP abgefragt werden.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/wifi/scan -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wifi/scan -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `wifi/sta_config` {#wifi_sta_config_warp1}
 
-Die WLAN-Verbindungskonfiguration. Diese kann über wifi/sta_config_update mit dem selben Payload aktualisiert werden.
+
+Die WLAN-Verbindungskonfiguration.
 
 
 <table>
@@ -308,11 +332,11 @@ Die WLAN-Verbindungskonfiguration. Diese kann über wifi/sta_config_update mit d
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `wifi/ap_config` {#wifi_ap_config_warp1}
 
-Die WLAN-Access-Point-Konfiguration. Diese kann über wifi/ap_config_update mit dem selben Payload aktualisiert werden. <strong>Achtung! Wenn der Access Point deaktiviert wird, und die WLAN-Verbindung bzw. LAN-Verbindung nicht aufgebaut werden kann, bzw. nicht konfiguriert wurde, kann der ESP nur noch durch einen Factory-Reset erreicht werden!</strong> Wir empfehlen, den Access Point immer im Fallback-Modus zu belassen.
+
+Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deaktiviert wird, und die WLAN-Verbindung bzw. LAN-Verbindung nicht aufgebaut werden kann, bzw. nicht konfiguriert wurde, kann der ESP nur noch durch einen Factory-Reset erreicht werden!</strong> Wir empfehlen, den Access Point immer im Fallback-Modus zu belassen.
 
 
 <table>
@@ -393,72 +417,93 @@ Die WLAN-Access-Point-Konfiguration. Diese kann über wifi/ap_config_update mit 
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `wifi/scan_results` {#wifi_scan_results_warp1}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
 
-Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden. Ein Array aus Objekten des folgenden Formats:
+
+Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden.
+
+
 <table>
     <thead>
         <tr>
-            <th scope="col">Name</th>
+            <th scope="col">Index</th>
             <th scope="col">Bedeutung</th>
         </tr>
     </thead>
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[..]`<br/>object</th>
     <td>
-        SSID des gefundenen WLANs. Leer bei versteckten Access Points.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`bssid`<br/>string</th>
-    <td>
-        BSSID des gefundenen WLANs.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`rssi`<br/>int</th>
-    <td>
-        Die Empfangsqualität des gefundenen WLANs. Immer ein negativer Wert, wobei Werte nahe 0 eine bessere Empfangsqualität bedeuten. <a href="https://de.wikipedia.org/wiki/Received_Signal_Strength_Indication">Siehe hier für Details.</a>
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`channel`<br/>int</th>
-    <td>
-        Kanal des gefundenen WLANs.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`encryption`<br/>int</th>
-    <td>
-        Verschlüsselungsstandard des gefundenen WLANs
         
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
         
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
+            <td>
+                SSID des gefundenen WLANs. Leer bei versteckten Access Points.
+            </td>
+        </tr>
         
-        - **0** - Unverschlüsselt
-        - **1** - WEP
-        - **2** - WPA-PSK
-        - **3** - WPA2-PSK
-        - **4** - WPA/WPA2-PSK
-        - **5** - WPA2-Enterprise
-        - **6** - Unbekannt
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`bssid`<br/>string</th>
+            <td>
+                BSSID des gefundenen WLANs.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`rssi`<br/>int</th>
+            <td>
+                Die Empfangsqualität des gefundenen WLANs. Immer ein negativer Wert, wobei Werte nahe 0 eine bessere Empfangsqualität bedeuten. <a href="https://de.wikipedia.org/wiki/Received_Signal_Strength_Indication">Siehe hier für Details.</a>
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`channel`<br/>int</th>
+            <td>
+                Kanal des gefundenen WLANs.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`encryption`<br/>int</th>
+            <td>
+                Verschlüsselungsstandard des gefundenen WLANs
+                - **0** - Unverschlüsselt
+                - **1** - WEP
+                - **2** - WPA-PSK
+                - **3** - WPA2-PSK
+                - **4** - WPA/WPA2-PSK
+                - **5** - WPA2-Enterprise
+                - **6** - Unbekannt
+            </td>
+        </tr>
+            </tbody>
+        </table>
     </td>
 </tr>
     </tbody>
 </table>
-
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 </TabItem>
 <TabItem value="warp2">
-<br/><br/><br/>
 ## `wifi/state` {#wifi_state_warp2}
+
 
 Der aktuelle WLAN-Zustand.
 
@@ -545,21 +590,44 @@ Der aktuelle WLAN-Zustand.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `wifi/scan` {#wifi_scan_warp2}
 
+
 Löst einen Scan nach WLANs aus. Die Scan-Ergebnisse können derzeit nur über HTTP abgefragt werden.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/wifi/scan -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wifi/scan -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `wifi/sta_config` {#wifi_sta_config_warp2}
 
-Die WLAN-Verbindungskonfiguration. Diese kann über wifi/sta_config_update mit dem selben Payload aktualisiert werden.
+
+Die WLAN-Verbindungskonfiguration.
 
 
 <table>
@@ -758,11 +826,11 @@ Die WLAN-Verbindungskonfiguration. Diese kann über wifi/sta_config_update mit d
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `wifi/ap_config` {#wifi_ap_config_warp2}
 
-Die WLAN-Access-Point-Konfiguration. Diese kann über wifi/ap_config_update mit dem selben Payload aktualisiert werden. <strong>Achtung! Wenn der Access Point deaktiviert wird, und die WLAN-Verbindung bzw. LAN-Verbindung nicht aufgebaut werden kann, bzw. nicht konfiguriert wurde, kann der ESP nur noch durch einen Factory-Reset erreicht werden!</strong> Wir empfehlen, den Access Point immer im Fallback-Modus zu belassen.
+
+Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deaktiviert wird, und die WLAN-Verbindung bzw. LAN-Verbindung nicht aufgebaut werden kann, bzw. nicht konfiguriert wurde, kann der ESP nur noch durch einen Factory-Reset erreicht werden!</strong> Wir empfehlen, den Access Point immer im Fallback-Modus zu belassen.
 
 
 <table>
@@ -843,72 +911,93 @@ Die WLAN-Access-Point-Konfiguration. Diese kann über wifi/ap_config_update mit 
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `wifi/scan_results` {#wifi_scan_results_warp2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
 
-Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden. Ein Array aus Objekten des folgenden Formats:
+
+Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden.
+
+
 <table>
     <thead>
         <tr>
-            <th scope="col">Name</th>
+            <th scope="col">Index</th>
             <th scope="col">Bedeutung</th>
         </tr>
     </thead>
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[..]`<br/>object</th>
     <td>
-        SSID des gefundenen WLANs. Leer bei versteckten Access Points.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`bssid`<br/>string</th>
-    <td>
-        BSSID des gefundenen WLANs.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`rssi`<br/>int</th>
-    <td>
-        Die Empfangsqualität des gefundenen WLANs. Immer ein negativer Wert, wobei Werte nahe 0 eine bessere Empfangsqualität bedeuten. <a href="https://de.wikipedia.org/wiki/Received_Signal_Strength_Indication">Siehe hier für Details.</a>
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`channel`<br/>int</th>
-    <td>
-        Kanal des gefundenen WLANs.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`encryption`<br/>int</th>
-    <td>
-        Verschlüsselungsstandard des gefundenen WLANs
         
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
         
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
+            <td>
+                SSID des gefundenen WLANs. Leer bei versteckten Access Points.
+            </td>
+        </tr>
         
-        - **0** - Unverschlüsselt
-        - **1** - WEP
-        - **2** - WPA-PSK
-        - **3** - WPA2-PSK
-        - **4** - WPA/WPA2-PSK
-        - **5** - WPA2-Enterprise
-        - **6** - Unbekannt
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`bssid`<br/>string</th>
+            <td>
+                BSSID des gefundenen WLANs.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`rssi`<br/>int</th>
+            <td>
+                Die Empfangsqualität des gefundenen WLANs. Immer ein negativer Wert, wobei Werte nahe 0 eine bessere Empfangsqualität bedeuten. <a href="https://de.wikipedia.org/wiki/Received_Signal_Strength_Indication">Siehe hier für Details.</a>
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`channel`<br/>int</th>
+            <td>
+                Kanal des gefundenen WLANs.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`encryption`<br/>int</th>
+            <td>
+                Verschlüsselungsstandard des gefundenen WLANs
+                - **0** - Unverschlüsselt
+                - **1** - WEP
+                - **2** - WPA-PSK
+                - **3** - WPA2-PSK
+                - **4** - WPA/WPA2-PSK
+                - **5** - WPA2-Enterprise
+                - **6** - Unbekannt
+            </td>
+        </tr>
+            </tbody>
+        </table>
     </td>
 </tr>
     </tbody>
 </table>
-
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 </TabItem>
 <TabItem value="warp3">
-<br/><br/><br/>
 ## `wifi/state` {#wifi_state_warp3}
+
 
 Der aktuelle WLAN-Zustand.
 
@@ -995,21 +1084,44 @@ Der aktuelle WLAN-Zustand.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `wifi/scan` {#wifi_scan_warp3}
 
+
 Löst einen Scan nach WLANs aus. Die Scan-Ergebnisse können derzeit nur über HTTP abgefragt werden.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/wifi/scan -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wifi/scan -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `wifi/sta_config` {#wifi_sta_config_warp3}
 
-Die WLAN-Verbindungskonfiguration. Diese kann über wifi/sta_config_update mit dem selben Payload aktualisiert werden.
+
+Die WLAN-Verbindungskonfiguration.
 
 
 <table>
@@ -1208,11 +1320,11 @@ Die WLAN-Verbindungskonfiguration. Diese kann über wifi/sta_config_update mit d
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `wifi/ap_config` {#wifi_ap_config_warp3}
 
-Die WLAN-Access-Point-Konfiguration. Diese kann über wifi/ap_config_update mit dem selben Payload aktualisiert werden. <strong>Achtung! Wenn der Access Point deaktiviert wird, und die WLAN-Verbindung bzw. LAN-Verbindung nicht aufgebaut werden kann, bzw. nicht konfiguriert wurde, kann der ESP nur noch durch einen Factory-Reset erreicht werden!</strong> Wir empfehlen, den Access Point immer im Fallback-Modus zu belassen.
+
+Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deaktiviert wird, und die WLAN-Verbindung bzw. LAN-Verbindung nicht aufgebaut werden kann, bzw. nicht konfiguriert wurde, kann der ESP nur noch durch einen Factory-Reset erreicht werden!</strong> Wir empfehlen, den Access Point immer im Fallback-Modus zu belassen.
 
 
 <table>
@@ -1293,72 +1405,93 @@ Die WLAN-Access-Point-Konfiguration. Diese kann über wifi/ap_config_update mit 
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `wifi/scan_results` {#wifi_scan_results_warp3}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
 
-Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden. Ein Array aus Objekten des folgenden Formats:
+
+Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden.
+
+
 <table>
     <thead>
         <tr>
-            <th scope="col">Name</th>
+            <th scope="col">Index</th>
             <th scope="col">Bedeutung</th>
         </tr>
     </thead>
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[..]`<br/>object</th>
     <td>
-        SSID des gefundenen WLANs. Leer bei versteckten Access Points.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`bssid`<br/>string</th>
-    <td>
-        BSSID des gefundenen WLANs.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`rssi`<br/>int</th>
-    <td>
-        Die Empfangsqualität des gefundenen WLANs. Immer ein negativer Wert, wobei Werte nahe 0 eine bessere Empfangsqualität bedeuten. <a href="https://de.wikipedia.org/wiki/Received_Signal_Strength_Indication">Siehe hier für Details.</a>
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`channel`<br/>int</th>
-    <td>
-        Kanal des gefundenen WLANs.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`encryption`<br/>int</th>
-    <td>
-        Verschlüsselungsstandard des gefundenen WLANs
         
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
         
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
+            <td>
+                SSID des gefundenen WLANs. Leer bei versteckten Access Points.
+            </td>
+        </tr>
         
-        - **0** - Unverschlüsselt
-        - **1** - WEP
-        - **2** - WPA-PSK
-        - **3** - WPA2-PSK
-        - **4** - WPA/WPA2-PSK
-        - **5** - WPA2-Enterprise
-        - **6** - Unbekannt
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`bssid`<br/>string</th>
+            <td>
+                BSSID des gefundenen WLANs.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`rssi`<br/>int</th>
+            <td>
+                Die Empfangsqualität des gefundenen WLANs. Immer ein negativer Wert, wobei Werte nahe 0 eine bessere Empfangsqualität bedeuten. <a href="https://de.wikipedia.org/wiki/Received_Signal_Strength_Indication">Siehe hier für Details.</a>
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`channel`<br/>int</th>
+            <td>
+                Kanal des gefundenen WLANs.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`encryption`<br/>int</th>
+            <td>
+                Verschlüsselungsstandard des gefundenen WLANs
+                - **0** - Unverschlüsselt
+                - **1** - WEP
+                - **2** - WPA-PSK
+                - **3** - WPA2-PSK
+                - **4** - WPA/WPA2-PSK
+                - **5** - WPA2-Enterprise
+                - **6** - Unbekannt
+            </td>
+        </tr>
+            </tbody>
+        </table>
     </td>
 </tr>
     </tbody>
 </table>
-
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 </TabItem>
 <TabItem value="wem">
-<br/><br/><br/>
 ## `wifi/state` {#wifi_state_wem}
+
 
 Der aktuelle WLAN-Zustand.
 
@@ -1445,21 +1578,44 @@ Der aktuelle WLAN-Zustand.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `wifi/scan` {#wifi_scan_wem}
 
+
 Löst einen Scan nach WLANs aus. Die Scan-Ergebnisse können derzeit nur über HTTP abgefragt werden.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/wifi/scan -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wifi/scan -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `wifi/sta_config` {#wifi_sta_config_wem}
 
-Die WLAN-Verbindungskonfiguration. Diese kann über wifi/sta_config_update mit dem selben Payload aktualisiert werden.
+
+Die WLAN-Verbindungskonfiguration.
 
 
 <table>
@@ -1658,11 +1814,11 @@ Die WLAN-Verbindungskonfiguration. Diese kann über wifi/sta_config_update mit d
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `wifi/ap_config` {#wifi_ap_config_wem}
 
-Die WLAN-Access-Point-Konfiguration. Diese kann über wifi/ap_config_update mit dem selben Payload aktualisiert werden. <strong>Achtung! Wenn der Access Point deaktiviert wird, und die WLAN-Verbindung bzw. LAN-Verbindung nicht aufgebaut werden kann, bzw. nicht konfiguriert wurde, kann der ESP nur noch durch einen Factory-Reset erreicht werden!</strong> Wir empfehlen, den Access Point immer im Fallback-Modus zu belassen.
+
+Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deaktiviert wird, und die WLAN-Verbindung bzw. LAN-Verbindung nicht aufgebaut werden kann, bzw. nicht konfiguriert wurde, kann der ESP nur noch durch einen Factory-Reset erreicht werden!</strong> Wir empfehlen, den Access Point immer im Fallback-Modus zu belassen.
 
 
 <table>
@@ -1743,72 +1899,93 @@ Die WLAN-Access-Point-Konfiguration. Diese kann über wifi/ap_config_update mit 
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `wifi/scan_results` {#wifi_scan_results_wem}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
 
-Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden. Ein Array aus Objekten des folgenden Formats:
+
+Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden.
+
+
 <table>
     <thead>
         <tr>
-            <th scope="col">Name</th>
+            <th scope="col">Index</th>
             <th scope="col">Bedeutung</th>
         </tr>
     </thead>
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[..]`<br/>object</th>
     <td>
-        SSID des gefundenen WLANs. Leer bei versteckten Access Points.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`bssid`<br/>string</th>
-    <td>
-        BSSID des gefundenen WLANs.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`rssi`<br/>int</th>
-    <td>
-        Die Empfangsqualität des gefundenen WLANs. Immer ein negativer Wert, wobei Werte nahe 0 eine bessere Empfangsqualität bedeuten. <a href="https://de.wikipedia.org/wiki/Received_Signal_Strength_Indication">Siehe hier für Details.</a>
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`channel`<br/>int</th>
-    <td>
-        Kanal des gefundenen WLANs.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`encryption`<br/>int</th>
-    <td>
-        Verschlüsselungsstandard des gefundenen WLANs
         
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
         
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
+            <td>
+                SSID des gefundenen WLANs. Leer bei versteckten Access Points.
+            </td>
+        </tr>
         
-        - **0** - Unverschlüsselt
-        - **1** - WEP
-        - **2** - WPA-PSK
-        - **3** - WPA2-PSK
-        - **4** - WPA/WPA2-PSK
-        - **5** - WPA2-Enterprise
-        - **6** - Unbekannt
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`bssid`<br/>string</th>
+            <td>
+                BSSID des gefundenen WLANs.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`rssi`<br/>int</th>
+            <td>
+                Die Empfangsqualität des gefundenen WLANs. Immer ein negativer Wert, wobei Werte nahe 0 eine bessere Empfangsqualität bedeuten. <a href="https://de.wikipedia.org/wiki/Received_Signal_Strength_Indication">Siehe hier für Details.</a>
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`channel`<br/>int</th>
+            <td>
+                Kanal des gefundenen WLANs.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`encryption`<br/>int</th>
+            <td>
+                Verschlüsselungsstandard des gefundenen WLANs
+                - **0** - Unverschlüsselt
+                - **1** - WEP
+                - **2** - WPA-PSK
+                - **3** - WPA2-PSK
+                - **4** - WPA/WPA2-PSK
+                - **5** - WPA2-Enterprise
+                - **6** - Unbekannt
+            </td>
+        </tr>
+            </tbody>
+        </table>
     </td>
 </tr>
     </tbody>
 </table>
-
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 </TabItem>
 <TabItem value="any">
-<br/><br/><br/>
 ## `wifi/state` {#wifi_state_any}
+
 
 Der aktuelle WLAN-Zustand.
 
@@ -1901,21 +2078,44 @@ Der aktuelle WLAN-Zustand.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `wifi/scan` {#wifi_scan_any}
 
+
 Löst einen Scan nach WLANs aus. Die Scan-Ergebnisse können derzeit nur über HTTP abgefragt werden.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/wifi/scan -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wifi/scan -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `wifi/sta_config` {#wifi_sta_config_any}
 
-Die WLAN-Verbindungskonfiguration. Diese kann über wifi/sta_config_update mit dem selben Payload aktualisiert werden.
+
+Die WLAN-Verbindungskonfiguration.
 
 
 <table>
@@ -2120,11 +2320,11 @@ Die WLAN-Verbindungskonfiguration. Diese kann über wifi/sta_config_update mit d
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `wifi/ap_config` {#wifi_ap_config_any}
 
-Die WLAN-Access-Point-Konfiguration. Diese kann über wifi/ap_config_update mit dem selben Payload aktualisiert werden. <strong>Achtung! Wenn der Access Point deaktiviert wird, und die WLAN-Verbindung bzw. LAN-Verbindung nicht aufgebaut werden kann, bzw. nicht konfiguriert wurde, kann der ESP nur noch durch einen Factory-Reset erreicht werden!</strong> Wir empfehlen, den Access Point immer im Fallback-Modus zu belassen.
+
+Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deaktiviert wird, und die WLAN-Verbindung bzw. LAN-Verbindung nicht aufgebaut werden kann, bzw. nicht konfiguriert wurde, kann der ESP nur noch durch einen Factory-Reset erreicht werden!</strong> Wir empfehlen, den Access Point immer im Fallback-Modus zu belassen.
 
 
 <table>
@@ -2211,68 +2411,92 @@ Die WLAN-Access-Point-Konfiguration. Diese kann über wifi/ap_config_update mit 
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `wifi/scan_results` {#wifi_scan_results_any}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
 
-Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden. Ein Array aus Objekten des folgenden Formats:
+
+Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden.
+
+
 <table>
     <thead>
         <tr>
-            <th scope="col">Name</th>
+            <th scope="col">Index</th>
             <th scope="col">Bedeutung</th>
         </tr>
     </thead>
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[..]`<br/>object</th>
     <td>
-        SSID des gefundenen WLANs. Leer bei versteckten Access Points.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`bssid`<br/>string</th>
-    <td>
-        BSSID des gefundenen WLANs.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`rssi`<br/>int</th>
-    <td>
-        Die Empfangsqualität des gefundenen WLANs. Immer ein negativer Wert, wobei Werte nahe 0 eine bessere Empfangsqualität bedeuten. <a href="https://de.wikipedia.org/wiki/Received_Signal_Strength_Indication">Siehe hier für Details.</a>
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`channel`<br/>int</th>
-    <td>
-        Kanal des gefundenen WLANs.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`encryption`<br/>int</th>
-    <td>
-        Verschlüsselungsstandard des gefundenen WLANs
         
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
         
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
+            <td>
+                SSID des gefundenen WLANs. Leer bei versteckten Access Points.
+            </td>
+        </tr>
         
-        - **0** - Unverschlüsselt
-        - **1** - WEP
-        - **2** - WPA-PSK
-        - **3** - WPA2-PSK
-        - **4** - WPA/WPA2-PSK
-        - **5** - WPA2-Enterprise
-        - **6** - Unbekannt
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`bssid`<br/>string</th>
+            <td>
+                BSSID des gefundenen WLANs.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`rssi`<br/>int</th>
+            <td>
+                Die Empfangsqualität des gefundenen WLANs. Immer ein negativer Wert, wobei Werte nahe 0 eine bessere Empfangsqualität bedeuten. <a href="https://de.wikipedia.org/wiki/Received_Signal_Strength_Indication">Siehe hier für Details.</a>
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`channel`<br/>int</th>
+            <td>
+                Kanal des gefundenen WLANs.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`encryption`<br/>int</th>
+            <td>
+                Verschlüsselungsstandard des gefundenen WLANs
+                
+                
+                
+                - **0** - Unverschlüsselt
+                - **1** - WEP
+                - **2** - WPA-PSK
+                - **3** - WPA2-PSK
+                - **4** - WPA/WPA2-PSK
+                - **5** - WPA2-Enterprise
+                - **6** - Unbekannt
+            </td>
+        </tr>
+            </tbody>
+        </table>
     </td>
 </tr>
     </tbody>
 </table>
-
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 </TabItem>
 </Tabs>
 

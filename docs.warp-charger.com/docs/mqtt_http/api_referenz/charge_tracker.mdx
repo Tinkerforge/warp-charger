@@ -2,13 +2,14 @@
 import MultilineTabs from '@site/src/components/MultilineTabs';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
 
 # Ladetracker
 
 <Tabs groupId="hardwareType" queryString className="hidden-tabs">
 <TabItem value="warp1">
-<br/><br/><br/>
 ## `charge_tracker/state` {#charge_tracker_state_warp1}
+
 
 Zustand des Ladeträckers
 
@@ -38,9 +39,9 @@ Zustand des Ladeträckers
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_tracker/last_charges` {#charge_tracker_last_charges_warp1}
+
 
 Die letzten (bis zu) 30 aufgezeichneten Ladevorgänge
 
@@ -101,9 +102,9 @@ Die letzten (bis zu) 30 aufgezeichneten Ladevorgänge
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_tracker/current_charge` {#charge_tracker_current_charge_warp1}
+
 
 Information zum aktuell laufenden Ladevorgang. Falls kein Ladevorgang läuft, hat die user_id den Wert -1
 
@@ -165,9 +166,9 @@ Information zum aktuell laufenden Ladevorgang. Falls kein Ladevorgang läuft, ha
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_tracker/remove_all_charges` {#charge_tracker_remove_all_charges_warp1}
+
 
 Löscht alle aufgezeichneten Ladevorgänge und die Nutzernamenhistorie. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
 
@@ -192,9 +193,11 @@ Löscht alle aufgezeichneten Ladevorgänge und die Nutzernamenhistorie. <strong>
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_tracker/charge_log` {#charge_tracker_charge_log_warp1}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Gibt alle aufgezeichneten Ladevorgänge in folgendem Binärformat aus. Einträge entsprechen jeweils einem Ladevorgang, sind 16 Byte lang und werden nacheinander ausgegeben. Die folgenden Indizes sind Byte-Offsets relativ zum Start eines aufgezeichneten Ladevorgangs. Alle Werte sind im Little-Endian-Format.
 
@@ -244,12 +247,17 @@ Gibt alle aufgezeichneten Ladevorgänge in folgendem Binärformat aus. Einträge
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `charge_tracker/config` {#charge_tracker_config_warp1}
 
-Die Ladetracker-Konfiguration. Diese kann über charge_tracker/config_update mit dem selben Payload aktualisiert werden.
+
+Die Ladetracker-Konfiguration.
 
 
 
@@ -273,8 +281,8 @@ Die Ladetracker-Konfiguration. Diese kann über charge_tracker/config_update mit
 </table>
 </TabItem>
 <TabItem value="warp2">
-<br/><br/><br/>
 ## `charge_tracker/state` {#charge_tracker_state_warp2}
+
 
 Zustand des Ladeträckers
 
@@ -304,9 +312,9 @@ Zustand des Ladeträckers
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_tracker/last_charges` {#charge_tracker_last_charges_warp2}
+
 
 Die letzten (bis zu) 30 aufgezeichneten Ladevorgänge
 
@@ -367,9 +375,9 @@ Die letzten (bis zu) 30 aufgezeichneten Ladevorgänge
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_tracker/current_charge` {#charge_tracker_current_charge_warp2}
+
 
 Information zum aktuell laufenden Ladevorgang. Falls kein Ladevorgang läuft, hat die user_id den Wert -1
 
@@ -431,9 +439,9 @@ Information zum aktuell laufenden Ladevorgang. Falls kein Ladevorgang läuft, ha
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_tracker/remove_all_charges` {#charge_tracker_remove_all_charges_warp2}
+
 
 Löscht alle aufgezeichneten Ladevorgänge und die Nutzernamenhistorie. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
 
@@ -458,9 +466,11 @@ Löscht alle aufgezeichneten Ladevorgänge und die Nutzernamenhistorie. <strong>
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_tracker/charge_log` {#charge_tracker_charge_log_warp2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Gibt alle aufgezeichneten Ladevorgänge in folgendem Binärformat aus. Einträge entsprechen jeweils einem Ladevorgang, sind 16 Byte lang und werden nacheinander ausgegeben. Die folgenden Indizes sind Byte-Offsets relativ zum Start eines aufgezeichneten Ladevorgangs. Alle Werte sind im Little-Endian-Format.
 
@@ -510,12 +520,17 @@ Gibt alle aufgezeichneten Ladevorgänge in folgendem Binärformat aus. Einträge
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `charge_tracker/config` {#charge_tracker_config_warp2}
 
-Die Ladetracker-Konfiguration. Diese kann über charge_tracker/config_update mit dem selben Payload aktualisiert werden.
+
+Die Ladetracker-Konfiguration.
 
 
 
@@ -539,8 +554,8 @@ Die Ladetracker-Konfiguration. Diese kann über charge_tracker/config_update mit
 </table>
 </TabItem>
 <TabItem value="warp3">
-<br/><br/><br/>
 ## `charge_tracker/state` {#charge_tracker_state_warp3}
+
 
 Zustand des Ladeträckers
 
@@ -570,9 +585,9 @@ Zustand des Ladeträckers
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_tracker/last_charges` {#charge_tracker_last_charges_warp3}
+
 
 Die letzten (bis zu) 30 aufgezeichneten Ladevorgänge
 
@@ -633,9 +648,9 @@ Die letzten (bis zu) 30 aufgezeichneten Ladevorgänge
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_tracker/current_charge` {#charge_tracker_current_charge_warp3}
+
 
 Information zum aktuell laufenden Ladevorgang. Falls kein Ladevorgang läuft, hat die user_id den Wert -1
 
@@ -697,9 +712,9 @@ Information zum aktuell laufenden Ladevorgang. Falls kein Ladevorgang läuft, ha
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_tracker/remove_all_charges` {#charge_tracker_remove_all_charges_warp3}
+
 
 Löscht alle aufgezeichneten Ladevorgänge und die Nutzernamenhistorie. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
 
@@ -724,9 +739,11 @@ Löscht alle aufgezeichneten Ladevorgänge und die Nutzernamenhistorie. <strong>
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_tracker/charge_log` {#charge_tracker_charge_log_warp3}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Gibt alle aufgezeichneten Ladevorgänge in folgendem Binärformat aus. Einträge entsprechen jeweils einem Ladevorgang, sind 16 Byte lang und werden nacheinander ausgegeben. Die folgenden Indizes sind Byte-Offsets relativ zum Start eines aufgezeichneten Ladevorgangs. Alle Werte sind im Little-Endian-Format.
 
@@ -776,12 +793,17 @@ Gibt alle aufgezeichneten Ladevorgänge in folgendem Binärformat aus. Einträge
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `charge_tracker/config` {#charge_tracker_config_warp3}
 
-Die Ladetracker-Konfiguration. Diese kann über charge_tracker/config_update mit dem selben Payload aktualisiert werden.
+
+Die Ladetracker-Konfiguration.
 
 
 
@@ -808,8 +830,8 @@ Die Ladetracker-Konfiguration. Diese kann über charge_tracker/config_update mit
 Auf dieser Hardware nicht unterstützt!
 </TabItem>
 <TabItem value="any">
-<br/><br/><br/>
 ## `charge_tracker/state` {#charge_tracker_state_any}
+
 
 Zustand des Ladeträckers
 
@@ -839,9 +861,9 @@ Zustand des Ladeträckers
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_tracker/last_charges` {#charge_tracker_last_charges_any}
+
 
 Die letzten (bis zu) 30 aufgezeichneten Ladevorgänge
 
@@ -902,9 +924,9 @@ Die letzten (bis zu) 30 aufgezeichneten Ladevorgänge
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_tracker/current_charge` {#charge_tracker_current_charge_any}
+
 
 Information zum aktuell laufenden Ladevorgang. Falls kein Ladevorgang läuft, hat die user_id den Wert -1
 
@@ -969,9 +991,9 @@ Information zum aktuell laufenden Ladevorgang. Falls kein Ladevorgang läuft, ha
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_tracker/remove_all_charges` {#charge_tracker_remove_all_charges_any}
+
 
 Löscht alle aufgezeichneten Ladevorgänge und die Nutzernamenhistorie. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
 
@@ -999,9 +1021,11 @@ Löscht alle aufgezeichneten Ladevorgänge und die Nutzernamenhistorie. <strong>
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_tracker/charge_log` {#charge_tracker_charge_log_any}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Gibt alle aufgezeichneten Ladevorgänge in folgendem Binärformat aus. Einträge entsprechen jeweils einem Ladevorgang, sind 16 Byte lang und werden nacheinander ausgegeben. Die folgenden Indizes sind Byte-Offsets relativ zum Start eines aufgezeichneten Ladevorgangs. Alle Werte sind im Little-Endian-Format.
 
@@ -1051,12 +1075,17 @@ Gibt alle aufgezeichneten Ladevorgänge in folgendem Binärformat aus. Einträge
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `charge_tracker/config` {#charge_tracker_config_any}
 
-Die Ladetracker-Konfiguration. Diese kann über charge_tracker/config_update mit dem selben Payload aktualisiert werden.
+
+Die Ladetracker-Konfiguration.
 
 
 

@@ -2,14 +2,15 @@
 import MultilineTabs from '@site/src/components/MultilineTabs';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
 
 # Veraltete Stromzähler-API
 **Bei Neuentwicklungen stattdessen [meters](meters.mdx) verwenden!**
 
 <Tabs groupId="hardwareType" queryString className="hidden-tabs">
 <TabItem value="warp1">
-<br/><br/><br/>
 ## `meter/state` {#meter_state_warp1}
+
 
 Der Zustand des Stromzählers.
 
@@ -46,9 +47,9 @@ Der Zustand des Stromzählers.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/values` {#meter_values_warp1}
+
 
 Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"><code>"meter"</code></a>
 
@@ -85,9 +86,9 @@ Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/phases` {#meter_phases_warp1}
+
 
 Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter_phases"><code>"meter_phases"</code></a>.
 
@@ -123,9 +124,9 @@ Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/error_counters` {#meter_error_counters_warp1}
+
 
 Fehlerzähler der Kommunikation mit dem Stromzähler.
 
@@ -162,9 +163,9 @@ Fehlerzähler der Kommunikation mit dem Stromzähler.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/all_values` {#meter_all_values_warp1}
+
 
 Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Benötigt das Feature <a href="#features_meter_all_values"><code>"meter_all_values"</code></a>. Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
 
@@ -537,510 +538,42 @@ Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Benötigt das 
     </tbody>
 </table>
 
-
-<br/><br/><br/>
-## `meter/state_update` {#meter_state_update_warp1}
-
-Setzt den Stromzählerzustand. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong>
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`state`<br/>int</th>
-    <td>
-        Zustand des Stromzählers
-        - **0** - Kein Stromzähler verbunden
-        - **1** - Stromzähler unzuverlässig, eventuell nur einphasig verbunden.
-        - **2** - Stromzähler verbunden
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`type`<br/>int</th>
-    <td>
-        Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!
-        - **0** - Kein Stromzähler verfügbar
-        - **2** - SDM630
-        - **3** - SDM72V2
-        - **1** - SDM72
-    </td>
-</tr>
-    </tbody>
-</table>
-
-
-<br/><br/><br/>
-## `meter/values_update` {#meter_values_update_warp1}
-
-Setzt die Messwerte des Stromzählers. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong>
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Die aktuelle Ladeleistung.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_rel`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Die geladene Energie seit dem letzten Reset.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_abs`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Die geladene Energie seit der Herstellung des Stromzählers.
-    </td>
-</tr>
-    </tbody>
-</table>
-
-
-<br/><br/><br/>
-## `meter/phases_update` {#meter_phases_update_warp1}
-
-Setzt die angeschlossenen und aktive Phasen. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong>
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases_active`<br/>bool[3]</th>
-    <td>
-        Die derzeit aktiven Phasen
-        - **[0]** - Phase L1 aktiv
-        - **[1]** - Phase L2 aktiv
-        - **[2]** - Phase L3 aktiv
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases_connected`<br/>bool[3]</th>
-    <td>
-        Die angeschlossenen Phasen
-        - **[0]** - Phase L1 angeschlossen
-        - **[1]** - Phase L2 angeschlossen
-        - **[2]** - Phase L3 angeschlossen
-    </td>
-</tr>
-    </tbody>
-</table>
-
-
-<br/><br/><br/>
-## `meter/all_values_update` {#meter_all_values_update_warp1}
-
-Setzt alle Messwerte, die von unterstützten Stromzählern gemessen werden. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong> Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Index</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..2]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Spannung gegen Neutral
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[3..5]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Strom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[6..8]`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Wirkleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[9..11]`<br/>float (<abbr title="Voltampere">VA</abbr>)</th>
-    <td>
-        Scheinleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[12..14]`<br/>float (<abbr title="Voltampere Reaktiv">var</abbr>)</th>
-    <td>
-        Blindleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[15..17]`<br/>float</th>
-    <td>
-        Leistungsfaktor; Das Vorzeichen des Leistungsfaktors gibt die Richtung des Stromflusses an.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[18..20]`<br/>float (<abbr title="Grad">°</abbr>)</th>
-    <td>
-        relative Phasenverschiebung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[21]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Durchschnittliche Spannung gegen Neutral
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[22]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Durchschnittlicher Strom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[23]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Summe der Phasenströme
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[24]`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Gesamtwirkleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[25]`<br/>float (<abbr title="Voltampere">VA</abbr>)</th>
-    <td>
-        Gesamtscheinleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[26]`<br/>float (<abbr title="Voltampere Reaktiv">var</abbr>)</th>
-    <td>
-        Gesamtblindleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[27]`<br/>float</th>
-    <td>
-        Gesamtleistungsfaktor
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[28]`<br/>float (<abbr title="Grad">°</abbr>)</th>
-    <td>
-        Gesamtphasenverschiebung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[29]`<br/>float (<abbr title="Hertz">Hz</abbr>)</th>
-    <td>
-        Frequenz der Versorgungsspannung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[30]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Wirkenergie (Import; vom Fahrzeug aufgenommen)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[31]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Wirkenergie (Export; vom Fahrzeug abgegeben)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[32]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Blindenergie (Import; vom Fahrzeug aufgenommen)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[33]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Blindenergie (Export; vom Fahrzeug abgegeben)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[34]`<br/>float (<abbr title="Kilovoltamperestunde">kVAh</abbr>)</th>
-    <td>
-        Gesamtscheinenergie
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[35]`<br/>float (<abbr title="Amperestunde">Ah</abbr>)</th>
-    <td>
-        Transportierte elektrische Ladung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[36]`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Bezogene Wirkleistung; Entspricht Import-Export-Differenz
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[37]`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Max. bezogene Wirkleistung; Höchster gemessener Wert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[38]`<br/>float (<abbr title="Voltampere">VA</abbr>)</th>
-    <td>
-        Bezogene Scheinleistung; Entspricht Import-Export-Differenz
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[39]`<br/>float (<abbr title="Voltampere">VA</abbr>)</th>
-    <td>
-        Max. bezogene Scheinleistung; Höchster gemessener Wert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[40]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Bezogener Neutralleiterstrom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[41]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Max. bezogener Neutralleiterstrom; Höchster gemessener Wert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[42]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Spannung L1 zu L2
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[43]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Spannung L2 zu L3
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[44]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Spannung L3 zu L1
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[45]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Durchschnittliche Spannung zwischen Phasen
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[46]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Neutralleiterstrom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[47..49]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Total Harmonic Distortion (THD) der Spannung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[50..52]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Total Harmonic Distortion (THD) des Stroms
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[53]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Durchschnittliche Spannungs-THD
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[54]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Durchschnittliche Strom-THD
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[55..57]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Bezogener Strom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[58..60]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Max. bezogener Strom; Höchster gemessener Wert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[61]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Spannungs-THD L1 zu L2
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[62]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Spannungs-THD L2 zu L3
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[63]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Spannungs-THD L3 zu L1
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[64]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Durchschnittliche Spannungs-THD zwischen Phasen
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[65]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Summe der Gesamtwirkenergien; Import-Export-Summe aller Phasen
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[66]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Summe der Gesamtblindenergien; Import-Export-Summe aller Phasen
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[67..69]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Wirkenergie (Import; vom Fahrzeug aufgenommen)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[70..72]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Wirkenergie (Export; vom Fahrzeug abgegeben)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[73..75]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Gesamtwirkenergie; Import-Export-Summe
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[76..78]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Blindenergie (Import; vom Fahrzeug aufgenommen)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[79..81]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Blindenergie (Export; vom Fahrzeug abgegeben)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[82..84]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Gesamtblindenergie; Import-Export-Summe
-    </td>
-</tr>
-    </tbody>
-</table>
-
-
 <br/><br/><br/>
 ## `meter/reset` {#meter_reset_warp1}
 
+
 Setzt den Energiezähler zurück.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/meter/reset -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/reset -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `meter/last_reset` {#meter_last_reset_warp1}
+
 
 Der Zeitpunkt des letzten Zähler-Resets (siehe [meter/reset](meter.mdx#meter_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.
 
@@ -1063,11 +596,11 @@ Der Zeitpunkt des letzten Zähler-Resets (siehe [meter/reset](meter.mdx#meter_re
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/type_override` {#meter_type_override_warp1}
 
-Erlaubt es den verbauten Zählertyp zu überschreiben, falls die Auto-Detektion nicht funktioniert. Der Wert kann über meter/type_override_update mit dem selben Payload aktualisiert werden.
+
+Erlaubt es den verbauten Zählertyp zu überschreiben, falls die Auto-Detektion nicht funktioniert.
 
 
 
@@ -1095,9 +628,11 @@ Erlaubt es den verbauten Zählertyp zu überschreiben, falls die Auto-Detektion 
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/history` {#meter_history_warp1}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
 
@@ -1126,10 +661,17 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `meter/live` {#meter_live_warp1}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [meter/history](meter.mdx#meter_history) generiert.
 
@@ -1165,10 +707,15 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
 </tr>
     </tbody>
 </table>
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 </TabItem>
 <TabItem value="warp2">
-<br/><br/><br/>
 ## `meter/state` {#meter_state_warp2}
+
 
 Der Zustand des Stromzählers.
 
@@ -1208,9 +755,9 @@ Der Zustand des Stromzählers.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/values` {#meter_values_warp2}
+
 
 Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"><code>"meter"</code></a>
 
@@ -1247,9 +794,9 @@ Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/phases` {#meter_phases_warp2}
+
 
 Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter_phases"><code>"meter_phases"</code></a>.
 
@@ -1285,9 +832,9 @@ Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/error_counters` {#meter_error_counters_warp2}
+
 
 Fehlerzähler der Kommunikation mit dem Stromzähler.
 
@@ -1345,9 +892,9 @@ Fehlerzähler der Kommunikation mit dem Stromzähler.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/all_values` {#meter_all_values_warp2}
+
 
 Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Benötigt das Feature <a href="#features_meter_all_values"><code>"meter_all_values"</code></a>. Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
 
@@ -1720,510 +1267,43 @@ Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Benötigt das 
     </tbody>
 </table>
 
-
-<br/><br/><br/>
-## `meter/state_update` {#meter_state_update_warp2}
-
-Setzt den Stromzählerzustand. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong>
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`state`<br/>int</th>
-    <td>
-        Zustand des Stromzählers
-        - **0** - Kein Stromzähler verbunden
-        - **1** - Stromzähler unzuverlässig, eventuell nur einphasig verbunden.
-        - **2** - Stromzähler verbunden
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`type`<br/>int</th>
-    <td>
-        Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!
-        - **0** - Kein Stromzähler verfügbar
-        - **2** - SDM630
-        - **3** - SDM72V2
-    </td>
-</tr>
-    </tbody>
-</table>
-
-
-<br/><br/><br/>
-## `meter/values_update` {#meter_values_update_warp2}
-
-Setzt die Messwerte des Stromzählers. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong>
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Die aktuelle Ladeleistung.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_rel`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Die geladene Energie seit dem letzten Reset.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_abs`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Die geladene Energie seit der Herstellung des Stromzählers.
-    </td>
-</tr>
-    </tbody>
-</table>
-
-
-<br/><br/><br/>
-## `meter/phases_update` {#meter_phases_update_warp2}
-
-Setzt die angeschlossenen und aktive Phasen. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong>
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases_active`<br/>bool[3]</th>
-    <td>
-        Die derzeit aktiven Phasen
-        - **[0]** - Phase L1 aktiv
-        - **[1]** - Phase L2 aktiv
-        - **[2]** - Phase L3 aktiv
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases_connected`<br/>bool[3]</th>
-    <td>
-        Die angeschlossenen Phasen
-        - **[0]** - Phase L1 angeschlossen
-        - **[1]** - Phase L2 angeschlossen
-        - **[2]** - Phase L3 angeschlossen
-    </td>
-</tr>
-    </tbody>
-</table>
-
-
-<br/><br/><br/>
-## `meter/all_values_update` {#meter_all_values_update_warp2}
-
-Setzt alle Messwerte, die von unterstützten Stromzählern gemessen werden. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong> Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Index</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..2]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Spannung gegen Neutral
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[3..5]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Strom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[6..8]`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Wirkleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[9..11]`<br/>float (<abbr title="Voltampere">VA</abbr>)</th>
-    <td>
-        Scheinleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[12..14]`<br/>float (<abbr title="Voltampere Reaktiv">var</abbr>)</th>
-    <td>
-        Blindleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[15..17]`<br/>float</th>
-    <td>
-        Leistungsfaktor; Das Vorzeichen des Leistungsfaktors gibt die Richtung des Stromflusses an.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[18..20]`<br/>float (<abbr title="Grad">°</abbr>)</th>
-    <td>
-        relative Phasenverschiebung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[21]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Durchschnittliche Spannung gegen Neutral
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[22]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Durchschnittlicher Strom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[23]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Summe der Phasenströme
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[24]`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Gesamtwirkleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[25]`<br/>float (<abbr title="Voltampere">VA</abbr>)</th>
-    <td>
-        Gesamtscheinleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[26]`<br/>float (<abbr title="Voltampere Reaktiv">var</abbr>)</th>
-    <td>
-        Gesamtblindleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[27]`<br/>float</th>
-    <td>
-        Gesamtleistungsfaktor
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[28]`<br/>float (<abbr title="Grad">°</abbr>)</th>
-    <td>
-        Gesamtphasenverschiebung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[29]`<br/>float (<abbr title="Hertz">Hz</abbr>)</th>
-    <td>
-        Frequenz der Versorgungsspannung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[30]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Wirkenergie (Import; vom Fahrzeug aufgenommen)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[31]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Wirkenergie (Export; vom Fahrzeug abgegeben)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[32]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Blindenergie (Import; vom Fahrzeug aufgenommen)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[33]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Blindenergie (Export; vom Fahrzeug abgegeben)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[34]`<br/>float (<abbr title="Kilovoltamperestunde">kVAh</abbr>)</th>
-    <td>
-        Gesamtscheinenergie
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[35]`<br/>float (<abbr title="Amperestunde">Ah</abbr>)</th>
-    <td>
-        Transportierte elektrische Ladung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[36]`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Bezogene Wirkleistung; Entspricht Import-Export-Differenz
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[37]`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Max. bezogene Wirkleistung; Höchster gemessener Wert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[38]`<br/>float (<abbr title="Voltampere">VA</abbr>)</th>
-    <td>
-        Bezogene Scheinleistung; Entspricht Import-Export-Differenz
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[39]`<br/>float (<abbr title="Voltampere">VA</abbr>)</th>
-    <td>
-        Max. bezogene Scheinleistung; Höchster gemessener Wert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[40]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Bezogener Neutralleiterstrom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[41]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Max. bezogener Neutralleiterstrom; Höchster gemessener Wert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[42]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Spannung L1 zu L2
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[43]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Spannung L2 zu L3
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[44]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Spannung L3 zu L1
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[45]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Durchschnittliche Spannung zwischen Phasen
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[46]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Neutralleiterstrom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[47..49]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Total Harmonic Distortion (THD) der Spannung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[50..52]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Total Harmonic Distortion (THD) des Stroms
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[53]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Durchschnittliche Spannungs-THD
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[54]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Durchschnittliche Strom-THD
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[55..57]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Bezogener Strom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[58..60]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Max. bezogener Strom; Höchster gemessener Wert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[61]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Spannungs-THD L1 zu L2
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[62]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Spannungs-THD L2 zu L3
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[63]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Spannungs-THD L3 zu L1
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[64]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Durchschnittliche Spannungs-THD zwischen Phasen
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[65]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Summe der Gesamtwirkenergien; Import-Export-Summe aller Phasen
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[66]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Summe der Gesamtblindenergien; Import-Export-Summe aller Phasen
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[67..69]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Wirkenergie (Import; vom Fahrzeug aufgenommen)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[70..72]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Wirkenergie (Export; vom Fahrzeug abgegeben)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[73..75]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Gesamtwirkenergie; Import-Export-Summe
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[76..78]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Blindenergie (Import; vom Fahrzeug aufgenommen)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[79..81]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Blindenergie (Export; vom Fahrzeug abgegeben)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[82..84]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Gesamtblindenergie; Import-Export-Summe
-    </td>
-</tr>
-    </tbody>
-</table>
-
-
 <br/><br/><br/>
 ## `meter/reset` {#meter_reset_warp2}
 
+
 Setzt den Energiezähler zurück.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/meter/reset -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/reset -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `meter/last_reset` {#meter_last_reset_warp2}
 
+
 Der Zeitpunkt des letzten Zähler-Resets (siehe [meter/reset](meter.mdx#meter_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.
 
 
@@ -2245,11 +1325,13 @@ Der Zeitpunkt des letzten Zähler-Resets (siehe [meter/reset](meter.mdx#meter_re
     </tbody>
 </table>
 
-
-
+<br/><br/><br/>
 
 <br/><br/><br/>
 ## `meter/history` {#meter_history_warp2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
 
@@ -2278,10 +1360,17 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `meter/live` {#meter_live_warp2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [meter/history](meter.mdx#meter_history) generiert.
 
@@ -2317,10 +1406,15 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
 </tr>
     </tbody>
 </table>
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 </TabItem>
 <TabItem value="warp3">
-<br/><br/><br/>
 ## `meter/state` {#meter_state_warp3}
+
 
 Der Zustand des Stromzählers.
 
@@ -2360,9 +1454,9 @@ Der Zustand des Stromzählers.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/values` {#meter_values_warp3}
+
 
 Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"><code>"meter"</code></a>
 
@@ -2399,9 +1493,9 @@ Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/phases` {#meter_phases_warp3}
+
 
 Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter_phases"><code>"meter_phases"</code></a>.
 
@@ -2437,9 +1531,9 @@ Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/error_counters` {#meter_error_counters_warp3}
+
 
 Fehlerzähler der Kommunikation mit dem Stromzähler.
 
@@ -2497,9 +1591,9 @@ Fehlerzähler der Kommunikation mit dem Stromzähler.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/all_values` {#meter_all_values_warp3}
+
 
 Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Benötigt das Feature <a href="#features_meter_all_values"><code>"meter_all_values"</code></a>. Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
 
@@ -2872,510 +1966,43 @@ Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Benötigt das 
     </tbody>
 </table>
 
-
-<br/><br/><br/>
-## `meter/state_update` {#meter_state_update_warp3}
-
-Setzt den Stromzählerzustand. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong>
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`state`<br/>int</th>
-    <td>
-        Zustand des Stromzählers
-        - **0** - Kein Stromzähler verbunden
-        - **1** - Stromzähler unzuverlässig, eventuell nur einphasig verbunden.
-        - **2** - Stromzähler verbunden
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`type`<br/>int</th>
-    <td>
-        Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!
-        - **0** - Kein Stromzähler verfügbar
-        - **2** - SDM630
-        - **3** - SDM72V2
-    </td>
-</tr>
-    </tbody>
-</table>
-
-
-<br/><br/><br/>
-## `meter/values_update` {#meter_values_update_warp3}
-
-Setzt die Messwerte des Stromzählers. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong>
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Die aktuelle Ladeleistung.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_rel`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Die geladene Energie seit dem letzten Reset.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_abs`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Die geladene Energie seit der Herstellung des Stromzählers.
-    </td>
-</tr>
-    </tbody>
-</table>
-
-
-<br/><br/><br/>
-## `meter/phases_update` {#meter_phases_update_warp3}
-
-Setzt die angeschlossenen und aktive Phasen. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong>
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases_active`<br/>bool[3]</th>
-    <td>
-        Die derzeit aktiven Phasen
-        - **[0]** - Phase L1 aktiv
-        - **[1]** - Phase L2 aktiv
-        - **[2]** - Phase L3 aktiv
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases_connected`<br/>bool[3]</th>
-    <td>
-        Die angeschlossenen Phasen
-        - **[0]** - Phase L1 angeschlossen
-        - **[1]** - Phase L2 angeschlossen
-        - **[2]** - Phase L3 angeschlossen
-    </td>
-</tr>
-    </tbody>
-</table>
-
-
-<br/><br/><br/>
-## `meter/all_values_update` {#meter_all_values_update_warp3}
-
-Setzt alle Messwerte, die von unterstützten Stromzählern gemessen werden. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong> Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Index</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..2]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Spannung gegen Neutral
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[3..5]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Strom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[6..8]`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Wirkleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[9..11]`<br/>float (<abbr title="Voltampere">VA</abbr>)</th>
-    <td>
-        Scheinleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[12..14]`<br/>float (<abbr title="Voltampere Reaktiv">var</abbr>)</th>
-    <td>
-        Blindleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[15..17]`<br/>float</th>
-    <td>
-        Leistungsfaktor; Das Vorzeichen des Leistungsfaktors gibt die Richtung des Stromflusses an.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[18..20]`<br/>float (<abbr title="Grad">°</abbr>)</th>
-    <td>
-        relative Phasenverschiebung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[21]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Durchschnittliche Spannung gegen Neutral
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[22]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Durchschnittlicher Strom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[23]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Summe der Phasenströme
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[24]`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Gesamtwirkleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[25]`<br/>float (<abbr title="Voltampere">VA</abbr>)</th>
-    <td>
-        Gesamtscheinleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[26]`<br/>float (<abbr title="Voltampere Reaktiv">var</abbr>)</th>
-    <td>
-        Gesamtblindleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[27]`<br/>float</th>
-    <td>
-        Gesamtleistungsfaktor
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[28]`<br/>float (<abbr title="Grad">°</abbr>)</th>
-    <td>
-        Gesamtphasenverschiebung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[29]`<br/>float (<abbr title="Hertz">Hz</abbr>)</th>
-    <td>
-        Frequenz der Versorgungsspannung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[30]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Wirkenergie (Import; vom Fahrzeug aufgenommen)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[31]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Wirkenergie (Export; vom Fahrzeug abgegeben)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[32]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Blindenergie (Import; vom Fahrzeug aufgenommen)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[33]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Blindenergie (Export; vom Fahrzeug abgegeben)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[34]`<br/>float (<abbr title="Kilovoltamperestunde">kVAh</abbr>)</th>
-    <td>
-        Gesamtscheinenergie
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[35]`<br/>float (<abbr title="Amperestunde">Ah</abbr>)</th>
-    <td>
-        Transportierte elektrische Ladung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[36]`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Bezogene Wirkleistung; Entspricht Import-Export-Differenz
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[37]`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Max. bezogene Wirkleistung; Höchster gemessener Wert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[38]`<br/>float (<abbr title="Voltampere">VA</abbr>)</th>
-    <td>
-        Bezogene Scheinleistung; Entspricht Import-Export-Differenz
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[39]`<br/>float (<abbr title="Voltampere">VA</abbr>)</th>
-    <td>
-        Max. bezogene Scheinleistung; Höchster gemessener Wert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[40]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Bezogener Neutralleiterstrom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[41]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Max. bezogener Neutralleiterstrom; Höchster gemessener Wert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[42]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Spannung L1 zu L2
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[43]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Spannung L2 zu L3
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[44]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Spannung L3 zu L1
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[45]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Durchschnittliche Spannung zwischen Phasen
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[46]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Neutralleiterstrom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[47..49]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Total Harmonic Distortion (THD) der Spannung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[50..52]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Total Harmonic Distortion (THD) des Stroms
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[53]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Durchschnittliche Spannungs-THD
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[54]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Durchschnittliche Strom-THD
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[55..57]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Bezogener Strom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[58..60]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Max. bezogener Strom; Höchster gemessener Wert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[61]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Spannungs-THD L1 zu L2
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[62]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Spannungs-THD L2 zu L3
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[63]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Spannungs-THD L3 zu L1
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[64]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Durchschnittliche Spannungs-THD zwischen Phasen
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[65]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Summe der Gesamtwirkenergien; Import-Export-Summe aller Phasen
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[66]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Summe der Gesamtblindenergien; Import-Export-Summe aller Phasen
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[67..69]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Wirkenergie (Import; vom Fahrzeug aufgenommen)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[70..72]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Wirkenergie (Export; vom Fahrzeug abgegeben)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[73..75]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Gesamtwirkenergie; Import-Export-Summe
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[76..78]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Blindenergie (Import; vom Fahrzeug aufgenommen)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[79..81]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Blindenergie (Export; vom Fahrzeug abgegeben)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[82..84]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Gesamtblindenergie; Import-Export-Summe
-    </td>
-</tr>
-    </tbody>
-</table>
-
-
 <br/><br/><br/>
 ## `meter/reset` {#meter_reset_warp3}
 
+
 Setzt den Energiezähler zurück.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/meter/reset -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/reset -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `meter/last_reset` {#meter_last_reset_warp3}
 
+
 Der Zeitpunkt des letzten Zähler-Resets (siehe [meter/reset](meter.mdx#meter_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.
 
 
@@ -3397,11 +2024,13 @@ Der Zeitpunkt des letzten Zähler-Resets (siehe [meter/reset](meter.mdx#meter_re
     </tbody>
 </table>
 
-
-
+<br/><br/><br/>
 
 <br/><br/><br/>
 ## `meter/history` {#meter_history_warp3}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
 
@@ -3430,10 +2059,17 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `meter/live` {#meter_live_warp3}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [meter/history](meter.mdx#meter_history) generiert.
 
@@ -3469,10 +2105,15 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
 </tr>
     </tbody>
 </table>
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 </TabItem>
 <TabItem value="wem">
-<br/><br/><br/>
 ## `meter/state` {#meter_state_wem}
+
 
 Der Zustand des Stromzählers.
 
@@ -3512,9 +2153,9 @@ Der Zustand des Stromzählers.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/values` {#meter_values_wem}
+
 
 Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"><code>"meter"</code></a>
 
@@ -3551,9 +2192,9 @@ Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/phases` {#meter_phases_wem}
+
 
 Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter_phases"><code>"meter_phases"</code></a>.
 
@@ -3589,9 +2230,9 @@ Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/error_counters` {#meter_error_counters_wem}
+
 
 Fehlerzähler der Kommunikation mit dem Stromzähler.
 
@@ -3649,9 +2290,9 @@ Fehlerzähler der Kommunikation mit dem Stromzähler.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/all_values` {#meter_all_values_wem}
+
 
 Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Benötigt das Feature <a href="#features_meter_all_values"><code>"meter_all_values"</code></a>. Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
 
@@ -4024,509 +2665,42 @@ Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Benötigt das 
     </tbody>
 </table>
 
-
-<br/><br/><br/>
-## `meter/state_update` {#meter_state_update_wem}
-
-Setzt den Stromzählerzustand. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong>
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`state`<br/>int</th>
-    <td>
-        Zustand des Stromzählers
-        - **0** - Kein Stromzähler verbunden
-        - **1** - Stromzähler unzuverlässig, eventuell nur einphasig verbunden.
-        - **2** - Stromzähler verbunden
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`type`<br/>int</th>
-    <td>
-        Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!
-        - **0** - Kein Stromzähler verfügbar
-        - **2** - SDM630
-        - **3** - SDM72V2
-    </td>
-</tr>
-    </tbody>
-</table>
-
-
-<br/><br/><br/>
-## `meter/values_update` {#meter_values_update_wem}
-
-Setzt die Messwerte des Stromzählers. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong>
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Die aktuelle Ladeleistung.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_rel`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Die geladene Energie seit dem letzten Reset.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_abs`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Die geladene Energie seit der Herstellung des Stromzählers.
-    </td>
-</tr>
-    </tbody>
-</table>
-
-
-<br/><br/><br/>
-## `meter/phases_update` {#meter_phases_update_wem}
-
-Setzt die angeschlossenen und aktive Phasen. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong>
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases_active`<br/>bool[3]</th>
-    <td>
-        Die derzeit aktiven Phasen
-        - **[0]** - Phase L1 aktiv
-        - **[1]** - Phase L2 aktiv
-        - **[2]** - Phase L3 aktiv
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases_connected`<br/>bool[3]</th>
-    <td>
-        Die angeschlossenen Phasen
-        - **[0]** - Phase L1 angeschlossen
-        - **[1]** - Phase L2 angeschlossen
-        - **[2]** - Phase L3 angeschlossen
-    </td>
-</tr>
-    </tbody>
-</table>
-
-
-<br/><br/><br/>
-## `meter/all_values_update` {#meter_all_values_update_wem}
-
-Setzt alle Messwerte, die von unterstützten Stromzählern gemessen werden. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong> Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Index</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..2]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Spannung gegen Neutral
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[3..5]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Strom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[6..8]`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Wirkleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[9..11]`<br/>float (<abbr title="Voltampere">VA</abbr>)</th>
-    <td>
-        Scheinleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[12..14]`<br/>float (<abbr title="Voltampere Reaktiv">var</abbr>)</th>
-    <td>
-        Blindleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[15..17]`<br/>float</th>
-    <td>
-        Leistungsfaktor; Das Vorzeichen des Leistungsfaktors gibt die Richtung des Stromflusses an.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[18..20]`<br/>float (<abbr title="Grad">°</abbr>)</th>
-    <td>
-        relative Phasenverschiebung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[21]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Durchschnittliche Spannung gegen Neutral
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[22]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Durchschnittlicher Strom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[23]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Summe der Phasenströme
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[24]`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Gesamtwirkleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[25]`<br/>float (<abbr title="Voltampere">VA</abbr>)</th>
-    <td>
-        Gesamtscheinleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[26]`<br/>float (<abbr title="Voltampere Reaktiv">var</abbr>)</th>
-    <td>
-        Gesamtblindleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[27]`<br/>float</th>
-    <td>
-        Gesamtleistungsfaktor
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[28]`<br/>float (<abbr title="Grad">°</abbr>)</th>
-    <td>
-        Gesamtphasenverschiebung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[29]`<br/>float (<abbr title="Hertz">Hz</abbr>)</th>
-    <td>
-        Frequenz der Versorgungsspannung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[30]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Wirkenergie (Import; vom Fahrzeug aufgenommen)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[31]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Wirkenergie (Export; vom Fahrzeug abgegeben)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[32]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Blindenergie (Import; vom Fahrzeug aufgenommen)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[33]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Blindenergie (Export; vom Fahrzeug abgegeben)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[34]`<br/>float (<abbr title="Kilovoltamperestunde">kVAh</abbr>)</th>
-    <td>
-        Gesamtscheinenergie
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[35]`<br/>float (<abbr title="Amperestunde">Ah</abbr>)</th>
-    <td>
-        Transportierte elektrische Ladung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[36]`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Bezogene Wirkleistung; Entspricht Import-Export-Differenz
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[37]`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Max. bezogene Wirkleistung; Höchster gemessener Wert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[38]`<br/>float (<abbr title="Voltampere">VA</abbr>)</th>
-    <td>
-        Bezogene Scheinleistung; Entspricht Import-Export-Differenz
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[39]`<br/>float (<abbr title="Voltampere">VA</abbr>)</th>
-    <td>
-        Max. bezogene Scheinleistung; Höchster gemessener Wert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[40]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Bezogener Neutralleiterstrom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[41]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Max. bezogener Neutralleiterstrom; Höchster gemessener Wert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[42]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Spannung L1 zu L2
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[43]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Spannung L2 zu L3
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[44]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Spannung L3 zu L1
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[45]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Durchschnittliche Spannung zwischen Phasen
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[46]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Neutralleiterstrom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[47..49]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Total Harmonic Distortion (THD) der Spannung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[50..52]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Total Harmonic Distortion (THD) des Stroms
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[53]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Durchschnittliche Spannungs-THD
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[54]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Durchschnittliche Strom-THD
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[55..57]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Bezogener Strom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[58..60]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Max. bezogener Strom; Höchster gemessener Wert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[61]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Spannungs-THD L1 zu L2
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[62]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Spannungs-THD L2 zu L3
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[63]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Spannungs-THD L3 zu L1
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[64]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Durchschnittliche Spannungs-THD zwischen Phasen
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[65]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Summe der Gesamtwirkenergien; Import-Export-Summe aller Phasen
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[66]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Summe der Gesamtblindenergien; Import-Export-Summe aller Phasen
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[67..69]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Wirkenergie (Import; vom Fahrzeug aufgenommen)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[70..72]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Wirkenergie (Export; vom Fahrzeug abgegeben)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[73..75]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Gesamtwirkenergie; Import-Export-Summe
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[76..78]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Blindenergie (Import; vom Fahrzeug aufgenommen)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[79..81]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Blindenergie (Export; vom Fahrzeug abgegeben)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[82..84]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Gesamtblindenergie; Import-Export-Summe
-    </td>
-</tr>
-    </tbody>
-</table>
-
-
 <br/><br/><br/>
 ## `meter/reset` {#meter_reset_wem}
 
+
 Setzt den Energiezähler zurück.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/meter/reset -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/reset -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `meter/last_reset` {#meter_last_reset_wem}
+
 
 Der Zeitpunkt des letzten Zähler-Resets (siehe [meter/reset](meter.mdx#meter_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.
 
@@ -4549,11 +2723,13 @@ Der Zeitpunkt des letzten Zähler-Resets (siehe [meter/reset](meter.mdx#meter_re
     </tbody>
 </table>
 
-
-
+<br/><br/><br/>
 
 <br/><br/><br/>
 ## `meter/history` {#meter_history_wem}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
 
@@ -4582,10 +2758,17 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `meter/live` {#meter_live_wem}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [meter/history](meter.mdx#meter_history) generiert.
 
@@ -4621,10 +2804,15 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
 </tr>
     </tbody>
 </table>
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 </TabItem>
 <TabItem value="any">
-<br/><br/><br/>
 ## `meter/state` {#meter_state_any}
+
 
 Der Zustand des Stromzählers.
 
@@ -4677,9 +2865,9 @@ Der Zustand des Stromzählers.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/values` {#meter_values_any}
+
 
 Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"><code>"meter"</code></a>
 
@@ -4716,9 +2904,9 @@ Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/phases` {#meter_phases_any}
+
 
 Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter_phases"><code>"meter_phases"</code></a>.
 
@@ -4760,9 +2948,9 @@ Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/error_counters` {#meter_error_counters_any}
+
 
 Fehlerzähler der Kommunikation mit dem Stromzähler.
 
@@ -4841,9 +3029,9 @@ Fehlerzähler der Kommunikation mit dem Stromzähler.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/all_values` {#meter_all_values_any}
+
 
 Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Benötigt das Feature <a href="#features_meter_all_values"><code>"meter_all_values"</code></a>. Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
 
@@ -5216,525 +3404,42 @@ Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Benötigt das 
     </tbody>
 </table>
 
-
-<br/><br/><br/>
-## `meter/state_update` {#meter_state_update_any}
-
-Setzt den Stromzählerzustand. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong>
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`state`<br/>int</th>
-    <td>
-        Zustand des Stromzählers
-        
-        
-        
-        - **0** - Kein Stromzähler verbunden
-        - **1** - Stromzähler unzuverlässig, eventuell nur einphasig verbunden.
-        - **2** - Stromzähler verbunden
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`type`<br/>int</th>
-    <td>
-        Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!
-        
-        
-        
-        - **0** - Kein Stromzähler verfügbar
-        - **2** - SDM630
-        - **3** - SDM72V2
-        
-        <strong>WARP 1:</strong><br/>
-        
-        - **1** - SDM72
-    </td>
-</tr>
-    </tbody>
-</table>
-
-
-<br/><br/><br/>
-## `meter/values_update` {#meter_values_update_any}
-
-Setzt die Messwerte des Stromzählers. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong>
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Die aktuelle Ladeleistung.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_rel`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Die geladene Energie seit dem letzten Reset.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_abs`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Die geladene Energie seit der Herstellung des Stromzählers.
-    </td>
-</tr>
-    </tbody>
-</table>
-
-
-<br/><br/><br/>
-## `meter/phases_update` {#meter_phases_update_any}
-
-Setzt die angeschlossenen und aktive Phasen. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong>
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases_active`<br/>bool[3]</th>
-    <td>
-        Die derzeit aktiven Phasen
-        
-        
-        
-        - **[0]** - Phase L1 aktiv
-        - **[1]** - Phase L2 aktiv
-        - **[2]** - Phase L3 aktiv
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases_connected`<br/>bool[3]</th>
-    <td>
-        Die angeschlossenen Phasen
-        
-        
-        
-        - **[0]** - Phase L1 angeschlossen
-        - **[1]** - Phase L2 angeschlossen
-        - **[2]** - Phase L3 angeschlossen
-    </td>
-</tr>
-    </tbody>
-</table>
-
-
-<br/><br/><br/>
-## `meter/all_values_update` {#meter_all_values_update_any}
-
-Setzt alle Messwerte, die von unterstützten Stromzählern gemessen werden. Kann verwendet werden, um einen externen Stromzähler an einen WARP Charger Smart anzubinden. <strong>Nicht gleichzeitig mit einem internen Stromzähler verwenden!</strong> Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Index</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..2]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Spannung gegen Neutral
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[3..5]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Strom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[6..8]`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Wirkleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[9..11]`<br/>float (<abbr title="Voltampere">VA</abbr>)</th>
-    <td>
-        Scheinleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[12..14]`<br/>float (<abbr title="Voltampere Reaktiv">var</abbr>)</th>
-    <td>
-        Blindleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[15..17]`<br/>float</th>
-    <td>
-        Leistungsfaktor; Das Vorzeichen des Leistungsfaktors gibt die Richtung des Stromflusses an.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[18..20]`<br/>float (<abbr title="Grad">°</abbr>)</th>
-    <td>
-        relative Phasenverschiebung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[21]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Durchschnittliche Spannung gegen Neutral
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[22]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Durchschnittlicher Strom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[23]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Summe der Phasenströme
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[24]`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Gesamtwirkleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[25]`<br/>float (<abbr title="Voltampere">VA</abbr>)</th>
-    <td>
-        Gesamtscheinleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[26]`<br/>float (<abbr title="Voltampere Reaktiv">var</abbr>)</th>
-    <td>
-        Gesamtblindleistung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[27]`<br/>float</th>
-    <td>
-        Gesamtleistungsfaktor
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[28]`<br/>float (<abbr title="Grad">°</abbr>)</th>
-    <td>
-        Gesamtphasenverschiebung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[29]`<br/>float (<abbr title="Hertz">Hz</abbr>)</th>
-    <td>
-        Frequenz der Versorgungsspannung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[30]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Wirkenergie (Import; vom Fahrzeug aufgenommen)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[31]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Wirkenergie (Export; vom Fahrzeug abgegeben)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[32]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Blindenergie (Import; vom Fahrzeug aufgenommen)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[33]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Blindenergie (Export; vom Fahrzeug abgegeben)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[34]`<br/>float (<abbr title="Kilovoltamperestunde">kVAh</abbr>)</th>
-    <td>
-        Gesamtscheinenergie
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[35]`<br/>float (<abbr title="Amperestunde">Ah</abbr>)</th>
-    <td>
-        Transportierte elektrische Ladung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[36]`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Bezogene Wirkleistung; Entspricht Import-Export-Differenz
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[37]`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Max. bezogene Wirkleistung; Höchster gemessener Wert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[38]`<br/>float (<abbr title="Voltampere">VA</abbr>)</th>
-    <td>
-        Bezogene Scheinleistung; Entspricht Import-Export-Differenz
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[39]`<br/>float (<abbr title="Voltampere">VA</abbr>)</th>
-    <td>
-        Max. bezogene Scheinleistung; Höchster gemessener Wert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[40]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Bezogener Neutralleiterstrom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[41]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Max. bezogener Neutralleiterstrom; Höchster gemessener Wert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[42]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Spannung L1 zu L2
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[43]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Spannung L2 zu L3
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[44]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Spannung L3 zu L1
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[45]`<br/>float (<abbr title="Volt">V</abbr>)</th>
-    <td>
-        Durchschnittliche Spannung zwischen Phasen
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[46]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Neutralleiterstrom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[47..49]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Total Harmonic Distortion (THD) der Spannung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[50..52]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Total Harmonic Distortion (THD) des Stroms
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[53]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Durchschnittliche Spannungs-THD
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[54]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Durchschnittliche Strom-THD
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[55..57]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Bezogener Strom
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[58..60]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
-    <td>
-        Max. bezogener Strom; Höchster gemessener Wert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[61]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Spannungs-THD L1 zu L2
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[62]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Spannungs-THD L2 zu L3
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[63]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Spannungs-THD L3 zu L1
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[64]`<br/>float (<abbr title="Prozent">%</abbr>)</th>
-    <td>
-        Durchschnittliche Spannungs-THD zwischen Phasen
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[65]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Summe der Gesamtwirkenergien; Import-Export-Summe aller Phasen
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[66]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Summe der Gesamtblindenergien; Import-Export-Summe aller Phasen
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[67..69]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Wirkenergie (Import; vom Fahrzeug aufgenommen)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[70..72]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Wirkenergie (Export; vom Fahrzeug abgegeben)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[73..75]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
-    <td>
-        Gesamtwirkenergie; Import-Export-Summe
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[76..78]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Blindenergie (Import; vom Fahrzeug aufgenommen)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[79..81]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Blindenergie (Export; vom Fahrzeug abgegeben)
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[82..84]`<br/>float (<abbr title="Kilovoltampere Reaktiv Stunde">kvarh</abbr>)</th>
-    <td>
-        Gesamtblindenergie; Import-Export-Summe
-    </td>
-</tr>
-    </tbody>
-</table>
-
-
 <br/><br/><br/>
 ## `meter/reset` {#meter_reset_any}
 
+
 Setzt den Energiezähler zurück.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/meter/reset -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/reset -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `meter/last_reset` {#meter_last_reset_any}
+
 
 Der Zeitpunkt des letzten Zähler-Resets (siehe [meter/reset](meter.mdx#meter_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.
 
@@ -5757,11 +3462,11 @@ Der Zeitpunkt des letzten Zähler-Resets (siehe [meter/reset](meter.mdx#meter_re
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/type_override` {#meter_type_override_any}
+
 <strong>(Nur WARP 1)</strong> 
-Erlaubt es den verbauten Zählertyp zu überschreiben, falls die Auto-Detektion nicht funktioniert. Der Wert kann über meter/type_override_update mit dem selben Payload aktualisiert werden.
+Erlaubt es den verbauten Zählertyp zu überschreiben, falls die Auto-Detektion nicht funktioniert.
 
 
 
@@ -5792,9 +3497,11 @@ Erlaubt es den verbauten Zählertyp zu überschreiben, falls die Auto-Detektion 
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meter/history` {#meter_history_any}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
 
@@ -5823,10 +3530,17 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `meter/live` {#meter_live_any}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [meter/history](meter.mdx#meter_history) generiert.
 
@@ -5862,6 +3576,11 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
 </tr>
     </tbody>
 </table>
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 </TabItem>
 </Tabs>
 
@@ -5889,26 +3608,6 @@ export const toc = [
 },{
     "value": "meter/all_values",
     "id": "meter_all_values",
-    "level": 2,
-    
-},{
-    "value": "meter/state_update",
-    "id": "meter_state_update",
-    "level": 2,
-    
-},{
-    "value": "meter/values_update",
-    "id": "meter_values_update",
-    "level": 2,
-    
-},{
-    "value": "meter/phases_update",
-    "id": "meter_phases_update",
-    "level": 2,
-    
-},{
-    "value": "meter/all_values_update",
-    "id": "meter_all_values_update",
     "level": 2,
     
 },{

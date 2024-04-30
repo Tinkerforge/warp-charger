@@ -2,6 +2,7 @@
 import MultilineTabs from '@site/src/components/MultilineTabs';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
 
 # OCPP-Verbindung
 
@@ -10,8 +11,8 @@ import TabItem from '@theme/TabItem';
 Auf dieser Hardware nicht unterstützt!
 </TabItem>
 <TabItem value="warp2">
-<br/><br/><br/>
 ## `ocpp/config` {#ocpp_config_warp2}
+
 
 Konfiguration der OCPP-Verbindung
 
@@ -70,18 +71,42 @@ Konfiguration der OCPP-Verbindung
 </tr>
     </tbody>
 </table>
-
 
 <br/><br/><br/>
 ## `ocpp/reset` {#ocpp_reset_warp2}
 
-Setzt den OCPP-Zustand zurück. <strong>Nicht gesendete Transaktionsdaten gehen verloren!</strong>
 
+Setzt den OCPP-Zustand zurück. <strong>Nicht gesendete Transaktionsdaten gehen verloren!</strong>
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/ocpp/reset -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/ocpp/reset -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
+
+
 </TabItem>
 <TabItem value="warp3">
-<br/><br/><br/>
 ## `ocpp/config` {#ocpp_config_warp3}
+
 
 Konfiguration der OCPP-Verbindung
 
@@ -141,20 +166,44 @@ Konfiguration der OCPP-Verbindung
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `ocpp/reset` {#ocpp_reset_warp3}
 
-Setzt den OCPP-Zustand zurück. <strong>Nicht gesendete Transaktionsdaten gehen verloren!</strong>
 
+Setzt den OCPP-Zustand zurück. <strong>Nicht gesendete Transaktionsdaten gehen verloren!</strong>
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/ocpp/reset -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/ocpp/reset -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
+
+
 </TabItem>
 <TabItem value="wem">
 Auf dieser Hardware nicht unterstützt!
 </TabItem>
 <TabItem value="any">
-<br/><br/><br/>
 ## `ocpp/config` {#ocpp_config_any}
+
 
 Konfiguration der OCPP-Verbindung
 
@@ -217,13 +266,37 @@ Konfiguration der OCPP-Verbindung
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `ocpp/reset` {#ocpp_reset_any}
 
-Setzt den OCPP-Zustand zurück. <strong>Nicht gesendete Transaktionsdaten gehen verloren!</strong>
 
+Setzt den OCPP-Zustand zurück. <strong>Nicht gesendete Transaktionsdaten gehen verloren!</strong>
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/ocpp/reset -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/ocpp/reset -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
+
+
 </TabItem>
 </Tabs>
 

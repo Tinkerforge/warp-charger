@@ -2,17 +2,20 @@
 import MultilineTabs from '@site/src/components/MultilineTabs';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
 
 # Lastmanager
 
 <Tabs groupId="hardwareType" queryString className="hidden-tabs">
 <TabItem value="warp1">
-<br/><br/><br/>
 ## `charge_manager/available_current` {#charge_manager_available_current_warp1}
 
-Der derzeit zur Verfügung stehende Strom. Kann über charge_manager/available_current_update aktualisiert werden. Dieser Strom wird unter den konfigurierten Wallboxen aufgeteilt.
+
+Der derzeit zur Verfügung stehende Strom. Dieser Strom wird unter den konfigurierten Wallboxen aufgeteilt.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -31,13 +34,15 @@ Der derzeit zur Verfügung stehende Strom. Kann über charge_manager/available_c
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_manager/available_phases` {#charge_manager_available_phases_warp1}
 
-Anzahl der derzeit verbundenen Phasen der Wallboxen. Kann über charge_manager/available_phases_update aktualisiert werden.
+
+Anzahl der derzeit verbundenen Phasen der Wallboxen.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -56,19 +61,19 @@ Anzahl der derzeit verbundenen Phasen der Wallboxen. Kann über charge_manager/a
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_manager/state` {#charge_manager_state_warp1}
 
-Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Object werden nicht als API-Bruch betrachtet!</strong>
 
+Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Object werden nicht als API-Bruch betrachtet!</strong>
 
 
 
 <br/><br/><br/>
 ## `charge_manager/config` {#charge_manager_config_warp1}
 
-Die Lastmanager-Konfiguration. Diese kann über charge_manager/config_update mit dem selben Payload aktualisiert werden.
+
+Die Lastmanager-Konfiguration.
 
 
 <table>
@@ -92,7 +97,7 @@ Die Lastmanager-Konfiguration. Diese kann über charge_manager/config_update mit
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_watchdog`<br/>bool</th>
     <td>
-        Gibt an, ob der Watchdog aktiviert sein soll. Der Watchdog setzt, wenn 30 Sekunden lang keine Nachricht auf [charge_manager/available_current_update](charge_manager.mdx#charge_manager_available_current_update) einging, den verfügbaren Strom auf die Default-Einstellung (default_available_current). Damit kann die Robustheit gegen Ausfall einer externen Steuerung, z.B. bei PV-Überschussladung erhöht werden.
+        Gibt an, ob der Watchdog aktiviert sein soll. Der Watchdog setzt, wenn 30 Sekunden lang keine Nachricht auf [charge_manager/available_current](charge_manager.mdx#charge_manager_available_current) einging, den verfügbaren Strom auf die Default-Einstellung (default_available_current). Damit kann die Robustheit gegen Ausfall einer externen Steuerung, z.B. bei PV-Überschussladung erhöht werden.
         - **true** - Wenn der Watchdog aktiviert ist.
         - **false** - Wenn der Watchdog nicht aktiviert ist.
     </td>
@@ -202,12 +207,14 @@ Die Lastmanager-Konfiguration. Diese kann über charge_manager/config_update mit
 </table>
 </TabItem>
 <TabItem value="warp2">
-<br/><br/><br/>
 ## `charge_manager/available_current` {#charge_manager_available_current_warp2}
 
-Der derzeit zur Verfügung stehende Strom. Kann über charge_manager/available_current_update aktualisiert werden. Dieser Strom wird unter den konfigurierten Wallboxen aufgeteilt.
+
+Der derzeit zur Verfügung stehende Strom. Dieser Strom wird unter den konfigurierten Wallboxen aufgeteilt.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -226,13 +233,15 @@ Der derzeit zur Verfügung stehende Strom. Kann über charge_manager/available_c
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_manager/available_phases` {#charge_manager_available_phases_warp2}
 
-Anzahl der derzeit verbundenen Phasen der Wallboxen. Kann über charge_manager/available_phases_update aktualisiert werden.
+
+Anzahl der derzeit verbundenen Phasen der Wallboxen.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -251,19 +260,19 @@ Anzahl der derzeit verbundenen Phasen der Wallboxen. Kann über charge_manager/a
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_manager/state` {#charge_manager_state_warp2}
 
-Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Object werden nicht als API-Bruch betrachtet!</strong>
 
+Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Object werden nicht als API-Bruch betrachtet!</strong>
 
 
 
 <br/><br/><br/>
 ## `charge_manager/config` {#charge_manager_config_warp2}
 
-Die Lastmanager-Konfiguration. Diese kann über charge_manager/config_update mit dem selben Payload aktualisiert werden.
+
+Die Lastmanager-Konfiguration.
 
 
 <table>
@@ -287,7 +296,7 @@ Die Lastmanager-Konfiguration. Diese kann über charge_manager/config_update mit
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_watchdog`<br/>bool</th>
     <td>
-        Gibt an, ob der Watchdog aktiviert sein soll. Der Watchdog setzt, wenn 30 Sekunden lang keine Nachricht auf [charge_manager/available_current_update](charge_manager.mdx#charge_manager_available_current_update) einging, den verfügbaren Strom auf die Default-Einstellung (default_available_current). Damit kann die Robustheit gegen Ausfall einer externen Steuerung, z.B. bei PV-Überschussladung erhöht werden.
+        Gibt an, ob der Watchdog aktiviert sein soll. Der Watchdog setzt, wenn 30 Sekunden lang keine Nachricht auf [charge_manager/available_current](charge_manager.mdx#charge_manager_available_current) einging, den verfügbaren Strom auf die Default-Einstellung (default_available_current). Damit kann die Robustheit gegen Ausfall einer externen Steuerung, z.B. bei PV-Überschussladung erhöht werden.
         - **true** - Wenn der Watchdog aktiviert ist.
         - **false** - Wenn der Watchdog nicht aktiviert ist.
     </td>
@@ -397,12 +406,14 @@ Die Lastmanager-Konfiguration. Diese kann über charge_manager/config_update mit
 </table>
 </TabItem>
 <TabItem value="warp3">
-<br/><br/><br/>
 ## `charge_manager/available_current` {#charge_manager_available_current_warp3}
 
-Der derzeit zur Verfügung stehende Strom. Kann über charge_manager/available_current_update aktualisiert werden. Dieser Strom wird unter den konfigurierten Wallboxen aufgeteilt.
+
+Der derzeit zur Verfügung stehende Strom. Dieser Strom wird unter den konfigurierten Wallboxen aufgeteilt.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -421,13 +432,15 @@ Der derzeit zur Verfügung stehende Strom. Kann über charge_manager/available_c
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_manager/available_phases` {#charge_manager_available_phases_warp3}
 
-Anzahl der derzeit verbundenen Phasen der Wallboxen. Kann über charge_manager/available_phases_update aktualisiert werden.
+
+Anzahl der derzeit verbundenen Phasen der Wallboxen.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -446,19 +459,19 @@ Anzahl der derzeit verbundenen Phasen der Wallboxen. Kann über charge_manager/a
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_manager/state` {#charge_manager_state_warp3}
 
-Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Object werden nicht als API-Bruch betrachtet!</strong>
 
+Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Object werden nicht als API-Bruch betrachtet!</strong>
 
 
 
 <br/><br/><br/>
 ## `charge_manager/config` {#charge_manager_config_warp3}
 
-Die Lastmanager-Konfiguration. Diese kann über charge_manager/config_update mit dem selben Payload aktualisiert werden.
+
+Die Lastmanager-Konfiguration.
 
 
 <table>
@@ -482,7 +495,7 @@ Die Lastmanager-Konfiguration. Diese kann über charge_manager/config_update mit
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_watchdog`<br/>bool</th>
     <td>
-        Gibt an, ob der Watchdog aktiviert sein soll. Der Watchdog setzt, wenn 30 Sekunden lang keine Nachricht auf [charge_manager/available_current_update](charge_manager.mdx#charge_manager_available_current_update) einging, den verfügbaren Strom auf die Default-Einstellung (default_available_current). Damit kann die Robustheit gegen Ausfall einer externen Steuerung, z.B. bei PV-Überschussladung erhöht werden.
+        Gibt an, ob der Watchdog aktiviert sein soll. Der Watchdog setzt, wenn 30 Sekunden lang keine Nachricht auf [charge_manager/available_current](charge_manager.mdx#charge_manager_available_current) einging, den verfügbaren Strom auf die Default-Einstellung (default_available_current). Damit kann die Robustheit gegen Ausfall einer externen Steuerung, z.B. bei PV-Überschussladung erhöht werden.
         - **true** - Wenn der Watchdog aktiviert ist.
         - **false** - Wenn der Watchdog nicht aktiviert ist.
     </td>
@@ -592,12 +605,14 @@ Die Lastmanager-Konfiguration. Diese kann über charge_manager/config_update mit
 </table>
 </TabItem>
 <TabItem value="wem">
-<br/><br/><br/>
 ## `charge_manager/available_current` {#charge_manager_available_current_wem}
 
-Der derzeit zur Verfügung stehende Strom. Kann über charge_manager/available_current_update aktualisiert werden. Dieser Strom wird unter den konfigurierten Wallboxen aufgeteilt.
+
+Der derzeit zur Verfügung stehende Strom. Dieser Strom wird unter den konfigurierten Wallboxen aufgeteilt.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -616,13 +631,15 @@ Der derzeit zur Verfügung stehende Strom. Kann über charge_manager/available_c
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_manager/available_phases` {#charge_manager_available_phases_wem}
 
-Anzahl der derzeit verbundenen Phasen der Wallboxen. Kann über charge_manager/available_phases_update aktualisiert werden.
+
+Anzahl der derzeit verbundenen Phasen der Wallboxen.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -641,19 +658,19 @@ Anzahl der derzeit verbundenen Phasen der Wallboxen. Kann über charge_manager/a
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_manager/state` {#charge_manager_state_wem}
 
-Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Object werden nicht als API-Bruch betrachtet!</strong>
 
+Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Object werden nicht als API-Bruch betrachtet!</strong>
 
 
 
 <br/><br/><br/>
 ## `charge_manager/config` {#charge_manager_config_wem}
 
-Die Lastmanager-Konfiguration. Diese kann über charge_manager/config_update mit dem selben Payload aktualisiert werden.
+
+Die Lastmanager-Konfiguration.
 
 
 <table>
@@ -677,7 +694,7 @@ Die Lastmanager-Konfiguration. Diese kann über charge_manager/config_update mit
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_watchdog`<br/>bool</th>
     <td>
-        Gibt an, ob der Watchdog aktiviert sein soll. Der Watchdog setzt, wenn 30 Sekunden lang keine Nachricht auf [charge_manager/available_current_update](charge_manager.mdx#charge_manager_available_current_update) einging, den verfügbaren Strom auf die Default-Einstellung (default_available_current). Damit kann die Robustheit gegen Ausfall einer externen Steuerung, z.B. bei PV-Überschussladung erhöht werden.
+        Gibt an, ob der Watchdog aktiviert sein soll. Der Watchdog setzt, wenn 30 Sekunden lang keine Nachricht auf [charge_manager/available_current](charge_manager.mdx#charge_manager_available_current) einging, den verfügbaren Strom auf die Default-Einstellung (default_available_current). Damit kann die Robustheit gegen Ausfall einer externen Steuerung, z.B. bei PV-Überschussladung erhöht werden.
         - **true** - Wenn der Watchdog aktiviert ist.
         - **false** - Wenn der Watchdog nicht aktiviert ist.
     </td>
@@ -787,12 +804,14 @@ Die Lastmanager-Konfiguration. Diese kann über charge_manager/config_update mit
 </table>
 </TabItem>
 <TabItem value="any">
-<br/><br/><br/>
 ## `charge_manager/available_current` {#charge_manager_available_current_any}
 
-Der derzeit zur Verfügung stehende Strom. Kann über charge_manager/available_current_update aktualisiert werden. Dieser Strom wird unter den konfigurierten Wallboxen aufgeteilt.
+
+Der derzeit zur Verfügung stehende Strom. Dieser Strom wird unter den konfigurierten Wallboxen aufgeteilt.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -811,13 +830,15 @@ Der derzeit zur Verfügung stehende Strom. Kann über charge_manager/available_c
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_manager/available_phases` {#charge_manager_available_phases_any}
 
-Anzahl der derzeit verbundenen Phasen der Wallboxen. Kann über charge_manager/available_phases_update aktualisiert werden.
+
+Anzahl der derzeit verbundenen Phasen der Wallboxen.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -836,19 +857,19 @@ Anzahl der derzeit verbundenen Phasen der Wallboxen. Kann über charge_manager/a
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `charge_manager/state` {#charge_manager_state_any}
 
-Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Object werden nicht als API-Bruch betrachtet!</strong>
 
+Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Object werden nicht als API-Bruch betrachtet!</strong>
 
 
 
 <br/><br/><br/>
 ## `charge_manager/config` {#charge_manager_config_any}
 
-Die Lastmanager-Konfiguration. Diese kann über charge_manager/config_update mit dem selben Payload aktualisiert werden.
+
+Die Lastmanager-Konfiguration.
 
 
 <table>
@@ -875,7 +896,7 @@ Die Lastmanager-Konfiguration. Diese kann über charge_manager/config_update mit
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_watchdog`<br/>bool</th>
     <td>
-        Gibt an, ob der Watchdog aktiviert sein soll. Der Watchdog setzt, wenn 30 Sekunden lang keine Nachricht auf [charge_manager/available_current_update](charge_manager.mdx#charge_manager_available_current_update) einging, den verfügbaren Strom auf die Default-Einstellung (default_available_current). Damit kann die Robustheit gegen Ausfall einer externen Steuerung, z.B. bei PV-Überschussladung erhöht werden.
+        Gibt an, ob der Watchdog aktiviert sein soll. Der Watchdog setzt, wenn 30 Sekunden lang keine Nachricht auf [charge_manager/available_current](charge_manager.mdx#charge_manager_available_current) einging, den verfügbaren Strom auf die Default-Einstellung (default_available_current). Damit kann die Robustheit gegen Ausfall einer externen Steuerung, z.B. bei PV-Überschussladung erhöht werden.
         
         
         

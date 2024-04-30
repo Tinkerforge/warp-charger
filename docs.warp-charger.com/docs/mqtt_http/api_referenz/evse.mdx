@@ -2,15 +2,51 @@
 import MultilineTabs from '@site/src/components/MultilineTabs';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
 
 # Ladecontroller (EVSE)
 
 <Tabs groupId="hardwareType" queryString className="hidden-tabs">
 <TabItem value="warp1">
-<br/><br/><br/>
 ## `evse/state` {#evse_state_warp1}
 
+
 Der Zustand des Ladecontrollers.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+            #### Lesen
+```bash
+curl http://$HOST/evse/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+            #### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "iec61851_state": 2,
+  "charger_state": 3,
+  "contactor_state": 3,
+  "contactor_error": 0,
+  "allowed_charging_current": 32000,
+  "error_state": 0,
+  "lock_state": 0
+}
+```
+:::
 
 
 <table>
@@ -105,9 +141,9 @@ Der Zustand des Ladecontrollers.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/hardware_configuration` {#evse_hardware_configuration_warp1}
+
 
 Die Hardwarekonfiguration des Ladecontrollers.
 
@@ -157,9 +193,9 @@ Die Hardwarekonfiguration des Ladecontrollers.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/slots` {#evse_slots_warp1}
+
 
 Der Zustand der Ladeslots. Siehe TODO LINK für Details.
 
@@ -217,9 +253,9 @@ Der Zustand der Ladeslots. Siehe TODO LINK für Details.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/button_state` {#evse_button_state_warp1}
+
 
 Der Zustand des Tasters in der Frontblende.
 
@@ -256,11 +292,11 @@ Der Zustand des Tasters in der Frontblende.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/indicator_led` {#evse_indicator_led_warp1}
 
-Der Zustand der LED im Taster. Kann über [evse/indicator_led_update](evse.mdx#evse_indicator_led_update) mit dem selben Payload geschrieben werden, falls die LED-Steuerung per API (siehe [evse/led_configuration](evse.mdx#evse_led_configuration)) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.
+
+Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung per API (siehe [evse/led_configuration](evse.mdx#evse_led_configuration)) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.
 
 
 <table>
@@ -317,9 +353,9 @@ Der Zustand der LED im Taster. Kann über [evse/indicator_led_update](evse.mdx#e
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/low_level_state` {#evse_low_level_state_warp1}
+
 
 Der Low-Level-Zustand des Ladecontrollers.
 
@@ -416,13 +452,15 @@ Der Low-Level-Zustand des Ladecontrollers.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/external_current` {#evse_external_current_warp1}
 
-Der von der externen Steuerung vorgegebene Ladestrom. Kann über evse/external_current_update mit dem selben Payload gesetzt werden.
+
+Der von der externen Steuerung vorgegebene Ladestrom.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -441,13 +479,15 @@ Der von der externen Steuerung vorgegebene Ladestrom. Kann über evse/external_c
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/external_clear_on_disconnect` {#evse_external_clear_on_disconnect_warp1}
 
-Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abziehen eines Fahrzeugs automatisch auf 0 gesetzt werden soll. Kann über evse/external_clear_on_disconnect_update mit dem selben Payload gesetzt werden.
+
+Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abziehen eines Fahrzeugs automatisch auf 0 gesetzt werden soll.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -468,13 +508,15 @@ Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abzieh
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/management_current` {#evse_management_current_warp1}
 
-Der vom Lastmanagement vorgegebene Ladestrom. Kann über evse/management_current_update mit dem selben Payload gesetzt werden.
+
+Der vom Lastmanagement vorgegebene Ladestrom.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -493,13 +535,15 @@ Der vom Lastmanagement vorgegebene Ladestrom. Kann über evse/management_current
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/auto_start_charging` {#evse_auto_start_charging_warp1}
 
-Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Dieser Wert kann über evse/auto_start_charging_update mit dem selben Payload aktualisiert werden.
+
+Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -518,13 +562,15 @@ Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Diese
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/global_current` {#evse_global_current_warp1}
 
-Der über das Webinterface vorgegebene Ladestrom. Kann über evse/global_current_update mit dem selben Payload gesetzt werden.
+
+Der über das Webinterface vorgegebene Ladestrom.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -543,13 +589,15 @@ Der über das Webinterface vorgegebene Ladestrom. Kann über evse/global_current
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/management_enabled` {#evse_management_enabled_warp1}
 
-Gibt an, ob der Ladeslot des Lastmanagements aktiv ist. Der Wert kann über evse/management_enabled_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob der Ladeslot des Lastmanagements aktiv ist.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -568,9 +616,9 @@ Gibt an, ob der Ladeslot des Lastmanagements aktiv ist. Der Wert kann über evse
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/user_current` {#evse_user_current_warp1}
+
 
 Der von der Benutzerautorisierung erlaubte Ladestrom.
 
@@ -593,13 +641,15 @@ Der von der Benutzerautorisierung erlaubte Ladestrom.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/user_enabled` {#evse_user_enabled_warp1}
 
-Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist. Der Wert kann über evse/user_enabled_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -618,13 +668,15 @@ Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist. Der Wert kann übe
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/external_enabled` {#evse_external_enabled_warp1}
 
-Gibt an, ob der Ladeslot der externen Steuerung aktiv ist. Der Wert kann über evse/external_enabled_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob der Ladeslot der externen Steuerung aktiv ist.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -643,11 +695,11 @@ Gibt an, ob der Ladeslot der externen Steuerung aktiv ist. Der Wert kann über e
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/external_defaults` {#evse_external_defaults_warp1}
 
-Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Ladeslots der externen Steuerung. Der Wert kann über evse/external_defaults_update mit dem selben Payload aktualisiert werden.
+
+Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Ladeslots der externen Steuerung.
 
 
 <table>
@@ -677,13 +729,15 @@ Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Lade
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/modbus_tcp_enabled` {#evse_modbus_tcp_enabled_warp1}
 
-Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Schreibzugriff gewährt wurde). Der Wert kann über evse/modbus_tcp_enabled_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Schreibzugriff gewährt wurde).
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -702,13 +756,15 @@ Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Sc
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/ocpp_enabled` {#evse_ocpp_enabled_warp1}
 
-Gibt an, ob der Ladeslot für OCPP aktiv ist. Der Wert kann über evse/ocpp_enabled_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob der Ladeslot für OCPP aktiv ist.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -727,13 +783,15 @@ Gibt an, ob der Ladeslot für OCPP aktiv ist. Der Wert kann über evse/ocpp_enab
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/automation_current` {#evse_automation_current_warp1}
 
-Der von der Automatisierung erlaubte Ladestrom. Kann über evse/automation_current_update mit dem selben Payload aktualisiert werden.
+
+Der von der Automatisierung erlaubte Ladestrom.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -752,17 +810,19 @@ Der von der Automatisierung erlaubte Ladestrom. Kann über evse/automation_curre
     </tbody>
 </table>
 
+<br/><br/><br/>
 
-
-
-
+<br/><br/><br/>
 
 <br/><br/><br/>
 ## `evse/led_configuration` {#evse_led_configuration_warp1}
 
-Die Konfiguration der LED des Tasters in der Frontblende. Diese kann über evse/led_configuration_update mit dem selben Payload aktualisiert werden.
+
+Die Konfiguration der LED des Tasters in der Frontblende.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -775,19 +835,19 @@ Die Konfiguration der LED des Tasters in der Frontblende. Diese kann über evse/
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_api`<br/>bool</th>
     <td>
-        Legt fest, ob die LED über die [evse/indicator_led_update](evse.mdx#evse_indicator_led_update)-API oder über Modbus TCP gesteuert werden darf.
-        - **false** - LED darf nicht gesteuert werden. Aufrufe von [evse/indicator_led_update](evse.mdx#evse_indicator_led_update) werden ignoriert
-        - **true** - LED darf gesteuert werden. Aufrufe von [evse/indicator_led_update](evse.mdx#evse_indicator_led_update) werden nur dann ignoriert, wenn das EVSE einen Fehlerzustand anzeigen möchte.
+        Legt fest, ob die LED über die [evse/indicator_led](evse.mdx#evse_indicator_led)-API oder über Modbus TCP gesteuert werden darf.
+        - **false** - LED darf nicht gesteuert werden. Aufrufe von [evse/indicator_led](evse.mdx#evse_indicator_led) werden ignoriert
+        - **true** - LED darf gesteuert werden. Aufrufe von [evse/indicator_led](evse.mdx#evse_indicator_led) werden nur dann ignoriert, wenn das EVSE einen Fehlerzustand anzeigen möchte.
     </td>
 </tr>
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/user_calibration` {#evse_user_calibration_warp1}
 
-Erlaubt es, die werksseitige Kalibrierung des EVSEs auszulesen und zu überschreiben. Dieser Wert kann über evse/user_calibration_update mit dem selben Payload aktualisiert werden. Um die Kalibierung auf den Werkszustand zurückzusetzen, kann ein Payload mit user_calibration_active auf false geschickt werden. Die weiteren Werte werden dann ignoriert.
+
+Erlaubt es, die werksseitige Kalibrierung des EVSEs auszulesen und zu überschreiben. Um die Kalibierung auf den Werkszustand zurückzusetzen, kann ein Payload mit user_calibration_active auf false geschickt werden. Die weiteren Werte werden dann ignoriert.
 
 
 <table>
@@ -843,17 +903,19 @@ Erlaubt es, die werksseitige Kalibrierung des EVSEs auszulesen und zu überschre
     </tbody>
 </table>
 
+<br/><br/><br/>
 
-
-
-
+<br/><br/><br/>
 
 <br/><br/><br/>
 ## `evse/boost_mode` {#evse_boost_mode_warp1}
 
-Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Ladestrom vorgibt (+ 0,24 A) um Messfehler der Ladeelektronik zu kompensieren. Nur Verwenden, falls ein Fahrzeug mit einem kleineren als dem erlaubten Ladestrom lädt! Dieser Wert kann über evse/boost_mode_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Ladestrom vorgibt (+ 0,24 A) um Messfehler der Ladeelektronik zu kompensieren. Nur Verwenden, falls ein Fahrzeug mit einem kleineren als dem erlaubten Ladestrom lädt!
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -872,55 +934,115 @@ Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Lade
     </tbody>
 </table>
 
+<br/><br/><br/>
 
+<br/><br/><br/>
 
+<br/><br/><br/>
 
+<br/><br/><br/>
 
-
-
-
-
-
-
+<br/><br/><br/>
 
 <br/><br/><br/>
 ## `evse/stop_charging` {#evse_stop_charging_warp1}
 
+
 Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit [evse/start_charging](evse.mdx#evse_start_charging) wieder gestartet werden.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/evse/stop_charging -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `evse/start_charging` {#evse_start_charging_warp1}
 
+
 Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit [evse/stop_charging](evse.mdx#evse_stop_charging) wieder gestoppt werden.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/evse/start_charging -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/start_charging -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `evse/start_debug` {#evse_start_debug_warp1}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Startet ein Ladeprotokoll. Es werden hochfrequent Messwerte des Ladecontrollers auf die WebSockets geschrieben, bis [evse/stop_debug](evse.mdx#evse_stop_debug) aufgerufen wird.
 
 
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `evse/stop_debug` {#evse_stop_debug_warp1}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Stoppt ein Ladeprotokoll. Siehe [evse/start_debug](evse.mdx#evse_start_debug) für Details.
 
 
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `evse/meter_config` {#evse_meter_config_warp1}
+
 
 Gibt an, welcher Stromzähler für Berechnungen im Zusammenhang mit Ladevorgängen verwendet werden soll. (z.B. Ladetracker, Ladelimits, usw.)
 
@@ -946,10 +1068,46 @@ Gibt an, welcher Stromzähler für Berechnungen im Zusammenhang mit Ladevorgäng
 </table>
 </TabItem>
 <TabItem value="warp2">
-<br/><br/><br/>
 ## `evse/state` {#evse_state_warp2}
 
+
 Der Zustand des Ladecontrollers.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+            #### Lesen
+```bash
+curl http://$HOST/evse/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+            #### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "iec61851_state": 2,
+  "charger_state": 3,
+  "contactor_state": 3,
+  "contactor_error": 0,
+  "allowed_charging_current": 32000,
+  "error_state": 0,
+  "lock_state": 0,
+  "dc_fault_current_state": 0
+}
+```
+:::
 
 
 <table>
@@ -1058,9 +1216,9 @@ Der Zustand des Ladecontrollers.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/hardware_configuration` {#evse_hardware_configuration_warp2}
+
 
 Die Hardwarekonfiguration des Ladecontrollers.
 
@@ -1123,9 +1281,9 @@ Die Hardwarekonfiguration des Ladecontrollers.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/slots` {#evse_slots_warp2}
+
 
 Der Zustand der Ladeslots. Siehe TODO LINK für Details.
 
@@ -1183,9 +1341,9 @@ Der Zustand der Ladeslots. Siehe TODO LINK für Details.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/button_state` {#evse_button_state_warp2}
+
 
 Der Zustand des Tasters in der Frontblende.
 
@@ -1222,11 +1380,11 @@ Der Zustand des Tasters in der Frontblende.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/indicator_led` {#evse_indicator_led_warp2}
 
-Der Zustand der LED im Taster. Kann über [evse/indicator_led_update](evse.mdx#evse_indicator_led_update) mit dem selben Payload geschrieben werden, falls die LED-Steuerung per API (siehe [evse/led_configuration](evse.mdx#evse_led_configuration)) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.
+
+Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung per API (siehe [evse/led_configuration](evse.mdx#evse_led_configuration)) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.
 
 
 <table>
@@ -1283,9 +1441,9 @@ Der Zustand der LED im Taster. Kann über [evse/indicator_led_update](evse.mdx#e
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/low_level_state` {#evse_low_level_state_warp2}
+
 
 Der Low-Level-Zustand des Ladecontrollers.
 
@@ -1430,13 +1588,15 @@ Der Low-Level-Zustand des Ladecontrollers.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/external_current` {#evse_external_current_warp2}
 
-Der von der externen Steuerung vorgegebene Ladestrom. Kann über evse/external_current_update mit dem selben Payload gesetzt werden.
+
+Der von der externen Steuerung vorgegebene Ladestrom.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1455,13 +1615,15 @@ Der von der externen Steuerung vorgegebene Ladestrom. Kann über evse/external_c
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/external_clear_on_disconnect` {#evse_external_clear_on_disconnect_warp2}
 
-Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abziehen eines Fahrzeugs automatisch auf 0 gesetzt werden soll. Kann über evse/external_clear_on_disconnect_update mit dem selben Payload gesetzt werden.
+
+Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abziehen eines Fahrzeugs automatisch auf 0 gesetzt werden soll.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1482,13 +1644,15 @@ Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abzieh
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/management_current` {#evse_management_current_warp2}
 
-Der vom Lastmanagement vorgegebene Ladestrom. Kann über evse/management_current_update mit dem selben Payload gesetzt werden.
+
+Der vom Lastmanagement vorgegebene Ladestrom.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1507,13 +1671,15 @@ Der vom Lastmanagement vorgegebene Ladestrom. Kann über evse/management_current
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/auto_start_charging` {#evse_auto_start_charging_warp2}
 
-Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Dieser Wert kann über evse/auto_start_charging_update mit dem selben Payload aktualisiert werden.
+
+Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1532,13 +1698,15 @@ Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Diese
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/global_current` {#evse_global_current_warp2}
 
-Der über das Webinterface vorgegebene Ladestrom. Kann über evse/global_current_update mit dem selben Payload gesetzt werden.
+
+Der über das Webinterface vorgegebene Ladestrom.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1557,13 +1725,15 @@ Der über das Webinterface vorgegebene Ladestrom. Kann über evse/global_current
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/management_enabled` {#evse_management_enabled_warp2}
 
-Gibt an, ob der Ladeslot des Lastmanagements aktiv ist. Der Wert kann über evse/management_enabled_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob der Ladeslot des Lastmanagements aktiv ist.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1582,9 +1752,9 @@ Gibt an, ob der Ladeslot des Lastmanagements aktiv ist. Der Wert kann über evse
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/user_current` {#evse_user_current_warp2}
+
 
 Der von der Benutzerautorisierung erlaubte Ladestrom.
 
@@ -1607,13 +1777,15 @@ Der von der Benutzerautorisierung erlaubte Ladestrom.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/user_enabled` {#evse_user_enabled_warp2}
 
-Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist. Der Wert kann über evse/user_enabled_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1632,13 +1804,15 @@ Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist. Der Wert kann übe
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/external_enabled` {#evse_external_enabled_warp2}
 
-Gibt an, ob der Ladeslot der externen Steuerung aktiv ist. Der Wert kann über evse/external_enabled_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob der Ladeslot der externen Steuerung aktiv ist.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1657,11 +1831,11 @@ Gibt an, ob der Ladeslot der externen Steuerung aktiv ist. Der Wert kann über e
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/external_defaults` {#evse_external_defaults_warp2}
 
-Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Ladeslots der externen Steuerung. Der Wert kann über evse/external_defaults_update mit dem selben Payload aktualisiert werden.
+
+Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Ladeslots der externen Steuerung.
 
 
 <table>
@@ -1691,13 +1865,15 @@ Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Lade
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/modbus_tcp_enabled` {#evse_modbus_tcp_enabled_warp2}
 
-Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Schreibzugriff gewährt wurde). Der Wert kann über evse/modbus_tcp_enabled_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Schreibzugriff gewährt wurde).
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1716,13 +1892,15 @@ Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Sc
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/ocpp_enabled` {#evse_ocpp_enabled_warp2}
 
-Gibt an, ob der Ladeslot für OCPP aktiv ist. Der Wert kann über evse/ocpp_enabled_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob der Ladeslot für OCPP aktiv ist.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1741,13 +1919,15 @@ Gibt an, ob der Ladeslot für OCPP aktiv ist. Der Wert kann über evse/ocpp_enab
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/automation_current` {#evse_automation_current_warp2}
 
-Der von der Automatisierung erlaubte Ladestrom. Kann über evse/automation_current_update mit dem selben Payload aktualisiert werden.
+
+Der von der Automatisierung erlaubte Ladestrom.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1766,11 +1946,11 @@ Der von der Automatisierung erlaubte Ladestrom. Kann über evse/automation_curre
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/gpio_configuration` {#evse_gpio_configuration_warp2}
 
-Die Konfiguration der konfigurierbaren Ein- und Ausgänge. Kann über evse/gpio_configuration_update mit dem selben Payload aktualisiert werden.
+
+Die Konfiguration der konfigurierbaren Ein- und Ausgänge.
 
 
 <table>
@@ -1829,13 +2009,15 @@ Die Konfiguration der konfigurierbaren Ein- und Ausgänge. Kann über evse/gpio_
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/button_configuration` {#evse_button_configuration_warp2}
 
-Die Konfiguration des Tasters in der Frontblende. Diese kann über evse/button_configuration_update mit dem selben Payload aktualisiert werden. Benötigt das Feature <a href="#features_button_configuration"><code>"button_configuration"</code></a>
+
+Die Konfiguration des Tasters in der Frontblende. Benötigt das Feature <a href="#features_button_configuration"><code>"button_configuration"</code></a>
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1858,13 +2040,15 @@ Die Konfiguration des Tasters in der Frontblende. Diese kann über evse/button_c
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/led_configuration` {#evse_led_configuration_warp2}
 
-Die Konfiguration der LED des Tasters in der Frontblende. Diese kann über evse/led_configuration_update mit dem selben Payload aktualisiert werden.
+
+Die Konfiguration der LED des Tasters in der Frontblende.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1877,23 +2061,25 @@ Die Konfiguration der LED des Tasters in der Frontblende. Diese kann über evse/
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_api`<br/>bool</th>
     <td>
-        Legt fest, ob die LED über die [evse/indicator_led_update](evse.mdx#evse_indicator_led_update)-API oder über Modbus TCP gesteuert werden darf.
-        - **false** - LED darf nicht gesteuert werden. Aufrufe von [evse/indicator_led_update](evse.mdx#evse_indicator_led_update) werden ignoriert
-        - **true** - LED darf gesteuert werden. Aufrufe von [evse/indicator_led_update](evse.mdx#evse_indicator_led_update) werden nur dann ignoriert, wenn das EVSE einen Fehlerzustand anzeigen möchte.
+        Legt fest, ob die LED über die [evse/indicator_led](evse.mdx#evse_indicator_led)-API oder über Modbus TCP gesteuert werden darf.
+        - **false** - LED darf nicht gesteuert werden. Aufrufe von [evse/indicator_led](evse.mdx#evse_indicator_led) werden ignoriert
+        - **true** - LED darf gesteuert werden. Aufrufe von [evse/indicator_led](evse.mdx#evse_indicator_led) werden nur dann ignoriert, wenn das EVSE einen Fehlerzustand anzeigen möchte.
     </td>
 </tr>
     </tbody>
 </table>
 
-
-
+<br/><br/><br/>
 
 <br/><br/><br/>
 ## `evse/ev_wakeup` {#evse_ev_wakeup_warp2}
 
-Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus einem Energiesparmodus zu wecken, indem ein Abziehen und Anstecken des Ladekabels vorgetäuscht wird. (Control-Pilot-Trennung/CP-Trennung) Dieser Wert kann über evse/ev_wakeup_update mit dem selben Payload aktualisiert werden. Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
+
+Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus einem Energiesparmodus zu wecken, indem ein Abziehen und Anstecken des Ladekabels vorgetäuscht wird. (Control-Pilot-Trennung/CP-Trennung) Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1912,13 +2098,15 @@ Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus e
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/control_pilot_disconnect` {#evse_control_pilot_disconnect_warp2}
 
-Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) Dieser Wert kann über evse/control_pilot_disconnect_update mit dem selben Payload aktualisiert werden. <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe [evse/management_enabled](evse.mdx#evse_management_enabled).  Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
+
+Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe [evse/management_enabled](evse.mdx#evse_management_enabled).  Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1937,13 +2125,15 @@ Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Contro
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/boost_mode` {#evse_boost_mode_warp2}
 
-Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Ladestrom vorgibt (+ 0,24 A) um Messfehler der Ladeelektronik zu kompensieren. Nur Verwenden, falls ein Fahrzeug mit einem kleineren als dem erlaubten Ladestrom lädt! Dieser Wert kann über evse/boost_mode_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Ladestrom vorgibt (+ 0,24 A) um Messfehler der Ladeelektronik zu kompensieren. Nur Verwenden, falls ein Fahrzeug mit einem kleineren als dem erlaubten Ladestrom lädt!
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1962,15 +2152,17 @@ Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Lade
     </tbody>
 </table>
 
-
-
+<br/><br/><br/>
 
 <br/><br/><br/>
 ## `evse/phases_connected` {#evse_phases_connected_warp2}
 
+
 Konfiguriert, ob die Wallbox fest ein- oder dreiphasig angeschlossen ist. Damit wird z.B. die 4200 W-Limitierung nach §14 EnWG berechnet
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1991,9 +2183,9 @@ Konfiguriert, ob die Wallbox fest ein- oder dreiphasig angeschlossen ist. Damit 
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/reset_dc_fault_current_state` {#evse_reset_dc_fault_current_state_warp2}
+
 
 Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong>
 
@@ -2018,21 +2210,47 @@ Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/trigger_dc_fault_test` {#evse_trigger_dc_fault_test_warp2}
 
-Startet einen Test des DC-Fehlerstrom-Schutzmoduls.
 
+Startet einen Test des DC-Fehlerstrom-Schutzmoduls.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/evse/trigger_dc_fault_test -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/trigger_dc_fault_test -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
+
 
 
 <br/><br/><br/>
 ## `evse/gp_output` {#evse_gp_output_warp2}
 
-Der aktuelle Wert des konfigurierbaren Ausgangs. Dieser Wert kann über evse/gp_output_update mit dem selben Payload aktualisiert werden.
+
+Der aktuelle Wert des konfigurierbaren Ausgangs.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -2053,45 +2271,105 @@ Der aktuelle Wert des konfigurierbaren Ausgangs. Dieser Wert kann über evse/gp_
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/stop_charging` {#evse_stop_charging_warp2}
 
+
 Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit [evse/start_charging](evse.mdx#evse_start_charging) wieder gestartet werden.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/evse/stop_charging -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `evse/start_charging` {#evse_start_charging_warp2}
 
+
 Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit [evse/stop_charging](evse.mdx#evse_stop_charging) wieder gestoppt werden.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/evse/start_charging -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/start_charging -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `evse/start_debug` {#evse_start_debug_warp2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Startet ein Ladeprotokoll. Es werden hochfrequent Messwerte des Ladecontrollers auf die WebSockets geschrieben, bis [evse/stop_debug](evse.mdx#evse_stop_debug) aufgerufen wird.
 
 
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `evse/stop_debug` {#evse_stop_debug_warp2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Stoppt ein Ladeprotokoll. Siehe [evse/start_debug](evse.mdx#evse_start_debug) für Details.
 
 
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `evse/meter_config` {#evse_meter_config_warp2}
+
 
 Gibt an, welcher Stromzähler für Berechnungen im Zusammenhang mit Ladevorgängen verwendet werden soll. (z.B. Ladetracker, Ladelimits, usw.)
 
@@ -2117,10 +2395,46 @@ Gibt an, welcher Stromzähler für Berechnungen im Zusammenhang mit Ladevorgäng
 </table>
 </TabItem>
 <TabItem value="warp3">
-<br/><br/><br/>
 ## `evse/state` {#evse_state_warp3}
 
+
 Der Zustand des Ladecontrollers.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+            #### Lesen
+```bash
+curl http://$HOST/evse/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+            #### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "iec61851_state": 2,
+  "charger_state": 3,
+  "contactor_state": 3,
+  "contactor_error": 0,
+  "allowed_charging_current": 32000,
+  "error_state": 0,
+  "lock_state": 0,
+  "dc_fault_current_state": 0
+}
+```
+:::
 
 
 <table>
@@ -2238,9 +2552,9 @@ Der Zustand des Ladecontrollers.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/hardware_configuration` {#evse_hardware_configuration_warp3}
+
 
 Die Hardwarekonfiguration des Ladecontrollers.
 
@@ -2303,9 +2617,9 @@ Die Hardwarekonfiguration des Ladecontrollers.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/slots` {#evse_slots_warp3}
+
 
 Der Zustand der Ladeslots. Siehe TODO LINK für Details.
 
@@ -2363,9 +2677,9 @@ Der Zustand der Ladeslots. Siehe TODO LINK für Details.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/button_state` {#evse_button_state_warp3}
+
 
 Der Zustand des Tasters in der Frontblende.
 
@@ -2402,11 +2716,11 @@ Der Zustand des Tasters in der Frontblende.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/indicator_led` {#evse_indicator_led_warp3}
 
-Der Zustand der LED im Taster. Kann über [evse/indicator_led_update](evse.mdx#evse_indicator_led_update) mit dem selben Payload geschrieben werden, falls die LED-Steuerung per API (siehe [evse/led_configuration](evse.mdx#evse_led_configuration)) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.
+
+Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung per API (siehe [evse/led_configuration](evse.mdx#evse_led_configuration)) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.
 
 
 <table>
@@ -2463,9 +2777,9 @@ Der Zustand der LED im Taster. Kann über [evse/indicator_led_update](evse.mdx#e
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/low_level_state` {#evse_low_level_state_warp3}
+
 
 Der Low-Level-Zustand des Ladecontrollers.
 
@@ -2659,13 +2973,15 @@ Der Low-Level-Zustand des Ladecontrollers.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/external_current` {#evse_external_current_warp3}
 
-Der von der externen Steuerung vorgegebene Ladestrom. Kann über evse/external_current_update mit dem selben Payload gesetzt werden.
+
+Der von der externen Steuerung vorgegebene Ladestrom.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -2684,13 +3000,15 @@ Der von der externen Steuerung vorgegebene Ladestrom. Kann über evse/external_c
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/external_clear_on_disconnect` {#evse_external_clear_on_disconnect_warp3}
 
-Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abziehen eines Fahrzeugs automatisch auf 0 gesetzt werden soll. Kann über evse/external_clear_on_disconnect_update mit dem selben Payload gesetzt werden.
+
+Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abziehen eines Fahrzeugs automatisch auf 0 gesetzt werden soll.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -2711,13 +3029,15 @@ Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abzieh
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/management_current` {#evse_management_current_warp3}
 
-Der vom Lastmanagement vorgegebene Ladestrom. Kann über evse/management_current_update mit dem selben Payload gesetzt werden.
+
+Der vom Lastmanagement vorgegebene Ladestrom.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -2736,13 +3056,15 @@ Der vom Lastmanagement vorgegebene Ladestrom. Kann über evse/management_current
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/auto_start_charging` {#evse_auto_start_charging_warp3}
 
-Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Dieser Wert kann über evse/auto_start_charging_update mit dem selben Payload aktualisiert werden.
+
+Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -2761,13 +3083,15 @@ Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Diese
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/global_current` {#evse_global_current_warp3}
 
-Der über das Webinterface vorgegebene Ladestrom. Kann über evse/global_current_update mit dem selben Payload gesetzt werden.
+
+Der über das Webinterface vorgegebene Ladestrom.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -2786,13 +3110,15 @@ Der über das Webinterface vorgegebene Ladestrom. Kann über evse/global_current
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/management_enabled` {#evse_management_enabled_warp3}
 
-Gibt an, ob der Ladeslot des Lastmanagements aktiv ist. Der Wert kann über evse/management_enabled_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob der Ladeslot des Lastmanagements aktiv ist.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -2811,9 +3137,9 @@ Gibt an, ob der Ladeslot des Lastmanagements aktiv ist. Der Wert kann über evse
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/user_current` {#evse_user_current_warp3}
+
 
 Der von der Benutzerautorisierung erlaubte Ladestrom.
 
@@ -2836,13 +3162,15 @@ Der von der Benutzerautorisierung erlaubte Ladestrom.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/user_enabled` {#evse_user_enabled_warp3}
 
-Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist. Der Wert kann über evse/user_enabled_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -2861,13 +3189,15 @@ Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist. Der Wert kann übe
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/external_enabled` {#evse_external_enabled_warp3}
 
-Gibt an, ob der Ladeslot der externen Steuerung aktiv ist. Der Wert kann über evse/external_enabled_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob der Ladeslot der externen Steuerung aktiv ist.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -2886,11 +3216,11 @@ Gibt an, ob der Ladeslot der externen Steuerung aktiv ist. Der Wert kann über e
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/external_defaults` {#evse_external_defaults_warp3}
 
-Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Ladeslots der externen Steuerung. Der Wert kann über evse/external_defaults_update mit dem selben Payload aktualisiert werden.
+
+Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Ladeslots der externen Steuerung.
 
 
 <table>
@@ -2920,13 +3250,15 @@ Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Lade
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/modbus_tcp_enabled` {#evse_modbus_tcp_enabled_warp3}
 
-Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Schreibzugriff gewährt wurde). Der Wert kann über evse/modbus_tcp_enabled_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Schreibzugriff gewährt wurde).
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -2945,13 +3277,15 @@ Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Sc
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/ocpp_enabled` {#evse_ocpp_enabled_warp3}
 
-Gibt an, ob der Ladeslot für OCPP aktiv ist. Der Wert kann über evse/ocpp_enabled_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob der Ladeslot für OCPP aktiv ist.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -2970,13 +3304,15 @@ Gibt an, ob der Ladeslot für OCPP aktiv ist. Der Wert kann über evse/ocpp_enab
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/automation_current` {#evse_automation_current_warp3}
 
-Der von der Automatisierung erlaubte Ladestrom. Kann über evse/automation_current_update mit dem selben Payload aktualisiert werden.
+
+Der von der Automatisierung erlaubte Ladestrom.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -2995,11 +3331,11 @@ Der von der Automatisierung erlaubte Ladestrom. Kann über evse/automation_curre
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/gpio_configuration` {#evse_gpio_configuration_warp3}
 
-Die Konfiguration der konfigurierbaren Ein- und Ausgänge. Kann über evse/gpio_configuration_update mit dem selben Payload aktualisiert werden.
+
+Die Konfiguration der konfigurierbaren Ein- und Ausgänge.
 
 
 <table>
@@ -3058,13 +3394,15 @@ Die Konfiguration der konfigurierbaren Ein- und Ausgänge. Kann über evse/gpio_
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/button_configuration` {#evse_button_configuration_warp3}
 
-Die Konfiguration des Tasters in der Frontblende. Diese kann über evse/button_configuration_update mit dem selben Payload aktualisiert werden. Benötigt das Feature <a href="#features_button_configuration"><code>"button_configuration"</code></a>
+
+Die Konfiguration des Tasters in der Frontblende. Benötigt das Feature <a href="#features_button_configuration"><code>"button_configuration"</code></a>
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -3087,13 +3425,15 @@ Die Konfiguration des Tasters in der Frontblende. Diese kann über evse/button_c
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/led_configuration` {#evse_led_configuration_warp3}
 
-Die Konfiguration der LED des Tasters in der Frontblende. Diese kann über evse/led_configuration_update mit dem selben Payload aktualisiert werden.
+
+Die Konfiguration der LED des Tasters in der Frontblende.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -3106,23 +3446,25 @@ Die Konfiguration der LED des Tasters in der Frontblende. Diese kann über evse/
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_api`<br/>bool</th>
     <td>
-        Legt fest, ob die LED über die [evse/indicator_led_update](evse.mdx#evse_indicator_led_update)-API oder über Modbus TCP gesteuert werden darf.
-        - **false** - LED darf nicht gesteuert werden. Aufrufe von [evse/indicator_led_update](evse.mdx#evse_indicator_led_update) werden ignoriert
-        - **true** - LED darf gesteuert werden. Aufrufe von [evse/indicator_led_update](evse.mdx#evse_indicator_led_update) werden nur dann ignoriert, wenn das EVSE einen Fehlerzustand anzeigen möchte.
+        Legt fest, ob die LED über die [evse/indicator_led](evse.mdx#evse_indicator_led)-API oder über Modbus TCP gesteuert werden darf.
+        - **false** - LED darf nicht gesteuert werden. Aufrufe von [evse/indicator_led](evse.mdx#evse_indicator_led) werden ignoriert
+        - **true** - LED darf gesteuert werden. Aufrufe von [evse/indicator_led](evse.mdx#evse_indicator_led) werden nur dann ignoriert, wenn das EVSE einen Fehlerzustand anzeigen möchte.
     </td>
 </tr>
     </tbody>
 </table>
 
-
-
+<br/><br/><br/>
 
 <br/><br/><br/>
 ## `evse/ev_wakeup` {#evse_ev_wakeup_warp3}
 
-Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus einem Energiesparmodus zu wecken, indem ein Abziehen und Anstecken des Ladekabels vorgetäuscht wird. (Control-Pilot-Trennung/CP-Trennung) Dieser Wert kann über evse/ev_wakeup_update mit dem selben Payload aktualisiert werden. Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
+
+Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus einem Energiesparmodus zu wecken, indem ein Abziehen und Anstecken des Ladekabels vorgetäuscht wird. (Control-Pilot-Trennung/CP-Trennung) Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -3141,13 +3483,15 @@ Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus e
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/control_pilot_disconnect` {#evse_control_pilot_disconnect_warp3}
 
-Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) Dieser Wert kann über evse/control_pilot_disconnect_update mit dem selben Payload aktualisiert werden. <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe [evse/management_enabled](evse.mdx#evse_management_enabled).  Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
+
+Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe [evse/management_enabled](evse.mdx#evse_management_enabled).  Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -3166,13 +3510,15 @@ Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Contro
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/boost_mode` {#evse_boost_mode_warp3}
 
-Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Ladestrom vorgibt (+ 0,24 A) um Messfehler der Ladeelektronik zu kompensieren. Nur Verwenden, falls ein Fahrzeug mit einem kleineren als dem erlaubten Ladestrom lädt! Dieser Wert kann über evse/boost_mode_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Ladestrom vorgibt (+ 0,24 A) um Messfehler der Ladeelektronik zu kompensieren. Nur Verwenden, falls ein Fahrzeug mit einem kleineren als dem erlaubten Ladestrom lädt!
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -3191,13 +3537,15 @@ Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Lade
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/phase_auto_switch` {#evse_phase_auto_switch_warp3}
 
-Konfiguriert, ob ein WARP3 Charger Pro automatisch von drei- auf einphasiges Laden wechseln soll, wenn ein Fahrzeug angeschlossen ist, dass nur auf L1 Strom bezieht. Dieser Wert kann über evse/phase_auto_switch mit dem selben Payload aktualisiert werden.
+
+Konfiguriert, ob ein WARP3 Charger Pro automatisch von drei- auf einphasiges Laden wechseln soll, wenn ein Fahrzeug angeschlossen ist, dass nur auf L1 Strom bezieht.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -3216,13 +3564,15 @@ Konfiguriert, ob ein WARP3 Charger Pro automatisch von drei- auf einphasiges Lad
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/phases_connected` {#evse_phases_connected_warp3}
+
 
 Konfiguriert, ob die Wallbox fest ein- oder dreiphasig angeschlossen ist. Damit wird z.B. die 4200 W-Limitierung nach §14 EnWG berechnet
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -3243,9 +3593,9 @@ Konfiguriert, ob die Wallbox fest ein- oder dreiphasig angeschlossen ist. Damit 
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/reset_dc_fault_current_state` {#evse_reset_dc_fault_current_state_warp3}
+
 
 Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong>
 
@@ -3270,55 +3620,139 @@ Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/trigger_dc_fault_test` {#evse_trigger_dc_fault_test_warp3}
 
+
 Startet einen Test des DC-Fehlerstrom-Schutzmoduls.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/evse/trigger_dc_fault_test -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/trigger_dc_fault_test -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
 
 
+<br/><br/><br/>
 
 <br/><br/><br/>
 ## `evse/stop_charging` {#evse_stop_charging_warp3}
 
+
 Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit [evse/start_charging](evse.mdx#evse_start_charging) wieder gestartet werden.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/evse/stop_charging -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `evse/start_charging` {#evse_start_charging_warp3}
 
+
 Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit [evse/stop_charging](evse.mdx#evse_stop_charging) wieder gestoppt werden.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/evse/start_charging -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/start_charging -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `evse/start_debug` {#evse_start_debug_warp3}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Startet ein Ladeprotokoll. Es werden hochfrequent Messwerte des Ladecontrollers auf die WebSockets geschrieben, bis [evse/stop_debug](evse.mdx#evse_stop_debug) aufgerufen wird.
 
 
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `evse/stop_debug` {#evse_stop_debug_warp3}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Stoppt ein Ladeprotokoll. Siehe [evse/start_debug](evse.mdx#evse_start_debug) für Details.
 
 
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `evse/meter_config` {#evse_meter_config_warp3}
+
 
 Gibt an, welcher Stromzähler für Berechnungen im Zusammenhang mit Ladevorgängen verwendet werden soll. (z.B. Ladetracker, Ladelimits, usw.)
 
@@ -3347,10 +3781,45 @@ Gibt an, welcher Stromzähler für Berechnungen im Zusammenhang mit Ladevorgäng
 Auf dieser Hardware nicht unterstützt!
 </TabItem>
 <TabItem value="any">
-<br/><br/><br/>
 ## `evse/state` {#evse_state_any}
 
+
 Der Zustand des Ladecontrollers.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+            #### Lesen
+```bash
+curl http://$HOST/evse/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+            #### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "iec61851_state": 2,
+  "charger_state": 3,
+  "contactor_state": 3,
+  "contactor_error": 0,
+  "allowed_charging_current": 32000,
+  "error_state": 0,
+  "lock_state": 0
+}
+```
+:::
 
 
 <table>
@@ -3508,9 +3977,9 @@ Der Zustand des Ladecontrollers.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/hardware_configuration` {#evse_hardware_configuration_any}
+
 
 Die Hardwarekonfiguration des Ladecontrollers.
 
@@ -3601,9 +4070,9 @@ Die Hardwarekonfiguration des Ladecontrollers.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/slots` {#evse_slots_any}
+
 
 Der Zustand der Ladeslots. Siehe TODO LINK für Details.
 
@@ -3667,9 +4136,9 @@ Der Zustand der Ladeslots. Siehe TODO LINK für Details.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/button_state` {#evse_button_state_any}
+
 
 Der Zustand des Tasters in der Frontblende.
 
@@ -3706,11 +4175,11 @@ Der Zustand des Tasters in der Frontblende.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/indicator_led` {#evse_indicator_led_any}
 
-Der Zustand der LED im Taster. Kann über [evse/indicator_led_update](evse.mdx#evse_indicator_led_update) mit dem selben Payload geschrieben werden, falls die LED-Steuerung per API (siehe [evse/led_configuration](evse.mdx#evse_led_configuration)) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.
+
+Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung per API (siehe [evse/led_configuration](evse.mdx#evse_led_configuration)) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.
 
 
 <table>
@@ -3770,9 +4239,9 @@ Der Zustand der LED im Taster. Kann über [evse/indicator_led_update](evse.mdx#e
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/low_level_state` {#evse_low_level_state_any}
+
 
 Der Low-Level-Zustand des Ladecontrollers.
 
@@ -4039,13 +4508,15 @@ Der Low-Level-Zustand des Ladecontrollers.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/external_current` {#evse_external_current_any}
 
-Der von der externen Steuerung vorgegebene Ladestrom. Kann über evse/external_current_update mit dem selben Payload gesetzt werden.
+
+Der von der externen Steuerung vorgegebene Ladestrom.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -4064,13 +4535,15 @@ Der von der externen Steuerung vorgegebene Ladestrom. Kann über evse/external_c
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/external_clear_on_disconnect` {#evse_external_clear_on_disconnect_any}
 
-Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abziehen eines Fahrzeugs automatisch auf 0 gesetzt werden soll. Kann über evse/external_clear_on_disconnect_update mit dem selben Payload gesetzt werden.
+
+Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abziehen eines Fahrzeugs automatisch auf 0 gesetzt werden soll.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -4094,13 +4567,15 @@ Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abzieh
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/management_current` {#evse_management_current_any}
 
-Der vom Lastmanagement vorgegebene Ladestrom. Kann über evse/management_current_update mit dem selben Payload gesetzt werden.
+
+Der vom Lastmanagement vorgegebene Ladestrom.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -4119,13 +4594,15 @@ Der vom Lastmanagement vorgegebene Ladestrom. Kann über evse/management_current
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/auto_start_charging` {#evse_auto_start_charging_any}
 
-Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Dieser Wert kann über evse/auto_start_charging_update mit dem selben Payload aktualisiert werden.
+
+Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -4144,13 +4621,15 @@ Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Diese
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/global_current` {#evse_global_current_any}
 
-Der über das Webinterface vorgegebene Ladestrom. Kann über evse/global_current_update mit dem selben Payload gesetzt werden.
+
+Der über das Webinterface vorgegebene Ladestrom.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -4169,13 +4648,15 @@ Der über das Webinterface vorgegebene Ladestrom. Kann über evse/global_current
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/management_enabled` {#evse_management_enabled_any}
 
-Gibt an, ob der Ladeslot des Lastmanagements aktiv ist. Der Wert kann über evse/management_enabled_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob der Ladeslot des Lastmanagements aktiv ist.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -4194,9 +4675,9 @@ Gibt an, ob der Ladeslot des Lastmanagements aktiv ist. Der Wert kann über evse
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/user_current` {#evse_user_current_any}
+
 
 Der von der Benutzerautorisierung erlaubte Ladestrom.
 
@@ -4219,13 +4700,15 @@ Der von der Benutzerautorisierung erlaubte Ladestrom.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/user_enabled` {#evse_user_enabled_any}
 
-Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist. Der Wert kann über evse/user_enabled_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -4244,13 +4727,15 @@ Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist. Der Wert kann übe
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/external_enabled` {#evse_external_enabled_any}
 
-Gibt an, ob der Ladeslot der externen Steuerung aktiv ist. Der Wert kann über evse/external_enabled_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob der Ladeslot der externen Steuerung aktiv ist.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -4269,11 +4754,11 @@ Gibt an, ob der Ladeslot der externen Steuerung aktiv ist. Der Wert kann über e
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/external_defaults` {#evse_external_defaults_any}
 
-Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Ladeslots der externen Steuerung. Der Wert kann über evse/external_defaults_update mit dem selben Payload aktualisiert werden.
+
+Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Ladeslots der externen Steuerung.
 
 
 <table>
@@ -4306,13 +4791,15 @@ Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Lade
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/modbus_tcp_enabled` {#evse_modbus_tcp_enabled_any}
 
-Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Schreibzugriff gewährt wurde). Der Wert kann über evse/modbus_tcp_enabled_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Schreibzugriff gewährt wurde).
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -4331,13 +4818,15 @@ Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Sc
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/ocpp_enabled` {#evse_ocpp_enabled_any}
 
-Gibt an, ob der Ladeslot für OCPP aktiv ist. Der Wert kann über evse/ocpp_enabled_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob der Ladeslot für OCPP aktiv ist.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -4356,13 +4845,15 @@ Gibt an, ob der Ladeslot für OCPP aktiv ist. Der Wert kann über evse/ocpp_enab
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/automation_current` {#evse_automation_current_any}
 
-Der von der Automatisierung erlaubte Ladestrom. Kann über evse/automation_current_update mit dem selben Payload aktualisiert werden.
+
+Der von der Automatisierung erlaubte Ladestrom.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -4381,11 +4872,11 @@ Der von der Automatisierung erlaubte Ladestrom. Kann über evse/automation_curre
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/gpio_configuration` {#evse_gpio_configuration_any}
+
 <strong>(Nur WARP 2 und WARP 3)</strong> 
-Die Konfiguration der konfigurierbaren Ein- und Ausgänge. Kann über evse/gpio_configuration_update mit dem selben Payload aktualisiert werden.
+Die Konfiguration der konfigurierbaren Ein- und Ausgänge.
 
 
 <table>
@@ -4453,13 +4944,15 @@ Die Konfiguration der konfigurierbaren Ein- und Ausgänge. Kann über evse/gpio_
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/button_configuration` {#evse_button_configuration_any}
+
 <strong>(Nur WARP 2 und WARP 3)</strong> 
-Die Konfiguration des Tasters in der Frontblende. Diese kann über evse/button_configuration_update mit dem selben Payload aktualisiert werden. Benötigt das Feature <a href="#features_button_configuration"><code>"button_configuration"</code></a>
+Die Konfiguration des Tasters in der Frontblende. Benötigt das Feature <a href="#features_button_configuration"><code>"button_configuration"</code></a>
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -4485,13 +4978,15 @@ Die Konfiguration des Tasters in der Frontblende. Diese kann über evse/button_c
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/led_configuration` {#evse_led_configuration_any}
 
-Die Konfiguration der LED des Tasters in der Frontblende. Diese kann über evse/led_configuration_update mit dem selben Payload aktualisiert werden.
+
+Die Konfiguration der LED des Tasters in der Frontblende.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -4504,22 +4999,22 @@ Die Konfiguration der LED des Tasters in der Frontblende. Diese kann über evse/
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_api`<br/>bool</th>
     <td>
-        Legt fest, ob die LED über die [evse/indicator_led_update](evse.mdx#evse_indicator_led_update)-API oder über Modbus TCP gesteuert werden darf.
+        Legt fest, ob die LED über die [evse/indicator_led](evse.mdx#evse_indicator_led)-API oder über Modbus TCP gesteuert werden darf.
         
         
         
-        - **false** - LED darf nicht gesteuert werden. Aufrufe von [evse/indicator_led_update](evse.mdx#evse_indicator_led_update) werden ignoriert
-        - **true** - LED darf gesteuert werden. Aufrufe von [evse/indicator_led_update](evse.mdx#evse_indicator_led_update) werden nur dann ignoriert, wenn das EVSE einen Fehlerzustand anzeigen möchte.
+        - **false** - LED darf nicht gesteuert werden. Aufrufe von [evse/indicator_led](evse.mdx#evse_indicator_led) werden ignoriert
+        - **true** - LED darf gesteuert werden. Aufrufe von [evse/indicator_led](evse.mdx#evse_indicator_led) werden nur dann ignoriert, wenn das EVSE einen Fehlerzustand anzeigen möchte.
     </td>
 </tr>
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/user_calibration` {#evse_user_calibration_any}
+
 <strong>(Nur WARP 1)</strong> 
-Erlaubt es, die werksseitige Kalibrierung des EVSEs auszulesen und zu überschreiben. Dieser Wert kann über evse/user_calibration_update mit dem selben Payload aktualisiert werden. Um die Kalibierung auf den Werkszustand zurückzusetzen, kann ein Payload mit user_calibration_active auf false geschickt werden. Die weiteren Werte werden dann ignoriert.
+Erlaubt es, die werksseitige Kalibrierung des EVSEs auszulesen und zu überschreiben. Um die Kalibierung auf den Werkszustand zurückzusetzen, kann ein Payload mit user_calibration_active auf false geschickt werden. Die weiteren Werte werden dann ignoriert.
 
 
 <table>
@@ -4575,13 +5070,15 @@ Erlaubt es, die werksseitige Kalibrierung des EVSEs auszulesen und zu überschre
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/ev_wakeup` {#evse_ev_wakeup_any}
+
 <strong>(Nur WARP 2 und WARP 3)</strong> 
-Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus einem Energiesparmodus zu wecken, indem ein Abziehen und Anstecken des Ladekabels vorgetäuscht wird. (Control-Pilot-Trennung/CP-Trennung) Dieser Wert kann über evse/ev_wakeup_update mit dem selben Payload aktualisiert werden. Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
+Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus einem Energiesparmodus zu wecken, indem ein Abziehen und Anstecken des Ladekabels vorgetäuscht wird. (Control-Pilot-Trennung/CP-Trennung) Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -4600,13 +5097,15 @@ Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus e
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/control_pilot_disconnect` {#evse_control_pilot_disconnect_any}
+
 <strong>(Nur WARP 2 und WARP 3)</strong> 
-Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) Dieser Wert kann über evse/control_pilot_disconnect_update mit dem selben Payload aktualisiert werden. <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe [evse/management_enabled](evse.mdx#evse_management_enabled).  Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
+Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe [evse/management_enabled](evse.mdx#evse_management_enabled).  Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -4625,13 +5124,15 @@ Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Contro
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/boost_mode` {#evse_boost_mode_any}
 
-Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Ladestrom vorgibt (+ 0,24 A) um Messfehler der Ladeelektronik zu kompensieren. Nur Verwenden, falls ein Fahrzeug mit einem kleineren als dem erlaubten Ladestrom lädt! Dieser Wert kann über evse/boost_mode_update mit dem selben Payload aktualisiert werden.
+
+Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Ladestrom vorgibt (+ 0,24 A) um Messfehler der Ladeelektronik zu kompensieren. Nur Verwenden, falls ein Fahrzeug mit einem kleineren als dem erlaubten Ladestrom lädt!
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -4650,13 +5151,15 @@ Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Lade
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/phase_auto_switch` {#evse_phase_auto_switch_any}
+
 <strong>(Nur WARP 3)</strong> 
-Konfiguriert, ob ein WARP3 Charger Pro automatisch von drei- auf einphasiges Laden wechseln soll, wenn ein Fahrzeug angeschlossen ist, dass nur auf L1 Strom bezieht. Dieser Wert kann über evse/phase_auto_switch mit dem selben Payload aktualisiert werden.
+Konfiguriert, ob ein WARP3 Charger Pro automatisch von drei- auf einphasiges Laden wechseln soll, wenn ein Fahrzeug angeschlossen ist, dass nur auf L1 Strom bezieht.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -4675,13 +5178,15 @@ Konfiguriert, ob ein WARP3 Charger Pro automatisch von drei- auf einphasiges Lad
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/phases_connected` {#evse_phases_connected_any}
+
 <strong>(Nur WARP 2 und WARP 3)</strong> 
 Konfiguriert, ob die Wallbox fest ein- oder dreiphasig angeschlossen ist. Damit wird z.B. die 4200 W-Limitierung nach §14 EnWG berechnet
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -4705,9 +5210,9 @@ Konfiguriert, ob die Wallbox fest ein- oder dreiphasig angeschlossen ist. Damit 
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/reset_dc_fault_current_state` {#evse_reset_dc_fault_current_state_any}
+
 <strong>(Nur WARP 2 und WARP 3)</strong> 
 Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong>
 
@@ -4732,21 +5237,47 @@ Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/trigger_dc_fault_test` {#evse_trigger_dc_fault_test_any}
+
 <strong>(Nur WARP 2 und WARP 3)</strong> 
 Startet einen Test des DC-Fehlerstrom-Schutzmoduls.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/evse/trigger_dc_fault_test -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/trigger_dc_fault_test -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
+
 
 
 <br/><br/><br/>
 ## `evse/gp_output` {#evse_gp_output_any}
+
 <strong>(Nur WARP 2)</strong> 
-Der aktuelle Wert des konfigurierbaren Ausgangs. Dieser Wert kann über evse/gp_output_update mit dem selben Payload aktualisiert werden.
+Der aktuelle Wert des konfigurierbaren Ausgangs.
 
 
+
+**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -4770,45 +5301,105 @@ Der aktuelle Wert des konfigurierbaren Ausgangs. Dieser Wert kann über evse/gp_
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `evse/stop_charging` {#evse_stop_charging_any}
 
+
 Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit [evse/start_charging](evse.mdx#evse_start_charging) wieder gestartet werden.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/evse/stop_charging -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `evse/start_charging` {#evse_start_charging_any}
 
+
 Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit [evse/stop_charging](evse.mdx#evse_stop_charging) wieder gestoppt werden.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/evse/start_charging -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/start_charging -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `evse/start_debug` {#evse_start_debug_any}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Startet ein Ladeprotokoll. Es werden hochfrequent Messwerte des Ladecontrollers auf die WebSockets geschrieben, bis [evse/stop_debug](evse.mdx#evse_stop_debug) aufgerufen wird.
 
 
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `evse/stop_debug` {#evse_stop_debug_any}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Stoppt ein Ladeprotokoll. Siehe [evse/start_debug](evse.mdx#evse_start_debug) für Details.
 
 
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `evse/meter_config` {#evse_meter_config_any}
+
 
 Gibt an, welcher Stromzähler für Berechnungen im Zusammenhang mit Ladevorgängen verwendet werden soll. (z.B. Ladetracker, Ladelimits, usw.)
 

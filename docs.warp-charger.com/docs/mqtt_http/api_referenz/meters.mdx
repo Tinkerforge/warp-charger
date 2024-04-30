@@ -2,6 +2,7 @@
 import MultilineTabs from '@site/src/components/MultilineTabs';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
 
 # Stromzähler
 WARP Charger und Energy Manager unterstützen mehrere Stromzähler.
@@ -20,24 +21,26 @@ WARP Charger und Energy Manager unterstützen mehrere Stromzähler.
     
 <Tabs groupId="hardwareType" queryString className="hidden-tabs">
 <TabItem value="warp1">
-<br/><br/><br/>
 ## `meters/X/values` {#meters_X_values_warp1}
 
-Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [meters/X/value_ids](meters.mdx#meters_X_value_ids) ermittelt werden. Bei einem API-Stromzähler können diese Werte über meters/X/update geschrieben werden
 
+Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [meters/X/value_ids](meters.mdx#meters_X_value_ids) ermittelt werden. Bei einem API-Stromzähler können diese Werte über meters/X/update geschrieben werden
 
 
 
 <br/><br/><br/>
 ## `meters/X/value_ids` {#meters_X_value_ids_warp1}
 
-Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [meters/X/values](meters.mdx#meters_X_values) an. <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
 
+Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [meters/X/values](meters.mdx#meters_X_values) an. <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
 
 
 
 <br/><br/><br/>
 ## `meters/X/history` {#meters_X_history_warp1}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
 
@@ -52,7 +55,7 @@ Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher f
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -66,10 +69,17 @@ Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher f
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `meters/X/live` {#meters_X_live_warp1}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für [meters/X/history](meters.mdx#meters_X_history) generiert.
 
@@ -84,7 +94,7 @@ Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -105,10 +115,15 @@ Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `meters/X/config` {#meters_X_config_warp1}
+
 
 Die Konfiguration des X. Stromzählers. Das Union-Tag gibt die Zählerklasse an.
 
@@ -229,9 +244,9 @@ null: Kein Stromzähler konfiguriert.
 </MultilineTabs>
 
 
-
 <br/><br/><br/>
 ## `meters/X/state` {#meters_X_state_warp1}
+
 
 Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [meters/X/config](meters.mdx#meters_X_config) konfiguriert wurde.
 
@@ -331,9 +346,9 @@ null: Zustand des SunSpec-Stromzählers. Im Moment leer.
 </Tabs>
 
 
-
 <br/><br/><br/>
 ## `meters/X/errors` {#meters_X_errors_warp1}
+
 
 Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [meters/X/config](meters.mdx#meters_X_config) konfiguriert wurde.
 
@@ -499,19 +514,42 @@ null: Fehlerzähler des SunSpec-Stromzählers. Im Moment leer.
 </Tabs>
 
 
-
 <br/><br/><br/>
 ## `meters/X/reset` {#meters_X_reset_warp1}
 
+
 Setzt alle zurücksetzbaren (Alle Werte deren "kind"-Eintrag "resettable" ist: <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>) Zählerwerte des X. Stromzählers zurück.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/meters/X/reset -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters/X/reset -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `meters/X/last_reset` {#meters_X_last_reset_warp1}
+
 
 Der Zeitpunkt des letzten Zähler-Resets (siehe [meters/X/reset](meters.mdx#meters_X_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.
 
@@ -534,11 +572,55 @@ Der Zeitpunkt des letzten Zähler-Resets (siehe [meters/X/reset](meters.mdx#mete
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meters/history` {#meters_history_warp1}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+```bash
+curl http://$HOST/meters/history
+```
+```jsx
+{
+  "offset": 9378,
+  "samples": [
+    [
+      null, null, null, null, null, null, null, null,
+      // 600 weitere null-Werte entfernt
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0, 1736, 6656, 6655, 6666,
+      6680, 6716, 6714, 6625, 6640, 6641, 6595, 6612,
+      6592, 6593, 6589, 6592, 6600, 6625, 6626, 6637,
+      6665, 6636, 6632, 6656, 6616, 6611, 6646, 6670,
+      6691, 6715, 6787, 6754, 6761, 6797, 6771, 6685,
+      6705, 6778, 6703, 6675, 6681, 6721, 6739, 6816,
+      6872, 6858, 6821, 6836, 6784, 6871, 6943, 6930,
+      6968, 6955, 6837, 6800, 6846, 6919, 6881, 6736,
+      6671, 6655, 6674, 6743, 6878, 5733, 4462, 3712,
+      3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
+         0,    0,    0,    0,    0,    0,    0,    0
+    ],
+    null
+  ]
+}
+```
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -551,7 +633,7 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -560,18 +642,25 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][2]</th>
     <td>
-        Die gemessenen Werte aller Stromzähler. Die Größe des Arrays ist 2 bei WARP1 und WARP2, 7 beim WARP Energy Manager.
-        - **[0..1]** - Die gemessenen Werte des jeweiligen Stromzählers
+        Die gemessenen Werte aller Stromzähler.
+        - **[0..1]** - Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.
     </td>
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `meters/live` {#meters_live_warp1}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
 
-Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [meters/history](meters.mdx#meters_history) generiert.
+
+Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [meters/history](meters.mdx#meters_history) generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.
 
 
 <table>
@@ -584,7 +673,7 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -600,32 +689,39 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][2]</th>
     <td>
-        Die gemessenen Werte aller Stromzähler. Die Größe des Arrays ist 2 bei WARP1 und WARP2, 7 beim WARP Energy Manager..
+        Die gemessenen Werte aller Stromzähler.
         - **[0..1]** - Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.
     </td>
 </tr>
     </tbody>
 </table>
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 </TabItem>
 <TabItem value="warp2">
-<br/><br/><br/>
 ## `meters/X/values` {#meters_X_values_warp2}
 
-Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [meters/X/value_ids](meters.mdx#meters_X_value_ids) ermittelt werden. Bei einem API-Stromzähler können diese Werte über meters/X/update geschrieben werden
 
+Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [meters/X/value_ids](meters.mdx#meters_X_value_ids) ermittelt werden. Bei einem API-Stromzähler können diese Werte über meters/X/update geschrieben werden
 
 
 
 <br/><br/><br/>
 ## `meters/X/value_ids` {#meters_X_value_ids_warp2}
 
-Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [meters/X/values](meters.mdx#meters_X_values) an. <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
 
+Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [meters/X/values](meters.mdx#meters_X_values) an. <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
 
 
 
 <br/><br/><br/>
 ## `meters/X/history` {#meters_X_history_warp2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
 
@@ -640,7 +736,7 @@ Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher f
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -654,10 +750,17 @@ Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher f
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `meters/X/live` {#meters_X_live_warp2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für [meters/X/history](meters.mdx#meters_X_history) generiert.
 
@@ -672,7 +775,7 @@ Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -693,10 +796,15 @@ Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `meters/X/config` {#meters_X_config_warp2}
+
 
 Die Konfiguration des X. Stromzählers. Das Union-Tag gibt die Zählerklasse an.
 
@@ -805,9 +913,9 @@ null: Kein Stromzähler konfiguriert.
 </MultilineTabs>
 
 
-
 <br/><br/><br/>
 ## `meters/X/state` {#meters_X_state_warp2}
+
 
 Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [meters/X/config](meters.mdx#meters_X_config) konfiguriert wurde.
 
@@ -907,9 +1015,9 @@ null: Zustand des SunSpec-Stromzählers. Im Moment leer.
 </Tabs>
 
 
-
 <br/><br/><br/>
 ## `meters/X/errors` {#meters_X_errors_warp2}
+
 
 Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [meters/X/config](meters.mdx#meters_X_config) konfiguriert wurde.
 
@@ -1075,19 +1183,42 @@ null: Fehlerzähler des SunSpec-Stromzählers. Im Moment leer.
 </Tabs>
 
 
-
 <br/><br/><br/>
 ## `meters/X/reset` {#meters_X_reset_warp2}
 
+
 Setzt alle zurücksetzbaren (Alle Werte deren "kind"-Eintrag "resettable" ist: <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>) Zählerwerte des X. Stromzählers zurück.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/meters/X/reset -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters/X/reset -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `meters/X/last_reset` {#meters_X_last_reset_warp2}
+
 
 Der Zeitpunkt des letzten Zähler-Resets (siehe [meters/X/reset](meters.mdx#meters_X_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.
 
@@ -1110,11 +1241,55 @@ Der Zeitpunkt des letzten Zähler-Resets (siehe [meters/X/reset](meters.mdx#mete
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meters/history` {#meters_history_warp2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+```bash
+curl http://$HOST/meters/history
+```
+```jsx
+{
+  "offset": 9378,
+  "samples": [
+    [
+      null, null, null, null, null, null, null, null,
+      // 600 weitere null-Werte entfernt
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0, 1736, 6656, 6655, 6666,
+      6680, 6716, 6714, 6625, 6640, 6641, 6595, 6612,
+      6592, 6593, 6589, 6592, 6600, 6625, 6626, 6637,
+      6665, 6636, 6632, 6656, 6616, 6611, 6646, 6670,
+      6691, 6715, 6787, 6754, 6761, 6797, 6771, 6685,
+      6705, 6778, 6703, 6675, 6681, 6721, 6739, 6816,
+      6872, 6858, 6821, 6836, 6784, 6871, 6943, 6930,
+      6968, 6955, 6837, 6800, 6846, 6919, 6881, 6736,
+      6671, 6655, 6674, 6743, 6878, 5733, 4462, 3712,
+      3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
+         0,    0,    0,    0,    0,    0,    0,    0
+    ],
+    null
+  ]
+}
+```
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1127,7 +1302,7 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -1136,18 +1311,25 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][2]</th>
     <td>
-        Die gemessenen Werte aller Stromzähler. Die Größe des Arrays ist 2 bei WARP1 und WARP2, 7 beim WARP Energy Manager.
-        - **[0..1]** - Die gemessenen Werte des jeweiligen Stromzählers
+        Die gemessenen Werte aller Stromzähler.
+        - **[0..1]** - Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.
     </td>
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `meters/live` {#meters_live_warp2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
 
-Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [meters/history](meters.mdx#meters_history) generiert.
+
+Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [meters/history](meters.mdx#meters_history) generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.
 
 
 <table>
@@ -1160,7 +1342,7 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -1176,32 +1358,39 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][2]</th>
     <td>
-        Die gemessenen Werte aller Stromzähler. Die Größe des Arrays ist 2 bei WARP1 und WARP2, 7 beim WARP Energy Manager..
+        Die gemessenen Werte aller Stromzähler.
         - **[0..1]** - Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.
     </td>
 </tr>
     </tbody>
 </table>
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 </TabItem>
 <TabItem value="warp3">
-<br/><br/><br/>
 ## `meters/X/values` {#meters_X_values_warp3}
 
-Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [meters/X/value_ids](meters.mdx#meters_X_value_ids) ermittelt werden. Bei einem API-Stromzähler können diese Werte über meters/X/update geschrieben werden
 
+Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [meters/X/value_ids](meters.mdx#meters_X_value_ids) ermittelt werden. Bei einem API-Stromzähler können diese Werte über meters/X/update geschrieben werden
 
 
 
 <br/><br/><br/>
 ## `meters/X/value_ids` {#meters_X_value_ids_warp3}
 
-Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [meters/X/values](meters.mdx#meters_X_values) an. <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
 
+Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [meters/X/values](meters.mdx#meters_X_values) an. <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
 
 
 
 <br/><br/><br/>
 ## `meters/X/history` {#meters_X_history_warp3}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
 
@@ -1216,7 +1405,7 @@ Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher f
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -1230,10 +1419,17 @@ Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher f
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `meters/X/live` {#meters_X_live_warp3}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für [meters/X/history](meters.mdx#meters_X_history) generiert.
 
@@ -1248,7 +1444,7 @@ Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -1269,10 +1465,15 @@ Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `meters/X/config` {#meters_X_config_warp3}
+
 
 Die Konfiguration des X. Stromzählers. Das Union-Tag gibt die Zählerklasse an.
 
@@ -1381,9 +1582,9 @@ null: Kein Stromzähler konfiguriert.
 </MultilineTabs>
 
 
-
 <br/><br/><br/>
 ## `meters/X/state` {#meters_X_state_warp3}
+
 
 Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [meters/X/config](meters.mdx#meters_X_config) konfiguriert wurde.
 
@@ -1483,9 +1684,9 @@ null: Zustand des SunSpec-Stromzählers. Im Moment leer.
 </Tabs>
 
 
-
 <br/><br/><br/>
 ## `meters/X/errors` {#meters_X_errors_warp3}
+
 
 Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [meters/X/config](meters.mdx#meters_X_config) konfiguriert wurde.
 
@@ -1651,19 +1852,42 @@ null: Fehlerzähler des SunSpec-Stromzählers. Im Moment leer.
 </Tabs>
 
 
-
 <br/><br/><br/>
 ## `meters/X/reset` {#meters_X_reset_warp3}
 
+
 Setzt alle zurücksetzbaren (Alle Werte deren "kind"-Eintrag "resettable" ist: <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>) Zählerwerte des X. Stromzählers zurück.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/meters/X/reset -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters/X/reset -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `meters/X/last_reset` {#meters_X_last_reset_warp3}
+
 
 Der Zeitpunkt des letzten Zähler-Resets (siehe [meters/X/reset](meters.mdx#meters_X_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.
 
@@ -1686,11 +1910,55 @@ Der Zeitpunkt des letzten Zähler-Resets (siehe [meters/X/reset](meters.mdx#mete
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meters/history` {#meters_history_warp3}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+```bash
+curl http://$HOST/meters/history
+```
+```jsx
+{
+  "offset": 9378,
+  "samples": [
+    [
+      null, null, null, null, null, null, null, null,
+      // 600 weitere null-Werte entfernt
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0, 1736, 6656, 6655, 6666,
+      6680, 6716, 6714, 6625, 6640, 6641, 6595, 6612,
+      6592, 6593, 6589, 6592, 6600, 6625, 6626, 6637,
+      6665, 6636, 6632, 6656, 6616, 6611, 6646, 6670,
+      6691, 6715, 6787, 6754, 6761, 6797, 6771, 6685,
+      6705, 6778, 6703, 6675, 6681, 6721, 6739, 6816,
+      6872, 6858, 6821, 6836, 6784, 6871, 6943, 6930,
+      6968, 6955, 6837, 6800, 6846, 6919, 6881, 6736,
+      6671, 6655, 6674, 6743, 6878, 5733, 4462, 3712,
+      3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
+         0,    0,    0,    0,    0,    0,    0,    0
+    ],
+    null
+  ]
+}
+```
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1703,7 +1971,7 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -1712,18 +1980,25 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][2]</th>
     <td>
-        Die gemessenen Werte aller Stromzähler. Die Größe des Arrays ist 2 bei WARP1 und WARP2, 7 beim WARP Energy Manager.
-        - **[0..1]** - Die gemessenen Werte des jeweiligen Stromzählers
+        Die gemessenen Werte aller Stromzähler.
+        - **[0..1]** - Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.
     </td>
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `meters/live` {#meters_live_warp3}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
 
-Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [meters/history](meters.mdx#meters_history) generiert.
+
+Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [meters/history](meters.mdx#meters_history) generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.
 
 
 <table>
@@ -1736,7 +2011,7 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -1752,32 +2027,39 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][2]</th>
     <td>
-        Die gemessenen Werte aller Stromzähler. Die Größe des Arrays ist 2 bei WARP1 und WARP2, 7 beim WARP Energy Manager..
+        Die gemessenen Werte aller Stromzähler.
         - **[0..1]** - Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.
     </td>
 </tr>
     </tbody>
 </table>
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 </TabItem>
 <TabItem value="wem">
-<br/><br/><br/>
 ## `meters/X/values` {#meters_X_values_wem}
 
-Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [meters/X/value_ids](meters.mdx#meters_X_value_ids) ermittelt werden. Bei einem API-Stromzähler können diese Werte über meters/X/update geschrieben werden
 
+Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [meters/X/value_ids](meters.mdx#meters_X_value_ids) ermittelt werden. Bei einem API-Stromzähler können diese Werte über meters/X/update geschrieben werden
 
 
 
 <br/><br/><br/>
 ## `meters/X/value_ids` {#meters_X_value_ids_wem}
 
-Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [meters/X/values](meters.mdx#meters_X_values) an. <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
 
+Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [meters/X/values](meters.mdx#meters_X_values) an. <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
 
 
 
 <br/><br/><br/>
 ## `meters/X/history` {#meters_X_history_wem}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
 
@@ -1792,7 +2074,7 @@ Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher f
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -1806,10 +2088,17 @@ Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher f
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `meters/X/live` {#meters_X_live_wem}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für [meters/X/history](meters.mdx#meters_X_history) generiert.
 
@@ -1824,7 +2113,7 @@ Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -1845,10 +2134,15 @@ Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `meters/X/config` {#meters_X_config_wem}
+
 
 Die Konfiguration des X. Stromzählers. Das Union-Tag gibt die Zählerklasse an.
 
@@ -1957,9 +2251,9 @@ null: Kein Stromzähler konfiguriert.
 </MultilineTabs>
 
 
-
 <br/><br/><br/>
 ## `meters/X/state` {#meters_X_state_wem}
+
 
 Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [meters/X/config](meters.mdx#meters_X_config) konfiguriert wurde.
 
@@ -2059,9 +2353,9 @@ null: Zustand des SunSpec-Stromzählers. Im Moment leer.
 </Tabs>
 
 
-
 <br/><br/><br/>
 ## `meters/X/errors` {#meters_X_errors_wem}
+
 
 Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [meters/X/config](meters.mdx#meters_X_config) konfiguriert wurde.
 
@@ -2227,19 +2521,42 @@ null: Fehlerzähler des SunSpec-Stromzählers. Im Moment leer.
 </Tabs>
 
 
-
 <br/><br/><br/>
 ## `meters/X/reset` {#meters_X_reset_wem}
 
+
 Setzt alle zurücksetzbaren (Alle Werte deren "kind"-Eintrag "resettable" ist: <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>) Zählerwerte des X. Stromzählers zurück.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/meters/X/reset -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters/X/reset -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `meters/X/last_reset` {#meters_X_last_reset_wem}
+
 
 Der Zeitpunkt des letzten Zähler-Resets (siehe [meters/X/reset](meters.mdx#meters_X_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.
 
@@ -2262,11 +2579,55 @@ Der Zeitpunkt des letzten Zähler-Resets (siehe [meters/X/reset](meters.mdx#mete
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meters/history` {#meters_history_wem}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+```bash
+curl http://$HOST/meters/history
+```
+```jsx
+{
+  "offset": 9378,
+  "samples": [
+    [
+      null, null, null, null, null, null, null, null,
+      // 600 weitere null-Werte entfernt
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0, 1736, 6656, 6655, 6666,
+      6680, 6716, 6714, 6625, 6640, 6641, 6595, 6612,
+      6592, 6593, 6589, 6592, 6600, 6625, 6626, 6637,
+      6665, 6636, 6632, 6656, 6616, 6611, 6646, 6670,
+      6691, 6715, 6787, 6754, 6761, 6797, 6771, 6685,
+      6705, 6778, 6703, 6675, 6681, 6721, 6739, 6816,
+      6872, 6858, 6821, 6836, 6784, 6871, 6943, 6930,
+      6968, 6955, 6837, 6800, 6846, 6919, 6881, 6736,
+      6671, 6655, 6674, 6743, 6878, 5733, 4462, 3712,
+      3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
+         0,    0,    0,    0,    0,    0,    0,    0
+    ],
+    null
+  ]
+}
+```
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2279,27 +2640,34 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][2]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][7]</th>
     <td>
-        Die gemessenen Werte aller Stromzähler. Die Größe des Arrays ist 2 bei WARP1 und WARP2, 7 beim WARP Energy Manager.
-        - **[0..1]** - Die gemessenen Werte des jeweiligen Stromzählers
+        Die gemessenen Werte aller Stromzähler.
+        - **[0..6]** - Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.
     </td>
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `meters/live` {#meters_live_wem}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
 
-Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [meters/history](meters.mdx#meters_history) generiert.
+
+Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [meters/history](meters.mdx#meters_history) generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.
 
 
 <table>
@@ -2312,7 +2680,7 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -2326,34 +2694,41 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][2]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][7]</th>
     <td>
-        Die gemessenen Werte aller Stromzähler. Die Größe des Arrays ist 2 bei WARP1 und WARP2, 7 beim WARP Energy Manager..
-        - **[0..1]** - Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.
+        Die gemessenen Werte aller Stromzähler.
+        - **[0..6]** - Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.
     </td>
 </tr>
     </tbody>
 </table>
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 </TabItem>
 <TabItem value="any">
-<br/><br/><br/>
 ## `meters/X/values` {#meters_X_values_any}
 
-Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [meters/X/value_ids](meters.mdx#meters_X_value_ids) ermittelt werden. Bei einem API-Stromzähler können diese Werte über meters/X/update geschrieben werden
 
+Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [meters/X/value_ids](meters.mdx#meters_X_value_ids) ermittelt werden. Bei einem API-Stromzähler können diese Werte über meters/X/update geschrieben werden
 
 
 
 <br/><br/><br/>
 ## `meters/X/value_ids` {#meters_X_value_ids_any}
 
-Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [meters/X/values](meters.mdx#meters_X_values) an. <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
 
+Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [meters/X/values](meters.mdx#meters_X_values) an. <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
 
 
 
 <br/><br/><br/>
 ## `meters/X/history` {#meters_X_history_any}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
 
@@ -2368,7 +2743,7 @@ Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher f
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -2382,10 +2757,17 @@ Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher f
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `meters/X/live` {#meters_X_live_any}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für [meters/X/history](meters.mdx#meters_X_history) generiert.
 
@@ -2400,7 +2782,7 @@ Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -2421,10 +2803,15 @@ Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `meters/X/config` {#meters_X_config_any}
+
 
 Die Konfiguration des X. Stromzählers. Das Union-Tag gibt die Zählerklasse an.
 
@@ -2590,9 +2977,9 @@ null: Kein Stromzähler konfiguriert.
 </MultilineTabs>
 
 
-
 <br/><br/><br/>
 ## `meters/X/state` {#meters_X_state_any}
+
 
 Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [meters/X/config](meters.mdx#meters_X_config) konfiguriert wurde.
 
@@ -2701,9 +3088,9 @@ null: Zustand des SunSpec-Stromzählers. Im Moment leer.
 </Tabs>
 
 
-
 <br/><br/><br/>
 ## `meters/X/errors` {#meters_X_errors_any}
+
 
 Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [meters/X/config](meters.mdx#meters_X_config) konfiguriert wurde.
 
@@ -2869,19 +3256,42 @@ null: Fehlerzähler des SunSpec-Stromzählers. Im Moment leer.
 </Tabs>
 
 
-
 <br/><br/><br/>
 ## `meters/X/reset` {#meters_X_reset_any}
 
+
 Setzt alle zurücksetzbaren (Alle Werte deren "kind"-Eintrag "resettable" ist: <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>) Zählerwerte des X. Stromzählers zurück.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/meters/X/reset -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters/X/reset -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `meters/X/last_reset` {#meters_X_last_reset_any}
+
 
 Der Zeitpunkt des letzten Zähler-Resets (siehe [meters/X/reset](meters.mdx#meters_X_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.
 
@@ -2904,11 +3314,55 @@ Der Zeitpunkt des letzten Zähler-Resets (siehe [meters/X/reset](meters.mdx#mete
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `meters/history` {#meters_history_any}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+```bash
+curl http://$HOST/meters/history
+```
+```jsx
+{
+  "offset": 9378,
+  "samples": [
+    [
+      null, null, null, null, null, null, null, null,
+      // 600 weitere null-Werte entfernt
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0, 1736, 6656, 6655, 6666,
+      6680, 6716, 6714, 6625, 6640, 6641, 6595, 6612,
+      6592, 6593, 6589, 6592, 6600, 6625, 6626, 6637,
+      6665, 6636, 6632, 6656, 6616, 6611, 6646, 6670,
+      6691, 6715, 6787, 6754, 6761, 6797, 6771, 6685,
+      6705, 6778, 6703, 6675, 6681, 6721, 6739, 6816,
+      6872, 6858, 6821, 6836, 6784, 6871, 6943, 6930,
+      6968, 6955, 6837, 6800, 6846, 6919, 6881, 6736,
+      6671, 6655, 6674, 6743, 6878, 5733, 4462, 3712,
+      3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
+         0,    0,    0,    0,    0,    0,    0,    0
+    ],
+    null
+  ]
+}
+```
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2921,30 +3375,41 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][2]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][..]</th>
     <td>
-        Die gemessenen Werte aller Stromzähler. Die Größe des Arrays ist 2 bei WARP1 und WARP2, 7 beim WARP Energy Manager.
+        Die gemessenen Werte aller Stromzähler.
         
+        <strong>WARP 1 und WARP 2 und WARP 3:</strong><br/>
         
+        - **[0..1]** - Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.
         
-        - **[0..1]** - Die gemessenen Werte des jeweiligen Stromzählers
+        <strong>Energy Manager:</strong><br/>
+        
+        - **[0..6]** - Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.
     </td>
 </tr>
     </tbody>
 </table>
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `meters/live` {#meters_live_any}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
 
-Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [meters/history](meters.mdx#meters_history) generiert.
+
+Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [meters/history](meters.mdx#meters_history) generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.
 
 
 <table>
@@ -2957,7 +3422,7 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -2971,17 +3436,26 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][2]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][..]</th>
     <td>
-        Die gemessenen Werte aller Stromzähler. Die Größe des Arrays ist 2 bei WARP1 und WARP2, 7 beim WARP Energy Manager..
+        Die gemessenen Werte aller Stromzähler.
         
-        
+        <strong>WARP 1 und WARP 2 und WARP 3:</strong><br/>
         
         - **[0..1]** - Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.
+        
+        <strong>Energy Manager:</strong><br/>
+        
+        - **[0..6]** - Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.
     </td>
 </tr>
     </tbody>
 </table>
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 </TabItem>
 </Tabs>
 

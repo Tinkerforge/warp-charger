@@ -2,15 +2,16 @@
 import MultilineTabs from '@site/src/components/MultilineTabs';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
 
 # Benutzerverwaltung
 
 <Tabs groupId="hardwareType" queryString className="hidden-tabs">
 <TabItem value="warp1">
-<br/><br/><br/>
 ## `users/config` {#users_config_warp1}
 
-Die Benutzerkonfiguration. Kann über die nachfolgenden Kommandos modifiziert werden.
+
+Die Benutzerkonfiguration. Kann mit [users/add](users.mdx#users_add), [users/modify](users.mdx#users_modify), [users/remove](users.mdx#users_remove) und [users/http_auth_update](users.mdx#users_http_auth_update) aktualisiert werden.
 
 
 <table>
@@ -99,12 +100,13 @@ Die Benutzerkonfiguration. Kann über die nachfolgenden Kommandos modifiziert we
 </tr>
     </tbody>
 </table>
-
 
 <br/><br/><br/>
 ## `users/add` {#users_add_warp1}
 
+
 Fügt einen neuen Benutzer hinzu.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 <table>
@@ -159,12 +161,13 @@ Fügt einen neuen Benutzer hinzu.
 </tr>
     </tbody>
 </table>
-
 
 <br/><br/><br/>
 ## `users/remove` {#users_remove_warp1}
 
+
 Löscht einen Benutzer.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 
@@ -186,12 +189,13 @@ Löscht einen Benutzer.
 </tr>
     </tbody>
 </table>
-
 
 <br/><br/><br/>
 ## `users/modify` {#users_modify_warp1}
 
+
 Modifiziert einen Benutzer.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 <table>
@@ -246,12 +250,13 @@ Modifiziert einen Benutzer.
 </tr>
     </tbody>
 </table>
-
 
 <br/><br/><br/>
 ## `users/http_auth_update` {#users_http_auth_update_warp1}
 
+
 Schreibt http_auth_enabled aus [users/config](users.mdx#users_config).
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 
@@ -276,19 +281,26 @@ Schreibt http_auth_enabled aus [users/config](users.mdx#users_config).
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `users/all_usernames` {#users_all_usernames_warp1}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Für das Ladetracking werden die Anzeigenamen gelöschter Benutzer separat im Flash gespeichert. Diese Funktion gibt alle Anzeigenamen, die möglicherweise in den getrackten Ladevorgängen vorkommen in einem Binärformat aus.
 
 
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 </TabItem>
 <TabItem value="warp2">
-<br/><br/><br/>
 ## `users/config` {#users_config_warp2}
 
-Die Benutzerkonfiguration. Kann über die nachfolgenden Kommandos modifiziert werden.
+
+Die Benutzerkonfiguration. Kann mit [users/add](users.mdx#users_add), [users/modify](users.mdx#users_modify), [users/remove](users.mdx#users_remove) und [users/http_auth_update](users.mdx#users_http_auth_update) aktualisiert werden.
 
 
 <table>
@@ -377,12 +389,13 @@ Die Benutzerkonfiguration. Kann über die nachfolgenden Kommandos modifiziert we
 </tr>
     </tbody>
 </table>
-
 
 <br/><br/><br/>
 ## `users/add` {#users_add_warp2}
 
+
 Fügt einen neuen Benutzer hinzu.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 <table>
@@ -438,11 +451,12 @@ Fügt einen neuen Benutzer hinzu.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `users/remove` {#users_remove_warp2}
 
+
 Löscht einen Benutzer.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 
@@ -465,11 +479,12 @@ Löscht einen Benutzer.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `users/modify` {#users_modify_warp2}
 
+
 Modifiziert einen Benutzer.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 <table>
@@ -525,11 +540,12 @@ Modifiziert einen Benutzer.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `users/http_auth_update` {#users_http_auth_update_warp2}
 
+
 Schreibt http_auth_enabled aus [users/config](users.mdx#users_config).
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 
@@ -554,19 +570,26 @@ Schreibt http_auth_enabled aus [users/config](users.mdx#users_config).
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `users/all_usernames` {#users_all_usernames_warp2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Für das Ladetracking werden die Anzeigenamen gelöschter Benutzer separat im Flash gespeichert. Diese Funktion gibt alle Anzeigenamen, die möglicherweise in den getrackten Ladevorgängen vorkommen in einem Binärformat aus.
 
 
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 </TabItem>
 <TabItem value="warp3">
-<br/><br/><br/>
 ## `users/config` {#users_config_warp3}
 
-Die Benutzerkonfiguration. Kann über die nachfolgenden Kommandos modifiziert werden.
+
+Die Benutzerkonfiguration. Kann mit [users/add](users.mdx#users_add), [users/modify](users.mdx#users_modify), [users/remove](users.mdx#users_remove) und [users/http_auth_update](users.mdx#users_http_auth_update) aktualisiert werden.
 
 
 <table>
@@ -656,11 +679,12 @@ Die Benutzerkonfiguration. Kann über die nachfolgenden Kommandos modifiziert we
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `users/add` {#users_add_warp3}
 
+
 Fügt einen neuen Benutzer hinzu.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 <table>
@@ -716,11 +740,12 @@ Fügt einen neuen Benutzer hinzu.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `users/remove` {#users_remove_warp3}
 
+
 Löscht einen Benutzer.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 
@@ -743,11 +768,12 @@ Löscht einen Benutzer.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `users/modify` {#users_modify_warp3}
 
+
 Modifiziert einen Benutzer.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 <table>
@@ -803,11 +829,12 @@ Modifiziert einen Benutzer.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `users/http_auth_update` {#users_http_auth_update_warp3}
 
+
 Schreibt http_auth_enabled aus [users/config](users.mdx#users_config).
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 
@@ -832,22 +859,29 @@ Schreibt http_auth_enabled aus [users/config](users.mdx#users_config).
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `users/all_usernames` {#users_all_usernames_warp3}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Für das Ladetracking werden die Anzeigenamen gelöschter Benutzer separat im Flash gespeichert. Diese Funktion gibt alle Anzeigenamen, die möglicherweise in den getrackten Ladevorgängen vorkommen in einem Binärformat aus.
 
 
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 </TabItem>
 <TabItem value="wem">
 Auf dieser Hardware nicht unterstützt!
 </TabItem>
 <TabItem value="any">
-<br/><br/><br/>
 ## `users/config` {#users_config_any}
 
-Die Benutzerkonfiguration. Kann über die nachfolgenden Kommandos modifiziert werden.
+
+Die Benutzerkonfiguration. Kann mit [users/add](users.mdx#users_add), [users/modify](users.mdx#users_modify), [users/remove](users.mdx#users_remove) und [users/http_auth_update](users.mdx#users_http_auth_update) aktualisiert werden.
 
 
 <table>
@@ -943,11 +977,12 @@ Die Benutzerkonfiguration. Kann über die nachfolgenden Kommandos modifiziert we
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `users/add` {#users_add_any}
 
+
 Fügt einen neuen Benutzer hinzu.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 <table>
@@ -1003,11 +1038,12 @@ Fügt einen neuen Benutzer hinzu.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `users/remove` {#users_remove_any}
 
+
 Löscht einen Benutzer.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 
@@ -1030,11 +1066,12 @@ Löscht einen Benutzer.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `users/modify` {#users_modify_any}
 
+
 Modifiziert einen Benutzer.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 <table>
@@ -1090,11 +1127,12 @@ Modifiziert einen Benutzer.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `users/http_auth_update` {#users_http_auth_update_any}
 
+
 Schreibt http_auth_enabled aus [users/config](users.mdx#users_config).
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 
@@ -1122,13 +1160,20 @@ Schreibt http_auth_enabled aus [users/config](users.mdx#users_config).
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `users/all_usernames` {#users_all_usernames_any}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Für das Ladetracking werden die Anzeigenamen gelöschter Benutzer separat im Flash gespeichert. Diese Funktion gibt alle Anzeigenamen, die möglicherweise in den getrackten Ladevorgängen vorkommen in einem Binärformat aus.
 
 
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 </TabItem>
 </Tabs>
 

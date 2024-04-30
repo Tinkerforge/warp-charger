@@ -2,55 +2,92 @@
 import MultilineTabs from '@site/src/components/MultilineTabs';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
 
 # Sonstiges
 
 <Tabs groupId="hardwareType" queryString className="hidden-tabs">
 <TabItem value="warp1">
-<br/><br/><br/>
 ## `reboot` {#reboot_warp1}
 
+
 Startet den ESP neu, um beispielsweise Konfigurationsänderungen anzuwenden.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/reboot -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/reboot -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `debug_report` {#debug_report_warp1}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Generiert einen Debug-Report. Dieser besteht aus allen Zuständen und Konfigurationen, sowie den letzten empfangenen Kommandos und Konfigurationsupdates. Passwörter werden, genau wie bei Konfigurationsabfragen, zensiert.
 
 
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `force_reboot` {#force_reboot_warp1}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Erzwingt einen sofortigen Neustart des ESPs. Nützlich, falls [reboot](misc.mdx#reboot) aus irgendwelchen Gründen hängt.
 
 
-
-
-<br/><br/><br/>
-## `update` {#update_warp1}
-
-Notfall-Update-Seite mit der eine Firmware-Aktualisierung eingespielt werden kann, auch wenn das normale Webinterface nicht funktioniert.
-
-
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `flash_firmware` {#flash_firmware_warp1}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Nimmt ein Firmware-Update als POST entgegen, dass dann geflasht wird.
 
 
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `config_reset` {#config_reset_warp1}
+
 
 Setzt alle Einstellungen zurück aber behält aufgezeichnete Ladevorgänge und die Nutzernamenhistorie. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
 
@@ -75,9 +112,9 @@ Setzt alle Einstellungen zurück aber behält aufgezeichnete Ladevorgänge und d
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `factory_reset` {#factory_reset_warp1}
+
 
 Setzt alle Einstellungen zurück und löscht alle aufgezeichneten Ladevorgänge. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
 
@@ -103,50 +140,86 @@ Setzt alle Einstellungen zurück und löscht alle aufgezeichneten Ladevorgänge.
 </table>
 </TabItem>
 <TabItem value="warp2">
-<br/><br/><br/>
 ## `reboot` {#reboot_warp2}
 
+
 Startet den ESP neu, um beispielsweise Konfigurationsänderungen anzuwenden.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/reboot -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/reboot -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `debug_report` {#debug_report_warp2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Generiert einen Debug-Report. Dieser besteht aus allen Zuständen und Konfigurationen, sowie den letzten empfangenen Kommandos und Konfigurationsupdates. Passwörter werden, genau wie bei Konfigurationsabfragen, zensiert.
 
 
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `force_reboot` {#force_reboot_warp2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Erzwingt einen sofortigen Neustart des ESPs. Nützlich, falls [reboot](misc.mdx#reboot) aus irgendwelchen Gründen hängt.
 
 
-
-
-<br/><br/><br/>
-## `update` {#update_warp2}
-
-Notfall-Update-Seite mit der eine Firmware-Aktualisierung eingespielt werden kann, auch wenn das normale Webinterface nicht funktioniert.
-
-
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `flash_firmware` {#flash_firmware_warp2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Nimmt ein Firmware-Update als POST entgegen, dass dann geflasht wird.
 
 
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `config_reset` {#config_reset_warp2}
+
 
 Setzt alle Einstellungen zurück aber behält aufgezeichnete Ladevorgänge und die Nutzernamenhistorie. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
 
@@ -171,9 +244,9 @@ Setzt alle Einstellungen zurück aber behält aufgezeichnete Ladevorgänge und d
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `factory_reset` {#factory_reset_warp2}
+
 
 Setzt alle Einstellungen zurück und löscht alle aufgezeichneten Ladevorgänge. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
 
@@ -199,50 +272,86 @@ Setzt alle Einstellungen zurück und löscht alle aufgezeichneten Ladevorgänge.
 </table>
 </TabItem>
 <TabItem value="warp3">
-<br/><br/><br/>
 ## `reboot` {#reboot_warp3}
 
+
 Startet den ESP neu, um beispielsweise Konfigurationsänderungen anzuwenden.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/reboot -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/reboot -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `debug_report` {#debug_report_warp3}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Generiert einen Debug-Report. Dieser besteht aus allen Zuständen und Konfigurationen, sowie den letzten empfangenen Kommandos und Konfigurationsupdates. Passwörter werden, genau wie bei Konfigurationsabfragen, zensiert.
 
 
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `force_reboot` {#force_reboot_warp3}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Erzwingt einen sofortigen Neustart des ESPs. Nützlich, falls [reboot](misc.mdx#reboot) aus irgendwelchen Gründen hängt.
 
 
-
-
-<br/><br/><br/>
-## `update` {#update_warp3}
-
-Notfall-Update-Seite mit der eine Firmware-Aktualisierung eingespielt werden kann, auch wenn das normale Webinterface nicht funktioniert.
-
-
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `flash_firmware` {#flash_firmware_warp3}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Nimmt ein Firmware-Update als POST entgegen, dass dann geflasht wird.
 
 
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `config_reset` {#config_reset_warp3}
+
 
 Setzt alle Einstellungen zurück aber behält aufgezeichnete Ladevorgänge und die Nutzernamenhistorie. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
 
@@ -267,9 +376,9 @@ Setzt alle Einstellungen zurück aber behält aufgezeichnete Ladevorgänge und d
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `factory_reset` {#factory_reset_warp3}
+
 
 Setzt alle Einstellungen zurück und löscht alle aufgezeichneten Ladevorgänge. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
 
@@ -295,50 +404,86 @@ Setzt alle Einstellungen zurück und löscht alle aufgezeichneten Ladevorgänge.
 </table>
 </TabItem>
 <TabItem value="wem">
-<br/><br/><br/>
 ## `reboot` {#reboot_wem}
 
+
 Startet den ESP neu, um beispielsweise Konfigurationsänderungen anzuwenden.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/reboot -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/reboot -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `debug_report` {#debug_report_wem}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Generiert einen Debug-Report. Dieser besteht aus allen Zuständen und Konfigurationen, sowie den letzten empfangenen Kommandos und Konfigurationsupdates. Passwörter werden, genau wie bei Konfigurationsabfragen, zensiert.
 
 
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `force_reboot` {#force_reboot_wem}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Erzwingt einen sofortigen Neustart des ESPs. Nützlich, falls [reboot](misc.mdx#reboot) aus irgendwelchen Gründen hängt.
 
 
-
-
-<br/><br/><br/>
-## `update` {#update_wem}
-
-Notfall-Update-Seite mit der eine Firmware-Aktualisierung eingespielt werden kann, auch wenn das normale Webinterface nicht funktioniert.
-
-
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `flash_firmware` {#flash_firmware_wem}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Nimmt ein Firmware-Update als POST entgegen, dass dann geflasht wird.
 
 
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `config_reset` {#config_reset_wem}
+
 
 Setzt alle Einstellungen zurück aber behält aufgezeichnete Ladevorgänge und die Nutzernamenhistorie. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
 
@@ -363,9 +508,9 @@ Setzt alle Einstellungen zurück aber behält aufgezeichnete Ladevorgänge und d
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `factory_reset` {#factory_reset_wem}
+
 
 Setzt alle Einstellungen zurück und löscht alle aufgezeichneten Ladevorgänge. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
 
@@ -391,50 +536,86 @@ Setzt alle Einstellungen zurück und löscht alle aufgezeichneten Ladevorgänge.
 </table>
 </TabItem>
 <TabItem value="any">
-<br/><br/><br/>
 ## `reboot` {#reboot_any}
 
+
 Startet den ESP neu, um beispielsweise Konfigurationsänderungen anzuwenden.
-
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+            #### Schreiben
+```bash
+curl http://$HOST/reboot -d 'null'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+            #### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/reboot -m 'null'
+```
+        </TabItem>
+    </Tabs>
+:::
 
-**Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.**
 
 
 <br/><br/><br/>
 ## `debug_report` {#debug_report_any}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Generiert einen Debug-Report. Dieser besteht aus allen Zuständen und Konfigurationen, sowie den letzten empfangenen Kommandos und Konfigurationsupdates. Passwörter werden, genau wie bei Konfigurationsabfragen, zensiert.
 
 
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `force_reboot` {#force_reboot_any}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Erzwingt einen sofortigen Neustart des ESPs. Nützlich, falls [reboot](misc.mdx#reboot) aus irgendwelchen Gründen hängt.
 
 
-
-
-<br/><br/><br/>
-## `update` {#update_any}
-
-Notfall-Update-Seite mit der eine Firmware-Aktualisierung eingespielt werden kann, auch wenn das normale Webinterface nicht funktioniert.
-
-
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `flash_firmware` {#flash_firmware_any}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
 
 Nimmt ein Firmware-Update als POST entgegen, dass dann geflasht wird.
 
 
-
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
 
 <br/><br/><br/>
 ## `config_reset` {#config_reset_any}
+
 
 Setzt alle Einstellungen zurück aber behält aufgezeichnete Ladevorgänge und die Nutzernamenhistorie. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
 
@@ -462,9 +643,9 @@ Setzt alle Einstellungen zurück aber behält aufgezeichnete Ladevorgänge und d
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `factory_reset` {#factory_reset_any}
+
 
 Setzt alle Einstellungen zurück und löscht alle aufgezeichneten Ladevorgänge. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
 
@@ -508,11 +689,6 @@ export const toc = [
 },{
     "value": "force_reboot",
     "id": "force_reboot",
-    "level": 2,
-    
-},{
-    "value": "update",
-    "id": "update",
     "level": 2,
     
 },{

@@ -2,13 +2,14 @@
 import MultilineTabs from '@site/src/components/MultilineTabs';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
 
 # MQTT-Verbindung
 
 <Tabs groupId="hardwareType" queryString className="hidden-tabs">
 <TabItem value="warp1">
-<br/><br/><br/>
 ## `mqtt/state` {#mqtt_state_warp1}
+
 
 Der aktuelle MQTT-Zustand.
 
@@ -56,11 +57,117 @@ Der aktuelle MQTT-Zustand.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `mqtt/config` {#mqtt_config_warp1}
 
-Die MQTT-Konfiguration. Diese kann über mqtt/config_update mit dem selben Payload aktualisiert werden.
+
+Die MQTT-Konfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+            #### Lesen
+```bash
+curl http://$HOST/mqtt/config
+```
+```jsx
+{
+  "enable_mqtt": true,
+  "broker_host": "my_mosquitto.localdomain",
+  "broker_port": 1883,
+  "broker_username": "warp-AbCd",
+  // highlight-start
+  // Wird nicht zurückgegeben
+  "broker_password": null,
+  // highlight-end
+  "global_topic_prefix": "warp/AbCd",
+  "client_name": "warp-AbCd",
+  "interval": 1,
+  "protocol": 0,
+  "cert_id": -1,
+  "client_cert_id": -1,
+  "client_key_id": -1,
+  "path": ""
+}
+```
+
+            #### Schreiben
+
+```bash
+curl http://$HOST/mqtt/config -d '{
+  "enable_mqtt": true,
+  "broker_host": "my_mosquitto.localdomain",
+  "broker_port": 1883,
+  "broker_username": "wallbox-garage",
+  "broker_password": "meinpasswort",
+  "global_topic_prefix": "wallbox/garage",
+  "client_name": "wallbox-garage",
+  "interval": 1,
+  "protocol": 0,
+  "cert_id": -1,
+  "client_cert_id": -1,
+  "client_key_id": -1,
+  "path": ""
+}'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+            #### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/mqtt/config
+```
+```jsx
+{
+  "enable_mqtt": true,
+  "broker_host": "my_mosquitto.localdomain",
+  "broker_port": 1883,
+  "broker_username": "warp-AbCd",
+  // highlight-start
+  // Wird nicht zurückgegeben
+  "broker_password": null,
+  // highlight-end
+  "global_topic_prefix": "warp/AbCd",
+  "client_name": "warp-AbCd",
+  "interval": 1,
+  "protocol": 0,
+  "cert_id": -1,
+  "client_cert_id": -1,
+  "client_key_id": -1,
+  "path": ""
+}
+```
+
+            #### Schreiben
+            Mit MQTT auf <code>$PREFIX/mqtt/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
+  "enable_mqtt": true,
+  "broker_host": "my_mosquitto.localdomain",
+  "broker_port": 1883,
+  "broker_username": "wallbox-garage",
+  "broker_password": "meinpasswort",
+  "global_topic_prefix": "wallbox/garage",
+  "client_name": "wallbox-garage",
+  "interval": 1,
+  "protocol": 0,
+  "cert_id": -1,
+  "client_cert_id": -1,
+  "client_key_id": -1,
+  "path": ""
+}'
+```
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -177,11 +284,11 @@ Die MQTT-Konfiguration. Diese kann über mqtt/config_update mit dem selben Paylo
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `mqtt/auto_discovery_config` {#mqtt_auto_discovery_config_warp1}
 
-Die Konfiguration der MQTT Auto Discovery. Diese kann über mqtt/auto_discovery_config_update mit dem selben Payload aktualisiert werden.
+
+Die Konfiguration der MQTT Auto Discovery.
 
 
 <table>
@@ -213,8 +320,8 @@ Die Konfiguration der MQTT Auto Discovery. Diese kann über mqtt/auto_discovery_
 </table>
 </TabItem>
 <TabItem value="warp2">
-<br/><br/><br/>
 ## `mqtt/state` {#mqtt_state_warp2}
+
 
 Der aktuelle MQTT-Zustand.
 
@@ -262,11 +369,117 @@ Der aktuelle MQTT-Zustand.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `mqtt/config` {#mqtt_config_warp2}
 
-Die MQTT-Konfiguration. Diese kann über mqtt/config_update mit dem selben Payload aktualisiert werden.
+
+Die MQTT-Konfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+            #### Lesen
+```bash
+curl http://$HOST/mqtt/config
+```
+```jsx
+{
+  "enable_mqtt": true,
+  "broker_host": "my_mosquitto.localdomain",
+  "broker_port": 1883,
+  "broker_username": "warp2-AbCd",
+  // highlight-start
+  // Wird nicht zurückgegeben
+  "broker_password": null,
+  // highlight-end
+  "global_topic_prefix": "warp2/AbCd",
+  "client_name": "warp2-AbCd",
+  "interval": 1,
+  "protocol": 0,
+  "cert_id": -1,
+  "client_cert_id": -1,
+  "client_key_id": -1,
+  "path": ""
+}
+```
+
+            #### Schreiben
+
+```bash
+curl http://$HOST/mqtt/config -d '{
+  "enable_mqtt": true,
+  "broker_host": "my_mosquitto.localdomain",
+  "broker_port": 1883,
+  "broker_username": "wallbox-garage",
+  "broker_password": "meinpasswort",
+  "global_topic_prefix": "wallbox/garage",
+  "client_name": "wallbox-garage",
+  "interval": 1,
+  "protocol": 0,
+  "cert_id": -1,
+  "client_cert_id": -1,
+  "client_key_id": -1,
+  "path": ""
+}'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+            #### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/mqtt/config
+```
+```jsx
+{
+  "enable_mqtt": true,
+  "broker_host": "my_mosquitto.localdomain",
+  "broker_port": 1883,
+  "broker_username": "warp2-AbCd",
+  // highlight-start
+  // Wird nicht zurückgegeben
+  "broker_password": null,
+  // highlight-end
+  "global_topic_prefix": "warp2/AbCd",
+  "client_name": "warp2-AbCd",
+  "interval": 1,
+  "protocol": 0,
+  "cert_id": -1,
+  "client_cert_id": -1,
+  "client_key_id": -1,
+  "path": ""
+}
+```
+
+            #### Schreiben
+            Mit MQTT auf <code>$PREFIX/mqtt/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
+  "enable_mqtt": true,
+  "broker_host": "my_mosquitto.localdomain",
+  "broker_port": 1883,
+  "broker_username": "wallbox-garage",
+  "broker_password": "meinpasswort",
+  "global_topic_prefix": "wallbox/garage",
+  "client_name": "wallbox-garage",
+  "interval": 1,
+  "protocol": 0,
+  "cert_id": -1,
+  "client_cert_id": -1,
+  "client_key_id": -1,
+  "path": ""
+}'
+```
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -383,11 +596,11 @@ Die MQTT-Konfiguration. Diese kann über mqtt/config_update mit dem selben Paylo
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `mqtt/auto_discovery_config` {#mqtt_auto_discovery_config_warp2}
 
-Die Konfiguration der MQTT Auto Discovery. Diese kann über mqtt/auto_discovery_config_update mit dem selben Payload aktualisiert werden.
+
+Die Konfiguration der MQTT Auto Discovery.
 
 
 <table>
@@ -419,8 +632,8 @@ Die Konfiguration der MQTT Auto Discovery. Diese kann über mqtt/auto_discovery_
 </table>
 </TabItem>
 <TabItem value="warp3">
-<br/><br/><br/>
 ## `mqtt/state` {#mqtt_state_warp3}
+
 
 Der aktuelle MQTT-Zustand.
 
@@ -468,11 +681,117 @@ Der aktuelle MQTT-Zustand.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `mqtt/config` {#mqtt_config_warp3}
 
-Die MQTT-Konfiguration. Diese kann über mqtt/config_update mit dem selben Payload aktualisiert werden.
+
+Die MQTT-Konfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+            #### Lesen
+```bash
+curl http://$HOST/mqtt/config
+```
+```jsx
+{
+  "enable_mqtt": true,
+  "broker_host": "my_mosquitto.localdomain",
+  "broker_port": 1883,
+  "broker_username": "warp3-AbCd",
+  // highlight-start
+  // Wird nicht zurückgegeben
+  "broker_password": null,
+  // highlight-end
+  "global_topic_prefix": "warp3/AbCd",
+  "client_name": "warp3-AbCd",
+  "interval": 1,
+  "protocol": 0,
+  "cert_id": -1,
+  "client_cert_id": -1,
+  "client_key_id": -1,
+  "path": ""
+}
+```
+
+            #### Schreiben
+
+```bash
+curl http://$HOST/mqtt/config -d '{
+  "enable_mqtt": true,
+  "broker_host": "my_mosquitto.localdomain",
+  "broker_port": 1883,
+  "broker_username": "wallbox-garage",
+  "broker_password": "meinpasswort",
+  "global_topic_prefix": "wallbox/garage",
+  "client_name": "wallbox-garage",
+  "interval": 1,
+  "protocol": 0,
+  "cert_id": -1,
+  "client_cert_id": -1,
+  "client_key_id": -1,
+  "path": ""
+}'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+            #### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/mqtt/config
+```
+```jsx
+{
+  "enable_mqtt": true,
+  "broker_host": "my_mosquitto.localdomain",
+  "broker_port": 1883,
+  "broker_username": "warp3-AbCd",
+  // highlight-start
+  // Wird nicht zurückgegeben
+  "broker_password": null,
+  // highlight-end
+  "global_topic_prefix": "warp3/AbCd",
+  "client_name": "warp3-AbCd",
+  "interval": 1,
+  "protocol": 0,
+  "cert_id": -1,
+  "client_cert_id": -1,
+  "client_key_id": -1,
+  "path": ""
+}
+```
+
+            #### Schreiben
+            Mit MQTT auf <code>$PREFIX/mqtt/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
+  "enable_mqtt": true,
+  "broker_host": "my_mosquitto.localdomain",
+  "broker_port": 1883,
+  "broker_username": "wallbox-garage",
+  "broker_password": "meinpasswort",
+  "global_topic_prefix": "wallbox/garage",
+  "client_name": "wallbox-garage",
+  "interval": 1,
+  "protocol": 0,
+  "cert_id": -1,
+  "client_cert_id": -1,
+  "client_key_id": -1,
+  "path": ""
+}'
+```
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -589,11 +908,11 @@ Die MQTT-Konfiguration. Diese kann über mqtt/config_update mit dem selben Paylo
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `mqtt/auto_discovery_config` {#mqtt_auto_discovery_config_warp3}
 
-Die Konfiguration der MQTT Auto Discovery. Diese kann über mqtt/auto_discovery_config_update mit dem selben Payload aktualisiert werden.
+
+Die Konfiguration der MQTT Auto Discovery.
 
 
 <table>
@@ -625,8 +944,8 @@ Die Konfiguration der MQTT Auto Discovery. Diese kann über mqtt/auto_discovery_
 </table>
 </TabItem>
 <TabItem value="wem">
-<br/><br/><br/>
 ## `mqtt/state` {#mqtt_state_wem}
+
 
 Der aktuelle MQTT-Zustand.
 
@@ -673,12 +992,118 @@ Der aktuelle MQTT-Zustand.
 </tr>
     </tbody>
 </table>
-
 
 <br/><br/><br/>
 ## `mqtt/config` {#mqtt_config_wem}
 
-Die MQTT-Konfiguration. Diese kann über mqtt/config_update mit dem selben Payload aktualisiert werden.
+
+Die MQTT-Konfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+
+            #### Lesen
+```bash
+curl http://$HOST/mqtt/config
+```
+```jsx
+{
+  "enable_mqtt": true,
+  "broker_host": "my_mosquitto.localdomain",
+  "broker_port": 1883,
+  "broker_username": "wem_unterverteilung",
+  // highlight-start
+  // Wird nicht zurückgegeben
+  "broker_password": null,
+  // highlight-end
+  "global_topic_prefix": "wem/unterverteilung",
+  "client_name": "wem_unterverteilung",
+  "interval": 1,
+  "protocol": 0,
+  "cert_id": -1,
+  "client_cert_id": -1,
+  "client_key_id": -1,
+  "path": ""
+}
+```
+
+            #### Schreiben
+
+```bash
+curl http://$HOST/mqtt/config -d '{
+  "enable_mqtt": true,
+  "broker_host": "my_mosquitto.localdomain",
+  "broker_port": 1883,
+  "broker_username": "wem_unterverteilung",
+  "broker_password": "meinpasswort",
+  "global_topic_prefix": "wem/unterverteilung",
+  "client_name": "wem_unterverteilung",
+  "interval": 1,
+  "protocol": 0,
+  "cert_id": -1,
+  "client_cert_id": -1,
+  "client_key_id": -1,
+  "path": ""
+}'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+
+            #### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/mqtt/config
+```
+```jsx
+{
+  "enable_mqtt": true,
+  "broker_host": "my_mosquitto.localdomain",
+  "broker_port": 1883,
+  "broker_username": "wem_unterverteilung",
+  // highlight-start
+  // Wird nicht zurückgegeben
+  "broker_password": null,
+  // highlight-end
+  "global_topic_prefix": "wem/unterverteilung",
+  "client_name": "wem_unterverteilung",
+  "interval": 1,
+  "protocol": 0,
+  "cert_id": -1,
+  "client_cert_id": -1,
+  "client_key_id": -1,
+  "path": ""
+}
+```
+
+            #### Schreiben
+            Mit MQTT auf <code>$PREFIX/mqtt/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
+  "enable_mqtt": true,
+  "broker_host": "my_mosquitto.localdomain",
+  "broker_port": 1883,
+  "broker_username": "wem_unterverteilung",
+  "broker_password": "meinpasswort",
+  "global_topic_prefix": "wem/unterverteilung",
+  "client_name": "wem_unterverteilung",
+  "interval": 1,
+  "protocol": 0,
+  "cert_id": -1,
+  "client_cert_id": -1,
+  "client_key_id": -1,
+  "path": ""
+}'
+```
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -795,11 +1220,11 @@ Die MQTT-Konfiguration. Diese kann über mqtt/config_update mit dem selben Paylo
     </tbody>
 </table>
 
-
+<br/><br/><br/>
 </TabItem>
 <TabItem value="any">
-<br/><br/><br/>
 ## `mqtt/state` {#mqtt_state_any}
+
 
 Der aktuelle MQTT-Zustand.
 
@@ -850,11 +1275,117 @@ Der aktuelle MQTT-Zustand.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `mqtt/config` {#mqtt_config_any}
 
-Die MQTT-Konfiguration. Diese kann über mqtt/config_update mit dem selben Payload aktualisiert werden.
+
+Die MQTT-Konfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+            #### Lesen
+```bash
+curl http://$HOST/mqtt/config
+```
+```jsx
+{
+  "enable_mqtt": true,
+  "broker_host": "my_mosquitto.localdomain",
+  "broker_port": 1883,
+  "broker_username": "warp-AbCd",
+  // highlight-start
+  // Wird nicht zurückgegeben
+  "broker_password": null,
+  // highlight-end
+  "global_topic_prefix": "warp/AbCd",
+  "client_name": "warp-AbCd",
+  "interval": 1,
+  "protocol": 0,
+  "cert_id": -1,
+  "client_cert_id": -1,
+  "client_key_id": -1,
+  "path": ""
+}
+```
+
+            #### Schreiben
+
+```bash
+curl http://$HOST/mqtt/config -d '{
+  "enable_mqtt": true,
+  "broker_host": "my_mosquitto.localdomain",
+  "broker_port": 1883,
+  "broker_username": "wallbox-garage",
+  "broker_password": "meinpasswort",
+  "global_topic_prefix": "wallbox/garage",
+  "client_name": "wallbox-garage",
+  "interval": 1,
+  "protocol": 0,
+  "cert_id": -1,
+  "client_cert_id": -1,
+  "client_key_id": -1,
+  "path": ""
+}'
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+            #### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/mqtt/config
+```
+```jsx
+{
+  "enable_mqtt": true,
+  "broker_host": "my_mosquitto.localdomain",
+  "broker_port": 1883,
+  "broker_username": "warp-AbCd",
+  // highlight-start
+  // Wird nicht zurückgegeben
+  "broker_password": null,
+  // highlight-end
+  "global_topic_prefix": "warp/AbCd",
+  "client_name": "warp-AbCd",
+  "interval": 1,
+  "protocol": 0,
+  "cert_id": -1,
+  "client_cert_id": -1,
+  "client_key_id": -1,
+  "path": ""
+}
+```
+
+            #### Schreiben
+            Mit MQTT auf <code>$PREFIX/mqtt/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
+  "enable_mqtt": true,
+  "broker_host": "my_mosquitto.localdomain",
+  "broker_port": 1883,
+  "broker_username": "wallbox-garage",
+  "broker_password": "meinpasswort",
+  "global_topic_prefix": "wallbox/garage",
+  "client_name": "wallbox-garage",
+  "interval": 1,
+  "protocol": 0,
+  "cert_id": -1,
+  "client_cert_id": -1,
+  "client_key_id": -1,
+  "path": ""
+}'
+```
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -986,11 +1517,11 @@ Die MQTT-Konfiguration. Diese kann über mqtt/config_update mit dem selben Paylo
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `mqtt/auto_discovery_config` {#mqtt_auto_discovery_config_any}
+
 **Benötigt das Feature <a href="#features_evse"><code>"evse"</code></a>**
-Die Konfiguration der MQTT Auto Discovery. Diese kann über mqtt/auto_discovery_config_update mit dem selben Payload aktualisiert werden.
+Die Konfiguration der MQTT Auto Discovery.
 
 
 <table>

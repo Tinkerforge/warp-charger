@@ -2,13 +2,14 @@
 import MultilineTabs from '@site/src/components/MultilineTabs';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
 
 # Automatisierung
 
 <Tabs groupId="hardwareType" queryString className="hidden-tabs">
 <TabItem value="warp1">
-<br/><br/><br/>
 ## `automation/state` {#automation_state_warp1}
+
 
 Der Zustand der Automatisierung.
 
@@ -34,7 +35,7 @@ Der Zustand der Automatisierung.
     <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_actions`<br/>int[15]</th>
     <td>
         Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus [automation/config](automation.mdx#automation_config))
-        - **[0..14]** - Eine bekannte Bedingung.
+        - **[0..14]** - Eine bekannte Aktion.
     </td>
 </tr>
 
@@ -42,7 +43,7 @@ Der Zustand der Automatisierung.
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_triggers`<br/>int[18]</th>
     <td>
         Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus [automation/config](automation.mdx#automation_config))
-        - **[0..17]** - Eine bekannte Bedingung.
+        - **[0..17]** - Eine ausführbare Bedingung.
     </td>
 </tr>
 
@@ -50,15 +51,15 @@ Der Zustand der Automatisierung.
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_actions`<br/>int[15]</th>
     <td>
         Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus [automation/config](automation.mdx#automation_config))
-        - **[0..14]** - Eine bekannte Bedingung.
+        - **[0..14]** - Eine ausführbare Aktion.
     </td>
 </tr>
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `automation/config` {#automation_config_warp1}
+
 
 Die Konfiguration der Automatisierung.
 
@@ -274,8 +275,8 @@ Die Konfiguration der Automatisierung.
                 null: Erreichen des Ladezeit- oder Energie-Limits
                 </TabItem>
                 
-                <TabItem value="9" label="9 - Auslösen des Watchdogs der externen Steuerung. Der Watchdog löst aus, wenn die externe Steuerung aktiv ist und [evse/external_current_update](evse.mdx#evse_external_current_update) mindestens 30 Sekunden lang nicht aufgerufen wurde. ">
-                null: Auslösen des Watchdogs der externen Steuerung. Der Watchdog löst aus, wenn die externe Steuerung aktiv ist und [evse/external_current_update](evse.mdx#evse_external_current_update) mindestens 30 Sekunden lang nicht aufgerufen wurde. 
+                <TabItem value="9" label="9 - Auslösen des Watchdogs der externen Steuerung. Der Watchdog löst aus, wenn die externe Steuerung aktiv ist und [evse/external_current](evse.mdx#evse_external_current) mindestens 30 Sekunden lang nicht geschrieben wurde. ">
+                null: Auslösen des Watchdogs der externen Steuerung. Der Watchdog löst aus, wenn die externe Steuerung aktiv ist und [evse/external_current](evse.mdx#evse_external_current) mindestens 30 Sekunden lang nicht geschrieben wurde. 
                 </TabItem>
                 
                 <TabItem value="10" label="10 - Erkennen eines Fehlers durch die Zählerüberwachung">
@@ -565,8 +566,8 @@ Die Konfiguration der Automatisierung.
 </table>
 </TabItem>
 <TabItem value="warp2">
-<br/><br/><br/>
 ## `automation/state` {#automation_state_warp2}
+
 
 Der Zustand der Automatisierung.
 
@@ -592,7 +593,7 @@ Der Zustand der Automatisierung.
     <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_actions`<br/>int[15]</th>
     <td>
         Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus [automation/config](automation.mdx#automation_config))
-        - **[0..14]** - Eine bekannte Bedingung.
+        - **[0..14]** - Eine bekannte Aktion.
     </td>
 </tr>
 
@@ -600,7 +601,7 @@ Der Zustand der Automatisierung.
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_triggers`<br/>int[18]</th>
     <td>
         Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus [automation/config](automation.mdx#automation_config))
-        - **[0..17]** - Eine bekannte Bedingung.
+        - **[0..17]** - Eine ausführbare Bedingung.
     </td>
 </tr>
 
@@ -608,15 +609,15 @@ Der Zustand der Automatisierung.
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_actions`<br/>int[15]</th>
     <td>
         Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus [automation/config](automation.mdx#automation_config))
-        - **[0..14]** - Eine bekannte Bedingung.
+        - **[0..14]** - Eine ausführbare Aktion.
     </td>
 </tr>
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `automation/config` {#automation_config_warp2}
+
 
 Die Konfiguration der Automatisierung.
 
@@ -882,8 +883,8 @@ Die Konfiguration der Automatisierung.
                 </table>
                 </TabItem>
                 
-                <TabItem value="9" label="9 - Auslösen des Watchdogs der externen Steuerung. Der Watchdog löst aus, wenn die externe Steuerung aktiv ist und [evse/external_current_update](evse.mdx#evse_external_current_update) mindestens 30 Sekunden lang nicht aufgerufen wurde. ">
-                null: Auslösen des Watchdogs der externen Steuerung. Der Watchdog löst aus, wenn die externe Steuerung aktiv ist und [evse/external_current_update](evse.mdx#evse_external_current_update) mindestens 30 Sekunden lang nicht aufgerufen wurde. 
+                <TabItem value="9" label="9 - Auslösen des Watchdogs der externen Steuerung. Der Watchdog löst aus, wenn die externe Steuerung aktiv ist und [evse/external_current](evse.mdx#evse_external_current) mindestens 30 Sekunden lang nicht geschrieben wurde. ">
+                null: Auslösen des Watchdogs der externen Steuerung. Der Watchdog löst aus, wenn die externe Steuerung aktiv ist und [evse/external_current](evse.mdx#evse_external_current) mindestens 30 Sekunden lang nicht geschrieben wurde. 
                 </TabItem>
                 
                 <TabItem value="10" label="10 - Erkennen eines Fehlers durch die Zählerüberwachung">
@@ -1196,8 +1197,8 @@ Die Konfiguration der Automatisierung.
 </table>
 </TabItem>
 <TabItem value="warp3">
-<br/><br/><br/>
 ## `automation/state` {#automation_state_warp3}
+
 
 Der Zustand der Automatisierung.
 
@@ -1223,7 +1224,7 @@ Der Zustand der Automatisierung.
     <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_actions`<br/>int[15]</th>
     <td>
         Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus [automation/config](automation.mdx#automation_config))
-        - **[0..14]** - Eine bekannte Bedingung.
+        - **[0..14]** - Eine bekannte Aktion.
     </td>
 </tr>
 
@@ -1231,7 +1232,7 @@ Der Zustand der Automatisierung.
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_triggers`<br/>int[18]</th>
     <td>
         Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus [automation/config](automation.mdx#automation_config))
-        - **[0..17]** - Eine bekannte Bedingung.
+        - **[0..17]** - Eine ausführbare Bedingung.
     </td>
 </tr>
 
@@ -1239,15 +1240,15 @@ Der Zustand der Automatisierung.
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_actions`<br/>int[15]</th>
     <td>
         Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus [automation/config](automation.mdx#automation_config))
-        - **[0..14]** - Eine bekannte Bedingung.
+        - **[0..14]** - Eine ausführbare Aktion.
     </td>
 </tr>
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `automation/config` {#automation_config_warp3}
+
 
 Die Konfiguration der Automatisierung.
 
@@ -1490,8 +1491,8 @@ Die Konfiguration der Automatisierung.
                 </table>
                 </TabItem>
                 
-                <TabItem value="9" label="9 - Auslösen des Watchdogs der externen Steuerung. Der Watchdog löst aus, wenn die externe Steuerung aktiv ist und [evse/external_current_update](evse.mdx#evse_external_current_update) mindestens 30 Sekunden lang nicht aufgerufen wurde. ">
-                null: Auslösen des Watchdogs der externen Steuerung. Der Watchdog löst aus, wenn die externe Steuerung aktiv ist und [evse/external_current_update](evse.mdx#evse_external_current_update) mindestens 30 Sekunden lang nicht aufgerufen wurde. 
+                <TabItem value="9" label="9 - Auslösen des Watchdogs der externen Steuerung. Der Watchdog löst aus, wenn die externe Steuerung aktiv ist und [evse/external_current](evse.mdx#evse_external_current) mindestens 30 Sekunden lang nicht geschrieben wurde. ">
+                null: Auslösen des Watchdogs der externen Steuerung. Der Watchdog löst aus, wenn die externe Steuerung aktiv ist und [evse/external_current](evse.mdx#evse_external_current) mindestens 30 Sekunden lang nicht geschrieben wurde. 
                 </TabItem>
                 
                 <TabItem value="10" label="10 - Erkennen eines Fehlers durch die Zählerüberwachung">
@@ -1781,8 +1782,8 @@ Die Konfiguration der Automatisierung.
 </table>
 </TabItem>
 <TabItem value="wem">
-<br/><br/><br/>
 ## `automation/state` {#automation_state_wem}
+
 
 Der Zustand der Automatisierung.
 
@@ -1808,7 +1809,7 @@ Der Zustand der Automatisierung.
     <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_actions`<br/>int[15]</th>
     <td>
         Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus [automation/config](automation.mdx#automation_config))
-        - **[0..14]** - Eine bekannte Bedingung.
+        - **[0..14]** - Eine bekannte Aktion.
     </td>
 </tr>
 
@@ -1816,7 +1817,7 @@ Der Zustand der Automatisierung.
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_triggers`<br/>int[18]</th>
     <td>
         Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus [automation/config](automation.mdx#automation_config))
-        - **[0..17]** - Eine bekannte Bedingung.
+        - **[0..17]** - Eine ausführbare Bedingung.
     </td>
 </tr>
 
@@ -1824,15 +1825,15 @@ Der Zustand der Automatisierung.
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_actions`<br/>int[15]</th>
     <td>
         Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus [automation/config](automation.mdx#automation_config))
-        - **[0..14]** - Eine bekannte Bedingung.
+        - **[0..14]** - Eine ausführbare Aktion.
     </td>
 </tr>
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `automation/config` {#automation_config_wem}
+
 
 Die Konfiguration der Automatisierung.
 
@@ -2365,8 +2366,8 @@ Die Konfiguration der Automatisierung.
 </table>
 </TabItem>
 <TabItem value="any">
-<br/><br/><br/>
 ## `automation/state` {#automation_state_any}
+
 
 Der Zustand der Automatisierung.
 
@@ -2398,7 +2399,7 @@ Der Zustand der Automatisierung.
         
         
         
-        - **[0..14]** - Eine bekannte Bedingung.
+        - **[0..14]** - Eine bekannte Aktion.
     </td>
 </tr>
 
@@ -2409,7 +2410,7 @@ Der Zustand der Automatisierung.
         
         
         
-        - **[0..17]** - Eine bekannte Bedingung.
+        - **[0..17]** - Eine ausführbare Bedingung.
     </td>
 </tr>
 
@@ -2420,15 +2421,15 @@ Der Zustand der Automatisierung.
         
         
         
-        - **[0..14]** - Eine bekannte Bedingung.
+        - **[0..14]** - Eine ausführbare Aktion.
     </td>
 </tr>
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `automation/config` {#automation_config_any}
+
 
 Die Konfiguration der Automatisierung.
 
@@ -2724,8 +2725,8 @@ Die Konfiguration der Automatisierung.
                 </table>
                 </TabItem>
                 
-                <TabItem value="9" label="9 - Auslösen des Watchdogs der externen Steuerung. Der Watchdog löst aus, wenn die externe Steuerung aktiv ist und [evse/external_current_update](evse.mdx#evse_external_current_update) mindestens 30 Sekunden lang nicht aufgerufen wurde. ">
-                null: Auslösen des Watchdogs der externen Steuerung. Der Watchdog löst aus, wenn die externe Steuerung aktiv ist und [evse/external_current_update](evse.mdx#evse_external_current_update) mindestens 30 Sekunden lang nicht aufgerufen wurde. 
+                <TabItem value="9" label="9 - Auslösen des Watchdogs der externen Steuerung. Der Watchdog löst aus, wenn die externe Steuerung aktiv ist und [evse/external_current](evse.mdx#evse_external_current) mindestens 30 Sekunden lang nicht geschrieben wurde. ">
+                null: Auslösen des Watchdogs der externen Steuerung. Der Watchdog löst aus, wenn die externe Steuerung aktiv ist und [evse/external_current](evse.mdx#evse_external_current) mindestens 30 Sekunden lang nicht geschrieben wurde. 
                 </TabItem>
                 
                 <TabItem value="10" label="10 - Erkennen eines Fehlers durch die Zählerüberwachung">

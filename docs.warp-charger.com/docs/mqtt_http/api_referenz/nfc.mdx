@@ -2,14 +2,15 @@
 import MultilineTabs from '@site/src/components/MultilineTabs';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
 
 # NFC-Ladefreigabe
 **Benötigt das Feature <a href="#features_nfc"><code>"nfc"</code></a>.**
 
 <Tabs groupId="hardwareType" queryString className="hidden-tabs">
 <TabItem value="warp1">
-<br/><br/><br/>
 ## `nfc/seen_tags` {#nfc_seen_tags_warp1}
+
 
 Die zuletzt von der Wallbox gesehenen NFC-Tags.
 
@@ -111,11 +112,12 @@ Die zuletzt von der Wallbox gesehenen NFC-Tags.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `nfc/inject_tag` {#nfc_inject_tag_warp1}
 
+
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die API ein Ladevorgang für einen bestimmten Benutzer gestartet oder gestoppt werden. Analog zur physischen Verwendung eines Tags wird der Ladevorgang bei Aufruf der API abwechselnd freigegeben oder blockiert. Siehe [nfc/inject_tag_start](nfc.mdx#nfc_inject_tag_start) und [nfc/inject_tag_stop](nfc.mdx#nfc_inject_tag_stop) für genauere Kontrolle. Das vorgetauschte Tag ist immer der letzte Eintrag in [nfc/seen_tags](nfc.mdx#nfc_seen_tags)
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 <table>
@@ -147,12 +149,13 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die A
 </tr>
     </tbody>
 </table>
-
 
 <br/><br/><br/>
 ## `nfc/inject_tag_start` {#nfc_inject_tag_start_warp1}
 
+
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Starten</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [nfc/seen_tags](nfc.mdx#nfc_seen_tags)
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 <table>
@@ -184,12 +187,13 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
 </tr>
     </tbody>
 </table>
-
 
 <br/><br/><br/>
 ## `nfc/inject_tag_stop` {#nfc_inject_tag_stop_warp1}
 
+
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Stoppen</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [nfc/seen_tags](nfc.mdx#nfc_seen_tags)
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 <table>
@@ -222,11 +226,11 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `nfc/config` {#nfc_config_warp1}
 
-Die NFC-Konfiguration. Diese kann über nfc/config_update mit dem selben Payload aktualisiert werden.
+
+Die NFC-Konfiguration.
 
 
 
@@ -287,8 +291,8 @@ Die NFC-Konfiguration. Diese kann über nfc/config_update mit dem selben Payload
 </table>
 </TabItem>
 <TabItem value="warp2">
-<br/><br/><br/>
 ## `nfc/seen_tags` {#nfc_seen_tags_warp2}
+
 
 Die zuletzt von der Wallbox gesehenen NFC-Tags.
 
@@ -390,11 +394,12 @@ Die zuletzt von der Wallbox gesehenen NFC-Tags.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `nfc/inject_tag` {#nfc_inject_tag_warp2}
 
+
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die API ein Ladevorgang für einen bestimmten Benutzer gestartet oder gestoppt werden. Analog zur physischen Verwendung eines Tags wird der Ladevorgang bei Aufruf der API abwechselnd freigegeben oder blockiert. Siehe [nfc/inject_tag_start](nfc.mdx#nfc_inject_tag_start) und [nfc/inject_tag_stop](nfc.mdx#nfc_inject_tag_stop) für genauere Kontrolle. Das vorgetauschte Tag ist immer der letzte Eintrag in [nfc/seen_tags](nfc.mdx#nfc_seen_tags)
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 <table>
@@ -426,12 +431,13 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die A
 </tr>
     </tbody>
 </table>
-
 
 <br/><br/><br/>
 ## `nfc/inject_tag_start` {#nfc_inject_tag_start_warp2}
 
+
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Starten</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [nfc/seen_tags](nfc.mdx#nfc_seen_tags)
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 <table>
@@ -463,12 +469,13 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
 </tr>
     </tbody>
 </table>
-
 
 <br/><br/><br/>
 ## `nfc/inject_tag_stop` {#nfc_inject_tag_stop_warp2}
 
+
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Stoppen</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [nfc/seen_tags](nfc.mdx#nfc_seen_tags)
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 <table>
@@ -501,11 +508,11 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `nfc/config` {#nfc_config_warp2}
 
-Die NFC-Konfiguration. Diese kann über nfc/config_update mit dem selben Payload aktualisiert werden.
+
+Die NFC-Konfiguration.
 
 
 
@@ -566,8 +573,8 @@ Die NFC-Konfiguration. Diese kann über nfc/config_update mit dem selben Payload
 </table>
 </TabItem>
 <TabItem value="warp3">
-<br/><br/><br/>
 ## `nfc/seen_tags` {#nfc_seen_tags_warp3}
+
 
 Die zuletzt von der Wallbox gesehenen NFC-Tags.
 
@@ -669,11 +676,12 @@ Die zuletzt von der Wallbox gesehenen NFC-Tags.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `nfc/inject_tag` {#nfc_inject_tag_warp3}
 
+
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die API ein Ladevorgang für einen bestimmten Benutzer gestartet oder gestoppt werden. Analog zur physischen Verwendung eines Tags wird der Ladevorgang bei Aufruf der API abwechselnd freigegeben oder blockiert. Siehe [nfc/inject_tag_start](nfc.mdx#nfc_inject_tag_start) und [nfc/inject_tag_stop](nfc.mdx#nfc_inject_tag_stop) für genauere Kontrolle. Das vorgetauschte Tag ist immer der letzte Eintrag in [nfc/seen_tags](nfc.mdx#nfc_seen_tags)
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 <table>
@@ -705,12 +713,13 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die A
 </tr>
     </tbody>
 </table>
-
 
 <br/><br/><br/>
 ## `nfc/inject_tag_start` {#nfc_inject_tag_start_warp3}
 
+
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Starten</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [nfc/seen_tags](nfc.mdx#nfc_seen_tags)
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 <table>
@@ -742,12 +751,13 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
 </tr>
     </tbody>
 </table>
-
 
 <br/><br/><br/>
 ## `nfc/inject_tag_stop` {#nfc_inject_tag_stop_warp3}
 
+
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Stoppen</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [nfc/seen_tags](nfc.mdx#nfc_seen_tags)
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 <table>
@@ -780,11 +790,11 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `nfc/config` {#nfc_config_warp3}
 
-Die NFC-Konfiguration. Diese kann über nfc/config_update mit dem selben Payload aktualisiert werden.
+
+Die NFC-Konfiguration.
 
 
 
@@ -848,8 +858,8 @@ Die NFC-Konfiguration. Diese kann über nfc/config_update mit dem selben Payload
 Auf dieser Hardware nicht unterstützt!
 </TabItem>
 <TabItem value="any">
-<br/><br/><br/>
 ## `nfc/seen_tags` {#nfc_seen_tags_any}
+
 
 Die zuletzt von der Wallbox gesehenen NFC-Tags.
 
@@ -957,11 +967,12 @@ Die zuletzt von der Wallbox gesehenen NFC-Tags.
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `nfc/inject_tag` {#nfc_inject_tag_any}
 
+
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die API ein Ladevorgang für einen bestimmten Benutzer gestartet oder gestoppt werden. Analog zur physischen Verwendung eines Tags wird der Ladevorgang bei Aufruf der API abwechselnd freigegeben oder blockiert. Siehe [nfc/inject_tag_start](nfc.mdx#nfc_inject_tag_start) und [nfc/inject_tag_stop](nfc.mdx#nfc_inject_tag_stop) für genauere Kontrolle. Das vorgetauschte Tag ist immer der letzte Eintrag in [nfc/seen_tags](nfc.mdx#nfc_seen_tags)
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 <table>
@@ -996,12 +1007,13 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die A
 </tr>
     </tbody>
 </table>
-
 
 <br/><br/><br/>
 ## `nfc/inject_tag_start` {#nfc_inject_tag_start_any}
 
+
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Starten</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [nfc/seen_tags](nfc.mdx#nfc_seen_tags)
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 <table>
@@ -1036,12 +1048,13 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
 </tr>
     </tbody>
 </table>
-
 
 <br/><br/><br/>
 ## `nfc/inject_tag_stop` {#nfc_inject_tag_stop_any}
 
+
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Stoppen</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [nfc/seen_tags](nfc.mdx#nfc_seen_tags)
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 
 
 <table>
@@ -1077,11 +1090,11 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
     </tbody>
 </table>
 
-
 <br/><br/><br/>
 ## `nfc/config` {#nfc_config_any}
 
-Die NFC-Konfiguration. Diese kann über nfc/config_update mit dem selben Payload aktualisiert werden.
+
+Die NFC-Konfiguration.
 
 
 
