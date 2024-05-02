@@ -1,7 +1,7 @@
 from api_doc_common import *
 
-charge_tracker = Module("charge_tracker", "Ladetracker", "", "", Version.CHARGER, [
-    Func("state", FuncType.STATE, Elem.OBJECT("Zustand des Ladeträckers", members={
+charge_tracker = Module("charge_tracker", "Ladetracker", "", "Das `charge_tracker`-Modul zeichnet Ladevorgänge auf. Ladevorgänge werden in einem kompakten Binärformat gespeichert und können in diesem, oder aufbereitet als PDF-Dokument abgerufen werden.", Version.CHARGER, [
+    Func("state", FuncType.STATE, Elem.OBJECT("Zustand des Ladetrackers", members={
             "tracked_charges": Elem.INT("Anzahl der insgesamt aufgezeichneten Ladevorgänge."),
             "first_charge_timestamp": Elem.INT("Ein Unix-Timestamp in <strong>Minuten</strong>, der den Startzeitpunkt des <strong>ersten</strong> Ladevorgangs angibt. 0 falls zum Startzeitpunkt keine Zeitsynchronisierung verfügbar war.", unit=Units.min_)
         })

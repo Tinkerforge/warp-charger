@@ -1,8 +1,8 @@
 from api_doc_common import *
 
-charge_manager = Module("charge_manager", "Lastmanager", "", "", Version.ANY, [
+charge_manager = Module("charge_manager", "Lastmanager", "", "Das `charge_manager`-Modul implementiert einen Lastmanager, der eine verfügbare Menge Strom auf ein oder mehrere WARP Charger (jeder Generation) verteilen kann. Der Lastmanager stellt sicher, dass der konfigurierte Verbund an WARP Chargern niemals mehr als den verfügbaren Strom beziehen und versucht diesen möglichst fair zu verteilen. Ein WARP Energy Manager verwendet den Lastmanager außerdem um die Phasenumschaltung eines Verbunds an WARP Chargern über ein externes Schütz sicher umzusetzen.", Version.ANY, [
     Func("available_current", FuncType.CONFIGURATION, Elem.OBJECT("Der derzeit zur Verfügung stehende Strom. Dieser Strom wird unter den konfigurierten Wallboxen aufgeteilt.", members={
-            "current": Elem.INT("Der zur Verfügung stehende Strom. Darf nicht großer sein als der konfigurierte Maximalstrom maximum_available_current aus {{{ref:charge_manager/config}}}.", unit=Units.mA),
+            "current": Elem.INT("Der zur Verfügung stehende Strom. Es werden nur Ströme akzeptiert, die kleiner als der konfigurierte Maximalstrom maximum_available_current aus {{{ref:charge_manager/config}}} sind.", unit=Units.mA),
         })
     ),
 
@@ -11,7 +11,7 @@ charge_manager = Module("charge_manager", "Lastmanager", "", "", Version.ANY, [
         })
     ),
 
-    Func("state", FuncType.STATE, Elem.OPAQUE("Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Object werden nicht als API-Bruch betrachtet!</strong>")),
+    Func("state", FuncType.STATE, Elem.OPAQUE("Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>")),
 
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die Lastmanager-Konfiguration.", members={
             "enable_charge_manager": Elem.BOOL("Gibt an, ob der Lastmanager aktiviert sein soll.", constants=[

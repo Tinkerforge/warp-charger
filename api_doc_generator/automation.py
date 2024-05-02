@@ -1,15 +1,15 @@
 from api_doc_common import *
 
-automation = Module("automation", "Automatisierung", "", "", Version.ANY, [
-    Func("state", FuncType.STATE, Elem.OBJECT("Der Zustand der Automatisierung.", members={
-        "registered_triggers": Elem.ARRAY("Dieser Firmware bekannte Bedingungen (Union-Tags des Triggers einer Regel aus {{{ref:automation/config}}})", members=[
+automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-Modul können einfache Regeln ausgeführt werden. Eine Regel besteht aus einer auszuführenden Aktion, sowie aus einer Bedingung, die zutreffen muss, damit die Aktion ausgeführt wird.", Version.ANY, [
+    Func("state", FuncType.STATE, Elem.OBJECT("Der Zustand der Automatisierung. Gibt an, welche Bedingungen und Aktionen von dieser Firmware unterstützt werden und welche der unterstützten Bedingungen und Aktionen im Moment ausgeführt werden können. Je nach Konfiguration können bestimmte Bedingungen und Aktionen nicht ausgeführt werden, beispielsweise kann nicht auf MQTT-Nachrichten reagiert werden, wenn keine MQTT-Verbindung konfiguriert ist.", members={
+        "registered_triggers": Elem.ARRAY("Dieser Firmware bekannte Bedingungen (Union-Tags des Triggers einer Regel aus {{{ref:automation/config}}}).", members=[
             * 18 * [Elem.INT("Eine bekannte Bedingung.")]]),
         "registered_actions": Elem.ARRAY("Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus {{{ref:automation/config}}})", members=[
             * 15 * [Elem.INT("Eine bekannte Aktion.")]]),
 
-        "enabled_triggers": Elem.ARRAY("Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus {{{ref:automation/config}}})", members=[
+        "enabled_triggers": Elem.ARRAY("Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus {{{ref:automation/config}}}). Ist immer eine Teilmenge der `registered_triggers`.", members=[
             * 18 * [Elem.INT("Eine ausführbare Bedingung.")]]),
-        "enabled_actions": Elem.ARRAY("Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus {{{ref:automation/config}}})", members=[
+        "enabled_actions": Elem.ARRAY("Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus {{{ref:automation/config}}}). Ist immer eine Teilmenge der `registered_actions`.", members=[
             * 15 * [Elem.INT("Eine ausführbare Aktion.")]]),
     })),
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die Konfiguration der Automatisierung.", members={

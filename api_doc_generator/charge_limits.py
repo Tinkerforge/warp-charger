@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-charge_limits = Module("charge_limits", "Ladezeit- und -energielimits", "", "", Version.CHARGER, [
+charge_limits = Module("charge_limits", "Ladezeit- und -energielimits", "", "Mit dem `charge_limits`-Modul können Energie- und Zeitlimits definiert werden, nach denen ein Ladevorgang beendet wird. Es können sowohl Standardlimits gesetzt werden ({{{ref:charge_limits/default_limits}}}, als auch Limits für den laufenden oder nächsten Ladevorgang überschrieben werden ({{{ref:charge_limits/override_duration}}} und {{{ref:charge_limits/override_energy}}})", Version.CHARGER, [
     Func("state", FuncType.STATE, Elem.OBJECT("Aktueller Zustand der Zeit- und Energielimits", members={
             "start_timestamp_ms": Elem.INT("Startzeitstempel des aktuellen Ladevorgangs. 0 falls kein Ladevorgang läuft.", unit=Units.ms),
             "target_timestamp_ms": Elem.INT("Zielzeitstempel des aktuellen Ladevorgangs. 0 falls kein Ladevorgang läuft. Gleich dem Startzeitstempel, falls kein Zeitlimit gesetzt ist.", unit=Units.ms),

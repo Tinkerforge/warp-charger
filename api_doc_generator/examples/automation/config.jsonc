@@ -1,0 +1,30 @@
+{
+  "tasks": [
+    {
+      "trigger": [1, { "mday": -1, "wday": 9, "hour": -1, "minute": 10 }],
+      "action": [1, { "message": "Hallo Welt!" }]
+    },
+    {
+      "trigger": [
+        18,
+        { "method": 4, "url_suffix": "garage_door", "payload": "open" }
+      ],
+      "action": [
+        2,
+        {
+          "topic": "door/control",
+          "payload": "1",
+          "retain": false,
+          "use_prefix": false
+        }
+      ]
+    }
+  ]
+}
+/*§§§
+Konfiguriere zwei Aufgaben:
+- (Trigger 1) Am Wochenende (wday 9), 10 Minuten (minute 10) nach jeder vollen Stunde,<br/>
+  (Action 1) zeige `Hallo Welt!` im Ereignis-Log an.
+- (Trigger 18) Wenn eine HTTP-GET-, POST- oder PUT-Anfrage (method 4) mit dem Inhalt "open" an URL `http://$HOST/automation_trigger/garage_door` empfangen wird,<br/>
+  (Action 2) sende MQTT-Nachricht `1` an Topic `door/control`.
+*/
