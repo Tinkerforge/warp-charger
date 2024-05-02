@@ -22,10 +22,15 @@ def get_example_from_file(api: str, prefix_version: str):
                 break
 
         with open(path, 'r') as f:
-            return f.read().strip()
+            result = f.read().strip().split("/*§§§", 1)
+            if len(result) == 1:
+                result.append("")
+            result = [x.strip() for x in result]
+            result[1] = result[1].removesuffix("*/").strip()
+            return result
     except Exception as e:
         print(f"Failed to load example for {api} ({prefix_version}): {e}")
-        return None
+        return None, None
 
 def wrap_non_empty(prefix, middle, suffix):
     if len(middle) == 0:
@@ -404,7 +409,7 @@ class Elem:
 ```bash
 # $HOST z.B. {prefix_version}-AbCd
 ```
-            #### Lesen
+#### Lesen
 ```bash
 curl http://$HOST/{f.api_name(module)}
 ```
@@ -414,16 +419,16 @@ curl http://$HOST/{f.api_name(module)}
 # $BROKER z.B. my_mosquitto.localdomain
 # $PREFIX z.B. {prefix_version}/AbCd
 ```
-            #### Lesen
+#### Lesen
 ```bash
 mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/{f.api_name(module)}
 ```
         </TabItem>
     </Tabs>
 
-```jsx
 {{payload}}
-```
+{{comment}}
+
 :::
 """
 
@@ -433,20 +438,24 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/{f.api_name(module)}
 ```bash
 # $HOST z.B. {prefix_version}-AbCd
 ```
-            #### Schreiben
+#### Schreiben
 ```bash
-curl http://$HOST/{f.api_name(module)} -d '{{payload}}'
+curl http://$HOST/{f.api_name(module)} -d {{payload}}
 ```
+{{comment}}
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
 # $BROKER z.B. my_mosquitto.localdomain
 # $PREFIX z.B. {prefix_version}/AbCd
 ```
-            #### Schreiben
+#### Schreiben
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/{f.api_name(module)} -m '{{payload}}'
+mosquitto_pub -h $BROKER -t $PREFIX/{f.api_name(module)} -m {{payload}}
 ```
+{{comment}}
+
         </TabItem>
     </Tabs>
 :::
@@ -459,19 +468,21 @@ mosquitto_pub -h $BROKER -t $PREFIX/{f.api_name(module)} -m '{{payload}}'
 # $HOST z.B. {prefix_version}-AbCd
 ```
 
-            #### Lesen
+#### Lesen
 ```bash
 curl http://$HOST/{f.api_name(module)}
 ```
-```jsx
 {{read_payload}}
-```
+{{read_comment}}
 
-            #### Schreiben
+
+#### Schreiben
 
 ```bash
-curl http://$HOST/{f.api_name(module)} -d '{{write_payload}}'
+curl http://$HOST/{f.api_name(module)} -d {{write_payload}}
 ```
+{{write_comment}}
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -479,20 +490,22 @@ curl http://$HOST/{f.api_name(module)} -d '{{write_payload}}'
 # $PREFIX z.B. {prefix_version}/AbCd
 ```
 
-            #### Lesen
+#### Lesen
 ```bash
 mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/{f.api_name(module)}
 ```
-```jsx
 {{read_payload}}
-```
+{{read_comment}}
 
-            #### Schreiben
+
+#### Schreiben
             Mit MQTT auf <code>$PREFIX/{f.api_name(module)}<strong>_update</strong></code>
 
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/{f.api_name(module)}_update -m '{{write_payload}}'
+mosquitto_pub -h $BROKER -t $PREFIX/{f.api_name(module)}_update -m {{write_payload}}
 ```
+{{write_comment}}
+
         </TabItem>
     </Tabs>
 :::
@@ -507,9 +520,9 @@ mosquitto_pub -h $BROKER -t $PREFIX/{f.api_name(module)}_update -m '{{write_payl
 ```bash
 curl http://$HOST/{f.api_name(module)}
 ```
-```jsx
 {{payload}}
-```
+{{comment}}
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -520,29 +533,34 @@ curl http://$HOST/{f.api_name(module)}
 """
 
         if f.type_ == FuncType.STATE:
-            payload = get_example_from_file(f.api_name(module), prefix_version)
+            payload, comment = get_example_from_file(f.api_name(module), prefix_version)
             if payload is not None:
-                return example_state_template.format(payload=payload)
+                return example_state_template.format(payload=wrap_non_empty("```jsx\n", payload, "\n```"), comment=comment)
             return ""
         elif f.type_ == FuncType.COMMAND:
-            payload = get_example_from_file(f.api_name(module), prefix_version)
+            payload, comment = get_example_from_file(f.api_name(module), prefix_version)
             if payload is not None:
-                return example_command_template.format(payload=payload)
+                return example_command_template.format(payload=wrap_non_empty("'", payload, "'"), comment=comment)
             if f.root.type_ == EType.NULL:
-                return example_command_template.format(payload="null")
+                return example_command_template.format(payload=wrap_non_empty("'", "null", "'"), comment="")
 
             return ""
         elif f.type_ == FuncType.CONFIGURATION:
-            read_payload = get_example_from_file(f.api_name(module), prefix_version)
-            write_payload = get_example_from_file(f.api_name(module) + "_update", prefix_version)
-            if read_payload is not None and write_payload is not None:
-                return example_config_template.format(read_payload=read_payload,
-                                                      write_payload=write_payload)
+            read_payload, read_comment = get_example_from_file(f.api_name(module), prefix_version)
+            write_payload, write_comment = get_example_from_file(f.api_name(module) + "_update", prefix_version)
+            if read_payload is not None:
+                if write_payload is None:
+                    write_payload = read_payload
+                    write_comment = read_comment
+                return example_config_template.format(read_payload=wrap_non_empty("```jsx\n",read_payload, "\n```"),
+                                                      write_payload=wrap_non_empty("'",write_payload, "'"),
+                                                      read_comment=read_comment,
+                                                      write_comment=write_comment)
             return ""
         elif f.type_ == FuncType.HTTP_ONLY:
-            payload = get_example_from_file(f.api_name(module), prefix_version)
+            payload, comment = get_example_from_file(f.api_name(module), prefix_version)
             if payload is not None:
-                return example_http_only_template.format(payload=payload)
+                return example_http_only_template.format(payload=wrap_non_empty("```jsx\n",payload, "\n```"), comment=comment)
             return ""
         else:
             print(f"Function type {f.type_} not supported for examples yet!")
