@@ -10,4 +10,5 @@ authentication = Module("authentication", "Zugangsdaten", "", "", Version.WEM, [
             "digest_hash": Elem.STRING("Der [Digest Hash](https://en.wikipedia.org/wiki/Digest_access_authentication), dem Zugriff auf Webinterface und HTTP-API gewährt werden.", censored=True),
         })
     ),
-])
+],
+    not_supported_text='Wallboxen verwenden das mächtigere {{{mod_ref:users}}}.')

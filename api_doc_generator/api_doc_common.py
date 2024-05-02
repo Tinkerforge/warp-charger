@@ -689,6 +689,7 @@ class Module:
     version: Version
     functions: list[Func]
     hide_prefix: bool = False
+    not_supported_text: str = 'Auf dieser Hardware nicht unterstützt!'
 
     def to_md(self) -> str:
         result = f"""---
@@ -716,7 +717,7 @@ import Admonition from '@theme/Admonition';
             result += f'<TabItem value="{ver.name.lower()}">\n'
 
             if ver not in self.version and ver != Version.ANY:
-                result += 'Auf dieser Hardware nicht unterstützt!\n</TabItem>\n'
+                result += f'{self.not_supported_text}\n</TabItem>\n'
                 continue
 
             functions = []

@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-meter = Module("meter", "Veraltete Stromzähler-API", "Bei Neuentwicklungen stattdessen [meters](meters.mdx) verwenden!", "", Version.ANY, [
+meter = Module("meter", "Veraltete Stromzähler-API", "Bei Neuentwicklungen stattdessen {{{mod_ref:meters}}} verwenden!", "", Version.ANY, [
     Func("state", FuncType.CONFIGURATION, Elem.OBJECT("Der Zustand des Stromzählers.", members={
             "state": Elem.INT("Zustand des Stromzählers", constants=[
                 Const(0, "Kein Stromzähler verbunden"),
