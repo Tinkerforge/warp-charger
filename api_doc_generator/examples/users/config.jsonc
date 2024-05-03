@@ -1,0 +1,43 @@
+{
+  "users": [
+    {
+      "id": 0,
+      "roles": 4294967295,
+      "current": 32000,
+      // highlight-start
+      // Wird vom Webinterface durch "Unbekannter Benutzer" ersetzt.
+      "display_name": "Anonymous",
+      // highlight-end
+      "username": "anonymous",
+      "digest_hash": ""
+    },
+    {
+      "id": 1,
+      "roles": 65535,
+      "current": 32000,
+      "display_name": "Root",
+      "username": "root",
+      // highlight-start
+      // null - Ein Passwort ist gesetzt, wird aber nicht zurückgegeben
+      // -> Nutzer kann sich im Webinterface einloggen und die HTTP-API verwenden.
+      "digest_hash": null
+      // highlight-end
+    },
+    {
+      "id": 3,
+      "roles": 65535,
+      "current": 32000,
+      "display_name": "Benutzer 2",
+      "username": "user2",
+      // highlight-start
+      // "" - kein Passwort gesetzt
+      // -> Nutzer kann für die NFC-Freigabe und den Ladetracker verwendet werden
+      //    kann sich aber nicht im Webinterface einloggen oder die HTTP-API verwenden.
+      "digest_hash": ""
+      // highlight-end
+    }
+  ],
+  // Nutzer 2 und 4 wurden gelöscht.
+  "next_user_id": 5,
+  "http_auth_enabled": true
+}

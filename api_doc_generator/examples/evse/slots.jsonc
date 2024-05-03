@@ -1,0 +1,21 @@
+[
+  // Slot ist aktiv, aber gibt den Ladevorgang ohne Limit (= 32 A) frei.
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  // Slot ist nicht aktiv, würde aber dennoch Ladevorgang freigeben.
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  // Slot limitiert den Ladevorgang auf 19 A.
+  { "max_current": 19000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": true },
+  // Slot ist nicht aktiv, würde den Ladevorgang andernfalls blockieren.
+  { "max_current": 0, "active": false, "clear_on_disconnect": true },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false }
+]
