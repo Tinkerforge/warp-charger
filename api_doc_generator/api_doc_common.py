@@ -17,7 +17,7 @@ def get_example_from_file(api: str, prefix_version: str):
         _dir, file = api.rsplit("/", 1)
         versioned_dir = f'./examples/{_dir}'
         for x in os.listdir(versioned_dir):
-            if x.startswith(file) and f'.{prefix_version}.' in x and x.endswith('.jsonc'):
+            if x.split('.', 1)[0] == file and f'.{prefix_version}.' in x and x.endswith('.jsonc'):
                 path = os.path.join(versioned_dir, x)
                 break
 
@@ -539,11 +539,11 @@ curl http://$HOST/{f.api_name(module)}
             return ""
         elif f.type_ == FuncType.COMMAND:
             payload, comment = get_example_from_file(f.api_name(module), prefix_version)
+            if payload is None and f.root.type_ == EType.NULL:
+                payload = "null"
+                comment = ""
             if payload is not None:
                 return example_command_template.format(payload=wrap_non_empty("'", payload, "'"), comment=comment)
-            if f.root.type_ == EType.NULL:
-                return example_command_template.format(payload=wrap_non_empty("'", "null", "'"), comment="")
-
             return ""
         elif f.type_ == FuncType.CONFIGURATION:
             read_payload, read_comment = get_example_from_file(f.api_name(module), prefix_version)
