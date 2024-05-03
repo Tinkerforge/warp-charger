@@ -49,13 +49,13 @@ wifi = Module("wifi", "WLAN-Konfiguration", "", "", Version.ANY, [
                 0: Elem.NULL("WPA Personal"),
                 1: Elem.OBJECT("EAP-TLS", members={
                     "ca_cert_id": Elem.INT("ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe {{{ref:certs/state}}}"),
-                    "identity": Elem.STRING("Anonyme Identität für dem Verbindungsaufbau zum RADIUS-Server. (Optional) <a href=\"https://security.stackexchange.com/a/201848\">Siehe hier für Details</a>"),
+                    "identity": Elem.STRING("Anonyme Identität für dem Verbindungsaufbau zum RADIUS-Server. (Optional) [Siehe hier für Details](https://security.stackexchange.com/a/201848)"),
                     "client_cert_id": Elem.INT("ID des Client-Zertifikats mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe {{{ref:certs/state}}}"),
                     "client_key_id": Elem.INT("ID des Zertifikats-Keys mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe {{{ref:certs/state}}}"),
                 }),
                 2: Elem.OBJECT("EAP-PEAP oder EAP-TTLS", members={
                     "ca_cert_id": Elem.INT("ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe {{{ref:certs/state}}}"),
-                    "identity": Elem.STRING("Anonyme Identität für dem Verbindungsaufbau zum RADIUS-Server. (Optional) <a href=\"https://security.stackexchange.com/a/201848\">Siehe hier für Details</a>"),
+                    "identity": Elem.STRING("Anonyme Identität für dem Verbindungsaufbau zum RADIUS-Server. (Optional) [Siehe hier für Details](https://security.stackexchange.com/a/201848)"),
                     "username": Elem.STRING("Benutzername"),
                     "password": Elem.STRING("Passwort", censored=True),
                     "client_cert_id": Elem.INT("ID des Client-Zertifikats mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe {{{ref:certs/state}}}"),
@@ -88,7 +88,7 @@ wifi = Module("wifi", "WLAN-Konfiguration", "", "", Version.ANY, [
             Elem.OBJECT("", members={
             "ssid": Elem.STRING("SSID des gefundenen WLANs. Leer bei versteckten Access Points."),
             "bssid": Elem.STRING("BSSID des gefundenen WLANs."),
-            "rssi": Elem.INT('Die Empfangsqualität des gefundenen WLANs. Immer ein negativer Wert, wobei Werte nahe 0 eine bessere Empfangsqualität bedeuten. <a href="https://de.wikipedia.org/wiki/Received_Signal_Strength_Indication">Siehe hier für Details.</a>'),
+            "rssi": Elem.INT('Die Empfangsqualität des gefundenen WLANs. Immer ein negativer Wert, wobei Werte nahe 0 eine bessere Empfangsqualität bedeuten. [Siehe hier für Details](https://de.wikipedia.org/wiki/Received_Signal_Strength_Indication)'),
             "channel": Elem.INT('Kanal des gefundenen WLANs.'),
             "encryption": Elem.INT("Verschlüsselungsstandard des gefundenen WLANs", constants=[
                 Const(0, "Unverschlüsselt"),

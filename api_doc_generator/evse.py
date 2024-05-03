@@ -52,7 +52,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", "Das `evse`-Modul verwaltet Z
                 Const(13, "Reserviert.", version=Version.WARP3),
             ]),
             "allowed_charging_current": Elem.INT("Maximal erlaubter Ladestrom, der dem Fahrzeug zur Verfügung gestellt wird. Dieser Strom ist das Minimum der Stromgrenzen aller Ladeslots.", unit=Units.mA),
-            "error_state": Elem.INT('Der aktuelle Fehlerzustand. <a href="https://www.warp-charger.com/#documents">Siehe Handbuch für Details.</a>', constants=[
+            "error_state": Elem.INT('Der aktuelle Fehlerzustand. [Siehe Handbuch für Details](https://warp-charger.com/downloads/#documents)', constants=[
                 Const(0, "OK"),
                 Const(2, "Schalterfehler"),
                 Const(3, "DC-Fehlerstromüberwachungsfehler"),
@@ -155,9 +155,9 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", "Das `evse`-Modul verwaltet Z
                 Const("2001..2010", "Fehler-Blinken 1 bis 10.; Standardfarbe Rot", version=Version.WARP3),
             ]),
             "duration": Elem.INT("Dauer für die der gesetzte Zustand erhalten bleibt.", unit=Units.ms),
-            "color_h": Elem.INT('Farbwert der LED im <a href="https://de.wikipedia.org/wiki/HSV-Farbraum">HSV-Farbraum</a>.'),
-            "color_s": Elem.INT('Farbsättigung der LED im <a href="https://de.wikipedia.org/wiki/HSV-Farbraum">HSV-Farbraum</a>.'),
-            "color_v": Elem.INT('Helligkeit der LED im <a href="https://de.wikipedia.org/wiki/HSV-Farbraum">HSV-Farbraum</a>. Eine Helligkeit von 0 verwendet die Standardfarbe der `indication` bzw. Blau bei WARP1 oder WARP2.'),
+            "color_h": Elem.INT('Farbwert der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum).'),
+            "color_s": Elem.INT('Farbsättigung der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum).'),
+            "color_v": Elem.INT('Helligkeit der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum). Eine Helligkeit von 0 verwendet die Standardfarbe der `indication` bzw. Blau bei WARP1 oder WARP2.'),
         })
     ),
 
