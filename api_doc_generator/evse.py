@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-evse = Module("evse", "Ladecontroller (EVSE)", "", "", Version.CHARGER.with_desc('**Benötigt das Feature <a href="#features_evse"><code>"evse"</code></a>**'),[
+evse = Module("evse", "Ladecontroller (EVSE)", "", "Das `evse`-Modul verwaltet Zustand und Konfiguration des Ladecontrollers.", Version.CHARGER.with_desc('**Benötigt das Feature <a href="#features_evse"><code>"evse"</code></a>**'),[
     Func("state", FuncType.STATE, Elem.OBJECT("Der Zustand des Ladecontrollers.", members={
             "iec61851_state": Elem.INT("Der aktuelle Zustand nach IEC 61851", constants=[
                     Const(0, "A: Nicht verbunden"),
@@ -59,7 +59,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", "", Version.CHARGER.with_desc
                 Const(4, "Schützfehler"),
                 Const(5, "Kommunikationsfehler"),
             ]),
-            "lock_state": Elem.INT("Zustand der Kabelverriegelung (nur relevant für Wallboxen mit Typ-2-Dose)", constants=[
+            "lock_state": Elem.INT("Zustand der Kabelverriegelung (nur relevant für Wallboxen mit Typ-2-Dose; Stand jetzt wurde kein WARP Charger mit Typ-2-Dose hergestellt)", constants=[
                 Const(0, "Initialisierung"),
                 Const(1, "Offen"),
                 Const(2, "Schließend"),
@@ -114,14 +114,14 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", "", Version.CHARGER.with_desc
         })
     ),
 
-    Func("slots", FuncType.STATE, Elem.ARRAY("Der Zustand der Ladeslots. Siehe TODO LINK für Details.", members=[
+    Func("slots", FuncType.STATE, Elem.ARRAY("Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus {{{ref:evse/state}}} ist das Minimum aller Ladeslots, die aktiv sind. Siehe TODO LINK für Details.", members=[
             * 15 * [Elem.OBJECT("Ein Ladeslot", members = {
                 "max_current": Elem.INT("Maximal erlaubter Ladestrom. 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockiert.", unit=Units.mA),
                 "active": Elem.BOOL("Gibt an ob dieser Slot aktiv ist.", constants=[
                     Const(True, "Slot ist aktiv"),
                     Const(False, "Slot ist nicht aktiv"),
                 ]),
-                "clear_on_disconnect": Elem.BOOL("Gibt an, ob der Ladestrom dieses Slots beim Abziehen eines Fahrzeugs auf 0 gesetzt wird.", constants=[
+                "clear_on_disconnect": Elem.BOOL("Gibt an, ob der Ladestrom dieses Slots beim Abziehen eines Fahrzeugs auf 0 (=Ladevorgang blockiert) gesetzt wird.", constants=[
                     Const(True, "Slot wird beim Abziehen blockieren"),
                     Const(False, "Slot wird gesetzten Ladestrom beim Abziehen beibehalten"),
                 ]),
@@ -298,17 +298,17 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", "", Version.CHARGER.with_desc
         })
     ),
 
-    Func("management_current", FuncType.CONFIGURATION, Elem.OBJECT("Der vom Lastmanagement vorgegebene Ladestrom.", members={
+    Func("management_current", FuncType.STATE, Elem.OBJECT("Der vom Lastmanagement vorgegebene Ladestrom.", members={
             "current": Elem.INT("6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockieren soll.", unit=Units.mA)
         })
     ),
 
     Func("auto_start_charging", FuncType.CONFIGURATION, Elem.OBJECT("Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird.", members={
-            "auto_start_charging": Elem.BOOL("Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Falls aktiviert, beginnt sofort, wenn das Fahrzeug angeschlossen wird der Ladevorgang. Falls deaktiviert, kann das Laden mit {{{ref:evse/start_charging}}} gestartet werden."),
+            "auto_start_charging": Elem.BOOL("Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Falls aktiviert, beginnt sofort, wenn das Fahrzeug angeschlossen wird der Ladevorgang. Falls deaktiviert, kann das Laden mit {{{ref:evse/start_charging}}} gestartet werden. Diese Einstellung setzt `clear_on_disconnect` der Ladestromgrenze 4 (Manuelle Ladefreigabe)"),
         })
     ),
 
-    Func("global_current", FuncType.CONFIGURATION, Elem.OBJECT("Der über das Webinterface vorgegebene Ladestrom.", members={
+    Func("global_current", FuncType.CONFIGURATION, Elem.OBJECT("Der über das Webinterface vorgegebene Ladestrom. **Achtung: Dieser Strom wird auf dem Ladecontroller persistent gespeichert. Für häufige Änderungen sollte stattdessen {{{ref:evse/external_current}}} verwendet werden, um den Flash des Ladecontrollers zu schonen!**", members={
             "current": Elem.INT("Der über das Webinterface vorgegebene Ladestrom. 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockiert.", unit=Units.mA)
         })
     ),
@@ -352,7 +352,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", "", Version.CHARGER.with_desc
         })
     ),
 
-    Func("automation_current", FuncType.CONFIGURATION, Elem.OBJECT("Der von der Automatisierung erlaubte Ladestrom.", members={
+    Func("automation_current", FuncType.STATE, Elem.OBJECT("Der von der Automatisierung erlaubte Ladestrom.", members={
             "current": Elem.INT("Der von der Automatisierung erlaubte Ladestrom. 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockiert.", unit=Units.mA)
         })
     ),

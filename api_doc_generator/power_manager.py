@@ -12,7 +12,7 @@ power_manager = Module("power_manager", "Konfiguration des PV-Überschussladens"
                 Const(2, "PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist."),
                 Const(3, "Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist."),
             ]),
-            "excess_charging_enable": Elem.BOOL("Wenn aktiviert, regelt der Energy Manager die an ihn angeschlossenen Verbraucher abhängig vom Überschuss einer vorhandenen Photovoltaikanlage. Wenn deaktiviert, wird die maximale Leistung unter Einhaltung der maximale Strombelastbarkeit der Zuleitungen erlaubt."),
+            "excess_charging_enable": Elem.BOOL("Wenn aktiviert, regelt der Power Manager die von ihm kontrollierten Verbraucher abhängig vom Überschuss einer vorhandenen Photovoltaikanlage. Wenn deaktiviert, wird die maximale Leistung unter Einhaltung der maximale Strombelastbarkeit der Zuleitungen erlaubt."),
             "phase_switching_mode": Elem.INT("", constants=[
                 Const(0, "Automatischer Wechsel zwischen drei- und einphasigem Laden. Nur möglich, wenn contactor_installed true ist."),
                 Const(1, "Immer einphasig"),
@@ -51,10 +51,10 @@ power_manager = Module("power_manager", "Konfiguration des PV-Überschussladens"
             "power_at_meter_filtered": Elem.FLOAT("Geglättete gemessene Leistung am Hausanschluss", unit=Units.W),
             "power_available": Elem.INT("Zum Laden verfügbare Leistung. Dies ist ein virtueller Wert, der nicht direkt der Ladeleistung entspricht.", unit=Units.W),
             "power_available_filtered": Elem.INT("Geglättete zum Laden verfügbare Leistung. Dies ist ein virtueller Wert, der nicht direkt der Ladeleistung entspricht.", unit=Units.W),
-            "overall_min_power": Elem.INT("Ladeleistung, die der Energy Manager in der aktuellen Konfiguration minimal einstellen kann, abhängig von Phasenanzahl und minimalem Ladestrom.", unit=Units.W),
-            "threshold_3to1": Elem.INT("Grenzwert der Ladeleistung, unter der der Energy Manager vom dreiphasigen in den einphasigen Modus wechseln möchte.", unit=Units.W),
-            "threshold_1to3": Elem.INT("Grenzwert der Ladeleistung, über der der Energy Manager vom einphasigen Modus in den dreiphasigen Modus wechseln möchte.", unit=Units.W),
-            "charge_manager_available_current": Elem.INT("Ladestrom, den der Energy Manager dem Lastmanagement aktuell zur Verfügung stellt.", unit=Units.mA),
+            "overall_min_power": Elem.INT("Ladeleistung, die der Power Manager in der aktuellen Konfiguration minimal einstellen kann, abhängig von Phasenanzahl und minimalem Ladestrom.", unit=Units.W),
+            "threshold_3to1": Elem.INT("Grenzwert der Ladeleistung, unter der der Power Manager vom dreiphasigen in den einphasigen Modus wechseln möchte.", unit=Units.W),
+            "threshold_1to3": Elem.INT("Grenzwert der Ladeleistung, über der der Power Manager vom einphasigen Modus in den dreiphasigen Modus wechseln möchte.", unit=Units.W),
+            "charge_manager_available_current": Elem.INT("Ladestrom, den der Power Manager dem Lastmanagement aktuell zur Verfügung stellt.", unit=Units.mA),
             "charge_manager_allocated_current": Elem.INT("Ladestrom, der aktuell vom Lastmanager an Wallboxen verteilt wurde.", unit=Units.mA),
             "max_current_limited": Elem.INT("Maximaler Ladestrom unter Beachtung externer Strombegrenzung", unit=Units.mA),
             "uptime_past_hysteresis": Elem.BOOL("Zeitraum nach einem Start des Power Managers, in dem ohne Wartezeit umgeschaltet werden kann.", constants=[

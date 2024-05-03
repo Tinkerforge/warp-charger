@@ -76,7 +76,7 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                                 Const(3, "NFC Forum Typ 3"),
                                 Const(4, "NFC Forum Typ 4"),
                             ]),
-                            "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d"),
+                            "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:AB:3D"),
                         }),
                         6: Elem.NULL("Erreichen des Ladezeit- oder Energie-Limits", version=Version.CHARGER),
                         7: Elem.OBJECT("Schalten des Abschalteingangs", version=Version.WARP2 | Version.WARP3, members={
@@ -172,7 +172,7 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                                 Const(3, "NFC Forum Typ 3"),
                                 Const(4, "NFC Forum Typ 4"),
                             ]),
-                            "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d"),
+                            "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:AB:3D"),
                             "tag_action": Elem.INT("Gibt an ob das Tag nur zum Starten oder Stoppen eines Ladevorgangs, oder für beides genutzt werden soll", constants=[
                                 Const(0, "Tag kann Ladevorgänge starten und stoppen"),
                                 Const(0, "Tag kann Ladevorgänge starten"),

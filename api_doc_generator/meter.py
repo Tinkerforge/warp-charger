@@ -1,13 +1,15 @@
 from api_doc_common import *
 
-meter = Module("meter", "Veraltete Stromzähler-API", "Bei Neuentwicklungen stattdessen {{{mod_ref:meters}}} verwenden!", "", Version.ANY, [
+meter = Module("meter", "Veraltete Stromzähler-API", "Bei Neuentwicklungen stattdessen {{{mod_ref:meters}}} verwenden!",
+    "Die veraltete Stromzähler-API unterstützt nur einen Stromzähler (den, der als `linked_meter_slot` in {{{ref:meters_legacy_api/config}}} konfiguriert ist) und kann nur eine Teilmenge der unterstützten Stromzählerwerte melden und verarbeiten. Die veraltete API wird vom {{{mod_ref:meters_legacy_api}}}-Modul emuliert.",
+    Version.ANY, [
     Func("state", FuncType.CONFIGURATION, Elem.OBJECT("Der Zustand des Stromzählers.", members={
             "state": Elem.INT("Zustand des Stromzählers", constants=[
                 Const(0, "Kein Stromzähler verbunden"),
                 Const(1, "Stromzähler unzuverlässig, eventuell nur einphasig verbunden."),
                 Const(2, "Stromzähler verbunden"),
             ]),
-            "type": Elem.INT("Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!", constants=[
+            "type": Elem.INT("Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jedem Gerät unterstützt!", constants=[
                 Const(0, "Kein Stromzähler verfügbar"),
                 Const(1, "Eastron SDM72", Version.WARP1),
                 Const(2, "Eastron SDM630", Version.ANY),
@@ -134,12 +136,12 @@ meter = Module("meter", "Veraltete Stromzähler-API", "Bei Neuentwicklungen stat
     ),
 
     Func("history", FuncType.HTTP_ONLY, Elem.OBJECT("Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.", members={
-        "offset": Elem.FLOAT("Das Alter des zuletzt gemessenen Wertes.", unit=Units.s),
+        "offset": Elem.INT("Das Alter des zuletzt gemessenen Wertes.", unit=Units.ms),
         "samples": Elem.ARRAY("Die gemessenen Werte.", unit=Units.W, member_type=EType.INT)
     })),
 
     Func("live", FuncType.HTTP_ONLY, Elem.OBJECT("Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für {{{ref:meter/history}}} generiert.", members={
-        "offset": Elem.FLOAT("Das Alter des zuletzt gemessenen Wertes.", unit=Units.s),
+        "offset": Elem.INT("Das Alter des zuletzt gemessenen Wertes.", unit=Units.ms),
         "samples_per_second": Elem.FLOAT("Die Anzahl der gemessenen Werte pro Sekunde.", unit=Units.Hz),
         "samples": Elem.ARRAY("Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.", unit=Units.W, member_type=EType.INT)
     }))

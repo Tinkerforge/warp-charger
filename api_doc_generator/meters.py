@@ -6,23 +6,36 @@ def meters_x_get_tag_fn(api: str, info: list):
 
 meters = Module("meters", "Stromzähler", "",
     """WARP Charger und Energy Manager unterstützen mehrere Stromzähler.
-    Die Stromzähler-API ist aufgeteilt in einem allgemeinen Teil unter meters/...
-    und einen Stromzähler-spezifischen Teil unter meters/X/... wobei X einer Stromzähler-Nummer entspricht.
-    Der Stromzähler-spezifische Teil beinhaltet immer {{{ref:meters/X/value_ids}}}, {{{ref:meters/X/values}}}, {{{ref:meters/X/live}}} und {{{ref:meters/X/history}}} mit dem unten dokumentierten Inhalt.
-    Beispielsweise können die Messwerte des ersten Stromzählers (der die Stromzählernummer 0 besitzt) unter meters/0/values gelesen werden.
-    Außerdem hat jeder Zähler die APIs {{{ref:meters/X/config}}}, {{{ref:meters/X/state}}} und {{{ref:meters/X/errors}}}, deren Inhalt von der Klasse des Stromzählers abhängt.
-    Die Stromzählerklasse wird als das <a href="#unions_section">Union</a>-Tag von {{{ref:meters/X/config}}} angegeben.
+    Die Stromzähler-API ist aufgeteilt in einem allgemeinen Teil unter `meters/...`
+    und einen Stromzähler-spezifischen Teil unter `meters/X/...` wobei `X` einer Stromzähler-Nummer entspricht.
+    Der Stromzähler-spezifische Teil beinhaltet immer
+    - {{{ref:meters/X/value_ids}}}
+    - {{{ref:meters/X/values}}}
+    - {{{ref:meters/X/live}}}
+    - {{{ref:meters/X/history}}}
 
+    Beispielsweise können die Messwerte des ersten Stromzählers (der die Stromzählernummer 0 besitzt) unter `meters/0/values` gelesen werden.
+    Außerdem hat jeder Zähler die APIs
+    - {{{ref:meters/X/config}}}
+    - {{{ref:meters/X/state}}}
+    - {{{ref:meters/X/errors}}}
+
+    deren Inhalt von der Klasse des Stromzählers abhängt.
+    Die Stromzählerklasse wird als das <a href="#unions_section">Union</a>-Tag von {{{ref:meters/X/config}}} angegeben.
 
     Jeder Stromzähler meldet seine Messwerte unter {{{ref:meters/X/values}}} als ein Array von Floats.
     Welcher Messwert wie zu interpretieren ist, kann unter {{{ref:meters/X/value_ids}}} (einem Array von Ints, den sogenannten MeterValueIDs) ausgelesen werden:
     Wenn beispielsweise an Index 3 in {{{ref:meters/X/value_ids}}} die MeterValueID 13 gelesen wird, dann ist der {{{ref:meters/X/values}}}-Wert an Index 3 als der Phasenstrom auf L1 zu interpretieren.
-    Alle MeterValueIDs sind auf Github dokumentiert: <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
+
+    Alle MeterValueIDs sind auf Github dokumentiert: [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+    <br/>
+    <br/>
     """,
     Version.ANY, [
-    Func("X/values", FuncType.STATE, Elem.ARRAY("Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus {{{ref:meters/X/value_ids}}} ermittelt werden. Bei einem API-Stromzähler können diese Werte über meters/X/update geschrieben werden", member_type=EType.FLOAT)),
+    Func("X/values", FuncType.STATE, Elem.ARRAY("Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus {{{ref:meters/X/value_ids}}} ermittelt werden.", member_type=EType.FLOAT)),
+    Func("X/update", FuncType.COMMAND, Elem.ARRAY("Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzähler (Union-Tag 4 in der entsprechenden {{{ref:meters/X/config}}}) verwendet werden.", member_type=EType.FLOAT)),
 
-    Func("X/value_ids", FuncType.STATE, Elem.ARRAY("Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus {{{ref:meters/X/values}}} an. <a href=\"https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv\">Dokumentation der MeterValueIDs</a>", member_type=EType.INT)),
+    Func("X/value_ids", FuncType.STATE, Elem.ARRAY("Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus {{{ref:meters/X/values}}} an. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)", member_type=EType.INT)),
 
     Func("X/history", FuncType.HTTP_ONLY, Elem.OBJECT("Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.", members={
         "offset": Elem.INT("Das Alter des zuletzt gemessenen Wertes.", unit=Units.ms),
@@ -55,7 +68,7 @@ meters = Module("meters", "Stromzähler", "",
         }),
         4: Elem.OBJECT("API-Stromzähler", members={
             "display_name": Elem.STRING("Anzeigename des Stromzählers"),
-            "value_ids": Elem.ARRAY("MeterValueIDs, die über die API {{{ref:meters/X/values:meters/X/update}}} gesetzt werden können sollen. <a href=\"https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv\">Dokumentation der MeterValueIDs</a>", member_type=EType.INT)
+            "value_ids": Elem.ARRAY("MeterValueIDs, die über die API {{{ref:meters/X/values:meters/X/update}}} gesetzt werden können sollen. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)", member_type=EType.INT)
         }),
         5: Elem.OBJECT("SunSpec-Stromzähler über Modbus-TCP", members={
             "display_name": Elem.STRING("Anzeigename des Stromzählers"),
@@ -112,7 +125,7 @@ meters = Module("meters", "Stromzähler", "",
         })
     ),
 
-    Func("X/reset", FuncType.COMMAND, Elem.NULL("Setzt alle zurücksetzbaren (Alle Werte deren \"kind\"-Eintrag \"resettable\" ist: <a href=\"https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv\">Dokumentation der MeterValueIDs</a>) Zählerwerte des X. Stromzählers zurück."), command_is_action=True),
+    Func("X/reset", FuncType.COMMAND, Elem.NULL("Setzt alle zurücksetzbaren (Alle Werte deren `kind`-Eintrag `resettable` ist: [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)) Zählerwerte des X. Stromzählers zurück."), command_is_action=True),
     Func("X/last_reset", FuncType.STATE, Elem.OBJECT("Der Zeitpunkt des letzten Zähler-Resets (siehe {{{ref:meters/X/reset}}}) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.", members={
             "last_reset": Elem.INT("Unix-Timestamp des Zeitpunkts des letzten Zähler-Resets.", unit=Units.s)
         })

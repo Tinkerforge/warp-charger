@@ -15,10 +15,10 @@ wifi = Module("wifi", "WLAN-Konfiguration", "", "", Version.ANY, [
                 Const(3,"Fallback aktiv"),
             ]),
             "ap_bssid": Elem.STRING("BSSID des WLAN-Access-Points."),
-            "sta_ip": Elem.STRING("Aktuelle IP der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht."),
-            "sta_subnet": Elem.STRING("Aktuelle Subnetzmaske der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht."),
+            "sta_ip": Elem.STRING("Aktuelle IP des Geräts im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht."),
+            "sta_subnet": Elem.STRING("Aktuelle Subnetzmaske des Geräts im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht."),
             "sta_rssi": Elem.INT("Die aktuelle Empfangsqualität. 0 falls keine Verbindung besteht, sonst negativ. Werte näher 0 entsprechen einem besseren Empfang."),
-            "sta_bssid": Elem.STRING("Die BSSID der Gegenstelle, zu der die Wallbox verbunden ist."),
+            "sta_bssid": Elem.STRING("Die BSSID der Gegenstelle, zu der das Gerät verbunden ist."),
             "connection_start": Elem.INT("Zeit in Millisekunden zu der die letzte Verbindung aufgebaut wurde.", unit=Units.ms),
             "connection_end": Elem.INT("Zeit in Millisekunden zu der die letzte Verbindung getrennt wurde.", unit=Units.ms)
         })
@@ -40,11 +40,11 @@ wifi = Module("wifi", "WLAN-Konfiguration", "", "", Version.ANY, [
                 Const(False, "Verbindet sich nur zu jedem Access Point mit der konfigurierten SSID, z.B. mit Repeatern.")
             ]),
             "passphrase": Elem.STRING("Die WLAN-Passphrase. Maximal 63 Byte. Dieser Eintrag ist optional und kann leer übergeben werden, falls sich zu einem unverschlüsselten WLAN verbunden werden soll.", censored=True),
-            "ip": Elem.STRING("IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als \"0.0.0.0\" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll."),
-            "gateway": Elem.STRING("Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll."),
-            "subnet": Elem.STRING("Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll."),
-            "dns": Elem.STRING("DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll."),
-            "dns2": Elem.STRING("Alternative DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll."),
+            "ip": Elem.STRING("IP-Adresse, die das Gerät im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als \"0.0.0.0\" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll."),
+            "gateway": Elem.STRING("Gateway-Adresse, die das Gerät im konfigurierten Netz verwenden soll."),
+            "subnet": Elem.STRING("Subnetzmaske, die das Gerät im konfigurierten Netz verwenden soll."),
+            "dns": Elem.STRING("DNS-Server-Adresse, die das Gerät im konfigurierten Netz verwenden soll."),
+            "dns2": Elem.STRING("Alternative DNS-Server-Adresse, die das Gerät im konfigurierten Netz verwenden soll."),
             "wpa_eap_config": Elem.UNION("WPA-Enterprise-Konfiguration", members={
                 0: Elem.NULL("WPA Personal"),
                 1: Elem.OBJECT("EAP-TLS", members={
@@ -78,9 +78,9 @@ wifi = Module("wifi", "WLAN-Konfiguration", "", "", Version.ANY, [
             "hide_ssid": Elem.BOOL("true falls die SSID versteckt werden soll, ansonsten false."),
             "passphrase": Elem.STRING("Die WLAN-Passphrase. Maximal 63 Byte.", censored=True),
             "channel": Elem.INT("Kanal, auf dem der Access Point erreichbar sein soll. Gültige Werte sind 1 bis 13 und 0, falls beim Start ein möglichst unbelegter Kanal ausgewählt werden soll."),
-            "ip": Elem.STRING("IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als \"0.0.0.0\" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll."),
-            "gateway": Elem.STRING("Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll."),
-            "subnet": Elem.STRING("Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll."),
+            "ip": Elem.STRING("IP-Adresse, die das Gerät im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als \"0.0.0.0\" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll."),
+            "gateway": Elem.STRING("Gateway-Adresse, die das Gerät im konfigurierten Netz verwenden soll."),
+            "subnet": Elem.STRING("Subnetzmaske, die das Gerät im konfigurierten Netz verwenden soll."),
         })
     ),
 

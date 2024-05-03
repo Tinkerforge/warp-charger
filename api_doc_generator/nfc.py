@@ -10,7 +10,7 @@ nfc = Module("nfc", "NFC-Ladefreigabe", "Benötigt das Feature <a href=\"#featur
                     Const(3, "NFC Forum Typ 3"),
                     Const(4, "NFC Forum Typ 4"),
                 ]),
-                "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d"),
+                "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`"),
                 "last_seen": Elem.INT("Zeit in Millisekunden vor der das Tag zuletzt gesehen wurde.", unit=Units.ms)
             })],
             Elem.OBJECT("Das von {{{ref:nfc/inject_tag}}} vorgetäuschte Tag", members = {
@@ -21,7 +21,7 @@ nfc = Module("nfc", "NFC-Ladefreigabe", "Benötigt das Feature <a href=\"#featur
                     Const(3, "NFC Forum Typ 3"),
                     Const(4, "NFC Forum Typ 4"),
                 ]),
-                "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d"),
+                "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`"),
                 "last_seen": Elem.INT("Zeit in Millisekunden vor der das Tag zuletzt gesehen wurde.", unit=Units.ms)
             })
         ])
@@ -35,7 +35,7 @@ nfc = Module("nfc", "NFC-Ladefreigabe", "Benötigt das Feature <a href=\"#featur
             Const(3, "NFC Forum Typ 3"),
             Const(4, "NFC Forum Typ 4"),
         ]),
-        "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d"),
+        "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`"),
     }), True),
 
      Func("inject_tag_start", FuncType.COMMAND, Elem.OBJECT("Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Starten</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in {{{ref:nfc/seen_tags}}}", members={
@@ -46,7 +46,7 @@ nfc = Module("nfc", "NFC-Ladefreigabe", "Benötigt das Feature <a href=\"#featur
             Const(3, "NFC Forum Typ 3"),
             Const(4, "NFC Forum Typ 4"),
         ]),
-        "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d"),
+        "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`"),
     }), True),
 
      Func("inject_tag_stop", FuncType.COMMAND, Elem.OBJECT("Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Stoppen</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in {{{ref:nfc/seen_tags}}}", members={
@@ -57,7 +57,7 @@ nfc = Module("nfc", "NFC-Ladefreigabe", "Benötigt das Feature <a href=\"#featur
             Const(3, "NFC Forum Typ 3"),
             Const(4, "NFC Forum Typ 4"),
         ]),
-        "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d"),
+        "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`"),
     }), True),
 
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die NFC-Konfiguration.", members={
@@ -72,7 +72,7 @@ nfc = Module("nfc", "NFC-Ladefreigabe", "Benötigt das Feature <a href=\"#featur
                             Const(3, "NFC Forum Typ 3"),
                             Const(4, "NFC Forum Typ 4"),
                         ]),
-                        "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d"),
+                        "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`"),
                     })
                 ]
             ]),

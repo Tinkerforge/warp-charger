@@ -9,7 +9,7 @@ users = Module("users", "Benutzerverwaltung", "", "", Version.CHARGER, [
                     "current": Elem.INT("Diesem Benutzer erlaubter Ladestrom 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 um diesem Nutzer das Laden zu verbieten", unit=Units.mA),
                     "display_name": Elem.STRING("Anzeigename des Benutzers. Wird auch im Ladetracker verwendet."),
                     "username": Elem.STRING("Nutzername zum Anmelden im Webinterface und der HTTP-API."),
-                    "digest_hash": Elem.STRING("HTTP-Digest-Hash. Wird als leerer String zurückgegeben, falls die Anmeldung für diesen Nutzer deaktiviert ist.", censored=True)
+                    "digest_hash": Elem.STRING("HTTP-Digest-Hash. Wird als leerer String zurückgegeben, falls die Anmeldung für diesen Nutzer deaktiviert ist. Wird als null zurückgegeben wenn die Anmeldung für diesen Nutzer aktiviert ist.", censored=True)
                 })
                 ]]),
             "next_user_id": Elem.INT("ID des nächsten anzulegenden Nutzers."),
