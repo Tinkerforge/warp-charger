@@ -9,13 +9,65 @@ import Admonition from '@theme/Admonition';
 
 # Veraltete Stromzähler-API
 **Bei Neuentwicklungen stattdessen [`meters`-Modul](meters.mdx) verwenden!**
-
+Die veraltete Stromzähler-API unterstützt nur einen Stromzähler (den, der als `linked_meter_slot` in [`meters_legacy_api/config`](meters_legacy_api.mdx#meters_legacy_api_config) konfiguriert ist) und kann nur eine Teilmenge der unterstützten Stromzählerwerte melden und verarbeiten. Die veraltete API wird vom [`meters_legacy_api`-Modul](meters_legacy_api.mdx)-Modul emuliert.
 <Tabs groupId="hardwareType" queryString className="hidden-tabs">
 <TabItem value="warp1">
 ## `meter/state` {#meter_state_warp1}
 
 
 Der Zustand des Stromzählers.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/state
+```
+```jsx
+{ "state": 2, "type": 3 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meter/state -d '{ "state": 2, "type": 3 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/state
+```
+```jsx
+{ "state": 2, "type": 3 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/state<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/state_update -m '{ "state": 2, "type": 3 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -40,7 +92,7 @@ Der Zustand des Stromzählers.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`type`<br/>int</th>
     <td>
-        Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!
+        Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jedem Gerät unterstützt!
         - **0** - Kein Stromzähler verfügbar
         - **2** - Eastron SDM630
         - **3** - Eastron SDM72V2
@@ -55,6 +107,58 @@ Der Zustand des Stromzählers.
 
 
 Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"><code>"meter"</code></a>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/values
+```
+```jsx
+{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meter/values -d '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/values
+```
+```jsx
+{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/values<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/values_update -m '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -94,6 +198,70 @@ Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"
 
 
 Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter_phases"><code>"meter_phases"</code></a>.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/phases
+```
+```jsx
+{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meter/phases -d '{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/phases
+```
+```jsx
+{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/phases<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/phases_update -m '{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -132,6 +300,35 @@ Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter
 
 
 Fehlerzähler der Kommunikation mit dem Stromzähler.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meter/error_counters
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/error_counters
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "meter": 0, "bricklet": 0, "bricklet_reset": 0 }
+```
+
+
+:::
 
 
 <table>
@@ -171,6 +368,210 @@ Fehlerzähler der Kommunikation mit dem Stromzähler.
 
 
 Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Benötigt das Feature <a href="#features_meter_all_values"><code>"meter_all_values"</code></a>. Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/all_values
+```
+```jsx
+[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meter/all_values -d '[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/all_values
+```
+```jsx
+[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/all_values<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/all_values_update -m '[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -583,6 +984,35 @@ mosquitto_pub -h $BROKER -t $PREFIX/meter/reset -m 'null'
 
 
 Der Zeitpunkt des letzten Zähler-Resets (siehe [`meter/reset`](meter.mdx#meter_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meter/last_reset
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/last_reset
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "last_reset": 1714728252 }
+```
+Zuletzt zurückgesetzt 2024-05-03T11:24:12+02:00
+
+:::
 
 
 <table>
@@ -642,6 +1072,47 @@ Erlaubt es den verbauten Zählertyp zu überschreiben, falls die Auto-Detektion 
 
 
 Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+```bash
+curl http://$HOST/meter/history
+```
+```jsx
+{
+  "offset": 60927,
+  "samples": [
+      null, null, null, null, null, null, null, null,
+      // 600 weitere null-Werte entfernt
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0, 1736, 6656, 6655, 6666,
+      6680, 6716, 6714, 6625, 6640, 6641, 6595, 6612,
+      6592, 6593, 6589, 6592, 6600, 6625, 6626, 6637,
+      6665, 6636, 6632, 6656, 6616, 6611, 6646, 6670,
+      6691, 6715, 6787, 6754, 6761, 6797, 6771, 6685,
+      6705, 6778, 6703, 6675, 6681, 6721, 6739, 6816,
+      6872, 6858, 6821, 6836, 6784, 6871, 6943, 6930,
+      6968, 6955, 6837, 6800, 6846, 6919, 6881, 6736,
+      6671, 6655, 6674, 6743, 6878, 5733, 4462, 3712,
+      3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
+         0,    0,    0,    0,    0,    0,    0,    0
+  ]
+}
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -654,7 +1125,7 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -681,6 +1152,43 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
 
 
 Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meter/history`](meter.mdx#meter_history) generiert.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+```bash
+curl http://$HOST/meter/live
+```
+```jsx
+{
+  "offset": 370,
+  "samples_per_second": 1.99565,
+  "samples": [
+    2626, 2626, 2626, 2626, 2626, 2626, 2626, 2673,
+    2673, 2673, 2673, 2673, 2673, 2673, 2673, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677,  988,
+     988,  988,  988,  988,  988,  988,  988,    3,
+       3,    3,    3,    3,    3,    3,    3,    1,
+       1,    1,    1,    1,    1,    1,    1,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    4
+   ]
+}
+```
+Es liegen 80 Werte vor, ~ 2 Werte pro Sekunde wurden erhoben, das Offset des letzten Werts sind 370 ms
+-> Die Messwerte reichen im Moment 40,370 Sekunden in die Vergangenheit.
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -693,7 +1201,7 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -725,6 +1233,58 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
 
 
 Der Zustand des Stromzählers.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/state
+```
+```jsx
+{ "state": 2, "type": 3 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meter/state -d '{ "state": 2, "type": 3 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/state
+```
+```jsx
+{ "state": 2, "type": 3 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/state<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/state_update -m '{ "state": 2, "type": 3 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -749,7 +1309,7 @@ Der Zustand des Stromzählers.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`type`<br/>int</th>
     <td>
-        Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!
+        Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jedem Gerät unterstützt!
         - **0** - Kein Stromzähler verfügbar
         - **2** - Eastron SDM630
         - **3** - Eastron SDM72V2
@@ -767,6 +1327,58 @@ Der Zustand des Stromzählers.
 
 
 Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"><code>"meter"</code></a>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/values
+```
+```jsx
+{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meter/values -d '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/values
+```
+```jsx
+{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/values<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/values_update -m '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -806,6 +1418,70 @@ Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"
 
 
 Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter_phases"><code>"meter_phases"</code></a>.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/phases
+```
+```jsx
+{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meter/phases -d '{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/phases
+```
+```jsx
+{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/phases<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/phases_update -m '{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -844,6 +1520,42 @@ Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter
 
 
 Fehlerzähler der Kommunikation mit dem Stromzähler.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meter/error_counters
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/error_counters
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "local_timeout": 0,
+  "global_timeout": 0,
+  "illegal_function": 0,
+  "illegal_data_access": 0,
+  "illegal_data_value": 0,
+  "slave_device_failure": 0
+}
+```
+
+
+:::
 
 
 <table>
@@ -904,6 +1616,210 @@ Fehlerzähler der Kommunikation mit dem Stromzähler.
 
 
 Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Benötigt das Feature <a href="#features_meter_all_values"><code>"meter_all_values"</code></a>. Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/all_values
+```
+```jsx
+[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meter/all_values -d '[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/all_values
+```
+```jsx
+[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/all_values<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/all_values_update -m '[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1316,6 +2232,35 @@ mosquitto_pub -h $BROKER -t $PREFIX/meter/reset -m 'null'
 
 
 Der Zeitpunkt des letzten Zähler-Resets (siehe [`meter/reset`](meter.mdx#meter_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meter/last_reset
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/last_reset
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "last_reset": 1714728252 }
+```
+Zuletzt zurückgesetzt 2024-05-03T11:24:12+02:00
+
+:::
 
 
 <table>
@@ -1345,6 +2290,47 @@ Der Zeitpunkt des letzten Zähler-Resets (siehe [`meter/reset`](meter.mdx#meter_
 
 
 Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+```bash
+curl http://$HOST/meter/history
+```
+```jsx
+{
+  "offset": 60927,
+  "samples": [
+      null, null, null, null, null, null, null, null,
+      // 600 weitere null-Werte entfernt
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0, 1736, 6656, 6655, 6666,
+      6680, 6716, 6714, 6625, 6640, 6641, 6595, 6612,
+      6592, 6593, 6589, 6592, 6600, 6625, 6626, 6637,
+      6665, 6636, 6632, 6656, 6616, 6611, 6646, 6670,
+      6691, 6715, 6787, 6754, 6761, 6797, 6771, 6685,
+      6705, 6778, 6703, 6675, 6681, 6721, 6739, 6816,
+      6872, 6858, 6821, 6836, 6784, 6871, 6943, 6930,
+      6968, 6955, 6837, 6800, 6846, 6919, 6881, 6736,
+      6671, 6655, 6674, 6743, 6878, 5733, 4462, 3712,
+      3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
+         0,    0,    0,    0,    0,    0,    0,    0
+  ]
+}
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1357,7 +2343,7 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -1384,6 +2370,43 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
 
 
 Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meter/history`](meter.mdx#meter_history) generiert.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+```bash
+curl http://$HOST/meter/live
+```
+```jsx
+{
+  "offset": 370,
+  "samples_per_second": 1.99565,
+  "samples": [
+    2626, 2626, 2626, 2626, 2626, 2626, 2626, 2673,
+    2673, 2673, 2673, 2673, 2673, 2673, 2673, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677,  988,
+     988,  988,  988,  988,  988,  988,  988,    3,
+       3,    3,    3,    3,    3,    3,    3,    1,
+       1,    1,    1,    1,    1,    1,    1,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    4
+   ]
+}
+```
+Es liegen 80 Werte vor, ~ 2 Werte pro Sekunde wurden erhoben, das Offset des letzten Werts sind 370 ms
+-> Die Messwerte reichen im Moment 40,370 Sekunden in die Vergangenheit.
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1396,7 +2419,7 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -1428,6 +2451,58 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
 
 
 Der Zustand des Stromzählers.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/state
+```
+```jsx
+{ "state": 2, "type": 3 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meter/state -d '{ "state": 2, "type": 3 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/state
+```
+```jsx
+{ "state": 2, "type": 3 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/state<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/state_update -m '{ "state": 2, "type": 3 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1452,7 +2527,7 @@ Der Zustand des Stromzählers.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`type`<br/>int</th>
     <td>
-        Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!
+        Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jedem Gerät unterstützt!
         - **0** - Kein Stromzähler verfügbar
         - **2** - Eastron SDM630
         - **3** - Eastron SDM72V2
@@ -1470,6 +2545,58 @@ Der Zustand des Stromzählers.
 
 
 Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"><code>"meter"</code></a>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/values
+```
+```jsx
+{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meter/values -d '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/values
+```
+```jsx
+{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/values<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/values_update -m '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1509,6 +2636,70 @@ Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"
 
 
 Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter_phases"><code>"meter_phases"</code></a>.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/phases
+```
+```jsx
+{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meter/phases -d '{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/phases
+```
+```jsx
+{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/phases<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/phases_update -m '{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1547,6 +2738,42 @@ Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter
 
 
 Fehlerzähler der Kommunikation mit dem Stromzähler.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meter/error_counters
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/error_counters
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "local_timeout": 0,
+  "global_timeout": 0,
+  "illegal_function": 0,
+  "illegal_data_access": 0,
+  "illegal_data_value": 0,
+  "slave_device_failure": 0
+}
+```
+
+
+:::
 
 
 <table>
@@ -1607,6 +2834,210 @@ Fehlerzähler der Kommunikation mit dem Stromzähler.
 
 
 Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Benötigt das Feature <a href="#features_meter_all_values"><code>"meter_all_values"</code></a>. Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/all_values
+```
+```jsx
+[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meter/all_values -d '[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/all_values
+```
+```jsx
+[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/all_values<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/all_values_update -m '[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2019,6 +3450,35 @@ mosquitto_pub -h $BROKER -t $PREFIX/meter/reset -m 'null'
 
 
 Der Zeitpunkt des letzten Zähler-Resets (siehe [`meter/reset`](meter.mdx#meter_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meter/last_reset
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/last_reset
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "last_reset": 1714728252 }
+```
+Zuletzt zurückgesetzt 2024-05-03T11:24:12+02:00
+
+:::
 
 
 <table>
@@ -2048,6 +3508,47 @@ Der Zeitpunkt des letzten Zähler-Resets (siehe [`meter/reset`](meter.mdx#meter_
 
 
 Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+```bash
+curl http://$HOST/meter/history
+```
+```jsx
+{
+  "offset": 60927,
+  "samples": [
+      null, null, null, null, null, null, null, null,
+      // 600 weitere null-Werte entfernt
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0, 1736, 6656, 6655, 6666,
+      6680, 6716, 6714, 6625, 6640, 6641, 6595, 6612,
+      6592, 6593, 6589, 6592, 6600, 6625, 6626, 6637,
+      6665, 6636, 6632, 6656, 6616, 6611, 6646, 6670,
+      6691, 6715, 6787, 6754, 6761, 6797, 6771, 6685,
+      6705, 6778, 6703, 6675, 6681, 6721, 6739, 6816,
+      6872, 6858, 6821, 6836, 6784, 6871, 6943, 6930,
+      6968, 6955, 6837, 6800, 6846, 6919, 6881, 6736,
+      6671, 6655, 6674, 6743, 6878, 5733, 4462, 3712,
+      3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
+         0,    0,    0,    0,    0,    0,    0,    0
+  ]
+}
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2060,7 +3561,7 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -2087,6 +3588,43 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
 
 
 Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meter/history`](meter.mdx#meter_history) generiert.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+```bash
+curl http://$HOST/meter/live
+```
+```jsx
+{
+  "offset": 370,
+  "samples_per_second": 1.99565,
+  "samples": [
+    2626, 2626, 2626, 2626, 2626, 2626, 2626, 2673,
+    2673, 2673, 2673, 2673, 2673, 2673, 2673, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677,  988,
+     988,  988,  988,  988,  988,  988,  988,    3,
+       3,    3,    3,    3,    3,    3,    3,    1,
+       1,    1,    1,    1,    1,    1,    1,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    4
+   ]
+}
+```
+Es liegen 80 Werte vor, ~ 2 Werte pro Sekunde wurden erhoben, das Offset des letzten Werts sind 370 ms
+-> Die Messwerte reichen im Moment 40,370 Sekunden in die Vergangenheit.
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2099,7 +3637,7 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -2131,6 +3669,58 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
 
 
 Der Zustand des Stromzählers.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/state
+```
+```jsx
+{ "state": 2, "type": 3 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meter/state -d '{ "state": 2, "type": 3 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/state
+```
+```jsx
+{ "state": 2, "type": 3 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/state<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/state_update -m '{ "state": 2, "type": 3 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2155,7 +3745,7 @@ Der Zustand des Stromzählers.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`type`<br/>int</th>
     <td>
-        Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!
+        Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jedem Gerät unterstützt!
         - **0** - Kein Stromzähler verfügbar
         - **2** - Eastron SDM630
         - **3** - Eastron SDM72V2
@@ -2173,6 +3763,58 @@ Der Zustand des Stromzählers.
 
 
 Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"><code>"meter"</code></a>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/values
+```
+```jsx
+{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meter/values -d '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/values
+```
+```jsx
+{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/values<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/values_update -m '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2212,6 +3854,70 @@ Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"
 
 
 Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter_phases"><code>"meter_phases"</code></a>.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/phases
+```
+```jsx
+{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meter/phases -d '{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/phases
+```
+```jsx
+{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/phases<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/phases_update -m '{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2250,6 +3956,42 @@ Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter
 
 
 Fehlerzähler der Kommunikation mit dem Stromzähler.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meter/error_counters
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/error_counters
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "local_timeout": 0,
+  "global_timeout": 0,
+  "illegal_function": 0,
+  "illegal_data_access": 0,
+  "illegal_data_value": 0,
+  "slave_device_failure": 0
+}
+```
+
+
+:::
 
 
 <table>
@@ -2310,6 +4052,210 @@ Fehlerzähler der Kommunikation mit dem Stromzähler.
 
 
 Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Benötigt das Feature <a href="#features_meter_all_values"><code>"meter_all_values"</code></a>. Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/all_values
+```
+```jsx
+[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meter/all_values -d '[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/all_values
+```
+```jsx
+[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/all_values<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/all_values_update -m '[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2722,6 +4668,35 @@ mosquitto_pub -h $BROKER -t $PREFIX/meter/reset -m 'null'
 
 
 Der Zeitpunkt des letzten Zähler-Resets (siehe [`meter/reset`](meter.mdx#meter_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meter/last_reset
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/last_reset
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "last_reset": 1714728252 }
+```
+Zuletzt zurückgesetzt 2024-05-03T11:24:12+02:00
+
+:::
 
 
 <table>
@@ -2751,6 +4726,47 @@ Der Zeitpunkt des letzten Zähler-Resets (siehe [`meter/reset`](meter.mdx#meter_
 
 
 Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+```bash
+curl http://$HOST/meter/history
+```
+```jsx
+{
+  "offset": 60927,
+  "samples": [
+      null, null, null, null, null, null, null, null,
+      // 600 weitere null-Werte entfernt
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0, 1736, 6656, 6655, 6666,
+      6680, 6716, 6714, 6625, 6640, 6641, 6595, 6612,
+      6592, 6593, 6589, 6592, 6600, 6625, 6626, 6637,
+      6665, 6636, 6632, 6656, 6616, 6611, 6646, 6670,
+      6691, 6715, 6787, 6754, 6761, 6797, 6771, 6685,
+      6705, 6778, 6703, 6675, 6681, 6721, 6739, 6816,
+      6872, 6858, 6821, 6836, 6784, 6871, 6943, 6930,
+      6968, 6955, 6837, 6800, 6846, 6919, 6881, 6736,
+      6671, 6655, 6674, 6743, 6878, 5733, 4462, 3712,
+      3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
+         0,    0,    0,    0,    0,    0,    0,    0
+  ]
+}
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2763,7 +4779,7 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -2790,6 +4806,43 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
 
 
 Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meter/history`](meter.mdx#meter_history) generiert.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+```bash
+curl http://$HOST/meter/live
+```
+```jsx
+{
+  "offset": 370,
+  "samples_per_second": 1.99565,
+  "samples": [
+    2626, 2626, 2626, 2626, 2626, 2626, 2626, 2673,
+    2673, 2673, 2673, 2673, 2673, 2673, 2673, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677,  988,
+     988,  988,  988,  988,  988,  988,  988,    3,
+       3,    3,    3,    3,    3,    3,    3,    1,
+       1,    1,    1,    1,    1,    1,    1,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    4
+   ]
+}
+```
+Es liegen 80 Werte vor, ~ 2 Werte pro Sekunde wurden erhoben, das Offset des letzten Werts sind 370 ms
+-> Die Messwerte reichen im Moment 40,370 Sekunden in die Vergangenheit.
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2802,7 +4855,7 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -2834,6 +4887,58 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
 
 
 Der Zustand des Stromzählers.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/state
+```
+```jsx
+{ "state": 2, "type": 3 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meter/state -d '{ "state": 2, "type": 3 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/state
+```
+```jsx
+{ "state": 2, "type": 3 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/state<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/state_update -m '{ "state": 2, "type": 3 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2861,7 +4966,7 @@ Der Zustand des Stromzählers.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`type`<br/>int</th>
     <td>
-        Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!
+        Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jedem Gerät unterstützt!
         
         
         
@@ -2889,6 +4994,58 @@ Der Zustand des Stromzählers.
 
 
 Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"><code>"meter"</code></a>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/values
+```
+```jsx
+{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meter/values -d '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/values
+```
+```jsx
+{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/values<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/values_update -m '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2928,6 +5085,70 @@ Die Messwerte des Stromzählers. Benötigt das Feature <a href="#features_meter"
 
 
 Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter_phases"><code>"meter_phases"</code></a>.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/phases
+```
+```jsx
+{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meter/phases -d '{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/phases
+```
+```jsx
+{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/phases<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/phases_update -m '{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2972,6 +5193,35 @@ Angeschlossene und aktive Phasen. Benötigt das Feature <a href="#features_meter
 
 
 Fehlerzähler der Kommunikation mit dem Stromzähler.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meter/error_counters
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/error_counters
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "meter": 0, "bricklet": 0, "bricklet_reset": 0 }
+```
+
+
+:::
 
 
 <table>
@@ -3053,6 +5303,210 @@ Fehlerzähler der Kommunikation mit dem Stromzähler.
 
 
 Alle Messwerte, die vom eingebauten Stromzähler gemessen werden. Benötigt das Feature <a href="#features_meter_all_values"><code>"meter_all_values"</code></a>. Hintereinanderliegende Werte die mit .. gekennzeichnet sind, beziehen sich auf die drei Phasen L1, L2 und L3.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/all_values
+```
+```jsx
+[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meter/all_values -d '[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/all_values
+```
+```jsx
+[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/all_values<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/all_values_update -m '[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -3465,6 +5919,35 @@ mosquitto_pub -h $BROKER -t $PREFIX/meter/reset -m 'null'
 
 
 Der Zeitpunkt des letzten Zähler-Resets (siehe [`meter/reset`](meter.mdx#meter_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meter/last_reset
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/last_reset
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "last_reset": 1714728252 }
+```
+Zuletzt zurückgesetzt 2024-05-03T11:24:12+02:00
+
+:::
 
 
 <table>
@@ -3527,6 +6010,47 @@ Erlaubt es den verbauten Zählertyp zu überschreiben, falls die Auto-Detektion 
 
 
 Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+```bash
+curl http://$HOST/meter/history
+```
+```jsx
+{
+  "offset": 60927,
+  "samples": [
+      null, null, null, null, null, null, null, null,
+      // 600 weitere null-Werte entfernt
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0, 1736, 6656, 6655, 6666,
+      6680, 6716, 6714, 6625, 6640, 6641, 6595, 6612,
+      6592, 6593, 6589, 6592, 6600, 6625, 6626, 6637,
+      6665, 6636, 6632, 6656, 6616, 6611, 6646, 6670,
+      6691, 6715, 6787, 6754, 6761, 6797, 6771, 6685,
+      6705, 6778, 6703, 6675, 6681, 6721, 6739, 6816,
+      6872, 6858, 6821, 6836, 6784, 6871, 6943, 6930,
+      6968, 6955, 6837, 6800, 6846, 6919, 6881, 6736,
+      6671, 6655, 6674, 6743, 6878, 5733, 4462, 3712,
+      3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
+         0,    0,    0,    0,    0,    0,    0,    0
+  ]
+}
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -3539,7 +6063,7 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>
@@ -3566,6 +6090,43 @@ Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden 
 
 
 Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meter/history`](meter.mdx#meter_history) generiert.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+```bash
+curl http://$HOST/meter/live
+```
+```jsx
+{
+  "offset": 370,
+  "samples_per_second": 1.99565,
+  "samples": [
+    2626, 2626, 2626, 2626, 2626, 2626, 2626, 2673,
+    2673, 2673, 2673, 2673, 2673, 2673, 2673, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677,  988,
+     988,  988,  988,  988,  988,  988,  988,    3,
+       3,    3,    3,    3,    3,    3,    3,    1,
+       1,    1,    1,    1,    1,    1,    1,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    4
+   ]
+}
+```
+Es liegen 80 Werte vor, ~ 2 Werte pro Sekunde wurden erhoben, das Offset des letzten Werts sind 370 ms
+-> Die Messwerte reichen im Moment 40,370 Sekunden in die Vergangenheit.
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -3578,7 +6139,7 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>float (<abbr title="Sekunde">s</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
         Das Alter des zuletzt gemessenen Wertes.
     </td>

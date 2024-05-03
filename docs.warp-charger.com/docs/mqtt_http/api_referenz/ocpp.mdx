@@ -18,6 +18,92 @@ Auf dieser Hardware nicht unterstützt!
 
 
 Konfiguration der OCPP-Verbindung
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/ocpp/config
+```
+```jsx
+{
+  "enable": true,
+  "url": "wss://10.0.3.5:8180/steve/websocket/CentralSystemService",
+  "identity": "warp2-AbCd",
+  "enable_auth": true,
+  // highlight-start
+  // Wird nicht zurückgegeben
+  "pass": null,
+  //highlight-end
+  "cert_id": -1
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/ocpp/config -d '{
+  "enable": true,
+  "url": "wss://10.0.3.5:8180/steve/websocket/CentralSystemService",
+  "identity": "warp2-AbCd",
+  "enable_auth": true,
+  "pass": "mypassword",
+  "cert_id": -1
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ocpp/config
+```
+```jsx
+{
+  "enable": true,
+  "url": "wss://10.0.3.5:8180/steve/websocket/CentralSystemService",
+  "identity": "warp2-AbCd",
+  "enable_auth": true,
+  // highlight-start
+  // Wird nicht zurückgegeben
+  "pass": null,
+  //highlight-end
+  "cert_id": -1
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/ocpp/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/ocpp/config_update -m '{
+  "enable": true,
+  "url": "wss://10.0.3.5:8180/steve/websocket/CentralSystemService",
+  "identity": "warp2-AbCd",
+  "enable_auth": true,
+  "pass": "mypassword",
+  "cert_id": -1
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -116,6 +202,92 @@ mosquitto_pub -h $BROKER -t $PREFIX/ocpp/reset -m 'null'
 
 
 Konfiguration der OCPP-Verbindung
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/ocpp/config
+```
+```jsx
+{
+  "enable": true,
+  "url": "wss://10.0.3.5:8180/steve/websocket/CentralSystemService",
+  "identity": "warp3-AbCd",
+  "enable_auth": true,
+  // highlight-start
+  // Wird nicht zurückgegeben
+  "pass": null,
+  //highlight-end
+  "cert_id": -1
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/ocpp/config -d '{
+  "enable": true,
+  "url": "wss://10.0.3.5:8180/steve/websocket/CentralSystemService",
+  "identity": "warp3-AbCd",
+  "enable_auth": true,
+  "pass": "mypassword",
+  "cert_id": -1
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ocpp/config
+```
+```jsx
+{
+  "enable": true,
+  "url": "wss://10.0.3.5:8180/steve/websocket/CentralSystemService",
+  "identity": "warp3-AbCd",
+  "enable_auth": true,
+  // highlight-start
+  // Wird nicht zurückgegeben
+  "pass": null,
+  //highlight-end
+  "cert_id": -1
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/ocpp/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/ocpp/config_update -m '{
+  "enable": true,
+  "url": "wss://10.0.3.5:8180/steve/websocket/CentralSystemService",
+  "identity": "warp3-AbCd",
+  "enable_auth": true,
+  "pass": "mypassword",
+  "cert_id": -1
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -217,6 +389,92 @@ Auf dieser Hardware nicht unterstützt!
 
 
 Konfiguration der OCPP-Verbindung
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/ocpp/config
+```
+```jsx
+{
+  "enable": true,
+  "url": "wss://10.0.3.5:8180/steve/websocket/CentralSystemService",
+  "identity": "warp-AbCd",
+  "enable_auth": true,
+  // highlight-start
+  // Wird nicht zurückgegeben
+  "pass": null,
+  //highlight-end
+  "cert_id": -1
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/ocpp/config -d '{
+  "enable": true,
+  "url": "wss://10.0.3.5:8180/steve/websocket/CentralSystemService",
+  "identity": "warp-AbCd",
+  "enable_auth": true,
+  "pass": "mypassword",
+  "cert_id": -1
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ocpp/config
+```
+```jsx
+{
+  "enable": true,
+  "url": "wss://10.0.3.5:8180/steve/websocket/CentralSystemService",
+  "identity": "warp-AbCd",
+  "enable_auth": true,
+  // highlight-start
+  // Wird nicht zurückgegeben
+  "pass": null,
+  //highlight-end
+  "cert_id": -1
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/ocpp/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/ocpp/config_update -m '{
+  "enable": true,
+  "url": "wss://10.0.3.5:8180/steve/websocket/CentralSystemService",
+  "identity": "warp-AbCd",
+  "enable_auth": true,
+  "pass": "mypassword",
+  "cert_id": -1
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>

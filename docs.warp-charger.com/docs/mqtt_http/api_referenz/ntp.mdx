@@ -15,6 +15,35 @@ import Admonition from '@theme/Admonition';
 
 
 Der Zustand der Netzwerkzeitsynchronisierung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/ntp/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ntp/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "synced": true, "time": 28578987 }
+```
+
+
+:::
 
 
 <table>
@@ -29,14 +58,14 @@ Der Zustand der Netzwerkzeitsynchronisierung.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`synced`<br/>bool</th>
     <td>
-        Gibt an, ob die Wallbox ihre Zeit per NTP synchronisieren konnte.
+        Gibt an, ob das Gerät seine Zeit per NTP synchronisieren konnte.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`time`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der die aktuelle Zeit der Wallbox angibt, oder 0 falls keine Zeitsynchronisierung besteht
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der die aktuelle Zeit des Geräts angibt, oder 0 falls keine Zeitsynchronisierung besteht
     </td>
 </tr>
     </tbody>
@@ -47,6 +76,82 @@ Der Zustand der Netzwerkzeitsynchronisierung.
 
 
 Die Konfiguration der Netzwerkzeitsynchronisierung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/ntp/config
+```
+```jsx
+{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/ntp/config -d '{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ntp/config
+```
+```jsx
+{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/ntp/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/ntp/config_update -m '{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -61,21 +166,21 @@ Die Konfiguration der Netzwerkzeitsynchronisierung.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable`<br/>bool</th>
     <td>
-        Gibt an, ob die Wallbox per NTP ihre Zeit synchronisieren soll. Die erhaltene Zeit wird zur Bestimmung der Startzeitpunkte von getrackten Ladevorgängen und im Ereignislog verwendet.
+        Gibt an, ob das Gerät per NTP seine Zeit synchronisieren soll. Die erhaltene Zeit wird zur Bestimmung der Startzeitpunkte von getrackten Ladevorgängen und im Ereignislog verwendet.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`use_dhcp`<br/>bool</th>
     <td>
-        Gibt an, ob die Wallbox NTP-Server per DHCP empfangen soll. Funktioniert nur, wenn DHCP zur IP-Addressvergabe verwendet wird.
+        Gibt an, ob das Gerät NTP-Server per DHCP empfangen soll. Funktioniert nur, wenn DHCP zur IP-Addressvergabe verwendet wird.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`timezone`<br/>string</th>
     <td>
-        Die Zeitzone, in der sich die Wallbox befindet. z.B. "Europe/Berlin"
+        Die Zeitzone, in der sich das Gerät befindet. z.B. "Europe/Berlin"
     </td>
 </tr>
 
@@ -100,6 +205,35 @@ Die Konfiguration der Netzwerkzeitsynchronisierung.
 
 
 Der Zustand der Netzwerkzeitsynchronisierung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/ntp/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ntp/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "synced": true, "time": 28578987 }
+```
+
+
+:::
 
 
 <table>
@@ -114,14 +248,14 @@ Der Zustand der Netzwerkzeitsynchronisierung.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`synced`<br/>bool</th>
     <td>
-        Gibt an, ob die Wallbox ihre Zeit per NTP synchronisieren konnte.
+        Gibt an, ob das Gerät seine Zeit per NTP synchronisieren konnte.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`time`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der die aktuelle Zeit der Wallbox angibt, oder 0 falls keine Zeitsynchronisierung besteht
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der die aktuelle Zeit des Geräts angibt, oder 0 falls keine Zeitsynchronisierung besteht
     </td>
 </tr>
     </tbody>
@@ -132,6 +266,82 @@ Der Zustand der Netzwerkzeitsynchronisierung.
 
 
 Die Konfiguration der Netzwerkzeitsynchronisierung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/ntp/config
+```
+```jsx
+{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/ntp/config -d '{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ntp/config
+```
+```jsx
+{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/ntp/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/ntp/config_update -m '{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -146,21 +356,21 @@ Die Konfiguration der Netzwerkzeitsynchronisierung.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable`<br/>bool</th>
     <td>
-        Gibt an, ob die Wallbox per NTP ihre Zeit synchronisieren soll. Die erhaltene Zeit wird zur Bestimmung der Startzeitpunkte von getrackten Ladevorgängen und im Ereignislog verwendet.
+        Gibt an, ob das Gerät per NTP seine Zeit synchronisieren soll. Die erhaltene Zeit wird zur Bestimmung der Startzeitpunkte von getrackten Ladevorgängen und im Ereignislog verwendet.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`use_dhcp`<br/>bool</th>
     <td>
-        Gibt an, ob die Wallbox NTP-Server per DHCP empfangen soll. Funktioniert nur, wenn DHCP zur IP-Addressvergabe verwendet wird.
+        Gibt an, ob das Gerät NTP-Server per DHCP empfangen soll. Funktioniert nur, wenn DHCP zur IP-Addressvergabe verwendet wird.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`timezone`<br/>string</th>
     <td>
-        Die Zeitzone, in der sich die Wallbox befindet. z.B. "Europe/Berlin"
+        Die Zeitzone, in der sich das Gerät befindet. z.B. "Europe/Berlin"
     </td>
 </tr>
 
@@ -185,6 +395,35 @@ Die Konfiguration der Netzwerkzeitsynchronisierung.
 
 
 Der Zustand der Netzwerkzeitsynchronisierung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/ntp/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ntp/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "synced": true, "time": 28578987 }
+```
+
+
+:::
 
 
 <table>
@@ -199,14 +438,14 @@ Der Zustand der Netzwerkzeitsynchronisierung.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`synced`<br/>bool</th>
     <td>
-        Gibt an, ob die Wallbox ihre Zeit per NTP synchronisieren konnte.
+        Gibt an, ob das Gerät seine Zeit per NTP synchronisieren konnte.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`time`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der die aktuelle Zeit der Wallbox angibt, oder 0 falls keine Zeitsynchronisierung besteht
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der die aktuelle Zeit des Geräts angibt, oder 0 falls keine Zeitsynchronisierung besteht
     </td>
 </tr>
     </tbody>
@@ -217,6 +456,82 @@ Der Zustand der Netzwerkzeitsynchronisierung.
 
 
 Die Konfiguration der Netzwerkzeitsynchronisierung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/ntp/config
+```
+```jsx
+{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/ntp/config -d '{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ntp/config
+```
+```jsx
+{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/ntp/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/ntp/config_update -m '{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -231,21 +546,21 @@ Die Konfiguration der Netzwerkzeitsynchronisierung.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable`<br/>bool</th>
     <td>
-        Gibt an, ob die Wallbox per NTP ihre Zeit synchronisieren soll. Die erhaltene Zeit wird zur Bestimmung der Startzeitpunkte von getrackten Ladevorgängen und im Ereignislog verwendet.
+        Gibt an, ob das Gerät per NTP seine Zeit synchronisieren soll. Die erhaltene Zeit wird zur Bestimmung der Startzeitpunkte von getrackten Ladevorgängen und im Ereignislog verwendet.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`use_dhcp`<br/>bool</th>
     <td>
-        Gibt an, ob die Wallbox NTP-Server per DHCP empfangen soll. Funktioniert nur, wenn DHCP zur IP-Addressvergabe verwendet wird.
+        Gibt an, ob das Gerät NTP-Server per DHCP empfangen soll. Funktioniert nur, wenn DHCP zur IP-Addressvergabe verwendet wird.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`timezone`<br/>string</th>
     <td>
-        Die Zeitzone, in der sich die Wallbox befindet. z.B. "Europe/Berlin"
+        Die Zeitzone, in der sich das Gerät befindet. z.B. "Europe/Berlin"
     </td>
 </tr>
 
@@ -270,6 +585,35 @@ Die Konfiguration der Netzwerkzeitsynchronisierung.
 
 
 Der Zustand der Netzwerkzeitsynchronisierung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/ntp/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ntp/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "synced": true, "time": 28578987 }
+```
+
+
+:::
 
 
 <table>
@@ -284,14 +628,14 @@ Der Zustand der Netzwerkzeitsynchronisierung.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`synced`<br/>bool</th>
     <td>
-        Gibt an, ob die Wallbox ihre Zeit per NTP synchronisieren konnte.
+        Gibt an, ob das Gerät seine Zeit per NTP synchronisieren konnte.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`time`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der die aktuelle Zeit der Wallbox angibt, oder 0 falls keine Zeitsynchronisierung besteht
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der die aktuelle Zeit des Geräts angibt, oder 0 falls keine Zeitsynchronisierung besteht
     </td>
 </tr>
     </tbody>
@@ -302,6 +646,82 @@ Der Zustand der Netzwerkzeitsynchronisierung.
 
 
 Die Konfiguration der Netzwerkzeitsynchronisierung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/ntp/config
+```
+```jsx
+{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/ntp/config -d '{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ntp/config
+```
+```jsx
+{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/ntp/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/ntp/config_update -m '{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -316,21 +736,21 @@ Die Konfiguration der Netzwerkzeitsynchronisierung.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable`<br/>bool</th>
     <td>
-        Gibt an, ob die Wallbox per NTP ihre Zeit synchronisieren soll. Die erhaltene Zeit wird zur Bestimmung der Startzeitpunkte von getrackten Ladevorgängen und im Ereignislog verwendet.
+        Gibt an, ob das Gerät per NTP seine Zeit synchronisieren soll. Die erhaltene Zeit wird zur Bestimmung der Startzeitpunkte von getrackten Ladevorgängen und im Ereignislog verwendet.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`use_dhcp`<br/>bool</th>
     <td>
-        Gibt an, ob die Wallbox NTP-Server per DHCP empfangen soll. Funktioniert nur, wenn DHCP zur IP-Addressvergabe verwendet wird.
+        Gibt an, ob das Gerät NTP-Server per DHCP empfangen soll. Funktioniert nur, wenn DHCP zur IP-Addressvergabe verwendet wird.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`timezone`<br/>string</th>
     <td>
-        Die Zeitzone, in der sich die Wallbox befindet. z.B. "Europe/Berlin"
+        Die Zeitzone, in der sich das Gerät befindet. z.B. "Europe/Berlin"
     </td>
 </tr>
 
@@ -355,6 +775,35 @@ Die Konfiguration der Netzwerkzeitsynchronisierung.
 
 
 Der Zustand der Netzwerkzeitsynchronisierung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/ntp/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ntp/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "synced": true, "time": 28578987 }
+```
+
+
+:::
 
 
 <table>
@@ -369,14 +818,14 @@ Der Zustand der Netzwerkzeitsynchronisierung.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`synced`<br/>bool</th>
     <td>
-        Gibt an, ob die Wallbox ihre Zeit per NTP synchronisieren konnte.
+        Gibt an, ob das Gerät seine Zeit per NTP synchronisieren konnte.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`time`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der die aktuelle Zeit der Wallbox angibt, oder 0 falls keine Zeitsynchronisierung besteht
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der die aktuelle Zeit des Geräts angibt, oder 0 falls keine Zeitsynchronisierung besteht
     </td>
 </tr>
     </tbody>
@@ -387,6 +836,82 @@ Der Zustand der Netzwerkzeitsynchronisierung.
 
 
 Die Konfiguration der Netzwerkzeitsynchronisierung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/ntp/config
+```
+```jsx
+{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/ntp/config -d '{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ntp/config
+```
+```jsx
+{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/ntp/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/ntp/config_update -m '{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -401,21 +926,21 @@ Die Konfiguration der Netzwerkzeitsynchronisierung.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable`<br/>bool</th>
     <td>
-        Gibt an, ob die Wallbox per NTP ihre Zeit synchronisieren soll. Die erhaltene Zeit wird zur Bestimmung der Startzeitpunkte von getrackten Ladevorgängen und im Ereignislog verwendet.
+        Gibt an, ob das Gerät per NTP seine Zeit synchronisieren soll. Die erhaltene Zeit wird zur Bestimmung der Startzeitpunkte von getrackten Ladevorgängen und im Ereignislog verwendet.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`use_dhcp`<br/>bool</th>
     <td>
-        Gibt an, ob die Wallbox NTP-Server per DHCP empfangen soll. Funktioniert nur, wenn DHCP zur IP-Addressvergabe verwendet wird.
+        Gibt an, ob das Gerät NTP-Server per DHCP empfangen soll. Funktioniert nur, wenn DHCP zur IP-Addressvergabe verwendet wird.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`timezone`<br/>string</th>
     <td>
-        Die Zeitzone, in der sich die Wallbox befindet. z.B. "Europe/Berlin"
+        Die Zeitzone, in der sich das Gerät befindet. z.B. "Europe/Berlin"
     </td>
 </tr>
 

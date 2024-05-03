@@ -15,6 +15,58 @@ import Admonition from '@theme/Admonition';
 
 
 Die Konfiguration der Zählerüberwachung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/require_meter/config
+```
+```jsx
+{ "config": 2 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/require_meter/config -d '{ "config": 2 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/require_meter/config
+```
+```jsx
+{ "config": 2 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/require_meter/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/require_meter/config_update -m '{ "config": 2 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -45,6 +97,58 @@ Die Konfiguration der Zählerüberwachung.
 
 
 Die Konfiguration der Zählerüberwachung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/require_meter/config
+```
+```jsx
+{ "config": 2 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/require_meter/config -d '{ "config": 2 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/require_meter/config
+```
+```jsx
+{ "config": 2 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/require_meter/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/require_meter/config_update -m '{ "config": 2 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -75,6 +179,58 @@ Die Konfiguration der Zählerüberwachung.
 
 
 Die Konfiguration der Zählerüberwachung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/require_meter/config
+```
+```jsx
+{ "config": 2 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/require_meter/config -d '{ "config": 2 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/require_meter/config
+```
+```jsx
+{ "config": 2 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/require_meter/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/require_meter/config_update -m '{ "config": 2 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -108,6 +264,58 @@ Auf dieser Hardware nicht unterstützt!
 
 
 Die Konfiguration der Zählerüberwachung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/require_meter/config
+```
+```jsx
+{ "config": 2 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/require_meter/config -d '{ "config": 2 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/require_meter/config
+```
+```jsx
+{ "config": 2 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/require_meter/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/require_meter/config_update -m '{ "config": 2 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 

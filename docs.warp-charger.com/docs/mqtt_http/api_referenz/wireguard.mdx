@@ -15,6 +15,35 @@ import Admonition from '@theme/Admonition';
 
 
 Der aktuelle WireGuard-Zustand.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/wireguard/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wireguard/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "state": 3, "connection_start": 15346, "connection_end": 0 }
+```
+
+
+:::
 
 
 <table>
@@ -58,6 +87,124 @@ Der aktuelle WireGuard-Zustand.
 
 
 Die WireGuard-Konfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/wireguard/config
+```
+```jsx
+{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  // highlight-start
+  // werden nicht zurückgegeben
+  // null = key gesetzt
+  // "" = key nicht gesetzt
+  "private_key": null,
+  "remote_public_key": null,
+  "preshared_key": "",
+  // highlight-end
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/wireguard/config -d '{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  "private_key": "7aufw3iiQRVs9HyN8sGPeAHtVKVMVgV+bdRrql5S6ac=",
+  "remote_public_key": "VKKqmbJ97OTKbqCBszfUaa/H1Tzy7IO9f+TWhwH7m9o=",
+  "preshared_key": "tZtZ59nx5uIQma7phYTA4b8P28ogSzKHFC40izC6y4c=",
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wireguard/config
+```
+```jsx
+{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  // highlight-start
+  // werden nicht zurückgegeben
+  // null = key gesetzt
+  // "" = key nicht gesetzt
+  "private_key": null,
+  "remote_public_key": null,
+  "preshared_key": "",
+  // highlight-end
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/wireguard/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wireguard/config_update -m '{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  "private_key": "7aufw3iiQRVs9HyN8sGPeAHtVKVMVgV+bdRrql5S6ac=",
+  "remote_public_key": "VKKqmbJ97OTKbqCBszfUaa/H1Tzy7IO9f+TWhwH7m9o=",
+  "preshared_key": "tZtZ59nx5uIQma7phYTA4b8P28ogSzKHFC40izC6y4c=",
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -90,7 +237,7 @@ Die WireGuard-Konfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`internal_ip`<br/>string</th>
     <td>
-        IP-Adresse der Wallbox im WireGuard-Netzwerk
+        IP-Adresse des Geräts im WireGuard-Netzwerk
     </td>
 </tr>
 
@@ -125,7 +272,7 @@ Die WireGuard-Konfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`private_key`<br/>string</th>
     <td>
-        Privater Schlüssel der Wallbox (44 Base64-Zeichen oder leer)
+        Privater Schlüssel des Geräts (44 Base64-Zeichen oder leer)
     </td>
 </tr>
 
@@ -139,7 +286,7 @@ Die WireGuard-Konfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`preshared_key`<br/>string</th>
     <td>
-        Geteilter Schlüssel (PSK) der Verbindung zwischen Wallbox und Peer (44 Base64-Zeichen oder leer)
+        Geteilter Schlüssel (PSK) der Verbindung zwischen Gerät und Peer (44 Base64-Zeichen oder leer)
     </td>
 </tr>
 
@@ -164,6 +311,35 @@ Die WireGuard-Konfiguration.
 
 
 Der aktuelle WireGuard-Zustand.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/wireguard/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wireguard/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "state": 3, "connection_start": 15346, "connection_end": 0 }
+```
+
+
+:::
 
 
 <table>
@@ -207,6 +383,124 @@ Der aktuelle WireGuard-Zustand.
 
 
 Die WireGuard-Konfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/wireguard/config
+```
+```jsx
+{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  // highlight-start
+  // werden nicht zurückgegeben
+  // null = key gesetzt
+  // "" = key nicht gesetzt
+  "private_key": null,
+  "remote_public_key": null,
+  "preshared_key": "",
+  // highlight-end
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/wireguard/config -d '{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  "private_key": "7aufw3iiQRVs9HyN8sGPeAHtVKVMVgV+bdRrql5S6ac=",
+  "remote_public_key": "VKKqmbJ97OTKbqCBszfUaa/H1Tzy7IO9f+TWhwH7m9o=",
+  "preshared_key": "tZtZ59nx5uIQma7phYTA4b8P28ogSzKHFC40izC6y4c=",
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wireguard/config
+```
+```jsx
+{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  // highlight-start
+  // werden nicht zurückgegeben
+  // null = key gesetzt
+  // "" = key nicht gesetzt
+  "private_key": null,
+  "remote_public_key": null,
+  "preshared_key": "",
+  // highlight-end
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/wireguard/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wireguard/config_update -m '{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  "private_key": "7aufw3iiQRVs9HyN8sGPeAHtVKVMVgV+bdRrql5S6ac=",
+  "remote_public_key": "VKKqmbJ97OTKbqCBszfUaa/H1Tzy7IO9f+TWhwH7m9o=",
+  "preshared_key": "tZtZ59nx5uIQma7phYTA4b8P28ogSzKHFC40izC6y4c=",
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -239,7 +533,7 @@ Die WireGuard-Konfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`internal_ip`<br/>string</th>
     <td>
-        IP-Adresse der Wallbox im WireGuard-Netzwerk
+        IP-Adresse des Geräts im WireGuard-Netzwerk
     </td>
 </tr>
 
@@ -274,7 +568,7 @@ Die WireGuard-Konfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`private_key`<br/>string</th>
     <td>
-        Privater Schlüssel der Wallbox (44 Base64-Zeichen oder leer)
+        Privater Schlüssel des Geräts (44 Base64-Zeichen oder leer)
     </td>
 </tr>
 
@@ -288,7 +582,7 @@ Die WireGuard-Konfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`preshared_key`<br/>string</th>
     <td>
-        Geteilter Schlüssel (PSK) der Verbindung zwischen Wallbox und Peer (44 Base64-Zeichen oder leer)
+        Geteilter Schlüssel (PSK) der Verbindung zwischen Gerät und Peer (44 Base64-Zeichen oder leer)
     </td>
 </tr>
 
@@ -313,6 +607,35 @@ Die WireGuard-Konfiguration.
 
 
 Der aktuelle WireGuard-Zustand.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/wireguard/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wireguard/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "state": 3, "connection_start": 15346, "connection_end": 0 }
+```
+
+
+:::
 
 
 <table>
@@ -356,6 +679,124 @@ Der aktuelle WireGuard-Zustand.
 
 
 Die WireGuard-Konfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/wireguard/config
+```
+```jsx
+{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  // highlight-start
+  // werden nicht zurückgegeben
+  // null = key gesetzt
+  // "" = key nicht gesetzt
+  "private_key": null,
+  "remote_public_key": null,
+  "preshared_key": "",
+  // highlight-end
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/wireguard/config -d '{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  "private_key": "7aufw3iiQRVs9HyN8sGPeAHtVKVMVgV+bdRrql5S6ac=",
+  "remote_public_key": "VKKqmbJ97OTKbqCBszfUaa/H1Tzy7IO9f+TWhwH7m9o=",
+  "preshared_key": "tZtZ59nx5uIQma7phYTA4b8P28ogSzKHFC40izC6y4c=",
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wireguard/config
+```
+```jsx
+{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  // highlight-start
+  // werden nicht zurückgegeben
+  // null = key gesetzt
+  // "" = key nicht gesetzt
+  "private_key": null,
+  "remote_public_key": null,
+  "preshared_key": "",
+  // highlight-end
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/wireguard/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wireguard/config_update -m '{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  "private_key": "7aufw3iiQRVs9HyN8sGPeAHtVKVMVgV+bdRrql5S6ac=",
+  "remote_public_key": "VKKqmbJ97OTKbqCBszfUaa/H1Tzy7IO9f+TWhwH7m9o=",
+  "preshared_key": "tZtZ59nx5uIQma7phYTA4b8P28ogSzKHFC40izC6y4c=",
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -388,7 +829,7 @@ Die WireGuard-Konfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`internal_ip`<br/>string</th>
     <td>
-        IP-Adresse der Wallbox im WireGuard-Netzwerk
+        IP-Adresse des Geräts im WireGuard-Netzwerk
     </td>
 </tr>
 
@@ -423,7 +864,7 @@ Die WireGuard-Konfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`private_key`<br/>string</th>
     <td>
-        Privater Schlüssel der Wallbox (44 Base64-Zeichen oder leer)
+        Privater Schlüssel des Geräts (44 Base64-Zeichen oder leer)
     </td>
 </tr>
 
@@ -437,7 +878,7 @@ Die WireGuard-Konfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`preshared_key`<br/>string</th>
     <td>
-        Geteilter Schlüssel (PSK) der Verbindung zwischen Wallbox und Peer (44 Base64-Zeichen oder leer)
+        Geteilter Schlüssel (PSK) der Verbindung zwischen Gerät und Peer (44 Base64-Zeichen oder leer)
     </td>
 </tr>
 
@@ -462,6 +903,35 @@ Die WireGuard-Konfiguration.
 
 
 Der aktuelle WireGuard-Zustand.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/wireguard/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wireguard/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "state": 3, "connection_start": 15346, "connection_end": 0 }
+```
+
+
+:::
 
 
 <table>
@@ -505,6 +975,124 @@ Der aktuelle WireGuard-Zustand.
 
 
 Die WireGuard-Konfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/wireguard/config
+```
+```jsx
+{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  // highlight-start
+  // werden nicht zurückgegeben
+  // null = key gesetzt
+  // "" = key nicht gesetzt
+  "private_key": null,
+  "remote_public_key": null,
+  "preshared_key": "",
+  // highlight-end
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/wireguard/config -d '{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  "private_key": "7aufw3iiQRVs9HyN8sGPeAHtVKVMVgV+bdRrql5S6ac=",
+  "remote_public_key": "VKKqmbJ97OTKbqCBszfUaa/H1Tzy7IO9f+TWhwH7m9o=",
+  "preshared_key": "tZtZ59nx5uIQma7phYTA4b8P28ogSzKHFC40izC6y4c=",
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wireguard/config
+```
+```jsx
+{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  // highlight-start
+  // werden nicht zurückgegeben
+  // null = key gesetzt
+  // "" = key nicht gesetzt
+  "private_key": null,
+  "remote_public_key": null,
+  "preshared_key": "",
+  // highlight-end
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/wireguard/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wireguard/config_update -m '{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  "private_key": "7aufw3iiQRVs9HyN8sGPeAHtVKVMVgV+bdRrql5S6ac=",
+  "remote_public_key": "VKKqmbJ97OTKbqCBszfUaa/H1Tzy7IO9f+TWhwH7m9o=",
+  "preshared_key": "tZtZ59nx5uIQma7phYTA4b8P28ogSzKHFC40izC6y4c=",
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -537,7 +1125,7 @@ Die WireGuard-Konfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`internal_ip`<br/>string</th>
     <td>
-        IP-Adresse der Wallbox im WireGuard-Netzwerk
+        IP-Adresse des Geräts im WireGuard-Netzwerk
     </td>
 </tr>
 
@@ -572,7 +1160,7 @@ Die WireGuard-Konfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`private_key`<br/>string</th>
     <td>
-        Privater Schlüssel der Wallbox (44 Base64-Zeichen oder leer)
+        Privater Schlüssel des Geräts (44 Base64-Zeichen oder leer)
     </td>
 </tr>
 
@@ -586,7 +1174,7 @@ Die WireGuard-Konfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`preshared_key`<br/>string</th>
     <td>
-        Geteilter Schlüssel (PSK) der Verbindung zwischen Wallbox und Peer (44 Base64-Zeichen oder leer)
+        Geteilter Schlüssel (PSK) der Verbindung zwischen Gerät und Peer (44 Base64-Zeichen oder leer)
     </td>
 </tr>
 
@@ -611,6 +1199,35 @@ Die WireGuard-Konfiguration.
 
 
 Der aktuelle WireGuard-Zustand.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/wireguard/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wireguard/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "state": 3, "connection_start": 15346, "connection_end": 0 }
+```
+
+
+:::
 
 
 <table>
@@ -657,6 +1274,124 @@ Der aktuelle WireGuard-Zustand.
 
 
 Die WireGuard-Konfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/wireguard/config
+```
+```jsx
+{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  // highlight-start
+  // werden nicht zurückgegeben
+  // null = key gesetzt
+  // "" = key nicht gesetzt
+  "private_key": null,
+  "remote_public_key": null,
+  "preshared_key": "",
+  // highlight-end
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/wireguard/config -d '{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  "private_key": "7aufw3iiQRVs9HyN8sGPeAHtVKVMVgV+bdRrql5S6ac=",
+  "remote_public_key": "VKKqmbJ97OTKbqCBszfUaa/H1Tzy7IO9f+TWhwH7m9o=",
+  "preshared_key": "tZtZ59nx5uIQma7phYTA4b8P28ogSzKHFC40izC6y4c=",
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wireguard/config
+```
+```jsx
+{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  // highlight-start
+  // werden nicht zurückgegeben
+  // null = key gesetzt
+  // "" = key nicht gesetzt
+  "private_key": null,
+  "remote_public_key": null,
+  "preshared_key": "",
+  // highlight-end
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/wireguard/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wireguard/config_update -m '{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  "private_key": "7aufw3iiQRVs9HyN8sGPeAHtVKVMVgV+bdRrql5S6ac=",
+  "remote_public_key": "VKKqmbJ97OTKbqCBszfUaa/H1Tzy7IO9f+TWhwH7m9o=",
+  "preshared_key": "tZtZ59nx5uIQma7phYTA4b8P28ogSzKHFC40izC6y4c=",
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -695,7 +1430,7 @@ Die WireGuard-Konfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`internal_ip`<br/>string</th>
     <td>
-        IP-Adresse der Wallbox im WireGuard-Netzwerk
+        IP-Adresse des Geräts im WireGuard-Netzwerk
     </td>
 </tr>
 
@@ -730,7 +1465,7 @@ Die WireGuard-Konfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`private_key`<br/>string</th>
     <td>
-        Privater Schlüssel der Wallbox (44 Base64-Zeichen oder leer)
+        Privater Schlüssel des Geräts (44 Base64-Zeichen oder leer)
     </td>
 </tr>
 
@@ -744,7 +1479,7 @@ Die WireGuard-Konfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`preshared_key`<br/>string</th>
     <td>
-        Geteilter Schlüssel (PSK) der Verbindung zwischen Wallbox und Peer (44 Base64-Zeichen oder leer)
+        Geteilter Schlüssel (PSK) der Verbindung zwischen Gerät und Peer (44 Base64-Zeichen oder leer)
     </td>
 </tr>
 

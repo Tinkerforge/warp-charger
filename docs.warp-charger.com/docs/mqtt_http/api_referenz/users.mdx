@@ -15,6 +15,77 @@ import Admonition from '@theme/Admonition';
 
 
 Die Benutzerkonfiguration. Kann mit [`users/add`](users.mdx#users_add), [`users/modify`](users.mdx#users_modify), [`users/remove`](users.mdx#users_remove) und [`users/http_auth_update`](users.mdx#users_http_auth_update) aktualisiert werden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/users/config
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/users/config
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "users": [
+    {
+      "id": 0,
+      "roles": 4294967295,
+      "current": 32000,
+      // highlight-start
+      // Wird vom Webinterface durch "Unbekannter Benutzer" ersetzt.
+      "display_name": "Anonymous",
+      // highlight-end
+      "username": "anonymous",
+      "digest_hash": ""
+    },
+    {
+      "id": 1,
+      "roles": 65535,
+      "current": 32000,
+      "display_name": "Root",
+      "username": "root",
+      // highlight-start
+      // null - Ein Passwort ist gesetzt, wird aber nicht zurückgegeben
+      // -> Nutzer kann sich im Webinterface einloggen und die HTTP-API verwenden.
+      "digest_hash": null
+      // highlight-end
+    },
+    {
+      "id": 3,
+      "roles": 65535,
+      "current": 32000,
+      "display_name": "Benutzer 2",
+      "username": "user2",
+      // highlight-start
+      // "" - kein Passwort gesetzt
+      // -> Nutzer kann für die NFC-Freigabe und den Ladetracker verwendet werden
+      //    kann sich aber nicht im Webinterface einloggen oder die HTTP-API verwenden.
+      "digest_hash": ""
+      // highlight-end
+    }
+  ],
+  // Nutzer 2 und 4 wurden gelöscht.
+  "next_user_id": 5,
+  "http_auth_enabled": true
+}
+```
+
+
+:::
 
 
 <table>
@@ -78,7 +149,7 @@ Die Benutzerkonfiguration. Kann mit [`users/add`](users.mdx#users_add), [`users/
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`digest_hash`<br/>string</th>
             <td>
-                HTTP-Digest-Hash. Wird als leerer String zurückgegeben, falls die Anmeldung für diesen Nutzer deaktiviert ist.
+                HTTP-Digest-Hash. Wird als leerer String zurückgegeben, falls die Anmeldung für diesen Nutzer deaktiviert ist. Wird als null zurückgegeben wenn die Anmeldung für diesen Nutzer aktiviert ist.
             </td>
         </tr>
             </tbody>
@@ -110,6 +181,49 @@ Die Benutzerkonfiguration. Kann mit [`users/add`](users.mdx#users_add), [`users/
 
 Fügt einen neuen Benutzer hinzu.
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/users/add -d '{
+    "id": 5,
+    "roles": 65535,
+    "current": 32000,
+    "display_name": "Neuer Benutzer",
+    "username": "testuser",
+    "digest_hash": "926011006c2686471698e86690b7e500"
+  }'
+```
+`id` muss der `next_user_id` aus [`users/config`](users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
+`digest_hash = MD5("testuser:esp32-lib:testpass")`
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/add -m '{
+    "id": 5,
+    "roles": 65535,
+    "current": 32000,
+    "display_name": "Neuer Benutzer",
+    "username": "testuser",
+    "digest_hash": "926011006c2686471698e86690b7e500"
+  }'
+```
+`id` muss der `next_user_id` aus [`users/config`](users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
+`digest_hash = MD5("testuser:esp32-lib:testpass")`
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -171,6 +285,33 @@ Fügt einen neuen Benutzer hinzu.
 
 Löscht einen Benutzer.
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/users/remove -d '{ "id": 4 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/remove -m '{ "id": 4 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -199,6 +340,49 @@ Löscht einen Benutzer.
 
 Modifiziert einen Benutzer.
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/users/modify -d '{
+    "id": 5,
+    "roles": null,
+    "current": null,
+    "display_name": "Neuer Benutzer (ohne Login)",
+    "username": null,
+    "digest_hash": ""
+  }'
+```
+Ändert beispielsweise nur den Anzeigenamen vom Benutzer mit der ID 5 und löscht dessen Passwort.
+Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-API verwenden.
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/modify -m '{
+    "id": 5,
+    "roles": null,
+    "current": null,
+    "display_name": "Neuer Benutzer (ohne Login)",
+    "username": null,
+    "digest_hash": ""
+  }'
+```
+Ändert beispielsweise nur den Anzeigenamen vom Benutzer mit der ID 5 und löscht dessen Passwort.
+Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-API verwenden.
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -260,6 +444,33 @@ Modifiziert einen Benutzer.
 
 Schreibt http_auth_enabled aus [`users/config`](users.mdx#users_config).
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/users/http_auth_update -d '{ "enabled": false }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/http_auth_update -m '{ "enabled": false }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -304,6 +515,77 @@ Für das Ladetracking werden die Anzeigenamen gelöschter Benutzer separat im Fl
 
 
 Die Benutzerkonfiguration. Kann mit [`users/add`](users.mdx#users_add), [`users/modify`](users.mdx#users_modify), [`users/remove`](users.mdx#users_remove) und [`users/http_auth_update`](users.mdx#users_http_auth_update) aktualisiert werden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/users/config
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/users/config
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "users": [
+    {
+      "id": 0,
+      "roles": 4294967295,
+      "current": 32000,
+      // highlight-start
+      // Wird vom Webinterface durch "Unbekannter Benutzer" ersetzt.
+      "display_name": "Anonymous",
+      // highlight-end
+      "username": "anonymous",
+      "digest_hash": ""
+    },
+    {
+      "id": 1,
+      "roles": 65535,
+      "current": 32000,
+      "display_name": "Root",
+      "username": "root",
+      // highlight-start
+      // null - Ein Passwort ist gesetzt, wird aber nicht zurückgegeben
+      // -> Nutzer kann sich im Webinterface einloggen und die HTTP-API verwenden.
+      "digest_hash": null
+      // highlight-end
+    },
+    {
+      "id": 3,
+      "roles": 65535,
+      "current": 32000,
+      "display_name": "Benutzer 2",
+      "username": "user2",
+      // highlight-start
+      // "" - kein Passwort gesetzt
+      // -> Nutzer kann für die NFC-Freigabe und den Ladetracker verwendet werden
+      //    kann sich aber nicht im Webinterface einloggen oder die HTTP-API verwenden.
+      "digest_hash": ""
+      // highlight-end
+    }
+  ],
+  // Nutzer 2 und 4 wurden gelöscht.
+  "next_user_id": 5,
+  "http_auth_enabled": true
+}
+```
+
+
+:::
 
 
 <table>
@@ -367,7 +649,7 @@ Die Benutzerkonfiguration. Kann mit [`users/add`](users.mdx#users_add), [`users/
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`digest_hash`<br/>string</th>
             <td>
-                HTTP-Digest-Hash. Wird als leerer String zurückgegeben, falls die Anmeldung für diesen Nutzer deaktiviert ist.
+                HTTP-Digest-Hash. Wird als leerer String zurückgegeben, falls die Anmeldung für diesen Nutzer deaktiviert ist. Wird als null zurückgegeben wenn die Anmeldung für diesen Nutzer aktiviert ist.
             </td>
         </tr>
             </tbody>
@@ -399,6 +681,49 @@ Die Benutzerkonfiguration. Kann mit [`users/add`](users.mdx#users_add), [`users/
 
 Fügt einen neuen Benutzer hinzu.
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/users/add -d '{
+    "id": 5,
+    "roles": 65535,
+    "current": 32000,
+    "display_name": "Neuer Benutzer",
+    "username": "testuser",
+    "digest_hash": "926011006c2686471698e86690b7e500"
+  }'
+```
+`id` muss der `next_user_id` aus [`users/config`](users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
+`digest_hash = MD5("testuser:esp32-lib:testpass")`
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/add -m '{
+    "id": 5,
+    "roles": 65535,
+    "current": 32000,
+    "display_name": "Neuer Benutzer",
+    "username": "testuser",
+    "digest_hash": "926011006c2686471698e86690b7e500"
+  }'
+```
+`id` muss der `next_user_id` aus [`users/config`](users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
+`digest_hash = MD5("testuser:esp32-lib:testpass")`
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -460,6 +785,33 @@ Fügt einen neuen Benutzer hinzu.
 
 Löscht einen Benutzer.
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/users/remove -d '{ "id": 4 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/remove -m '{ "id": 4 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -488,6 +840,49 @@ Löscht einen Benutzer.
 
 Modifiziert einen Benutzer.
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/users/modify -d '{
+    "id": 5,
+    "roles": null,
+    "current": null,
+    "display_name": "Neuer Benutzer (ohne Login)",
+    "username": null,
+    "digest_hash": ""
+  }'
+```
+Ändert beispielsweise nur den Anzeigenamen vom Benutzer mit der ID 5 und löscht dessen Passwort.
+Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-API verwenden.
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/modify -m '{
+    "id": 5,
+    "roles": null,
+    "current": null,
+    "display_name": "Neuer Benutzer (ohne Login)",
+    "username": null,
+    "digest_hash": ""
+  }'
+```
+Ändert beispielsweise nur den Anzeigenamen vom Benutzer mit der ID 5 und löscht dessen Passwort.
+Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-API verwenden.
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -549,6 +944,33 @@ Modifiziert einen Benutzer.
 
 Schreibt http_auth_enabled aus [`users/config`](users.mdx#users_config).
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/users/http_auth_update -d '{ "enabled": false }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/http_auth_update -m '{ "enabled": false }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -593,6 +1015,77 @@ Für das Ladetracking werden die Anzeigenamen gelöschter Benutzer separat im Fl
 
 
 Die Benutzerkonfiguration. Kann mit [`users/add`](users.mdx#users_add), [`users/modify`](users.mdx#users_modify), [`users/remove`](users.mdx#users_remove) und [`users/http_auth_update`](users.mdx#users_http_auth_update) aktualisiert werden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/users/config
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/users/config
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "users": [
+    {
+      "id": 0,
+      "roles": 4294967295,
+      "current": 32000,
+      // highlight-start
+      // Wird vom Webinterface durch "Unbekannter Benutzer" ersetzt.
+      "display_name": "Anonymous",
+      // highlight-end
+      "username": "anonymous",
+      "digest_hash": ""
+    },
+    {
+      "id": 1,
+      "roles": 65535,
+      "current": 32000,
+      "display_name": "Root",
+      "username": "root",
+      // highlight-start
+      // null - Ein Passwort ist gesetzt, wird aber nicht zurückgegeben
+      // -> Nutzer kann sich im Webinterface einloggen und die HTTP-API verwenden.
+      "digest_hash": null
+      // highlight-end
+    },
+    {
+      "id": 3,
+      "roles": 65535,
+      "current": 32000,
+      "display_name": "Benutzer 2",
+      "username": "user2",
+      // highlight-start
+      // "" - kein Passwort gesetzt
+      // -> Nutzer kann für die NFC-Freigabe und den Ladetracker verwendet werden
+      //    kann sich aber nicht im Webinterface einloggen oder die HTTP-API verwenden.
+      "digest_hash": ""
+      // highlight-end
+    }
+  ],
+  // Nutzer 2 und 4 wurden gelöscht.
+  "next_user_id": 5,
+  "http_auth_enabled": true
+}
+```
+
+
+:::
 
 
 <table>
@@ -656,7 +1149,7 @@ Die Benutzerkonfiguration. Kann mit [`users/add`](users.mdx#users_add), [`users/
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`digest_hash`<br/>string</th>
             <td>
-                HTTP-Digest-Hash. Wird als leerer String zurückgegeben, falls die Anmeldung für diesen Nutzer deaktiviert ist.
+                HTTP-Digest-Hash. Wird als leerer String zurückgegeben, falls die Anmeldung für diesen Nutzer deaktiviert ist. Wird als null zurückgegeben wenn die Anmeldung für diesen Nutzer aktiviert ist.
             </td>
         </tr>
             </tbody>
@@ -688,6 +1181,49 @@ Die Benutzerkonfiguration. Kann mit [`users/add`](users.mdx#users_add), [`users/
 
 Fügt einen neuen Benutzer hinzu.
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/users/add -d '{
+    "id": 5,
+    "roles": 65535,
+    "current": 32000,
+    "display_name": "Neuer Benutzer",
+    "username": "testuser",
+    "digest_hash": "926011006c2686471698e86690b7e500"
+  }'
+```
+`id` muss der `next_user_id` aus [`users/config`](users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
+`digest_hash = MD5("testuser:esp32-lib:testpass")`
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/add -m '{
+    "id": 5,
+    "roles": 65535,
+    "current": 32000,
+    "display_name": "Neuer Benutzer",
+    "username": "testuser",
+    "digest_hash": "926011006c2686471698e86690b7e500"
+  }'
+```
+`id` muss der `next_user_id` aus [`users/config`](users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
+`digest_hash = MD5("testuser:esp32-lib:testpass")`
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -749,6 +1285,33 @@ Fügt einen neuen Benutzer hinzu.
 
 Löscht einen Benutzer.
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/users/remove -d '{ "id": 4 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/remove -m '{ "id": 4 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -777,6 +1340,49 @@ Löscht einen Benutzer.
 
 Modifiziert einen Benutzer.
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/users/modify -d '{
+    "id": 5,
+    "roles": null,
+    "current": null,
+    "display_name": "Neuer Benutzer (ohne Login)",
+    "username": null,
+    "digest_hash": ""
+  }'
+```
+Ändert beispielsweise nur den Anzeigenamen vom Benutzer mit der ID 5 und löscht dessen Passwort.
+Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-API verwenden.
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/modify -m '{
+    "id": 5,
+    "roles": null,
+    "current": null,
+    "display_name": "Neuer Benutzer (ohne Login)",
+    "username": null,
+    "digest_hash": ""
+  }'
+```
+Ändert beispielsweise nur den Anzeigenamen vom Benutzer mit der ID 5 und löscht dessen Passwort.
+Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-API verwenden.
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -838,6 +1444,33 @@ Modifiziert einen Benutzer.
 
 Schreibt http_auth_enabled aus [`users/config`](users.mdx#users_config).
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/users/http_auth_update -d '{ "enabled": false }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/http_auth_update -m '{ "enabled": false }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -885,6 +1518,77 @@ Auf dieser Hardware nicht unterstützt!
 
 
 Die Benutzerkonfiguration. Kann mit [`users/add`](users.mdx#users_add), [`users/modify`](users.mdx#users_modify), [`users/remove`](users.mdx#users_remove) und [`users/http_auth_update`](users.mdx#users_http_auth_update) aktualisiert werden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/users/config
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/users/config
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "users": [
+    {
+      "id": 0,
+      "roles": 4294967295,
+      "current": 32000,
+      // highlight-start
+      // Wird vom Webinterface durch "Unbekannter Benutzer" ersetzt.
+      "display_name": "Anonymous",
+      // highlight-end
+      "username": "anonymous",
+      "digest_hash": ""
+    },
+    {
+      "id": 1,
+      "roles": 65535,
+      "current": 32000,
+      "display_name": "Root",
+      "username": "root",
+      // highlight-start
+      // null - Ein Passwort ist gesetzt, wird aber nicht zurückgegeben
+      // -> Nutzer kann sich im Webinterface einloggen und die HTTP-API verwenden.
+      "digest_hash": null
+      // highlight-end
+    },
+    {
+      "id": 3,
+      "roles": 65535,
+      "current": 32000,
+      "display_name": "Benutzer 2",
+      "username": "user2",
+      // highlight-start
+      // "" - kein Passwort gesetzt
+      // -> Nutzer kann für die NFC-Freigabe und den Ladetracker verwendet werden
+      //    kann sich aber nicht im Webinterface einloggen oder die HTTP-API verwenden.
+      "digest_hash": ""
+      // highlight-end
+    }
+  ],
+  // Nutzer 2 und 4 wurden gelöscht.
+  "next_user_id": 5,
+  "http_auth_enabled": true
+}
+```
+
+
+:::
 
 
 <table>
@@ -951,7 +1655,7 @@ Die Benutzerkonfiguration. Kann mit [`users/add`](users.mdx#users_add), [`users/
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`digest_hash`<br/>string</th>
             <td>
-                HTTP-Digest-Hash. Wird als leerer String zurückgegeben, falls die Anmeldung für diesen Nutzer deaktiviert ist.
+                HTTP-Digest-Hash. Wird als leerer String zurückgegeben, falls die Anmeldung für diesen Nutzer deaktiviert ist. Wird als null zurückgegeben wenn die Anmeldung für diesen Nutzer aktiviert ist.
             </td>
         </tr>
             </tbody>
@@ -986,6 +1690,49 @@ Die Benutzerkonfiguration. Kann mit [`users/add`](users.mdx#users_add), [`users/
 
 Fügt einen neuen Benutzer hinzu.
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/users/add -d '{
+    "id": 5,
+    "roles": 65535,
+    "current": 32000,
+    "display_name": "Neuer Benutzer",
+    "username": "testuser",
+    "digest_hash": "926011006c2686471698e86690b7e500"
+  }'
+```
+`id` muss der `next_user_id` aus [`users/config`](users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
+`digest_hash = MD5("testuser:esp32-lib:testpass")`
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/add -m '{
+    "id": 5,
+    "roles": 65535,
+    "current": 32000,
+    "display_name": "Neuer Benutzer",
+    "username": "testuser",
+    "digest_hash": "926011006c2686471698e86690b7e500"
+  }'
+```
+`id` muss der `next_user_id` aus [`users/config`](users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
+`digest_hash = MD5("testuser:esp32-lib:testpass")`
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1047,6 +1794,33 @@ Fügt einen neuen Benutzer hinzu.
 
 Löscht einen Benutzer.
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/users/remove -d '{ "id": 4 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/remove -m '{ "id": 4 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -1075,6 +1849,49 @@ Löscht einen Benutzer.
 
 Modifiziert einen Benutzer.
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/users/modify -d '{
+    "id": 5,
+    "roles": null,
+    "current": null,
+    "display_name": "Neuer Benutzer (ohne Login)",
+    "username": null,
+    "digest_hash": ""
+  }'
+```
+Ändert beispielsweise nur den Anzeigenamen vom Benutzer mit der ID 5 und löscht dessen Passwort.
+Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-API verwenden.
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/modify -m '{
+    "id": 5,
+    "roles": null,
+    "current": null,
+    "display_name": "Neuer Benutzer (ohne Login)",
+    "username": null,
+    "digest_hash": ""
+  }'
+```
+Ändert beispielsweise nur den Anzeigenamen vom Benutzer mit der ID 5 und löscht dessen Passwort.
+Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-API verwenden.
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1136,6 +1953,33 @@ Modifiziert einen Benutzer.
 
 Schreibt http_auth_enabled aus [`users/config`](users.mdx#users_config).
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/users/http_auth_update -d '{ "enabled": false }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/http_auth_update -m '{ "enabled": false }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 

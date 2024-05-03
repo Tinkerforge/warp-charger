@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 import Admonition from '@theme/Admonition';
 
 # Ladecontroller (EVSE)
-
+Das `evse`-Modul verwaltet Zustand und Konfiguration des Ladecontrollers.
 <Tabs groupId="hardwareType" queryString className="hidden-tabs">
 <TabItem value="warp1">
 ## `evse/state` {#evse_state_warp1}
@@ -134,7 +134,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`lock_state`<br/>int</th>
     <td>
-        Zustand der Kabelverriegelung (nur relevant für Wallboxen mit Typ-2-Dose)
+        Zustand der Kabelverriegelung (nur relevant für Wallboxen mit Typ-2-Dose; Stand jetzt wurde kein WARP Charger mit Typ-2-Dose hergestellt)
         - **0** - Initialisierung
         - **1** - Offen
         - **2** - Schließend
@@ -151,6 +151,35 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
 
 
 Die Hardwarekonfiguration des Ladecontrollers.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/hardware_configuration
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "jumper_configuration": 6, "has_lock_switch": false, "evse_version": 14 }
+```
+
+
+:::
 
 
 <table>
@@ -202,7 +231,56 @@ Die Hardwarekonfiguration des Ladecontrollers.
 ## `evse/slots` {#evse_slots_warp1}
 
 
-Der Zustand der Ladeslots. Siehe TODO LINK für Details.
+Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Siehe TODO LINK für Details.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/slots
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/slots
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  // Slot ist aktiv, aber gibt den Ladevorgang ohne Limit (= 32 A) frei.
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  // Slot ist nicht aktiv, würde aber dennoch Ladevorgang freigeben.
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  // Slot limitiert den Ladevorgang auf 19 A.
+  { "max_current": 19000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": true },
+  // Slot ist nicht aktiv, würde den Ladevorgang andernfalls blockieren.
+  { "max_current": 0, "active": false, "clear_on_disconnect": true },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false }
+]
+```
+
+
+:::
 
 
 <table>
@@ -246,7 +324,7 @@ Der Zustand der Ladeslots. Siehe TODO LINK für Details.
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`clear_on_disconnect`<br/>bool</th>
             <td>
-                Gibt an, ob der Ladestrom dieses Slots beim Abziehen eines Fahrzeugs auf 0 gesetzt wird.
+                Gibt an, ob der Ladestrom dieses Slots beim Abziehen eines Fahrzeugs auf 0 (=Ladevorgang blockiert) gesetzt wird.
                 - **true** - Slot wird beim Abziehen blockieren
                 - **false** - Slot wird gesetzten Ladestrom beim Abziehen beibehalten
             </td>
@@ -263,6 +341,39 @@ Der Zustand der Ladeslots. Siehe TODO LINK für Details.
 
 
 Der Zustand des Tasters in der Frontblende.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/button_state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/button_state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "button_press_time": 278667837,
+  "button_release_time": 278667971,
+  "button_pressed": false
+}
+```
+
+
+:::
 
 
 <table>
@@ -302,6 +413,70 @@ Der Zustand des Tasters in der Frontblende.
 
 
 Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung per API (siehe [`evse/led_configuration`](evse.mdx#evse_led_configuration)) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/indicator_led
+```
+```jsx
+{ "indication": -1, "duration": 0, "color_h": 0, "color_s": 0, "color_v": 0 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/indicator_led -d '{
+  "indication": 2003,
+  "duration": 20000,
+  "color_h": 120,
+  "color_s": 255,
+  "color_v": 255
+}'
+```
+Zeigt 20 Sekunden lang das Blinkmuster 3xBlinken+längere Pause auf der LED im Fronttaster an. Die gewählte Farbe wird ignoriert, da diese Hardware nur eine blaue LED besitzt.
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/indicator_led
+```
+```jsx
+{ "indication": -1, "duration": 0, "color_h": 0, "color_s": 0, "color_v": 0 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/indicator_led<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/indicator_led_update -m '{
+  "indication": 2003,
+  "duration": 20000,
+  "color_h": 120,
+  "color_s": 255,
+  "color_v": 255
+}'
+```
+Zeigt 20 Sekunden lang das Blinkmuster 3xBlinken+längere Pause auf der LED im Fronttaster an. Die gewählte Farbe wird ignoriert, da diese Hardware nur eine blaue LED besitzt.
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -352,7 +527,7 @@ Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`color_v`<br/>int</th>
     <td>
-        Helligkeit der LED im <a href="https://de.wikipedia.org/wiki/HSV-Farbraum">HSV-Farbraum</a>. Eine Helligkeit von 0 überlässt die Farbwahl dem Ladecontroller.
+        Helligkeit der LED im <a href="https://de.wikipedia.org/wiki/HSV-Farbraum">HSV-Farbraum</a>. Eine Helligkeit von 0 verwendet die Standardfarbe der `indication` bzw. Blau bei WARP1 oder WARP2.
     </td>
 </tr>
     </tbody>
@@ -363,6 +538,45 @@ Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung 
 
 
 Der Low-Level-Zustand des Ladecontrollers.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/low_level_state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/low_level_state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "led_state": 4,
+  "cp_pwm_duty_cycle": 533,
+  "adc_values": [16356, 7198],
+  "voltages": [-2646, 899, 5915],
+  "resistances": [850, 219],
+  "gpio": [false, false, true, true, true],
+  "charging_time": 9341087,
+  "time_since_state_change": 9341087,
+  "uptime": 876032107
+}
+```
+
+
+:::
 
 
 <table>
@@ -462,6 +676,58 @@ Der Low-Level-Zustand des Ladecontrollers.
 
 
 Der von der externen Steuerung vorgegebene Ladestrom.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/external_current
+```
+```jsx
+{ "current": 16000 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/external_current -d '{ "current": 16000 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/external_current
+```
+```jsx
+{ "current": 16000 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/external_current<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/external_current_update -m '{ "current": 16000 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -489,6 +755,58 @@ Der von der externen Steuerung vorgegebene Ladestrom.
 
 
 Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abziehen eines Fahrzeugs automatisch auf 0 gesetzt werden soll.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/external_clear_on_disconnect
+```
+```jsx
+{ "clear_on_disconnect": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/external_clear_on_disconnect -d '{ "clear_on_disconnect": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/external_clear_on_disconnect
+```
+```jsx
+{ "clear_on_disconnect": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/external_clear_on_disconnect<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/external_clear_on_disconnect_update -m '{ "clear_on_disconnect": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -518,10 +836,37 @@ Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abzieh
 
 
 Der vom Lastmanagement vorgegebene Ladestrom.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/management_current
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/management_current
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "current": 14000 }
+```
 
 
+:::
 
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
+
 <table>
     <thead>
         <tr>
@@ -545,6 +890,58 @@ Der vom Lastmanagement vorgegebene Ladestrom.
 
 
 Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/auto_start_charging
+```
+```jsx
+{ "auto_start_charging": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/auto_start_charging -d '{ "auto_start_charging": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/auto_start_charging
+```
+```jsx
+{ "auto_start_charging": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/auto_start_charging<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/auto_start_charging_update -m '{ "auto_start_charging": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -561,7 +958,7 @@ Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`auto_start_charging`<br/>bool</th>
     <td>
-        Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Falls aktiviert, beginnt sofort, wenn das Fahrzeug angeschlossen wird der Ladevorgang. Falls deaktiviert, kann das Laden mit [`evse/start_charging`](evse.mdx#evse_start_charging) gestartet werden.
+        Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Falls aktiviert, beginnt sofort, wenn das Fahrzeug angeschlossen wird der Ladevorgang. Falls deaktiviert, kann das Laden mit [`evse/start_charging`](evse.mdx#evse_start_charging) gestartet werden. Diese Einstellung setzt `clear_on_disconnect` der Ladestromgrenze 4 (Manuelle Ladefreigabe)
     </td>
 </tr>
     </tbody>
@@ -571,7 +968,59 @@ Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird.
 ## `evse/global_current` {#evse_global_current_warp1}
 
 
-Der über das Webinterface vorgegebene Ladestrom.
+Der über das Webinterface vorgegebene Ladestrom. **Achtung: Dieser Strom wird auf dem Ladecontroller persistent gespeichert. Für häufige Änderungen sollte stattdessen [`evse/external_current`](evse.mdx#evse_external_current) verwendet werden, um den Flash des Ladecontrollers zu schonen!**
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/global_current
+```
+```jsx
+{ "current": 16000 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/global_current -d '{ "current": 16000 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/global_current
+```
+```jsx
+{ "current": 16000 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/global_current<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/global_current_update -m '{ "current": 16000 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -599,6 +1048,58 @@ Der über das Webinterface vorgegebene Ladestrom.
 
 
 Gibt an, ob der Ladeslot des Lastmanagements aktiv ist.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/management_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/management_enabled -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/management_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/management_enabled<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/management_enabled_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -626,6 +1127,35 @@ Gibt an, ob der Ladeslot des Lastmanagements aktiv ist.
 
 
 Der von der Benutzerautorisierung erlaubte Ladestrom.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/user_current
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/user_current
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "current": 15000 }
+```
+
+
+:::
 
 
 <table>
@@ -651,6 +1181,58 @@ Der von der Benutzerautorisierung erlaubte Ladestrom.
 
 
 Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/user_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/user_enabled -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/user_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/user_enabled<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/user_enabled_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -678,6 +1260,58 @@ Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist.
 
 
 Gibt an, ob der Ladeslot der externen Steuerung aktiv ist.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/external_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/external_enabled -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/external_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/external_enabled<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/external_enabled_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -705,6 +1339,58 @@ Gibt an, ob der Ladeslot der externen Steuerung aktiv ist.
 
 
 Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Ladeslots der externen Steuerung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/external_defaults
+```
+```jsx
+{ "current": 32000, "clear_on_disconnect": false }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/external_defaults -d '{ "current": 32000, "clear_on_disconnect": false }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/external_defaults
+```
+```jsx
+{ "current": 32000, "clear_on_disconnect": false }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/external_defaults<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/external_defaults_update -m '{ "current": 32000, "clear_on_disconnect": false }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -739,6 +1425,58 @@ Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Lade
 
 
 Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Schreibzugriff gewährt wurde).
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/modbus_tcp_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/modbus_tcp_enabled -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/modbus_tcp_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/modbus_tcp_enabled<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/modbus_tcp_enabled_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -766,6 +1504,58 @@ Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Sc
 
 
 Gibt an, ob der Ladeslot für OCPP aktiv ist.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/ocpp_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/ocpp_enabled -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/ocpp_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/ocpp_enabled<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/ocpp_enabled_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -793,10 +1583,37 @@ Gibt an, ob der Ladeslot für OCPP aktiv ist.
 
 
 Der von der Automatisierung erlaubte Ladestrom.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/automation_current
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/automation_current
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "current": 14000 }
+```
 
 
+:::
 
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
+
 <table>
     <thead>
         <tr>
@@ -824,6 +1641,58 @@ Der von der Automatisierung erlaubte Ladestrom.
 
 
 Die Konfiguration der LED des Tasters in der Frontblende.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/led_configuration
+```
+```jsx
+{ "enable_api": false }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/led_configuration -d '{ "enable_api": false }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/led_configuration
+```
+```jsx
+{ "enable_api": false }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/led_configuration<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/led_configuration_update -m '{ "enable_api": false }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -853,6 +1722,106 @@ Die Konfiguration der LED des Tasters in der Frontblende.
 
 
 Erlaubt es, die werksseitige Kalibrierung des EVSEs auszulesen und zu überschreiben. Um die Kalibierung auf den Werkszustand zurückzusetzen, kann ein Payload mit user_calibration_active auf false geschickt werden. Die weiteren Werte werden dann ignoriert.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/user_calibration
+```
+```jsx
+{
+  "user_calibration_active": false,
+  "voltage_diff": -95,
+  "voltage_mul": 12205,
+  "voltage_div": 12157,
+  "resistance_2700": 312,
+  "resistance_880": [
+    1517, 984, 870, 795,
+    803,  769, 671, 748,
+    691,  588, 598, 549,
+    537,  606
+  ]
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/user_calibration -d '{
+  "user_calibration_active": false,
+  "voltage_diff": -95,
+  "voltage_mul": 12205,
+  "voltage_div": 12157,
+  "resistance_2700": 312,
+  "resistance_880": [
+    1517, 984, 870, 795,
+    803,  769, 671, 748,
+    691,  588, 598, 549,
+    537,  606
+  ]
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/user_calibration
+```
+```jsx
+{
+  "user_calibration_active": false,
+  "voltage_diff": -95,
+  "voltage_mul": 12205,
+  "voltage_div": 12157,
+  "resistance_2700": 312,
+  "resistance_880": [
+    1517, 984, 870, 795,
+    803,  769, 671, 748,
+    691,  588, 598, 549,
+    537,  606
+  ]
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/user_calibration<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/user_calibration_update -m '{
+  "user_calibration_active": false,
+  "voltage_diff": -95,
+  "voltage_mul": 12205,
+  "voltage_div": 12157,
+  "resistance_2700": 312,
+  "resistance_880": [
+    1517, 984, 870, 795,
+    803,  769, 671, 748,
+    691,  588, 598, 549,
+    537,  606
+  ]
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -917,6 +1886,58 @@ Erlaubt es, die werksseitige Kalibrierung des EVSEs auszulesen und zu überschre
 
 
 Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Ladestrom vorgibt (+ 0,24 A) um Messfehler der Ladeelektronik zu kompensieren. Nur Verwenden, falls ein Fahrzeug mit einem kleineren als dem erlaubten Ladestrom lädt!
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/boost_mode
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/boost_mode -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/boost_mode
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/boost_mode<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/boost_mode_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -1058,6 +2079,58 @@ Stoppt ein Ladeprotokoll. Siehe [`evse/start_debug`](evse.mdx#evse_start_debug) 
 
 
 Gibt an, welcher Stromzähler für Berechnungen im Zusammenhang mit Ladevorgängen verwendet werden soll. (z.B. Ladetracker, Ladelimits, usw.)
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/meter_config
+```
+```jsx
+{ "slot": 0 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/meter_config -d '{ "slot": 0 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/meter_config
+```
+```jsx
+{ "slot": 0 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/meter_config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/meter_config_update -m '{ "slot": 0 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -1205,7 +2278,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`lock_state`<br/>int</th>
     <td>
-        Zustand der Kabelverriegelung (nur relevant für Wallboxen mit Typ-2-Dose)
+        Zustand der Kabelverriegelung (nur relevant für Wallboxen mit Typ-2-Dose; Stand jetzt wurde kein WARP Charger mit Typ-2-Dose hergestellt)
         - **0** - Initialisierung
         - **1** - Offen
         - **2** - Schließend
@@ -1236,6 +2309,40 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
 
 
 Die Hardwarekonfiguration des Ladecontrollers.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/hardware_configuration
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "jumper_configuration": 6,
+  "has_lock_switch": false,
+  "evse_version": 20,
+  "energy_meter_type": 3
+}
+```
+
+
+:::
 
 
 <table>
@@ -1300,7 +2407,56 @@ Die Hardwarekonfiguration des Ladecontrollers.
 ## `evse/slots` {#evse_slots_warp2}
 
 
-Der Zustand der Ladeslots. Siehe TODO LINK für Details.
+Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Siehe TODO LINK für Details.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/slots
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/slots
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  // Slot ist aktiv, aber gibt den Ladevorgang ohne Limit (= 32 A) frei.
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  // Slot ist nicht aktiv, würde aber dennoch Ladevorgang freigeben.
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  // Slot limitiert den Ladevorgang auf 19 A.
+  { "max_current": 19000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": true },
+  // Slot ist nicht aktiv, würde den Ladevorgang andernfalls blockieren.
+  { "max_current": 0, "active": false, "clear_on_disconnect": true },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false }
+]
+```
+
+
+:::
 
 
 <table>
@@ -1344,7 +2500,7 @@ Der Zustand der Ladeslots. Siehe TODO LINK für Details.
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`clear_on_disconnect`<br/>bool</th>
             <td>
-                Gibt an, ob der Ladestrom dieses Slots beim Abziehen eines Fahrzeugs auf 0 gesetzt wird.
+                Gibt an, ob der Ladestrom dieses Slots beim Abziehen eines Fahrzeugs auf 0 (=Ladevorgang blockiert) gesetzt wird.
                 - **true** - Slot wird beim Abziehen blockieren
                 - **false** - Slot wird gesetzten Ladestrom beim Abziehen beibehalten
             </td>
@@ -1361,6 +2517,39 @@ Der Zustand der Ladeslots. Siehe TODO LINK für Details.
 
 
 Der Zustand des Tasters in der Frontblende.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/button_state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/button_state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "button_press_time": 278667837,
+  "button_release_time": 278667971,
+  "button_pressed": false
+}
+```
+
+
+:::
 
 
 <table>
@@ -1400,6 +2589,70 @@ Der Zustand des Tasters in der Frontblende.
 
 
 Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung per API (siehe [`evse/led_configuration`](evse.mdx#evse_led_configuration)) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/indicator_led
+```
+```jsx
+{ "indication": -1, "duration": 0, "color_h": 0, "color_s": 0, "color_v": 0 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/indicator_led -d '{
+  "indication": 2003,
+  "duration": 20000,
+  "color_h": 120,
+  "color_s": 255,
+  "color_v": 255
+}'
+```
+Zeigt 20 Sekunden lang das Blinkmuster 3xBlinken+längere Pause auf der LED im Fronttaster an. Die gewählte Farbe wird ignoriert, da diese Hardware nur eine blaue LED besitzt.
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/indicator_led
+```
+```jsx
+{ "indication": -1, "duration": 0, "color_h": 0, "color_s": 0, "color_v": 0 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/indicator_led<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/indicator_led_update -m '{
+  "indication": 2003,
+  "duration": 20000,
+  "color_h": 120,
+  "color_s": 255,
+  "color_v": 255
+}'
+```
+Zeigt 20 Sekunden lang das Blinkmuster 3xBlinken+längere Pause auf der LED im Fronttaster an. Die gewählte Farbe wird ignoriert, da diese Hardware nur eine blaue LED besitzt.
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1450,7 +2703,7 @@ Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`color_v`<br/>int</th>
     <td>
-        Helligkeit der LED im <a href="https://de.wikipedia.org/wiki/HSV-Farbraum">HSV-Farbraum</a>. Eine Helligkeit von 0 überlässt die Farbwahl dem Ladecontroller.
+        Helligkeit der LED im <a href="https://de.wikipedia.org/wiki/HSV-Farbraum">HSV-Farbraum</a>. Eine Helligkeit von 0 verwendet die Standardfarbe der `indication` bzw. Blau bei WARP1 oder WARP2.
     </td>
 </tr>
     </tbody>
@@ -1461,6 +2714,60 @@ Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung 
 
 
 Der Low-Level-Zustand des Ladecontrollers.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/low_level_state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/low_level_state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "led_state": 4,
+  "cp_pwm_duty_cycle": 533,
+  "adc_values": [3852, 2984, 139, 176, 1046, 3829, 134],
+  "voltages": [11633, 6037, -12303, -12071, 842, 12342, -12336],
+  "resistances": [876, 225],
+  "gpio": [
+    true,  false, false, false,
+    true,  true,  false, true,
+    false, false, false, false,
+    false, false, false, false,
+    true,  false, false, false,
+    false, false, false, false
+  ],
+  "charging_time": 4861239,
+  "time_since_state_change": 4861239,
+  "uptime": 866869867,
+  "time_since_dc_fault_check": 22562584,
+  "temperature": 0,
+  "phases_current": 3,
+  "phases_requested": 3,
+  "phases_state": 0,
+  "phases_info": 0,
+  "dc_fault_pins": 0,
+  "dc_fault_sensor_type": 0
+}
+```
+
+
+:::
 
 
 <table>
@@ -1608,6 +2915,58 @@ Der Low-Level-Zustand des Ladecontrollers.
 
 
 Der von der externen Steuerung vorgegebene Ladestrom.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/external_current
+```
+```jsx
+{ "current": 16000 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/external_current -d '{ "current": 16000 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/external_current
+```
+```jsx
+{ "current": 16000 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/external_current<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/external_current_update -m '{ "current": 16000 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -1635,6 +2994,58 @@ Der von der externen Steuerung vorgegebene Ladestrom.
 
 
 Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abziehen eines Fahrzeugs automatisch auf 0 gesetzt werden soll.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/external_clear_on_disconnect
+```
+```jsx
+{ "clear_on_disconnect": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/external_clear_on_disconnect -d '{ "clear_on_disconnect": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/external_clear_on_disconnect
+```
+```jsx
+{ "clear_on_disconnect": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/external_clear_on_disconnect<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/external_clear_on_disconnect_update -m '{ "clear_on_disconnect": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -1664,10 +3075,37 @@ Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abzieh
 
 
 Der vom Lastmanagement vorgegebene Ladestrom.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/management_current
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/management_current
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "current": 14000 }
+```
 
 
+:::
 
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
+
 <table>
     <thead>
         <tr>
@@ -1691,6 +3129,58 @@ Der vom Lastmanagement vorgegebene Ladestrom.
 
 
 Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/auto_start_charging
+```
+```jsx
+{ "auto_start_charging": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/auto_start_charging -d '{ "auto_start_charging": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/auto_start_charging
+```
+```jsx
+{ "auto_start_charging": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/auto_start_charging<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/auto_start_charging_update -m '{ "auto_start_charging": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -1707,7 +3197,7 @@ Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`auto_start_charging`<br/>bool</th>
     <td>
-        Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Falls aktiviert, beginnt sofort, wenn das Fahrzeug angeschlossen wird der Ladevorgang. Falls deaktiviert, kann das Laden mit [`evse/start_charging`](evse.mdx#evse_start_charging) gestartet werden.
+        Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Falls aktiviert, beginnt sofort, wenn das Fahrzeug angeschlossen wird der Ladevorgang. Falls deaktiviert, kann das Laden mit [`evse/start_charging`](evse.mdx#evse_start_charging) gestartet werden. Diese Einstellung setzt `clear_on_disconnect` der Ladestromgrenze 4 (Manuelle Ladefreigabe)
     </td>
 </tr>
     </tbody>
@@ -1717,7 +3207,59 @@ Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird.
 ## `evse/global_current` {#evse_global_current_warp2}
 
 
-Der über das Webinterface vorgegebene Ladestrom.
+Der über das Webinterface vorgegebene Ladestrom. **Achtung: Dieser Strom wird auf dem Ladecontroller persistent gespeichert. Für häufige Änderungen sollte stattdessen [`evse/external_current`](evse.mdx#evse_external_current) verwendet werden, um den Flash des Ladecontrollers zu schonen!**
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/global_current
+```
+```jsx
+{ "current": 16000 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/global_current -d '{ "current": 16000 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/global_current
+```
+```jsx
+{ "current": 16000 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/global_current<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/global_current_update -m '{ "current": 16000 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -1745,6 +3287,58 @@ Der über das Webinterface vorgegebene Ladestrom.
 
 
 Gibt an, ob der Ladeslot des Lastmanagements aktiv ist.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/management_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/management_enabled -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/management_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/management_enabled<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/management_enabled_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -1772,6 +3366,35 @@ Gibt an, ob der Ladeslot des Lastmanagements aktiv ist.
 
 
 Der von der Benutzerautorisierung erlaubte Ladestrom.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/user_current
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/user_current
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "current": 15000 }
+```
+
+
+:::
 
 
 <table>
@@ -1797,6 +3420,58 @@ Der von der Benutzerautorisierung erlaubte Ladestrom.
 
 
 Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/user_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/user_enabled -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/user_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/user_enabled<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/user_enabled_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -1824,6 +3499,58 @@ Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist.
 
 
 Gibt an, ob der Ladeslot der externen Steuerung aktiv ist.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/external_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/external_enabled -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/external_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/external_enabled<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/external_enabled_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -1851,6 +3578,58 @@ Gibt an, ob der Ladeslot der externen Steuerung aktiv ist.
 
 
 Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Ladeslots der externen Steuerung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/external_defaults
+```
+```jsx
+{ "current": 32000, "clear_on_disconnect": false }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/external_defaults -d '{ "current": 32000, "clear_on_disconnect": false }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/external_defaults
+```
+```jsx
+{ "current": 32000, "clear_on_disconnect": false }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/external_defaults<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/external_defaults_update -m '{ "current": 32000, "clear_on_disconnect": false }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1885,6 +3664,58 @@ Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Lade
 
 
 Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Schreibzugriff gewährt wurde).
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/modbus_tcp_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/modbus_tcp_enabled -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/modbus_tcp_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/modbus_tcp_enabled<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/modbus_tcp_enabled_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -1912,6 +3743,58 @@ Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Sc
 
 
 Gibt an, ob der Ladeslot für OCPP aktiv ist.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/ocpp_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/ocpp_enabled -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/ocpp_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/ocpp_enabled<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/ocpp_enabled_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -1939,10 +3822,37 @@ Gibt an, ob der Ladeslot für OCPP aktiv ist.
 
 
 Der von der Automatisierung erlaubte Ladestrom.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/automation_current
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/automation_current
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "current": 14000 }
+```
 
 
+:::
 
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
+
 <table>
     <thead>
         <tr>
@@ -1966,6 +3876,58 @@ Der von der Automatisierung erlaubte Ladestrom.
 
 
 Die Konfiguration der konfigurierbaren Ein- und Ausgänge.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/gpio_configuration
+```
+```jsx
+{ "shutdown_input": 4, "input": 0, "output": 1 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/gpio_configuration -d '{ "shutdown_input": 4, "input": 0, "output": 1 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/gpio_configuration
+```
+```jsx
+{ "shutdown_input": 4, "input": 0, "output": 1 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/gpio_configuration<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/gpio_configuration_update -m '{ "shutdown_input": 4, "input": 0, "output": 1 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2029,6 +3991,58 @@ Die Konfiguration der konfigurierbaren Ein- und Ausgänge.
 
 
 Die Konfiguration des Tasters in der Frontblende. Benötigt das Feature <a href="#features_button_configuration"><code>"button_configuration"</code></a>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/button_configuration
+```
+```jsx
+{ "button": 2 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/button_configuration -d '{ "button": 2 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/button_configuration
+```
+```jsx
+{ "button": 2 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/button_configuration<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/button_configuration_update -m '{ "button": 2 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -2060,6 +4074,58 @@ Die Konfiguration des Tasters in der Frontblende. Benötigt das Feature <a href=
 
 
 Die Konfiguration der LED des Tasters in der Frontblende.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/led_configuration
+```
+```jsx
+{ "enable_api": false }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/led_configuration -d '{ "enable_api": false }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/led_configuration
+```
+```jsx
+{ "enable_api": false }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/led_configuration<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/led_configuration_update -m '{ "enable_api": false }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -2091,6 +4157,58 @@ Die Konfiguration der LED des Tasters in der Frontblende.
 
 
 Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus einem Energiesparmodus zu wecken, indem ein Abziehen und Anstecken des Ladekabels vorgetäuscht wird. (Control-Pilot-Trennung/CP-Trennung) Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/ev_wakeup
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/ev_wakeup -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/ev_wakeup
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/ev_wakeup<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/ev_wakeup_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -2118,6 +4236,58 @@ Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus e
 
 
 Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe [`evse/management_enabled`](evse.mdx#evse_management_enabled).  Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/control_pilot_disconnect
+```
+```jsx
+{ "disconnect": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/control_pilot_disconnect -d '{ "disconnect": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/control_pilot_disconnect
+```
+```jsx
+{ "disconnect": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/control_pilot_disconnect<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/control_pilot_disconnect_update -m '{ "disconnect": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -2145,6 +4315,58 @@ Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Contro
 
 
 Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Ladestrom vorgibt (+ 0,24 A) um Messfehler der Ladeelektronik zu kompensieren. Nur Verwenden, falls ein Fahrzeug mit einem kleineren als dem erlaubten Ladestrom lädt!
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/boost_mode
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/boost_mode -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/boost_mode
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/boost_mode<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/boost_mode_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -2174,6 +4396,58 @@ Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Lade
 
 
 Konfiguriert, ob die Wallbox fest ein- oder dreiphasig angeschlossen ist. Damit wird z.B. die 4200 W-Limitierung nach §14 EnWG berechnet
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/phases_connected
+```
+```jsx
+{ "phases": 1 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/phases_connected -d '{ "phases": 1 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/phases_connected
+```
+```jsx
+{ "phases": 1 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/phases_connected<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/phases_connected_update -m '{ "phases": 1 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -2203,6 +4477,33 @@ Konfiguriert, ob die Wallbox fest ein- oder dreiphasig angeschlossen ist. Damit 
 
 
 Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/evse/reset_dc_fault_current_state -d '{ "password": 3695376931 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/reset_dc_fault_current_state -m '{ "password": 3695376931 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -2266,6 +4567,58 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/trigger_dc_fault_test -m 'null'
 
 
 Der aktuelle Wert des konfigurierbaren Ausgangs.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/gp_output
+```
+```jsx
+{ "gp_output": 1 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/gp_output -d '{ "gp_output": 1 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/gp_output
+```
+```jsx
+{ "gp_output": 1 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/gp_output<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/gp_output_update -m '{ "gp_output": 1 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -2399,6 +4752,58 @@ Stoppt ein Ladeprotokoll. Siehe [`evse/start_debug`](evse.mdx#evse_start_debug) 
 
 
 Gibt an, welcher Stromzähler für Berechnungen im Zusammenhang mit Ladevorgängen verwendet werden soll. (z.B. Ladetracker, Ladelimits, usw.)
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/meter_config
+```
+```jsx
+{ "slot": 0 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/meter_config -d '{ "slot": 0 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/meter_config
+```
+```jsx
+{ "slot": 0 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/meter_config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/meter_config_update -m '{ "slot": 0 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -2555,7 +4960,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`lock_state`<br/>int</th>
     <td>
-        Zustand der Kabelverriegelung (nur relevant für Wallboxen mit Typ-2-Dose)
+        Zustand der Kabelverriegelung (nur relevant für Wallboxen mit Typ-2-Dose; Stand jetzt wurde kein WARP Charger mit Typ-2-Dose hergestellt)
         - **0** - Initialisierung
         - **1** - Offen
         - **2** - Schließend
@@ -2586,6 +4991,40 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
 
 
 Die Hardwarekonfiguration des Ladecontrollers.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/hardware_configuration
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "jumper_configuration": 6,
+  "has_lock_switch": false,
+  "evse_version": 30,
+  "energy_meter_type": 6
+}
+```
+
+
+:::
 
 
 <table>
@@ -2650,7 +5089,56 @@ Die Hardwarekonfiguration des Ladecontrollers.
 ## `evse/slots` {#evse_slots_warp3}
 
 
-Der Zustand der Ladeslots. Siehe TODO LINK für Details.
+Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Siehe TODO LINK für Details.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/slots
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/slots
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  // Slot ist aktiv, aber gibt den Ladevorgang ohne Limit (= 32 A) frei.
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  // Slot ist nicht aktiv, würde aber dennoch Ladevorgang freigeben.
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  // Slot limitiert den Ladevorgang auf 19 A.
+  { "max_current": 19000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": true },
+  // Slot ist nicht aktiv, würde den Ladevorgang andernfalls blockieren.
+  { "max_current": 0, "active": false, "clear_on_disconnect": true },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false }
+]
+```
+
+
+:::
 
 
 <table>
@@ -2694,7 +5182,7 @@ Der Zustand der Ladeslots. Siehe TODO LINK für Details.
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`clear_on_disconnect`<br/>bool</th>
             <td>
-                Gibt an, ob der Ladestrom dieses Slots beim Abziehen eines Fahrzeugs auf 0 gesetzt wird.
+                Gibt an, ob der Ladestrom dieses Slots beim Abziehen eines Fahrzeugs auf 0 (=Ladevorgang blockiert) gesetzt wird.
                 - **true** - Slot wird beim Abziehen blockieren
                 - **false** - Slot wird gesetzten Ladestrom beim Abziehen beibehalten
             </td>
@@ -2711,6 +5199,39 @@ Der Zustand der Ladeslots. Siehe TODO LINK für Details.
 
 
 Der Zustand des Tasters in der Frontblende.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/button_state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/button_state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "button_press_time": 278667837,
+  "button_release_time": 278667971,
+  "button_pressed": false
+}
+```
+
+
+:::
 
 
 <table>
@@ -2750,6 +5271,70 @@ Der Zustand des Tasters in der Frontblende.
 
 
 Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung per API (siehe [`evse/led_configuration`](evse.mdx#evse_led_configuration)) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/indicator_led
+```
+```jsx
+{ "indication": -1, "duration": 0, "color_h": 0, "color_s": 0, "color_v": 0 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/indicator_led -d '{
+  "indication": 2003,
+  "duration": 20000,
+  "color_h": 120,
+  "color_s": 255,
+  "color_v": 255
+}'
+```
+Zeigt 20 Sekunden lang das Blinkmuster 3xBlinken+längere Pause in Grün auf der LED im Fronttaster an.
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/indicator_led
+```
+```jsx
+{ "indication": -1, "duration": 0, "color_h": 0, "color_s": 0, "color_v": 0 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/indicator_led<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/indicator_led_update -m '{
+  "indication": 2003,
+  "duration": 20000,
+  "color_h": 120,
+  "color_s": 255,
+  "color_v": 255
+}'
+```
+Zeigt 20 Sekunden lang das Blinkmuster 3xBlinken+längere Pause in Grün auf der LED im Fronttaster an.
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2767,12 +5352,12 @@ Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung 
         Aktuell gesetzter Zustand.
         - **-1** - EVSE kontrolliert LED
         - **0** - Aus
-        - **1..254** - Per PWM gedimmtes leuchten
-        - **255** - An
-        - **1001** - Bestätigendes Blinken (z.B: NFC-Tag wurde erkannt)
-        - **1002** - Ablehnendes Blinken (z.B: NFC-Tag ist unbekannt)
-        - **1003** - Aufforderndes Blinken (z.B: NFC-Tag wird zum Laden benötigt)
-        - **2001..2010** - Fehler-Blinken 1 bis 10.
+        - **1..254** - Per PWM gedimmtes Leuchten; Standardfarbe Blau
+        - **255** - An; Standardfarbe Blau
+        - **1001** - Bestätigendes Blinken (z.B: NFC-Tag wurde erkannt); Standardfarbe Grün
+        - **1002** - Ablehnendes Blinken (z.B: NFC-Tag ist unbekannt); Standardfarbe Rot
+        - **1003** - Aufforderndes Blinken (z.B: NFC-Tag wird zum Laden benötigt); Standardfarbe Orange
+        - **2001..2010** - Fehler-Blinken 1 bis 10.; Standardfarbe Rot
     </td>
 </tr>
 
@@ -2800,7 +5385,7 @@ Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`color_v`<br/>int</th>
     <td>
-        Helligkeit der LED im <a href="https://de.wikipedia.org/wiki/HSV-Farbraum">HSV-Farbraum</a>. Eine Helligkeit von 0 überlässt die Farbwahl dem Ladecontroller.
+        Helligkeit der LED im <a href="https://de.wikipedia.org/wiki/HSV-Farbraum">HSV-Farbraum</a>. Eine Helligkeit von 0 verwendet die Standardfarbe der `indication` bzw. Blau bei WARP1 oder WARP2.
     </td>
 </tr>
     </tbody>
@@ -2811,6 +5396,60 @@ Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung 
 
 
 Der Low-Level-Zustand des Ladecontrollers.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/low_level_state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/low_level_state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "led_state": 4,
+  "cp_pwm_duty_cycle": 533,
+  "adc_values": [3911, 3034, 176, 228, 1029, 3749, 169],
+  "voltages": [12013, 6359, -12071, -11717, 829, 12084, -12110],
+  "resistances": [921, 220],
+  "gpio": [
+    false, false, false, true,
+    false, false, false, false,
+    false, true,  true,  false,
+    true,  false, false, true,
+    false, true,  true,  false,
+    false, false, false, false
+  ],
+  "charging_time": 8908109,
+  "time_since_state_change": 8908109,
+  "uptime": 866814264,
+  "time_since_dc_fault_check": 22533556,
+  "temperature": 3900,
+  "phases_current": 1,
+  "phases_requested": 1,
+  "phases_state": 0,
+  "phases_info": 0,
+  "dc_fault_pins": 0,
+  "dc_fault_sensor_type": 1
+}
+```
+
+
+:::
 
 
 <table>
@@ -3007,6 +5646,58 @@ Der Low-Level-Zustand des Ladecontrollers.
 
 
 Der von der externen Steuerung vorgegebene Ladestrom.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/external_current
+```
+```jsx
+{ "current": 16000 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/external_current -d '{ "current": 16000 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/external_current
+```
+```jsx
+{ "current": 16000 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/external_current<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/external_current_update -m '{ "current": 16000 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -3034,6 +5725,58 @@ Der von der externen Steuerung vorgegebene Ladestrom.
 
 
 Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abziehen eines Fahrzeugs automatisch auf 0 gesetzt werden soll.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/external_clear_on_disconnect
+```
+```jsx
+{ "clear_on_disconnect": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/external_clear_on_disconnect -d '{ "clear_on_disconnect": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/external_clear_on_disconnect
+```
+```jsx
+{ "clear_on_disconnect": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/external_clear_on_disconnect<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/external_clear_on_disconnect_update -m '{ "clear_on_disconnect": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -3063,10 +5806,37 @@ Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abzieh
 
 
 Der vom Lastmanagement vorgegebene Ladestrom.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/management_current
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/management_current
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "current": 14000 }
+```
 
 
+:::
 
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
+
 <table>
     <thead>
         <tr>
@@ -3090,6 +5860,58 @@ Der vom Lastmanagement vorgegebene Ladestrom.
 
 
 Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/auto_start_charging
+```
+```jsx
+{ "auto_start_charging": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/auto_start_charging -d '{ "auto_start_charging": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/auto_start_charging
+```
+```jsx
+{ "auto_start_charging": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/auto_start_charging<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/auto_start_charging_update -m '{ "auto_start_charging": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -3106,7 +5928,7 @@ Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`auto_start_charging`<br/>bool</th>
     <td>
-        Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Falls aktiviert, beginnt sofort, wenn das Fahrzeug angeschlossen wird der Ladevorgang. Falls deaktiviert, kann das Laden mit [`evse/start_charging`](evse.mdx#evse_start_charging) gestartet werden.
+        Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Falls aktiviert, beginnt sofort, wenn das Fahrzeug angeschlossen wird der Ladevorgang. Falls deaktiviert, kann das Laden mit [`evse/start_charging`](evse.mdx#evse_start_charging) gestartet werden. Diese Einstellung setzt `clear_on_disconnect` der Ladestromgrenze 4 (Manuelle Ladefreigabe)
     </td>
 </tr>
     </tbody>
@@ -3116,7 +5938,59 @@ Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird.
 ## `evse/global_current` {#evse_global_current_warp3}
 
 
-Der über das Webinterface vorgegebene Ladestrom.
+Der über das Webinterface vorgegebene Ladestrom. **Achtung: Dieser Strom wird auf dem Ladecontroller persistent gespeichert. Für häufige Änderungen sollte stattdessen [`evse/external_current`](evse.mdx#evse_external_current) verwendet werden, um den Flash des Ladecontrollers zu schonen!**
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/global_current
+```
+```jsx
+{ "current": 16000 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/global_current -d '{ "current": 16000 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/global_current
+```
+```jsx
+{ "current": 16000 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/global_current<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/global_current_update -m '{ "current": 16000 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -3144,6 +6018,58 @@ Der über das Webinterface vorgegebene Ladestrom.
 
 
 Gibt an, ob der Ladeslot des Lastmanagements aktiv ist.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/management_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/management_enabled -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/management_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/management_enabled<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/management_enabled_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -3171,6 +6097,35 @@ Gibt an, ob der Ladeslot des Lastmanagements aktiv ist.
 
 
 Der von der Benutzerautorisierung erlaubte Ladestrom.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/user_current
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/user_current
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "current": 15000 }
+```
+
+
+:::
 
 
 <table>
@@ -3196,6 +6151,58 @@ Der von der Benutzerautorisierung erlaubte Ladestrom.
 
 
 Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/user_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/user_enabled -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/user_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/user_enabled<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/user_enabled_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -3223,6 +6230,58 @@ Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist.
 
 
 Gibt an, ob der Ladeslot der externen Steuerung aktiv ist.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/external_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/external_enabled -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/external_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/external_enabled<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/external_enabled_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -3250,6 +6309,58 @@ Gibt an, ob der Ladeslot der externen Steuerung aktiv ist.
 
 
 Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Ladeslots der externen Steuerung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/external_defaults
+```
+```jsx
+{ "current": 32000, "clear_on_disconnect": false }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/external_defaults -d '{ "current": 32000, "clear_on_disconnect": false }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/external_defaults
+```
+```jsx
+{ "current": 32000, "clear_on_disconnect": false }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/external_defaults<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/external_defaults_update -m '{ "current": 32000, "clear_on_disconnect": false }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -3284,6 +6395,58 @@ Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Lade
 
 
 Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Schreibzugriff gewährt wurde).
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/modbus_tcp_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/modbus_tcp_enabled -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/modbus_tcp_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/modbus_tcp_enabled<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/modbus_tcp_enabled_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -3311,6 +6474,58 @@ Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Sc
 
 
 Gibt an, ob der Ladeslot für OCPP aktiv ist.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/ocpp_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/ocpp_enabled -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/ocpp_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/ocpp_enabled<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/ocpp_enabled_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -3338,10 +6553,37 @@ Gibt an, ob der Ladeslot für OCPP aktiv ist.
 
 
 Der von der Automatisierung erlaubte Ladestrom.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/automation_current
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/automation_current
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "current": 14000 }
+```
 
 
+:::
 
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
+
 <table>
     <thead>
         <tr>
@@ -3365,6 +6607,58 @@ Der von der Automatisierung erlaubte Ladestrom.
 
 
 Die Konfiguration der konfigurierbaren Ein- und Ausgänge.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/gpio_configuration
+```
+```jsx
+{ "shutdown_input": 4, "input": 0, "output": 1 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/gpio_configuration -d '{ "shutdown_input": 4, "input": 0, "output": 1 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/gpio_configuration
+```
+```jsx
+{ "shutdown_input": 4, "input": 0, "output": 1 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/gpio_configuration<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/gpio_configuration_update -m '{ "shutdown_input": 4, "input": 0, "output": 1 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -3428,6 +6722,58 @@ Die Konfiguration der konfigurierbaren Ein- und Ausgänge.
 
 
 Die Konfiguration des Tasters in der Frontblende. Benötigt das Feature <a href="#features_button_configuration"><code>"button_configuration"</code></a>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/button_configuration
+```
+```jsx
+{ "button": 2 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/button_configuration -d '{ "button": 2 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/button_configuration
+```
+```jsx
+{ "button": 2 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/button_configuration<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/button_configuration_update -m '{ "button": 2 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -3459,6 +6805,58 @@ Die Konfiguration des Tasters in der Frontblende. Benötigt das Feature <a href=
 
 
 Die Konfiguration der LED des Tasters in der Frontblende.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/led_configuration
+```
+```jsx
+{ "enable_api": false }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/led_configuration -d '{ "enable_api": false }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/led_configuration
+```
+```jsx
+{ "enable_api": false }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/led_configuration<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/led_configuration_update -m '{ "enable_api": false }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -3490,6 +6888,58 @@ Die Konfiguration der LED des Tasters in der Frontblende.
 
 
 Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus einem Energiesparmodus zu wecken, indem ein Abziehen und Anstecken des Ladekabels vorgetäuscht wird. (Control-Pilot-Trennung/CP-Trennung) Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/ev_wakeup
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/ev_wakeup -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/ev_wakeup
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/ev_wakeup<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/ev_wakeup_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -3517,6 +6967,58 @@ Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus e
 
 
 Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe [`evse/management_enabled`](evse.mdx#evse_management_enabled).  Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/control_pilot_disconnect
+```
+```jsx
+{ "disconnect": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/control_pilot_disconnect -d '{ "disconnect": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/control_pilot_disconnect
+```
+```jsx
+{ "disconnect": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/control_pilot_disconnect<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/control_pilot_disconnect_update -m '{ "disconnect": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -3544,6 +7046,58 @@ Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Contro
 
 
 Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Ladestrom vorgibt (+ 0,24 A) um Messfehler der Ladeelektronik zu kompensieren. Nur Verwenden, falls ein Fahrzeug mit einem kleineren als dem erlaubten Ladestrom lädt!
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/boost_mode
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/boost_mode -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/boost_mode
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/boost_mode<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/boost_mode_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -3571,6 +7125,58 @@ Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Lade
 
 
 Konfiguriert, ob ein WARP3 Charger Pro automatisch von drei- auf einphasiges Laden wechseln soll, wenn ein Fahrzeug angeschlossen ist, dass nur auf L1 Strom bezieht.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/phase_auto_switch
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/phase_auto_switch -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/phase_auto_switch
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/phase_auto_switch<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/phase_auto_switch_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -3598,6 +7204,58 @@ Konfiguriert, ob ein WARP3 Charger Pro automatisch von drei- auf einphasiges Lad
 
 
 Konfiguriert, ob die Wallbox fest ein- oder dreiphasig angeschlossen ist. Damit wird z.B. die 4200 W-Limitierung nach §14 EnWG berechnet
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/phases_connected
+```
+```jsx
+{ "phases": 1 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/phases_connected -d '{ "phases": 1 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/phases_connected
+```
+```jsx
+{ "phases": 1 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/phases_connected<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/phases_connected_update -m '{ "phases": 1 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -3627,6 +7285,33 @@ Konfiguriert, ob die Wallbox fest ein- oder dreiphasig angeschlossen ist. Damit 
 
 
 Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/evse/reset_dc_fault_current_state -d '{ "password": 3695376931 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/reset_dc_fault_current_state -m '{ "password": 3695376931 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -3796,6 +7481,58 @@ Stoppt ein Ladeprotokoll. Siehe [`evse/start_debug`](evse.mdx#evse_start_debug) 
 
 
 Gibt an, welcher Stromzähler für Berechnungen im Zusammenhang mit Ladevorgängen verwendet werden soll. (z.B. Ladetracker, Ladelimits, usw.)
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/meter_config
+```
+```jsx
+{ "slot": 0 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/meter_config -d '{ "slot": 0 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/meter_config
+```
+```jsx
+{ "slot": 0 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/meter_config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/meter_config_update -m '{ "slot": 0 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -3988,7 +7725,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`lock_state`<br/>int</th>
     <td>
-        Zustand der Kabelverriegelung (nur relevant für Wallboxen mit Typ-2-Dose)
+        Zustand der Kabelverriegelung (nur relevant für Wallboxen mit Typ-2-Dose; Stand jetzt wurde kein WARP Charger mit Typ-2-Dose hergestellt)
         
         
         
@@ -4025,6 +7762,35 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
 
 
 Die Hardwarekonfiguration des Ladecontrollers.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/hardware_configuration
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "jumper_configuration": 6, "has_lock_switch": false, "evse_version": 14 }
+```
+
+
+:::
 
 
 <table>
@@ -4117,7 +7883,56 @@ Die Hardwarekonfiguration des Ladecontrollers.
 ## `evse/slots` {#evse_slots_any}
 
 
-Der Zustand der Ladeslots. Siehe TODO LINK für Details.
+Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Siehe TODO LINK für Details.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/slots
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/slots
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  // Slot ist aktiv, aber gibt den Ladevorgang ohne Limit (= 32 A) frei.
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  // Slot ist nicht aktiv, würde aber dennoch Ladevorgang freigeben.
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  // Slot limitiert den Ladevorgang auf 19 A.
+  { "max_current": 19000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": true },
+  // Slot ist nicht aktiv, würde den Ladevorgang andernfalls blockieren.
+  { "max_current": 0, "active": false, "clear_on_disconnect": true },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false }
+]
+```
+
+
+:::
 
 
 <table>
@@ -4164,7 +7979,7 @@ Der Zustand der Ladeslots. Siehe TODO LINK für Details.
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`clear_on_disconnect`<br/>bool</th>
             <td>
-                Gibt an, ob der Ladestrom dieses Slots beim Abziehen eines Fahrzeugs auf 0 gesetzt wird.
+                Gibt an, ob der Ladestrom dieses Slots beim Abziehen eines Fahrzeugs auf 0 (=Ladevorgang blockiert) gesetzt wird.
                 
                 
                 
@@ -4184,6 +7999,39 @@ Der Zustand der Ladeslots. Siehe TODO LINK für Details.
 
 
 Der Zustand des Tasters in der Frontblende.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/button_state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/button_state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "button_press_time": 278667837,
+  "button_release_time": 278667971,
+  "button_pressed": false
+}
+```
+
+
+:::
 
 
 <table>
@@ -4223,6 +8071,70 @@ Der Zustand des Tasters in der Frontblende.
 
 
 Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung per API (siehe [`evse/led_configuration`](evse.mdx#evse_led_configuration)) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/indicator_led
+```
+```jsx
+{ "indication": -1, "duration": 0, "color_h": 0, "color_s": 0, "color_v": 0 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/indicator_led -d '{
+  "indication": 2003,
+  "duration": 20000,
+  "color_h": 120,
+  "color_s": 255,
+  "color_v": 255
+}'
+```
+Zeigt 20 Sekunden lang das Blinkmuster 3xBlinken+längere Pause auf der LED im Fronttaster an. Die gewählte Farbe wird ignoriert, da diese Hardware nur eine blaue LED besitzt.
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/indicator_led
+```
+```jsx
+{ "indication": -1, "duration": 0, "color_h": 0, "color_s": 0, "color_v": 0 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/indicator_led<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/indicator_led_update -m '{
+  "indication": 2003,
+  "duration": 20000,
+  "color_h": 120,
+  "color_s": 255,
+  "color_v": 255
+}'
+```
+Zeigt 20 Sekunden lang das Blinkmuster 3xBlinken+längere Pause auf der LED im Fronttaster an. Die gewählte Farbe wird ignoriert, da diese Hardware nur eine blaue LED besitzt.
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -4243,12 +8155,24 @@ Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung 
         
         - **-1** - EVSE kontrolliert LED
         - **0** - Aus
+        
+        <strong>WARP 1 und WARP 2:</strong><br/>
+        
         - **1..254** - Per PWM gedimmtes leuchten
         - **255** - An
         - **1001** - Bestätigendes Blinken (z.B: NFC-Tag wurde erkannt)
         - **1002** - Ablehnendes Blinken (z.B: NFC-Tag ist unbekannt)
         - **1003** - Aufforderndes Blinken (z.B: NFC-Tag wird zum Laden benötigt)
         - **2001..2010** - Fehler-Blinken 1 bis 10.
+        
+        <strong>WARP 3:</strong><br/>
+        
+        - **1..254** - Per PWM gedimmtes Leuchten; Standardfarbe Blau
+        - **255** - An; Standardfarbe Blau
+        - **1001** - Bestätigendes Blinken (z.B: NFC-Tag wurde erkannt); Standardfarbe Grün
+        - **1002** - Ablehnendes Blinken (z.B: NFC-Tag ist unbekannt); Standardfarbe Rot
+        - **1003** - Aufforderndes Blinken (z.B: NFC-Tag wird zum Laden benötigt); Standardfarbe Orange
+        - **2001..2010** - Fehler-Blinken 1 bis 10.; Standardfarbe Rot
     </td>
 </tr>
 
@@ -4276,7 +8200,7 @@ Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`color_v`<br/>int</th>
     <td>
-        Helligkeit der LED im <a href="https://de.wikipedia.org/wiki/HSV-Farbraum">HSV-Farbraum</a>. Eine Helligkeit von 0 überlässt die Farbwahl dem Ladecontroller.
+        Helligkeit der LED im <a href="https://de.wikipedia.org/wiki/HSV-Farbraum">HSV-Farbraum</a>. Eine Helligkeit von 0 verwendet die Standardfarbe der `indication` bzw. Blau bei WARP1 oder WARP2.
     </td>
 </tr>
     </tbody>
@@ -4287,6 +8211,45 @@ Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung 
 
 
 Der Low-Level-Zustand des Ladecontrollers.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/low_level_state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/low_level_state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "led_state": 4,
+  "cp_pwm_duty_cycle": 533,
+  "adc_values": [16356, 7198],
+  "voltages": [-2646, 899, 5915],
+  "resistances": [850, 219],
+  "gpio": [false, false, true, true, true],
+  "charging_time": 9341087,
+  "time_since_state_change": 9341087,
+  "uptime": 876032107
+}
+```
+
+
+:::
 
 
 <table>
@@ -4556,6 +8519,58 @@ Der Low-Level-Zustand des Ladecontrollers.
 
 
 Der von der externen Steuerung vorgegebene Ladestrom.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/external_current
+```
+```jsx
+{ "current": 16000 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/external_current -d '{ "current": 16000 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/external_current
+```
+```jsx
+{ "current": 16000 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/external_current<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/external_current_update -m '{ "current": 16000 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -4583,6 +8598,58 @@ Der von der externen Steuerung vorgegebene Ladestrom.
 
 
 Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abziehen eines Fahrzeugs automatisch auf 0 gesetzt werden soll.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/external_clear_on_disconnect
+```
+```jsx
+{ "clear_on_disconnect": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/external_clear_on_disconnect -d '{ "clear_on_disconnect": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/external_clear_on_disconnect
+```
+```jsx
+{ "clear_on_disconnect": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/external_clear_on_disconnect<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/external_clear_on_disconnect_update -m '{ "clear_on_disconnect": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -4615,10 +8682,37 @@ Gibt an, ob der von der externen Ladesteuerung vorgegebene Ladestrom beim Abzieh
 
 
 Der vom Lastmanagement vorgegebene Ladestrom.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/management_current
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/management_current
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "current": 14000 }
+```
 
 
+:::
 
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
+
 <table>
     <thead>
         <tr>
@@ -4642,6 +8736,58 @@ Der vom Lastmanagement vorgegebene Ladestrom.
 
 
 Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/auto_start_charging
+```
+```jsx
+{ "auto_start_charging": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/auto_start_charging -d '{ "auto_start_charging": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/auto_start_charging
+```
+```jsx
+{ "auto_start_charging": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/auto_start_charging<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/auto_start_charging_update -m '{ "auto_start_charging": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -4658,7 +8804,7 @@ Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`auto_start_charging`<br/>bool</th>
     <td>
-        Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Falls aktiviert, beginnt sofort, wenn das Fahrzeug angeschlossen wird der Ladevorgang. Falls deaktiviert, kann das Laden mit [`evse/start_charging`](evse.mdx#evse_start_charging) gestartet werden.
+        Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Falls aktiviert, beginnt sofort, wenn das Fahrzeug angeschlossen wird der Ladevorgang. Falls deaktiviert, kann das Laden mit [`evse/start_charging`](evse.mdx#evse_start_charging) gestartet werden. Diese Einstellung setzt `clear_on_disconnect` der Ladestromgrenze 4 (Manuelle Ladefreigabe)
     </td>
 </tr>
     </tbody>
@@ -4668,7 +8814,59 @@ Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird.
 ## `evse/global_current` {#evse_global_current_any}
 
 
-Der über das Webinterface vorgegebene Ladestrom.
+Der über das Webinterface vorgegebene Ladestrom. **Achtung: Dieser Strom wird auf dem Ladecontroller persistent gespeichert. Für häufige Änderungen sollte stattdessen [`evse/external_current`](evse.mdx#evse_external_current) verwendet werden, um den Flash des Ladecontrollers zu schonen!**
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/global_current
+```
+```jsx
+{ "current": 16000 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/global_current -d '{ "current": 16000 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/global_current
+```
+```jsx
+{ "current": 16000 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/global_current<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/global_current_update -m '{ "current": 16000 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -4696,6 +8894,58 @@ Der über das Webinterface vorgegebene Ladestrom.
 
 
 Gibt an, ob der Ladeslot des Lastmanagements aktiv ist.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/management_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/management_enabled -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/management_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/management_enabled<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/management_enabled_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -4723,6 +8973,35 @@ Gibt an, ob der Ladeslot des Lastmanagements aktiv ist.
 
 
 Der von der Benutzerautorisierung erlaubte Ladestrom.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/user_current
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/user_current
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "current": 15000 }
+```
+
+
+:::
 
 
 <table>
@@ -4748,6 +9027,58 @@ Der von der Benutzerautorisierung erlaubte Ladestrom.
 
 
 Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/user_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/user_enabled -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/user_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/user_enabled<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/user_enabled_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -4775,6 +9106,58 @@ Gibt an, ob der Ladeslot der Benutzerautorisierung aktiv ist.
 
 
 Gibt an, ob der Ladeslot der externen Steuerung aktiv ist.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/external_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/external_enabled -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/external_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/external_enabled<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/external_enabled_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -4802,6 +9185,58 @@ Gibt an, ob der Ladeslot der externen Steuerung aktiv ist.
 
 
 Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Ladeslots der externen Steuerung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/external_defaults
+```
+```jsx
+{ "current": 32000, "clear_on_disconnect": false }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/external_defaults -d '{ "current": 32000, "clear_on_disconnect": false }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/external_defaults
+```
+```jsx
+{ "current": 32000, "clear_on_disconnect": false }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/external_defaults<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/external_defaults_update -m '{ "current": 32000, "clear_on_disconnect": false }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -4839,6 +9274,58 @@ Die nach einem Neustart des Ladecontrollers übernommenen Einstellungen des Lade
 
 
 Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Schreibzugriff gewährt wurde).
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/modbus_tcp_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/modbus_tcp_enabled -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/modbus_tcp_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/modbus_tcp_enabled<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/modbus_tcp_enabled_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -4866,6 +9353,58 @@ Gibt an, ob die Ladeslots für Modbus-TCP aktiv sind (und damit ob Modbus-TCP Sc
 
 
 Gibt an, ob der Ladeslot für OCPP aktiv ist.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/ocpp_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/ocpp_enabled -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/ocpp_enabled
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/ocpp_enabled<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/ocpp_enabled_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -4893,10 +9432,37 @@ Gibt an, ob der Ladeslot für OCPP aktiv ist.
 
 
 Der von der Automatisierung erlaubte Ladestrom.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/evse/automation_current
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/automation_current
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "current": 14000 }
+```
 
 
+:::
 
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
+
 <table>
     <thead>
         <tr>
@@ -4920,6 +9486,58 @@ Der von der Automatisierung erlaubte Ladestrom.
 
 <strong>(Nur WARP 2 und WARP 3)</strong> 
 Die Konfiguration der konfigurierbaren Ein- und Ausgänge.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/gpio_configuration
+```
+```jsx
+{ "shutdown_input": 4, "input": 0, "output": 1 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/gpio_configuration -d '{ "shutdown_input": 4, "input": 0, "output": 1 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/gpio_configuration
+```
+```jsx
+{ "shutdown_input": 4, "input": 0, "output": 1 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/gpio_configuration<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/gpio_configuration_update -m '{ "shutdown_input": 4, "input": 0, "output": 1 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -4992,6 +9610,58 @@ Die Konfiguration der konfigurierbaren Ein- und Ausgänge.
 
 <strong>(Nur WARP 2 und WARP 3)</strong> 
 Die Konfiguration des Tasters in der Frontblende. Benötigt das Feature <a href="#features_button_configuration"><code>"button_configuration"</code></a>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/button_configuration
+```
+```jsx
+{ "button": 2 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/button_configuration -d '{ "button": 2 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/button_configuration
+```
+```jsx
+{ "button": 2 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/button_configuration<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/button_configuration_update -m '{ "button": 2 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -5026,6 +9696,58 @@ Die Konfiguration des Tasters in der Frontblende. Benötigt das Feature <a href=
 
 
 Die Konfiguration der LED des Tasters in der Frontblende.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/led_configuration
+```
+```jsx
+{ "enable_api": false }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/led_configuration -d '{ "enable_api": false }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/led_configuration
+```
+```jsx
+{ "enable_api": false }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/led_configuration<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/led_configuration_update -m '{ "enable_api": false }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -5058,6 +9780,106 @@ Die Konfiguration der LED des Tasters in der Frontblende.
 
 <strong>(Nur WARP 1)</strong> 
 Erlaubt es, die werksseitige Kalibrierung des EVSEs auszulesen und zu überschreiben. Um die Kalibierung auf den Werkszustand zurückzusetzen, kann ein Payload mit user_calibration_active auf false geschickt werden. Die weiteren Werte werden dann ignoriert.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/user_calibration
+```
+```jsx
+{
+  "user_calibration_active": false,
+  "voltage_diff": -95,
+  "voltage_mul": 12205,
+  "voltage_div": 12157,
+  "resistance_2700": 312,
+  "resistance_880": [
+    1517, 984, 870, 795,
+    803,  769, 671, 748,
+    691,  588, 598, 549,
+    537,  606
+  ]
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/user_calibration -d '{
+  "user_calibration_active": false,
+  "voltage_diff": -95,
+  "voltage_mul": 12205,
+  "voltage_div": 12157,
+  "resistance_2700": 312,
+  "resistance_880": [
+    1517, 984, 870, 795,
+    803,  769, 671, 748,
+    691,  588, 598, 549,
+    537,  606
+  ]
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/user_calibration
+```
+```jsx
+{
+  "user_calibration_active": false,
+  "voltage_diff": -95,
+  "voltage_mul": 12205,
+  "voltage_div": 12157,
+  "resistance_2700": 312,
+  "resistance_880": [
+    1517, 984, 870, 795,
+    803,  769, 671, 748,
+    691,  588, 598, 549,
+    537,  606
+  ]
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/user_calibration<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/user_calibration_update -m '{
+  "user_calibration_active": false,
+  "voltage_diff": -95,
+  "voltage_mul": 12205,
+  "voltage_div": 12157,
+  "resistance_2700": 312,
+  "resistance_880": [
+    1517, 984, 870, 795,
+    803,  769, 671, 748,
+    691,  588, 598, 549,
+    537,  606
+  ]
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -5118,6 +9940,58 @@ Erlaubt es, die werksseitige Kalibrierung des EVSEs auszulesen und zu überschre
 
 <strong>(Nur WARP 2 und WARP 3)</strong> 
 Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus einem Energiesparmodus zu wecken, indem ein Abziehen und Anstecken des Ladekabels vorgetäuscht wird. (Control-Pilot-Trennung/CP-Trennung) Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/ev_wakeup
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/ev_wakeup -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/ev_wakeup
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/ev_wakeup<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/ev_wakeup_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -5145,6 +10019,58 @@ Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus e
 
 <strong>(Nur WARP 2 und WARP 3)</strong> 
 Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe [`evse/management_enabled`](evse.mdx#evse_management_enabled).  Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/control_pilot_disconnect
+```
+```jsx
+{ "disconnect": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/control_pilot_disconnect -d '{ "disconnect": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/control_pilot_disconnect
+```
+```jsx
+{ "disconnect": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/control_pilot_disconnect<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/control_pilot_disconnect_update -m '{ "disconnect": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -5172,6 +10098,58 @@ Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Contro
 
 
 Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Ladestrom vorgibt (+ 0,24 A) um Messfehler der Ladeelektronik zu kompensieren. Nur Verwenden, falls ein Fahrzeug mit einem kleineren als dem erlaubten Ladestrom lädt!
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/boost_mode
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/boost_mode -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/boost_mode
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/boost_mode<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/boost_mode_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -5199,6 +10177,58 @@ Gibt an, ob das EVSE der Ladeelektronik des Fahrzeugs einen leicht höheren Lade
 
 <strong>(Nur WARP 3)</strong> 
 Konfiguriert, ob ein WARP3 Charger Pro automatisch von drei- auf einphasiges Laden wechseln soll, wenn ein Fahrzeug angeschlossen ist, dass nur auf L1 Strom bezieht.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/phase_auto_switch
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/phase_auto_switch -d '{ "enabled": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/phase_auto_switch
+```
+```jsx
+{ "enabled": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/phase_auto_switch<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/phase_auto_switch_update -m '{ "enabled": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -5226,6 +10256,58 @@ Konfiguriert, ob ein WARP3 Charger Pro automatisch von drei- auf einphasiges Lad
 
 <strong>(Nur WARP 2 und WARP 3)</strong> 
 Konfiguriert, ob die Wallbox fest ein- oder dreiphasig angeschlossen ist. Damit wird z.B. die 4200 W-Limitierung nach §14 EnWG berechnet
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/phases_connected
+```
+```jsx
+{ "phases": 1 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/phases_connected -d '{ "phases": 1 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/phases_connected
+```
+```jsx
+{ "phases": 1 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/phases_connected<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/phases_connected_update -m '{ "phases": 1 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -5258,6 +10340,33 @@ Konfiguriert, ob die Wallbox fest ein- oder dreiphasig angeschlossen ist. Damit 
 
 <strong>(Nur WARP 2 und WARP 3)</strong> 
 Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/evse/reset_dc_fault_current_state -d '{ "password": 3695376931 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/reset_dc_fault_current_state -m '{ "password": 3695376931 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -5321,6 +10430,58 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/trigger_dc_fault_test -m 'null'
 
 <strong>(Nur WARP 2)</strong> 
 Der aktuelle Wert des konfigurierbaren Ausgangs.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/gp_output
+```
+```jsx
+{ "gp_output": 1 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/gp_output -d '{ "gp_output": 1 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/gp_output
+```
+```jsx
+{ "gp_output": 1 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/gp_output<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/gp_output_update -m '{ "gp_output": 1 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -5457,6 +10618,58 @@ Stoppt ein Ladeprotokoll. Siehe [`evse/start_debug`](evse.mdx#evse_start_debug) 
 
 
 Gibt an, welcher Stromzähler für Berechnungen im Zusammenhang mit Ladevorgängen verwendet werden soll. (z.B. Ladetracker, Ladelimits, usw.)
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/evse/meter_config
+```
+```jsx
+{ "slot": 0 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/evse/meter_config -d '{ "slot": 0 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/meter_config
+```
+```jsx
+{ "slot": 0 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/meter_config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/meter_config_update -m '{ "slot": 0 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 

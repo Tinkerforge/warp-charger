@@ -16,6 +16,90 @@ import Admonition from '@theme/Admonition';
 
 
 Die aktuelle Zeit auf der Real-Time Clock.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/rtc/time
+```
+```jsx
+{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/rtc/time -d '{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/rtc/time
+```
+```jsx
+{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/rtc/time<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/rtc/time_update -m '{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -112,6 +196,90 @@ Die Real-Time-Clock-Konfiguration.
 
 
 Die aktuelle Zeit auf der Real-Time Clock.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/rtc/time
+```
+```jsx
+{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/rtc/time -d '{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/rtc/time
+```
+```jsx
+{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/rtc/time<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/rtc/time_update -m '{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -208,6 +376,90 @@ Die Real-Time-Clock-Konfiguration.
 
 
 Die aktuelle Zeit auf der Real-Time Clock.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/rtc/time
+```
+```jsx
+{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/rtc/time -d '{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/rtc/time
+```
+```jsx
+{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/rtc/time<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/rtc/time_update -m '{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -304,6 +556,90 @@ Die Real-Time-Clock-Konfiguration.
 
 
 Die aktuelle Zeit auf der Real-Time Clock.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/rtc/time
+```
+```jsx
+{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/rtc/time -d '{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/rtc/time
+```
+```jsx
+{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/rtc/time<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/rtc/time_update -m '{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -400,6 +736,90 @@ Die Real-Time-Clock-Konfiguration.
 
 
 Die aktuelle Zeit auf der Real-Time Clock.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/rtc/time
+```
+```jsx
+{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/rtc/time -d '{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/rtc/time
+```
+```jsx
+{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/rtc/time<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/rtc/time_update -m '{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>

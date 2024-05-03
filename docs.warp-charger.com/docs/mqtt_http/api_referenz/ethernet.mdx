@@ -9,7 +9,7 @@ import Admonition from '@theme/Admonition';
 
 # LAN-Verbindung
 **Benötigt das Feature <a href="#features_ethernet"><code>"ethernet"</code></a>.**
-
+Mit dem `ethernet`-Modul und passender Hardware kann eine Verbindung zu einem LAN hergestellt werden.
 <Tabs groupId="hardwareType" queryString className="hidden-tabs">
 <TabItem value="warp1">
 Auf dieser Hardware nicht unterstützt!
@@ -18,7 +18,44 @@ Auf dieser Hardware nicht unterstützt!
 ## `ethernet/state` {#ethernet_state_warp2}
 
 
-Der aktuelle LAN-Zustand.
+Der Zustand der LAN/Ethernet-Verbindung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/ethernet/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ethernet/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "connection_state": 3,
+  "connection_start": 4241,
+  "connection_end": 0,
+  "ip": "192.168.1.129",
+  "subnet": "255.255.255.0",
+  "full_duplex": true,
+  "link_speed": 100
+}
+```
+
+
+:::
 
 
 <table>
@@ -33,7 +70,7 @@ Der aktuelle LAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_state`<br/>int</th>
     <td>
-        Zustand der Verbindung zum konfigurierten LAN.
+        Verbindungszustand.
         - **0** - Nicht konfiguriert
         - **1** - Nicht verbunden
         - **2** - Verbinde
@@ -44,14 +81,14 @@ Der aktuelle LAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
     <td>
-        Aktuelle IP der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
+        IP des Geräts im verbundenen Netzwerk. 0.0.0.0 falls keine Verbindung besteht.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
     <td>
-        Aktuelle Subnetzmaske der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
+        Verwendete Subnetzmaske des Geräts im verbundenen Netzwerk. 0.0.0.0 falls keine Verbindung besteht.
     </td>
 </tr>
 
@@ -75,14 +112,14 @@ Der aktuelle LAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_start`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
-        Zeit in Millisekunden zu der die letzte Verbindung aufgebaut wurde.
+        Zeit in Millisekunden zu der zuletzt eine Verbindung aufgebaut wurde.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_end`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
-        Zeit in Millisekunden zu der die letzte Verbindung getrennt wurde.
+        Zeit in Millisekunden zu der zuletzt eine Verbindung getrennt wurde.
     </td>
 </tr>
     </tbody>
@@ -92,7 +129,87 @@ Der aktuelle LAN-Zustand.
 ## `ethernet/config` {#ethernet_config_warp2}
 
 
-Die LAN-Verbindungskonfiguration.
+Die Konfiguration der LAN/Ethernet-Verbindung..
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/ethernet/config
+```
+```jsx
+{
+  "enable_ethernet": true,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/ethernet/config -d '{
+  "enable_ethernet": true,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0"
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ethernet/config
+```
+```jsx
+{
+  "enable_ethernet": true,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/ethernet/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/ethernet/config_update -m '{
+  "enable_ethernet": true,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0"
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -107,7 +224,7 @@ Die LAN-Verbindungskonfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_ethernet`<br/>bool</th>
     <td>
-        Gibt an ob eine LAN-Verbindung zum konfigurierten Netzwerk aufgebaut werden soll.
+        Gibt an ob eine LAN-Verbindung aufgebaut werden soll.
         - **true** - Wenn eine LAN-Verbindung aufgebaut werden soll.
         - **false** - Wenn nicht.
     </td>
@@ -116,35 +233,35 @@ Die LAN-Verbindungskonfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
     <td>
-        IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
+        IP-Adresse, die das Gerät verwenden soll. Dieser Eintrag und die folgenden sind optional und können auf "0.0.0.0" gesetzt werden, falls die Addresskonfiguration automatisch per DHCP bezogen werden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`gateway`<br/>string</th>
     <td>
-        Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Gateway-Adresse, die das Gerät verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
     <td>
-        Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll.
+        Subnetzmaske, die das Gerät verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`dns`<br/>string</th>
     <td>
-        DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        DNS-Server-Adresse, die das Gerät verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`dns2`<br/>string</th>
     <td>
-        Alternative DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Alternative DNS-Server-Adresse, die das Gerät verwenden soll.
     </td>
 </tr>
     </tbody>
@@ -154,7 +271,44 @@ Die LAN-Verbindungskonfiguration.
 ## `ethernet/state` {#ethernet_state_warp3}
 
 
-Der aktuelle LAN-Zustand.
+Der Zustand der LAN/Ethernet-Verbindung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/ethernet/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ethernet/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "connection_state": 3,
+  "connection_start": 4241,
+  "connection_end": 0,
+  "ip": "192.168.1.129",
+  "subnet": "255.255.255.0",
+  "full_duplex": true,
+  "link_speed": 100
+}
+```
+
+
+:::
 
 
 <table>
@@ -169,7 +323,7 @@ Der aktuelle LAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_state`<br/>int</th>
     <td>
-        Zustand der Verbindung zum konfigurierten LAN.
+        Verbindungszustand.
         - **0** - Nicht konfiguriert
         - **1** - Nicht verbunden
         - **2** - Verbinde
@@ -180,14 +334,14 @@ Der aktuelle LAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
     <td>
-        Aktuelle IP der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
+        IP des Geräts im verbundenen Netzwerk. 0.0.0.0 falls keine Verbindung besteht.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
     <td>
-        Aktuelle Subnetzmaske der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
+        Verwendete Subnetzmaske des Geräts im verbundenen Netzwerk. 0.0.0.0 falls keine Verbindung besteht.
     </td>
 </tr>
 
@@ -211,14 +365,14 @@ Der aktuelle LAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_start`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
-        Zeit in Millisekunden zu der die letzte Verbindung aufgebaut wurde.
+        Zeit in Millisekunden zu der zuletzt eine Verbindung aufgebaut wurde.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_end`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
-        Zeit in Millisekunden zu der die letzte Verbindung getrennt wurde.
+        Zeit in Millisekunden zu der zuletzt eine Verbindung getrennt wurde.
     </td>
 </tr>
     </tbody>
@@ -228,7 +382,87 @@ Der aktuelle LAN-Zustand.
 ## `ethernet/config` {#ethernet_config_warp3}
 
 
-Die LAN-Verbindungskonfiguration.
+Die Konfiguration der LAN/Ethernet-Verbindung..
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/ethernet/config
+```
+```jsx
+{
+  "enable_ethernet": true,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/ethernet/config -d '{
+  "enable_ethernet": true,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0"
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ethernet/config
+```
+```jsx
+{
+  "enable_ethernet": true,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/ethernet/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/ethernet/config_update -m '{
+  "enable_ethernet": true,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0"
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -243,7 +477,7 @@ Die LAN-Verbindungskonfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_ethernet`<br/>bool</th>
     <td>
-        Gibt an ob eine LAN-Verbindung zum konfigurierten Netzwerk aufgebaut werden soll.
+        Gibt an ob eine LAN-Verbindung aufgebaut werden soll.
         - **true** - Wenn eine LAN-Verbindung aufgebaut werden soll.
         - **false** - Wenn nicht.
     </td>
@@ -252,35 +486,35 @@ Die LAN-Verbindungskonfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
     <td>
-        IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
+        IP-Adresse, die das Gerät verwenden soll. Dieser Eintrag und die folgenden sind optional und können auf "0.0.0.0" gesetzt werden, falls die Addresskonfiguration automatisch per DHCP bezogen werden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`gateway`<br/>string</th>
     <td>
-        Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Gateway-Adresse, die das Gerät verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
     <td>
-        Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll.
+        Subnetzmaske, die das Gerät verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`dns`<br/>string</th>
     <td>
-        DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        DNS-Server-Adresse, die das Gerät verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`dns2`<br/>string</th>
     <td>
-        Alternative DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Alternative DNS-Server-Adresse, die das Gerät verwenden soll.
     </td>
 </tr>
     </tbody>
@@ -290,7 +524,44 @@ Die LAN-Verbindungskonfiguration.
 ## `ethernet/state` {#ethernet_state_wem}
 
 
-Der aktuelle LAN-Zustand.
+Der Zustand der LAN/Ethernet-Verbindung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/ethernet/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ethernet/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "connection_state": 3,
+  "connection_start": 4241,
+  "connection_end": 0,
+  "ip": "192.168.1.129",
+  "subnet": "255.255.255.0",
+  "full_duplex": true,
+  "link_speed": 100
+}
+```
+
+
+:::
 
 
 <table>
@@ -305,7 +576,7 @@ Der aktuelle LAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_state`<br/>int</th>
     <td>
-        Zustand der Verbindung zum konfigurierten LAN.
+        Verbindungszustand.
         - **0** - Nicht konfiguriert
         - **1** - Nicht verbunden
         - **2** - Verbinde
@@ -316,14 +587,14 @@ Der aktuelle LAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
     <td>
-        Aktuelle IP der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
+        IP des Geräts im verbundenen Netzwerk. 0.0.0.0 falls keine Verbindung besteht.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
     <td>
-        Aktuelle Subnetzmaske der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
+        Verwendete Subnetzmaske des Geräts im verbundenen Netzwerk. 0.0.0.0 falls keine Verbindung besteht.
     </td>
 </tr>
 
@@ -347,14 +618,14 @@ Der aktuelle LAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_start`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
-        Zeit in Millisekunden zu der die letzte Verbindung aufgebaut wurde.
+        Zeit in Millisekunden zu der zuletzt eine Verbindung aufgebaut wurde.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_end`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
-        Zeit in Millisekunden zu der die letzte Verbindung getrennt wurde.
+        Zeit in Millisekunden zu der zuletzt eine Verbindung getrennt wurde.
     </td>
 </tr>
     </tbody>
@@ -364,7 +635,87 @@ Der aktuelle LAN-Zustand.
 ## `ethernet/config` {#ethernet_config_wem}
 
 
-Die LAN-Verbindungskonfiguration.
+Die Konfiguration der LAN/Ethernet-Verbindung..
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/ethernet/config
+```
+```jsx
+{
+  "enable_ethernet": true,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/ethernet/config -d '{
+  "enable_ethernet": true,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0"
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ethernet/config
+```
+```jsx
+{
+  "enable_ethernet": true,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/ethernet/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/ethernet/config_update -m '{
+  "enable_ethernet": true,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0"
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -379,7 +730,7 @@ Die LAN-Verbindungskonfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_ethernet`<br/>bool</th>
     <td>
-        Gibt an ob eine LAN-Verbindung zum konfigurierten Netzwerk aufgebaut werden soll.
+        Gibt an ob eine LAN-Verbindung aufgebaut werden soll.
         - **true** - Wenn eine LAN-Verbindung aufgebaut werden soll.
         - **false** - Wenn nicht.
     </td>
@@ -388,35 +739,35 @@ Die LAN-Verbindungskonfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
     <td>
-        IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
+        IP-Adresse, die das Gerät verwenden soll. Dieser Eintrag und die folgenden sind optional und können auf "0.0.0.0" gesetzt werden, falls die Addresskonfiguration automatisch per DHCP bezogen werden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`gateway`<br/>string</th>
     <td>
-        Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Gateway-Adresse, die das Gerät verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
     <td>
-        Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll.
+        Subnetzmaske, die das Gerät verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`dns`<br/>string</th>
     <td>
-        DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        DNS-Server-Adresse, die das Gerät verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`dns2`<br/>string</th>
     <td>
-        Alternative DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Alternative DNS-Server-Adresse, die das Gerät verwenden soll.
     </td>
 </tr>
     </tbody>
@@ -426,7 +777,44 @@ Die LAN-Verbindungskonfiguration.
 ## `ethernet/state` {#ethernet_state_any}
 
 
-Der aktuelle LAN-Zustand.
+Der Zustand der LAN/Ethernet-Verbindung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/ethernet/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ethernet/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "connection_state": 3,
+  "connection_start": 4241,
+  "connection_end": 0,
+  "ip": "192.168.1.129",
+  "subnet": "255.255.255.0",
+  "full_duplex": true,
+  "link_speed": 100
+}
+```
+
+
+:::
 
 
 <table>
@@ -441,7 +829,7 @@ Der aktuelle LAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_state`<br/>int</th>
     <td>
-        Zustand der Verbindung zum konfigurierten LAN.
+        Verbindungszustand.
         
         
         
@@ -455,14 +843,14 @@ Der aktuelle LAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
     <td>
-        Aktuelle IP der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
+        IP des Geräts im verbundenen Netzwerk. 0.0.0.0 falls keine Verbindung besteht.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
     <td>
-        Aktuelle Subnetzmaske der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
+        Verwendete Subnetzmaske des Geräts im verbundenen Netzwerk. 0.0.0.0 falls keine Verbindung besteht.
     </td>
 </tr>
 
@@ -489,14 +877,14 @@ Der aktuelle LAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_start`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
-        Zeit in Millisekunden zu der die letzte Verbindung aufgebaut wurde.
+        Zeit in Millisekunden zu der zuletzt eine Verbindung aufgebaut wurde.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_end`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
-        Zeit in Millisekunden zu der die letzte Verbindung getrennt wurde.
+        Zeit in Millisekunden zu der zuletzt eine Verbindung getrennt wurde.
     </td>
 </tr>
     </tbody>
@@ -506,7 +894,87 @@ Der aktuelle LAN-Zustand.
 ## `ethernet/config` {#ethernet_config_any}
 
 
-Die LAN-Verbindungskonfiguration.
+Die Konfiguration der LAN/Ethernet-Verbindung..
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/ethernet/config
+```
+```jsx
+{
+  "enable_ethernet": true,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/ethernet/config -d '{
+  "enable_ethernet": true,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0"
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ethernet/config
+```
+```jsx
+{
+  "enable_ethernet": true,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/ethernet/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/ethernet/config_update -m '{
+  "enable_ethernet": true,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0"
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -521,7 +989,7 @@ Die LAN-Verbindungskonfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_ethernet`<br/>bool</th>
     <td>
-        Gibt an ob eine LAN-Verbindung zum konfigurierten Netzwerk aufgebaut werden soll.
+        Gibt an ob eine LAN-Verbindung aufgebaut werden soll.
         
         
         
@@ -533,35 +1001,35 @@ Die LAN-Verbindungskonfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
     <td>
-        IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
+        IP-Adresse, die das Gerät verwenden soll. Dieser Eintrag und die folgenden sind optional und können auf "0.0.0.0" gesetzt werden, falls die Addresskonfiguration automatisch per DHCP bezogen werden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`gateway`<br/>string</th>
     <td>
-        Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Gateway-Adresse, die das Gerät verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
     <td>
-        Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll.
+        Subnetzmaske, die das Gerät verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`dns`<br/>string</th>
     <td>
-        DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        DNS-Server-Adresse, die das Gerät verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`dns2`<br/>string</th>
     <td>
-        Alternative DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Alternative DNS-Server-Adresse, die das Gerät verwenden soll.
     </td>
 </tr>
     </tbody>

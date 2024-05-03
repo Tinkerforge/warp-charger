@@ -15,6 +15,40 @@ import Admonition from '@theme/Admonition';
 
 
 Der aktuelle MQTT-Zustand.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/mqtt/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/mqtt/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "connection_state": 2,
+  "connection_start": 27649,
+  "connection_end": 0,
+  "last_error": 0
+}
+```
+
+
+:::
 
 
 <table>
@@ -213,14 +247,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`broker_host`<br/>string</th>
     <td>
-        Hostname oder IP-Adresse des MQTT-Brokers, zu dem sich die Wallbox verbinden soll.
+        Hostname oder IP-Adresse des MQTT-Brokers, zu dem sich das Gerät verbinden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`broker_port`<br/>int</th>
     <td>
-        Port des MQTT-Brokers zu dem sich die Wallbox verbinden soll. Typischerweise 1883.
+        Port des MQTT-Brokers zu dem sich das Gerät verbinden soll. Typischerweise 1883.
     </td>
 </tr>
 
@@ -241,14 +275,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`global_topic_prefix`<br/>string</th>
     <td>
-        Präfix der allen MQTT-Topics vorangestellt wird. Normalerweise warp/[UID der Wallbox] bzw. warp2/[UID der Wallbox].
+        Präfix der allen MQTT-Topics vorangestellt wird. Normalerweise warp/[UID des Geräts] bzw. warp2/[UID des Geräts].
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`client_name`<br/>string</th>
     <td>
-        Name unter dem sich die Wallbox beim Broker registriert. <strong>Das ist nicht der Username zur Authentisierung.</strong>
+        Name unter dem sich das Gerät beim Broker registriert. <strong>Das ist nicht der Username zur Authentisierung.</strong>
     </td>
 </tr>
 
@@ -300,6 +334,58 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
 
 
 Die Konfiguration der MQTT Auto Discovery.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/mqtt/auto_discovery_config
+```
+```jsx
+{ "auto_discovery_mode": 2, "auto_discovery_prefix": "homeassistant" }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/mqtt/auto_discovery_config -d '{ "auto_discovery_mode": 2, "auto_discovery_prefix": "homeassistant" }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/mqtt/auto_discovery_config
+```
+```jsx
+{ "auto_discovery_mode": 2, "auto_discovery_prefix": "homeassistant" }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/mqtt/auto_discovery_config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/mqtt/auto_discovery_config_update -m '{ "auto_discovery_mode": 2, "auto_discovery_prefix": "homeassistant" }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -335,6 +421,40 @@ Die Konfiguration der MQTT Auto Discovery.
 
 
 Der aktuelle MQTT-Zustand.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/mqtt/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/mqtt/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "connection_state": 2,
+  "connection_start": 27649,
+  "connection_end": 0,
+  "last_error": 0
+}
+```
+
+
+:::
 
 
 <table>
@@ -533,14 +653,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`broker_host`<br/>string</th>
     <td>
-        Hostname oder IP-Adresse des MQTT-Brokers, zu dem sich die Wallbox verbinden soll.
+        Hostname oder IP-Adresse des MQTT-Brokers, zu dem sich das Gerät verbinden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`broker_port`<br/>int</th>
     <td>
-        Port des MQTT-Brokers zu dem sich die Wallbox verbinden soll. Typischerweise 1883.
+        Port des MQTT-Brokers zu dem sich das Gerät verbinden soll. Typischerweise 1883.
     </td>
 </tr>
 
@@ -561,14 +681,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`global_topic_prefix`<br/>string</th>
     <td>
-        Präfix der allen MQTT-Topics vorangestellt wird. Normalerweise warp/[UID der Wallbox] bzw. warp2/[UID der Wallbox].
+        Präfix der allen MQTT-Topics vorangestellt wird. Normalerweise warp/[UID des Geräts] bzw. warp2/[UID des Geräts].
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`client_name`<br/>string</th>
     <td>
-        Name unter dem sich die Wallbox beim Broker registriert. <strong>Das ist nicht der Username zur Authentisierung.</strong>
+        Name unter dem sich das Gerät beim Broker registriert. <strong>Das ist nicht der Username zur Authentisierung.</strong>
     </td>
 </tr>
 
@@ -620,6 +740,58 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
 
 
 Die Konfiguration der MQTT Auto Discovery.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/mqtt/auto_discovery_config
+```
+```jsx
+{ "auto_discovery_mode": 2, "auto_discovery_prefix": "homeassistant" }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/mqtt/auto_discovery_config -d '{ "auto_discovery_mode": 2, "auto_discovery_prefix": "homeassistant" }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/mqtt/auto_discovery_config
+```
+```jsx
+{ "auto_discovery_mode": 2, "auto_discovery_prefix": "homeassistant" }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/mqtt/auto_discovery_config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/mqtt/auto_discovery_config_update -m '{ "auto_discovery_mode": 2, "auto_discovery_prefix": "homeassistant" }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -655,6 +827,40 @@ Die Konfiguration der MQTT Auto Discovery.
 
 
 Der aktuelle MQTT-Zustand.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/mqtt/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/mqtt/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "connection_state": 2,
+  "connection_start": 27649,
+  "connection_end": 0,
+  "last_error": 0
+}
+```
+
+
+:::
 
 
 <table>
@@ -853,14 +1059,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`broker_host`<br/>string</th>
     <td>
-        Hostname oder IP-Adresse des MQTT-Brokers, zu dem sich die Wallbox verbinden soll.
+        Hostname oder IP-Adresse des MQTT-Brokers, zu dem sich das Gerät verbinden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`broker_port`<br/>int</th>
     <td>
-        Port des MQTT-Brokers zu dem sich die Wallbox verbinden soll. Typischerweise 1883.
+        Port des MQTT-Brokers zu dem sich das Gerät verbinden soll. Typischerweise 1883.
     </td>
 </tr>
 
@@ -881,14 +1087,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`global_topic_prefix`<br/>string</th>
     <td>
-        Präfix der allen MQTT-Topics vorangestellt wird. Normalerweise warp/[UID der Wallbox] bzw. warp2/[UID der Wallbox].
+        Präfix der allen MQTT-Topics vorangestellt wird. Normalerweise warp/[UID des Geräts] bzw. warp2/[UID des Geräts].
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`client_name`<br/>string</th>
     <td>
-        Name unter dem sich die Wallbox beim Broker registriert. <strong>Das ist nicht der Username zur Authentisierung.</strong>
+        Name unter dem sich das Gerät beim Broker registriert. <strong>Das ist nicht der Username zur Authentisierung.</strong>
     </td>
 </tr>
 
@@ -940,6 +1146,58 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
 
 
 Die Konfiguration der MQTT Auto Discovery.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/mqtt/auto_discovery_config
+```
+```jsx
+{ "auto_discovery_mode": 2, "auto_discovery_prefix": "homeassistant" }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/mqtt/auto_discovery_config -d '{ "auto_discovery_mode": 2, "auto_discovery_prefix": "homeassistant" }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/mqtt/auto_discovery_config
+```
+```jsx
+{ "auto_discovery_mode": 2, "auto_discovery_prefix": "homeassistant" }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/mqtt/auto_discovery_config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/mqtt/auto_discovery_config_update -m '{ "auto_discovery_mode": 2, "auto_discovery_prefix": "homeassistant" }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -975,6 +1233,40 @@ Die Konfiguration der MQTT Auto Discovery.
 
 
 Der aktuelle MQTT-Zustand.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/mqtt/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/mqtt/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "connection_state": 2,
+  "connection_start": 27649,
+  "connection_end": 0,
+  "last_error": 0
+}
+```
+
+
+:::
 
 
 <table>
@@ -1173,14 +1465,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`broker_host`<br/>string</th>
     <td>
-        Hostname oder IP-Adresse des MQTT-Brokers, zu dem sich die Wallbox verbinden soll.
+        Hostname oder IP-Adresse des MQTT-Brokers, zu dem sich das Gerät verbinden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`broker_port`<br/>int</th>
     <td>
-        Port des MQTT-Brokers zu dem sich die Wallbox verbinden soll. Typischerweise 1883.
+        Port des MQTT-Brokers zu dem sich das Gerät verbinden soll. Typischerweise 1883.
     </td>
 </tr>
 
@@ -1201,14 +1493,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`global_topic_prefix`<br/>string</th>
     <td>
-        Präfix der allen MQTT-Topics vorangestellt wird. Normalerweise warp/[UID der Wallbox] bzw. warp2/[UID der Wallbox].
+        Präfix der allen MQTT-Topics vorangestellt wird. Normalerweise warp/[UID des Geräts] bzw. warp2/[UID des Geräts].
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`client_name`<br/>string</th>
     <td>
-        Name unter dem sich die Wallbox beim Broker registriert. <strong>Das ist nicht der Username zur Authentisierung.</strong>
+        Name unter dem sich das Gerät beim Broker registriert. <strong>Das ist nicht der Username zur Authentisierung.</strong>
     </td>
 </tr>
 
@@ -1262,6 +1554,40 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
 
 
 Der aktuelle MQTT-Zustand.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/mqtt/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/mqtt/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "connection_state": 2,
+  "connection_start": 27649,
+  "connection_end": 0,
+  "last_error": 0
+}
+```
+
+
+:::
 
 
 <table>
@@ -1469,14 +1795,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`broker_host`<br/>string</th>
     <td>
-        Hostname oder IP-Adresse des MQTT-Brokers, zu dem sich die Wallbox verbinden soll.
+        Hostname oder IP-Adresse des MQTT-Brokers, zu dem sich das Gerät verbinden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`broker_port`<br/>int</th>
     <td>
-        Port des MQTT-Brokers zu dem sich die Wallbox verbinden soll. Typischerweise 1883.
+        Port des MQTT-Brokers zu dem sich das Gerät verbinden soll. Typischerweise 1883.
     </td>
 </tr>
 
@@ -1497,14 +1823,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`global_topic_prefix`<br/>string</th>
     <td>
-        Präfix der allen MQTT-Topics vorangestellt wird. Normalerweise warp/[UID der Wallbox] bzw. warp2/[UID der Wallbox].
+        Präfix der allen MQTT-Topics vorangestellt wird. Normalerweise warp/[UID des Geräts] bzw. warp2/[UID des Geräts].
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`client_name`<br/>string</th>
     <td>
-        Name unter dem sich die Wallbox beim Broker registriert. <strong>Das ist nicht der Username zur Authentisierung.</strong>
+        Name unter dem sich das Gerät beim Broker registriert. <strong>Das ist nicht der Username zur Authentisierung.</strong>
     </td>
 </tr>
 
@@ -1565,6 +1891,58 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
 
 **Benötigt das Feature <a href="#features_evse"><code>"evse"</code></a>**
 Die Konfiguration der MQTT Auto Discovery.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/mqtt/auto_discovery_config
+```
+```jsx
+{ "auto_discovery_mode": 2, "auto_discovery_prefix": "homeassistant" }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/mqtt/auto_discovery_config -d '{ "auto_discovery_mode": 2, "auto_discovery_prefix": "homeassistant" }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/mqtt/auto_discovery_config
+```
+```jsx
+{ "auto_discovery_mode": 2, "auto_discovery_prefix": "homeassistant" }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/mqtt/auto_discovery_config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/mqtt/auto_discovery_config_update -m '{ "auto_discovery_mode": 2, "auto_discovery_prefix": "homeassistant" }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>

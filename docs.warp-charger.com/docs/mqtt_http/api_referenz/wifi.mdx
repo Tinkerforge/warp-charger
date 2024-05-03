@@ -15,6 +15,45 @@ import Admonition from '@theme/Admonition';
 
 
 Der aktuelle WLAN-Zustand.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/wifi/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "connection_state": 3,
+  "connection_start": 10117,
+  "connection_end": 0,
+  "ap_state": 2,
+  "ap_bssid": "C4:5B:BE:C0:FF:EE",
+  "sta_ip": "10.1.2.3",
+  "sta_subnet": "255.255.255.0",
+  "sta_rssi": -38,
+  "sta_bssid": "71:21:CE:12:F0:12"
+}
+```
+
+
+:::
 
 
 <table>
@@ -58,14 +97,14 @@ Der aktuelle WLAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`sta_ip`<br/>string</th>
     <td>
-        Aktuelle IP der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
+        Aktuelle IP des Geräts im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`sta_subnet`<br/>string</th>
     <td>
-        Aktuelle Subnetzmaske der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
+        Aktuelle Subnetzmaske des Geräts im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
     </td>
 </tr>
 
@@ -79,7 +118,7 @@ Der aktuelle WLAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`sta_bssid`<br/>string</th>
     <td>
-        Die BSSID der Gegenstelle, zu der die Wallbox verbunden ist.
+        Die BSSID der Gegenstelle, zu der das Gerät verbunden ist.
     </td>
 </tr>
 
@@ -194,35 +233,35 @@ Die WLAN-Verbindungskonfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
     <td>
-        IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
+        IP-Adresse, die das Gerät im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`gateway`<br/>string</th>
     <td>
-        Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Gateway-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
     <td>
-        Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll.
+        Subnetzmaske, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`dns`<br/>string</th>
     <td>
-        DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        DNS-Server-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`dns2`<br/>string</th>
     <td>
-        Alternative DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Alternative DNS-Server-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
@@ -344,6 +383,98 @@ Die WLAN-Verbindungskonfiguration.
 
 
 Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deaktiviert wird, und die WLAN-Verbindung bzw. LAN-Verbindung nicht aufgebaut werden kann, bzw. nicht konfiguriert wurde, kann der ESP nur noch durch einen Factory-Reset erreicht werden!</strong> Wir empfehlen, den Access Point immer im Fallback-Modus zu belassen.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/wifi/ap_config
+```
+```jsx
+{
+  "enable_ap": true,
+  "ap_fallback_only": true,
+  "ssid": "warp-AbCd",
+  "hide_ssid": false,
+  "passphrase": null,
+  "channel": 0,
+  "ip": "10.0.0.1",
+  "gateway": "10.0.0.1",
+  "subnet": "255.255.255.0"
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/wifi/ap_config -d '{
+  "enable_ap": true,
+  "ap_fallback_only": true,
+  "ssid": "wallbox_garage",
+  "hide_ssid": false,
+  "passphrase": null,
+  "channel": 0,
+  "ip": "10.0.0.1",
+  "gateway": "10.0.0.1",
+  "subnet": "255.255.255.0"
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/ap_config
+```
+```jsx
+{
+  "enable_ap": true,
+  "ap_fallback_only": true,
+  "ssid": "warp-AbCd",
+  "hide_ssid": false,
+  "passphrase": null,
+  "channel": 0,
+  "ip": "10.0.0.1",
+  "gateway": "10.0.0.1",
+  "subnet": "255.255.255.0"
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/wifi/ap_config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wifi/ap_config_update -m '{
+  "enable_ap": true,
+  "ap_fallback_only": true,
+  "ssid": "wallbox_garage",
+  "hide_ssid": false,
+  "passphrase": null,
+  "channel": 0,
+  "ip": "10.0.0.1",
+  "gateway": "10.0.0.1",
+  "subnet": "255.255.255.0"
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -404,21 +535,21 @@ Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deak
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
     <td>
-        IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
+        IP-Adresse, die das Gerät im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`gateway`<br/>string</th>
     <td>
-        Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Gateway-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
     <td>
-        Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll.
+        Subnetzmaske, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
     </tbody>
@@ -431,6 +562,51 @@ Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deak
 
 
 Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+```bash
+curl http://$HOST/wifi/scan_results
+```
+```jsx
+[
+  {
+    "ssid": "Mein WLAN",
+    "bssid": "0C:22:38:4E:5A:0C",
+    "rssi": -43,
+    "channel": 9,
+    "encryption": 3
+  },
+  {
+    "ssid": "Mein WLAN",
+    "bssid": "0C:22:38:4E:5A:0D",
+    "rssi": -43,
+    "channel": 13,
+    "encryption": 3
+  },
+  {
+    "ssid": "Anderes WLAN",
+    "bssid": "C0:FF:EE:4E:5A:0C",
+    "rssi": -75,
+    "channel": 1,
+    "encryption": 3
+  }
+]
+```
+Zwei Repeater des selben WLANs haben die gleiche SSID, aber unterschiedliche BSSIDs.
+Durch das bssid_lock in [`wifi/sta_config`](wifi.mdx#wifi_sta_config) kann eine Verbindung zu einem spezifischen Repeater
+erzwungen werden.
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -513,6 +689,45 @@ Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden
 
 
 Der aktuelle WLAN-Zustand.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/wifi/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "connection_state": 3,
+  "connection_start": 10117,
+  "connection_end": 0,
+  "ap_state": 2,
+  "ap_bssid": "C4:5B:BE:C0:FF:EE",
+  "sta_ip": "10.1.2.3",
+  "sta_subnet": "255.255.255.0",
+  "sta_rssi": -38,
+  "sta_bssid": "71:21:CE:12:F0:12"
+}
+```
+
+
+:::
 
 
 <table>
@@ -556,14 +771,14 @@ Der aktuelle WLAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`sta_ip`<br/>string</th>
     <td>
-        Aktuelle IP der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
+        Aktuelle IP des Geräts im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`sta_subnet`<br/>string</th>
     <td>
-        Aktuelle Subnetzmaske der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
+        Aktuelle Subnetzmaske des Geräts im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
     </td>
 </tr>
 
@@ -577,7 +792,7 @@ Der aktuelle WLAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`sta_bssid`<br/>string</th>
     <td>
-        Die BSSID der Gegenstelle, zu der die Wallbox verbunden ist.
+        Die BSSID der Gegenstelle, zu der das Gerät verbunden ist.
     </td>
 </tr>
 
@@ -692,35 +907,35 @@ Die WLAN-Verbindungskonfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
     <td>
-        IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
+        IP-Adresse, die das Gerät im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`gateway`<br/>string</th>
     <td>
-        Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Gateway-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
     <td>
-        Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll.
+        Subnetzmaske, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`dns`<br/>string</th>
     <td>
-        DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        DNS-Server-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`dns2`<br/>string</th>
     <td>
-        Alternative DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Alternative DNS-Server-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
@@ -842,6 +1057,98 @@ Die WLAN-Verbindungskonfiguration.
 
 
 Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deaktiviert wird, und die WLAN-Verbindung bzw. LAN-Verbindung nicht aufgebaut werden kann, bzw. nicht konfiguriert wurde, kann der ESP nur noch durch einen Factory-Reset erreicht werden!</strong> Wir empfehlen, den Access Point immer im Fallback-Modus zu belassen.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/wifi/ap_config
+```
+```jsx
+{
+  "enable_ap": true,
+  "ap_fallback_only": true,
+  "ssid": "warp2-AbCd",
+  "hide_ssid": false,
+  "passphrase": null,
+  "channel": 0,
+  "ip": "10.0.0.1",
+  "gateway": "10.0.0.1",
+  "subnet": "255.255.255.0"
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/wifi/ap_config -d '{
+  "enable_ap": true,
+  "ap_fallback_only": true,
+  "ssid": "wallbox_garage",
+  "hide_ssid": false,
+  "passphrase": null,
+  "channel": 0,
+  "ip": "10.0.0.1",
+  "gateway": "10.0.0.1",
+  "subnet": "255.255.255.0"
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/ap_config
+```
+```jsx
+{
+  "enable_ap": true,
+  "ap_fallback_only": true,
+  "ssid": "warp2-AbCd",
+  "hide_ssid": false,
+  "passphrase": null,
+  "channel": 0,
+  "ip": "10.0.0.1",
+  "gateway": "10.0.0.1",
+  "subnet": "255.255.255.0"
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/wifi/ap_config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wifi/ap_config_update -m '{
+  "enable_ap": true,
+  "ap_fallback_only": true,
+  "ssid": "wallbox_garage",
+  "hide_ssid": false,
+  "passphrase": null,
+  "channel": 0,
+  "ip": "10.0.0.1",
+  "gateway": "10.0.0.1",
+  "subnet": "255.255.255.0"
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -902,21 +1209,21 @@ Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deak
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
     <td>
-        IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
+        IP-Adresse, die das Gerät im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`gateway`<br/>string</th>
     <td>
-        Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Gateway-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
     <td>
-        Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll.
+        Subnetzmaske, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
     </tbody>
@@ -929,6 +1236,51 @@ Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deak
 
 
 Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+```bash
+curl http://$HOST/wifi/scan_results
+```
+```jsx
+[
+  {
+    "ssid": "Mein WLAN",
+    "bssid": "0C:22:38:4E:5A:0C",
+    "rssi": -43,
+    "channel": 9,
+    "encryption": 3
+  },
+  {
+    "ssid": "Mein WLAN",
+    "bssid": "0C:22:38:4E:5A:0D",
+    "rssi": -43,
+    "channel": 13,
+    "encryption": 3
+  },
+  {
+    "ssid": "Anderes WLAN",
+    "bssid": "C0:FF:EE:4E:5A:0C",
+    "rssi": -75,
+    "channel": 1,
+    "encryption": 3
+  }
+]
+```
+Zwei Repeater des selben WLANs haben die gleiche SSID, aber unterschiedliche BSSIDs.
+Durch das bssid_lock in [`wifi/sta_config`](wifi.mdx#wifi_sta_config) kann eine Verbindung zu einem spezifischen Repeater
+erzwungen werden.
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1011,6 +1363,45 @@ Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden
 
 
 Der aktuelle WLAN-Zustand.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/wifi/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "connection_state": 3,
+  "connection_start": 10117,
+  "connection_end": 0,
+  "ap_state": 2,
+  "ap_bssid": "C4:5B:BE:C0:FF:EE",
+  "sta_ip": "10.1.2.3",
+  "sta_subnet": "255.255.255.0",
+  "sta_rssi": -38,
+  "sta_bssid": "71:21:CE:12:F0:12"
+}
+```
+
+
+:::
 
 
 <table>
@@ -1054,14 +1445,14 @@ Der aktuelle WLAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`sta_ip`<br/>string</th>
     <td>
-        Aktuelle IP der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
+        Aktuelle IP des Geräts im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`sta_subnet`<br/>string</th>
     <td>
-        Aktuelle Subnetzmaske der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
+        Aktuelle Subnetzmaske des Geräts im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
     </td>
 </tr>
 
@@ -1075,7 +1466,7 @@ Der aktuelle WLAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`sta_bssid`<br/>string</th>
     <td>
-        Die BSSID der Gegenstelle, zu der die Wallbox verbunden ist.
+        Die BSSID der Gegenstelle, zu der das Gerät verbunden ist.
     </td>
 </tr>
 
@@ -1190,35 +1581,35 @@ Die WLAN-Verbindungskonfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
     <td>
-        IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
+        IP-Adresse, die das Gerät im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`gateway`<br/>string</th>
     <td>
-        Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Gateway-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
     <td>
-        Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll.
+        Subnetzmaske, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`dns`<br/>string</th>
     <td>
-        DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        DNS-Server-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`dns2`<br/>string</th>
     <td>
-        Alternative DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Alternative DNS-Server-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
@@ -1340,6 +1731,98 @@ Die WLAN-Verbindungskonfiguration.
 
 
 Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deaktiviert wird, und die WLAN-Verbindung bzw. LAN-Verbindung nicht aufgebaut werden kann, bzw. nicht konfiguriert wurde, kann der ESP nur noch durch einen Factory-Reset erreicht werden!</strong> Wir empfehlen, den Access Point immer im Fallback-Modus zu belassen.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/wifi/ap_config
+```
+```jsx
+{
+  "enable_ap": true,
+  "ap_fallback_only": true,
+  "ssid": "warp3-AbCd",
+  "hide_ssid": false,
+  "passphrase": null,
+  "channel": 0,
+  "ip": "10.0.0.1",
+  "gateway": "10.0.0.1",
+  "subnet": "255.255.255.0"
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/wifi/ap_config -d '{
+  "enable_ap": true,
+  "ap_fallback_only": true,
+  "ssid": "wallbox_garage",
+  "hide_ssid": false,
+  "passphrase": null,
+  "channel": 0,
+  "ip": "10.0.0.1",
+  "gateway": "10.0.0.1",
+  "subnet": "255.255.255.0"
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/ap_config
+```
+```jsx
+{
+  "enable_ap": true,
+  "ap_fallback_only": true,
+  "ssid": "warp3-AbCd",
+  "hide_ssid": false,
+  "passphrase": null,
+  "channel": 0,
+  "ip": "10.0.0.1",
+  "gateway": "10.0.0.1",
+  "subnet": "255.255.255.0"
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/wifi/ap_config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wifi/ap_config_update -m '{
+  "enable_ap": true,
+  "ap_fallback_only": true,
+  "ssid": "wallbox_garage",
+  "hide_ssid": false,
+  "passphrase": null,
+  "channel": 0,
+  "ip": "10.0.0.1",
+  "gateway": "10.0.0.1",
+  "subnet": "255.255.255.0"
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1400,21 +1883,21 @@ Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deak
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
     <td>
-        IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
+        IP-Adresse, die das Gerät im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`gateway`<br/>string</th>
     <td>
-        Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Gateway-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
     <td>
-        Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll.
+        Subnetzmaske, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
     </tbody>
@@ -1427,6 +1910,51 @@ Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deak
 
 
 Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+```bash
+curl http://$HOST/wifi/scan_results
+```
+```jsx
+[
+  {
+    "ssid": "Mein WLAN",
+    "bssid": "0C:22:38:4E:5A:0C",
+    "rssi": -43,
+    "channel": 9,
+    "encryption": 3
+  },
+  {
+    "ssid": "Mein WLAN",
+    "bssid": "0C:22:38:4E:5A:0D",
+    "rssi": -43,
+    "channel": 13,
+    "encryption": 3
+  },
+  {
+    "ssid": "Anderes WLAN",
+    "bssid": "C0:FF:EE:4E:5A:0C",
+    "rssi": -75,
+    "channel": 1,
+    "encryption": 3
+  }
+]
+```
+Zwei Repeater des selben WLANs haben die gleiche SSID, aber unterschiedliche BSSIDs.
+Durch das bssid_lock in [`wifi/sta_config`](wifi.mdx#wifi_sta_config) kann eine Verbindung zu einem spezifischen Repeater
+erzwungen werden.
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1509,6 +2037,45 @@ Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden
 
 
 Der aktuelle WLAN-Zustand.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/wifi/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "connection_state": 3,
+  "connection_start": 10117,
+  "connection_end": 0,
+  "ap_state": 2,
+  "ap_bssid": "C4:5B:BE:C0:FF:EE",
+  "sta_ip": "10.1.2.3",
+  "sta_subnet": "255.255.255.0",
+  "sta_rssi": -38,
+  "sta_bssid": "71:21:CE:12:F0:12"
+}
+```
+
+
+:::
 
 
 <table>
@@ -1552,14 +2119,14 @@ Der aktuelle WLAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`sta_ip`<br/>string</th>
     <td>
-        Aktuelle IP der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
+        Aktuelle IP des Geräts im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`sta_subnet`<br/>string</th>
     <td>
-        Aktuelle Subnetzmaske der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
+        Aktuelle Subnetzmaske des Geräts im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
     </td>
 </tr>
 
@@ -1573,7 +2140,7 @@ Der aktuelle WLAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`sta_bssid`<br/>string</th>
     <td>
-        Die BSSID der Gegenstelle, zu der die Wallbox verbunden ist.
+        Die BSSID der Gegenstelle, zu der das Gerät verbunden ist.
     </td>
 </tr>
 
@@ -1688,35 +2255,35 @@ Die WLAN-Verbindungskonfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
     <td>
-        IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
+        IP-Adresse, die das Gerät im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`gateway`<br/>string</th>
     <td>
-        Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Gateway-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
     <td>
-        Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll.
+        Subnetzmaske, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`dns`<br/>string</th>
     <td>
-        DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        DNS-Server-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`dns2`<br/>string</th>
     <td>
-        Alternative DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Alternative DNS-Server-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
@@ -1898,21 +2465,21 @@ Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deak
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
     <td>
-        IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
+        IP-Adresse, die das Gerät im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`gateway`<br/>string</th>
     <td>
-        Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Gateway-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
     <td>
-        Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll.
+        Subnetzmaske, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
     </tbody>
@@ -1925,6 +2492,51 @@ Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deak
 
 
 Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+```bash
+curl http://$HOST/wifi/scan_results
+```
+```jsx
+[
+  {
+    "ssid": "Mein WLAN",
+    "bssid": "0C:22:38:4E:5A:0C",
+    "rssi": -43,
+    "channel": 9,
+    "encryption": 3
+  },
+  {
+    "ssid": "Mein WLAN",
+    "bssid": "0C:22:38:4E:5A:0D",
+    "rssi": -43,
+    "channel": 13,
+    "encryption": 3
+  },
+  {
+    "ssid": "Anderes WLAN",
+    "bssid": "C0:FF:EE:4E:5A:0C",
+    "rssi": -75,
+    "channel": 1,
+    "encryption": 3
+  }
+]
+```
+Zwei Repeater des selben WLANs haben die gleiche SSID, aber unterschiedliche BSSIDs.
+Durch das bssid_lock in [`wifi/sta_config`](wifi.mdx#wifi_sta_config) kann eine Verbindung zu einem spezifischen Repeater
+erzwungen werden.
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2007,6 +2619,45 @@ Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden
 
 
 Der aktuelle WLAN-Zustand.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/wifi/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "connection_state": 3,
+  "connection_start": 10117,
+  "connection_end": 0,
+  "ap_state": 2,
+  "ap_bssid": "C4:5B:BE:C0:FF:EE",
+  "sta_ip": "10.1.2.3",
+  "sta_subnet": "255.255.255.0",
+  "sta_rssi": -38,
+  "sta_bssid": "71:21:CE:12:F0:12"
+}
+```
+
+
+:::
 
 
 <table>
@@ -2056,14 +2707,14 @@ Der aktuelle WLAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`sta_ip`<br/>string</th>
     <td>
-        Aktuelle IP der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
+        Aktuelle IP des Geräts im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`sta_subnet`<br/>string</th>
     <td>
-        Aktuelle Subnetzmaske der Wallbox im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
+        Aktuelle Subnetzmaske des Geräts im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
     </td>
 </tr>
 
@@ -2077,7 +2728,7 @@ Der aktuelle WLAN-Zustand.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`sta_bssid`<br/>string</th>
     <td>
-        Die BSSID der Gegenstelle, zu der die Wallbox verbunden ist.
+        Die BSSID der Gegenstelle, zu der das Gerät verbunden ist.
     </td>
 </tr>
 
@@ -2198,35 +2849,35 @@ Die WLAN-Verbindungskonfiguration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
     <td>
-        IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
+        IP-Adresse, die das Gerät im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`gateway`<br/>string</th>
     <td>
-        Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Gateway-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
     <td>
-        Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll.
+        Subnetzmaske, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`dns`<br/>string</th>
     <td>
-        DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        DNS-Server-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`dns2`<br/>string</th>
     <td>
-        Alternative DNS-Server-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Alternative DNS-Server-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
@@ -2348,6 +2999,98 @@ Die WLAN-Verbindungskonfiguration.
 
 
 Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deaktiviert wird, und die WLAN-Verbindung bzw. LAN-Verbindung nicht aufgebaut werden kann, bzw. nicht konfiguriert wurde, kann der ESP nur noch durch einen Factory-Reset erreicht werden!</strong> Wir empfehlen, den Access Point immer im Fallback-Modus zu belassen.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/wifi/ap_config
+```
+```jsx
+{
+  "enable_ap": true,
+  "ap_fallback_only": true,
+  "ssid": "warp-AbCd",
+  "hide_ssid": false,
+  "passphrase": null,
+  "channel": 0,
+  "ip": "10.0.0.1",
+  "gateway": "10.0.0.1",
+  "subnet": "255.255.255.0"
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/wifi/ap_config -d '{
+  "enable_ap": true,
+  "ap_fallback_only": true,
+  "ssid": "wallbox_garage",
+  "hide_ssid": false,
+  "passphrase": null,
+  "channel": 0,
+  "ip": "10.0.0.1",
+  "gateway": "10.0.0.1",
+  "subnet": "255.255.255.0"
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/ap_config
+```
+```jsx
+{
+  "enable_ap": true,
+  "ap_fallback_only": true,
+  "ssid": "warp-AbCd",
+  "hide_ssid": false,
+  "passphrase": null,
+  "channel": 0,
+  "ip": "10.0.0.1",
+  "gateway": "10.0.0.1",
+  "subnet": "255.255.255.0"
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/wifi/ap_config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wifi/ap_config_update -m '{
+  "enable_ap": true,
+  "ap_fallback_only": true,
+  "ssid": "wallbox_garage",
+  "hide_ssid": false,
+  "passphrase": null,
+  "channel": 0,
+  "ip": "10.0.0.1",
+  "gateway": "10.0.0.1",
+  "subnet": "255.255.255.0"
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2414,21 +3157,21 @@ Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deak
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
     <td>
-        IP-Adresse, die die Wallbox im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
+        IP-Adresse, die das Gerät im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`gateway`<br/>string</th>
     <td>
-        Gateway-Adresse, die die Wallbox im konfigurierten Netz verwenden soll.
+        Gateway-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
     <td>
-        Subnetzmaske, die die Wallbox im konfigurierten Netz verwenden soll.
+        Subnetzmaske, die das Gerät im konfigurierten Netz verwenden soll.
     </td>
 </tr>
     </tbody>
@@ -2441,6 +3184,51 @@ Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deak
 
 
 Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+```bash
+curl http://$HOST/wifi/scan_results
+```
+```jsx
+[
+  {
+    "ssid": "Mein WLAN",
+    "bssid": "0C:22:38:4E:5A:0C",
+    "rssi": -43,
+    "channel": 9,
+    "encryption": 3
+  },
+  {
+    "ssid": "Mein WLAN",
+    "bssid": "0C:22:38:4E:5A:0D",
+    "rssi": -43,
+    "channel": 13,
+    "encryption": 3
+  },
+  {
+    "ssid": "Anderes WLAN",
+    "bssid": "C0:FF:EE:4E:5A:0C",
+    "rssi": -75,
+    "channel": 1,
+    "encryption": 3
+  }
+]
+```
+Zwei Repeater des selben WLANs haben die gleiche SSID, aber unterschiedliche BSSIDs.
+Durch das bssid_lock in [`wifi/sta_config`](wifi.mdx#wifi_sta_config) kann eine Verbindung zu einem spezifischen Repeater
+erzwungen werden.
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>

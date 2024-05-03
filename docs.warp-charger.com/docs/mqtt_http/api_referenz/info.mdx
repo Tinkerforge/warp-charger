@@ -14,7 +14,36 @@ import Admonition from '@theme/Admonition';
 ## `info/version` {#info_version_warp1}
 
 
-Version der Wallbox-Firmware.
+Version der aktuell ausgeführten Firmware.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/info/version
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/version
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "firmware": "2.0.2-65fb1d59", "config": "2.0.0", "config_type": "wem" }
+```
+
+
+:::
 
 
 <table>
@@ -62,6 +91,35 @@ Initialisierungszustand der Firmware-Module.
 
 
 Unterstützte Hardwarefeatures. Siehe <a class="scrollto" href="#features_section">Features</a> für Details.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/info/features
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/features
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+["evse", "nfc", "meters", "meter", "meter_all_values"]
+```
+
+
+:::
 
 
 
@@ -69,7 +127,41 @@ Unterstützte Hardwarefeatures. Siehe <a class="scrollto" href="#features_sectio
 ## `info/name` {#info_name_warp1}
 
 
-Name und Typ der Wallbox
+Name und Typ des Geräts
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/info/name
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/name
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "name": "warp-AbCd",
+  "type": "warp",
+  "display_type": "WARP Charger Pro 22kW +NFC",
+  "uid": "AbCd"
+}
+```
+
+
+:::
 
 
 <table>
@@ -84,14 +176,14 @@ Name und Typ der Wallbox
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
     <td>
-        Der Name der Wallbox. Besteht aus Typ und UID der Wallbox.
+        Der Name des Geräts. Besteht aus Typ und UID des Geräts.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`type`<br/>string</th>
     <td>
-        Typ der Wallbox.
+        Typ des Geräts.
         - **warp** - Ein WARP Charger
         - **warp2** - Ein WARP2 Charger
         - **warp3** - Ein WARP3 Charger
@@ -102,14 +194,14 @@ Name und Typ der Wallbox
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`display_type`<br/>string</th>
     <td>
-        Benutzerlesbarer Typ der Wallbox. Gibt neben der Hardware-Version die Variante (Smart, Pro), die maximale Ladeleistung und eventuelle Upgrades an. z.B. "WARP2 Charger Pro 11kW +NFC"
+        Benutzerlesbarer Typ des Geräts. Gibt neben der Hardware-Version die Variante (Smart, Pro), die maximale Ladeleistung und eventuelle Upgrades an. z.B. "WARP2 Charger Pro 11kW +NFC"
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`uid`<br/>string</th>
     <td>
-        UID der Wallbox bzw. des verbauten ESP (Ethernet) Bricks.
+        UID des Geräts bzw. des verbauten ESP (Ethernet) Bricks.
     </td>
 </tr>
     </tbody>
@@ -119,7 +211,59 @@ Name und Typ der Wallbox
 ## `info/display_name` {#info_display_name_warp1}
 
 
-Benutzerlesbarer Name der Wallbox.
+Benutzerlesbarer Name des Geräts.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/info/display_name
+```
+```jsx
+{ "display_name": "Wallbox Garage links" }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/info/display_name -d '{ "display_name": "Wallbox Garage links" }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/display_name
+```
+```jsx
+{ "display_name": "Wallbox Garage links" }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/info/display_name<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/info/display_name_update -m '{ "display_name": "Wallbox Garage links" }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -147,6 +291,52 @@ Benutzerlesbarer Name der Wallbox.
 
 
 Debug-Informationen über die letzten Firmware-Ausführungen
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/info/last_boots
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/last_boots
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  {
+    "reset_reason": 3,
+    "boot_count": 1,
+    "timestamp_min": 28568911,
+    "uptime": 1648057,
+    "uptime_overflows": 0
+  },
+  // Ein Eintrag wird erst nach 5 Minuten Uptime aufgezeichnet.
+  // Zwischen Boot 1 und 4 wurde das Geräte zwei Mal innerhalb von 5 Minuten neugestartet (z.B. wegen Konfigurationsänderungen)
+  {
+    "reset_reason": 3,
+    "boot_count": 4,
+    "timestamp_min": 28568946,
+    "uptime": 28301027,
+    "uptime_overflows": 0
+  }
+]
+```
+
+
+:::
 
 
 <table>
@@ -174,14 +364,14 @@ Debug-Informationen über die letzten Firmware-Ausführungen
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`reset_reason`<br/>int</th>
             <td>
-                Grund des Neustarts. Siehe <a href="https://docs.espressif.com/projects/esp-idf/en/v4.4.3/esp32/api-reference/system/system.html?highlight=esp_reset_reason#_CPPv418esp_reset_reason_t">Espressif-Dokumentation</a>
+                Grund des Neustarts. Siehe [Espressif-Dokumentation](https://docs.espressif.com/projects/esp-idf/en/v4.4.3/esp32/api-reference/system/system.html?highlight=esp_reset_reason#_CPPv418esp_reset_reason_t)
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`boot_count`<br/>int</th>
             <td>
-                Zähler der angibt, der wievielte Neustart seit dem die Wallbox vom Strom getrennt wurde, durchgeführt wird. Ein Eintrag in last_boots wird erst fünf Minuten nach dem Start der Wallbox geschrieben um den Flash zu schonen. Falls innerhalb der ersten fünf Minuten neugestartet wird, kann ein Eintrag verloren gehen, was anhand dieses Zählers bemerkt werden kann
+                Zähler der angibt, der wievielte Neustart seit dem das Gerät vom Strom getrennt wurde, durchgeführt wird. Ein Eintrag in last_boots wird erst fünf Minuten nach dem Start des Geräts geschrieben um den Flash zu schonen. Falls innerhalb der ersten fünf Minuten neugestartet wird, kann ein Eintrag verloren gehen, was anhand dieses Zählers bemerkt werden kann
             </td>
         </tr>
         
@@ -216,7 +406,36 @@ Debug-Informationen über die letzten Firmware-Ausführungen
 ## `info/version` {#info_version_warp2}
 
 
-Version der Wallbox-Firmware.
+Version der aktuell ausgeführten Firmware.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/info/version
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/version
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "firmware": "2.0.2-65fb1d59", "config": "2.0.0", "config_type": "wem" }
+```
+
+
+:::
 
 
 <table>
@@ -264,6 +483,45 @@ Initialisierungszustand der Firmware-Module.
 
 
 Unterstützte Hardwarefeatures. Siehe <a class="scrollto" href="#features_section">Features</a> für Details.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/info/features
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/features
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  "evse",
+  "cp_disconnect",
+  "button_configuration",
+  "ethernet",
+  "meters",
+  "nfc",
+  "meter",
+  "meter_all_values",
+  "meter_phases"
+]
+```
+
+
+:::
 
 
 
@@ -271,7 +529,41 @@ Unterstützte Hardwarefeatures. Siehe <a class="scrollto" href="#features_sectio
 ## `info/name` {#info_name_warp2}
 
 
-Name und Typ der Wallbox
+Name und Typ des Geräts
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/info/name
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/name
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "name": "warp2-AbCd",
+  "type": "warp2",
+  "display_type": "WARP2 Charger Pro 22kW",
+  "uid": "AbCd"
+}
+```
+
+
+:::
 
 
 <table>
@@ -286,14 +578,14 @@ Name und Typ der Wallbox
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
     <td>
-        Der Name der Wallbox. Besteht aus Typ und UID der Wallbox.
+        Der Name des Geräts. Besteht aus Typ und UID des Geräts.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`type`<br/>string</th>
     <td>
-        Typ der Wallbox.
+        Typ des Geräts.
         - **warp** - Ein WARP Charger
         - **warp2** - Ein WARP2 Charger
         - **warp3** - Ein WARP3 Charger
@@ -304,14 +596,14 @@ Name und Typ der Wallbox
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`display_type`<br/>string</th>
     <td>
-        Benutzerlesbarer Typ der Wallbox. Gibt neben der Hardware-Version die Variante (Smart, Pro), die maximale Ladeleistung und eventuelle Upgrades an. z.B. "WARP2 Charger Pro 11kW +NFC"
+        Benutzerlesbarer Typ des Geräts. Gibt neben der Hardware-Version die Variante (Smart, Pro), die maximale Ladeleistung und eventuelle Upgrades an. z.B. "WARP2 Charger Pro 11kW +NFC"
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`uid`<br/>string</th>
     <td>
-        UID der Wallbox bzw. des verbauten ESP (Ethernet) Bricks.
+        UID des Geräts bzw. des verbauten ESP (Ethernet) Bricks.
     </td>
 </tr>
     </tbody>
@@ -321,7 +613,59 @@ Name und Typ der Wallbox
 ## `info/display_name` {#info_display_name_warp2}
 
 
-Benutzerlesbarer Name der Wallbox.
+Benutzerlesbarer Name des Geräts.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/info/display_name
+```
+```jsx
+{ "display_name": "Wallbox Garage links" }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/info/display_name -d '{ "display_name": "Wallbox Garage links" }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/display_name
+```
+```jsx
+{ "display_name": "Wallbox Garage links" }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/info/display_name<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/info/display_name_update -m '{ "display_name": "Wallbox Garage links" }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -349,6 +693,52 @@ Benutzerlesbarer Name der Wallbox.
 
 
 Debug-Informationen über die letzten Firmware-Ausführungen
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/info/last_boots
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/last_boots
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  {
+    "reset_reason": 3,
+    "boot_count": 1,
+    "timestamp_min": 28568911,
+    "uptime": 1648057,
+    "uptime_overflows": 0
+  },
+  // Ein Eintrag wird erst nach 5 Minuten Uptime aufgezeichnet.
+  // Zwischen Boot 1 und 4 wurde das Geräte zwei Mal innerhalb von 5 Minuten neugestartet (z.B. wegen Konfigurationsänderungen)
+  {
+    "reset_reason": 3,
+    "boot_count": 4,
+    "timestamp_min": 28568946,
+    "uptime": 28301027,
+    "uptime_overflows": 0
+  }
+]
+```
+
+
+:::
 
 
 <table>
@@ -376,14 +766,14 @@ Debug-Informationen über die letzten Firmware-Ausführungen
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`reset_reason`<br/>int</th>
             <td>
-                Grund des Neustarts. Siehe <a href="https://docs.espressif.com/projects/esp-idf/en/v4.4.3/esp32/api-reference/system/system.html?highlight=esp_reset_reason#_CPPv418esp_reset_reason_t">Espressif-Dokumentation</a>
+                Grund des Neustarts. Siehe [Espressif-Dokumentation](https://docs.espressif.com/projects/esp-idf/en/v4.4.3/esp32/api-reference/system/system.html?highlight=esp_reset_reason#_CPPv418esp_reset_reason_t)
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`boot_count`<br/>int</th>
             <td>
-                Zähler der angibt, der wievielte Neustart seit dem die Wallbox vom Strom getrennt wurde, durchgeführt wird. Ein Eintrag in last_boots wird erst fünf Minuten nach dem Start der Wallbox geschrieben um den Flash zu schonen. Falls innerhalb der ersten fünf Minuten neugestartet wird, kann ein Eintrag verloren gehen, was anhand dieses Zählers bemerkt werden kann
+                Zähler der angibt, der wievielte Neustart seit dem das Gerät vom Strom getrennt wurde, durchgeführt wird. Ein Eintrag in last_boots wird erst fünf Minuten nach dem Start des Geräts geschrieben um den Flash zu schonen. Falls innerhalb der ersten fünf Minuten neugestartet wird, kann ein Eintrag verloren gehen, was anhand dieses Zählers bemerkt werden kann
             </td>
         </tr>
         
@@ -418,7 +808,36 @@ Debug-Informationen über die letzten Firmware-Ausführungen
 ## `info/version` {#info_version_warp3}
 
 
-Version der Wallbox-Firmware.
+Version der aktuell ausgeführten Firmware.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/info/version
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/version
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "firmware": "2.0.2-65fb1d59", "config": "2.0.0", "config_type": "wem" }
+```
+
+
+:::
 
 
 <table>
@@ -466,6 +885,46 @@ Initialisierungszustand der Firmware-Module.
 
 
 Unterstützte Hardwarefeatures. Siehe <a class="scrollto" href="#features_section">Features</a> für Details.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/info/features
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/features
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  "evse",
+  "cp_disconnect",
+  "button_configuration",
+  "ethernet",
+  "meters",
+  "nfc",
+  "meter",
+  "meter_all_values",
+  "meter_phases",
+  "rtc"
+]
+```
+
+
+:::
 
 
 
@@ -473,7 +932,41 @@ Unterstützte Hardwarefeatures. Siehe <a class="scrollto" href="#features_sectio
 ## `info/name` {#info_name_warp3}
 
 
-Name und Typ der Wallbox
+Name und Typ des Geräts
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/info/name
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/name
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "name": "warp3-AbCd",
+  "type": "warp3",
+  "display_type": "WARP3 Charger Pro 22kW",
+  "uid": "AbCd"
+}
+```
+
+
+:::
 
 
 <table>
@@ -488,14 +981,14 @@ Name und Typ der Wallbox
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
     <td>
-        Der Name der Wallbox. Besteht aus Typ und UID der Wallbox.
+        Der Name des Geräts. Besteht aus Typ und UID des Geräts.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`type`<br/>string</th>
     <td>
-        Typ der Wallbox.
+        Typ des Geräts.
         - **warp** - Ein WARP Charger
         - **warp2** - Ein WARP2 Charger
         - **warp3** - Ein WARP3 Charger
@@ -506,14 +999,14 @@ Name und Typ der Wallbox
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`display_type`<br/>string</th>
     <td>
-        Benutzerlesbarer Typ der Wallbox. Gibt neben der Hardware-Version die Variante (Smart, Pro), die maximale Ladeleistung und eventuelle Upgrades an. z.B. "WARP2 Charger Pro 11kW +NFC"
+        Benutzerlesbarer Typ des Geräts. Gibt neben der Hardware-Version die Variante (Smart, Pro), die maximale Ladeleistung und eventuelle Upgrades an. z.B. "WARP2 Charger Pro 11kW +NFC"
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`uid`<br/>string</th>
     <td>
-        UID der Wallbox bzw. des verbauten ESP (Ethernet) Bricks.
+        UID des Geräts bzw. des verbauten ESP (Ethernet) Bricks.
     </td>
 </tr>
     </tbody>
@@ -523,7 +1016,59 @@ Name und Typ der Wallbox
 ## `info/display_name` {#info_display_name_warp3}
 
 
-Benutzerlesbarer Name der Wallbox.
+Benutzerlesbarer Name des Geräts.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/info/display_name
+```
+```jsx
+{ "display_name": "Wallbox Garage links" }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/info/display_name -d '{ "display_name": "Wallbox Garage links" }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/display_name
+```
+```jsx
+{ "display_name": "Wallbox Garage links" }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/info/display_name<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/info/display_name_update -m '{ "display_name": "Wallbox Garage links" }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -551,6 +1096,52 @@ Benutzerlesbarer Name der Wallbox.
 
 
 Debug-Informationen über die letzten Firmware-Ausführungen
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/info/last_boots
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/last_boots
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  {
+    "reset_reason": 3,
+    "boot_count": 1,
+    "timestamp_min": 28568911,
+    "uptime": 1648057,
+    "uptime_overflows": 0
+  },
+  // Ein Eintrag wird erst nach 5 Minuten Uptime aufgezeichnet.
+  // Zwischen Boot 1 und 4 wurde das Geräte zwei Mal innerhalb von 5 Minuten neugestartet (z.B. wegen Konfigurationsänderungen)
+  {
+    "reset_reason": 3,
+    "boot_count": 4,
+    "timestamp_min": 28568946,
+    "uptime": 28301027,
+    "uptime_overflows": 0
+  }
+]
+```
+
+
+:::
 
 
 <table>
@@ -578,14 +1169,14 @@ Debug-Informationen über die letzten Firmware-Ausführungen
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`reset_reason`<br/>int</th>
             <td>
-                Grund des Neustarts. Siehe <a href="https://docs.espressif.com/projects/esp-idf/en/v4.4.3/esp32/api-reference/system/system.html?highlight=esp_reset_reason#_CPPv418esp_reset_reason_t">Espressif-Dokumentation</a>
+                Grund des Neustarts. Siehe [Espressif-Dokumentation](https://docs.espressif.com/projects/esp-idf/en/v4.4.3/esp32/api-reference/system/system.html?highlight=esp_reset_reason#_CPPv418esp_reset_reason_t)
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`boot_count`<br/>int</th>
             <td>
-                Zähler der angibt, der wievielte Neustart seit dem die Wallbox vom Strom getrennt wurde, durchgeführt wird. Ein Eintrag in last_boots wird erst fünf Minuten nach dem Start der Wallbox geschrieben um den Flash zu schonen. Falls innerhalb der ersten fünf Minuten neugestartet wird, kann ein Eintrag verloren gehen, was anhand dieses Zählers bemerkt werden kann
+                Zähler der angibt, der wievielte Neustart seit dem das Gerät vom Strom getrennt wurde, durchgeführt wird. Ein Eintrag in last_boots wird erst fünf Minuten nach dem Start des Geräts geschrieben um den Flash zu schonen. Falls innerhalb der ersten fünf Minuten neugestartet wird, kann ein Eintrag verloren gehen, was anhand dieses Zählers bemerkt werden kann
             </td>
         </tr>
         
@@ -620,7 +1211,36 @@ Debug-Informationen über die letzten Firmware-Ausführungen
 ## `info/version` {#info_version_wem}
 
 
-Version der Wallbox-Firmware.
+Version der aktuell ausgeführten Firmware.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/info/version
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/version
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "firmware": "2.3.0-66337338", "config": "2.2.0", "config_type": "warp" }
+```
+
+
+:::
 
 
 <table>
@@ -668,6 +1288,35 @@ Initialisierungszustand der Firmware-Module.
 
 
 Unterstützte Hardwarefeatures. Siehe <a class="scrollto" href="#features_section">Features</a> für Details.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/info/features
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/features
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+["ethernet", "meters", "energy_manager", "rtc"]
+```
+
+
+:::
 
 
 
@@ -675,7 +1324,41 @@ Unterstützte Hardwarefeatures. Siehe <a class="scrollto" href="#features_sectio
 ## `info/name` {#info_name_wem}
 
 
-Name und Typ der Wallbox
+Name und Typ des Geräts
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/info/name
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/name
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "name": "wem-AbCd",
+  "type": "wem",
+  "display_type": "WARP Energy Manager",
+  "uid": "AbCd"
+}
+```
+
+
+:::
 
 
 <table>
@@ -690,14 +1373,14 @@ Name und Typ der Wallbox
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
     <td>
-        Der Name der Wallbox. Besteht aus Typ und UID der Wallbox.
+        Der Name des Geräts. Besteht aus Typ und UID des Geräts.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`type`<br/>string</th>
     <td>
-        Typ der Wallbox.
+        Typ des Geräts.
         - **warp** - Ein WARP Charger
         - **warp2** - Ein WARP2 Charger
         - **warp3** - Ein WARP3 Charger
@@ -708,14 +1391,14 @@ Name und Typ der Wallbox
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`display_type`<br/>string</th>
     <td>
-        Benutzerlesbarer Typ der Wallbox. Gibt neben der Hardware-Version die Variante (Smart, Pro), die maximale Ladeleistung und eventuelle Upgrades an. z.B. "WARP2 Charger Pro 11kW +NFC"
+        Benutzerlesbarer Typ des Geräts. Gibt neben der Hardware-Version die Variante (Smart, Pro), die maximale Ladeleistung und eventuelle Upgrades an. z.B. "WARP2 Charger Pro 11kW +NFC"
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`uid`<br/>string</th>
     <td>
-        UID der Wallbox bzw. des verbauten ESP (Ethernet) Bricks.
+        UID des Geräts bzw. des verbauten ESP (Ethernet) Bricks.
     </td>
 </tr>
     </tbody>
@@ -725,7 +1408,59 @@ Name und Typ der Wallbox
 ## `info/display_name` {#info_display_name_wem}
 
 
-Benutzerlesbarer Name der Wallbox.
+Benutzerlesbarer Name des Geräts.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/info/display_name
+```
+```jsx
+{ "display_name": "Wallbox Garage links" }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/info/display_name -d '{ "display_name": "Wallbox Garage links" }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/display_name
+```
+```jsx
+{ "display_name": "Wallbox Garage links" }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/info/display_name<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/info/display_name_update -m '{ "display_name": "Wallbox Garage links" }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -753,6 +1488,52 @@ Benutzerlesbarer Name der Wallbox.
 
 
 Debug-Informationen über die letzten Firmware-Ausführungen
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/info/last_boots
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/last_boots
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  {
+    "reset_reason": 3,
+    "boot_count": 1,
+    "timestamp_min": 28568911,
+    "uptime": 1648057,
+    "uptime_overflows": 0
+  },
+  // Ein Eintrag wird erst nach 5 Minuten Uptime aufgezeichnet.
+  // Zwischen Boot 1 und 4 wurde das Geräte zwei Mal innerhalb von 5 Minuten neugestartet (z.B. wegen Konfigurationsänderungen)
+  {
+    "reset_reason": 3,
+    "boot_count": 4,
+    "timestamp_min": 28568946,
+    "uptime": 28301027,
+    "uptime_overflows": 0
+  }
+]
+```
+
+
+:::
 
 
 <table>
@@ -780,14 +1561,14 @@ Debug-Informationen über die letzten Firmware-Ausführungen
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`reset_reason`<br/>int</th>
             <td>
-                Grund des Neustarts. Siehe <a href="https://docs.espressif.com/projects/esp-idf/en/v4.4.3/esp32/api-reference/system/system.html?highlight=esp_reset_reason#_CPPv418esp_reset_reason_t">Espressif-Dokumentation</a>
+                Grund des Neustarts. Siehe [Espressif-Dokumentation](https://docs.espressif.com/projects/esp-idf/en/v4.4.3/esp32/api-reference/system/system.html?highlight=esp_reset_reason#_CPPv418esp_reset_reason_t)
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`boot_count`<br/>int</th>
             <td>
-                Zähler der angibt, der wievielte Neustart seit dem die Wallbox vom Strom getrennt wurde, durchgeführt wird. Ein Eintrag in last_boots wird erst fünf Minuten nach dem Start der Wallbox geschrieben um den Flash zu schonen. Falls innerhalb der ersten fünf Minuten neugestartet wird, kann ein Eintrag verloren gehen, was anhand dieses Zählers bemerkt werden kann
+                Zähler der angibt, der wievielte Neustart seit dem das Gerät vom Strom getrennt wurde, durchgeführt wird. Ein Eintrag in last_boots wird erst fünf Minuten nach dem Start des Geräts geschrieben um den Flash zu schonen. Falls innerhalb der ersten fünf Minuten neugestartet wird, kann ein Eintrag verloren gehen, was anhand dieses Zählers bemerkt werden kann
             </td>
         </tr>
         
@@ -822,7 +1603,36 @@ Debug-Informationen über die letzten Firmware-Ausführungen
 ## `info/version` {#info_version_any}
 
 
-Version der Wallbox-Firmware.
+Version der aktuell ausgeführten Firmware.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/info/version
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/version
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "firmware": "2.0.2-65fb1d59", "config": "2.0.0", "config_type": "wem" }
+```
+
+
+:::
 
 
 <table>
@@ -870,6 +1680,35 @@ Initialisierungszustand der Firmware-Module.
 
 
 Unterstützte Hardwarefeatures. Siehe <a class="scrollto" href="#features_section">Features</a> für Details.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/info/features
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/features
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+["evse", "nfc", "meters", "meter", "meter_all_values"]
+```
+
+
+:::
 
 
 
@@ -877,7 +1716,41 @@ Unterstützte Hardwarefeatures. Siehe <a class="scrollto" href="#features_sectio
 ## `info/name` {#info_name_any}
 
 
-Name und Typ der Wallbox
+Name und Typ des Geräts
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/info/name
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/name
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "name": "warp-AbCd",
+  "type": "warp",
+  "display_type": "WARP Charger Pro 22kW +NFC",
+  "uid": "AbCd"
+}
+```
+
+
+:::
 
 
 <table>
@@ -892,14 +1765,14 @@ Name und Typ der Wallbox
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
     <td>
-        Der Name der Wallbox. Besteht aus Typ und UID der Wallbox.
+        Der Name des Geräts. Besteht aus Typ und UID des Geräts.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`type`<br/>string</th>
     <td>
-        Typ der Wallbox.
+        Typ des Geräts.
         
         
         
@@ -913,14 +1786,14 @@ Name und Typ der Wallbox
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`display_type`<br/>string</th>
     <td>
-        Benutzerlesbarer Typ der Wallbox. Gibt neben der Hardware-Version die Variante (Smart, Pro), die maximale Ladeleistung und eventuelle Upgrades an. z.B. "WARP2 Charger Pro 11kW +NFC"
+        Benutzerlesbarer Typ des Geräts. Gibt neben der Hardware-Version die Variante (Smart, Pro), die maximale Ladeleistung und eventuelle Upgrades an. z.B. "WARP2 Charger Pro 11kW +NFC"
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`uid`<br/>string</th>
     <td>
-        UID der Wallbox bzw. des verbauten ESP (Ethernet) Bricks.
+        UID des Geräts bzw. des verbauten ESP (Ethernet) Bricks.
     </td>
 </tr>
     </tbody>
@@ -930,7 +1803,59 @@ Name und Typ der Wallbox
 ## `info/display_name` {#info_display_name_any}
 
 
-Benutzerlesbarer Name der Wallbox.
+Benutzerlesbarer Name des Geräts.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/info/display_name
+```
+```jsx
+{ "display_name": "Wallbox Garage links" }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/info/display_name -d '{ "display_name": "Wallbox Garage links" }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/display_name
+```
+```jsx
+{ "display_name": "Wallbox Garage links" }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/info/display_name<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/info/display_name_update -m '{ "display_name": "Wallbox Garage links" }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -958,6 +1883,52 @@ Benutzerlesbarer Name der Wallbox.
 
 
 Debug-Informationen über die letzten Firmware-Ausführungen
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/info/last_boots
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/last_boots
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  {
+    "reset_reason": 3,
+    "boot_count": 1,
+    "timestamp_min": 28568911,
+    "uptime": 1648057,
+    "uptime_overflows": 0
+  },
+  // Ein Eintrag wird erst nach 5 Minuten Uptime aufgezeichnet.
+  // Zwischen Boot 1 und 4 wurde das Geräte zwei Mal innerhalb von 5 Minuten neugestartet (z.B. wegen Konfigurationsänderungen)
+  {
+    "reset_reason": 3,
+    "boot_count": 4,
+    "timestamp_min": 28568946,
+    "uptime": 28301027,
+    "uptime_overflows": 0
+  }
+]
+```
+
+
+:::
 
 
 <table>
@@ -985,14 +1956,14 @@ Debug-Informationen über die letzten Firmware-Ausführungen
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`reset_reason`<br/>int</th>
             <td>
-                Grund des Neustarts. Siehe <a href="https://docs.espressif.com/projects/esp-idf/en/v4.4.3/esp32/api-reference/system/system.html?highlight=esp_reset_reason#_CPPv418esp_reset_reason_t">Espressif-Dokumentation</a>
+                Grund des Neustarts. Siehe [Espressif-Dokumentation](https://docs.espressif.com/projects/esp-idf/en/v4.4.3/esp32/api-reference/system/system.html?highlight=esp_reset_reason#_CPPv418esp_reset_reason_t)
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`boot_count`<br/>int</th>
             <td>
-                Zähler der angibt, der wievielte Neustart seit dem die Wallbox vom Strom getrennt wurde, durchgeführt wird. Ein Eintrag in last_boots wird erst fünf Minuten nach dem Start der Wallbox geschrieben um den Flash zu schonen. Falls innerhalb der ersten fünf Minuten neugestartet wird, kann ein Eintrag verloren gehen, was anhand dieses Zählers bemerkt werden kann
+                Zähler der angibt, der wievielte Neustart seit dem das Gerät vom Strom getrennt wurde, durchgeführt wird. Ein Eintrag in last_boots wird erst fünf Minuten nach dem Start des Geräts geschrieben um den Flash zu schonen. Falls innerhalb der ersten fünf Minuten neugestartet wird, kann ein Eintrag verloren gehen, was anhand dieses Zählers bemerkt werden kann
             </td>
         </tr>
         

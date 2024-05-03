@@ -15,6 +15,35 @@ import Admonition from '@theme/Admonition';
 
 
 Der Zustand der emulierten veralteten Stromzähler-API
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters_legacy_api/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters_legacy_api/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{"writable":false}
+```
+
+
+:::
 
 
 <table>
@@ -29,7 +58,7 @@ Der Zustand der emulierten veralteten Stromzähler-API
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`writable`<br/>bool</th>
     <td>
-        Gibt an, ob die veraltete Stromzähler-API geschrieben werden kann.
+        Gibt an, ob die veraltete Stromzähler-API geschrieben werden kann. Das ist nur der Fall, wenn der unter [`meters_legacy_api/config`](meters_legacy_api.mdx#meters_legacy_api_config) als `linked_meter_slot` eingetragene Stromzähler ein Stromzähler ist, der in seiner [`meters/X/config`](meters.mdx#meters_X_config) als API-Zähler konfiguriert ist.
     </td>
 </tr>
     </tbody>
@@ -40,6 +69,58 @@ Der Zustand der emulierten veralteten Stromzähler-API
 
 
 Die Konfiguration der emulierten veralteten Stromzähler-API
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meters_legacy_api/config
+```
+```jsx
+{"linked_meter_slot":0}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meters_legacy_api/config -d '{"linked_meter_slot":0}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters_legacy_api/config
+```
+```jsx
+{"linked_meter_slot":0}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meters_legacy_api/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters_legacy_api/config_update -m '{"linked_meter_slot":0}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -67,6 +148,35 @@ Die Konfiguration der emulierten veralteten Stromzähler-API
 
 
 Der Zustand der emulierten veralteten Stromzähler-API
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters_legacy_api/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters_legacy_api/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{"writable":false}
+```
+
+
+:::
 
 
 <table>
@@ -81,7 +191,7 @@ Der Zustand der emulierten veralteten Stromzähler-API
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`writable`<br/>bool</th>
     <td>
-        Gibt an, ob die veraltete Stromzähler-API geschrieben werden kann.
+        Gibt an, ob die veraltete Stromzähler-API geschrieben werden kann. Das ist nur der Fall, wenn der unter [`meters_legacy_api/config`](meters_legacy_api.mdx#meters_legacy_api_config) als `linked_meter_slot` eingetragene Stromzähler ein Stromzähler ist, der in seiner [`meters/X/config`](meters.mdx#meters_X_config) als API-Zähler konfiguriert ist.
     </td>
 </tr>
     </tbody>
@@ -92,6 +202,58 @@ Der Zustand der emulierten veralteten Stromzähler-API
 
 
 Die Konfiguration der emulierten veralteten Stromzähler-API
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meters_legacy_api/config
+```
+```jsx
+{"linked_meter_slot":0}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meters_legacy_api/config -d '{"linked_meter_slot":0}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters_legacy_api/config
+```
+```jsx
+{"linked_meter_slot":0}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meters_legacy_api/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters_legacy_api/config_update -m '{"linked_meter_slot":0}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -119,6 +281,35 @@ Die Konfiguration der emulierten veralteten Stromzähler-API
 
 
 Der Zustand der emulierten veralteten Stromzähler-API
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters_legacy_api/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters_legacy_api/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{"writable":false}
+```
+
+
+:::
 
 
 <table>
@@ -133,7 +324,7 @@ Der Zustand der emulierten veralteten Stromzähler-API
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`writable`<br/>bool</th>
     <td>
-        Gibt an, ob die veraltete Stromzähler-API geschrieben werden kann.
+        Gibt an, ob die veraltete Stromzähler-API geschrieben werden kann. Das ist nur der Fall, wenn der unter [`meters_legacy_api/config`](meters_legacy_api.mdx#meters_legacy_api_config) als `linked_meter_slot` eingetragene Stromzähler ein Stromzähler ist, der in seiner [`meters/X/config`](meters.mdx#meters_X_config) als API-Zähler konfiguriert ist.
     </td>
 </tr>
     </tbody>
@@ -144,6 +335,58 @@ Der Zustand der emulierten veralteten Stromzähler-API
 
 
 Die Konfiguration der emulierten veralteten Stromzähler-API
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meters_legacy_api/config
+```
+```jsx
+{"linked_meter_slot":0}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meters_legacy_api/config -d '{"linked_meter_slot":0}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters_legacy_api/config
+```
+```jsx
+{"linked_meter_slot":0}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meters_legacy_api/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters_legacy_api/config_update -m '{"linked_meter_slot":0}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -171,6 +414,35 @@ Die Konfiguration der emulierten veralteten Stromzähler-API
 
 
 Der Zustand der emulierten veralteten Stromzähler-API
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters_legacy_api/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters_legacy_api/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{"writable":false}
+```
+
+
+:::
 
 
 <table>
@@ -185,7 +457,7 @@ Der Zustand der emulierten veralteten Stromzähler-API
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`writable`<br/>bool</th>
     <td>
-        Gibt an, ob die veraltete Stromzähler-API geschrieben werden kann.
+        Gibt an, ob die veraltete Stromzähler-API geschrieben werden kann. Das ist nur der Fall, wenn der unter [`meters_legacy_api/config`](meters_legacy_api.mdx#meters_legacy_api_config) als `linked_meter_slot` eingetragene Stromzähler ein Stromzähler ist, der in seiner [`meters/X/config`](meters.mdx#meters_X_config) als API-Zähler konfiguriert ist.
     </td>
 </tr>
     </tbody>
@@ -196,6 +468,58 @@ Der Zustand der emulierten veralteten Stromzähler-API
 
 
 Die Konfiguration der emulierten veralteten Stromzähler-API
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meters_legacy_api/config
+```
+```jsx
+{"linked_meter_slot":0}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meters_legacy_api/config -d '{"linked_meter_slot":0}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters_legacy_api/config
+```
+```jsx
+{"linked_meter_slot":0}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meters_legacy_api/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters_legacy_api/config_update -m '{"linked_meter_slot":0}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -223,6 +547,35 @@ Die Konfiguration der emulierten veralteten Stromzähler-API
 
 
 Der Zustand der emulierten veralteten Stromzähler-API
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters_legacy_api/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters_legacy_api/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{"writable":false}
+```
+
+
+:::
 
 
 <table>
@@ -237,7 +590,7 @@ Der Zustand der emulierten veralteten Stromzähler-API
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`writable`<br/>bool</th>
     <td>
-        Gibt an, ob die veraltete Stromzähler-API geschrieben werden kann.
+        Gibt an, ob die veraltete Stromzähler-API geschrieben werden kann. Das ist nur der Fall, wenn der unter [`meters_legacy_api/config`](meters_legacy_api.mdx#meters_legacy_api_config) als `linked_meter_slot` eingetragene Stromzähler ein Stromzähler ist, der in seiner [`meters/X/config`](meters.mdx#meters_X_config) als API-Zähler konfiguriert ist.
     </td>
 </tr>
     </tbody>
@@ -248,6 +601,58 @@ Der Zustand der emulierten veralteten Stromzähler-API
 
 
 Die Konfiguration der emulierten veralteten Stromzähler-API
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meters_legacy_api/config
+```
+```jsx
+{"linked_meter_slot":0}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meters_legacy_api/config -d '{"linked_meter_slot":0}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters_legacy_api/config
+```
+```jsx
+{"linked_meter_slot":0}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meters_legacy_api/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters_legacy_api/config_update -m '{"linked_meter_slot":0}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 

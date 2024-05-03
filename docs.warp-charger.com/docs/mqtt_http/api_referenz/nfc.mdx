@@ -16,6 +16,45 @@ import Admonition from '@theme/Admonition';
 
 
 Die zuletzt von der Wallbox gesehenen NFC-Tags.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/nfc/seen_tags
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/nfc/seen_tags
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  { "tag_type": 2, "tag_id": "04:E3:B2:27:39:AD:FE", "last_seen": 22724083 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "01:23:AB:3D", "last_seen": 10753 }
+]
+```
+
+
+:::
 
 
 <table>
@@ -55,7 +94,7 @@ Die zuletzt von der Wallbox gesehenen NFC-Tags.
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
             <td>
-                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
             </td>
         </tr>
         
@@ -98,7 +137,7 @@ Die zuletzt von der Wallbox gesehenen NFC-Tags.
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
             <td>
-                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
             </td>
         </tr>
         
@@ -121,6 +160,33 @@ Die zuletzt von der Wallbox gesehenen NFC-Tags.
 
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die API ein Ladevorgang für einen bestimmten Benutzer gestartet oder gestoppt werden. Analog zur physischen Verwendung eines Tags wird der Ladevorgang bei Aufruf der API abwechselnd freigegeben oder blockiert. Siehe [`nfc/inject_tag_start`](nfc.mdx#nfc_inject_tag_start) und [`nfc/inject_tag_stop`](nfc.mdx#nfc_inject_tag_stop) für genauere Kontrolle. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/nfc/inject_tag -d '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag -m '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -147,7 +213,7 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die A
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
     <td>
-        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
     </td>
 </tr>
     </tbody>
@@ -159,6 +225,33 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die A
 
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Starten</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/nfc/inject_tag_start -d '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag_start -m '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -185,7 +278,7 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
     <td>
-        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
     </td>
 </tr>
     </tbody>
@@ -197,6 +290,33 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
 
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Stoppen</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/nfc/inject_tag_stop -d '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag_stop -m '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -223,7 +343,7 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
     <td>
-        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
     </td>
 </tr>
     </tbody>
@@ -234,6 +354,78 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
 
 
 Die NFC-Konfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/nfc/config
+```
+```jsx
+{
+  "authorized_tags": [
+    { "user_id": 1, "tag_type": 2, "tag_id": "04:E3:B2:27:39:AD:FE" },
+    { "user_id": 2, "tag_type": 0, "tag_id": "01:23:AB:3D" }
+  ]
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/nfc/config -d '{
+  "authorized_tags": [
+    { "user_id": 1, "tag_type": 2, "tag_id": "04:E3:B2:27:39:AD:FE" },
+    { "user_id": 2, "tag_type": 0, "tag_id": "01:23:AB:3D" }
+  ]
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/nfc/config
+```
+```jsx
+{
+  "authorized_tags": [
+    { "user_id": 1, "tag_type": 2, "tag_id": "04:E3:B2:27:39:AD:FE" },
+    { "user_id": 2, "tag_type": 0, "tag_id": "01:23:AB:3D" }
+  ]
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/nfc/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/nfc/config_update -m '{
+  "authorized_tags": [
+    { "user_id": 1, "tag_type": 2, "tag_id": "04:E3:B2:27:39:AD:FE" },
+    { "user_id": 2, "tag_type": 0, "tag_id": "01:23:AB:3D" }
+  ]
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -283,7 +475,7 @@ Die NFC-Konfiguration.
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
             <td>
-                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
             </td>
         </tr>
             </tbody>
@@ -298,6 +490,45 @@ Die NFC-Konfiguration.
 
 
 Die zuletzt von der Wallbox gesehenen NFC-Tags.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/nfc/seen_tags
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/nfc/seen_tags
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  { "tag_type": 2, "tag_id": "04:E3:B2:27:39:AD:FE", "last_seen": 22724083 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "01:23:AB:3D", "last_seen": 10753 }
+]
+```
+
+
+:::
 
 
 <table>
@@ -337,7 +568,7 @@ Die zuletzt von der Wallbox gesehenen NFC-Tags.
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
             <td>
-                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
             </td>
         </tr>
         
@@ -380,7 +611,7 @@ Die zuletzt von der Wallbox gesehenen NFC-Tags.
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
             <td>
-                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
             </td>
         </tr>
         
@@ -403,6 +634,33 @@ Die zuletzt von der Wallbox gesehenen NFC-Tags.
 
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die API ein Ladevorgang für einen bestimmten Benutzer gestartet oder gestoppt werden. Analog zur physischen Verwendung eines Tags wird der Ladevorgang bei Aufruf der API abwechselnd freigegeben oder blockiert. Siehe [`nfc/inject_tag_start`](nfc.mdx#nfc_inject_tag_start) und [`nfc/inject_tag_stop`](nfc.mdx#nfc_inject_tag_stop) für genauere Kontrolle. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/nfc/inject_tag -d '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag -m '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -429,7 +687,7 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die A
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
     <td>
-        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
     </td>
 </tr>
     </tbody>
@@ -441,6 +699,33 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die A
 
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Starten</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/nfc/inject_tag_start -d '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag_start -m '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -467,7 +752,7 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
     <td>
-        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
     </td>
 </tr>
     </tbody>
@@ -479,6 +764,33 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
 
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Stoppen</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/nfc/inject_tag_stop -d '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag_stop -m '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -505,7 +817,7 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
     <td>
-        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
     </td>
 </tr>
     </tbody>
@@ -516,6 +828,78 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
 
 
 Die NFC-Konfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/nfc/config
+```
+```jsx
+{
+  "authorized_tags": [
+    { "user_id": 1, "tag_type": 2, "tag_id": "04:E3:B2:27:39:AD:FE" },
+    { "user_id": 2, "tag_type": 0, "tag_id": "01:23:AB:3D" }
+  ]
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/nfc/config -d '{
+  "authorized_tags": [
+    { "user_id": 1, "tag_type": 2, "tag_id": "04:E3:B2:27:39:AD:FE" },
+    { "user_id": 2, "tag_type": 0, "tag_id": "01:23:AB:3D" }
+  ]
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/nfc/config
+```
+```jsx
+{
+  "authorized_tags": [
+    { "user_id": 1, "tag_type": 2, "tag_id": "04:E3:B2:27:39:AD:FE" },
+    { "user_id": 2, "tag_type": 0, "tag_id": "01:23:AB:3D" }
+  ]
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/nfc/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/nfc/config_update -m '{
+  "authorized_tags": [
+    { "user_id": 1, "tag_type": 2, "tag_id": "04:E3:B2:27:39:AD:FE" },
+    { "user_id": 2, "tag_type": 0, "tag_id": "01:23:AB:3D" }
+  ]
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -565,7 +949,7 @@ Die NFC-Konfiguration.
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
             <td>
-                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
             </td>
         </tr>
             </tbody>
@@ -580,6 +964,45 @@ Die NFC-Konfiguration.
 
 
 Die zuletzt von der Wallbox gesehenen NFC-Tags.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/nfc/seen_tags
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/nfc/seen_tags
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  { "tag_type": 2, "tag_id": "04:E3:B2:27:39:AD:FE", "last_seen": 22724083 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "01:23:AB:3D", "last_seen": 10753 }
+]
+```
+
+
+:::
 
 
 <table>
@@ -619,7 +1042,7 @@ Die zuletzt von der Wallbox gesehenen NFC-Tags.
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
             <td>
-                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
             </td>
         </tr>
         
@@ -662,7 +1085,7 @@ Die zuletzt von der Wallbox gesehenen NFC-Tags.
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
             <td>
-                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
             </td>
         </tr>
         
@@ -685,6 +1108,33 @@ Die zuletzt von der Wallbox gesehenen NFC-Tags.
 
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die API ein Ladevorgang für einen bestimmten Benutzer gestartet oder gestoppt werden. Analog zur physischen Verwendung eines Tags wird der Ladevorgang bei Aufruf der API abwechselnd freigegeben oder blockiert. Siehe [`nfc/inject_tag_start`](nfc.mdx#nfc_inject_tag_start) und [`nfc/inject_tag_stop`](nfc.mdx#nfc_inject_tag_stop) für genauere Kontrolle. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/nfc/inject_tag -d '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag -m '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -711,7 +1161,7 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die A
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
     <td>
-        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
     </td>
 </tr>
     </tbody>
@@ -723,6 +1173,33 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die A
 
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Starten</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/nfc/inject_tag_start -d '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag_start -m '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -749,7 +1226,7 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
     <td>
-        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
     </td>
 </tr>
     </tbody>
@@ -761,6 +1238,33 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
 
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Stoppen</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/nfc/inject_tag_stop -d '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag_stop -m '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -787,7 +1291,7 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
     <td>
-        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
     </td>
 </tr>
     </tbody>
@@ -798,6 +1302,78 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
 
 
 Die NFC-Konfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/nfc/config
+```
+```jsx
+{
+  "authorized_tags": [
+    { "user_id": 1, "tag_type": 2, "tag_id": "04:E3:B2:27:39:AD:FE" },
+    { "user_id": 2, "tag_type": 0, "tag_id": "01:23:AB:3D" }
+  ]
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/nfc/config -d '{
+  "authorized_tags": [
+    { "user_id": 1, "tag_type": 2, "tag_id": "04:E3:B2:27:39:AD:FE" },
+    { "user_id": 2, "tag_type": 0, "tag_id": "01:23:AB:3D" }
+  ]
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/nfc/config
+```
+```jsx
+{
+  "authorized_tags": [
+    { "user_id": 1, "tag_type": 2, "tag_id": "04:E3:B2:27:39:AD:FE" },
+    { "user_id": 2, "tag_type": 0, "tag_id": "01:23:AB:3D" }
+  ]
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/nfc/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/nfc/config_update -m '{
+  "authorized_tags": [
+    { "user_id": 1, "tag_type": 2, "tag_id": "04:E3:B2:27:39:AD:FE" },
+    { "user_id": 2, "tag_type": 0, "tag_id": "01:23:AB:3D" }
+  ]
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -847,7 +1423,7 @@ Die NFC-Konfiguration.
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
             <td>
-                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
             </td>
         </tr>
             </tbody>
@@ -865,6 +1441,45 @@ Auf dieser Hardware nicht unterstützt!
 
 
 Die zuletzt von der Wallbox gesehenen NFC-Tags.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/nfc/seen_tags
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/nfc/seen_tags
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  { "tag_type": 2, "tag_id": "04:E3:B2:27:39:AD:FE", "last_seen": 22724083 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "", "last_seen": 0 },
+  { "tag_type": 0, "tag_id": "01:23:AB:3D", "last_seen": 10753 }
+]
+```
+
+
+:::
 
 
 <table>
@@ -907,7 +1522,7 @@ Die zuletzt von der Wallbox gesehenen NFC-Tags.
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
             <td>
-                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
             </td>
         </tr>
         
@@ -953,7 +1568,7 @@ Die zuletzt von der Wallbox gesehenen NFC-Tags.
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
             <td>
-                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
             </td>
         </tr>
         
@@ -976,6 +1591,33 @@ Die zuletzt von der Wallbox gesehenen NFC-Tags.
 
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die API ein Ladevorgang für einen bestimmten Benutzer gestartet oder gestoppt werden. Analog zur physischen Verwendung eines Tags wird der Ladevorgang bei Aufruf der API abwechselnd freigegeben oder blockiert. Siehe [`nfc/inject_tag_start`](nfc.mdx#nfc_inject_tag_start) und [`nfc/inject_tag_stop`](nfc.mdx#nfc_inject_tag_stop) für genauere Kontrolle. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/nfc/inject_tag -d '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag -m '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1005,7 +1647,7 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die A
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
     <td>
-        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
     </td>
 </tr>
     </tbody>
@@ -1017,6 +1659,33 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die A
 
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Starten</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/nfc/inject_tag_start -d '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag_start -m '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1046,7 +1715,7 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
     <td>
-        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
     </td>
 </tr>
     </tbody>
@@ -1058,6 +1727,33 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
 
 Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Stoppen</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/nfc/inject_tag_stop -d '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag_stop -m '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1087,7 +1783,7 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
     <td>
-        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+        ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
     </td>
 </tr>
     </tbody>
@@ -1098,6 +1794,78 @@ Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <st
 
 
 Die NFC-Konfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/nfc/config
+```
+```jsx
+{
+  "authorized_tags": [
+    { "user_id": 1, "tag_type": 2, "tag_id": "04:E3:B2:27:39:AD:FE" },
+    { "user_id": 2, "tag_type": 0, "tag_id": "01:23:AB:3D" }
+  ]
+}
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/nfc/config -d '{
+  "authorized_tags": [
+    { "user_id": 1, "tag_type": 2, "tag_id": "04:E3:B2:27:39:AD:FE" },
+    { "user_id": 2, "tag_type": 0, "tag_id": "01:23:AB:3D" }
+  ]
+}'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/nfc/config
+```
+```jsx
+{
+  "authorized_tags": [
+    { "user_id": 1, "tag_type": 2, "tag_id": "04:E3:B2:27:39:AD:FE" },
+    { "user_id": 2, "tag_type": 0, "tag_id": "01:23:AB:3D" }
+  ]
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/nfc/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/nfc/config_update -m '{
+  "authorized_tags": [
+    { "user_id": 1, "tag_type": 2, "tag_id": "04:E3:B2:27:39:AD:FE" },
+    { "user_id": 2, "tag_type": 0, "tag_id": "01:23:AB:3D" }
+  ]
+}'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -1153,7 +1921,7 @@ Die NFC-Konfiguration.
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_id`<br/>string</th>
             <td>
-                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:ab:3d
+                ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`
             </td>
         </tr>
             </tbody>

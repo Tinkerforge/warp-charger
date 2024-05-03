@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 import Admonition from '@theme/Admonition';
 
 # Energy-Manager-Konfiguration
-
+Das `energy_manager`-Modul verwaltet Zustand und Konfiguration des WARP Energy Manager Bricklets.
 <Tabs groupId="hardwareType" queryString className="hidden-tabs">
 <TabItem value="warp1">
 Auf dieser Hardware nicht unterstützt!
@@ -24,6 +24,58 @@ Auf dieser Hardware nicht unterstützt!
 
 
 Konfiguration des Energy Managers
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/energy_manager/config
+```
+```jsx
+{ "contactor_installed": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/energy_manager/config -d '{ "contactor_installed": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/energy_manager/config
+```
+```jsx
+{ "contactor_installed": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/energy_manager/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/energy_manager/config_update -m '{ "contactor_installed": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -51,6 +103,42 @@ Konfiguration des Energy Managers
 
 
 Zustand des Energy Managers
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/energy_manager/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/energy_manager/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "phases_switched": 1,
+  "input3_state": false,
+  "input4_state": false,
+  "relay_state": false,
+  "error_flags": 0,
+  "config_error_flags": 0
+}
+```
+
+
+:::
 
 
 <table>
@@ -130,6 +218,42 @@ Zustand des Energy Managers
 
 
 Low-Level-Zustand des Energy Managers
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/energy_manager/low_level_state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/energy_manager/low_level_state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "consecutive_bricklet_errors": 0,
+  "contactor": false,
+  "contactor_check_state": 1,
+  "input_voltage": 11925,
+  "led_rgb": [0, 0, 0],
+  "uptime": 940868435
+}
+```
+
+
+:::
 
 
 <table>
@@ -197,6 +321,44 @@ Low-Level-Zustand des Energy Managers
 
 
 Informationen über die eingelegte MicroSD-Karte.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/energy_manager/sdcard_state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/energy_manager/sdcard_state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "sd_status": 0,
+  "lfs_status": 0,
+  "card_type": 12,
+  "sector_count": 15759360,
+  "sector_size": 512,
+  "manufacturer_id": 116,
+  "product_rev": 32,
+  "product_name": "USDU1"
+}
+```
+
+
+:::
 
 
 <table>
@@ -295,6 +457,33 @@ Informationen über die eingelegte MicroSD-Karte.
 
 
 Formatiert die eingelegte SD-Karte und löscht damit die Historie der Energiebilanz. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/energy_manager/sdcard_format -d '{ "do_i_know_what_i_am_doing": false }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/energy_manager/sdcard_format -m '{ "do_i_know_what_i_am_doing": false }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -322,6 +511,58 @@ Formatiert die eingelegte SD-Karte und löscht damit die Historie der Energiebil
 
 
 Konfiguration des Energy Managers
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/energy_manager/config
+```
+```jsx
+{ "contactor_installed": true }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/energy_manager/config -d '{ "contactor_installed": true }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/energy_manager/config
+```
+```jsx
+{ "contactor_installed": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/energy_manager/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/energy_manager/config_update -m '{ "contactor_installed": true }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -349,6 +590,42 @@ Konfiguration des Energy Managers
 
 
 Zustand des Energy Managers
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/energy_manager/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/energy_manager/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "phases_switched": 1,
+  "input3_state": false,
+  "input4_state": false,
+  "relay_state": false,
+  "error_flags": 0,
+  "config_error_flags": 0
+}
+```
+
+
+:::
 
 
 <table>
@@ -446,6 +723,42 @@ Zustand des Energy Managers
 
 
 Low-Level-Zustand des Energy Managers
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/energy_manager/low_level_state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/energy_manager/low_level_state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "consecutive_bricklet_errors": 0,
+  "contactor": false,
+  "contactor_check_state": 1,
+  "input_voltage": 11925,
+  "led_rgb": [0, 0, 0],
+  "uptime": 940868435
+}
+```
+
+
+:::
 
 
 <table>
@@ -522,6 +835,44 @@ Low-Level-Zustand des Energy Managers
 
 
 Informationen über die eingelegte MicroSD-Karte.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/energy_manager/sdcard_state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/energy_manager/sdcard_state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "sd_status": 0,
+  "lfs_status": 0,
+  "card_type": 12,
+  "sector_count": 15759360,
+  "sector_size": 512,
+  "manufacturer_id": 116,
+  "product_rev": 32,
+  "product_name": "USDU1"
+}
+```
+
+
+:::
 
 
 <table>
@@ -629,6 +980,33 @@ Informationen über die eingelegte MicroSD-Karte.
 
 
 Formatiert die eingelegte SD-Karte und löscht damit die Historie der Energiebilanz. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/energy_manager/sdcard_format -d '{ "do_i_know_what_i_am_doing": false }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/energy_manager/sdcard_format -m '{ "do_i_know_what_i_am_doing": false }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>

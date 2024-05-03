@@ -15,6 +15,58 @@ import Admonition from '@theme/Admonition';
 
 
 Allgemeine Netzwerkeinstellungen
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/network/config
+```
+```jsx
+{ "hostname": "warp-AbCd", "enable_mdns": true, "web_server_port": 80 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/network/config -d '{ "hostname": "warp-AbCd", "enable_mdns": true, "web_server_port": 80 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/network/config
+```
+```jsx
+{ "hostname": "warp-AbCd", "enable_mdns": true, "web_server_port": 80 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/network/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/network/config_update -m '{ "hostname": "warp-AbCd", "enable_mdns": true, "web_server_port": 80 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -29,14 +81,14 @@ Allgemeine Netzwerkeinstellungen
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`hostname`<br/>string</th>
     <td>
-        Hostname den die Wallbox in allen konfigurierten Netzwerken verwenden soll.
+        Hostname den das Gerät in allen konfigurierten Netzwerken verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_mdns`<br/>bool</th>
     <td>
-        Gibt an, ob die Wallbox das Webinterface per mDNS im Netzwerk bekanntgeben soll. Per mDNS wird das Webinterface unter http://[hostname].local (z.B. http://warp2-AbC.local) erreichbar sein.
+        Gibt an, ob das Gerät das Webinterface per mDNS im Netzwerk bekanntgeben soll. Per mDNS wird das Webinterface unter http://[hostname].local (z.B. http://warp2-AbC.local) erreichbar sein.
     </td>
 </tr>
 
@@ -54,6 +106,58 @@ Allgemeine Netzwerkeinstellungen
 
 
 Allgemeine Netzwerkeinstellungen
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/network/config
+```
+```jsx
+{ "hostname": "warp2-AbCd", "enable_mdns": true, "web_server_port": 80 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/network/config -d '{ "hostname": "warp2-AbCd", "enable_mdns": true, "web_server_port": 80 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/network/config
+```
+```jsx
+{ "hostname": "warp2-AbCd", "enable_mdns": true, "web_server_port": 80 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/network/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/network/config_update -m '{ "hostname": "warp2-AbCd", "enable_mdns": true, "web_server_port": 80 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -68,14 +172,14 @@ Allgemeine Netzwerkeinstellungen
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`hostname`<br/>string</th>
     <td>
-        Hostname den die Wallbox in allen konfigurierten Netzwerken verwenden soll.
+        Hostname den das Gerät in allen konfigurierten Netzwerken verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_mdns`<br/>bool</th>
     <td>
-        Gibt an, ob die Wallbox das Webinterface per mDNS im Netzwerk bekanntgeben soll. Per mDNS wird das Webinterface unter http://[hostname].local (z.B. http://warp2-AbC.local) erreichbar sein.
+        Gibt an, ob das Gerät das Webinterface per mDNS im Netzwerk bekanntgeben soll. Per mDNS wird das Webinterface unter http://[hostname].local (z.B. http://warp2-AbC.local) erreichbar sein.
     </td>
 </tr>
 
@@ -93,6 +197,58 @@ Allgemeine Netzwerkeinstellungen
 
 
 Allgemeine Netzwerkeinstellungen
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/network/config
+```
+```jsx
+{ "hostname": "warp3-AbCd", "enable_mdns": true, "web_server_port": 80 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/network/config -d '{ "hostname": "warp3-AbCd", "enable_mdns": true, "web_server_port": 80 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/network/config
+```
+```jsx
+{ "hostname": "warp3-AbCd", "enable_mdns": true, "web_server_port": 80 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/network/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/network/config_update -m '{ "hostname": "warp3-AbCd", "enable_mdns": true, "web_server_port": 80 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -107,14 +263,14 @@ Allgemeine Netzwerkeinstellungen
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`hostname`<br/>string</th>
     <td>
-        Hostname den die Wallbox in allen konfigurierten Netzwerken verwenden soll.
+        Hostname den das Gerät in allen konfigurierten Netzwerken verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_mdns`<br/>bool</th>
     <td>
-        Gibt an, ob die Wallbox das Webinterface per mDNS im Netzwerk bekanntgeben soll. Per mDNS wird das Webinterface unter http://[hostname].local (z.B. http://warp2-AbC.local) erreichbar sein.
+        Gibt an, ob das Gerät das Webinterface per mDNS im Netzwerk bekanntgeben soll. Per mDNS wird das Webinterface unter http://[hostname].local (z.B. http://warp2-AbC.local) erreichbar sein.
     </td>
 </tr>
 
@@ -132,6 +288,58 @@ Allgemeine Netzwerkeinstellungen
 
 
 Allgemeine Netzwerkeinstellungen
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/network/config
+```
+```jsx
+{ "hostname": "wem-AbCd", "enable_mdns": true, "web_server_port": 80 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/network/config -d '{ "hostname": "wem-AbCd", "enable_mdns": true, "web_server_port": 80 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/network/config
+```
+```jsx
+{ "hostname": "wem-AbCd", "enable_mdns": true, "web_server_port": 80 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/network/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/network/config_update -m '{ "hostname": "wem-AbCd", "enable_mdns": true, "web_server_port": 80 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -146,14 +354,14 @@ Allgemeine Netzwerkeinstellungen
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`hostname`<br/>string</th>
     <td>
-        Hostname den die Wallbox in allen konfigurierten Netzwerken verwenden soll.
+        Hostname den das Gerät in allen konfigurierten Netzwerken verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_mdns`<br/>bool</th>
     <td>
-        Gibt an, ob die Wallbox das Webinterface per mDNS im Netzwerk bekanntgeben soll. Per mDNS wird das Webinterface unter http://[hostname].local (z.B. http://warp2-AbC.local) erreichbar sein.
+        Gibt an, ob das Gerät das Webinterface per mDNS im Netzwerk bekanntgeben soll. Per mDNS wird das Webinterface unter http://[hostname].local (z.B. http://warp2-AbC.local) erreichbar sein.
     </td>
 </tr>
 
@@ -171,6 +379,58 @@ Allgemeine Netzwerkeinstellungen
 
 
 Allgemeine Netzwerkeinstellungen
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/network/config
+```
+```jsx
+{ "hostname": "warp-AbCd", "enable_mdns": true, "web_server_port": 80 }
+```
+
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/network/config -d '{ "hostname": "warp-AbCd", "enable_mdns": true, "web_server_port": 80 }'
+```
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/network/config
+```
+```jsx
+{ "hostname": "warp-AbCd", "enable_mdns": true, "web_server_port": 80 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/network/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/network/config_update -m '{ "hostname": "warp-AbCd", "enable_mdns": true, "web_server_port": 80 }'
+```
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -185,14 +445,14 @@ Allgemeine Netzwerkeinstellungen
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`hostname`<br/>string</th>
     <td>
-        Hostname den die Wallbox in allen konfigurierten Netzwerken verwenden soll.
+        Hostname den das Gerät in allen konfigurierten Netzwerken verwenden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_mdns`<br/>bool</th>
     <td>
-        Gibt an, ob die Wallbox das Webinterface per mDNS im Netzwerk bekanntgeben soll. Per mDNS wird das Webinterface unter http://[hostname].local (z.B. http://warp2-AbC.local) erreichbar sein.
+        Gibt an, ob das Gerät das Webinterface per mDNS im Netzwerk bekanntgeben soll. Per mDNS wird das Webinterface unter http://[hostname].local (z.B. http://warp2-AbC.local) erreichbar sein.
     </td>
 </tr>
 

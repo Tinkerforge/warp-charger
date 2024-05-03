@@ -9,25 +9,133 @@ import Admonition from '@theme/Admonition';
 
 # Stromzähler
 WARP Charger und Energy Manager unterstützen mehrere Stromzähler.
-    Die Stromzähler-API ist aufgeteilt in einem allgemeinen Teil unter meters/...
-    und einen Stromzähler-spezifischen Teil unter meters/X/... wobei X einer Stromzähler-Nummer entspricht.
-    Der Stromzähler-spezifische Teil beinhaltet immer [`meters/X/value_ids`](meters.mdx#meters_X_value_ids), [`meters/X/values`](meters.mdx#meters_X_values), [`meters/X/live`](meters.mdx#meters_X_live) und [`meters/X/history`](meters.mdx#meters_X_history) mit dem unten dokumentierten Inhalt.
-    Beispielsweise können die Messwerte des ersten Stromzählers (der die Stromzählernummer 0 besitzt) unter meters/0/values gelesen werden.
-    Außerdem hat jeder Zähler die APIs [`meters/X/config`](meters.mdx#meters_X_config), [`meters/X/state`](meters.mdx#meters_X_state) und [`meters/X/errors`](meters.mdx#meters_X_errors), deren Inhalt von der Klasse des Stromzählers abhängt.
-    Die Stromzählerklasse wird als das <a href="#unions_section">Union</a>-Tag von [`meters/X/config`](meters.mdx#meters_X_config) angegeben.
+    Die Stromzähler-API ist aufgeteilt in einem allgemeinen Teil unter `meters/...`
+    und einen Stromzähler-spezifischen Teil unter `meters/X/...` wobei `X` einer Stromzähler-Nummer entspricht.
+    Der Stromzähler-spezifische Teil beinhaltet immer
+    - [`meters/X/value_ids`](meters.mdx#meters_X_value_ids)
+    - [`meters/X/values`](meters.mdx#meters_X_values)
+    - [`meters/X/live`](meters.mdx#meters_X_live)
+    - [`meters/X/history`](meters.mdx#meters_X_history)
 
+    Beispielsweise können die Messwerte des ersten Stromzählers (der die Stromzählernummer 0 besitzt) unter `meters/0/values` gelesen werden.
+    Außerdem hat jeder Zähler die APIs
+    - [`meters/X/config`](meters.mdx#meters_X_config)
+    - [`meters/X/state`](meters.mdx#meters_X_state)
+    - [`meters/X/errors`](meters.mdx#meters_X_errors)
+
+    deren Inhalt von der Klasse des Stromzählers abhängt.
+    Die Stromzählerklasse wird als das <a href="#unions_section">Union</a>-Tag von [`meters/X/config`](meters.mdx#meters_X_config) angegeben.
 
     Jeder Stromzähler meldet seine Messwerte unter [`meters/X/values`](meters.mdx#meters_X_values) als ein Array von Floats.
     Welcher Messwert wie zu interpretieren ist, kann unter [`meters/X/value_ids`](meters.mdx#meters_X_value_ids) (einem Array von Ints, den sogenannten MeterValueIDs) ausgelesen werden:
     Wenn beispielsweise an Index 3 in [`meters/X/value_ids`](meters.mdx#meters_X_value_ids) die MeterValueID 13 gelesen wird, dann ist der [`meters/X/values`](meters.mdx#meters_X_values)-Wert an Index 3 als der Phasenstrom auf L1 zu interpretieren.
-    Alle MeterValueIDs sind auf Github dokumentiert: <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
+
+    Alle MeterValueIDs sind auf Github dokumentiert: [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+    <br/>
+    <br/>
     
 <Tabs groupId="hardwareType" queryString className="hidden-tabs">
 <TabItem value="warp1">
 ## `meters/X/values` {#meters_X_values_warp1}
 
 
-Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meters/X/value_ids`](meters.mdx#meters_X_value_ids) ermittelt werden. Bei einem API-Stromzähler können diese Werte über meters/X/update geschrieben werden
+Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meters/X/value_ids`](meters.mdx#meters_X_value_ids) ermittelt werden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/values
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/values
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  // Index 0
+  217.6941223, 0, 0,
+  30.72553635, 0, 0,
+  6680.515625, 0, 0,
+  6681.138672, 0, 0,
+  // Index 12
+  -90.09844208, 0, 0,
+  1, 0, 0,
+  72.56191254, 10.24184513, 30.72553635,
+  6683.693359, 6680.666016, -90.09844208,
+  // Index 24
+  1, 50, 4644.044922,
+  3.992000103, 0, 0,
+  0, 0, 30.70857239,
+  4648.038086, 197.5639954, 4648.038086,
+  // Index 36
+  4644.044922, 3.992000103
+]
+```
+
+
+:::
+
+
+
+<br/><br/><br/>
+## `meters/X/update` {#meters_X_update_warp1}
+
+
+Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzähler (Union-Tag 4 in der entsprechenden [`meters/X/config`](meters.mdx#meters_X_config)) verwendet werden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/meters/X/update -d '[
+    15.9, 16, 16.1,
+    3657, 3680, 3703
+]'
+```
+Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters/X/update -m '[
+    15.9, 16, 16.1,
+    3657, 3680, 3703
+]'
+```
+Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -35,7 +143,64 @@ Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meter
 ## `meters/X/value_ids` {#meters_X_value_ids_warp1}
 
 
-Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [`meters/X/values`](meters.mdx#meters_X_values) an. <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
+Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [`meters/X/values`](meters.mdx#meters_X_values) an. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/value_ids
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/value_ids
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  // Siehe https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv
+  // Index 0
+  1, 2, 3,       // Spannung L1-N, L2-N, L3-N
+  13, 17, 21,    // Strom (Bezug + Einspeisung) L1-N, L2-N, L3-N
+  39, 48, 57,    // Wirkleistung (Bezug - Einspeisung) L1-N, L2-N, L3-N
+  122, 130, 138, // Scheinleistung (Bezug + Einspeisung) L1-N, L2-N, L3-N
+  // Index 12
+  83, 91, 99,    // Blindleistung (induktiv - kapazitiv)  L1-N, L2-N, L3-N
+  353, 354, 355, // Leistungsfaktor (gerichtet; Vorzeichen gibt Richtung des Stromflusses an) L1, L2, L3
+  7,             // Durchschnittliche Phasenspannung
+  29,            // Durchschnitt der (Bezug + Einspeisung)-Phasenströme
+  33,            // Summe der (Bezug + Einspeisung)-Phasenstöme
+  74,            // Summe der (Bezug - Einspeisung)-Phasenwirkleistungen
+  154,           // Summe der (Bezug + Einspeisung)-Phasenscheinleistungen
+  115,           // Summe der (induktiv - kapazitiv)-Phasenblindleistungen
+  // Index 24
+  356,           // Summe der gerichteten Leistungsfaktoren
+  364,           // Netzfrequenz
+  209, 211,      // Wirkenergie (Σ L1, L2, L3, seit Herstellung) Bezug, Einspeisung
+  4, 5, 6, 8,    // Spannung L1-L2; L2-L3; L3-L1; ⌀ L1-L2, L2-L3, L3-L1
+  25,            // Neutralleiterstrom
+  213,           // Wirkenergie (Σ L1, L2, L3, seit Herstellung) Bezug + Einspeisung
+  277,           // Blindenergie (Σ L1, L2, L3, seit Herstellung) induktiv + kapazitiv
+  214,           // Wirkenergie (Σ L1, L2, L3, seit letztem Zurücksetzen) Bezug + Einspeisung
+  // Index 36
+  210,           // Wirkenergie (Σ L1, L2, L3, seit letztem Zurücksetzen) Bezug
+  212            // Wirkenergie (Σ L1, L2, L3, seit letztem Zurücksetzen) Einspeisung
+]
+```
+
+
+:::
 
 
 
@@ -46,6 +211,47 @@ Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt di
 
 
 Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+```bash
+curl http://$HOST/meters/X/history
+```
+```jsx
+{
+  "offset": 60927,
+  "samples": [
+      null, null, null, null, null, null, null, null,
+      // 600 weitere null-Werte entfernt
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0, 1736, 6656, 6655, 6666,
+      6680, 6716, 6714, 6625, 6640, 6641, 6595, 6612,
+      6592, 6593, 6589, 6592, 6600, 6625, 6626, 6637,
+      6665, 6636, 6632, 6656, 6616, 6611, 6646, 6670,
+      6691, 6715, 6787, 6754, 6761, 6797, 6771, 6685,
+      6705, 6778, 6703, 6675, 6681, 6721, 6739, 6816,
+      6872, 6858, 6821, 6836, 6784, 6871, 6943, 6930,
+      6968, 6955, 6837, 6800, 6846, 6919, 6881, 6736,
+      6671, 6655, 6674, 6743, 6878, 5733, 4462, 3712,
+      3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
+         0,    0,    0,    0,    0,    0,    0,    0
+  ]
+}
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -85,6 +291,43 @@ Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher f
 
 
 Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/X/history`](meters.mdx#meters_X_history) generiert.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+```bash
+curl http://$HOST/meters/X/live
+```
+```jsx
+{
+  "offset": 370,
+  "samples_per_second": 1.99565,
+  "samples": [
+    2626, 2626, 2626, 2626, 2626, 2626, 2626, 2673,
+    2673, 2673, 2673, 2673, 2673, 2673, 2673, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677,  988,
+     988,  988,  988,  988,  988,  988,  988,    3,
+       3,    3,    3,    3,    3,    3,    3,    1,
+       1,    1,    1,    1,    1,    1,    1,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    4
+   ]
+}
+```
+Es liegen 80 Werte vor, ~ 2 Werte pro Sekunde wurden erhoben, das Offset des letzten Werts sind 370 ms
+-> Die Messwerte reichen im Moment 40,370 Sekunden in die Vergangenheit.
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -129,6 +372,62 @@ Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte
 
 
 Die Konfiguration des X. Stromzählers. Das Union-Tag gibt die Zählerklasse an.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meters/X/config
+```
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meters/X/config -d '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+```
+Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/config
+```
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meters/X/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters/X/config_update -m '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+```
+Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+
+        </TabItem>
+    </Tabs>
+:::
 
 <MultilineTabs className="unique-tabs" groupId="metersXConfig">
 <TabItem value="0" label="0 - Kein Stromzähler konfiguriert.">
@@ -189,7 +488,7 @@ null: Kein Stromzähler konfiguriert.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`value_ids`<br/>int[..]</th>
     <td>
-        MeterValueIDs, die über die API [meters/X/update](meters.mdx#meters_X_values) gesetzt werden können sollen. <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
+        MeterValueIDs, die über die API [meters/X/update](meters.mdx#meters_X_values) gesetzt werden können sollen. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
     </td>
 </tr>
     </tbody>
@@ -252,6 +551,35 @@ null: Kein Stromzähler konfiguriert.
 
 
 Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](meters.mdx#meters_X_config) konfiguriert wurde.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+null
+```
+
+
+:::
 
 <Tabs className="hidden-tabs" groupId="metersXConfig">
 <TabItem value="0" label="0 - Kein Stromzähler konfiguriert.">
@@ -354,6 +682,35 @@ null: Zustand des SunSpec-Stromzählers. Im Moment leer.
 
 
 Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](meters.mdx#meters_X_config) konfiguriert wurde.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/errors
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/errors
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+null
+```
+
+
+:::
 
 <Tabs className="hidden-tabs" groupId="metersXConfig">
 <TabItem value="0" label="0 - Kein Stromzähler konfiguriert.">
@@ -521,7 +878,7 @@ null: Fehlerzähler des SunSpec-Stromzählers. Im Moment leer.
 ## `meters/X/reset` {#meters_X_reset_warp1}
 
 
-Setzt alle zurücksetzbaren (Alle Werte deren "kind"-Eintrag "resettable" ist: <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>) Zählerwerte des X. Stromzählers zurück.
+Setzt alle zurücksetzbaren (Alle Werte deren `kind`-Eintrag `resettable` ist: [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)) Zählerwerte des X. Stromzählers zurück.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -559,6 +916,35 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/X/reset -m 'null'
 
 
 Der Zeitpunkt des letzten Zähler-Resets (siehe [`meters/X/reset`](meters.mdx#meters_X_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/last_reset
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/last_reset
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "last_reset": 1714728252 }
+```
+Zuletzt zurückgesetzt 2024-05-03T11:24:12+02:00
+
+:::
 
 
 <table>
@@ -617,6 +1003,11 @@ curl http://$HOST/meters/history
       3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
          0,    0,    0,    0,    0,    0,    0,    0
     ],
+    null,
+    null,
+    null,
+    null,
+    null,
     null
   ]
 }
@@ -670,6 +1061,45 @@ curl http://$HOST/meters/history
 
 
 Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/history`](meters.mdx#meters_history) generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+```bash
+curl http://$HOST/meters/live
+```
+```jsx
+{
+  "offset": 370,
+  "samples_per_second": 1.99565,
+  "samples": [
+    [
+        2626, 2626, 2626, 2626, 2626, 2626, 2626, 2673,
+        2673, 2673, 2673, 2673, 2673, 2673, 2673, 2677,
+        2677, 2677, 2677, 2677, 2677, 2677, 2677, 2677,
+        2677, 2677, 2677, 2677, 2677, 2677, 2677,  988,
+         988,  988,  988,  988,  988,  988,  988,    3,
+           3,    3,    3,    3,    3,    3,    3,    1,
+           1,    1,    1,    1,    1,    1,    1,    3,
+           3,    3,    3,    3,    3,    3,    3,    3,
+           3,    3,    3,    3,    3,    3,    3,    3,
+           3,    3,    3,    3,    3,    3,    3,    4
+    ],
+    null
+  ]
+}
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -714,7 +1144,103 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
 ## `meters/X/values` {#meters_X_values_warp2}
 
 
-Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meters/X/value_ids`](meters.mdx#meters_X_value_ids) ermittelt werden. Bei einem API-Stromzähler können diese Werte über meters/X/update geschrieben werden
+Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meters/X/value_ids`](meters.mdx#meters_X_value_ids) ermittelt werden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/values
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/values
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  // Index 0
+  217.6941223, 0, 0,
+  30.72553635, 0, 0,
+  6680.515625, 0, 0,
+  6681.138672, 0, 0,
+  // Index 12
+  -90.09844208, 0, 0,
+  1, 0, 0,
+  72.56191254, 10.24184513, 30.72553635,
+  6683.693359, 6680.666016, -90.09844208,
+  // Index 24
+  1, 50, 4644.044922,
+  3.992000103, 0, 0,
+  0, 0, 30.70857239,
+  4648.038086, 197.5639954, 4648.038086,
+  // Index 36
+  4644.044922, 3.992000103
+]
+```
+
+
+:::
+
+
+
+<br/><br/><br/>
+## `meters/X/update` {#meters_X_update_warp2}
+
+
+Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzähler (Union-Tag 4 in der entsprechenden [`meters/X/config`](meters.mdx#meters_X_config)) verwendet werden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/meters/X/update -d '[
+    15.9, 16, 16.1,
+    3657, 3680, 3703
+]'
+```
+Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters/X/update -m '[
+    15.9, 16, 16.1,
+    3657, 3680, 3703
+]'
+```
+Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -722,7 +1248,64 @@ Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meter
 ## `meters/X/value_ids` {#meters_X_value_ids_warp2}
 
 
-Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [`meters/X/values`](meters.mdx#meters_X_values) an. <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
+Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [`meters/X/values`](meters.mdx#meters_X_values) an. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/value_ids
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/value_ids
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  // Siehe https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv
+  // Index 0
+  1, 2, 3,       // Spannung L1-N, L2-N, L3-N
+  13, 17, 21,    // Strom (Bezug + Einspeisung) L1-N, L2-N, L3-N
+  39, 48, 57,    // Wirkleistung (Bezug - Einspeisung) L1-N, L2-N, L3-N
+  122, 130, 138, // Scheinleistung (Bezug + Einspeisung) L1-N, L2-N, L3-N
+  // Index 12
+  83, 91, 99,    // Blindleistung (induktiv - kapazitiv)  L1-N, L2-N, L3-N
+  353, 354, 355, // Leistungsfaktor (gerichtet; Vorzeichen gibt Richtung des Stromflusses an) L1, L2, L3
+  7,             // Durchschnittliche Phasenspannung
+  29,            // Durchschnitt der (Bezug + Einspeisung)-Phasenströme
+  33,            // Summe der (Bezug + Einspeisung)-Phasenstöme
+  74,            // Summe der (Bezug - Einspeisung)-Phasenwirkleistungen
+  154,           // Summe der (Bezug + Einspeisung)-Phasenscheinleistungen
+  115,           // Summe der (induktiv - kapazitiv)-Phasenblindleistungen
+  // Index 24
+  356,           // Summe der gerichteten Leistungsfaktoren
+  364,           // Netzfrequenz
+  209, 211,      // Wirkenergie (Σ L1, L2, L3, seit Herstellung) Bezug, Einspeisung
+  4, 5, 6, 8,    // Spannung L1-L2; L2-L3; L3-L1; ⌀ L1-L2, L2-L3, L3-L1
+  25,            // Neutralleiterstrom
+  213,           // Wirkenergie (Σ L1, L2, L3, seit Herstellung) Bezug + Einspeisung
+  277,           // Blindenergie (Σ L1, L2, L3, seit Herstellung) induktiv + kapazitiv
+  214,           // Wirkenergie (Σ L1, L2, L3, seit letztem Zurücksetzen) Bezug + Einspeisung
+  // Index 36
+  210,           // Wirkenergie (Σ L1, L2, L3, seit letztem Zurücksetzen) Bezug
+  212            // Wirkenergie (Σ L1, L2, L3, seit letztem Zurücksetzen) Einspeisung
+]
+```
+
+
+:::
 
 
 
@@ -733,6 +1316,47 @@ Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt di
 
 
 Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+```bash
+curl http://$HOST/meters/X/history
+```
+```jsx
+{
+  "offset": 60927,
+  "samples": [
+      null, null, null, null, null, null, null, null,
+      // 600 weitere null-Werte entfernt
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0, 1736, 6656, 6655, 6666,
+      6680, 6716, 6714, 6625, 6640, 6641, 6595, 6612,
+      6592, 6593, 6589, 6592, 6600, 6625, 6626, 6637,
+      6665, 6636, 6632, 6656, 6616, 6611, 6646, 6670,
+      6691, 6715, 6787, 6754, 6761, 6797, 6771, 6685,
+      6705, 6778, 6703, 6675, 6681, 6721, 6739, 6816,
+      6872, 6858, 6821, 6836, 6784, 6871, 6943, 6930,
+      6968, 6955, 6837, 6800, 6846, 6919, 6881, 6736,
+      6671, 6655, 6674, 6743, 6878, 5733, 4462, 3712,
+      3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
+         0,    0,    0,    0,    0,    0,    0,    0
+  ]
+}
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -772,6 +1396,43 @@ Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher f
 
 
 Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/X/history`](meters.mdx#meters_X_history) generiert.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+```bash
+curl http://$HOST/meters/X/live
+```
+```jsx
+{
+  "offset": 370,
+  "samples_per_second": 1.99565,
+  "samples": [
+    2626, 2626, 2626, 2626, 2626, 2626, 2626, 2673,
+    2673, 2673, 2673, 2673, 2673, 2673, 2673, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677,  988,
+     988,  988,  988,  988,  988,  988,  988,    3,
+       3,    3,    3,    3,    3,    3,    3,    1,
+       1,    1,    1,    1,    1,    1,    1,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    4
+   ]
+}
+```
+Es liegen 80 Werte vor, ~ 2 Werte pro Sekunde wurden erhoben, das Offset des letzten Werts sind 370 ms
+-> Die Messwerte reichen im Moment 40,370 Sekunden in die Vergangenheit.
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -816,6 +1477,62 @@ Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte
 
 
 Die Konfiguration des X. Stromzählers. Das Union-Tag gibt die Zählerklasse an.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meters/X/config
+```
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meters/X/config -d '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+```
+Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/config
+```
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meters/X/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters/X/config_update -m '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+```
+Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+
+        </TabItem>
+    </Tabs>
+:::
 
 <MultilineTabs className="unique-tabs" groupId="metersXConfig">
 <TabItem value="0" label="0 - Kein Stromzähler konfiguriert.">
@@ -864,7 +1581,7 @@ null: Kein Stromzähler konfiguriert.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`value_ids`<br/>int[..]</th>
     <td>
-        MeterValueIDs, die über die API [meters/X/update](meters.mdx#meters_X_values) gesetzt werden können sollen. <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
+        MeterValueIDs, die über die API [meters/X/update](meters.mdx#meters_X_values) gesetzt werden können sollen. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
     </td>
 </tr>
     </tbody>
@@ -927,6 +1644,35 @@ null: Kein Stromzähler konfiguriert.
 
 
 Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](meters.mdx#meters_X_config) konfiguriert wurde.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+null
+```
+
+
+:::
 
 <Tabs className="hidden-tabs" groupId="metersXConfig">
 <TabItem value="0" label="0 - Kein Stromzähler konfiguriert.">
@@ -1029,6 +1775,35 @@ null: Zustand des SunSpec-Stromzählers. Im Moment leer.
 
 
 Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](meters.mdx#meters_X_config) konfiguriert wurde.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/errors
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/errors
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+null
+```
+
+
+:::
 
 <Tabs className="hidden-tabs" groupId="metersXConfig">
 <TabItem value="0" label="0 - Kein Stromzähler konfiguriert.">
@@ -1196,7 +1971,7 @@ null: Fehlerzähler des SunSpec-Stromzählers. Im Moment leer.
 ## `meters/X/reset` {#meters_X_reset_warp2}
 
 
-Setzt alle zurücksetzbaren (Alle Werte deren "kind"-Eintrag "resettable" ist: <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>) Zählerwerte des X. Stromzählers zurück.
+Setzt alle zurücksetzbaren (Alle Werte deren `kind`-Eintrag `resettable` ist: [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)) Zählerwerte des X. Stromzählers zurück.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -1234,6 +2009,35 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/X/reset -m 'null'
 
 
 Der Zeitpunkt des letzten Zähler-Resets (siehe [`meters/X/reset`](meters.mdx#meters_X_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/last_reset
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/last_reset
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "last_reset": 1714728252 }
+```
+Zuletzt zurückgesetzt 2024-05-03T11:24:12+02:00
+
+:::
 
 
 <table>
@@ -1292,6 +2096,11 @@ curl http://$HOST/meters/history
       3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
          0,    0,    0,    0,    0,    0,    0,    0
     ],
+    null,
+    null,
+    null,
+    null,
+    null,
     null
   ]
 }
@@ -1345,6 +2154,45 @@ curl http://$HOST/meters/history
 
 
 Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/history`](meters.mdx#meters_history) generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+```bash
+curl http://$HOST/meters/live
+```
+```jsx
+{
+  "offset": 370,
+  "samples_per_second": 1.99565,
+  "samples": [
+    [
+        2626, 2626, 2626, 2626, 2626, 2626, 2626, 2673,
+        2673, 2673, 2673, 2673, 2673, 2673, 2673, 2677,
+        2677, 2677, 2677, 2677, 2677, 2677, 2677, 2677,
+        2677, 2677, 2677, 2677, 2677, 2677, 2677,  988,
+         988,  988,  988,  988,  988,  988,  988,    3,
+           3,    3,    3,    3,    3,    3,    3,    1,
+           1,    1,    1,    1,    1,    1,    1,    3,
+           3,    3,    3,    3,    3,    3,    3,    3,
+           3,    3,    3,    3,    3,    3,    3,    3,
+           3,    3,    3,    3,    3,    3,    3,    4
+    ],
+    null
+  ]
+}
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1389,7 +2237,103 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
 ## `meters/X/values` {#meters_X_values_warp3}
 
 
-Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meters/X/value_ids`](meters.mdx#meters_X_value_ids) ermittelt werden. Bei einem API-Stromzähler können diese Werte über meters/X/update geschrieben werden
+Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meters/X/value_ids`](meters.mdx#meters_X_value_ids) ermittelt werden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/values
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/values
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  // Index 0
+  217.6941223, 0, 0,
+  30.72553635, 0, 0,
+  6680.515625, 0, 0,
+  6681.138672, 0, 0,
+  // Index 12
+  -90.09844208, 0, 0,
+  1, 0, 0,
+  72.56191254, 10.24184513, 30.72553635,
+  6683.693359, 6680.666016, -90.09844208,
+  // Index 24
+  1, 50, 4644.044922,
+  3.992000103, 0, 0,
+  0, 0, 30.70857239,
+  4648.038086, 197.5639954, 4648.038086,
+  // Index 36
+  4644.044922, 3.992000103
+]
+```
+
+
+:::
+
+
+
+<br/><br/><br/>
+## `meters/X/update` {#meters_X_update_warp3}
+
+
+Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzähler (Union-Tag 4 in der entsprechenden [`meters/X/config`](meters.mdx#meters_X_config)) verwendet werden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/meters/X/update -d '[
+    15.9, 16, 16.1,
+    3657, 3680, 3703
+]'
+```
+Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters/X/update -m '[
+    15.9, 16, 16.1,
+    3657, 3680, 3703
+]'
+```
+Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -1397,7 +2341,64 @@ Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meter
 ## `meters/X/value_ids` {#meters_X_value_ids_warp3}
 
 
-Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [`meters/X/values`](meters.mdx#meters_X_values) an. <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
+Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [`meters/X/values`](meters.mdx#meters_X_values) an. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/value_ids
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/value_ids
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  // Siehe https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv
+  // Index 0
+  1, 2, 3,       // Spannung L1-N, L2-N, L3-N
+  13, 17, 21,    // Strom (Bezug + Einspeisung) L1-N, L2-N, L3-N
+  39, 48, 57,    // Wirkleistung (Bezug - Einspeisung) L1-N, L2-N, L3-N
+  122, 130, 138, // Scheinleistung (Bezug + Einspeisung) L1-N, L2-N, L3-N
+  // Index 12
+  83, 91, 99,    // Blindleistung (induktiv - kapazitiv)  L1-N, L2-N, L3-N
+  353, 354, 355, // Leistungsfaktor (gerichtet; Vorzeichen gibt Richtung des Stromflusses an) L1, L2, L3
+  7,             // Durchschnittliche Phasenspannung
+  29,            // Durchschnitt der (Bezug + Einspeisung)-Phasenströme
+  33,            // Summe der (Bezug + Einspeisung)-Phasenstöme
+  74,            // Summe der (Bezug - Einspeisung)-Phasenwirkleistungen
+  154,           // Summe der (Bezug + Einspeisung)-Phasenscheinleistungen
+  115,           // Summe der (induktiv - kapazitiv)-Phasenblindleistungen
+  // Index 24
+  356,           // Summe der gerichteten Leistungsfaktoren
+  364,           // Netzfrequenz
+  209, 211,      // Wirkenergie (Σ L1, L2, L3, seit Herstellung) Bezug, Einspeisung
+  4, 5, 6, 8,    // Spannung L1-L2; L2-L3; L3-L1; ⌀ L1-L2, L2-L3, L3-L1
+  25,            // Neutralleiterstrom
+  213,           // Wirkenergie (Σ L1, L2, L3, seit Herstellung) Bezug + Einspeisung
+  277,           // Blindenergie (Σ L1, L2, L3, seit Herstellung) induktiv + kapazitiv
+  214,           // Wirkenergie (Σ L1, L2, L3, seit letztem Zurücksetzen) Bezug + Einspeisung
+  // Index 36
+  210,           // Wirkenergie (Σ L1, L2, L3, seit letztem Zurücksetzen) Bezug
+  212            // Wirkenergie (Σ L1, L2, L3, seit letztem Zurücksetzen) Einspeisung
+]
+```
+
+
+:::
 
 
 
@@ -1408,6 +2409,47 @@ Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt di
 
 
 Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+```bash
+curl http://$HOST/meters/X/history
+```
+```jsx
+{
+  "offset": 60927,
+  "samples": [
+      null, null, null, null, null, null, null, null,
+      // 600 weitere null-Werte entfernt
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0, 1736, 6656, 6655, 6666,
+      6680, 6716, 6714, 6625, 6640, 6641, 6595, 6612,
+      6592, 6593, 6589, 6592, 6600, 6625, 6626, 6637,
+      6665, 6636, 6632, 6656, 6616, 6611, 6646, 6670,
+      6691, 6715, 6787, 6754, 6761, 6797, 6771, 6685,
+      6705, 6778, 6703, 6675, 6681, 6721, 6739, 6816,
+      6872, 6858, 6821, 6836, 6784, 6871, 6943, 6930,
+      6968, 6955, 6837, 6800, 6846, 6919, 6881, 6736,
+      6671, 6655, 6674, 6743, 6878, 5733, 4462, 3712,
+      3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
+         0,    0,    0,    0,    0,    0,    0,    0
+  ]
+}
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1447,6 +2489,43 @@ Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher f
 
 
 Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/X/history`](meters.mdx#meters_X_history) generiert.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+```bash
+curl http://$HOST/meters/X/live
+```
+```jsx
+{
+  "offset": 370,
+  "samples_per_second": 1.99565,
+  "samples": [
+    2626, 2626, 2626, 2626, 2626, 2626, 2626, 2673,
+    2673, 2673, 2673, 2673, 2673, 2673, 2673, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677,  988,
+     988,  988,  988,  988,  988,  988,  988,    3,
+       3,    3,    3,    3,    3,    3,    3,    1,
+       1,    1,    1,    1,    1,    1,    1,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    4
+   ]
+}
+```
+Es liegen 80 Werte vor, ~ 2 Werte pro Sekunde wurden erhoben, das Offset des letzten Werts sind 370 ms
+-> Die Messwerte reichen im Moment 40,370 Sekunden in die Vergangenheit.
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1491,6 +2570,62 @@ Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte
 
 
 Die Konfiguration des X. Stromzählers. Das Union-Tag gibt die Zählerklasse an.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meters/X/config
+```
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meters/X/config -d '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+```
+Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/config
+```
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meters/X/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters/X/config_update -m '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+```
+Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+
+        </TabItem>
+    </Tabs>
+:::
 
 <MultilineTabs className="unique-tabs" groupId="metersXConfig">
 <TabItem value="0" label="0 - Kein Stromzähler konfiguriert.">
@@ -1539,7 +2674,7 @@ null: Kein Stromzähler konfiguriert.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`value_ids`<br/>int[..]</th>
     <td>
-        MeterValueIDs, die über die API [meters/X/update](meters.mdx#meters_X_values) gesetzt werden können sollen. <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
+        MeterValueIDs, die über die API [meters/X/update](meters.mdx#meters_X_values) gesetzt werden können sollen. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
     </td>
 </tr>
     </tbody>
@@ -1602,6 +2737,35 @@ null: Kein Stromzähler konfiguriert.
 
 
 Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](meters.mdx#meters_X_config) konfiguriert wurde.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+null
+```
+
+
+:::
 
 <Tabs className="hidden-tabs" groupId="metersXConfig">
 <TabItem value="0" label="0 - Kein Stromzähler konfiguriert.">
@@ -1704,6 +2868,35 @@ null: Zustand des SunSpec-Stromzählers. Im Moment leer.
 
 
 Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](meters.mdx#meters_X_config) konfiguriert wurde.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/errors
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/errors
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+null
+```
+
+
+:::
 
 <Tabs className="hidden-tabs" groupId="metersXConfig">
 <TabItem value="0" label="0 - Kein Stromzähler konfiguriert.">
@@ -1871,7 +3064,7 @@ null: Fehlerzähler des SunSpec-Stromzählers. Im Moment leer.
 ## `meters/X/reset` {#meters_X_reset_warp3}
 
 
-Setzt alle zurücksetzbaren (Alle Werte deren "kind"-Eintrag "resettable" ist: <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>) Zählerwerte des X. Stromzählers zurück.
+Setzt alle zurücksetzbaren (Alle Werte deren `kind`-Eintrag `resettable` ist: [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)) Zählerwerte des X. Stromzählers zurück.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -1909,6 +3102,35 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/X/reset -m 'null'
 
 
 Der Zeitpunkt des letzten Zähler-Resets (siehe [`meters/X/reset`](meters.mdx#meters_X_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/last_reset
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/last_reset
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "last_reset": 1714728252 }
+```
+Zuletzt zurückgesetzt 2024-05-03T11:24:12+02:00
+
+:::
 
 
 <table>
@@ -1967,6 +3189,11 @@ curl http://$HOST/meters/history
       3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
          0,    0,    0,    0,    0,    0,    0,    0
     ],
+    null,
+    null,
+    null,
+    null,
+    null,
     null
   ]
 }
@@ -2020,6 +3247,45 @@ curl http://$HOST/meters/history
 
 
 Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/history`](meters.mdx#meters_history) generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+```bash
+curl http://$HOST/meters/live
+```
+```jsx
+{
+  "offset": 370,
+  "samples_per_second": 1.99565,
+  "samples": [
+    [
+        2626, 2626, 2626, 2626, 2626, 2626, 2626, 2673,
+        2673, 2673, 2673, 2673, 2673, 2673, 2673, 2677,
+        2677, 2677, 2677, 2677, 2677, 2677, 2677, 2677,
+        2677, 2677, 2677, 2677, 2677, 2677, 2677,  988,
+         988,  988,  988,  988,  988,  988,  988,    3,
+           3,    3,    3,    3,    3,    3,    3,    1,
+           1,    1,    1,    1,    1,    1,    1,    3,
+           3,    3,    3,    3,    3,    3,    3,    3,
+           3,    3,    3,    3,    3,    3,    3,    3,
+           3,    3,    3,    3,    3,    3,    3,    4
+    ],
+    null
+  ]
+}
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2064,7 +3330,103 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
 ## `meters/X/values` {#meters_X_values_wem}
 
 
-Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meters/X/value_ids`](meters.mdx#meters_X_value_ids) ermittelt werden. Bei einem API-Stromzähler können diese Werte über meters/X/update geschrieben werden
+Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meters/X/value_ids`](meters.mdx#meters_X_value_ids) ermittelt werden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/values
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/values
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  // Index 0
+  217.6941223, 0, 0,
+  30.72553635, 0, 0,
+  6680.515625, 0, 0,
+  6681.138672, 0, 0,
+  // Index 12
+  -90.09844208, 0, 0,
+  1, 0, 0,
+  72.56191254, 10.24184513, 30.72553635,
+  6683.693359, 6680.666016, -90.09844208,
+  // Index 24
+  1, 50, 4644.044922,
+  3.992000103, 0, 0,
+  0, 0, 30.70857239,
+  4648.038086, 197.5639954, 4648.038086,
+  // Index 36
+  4644.044922, 3.992000103
+]
+```
+
+
+:::
+
+
+
+<br/><br/><br/>
+## `meters/X/update` {#meters_X_update_wem}
+
+
+Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzähler (Union-Tag 4 in der entsprechenden [`meters/X/config`](meters.mdx#meters_X_config)) verwendet werden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/meters/X/update -d '[
+    15.9, 16, 16.1,
+    3657, 3680, 3703
+]'
+```
+Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters/X/update -m '[
+    15.9, 16, 16.1,
+    3657, 3680, 3703
+]'
+```
+Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -2072,7 +3434,64 @@ Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meter
 ## `meters/X/value_ids` {#meters_X_value_ids_wem}
 
 
-Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [`meters/X/values`](meters.mdx#meters_X_values) an. <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
+Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [`meters/X/values`](meters.mdx#meters_X_values) an. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/value_ids
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/value_ids
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  // Siehe https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv
+  // Index 0
+  1, 2, 3,       // Spannung L1-N, L2-N, L3-N
+  13, 17, 21,    // Strom (Bezug + Einspeisung) L1-N, L2-N, L3-N
+  39, 48, 57,    // Wirkleistung (Bezug - Einspeisung) L1-N, L2-N, L3-N
+  122, 130, 138, // Scheinleistung (Bezug + Einspeisung) L1-N, L2-N, L3-N
+  // Index 12
+  83, 91, 99,    // Blindleistung (induktiv - kapazitiv)  L1-N, L2-N, L3-N
+  353, 354, 355, // Leistungsfaktor (gerichtet; Vorzeichen gibt Richtung des Stromflusses an) L1, L2, L3
+  7,             // Durchschnittliche Phasenspannung
+  29,            // Durchschnitt der (Bezug + Einspeisung)-Phasenströme
+  33,            // Summe der (Bezug + Einspeisung)-Phasenstöme
+  74,            // Summe der (Bezug - Einspeisung)-Phasenwirkleistungen
+  154,           // Summe der (Bezug + Einspeisung)-Phasenscheinleistungen
+  115,           // Summe der (induktiv - kapazitiv)-Phasenblindleistungen
+  // Index 24
+  356,           // Summe der gerichteten Leistungsfaktoren
+  364,           // Netzfrequenz
+  209, 211,      // Wirkenergie (Σ L1, L2, L3, seit Herstellung) Bezug, Einspeisung
+  4, 5, 6, 8,    // Spannung L1-L2; L2-L3; L3-L1; ⌀ L1-L2, L2-L3, L3-L1
+  25,            // Neutralleiterstrom
+  213,           // Wirkenergie (Σ L1, L2, L3, seit Herstellung) Bezug + Einspeisung
+  277,           // Blindenergie (Σ L1, L2, L3, seit Herstellung) induktiv + kapazitiv
+  214,           // Wirkenergie (Σ L1, L2, L3, seit letztem Zurücksetzen) Bezug + Einspeisung
+  // Index 36
+  210,           // Wirkenergie (Σ L1, L2, L3, seit letztem Zurücksetzen) Bezug
+  212            // Wirkenergie (Σ L1, L2, L3, seit letztem Zurücksetzen) Einspeisung
+]
+```
+
+
+:::
 
 
 
@@ -2083,6 +3502,47 @@ Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt di
 
 
 Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+```bash
+curl http://$HOST/meters/X/history
+```
+```jsx
+{
+  "offset": 60927,
+  "samples": [
+      null, null, null, null, null, null, null, null,
+      // 600 weitere null-Werte entfernt
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0, 1736, 6656, 6655, 6666,
+      6680, 6716, 6714, 6625, 6640, 6641, 6595, 6612,
+      6592, 6593, 6589, 6592, 6600, 6625, 6626, 6637,
+      6665, 6636, 6632, 6656, 6616, 6611, 6646, 6670,
+      6691, 6715, 6787, 6754, 6761, 6797, 6771, 6685,
+      6705, 6778, 6703, 6675, 6681, 6721, 6739, 6816,
+      6872, 6858, 6821, 6836, 6784, 6871, 6943, 6930,
+      6968, 6955, 6837, 6800, 6846, 6919, 6881, 6736,
+      6671, 6655, 6674, 6743, 6878, 5733, 4462, 3712,
+      3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
+         0,    0,    0,    0,    0,    0,    0,    0
+  ]
+}
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2122,6 +3582,43 @@ Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher f
 
 
 Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/X/history`](meters.mdx#meters_X_history) generiert.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+```bash
+curl http://$HOST/meters/X/live
+```
+```jsx
+{
+  "offset": 370,
+  "samples_per_second": 1.99565,
+  "samples": [
+    2626, 2626, 2626, 2626, 2626, 2626, 2626, 2673,
+    2673, 2673, 2673, 2673, 2673, 2673, 2673, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677,  988,
+     988,  988,  988,  988,  988,  988,  988,    3,
+       3,    3,    3,    3,    3,    3,    3,    1,
+       1,    1,    1,    1,    1,    1,    1,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    4
+   ]
+}
+```
+Es liegen 80 Werte vor, ~ 2 Werte pro Sekunde wurden erhoben, das Offset des letzten Werts sind 370 ms
+-> Die Messwerte reichen im Moment 40,370 Sekunden in die Vergangenheit.
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2166,6 +3663,62 @@ Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte
 
 
 Die Konfiguration des X. Stromzählers. Das Union-Tag gibt die Zählerklasse an.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meters/X/config
+```
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meters/X/config -d '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+```
+Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/config
+```
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meters/X/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters/X/config_update -m '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+```
+Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+
+        </TabItem>
+    </Tabs>
+:::
 
 <MultilineTabs className="unique-tabs" groupId="metersXConfig">
 <TabItem value="0" label="0 - Kein Stromzähler konfiguriert.">
@@ -2214,7 +3767,7 @@ null: Kein Stromzähler konfiguriert.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`value_ids`<br/>int[..]</th>
     <td>
-        MeterValueIDs, die über die API [meters/X/update](meters.mdx#meters_X_values) gesetzt werden können sollen. <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
+        MeterValueIDs, die über die API [meters/X/update](meters.mdx#meters_X_values) gesetzt werden können sollen. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
     </td>
 </tr>
     </tbody>
@@ -2277,6 +3830,35 @@ null: Kein Stromzähler konfiguriert.
 
 
 Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](meters.mdx#meters_X_config) konfiguriert wurde.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+null
+```
+
+
+:::
 
 <Tabs className="hidden-tabs" groupId="metersXConfig">
 <TabItem value="0" label="0 - Kein Stromzähler konfiguriert.">
@@ -2379,6 +3961,35 @@ null: Zustand des SunSpec-Stromzählers. Im Moment leer.
 
 
 Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](meters.mdx#meters_X_config) konfiguriert wurde.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/errors
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/errors
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+null
+```
+
+
+:::
 
 <Tabs className="hidden-tabs" groupId="metersXConfig">
 <TabItem value="0" label="0 - Kein Stromzähler konfiguriert.">
@@ -2546,7 +4157,7 @@ null: Fehlerzähler des SunSpec-Stromzählers. Im Moment leer.
 ## `meters/X/reset` {#meters_X_reset_wem}
 
 
-Setzt alle zurücksetzbaren (Alle Werte deren "kind"-Eintrag "resettable" ist: <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>) Zählerwerte des X. Stromzählers zurück.
+Setzt alle zurücksetzbaren (Alle Werte deren `kind`-Eintrag `resettable` ist: [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)) Zählerwerte des X. Stromzählers zurück.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -2584,6 +4195,35 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/X/reset -m 'null'
 
 
 Der Zeitpunkt des letzten Zähler-Resets (siehe [`meters/X/reset`](meters.mdx#meters_X_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/last_reset
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/last_reset
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "last_reset": 1714728252 }
+```
+Zuletzt zurückgesetzt 2024-05-03T11:24:12+02:00
+
+:::
 
 
 <table>
@@ -2695,6 +4335,50 @@ curl http://$HOST/meters/history
 
 
 Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/history`](meters.mdx#meters_history) generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+```bash
+curl http://$HOST/meters/live
+```
+```jsx
+{
+  "offset": 370,
+  "samples_per_second": 1.99565,
+  "samples": [
+    [
+        2626, 2626, 2626, 2626, 2626, 2626, 2626, 2673,
+        2673, 2673, 2673, 2673, 2673, 2673, 2673, 2677,
+        2677, 2677, 2677, 2677, 2677, 2677, 2677, 2677,
+        2677, 2677, 2677, 2677, 2677, 2677, 2677,  988,
+         988,  988,  988,  988,  988,  988,  988,    3,
+           3,    3,    3,    3,    3,    3,    3,    1,
+           1,    1,    1,    1,    1,    1,    1,    3,
+           3,    3,    3,    3,    3,    3,    3,    3,
+           3,    3,    3,    3,    3,    3,    3,    3,
+           3,    3,    3,    3,    3,    3,    3,    4
+    ],
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ]
+}
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2739,7 +4423,103 @@ Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschn
 ## `meters/X/values` {#meters_X_values_any}
 
 
-Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meters/X/value_ids`](meters.mdx#meters_X_value_ids) ermittelt werden. Bei einem API-Stromzähler können diese Werte über meters/X/update geschrieben werden
+Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meters/X/value_ids`](meters.mdx#meters_X_value_ids) ermittelt werden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/values
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/values
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  // Index 0
+  217.6941223, 0, 0,
+  30.72553635, 0, 0,
+  6680.515625, 0, 0,
+  6681.138672, 0, 0,
+  // Index 12
+  -90.09844208, 0, 0,
+  1, 0, 0,
+  72.56191254, 10.24184513, 30.72553635,
+  6683.693359, 6680.666016, -90.09844208,
+  // Index 24
+  1, 50, 4644.044922,
+  3.992000103, 0, 0,
+  0, 0, 30.70857239,
+  4648.038086, 197.5639954, 4648.038086,
+  // Index 36
+  4644.044922, 3.992000103
+]
+```
+
+
+:::
+
+
+
+<br/><br/><br/>
+## `meters/X/update` {#meters_X_update_any}
+
+
+Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzähler (Union-Tag 4 in der entsprechenden [`meters/X/config`](meters.mdx#meters_X_config)) verwendet werden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/meters/X/update -d '[
+    15.9, 16, 16.1,
+    3657, 3680, 3703
+]'
+```
+Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters/X/update -m '[
+    15.9, 16, 16.1,
+    3657, 3680, 3703
+]'
+```
+Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 
@@ -2747,7 +4527,64 @@ Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meter
 ## `meters/X/value_ids` {#meters_X_value_ids_any}
 
 
-Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [`meters/X/values`](meters.mdx#meters_X_values) an. <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
+Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [`meters/X/values`](meters.mdx#meters_X_values) an. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/value_ids
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/value_ids
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  // Siehe https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv
+  // Index 0
+  1, 2, 3,       // Spannung L1-N, L2-N, L3-N
+  13, 17, 21,    // Strom (Bezug + Einspeisung) L1-N, L2-N, L3-N
+  39, 48, 57,    // Wirkleistung (Bezug - Einspeisung) L1-N, L2-N, L3-N
+  122, 130, 138, // Scheinleistung (Bezug + Einspeisung) L1-N, L2-N, L3-N
+  // Index 12
+  83, 91, 99,    // Blindleistung (induktiv - kapazitiv)  L1-N, L2-N, L3-N
+  353, 354, 355, // Leistungsfaktor (gerichtet; Vorzeichen gibt Richtung des Stromflusses an) L1, L2, L3
+  7,             // Durchschnittliche Phasenspannung
+  29,            // Durchschnitt der (Bezug + Einspeisung)-Phasenströme
+  33,            // Summe der (Bezug + Einspeisung)-Phasenstöme
+  74,            // Summe der (Bezug - Einspeisung)-Phasenwirkleistungen
+  154,           // Summe der (Bezug + Einspeisung)-Phasenscheinleistungen
+  115,           // Summe der (induktiv - kapazitiv)-Phasenblindleistungen
+  // Index 24
+  356,           // Summe der gerichteten Leistungsfaktoren
+  364,           // Netzfrequenz
+  209, 211,      // Wirkenergie (Σ L1, L2, L3, seit Herstellung) Bezug, Einspeisung
+  4, 5, 6, 8,    // Spannung L1-L2; L2-L3; L3-L1; ⌀ L1-L2, L2-L3, L3-L1
+  25,            // Neutralleiterstrom
+  213,           // Wirkenergie (Σ L1, L2, L3, seit Herstellung) Bezug + Einspeisung
+  277,           // Blindenergie (Σ L1, L2, L3, seit Herstellung) induktiv + kapazitiv
+  214,           // Wirkenergie (Σ L1, L2, L3, seit letztem Zurücksetzen) Bezug + Einspeisung
+  // Index 36
+  210,           // Wirkenergie (Σ L1, L2, L3, seit letztem Zurücksetzen) Bezug
+  212            // Wirkenergie (Σ L1, L2, L3, seit letztem Zurücksetzen) Einspeisung
+]
+```
+
+
+:::
 
 
 
@@ -2758,6 +4595,47 @@ Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt di
 
 
 Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+```bash
+curl http://$HOST/meters/X/history
+```
+```jsx
+{
+  "offset": 60927,
+  "samples": [
+      null, null, null, null, null, null, null, null,
+      // 600 weitere null-Werte entfernt
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0, 1736, 6656, 6655, 6666,
+      6680, 6716, 6714, 6625, 6640, 6641, 6595, 6612,
+      6592, 6593, 6589, 6592, 6600, 6625, 6626, 6637,
+      6665, 6636, 6632, 6656, 6616, 6611, 6646, 6670,
+      6691, 6715, 6787, 6754, 6761, 6797, 6771, 6685,
+      6705, 6778, 6703, 6675, 6681, 6721, 6739, 6816,
+      6872, 6858, 6821, 6836, 6784, 6871, 6943, 6930,
+      6968, 6955, 6837, 6800, 6846, 6919, 6881, 6736,
+      6671, 6655, 6674, 6743, 6878, 5733, 4462, 3712,
+      3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
+         0,    0,    0,    0,    0,    0,    0,    0
+  ]
+}
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2797,6 +4675,43 @@ Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher f
 
 
 Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/X/history`](meters.mdx#meters_X_history) generiert.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+```bash
+curl http://$HOST/meters/X/live
+```
+```jsx
+{
+  "offset": 370,
+  "samples_per_second": 1.99565,
+  "samples": [
+    2626, 2626, 2626, 2626, 2626, 2626, 2626, 2673,
+    2673, 2673, 2673, 2673, 2673, 2673, 2673, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677,  988,
+     988,  988,  988,  988,  988,  988,  988,    3,
+       3,    3,    3,    3,    3,    3,    3,    1,
+       1,    1,    1,    1,    1,    1,    1,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    4
+   ]
+}
+```
+Es liegen 80 Werte vor, ~ 2 Werte pro Sekunde wurden erhoben, das Offset des letzten Werts sind 370 ms
+-> Die Messwerte reichen im Moment 40,370 Sekunden in die Vergangenheit.
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2841,6 +4756,62 @@ Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte
 
 
 Die Konfiguration des X. Stromzählers. Das Union-Tag gibt die Zählerklasse an.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meters/X/config
+```
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+
+
+#### Schreiben
+
+```bash
+curl http://$HOST/meters/X/config -d '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+```
+Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/config
+```
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meters/X/config<strong>_update</strong></code>
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters/X/config_update -m '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+```
+Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+
+        </TabItem>
+    </Tabs>
+:::
 
 <MultilineTabs className="unique-tabs" groupId="metersXConfig">
 <TabItem value="0" label="0 - Kein Stromzähler konfiguriert.">
@@ -2946,7 +4917,7 @@ null: Kein Stromzähler konfiguriert.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`value_ids`<br/>int[..]</th>
     <td>
-        MeterValueIDs, die über die API [meters/X/update](meters.mdx#meters_X_values) gesetzt werden können sollen. <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>
+        MeterValueIDs, die über die API [meters/X/update](meters.mdx#meters_X_values) gesetzt werden können sollen. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
     </td>
 </tr>
     </tbody>
@@ -3009,6 +4980,35 @@ null: Kein Stromzähler konfiguriert.
 
 
 Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](meters.mdx#meters_X_config) konfiguriert wurde.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+null
+```
+
+
+:::
 
 <Tabs className="hidden-tabs" groupId="metersXConfig">
 <TabItem value="0" label="0 - Kein Stromzähler konfiguriert.">
@@ -3120,6 +5120,35 @@ null: Zustand des SunSpec-Stromzählers. Im Moment leer.
 
 
 Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](meters.mdx#meters_X_config) konfiguriert wurde.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/errors
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/errors
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+null
+```
+
+
+:::
 
 <Tabs className="hidden-tabs" groupId="metersXConfig">
 <TabItem value="0" label="0 - Kein Stromzähler konfiguriert.">
@@ -3287,7 +5316,7 @@ null: Fehlerzähler des SunSpec-Stromzählers. Im Moment leer.
 ## `meters/X/reset` {#meters_X_reset_any}
 
 
-Setzt alle zurücksetzbaren (Alle Werte deren "kind"-Eintrag "resettable" ist: <a href="https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv">Dokumentation der MeterValueIDs</a>) Zählerwerte des X. Stromzählers zurück.
+Setzt alle zurücksetzbaren (Alle Werte deren `kind`-Eintrag `resettable` ist: [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)) Zählerwerte des X. Stromzählers zurück.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -3325,6 +5354,35 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/X/reset -m 'null'
 
 
 Der Zeitpunkt des letzten Zähler-Resets (siehe [`meters/X/reset`](meters.mdx#meters_X_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/X/last_reset
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/last_reset
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "last_reset": 1714728252 }
+```
+Zuletzt zurückgesetzt 2024-05-03T11:24:12+02:00
+
+:::
 
 
 <table>
@@ -3383,6 +5441,11 @@ curl http://$HOST/meters/history
       3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
          0,    0,    0,    0,    0,    0,    0,    0
     ],
+    null,
+    null,
+    null,
+    null,
+    null,
     null
   ]
 }
@@ -3443,6 +5506,45 @@ curl http://$HOST/meters/history
 
 
 Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/history`](meters.mdx#meters_history) generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+```bash
+curl http://$HOST/meters/live
+```
+```jsx
+{
+  "offset": 370,
+  "samples_per_second": 1.99565,
+  "samples": [
+    [
+        2626, 2626, 2626, 2626, 2626, 2626, 2626, 2673,
+        2673, 2673, 2673, 2673, 2673, 2673, 2673, 2677,
+        2677, 2677, 2677, 2677, 2677, 2677, 2677, 2677,
+        2677, 2677, 2677, 2677, 2677, 2677, 2677,  988,
+         988,  988,  988,  988,  988,  988,  988,    3,
+           3,    3,    3,    3,    3,    3,    3,    1,
+           1,    1,    1,    1,    1,    1,    1,    3,
+           3,    3,    3,    3,    3,    3,    3,    3,
+           3,    3,    3,    3,    3,    3,    3,    3,
+           3,    3,    3,    3,    3,    3,    3,    4
+    ],
+    null
+  ]
+}
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -3496,6 +5598,11 @@ export const toc = [
     {
     "value": "meters/X/values",
     "id": "meters_X_values",
+    "level": 2,
+    
+},{
+    "value": "meters/X/update",
+    "id": "meters_X_update",
     "level": 2,
     
 },{
