@@ -5,6 +5,12 @@ import React from "react";
 // ----------------------------------------------------------------------------
 export const meters = [
   {
+    name: "Color Control GX",
+    manufacturer: "Victron Energy",
+    protocol: "Modbus/TCP",
+    note: "Support für Victron Energy kommt in Kürze",
+  },
+  {
     name: "DEM4A",
     manufacturer: "YTL",
     protocol: "Modbus/RTU",
@@ -21,6 +27,18 @@ export const meters = [
     manufacturer: "SMA",
     protocol: "Speedwire",
     note: "",
+  },
+  {
+    name: "Hybrid Wechselrichter",
+    manufacturer: "Deye",
+    protocol: "Modbus/TCP",
+    note: "Support für Deye kommt in Kürze",
+  },
+  {
+    name: "Hybrid Wechselrichter (SH Serie)",
+    manufacturer: "Sungrow",
+    protocol: "Modbus/TCP",
+    note: "Support für Sungrow kommt in Kürze",
   },
   {
     name: "KSEM G2",
@@ -50,7 +68,7 @@ export const meters = [
     name: "Shelly TBD",
     manufacturer: "Shelly",
     protocol: "HTTP",
-    note: "Support für Shelly Coming Soon",
+    note: "Support für Shelly kommt in Kürze",
   },
   {
     name: "Smart Meter LAN 2.0",
@@ -59,10 +77,10 @@ export const meters = [
     note: "",
   },
   {
-    name: "TODO",
+    name: "String Wechselrichter (SG Serie)",
     manufacturer: "Sungrow",
     protocol: "Modbus/TCP",
-    note: "",
+    note: "Support für Sungrow kommt in Kürze",
   },
   {
     name: "Sunny Boy 2.5",
