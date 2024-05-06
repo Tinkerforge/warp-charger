@@ -46,7 +46,7 @@ Damit die geänderte Konfiguration verwendet wird, musst du Mosquitto danach mit
 
 Im Webinterface des WARP Chargers kannst du jetzt die Verbindung zum MQTT-Broker konfigurieren. Hierzu musst du unter `Schnittstellen -> MQTT` die Verbindung aktivieren und den Host eintragen (`raspberrypi` falls du ihn nicht geändert hast). Alternativ kannst du die IP-Adresse des Pis verwenden. Diese kannst du in der Konsole mit `ip -brief a` auslesen: unter eth0 die der LAN-Verbindung, oder unter wlan0 die der WLAN-Verbindung. Danach kannst du die Konfigurationsänderung durch Klicken auf Speichern anwenden. Das Webinterface startet dann neu.
 
-Um zu Testen, ob die Verbindung zum MQTT-Broker funktioniert, kannst du zunächst die Status-Seite des Webinterfaces prüfen. Der Status der MQTT-Verbindung sollte auf Verbunden stehen. Falls das nicht der Fall ist, kannst du im Ereignislog nachsehen, was das Problem ist. Als weiteren Test kannst du in der Konsole des Pis die empfangenen Nachrichten mitlesen: `mosquitto_sub -v -t 'warp/#'` bzw. bei einem WARP2 Charger `mosquitto_sub -v -t 'warp2/#'` liefert empfangene Nachrichten aller Wallboxen, die mit dem Broker verbunden sind.
+Um zu Testen, ob die Verbindung zum MQTT-Broker funktioniert, kannst du zunächst die Status-Seite des Webinterfaces prüfen. Der Status der MQTT-Verbindung sollte auf Verbunden stehen. Falls das nicht der Fall ist, kannst du im Ereignislog nachsehen, was das Problem ist. Als weiteren Test kannst du in der Konsole des Pis die empfangenen Nachrichten mitlesen: `mosquitto_sub -v -t 'warp/#'` bzw. bei einem WARP2 Charger `mosquitto_sub -v -t 'warp2/#'` und bei einem WARP3 Charger `mosquitto_sub -v -t 'warp3/#'` liefert empfangene Nachrichten aller Wallboxen, die mit dem Broker verbunden sind.
 
 Damit EVCC später den WARP Charger steuern darf, musst du unter `Wallbox -> Ladeeinstellungen` die externe Steuerung erlauben.
 
@@ -73,7 +73,7 @@ Die Installation und Konfiguration von EVCC auf einem Raspberry Pi wird in der [
 Bei der Ausführung von `evcc configure` kannst du als Wallbox `TinkerForge WARP Charger Smart` bzw. `TinkerForge WARP Charger Pro` auswählen und folgende Hinweise beachten:
 
 *   Als IP-Adresse oder Hostname musst du **nicht** den entsprechenden Wert der Wallbox, sondern den in vorherigen Abschnitt konfigurierten Broker-Hostname oder dessen IP-Adresse eintragen.
-*   Das Topic ist der in der MQTT-Konfiguration gesetzte Topic-Präfix, z.B. warp/ABC. Mit diesem beginnt das Topic jeder Nachricht, die du mit `mosquitto_sub -v -t 'warp/#'` bzw. `mosquitto_sub -v -t 'warp2/#'` sehen kannst.
+*   Das Topic ist der in der MQTT-Konfiguration gesetzte Topic-Präfix, z.B. warp/ABC. Mit diesem beginnt das Topic jeder Nachricht, die du mit `mosquitto_sub -v -t 'warp/#'` oder `mosquitto_sub -v -t 'warp2/#'` oder `mosquitto_sub -v -t 'warp3/#'` sehen kannst.
 *   Wenn du wie oben beschrieben einen WARP Energy Manager zur Phasenumschaltung verwenden möchtest, musst du den MQTT-Topic-Präfix des Energy Managers (z.B. wem/XYZ) angeben, wenn `evcc configure` nach energymanager fragt.
 
 ### Simulation von Stromzählern
