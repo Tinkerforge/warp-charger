@@ -23,6 +23,12 @@ export const meters = [
     note: "Nur über WARP Energy Manager",
   },
   {
+    name: "Energy Meter 2.0",
+    manufacturer: "SMA",
+    protocol: "Speedwire",
+    note: "",
+  },
+  {
     name: "Hybrid Wechselrichter",
     manufacturer: "Deye",
     protocol: "Modbus/TCP",
@@ -33,18 +39,6 @@ export const meters = [
     manufacturer: "Sungrow",
     protocol: "Modbus/TCP",
     note: "Support für Sungrow kommt in Kürze",
-  },
-  {
-    name: "KSEM G2",
-    manufacturer: "Kostal",
-    protocol: "SunSpec",
-    note: "Smart Energy Meter",
-  },
-  {
-    name: "SDM72V2",
-    manufacturer: "Eastron",
-    protocol: "Modbus/RTU",
-    note: "Nur über WARP Energy Manager",
   },
   {
     name: "SDM630",
@@ -59,10 +53,22 @@ export const meters = [
     note: "Nur über WARP Energy Manager",
   },
   {
+    name: "SDM72V2",
+    manufacturer: "Eastron",
+    protocol: "Modbus/RTU",
+    note: "Nur über WARP Energy Manager",
+  },
+  {
     name: "Shelly TBD",
     manufacturer: "Shelly",
     protocol: "HTTP",
     note: "Support für Shelly kommt in Kürze",
+  },
+  {
+    name: "Smart Energy Meter (KSEM G2)",
+    manufacturer: "Kostal",
+    protocol: "SunSpec",
+    note: "",
   },
   {
     name: "Smart Meter LAN 2.0",
@@ -90,12 +96,6 @@ export const meters = [
   },
   {
     name: "Sunny Home Manager 1.0/2.0",
-    manufacturer: "SMA",
-    protocol: "Speedwire",
-    note: "",
-  },
-  {
-    name: "Energy Meter 2.0",
     manufacturer: "SMA",
     protocol: "Speedwire",
     note: "",
