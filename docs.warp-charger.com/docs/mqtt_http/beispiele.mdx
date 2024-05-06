@@ -1,0 +1,251 @@
+---
+sidebar_position: 2
+---
+
+import MultilineTabs from '@site/src/components/MultilineTabs';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
+
+# Beispiele
+
+## Steuern des Ladevorgangs eines WARP Chargers
+
+Der Ladevorgang kann mit folgenden APIs gesteuert werden:
+
+- [`evse/start_charging`](api_referenz/evse#evse_start_charging) startet einen Ladevorgang. Ein Ladevorgang startet automatisch, es sei denn die manuelle Ladefreigabe (unter Wallbox -> Einstellungen bzw. [`evse/auto_start_charging`](api_referenz/evse#evse_auto_start_charging)) ist aktiviert.
+- [`evse/stop_charging`](api_referenz/evse#evse_stop_charging) stoppt einen Ladevorgang. Ein gestoppter Ladevorgang kann mit [`evse/start_charging`](api_referenz/evse#evse_start_charging) wieder aktiviert werden.
+- [`evse/external_current`](api_referenz/evse#evse_external_current) setzt ein Ladestromlimit. Dafür muss die externe Steuerung (unter Wallbox -> Einstellungen bzw. [`evse/external_enabled`](api_referenz/evse#evse_external_enabled))  aktiviert werden.
+
+:::tip
+
+Ein Ladevorgang kann auch aus anderen Gründen gestoppt bzw. blockiert sein, beispielsweise weil das Lastmanagement, die NFC-Freigabe oder OCPP blockieren. Details siehe TODO LINK LADESLOTS
+
+:::
+
+
+### Starten eines Ladevorgangs
+
+:::info[Beispiel]
+<Tabs groupId="exampleApiType" queryString>
+    <TabItem value="http" label="HTTP (curl)">
+        ```bash
+        # $HOST z.B. warp-AbCd
+        ```
+        ```bash
+        curl http://$HOST/evse/start_charging -d 'null'
+        ```
+
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition>
+        ```bash
+        # $BROKER z.B. my_mosquitto.localdomain
+        # $PREFIX z.B. warp/AbCd
+        ```
+        ```bash
+        mosquitto_pub -h $BROKER -t $PREFIX/evse/start_charging -m 'null'
+        ```
+    </TabItem>
+</Tabs>
+:::
+
+### Stoppen eines Ladevorgangs
+
+:::info[Beispiel]
+<Tabs groupId="exampleApiType" queryString>
+    <TabItem value="http" label="HTTP (curl)">
+        ```bash
+        # $HOST z.B. warp-AbCd
+        ```
+        ```bash
+        curl http://$HOST/evse/stop_charging -d 'null'
+        ```
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition>
+        ```bash
+        # $BROKER z.B. my_mosquitto.localdomain
+        # $PREFIX z.B. warp/AbCd
+        ```
+        ```bash
+        mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
+        ```
+    </TabItem>
+</Tabs>
+:::
+
+### Lesen/Schreiben des Ladestromlimits
+
+:::tip
+
+Eine Ladestromgrenze kann auch über [`evse/global_current`](api_referenz/evse#evse_global_current) gesetzt werden.
+Diese Grenze wird allerdings im Flash des Ladecontrollers gespeichert.
+Bei häufigem Setzen der Ladestromgrenze sollte (um den Flash des Ladecontrollers) zu schonen, deshalb [`evse/external_current`](api_referenz/evse#evse_external_current) verwendet werden.
+
+:::
+
+:::info[Beispiel]
+<Tabs groupId="exampleApiType" queryString>
+    <TabItem value="http" label="HTTP (curl)">
+        ```bash
+        # $HOST z.B. warp-AbCd
+        ```
+
+        #### Lesen
+        ```bash
+        curl http://$HOST/evse/external_current
+        ```
+        ```jsx
+        { "current": 16000 }
+        ```
+
+        #### Schreiben
+        ```bash
+        curl http://$HOST/evse/external_current -d '{ "current": 16000 }'
+        ```
+
+        oder abgekürzt:
+
+        ```bash
+        curl http://$HOST/evse/external_current -d '16000'
+        ```
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        ```bash
+        # $BROKER z.B. my_mosquitto.localdomain
+        # $PREFIX z.B. warp/AbCd
+        ```
+
+        #### Lesen
+        ```bash
+        mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/external_current
+        ```
+        ```jsx
+        { "current": 16000 }
+        ```
+
+        #### Schreiben
+        Mit MQTT auf <code>$PREFIX/evse/external_current<strong>_update</strong></code>
+
+        ```bash
+        mosquitto_pub -h $BROKER -t $PREFIX/evse/external_current_update -m '{ "current": 16000 }'
+        ```
+
+        oder abgekürzt:
+
+        ```bash
+        mosquitto_pub -h $BROKER -t $PREFIX/evse/external_current_update -m '16000'
+        ```
+    </TabItem>
+</Tabs>
+:::
+
+## Vortäuschen eines NFC-Tags
+
+Über die API kann einem WARP Charger vorgetäuscht werden, dass ein NFC-Tag erkannt wurde. Es können sowohl Nutzern zugeordnete, als auch unbekannte Tags (die beispielsweise in einer Automatisierungs-Regel verwendet werden) vorgetäuscht werden.
+
+Mit folgenden APIs kann ein Tag vorgetäuscht werden:
+
+- [`nfc/inject_tag_start`](api_referenz/nfc#nfc_inject_tag_start) Täuscht ein NFC-Tag vor. Das Tag kann einen Ladevorgang starten, wenn es bekannt und einem Nutzer zugeordnet ist. Falls bereits ein Ladevorgang läuft wird dieses Tag ignoriert.
+- [`nfc/inject_tag_stop`](api_referenz/nfc#nfc_inject_tag_stop) Täuscht ein NFC-Tag vor. Das Tag kann einen Ladevorgang stoppen, wenn es bekannt und einem Nutzer zugeordnet ist. Falls kein Ladevorgang läuft wird dieses Tag ignoriert.
+- [`nfc/inject_tag`](api_referenz/nfc#nfc_inject_tag) Täuscht ein NFC-Tag vor, das einen Ladevorgang sowohl starten, als auch stoppen kann, wenn es bekannt und einem Nutzer zugeordnet ist.
+
+Allen drei APIs muss der Typ, sowie die ID das Tags übergeben werden.
+
+:::info[Beispiel]
+<Tabs groupId="exampleApiType" queryString>
+    <TabItem value="http" label="HTTP (curl)">
+        ```bash
+        # $HOST z.B. warp-AbCd
+        ```
+        ```bash
+        curl http://$HOST/nfc/inject_tag -d '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+        ```
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition>
+        ```bash
+        # $BROKER z.B. my_mosquitto.localdomain
+        # $PREFIX z.B. warp/AbCd
+        ```
+        ```bash
+        mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag -m '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+        ```
+    </TabItem>
+</Tabs>
+:::
+
+## API-Zähler für PV-Überschuss
+
+Damit ein Stromzähler für das PV-Überschussladen verwendet werden kann, muss er die Wirkleistung am Hausanschluss messen.
+Damit der Regler schnell auf vorhandenen PV-Überschuss reagieren kann, sollten die Messwerte ungefähr sekündlich aktualisiert werden.
+
+### Anlegen des API-Zählers
+
+Ein API-Zähler kann wie folgt konfiguriert werden:
+
+1. Auf der Stromzählerunterseite einen neuen Stromzähler anlegen
+   ![Stromzählerunterseite](/img/mqtt/api_meter_1.png)
+2. Stromzählerklasse `API` und Anzeigename eingeben, dann Wert hinzufügen
+   ![Stromzählerunterseite](/img/mqtt/api_meter_2.png)
+3. Als Wert die Wirkleistung (Summe aller Phasen) Bezug minus Einspeisung auswählen
+   ![Stromzählerunterseite](/img/mqtt/api_meter_3.png)
+
+Alternativ kann der API-Zähler per API konfiguriert werden:
+
+:::info[Beispiel]
+<Tabs groupId="exampleApiType" queryString>
+    <TabItem value="http" label="HTTP (curl)">
+        ```bash
+        # $HOST z.B. warp-AbCd
+        ```
+        ```bash
+        curl http://$HOST/meters/1/config -d '[4,{"display_name":"Hausanschluss","value_ids":[74]}]'
+        ```
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        ```bash
+        # $BROKER z.B. my_mosquitto.localdomain
+        # $PREFIX z.B. warp/AbCd
+        ```
+        ```bash
+        mosquitto_pub -h $BROKER -t $PREFIX/meters/1/config -m '[4,{"display_name":"Hausanschluss","value_ids":[74]}]'
+        ```
+    </TabItem>
+</Tabs>
+:::
+
+### Konfiguration des PV-Überschussladens
+
+Damit der neue API-Zähler für das PV-Überschussladen verwendet wird, muss er in dessen Einstellungen ausgewählt werden:
+![Einstellungen des PV-Überschussladens](/img/mqtt/api_meter_4.png)
+
+### Schreiben der Messwerte per API
+
+Der PV-Überschuss am Hausanschluss kann jetzt über die API gemeldet werden.
+Positive Werte sind hierbei ein Bezug, d.h. das Haus bezieht Strom aus dem Netz.
+Negative Werte sind eine Einspeisung ins Stromnetz.
+Falls ein PV-Überschuss von 2030,5 Watt besteht kann dieser wie folgt gemeldet werden:
+
+:::info[Beispiel]
+<Tabs groupId="exampleApiType" queryString>
+    <TabItem value="http" label="HTTP (curl)">
+        ```bash
+        # $HOST z.B. warp-AbCd
+        ```
+        ```bash
+        curl http://$HOST/meters/1/update -d '[-2030.5]'
+        ```
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        ```bash
+        # $BROKER z.B. my_mosquitto.localdomain
+        # $PREFIX z.B. warp/AbCd
+        ```
+        ```bash
+        mosquitto_pub -h $BROKER -t $PREFIX/meters/1/update -m '[-2030.5]'
+        ```
+    </TabItem>
+</Tabs>
+:::

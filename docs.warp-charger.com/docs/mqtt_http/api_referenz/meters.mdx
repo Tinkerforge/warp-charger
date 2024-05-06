@@ -48,7 +48,7 @@ Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meter
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/values
+curl http://$HOST/meters/1/values
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -58,7 +58,7 @@ curl http://$HOST/meters/X/values
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/values
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/values
 ```
         </TabItem>
     </Tabs>
@@ -103,7 +103,7 @@ Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzä
 ```
 #### Schreiben
 ```bash
-curl http://$HOST/meters/X/update -d '[
+curl http://$HOST/meters/1/update -d '[
     15.9, 16, 16.1,
     3657, 3680, 3703
 ]'
@@ -123,7 +123,7 @@ Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) fü
 ```
 #### Schreiben
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/meters/X/update -m '[
+mosquitto_pub -h $BROKER -t $PREFIX/meters/1/update -m '[
     15.9, 16, 16.1,
     3657, 3680, 3703
 ]'
@@ -154,7 +154,7 @@ Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt di
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/value_ids
+curl http://$HOST/meters/1/value_ids
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -164,7 +164,7 @@ curl http://$HOST/meters/X/value_ids
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/value_ids
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/value_ids
 ```
         </TabItem>
     </Tabs>
@@ -219,7 +219,7 @@ Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher f
 # $HOST z.B. warp-AbCd
 ```
 ```bash
-curl http://$HOST/meters/X/history
+curl http://$HOST/meters/1/history
 ```
 ```jsx
 {
@@ -299,7 +299,7 @@ Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte
 # $HOST z.B. warp-AbCd
 ```
 ```bash
-curl http://$HOST/meters/X/live
+curl http://$HOST/meters/1/live
 ```
 ```jsx
 {
@@ -382,22 +382,26 @@ Die Konfiguration des X. Stromzählers. Das Union-Tag gibt die Zählerklasse an.
 
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/config
+curl http://$HOST/meters/1/config
 ```
 ```jsx
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
-Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
 
 
 #### Schreiben
 ```bash
-curl http://$HOST/meters/X/config -d '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+curl http://$HOST/meters/1/config -d '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
 ```
 
-Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -408,25 +412,29 @@ der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung)
 
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/config
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/config
 ```
 ```jsx
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
-Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
 
 
 #### Schreiben
-            Mit MQTT auf <code>$PREFIX/meters/X/config<strong>_update</strong></code>
+            Mit MQTT auf <code>$PREFIX/meters/1/config<strong>_update</strong></code>
 
 
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/meters/X/config_update -m '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+mosquitto_pub -h $BROKER -t $PREFIX/meters/1/config_update -m '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
 ```
 
-Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
 
         </TabItem>
     </Tabs>
@@ -562,7 +570,7 @@ Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Strom
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/state
+curl http://$HOST/meters/1/state
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -572,7 +580,7 @@ curl http://$HOST/meters/X/state
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/state
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/state
 ```
         </TabItem>
     </Tabs>
@@ -693,7 +701,7 @@ Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hän
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/errors
+curl http://$HOST/meters/1/errors
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -703,7 +711,7 @@ curl http://$HOST/meters/X/errors
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/errors
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/errors
 ```
         </TabItem>
     </Tabs>
@@ -892,7 +900,7 @@ Setzt alle zurücksetzbaren (Alle Werte deren `kind`-Eintrag `resettable` ist: [
 ```
 #### Schreiben
 ```bash
-curl http://$HOST/meters/X/reset -d 'null'
+curl http://$HOST/meters/1/reset -d 'null'
 ```
 
 
@@ -905,7 +913,7 @@ curl http://$HOST/meters/X/reset -d 'null'
 ```
 #### Schreiben
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/meters/X/reset -m 'null'
+mosquitto_pub -h $BROKER -t $PREFIX/meters/1/reset -m 'null'
 ```
 
 
@@ -929,7 +937,7 @@ Der Zeitpunkt des letzten Zähler-Resets (siehe [`meters/X/reset`](meters.mdx#me
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/last_reset
+curl http://$HOST/meters/1/last_reset
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -939,7 +947,7 @@ curl http://$HOST/meters/X/last_reset
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/last_reset
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/last_reset
 ```
         </TabItem>
     </Tabs>
@@ -1158,7 +1166,7 @@ Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meter
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/values
+curl http://$HOST/meters/1/values
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -1168,7 +1176,7 @@ curl http://$HOST/meters/X/values
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/values
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/values
 ```
         </TabItem>
     </Tabs>
@@ -1213,7 +1221,7 @@ Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzä
 ```
 #### Schreiben
 ```bash
-curl http://$HOST/meters/X/update -d '[
+curl http://$HOST/meters/1/update -d '[
     15.9, 16, 16.1,
     3657, 3680, 3703
 ]'
@@ -1233,7 +1241,7 @@ Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) fü
 ```
 #### Schreiben
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/meters/X/update -m '[
+mosquitto_pub -h $BROKER -t $PREFIX/meters/1/update -m '[
     15.9, 16, 16.1,
     3657, 3680, 3703
 ]'
@@ -1264,7 +1272,7 @@ Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt di
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/value_ids
+curl http://$HOST/meters/1/value_ids
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -1274,7 +1282,7 @@ curl http://$HOST/meters/X/value_ids
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/value_ids
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/value_ids
 ```
         </TabItem>
     </Tabs>
@@ -1329,7 +1337,7 @@ Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher f
 # $HOST z.B. warp2-AbCd
 ```
 ```bash
-curl http://$HOST/meters/X/history
+curl http://$HOST/meters/1/history
 ```
 ```jsx
 {
@@ -1409,7 +1417,7 @@ Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte
 # $HOST z.B. warp2-AbCd
 ```
 ```bash
-curl http://$HOST/meters/X/live
+curl http://$HOST/meters/1/live
 ```
 ```jsx
 {
@@ -1492,22 +1500,26 @@ Die Konfiguration des X. Stromzählers. Das Union-Tag gibt die Zählerklasse an.
 
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/config
+curl http://$HOST/meters/1/config
 ```
 ```jsx
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
-Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
 
 
 #### Schreiben
 ```bash
-curl http://$HOST/meters/X/config -d '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+curl http://$HOST/meters/1/config -d '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
 ```
 
-Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -1518,25 +1530,29 @@ der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung)
 
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/config
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/config
 ```
 ```jsx
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
-Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
 
 
 #### Schreiben
-            Mit MQTT auf <code>$PREFIX/meters/X/config<strong>_update</strong></code>
+            Mit MQTT auf <code>$PREFIX/meters/1/config<strong>_update</strong></code>
 
 
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/meters/X/config_update -m '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+mosquitto_pub -h $BROKER -t $PREFIX/meters/1/config_update -m '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
 ```
 
-Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
 
         </TabItem>
     </Tabs>
@@ -1660,7 +1676,7 @@ Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Strom
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/state
+curl http://$HOST/meters/1/state
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -1670,7 +1686,7 @@ curl http://$HOST/meters/X/state
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/state
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/state
 ```
         </TabItem>
     </Tabs>
@@ -1791,7 +1807,7 @@ Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hän
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/errors
+curl http://$HOST/meters/1/errors
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -1801,7 +1817,7 @@ curl http://$HOST/meters/X/errors
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/errors
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/errors
 ```
         </TabItem>
     </Tabs>
@@ -1990,7 +2006,7 @@ Setzt alle zurücksetzbaren (Alle Werte deren `kind`-Eintrag `resettable` ist: [
 ```
 #### Schreiben
 ```bash
-curl http://$HOST/meters/X/reset -d 'null'
+curl http://$HOST/meters/1/reset -d 'null'
 ```
 
 
@@ -2003,7 +2019,7 @@ curl http://$HOST/meters/X/reset -d 'null'
 ```
 #### Schreiben
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/meters/X/reset -m 'null'
+mosquitto_pub -h $BROKER -t $PREFIX/meters/1/reset -m 'null'
 ```
 
 
@@ -2027,7 +2043,7 @@ Der Zeitpunkt des letzten Zähler-Resets (siehe [`meters/X/reset`](meters.mdx#me
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/last_reset
+curl http://$HOST/meters/1/last_reset
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -2037,7 +2053,7 @@ curl http://$HOST/meters/X/last_reset
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/last_reset
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/last_reset
 ```
         </TabItem>
     </Tabs>
@@ -2256,7 +2272,7 @@ Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meter
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/values
+curl http://$HOST/meters/1/values
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -2266,7 +2282,7 @@ curl http://$HOST/meters/X/values
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/values
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/values
 ```
         </TabItem>
     </Tabs>
@@ -2311,7 +2327,7 @@ Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzä
 ```
 #### Schreiben
 ```bash
-curl http://$HOST/meters/X/update -d '[
+curl http://$HOST/meters/1/update -d '[
     15.9, 16, 16.1,
     3657, 3680, 3703
 ]'
@@ -2331,7 +2347,7 @@ Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) fü
 ```
 #### Schreiben
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/meters/X/update -m '[
+mosquitto_pub -h $BROKER -t $PREFIX/meters/1/update -m '[
     15.9, 16, 16.1,
     3657, 3680, 3703
 ]'
@@ -2362,7 +2378,7 @@ Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt di
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/value_ids
+curl http://$HOST/meters/1/value_ids
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -2372,7 +2388,7 @@ curl http://$HOST/meters/X/value_ids
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/value_ids
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/value_ids
 ```
         </TabItem>
     </Tabs>
@@ -2427,7 +2443,7 @@ Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher f
 # $HOST z.B. warp3-AbCd
 ```
 ```bash
-curl http://$HOST/meters/X/history
+curl http://$HOST/meters/1/history
 ```
 ```jsx
 {
@@ -2507,7 +2523,7 @@ Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte
 # $HOST z.B. warp3-AbCd
 ```
 ```bash
-curl http://$HOST/meters/X/live
+curl http://$HOST/meters/1/live
 ```
 ```jsx
 {
@@ -2590,22 +2606,26 @@ Die Konfiguration des X. Stromzählers. Das Union-Tag gibt die Zählerklasse an.
 
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/config
+curl http://$HOST/meters/1/config
 ```
 ```jsx
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
-Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
 
 
 #### Schreiben
 ```bash
-curl http://$HOST/meters/X/config -d '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+curl http://$HOST/meters/1/config -d '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
 ```
 
-Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -2616,25 +2636,29 @@ der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung)
 
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/config
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/config
 ```
 ```jsx
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
-Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
 
 
 #### Schreiben
-            Mit MQTT auf <code>$PREFIX/meters/X/config<strong>_update</strong></code>
+            Mit MQTT auf <code>$PREFIX/meters/1/config<strong>_update</strong></code>
 
 
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/meters/X/config_update -m '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+mosquitto_pub -h $BROKER -t $PREFIX/meters/1/config_update -m '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
 ```
 
-Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
 
         </TabItem>
     </Tabs>
@@ -2758,7 +2782,7 @@ Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Strom
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/state
+curl http://$HOST/meters/1/state
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -2768,7 +2792,7 @@ curl http://$HOST/meters/X/state
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/state
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/state
 ```
         </TabItem>
     </Tabs>
@@ -2889,7 +2913,7 @@ Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hän
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/errors
+curl http://$HOST/meters/1/errors
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -2899,7 +2923,7 @@ curl http://$HOST/meters/X/errors
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/errors
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/errors
 ```
         </TabItem>
     </Tabs>
@@ -3088,7 +3112,7 @@ Setzt alle zurücksetzbaren (Alle Werte deren `kind`-Eintrag `resettable` ist: [
 ```
 #### Schreiben
 ```bash
-curl http://$HOST/meters/X/reset -d 'null'
+curl http://$HOST/meters/1/reset -d 'null'
 ```
 
 
@@ -3101,7 +3125,7 @@ curl http://$HOST/meters/X/reset -d 'null'
 ```
 #### Schreiben
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/meters/X/reset -m 'null'
+mosquitto_pub -h $BROKER -t $PREFIX/meters/1/reset -m 'null'
 ```
 
 
@@ -3125,7 +3149,7 @@ Der Zeitpunkt des letzten Zähler-Resets (siehe [`meters/X/reset`](meters.mdx#me
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/last_reset
+curl http://$HOST/meters/1/last_reset
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -3135,7 +3159,7 @@ curl http://$HOST/meters/X/last_reset
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/last_reset
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/last_reset
 ```
         </TabItem>
     </Tabs>
@@ -3354,7 +3378,7 @@ Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meter
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/values
+curl http://$HOST/meters/1/values
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -3364,7 +3388,7 @@ curl http://$HOST/meters/X/values
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/values
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/values
 ```
         </TabItem>
     </Tabs>
@@ -3409,7 +3433,7 @@ Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzä
 ```
 #### Schreiben
 ```bash
-curl http://$HOST/meters/X/update -d '[
+curl http://$HOST/meters/1/update -d '[
     15.9, 16, 16.1,
     3657, 3680, 3703
 ]'
@@ -3429,7 +3453,7 @@ Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) fü
 ```
 #### Schreiben
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/meters/X/update -m '[
+mosquitto_pub -h $BROKER -t $PREFIX/meters/1/update -m '[
     15.9, 16, 16.1,
     3657, 3680, 3703
 ]'
@@ -3460,7 +3484,7 @@ Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt di
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/value_ids
+curl http://$HOST/meters/1/value_ids
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -3470,7 +3494,7 @@ curl http://$HOST/meters/X/value_ids
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/value_ids
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/value_ids
 ```
         </TabItem>
     </Tabs>
@@ -3525,7 +3549,7 @@ Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher f
 # $HOST z.B. wem-AbCd
 ```
 ```bash
-curl http://$HOST/meters/X/history
+curl http://$HOST/meters/1/history
 ```
 ```jsx
 {
@@ -3605,7 +3629,7 @@ Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte
 # $HOST z.B. wem-AbCd
 ```
 ```bash
-curl http://$HOST/meters/X/live
+curl http://$HOST/meters/1/live
 ```
 ```jsx
 {
@@ -3688,22 +3712,26 @@ Die Konfiguration des X. Stromzählers. Das Union-Tag gibt die Zählerklasse an.
 
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/config
+curl http://$HOST/meters/1/config
 ```
 ```jsx
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
-Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
 
 
 #### Schreiben
 ```bash
-curl http://$HOST/meters/X/config -d '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+curl http://$HOST/meters/1/config -d '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
 ```
 
-Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -3714,25 +3742,29 @@ der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung)
 
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/config
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/config
 ```
 ```jsx
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
-Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
 
 
 #### Schreiben
-            Mit MQTT auf <code>$PREFIX/meters/X/config<strong>_update</strong></code>
+            Mit MQTT auf <code>$PREFIX/meters/1/config<strong>_update</strong></code>
 
 
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/meters/X/config_update -m '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+mosquitto_pub -h $BROKER -t $PREFIX/meters/1/config_update -m '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
 ```
 
-Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
 
         </TabItem>
     </Tabs>
@@ -3856,7 +3888,7 @@ Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Strom
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/state
+curl http://$HOST/meters/1/state
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -3866,7 +3898,7 @@ curl http://$HOST/meters/X/state
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/state
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/state
 ```
         </TabItem>
     </Tabs>
@@ -3987,7 +4019,7 @@ Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hän
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/errors
+curl http://$HOST/meters/1/errors
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -3997,7 +4029,7 @@ curl http://$HOST/meters/X/errors
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/errors
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/errors
 ```
         </TabItem>
     </Tabs>
@@ -4186,7 +4218,7 @@ Setzt alle zurücksetzbaren (Alle Werte deren `kind`-Eintrag `resettable` ist: [
 ```
 #### Schreiben
 ```bash
-curl http://$HOST/meters/X/reset -d 'null'
+curl http://$HOST/meters/1/reset -d 'null'
 ```
 
 
@@ -4199,7 +4231,7 @@ curl http://$HOST/meters/X/reset -d 'null'
 ```
 #### Schreiben
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/meters/X/reset -m 'null'
+mosquitto_pub -h $BROKER -t $PREFIX/meters/1/reset -m 'null'
 ```
 
 
@@ -4223,7 +4255,7 @@ Der Zeitpunkt des letzten Zähler-Resets (siehe [`meters/X/reset`](meters.mdx#me
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/last_reset
+curl http://$HOST/meters/1/last_reset
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -4233,7 +4265,7 @@ curl http://$HOST/meters/X/last_reset
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/last_reset
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/last_reset
 ```
         </TabItem>
     </Tabs>
@@ -4452,7 +4484,7 @@ Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meter
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/values
+curl http://$HOST/meters/1/values
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -4462,7 +4494,7 @@ curl http://$HOST/meters/X/values
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/values
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/values
 ```
         </TabItem>
     </Tabs>
@@ -4507,7 +4539,7 @@ Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzä
 ```
 #### Schreiben
 ```bash
-curl http://$HOST/meters/X/update -d '[
+curl http://$HOST/meters/1/update -d '[
     15.9, 16, 16.1,
     3657, 3680, 3703
 ]'
@@ -4527,7 +4559,7 @@ Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) fü
 ```
 #### Schreiben
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/meters/X/update -m '[
+mosquitto_pub -h $BROKER -t $PREFIX/meters/1/update -m '[
     15.9, 16, 16.1,
     3657, 3680, 3703
 ]'
@@ -4558,7 +4590,7 @@ Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt di
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/value_ids
+curl http://$HOST/meters/1/value_ids
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -4568,7 +4600,7 @@ curl http://$HOST/meters/X/value_ids
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/value_ids
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/value_ids
 ```
         </TabItem>
     </Tabs>
@@ -4623,7 +4655,7 @@ Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher f
 # $HOST z.B. warp-AbCd
 ```
 ```bash
-curl http://$HOST/meters/X/history
+curl http://$HOST/meters/1/history
 ```
 ```jsx
 {
@@ -4703,7 +4735,7 @@ Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte
 # $HOST z.B. warp-AbCd
 ```
 ```bash
-curl http://$HOST/meters/X/live
+curl http://$HOST/meters/1/live
 ```
 ```jsx
 {
@@ -4786,22 +4818,26 @@ Die Konfiguration des X. Stromzählers. Das Union-Tag gibt die Zählerklasse an.
 
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/config
+curl http://$HOST/meters/1/config
 ```
 ```jsx
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
-Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
 
 
 #### Schreiben
 ```bash
-curl http://$HOST/meters/X/config -d '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+curl http://$HOST/meters/1/config -d '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
 ```
 
-Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -4812,25 +4848,29 @@ der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung)
 
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/config
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/config
 ```
 ```jsx
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
-Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
 
 
 #### Schreiben
-            Mit MQTT auf <code>$PREFIX/meters/X/config<strong>_update</strong></code>
+            Mit MQTT auf <code>$PREFIX/meters/1/config<strong>_update</strong></code>
 
 
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/meters/X/config_update -m '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+mosquitto_pub -h $BROKER -t $PREFIX/meters/1/config_update -m '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
 ```
 
-Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
 
         </TabItem>
     </Tabs>
@@ -5011,7 +5051,7 @@ Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Strom
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/state
+curl http://$HOST/meters/1/state
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -5021,7 +5061,7 @@ curl http://$HOST/meters/X/state
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/state
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/state
 ```
         </TabItem>
     </Tabs>
@@ -5151,7 +5191,7 @@ Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hän
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/errors
+curl http://$HOST/meters/1/errors
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -5161,7 +5201,7 @@ curl http://$HOST/meters/X/errors
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/errors
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/errors
 ```
         </TabItem>
     </Tabs>
@@ -5350,7 +5390,7 @@ Setzt alle zurücksetzbaren (Alle Werte deren `kind`-Eintrag `resettable` ist: [
 ```
 #### Schreiben
 ```bash
-curl http://$HOST/meters/X/reset -d 'null'
+curl http://$HOST/meters/1/reset -d 'null'
 ```
 
 
@@ -5363,7 +5403,7 @@ curl http://$HOST/meters/X/reset -d 'null'
 ```
 #### Schreiben
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/meters/X/reset -m 'null'
+mosquitto_pub -h $BROKER -t $PREFIX/meters/1/reset -m 'null'
 ```
 
 
@@ -5387,7 +5427,7 @@ Der Zeitpunkt des letzten Zähler-Resets (siehe [`meters/X/reset`](meters.mdx#me
 ```
 #### Lesen
 ```bash
-curl http://$HOST/meters/X/last_reset
+curl http://$HOST/meters/1/last_reset
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -5397,7 +5437,7 @@ curl http://$HOST/meters/X/last_reset
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/X/last_reset
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/last_reset
 ```
         </TabItem>
     </Tabs>
