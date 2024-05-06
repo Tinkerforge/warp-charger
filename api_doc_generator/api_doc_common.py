@@ -407,6 +407,9 @@ class Elem:
 
         add_shortcut = f.type_ != FuncType.STATE and self.type_ == EType.OBJECT and len(self.val.items()) == 1 and not "do_i_know_what_i_am_doing" in self.val
 
+        def api_name(f: Func, module: str):
+            return f.api_name(module).replace("meters/X/", "meters/1/")
+
         example_state_template = f""":::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -415,7 +418,7 @@ class Elem:
 ```
 #### Lesen
 ```bash
-curl http://$HOST/{f.api_name(module)}
+curl http://$HOST/{api_name(f, module)}
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -425,7 +428,7 @@ curl http://$HOST/{f.api_name(module)}
 ```
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/{f.api_name(module)}
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/{api_name(f, module)}
 ```
         </TabItem>
     </Tabs>
@@ -443,12 +446,12 @@ oder abgekürzt:
 
         write_http_template = f"""
 ```bash
-curl http://$HOST/{f.api_name(module)} -d '{{payload}}'
+curl http://$HOST/{api_name(f, module)} -d '{{payload}}'
 ```
 """
         write_mqtt_template = f"""
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/{f.api_name(module)}{{update}} -m '{{payload}}'
+mosquitto_pub -h $BROKER -t $PREFIX/{api_name(f, module)}{{update}} -m '{{payload}}'
 ```
 """
 
@@ -484,7 +487,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/{f.api_name(module)}{{update}} -m '{{payload
 
 #### Lesen
 ```bash
-curl http://$HOST/{f.api_name(module)}
+curl http://$HOST/{api_name(f, module)}
 ```
 {{read_payload}}
 {{read_comment}}
@@ -502,14 +505,14 @@ curl http://$HOST/{f.api_name(module)}
 
 #### Lesen
 ```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/{f.api_name(module)}
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/{api_name(f, module)}
 ```
 {{read_payload}}
 {{read_comment}}
 
 
 #### Schreiben
-            Mit MQTT auf <code>$PREFIX/{f.api_name(module)}<strong>_update</strong></code>
+            Mit MQTT auf <code>$PREFIX/{api_name(f, module)}<strong>_update</strong></code>
 
 {{mqtt}}{{mqtt_shortcut}}
 {{write_comment}}
@@ -526,7 +529,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/{f.api_name(module)}
 # $HOST z.B. {prefix_version}-AbCd
 ```
 ```bash
-curl http://$HOST/{f.api_name(module)}
+curl http://$HOST/{api_name(f, module)}
 ```
 {{payload}}
 {{comment}}
