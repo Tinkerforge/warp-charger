@@ -38,7 +38,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/Tinkerforge/warp-charger/docs.warp-charger.com/',
+            'https://github.com/Tinkerforge/warp-charger/edit/master/docs.warp-charger.com/',
         },
         theme: {
           customCss: './src/css/custom.css',
