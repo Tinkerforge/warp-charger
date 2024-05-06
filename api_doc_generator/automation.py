@@ -93,7 +93,7 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                         }),
                         9: Elem.NULL("Auslösen des Watchdogs der externen Steuerung. Der Watchdog löst aus, wenn die externe Steuerung aktiv ist und {{{ref:evse/external_current}}} mindestens 30 Sekunden lang nicht geschrieben wurde. ", version=Version.CHARGER),
                         10: Elem.NULL("Erkennen eines Fehlers durch die Zählerüberwachung", version=Version.CHARGER),
-                        11: Elem.NULL("Auslösen des Watchdogs des Lastmanagements. Siehe {{{ref:charge_manager/config}}}"),
+                        11: Elem.NULL("Auslösen des Watchdogs des Lastmanagements."),
                         12: Elem.OBJECT("Schalten von Eingang 3", version=Version.WEM, members={
                             "state": Elem.BOOL("Gibt an, ob bei geöffnetem oder geschlossenem Eingang reagiert werden soll", constants=[
                                 Const(True, "Reagieren bei geöffnetem Eingang"),
