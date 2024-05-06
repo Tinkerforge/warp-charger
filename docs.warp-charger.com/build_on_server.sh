@@ -5,5 +5,3 @@
 cd /var/www/git/warp-charger/docs.warp-charger.com/
 /usr/bin/git pull origin master
 /usr/local/bin/npm run build
-cp .htaccess build/
-cp .htpasswd build/
