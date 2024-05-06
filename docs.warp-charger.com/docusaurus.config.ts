@@ -53,7 +53,7 @@ const config: Config = {
       appId: 'WDTZV3KHAX',
 
       // Public API key: it is safe to commit it
-      apiKey: 'ebf6f72368963d7ad6070e373b771762',
+      apiKey: '7e97a190bd91b4399f37ba2a3f42f3f4',
 
       indexName: 'warp-charger',
 
