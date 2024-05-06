@@ -58,7 +58,7 @@ const config: Config = {
       indexName: 'warp-charger',
 
       // Optional: see doc section below
-//      contextualSearch: true,
+      contextualSearch: true,
 
       // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
 //      externalUrlRegex: '',
@@ -73,7 +73,7 @@ const config: Config = {
 //      searchParameters: {},
 
       // Optional: path for search page that enabled by default (`false` to disable it)
-//      searchPagePath: 'search',
+      searchPagePath: 'search',
 
       // Optional: whether the insights feature is enabled or not on Docsearch (`false` by default)
 //      insights: false,
