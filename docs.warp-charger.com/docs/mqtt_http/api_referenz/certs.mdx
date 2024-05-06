@@ -111,6 +111,7 @@ curl http://$HOST/certs/add -d '{
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -125,6 +126,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/certs/add -m '{
   "cert": "-----BEGIN CERTIFICATE-----\nMIIFYDCC[__Zertifikatspayload gekürzt__]psr6GtPAQw4dy753ec5\n-----END CERTIFICATE-----"
 }'
 ```
+
 
 
         </TabItem>
@@ -182,6 +184,7 @@ curl http://$HOST/certs/modify -d '{ "id": 0, "name": "ISRG Root X1 (Lets Encryp
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -192,6 +195,7 @@ curl http://$HOST/certs/modify -d '{ "id": 0, "name": "ISRG Root X1 (Lets Encryp
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/certs/modify -m '{ "id": 0, "name": "ISRG Root X1 (Lets Encrypt)", "cert": null }'
 ```
+
 
 
         </TabItem>
@@ -248,6 +252,14 @@ Löscht ein vorhandenes TLS-Zertifikat.
 curl http://$HOST/certs/remove -d '{ "id": 0 }'
 ```
 
+oder abgekürzt:
+
+```bash
+curl http://$HOST/certs/remove -d '0'
+```
+
+
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -260,14 +272,20 @@ curl http://$HOST/certs/remove -d '{ "id": 0 }'
 mosquitto_pub -h $BROKER -t $PREFIX/certs/remove -m '{ "id": 0 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/certs/remove -m '0'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -387,6 +405,7 @@ curl http://$HOST/certs/add -d '{
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -401,6 +420,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/certs/add -m '{
   "cert": "-----BEGIN CERTIFICATE-----\nMIIFYDCC[__Zertifikatspayload gekürzt__]psr6GtPAQw4dy753ec5\n-----END CERTIFICATE-----"
 }'
 ```
+
 
 
         </TabItem>
@@ -458,6 +478,7 @@ curl http://$HOST/certs/modify -d '{ "id": 0, "name": "ISRG Root X1 (Lets Encryp
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -468,6 +489,7 @@ curl http://$HOST/certs/modify -d '{ "id": 0, "name": "ISRG Root X1 (Lets Encryp
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/certs/modify -m '{ "id": 0, "name": "ISRG Root X1 (Lets Encrypt)", "cert": null }'
 ```
+
 
 
         </TabItem>
@@ -524,6 +546,14 @@ Löscht ein vorhandenes TLS-Zertifikat.
 curl http://$HOST/certs/remove -d '{ "id": 0 }'
 ```
 
+oder abgekürzt:
+
+```bash
+curl http://$HOST/certs/remove -d '0'
+```
+
+
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -536,14 +566,20 @@ curl http://$HOST/certs/remove -d '{ "id": 0 }'
 mosquitto_pub -h $BROKER -t $PREFIX/certs/remove -m '{ "id": 0 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/certs/remove -m '0'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -663,6 +699,7 @@ curl http://$HOST/certs/add -d '{
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -677,6 +714,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/certs/add -m '{
   "cert": "-----BEGIN CERTIFICATE-----\nMIIFYDCC[__Zertifikatspayload gekürzt__]psr6GtPAQw4dy753ec5\n-----END CERTIFICATE-----"
 }'
 ```
+
 
 
         </TabItem>
@@ -734,6 +772,7 @@ curl http://$HOST/certs/modify -d '{ "id": 0, "name": "ISRG Root X1 (Lets Encryp
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -744,6 +783,7 @@ curl http://$HOST/certs/modify -d '{ "id": 0, "name": "ISRG Root X1 (Lets Encryp
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/certs/modify -m '{ "id": 0, "name": "ISRG Root X1 (Lets Encrypt)", "cert": null }'
 ```
+
 
 
         </TabItem>
@@ -800,6 +840,14 @@ Löscht ein vorhandenes TLS-Zertifikat.
 curl http://$HOST/certs/remove -d '{ "id": 0 }'
 ```
 
+oder abgekürzt:
+
+```bash
+curl http://$HOST/certs/remove -d '0'
+```
+
+
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -812,14 +860,20 @@ curl http://$HOST/certs/remove -d '{ "id": 0 }'
 mosquitto_pub -h $BROKER -t $PREFIX/certs/remove -m '{ "id": 0 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/certs/remove -m '0'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -939,6 +993,7 @@ curl http://$HOST/certs/add -d '{
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -953,6 +1008,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/certs/add -m '{
   "cert": "-----BEGIN CERTIFICATE-----\nMIIFYDCC[__Zertifikatspayload gekürzt__]psr6GtPAQw4dy753ec5\n-----END CERTIFICATE-----"
 }'
 ```
+
 
 
         </TabItem>
@@ -1010,6 +1066,7 @@ curl http://$HOST/certs/modify -d '{ "id": 0, "name": "ISRG Root X1 (Lets Encryp
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -1020,6 +1077,7 @@ curl http://$HOST/certs/modify -d '{ "id": 0, "name": "ISRG Root X1 (Lets Encryp
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/certs/modify -m '{ "id": 0, "name": "ISRG Root X1 (Lets Encrypt)", "cert": null }'
 ```
+
 
 
         </TabItem>
@@ -1076,6 +1134,14 @@ Löscht ein vorhandenes TLS-Zertifikat.
 curl http://$HOST/certs/remove -d '{ "id": 0 }'
 ```
 
+oder abgekürzt:
+
+```bash
+curl http://$HOST/certs/remove -d '0'
+```
+
+
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -1088,14 +1154,20 @@ curl http://$HOST/certs/remove -d '{ "id": 0 }'
 mosquitto_pub -h $BROKER -t $PREFIX/certs/remove -m '{ "id": 0 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/certs/remove -m '0'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1218,6 +1290,7 @@ curl http://$HOST/certs/add -d '{
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -1232,6 +1305,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/certs/add -m '{
   "cert": "-----BEGIN CERTIFICATE-----\nMIIFYDCC[__Zertifikatspayload gekürzt__]psr6GtPAQw4dy753ec5\n-----END CERTIFICATE-----"
 }'
 ```
+
 
 
         </TabItem>
@@ -1289,6 +1363,7 @@ curl http://$HOST/certs/modify -d '{ "id": 0, "name": "ISRG Root X1 (Lets Encryp
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -1299,6 +1374,7 @@ curl http://$HOST/certs/modify -d '{ "id": 0, "name": "ISRG Root X1 (Lets Encryp
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/certs/modify -m '{ "id": 0, "name": "ISRG Root X1 (Lets Encrypt)", "cert": null }'
 ```
+
 
 
         </TabItem>
@@ -1355,6 +1431,14 @@ Löscht ein vorhandenes TLS-Zertifikat.
 curl http://$HOST/certs/remove -d '{ "id": 0 }'
 ```
 
+oder abgekürzt:
+
+```bash
+curl http://$HOST/certs/remove -d '0'
+```
+
+
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -1367,14 +1451,20 @@ curl http://$HOST/certs/remove -d '{ "id": 0 }'
 mosquitto_pub -h $BROKER -t $PREFIX/certs/remove -m '{ "id": 0 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/certs/remove -m '0'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>

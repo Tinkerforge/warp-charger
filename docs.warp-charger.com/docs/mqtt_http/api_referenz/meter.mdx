@@ -34,10 +34,10 @@ curl http://$HOST/meter/state
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meter/state -d '{ "state": 2, "type": 3 }'
 ```
+
 
 
         </TabItem>
@@ -60,9 +60,11 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/state
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meter/state<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/state_update -m '{ "state": 2, "type": 3 }'
 ```
+
 
 
         </TabItem>
@@ -125,10 +127,10 @@ curl http://$HOST/meter/values
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meter/values -d '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
 ```
+
 
 
         </TabItem>
@@ -151,9 +153,11 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/values
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meter/values<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/values_update -m '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
 ```
+
 
 
         </TabItem>
@@ -219,13 +223,13 @@ curl http://$HOST/meter/phases
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meter/phases -d '{
   "phases_connected": [true, false, false],
   "phases_active": [true, false, false]
 }'
 ```
+
 
 
         </TabItem>
@@ -251,12 +255,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/phases
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meter/phases<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/phases_update -m '{
   "phases_connected": [true, false, false],
   "phases_active": [true, false, false]
 }'
 ```
+
 
 
         </TabItem>
@@ -424,7 +430,6 @@ curl http://$HOST/meter/all_values
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meter/all_values -d '[
     // Index 0
@@ -466,6 +471,7 @@ curl http://$HOST/meter/all_values -d '[
     null
   ]'
 ```
+
 
 
         </TabItem>
@@ -526,6 +532,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/all_values
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meter/all_values<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/all_values_update -m '[
     // Index 0
@@ -567,6 +574,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meter/all_values_update -m '[
     null
   ]'
 ```
+
 
 
         </TabItem>
@@ -961,6 +969,7 @@ curl http://$HOST/meter/reset -d 'null'
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -971,6 +980,7 @@ curl http://$HOST/meter/reset -d 'null'
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/reset -m 'null'
 ```
+
 
 
         </TabItem>
@@ -1040,8 +1050,6 @@ Zuletzt zurückgesetzt 2024-05-03T11:24:12+02:00
 Erlaubt es den verbauten Zählertyp zu überschreiben, falls die Auto-Detektion nicht funktioniert.
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1251,10 +1259,10 @@ curl http://$HOST/meter/state
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meter/state -d '{ "state": 2, "type": 3 }'
 ```
+
 
 
         </TabItem>
@@ -1277,9 +1285,11 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/state
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meter/state<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/state_update -m '{ "state": 2, "type": 3 }'
 ```
+
 
 
         </TabItem>
@@ -1345,10 +1355,10 @@ curl http://$HOST/meter/values
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meter/values -d '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
 ```
+
 
 
         </TabItem>
@@ -1371,9 +1381,11 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/values
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meter/values<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/values_update -m '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
 ```
+
 
 
         </TabItem>
@@ -1439,13 +1451,13 @@ curl http://$HOST/meter/phases
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meter/phases -d '{
   "phases_connected": [true, false, false],
   "phases_active": [true, false, false]
 }'
 ```
+
 
 
         </TabItem>
@@ -1471,12 +1483,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/phases
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meter/phases<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/phases_update -m '{
   "phases_connected": [true, false, false],
   "phases_active": [true, false, false]
 }'
 ```
+
 
 
         </TabItem>
@@ -1672,7 +1686,6 @@ curl http://$HOST/meter/all_values
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meter/all_values -d '[
     // Index 0
@@ -1714,6 +1727,7 @@ curl http://$HOST/meter/all_values -d '[
     null
   ]'
 ```
+
 
 
         </TabItem>
@@ -1774,6 +1788,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/all_values
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meter/all_values<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/all_values_update -m '[
     // Index 0
@@ -1815,6 +1830,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meter/all_values_update -m '[
     null
   ]'
 ```
+
 
 
         </TabItem>
@@ -2209,6 +2225,7 @@ curl http://$HOST/meter/reset -d 'null'
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -2219,6 +2236,7 @@ curl http://$HOST/meter/reset -d 'null'
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/reset -m 'null'
 ```
+
 
 
         </TabItem>
@@ -2469,10 +2487,10 @@ curl http://$HOST/meter/state
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meter/state -d '{ "state": 2, "type": 3 }'
 ```
+
 
 
         </TabItem>
@@ -2495,9 +2513,11 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/state
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meter/state<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/state_update -m '{ "state": 2, "type": 3 }'
 ```
+
 
 
         </TabItem>
@@ -2563,10 +2583,10 @@ curl http://$HOST/meter/values
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meter/values -d '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
 ```
+
 
 
         </TabItem>
@@ -2589,9 +2609,11 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/values
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meter/values<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/values_update -m '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
 ```
+
 
 
         </TabItem>
@@ -2657,13 +2679,13 @@ curl http://$HOST/meter/phases
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meter/phases -d '{
   "phases_connected": [true, false, false],
   "phases_active": [true, false, false]
 }'
 ```
+
 
 
         </TabItem>
@@ -2689,12 +2711,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/phases
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meter/phases<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/phases_update -m '{
   "phases_connected": [true, false, false],
   "phases_active": [true, false, false]
 }'
 ```
+
 
 
         </TabItem>
@@ -2890,7 +2914,6 @@ curl http://$HOST/meter/all_values
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meter/all_values -d '[
     // Index 0
@@ -2932,6 +2955,7 @@ curl http://$HOST/meter/all_values -d '[
     null
   ]'
 ```
+
 
 
         </TabItem>
@@ -2992,6 +3016,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/all_values
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meter/all_values<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/all_values_update -m '[
     // Index 0
@@ -3033,6 +3058,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meter/all_values_update -m '[
     null
   ]'
 ```
+
 
 
         </TabItem>
@@ -3427,6 +3453,7 @@ curl http://$HOST/meter/reset -d 'null'
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -3437,6 +3464,7 @@ curl http://$HOST/meter/reset -d 'null'
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/reset -m 'null'
 ```
+
 
 
         </TabItem>
@@ -3687,10 +3715,10 @@ curl http://$HOST/meter/state
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meter/state -d '{ "state": 2, "type": 3 }'
 ```
+
 
 
         </TabItem>
@@ -3713,9 +3741,11 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/state
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meter/state<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/state_update -m '{ "state": 2, "type": 3 }'
 ```
+
 
 
         </TabItem>
@@ -3781,10 +3811,10 @@ curl http://$HOST/meter/values
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meter/values -d '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
 ```
+
 
 
         </TabItem>
@@ -3807,9 +3837,11 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/values
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meter/values<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/values_update -m '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
 ```
+
 
 
         </TabItem>
@@ -3875,13 +3907,13 @@ curl http://$HOST/meter/phases
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meter/phases -d '{
   "phases_connected": [true, false, false],
   "phases_active": [true, false, false]
 }'
 ```
+
 
 
         </TabItem>
@@ -3907,12 +3939,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/phases
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meter/phases<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/phases_update -m '{
   "phases_connected": [true, false, false],
   "phases_active": [true, false, false]
 }'
 ```
+
 
 
         </TabItem>
@@ -4108,7 +4142,6 @@ curl http://$HOST/meter/all_values
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meter/all_values -d '[
     // Index 0
@@ -4150,6 +4183,7 @@ curl http://$HOST/meter/all_values -d '[
     null
   ]'
 ```
+
 
 
         </TabItem>
@@ -4210,6 +4244,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/all_values
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meter/all_values<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/all_values_update -m '[
     // Index 0
@@ -4251,6 +4286,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meter/all_values_update -m '[
     null
   ]'
 ```
+
 
 
         </TabItem>
@@ -4645,6 +4681,7 @@ curl http://$HOST/meter/reset -d 'null'
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -4655,6 +4692,7 @@ curl http://$HOST/meter/reset -d 'null'
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/reset -m 'null'
 ```
+
 
 
         </TabItem>
@@ -4905,10 +4943,10 @@ curl http://$HOST/meter/state
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meter/state -d '{ "state": 2, "type": 3 }'
 ```
+
 
 
         </TabItem>
@@ -4931,9 +4969,11 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/state
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meter/state<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/state_update -m '{ "state": 2, "type": 3 }'
 ```
+
 
 
         </TabItem>
@@ -5012,10 +5052,10 @@ curl http://$HOST/meter/values
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meter/values -d '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
 ```
+
 
 
         </TabItem>
@@ -5038,9 +5078,11 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/values
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meter/values<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/values_update -m '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
 ```
+
 
 
         </TabItem>
@@ -5106,13 +5148,13 @@ curl http://$HOST/meter/phases
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meter/phases -d '{
   "phases_connected": [true, false, false],
   "phases_active": [true, false, false]
 }'
 ```
+
 
 
         </TabItem>
@@ -5138,12 +5180,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/phases
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meter/phases<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/phases_update -m '{
   "phases_connected": [true, false, false],
   "phases_active": [true, false, false]
 }'
 ```
+
 
 
         </TabItem>
@@ -5359,7 +5403,6 @@ curl http://$HOST/meter/all_values
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meter/all_values -d '[
     // Index 0
@@ -5401,6 +5444,7 @@ curl http://$HOST/meter/all_values -d '[
     null
   ]'
 ```
+
 
 
         </TabItem>
@@ -5461,6 +5505,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/all_values
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meter/all_values<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/all_values_update -m '[
     // Index 0
@@ -5502,6 +5547,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meter/all_values_update -m '[
     null
   ]'
 ```
+
 
 
         </TabItem>
@@ -5896,6 +5942,7 @@ curl http://$HOST/meter/reset -d 'null'
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -5906,6 +5953,7 @@ curl http://$HOST/meter/reset -d 'null'
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meter/reset -m 'null'
 ```
+
 
 
         </TabItem>
@@ -5975,8 +6023,6 @@ Zuletzt zurückgesetzt 2024-05-03T11:24:12+02:00
 Erlaubt es den verbauten Zählertyp zu überschreiben, falls die Auto-Detektion nicht funktioniert.
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>

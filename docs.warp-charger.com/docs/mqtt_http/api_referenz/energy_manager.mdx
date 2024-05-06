@@ -42,10 +42,17 @@ curl http://$HOST/energy_manager/config
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/energy_manager/config -d '{ "contactor_installed": true }'
 ```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/energy_manager/config -d 'true'
+```
+
+
 
 
         </TabItem>
@@ -68,9 +75,18 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/energy_manager/config
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/energy_manager/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/energy_manager/config_update -m '{ "contactor_installed": true }'
 ```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/energy_manager/config_update -m 'true'
+```
+
+
 
 
         </TabItem>
@@ -78,8 +94,6 @@ mosquitto_pub -h $BROKER -t $PREFIX/energy_manager/config_update -m '{ "contacto
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -469,6 +483,7 @@ curl http://$HOST/energy_manager/sdcard_format -d '{ "do_i_know_what_i_am_doing"
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -479,6 +494,7 @@ curl http://$HOST/energy_manager/sdcard_format -d '{ "do_i_know_what_i_am_doing"
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/energy_manager/sdcard_format -m '{ "do_i_know_what_i_am_doing": false }'
 ```
+
 
 
         </TabItem>
@@ -529,10 +545,17 @@ curl http://$HOST/energy_manager/config
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/energy_manager/config -d '{ "contactor_installed": true }'
 ```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/energy_manager/config -d 'true'
+```
+
+
 
 
         </TabItem>
@@ -555,9 +578,18 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/energy_manager/config
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/energy_manager/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/energy_manager/config_update -m '{ "contactor_installed": true }'
 ```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/energy_manager/config_update -m 'true'
+```
+
+
 
 
         </TabItem>
@@ -565,8 +597,6 @@ mosquitto_pub -h $BROKER -t $PREFIX/energy_manager/config_update -m '{ "contacto
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -992,6 +1022,7 @@ curl http://$HOST/energy_manager/sdcard_format -d '{ "do_i_know_what_i_am_doing"
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -1002,6 +1033,7 @@ curl http://$HOST/energy_manager/sdcard_format -d '{ "do_i_know_what_i_am_doing"
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/energy_manager/sdcard_format -m '{ "do_i_know_what_i_am_doing": false }'
 ```
+
 
 
         </TabItem>

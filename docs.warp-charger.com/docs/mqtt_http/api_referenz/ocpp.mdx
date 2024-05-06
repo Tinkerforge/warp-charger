@@ -46,7 +46,6 @@ curl http://$HOST/ocpp/config
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/ocpp/config -d '{
   "enable": true,
@@ -57,6 +56,7 @@ curl http://$HOST/ocpp/config -d '{
   "cert_id": -1
 }'
 ```
+
 
 
         </TabItem>
@@ -89,6 +89,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ocpp/config
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/ocpp/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/ocpp/config_update -m '{
   "enable": true,
@@ -99,6 +100,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/ocpp/config_update -m '{
   "cert_id": -1
 }'
 ```
+
 
 
         </TabItem>
@@ -179,6 +181,7 @@ curl http://$HOST/ocpp/reset -d 'null'
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -189,6 +192,7 @@ curl http://$HOST/ocpp/reset -d 'null'
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/ocpp/reset -m 'null'
 ```
+
 
 
         </TabItem>
@@ -230,7 +234,6 @@ curl http://$HOST/ocpp/config
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/ocpp/config -d '{
   "enable": true,
@@ -241,6 +244,7 @@ curl http://$HOST/ocpp/config -d '{
   "cert_id": -1
 }'
 ```
+
 
 
         </TabItem>
@@ -273,6 +277,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ocpp/config
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/ocpp/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/ocpp/config_update -m '{
   "enable": true,
@@ -283,6 +288,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/ocpp/config_update -m '{
   "cert_id": -1
 }'
 ```
+
 
 
         </TabItem>
@@ -363,6 +369,7 @@ curl http://$HOST/ocpp/reset -d 'null'
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -373,6 +380,7 @@ curl http://$HOST/ocpp/reset -d 'null'
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/ocpp/reset -m 'null'
 ```
+
 
 
         </TabItem>
@@ -417,7 +425,6 @@ curl http://$HOST/ocpp/config
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/ocpp/config -d '{
   "enable": true,
@@ -428,6 +435,7 @@ curl http://$HOST/ocpp/config -d '{
   "cert_id": -1
 }'
 ```
+
 
 
         </TabItem>
@@ -460,6 +468,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ocpp/config
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/ocpp/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/ocpp/config_update -m '{
   "enable": true,
@@ -470,6 +479,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/ocpp/config_update -m '{
   "cert_id": -1
 }'
 ```
+
 
 
         </TabItem>
@@ -553,6 +563,7 @@ curl http://$HOST/ocpp/reset -d 'null'
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -563,6 +574,7 @@ curl http://$HOST/ocpp/reset -d 'null'
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/ocpp/reset -m 'null'
 ```
+
 
 
         </TabItem>

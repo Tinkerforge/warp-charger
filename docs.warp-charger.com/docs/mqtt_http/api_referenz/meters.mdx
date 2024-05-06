@@ -108,6 +108,7 @@ curl http://$HOST/meters/X/update -d '[
     3657, 3680, 3703
 ]'
 ```
+
 Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
 ```jsx
@@ -127,6 +128,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/X/update -m '[
     3657, 3680, 3703
 ]'
 ```
+
 Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
 ```jsx
@@ -390,10 +392,10 @@ der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung)
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meters/X/config -d '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
 ```
+
 Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 
@@ -418,9 +420,11 @@ der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung)
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meters/X/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meters/X/config_update -m '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
 ```
+
 Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 
@@ -892,6 +896,7 @@ curl http://$HOST/meters/X/reset -d 'null'
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -902,6 +907,7 @@ curl http://$HOST/meters/X/reset -d 'null'
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meters/X/reset -m 'null'
 ```
+
 
 
         </TabItem>
@@ -1212,6 +1218,7 @@ curl http://$HOST/meters/X/update -d '[
     3657, 3680, 3703
 ]'
 ```
+
 Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
 ```jsx
@@ -1231,6 +1238,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/X/update -m '[
     3657, 3680, 3703
 ]'
 ```
+
 Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
 ```jsx
@@ -1494,10 +1502,10 @@ der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung)
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meters/X/config -d '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
 ```
+
 Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 
@@ -1522,9 +1530,11 @@ der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung)
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meters/X/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meters/X/config_update -m '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
 ```
+
 Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 
@@ -1984,6 +1994,7 @@ curl http://$HOST/meters/X/reset -d 'null'
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -1994,6 +2005,7 @@ curl http://$HOST/meters/X/reset -d 'null'
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meters/X/reset -m 'null'
 ```
+
 
 
         </TabItem>
@@ -2304,6 +2316,7 @@ curl http://$HOST/meters/X/update -d '[
     3657, 3680, 3703
 ]'
 ```
+
 Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
 ```jsx
@@ -2323,6 +2336,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/X/update -m '[
     3657, 3680, 3703
 ]'
 ```
+
 Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
 ```jsx
@@ -2586,10 +2600,10 @@ der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung)
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meters/X/config -d '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
 ```
+
 Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 
@@ -2614,9 +2628,11 @@ der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung)
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meters/X/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meters/X/config_update -m '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
 ```
+
 Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 
@@ -3076,6 +3092,7 @@ curl http://$HOST/meters/X/reset -d 'null'
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -3086,6 +3103,7 @@ curl http://$HOST/meters/X/reset -d 'null'
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meters/X/reset -m 'null'
 ```
+
 
 
         </TabItem>
@@ -3396,6 +3414,7 @@ curl http://$HOST/meters/X/update -d '[
     3657, 3680, 3703
 ]'
 ```
+
 Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
 ```jsx
@@ -3415,6 +3434,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/X/update -m '[
     3657, 3680, 3703
 ]'
 ```
+
 Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
 ```jsx
@@ -3678,10 +3698,10 @@ der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung)
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meters/X/config -d '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
 ```
+
 Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 
@@ -3706,9 +3726,11 @@ der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung)
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meters/X/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meters/X/config_update -m '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
 ```
+
 Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 
@@ -4168,6 +4190,7 @@ curl http://$HOST/meters/X/reset -d 'null'
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -4178,6 +4201,7 @@ curl http://$HOST/meters/X/reset -d 'null'
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meters/X/reset -m 'null'
 ```
+
 
 
         </TabItem>
@@ -4488,6 +4512,7 @@ curl http://$HOST/meters/X/update -d '[
     3657, 3680, 3703
 ]'
 ```
+
 Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
 ```jsx
@@ -4507,6 +4532,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/X/update -m '[
     3657, 3680, 3703
 ]'
 ```
+
 Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
 ```jsx
@@ -4770,10 +4796,10 @@ der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung)
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/meters/X/config -d '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
 ```
+
 Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 
@@ -4798,9 +4824,11 @@ der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung)
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/meters/X/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meters/X/config_update -m '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
 ```
+
 Konfiguriert einen mit [`meters/X/update`](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 
@@ -5326,6 +5354,7 @@ curl http://$HOST/meters/X/reset -d 'null'
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -5336,6 +5365,7 @@ curl http://$HOST/meters/X/reset -d 'null'
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/meters/X/reset -m 'null'
 ```
+
 
 
         </TabItem>

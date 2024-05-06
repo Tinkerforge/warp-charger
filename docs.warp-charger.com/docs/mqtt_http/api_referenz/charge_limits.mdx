@@ -113,10 +113,10 @@ curl http://$HOST/charge_limits/default_limits
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_limits/default_limits -d '{ "duration": 8, "energy_wh": 50000 }'
 ```
+
 
 
         </TabItem>
@@ -139,9 +139,11 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/default_limits
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_limits/default_limits<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/default_limits_update -m '{ "duration": 8, "energy_wh": 50000 }'
 ```
+
 
 
         </TabItem>
@@ -273,6 +275,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/active_limits
 curl http://$HOST/charge_limits/override_duration -d '{ "duration": 12 }'
 ```
 
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_limits/override_duration -d '12'
+```
+
+
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -285,14 +295,20 @@ curl http://$HOST/charge_limits/override_duration -d '{ "duration": 12 }'
 mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_duration -m '{ "duration": 12 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_duration -m '12'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -338,6 +354,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_duration -m '{ "durat
 curl http://$HOST/charge_limits/override_energy -d '{ "energy_wh": 25000 }'
 ```
 
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_limits/override_energy -d '25000'
+```
+
+
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -350,14 +374,20 @@ curl http://$HOST/charge_limits/override_energy -d '{ "energy_wh": 25000 }'
 mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_energy -m '{ "energy_wh": 25000 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_energy -m '25000'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -394,6 +424,7 @@ curl http://$HOST/charge_limits/restart -d 'null'
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -404,6 +435,7 @@ curl http://$HOST/charge_limits/restart -d 'null'
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/restart -m 'null'
 ```
+
 
 
         </TabItem>
@@ -515,10 +547,10 @@ curl http://$HOST/charge_limits/default_limits
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_limits/default_limits -d '{ "duration": 8, "energy_wh": 50000 }'
 ```
+
 
 
         </TabItem>
@@ -541,9 +573,11 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/default_limits
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_limits/default_limits<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/default_limits_update -m '{ "duration": 8, "energy_wh": 50000 }'
 ```
+
 
 
         </TabItem>
@@ -675,6 +709,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/active_limits
 curl http://$HOST/charge_limits/override_duration -d '{ "duration": 12 }'
 ```
 
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_limits/override_duration -d '12'
+```
+
+
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -687,14 +729,20 @@ curl http://$HOST/charge_limits/override_duration -d '{ "duration": 12 }'
 mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_duration -m '{ "duration": 12 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_duration -m '12'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -740,6 +788,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_duration -m '{ "durat
 curl http://$HOST/charge_limits/override_energy -d '{ "energy_wh": 25000 }'
 ```
 
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_limits/override_energy -d '25000'
+```
+
+
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -752,14 +808,20 @@ curl http://$HOST/charge_limits/override_energy -d '{ "energy_wh": 25000 }'
 mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_energy -m '{ "energy_wh": 25000 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_energy -m '25000'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -796,6 +858,7 @@ curl http://$HOST/charge_limits/restart -d 'null'
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -806,6 +869,7 @@ curl http://$HOST/charge_limits/restart -d 'null'
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/restart -m 'null'
 ```
+
 
 
         </TabItem>
@@ -917,10 +981,10 @@ curl http://$HOST/charge_limits/default_limits
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_limits/default_limits -d '{ "duration": 8, "energy_wh": 50000 }'
 ```
+
 
 
         </TabItem>
@@ -943,9 +1007,11 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/default_limits
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_limits/default_limits<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/default_limits_update -m '{ "duration": 8, "energy_wh": 50000 }'
 ```
+
 
 
         </TabItem>
@@ -1077,6 +1143,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/active_limits
 curl http://$HOST/charge_limits/override_duration -d '{ "duration": 12 }'
 ```
 
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_limits/override_duration -d '12'
+```
+
+
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -1089,14 +1163,20 @@ curl http://$HOST/charge_limits/override_duration -d '{ "duration": 12 }'
 mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_duration -m '{ "duration": 12 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_duration -m '12'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1142,6 +1222,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_duration -m '{ "durat
 curl http://$HOST/charge_limits/override_energy -d '{ "energy_wh": 25000 }'
 ```
 
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_limits/override_energy -d '25000'
+```
+
+
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -1154,14 +1242,20 @@ curl http://$HOST/charge_limits/override_energy -d '{ "energy_wh": 25000 }'
 mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_energy -m '{ "energy_wh": 25000 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_energy -m '25000'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1198,6 +1292,7 @@ curl http://$HOST/charge_limits/restart -d 'null'
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -1208,6 +1303,7 @@ curl http://$HOST/charge_limits/restart -d 'null'
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/restart -m 'null'
 ```
+
 
 
         </TabItem>
@@ -1322,10 +1418,10 @@ curl http://$HOST/charge_limits/default_limits
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_limits/default_limits -d '{ "duration": 8, "energy_wh": 50000 }'
 ```
+
 
 
         </TabItem>
@@ -1348,9 +1444,11 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/default_limits
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_limits/default_limits<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/default_limits_update -m '{ "duration": 8, "energy_wh": 50000 }'
 ```
+
 
 
         </TabItem>
@@ -1488,6 +1586,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/active_limits
 curl http://$HOST/charge_limits/override_duration -d '{ "duration": 12 }'
 ```
 
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_limits/override_duration -d '12'
+```
+
+
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -1500,14 +1606,20 @@ curl http://$HOST/charge_limits/override_duration -d '{ "duration": 12 }'
 mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_duration -m '{ "duration": 12 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_duration -m '12'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1556,6 +1668,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_duration -m '{ "durat
 curl http://$HOST/charge_limits/override_energy -d '{ "energy_wh": 25000 }'
 ```
 
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_limits/override_energy -d '25000'
+```
+
+
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -1568,14 +1688,20 @@ curl http://$HOST/charge_limits/override_energy -d '{ "energy_wh": 25000 }'
 mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_energy -m '{ "energy_wh": 25000 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_energy -m '25000'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1612,6 +1738,7 @@ curl http://$HOST/charge_limits/restart -d 'null'
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -1622,6 +1749,7 @@ curl http://$HOST/charge_limits/restart -d 'null'
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/restart -m 'null'
 ```
+
 
 
         </TabItem>

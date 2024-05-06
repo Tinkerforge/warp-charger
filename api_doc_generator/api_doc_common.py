@@ -403,6 +403,8 @@ class Elem:
         else:
             prefix_version = prefix_version.name.lower()
 
+        add_shortcut = f.type_ != FuncType.STATE and self.type_ == EType.OBJECT and len(self.val.items()) == 1 and not "do_i_know_what_i_am_doing" in self.val
+
         example_state_template = f""":::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -432,16 +434,29 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/{f.api_name(module)}
 :::
 """
 
+        shortcut_template = """
+oder abgekürzt:
+{}
+"""
+
+        write_http_template = f"""
+```bash
+curl http://$HOST/{f.api_name(module)} -d '{{payload}}'
+```
+"""
+        write_mqtt_template = f"""
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/{f.api_name(module)}{{update}} -m '{{payload}}'
+```
+"""
+
         example_command_template = f""":::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
 ```bash
 # $HOST z.B. {prefix_version}-AbCd
 ```
-#### Schreiben
-```bash
-curl http://$HOST/{f.api_name(module)} -d {{payload}}
-```
+#### Schreiben{{http}}{{http_shortcut}}
 {{comment}}
 
         </TabItem>
@@ -450,10 +465,7 @@ curl http://$HOST/{f.api_name(module)} -d {{payload}}
 # $BROKER z.B. my_mosquitto.localdomain
 # $PREFIX z.B. {prefix_version}/AbCd
 ```
-#### Schreiben
-```bash
-mosquitto_pub -h $BROKER -t $PREFIX/{f.api_name(module)} -m {{payload}}
-```
+#### Schreiben{{mqtt}}{{mqtt_shortcut}}
 {{comment}}
 
         </TabItem>
@@ -476,11 +488,7 @@ curl http://$HOST/{f.api_name(module)}
 {{read_comment}}
 
 
-#### Schreiben
-
-```bash
-curl http://$HOST/{f.api_name(module)} -d {{write_payload}}
-```
+#### Schreiben{{http}}{{http_shortcut}}
 {{write_comment}}
 
         </TabItem>
@@ -501,9 +509,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/{f.api_name(module)}
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/{f.api_name(module)}<strong>_update</strong></code>
 
-```bash
-mosquitto_pub -h $BROKER -t $PREFIX/{f.api_name(module)}_update -m {{write_payload}}
-```
+{{mqtt}}{{mqtt_shortcut}}
 {{write_comment}}
 
         </TabItem>
@@ -532,6 +538,9 @@ curl http://$HOST/{f.api_name(module)}
 :::
 """
 
+        def get_shortcut_payload(payload):
+            return re.sub(r'^\s*\{\s*"[^"]*":\s*', "", payload[:-1], 1).strip()
+
         if f.type_ == FuncType.STATE:
             payload, comment = get_example_from_file(f.api_name(module), prefix_version)
             if payload is not None:
@@ -543,7 +552,17 @@ curl http://$HOST/{f.api_name(module)}
                 payload = "null"
                 comment = ""
             if payload is not None:
-                return example_command_template.format(payload=wrap_non_empty("'", payload, "'"), comment=comment)
+                http_shortcut = shortcut_template.format(write_http_template.format(payload=get_shortcut_payload(payload))) if add_shortcut else ""
+                mqtt_shortcut = shortcut_template.format(write_mqtt_template.format(payload=get_shortcut_payload(payload),update="")) if add_shortcut else ""
+                http = write_http_template.format(payload=payload)
+                mqtt = write_mqtt_template.format(payload=payload,update="")
+
+                return example_command_template.format(
+                    http_shortcut=http_shortcut,
+                    mqtt_shortcut=mqtt_shortcut,
+                    http=http,
+                    mqtt=mqtt,
+                    comment=comment)
             return ""
         elif f.type_ == FuncType.CONFIGURATION:
             read_payload, read_comment = get_example_from_file(f.api_name(module), prefix_version)
@@ -552,8 +571,17 @@ curl http://$HOST/{f.api_name(module)}
                 if write_payload is None:
                     write_payload = read_payload
                     write_comment = read_comment
+
+                http_shortcut = shortcut_template.format(write_http_template.format(payload=get_shortcut_payload(write_payload))) if add_shortcut else ""
+                mqtt_shortcut = shortcut_template.format(write_mqtt_template.format(payload=get_shortcut_payload(write_payload),update="_update")) if add_shortcut else ""
+                http = write_http_template.format(payload=write_payload)
+                mqtt = write_mqtt_template.format(payload=write_payload,update="_update")
+
                 return example_config_template.format(read_payload=wrap_non_empty("```jsx\n",read_payload, "\n```"),
-                                                      write_payload=wrap_non_empty("'",write_payload, "'"),
+                                                      http_shortcut=http_shortcut,
+                                                      mqtt_shortcut=mqtt_shortcut,
+                                                      http=http,
+                                                      mqtt=mqtt,
                                                       read_comment=read_comment,
                                                       write_comment=write_comment)
             return ""
@@ -603,9 +631,6 @@ curl http://$HOST/{f.api_name(module)}
             table = self.to_tabs(is_root=True, version=version)
         else:
             table = self.to_table(is_root=True, version=version)
-
-        if f.type_ != FuncType.STATE and self.type_ == EType.OBJECT and len(self.val.items()) == 1 and not "do_i_know_what_i_am_doing" in self.val:
-            table = "\n\n**<a href=\"#states_section_shortcuts\">Kann abgekürzt werden.</a>**" + table
 
         content += "\n" + table + "\n"
 

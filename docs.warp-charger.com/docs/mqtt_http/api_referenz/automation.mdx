@@ -143,7 +143,6 @@ Konfiguriere zwei Aufgaben:
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/automation/config -d '{
   "tasks": [
@@ -169,6 +168,34 @@ curl http://$HOST/automation/config -d '{
   ]
 }'
 ```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/automation/config -d '[
+    {
+      "trigger": [1, { "mday": -1, "wday": 9, "hour": -1, "minute": 10 }],
+      "action": [1, { "message": "Hallo Welt!" }]
+    },
+    {
+      "trigger": [
+        18,
+        { "method": 4, "url_suffix": "garage_door", "payload": "open" }
+      ],
+      "action": [
+        2,
+        {
+          "topic": "door/control",
+          "payload": "1",
+          "retain": false,
+          "use_prefix": false
+        }
+      ]
+    }
+  ]'
+```
+
+
 
 
         </TabItem>
@@ -217,6 +244,7 @@ Konfiguriere zwei Aufgaben:
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/automation/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '{
   "tasks": [
@@ -243,14 +271,40 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '{
 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
+    {
+      "trigger": [1, { "mday": -1, "wday": 9, "hour": -1, "minute": 10 }],
+      "action": [1, { "message": "Hallo Welt!" }]
+    },
+    {
+      "trigger": [
+        18,
+        { "method": 4, "url_suffix": "garage_door", "payload": "open" }
+      ],
+      "action": [
+        2,
+        {
+          "topic": "door/control",
+          "payload": "1",
+          "retain": false,
+          "use_prefix": false
+        }
+      ]
+    }
+  ]'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -883,7 +937,6 @@ Konfiguriere zwei Aufgaben:
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/automation/config -d '{
   "tasks": [
@@ -909,6 +962,34 @@ curl http://$HOST/automation/config -d '{
   ]
 }'
 ```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/automation/config -d '[
+    {
+      "trigger": [1, { "mday": -1, "wday": 9, "hour": -1, "minute": 10 }],
+      "action": [1, { "message": "Hallo Welt!" }]
+    },
+    {
+      "trigger": [
+        18,
+        { "method": 4, "url_suffix": "garage_door", "payload": "open" }
+      ],
+      "action": [
+        2,
+        {
+          "topic": "door/control",
+          "payload": "1",
+          "retain": false,
+          "use_prefix": false
+        }
+      ]
+    }
+  ]'
+```
+
+
 
 
         </TabItem>
@@ -957,6 +1038,7 @@ Konfiguriere zwei Aufgaben:
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/automation/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '{
   "tasks": [
@@ -983,14 +1065,40 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '{
 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
+    {
+      "trigger": [1, { "mday": -1, "wday": 9, "hour": -1, "minute": 10 }],
+      "action": [1, { "message": "Hallo Welt!" }]
+    },
+    {
+      "trigger": [
+        18,
+        { "method": 4, "url_suffix": "garage_door", "payload": "open" }
+      ],
+      "action": [
+        2,
+        {
+          "topic": "door/control",
+          "payload": "1",
+          "retain": false,
+          "use_prefix": false
+        }
+      ]
+    }
+  ]'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1696,7 +1804,6 @@ Konfiguriere zwei Aufgaben:
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/automation/config -d '{
   "tasks": [
@@ -1722,6 +1829,34 @@ curl http://$HOST/automation/config -d '{
   ]
 }'
 ```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/automation/config -d '[
+    {
+      "trigger": [1, { "mday": -1, "wday": 9, "hour": -1, "minute": 10 }],
+      "action": [1, { "message": "Hallo Welt!" }]
+    },
+    {
+      "trigger": [
+        18,
+        { "method": 4, "url_suffix": "garage_door", "payload": "open" }
+      ],
+      "action": [
+        2,
+        {
+          "topic": "door/control",
+          "payload": "1",
+          "retain": false,
+          "use_prefix": false
+        }
+      ]
+    }
+  ]'
+```
+
+
 
 
         </TabItem>
@@ -1770,6 +1905,7 @@ Konfiguriere zwei Aufgaben:
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/automation/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '{
   "tasks": [
@@ -1796,14 +1932,40 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '{
 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
+    {
+      "trigger": [1, { "mday": -1, "wday": 9, "hour": -1, "minute": 10 }],
+      "action": [1, { "message": "Hallo Welt!" }]
+    },
+    {
+      "trigger": [
+        18,
+        { "method": 4, "url_suffix": "garage_door", "payload": "open" }
+      ],
+      "action": [
+        2,
+        {
+          "topic": "door/control",
+          "payload": "1",
+          "retain": false,
+          "use_prefix": false
+        }
+      ]
+    }
+  ]'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -2463,7 +2625,6 @@ Konfiguriere zwei Aufgaben:
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/automation/config -d '{
   "tasks": [
@@ -2489,6 +2650,34 @@ curl http://$HOST/automation/config -d '{
   ]
 }'
 ```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/automation/config -d '[
+    {
+      "trigger": [1, { "mday": -1, "wday": 9, "hour": -1, "minute": 10 }],
+      "action": [1, { "message": "Hallo Welt!" }]
+    },
+    {
+      "trigger": [
+        18,
+        { "method": 4, "url_suffix": "garage_door", "payload": "open" }
+      ],
+      "action": [
+        2,
+        {
+          "topic": "door/control",
+          "payload": "1",
+          "retain": false,
+          "use_prefix": false
+        }
+      ]
+    }
+  ]'
+```
+
+
 
 
         </TabItem>
@@ -2537,6 +2726,7 @@ Konfiguriere zwei Aufgaben:
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/automation/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '{
   "tasks": [
@@ -2563,14 +2753,40 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '{
 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
+    {
+      "trigger": [1, { "mday": -1, "wday": 9, "hour": -1, "minute": 10 }],
+      "action": [1, { "message": "Hallo Welt!" }]
+    },
+    {
+      "trigger": [
+        18,
+        { "method": 4, "url_suffix": "garage_door", "payload": "open" }
+      ],
+      "action": [
+        2,
+        {
+          "topic": "door/control",
+          "payload": "1",
+          "retain": false,
+          "use_prefix": false
+        }
+      ]
+    }
+  ]'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -3241,7 +3457,6 @@ Konfiguriere zwei Aufgaben:
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/automation/config -d '{
   "tasks": [
@@ -3267,6 +3482,34 @@ curl http://$HOST/automation/config -d '{
   ]
 }'
 ```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/automation/config -d '[
+    {
+      "trigger": [1, { "mday": -1, "wday": 9, "hour": -1, "minute": 10 }],
+      "action": [1, { "message": "Hallo Welt!" }]
+    },
+    {
+      "trigger": [
+        18,
+        { "method": 4, "url_suffix": "garage_door", "payload": "open" }
+      ],
+      "action": [
+        2,
+        {
+          "topic": "door/control",
+          "payload": "1",
+          "retain": false,
+          "use_prefix": false
+        }
+      ]
+    }
+  ]'
+```
+
+
 
 
         </TabItem>
@@ -3315,6 +3558,7 @@ Konfiguriere zwei Aufgaben:
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/automation/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '{
   "tasks": [
@@ -3341,14 +3585,40 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '{
 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
+    {
+      "trigger": [1, { "mday": -1, "wday": 9, "hour": -1, "minute": 10 }],
+      "action": [1, { "message": "Hallo Welt!" }]
+    },
+    {
+      "trigger": [
+        18,
+        { "method": 4, "url_suffix": "garage_door", "payload": "open" }
+      ],
+      "action": [
+        2,
+        {
+          "topic": "door/control",
+          "payload": "1",
+          "retain": false,
+          "use_prefix": false
+        }
+      ]
+    }
+  ]'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>

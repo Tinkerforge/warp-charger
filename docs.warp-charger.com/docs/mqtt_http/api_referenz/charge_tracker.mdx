@@ -299,6 +299,7 @@ curl http://$HOST/charge_tracker/remove_all_charges -d '{ "do_i_know_what_i_am_d
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -309,6 +310,7 @@ curl http://$HOST/charge_tracker/remove_all_charges -d '{ "do_i_know_what_i_am_d
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_tracker/remove_all_charges -m '{ "do_i_know_what_i_am_doing": false }'
 ```
+
 
 
         </TabItem>
@@ -444,10 +446,17 @@ curl http://$HOST/charge_tracker/config
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_tracker/config -d '{ "electricity_price": 3381 }'
 ```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_tracker/config -d '3381'
+```
+
+
 
 
         </TabItem>
@@ -470,9 +479,18 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_tracker/config
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_tracker/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_tracker/config_update -m '{ "electricity_price": 3381 }'
 ```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_tracker/config_update -m '3381'
+```
+
+
 
 
         </TabItem>
@@ -480,8 +498,6 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_tracker/config_update -m '{ "electric
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -789,6 +805,7 @@ curl http://$HOST/charge_tracker/remove_all_charges -d '{ "do_i_know_what_i_am_d
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -799,6 +816,7 @@ curl http://$HOST/charge_tracker/remove_all_charges -d '{ "do_i_know_what_i_am_d
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_tracker/remove_all_charges -m '{ "do_i_know_what_i_am_doing": false }'
 ```
+
 
 
         </TabItem>
@@ -934,10 +952,17 @@ curl http://$HOST/charge_tracker/config
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_tracker/config -d '{ "electricity_price": 3381 }'
 ```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_tracker/config -d '3381'
+```
+
+
 
 
         </TabItem>
@@ -960,9 +985,18 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_tracker/config
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_tracker/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_tracker/config_update -m '{ "electricity_price": 3381 }'
 ```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_tracker/config_update -m '3381'
+```
+
+
 
 
         </TabItem>
@@ -970,8 +1004,6 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_tracker/config_update -m '{ "electric
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1279,6 +1311,7 @@ curl http://$HOST/charge_tracker/remove_all_charges -d '{ "do_i_know_what_i_am_d
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -1289,6 +1322,7 @@ curl http://$HOST/charge_tracker/remove_all_charges -d '{ "do_i_know_what_i_am_d
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_tracker/remove_all_charges -m '{ "do_i_know_what_i_am_doing": false }'
 ```
+
 
 
         </TabItem>
@@ -1424,10 +1458,17 @@ curl http://$HOST/charge_tracker/config
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_tracker/config -d '{ "electricity_price": 3381 }'
 ```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_tracker/config -d '3381'
+```
+
+
 
 
         </TabItem>
@@ -1450,9 +1491,18 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_tracker/config
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_tracker/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_tracker/config_update -m '{ "electricity_price": 3381 }'
 ```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_tracker/config_update -m '3381'
+```
+
+
 
 
         </TabItem>
@@ -1460,8 +1510,6 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_tracker/config_update -m '{ "electric
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1775,6 +1823,7 @@ curl http://$HOST/charge_tracker/remove_all_charges -d '{ "do_i_know_what_i_am_d
 ```
 
 
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
@@ -1785,6 +1834,7 @@ curl http://$HOST/charge_tracker/remove_all_charges -d '{ "do_i_know_what_i_am_d
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_tracker/remove_all_charges -m '{ "do_i_know_what_i_am_doing": false }'
 ```
+
 
 
         </TabItem>
@@ -1923,10 +1973,17 @@ curl http://$HOST/charge_tracker/config
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_tracker/config -d '{ "electricity_price": 3381 }'
 ```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_tracker/config -d '3381'
+```
+
+
 
 
         </TabItem>
@@ -1949,9 +2006,18 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_tracker/config
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_tracker/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_tracker/config_update -m '{ "electricity_price": 3381 }'
 ```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_tracker/config_update -m '3381'
+```
+
+
 
 
         </TabItem>
@@ -1959,8 +2025,6 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_tracker/config_update -m '{ "electric
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>

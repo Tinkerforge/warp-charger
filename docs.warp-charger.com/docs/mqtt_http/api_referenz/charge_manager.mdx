@@ -33,10 +33,17 @@ curl http://$HOST/charge_manager/available_current
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_manager/available_current -d '{ "current": 16000 }'
 ```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_manager/available_current -d '16000'
+```
+
+
 
 
         </TabItem>
@@ -59,9 +66,18 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/available_current
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_manager/available_current<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '{ "current": 16000 }'
 ```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '16000'
+```
+
+
 
 
         </TabItem>
@@ -69,8 +85,6 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -112,10 +126,17 @@ curl http://$HOST/charge_manager/available_phases
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_manager/available_phases -d '{ "phases": 1 }'
 ```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_manager/available_phases -d '1'
+```
+
+
 
 
         </TabItem>
@@ -138,9 +159,18 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/available_phases
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_manager/available_phases<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '{ "phases": 1 }'
 ```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '1'
+```
+
+
 
 
         </TabItem>
@@ -148,8 +178,6 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '{
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -215,7 +243,6 @@ curl http://$HOST/charge_manager/config
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_manager/config -d '{
   "enable_charge_manager": true,
@@ -235,6 +262,7 @@ curl http://$HOST/charge_manager/config -d '{
   ]
 }'
 ```
+
 
 
         </TabItem>
@@ -273,6 +301,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/config
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_manager/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
   "enable_charge_manager": true,
@@ -292,6 +321,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
   ]
 }'
 ```
+
 
 
         </TabItem>
@@ -452,10 +482,17 @@ curl http://$HOST/charge_manager/available_current
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_manager/available_current -d '{ "current": 16000 }'
 ```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_manager/available_current -d '16000'
+```
+
+
 
 
         </TabItem>
@@ -478,9 +515,18 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/available_current
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_manager/available_current<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '{ "current": 16000 }'
 ```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '16000'
+```
+
+
 
 
         </TabItem>
@@ -488,8 +534,6 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -531,10 +575,17 @@ curl http://$HOST/charge_manager/available_phases
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_manager/available_phases -d '{ "phases": 1 }'
 ```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_manager/available_phases -d '1'
+```
+
+
 
 
         </TabItem>
@@ -557,9 +608,18 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/available_phases
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_manager/available_phases<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '{ "phases": 1 }'
 ```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '1'
+```
+
+
 
 
         </TabItem>
@@ -567,8 +627,6 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '{
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -634,7 +692,6 @@ curl http://$HOST/charge_manager/config
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_manager/config -d '{
   "enable_charge_manager": true,
@@ -654,6 +711,7 @@ curl http://$HOST/charge_manager/config -d '{
   ]
 }'
 ```
+
 
 
         </TabItem>
@@ -692,6 +750,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/config
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_manager/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
   "enable_charge_manager": true,
@@ -711,6 +770,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
   ]
 }'
 ```
+
 
 
         </TabItem>
@@ -871,10 +931,17 @@ curl http://$HOST/charge_manager/available_current
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_manager/available_current -d '{ "current": 16000 }'
 ```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_manager/available_current -d '16000'
+```
+
+
 
 
         </TabItem>
@@ -897,9 +964,18 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/available_current
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_manager/available_current<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '{ "current": 16000 }'
 ```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '16000'
+```
+
+
 
 
         </TabItem>
@@ -907,8 +983,6 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -950,10 +1024,17 @@ curl http://$HOST/charge_manager/available_phases
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_manager/available_phases -d '{ "phases": 1 }'
 ```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_manager/available_phases -d '1'
+```
+
+
 
 
         </TabItem>
@@ -976,9 +1057,18 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/available_phases
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_manager/available_phases<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '{ "phases": 1 }'
 ```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '1'
+```
+
+
 
 
         </TabItem>
@@ -986,8 +1076,6 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '{
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1053,7 +1141,6 @@ curl http://$HOST/charge_manager/config
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_manager/config -d '{
   "enable_charge_manager": true,
@@ -1073,6 +1160,7 @@ curl http://$HOST/charge_manager/config -d '{
   ]
 }'
 ```
+
 
 
         </TabItem>
@@ -1111,6 +1199,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/config
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_manager/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
   "enable_charge_manager": true,
@@ -1130,6 +1219,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
   ]
 }'
 ```
+
 
 
         </TabItem>
@@ -1290,10 +1380,17 @@ curl http://$HOST/charge_manager/available_current
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_manager/available_current -d '{ "current": 16000 }'
 ```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_manager/available_current -d '16000'
+```
+
+
 
 
         </TabItem>
@@ -1316,9 +1413,18 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/available_current
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_manager/available_current<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '{ "current": 16000 }'
 ```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '16000'
+```
+
+
 
 
         </TabItem>
@@ -1326,8 +1432,6 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1369,10 +1473,17 @@ curl http://$HOST/charge_manager/available_phases
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_manager/available_phases -d '{ "phases": 1 }'
 ```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_manager/available_phases -d '1'
+```
+
+
 
 
         </TabItem>
@@ -1395,9 +1506,18 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/available_phases
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_manager/available_phases<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '{ "phases": 1 }'
 ```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '1'
+```
+
+
 
 
         </TabItem>
@@ -1405,8 +1525,6 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '{
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1472,7 +1590,6 @@ curl http://$HOST/charge_manager/config
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_manager/config -d '{
   "enable_charge_manager": true,
@@ -1492,6 +1609,7 @@ curl http://$HOST/charge_manager/config -d '{
   ]
 }'
 ```
+
 
 
         </TabItem>
@@ -1530,6 +1648,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/config
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_manager/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
   "enable_charge_manager": true,
@@ -1549,6 +1668,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
   ]
 }'
 ```
+
 
 
         </TabItem>
@@ -1709,10 +1829,17 @@ curl http://$HOST/charge_manager/available_current
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_manager/available_current -d '{ "current": 16000 }'
 ```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_manager/available_current -d '16000'
+```
+
+
 
 
         </TabItem>
@@ -1735,9 +1862,18 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/available_current
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_manager/available_current<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '{ "current": 16000 }'
 ```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '16000'
+```
+
+
 
 
         </TabItem>
@@ -1745,8 +1881,6 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1788,10 +1922,17 @@ curl http://$HOST/charge_manager/available_phases
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_manager/available_phases -d '{ "phases": 1 }'
 ```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_manager/available_phases -d '1'
+```
+
+
 
 
         </TabItem>
@@ -1814,9 +1955,18 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/available_phases
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_manager/available_phases<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '{ "phases": 1 }'
 ```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '1'
+```
+
+
 
 
         </TabItem>
@@ -1824,8 +1974,6 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '{
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1891,7 +2039,6 @@ curl http://$HOST/charge_manager/config
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/charge_manager/config -d '{
   "enable_charge_manager": true,
@@ -1911,6 +2058,7 @@ curl http://$HOST/charge_manager/config -d '{
   ]
 }'
 ```
+
 
 
         </TabItem>
@@ -1949,6 +2097,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/config
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/charge_manager/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
   "enable_charge_manager": true,
@@ -1968,6 +2117,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
   ]
 }'
 ```
+
 
 
         </TabItem>

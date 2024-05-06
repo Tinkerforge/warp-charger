@@ -49,7 +49,6 @@ curl http://$HOST/authentication/config
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/authentication/config -d '{
   "enable_auth": true,
@@ -57,6 +56,7 @@ curl http://$HOST/authentication/config -d '{
   "digest_hash": "926011006c2686471698e86690b7e500"
 }'
 ```
+
 `"digest_hash" = MD5("testuser:esp32-lib:testpass")`
 
         </TabItem>
@@ -86,6 +86,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/authentication/config
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/authentication/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/authentication/config_update -m '{
   "enable_auth": true,
@@ -93,6 +94,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/authentication/config_update -m '{
   "digest_hash": "926011006c2686471698e86690b7e500"
 }'
 ```
+
 `"digest_hash" = MD5("testuser:esp32-lib:testpass")`
 
         </TabItem>
@@ -164,7 +166,6 @@ curl http://$HOST/authentication/config
 
 
 #### Schreiben
-
 ```bash
 curl http://$HOST/authentication/config -d '{
   "enable_auth": true,
@@ -172,6 +173,7 @@ curl http://$HOST/authentication/config -d '{
   "digest_hash": "926011006c2686471698e86690b7e500"
 }'
 ```
+
 `"digest_hash" = MD5("testuser:esp32-lib:testpass")`
 
         </TabItem>
@@ -201,6 +203,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/authentication/config
 #### Schreiben
             Mit MQTT auf <code>$PREFIX/authentication/config<strong>_update</strong></code>
 
+
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/authentication/config_update -m '{
   "enable_auth": true,
@@ -208,6 +211,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/authentication/config_update -m '{
   "digest_hash": "926011006c2686471698e86690b7e500"
 }'
 ```
+
 `"digest_hash" = MD5("testuser:esp32-lib:testpass")`
 
         </TabItem>

@@ -198,6 +198,7 @@ curl http://$HOST/users/add -d '{
     "digest_hash": "926011006c2686471698e86690b7e500"
   }'
 ```
+
 `id` muss der `next_user_id` aus [`users/config`](users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
 `digest_hash = MD5("testuser:esp32-lib:testpass")`
 
@@ -218,6 +219,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/users/add -m '{
     "digest_hash": "926011006c2686471698e86690b7e500"
   }'
 ```
+
 `id` muss der `next_user_id` aus [`users/config`](users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
 `digest_hash = MD5("testuser:esp32-lib:testpass")`
 
@@ -296,6 +298,14 @@ Löscht einen Benutzer.
 curl http://$HOST/users/remove -d '{ "id": 4 }'
 ```
 
+oder abgekürzt:
+
+```bash
+curl http://$HOST/users/remove -d '4'
+```
+
+
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -308,14 +318,20 @@ curl http://$HOST/users/remove -d '{ "id": 4 }'
 mosquitto_pub -h $BROKER -t $PREFIX/users/remove -m '{ "id": 4 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/remove -m '4'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -357,6 +373,7 @@ curl http://$HOST/users/modify -d '{
     "digest_hash": ""
   }'
 ```
+
 Ändert beispielsweise nur den Anzeigenamen vom Benutzer mit der ID 5 und löscht dessen Passwort.
 Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-API verwenden.
 
@@ -377,6 +394,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/users/modify -m '{
     "digest_hash": ""
   }'
 ```
+
 Ändert beispielsweise nur den Anzeigenamen vom Benutzer mit der ID 5 und löscht dessen Passwort.
 Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-API verwenden.
 
@@ -455,6 +473,14 @@ Schreibt http_auth_enabled aus [`users/config`](users.mdx#users_config).
 curl http://$HOST/users/http_auth_update -d '{ "enabled": false }'
 ```
 
+oder abgekürzt:
+
+```bash
+curl http://$HOST/users/http_auth_update -d 'false'
+```
+
+
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -467,14 +493,20 @@ curl http://$HOST/users/http_auth_update -d '{ "enabled": false }'
 mosquitto_pub -h $BROKER -t $PREFIX/users/http_auth_update -m '{ "enabled": false }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/http_auth_update -m 'false'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -698,6 +730,7 @@ curl http://$HOST/users/add -d '{
     "digest_hash": "926011006c2686471698e86690b7e500"
   }'
 ```
+
 `id` muss der `next_user_id` aus [`users/config`](users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
 `digest_hash = MD5("testuser:esp32-lib:testpass")`
 
@@ -718,6 +751,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/users/add -m '{
     "digest_hash": "926011006c2686471698e86690b7e500"
   }'
 ```
+
 `id` muss der `next_user_id` aus [`users/config`](users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
 `digest_hash = MD5("testuser:esp32-lib:testpass")`
 
@@ -796,6 +830,14 @@ Löscht einen Benutzer.
 curl http://$HOST/users/remove -d '{ "id": 4 }'
 ```
 
+oder abgekürzt:
+
+```bash
+curl http://$HOST/users/remove -d '4'
+```
+
+
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -808,14 +850,20 @@ curl http://$HOST/users/remove -d '{ "id": 4 }'
 mosquitto_pub -h $BROKER -t $PREFIX/users/remove -m '{ "id": 4 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/remove -m '4'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -857,6 +905,7 @@ curl http://$HOST/users/modify -d '{
     "digest_hash": ""
   }'
 ```
+
 Ändert beispielsweise nur den Anzeigenamen vom Benutzer mit der ID 5 und löscht dessen Passwort.
 Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-API verwenden.
 
@@ -877,6 +926,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/users/modify -m '{
     "digest_hash": ""
   }'
 ```
+
 Ändert beispielsweise nur den Anzeigenamen vom Benutzer mit der ID 5 und löscht dessen Passwort.
 Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-API verwenden.
 
@@ -955,6 +1005,14 @@ Schreibt http_auth_enabled aus [`users/config`](users.mdx#users_config).
 curl http://$HOST/users/http_auth_update -d '{ "enabled": false }'
 ```
 
+oder abgekürzt:
+
+```bash
+curl http://$HOST/users/http_auth_update -d 'false'
+```
+
+
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -967,14 +1025,20 @@ curl http://$HOST/users/http_auth_update -d '{ "enabled": false }'
 mosquitto_pub -h $BROKER -t $PREFIX/users/http_auth_update -m '{ "enabled": false }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/http_auth_update -m 'false'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1198,6 +1262,7 @@ curl http://$HOST/users/add -d '{
     "digest_hash": "926011006c2686471698e86690b7e500"
   }'
 ```
+
 `id` muss der `next_user_id` aus [`users/config`](users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
 `digest_hash = MD5("testuser:esp32-lib:testpass")`
 
@@ -1218,6 +1283,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/users/add -m '{
     "digest_hash": "926011006c2686471698e86690b7e500"
   }'
 ```
+
 `id` muss der `next_user_id` aus [`users/config`](users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
 `digest_hash = MD5("testuser:esp32-lib:testpass")`
 
@@ -1296,6 +1362,14 @@ Löscht einen Benutzer.
 curl http://$HOST/users/remove -d '{ "id": 4 }'
 ```
 
+oder abgekürzt:
+
+```bash
+curl http://$HOST/users/remove -d '4'
+```
+
+
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -1308,14 +1382,20 @@ curl http://$HOST/users/remove -d '{ "id": 4 }'
 mosquitto_pub -h $BROKER -t $PREFIX/users/remove -m '{ "id": 4 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/remove -m '4'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1357,6 +1437,7 @@ curl http://$HOST/users/modify -d '{
     "digest_hash": ""
   }'
 ```
+
 Ändert beispielsweise nur den Anzeigenamen vom Benutzer mit der ID 5 und löscht dessen Passwort.
 Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-API verwenden.
 
@@ -1377,6 +1458,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/users/modify -m '{
     "digest_hash": ""
   }'
 ```
+
 Ändert beispielsweise nur den Anzeigenamen vom Benutzer mit der ID 5 und löscht dessen Passwort.
 Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-API verwenden.
 
@@ -1455,6 +1537,14 @@ Schreibt http_auth_enabled aus [`users/config`](users.mdx#users_config).
 curl http://$HOST/users/http_auth_update -d '{ "enabled": false }'
 ```
 
+oder abgekürzt:
+
+```bash
+curl http://$HOST/users/http_auth_update -d 'false'
+```
+
+
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -1467,14 +1557,20 @@ curl http://$HOST/users/http_auth_update -d '{ "enabled": false }'
 mosquitto_pub -h $BROKER -t $PREFIX/users/http_auth_update -m '{ "enabled": false }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/http_auth_update -m 'false'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1707,6 +1803,7 @@ curl http://$HOST/users/add -d '{
     "digest_hash": "926011006c2686471698e86690b7e500"
   }'
 ```
+
 `id` muss der `next_user_id` aus [`users/config`](users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
 `digest_hash = MD5("testuser:esp32-lib:testpass")`
 
@@ -1727,6 +1824,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/users/add -m '{
     "digest_hash": "926011006c2686471698e86690b7e500"
   }'
 ```
+
 `id` muss der `next_user_id` aus [`users/config`](users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
 `digest_hash = MD5("testuser:esp32-lib:testpass")`
 
@@ -1805,6 +1903,14 @@ Löscht einen Benutzer.
 curl http://$HOST/users/remove -d '{ "id": 4 }'
 ```
 
+oder abgekürzt:
+
+```bash
+curl http://$HOST/users/remove -d '4'
+```
+
+
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -1817,14 +1923,20 @@ curl http://$HOST/users/remove -d '{ "id": 4 }'
 mosquitto_pub -h $BROKER -t $PREFIX/users/remove -m '{ "id": 4 }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/remove -m '4'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
@@ -1866,6 +1978,7 @@ curl http://$HOST/users/modify -d '{
     "digest_hash": ""
   }'
 ```
+
 Ändert beispielsweise nur den Anzeigenamen vom Benutzer mit der ID 5 und löscht dessen Passwort.
 Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-API verwenden.
 
@@ -1886,6 +1999,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/users/modify -m '{
     "digest_hash": ""
   }'
 ```
+
 Ändert beispielsweise nur den Anzeigenamen vom Benutzer mit der ID 5 und löscht dessen Passwort.
 Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-API verwenden.
 
@@ -1964,6 +2078,14 @@ Schreibt http_auth_enabled aus [`users/config`](users.mdx#users_config).
 curl http://$HOST/users/http_auth_update -d '{ "enabled": false }'
 ```
 
+oder abgekürzt:
+
+```bash
+curl http://$HOST/users/http_auth_update -d 'false'
+```
+
+
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -1976,14 +2098,20 @@ curl http://$HOST/users/http_auth_update -d '{ "enabled": false }'
 mosquitto_pub -h $BROKER -t $PREFIX/users/http_auth_update -m '{ "enabled": false }'
 ```
 
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/http_auth_update -m 'false'
+```
+
+
+
 
         </TabItem>
     </Tabs>
 :::
 
 
-
-**<a href="#states_section_shortcuts">Kann abgekürzt werden.</a>**
 <table>
     <thead>
         <tr>
