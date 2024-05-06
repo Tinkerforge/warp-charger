@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Steuerbare Verbrauchseinrichtung nach §14a EnWG 
+# Steuerbare Verbrauchseinrichtung nach §14a EnWG
 
 Wallboxen gehören nach §14a EnWG zu sogenannten Steuerbaren
 Verbrauchseinrichtungen, da deren Anschlussleistung mehr als 4,2 kW
@@ -25,7 +25,7 @@ Kontakt (spannungsfreier Schaltkontakt) angeschlossen werden. Dazu muss
 eine Steuerleitung vom Rundsteuerempfänger oder der Steuerbox des
 Netzbetreibers in die Wallbox gelegt und am Ladecontroller angeschlossen
 werden. Für Details zum Anschluss am Klemmbock siehe
-[Montage und Installation](montage_und_installation.md#evse-klemmblock--abschalteingang).
+[Montage und Installation](assembly_and_installation.md#evse-klemmblock--abschalteingang).
 
 In der Standardkonfiguration der Wallbox wird auf 4200 W limitiert, wenn
 der Abschalteingang geschlossen ist. Dieses Verhalten kann im

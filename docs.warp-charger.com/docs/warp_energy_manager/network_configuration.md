@@ -150,4 +150,4 @@ Webinterface ist im Abschnitt vollständig beschrieben.
 
 Generell empfehlen wir, nach der Installation ein Update der
 Energiemanager-Firmware durchzuführen, um die neusten Funktionen und ggf.
-Bugfixes zu erhalten. Siehe [Firmware-Aktualisierung](firmware_aktualisierung.md).
+Bugfixes zu erhalten. Siehe [Firmware-Aktualisierung](firmware_update).

@@ -7,7 +7,7 @@ import { columns, meters, moduleTests } from "./meters.table";
 
 # Kompatible Stromzähler
 
-Um ein [PV-Überschlussladen](warp_charger/pv_überschussladen) zu ermöglichen, musss
+Um ein [PV-Überschlussladen](warp_charger/pv_excess_charging) zu ermöglichen, musss
 der WARP Charger oder der WARP Energy Manager Zugriff auf einen Stromzähler am Hausanschluss haben,
 da nur dort der eigentliche PV-Überschuss ermittelt werden kann.
 
