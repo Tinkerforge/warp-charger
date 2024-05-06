@@ -25,7 +25,7 @@ export const meters = [
   {
     name: "Energy Meter 2.0",
     manufacturer: "SMA",
-    protocol: "Speedwire",
+    protocol: "SMA Speedwire",
     note: "",
   },
   {
@@ -97,7 +97,7 @@ export const meters = [
   {
     name: "Sunny Home Manager 1.0/2.0",
     manufacturer: "SMA",
-    protocol: "Speedwire",
+    protocol: "SMA Speedwire",
     note: "",
   },
   {
