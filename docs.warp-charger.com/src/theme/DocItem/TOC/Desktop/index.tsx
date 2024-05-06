@@ -26,7 +26,7 @@ export default function DocItemTOCDesktop(props: Props): JSX.Element {
     const { toc, frontMatter, metadata } = useDoc();
 
     // We are not in the API documentation. Show the default TOC.
-    if (!metadata.sourceDirName.startsWith("mqtt_http/api_referenz"))
+    if (!metadata.sourceDirName.startsWith("mqtt_http/api_reference"))
         return <Desktop {...props} />;
 
     // We are in the API documentation.
