@@ -23,12 +23,6 @@ export const meters = [
     note: "Nur über WARP Energy Manager",
   },
   {
-    name: "Home Manager 1.0/2.0",
-    manufacturer: "SMA",
-    protocol: "Speedwire",
-    note: "",
-  },
-  {
     name: "Hybrid Wechselrichter",
     manufacturer: "Deye",
     protocol: "Modbus/TCP",
@@ -92,6 +86,12 @@ export const meters = [
     name: "Sunny Boy 3.6",
     manufacturer: "SMA",
     protocol: "SunSpec",
+    note: "",
+  },
+  {
+    name: "Sunny Home Manager 1.0/2.0",
+    manufacturer: "SMA",
+    protocol: "Speedwire",
     note: "",
   },
   {
