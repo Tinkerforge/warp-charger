@@ -5,7 +5,7 @@ import React from "react";
 // ----------------------------------------------------------------------------
 export const meters = [
   {
-    name: "Color Control GX",
+    name: "Venus Cerbo GX",
     manufacturer: "Victron Energy",
     protocol: "Modbus/TCP",
     note: "Support für Victron Energy kommt in Kürze",
