@@ -5,12 +5,6 @@ import React from "react";
 // ----------------------------------------------------------------------------
 export const meters = [
   {
-    name: "Venus Cerbo GX",
-    manufacturer: "Victron Energy",
-    protocol: "Modbus/TCP",
-    note: "Support für Victron Energy kommt in Kürze",
-  },
-  {
     name: "DEM4A",
     manufacturer: "YTL",
     protocol: "Modbus/RTU",
@@ -27,6 +21,12 @@ export const meters = [
     manufacturer: "SMA",
     protocol: "SMA Speedwire",
     note: "",
+  },
+  {
+    name: "GX",
+    manufacturer: "Victron Energy",
+    protocol: "Modbus/TCP",
+    note: "Alle GX Geräte; Support für Victron Energy kommt in Kürze",
   },
   {
     name: "Hybrid Wechselrichter",
