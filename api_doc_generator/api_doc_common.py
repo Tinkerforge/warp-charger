@@ -776,7 +776,7 @@ import Admonition from '@theme/Admonition';
                 for f in fns:
                     functions.append(f.root.root_to_md(f, self.name if not self.hide_prefix else None, ver))
 
-            result += "\n<br/><br/><br/>\n".join(functions)
+            result += "\n<br/><br/><br/>\n".join([x for x in functions if len(x) > 0])
             result += '</TabItem>\n'
 
         result += '</Tabs>\n'
