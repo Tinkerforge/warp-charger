@@ -99,8 +99,8 @@ die Wallboxen müssen direkt angeschlossen werden.
 
 Im Verteilergehäuse befinden sich Klemmen vom Typ SRK 10 oder
 vergleichbar. Es können ein- und mehrdrähtige Leiter mit einem
-Querschnitt von bis zu 16 m²m und Leiter mit Aderendhülse mit einem
-Querschnitt von bis zu 10 m²m angeschlossen werden. Die Abisolierlänge
+Querschnitt von bis zu 16 mm² und Leiter mit Aderendhülse mit einem
+Querschnitt von bis zu 10 mm² angeschlossen werden. Die Abisolierlänge
 beträgt 10 mm. Der Anschluss erfolgt anhand der Beschriftung der Klemmen
 im Verteilergehäuse.
 

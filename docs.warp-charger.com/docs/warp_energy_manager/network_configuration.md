@@ -90,7 +90,7 @@ sein, dass die Verbindung zum Access-Point neu aufgebaut werden muss.
 
 Bei einer erfolgreichen Verbindung sollte der Energiemanager jetzt im
 konfigurierten Netzwerk unter
-http://[konfigurierter_hostname, z.B. http://warp3-ABC erreichbar sein.
+http://[konfigurierter_hostname], z.B. http://warp3-ABC erreichbar sein.
 
 ### WLAN-Access-Point
 

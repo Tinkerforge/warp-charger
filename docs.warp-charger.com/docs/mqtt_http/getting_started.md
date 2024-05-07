@@ -24,7 +24,7 @@ Damit die Wallbox über MQTT kommuniziert, muss zunächst im Webinterface die Ve
 - **Topic-Präfix** Dieser Präfix wird allen Topics vorangestellt, die die Wallbox verwendet. Voreingestellt ist `warp/AbCd`, `warp2/AbCd`, `warp3/AbCd` bzw. `wem/AbCd` wobei `AbCd` eine eindeutige Kennung pro Wallbox ist, es sind aber andere Präfixe wie z.B. garage_links möglich. Falls mehrere Wallboxen mit dem selben Broker kommunizieren müssen eindeutige Präfixe pro Box gewählt werden.
 - **Client-ID** Mit dieser ID registriert sich die Wallbox beim Broker.
 
-Nachdem die Konfiguration gesetzt und der "MQTT aktivieren"-Schalter gesetzt ist, kann die Konfiguration gespeichert werden. Der ESP startet dann neu und verbindet sich zum Broker. Auf der Status-Seite wird angezeigt, ob die Verbindung aufgebaut werden konnte.
+Nachdem die Konfiguration gesetzt und der "MQTT aktiviert"-Schalter gesetzt ist, kann die Konfiguration gespeichert werden. Der ESP startet dann neu und verbindet sich zum Broker. Auf der Status-Seite wird angezeigt, ob die Verbindung aufgebaut werden konnte.
 
 ![MQTT-Einstellungsseite](/img/mqtt/mqtt_ui.png)
 

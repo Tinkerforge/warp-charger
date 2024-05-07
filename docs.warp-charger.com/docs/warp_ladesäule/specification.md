@@ -20,7 +20,7 @@ Die Säulen zeichnen sich durch folgende technische Spezifikation aus:
 | Eigenschaft | Wert |
 |-|-|
 | Material | Stahl, verzinkt |
-| Materialstärke | 2,0mm |
+| Materialstärke | 2,0 mm |
 | Gewicht | 19,6 kg |
 | Farbe | DB703, Eisenglimmerlack |
 
@@ -30,7 +30,7 @@ Die Säulen zeichnen sich durch folgende technische Spezifikation aus:
 | Eigenschaft | Wert |
 |-|-|
 | Material | V4A |
-| Materialstärke | 1,5mm |
+| Materialstärke | 1,5 mm |
 | Gewicht | 19,8 kg |
 | Farbe | Edelstahl |
 

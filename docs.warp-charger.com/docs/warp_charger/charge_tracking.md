@@ -2,7 +2,7 @@
 sidebar_position: 6
 ---
 
-# Ladelogbuch 
+# Ladelogbuch
 
 ## Funktionsweise
 
@@ -12,7 +12,7 @@ Ladevorgang werden die folgenden Informationen gespeichert:
 * Startdatum und Zeit des Ladevorgangs, falls Datum und Zeit bekannt
 sind. Siehe Abschnitt .
 * Benutzer, der den Ladevorgang gestartet hat, falls bekannt.
-* Zählerstand beim Start und Ende des Ladevorgangs (nur WARP3 Charger Pro). 
+* Zählerstand beim Start und Ende des Ladevorgangs (nur WARP3 Charger Pro).
 Hieraus wird die geladene Energie in  kWh berechnet.
 * Dauer des Ladevorgans.
 
@@ -24,7 +24,7 @@ Strompreis geändert wird, auch die angezeiten Kosten älterer
 Ladevorgänge geändert werden.
 
 Diese Informationen werden lokal auf dem WARP3 Charger gespeichert.
-Es wird kein Internetzugang oder eine Cloud o.ä. benötigt und die 
+Es wird kein Internetzugang oder eine Cloud o.ä. benötigt und die
 Daten werden nicht an dritte übertragen.
 
 
@@ -44,7 +44,7 @@ Die Benutzer können unter `Benutzer` -> `Benutzerverwaltung` bearbeitet werden.
 ![image](/img/first_steps/user_configuration.png)
 
 Im Screenshot haben wir zusätzlich zu den Default-Benutzern einen "Doku Nutzer"
-hinzugefügt der im auf 16A Ladestrom begrenzt ist. 
+hinzugefügt der im auf 16A Ladestrom begrenzt ist.
 Dafür einfach auf das "+" unten rechts klicken und einen
 Benutzernamen, einen Anzeigenamen und den maximalen Ladestrom für diesen Nutzer
 eintragen.
@@ -63,8 +63,8 @@ Es können beliebige NFC-Tags von den unterstützten Typen angelernt werden
 ![image](/img/first_steps/nfc_configuration.png)
 
 Zum Hinzufügen eins NFC-Tags wieder auf das "+" unten rechts klicken.
-In dem Tag-hinzufügen-Fenster werden die zuletzt erkannten NFC-Tags angezeigt.
-D.h. man kann zum anlernen eines Tags einfach das Tag vor der Konfiguration
+Im Tag-hinzufügen-Fenster werden die zuletzt erkannten NFC-Tags angezeigt.
+D.h. man kann zum Anlernen eines Tags einfach das Tag vor der Konfiguration
 einmal an die Wallbox halten um es dann hier auszuwählen.
 
 Im Beispiel ordnen wir dem "Doku Nutzer" ein NFC-Forum-Typ2-Tag zu.
@@ -76,7 +76,7 @@ Wallbox einen neuen Benutzer der auch vom Ladelogbuch genutzt wird.
 
 ## Ladelog-Export als PDF oder CSV
 
-Aufgezeichnete Ladevorgänge können im Webinterface unter 
+Aufgezeichnete Ladevorgänge können im Webinterface unter
 `Wallbox` -> `Ladetracker` entweder als PDF, oder als ein CSV-Dokument,
 kompatibel zu üblichen Tabellenkalkulationsprogrammen, heruntergeladen
 werden. Außerdem kann das erzeugte Dokument vorgefiltert werden, um
@@ -91,11 +91,11 @@ Zeichen umfassen. Der Briefkopf wird in der PDF so hinterlegt, dass er
 bei üblicher Faltung im Fenster eines Briefumschlags sichtbar ist.
 
 An dieser Stelle können auch Informationen zum Firmenfahrzeug o.ä.
-eingetragen werden. So ist sichergestellt dass das Ladelogbuch zu 
+eingetragen werden. So ist sichergestellt dass das Ladelogbuch zu
 unterschiedlichsten Unternehmensrichtlinien zum Abrechnen von
 Firmen-Elektrofahrzeugen kompatibel ist.
 
-Ein Beispiel-PDF-Ladelog kann unter 
+Ein Beispiel-PDF-Ladelog kann unter
 https://www.warp-charger.com/documents/beispiel_ladelog.pdf
 heruntergeladen werden.
 
