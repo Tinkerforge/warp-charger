@@ -64,8 +64,7 @@ Hersteller-Protokolle, unter anderem SMA und SunGrow. Eine andere Möglichkeit
 ist es den Zähler über eine Hausautomatisierung o.ä. virtuell über die API
 anzulegen.
 
-Eine Liste der unterstützen und von uns getesteten Zählern ist unter
-TODO zu finden.
+Siehe [Liste der unterstützen und von uns getesteten Zähler](/docs/compatible_meters).
 
 Im folgenden Beispiel für wir einen KOSTAL Smart Energy Meter als
 Zähler hinzugefügt. Dafür muss nur einmal die IP-Adresse des Zählers
