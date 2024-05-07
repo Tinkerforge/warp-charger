@@ -28,7 +28,7 @@ Der WARP3 Charger zeichnet sich durch folgende technische Spezifikation aus:
 | Ladekabellänge | 5,0 m und 7,5 m (*) |
 | Zuleitungsquerschnitt | 2,5 mm² bis 10 mm² |
 | Zuleitungseinführung | Von der Unterseite und Rückseite möglich |
-| Abmessungen Wallbox | Breite 280 mm × Höhe 215 mm × Tiefe 95 mm (Bounding Box) |
+| Abmessungen Wallbox | 280 × 215 × 95 mm (B/H/T, Bounding Box) |
 | Anbringung | [Siehe Bohrschablone](https://www.warp-charger.com/documents/WARP3_Bohrschablone.pdf) |
 | Gewicht | Je nach Kabellänge, ca. 8 kg (*) |
 | Schutzart | IP54 (spritzwassergeschützt, für den Außenbereich geeignet) |
