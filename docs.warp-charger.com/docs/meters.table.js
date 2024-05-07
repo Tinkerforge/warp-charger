@@ -117,14 +117,14 @@ export const meters = [
     manufacturer: "Tinkerforge",
     protocol: "HTTP",
     note: "Siehe MQTT und HTTP API -> API-Referenz -> meters",
-    note_url: "https://docs.warp-charger.com/mqtt_http/api_referenz/meters",
+    note_url: "https://docs.warp-charger.com/docs/mqtt_http/api_reference/meters",
   },
   {
     name: "WARP Push-API",
     manufacturer: "Tinkerforge",
     protocol: "MQTT",
     note: "Siehe MQTT und HTTP API -> API-Referenz -> meters",
-    note_url: "https://docs.warp-charger.com/mqtt_http/api_referenz/meters",
+    note_url: "https://docs.warp-charger.com/docs/mqtt_http/api_reference/meters",
   },
 ];
 

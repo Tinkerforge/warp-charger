@@ -38,7 +38,7 @@ Mit
 ```bash
 mosquitto_sub -v -t "warp/AbCd/#"
 ```
-können alle Nachrichten der Wallbox angezeigt werden. (Den Präfix `warp/AbCd` durch den konfigurierten ersetzen) Es könnte z.B. die folgende Nachricht auf [`warp/AbCd/evse/state`](api_referenz/evse#evse_state) empfangen werden:
+können alle Nachrichten der Wallbox angezeigt werden. (Den Präfix `warp/AbCd` durch den konfigurierten ersetzen) Es könnte z.B. die folgende Nachricht auf [`warp/AbCd/evse/state`](api_reference/evse#evse_state) empfangen werden:
 ```jsx
 {
   "iec61851_state": 1,
@@ -51,9 +51,9 @@ können alle Nachrichten der Wallbox angezeigt werden. (Den Präfix `warp/AbCd` 
   "dc_fault_current_state": 0
 }
 ```
-Die Nachrichten des Topics [`evse/state`](api_referenz/evse#evse_state) geben einen Überblick über den Zustand des Ladecontrollers. Beispielsweise liegt der erlaubte Ladestrom gerade bei 32000, also 32 Ampere.
+Die Nachrichten des Topics [`evse/state`](api_reference/evse#evse_state) geben einen Überblick über den Zustand des Ladecontrollers. Beispielsweise liegt der erlaubte Ladestrom gerade bei 32000, also 32 Ampere.
 
-Durch Senden der Nachricht `{"current":8000}` an das Topic  [`evse/global_current_update`](api_referenz/evse#evse_global_current_update) kann der Ladestrom auf 8 Ampere begrenzt werden, zum Beispiel so:
+Durch Senden der Nachricht `{"current":8000}` an das Topic  [`evse/global_current_update`](api_reference/evse#evse_global_current_update) kann der Ladestrom auf 8 Ampere begrenzt werden, zum Beispiel so:
 ```bash
 mosquitto_pub -t "warp/AbCd/evse/global_current_update" -m "{\"current\": 8000}"
 ```
@@ -61,7 +61,7 @@ mosquitto_pub -t "warp/AbCd/evse/global_current_update" -m "{\"current\": 8000}"
 
 :::info
 
-Zur Vereinfachung wird hier [`evse/global_current_update`](api_referenz/evse#evse_global_current) verwendet. Der mit dieser API gesetzte Strom wird im Flash des Ladecontrollers gespeichert und sollte deshalb **nicht häufig** gesetzt werden, um den Flash zu schonen. Häufige Änderungen des Ladestroms (z.B. für eine externe Steuerung, ein PV-Überschussladen ö.Ä. ) sollten stattdessen über die API [`evse/external_current_update`](api_referenz/evse#evse_external_current) erfolgen, die auf der Unterseite Wallbox -> Einstellung mit dem Punkt "Externe Steuerung" aktiviert werden kann.
+Zur Vereinfachung wird hier [`evse/global_current_update`](api_reference/evse#evse_global_current) verwendet. Der mit dieser API gesetzte Strom wird im Flash des Ladecontrollers gespeichert und sollte deshalb **nicht häufig** gesetzt werden, um den Flash zu schonen. Häufige Änderungen des Ladestroms (z.B. für eine externe Steuerung, ein PV-Überschussladen ö.Ä. ) sollten stattdessen über die API [`evse/external_current_update`](api_reference/evse#evse_external_current) erfolgen, die auf der Unterseite Wallbox -> Einstellung mit dem Punkt "Externe Steuerung" aktiviert werden kann.
 
 :::
 
@@ -93,7 +93,7 @@ Die HTTP-API kann ohne vorherige Konfiguration verwendet werden. Optional könne
 
 ### Grundlagen
 
-Die HTTP-API ist strukturell identisch zur MQTT-API: Wenn die MQTT-API beispielsweise das Topic [`warp/AbCd/evse/state`](api_referenz/evse#evse_state) verwendet, kann die selbe API über die URL `http://warp-AbCd/evse/state erreicht werden`. Die HTTP-API verfügt allerdings über einige fortgeschrittene Funktionen, die nicht über MQTT verfügbar sind. Es können zusätzlich die [WebSockets](https://en.wikipedia.org/wiki/WebSocket) unter z.B. `ws://warp-AbCd/ws` verwendet werden. Über eine WebSocket-Verbindung überträgt die Wallbox (analog zu MQTT) automatisch aktualisierte Werte.
+Die HTTP-API ist strukturell identisch zur MQTT-API: Wenn die MQTT-API beispielsweise das Topic [`warp/AbCd/evse/state`](api_reference/evse#evse_state) verwendet, kann die selbe API über die URL `http://warp-AbCd/evse/state erreicht werden`. Die HTTP-API verfügt allerdings über einige fortgeschrittene Funktionen, die nicht über MQTT verfügbar sind. Es können zusätzlich die [WebSockets](https://en.wikipedia.org/wiki/WebSocket) unter z.B. `ws://warp-AbCd/ws` verwendet werden. Über eine WebSocket-Verbindung überträgt die Wallbox (analog zu MQTT) automatisch aktualisierte Werte.
 
 Um Analog zum MQTT-Beispiel alle von der Wallbox gesendeten Nachrichten zu empfangen, kann eine WebSocket-Verbindung benutzt werden. Hierzu und für die weiteren Beispiele werden [websocat](https://github.com/vi/websocat) und [curl](https://curl.se/) verwendet und davon ausgegangen, dass die Wallbox unter dem Hostnamen warp-AbCd erreichbar ist.
 
@@ -146,7 +146,7 @@ curl -X PUT -d "{\"current\":8000}" warp-AbCd/evse/global_current_update
 
 :::info
 
-Zur Vereinfachung wird hier [`evse/global_current_update`](api_referenz/evse#evse_global_current) verwendet. Der mit dieser API gesetzte Strom wird im Flash des Ladecontrollers gespeichert und sollte deshalb **nicht häufig** gesetzt werden, um den Flash zu schonen. Häufige Änderungen des Ladestroms (z.B. für eine externe Steuerung, ein PV-Überschussladen ö.Ä. ) sollten stattdessen über die API [`evse/external_current_update`](api_referenz/evse#evse_external_current) erfolgen, die auf der Unterseite Wallbox -> Einstellung mit dem Punkt "Externe Steuerung" aktiviert werden kann.
+Zur Vereinfachung wird hier [`evse/global_current_update`](api_reference/evse#evse_global_current) verwendet. Der mit dieser API gesetzte Strom wird im Flash des Ladecontrollers gespeichert und sollte deshalb **nicht häufig** gesetzt werden, um den Flash zu schonen. Häufige Änderungen des Ladestroms (z.B. für eine externe Steuerung, ein PV-Überschussladen ö.Ä. ) sollten stattdessen über die API [`evse/external_current_update`](api_reference/evse#evse_external_current) erfolgen, die auf der Unterseite Wallbox -> Einstellung mit dem Punkt "Externe Steuerung" aktiviert werden kann.
 
 :::
 
@@ -177,12 +177,12 @@ bzw.
 [1, "Hello World"]
 ```
 
-Ein konkreteres Beispiel: Die API [`meters/1/config`](api_referenz/meters#meters_X_config) konfiguriert den Stromzähler im Slot 1. Eine Wallbox im Auslieferungszustand hat nur einen Stromzähler auf Slot 0 (den möglicherweise intern verbauten Zähler) konfiguriert. Deshalb hat `meters/1/config` standardmäßig den Wert
+Ein konkreteres Beispiel: Die API [`meters/1/config`](api_reference/meters#meters_X_config) konfiguriert den Stromzähler im Slot 1. Eine Wallbox im Auslieferungszustand hat nur einen Stromzähler auf Slot 0 (den möglicherweise intern verbauten Zähler) konfiguriert. Deshalb hat `meters/1/config` standardmäßig den Wert
 ```jsx
 [0, null]
 ```
 also das Tag 0 mit keinen weiteren Daten (ausgedrückt durch `null`)
-Laut [Dokumentation dieser API](api_referenz/meters#meters_X_config) bedeutet das Tag 0, dass kein Stromzähler konfiguriert ist.
+Laut [Dokumentation dieser API](api_reference/meters#meters_X_config) bedeutet das Tag 0, dass kein Stromzähler konfiguriert ist.
 
 Soll stattdessen ein Zähler konfiguriert werden, der seine Werte über das SMA Speedwire-Protokoll empfängt (Tag 7), wird zusätzlich der Anzeigename des Zählers benötigt. Es muss also die folgende Konfiguration gesetzt werden:
 ```jsx

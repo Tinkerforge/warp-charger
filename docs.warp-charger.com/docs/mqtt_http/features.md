@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Features
 
-WARP Charger und Energy Manager melden die jeweils unterstützten Features auf dem Topic [`info/features`](api_referenz/info#info_features). Mithilfe der Features ist es möglich, dass eine Anwendung die API so verwendet, dass sie mit allen Versionen und Varianten des WARP Chargers kompatibel ist. Feature-Voraussetzungen sind an API-Topics in der Referenz vermerkt. Folgende Features können angeboten werden:
+WARP Charger und Energy Manager melden die jeweils unterstützten Features auf dem Topic [`info/features`](api_reference/info#info_features). Mithilfe der Features ist es möglich, dass eine Anwendung die API so verwendet, dass sie mit allen Versionen und Varianten des WARP Chargers kompatibel ist. Feature-Voraussetzungen sind an API-Topics in der Referenz vermerkt. Folgende Features können angeboten werden:
 
 ## `evse` Ladecontroller
 
@@ -16,7 +16,7 @@ Der Ladecontroller kann das Control Pilot-Signal unterbrechen.
 
 ## `phase_switch` Phasenwechsel
 
-Hardware und Konfiguration erlauben eine manuelle Phasenumschaltung mit der API [`power_manager/external_current_update`](api_referenz/power_manager#power_manager_external_current_update).
+Hardware und Konfiguration erlauben eine manuelle Phasenumschaltung mit der API [`power_manager/external_current_update`](api_reference/power_manager#power_manager_external_current_update).
 
 ## `button_configuration` Button-Konfiguration
 

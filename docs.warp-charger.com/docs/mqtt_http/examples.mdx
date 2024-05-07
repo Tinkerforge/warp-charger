@@ -13,9 +13,9 @@ import Admonition from '@theme/Admonition';
 
 Der Ladevorgang kann mit folgenden APIs gesteuert werden:
 
-- [`evse/start_charging`](api_referenz/evse#evse_start_charging) startet einen Ladevorgang. Ein Ladevorgang startet automatisch, es sei denn die manuelle Ladefreigabe (unter Wallbox -> Einstellungen bzw. [`evse/auto_start_charging`](api_referenz/evse#evse_auto_start_charging)) ist aktiviert.
-- [`evse/stop_charging`](api_referenz/evse#evse_stop_charging) stoppt einen Ladevorgang. Ein gestoppter Ladevorgang kann mit [`evse/start_charging`](api_referenz/evse#evse_start_charging) wieder aktiviert werden.
-- [`evse/external_current`](api_referenz/evse#evse_external_current) setzt ein Ladestromlimit. Dafür muss die externe Steuerung (unter Wallbox -> Einstellungen bzw. [`evse/external_enabled`](api_referenz/evse#evse_external_enabled))  aktiviert werden.
+- [`evse/start_charging`](api_reference/evse#evse_start_charging) startet einen Ladevorgang. Ein Ladevorgang startet automatisch, es sei denn die manuelle Ladefreigabe (unter Wallbox -> Einstellungen bzw. [`evse/auto_start_charging`](api_reference/evse#evse_auto_start_charging)) ist aktiviert.
+- [`evse/stop_charging`](api_reference/evse#evse_stop_charging) stoppt einen Ladevorgang. Ein gestoppter Ladevorgang kann mit [`evse/start_charging`](api_reference/evse#evse_start_charging) wieder aktiviert werden.
+- [`evse/external_current`](api_reference/evse#evse_external_current) setzt ein Ladestromlimit. Dafür muss die externe Steuerung (unter Wallbox -> Einstellungen bzw. [`evse/external_enabled`](api_reference/evse#evse_external_enabled))  aktiviert werden.
 
 :::tip
 
@@ -79,9 +79,9 @@ Ein Ladevorgang kann auch aus anderen Gründen gestoppt bzw. blockiert sein, bei
 
 :::tip
 
-Eine Ladestromgrenze kann auch über [`evse/global_current`](api_referenz/evse#evse_global_current) gesetzt werden.
+Eine Ladestromgrenze kann auch über [`evse/global_current`](api_reference/evse#evse_global_current) gesetzt werden.
 Diese Grenze wird allerdings im Flash des Ladecontrollers gespeichert.
-Bei häufigem Setzen der Ladestromgrenze sollte (um den Flash des Ladecontrollers) zu schonen, deshalb [`evse/external_current`](api_referenz/evse#evse_external_current) verwendet werden.
+Bei häufigem Setzen der Ladestromgrenze sollte (um den Flash des Ladecontrollers) zu schonen, deshalb [`evse/external_current`](api_reference/evse#evse_external_current) verwendet werden.
 
 :::
 
@@ -147,9 +147,9 @@ Bei häufigem Setzen der Ladestromgrenze sollte (um den Flash des Ladecontroller
 
 Mit folgenden APIs kann ein Tag vorgetäuscht werden:
 
-- [`nfc/inject_tag_start`](api_referenz/nfc#nfc_inject_tag_start) Täuscht ein NFC-Tag vor. Das Tag kann einen Ladevorgang starten, wenn es bekannt und einem Nutzer zugeordnet ist. Falls bereits ein Ladevorgang läuft wird dieses Tag ignoriert.
-- [`nfc/inject_tag_stop`](api_referenz/nfc#nfc_inject_tag_stop) Täuscht ein NFC-Tag vor. Das Tag kann einen Ladevorgang stoppen, wenn es bekannt und einem Nutzer zugeordnet ist. Falls kein Ladevorgang läuft wird dieses Tag ignoriert.
-- [`nfc/inject_tag`](api_referenz/nfc#nfc_inject_tag) Täuscht ein NFC-Tag vor, das einen Ladevorgang sowohl starten, als auch stoppen kann, wenn es bekannt und einem Nutzer zugeordnet ist.
+- [`nfc/inject_tag_start`](api_reference/nfc#nfc_inject_tag_start) Täuscht ein NFC-Tag vor. Das Tag kann einen Ladevorgang starten, wenn es bekannt und einem Nutzer zugeordnet ist. Falls bereits ein Ladevorgang läuft wird dieses Tag ignoriert.
+- [`nfc/inject_tag_stop`](api_reference/nfc#nfc_inject_tag_stop) Täuscht ein NFC-Tag vor. Das Tag kann einen Ladevorgang stoppen, wenn es bekannt und einem Nutzer zugeordnet ist. Falls kein Ladevorgang läuft wird dieses Tag ignoriert.
+- [`nfc/inject_tag`](api_reference/nfc#nfc_inject_tag) Täuscht ein NFC-Tag vor, das einen Ladevorgang sowohl starten, als auch stoppen kann, wenn es bekannt und einem Nutzer zugeordnet ist.
 
 Allen drei APIs muss der Typ, sowie die ID das Tags übergeben werden.
 
