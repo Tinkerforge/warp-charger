@@ -45,5 +45,5 @@ for x in mods:
     content = x.to_md()
     content = re.sub("{{{ref:([^}]*)}}}", resolve_ref_md, content)
     content = re.sub("{{{mod_ref:([^}]*)}}}", resolve_mod_ref_md, content)
-    with open(f"../docs.warp-charger.com/docs/mqtt_http/api_referenz/{x.name}.mdx", "w") as f:
+    with open(f"../docs.warp-charger.com/docs/mqtt_http/api_reference/{x.name}.mdx", "w") as f:
         f.write(content)
