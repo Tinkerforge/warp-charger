@@ -11,7 +11,7 @@ Die Säulen zeichnen sich durch folgende technische Spezifikation aus:
 
 | Eigenschaft | Wert |
 |-|-|
-| Anzahl WARP2 Charger | 1‐2 |
+| Anzahl WARP Charger | 1‐2 |
 | Abmessungen | 300 × 1500 × 100 mm (B/H/T), siehe Unten für Details |
 | Lieferumfang | Ladesäule mit 1 oder 2 WARP Chargern, Bodenplatte, Lochbildschablone |
 

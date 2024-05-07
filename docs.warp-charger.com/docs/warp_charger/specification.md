@@ -13,11 +13,11 @@ Der WARP3 Charger zeichnet sich durch folgende technische Spezifikation aus:
 | Ladestandard | DIN EN 61851‐1 |
 | Nennspannung | 230 V 1-phasig AC / 400 V 3-phasig AC |
 | Nennfrequenz | 50 Hz |
-| Stromverbrauch | Basic/Smart ≤ 3 W; Pro ≤ 5 W  (Standby, WLAN an) |
+| Stromverbrauch | Basic / Smart ≤ 3 W; Pro ≤ 5 W (Standby, WLAN aktiv) |
 | Nennstrom | 16 A / 32 A (*) |
 | Betriebstemperatur | ‐25 °C bis +50 °C (Durchschnitt in 24 h: < 35 °C) |
 | Fehlerstromerkennung | DC 6 mA (integriert) |
-| Strommessung | Integrierter MID‐geeichter Stromzähler nach EU‐Mess‐ geräterichtlinie 2014/32/EU (nur Pro) |
+| Strommessung | Integrierter MID‐geeichter Stromzähler nach EU‐Messgeräterichtlinie 2014/32/EU (nur Pro) |
 | §14a EnWG steuerbar | Mittels internen Abschalteingang, über Schnittstellen oder WARP Energy Manager |
 
 ### Mechanische Eigenschaften
@@ -38,17 +38,17 @@ Der WARP3 Charger zeichnet sich durch folgende technische Spezifikation aus:
 
 | Eigenschaft | Wert |
 |-|-|
-| Ladestrom | Konfigurierbar in mA Schritten |
+| Ladestrom | Konfigurierbar in 1 mA Schritten |
 | Phasenumschaltung | Intern zwischen einphasig und dreiphasig |
 | CP-Trennung | Automatische Simulation von an- und abstecken des Kabels zum Aufwecken von Autos |
 | Zugangsverriegelung | NFC (RFID), Webinterface, API |
-| Lastmanagement | Statisch/dynamisch (**) integriert, max. 32 WARP Charger |
+| Lastmanagement | Statisch / dynamisch (**) integriert, max. 32 WARP Charger |
 | NFC‐Tags | 3 NFC Karten im Lieferumfang, max. 32 anlernbar |
 | NFC Typen | NFC Forum Typ1, Typ2, Typ3 und Mifare Classic unterstützt (auch eigene Karten anlernbar) |
 | Benutzer | Max. 32 konfigurierbar |
 | Schnittstellen | HTTP, MQTT, Modbus/TCP, OCPP, SunSpec |
 | Modbus-Register | WARP Charger Tabelle und Simulation von Bender CC613 und Keba C-Series |
 
-(*) Je nach Variante der Wallbox (Basic/Smart/Pro, 5m/7,5m, 11kW/22kW).
+(*) Je nach Variante der Wallbox (Basic / Smart / Pro, 5 m / 7,5 m, 11 kW / 22 kW).
 
 (**) Das Feature dynamisches Lastmanagement wird zeitnah mittels Softwareupdate ausgerollt.

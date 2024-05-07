@@ -7,7 +7,7 @@ import { columns, meters, moduleTests } from "./meters.table";
 
 # Kompatible Stromzähler
 
-Um ein [PV-Überschlussladen](warp_charger/pv_excess_charging) zu ermöglichen, musss
+Um ein [PV-Überschlussladen](warp_charger/pv_excess_charging) zu ermöglichen, muss
 der WARP Charger oder der WARP Energy Manager Zugriff auf einen Stromzähler am Hausanschluss haben,
 da nur dort der eigentliche PV-Überschuss ermittelt werden kann.
 
@@ -21,7 +21,7 @@ Ist ein Wechselrichter oder Energiemanager vorhanden der Zugriff auf einen Strom
 
 Generell sollte jedes SunSpec-kompatible Gerät ausgelesen werden können, wir führen hier allerdings nur getestet Geräte auf.
 
-Wenn du einen Wechselrichter oder Energiemanager mit SunSpec-Unterstützung hast der bei dir funktionert und noch nicht in der Liste ist, schicke uns doch eine Email an [info@tinkerforge.com](mailto://info@tinkerforge.com) damit wir die Liste aktualisieren können.
+Wenn du einen Wechselrichter oder Energiemanager mit SunSpec-Unterstützung hast der bei dir funktioniert und noch nicht in der Liste ist, schicke uns doch eine Email an [info@tinkerforge.com](mailto://info@tinkerforge.com) damit wir die Liste aktualisieren können.
 
 :::note
 

@@ -5,7 +5,7 @@ sidebar_position: 1
 # Konfiguration
 
 Das Modbus-Protokoll ist ein Kommunikationsprotokoll welches es in
-verschienden Varianten gibt.
+verschiedenen Varianten gibt.
 
 Die WARP Charger unterstützen [Modbus/TCP](https://de.wikipedia.org/wiki/Modbus)
 und agieren dabei als Modbus-Server. Im Auslieferungszustand ist Modbus deaktiviert

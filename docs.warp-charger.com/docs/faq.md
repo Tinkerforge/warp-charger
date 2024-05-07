@@ -75,7 +75,7 @@ Es gibt verschiedene Möglichkeiten, die Ladefunktion einen WARP Chargers zu kon
 * Über HTTP, MQTT, OCPP bzw. Modbus/TCP kann die Wallbox gesteuert werden. Siehe auch [API-Dokumentation](category/api-referenz)
 * Das Verhalten auf die Eingänge des WARP Energy Managers können konfiguriert werden. Unter anderem ist eine Reduktion der Ladeleistung/Abschaltung möglich. Der WARP Energy Manager steuert die Wallboxen über eine (WLAN/LAN-)Netzwerkverbindung, so dass eine Steuerung aus der Ferne möglich ist.
 * Es ist auch möglich einen Rundsteuerempfänger oder ähnlichen Abschalter direkt an die Wallbox anschließen. Hierzu gibt es in der Wallbox einen konfigurierbaren Abschalteingang. Eventuell muss zur Durchführung des Abschalters ein Loch in das Gehäuse der Wallbox gebohrt werden.
-* Mehr Informationen zu diesem Thema gibt es auch auf der Infoseit zu [§14a EnWG](https://warp-charger.com/%c2%a714a-enwg/).
+* Mehr Informationen zu diesem Thema gibt es auch auf der Infoseite zu [§14a EnWG](https://warp-charger.com/%c2%a714a-enwg/).
 
 ### Kann ein bereits vorhandener/anderer Stromzähler verwendet werden?
 

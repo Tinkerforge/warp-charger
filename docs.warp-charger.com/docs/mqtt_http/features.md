@@ -40,7 +40,7 @@ Ein RTC-Bricklet oder der RTC-Chip einer WARP3 oder eines Energy Managers wurde 
 
 ## `meter` (veraltete API) Stromzähler
 
-Ein Stromzähler und Hardware zum Auslesen desselben über RS485 ist verfügbar. Dieses Feature wird erst gesetzt, wenn ein Stromzähler mindestens einmal erfolgreich über Modbus ausgelesen wuerde.
+Ein Stromzähler und Hardware zum Auslesen desselben über RS485 ist verfügbar. Dieses Feature wird erst gesetzt, wenn ein Stromzähler mindestens einmal erfolgreich über Modbus ausgelesen wurde.
 
 ## `meter_phases` (veraltete API) Stromzähler misst phasenweise
 

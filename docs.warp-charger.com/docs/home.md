@@ -15,7 +15,7 @@ Zusätzlich stellen wir eine ausführliche Dokumentation mit Beispielen zur
 * [MQTT/HTTP API](mqtt_http/getting_started) sowie zur
 * [Modbus-Schnittstelle](modbus/configuration)
 
-bereit. Anleitungen zur integration von WARP Chargern in
+bereit. Anleitungen zur Integration von WARP Chargern in
 * [Heimautomatisierungs-Lösungen](smart_home/warp_automation) und
 * [EVCC](evcc)
 
