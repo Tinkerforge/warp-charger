@@ -8,8 +8,8 @@ import TabItem from '@theme/TabItem';
 import Admonition from '@theme/Admonition';
 
 # Veraltete Stromzähler-API
-**Bei Neuentwicklungen stattdessen [`meters`-Modul](meters.mdx) verwenden!**
-Die veraltete Stromzähler-API unterstützt nur einen Stromzähler (den, der als `linked_meter_slot` in [`meters_legacy_api/config`](meters_legacy_api.mdx#meters_legacy_api_config) konfiguriert ist) und kann nur eine Teilmenge der unterstützten Stromzählerwerte melden und verarbeiten. Die veraltete API wird vom [`meters_legacy_api`-Modul](meters_legacy_api.mdx) emuliert.
+**Bei Neuentwicklungen stattdessen [`meters`-Modul](/mqtt_http/api_reference/meters.mdx) verwenden!**
+Die veraltete Stromzähler-API unterstützt nur einen Stromzähler (den, der als `linked_meter_slot` in [`meters_legacy_api/config`](/mqtt_http/api_reference/meters_legacy_api.mdx#meters_legacy_api_config) konfiguriert ist) und kann nur eine Teilmenge der unterstützten Stromzählerwerte melden und verarbeiten. Die veraltete API wird vom [`meters_legacy_api`-Modul](/mqtt_http/api_reference/meters_legacy_api.mdx)-Modul emuliert.
 <Tabs groupId="hardwareType" queryString className="hidden-tabs">
 <TabItem value="warp1">
 ## `meter/state` {#meter_state_warp1}
@@ -993,7 +993,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meter/reset -m 'null'
 ## `meter/last_reset` {#meter_last_reset_warp1}
 
 
-Der Zeitpunkt des letzten Zähler-Resets (siehe [`meter/reset`](meter.mdx#meter_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.
+Der Zeitpunkt des letzten Zähler-Resets (siehe [`meter/reset`](/mqtt_http/api_reference/meter.mdx#meter_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -1159,7 +1159,7 @@ curl http://$HOST/meter/history
     <TabItem value="http" label="HTTP (curl)">
 
 
-Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meter/history`](meter.mdx#meter_history) generiert.
+Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meter/history`](/mqtt_http/api_reference/meter.mdx#meter_history) generiert.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -2249,7 +2249,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meter/reset -m 'null'
 ## `meter/last_reset` {#meter_last_reset_warp2}
 
 
-Der Zeitpunkt des letzten Zähler-Resets (siehe [`meter/reset`](meter.mdx#meter_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.
+Der Zeitpunkt des letzten Zähler-Resets (siehe [`meter/reset`](/mqtt_http/api_reference/meter.mdx#meter_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -2385,7 +2385,7 @@ curl http://$HOST/meter/history
     <TabItem value="http" label="HTTP (curl)">
 
 
-Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meter/history`](meter.mdx#meter_history) generiert.
+Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meter/history`](/mqtt_http/api_reference/meter.mdx#meter_history) generiert.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -3475,7 +3475,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meter/reset -m 'null'
 ## `meter/last_reset` {#meter_last_reset_warp3}
 
 
-Der Zeitpunkt des letzten Zähler-Resets (siehe [`meter/reset`](meter.mdx#meter_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.
+Der Zeitpunkt des letzten Zähler-Resets (siehe [`meter/reset`](/mqtt_http/api_reference/meter.mdx#meter_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -3611,7 +3611,7 @@ curl http://$HOST/meter/history
     <TabItem value="http" label="HTTP (curl)">
 
 
-Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meter/history`](meter.mdx#meter_history) generiert.
+Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meter/history`](/mqtt_http/api_reference/meter.mdx#meter_history) generiert.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -4701,7 +4701,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meter/reset -m 'null'
 ## `meter/last_reset` {#meter_last_reset_wem}
 
 
-Der Zeitpunkt des letzten Zähler-Resets (siehe [`meter/reset`](meter.mdx#meter_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.
+Der Zeitpunkt des letzten Zähler-Resets (siehe [`meter/reset`](/mqtt_http/api_reference/meter.mdx#meter_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -4837,7 +4837,7 @@ curl http://$HOST/meter/history
     <TabItem value="http" label="HTTP (curl)">
 
 
-Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meter/history`](meter.mdx#meter_history) generiert.
+Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meter/history`](/mqtt_http/api_reference/meter.mdx#meter_history) generiert.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -5960,7 +5960,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meter/reset -m 'null'
 ## `meter/last_reset` {#meter_last_reset_any}
 
 
-Der Zeitpunkt des letzten Zähler-Resets (siehe [`meter/reset`](meter.mdx#meter_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.
+Der Zeitpunkt des letzten Zähler-Resets (siehe [`meter/reset`](/mqtt_http/api_reference/meter.mdx#meter_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde, oder zum Zeitpunkt des Resets keine Netzwerk-Zeitsynchronisierung vorlag.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -6129,7 +6129,7 @@ curl http://$HOST/meter/history
     <TabItem value="http" label="HTTP (curl)">
 
 
-Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meter/history`](meter.mdx#meter_history) generiert.
+Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meter/history`](/mqtt_http/api_reference/meter.mdx#meter_history) generiert.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">

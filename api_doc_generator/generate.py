@@ -21,7 +21,7 @@ def resolve_ref_md(match):
         anchor = "{}_{}".format(module, fn.replace("/", "_"))
         link_text = "`{}/{}`".format(module, fn) if label is None else label
 
-    return f"[{link_text}]({module}.mdx#{anchor})"
+    return f"[{link_text}](/mqtt_http/api_reference/{module}.mdx#{anchor})"
 
 def resolve_mod_ref_md(match):
     ref = match.group(1)
@@ -39,7 +39,7 @@ def resolve_mod_ref_md(match):
     #     link_text = "{}/{}".format(module, fn) if label is None else label
 
 
-    return f"[{label}]({ref}.mdx)"
+    return f"[{label}](/mqtt_http/api_reference/{ref}.mdx)"
 
 for x in mods:
     content = x.to_md()

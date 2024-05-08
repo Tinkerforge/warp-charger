@@ -12,23 +12,23 @@ WARP Charger und Energy Manager unterstützen mehrere Stromzähler.
     Die Stromzähler-API ist aufgeteilt in einem allgemeinen Teil unter `meters/...`
     und einen Stromzähler-spezifischen Teil unter `meters/X/...` wobei `X` einer Stromzähler-Nummer entspricht.
     Der Stromzähler-spezifische Teil beinhaltet immer
-    - [`meters/X/value_ids`](meters.mdx#meters_X_value_ids)
-    - [`meters/X/values`](meters.mdx#meters_X_values)
-    - [`meters/X/live`](meters.mdx#meters_X_live)
-    - [`meters/X/history`](meters.mdx#meters_X_history)
+    - [`meters/X/value_ids`](/mqtt_http/api_reference/meters.mdx#meters_X_value_ids)
+    - [`meters/X/values`](/mqtt_http/api_reference/meters.mdx#meters_X_values)
+    - [`meters/X/live`](/mqtt_http/api_reference/meters.mdx#meters_X_live)
+    - [`meters/X/history`](/mqtt_http/api_reference/meters.mdx#meters_X_history)
 
     Beispielsweise können die Messwerte des ersten Stromzählers (der die Stromzählernummer 0 besitzt) unter `meters/0/values` gelesen werden.
     Außerdem hat jeder Zähler die APIs
-    - [`meters/X/config`](meters.mdx#meters_X_config)
-    - [`meters/X/state`](meters.mdx#meters_X_state)
-    - [`meters/X/errors`](meters.mdx#meters_X_errors)
+    - [`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config)
+    - [`meters/X/state`](/mqtt_http/api_reference/meters.mdx#meters_X_state)
+    - [`meters/X/errors`](/mqtt_http/api_reference/meters.mdx#meters_X_errors)
 
     deren Inhalt von der Klasse des Stromzählers abhängt.
-    Die Stromzählerklasse wird als das <a href="#unions_section">Union</a>-Tag von [`meters/X/config`](meters.mdx#meters_X_config) angegeben.
+    Die Stromzählerklasse wird als das <a href="#unions_section">Union</a>-Tag von [`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config) angegeben.
 
-    Jeder Stromzähler meldet seine Messwerte unter [`meters/X/values`](meters.mdx#meters_X_values) als ein Array von Floats.
-    Welcher Messwert wie zu interpretieren ist, kann unter [`meters/X/value_ids`](meters.mdx#meters_X_value_ids) (einem Array von Ints, den sogenannten MeterValueIDs) ausgelesen werden:
-    Wenn beispielsweise an Index 3 in [`meters/X/value_ids`](meters.mdx#meters_X_value_ids) die MeterValueID 13 gelesen wird, dann ist der [`meters/X/values`](meters.mdx#meters_X_values)-Wert an Index 3 als der Phasenstrom auf L1 zu interpretieren.
+    Jeder Stromzähler meldet seine Messwerte unter [`meters/X/values`](/mqtt_http/api_reference/meters.mdx#meters_X_values) als ein Array von Floats.
+    Welcher Messwert wie zu interpretieren ist, kann unter [`meters/X/value_ids`](/mqtt_http/api_reference/meters.mdx#meters_X_value_ids) (einem Array von Ints, den sogenannten MeterValueIDs) ausgelesen werden:
+    Wenn beispielsweise an Index 3 in [`meters/X/value_ids`](/mqtt_http/api_reference/meters.mdx#meters_X_value_ids) die MeterValueID 13 gelesen wird, dann ist der [`meters/X/values`](/mqtt_http/api_reference/meters.mdx#meters_X_values)-Wert an Index 3 als der Phasenstrom auf L1 zu interpretieren.
 
     Alle MeterValueIDs sind auf Github dokumentiert: [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
     <br/>
@@ -39,7 +39,7 @@ WARP Charger und Energy Manager unterstützen mehrere Stromzähler.
 ## `meters/X/values` {#meters_X_values_warp1}
 
 
-Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meters/X/value_ids`](meters.mdx#meters_X_value_ids) ermittelt werden.
+Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meters/X/value_ids`](/mqtt_http/api_reference/meters.mdx#meters_X_value_ids) ermittelt werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -94,7 +94,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/values
 ## `meters/X/update` {#meters_X_update_warp1}
 
 
-Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzähler (Union-Tag 4 in der entsprechenden [`meters/X/config`](meters.mdx#meters_X_config)) verwendet werden.
+Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzähler (Union-Tag 4 in der entsprechenden [`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config)) verwendet werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -110,7 +110,7 @@ curl http://$HOST/meters/1/update -d '[
 ```
 
 Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
-Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
+Die korrekte Konfiguration ([`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config)) für diesen Zähler wäre
 ```jsx
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
@@ -130,7 +130,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/1/update -m '[
 ```
 
 Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
-Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
+Die korrekte Konfiguration ([`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config)) für diesen Zähler wäre
 ```jsx
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
@@ -145,7 +145,7 @@ Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) fü
 ## `meters/X/value_ids` {#meters_X_value_ids_warp1}
 
 
-Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [`meters/X/values`](meters.mdx#meters_X_values) an. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [`meters/X/values`](/mqtt_http/api_reference/meters.mdx#meters_X_values) an. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -291,7 +291,7 @@ curl http://$HOST/meters/1/history
     <TabItem value="http" label="HTTP (curl)">
 
 
-Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/X/history`](meters.mdx#meters_X_history) generiert.
+Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/X/history`](/mqtt_http/api_reference/meters.mdx#meters_X_history) generiert.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -388,7 +388,7 @@ curl http://$HOST/meters/1/config
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
 Konfiguriert für den Stromzähler-Slot 1
-einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 4 ist das Union-Tag des API-Stromzählers.
 
@@ -399,7 +399,7 @@ curl http://$HOST/meters/1/config -d '[4, { "display_name": "API-Zähler", "valu
 ```
 
 Konfiguriert für den Stromzähler-Slot 1
-einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 4 ist das Union-Tag des API-Stromzählers.
 
@@ -418,7 +418,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/config
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
 Konfiguriert für den Stromzähler-Slot 1
-einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 4 ist das Union-Tag des API-Stromzählers.
 
@@ -432,7 +432,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/1/config_update -m '[4, { "display_na
 ```
 
 Konfiguriert für den Stromzähler-Slot 1
-einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 4 ist das Union-Tag des API-Stromzählers.
 
@@ -499,7 +499,7 @@ null: Kein Stromzähler konfiguriert.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`value_ids`<br/>int[..]</th>
     <td>
-        MeterValueIDs, die über die API [meters/X/update](meters.mdx#meters_X_values) gesetzt werden können sollen. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+        MeterValueIDs, die über die API [meters/X/update](/mqtt_http/api_reference/meters.mdx#meters_X_values) gesetzt werden können sollen. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
     </td>
 </tr>
     </tbody>
@@ -561,7 +561,7 @@ null: Kein Stromzähler konfiguriert.
 ## `meters/X/state` {#meters_X_state_warp1}
 
 
-Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](meters.mdx#meters_X_config) konfiguriert wurde.
+Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config) konfiguriert wurde.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -692,7 +692,7 @@ null: Zustand des SunSpec-Stromzählers. Im Moment leer.
 ## `meters/X/errors` {#meters_X_errors_warp1}
 
 
-Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](meters.mdx#meters_X_config) konfiguriert wurde.
+Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config) konfiguriert wurde.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -928,7 +928,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/1/reset -m 'null'
 ## `meters/X/last_reset` {#meters_X_last_reset_warp1}
 
 
-Der Zeitpunkt des letzten Zähler-Resets (siehe [`meters/X/reset`](meters.mdx#meters_X_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.
+Der Zeitpunkt des letzten Zähler-Resets (siehe [`meters/X/reset`](/mqtt_http/api_reference/meters.mdx#meters_X_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -1073,7 +1073,7 @@ curl http://$HOST/meters/history
     <TabItem value="http" label="HTTP (curl)">
 
 
-Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/history`](meters.mdx#meters_history) generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.
+Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/history`](/mqtt_http/api_reference/meters.mdx#meters_history) generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -1157,7 +1157,7 @@ curl http://$HOST/meters/live
 ## `meters/X/values` {#meters_X_values_warp2}
 
 
-Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meters/X/value_ids`](meters.mdx#meters_X_value_ids) ermittelt werden.
+Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meters/X/value_ids`](/mqtt_http/api_reference/meters.mdx#meters_X_value_ids) ermittelt werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -1212,7 +1212,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/values
 ## `meters/X/update` {#meters_X_update_warp2}
 
 
-Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzähler (Union-Tag 4 in der entsprechenden [`meters/X/config`](meters.mdx#meters_X_config)) verwendet werden.
+Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzähler (Union-Tag 4 in der entsprechenden [`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config)) verwendet werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -1228,7 +1228,7 @@ curl http://$HOST/meters/1/update -d '[
 ```
 
 Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
-Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
+Die korrekte Konfiguration ([`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config)) für diesen Zähler wäre
 ```jsx
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
@@ -1248,7 +1248,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/1/update -m '[
 ```
 
 Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
-Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
+Die korrekte Konfiguration ([`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config)) für diesen Zähler wäre
 ```jsx
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
@@ -1263,7 +1263,7 @@ Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) fü
 ## `meters/X/value_ids` {#meters_X_value_ids_warp2}
 
 
-Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [`meters/X/values`](meters.mdx#meters_X_values) an. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [`meters/X/values`](/mqtt_http/api_reference/meters.mdx#meters_X_values) an. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -1409,7 +1409,7 @@ curl http://$HOST/meters/1/history
     <TabItem value="http" label="HTTP (curl)">
 
 
-Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/X/history`](meters.mdx#meters_X_history) generiert.
+Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/X/history`](/mqtt_http/api_reference/meters.mdx#meters_X_history) generiert.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -1506,7 +1506,7 @@ curl http://$HOST/meters/1/config
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
 Konfiguriert für den Stromzähler-Slot 1
-einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 4 ist das Union-Tag des API-Stromzählers.
 
@@ -1517,7 +1517,7 @@ curl http://$HOST/meters/1/config -d '[4, { "display_name": "API-Zähler", "valu
 ```
 
 Konfiguriert für den Stromzähler-Slot 1
-einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 4 ist das Union-Tag des API-Stromzählers.
 
@@ -1536,7 +1536,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/config
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
 Konfiguriert für den Stromzähler-Slot 1
-einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 4 ist das Union-Tag des API-Stromzählers.
 
@@ -1550,7 +1550,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/1/config_update -m '[4, { "display_na
 ```
 
 Konfiguriert für den Stromzähler-Slot 1
-einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 4 ist das Union-Tag des API-Stromzählers.
 
@@ -1605,7 +1605,7 @@ null: Kein Stromzähler konfiguriert.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`value_ids`<br/>int[..]</th>
     <td>
-        MeterValueIDs, die über die API [meters/X/update](meters.mdx#meters_X_values) gesetzt werden können sollen. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+        MeterValueIDs, die über die API [meters/X/update](/mqtt_http/api_reference/meters.mdx#meters_X_values) gesetzt werden können sollen. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
     </td>
 </tr>
     </tbody>
@@ -1667,7 +1667,7 @@ null: Kein Stromzähler konfiguriert.
 ## `meters/X/state` {#meters_X_state_warp2}
 
 
-Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](meters.mdx#meters_X_config) konfiguriert wurde.
+Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config) konfiguriert wurde.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -1798,7 +1798,7 @@ null: Zustand des SunSpec-Stromzählers. Im Moment leer.
 ## `meters/X/errors` {#meters_X_errors_warp2}
 
 
-Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](meters.mdx#meters_X_config) konfiguriert wurde.
+Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config) konfiguriert wurde.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -2034,7 +2034,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/1/reset -m 'null'
 ## `meters/X/last_reset` {#meters_X_last_reset_warp2}
 
 
-Der Zeitpunkt des letzten Zähler-Resets (siehe [`meters/X/reset`](meters.mdx#meters_X_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.
+Der Zeitpunkt des letzten Zähler-Resets (siehe [`meters/X/reset`](/mqtt_http/api_reference/meters.mdx#meters_X_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -2179,7 +2179,7 @@ curl http://$HOST/meters/history
     <TabItem value="http" label="HTTP (curl)">
 
 
-Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/history`](meters.mdx#meters_history) generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.
+Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/history`](/mqtt_http/api_reference/meters.mdx#meters_history) generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -2263,7 +2263,7 @@ curl http://$HOST/meters/live
 ## `meters/X/values` {#meters_X_values_warp3}
 
 
-Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meters/X/value_ids`](meters.mdx#meters_X_value_ids) ermittelt werden.
+Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meters/X/value_ids`](/mqtt_http/api_reference/meters.mdx#meters_X_value_ids) ermittelt werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -2318,7 +2318,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/values
 ## `meters/X/update` {#meters_X_update_warp3}
 
 
-Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzähler (Union-Tag 4 in der entsprechenden [`meters/X/config`](meters.mdx#meters_X_config)) verwendet werden.
+Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzähler (Union-Tag 4 in der entsprechenden [`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config)) verwendet werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -2334,7 +2334,7 @@ curl http://$HOST/meters/1/update -d '[
 ```
 
 Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
-Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
+Die korrekte Konfiguration ([`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config)) für diesen Zähler wäre
 ```jsx
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
@@ -2354,7 +2354,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/1/update -m '[
 ```
 
 Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
-Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
+Die korrekte Konfiguration ([`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config)) für diesen Zähler wäre
 ```jsx
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
@@ -2369,7 +2369,7 @@ Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) fü
 ## `meters/X/value_ids` {#meters_X_value_ids_warp3}
 
 
-Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [`meters/X/values`](meters.mdx#meters_X_values) an. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [`meters/X/values`](/mqtt_http/api_reference/meters.mdx#meters_X_values) an. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -2515,7 +2515,7 @@ curl http://$HOST/meters/1/history
     <TabItem value="http" label="HTTP (curl)">
 
 
-Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/X/history`](meters.mdx#meters_X_history) generiert.
+Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/X/history`](/mqtt_http/api_reference/meters.mdx#meters_X_history) generiert.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -2612,7 +2612,7 @@ curl http://$HOST/meters/1/config
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
 Konfiguriert für den Stromzähler-Slot 1
-einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 4 ist das Union-Tag des API-Stromzählers.
 
@@ -2623,7 +2623,7 @@ curl http://$HOST/meters/1/config -d '[4, { "display_name": "API-Zähler", "valu
 ```
 
 Konfiguriert für den Stromzähler-Slot 1
-einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 4 ist das Union-Tag des API-Stromzählers.
 
@@ -2642,7 +2642,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/config
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
 Konfiguriert für den Stromzähler-Slot 1
-einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 4 ist das Union-Tag des API-Stromzählers.
 
@@ -2656,7 +2656,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/1/config_update -m '[4, { "display_na
 ```
 
 Konfiguriert für den Stromzähler-Slot 1
-einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 4 ist das Union-Tag des API-Stromzählers.
 
@@ -2711,7 +2711,7 @@ null: Kein Stromzähler konfiguriert.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`value_ids`<br/>int[..]</th>
     <td>
-        MeterValueIDs, die über die API [meters/X/update](meters.mdx#meters_X_values) gesetzt werden können sollen. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+        MeterValueIDs, die über die API [meters/X/update](/mqtt_http/api_reference/meters.mdx#meters_X_values) gesetzt werden können sollen. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
     </td>
 </tr>
     </tbody>
@@ -2773,7 +2773,7 @@ null: Kein Stromzähler konfiguriert.
 ## `meters/X/state` {#meters_X_state_warp3}
 
 
-Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](meters.mdx#meters_X_config) konfiguriert wurde.
+Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config) konfiguriert wurde.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -2904,7 +2904,7 @@ null: Zustand des SunSpec-Stromzählers. Im Moment leer.
 ## `meters/X/errors` {#meters_X_errors_warp3}
 
 
-Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](meters.mdx#meters_X_config) konfiguriert wurde.
+Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config) konfiguriert wurde.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -3140,7 +3140,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/1/reset -m 'null'
 ## `meters/X/last_reset` {#meters_X_last_reset_warp3}
 
 
-Der Zeitpunkt des letzten Zähler-Resets (siehe [`meters/X/reset`](meters.mdx#meters_X_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.
+Der Zeitpunkt des letzten Zähler-Resets (siehe [`meters/X/reset`](/mqtt_http/api_reference/meters.mdx#meters_X_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -3285,7 +3285,7 @@ curl http://$HOST/meters/history
     <TabItem value="http" label="HTTP (curl)">
 
 
-Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/history`](meters.mdx#meters_history) generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.
+Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/history`](/mqtt_http/api_reference/meters.mdx#meters_history) generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -3369,7 +3369,7 @@ curl http://$HOST/meters/live
 ## `meters/X/values` {#meters_X_values_wem}
 
 
-Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meters/X/value_ids`](meters.mdx#meters_X_value_ids) ermittelt werden.
+Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meters/X/value_ids`](/mqtt_http/api_reference/meters.mdx#meters_X_value_ids) ermittelt werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -3424,7 +3424,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/values
 ## `meters/X/update` {#meters_X_update_wem}
 
 
-Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzähler (Union-Tag 4 in der entsprechenden [`meters/X/config`](meters.mdx#meters_X_config)) verwendet werden.
+Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzähler (Union-Tag 4 in der entsprechenden [`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config)) verwendet werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -3440,7 +3440,7 @@ curl http://$HOST/meters/1/update -d '[
 ```
 
 Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
-Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
+Die korrekte Konfiguration ([`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config)) für diesen Zähler wäre
 ```jsx
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
@@ -3460,7 +3460,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/1/update -m '[
 ```
 
 Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
-Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
+Die korrekte Konfiguration ([`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config)) für diesen Zähler wäre
 ```jsx
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
@@ -3475,7 +3475,7 @@ Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) fü
 ## `meters/X/value_ids` {#meters_X_value_ids_wem}
 
 
-Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [`meters/X/values`](meters.mdx#meters_X_values) an. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [`meters/X/values`](/mqtt_http/api_reference/meters.mdx#meters_X_values) an. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -3621,7 +3621,7 @@ curl http://$HOST/meters/1/history
     <TabItem value="http" label="HTTP (curl)">
 
 
-Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/X/history`](meters.mdx#meters_X_history) generiert.
+Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/X/history`](/mqtt_http/api_reference/meters.mdx#meters_X_history) generiert.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -3718,7 +3718,7 @@ curl http://$HOST/meters/1/config
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
 Konfiguriert für den Stromzähler-Slot 1
-einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 4 ist das Union-Tag des API-Stromzählers.
 
@@ -3729,7 +3729,7 @@ curl http://$HOST/meters/1/config -d '[4, { "display_name": "API-Zähler", "valu
 ```
 
 Konfiguriert für den Stromzähler-Slot 1
-einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 4 ist das Union-Tag des API-Stromzählers.
 
@@ -3748,7 +3748,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/config
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
 Konfiguriert für den Stromzähler-Slot 1
-einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 4 ist das Union-Tag des API-Stromzählers.
 
@@ -3762,7 +3762,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/1/config_update -m '[4, { "display_na
 ```
 
 Konfiguriert für den Stromzähler-Slot 1
-einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 4 ist das Union-Tag des API-Stromzählers.
 
@@ -3817,7 +3817,7 @@ null: Kein Stromzähler konfiguriert.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`value_ids`<br/>int[..]</th>
     <td>
-        MeterValueIDs, die über die API [meters/X/update](meters.mdx#meters_X_values) gesetzt werden können sollen. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+        MeterValueIDs, die über die API [meters/X/update](/mqtt_http/api_reference/meters.mdx#meters_X_values) gesetzt werden können sollen. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
     </td>
 </tr>
     </tbody>
@@ -3879,7 +3879,7 @@ null: Kein Stromzähler konfiguriert.
 ## `meters/X/state` {#meters_X_state_wem}
 
 
-Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](meters.mdx#meters_X_config) konfiguriert wurde.
+Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config) konfiguriert wurde.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -4010,7 +4010,7 @@ null: Zustand des SunSpec-Stromzählers. Im Moment leer.
 ## `meters/X/errors` {#meters_X_errors_wem}
 
 
-Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](meters.mdx#meters_X_config) konfiguriert wurde.
+Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config) konfiguriert wurde.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -4246,7 +4246,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/1/reset -m 'null'
 ## `meters/X/last_reset` {#meters_X_last_reset_wem}
 
 
-Der Zeitpunkt des letzten Zähler-Resets (siehe [`meters/X/reset`](meters.mdx#meters_X_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.
+Der Zeitpunkt des letzten Zähler-Resets (siehe [`meters/X/reset`](/mqtt_http/api_reference/meters.mdx#meters_X_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -4386,7 +4386,7 @@ curl http://$HOST/meters/history
     <TabItem value="http" label="HTTP (curl)">
 
 
-Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/history`](meters.mdx#meters_history) generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.
+Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/history`](/mqtt_http/api_reference/meters.mdx#meters_history) generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -4475,7 +4475,7 @@ curl http://$HOST/meters/live
 ## `meters/X/values` {#meters_X_values_any}
 
 
-Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meters/X/value_ids`](meters.mdx#meters_X_value_ids) ermittelt werden.
+Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meters/X/value_ids`](/mqtt_http/api_reference/meters.mdx#meters_X_value_ids) ermittelt werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -4530,7 +4530,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/values
 ## `meters/X/update` {#meters_X_update_any}
 
 
-Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzähler (Union-Tag 4 in der entsprechenden [`meters/X/config`](meters.mdx#meters_X_config)) verwendet werden.
+Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzähler (Union-Tag 4 in der entsprechenden [`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config)) verwendet werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -4546,7 +4546,7 @@ curl http://$HOST/meters/1/update -d '[
 ```
 
 Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
-Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
+Die korrekte Konfiguration ([`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config)) für diesen Zähler wäre
 ```jsx
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
@@ -4566,7 +4566,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/1/update -m '[
 ```
 
 Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
-Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) für diesen Zähler wäre
+Die korrekte Konfiguration ([`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config)) für diesen Zähler wäre
 ```jsx
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
@@ -4581,7 +4581,7 @@ Die korrekte Konfiguration ([`meters/X/config`](meters.mdx#meters_X_config)) fü
 ## `meters/X/value_ids` {#meters_X_value_ids_any}
 
 
-Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [`meters/X/values`](meters.mdx#meters_X_values) an. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [`meters/X/values`](/mqtt_http/api_reference/meters.mdx#meters_X_values) an. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -4727,7 +4727,7 @@ curl http://$HOST/meters/1/history
     <TabItem value="http" label="HTTP (curl)">
 
 
-Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/X/history`](meters.mdx#meters_X_history) generiert.
+Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/X/history`](/mqtt_http/api_reference/meters.mdx#meters_X_history) generiert.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -4824,7 +4824,7 @@ curl http://$HOST/meters/1/config
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
 Konfiguriert für den Stromzähler-Slot 1
-einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 4 ist das Union-Tag des API-Stromzählers.
 
@@ -4835,7 +4835,7 @@ curl http://$HOST/meters/1/config -d '[4, { "display_name": "API-Zähler", "valu
 ```
 
 Konfiguriert für den Stromzähler-Slot 1
-einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 4 ist das Union-Tag des API-Stromzählers.
 
@@ -4854,7 +4854,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/config
 [4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
 ```
 Konfiguriert für den Stromzähler-Slot 1
-einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 4 ist das Union-Tag des API-Stromzählers.
 
@@ -4868,7 +4868,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/1/config_update -m '[4, { "display_na
 ```
 
 Konfiguriert für den Stromzähler-Slot 1
-einen über [meters/1/update](meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
 der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
 4 ist das Union-Tag des API-Stromzählers.
 
@@ -4980,7 +4980,7 @@ null: Kein Stromzähler konfiguriert.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`value_ids`<br/>int[..]</th>
     <td>
-        MeterValueIDs, die über die API [meters/X/update](meters.mdx#meters_X_values) gesetzt werden können sollen. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+        MeterValueIDs, die über die API [meters/X/update](/mqtt_http/api_reference/meters.mdx#meters_X_values) gesetzt werden können sollen. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
     </td>
 </tr>
     </tbody>
@@ -5042,7 +5042,7 @@ null: Kein Stromzähler konfiguriert.
 ## `meters/X/state` {#meters_X_state_any}
 
 
-Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](meters.mdx#meters_X_config) konfiguriert wurde.
+Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config) konfiguriert wurde.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -5182,7 +5182,7 @@ null: Zustand des SunSpec-Stromzählers. Im Moment leer.
 ## `meters/X/errors` {#meters_X_errors_any}
 
 
-Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](meters.mdx#meters_X_config) konfiguriert wurde.
+Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config) konfiguriert wurde.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -5418,7 +5418,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters/1/reset -m 'null'
 ## `meters/X/last_reset` {#meters_X_last_reset_any}
 
 
-Der Zeitpunkt des letzten Zähler-Resets (siehe [`meters/X/reset`](meters.mdx#meters_X_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.
+Der Zeitpunkt des letzten Zähler-Resets (siehe [`meters/X/reset`](/mqtt_http/api_reference/meters.mdx#meters_X_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -5570,7 +5570,7 @@ curl http://$HOST/meters/history
     <TabItem value="http" label="HTTP (curl)">
 
 
-Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/history`](meters.mdx#meters_history) generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.
+Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/history`](/mqtt_http/api_reference/meters.mdx#meters_history) generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
