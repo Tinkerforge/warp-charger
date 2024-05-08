@@ -42,7 +42,7 @@ Damit die geänderte Konfiguration verwendet wird, musst du Mosquitto danach mit
 
 ### Verknüpfen des WARP Chargers
 
-Mehr Informationen zur MQTT-Konfiguration findest du in der [API-Dokumentation](mqtt_http/getting_started).
+Mehr Informationen zur MQTT-Konfiguration findest du in der [API-Dokumentation](/mqtt_http/getting_started.md).
 
 Im Webinterface des WARP Chargers kannst du jetzt die Verbindung zum MQTT-Broker konfigurieren. Hierzu musst du unter `Schnittstellen -> MQTT` die Verbindung aktivieren und den Host eintragen (`raspberrypi` falls du ihn nicht geändert hast). Alternativ kannst du die IP-Adresse des Pis verwenden. Diese kannst du in der Konsole mit `ip -brief a` auslesen: unter eth0 die der LAN-Verbindung, oder unter wlan0 die der WLAN-Verbindung. Danach kannst du die Konfigurationsänderung durch Klicken auf Speichern anwenden. Das Webinterface startet dann neu.
 

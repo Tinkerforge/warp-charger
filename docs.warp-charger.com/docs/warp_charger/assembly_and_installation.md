@@ -26,8 +26,8 @@ Im Lieferumfang der Wallbox befinden sich:
 Bei den Varianten Smart und Pro zusätzlich:
 -   drei NFC-Karten
 
-Die Wallbox wird in einer Wellpappverpackung geliefert, der Umschlag mit dem 
-Zubehör befindet sich in der oberen ebene der Verpackung. Das Kabel ist in der 
+Die Wallbox wird in einer Wellpappverpackung geliefert, der Umschlag mit dem
+Zubehör befindet sich in der oberen ebene der Verpackung. Das Kabel ist in der
 unteren ebene aufgerollt.
 
 ![image](/img/first_steps/packaging_opened.jpg)
@@ -243,7 +243,7 @@ Verbindung zum Fahrzeug getrennt und anschließend erneut hergestellt
 (Kabel aus- und wieder einstecken) oder der Ladevorgang über das
 Webinterface neugestartet werden.
 
-## Bedienelemente 
+## Bedienelemente
 
 Die im Fronttaster verbaute RGB-LED kann je nach Betriebszustand
 verschiedene Farben annehmen. Das Verhalten bei einem Tastendruck kann
@@ -264,6 +264,6 @@ Ladekabels definiert wird.
 Zusätzlich befindet sich hier der Abschalteingang ("EN"). Dieser Eingang
 muss mit PE kurzgeschlossen werden, um aktiv zu sein. PE ist mehrfach
 auf dem Klemmblock vorhanden. Zur Konfiguration des Abschalteingangs
-siehe [Steuerbare Verbrauseinrichtung nach §14a EnWG](verbrauchseinrichtung).
+siehe [Steuerbare Verbrauseinrichtung nach §14a EnWG](/warp_charger/verbrauchseinrichtung.md).
 
 ![image](/img/warp3_shared_with_manual/resized/evse_clamp.jpg)

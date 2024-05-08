@@ -31,8 +31,8 @@ Wenn das PV-Überschussladen eingerichtet ist stehen vier **Lademodi** zur Verf�
 
 **Aus:** Alle Ladevorgänge werden gestoppt
 
-**PV:** Fahrzeuge werden nur aus dem PV-Überschuss geladen. 
-Wenn nicht genügend Überschuss zur Verfügung steht, wird der 
+**PV:** Fahrzeuge werden nur aus dem PV-Überschuss geladen.
+Wenn nicht genügend Überschuss zur Verfügung steht, wird der
 Ladevorgang gestoppt.
 
 **Min+PV:** Fahrzeuge werden aus dem PV-Überschuss geladen. Falls nicht genügend
@@ -64,7 +64,7 @@ Hersteller-Protokolle, unter anderem SMA und SunGrow. Eine andere Möglichkeit
 ist es den Zähler über eine Hausautomatisierung o.ä. virtuell über die API
 anzulegen.
 
-Siehe [Liste der unterstützen und von uns getesteten Zähler](/docs/compatible_meters).
+Siehe [Liste der unterstützen und von uns getesteten Zähler](/compatible_meters.md).
 
 Im folgenden Beispiel für wir einen KOSTAL Smart Energy Meter als
 Zähler hinzugefügt. Dafür muss nur einmal die IP-Adresse des Zählers
