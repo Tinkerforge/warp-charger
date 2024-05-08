@@ -7,8 +7,6 @@ const config: Config = {
   tagline: 'Dokumentation für WARP Charger, Ladesäule und Energy Manager',
   favicon: 'img/favicon.png',
 
-  trailingSlash: false,
-
   // Set the production url of your site here
   url: 'https://docs.warp-charger.com',
   // Set the /<baseUrl>/ pathname under which your site is served
