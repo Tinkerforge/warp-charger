@@ -29,16 +29,22 @@ export const meters = [
     note: "Alle GX Geräte; Support für Victron Energy kommt in Kürze",
   },
   {
-    name: "Hybrid Wechselrichter",
+    name: "Hybrid-Wechselrichter",
     manufacturer: "Deye",
     protocol: "Modbus/TCP",
-    note: "Support für Deye kommt in Kürze",
+    note: "Nieder- und Hochspannungsbatterie; Support für Deye kommt in Kürze",
   },
   {
-    name: "Hybrid Wechselrichter (SH Serie)",
+    name: "Hybrid-Wechselrichter (SH-Serie)",
     manufacturer: "Sungrow",
     protocol: "Modbus/TCP",
     note: "Support für Sungrow kommt in Kürze",
+  },
+  {
+    name: "Max.Storage",
+    manufacturer: "Solarmax",
+    protocol: "Modbus/TCP",
+    note: "Support für Solarmax kommt in Kürze",
   },
   {
     name: "SDM630",
@@ -77,7 +83,7 @@ export const meters = [
     note: "",
   },
   {
-    name: "String Wechselrichter (SG Serie)",
+    name: "String-Wechselrichter (SG-Serie)",
     manufacturer: "Sungrow",
     protocol: "Modbus/TCP",
     note: "Support für Sungrow kommt in Kürze",
@@ -95,19 +101,13 @@ export const meters = [
     note: "",
   },
   {
-    name: "Sunny Home Manager 1.0/2.0",
+    name: "Sunny Home Manager 1.0 / 2.0",
     manufacturer: "SMA",
     protocol: "SMA Speedwire",
     note: "",
   },
   {
-    name: "Symo 8.2-3-M",
-    manufacturer: "Fronius",
-    protocol: "SunSpec",
-    note: "",
-  },
-  {
-    name: "Symo 12.5-3",
+    name: "Symo",
     manufacturer: "Fronius",
     protocol: "SunSpec",
     note: "",
