@@ -1,130 +1,124 @@
 import React from "react";
 
 // ----------------------------------------------------------------------------
-// Please respect order by name when adding new entries.
+// Please respect order by manufacturer, then by name, when adding new entries.
 // ----------------------------------------------------------------------------
 export const meters = [
   {
-    name: "DEM4A",
-    manufacturer: "YTL",
-    protocol: "Modbus/RTU",
-    note: "Nur über WARP Energy Manager",
+    manufacturer: "Deye",
+    name: "SUN-Serie",
+    protocol: "Modbus/TCP",
+    note: "Hybrid-Wechselrichter für Nieder- und Hochspannungsbatterien; Support für Deye kommt in Kürze",
   },
   {
-    name: "DSZ15DZMOD",
-    manufacturer: "Eltako",
+    manufacturer: "Eastron",
+    name: "SDM630",
     protocol: "Modbus/RTU",
-    note: "Nur über WARP Energy Manager",
+    note: "Nur über WARP Energy Manager (direkt angeschlossen)",
   },
   {
-    name: "Energy Meter 2.0",
-    manufacturer: "SMA",
-    protocol: "SMA Speedwire",
+    manufacturer: "Eastron",
+    name: "SDM630MCT",
+    protocol: "Modbus/RTU",
+    note: "Nur über WARP Energy Manager (direkt angeschlossen)",
+  },
+  {
+    manufacturer: "Eastron",
+    name: "SDM72V2",
+    protocol: "Modbus/RTU",
+    note: "Nur über WARP Energy Manager (direkt angeschlossen)",
+  },
+  {
+    manufacturer: "elgris",
+    name: "Smart Meter LAN 2.0",
+    protocol: "SunSpec",
     note: "",
   },
   {
-    name: "GX",
-    manufacturer: "Victron Energy",
-    protocol: "Modbus/TCP",
-    note: "Alle GX Geräte; Support für Victron Energy kommt in Kürze",
-  },
-  {
-    name: "Hybrid-Wechselrichter",
-    manufacturer: "Deye",
-    protocol: "Modbus/TCP",
-    note: "Nieder- und Hochspannungsbatterie; Support für Deye kommt in Kürze",
-  },
-  {
-    name: "Hybrid-Wechselrichter (SH-Serie)",
-    manufacturer: "Sungrow",
-    protocol: "Modbus/TCP",
-    note: "Support für Sungrow kommt in Kürze",
-  },
-  {
-    name: "Max.Storage",
-    manufacturer: "Solarmax",
-    protocol: "Modbus/TCP",
-    note: "Support für Solarmax kommt in Kürze",
-  },
-  {
-    name: "SDM630",
-    manufacturer: "Eastron",
+    manufacturer: "Eltako",
+    name: "DSZ15DZMOD",
     protocol: "Modbus/RTU",
-    note: "Nur über WARP Energy Manager",
+    note: "Nur über WARP Energy Manager (direkt angeschlossen)",
   },
   {
-    name: "SDM630MCT",
-    manufacturer: "Eastron",
-    protocol: "Modbus/RTU",
-    note: "Nur über WARP Energy Manager",
+    manufacturer: "Fronius",
+    name: "Symo-Serie",
+    protocol: "SunSpec",
+    note: "String-Wechselrichter",
   },
   {
-    name: "SDM72V2",
-    manufacturer: "Eastron",
-    protocol: "Modbus/RTU",
-    note: "Nur über WARP Energy Manager",
+    manufacturer: "Kostal",
+    name: "Smart Energy Meter (KSEM G2)",
+    protocol: "SunSpec",
+    note: "",
   },
   {
-    name: "Shelly TBD",
     manufacturer: "Shelly",
+    name: "Shelly TBD",
     protocol: "HTTP",
     note: "Support für Shelly kommt in Kürze",
   },
   {
-    name: "Smart Energy Meter (KSEM G2)",
-    manufacturer: "Kostal",
-    protocol: "SunSpec",
-    note: "",
-  },
-  {
-    name: "Smart Meter LAN 2.0",
-    manufacturer: "elgris",
-    protocol: "SunSpec",
-    note: "",
-  },
-  {
-    name: "String-Wechselrichter (SG-Serie)",
-    manufacturer: "Sungrow",
-    protocol: "Modbus/TCP",
-    note: "Support für Sungrow kommt in Kürze",
-  },
-  {
-    name: "Sunny Boy 2.5",
     manufacturer: "SMA",
-    protocol: "SunSpec",
-    note: "",
-  },
-  {
-    name: "Sunny Boy 3.6",
-    manufacturer: "SMA",
-    protocol: "SunSpec",
-    note: "",
-  },
-  {
-    name: "Sunny Home Manager 1.0 / 2.0",
-    manufacturer: "SMA",
+    name: "Energy Meter 2.0",
     protocol: "SMA Speedwire",
     note: "",
   },
   {
-    name: "Symo",
-    manufacturer: "Fronius",
+    manufacturer: "SMA",
+    name: "Sunny Boy 2.5 / 3.6",
     protocol: "SunSpec",
     note: "",
   },
   {
-    name: "WARP Push-API",
+    manufacturer: "SMA",
+    name: "Sunny Home Manager 1.0 / 2.0",
+    protocol: "SMA Speedwire",
+    note: "",
+  },
+  {
+    manufacturer: "Solarmax",
+    name: "Max.Storage",
+    protocol: "Modbus/TCP",
+    note: "Support für Solarmax kommt in Kürze",
+  },
+  {
+    manufacturer: "Sungrow",
+    name: "SG-Serie",
+    protocol: "Modbus/TCP",
+    note: "String-Wechselrichter; Support für Sungrow kommt in Kürze",
+  },
+  {
+    manufacturer: "Sungrow",
+    name: "SH-Serie",
+    protocol: "Modbus/TCP",
+    note: "Hybrid-Wechselrichter; Support für Sungrow kommt in Kürze",
+  },
+  {
     manufacturer: "Tinkerforge",
+    name: "WARP Push-API",
     protocol: "HTTP",
     note: "Siehe MQTT und HTTP API -> API-Referenz -> meters",
     note_url: "https://docs.warp-charger.com/docs/mqtt_http/api_reference/meters",
   },
   {
-    name: "WARP Push-API",
     manufacturer: "Tinkerforge",
+    name: "WARP Push-API",
     protocol: "MQTT",
     note: "Siehe MQTT und HTTP API -> API-Referenz -> meters",
     note_url: "https://docs.warp-charger.com/docs/mqtt_http/api_reference/meters",
+  },
+  {
+    manufacturer: "Victron Energy",
+    name: "GX Geräte",
+    protocol: "Modbus/TCP",
+    note: "Alle GX Geräte, z.B.: Cerbo GX; Support für Victron Energy kommt in Kürze",
+  },
+  {
+    manufacturer: "YTL",
+    name: "DEM4A",
+    protocol: "Modbus/RTU",
+    note: "Nur über WARP Energy Manager (direkt angeschlossen)",
   },
 ];
 
@@ -132,16 +126,16 @@ export const meters = [
 // SortableDataTable column definition
 // ----------------------------------------------------------------------------
 export const columns = [
-  {
-    header: "Name",
-    accessorKey: "name",
-    className: "sortable-data-table left nowrap",
-  },
-  {
+ {
     header: "Hersteller",
     accessorKey: "manufacturer",
     className: "sortable-data-table left nowrap",
   },
+  {
+    header: "Name",
+    accessorKey: "name",
+    className: "sortable-data-table left nowrap",
+  }, 
   {
     header: "Protokoll",
     accessorKey: "protocol",

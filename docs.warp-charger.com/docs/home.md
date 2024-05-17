@@ -46,14 +46,15 @@ ausgewertet werden kann. Mittels der Leistungs-Messwerte von diesem
 Stromzähler erfolgt dann das PV-Überschussladen. Einer Übersicht über 
 die aktuell unterstützen Zählertypen, die die Leistung am Hausanschluss 
 messen können, lassen sich im Artikel
-[Kompatible Stromzähler](/compatible_meters.md) finden.
+[kompatible Stromzähler](/compatible_meters.md) finden.
 
 ### Mehrere Wallboxen an einer Leitung betreiben - Statisches Lastmanagement
 
 Teilen sich mehrere WARP Charger eine Zuleitung, so müssen die 
 Ladeströme der angeschlossenen Wallboxen gegebenenfalls begrenzt werden.
 WARP3 Charger Smart und WARP3 Charger Pro verfügen über ein integriertes
-statisches Lastmanagement. Die Wallboxen müssen sich nur innerhalb eines
+[statisches Lastmanagement](warp_charger/chargemanagement.md). 
+Die Wallboxen müssen sich nur innerhalb eines
 Netzwerks (LAN, WLAN) befinden. Ein gesonderter Stromzähler ist für das 
 statische Lastmanagement nicht notwendig.
 
@@ -61,7 +62,7 @@ statische Lastmanagement nicht notwendig.
 
 Ist der Netzanschluss nicht ausreichend dimensioniert um eine oder 
 mehrere Wallboxen betreiben zu können, kann gegebenenfalls ein 
-[Dynamisches Lastmanagement](/compatible_meters.md) helfen. Gerade bei 
+dynamisches Lastmanagement helfen. Gerade bei 
 größeren Objekten ist der Netzanschluss oftmals rechnerisch ausgereizt, 
 wenn angenommen wird, dass alle Verbraucher eingeschaltet werden.
 In der Praxis kommt dies aber eigentlich nie vor, so dass Wallboxen 
@@ -73,7 +74,7 @@ Phasenströme messen kann, so kann das dynamische Lastmanagement direkt
 von einem WARP Charger übernommen werden. Einer Übersicht über die 
 aktuell unterstützen Zählertypen, die die Leistung am Hausanschluss 
 messen können, lassen sich im Artikel
-[Kompatible Stromzähler](/compatible_meters.md) finden.
+[kompatible Stromzähler](/compatible_meters.md) finden.
 
 Das dynamische Lastmanagement ist noch nicht verfügbar, wird aber 
 zeitnah mittels Firmwareupdate ausgerollt.
