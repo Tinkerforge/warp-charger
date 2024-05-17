@@ -42,6 +42,12 @@ export const meters = [
   },
   {
     manufacturer: "Fronius",
+    name: "GEN24-Serie",
+    protocol: "SunSpec",
+    note: "Hybrid-Wechselrichter",
+  },
+  {
+    manufacturer: "Fronius",
     name: "Symo-Serie",
     protocol: "SunSpec",
     note: "String-Wechselrichter",
@@ -80,7 +86,7 @@ export const meters = [
     manufacturer: "Solarmax",
     name: "Max.Storage",
     protocol: "Modbus/TCP",
-    note: "Support für Solarmax kommt in Kürze",
+    note: "Support für Solarmax folgt in Kürze",
   },
   {
     manufacturer: "Sungrow",
@@ -93,6 +99,13 @@ export const meters = [
     name: "SH-Serie",
     protocol: "Modbus/TCP",
     note: "Hybrid-Wechselrichter; Support für Sungrow kommt in Kürze",
+  },
+  {
+    manufacturer: "Tasmota",
+    name: "Smart Meter Interface - IR Lesekopf",
+    protocol: "HTTP",
+    note: "SMART Meter Interface um Stromzähler mittels IR Lesekopf auszulesen",
+    note_url: "https://www.tinkerunity.org/topic/12255-z%C3%A4hler-des-netzbetreibers-sml-ir-hichi%E2%80%A6-f%C3%BCr-pv-%C3%BCberschuss/?do=findComment&comment=55374"
   },
   {
     manufacturer: "Tinkerforge",
