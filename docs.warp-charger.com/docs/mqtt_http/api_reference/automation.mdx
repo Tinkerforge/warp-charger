@@ -61,34 +61,34 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_triggers`<br/>int[18]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_triggers`<br/>int[19]</th>
     <td>
         Dieser Firmware bekannte Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)).
-        - **[0..17]** - Eine bekannte Bedingung.
+        - **[0..18]** - Eine bekannte Bedingung.
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_actions`<br/>int[15]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_actions`<br/>int[16]</th>
     <td>
         Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config))
-        - **[0..14]** - Eine bekannte Aktion.
+        - **[0..15]** - Eine bekannte Aktion.
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_triggers`<br/>int[18]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_triggers`<br/>int[19]</th>
     <td>
         Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_triggers`.
-        - **[0..17]** - Eine ausführbare Bedingung.
+        - **[0..18]** - Eine ausführbare Bedingung.
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_actions`<br/>int[15]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_actions`<br/>int[16]</th>
     <td>
         Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_actions`.
-        - **[0..14]** - Eine ausführbare Aktion.
+        - **[0..15]** - Eine ausführbare Aktion.
     </td>
 </tr>
     </tbody>
@@ -329,7 +329,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
             <tbody>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/docs/mqtt_http/getting_started#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Bedingung, die zutreffen muss, damit Aktion ausgeführt wird
                 <MultilineTabs className="unique-tabs">
@@ -447,7 +447,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     <tbody>
                 
                 <tr>
-                    <th scope="row" style={{whiteSpace: "nowrap"}}>`topic`<br/>string</th>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`topic_filter`<br/>string</th>
                     <td>
                         MQTT-Topic-Filter, mit dem auf Nachrichten gewartet werden soll.
                     </td>
@@ -525,13 +525,99 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 <TabItem value="11" label="11 - Auslösen des Watchdogs des Lastmanagements.">
                 null: Auslösen des Watchdogs des Lastmanagements.
                 </TabItem>
+                
+                <TabItem value="16" label="16 - Strom verfügbar TODO">
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_available`<br/>bool</th>
+                    <td>
+                        Gibt an, ob reagiert werden soll, wenn Strom verfügbar, oder nicht verfügbar ist.
+                        - **true** - Reagieren wenn Strom verfügbar ist
+                        - **false** - Reagieren wenn kein Strom verfügbar ist
+                    </td>
+                </tr>
+                    </tbody>
+                </table>
+                </TabItem>
+                
+                <TabItem value="17" label="17 - Messen von Netzbezug- oder Einspeisung">
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`drawing_power`<br/>bool</th>
+                    <td>
+                        Gibt an, ob reagiert werden soll, wenn Strom ins Netz eingespeist, oder aus dem Netz bezogen wird.
+                        - **true** - Reagieren wenn Strom bezogen wird
+                        - **false** - Reagieren wenn Strom eingespeist wird
+                    </td>
+                </tr>
+                    </tbody>
+                </table>
+                </TabItem>
+                
+                <TabItem value="18" label="18 - Empfang eines HTTP-Requests">
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`method`<br/>int</th>
+                    <td>
+                        Gibt an, bei welchen HTTP-Methoden reagiert werden soll
+                        - **0** - Reagiere auf GET
+                        - **1** - Reagiere auf POST
+                        - **2** - Reagiere auf PUT
+                        - **3** - Reagiere auf POST und PUT
+                        - **4** - Reagiere auf GET, POST und PUT
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`url_suffix`<br/>string</th>
+                    <td>
+                        URL-Suffix auf dem auf HTTP-Requests gewartet wird. Wird an http://[hostname]/automation_trigger/ angehangen.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`payload`<br/>string</th>
+                    <td>
+                        Payload, der im HTTP-Request enthalten sein muss, damit die Regel auslöst. Darf (insbesondere bei HTTP GET) leer sein.
+                    </td>
+                </tr>
+                    </tbody>
+                </table>
+                </TabItem>
                 </MultilineTabs>
                 
             </td>
         </tr>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/docs/mqtt_http/getting_started#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Aktion, die ausgeführt werden soll
                 <MultilineTabs className="unique-tabs">
@@ -635,7 +721,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     <tbody>
                 
                 <tr>
-                    <th scope="row" style={{whiteSpace: "nowrap"}}>`state`<br/>int</th>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`indication`<br/>int</th>
                     <td>
                         Blinkmuster, dass angezeigt werden soll.
                         - **-1** - EVSE kontrolliert LED
@@ -653,6 +739,27 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     <th scope="row" style={{whiteSpace: "nowrap"}}>`duration`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
                     <td>
                         Dauer für die der gesetzte Zustand erhalten bleibt.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`color_h`<br/>int (<abbr title="Grad">°</abbr>)</th>
+                    <td>
+                        Farbwert der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum). Erlaubt sind Werte von 0 bis 359
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`color_s`<br/>int</th>
+                    <td>
+                        Farbsättigung der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum). Erlaubt sind Werte von 0 bis 255
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`color_v`<br/>int</th>
+                    <td>
+                        Helligkeit der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum). Eine Helligkeit von 0 verwendet die Standardfarbe der `indication` bzw. Blau bei WARP1 oder WARP2. Erlaubt sind Werte von 0 bis 255
                     </td>
                 </tr>
                     </tbody>
@@ -732,7 +839,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 </tr>
                 
                 <tr>
-                    <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_action`<br/>int</th>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>int</th>
                     <td>
                         Gibt an ob das Tag nur zum Starten oder Stoppen eines Ladevorgangs, oder für beides genutzt werden soll
                         - **0** - Tag kann Ladevorgänge starten und stoppen
@@ -855,34 +962,34 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_triggers`<br/>int[18]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_triggers`<br/>int[19]</th>
     <td>
         Dieser Firmware bekannte Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)).
-        - **[0..17]** - Eine bekannte Bedingung.
+        - **[0..18]** - Eine bekannte Bedingung.
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_actions`<br/>int[15]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_actions`<br/>int[16]</th>
     <td>
         Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config))
-        - **[0..14]** - Eine bekannte Aktion.
+        - **[0..15]** - Eine bekannte Aktion.
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_triggers`<br/>int[18]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_triggers`<br/>int[19]</th>
     <td>
         Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_triggers`.
-        - **[0..17]** - Eine ausführbare Bedingung.
+        - **[0..18]** - Eine ausführbare Bedingung.
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_actions`<br/>int[15]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_actions`<br/>int[16]</th>
     <td>
         Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_actions`.
-        - **[0..14]** - Eine ausführbare Aktion.
+        - **[0..15]** - Eine ausführbare Aktion.
     </td>
 </tr>
     </tbody>
@@ -1123,7 +1230,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
             <tbody>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/docs/mqtt_http/getting_started#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Bedingung, die zutreffen muss, damit Aktion ausgeführt wird
                 <MultilineTabs className="unique-tabs">
@@ -1241,7 +1348,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     <tbody>
                 
                 <tr>
-                    <th scope="row" style={{whiteSpace: "nowrap"}}>`topic`<br/>string</th>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`topic_filter`<br/>string</th>
                     <td>
                         MQTT-Topic-Filter, mit dem auf Nachrichten gewartet werden soll.
                     </td>
@@ -1324,7 +1431,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     <tbody>
                 
                 <tr>
-                    <th scope="row" style={{whiteSpace: "nowrap"}}>`high`<br/>bool</th>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`closed`<br/>bool</th>
                     <td>
                         Gibt an, ob bei geöffnetem oder geschlossenem Eingang reagiert werden soll
                         - **true** - Reagieren bei geöffnetem Eingang
@@ -1347,7 +1454,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     <tbody>
                 
                 <tr>
-                    <th scope="row" style={{whiteSpace: "nowrap"}}>`high`<br/>bool</th>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`closed`<br/>bool</th>
                     <td>
                         Gibt an, ob bei geöffnetem oder geschlossenem Eingang reagiert werden soll
                         - **true** - Reagieren bei geöffnetem Eingang
@@ -1369,13 +1476,99 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 <TabItem value="11" label="11 - Auslösen des Watchdogs des Lastmanagements.">
                 null: Auslösen des Watchdogs des Lastmanagements.
                 </TabItem>
+                
+                <TabItem value="16" label="16 - Strom verfügbar TODO">
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_available`<br/>bool</th>
+                    <td>
+                        Gibt an, ob reagiert werden soll, wenn Strom verfügbar, oder nicht verfügbar ist.
+                        - **true** - Reagieren wenn Strom verfügbar ist
+                        - **false** - Reagieren wenn kein Strom verfügbar ist
+                    </td>
+                </tr>
+                    </tbody>
+                </table>
+                </TabItem>
+                
+                <TabItem value="17" label="17 - Messen von Netzbezug- oder Einspeisung">
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`drawing_power`<br/>bool</th>
+                    <td>
+                        Gibt an, ob reagiert werden soll, wenn Strom ins Netz eingespeist, oder aus dem Netz bezogen wird.
+                        - **true** - Reagieren wenn Strom bezogen wird
+                        - **false** - Reagieren wenn Strom eingespeist wird
+                    </td>
+                </tr>
+                    </tbody>
+                </table>
+                </TabItem>
+                
+                <TabItem value="18" label="18 - Empfang eines HTTP-Requests">
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`method`<br/>int</th>
+                    <td>
+                        Gibt an, bei welchen HTTP-Methoden reagiert werden soll
+                        - **0** - Reagiere auf GET
+                        - **1** - Reagiere auf POST
+                        - **2** - Reagiere auf PUT
+                        - **3** - Reagiere auf POST und PUT
+                        - **4** - Reagiere auf GET, POST und PUT
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`url_suffix`<br/>string</th>
+                    <td>
+                        URL-Suffix auf dem auf HTTP-Requests gewartet wird. Wird an http://[hostname]/automation_trigger/ angehangen.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`payload`<br/>string</th>
+                    <td>
+                        Payload, der im HTTP-Request enthalten sein muss, damit die Regel auslöst. Darf (insbesondere bei HTTP GET) leer sein.
+                    </td>
+                </tr>
+                    </tbody>
+                </table>
+                </TabItem>
                 </MultilineTabs>
                 
             </td>
         </tr>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/docs/mqtt_http/getting_started#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Aktion, die ausgeführt werden soll
                 <MultilineTabs className="unique-tabs">
@@ -1479,7 +1672,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     <tbody>
                 
                 <tr>
-                    <th scope="row" style={{whiteSpace: "nowrap"}}>`state`<br/>int</th>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`indication`<br/>int</th>
                     <td>
                         Blinkmuster, dass angezeigt werden soll.
                         - **-1** - EVSE kontrolliert LED
@@ -1497,6 +1690,27 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     <th scope="row" style={{whiteSpace: "nowrap"}}>`duration`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
                     <td>
                         Dauer für die der gesetzte Zustand erhalten bleibt.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`color_h`<br/>int (<abbr title="Grad">°</abbr>)</th>
+                    <td>
+                        Farbwert der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum). Erlaubt sind Werte von 0 bis 359
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`color_s`<br/>int</th>
+                    <td>
+                        Farbsättigung der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum). Erlaubt sind Werte von 0 bis 255
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`color_v`<br/>int</th>
+                    <td>
+                        Helligkeit der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum). Eine Helligkeit von 0 verwendet die Standardfarbe der `indication` bzw. Blau bei WARP1 oder WARP2. Erlaubt sind Werte von 0 bis 255
                     </td>
                 </tr>
                     </tbody>
@@ -1576,7 +1790,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 </tr>
                 
                 <tr>
-                    <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_action`<br/>int</th>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>int</th>
                     <td>
                         Gibt an ob das Tag nur zum Starten oder Stoppen eines Ladevorgangs, oder für beides genutzt werden soll
                         - **0** - Tag kann Ladevorgänge starten und stoppen
@@ -1722,34 +1936,34 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_triggers`<br/>int[18]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_triggers`<br/>int[19]</th>
     <td>
         Dieser Firmware bekannte Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)).
-        - **[0..17]** - Eine bekannte Bedingung.
+        - **[0..18]** - Eine bekannte Bedingung.
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_actions`<br/>int[15]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_actions`<br/>int[16]</th>
     <td>
         Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config))
-        - **[0..14]** - Eine bekannte Aktion.
+        - **[0..15]** - Eine bekannte Aktion.
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_triggers`<br/>int[18]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_triggers`<br/>int[19]</th>
     <td>
         Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_triggers`.
-        - **[0..17]** - Eine ausführbare Bedingung.
+        - **[0..18]** - Eine ausführbare Bedingung.
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_actions`<br/>int[15]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_actions`<br/>int[16]</th>
     <td>
         Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_actions`.
-        - **[0..14]** - Eine ausführbare Aktion.
+        - **[0..15]** - Eine ausführbare Aktion.
     </td>
 </tr>
     </tbody>
@@ -1990,7 +2204,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
             <tbody>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/docs/mqtt_http/getting_started#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Bedingung, die zutreffen muss, damit Aktion ausgeführt wird
                 <MultilineTabs className="unique-tabs">
@@ -2108,7 +2322,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     <tbody>
                 
                 <tr>
-                    <th scope="row" style={{whiteSpace: "nowrap"}}>`topic`<br/>string</th>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`topic_filter`<br/>string</th>
                     <td>
                         MQTT-Topic-Filter, mit dem auf Nachrichten gewartet werden soll.
                     </td>
@@ -2191,7 +2405,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     <tbody>
                 
                 <tr>
-                    <th scope="row" style={{whiteSpace: "nowrap"}}>`high`<br/>bool</th>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`closed`<br/>bool</th>
                     <td>
                         Gibt an, ob bei geöffnetem oder geschlossenem Eingang reagiert werden soll
                         - **true** - Reagieren bei geöffnetem Eingang
@@ -2213,13 +2427,99 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 <TabItem value="11" label="11 - Auslösen des Watchdogs des Lastmanagements.">
                 null: Auslösen des Watchdogs des Lastmanagements.
                 </TabItem>
+                
+                <TabItem value="16" label="16 - Strom verfügbar TODO">
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_available`<br/>bool</th>
+                    <td>
+                        Gibt an, ob reagiert werden soll, wenn Strom verfügbar, oder nicht verfügbar ist.
+                        - **true** - Reagieren wenn Strom verfügbar ist
+                        - **false** - Reagieren wenn kein Strom verfügbar ist
+                    </td>
+                </tr>
+                    </tbody>
+                </table>
+                </TabItem>
+                
+                <TabItem value="17" label="17 - Messen von Netzbezug- oder Einspeisung">
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`drawing_power`<br/>bool</th>
+                    <td>
+                        Gibt an, ob reagiert werden soll, wenn Strom ins Netz eingespeist, oder aus dem Netz bezogen wird.
+                        - **true** - Reagieren wenn Strom bezogen wird
+                        - **false** - Reagieren wenn Strom eingespeist wird
+                    </td>
+                </tr>
+                    </tbody>
+                </table>
+                </TabItem>
+                
+                <TabItem value="18" label="18 - Empfang eines HTTP-Requests">
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`method`<br/>int</th>
+                    <td>
+                        Gibt an, bei welchen HTTP-Methoden reagiert werden soll
+                        - **0** - Reagiere auf GET
+                        - **1** - Reagiere auf POST
+                        - **2** - Reagiere auf PUT
+                        - **3** - Reagiere auf POST und PUT
+                        - **4** - Reagiere auf GET, POST und PUT
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`url_suffix`<br/>string</th>
+                    <td>
+                        URL-Suffix auf dem auf HTTP-Requests gewartet wird. Wird an http://[hostname]/automation_trigger/ angehangen.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`payload`<br/>string</th>
+                    <td>
+                        Payload, der im HTTP-Request enthalten sein muss, damit die Regel auslöst. Darf (insbesondere bei HTTP GET) leer sein.
+                    </td>
+                </tr>
+                    </tbody>
+                </table>
+                </TabItem>
                 </MultilineTabs>
                 
             </td>
         </tr>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/docs/mqtt_http/getting_started#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Aktion, die ausgeführt werden soll
                 <MultilineTabs className="unique-tabs">
@@ -2323,7 +2623,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     <tbody>
                 
                 <tr>
-                    <th scope="row" style={{whiteSpace: "nowrap"}}>`state`<br/>int</th>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`indication`<br/>int</th>
                     <td>
                         Blinkmuster, dass angezeigt werden soll.
                         - **-1** - EVSE kontrolliert LED
@@ -2341,6 +2641,27 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     <th scope="row" style={{whiteSpace: "nowrap"}}>`duration`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
                     <td>
                         Dauer für die der gesetzte Zustand erhalten bleibt.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`color_h`<br/>int (<abbr title="Grad">°</abbr>)</th>
+                    <td>
+                        Farbwert der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum). Erlaubt sind Werte von 0 bis 359
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`color_s`<br/>int</th>
+                    <td>
+                        Farbsättigung der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum). Erlaubt sind Werte von 0 bis 255
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`color_v`<br/>int</th>
+                    <td>
+                        Helligkeit der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum). Eine Helligkeit von 0 verwendet die Standardfarbe der `indication` bzw. Blau bei WARP1 oder WARP2. Erlaubt sind Werte von 0 bis 255
                     </td>
                 </tr>
                     </tbody>
@@ -2420,7 +2741,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 </tr>
                 
                 <tr>
-                    <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_action`<br/>int</th>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>int</th>
                     <td>
                         Gibt an ob das Tag nur zum Starten oder Stoppen eines Ladevorgangs, oder für beides genutzt werden soll
                         - **0** - Tag kann Ladevorgänge starten und stoppen
@@ -2476,6 +2797,76 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     <td>
                         Energielimit eines Ladevorgangs. Nach Ablaufen des Energielimits wird der Ladevorgang gestoppt.
                         - **-1** - Energielimit nicht verändern
+                    </td>
+                </tr>
+                    </tbody>
+                </table>
+                </TabItem>
+                
+                <TabItem value="11" label="11 - Starte eine Phasenumschaltung">
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases_wanted`<br/>int</th>
+                    <td>
+                        Gibt an, auf ein- oder dreiphasig umgeschalted werden soll
+                        - **1** - Wechsele auf einphasig
+                        - **3** - Wechsele auf dreiphasig
+                    </td>
+                </tr>
+                    </tbody>
+                </table>
+                </TabItem>
+                
+                <TabItem value="12" label="12 - Wechsle den Lademodus">
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`mode`<br/>int</th>
+                    <td>
+                        Gewünschter Lademodus. Siehe [`power_manager/charge_mode`](/mqtt_http/api_reference/power_manager.mdx#power_manager_charge_mode)
+                        - **0** - Schnell
+                        - **1** - Aus
+                        - **2** - PV
+                        - **3** - Min + PV
+                    </td>
+                </tr>
+                    </tbody>
+                </table>
+                </TabItem>
+                
+                <TabItem value="14" label="14 - Limitiere den ???TODO???-Strom">
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`current`<br/>int</th>
+                    <td>
+                        Stromlimit, dass gesetzt werden soll
+                        - **-1** - Stromlimit aufheben
                     </td>
                 </tr>
                     </tbody>
@@ -2543,34 +2934,34 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_triggers`<br/>int[18]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_triggers`<br/>int[19]</th>
     <td>
         Dieser Firmware bekannte Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)).
-        - **[0..17]** - Eine bekannte Bedingung.
+        - **[0..18]** - Eine bekannte Bedingung.
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_actions`<br/>int[15]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_actions`<br/>int[16]</th>
     <td>
         Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config))
-        - **[0..14]** - Eine bekannte Aktion.
+        - **[0..15]** - Eine bekannte Aktion.
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_triggers`<br/>int[18]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_triggers`<br/>int[19]</th>
     <td>
         Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_triggers`.
-        - **[0..17]** - Eine ausführbare Bedingung.
+        - **[0..18]** - Eine ausführbare Bedingung.
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_actions`<br/>int[15]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_actions`<br/>int[16]</th>
     <td>
         Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_actions`.
-        - **[0..14]** - Eine ausführbare Aktion.
+        - **[0..15]** - Eine ausführbare Aktion.
     </td>
 </tr>
     </tbody>
@@ -2811,7 +3202,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
             <tbody>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/docs/mqtt_http/getting_started#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Bedingung, die zutreffen muss, damit Aktion ausgeführt wird
                 <MultilineTabs className="unique-tabs">
@@ -2889,7 +3280,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     <tbody>
                 
                 <tr>
-                    <th scope="row" style={{whiteSpace: "nowrap"}}>`topic`<br/>string</th>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`topic_filter`<br/>string</th>
                     <td>
                         MQTT-Topic-Filter, mit dem auf Nachrichten gewartet werden soll.
                     </td>
@@ -3038,7 +3429,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 </table>
                 </TabItem>
                 
-                <TabItem value="17" label="17 - Netzbezug- oder Einspeisung gemessen">
+                <TabItem value="17" label="17 - Messen von Netzbezug- oder Einspeisung">
                 
                 <table>
                     <thead>
@@ -3060,13 +3451,53 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     </tbody>
                 </table>
                 </TabItem>
+                
+                <TabItem value="18" label="18 - Empfang eines HTTP-Requests">
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`method`<br/>int</th>
+                    <td>
+                        Gibt an, bei welchen HTTP-Methoden reagiert werden soll
+                        - **0** - Reagiere auf GET
+                        - **1** - Reagiere auf POST
+                        - **2** - Reagiere auf PUT
+                        - **3** - Reagiere auf POST und PUT
+                        - **4** - Reagiere auf GET, POST und PUT
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`url_suffix`<br/>string</th>
+                    <td>
+                        URL-Suffix auf dem auf HTTP-Requests gewartet wird. Wird an http://[hostname]/automation_trigger/ angehangen.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`payload`<br/>string</th>
+                    <td>
+                        Payload, der im HTTP-Request enthalten sein muss, damit die Regel auslöst. Darf (insbesondere bei HTTP GET) leer sein.
+                    </td>
+                </tr>
+                    </tbody>
+                </table>
+                </TabItem>
                 </MultilineTabs>
                 
             </td>
         </tr>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/docs/mqtt_http/getting_started#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Aktion, die ausgeführt werden soll
                 <MultilineTabs className="unique-tabs">
@@ -3191,7 +3622,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     <tbody>
                 
                 <tr>
-                    <th scope="row" style={{whiteSpace: "nowrap"}}>`phase`<br/>int</th>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases_wanted`<br/>int</th>
                     <td>
                         Gibt an, auf ein- oder dreiphasig umgeschalted werden soll
                         - **1** - Wechsele auf einphasig
@@ -3363,46 +3794,46 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_triggers`<br/>int[18]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_triggers`<br/>int[19]</th>
     <td>
         Dieser Firmware bekannte Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)).
         
         
         
-        - **[0..17]** - Eine bekannte Bedingung.
+        - **[0..18]** - Eine bekannte Bedingung.
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_actions`<br/>int[15]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_actions`<br/>int[16]</th>
     <td>
         Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config))
         
         
         
-        - **[0..14]** - Eine bekannte Aktion.
+        - **[0..15]** - Eine bekannte Aktion.
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_triggers`<br/>int[18]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_triggers`<br/>int[19]</th>
     <td>
         Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_triggers`.
         
         
         
-        - **[0..17]** - Eine ausführbare Bedingung.
+        - **[0..18]** - Eine ausführbare Bedingung.
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_actions`<br/>int[15]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_actions`<br/>int[16]</th>
     <td>
         Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_actions`.
         
         
         
-        - **[0..14]** - Eine ausführbare Aktion.
+        - **[0..15]** - Eine ausführbare Aktion.
     </td>
 </tr>
     </tbody>
@@ -3646,7 +4077,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
             <tbody>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/docs/mqtt_http/getting_started#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Bedingung, die zutreffen muss, damit Aktion ausgeführt wird
                 <MultilineTabs className="unique-tabs">
@@ -3782,7 +4213,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     <tbody>
                 
                 <tr>
-                    <th scope="row" style={{whiteSpace: "nowrap"}}>`topic`<br/>string</th>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`topic_filter`<br/>string</th>
                     <td>
                         MQTT-Topic-Filter, mit dem auf Nachrichten gewartet werden soll.
                     </td>
@@ -3868,7 +4299,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     <tbody>
                 
                 <tr>
-                    <th scope="row" style={{whiteSpace: "nowrap"}}>`high`<br/>bool</th>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`closed`<br/>bool</th>
                     <td>
                         Gibt an, ob bei geöffnetem oder geschlossenem Eingang reagiert werden soll
                         
@@ -3894,7 +4325,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     <tbody>
                 
                 <tr>
-                    <th scope="row" style={{whiteSpace: "nowrap"}}>`high`<br/>bool</th>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`closed`<br/>bool</th>
                     <td>
                         Gibt an, ob bei geöffnetem oder geschlossenem Eingang reagiert werden soll
                         
@@ -4050,7 +4481,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 </table>
                 </TabItem>
                 
-                <TabItem value="17" label="17 - Netzbezug- oder Einspeisung gemessen">
+                <TabItem value="17" label="17 - Messen von Netzbezug- oder Einspeisung">
                 
                 <table>
                     <thead>
@@ -4075,13 +4506,56 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     </tbody>
                 </table>
                 </TabItem>
+                
+                <TabItem value="18" label="18 - Empfang eines HTTP-Requests">
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`method`<br/>int</th>
+                    <td>
+                        Gibt an, bei welchen HTTP-Methoden reagiert werden soll
+                        
+                        
+                        
+                        - **0** - Reagiere auf GET
+                        - **1** - Reagiere auf POST
+                        - **2** - Reagiere auf PUT
+                        - **3** - Reagiere auf POST und PUT
+                        - **4** - Reagiere auf GET, POST und PUT
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`url_suffix`<br/>string</th>
+                    <td>
+                        URL-Suffix auf dem auf HTTP-Requests gewartet wird. Wird an http://[hostname]/automation_trigger/ angehangen.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`payload`<br/>string</th>
+                    <td>
+                        Payload, der im HTTP-Request enthalten sein muss, damit die Regel auslöst. Darf (insbesondere bei HTTP GET) leer sein.
+                    </td>
+                </tr>
+                    </tbody>
+                </table>
+                </TabItem>
                 </MultilineTabs>
                 
             </td>
         </tr>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/docs/mqtt_http/getting_started#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Aktion, die ausgeführt werden soll
                 <MultilineTabs className="unique-tabs">
@@ -4185,7 +4659,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     <tbody>
                 
                 <tr>
-                    <th scope="row" style={{whiteSpace: "nowrap"}}>`state`<br/>int</th>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`indication`<br/>int</th>
                     <td>
                         Blinkmuster, dass angezeigt werden soll.
                         
@@ -4206,6 +4680,27 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     <th scope="row" style={{whiteSpace: "nowrap"}}>`duration`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
                     <td>
                         Dauer für die der gesetzte Zustand erhalten bleibt.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`color_h`<br/>int (<abbr title="Grad">°</abbr>)</th>
+                    <td>
+                        Farbwert der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum). Erlaubt sind Werte von 0 bis 359
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`color_s`<br/>int</th>
+                    <td>
+                        Farbsättigung der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum). Erlaubt sind Werte von 0 bis 255
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`color_v`<br/>int</th>
+                    <td>
+                        Helligkeit der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum). Eine Helligkeit von 0 verwendet die Standardfarbe der `indication` bzw. Blau bei WARP1 oder WARP2. Erlaubt sind Werte von 0 bis 255
                     </td>
                 </tr>
                     </tbody>
@@ -4288,7 +4783,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 </tr>
                 
                 <tr>
-                    <th scope="row" style={{whiteSpace: "nowrap"}}>`tag_action`<br/>int</th>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>int</th>
                     <td>
                         Gibt an ob das Tag nur zum Starten oder Stoppen eines Ladevorgangs, oder für beides genutzt werden soll
                         
@@ -4400,7 +4895,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                     <tbody>
                 
                 <tr>
-                    <th scope="row" style={{whiteSpace: "nowrap"}}>`phase`<br/>int</th>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases_wanted`<br/>int</th>
                     <td>
                         Gibt an, auf ein- oder dreiphasig umgeschalted werden soll
                         

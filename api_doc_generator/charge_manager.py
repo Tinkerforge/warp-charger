@@ -1,5 +1,11 @@
 from api_doc_common import *
 
+def charger(version):
+    return [Elem.OBJECT("Eine zu steuernde Wallbox", version=version, members = {
+        "host": Elem.STRING("IP-Adresse der zu steuernden Wallbox"),
+        "name": Elem.STRING("Anzeigename der zu steuernden Wallbox")
+})]
+
 charge_manager = Module("charge_manager", "Lastmanager", "", "Das `charge_manager`-Modul implementiert einen Lastmanager, der eine verfügbare Menge Strom auf ein oder mehrere WARP Charger (jeder Generation) verteilen kann. Der Lastmanager stellt sicher, dass der konfigurierte Verbund an WARP Chargern niemals mehr als den verfügbaren Strom beziehen und versucht diesen möglichst fair zu verteilen. Ein WARP Energy Manager verwendet den Lastmanager außerdem um die Phasenumschaltung eines Verbunds an WARP Chargern über ein externes Schütz sicher umzusetzen.", Version.ANY, [
     Func("available_current", FuncType.CONFIGURATION, Elem.OBJECT("Der derzeit zur Verfügung stehende Strom. Dieser Strom wird unter den konfigurierten Wallboxen aufgeteilt.", members={
             "current": Elem.INT("Der zur Verfügung stehende Strom. Es werden nur Ströme akzeptiert, die kleiner als der konfigurierte Maximalstrom maximum_available_current aus {{{ref:charge_manager/config}}} sind.", unit=Units.mA),
@@ -40,12 +46,10 @@ charge_manager = Module("charge_manager", "Lastmanager", "", "Das `charge_manage
             "minimum_current_1p": Elem.INT("Kleinste Strommenge, die einer Wallbox im einphasigen Betrieb zugeteilt werden soll, damit diese einen Ladevorgang beginnt. Hiermit kann beeinflusst werden wie viele Wallboxen gleichzeitig laden.", unit=Units.mA),
             "requested_current_threshold": Elem.INT("Wallboxen mit einem Stromzähler, der Phasenströme misst, werden requested_current_threshold Sekunden nach dem Ladestart auf den größten Phasenstrom plus den konfigurierten Spielraum limitiert. Damit kann der verfügbare Strom effizienter auf mehrere Wallboxen verteilt werden.", unit=Units.s),
             "requested_current_margin": Elem.INT("Spielraum, der auf den größten gemessenen Phasenstrom aufgeschlagen wird.", unit=Units.mA),
-            "chargers": Elem.ARRAY("Wallboxen, die vom Lastmanager gesteuert werden sollen.", members=[
-                * 10 * [Elem.OBJECT("Eine zu steuernde Wallbox", members = {
-                    "host": Elem.STRING("IP-Adresse der zu steuernden Wallbox"),
-                    "name": Elem.STRING("Anzeigename der zu steuernden Wallbox")
-                })]
-            ])
+            "chargers": Elem.ARRAY("Wallboxen, die vom Lastmanager gesteuert werden sollen.", members=
+                  10 * charger(Version.WARP1)
+                + 32 * charger(Version.WARP2 | Version.WARP3 | Version.WEM)
+            )
         })
     )
 ])

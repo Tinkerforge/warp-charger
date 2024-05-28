@@ -182,6 +182,108 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/scan -m 'null'
 
 
 Die WLAN-Verbindungskonfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/wifi/sta_config
+```
+```jsx
+{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/wifi/sta_config -d '{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/sta_config
+```
+```jsx
+{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/wifi/sta_config<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -222,6 +324,15 @@ Die WLAN-Verbindungskonfiguration.
         Legt fest, ob sich nur zum WLAN mit der gesetzten BSSID verbunden werden soll. Deaktiviert lassen, falls Repeater o.Ä. verwendet werden sollen.
         - **true** - Verbindet sich nur zum Access Point mit der übergebenen BSSID.
         - **false** - Verbindet sich nur zu jedem Access Point mit der konfigurierten SSID, z.B. mit Repeatern.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_11b`<br/>bool</th>
+    <td>
+        Legt fest, ob der veraltete und langsame [802.11b-Modus](https://de.wikipedia.org/wiki/Wireless_Local_Area_Network#IEEE_802.11b) verwendet werden darf. Dieser verlangsamt auch andere Geräte, die zum WLAN verbunden sind, kann aber die Empfangsqualität und Robustheit der Verbindung leicht verbessern.
+        - **true** - Erlaube Verwendung des 802.11b-Modus
+        - **false** - Verbiete Verwendung des 802.11b-Modus
     </td>
 </tr>
 
@@ -268,7 +379,7 @@ Die WLAN-Verbindungskonfiguration.
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`wpa_eap_config`<br/>[Union](/docs/mqtt_http/getting_started#unions)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wpa_eap_config`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
     <td>
         WPA-Enterprise-Konfiguration
         <MultilineTabs className="unique-tabs">
@@ -860,6 +971,108 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/scan -m 'null'
 
 
 Die WLAN-Verbindungskonfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/wifi/sta_config
+```
+```jsx
+{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/wifi/sta_config -d '{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/sta_config
+```
+```jsx
+{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/wifi/sta_config<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -900,6 +1113,15 @@ Die WLAN-Verbindungskonfiguration.
         Legt fest, ob sich nur zum WLAN mit der gesetzten BSSID verbunden werden soll. Deaktiviert lassen, falls Repeater o.Ä. verwendet werden sollen.
         - **true** - Verbindet sich nur zum Access Point mit der übergebenen BSSID.
         - **false** - Verbindet sich nur zu jedem Access Point mit der konfigurierten SSID, z.B. mit Repeatern.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_11b`<br/>bool</th>
+    <td>
+        Legt fest, ob der veraltete und langsame [802.11b-Modus](https://de.wikipedia.org/wiki/Wireless_Local_Area_Network#IEEE_802.11b) verwendet werden darf. Dieser verlangsamt auch andere Geräte, die zum WLAN verbunden sind, kann aber die Empfangsqualität und Robustheit der Verbindung leicht verbessern.
+        - **true** - Erlaube Verwendung des 802.11b-Modus
+        - **false** - Verbiete Verwendung des 802.11b-Modus
     </td>
 </tr>
 
@@ -946,7 +1168,7 @@ Die WLAN-Verbindungskonfiguration.
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`wpa_eap_config`<br/>[Union](/docs/mqtt_http/getting_started#unions)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wpa_eap_config`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
     <td>
         WPA-Enterprise-Konfiguration
         <MultilineTabs className="unique-tabs">
@@ -1538,6 +1760,108 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/scan -m 'null'
 
 
 Die WLAN-Verbindungskonfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp3-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/wifi/sta_config
+```
+```jsx
+{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/wifi/sta_config -d '{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp3/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/sta_config
+```
+```jsx
+{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/wifi/sta_config<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -1578,6 +1902,15 @@ Die WLAN-Verbindungskonfiguration.
         Legt fest, ob sich nur zum WLAN mit der gesetzten BSSID verbunden werden soll. Deaktiviert lassen, falls Repeater o.Ä. verwendet werden sollen.
         - **true** - Verbindet sich nur zum Access Point mit der übergebenen BSSID.
         - **false** - Verbindet sich nur zu jedem Access Point mit der konfigurierten SSID, z.B. mit Repeatern.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_11b`<br/>bool</th>
+    <td>
+        Legt fest, ob der veraltete und langsame [802.11b-Modus](https://de.wikipedia.org/wiki/Wireless_Local_Area_Network#IEEE_802.11b) verwendet werden darf. Dieser verlangsamt auch andere Geräte, die zum WLAN verbunden sind, kann aber die Empfangsqualität und Robustheit der Verbindung leicht verbessern.
+        - **true** - Erlaube Verwendung des 802.11b-Modus
+        - **false** - Verbiete Verwendung des 802.11b-Modus
     </td>
 </tr>
 
@@ -1624,7 +1957,7 @@ Die WLAN-Verbindungskonfiguration.
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`wpa_eap_config`<br/>[Union](/docs/mqtt_http/getting_started#unions)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wpa_eap_config`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
     <td>
         WPA-Enterprise-Konfiguration
         <MultilineTabs className="unique-tabs">
@@ -2216,6 +2549,108 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/scan -m 'null'
 
 
 Die WLAN-Verbindungskonfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/wifi/sta_config
+```
+```jsx
+{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/wifi/sta_config -d '{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/sta_config
+```
+```jsx
+{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/wifi/sta_config<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2256,6 +2691,15 @@ Die WLAN-Verbindungskonfiguration.
         Legt fest, ob sich nur zum WLAN mit der gesetzten BSSID verbunden werden soll. Deaktiviert lassen, falls Repeater o.Ä. verwendet werden sollen.
         - **true** - Verbindet sich nur zum Access Point mit der übergebenen BSSID.
         - **false** - Verbindet sich nur zu jedem Access Point mit der konfigurierten SSID, z.B. mit Repeatern.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_11b`<br/>bool</th>
+    <td>
+        Legt fest, ob der veraltete und langsame [802.11b-Modus](https://de.wikipedia.org/wiki/Wireless_Local_Area_Network#IEEE_802.11b) verwendet werden darf. Dieser verlangsamt auch andere Geräte, die zum WLAN verbunden sind, kann aber die Empfangsqualität und Robustheit der Verbindung leicht verbessern.
+        - **true** - Erlaube Verwendung des 802.11b-Modus
+        - **false** - Verbiete Verwendung des 802.11b-Modus
     </td>
 </tr>
 
@@ -2302,7 +2746,7 @@ Die WLAN-Verbindungskonfiguration.
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`wpa_eap_config`<br/>[Union](/docs/mqtt_http/getting_started#unions)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wpa_eap_config`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
     <td>
         WPA-Enterprise-Konfiguration
         <MultilineTabs className="unique-tabs">
@@ -2806,6 +3250,108 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/scan -m 'null'
 
 
 Die WLAN-Verbindungskonfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/wifi/sta_config
+```
+```jsx
+{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/wifi/sta_config -d '{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/sta_config
+```
+```jsx
+{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/wifi/sta_config<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -2856,6 +3402,18 @@ Die WLAN-Verbindungskonfiguration.
 </tr>
 
 <tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_11b`<br/>bool</th>
+    <td>
+        Legt fest, ob der veraltete und langsame [802.11b-Modus](https://de.wikipedia.org/wiki/Wireless_Local_Area_Network#IEEE_802.11b) verwendet werden darf. Dieser verlangsamt auch andere Geräte, die zum WLAN verbunden sind, kann aber die Empfangsqualität und Robustheit der Verbindung leicht verbessern.
+        
+        
+        
+        - **true** - Erlaube Verwendung des 802.11b-Modus
+        - **false** - Verbiete Verwendung des 802.11b-Modus
+    </td>
+</tr>
+
+<tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`passphrase`<br/>string</th>
     <td>
         Die WLAN-Passphrase. Maximal 63 Byte. Dieser Eintrag ist optional und kann leer übergeben werden, falls sich zu einem unverschlüsselten WLAN verbunden werden soll.
@@ -2898,7 +3456,7 @@ Die WLAN-Verbindungskonfiguration.
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`wpa_eap_config`<br/>[Union](/docs/mqtt_http/getting_started#unions)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wpa_eap_config`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
     <td>
         WPA-Enterprise-Konfiguration
         <MultilineTabs className="unique-tabs">

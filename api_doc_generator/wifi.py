@@ -39,6 +39,10 @@ wifi = Module("wifi", "WLAN-Konfiguration", "", "", Version.ANY, [
                 Const(True, "Verbindet sich nur zum Access Point mit der übergebenen BSSID."),
                 Const(False, "Verbindet sich nur zu jedem Access Point mit der konfigurierten SSID, z.B. mit Repeatern.")
             ]),
+            "enable_11b": Elem.BOOL("Legt fest, ob der veraltete und langsame [802.11b-Modus](https://de.wikipedia.org/wiki/Wireless_Local_Area_Network#IEEE_802.11b) verwendet werden darf. Dieser verlangsamt auch andere Geräte, die zum WLAN verbunden sind, kann aber die Empfangsqualität und Robustheit der Verbindung leicht verbessern.", constants=[
+                Const(True, "Erlaube Verwendung des 802.11b-Modus"),
+                Const(False, "Verbiete Verwendung des 802.11b-Modus")
+            ]),
             "passphrase": Elem.STRING("Die WLAN-Passphrase. Maximal 63 Byte. Dieser Eintrag ist optional und kann leer übergeben werden, falls sich zu einem unverschlüsselten WLAN verbunden werden soll.", censored=True),
             "ip": Elem.STRING("IP-Adresse, die das Gerät im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als \"0.0.0.0\" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll."),
             "gateway": Elem.STRING("Gateway-Adresse, die das Gerät im konfigurierten Netz verwenden soll."),

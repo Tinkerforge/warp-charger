@@ -155,9 +155,9 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", "Das `evse`-Modul verwaltet Z
                 Const("2001..2010", "Fehler-Blinken 1 bis 10.; Standardfarbe Rot", version=Version.WARP3),
             ]),
             "duration": Elem.INT("Dauer für die der gesetzte Zustand erhalten bleibt.", unit=Units.ms),
-            "color_h": Elem.INT('Farbwert der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum).'),
-            "color_s": Elem.INT('Farbsättigung der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum).'),
-            "color_v": Elem.INT('Helligkeit der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum). Eine Helligkeit von 0 verwendet die Standardfarbe der `indication` bzw. Blau bei WARP1 oder WARP2.'),
+            "color_h": Elem.INT('Farbwert der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum). Erlaubt sind Werte von 0 bis 359', unit=Units.degree),
+            "color_s": Elem.INT('Farbsättigung der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum). Erlaubt sind Werte von 0 bis 255'),
+            "color_v": Elem.INT('Helligkeit der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum). Eine Helligkeit von 0 verwendet die Standardfarbe der `indication` bzw. Blau bei WARP1 oder WARP2. Erlaubt sind Werte von 0 bis 255'),
         })
     ),
 

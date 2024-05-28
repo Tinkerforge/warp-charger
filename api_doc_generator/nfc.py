@@ -1,5 +1,20 @@
 from api_doc_common import *
 
+def tag(version):
+    return [
+        Elem.OBJECT("Ein autorisiertes NFC-Tag", version=version, members={
+            "user_id": Elem.INT("ID des Nutzers dem dieses Tag zugeordnet ist, oder 0 falls es keinem Nutzer zugeordnet ist."),
+            "tag_type": Elem.INT("Typ des Tags.", constants=[
+                Const(0, "Mifare Classic"),
+                Const(1, "NFC Forum Typ 1"),
+                Const(2, "NFC Forum Typ 2"),
+                Const(3, "NFC Forum Typ 3"),
+                Const(4, "NFC Forum Typ 4"),
+            ]),
+            "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`"),
+        })
+    ]
+
 nfc = Module("nfc", "NFC-Ladefreigabe", "Benötigt das Feature <a href=\"#features_nfc\"><code>\"nfc\"</code></a>.", "", Version.CHARGER, [
     Func("seen_tags", FuncType.STATE, Elem.ARRAY("Die zuletzt von der Wallbox gesehenen NFC-Tags.", members=[
             * 8 * [Elem.OBJECT("Ein gesehenes NFC-Tag", members = {
@@ -61,21 +76,10 @@ nfc = Module("nfc", "NFC-Ladefreigabe", "Benötigt das Feature <a href=\"#featur
     }), True),
 
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die NFC-Konfiguration.", members={
-            "authorized_tags": Elem.ARRAY("Eine Liste authorisierter Tags.", members=[
-                * 16 * [
-                    Elem.OBJECT("Ein autorisiertes NFC-Tag", members={
-                        "user_id": Elem.INT("ID des Nutzers dem dieses Tag zugeordnet ist, oder 0 falls es keinem Nutzer zugeordnet ist."),
-                        "tag_type": Elem.INT("Typ des Tags.", constants=[
-                            Const(0, "Mifare Classic"),
-                            Const(1, "NFC Forum Typ 1"),
-                            Const(2, "NFC Forum Typ 2"),
-                            Const(3, "NFC Forum Typ 3"),
-                            Const(4, "NFC Forum Typ 4"),
-                        ]),
-                        "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. `01:23:AB:3D`"),
-                    })
-                ]
-            ]),
+            "authorized_tags": Elem.ARRAY("Eine Liste authorisierter Tags.", members=
+                  16 * tag(Version.WARP1)
+                + 32 * tag(Version.WARP2 | Version.WARP3 | Version.WEM)
+            ),
         })
     ),
 ])
