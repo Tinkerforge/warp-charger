@@ -29,7 +29,6 @@ def get_example_from_file(api: str, prefix_version: str):
             result[1] = result[1].removesuffix("*/").strip()
             return result
     except Exception as e:
-        print(f"Failed to load example for {api} ({prefix_version}): {e}")
         return None, None
 
 def wrap_non_empty(prefix, middle, suffix):
@@ -626,7 +625,11 @@ curl http://$HOST/{api_name(f, module)}
         if f.command_is_action:
             content += '<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>\n'
 
-        content += self.get_examples(f, module, version)
+        examples = self.get_examples(f, module, version)
+        # Only log this once per API
+        if examples == "" and version == Version.ANY:
+            print(f"No examples for {f.api_name(module)}")
+        content += examples
 
         if self.type_ == EType.NULL:
             table = ""
