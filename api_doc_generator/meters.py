@@ -74,9 +74,106 @@ meters = Module("meters", "Stromzähler", "",
             "display_name": Elem.STRING("Anzeigename des Stromzählers"),
             "host": Elem.STRING("Hostname oder IP-Adresse des SunSpec-Geräts"),
             "port": Elem.INT("Port des SunSpec-Geräts. Typischerweise 502"),
-            "device_addess": Elem.INT("Modbus-Device-Adresse des Sunspec-Geräts"),
+            "device_address": Elem.INT("Modbus-Device-Adresse des Sunspec-Geräts"),
             "model_id": Elem.INT("SunSpec-Model-ID"),
-        })
+        }),
+        6: Elem.OBJECT("Modbus-TCP-Stromzähler.", members={
+            "display_name": Elem.STRING("Anzeigename des Stromzählers"),
+            "host": Elem.STRING("Hostname oder IP-Adresse des SunSpec-Geräts"),
+            "port": Elem.INT("Port des SunSpec-Geräts. Typischerweise 502"),
+            "table": Elem.UNION("Registertabelle, die gelesen werden soll.", members={
+                0: Elem.NULL("Keine Registertabelle konfiguriert."),
+                1: Elem.OBJECT("Benutzerdefinierte Registertabelle", members={
+                    "device_address": Elem.INT("Geräteadresse."),
+                    "register_address_mode": Elem.INT("Gibt an, ob die konfigurierten Registerstartadressen im Webinterface als Adressen oder Registernummern angezeigt werden.", constants=[
+                        Const(0, "Startadressen werden als Registeraddressen angezeigt. Die erste Adresse ist 0."),
+                        Const(1, "Startadressen werden als Registernummern angezeigt. Die erste Registernummer ist 1."),
+                    ]),
+                    "registers": Elem.ARRAY("Registertabelle", members=
+                        36 * [
+                            Elem.OBJECT("Ein Register, dass gelesen werden soll", members={
+                                "rtype": Elem.INT("Registertyp", constants=[
+                                    Const(0, "Holding Register"),
+                                    Const(1, "Input Register"),
+                                ]),
+                                "addr": Elem.INT("Startadresse des Registers."),
+                                "vtype": Elem.INT("Wert-Typ", constants=[
+                                    Const(1, "Ein Register, 16-Bit, Ganzzahl, vorzeichenlos"),
+                                    Const(9, "Ein Register, 16-Bit, Ganzzahl, vorzeichenbehaftet"),
+                                    Const(2, "Zwei Register, 32-Bit, Ganzzahl, vorzeichenlos, Big-Endian"),
+                                    Const(34, "Zwei Register, 32-Bit, Ganzzahl, vorzeichenlos, Little-Endian"),
+                                    Const(10, "Zwei Register, 32-Bit, Ganzzahl, vorzeichenbehaftet, Big-Endian"),
+                                    Const(42, "Zwei Register, 32-Bit, Ganzzahl, vorzeichenbehaftet, Little-Endian"),
+                                    Const(26, "Zwei Register, 32-Bit, Gleitkommazahl, Big-Endian"),
+                                    Const(58, "Zwei Register, 32-Bit, Gleitkommazahl, Little-Endian"),
+                                    Const(4, "Vier Register, 64-Bit, Ganzzahl, vorzeichenlos, Big-Endian"),
+                                    Const(36, "Vier Register, 64-Bit, Ganzzahl, vorzeichenlos, Little-Endian"),
+                                    Const(12, "Vier Register, 64-Bit, Ganzzahl, vorzeichenbehaftet, Big-Endian"),
+                                    Const(44, "Vier Register, 64-Bit, Ganzzahl, vorzeichenbehaftet, Little-Endian"),
+                                    Const(28, "Vier Register, 64-Bit, Gleitkommazahl, Big-Endian"),
+                                    Const(60, "Vier Register, 64-Bit, Gleitkommazahl, Little-Endian")
+                                ]),
+                                "off": Elem.FLOAT("Offset, dass auf den gelesenen Wert addiert werden soll. Der Offset-Wert wird addiert, bevor der Skalierungsfaktor angewandt wird."),
+                                "scale": Elem.FLOAT("Skalierungsfaktor, mit dem der gelesene Wert multipliziert werden soll. Der Skalierungsfaktor wirkt auf den Wert, der durch die Addition des gelesenen Wertes mit dem Offset entstanden ist."),
+                                "id": Elem.INT("MeterValueID, die die Interpretation des gelesenen Werts angibt. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)")
+                            })
+                        ]
+                    )
+                }),
+                2: Elem.OBJECT("Sungrow Hybrid-Wechselrichter (SH...)", members={
+                    "virtual_meter": Elem.INT("Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", constants=[
+                        Const(0, "Kein virtueller Zähler ausgewählt"),
+                        Const(1, "Wechselrichter"),
+                        Const(2, "Netzanschluss"),
+                        Const(3, "Speicher"),
+                        Const(4, "Last")
+                    ]),
+                    "device_address": Elem.INT("Geräteadresse. Typischerweise 1."),
+                }),
+                3: Elem.OBJECT("Sungrow String-Wechselrichter (SG...)", members={
+                    "virtual_meter": Elem.INT("Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", constants=[
+                        Const(0, "Kein virtueller Zähler ausgewählt"),
+                        Const(1, "Wechselrichter"),
+                        Const(2, "Netzanschluss"),
+                        Const(3, "Last")
+                    ]),
+                    "device_address": Elem.INT("Geräteadresse. Typischerweise 1."),
+                }),
+                4: Elem.OBJECT("Solarmax Max.Storage", members={
+                    "virtual_meter": Elem.INT("Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", constants=[
+                        Const(0, "Kein virtueller Zähler ausgewählt"),
+                        Const(1, "Wechselrichter"),
+                        Const(2, "Netzanschluss"),
+                        Const(3, "Speicher")
+                    ]),
+                    "device_address": Elem.INT("Geräteadresse. Typischerweise 1."),
+                }),
+                5: Elem.OBJECT("Victron Energy GX", members={
+                    "virtual_meter": Elem.INT("Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", constants=[
+                        Const(0, "Kein virtueller Zähler ausgewählt"),
+                        Const(1, "Wechselrichter"),
+                        Const(2, "Netzanschluss"),
+                        Const(3, "Speicher"),
+                        Const(4, "Last")
+                    ]),
+                    "device_address": Elem.INT("Geräteadresse. Typischerweise 100."),
+                }),
+                6: Elem.OBJECT("Deye Hybrid-Wechselrichter", members={
+                    "virtual_meter": Elem.INT("Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", constants=[
+                        Const(0, "Kein virtueller Zähler ausgewählt"),
+                        Const(1, "Wechselrichter"),
+                        Const(2, "Netzanschluss"),
+                        Const(3, "Speicher"),
+                        Const(4, "Last")
+                    ]),
+                    "device_address": Elem.INT("Geräteadresse. Typischerweise 1."),
+                }),
+
+            })
+        }),
+        7: Elem.OBJECT("SMA Speedwire-Stromzähler.", members={
+            "display_name": Elem.STRING("Anzeigename des Stromzählers"),
+        }),
     })),
 
     Func("X/state", FuncType.STATE, Elem.HIDDEN_UNION("Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in {{{ref:meters/X/config}}} konfiguriert wurde.", tab_id="metersXConfig", get_tag_fn=meters_x_get_tag_fn, members={

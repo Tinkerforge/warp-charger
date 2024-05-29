@@ -8,7 +8,7 @@ export const meters = [
     manufacturer: "Deye",
     name: "SUN-Serie",
     protocol: "Modbus/TCP",
-    note: "Hybrid-Wechselrichter für Nieder- und Hochspannungsbatterien; Support für Deye kommt in Kürze",
+    note: "Hybrid-Wechselrichter für Nieder- und Hochspannungsbatterien",
   },
   {
     manufacturer: "Eastron",
@@ -92,13 +92,13 @@ export const meters = [
     manufacturer: "Sungrow",
     name: "SG-Serie",
     protocol: "Modbus/TCP",
-    note: "String-Wechselrichter; Support für Sungrow kommt in Kürze",
+    note: "String-Wechselrichter",
   },
   {
     manufacturer: "Sungrow",
     name: "SH-Serie",
     protocol: "Modbus/TCP",
-    note: "Hybrid-Wechselrichter; Support für Sungrow kommt in Kürze",
+    note: "Hybrid-Wechselrichter",
   },
   {
     manufacturer: "Tasmota",
@@ -125,7 +125,7 @@ export const meters = [
     manufacturer: "Victron Energy",
     name: "GX Geräte",
     protocol: "Modbus/TCP",
-    note: "Alle GX Geräte, z.B.: Cerbo GX; Support für Victron Energy kommt in Kürze",
+    note: "Alle GX Geräte, z.B.: Cerbo GX",
   },
   {
     manufacturer: "YTL",
@@ -148,7 +148,7 @@ export const columns = [
     header: "Name",
     accessorKey: "name",
     className: "sortable-data-table left nowrap",
-  }, 
+  },
   {
     header: "Protokoll",
     accessorKey: "protocol",

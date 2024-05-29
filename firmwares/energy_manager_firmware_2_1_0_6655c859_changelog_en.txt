@@ -1,0 +1,42 @@
+2024-05-28: 2.1.0 (2bb24e04)
+- Add SMA Speedwire as new energy meter data source
+- Add Modbus TCP as new energy meter data source [a:https://docs.warp-charger.com/docs/compatible_meters]List of supported meters[/a]
+- Add MQTTS and MQTT over WS(S) support
+- Add HTTP automation trigger
+- Add more meter history plot zoom levels
+- Add phase switch buttons to status page if external control is enabled
+- Add modal for WiFi scan results
+- SunSpec: Support multiple devices in one register set
+- SunSpec: Support multiple instances of the same model in one device
+- SunSpec: Improve boot scan robustness
+- SunSpec: Fix power factor scaling
+- SunSpec: Add support for DER models 701, 713 and 714
+- SunSpec: Improve SolarEdge and Sungrow inverter compatibility
+- SunSpec: Improve discovery robustness
+- WiFi Enterprise: Fix EAP-TLS connections with client key
+- Fix DSZ15DZMOD support of legacy API
+- Fix automatic channel selection of soft AP
+- Fix phases not being shown as active if phase current is over threshold but negative (grid feed)
+- Fix Min+PV charge mode with non-default minimum current
+- Fix auto scaling of non-stacked graphs
+- Fix PV mode stopping a charge after 3p->1p switch
+- Double charge manager current margin if exactly one charger is active
+- Print module in event log messages
+- Reorganize web interface menu structure
+- Unify label/content split of status and other subpages
+- Show placeholder if RTC time is not set
+- Show disabled automation actions
+- Fix visibility of empty power plot
+- Fix energy analysis graph colors changing on reload
+- Allow to re-enable 802.11b mode to improve WiFi reception
+- Fix NTP server configuration via DHCP
+- Fix showing 0 W on status page if no data is available
+- Fix MQTT showing as deactivated before first connection attempt
+- Fix WiFi scan not showing as completed if no WiFi was found
+- Fix automatic web interface reload on firmware version change
+- Update default NTP servers
+- Improve NTP sync speed
+- Don't overwrite fresh NTP synced time with probably older RTC time
+- Improve web server robustness
+- Improve translations
+- Support up to 2 kilobyte of HTTP request headers

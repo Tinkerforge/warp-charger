@@ -875,10 +875,10 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[10]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[32]</th>
     <td>
         Wallboxen, die vom Lastmanager gesteuert werden sollen.
-        - **[0..9]** - Eine zu steuernde Wallbox
+        - **[0..31]** - Eine zu steuernde Wallbox
         <table>
             <thead>
                 <tr>
@@ -1324,10 +1324,10 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[10]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[32]</th>
     <td>
         Wallboxen, die vom Lastmanager gesteuert werden sollen.
-        - **[0..9]** - Eine zu steuernde Wallbox
+        - **[0..31]** - Eine zu steuernde Wallbox
         <table>
             <thead>
                 <tr>
@@ -1773,10 +1773,10 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[10]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[32]</th>
     <td>
         Wallboxen, die vom Lastmanager gesteuert werden sollen.
-        - **[0..9]** - Eine zu steuernde Wallbox
+        - **[0..31]** - Eine zu steuernde Wallbox
         <table>
             <thead>
                 <tr>
@@ -2237,13 +2237,41 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[10]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[..]</th>
     <td>
         Wallboxen, die vom Lastmanager gesteuert werden sollen.
         
-        
+        <strong>WARP 1:</strong><br/>
         
         - **[0..9]** - Eine zu steuernde Wallbox
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`host`<br/>string</th>
+            <td>
+                IP-Adresse der zu steuernden Wallbox
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
+            <td>
+                Anzeigename der zu steuernden Wallbox
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        
+        <strong>WARP 2 und WARP 3 und Energy Manager:</strong><br/>
+        
+        - **[0..31]** - Eine zu steuernde Wallbox
         <table>
             <thead>
                 <tr>

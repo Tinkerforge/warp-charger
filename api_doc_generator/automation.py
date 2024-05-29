@@ -3,14 +3,14 @@ from api_doc_common import *
 automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-Modul können einfache Regeln ausgeführt werden. Eine Regel besteht aus einer auszuführenden Aktion, sowie aus einer Bedingung, die zutreffen muss, damit die Aktion ausgeführt wird.", Version.ANY, [
     Func("state", FuncType.STATE, Elem.OBJECT("Der Zustand der Automatisierung. Gibt an, welche Bedingungen und Aktionen von dieser Firmware unterstützt werden und welche der unterstützten Bedingungen und Aktionen im Moment ausgeführt werden können. Je nach Konfiguration können bestimmte Bedingungen und Aktionen nicht ausgeführt werden, beispielsweise kann nicht auf MQTT-Nachrichten reagiert werden, wenn keine MQTT-Verbindung konfiguriert ist.", members={
         "registered_triggers": Elem.ARRAY("Dieser Firmware bekannte Bedingungen (Union-Tags des Triggers einer Regel aus {{{ref:automation/config}}}).", members=[
-            * 18 * [Elem.INT("Eine bekannte Bedingung.")]]),
+            * 19 * [Elem.INT("Eine bekannte Bedingung.")]]),
         "registered_actions": Elem.ARRAY("Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus {{{ref:automation/config}}})", members=[
-            * 15 * [Elem.INT("Eine bekannte Aktion.")]]),
+            * 16 * [Elem.INT("Eine bekannte Aktion.")]]),
 
         "enabled_triggers": Elem.ARRAY("Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus {{{ref:automation/config}}}). Ist immer eine Teilmenge der `registered_triggers`.", members=[
-            * 18 * [Elem.INT("Eine ausführbare Bedingung.")]]),
+            * 19 * [Elem.INT("Eine ausführbare Bedingung.")]]),
         "enabled_actions": Elem.ARRAY("Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus {{{ref:automation/config}}}). Ist immer eine Teilmenge der `registered_actions`.", members=[
-            * 15 * [Elem.INT("Eine ausführbare Aktion.")]]),
+            * 16 * [Elem.INT("Eine ausführbare Aktion.")]]),
     })),
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die Konfiguration der Automatisierung.", members={
             "tasks": Elem.ARRAY("Konfigurierte Regeln", members=[
@@ -62,7 +62,7 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                             ]),
                         }),
                         3: Elem.OBJECT("Empfang einer MQTT-Nachricht", members={
-                            "topic": Elem.STRING("MQTT-Topic-Filter, mit dem auf Nachrichten gewartet werden soll."),
+                            "topic_filter": Elem.STRING("MQTT-Topic-Filter, mit dem auf Nachrichten gewartet werden soll."),
                             "payload": Elem.STRING("Payload, der in der Nachricht enthalten sein soll"),
                             "retain": Elem.BOOL("Gibt an, ob auf retained-Pakete reagiert werden soll"),
                             "use_prefix": Elem.BOOL("Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe {{{ref:mqtt/config}}}) vor dem konfigurierten Topic vorangestellt werden soll.")
@@ -80,13 +80,13 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                         }),
                         6: Elem.NULL("Erreichen des Ladezeit- oder Energie-Limits", version=Version.CHARGER),
                         7: Elem.OBJECT("Schalten des Abschalteingangs", version=Version.WARP2 | Version.WARP3, members={
-                            "high": Elem.BOOL("Gibt an, ob bei geöffnetem oder geschlossenem Eingang reagiert werden soll", constants=[
+                            "closed": Elem.BOOL("Gibt an, ob bei geöffnetem oder geschlossenem Eingang reagiert werden soll", constants=[
                                 Const(True, "Reagieren bei geöffnetem Eingang"),
                                 Const(False, "Reagieren bei geschlossenem Eingang"),
                             ])
                         }),
                         8: Elem.OBJECT("Schalten des konfigurierbaren Eingangs", version=Version.WARP2, members={
-                            "high": Elem.BOOL("Gibt an, ob bei geöffnetem oder geschlossenem Eingang reagiert werden soll", constants=[
+                            "closed": Elem.BOOL("Gibt an, ob bei geöffnetem oder geschlossenem Eingang reagiert werden soll", constants=[
                                 Const(True, "Reagieren bei geöffnetem Eingang"),
                                 Const(False, "Reagieren bei geschlossenem Eingang"),
                             ])
@@ -118,17 +118,28 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                                 Const(False, "Reagieren wenn kein Schützfehler erkannt wurde"),
                             ])
                         }),
-                        16: Elem.OBJECT("Strom verfügbar TODO", version=Version.WEM, members={
+                        16: Elem.OBJECT("Strom verfügbar TODO", members={
                             "power_available": Elem.BOOL("Gibt an, ob reagiert werden soll, wenn Strom verfügbar, oder nicht verfügbar ist.", constants=[
                                 Const(True, "Reagieren wenn Strom verfügbar ist"),
                                 Const(False, "Reagieren wenn kein Strom verfügbar ist"),
                             ])
                         }),
-                        17: Elem.OBJECT("Netzbezug- oder Einspeisung gemessen", version=Version.WEM, members={
+                        17: Elem.OBJECT("Messen von Netzbezug- oder Einspeisung", members={
                             "drawing_power": Elem.BOOL("Gibt an, ob reagiert werden soll, wenn Strom ins Netz eingespeist, oder aus dem Netz bezogen wird.", constants=[
                                 Const(True, "Reagieren wenn Strom bezogen wird"),
                                 Const(False, "Reagieren wenn Strom eingespeist wird"),
                             ])
+                        }),
+                        18: Elem.OBJECT("Empfang eines HTTP-Requests", members={
+                            "method": Elem.INT("Gibt an, bei welchen HTTP-Methoden reagiert werden soll", constants=[
+                                Const(0, "Reagiere auf GET"),
+                                Const(1, "Reagiere auf POST"),
+                                Const(2, "Reagiere auf PUT"),
+                                Const(3, "Reagiere auf POST und PUT"),
+                                Const(4, "Reagiere auf GET, POST und PUT"),
+                            ]),
+                            "url_suffix": Elem.STRING("URL-Suffix auf dem auf HTTP-Requests gewartet wird. Wird an http://[hostname]/automation_trigger/ angehangen."),
+                            "payload": Elem.STRING("Payload, der im HTTP-Request enthalten sein muss, damit die Regel auslöst. Darf (insbesondere bei HTTP GET) leer sein.")
                         }),
                     }),
                     "action": Elem.UNION("Aktion, die ausgeführt werden soll", members={
@@ -146,7 +157,7 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                             "current": Elem.INT("Ladestromlimit, dass gesetzt werden soll")
                         }),
                         4: Elem.OBJECT("Zeige auf der Fronttaster-LED an", version=Version.CHARGER, members={
-                            "state": Elem.INT("Blinkmuster, dass angezeigt werden soll.", constants=[
+                            "indication": Elem.INT("Blinkmuster, dass angezeigt werden soll.", constants=[
                                 Const(-1, "EVSE kontrolliert LED"),
                                 Const(0, "Aus"),
                                 Const("1..254", "Per PWM gedimmtes leuchten"),
@@ -156,7 +167,10 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                                 Const(1003, "Aufforderndes Blinken (z.B: NFC-Tag wird zum Laden benötigt)"),
                                 Const("2001..2010", "Fehler-Blinken 1 bis 10."),
                             ]),
-                            "duration": Elem.INT("Dauer für die der gesetzte Zustand erhalten bleibt.", unit=Units.ms)
+                            "duration": Elem.INT("Dauer für die der gesetzte Zustand erhalten bleibt.", unit=Units.ms),
+                            "color_h": Elem.INT('Farbwert der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum). Erlaubt sind Werte von 0 bis 359', unit=Units.degree),
+                            "color_s": Elem.INT('Farbsättigung der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum). Erlaubt sind Werte von 0 bis 255'),
+                            "color_v": Elem.INT('Helligkeit der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum). Eine Helligkeit von 0 verwendet die Standardfarbe der `indication` bzw. Blau bei WARP1 oder WARP2. Erlaubt sind Werte von 0 bis 255'),
                         }),
                         5: Elem.OBJECT("Setze einen Stromzähler zurück", members={
                             "meter_slot": Elem.INT("Meter-Slot-ID des Zählers, der zurückgesetzt werden soll")
@@ -173,7 +187,7 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                                 Const(4, "NFC Forum Typ 4"),
                             ]),
                             "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:AB:3D"),
-                            "tag_action": Elem.INT("Gibt an ob das Tag nur zum Starten oder Stoppen eines Ladevorgangs, oder für beides genutzt werden soll", constants=[
+                            "action": Elem.INT("Gibt an ob das Tag nur zum Starten oder Stoppen eines Ladevorgangs, oder für beides genutzt werden soll", constants=[
                                 Const(0, "Tag kann Ladevorgänge starten und stoppen"),
                                 Const(0, "Tag kann Ladevorgänge starten"),
                                 Const(0, "Tag kann Ladevorgänge stoppen"),
@@ -209,13 +223,13 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                             ])
                         }),
                         #10: Elem.OBJECT("Lösche die aufgezeichneten Ladevorgänge", version=Version.CHARGER, members={}),
-                        11: Elem.OBJECT("Starte eine Phasenumschaltung", version=Version.WEM, members={
-                            "phase": Elem.INT("Gibt an, auf ein- oder dreiphasig umgeschalted werden soll", constants=[
+                        11: Elem.OBJECT("Starte eine Phasenumschaltung", version=Version.WARP3 | Version.WEM, members={
+                            "phases_wanted": Elem.INT("Gibt an, auf ein- oder dreiphasig umgeschalted werden soll", constants=[
                                 Const(1, "Wechsele auf einphasig"),
                                 Const(3, "Wechsele auf dreiphasig"),
                             ])
                         }),
-                        12: Elem.OBJECT("Wechsle den Lademodus", version=Version.WEM, members={
+                        12: Elem.OBJECT("Wechsle den Lademodus", version=Version.WARP3 | Version.WEM, members={
                             "mode": Elem.INT("Gewünschter Lademodus. Siehe {{{ref:power_manager/charge_mode}}}", constants=[
                                 Const(0, "Schnell"),
                                 Const(1, "Aus"),
@@ -229,7 +243,7 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                                 Const(False, "Geöffnet"),
                             ])
                         }),
-                        14: Elem.OBJECT("Limitiere den ???TODO???-Strom", version=Version.WEM, members={
+                        14: Elem.OBJECT("Limitiere den ???TODO???-Strom", version=Version.WARP3 | Version.WEM, members={
                             "current": Elem.INT("Stromlimit, dass gesetzt werden soll", constants=[
                                 Const(-1, "Stromlimit aufheben")
                             ])

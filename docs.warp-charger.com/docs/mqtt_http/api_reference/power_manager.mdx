@@ -11,7 +11,690 @@ import Admonition from '@theme/Admonition';
 
 <Tabs groupId="hardwareType" queryString className="hidden-tabs">
 <TabItem value="warp1">
-Auf dieser Hardware nicht unterstützt!
+## `power_manager/config` {#power_manager_config_warp1}
+
+
+Konfiguration des Power Managers
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/power_manager/config
+```
+```jsx
+{
+  "enabled": true,
+  "phase_switching_mode": 1,
+  "excess_charging_enable": true,
+  "default_mode": 0,
+  "meter_slot_grid_power": 3,
+  "target_power_from_grid": 0,
+  "guaranteed_power": 1380,
+  "cloud_filter_mode": 2
+}
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/power_manager/config -d '{
+  "enabled": true,
+  "phase_switching_mode": 1,
+  "excess_charging_enable": true,
+  "default_mode": 0,
+  "meter_slot_grid_power": 3,
+  "target_power_from_grid": 0,
+  "guaranteed_power": 1380,
+  "cloud_filter_mode": 2
+}'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/config
+```
+```jsx
+{
+  "enabled": true,
+  "phase_switching_mode": 1,
+  "excess_charging_enable": true,
+  "default_mode": 0,
+  "meter_slot_grid_power": 3,
+  "target_power_from_grid": 0,
+  "guaranteed_power": 1380,
+  "cloud_filter_mode": 2
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/power_manager/config<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
+  "enabled": true,
+  "phase_switching_mode": 1,
+  "excess_charging_enable": true,
+  "default_mode": 0,
+  "meter_slot_grid_power": 3,
+  "target_power_from_grid": 0,
+  "guaranteed_power": 1380,
+  "cloud_filter_mode": 2
+}'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled`<br/>bool</th>
+    <td>
+        Gibt an ob der Power Manager aktiviert ist.
+        - **true** - Wenn der Power Manager aktiviert ist.
+        - **false** - Wenn der Power Manager deaktiviert ist.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`default_mode`<br/>int</th>
+    <td>
+        Der nach einem Neustart des Power Managers verwendete Lademodus
+        - **0** - Schnell. Lädt Fahrzeuge so schnell wie möglich, selbst wenn dafür Netzbezug notwendig ist.
+        - **1** - Aus. Fahrzeuge werden nicht geladen.
+        - **2** - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
+        - **3** - Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`excess_charging_enable`<br/>bool</th>
+    <td>
+        Wenn aktiviert, regelt der Power Manager die von ihm kontrollierten Verbraucher abhängig vom Überschuss einer vorhandenen Photovoltaikanlage. Wenn deaktiviert, wird die maximale Leistung unter Einhaltung der maximale Strombelastbarkeit der Zuleitungen erlaubt.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`phase_switching_mode`<br/>int</th>
+    <td>
+        
+        - **0** - Automatischer Wechsel zwischen drei- und einphasigem Laden. Nur möglich, wenn contactor_installed true ist.
+        - **1** - Immer einphasig
+        - **2** - Immer dreiphasig
+        - **4** - Einphasiger PV-Modus, dreiphasiger Schnell-Modus
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`target_power_from_grid`<br/>int (<abbr title="Watt">W</abbr>)</th>
+    <td>
+        Soll-Netzbezug für Überschussregelung. Gibt den gewünschten Netzbezug (positive Werte) bzw. Netzeinspeisung (negative Werte) im PV-Lademodus vor. Damit kann auch die Priorität gegenüber einem Batteriespeicher beeinflusst werden.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`guaranteed_power`<br/>int (<abbr title="Watt">W</abbr>)</th>
+    <td>
+        Mindest-Ladeleistung, die für den Min + PV-Lademodus verwendet wird. Diese Leistung wird bei unzureichendem PV-Überschuss (teilweise) aus dem Netz bezogen.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`cloud_filter_mode`<br/>int</th>
+    <td>
+        Modus des Wolkenfilters, um im PV-Lademodus Überreaktionen bei kurzzeitiger Änderung der Bewölkung zu vermeiden.
+        - **0** - Kein Wolkenfilter.
+        - **1** - Schwacher Wolkenfilter.
+        - **2** - Mittlerer Wolkenfilter.
+        - **3** - Starker Wolkenfilter.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`meter_slot_grid_power`<br/>int</th>
+    <td>
+        Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `power_manager/state` {#power_manager_state_warp1}
+
+
+Zustand des Power Managers
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/power_manager/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "config_error_flags": 0, "external_control": 1 }
+```
+
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`config_error_flags`<br/>int</th>
+    <td>
+        Aktive Konfigurationsfehler des Power Managers. Es handelt sich hierbei um eine Bitmaske, sodass sämtliche Kombinationen aus Konfigurationsfehlern auftreten können.
+        - **0** - Kein Fehler
+        - **0x00000001** - Phasenumschaltung oder Schütz nicht konfiguriert
+        - **0x00000002** - Maximaler Gesamtstrom der Wallboxen nicht konfiguriert
+        - **0x00000004** - Keine Wallboxen konfiguriert
+        - **0x00000008** - Überschussladen aktiviert aber kein Stromzähler eingerichtet
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`external_control`<br/>int</th>
+    <td>
+        Status der externen Steuerung zur Phasenumschaltung.
+        - **0** - Externe Steuerung bereit für Kommandos.
+        - **1** - Externe Steuerung über die Einstellungen deaktiviert.
+        - **2** - Externe Steuerung ist aktiviert aber aktuell nicht verfügbar. Gründe sind unter anderem: ausgelöste Schützüberwachung, eine oder mehrere Wallboxen nicht erreichbar oder unterstützen keine CP-Trennung, Ladevorgang blockiert durch Eingang 3.
+        - **3** - Phasenumschaltung wird gerade durchgeführt; ankommende Kommandos werden ignoriert.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `power_manager/low_level_state` {#power_manager_low_level_state_warp1}
+
+
+Low-Level-Zustand des Power Managers
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/power_manager/low_level_state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/low_level_state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "power_at_meter": -4067.817383,
+  "power_at_meter_filtered": -4909,
+  "power_available": 3680,
+  "power_available_filtered": 3680,
+  "overall_min_power": 1380,
+  "threshold_3to1": 3795,
+  "threshold_1to3": 4025,
+  "charge_manager_available_current": 16000,
+  "charge_manager_allocated_current": 16000,
+  "max_current_limited": 16000,
+  "uptime_past_hysteresis": true,
+  "is_3phase": false,
+  "wants_3phase": false,
+  "wants_3phase_last": false,
+  "is_on_last": true,
+  "wants_on_last": true,
+  "phase_state_change_blocked": false,
+  "phase_state_change_delay": 0,
+  "on_state_change_blocked": true,
+  "on_state_change_delay": 194264,
+  "charging_blocked": 0,
+  "switching_state": 0
+}
+```
+
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_at_meter`<br/>float (<abbr title="Watt">W</abbr>)</th>
+    <td>
+        Gemessene Leistung am Hausanschluss
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_at_meter_filtered`<br/>float (<abbr title="Watt">W</abbr>)</th>
+    <td>
+        Geglättete gemessene Leistung am Hausanschluss
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_available`<br/>int (<abbr title="Watt">W</abbr>)</th>
+    <td>
+        Zum Laden verfügbare Leistung. Dies ist ein virtueller Wert, der nicht direkt der Ladeleistung entspricht.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_available_filtered`<br/>int (<abbr title="Watt">W</abbr>)</th>
+    <td>
+        Geglättete zum Laden verfügbare Leistung. Dies ist ein virtueller Wert, der nicht direkt der Ladeleistung entspricht.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`overall_min_power`<br/>int (<abbr title="Watt">W</abbr>)</th>
+    <td>
+        Ladeleistung, die der Power Manager in der aktuellen Konfiguration minimal einstellen kann, abhängig von Phasenanzahl und minimalem Ladestrom.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`threshold_3to1`<br/>int (<abbr title="Watt">W</abbr>)</th>
+    <td>
+        Grenzwert der Ladeleistung, unter der der Power Manager vom dreiphasigen in den einphasigen Modus wechseln möchte.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`threshold_1to3`<br/>int (<abbr title="Watt">W</abbr>)</th>
+    <td>
+        Grenzwert der Ladeleistung, über der der Power Manager vom einphasigen Modus in den dreiphasigen Modus wechseln möchte.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`charge_manager_available_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+    <td>
+        Ladestrom, den der Power Manager dem Lastmanagement aktuell zur Verfügung stellt.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`charge_manager_allocated_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+    <td>
+        Ladestrom, der aktuell vom Lastmanager an Wallboxen verteilt wurde.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`max_current_limited`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+    <td>
+        Maximaler Ladestrom unter Beachtung externer Strombegrenzung
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`uptime_past_hysteresis`<br/>bool</th>
+    <td>
+        Zeitraum nach einem Start des Power Managers, in dem ohne Wartezeit umgeschaltet werden kann.
+        - **true** - Startphase beendet, Wartezeiten müssen eingehalten werden
+        - **false** - Startphase läuft, Wartezeiten werden ignoriert
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`is_3phase`<br/>bool</th>
+    <td>
+        Zustand der Phasenumschaltung
+        - **true** - Kontrollierte Wallboxen werden dreiphasig versorgt
+        - **false** - Kontrollierte Wallboxen werden einphasig versorgt
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wants_3phase`<br/>bool</th>
+    <td>
+        Entscheidung der Phasenumschaltung
+        - **true** - Dreiphasiger Betrieb erwünscht
+        - **false** - Einphasiger Betrieb erwünscht
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wants_3phase_last`<br/>bool</th>
+    <td>
+        Vorige Entscheidung der Phasenumschaltung
+        - **true** - Dreiphasiger Betrieb war erwünscht
+        - **false** - Einphasiger Betrieb war erwünscht
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`is_on_last`<br/>bool</th>
+    <td>
+        Voriger Zustand der Stromfreigabe
+        - **true** - Ladestrom für Wallboxen war freigegeben
+        - **false** - Ladestrom für Wallboxen war nicht freigegeben
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wants_on_last`<br/>bool</th>
+    <td>
+        Vorige Entscheidung der Stromfreigabe
+        - **true** - Freigabe für Ladestrom für Wallboxen war erwünscht
+        - **false** - Freigabe für Ladestrom für Wallboxen war nicht erwünscht
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`phase_state_change_blocked`<br/>bool</th>
+    <td>
+        Blockierung der Phasenumschaltung aufgrund von Lastschwankungen
+        - **true** - Phasenumschaltung ist aufgrund kürzlicher Laständerungen blockiert
+        - **false** - Phasenumschaltung ist nicht blockiert
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`phase_state_change_delay`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
+    <td>
+        Wartezeit, bis die Phasenumschaltung nicht mehr blockiert ist
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`on_state_change_blocked`<br/>bool</th>
+    <td>
+        Blockierung der Ladestromfreigabe aufgrund von Lastschwankungen
+        - **true** - Ladestrom darf aufgrund kürzlicher Laständerungen nicht freigegeben oder blockiert werden
+        - **false** - Ladestrom darf freigegeben oder blockiert werden
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`on_state_change_delay`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
+    <td>
+        Wartezeit, bis die Ladestromfreigabe nicht mehr blockiert ist
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`charging_blocked`<br/>int</th>
+    <td>
+        Ladefreigabe wird extern blockiert, falls Wert nicht 0.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`switching_state`<br/>int</th>
+    <td>
+        Interne Automatenzustände der Phasenumschaltung
+        - **0** - Es wird gerade keine Phasenumschaltung durchgeführt. Strom und Leistung werden überwacht.
+        - **1** - Ladevorgänge aller Wallboxen werden beendet
+        - **2** - Alle Wallboxen führen CP-Trennung durch
+        - **3** - Schütz wird geschaltet
+        - **4** - Alle Wallboxen heben CP-Trennung auf
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `power_manager/charge_mode` {#power_manager_charge_mode_warp1}
+
+
+Aktuell verwendeter Lademodus.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/power_manager/charge_mode
+```
+```jsx
+{ "mode": 2 }
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/power_manager/charge_mode -d '{ "mode": 2 }'
+```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/power_manager/charge_mode -d '2'
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/charge_mode
+```
+```jsx
+{ "mode": 2 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/power_manager/charge_mode<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/power_manager/charge_mode_update -m '{ "mode": 2 }'
+```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/power_manager/charge_mode_update -m '2'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`mode`<br/>int</th>
+    <td>
+        
+        - **0** - Schnell. Lädt Fahrzeuge so schnell wie möglich, selbst wenn dafür Netzbezug notwendig ist.
+        - **1** - Aus. Fahrzeuge werden nicht geladen.
+        - **2** - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
+        - **3** - Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `power_manager/external_control` {#power_manager_external_control_warp1}
+
+
+Phasenanforderung für externe Steuerung. Kann geschrieben werden, wenn external_control in [`power_manager/state`](/mqtt_http/api_reference/power_manager.mdx#power_manager_state) 0 ist.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/power_manager/external_control
+```
+```jsx
+{ "phases_wanted": 1 }
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/power_manager/external_control -d '{ "phases_wanted": 1 }'
+```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/power_manager/external_control -d '1'
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/external_control
+```
+```jsx
+{ "phases_wanted": 1 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/power_manager/external_control<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/power_manager/external_control_update -m '{ "phases_wanted": 1 }'
+```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/power_manager/external_control_update -m '1'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases_wanted`<br/>int</th>
+    <td>
+        
+        - **0** - Keine Phasen angefordert, keine Stromfreigabe.
+        - **1** - Eine Phase angefordert.
+        - **3** - Drei Phasen angefordert.
+    </td>
+</tr>
+    </tbody>
+</table>
 </TabItem>
 <TabItem value="warp2">
 ## `power_manager/config` {#power_manager_config_warp2}

@@ -630,10 +630,10 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/users/config
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`users`<br/>object[17]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`users`<br/>object[33]</th>
     <td>
         Die Benutzer
-        - **[0..16]** - Ein Benutzer
+        - **[0..32]** - Ein Benutzer
         <table>
             <thead>
                 <tr>
@@ -1162,10 +1162,10 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/users/config
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`users`<br/>object[17]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`users`<br/>object[33]</th>
     <td>
         Die Benutzer
-        - **[0..16]** - Ein Benutzer
+        - **[0..32]** - Ein Benutzer
         <table>
             <thead>
                 <tr>
@@ -1697,13 +1697,69 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/users/config
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`users`<br/>object[17]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`users`<br/>object[..]</th>
     <td>
         Die Benutzer
         
-        
+        <strong>WARP 1:</strong><br/>
         
         - **[0..16]** - Ein Benutzer
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
+            <td>
+                ID des Benutzers (1-255)
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`roles`<br/>int</th>
+            <td>
+                Berechtigungen des Benutzers. Wird noch nicht verwendet.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+            <td>
+                Diesem Benutzer erlaubter Ladestrom 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 um diesem Nutzer das Laden zu verbieten
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+            <td>
+                Anzeigename des Benutzers. Wird auch im Ladetracker verwendet.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`username`<br/>string</th>
+            <td>
+                Nutzername zum Anmelden im Webinterface und der HTTP-API.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`digest_hash`<br/>string</th>
+            <td>
+                HTTP-Digest-Hash. Wird als leerer String zurückgegeben, falls die Anmeldung für diesen Nutzer deaktiviert ist. Wird als null zurückgegeben wenn die Anmeldung für diesen Nutzer aktiviert ist.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        
+        <strong>WARP 2 und WARP 3 und Energy Manager:</strong><br/>
+        
+        - **[0..32]** - Ein Benutzer
         <table>
             <thead>
                 <tr>

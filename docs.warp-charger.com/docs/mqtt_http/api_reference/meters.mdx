@@ -539,7 +539,7 @@ null: Kein Stromzähler konfiguriert.
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`device_addess`<br/>int</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
     <td>
         Modbus-Device-Adresse des Sunspec-Geräts
     </td>
@@ -549,6 +549,344 @@ null: Kein Stromzähler konfiguriert.
     <th scope="row" style={{whiteSpace: "nowrap"}}>`model_id`<br/>int</th>
     <td>
         SunSpec-Model-ID
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+
+<TabItem value="6" label="6 - Modbus-TCP-Stromzähler.">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        Anzeigename des Stromzählers
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`host`<br/>string</th>
+    <td>
+        Hostname oder IP-Adresse des SunSpec-Geräts
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`port`<br/>int</th>
+    <td>
+        Port des SunSpec-Geräts. Typischerweise 502
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`table`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
+    <td>
+        Registertabelle, die gelesen werden soll.
+        <MultilineTabs className="unique-tabs">
+        <TabItem value="0" label="0 - Keine Registertabelle konfiguriert.">
+        null: Keine Registertabelle konfiguriert.
+        </TabItem>
+        
+        <TabItem value="1" label="1 - Benutzerdefinierte Registertabelle">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`register_address_mode`<br/>int</th>
+            <td>
+                Gibt an, ob die konfigurierten Registerstartadressen im Webinterface als Adressen oder Registernummern angezeigt werden.
+                - **0** - Startadressen werden als Registeraddressen angezeigt. Die erste Adresse ist 0.
+                - **1** - Startadressen werden als Registernummern angezeigt. Die erste Registernummer ist 1.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`registers`<br/>object[36]</th>
+            <td>
+                Registertabelle
+                - **[0..35]** - Ein Register, dass gelesen werden soll
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`rtype`<br/>int</th>
+                    <td>
+                        Registertyp
+                        - **0** - Holding Register
+                        - **1** - Input Register
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`addr`<br/>int</th>
+                    <td>
+                        Startadresse des Registers.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`vtype`<br/>int</th>
+                    <td>
+                        Wert-Typ
+                        - **1** - Ein Register, 16-Bit, Ganzzahl, vorzeichenlos
+                        - **9** - Ein Register, 16-Bit, Ganzzahl, vorzeichenbehaftet
+                        - **2** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenlos, Big-Endian
+                        - **34** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenlos, Little-Endian
+                        - **10** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenbehaftet, Big-Endian
+                        - **42** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenbehaftet, Little-Endian
+                        - **26** - Zwei Register, 32-Bit, Gleitkommazahl, Big-Endian
+                        - **58** - Zwei Register, 32-Bit, Gleitkommazahl, Little-Endian
+                        - **4** - Vier Register, 64-Bit, Ganzzahl, vorzeichenlos, Big-Endian
+                        - **36** - Vier Register, 64-Bit, Ganzzahl, vorzeichenlos, Little-Endian
+                        - **12** - Vier Register, 64-Bit, Ganzzahl, vorzeichenbehaftet, Big-Endian
+                        - **44** - Vier Register, 64-Bit, Ganzzahl, vorzeichenbehaftet, Little-Endian
+                        - **28** - Vier Register, 64-Bit, Gleitkommazahl, Big-Endian
+                        - **60** - Vier Register, 64-Bit, Gleitkommazahl, Little-Endian
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`off`<br/>float</th>
+                    <td>
+                        Offset, dass auf den gelesenen Wert addiert werden soll. Der Offset-Wert wird addiert, bevor der Skalierungsfaktor angewandt wird.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`scale`<br/>float</th>
+                    <td>
+                        Skalierungsfaktor, mit dem der gelesene Wert multipliziert werden soll. Der Skalierungsfaktor wirkt auf den Wert, der durch die Addition des gelesenen Wertes mit dem Offset entstanden ist.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
+                    <td>
+                        MeterValueID, die die Interpretation des gelesenen Werts angibt. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+                    </td>
+                </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="2" label="2 - Sungrow Hybrid-Wechselrichter (SH...)">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+                - **4** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="3" label="3 - Sungrow String-Wechselrichter (SG...)">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="4" label="4 - Solarmax Max.Storage">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="5" label="5 - Victron Energy GX">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+                - **4** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 100.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="6" label="6 - Deye Hybrid-Wechselrichter">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+                - **4** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        </MultilineTabs>
+        
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+
+<TabItem value="7" label="7 - SMA Speedwire-Stromzähler.">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        Anzeigename des Stromzählers
     </td>
 </tr>
     </tbody>
@@ -1645,7 +1983,7 @@ null: Kein Stromzähler konfiguriert.
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`device_addess`<br/>int</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
     <td>
         Modbus-Device-Adresse des Sunspec-Geräts
     </td>
@@ -1655,6 +1993,344 @@ null: Kein Stromzähler konfiguriert.
     <th scope="row" style={{whiteSpace: "nowrap"}}>`model_id`<br/>int</th>
     <td>
         SunSpec-Model-ID
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+
+<TabItem value="6" label="6 - Modbus-TCP-Stromzähler.">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        Anzeigename des Stromzählers
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`host`<br/>string</th>
+    <td>
+        Hostname oder IP-Adresse des SunSpec-Geräts
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`port`<br/>int</th>
+    <td>
+        Port des SunSpec-Geräts. Typischerweise 502
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`table`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
+    <td>
+        Registertabelle, die gelesen werden soll.
+        <MultilineTabs className="unique-tabs">
+        <TabItem value="0" label="0 - Keine Registertabelle konfiguriert.">
+        null: Keine Registertabelle konfiguriert.
+        </TabItem>
+        
+        <TabItem value="1" label="1 - Benutzerdefinierte Registertabelle">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`register_address_mode`<br/>int</th>
+            <td>
+                Gibt an, ob die konfigurierten Registerstartadressen im Webinterface als Adressen oder Registernummern angezeigt werden.
+                - **0** - Startadressen werden als Registeraddressen angezeigt. Die erste Adresse ist 0.
+                - **1** - Startadressen werden als Registernummern angezeigt. Die erste Registernummer ist 1.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`registers`<br/>object[36]</th>
+            <td>
+                Registertabelle
+                - **[0..35]** - Ein Register, dass gelesen werden soll
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`rtype`<br/>int</th>
+                    <td>
+                        Registertyp
+                        - **0** - Holding Register
+                        - **1** - Input Register
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`addr`<br/>int</th>
+                    <td>
+                        Startadresse des Registers.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`vtype`<br/>int</th>
+                    <td>
+                        Wert-Typ
+                        - **1** - Ein Register, 16-Bit, Ganzzahl, vorzeichenlos
+                        - **9** - Ein Register, 16-Bit, Ganzzahl, vorzeichenbehaftet
+                        - **2** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenlos, Big-Endian
+                        - **34** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenlos, Little-Endian
+                        - **10** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenbehaftet, Big-Endian
+                        - **42** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenbehaftet, Little-Endian
+                        - **26** - Zwei Register, 32-Bit, Gleitkommazahl, Big-Endian
+                        - **58** - Zwei Register, 32-Bit, Gleitkommazahl, Little-Endian
+                        - **4** - Vier Register, 64-Bit, Ganzzahl, vorzeichenlos, Big-Endian
+                        - **36** - Vier Register, 64-Bit, Ganzzahl, vorzeichenlos, Little-Endian
+                        - **12** - Vier Register, 64-Bit, Ganzzahl, vorzeichenbehaftet, Big-Endian
+                        - **44** - Vier Register, 64-Bit, Ganzzahl, vorzeichenbehaftet, Little-Endian
+                        - **28** - Vier Register, 64-Bit, Gleitkommazahl, Big-Endian
+                        - **60** - Vier Register, 64-Bit, Gleitkommazahl, Little-Endian
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`off`<br/>float</th>
+                    <td>
+                        Offset, dass auf den gelesenen Wert addiert werden soll. Der Offset-Wert wird addiert, bevor der Skalierungsfaktor angewandt wird.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`scale`<br/>float</th>
+                    <td>
+                        Skalierungsfaktor, mit dem der gelesene Wert multipliziert werden soll. Der Skalierungsfaktor wirkt auf den Wert, der durch die Addition des gelesenen Wertes mit dem Offset entstanden ist.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
+                    <td>
+                        MeterValueID, die die Interpretation des gelesenen Werts angibt. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+                    </td>
+                </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="2" label="2 - Sungrow Hybrid-Wechselrichter (SH...)">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+                - **4** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="3" label="3 - Sungrow String-Wechselrichter (SG...)">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="4" label="4 - Solarmax Max.Storage">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="5" label="5 - Victron Energy GX">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+                - **4** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 100.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="6" label="6 - Deye Hybrid-Wechselrichter">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+                - **4** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        </MultilineTabs>
+        
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+
+<TabItem value="7" label="7 - SMA Speedwire-Stromzähler.">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        Anzeigename des Stromzählers
     </td>
 </tr>
     </tbody>
@@ -2751,7 +3427,7 @@ null: Kein Stromzähler konfiguriert.
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`device_addess`<br/>int</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
     <td>
         Modbus-Device-Adresse des Sunspec-Geräts
     </td>
@@ -2761,6 +3437,344 @@ null: Kein Stromzähler konfiguriert.
     <th scope="row" style={{whiteSpace: "nowrap"}}>`model_id`<br/>int</th>
     <td>
         SunSpec-Model-ID
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+
+<TabItem value="6" label="6 - Modbus-TCP-Stromzähler.">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        Anzeigename des Stromzählers
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`host`<br/>string</th>
+    <td>
+        Hostname oder IP-Adresse des SunSpec-Geräts
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`port`<br/>int</th>
+    <td>
+        Port des SunSpec-Geräts. Typischerweise 502
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`table`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
+    <td>
+        Registertabelle, die gelesen werden soll.
+        <MultilineTabs className="unique-tabs">
+        <TabItem value="0" label="0 - Keine Registertabelle konfiguriert.">
+        null: Keine Registertabelle konfiguriert.
+        </TabItem>
+        
+        <TabItem value="1" label="1 - Benutzerdefinierte Registertabelle">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`register_address_mode`<br/>int</th>
+            <td>
+                Gibt an, ob die konfigurierten Registerstartadressen im Webinterface als Adressen oder Registernummern angezeigt werden.
+                - **0** - Startadressen werden als Registeraddressen angezeigt. Die erste Adresse ist 0.
+                - **1** - Startadressen werden als Registernummern angezeigt. Die erste Registernummer ist 1.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`registers`<br/>object[36]</th>
+            <td>
+                Registertabelle
+                - **[0..35]** - Ein Register, dass gelesen werden soll
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`rtype`<br/>int</th>
+                    <td>
+                        Registertyp
+                        - **0** - Holding Register
+                        - **1** - Input Register
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`addr`<br/>int</th>
+                    <td>
+                        Startadresse des Registers.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`vtype`<br/>int</th>
+                    <td>
+                        Wert-Typ
+                        - **1** - Ein Register, 16-Bit, Ganzzahl, vorzeichenlos
+                        - **9** - Ein Register, 16-Bit, Ganzzahl, vorzeichenbehaftet
+                        - **2** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenlos, Big-Endian
+                        - **34** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenlos, Little-Endian
+                        - **10** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenbehaftet, Big-Endian
+                        - **42** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenbehaftet, Little-Endian
+                        - **26** - Zwei Register, 32-Bit, Gleitkommazahl, Big-Endian
+                        - **58** - Zwei Register, 32-Bit, Gleitkommazahl, Little-Endian
+                        - **4** - Vier Register, 64-Bit, Ganzzahl, vorzeichenlos, Big-Endian
+                        - **36** - Vier Register, 64-Bit, Ganzzahl, vorzeichenlos, Little-Endian
+                        - **12** - Vier Register, 64-Bit, Ganzzahl, vorzeichenbehaftet, Big-Endian
+                        - **44** - Vier Register, 64-Bit, Ganzzahl, vorzeichenbehaftet, Little-Endian
+                        - **28** - Vier Register, 64-Bit, Gleitkommazahl, Big-Endian
+                        - **60** - Vier Register, 64-Bit, Gleitkommazahl, Little-Endian
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`off`<br/>float</th>
+                    <td>
+                        Offset, dass auf den gelesenen Wert addiert werden soll. Der Offset-Wert wird addiert, bevor der Skalierungsfaktor angewandt wird.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`scale`<br/>float</th>
+                    <td>
+                        Skalierungsfaktor, mit dem der gelesene Wert multipliziert werden soll. Der Skalierungsfaktor wirkt auf den Wert, der durch die Addition des gelesenen Wertes mit dem Offset entstanden ist.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
+                    <td>
+                        MeterValueID, die die Interpretation des gelesenen Werts angibt. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+                    </td>
+                </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="2" label="2 - Sungrow Hybrid-Wechselrichter (SH...)">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+                - **4** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="3" label="3 - Sungrow String-Wechselrichter (SG...)">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="4" label="4 - Solarmax Max.Storage">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="5" label="5 - Victron Energy GX">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+                - **4** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 100.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="6" label="6 - Deye Hybrid-Wechselrichter">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+                - **4** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        </MultilineTabs>
+        
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+
+<TabItem value="7" label="7 - SMA Speedwire-Stromzähler.">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        Anzeigename des Stromzählers
     </td>
 </tr>
     </tbody>
@@ -3857,7 +4871,7 @@ null: Kein Stromzähler konfiguriert.
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`device_addess`<br/>int</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
     <td>
         Modbus-Device-Adresse des Sunspec-Geräts
     </td>
@@ -3867,6 +4881,344 @@ null: Kein Stromzähler konfiguriert.
     <th scope="row" style={{whiteSpace: "nowrap"}}>`model_id`<br/>int</th>
     <td>
         SunSpec-Model-ID
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+
+<TabItem value="6" label="6 - Modbus-TCP-Stromzähler.">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        Anzeigename des Stromzählers
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`host`<br/>string</th>
+    <td>
+        Hostname oder IP-Adresse des SunSpec-Geräts
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`port`<br/>int</th>
+    <td>
+        Port des SunSpec-Geräts. Typischerweise 502
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`table`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
+    <td>
+        Registertabelle, die gelesen werden soll.
+        <MultilineTabs className="unique-tabs">
+        <TabItem value="0" label="0 - Keine Registertabelle konfiguriert.">
+        null: Keine Registertabelle konfiguriert.
+        </TabItem>
+        
+        <TabItem value="1" label="1 - Benutzerdefinierte Registertabelle">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`register_address_mode`<br/>int</th>
+            <td>
+                Gibt an, ob die konfigurierten Registerstartadressen im Webinterface als Adressen oder Registernummern angezeigt werden.
+                - **0** - Startadressen werden als Registeraddressen angezeigt. Die erste Adresse ist 0.
+                - **1** - Startadressen werden als Registernummern angezeigt. Die erste Registernummer ist 1.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`registers`<br/>object[36]</th>
+            <td>
+                Registertabelle
+                - **[0..35]** - Ein Register, dass gelesen werden soll
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`rtype`<br/>int</th>
+                    <td>
+                        Registertyp
+                        - **0** - Holding Register
+                        - **1** - Input Register
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`addr`<br/>int</th>
+                    <td>
+                        Startadresse des Registers.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`vtype`<br/>int</th>
+                    <td>
+                        Wert-Typ
+                        - **1** - Ein Register, 16-Bit, Ganzzahl, vorzeichenlos
+                        - **9** - Ein Register, 16-Bit, Ganzzahl, vorzeichenbehaftet
+                        - **2** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenlos, Big-Endian
+                        - **34** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenlos, Little-Endian
+                        - **10** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenbehaftet, Big-Endian
+                        - **42** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenbehaftet, Little-Endian
+                        - **26** - Zwei Register, 32-Bit, Gleitkommazahl, Big-Endian
+                        - **58** - Zwei Register, 32-Bit, Gleitkommazahl, Little-Endian
+                        - **4** - Vier Register, 64-Bit, Ganzzahl, vorzeichenlos, Big-Endian
+                        - **36** - Vier Register, 64-Bit, Ganzzahl, vorzeichenlos, Little-Endian
+                        - **12** - Vier Register, 64-Bit, Ganzzahl, vorzeichenbehaftet, Big-Endian
+                        - **44** - Vier Register, 64-Bit, Ganzzahl, vorzeichenbehaftet, Little-Endian
+                        - **28** - Vier Register, 64-Bit, Gleitkommazahl, Big-Endian
+                        - **60** - Vier Register, 64-Bit, Gleitkommazahl, Little-Endian
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`off`<br/>float</th>
+                    <td>
+                        Offset, dass auf den gelesenen Wert addiert werden soll. Der Offset-Wert wird addiert, bevor der Skalierungsfaktor angewandt wird.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`scale`<br/>float</th>
+                    <td>
+                        Skalierungsfaktor, mit dem der gelesene Wert multipliziert werden soll. Der Skalierungsfaktor wirkt auf den Wert, der durch die Addition des gelesenen Wertes mit dem Offset entstanden ist.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
+                    <td>
+                        MeterValueID, die die Interpretation des gelesenen Werts angibt. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+                    </td>
+                </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="2" label="2 - Sungrow Hybrid-Wechselrichter (SH...)">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+                - **4** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="3" label="3 - Sungrow String-Wechselrichter (SG...)">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="4" label="4 - Solarmax Max.Storage">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="5" label="5 - Victron Energy GX">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+                - **4** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 100.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="6" label="6 - Deye Hybrid-Wechselrichter">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+                - **4** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        </MultilineTabs>
+        
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+
+<TabItem value="7" label="7 - SMA Speedwire-Stromzähler.">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        Anzeigename des Stromzählers
     </td>
 </tr>
     </tbody>
@@ -5020,7 +6372,7 @@ null: Kein Stromzähler konfiguriert.
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`device_addess`<br/>int</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
     <td>
         Modbus-Device-Adresse des Sunspec-Geräts
     </td>
@@ -5030,6 +6382,371 @@ null: Kein Stromzähler konfiguriert.
     <th scope="row" style={{whiteSpace: "nowrap"}}>`model_id`<br/>int</th>
     <td>
         SunSpec-Model-ID
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+
+<TabItem value="6" label="6 - Modbus-TCP-Stromzähler.">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        Anzeigename des Stromzählers
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`host`<br/>string</th>
+    <td>
+        Hostname oder IP-Adresse des SunSpec-Geräts
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`port`<br/>int</th>
+    <td>
+        Port des SunSpec-Geräts. Typischerweise 502
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`table`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
+    <td>
+        Registertabelle, die gelesen werden soll.
+        <MultilineTabs className="unique-tabs">
+        <TabItem value="0" label="0 - Keine Registertabelle konfiguriert.">
+        null: Keine Registertabelle konfiguriert.
+        </TabItem>
+        
+        <TabItem value="1" label="1 - Benutzerdefinierte Registertabelle">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`register_address_mode`<br/>int</th>
+            <td>
+                Gibt an, ob die konfigurierten Registerstartadressen im Webinterface als Adressen oder Registernummern angezeigt werden.
+                
+                
+                
+                - **0** - Startadressen werden als Registeraddressen angezeigt. Die erste Adresse ist 0.
+                - **1** - Startadressen werden als Registernummern angezeigt. Die erste Registernummer ist 1.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`registers`<br/>object[36]</th>
+            <td>
+                Registertabelle
+                
+                
+                
+                - **[0..35]** - Ein Register, dass gelesen werden soll
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`rtype`<br/>int</th>
+                    <td>
+                        Registertyp
+                        
+                        
+                        
+                        - **0** - Holding Register
+                        - **1** - Input Register
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`addr`<br/>int</th>
+                    <td>
+                        Startadresse des Registers.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`vtype`<br/>int</th>
+                    <td>
+                        Wert-Typ
+                        
+                        
+                        
+                        - **1** - Ein Register, 16-Bit, Ganzzahl, vorzeichenlos
+                        - **9** - Ein Register, 16-Bit, Ganzzahl, vorzeichenbehaftet
+                        - **2** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenlos, Big-Endian
+                        - **34** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenlos, Little-Endian
+                        - **10** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenbehaftet, Big-Endian
+                        - **42** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenbehaftet, Little-Endian
+                        - **26** - Zwei Register, 32-Bit, Gleitkommazahl, Big-Endian
+                        - **58** - Zwei Register, 32-Bit, Gleitkommazahl, Little-Endian
+                        - **4** - Vier Register, 64-Bit, Ganzzahl, vorzeichenlos, Big-Endian
+                        - **36** - Vier Register, 64-Bit, Ganzzahl, vorzeichenlos, Little-Endian
+                        - **12** - Vier Register, 64-Bit, Ganzzahl, vorzeichenbehaftet, Big-Endian
+                        - **44** - Vier Register, 64-Bit, Ganzzahl, vorzeichenbehaftet, Little-Endian
+                        - **28** - Vier Register, 64-Bit, Gleitkommazahl, Big-Endian
+                        - **60** - Vier Register, 64-Bit, Gleitkommazahl, Little-Endian
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`off`<br/>float</th>
+                    <td>
+                        Offset, dass auf den gelesenen Wert addiert werden soll. Der Offset-Wert wird addiert, bevor der Skalierungsfaktor angewandt wird.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`scale`<br/>float</th>
+                    <td>
+                        Skalierungsfaktor, mit dem der gelesene Wert multipliziert werden soll. Der Skalierungsfaktor wirkt auf den Wert, der durch die Addition des gelesenen Wertes mit dem Offset entstanden ist.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
+                    <td>
+                        MeterValueID, die die Interpretation des gelesenen Werts angibt. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+                    </td>
+                </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="2" label="2 - Sungrow Hybrid-Wechselrichter (SH...)">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                
+                
+                
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+                - **4** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="3" label="3 - Sungrow String-Wechselrichter (SG...)">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                
+                
+                
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="4" label="4 - Solarmax Max.Storage">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                
+                
+                
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="5" label="5 - Victron Energy GX">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                
+                
+                
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+                - **4** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 100.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="6" label="6 - Deye Hybrid-Wechselrichter">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                
+                
+                
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+                - **4** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        </MultilineTabs>
+        
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+
+<TabItem value="7" label="7 - SMA Speedwire-Stromzähler.">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        Anzeigename des Stromzählers
     </td>
 </tr>
     </tbody>

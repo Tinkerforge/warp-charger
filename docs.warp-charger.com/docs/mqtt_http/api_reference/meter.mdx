@@ -1048,6 +1048,70 @@ Zuletzt zurückgesetzt 2024-05-03T11:24:12+02:00
 
 
 Erlaubt es den verbauten Zählertyp zu überschreiben, falls die Auto-Detektion nicht funktioniert.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/type_override
+```
+
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/meter/type_override -d ''
+```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/meter/type_override -d ''
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/type_override
+```
+
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/type_override<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/type_override_update -m ''
+```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/type_override_update -m ''
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
@@ -6015,6 +6079,70 @@ Zuletzt zurückgesetzt 2024-05-03T11:24:12+02:00
 
 <strong>(Nur WARP 1)</strong> 
 Erlaubt es den verbauten Zählertyp zu überschreiben, falls die Auto-Detektion nicht funktioniert.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meter/type_override
+```
+
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/meter/type_override -d ''
+```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/meter/type_override -d ''
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/type_override
+```
+
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meter/type_override<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/type_override_update -m ''
+```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/type_override_update -m ''
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
 
 
 <table>
