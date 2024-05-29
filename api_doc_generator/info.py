@@ -1,8 +1,8 @@
 from api_doc_common import *
 
 info = Module("info", "Allgemeine Informationen", "", "", Version.ANY, [
-    Func("version", FuncType.STATE, Elem.OBJECT("Version der aktuell ausgeführten Firmware. Siehe [Semantic Versioning](https://semver.org/)-Format.", members={
-            "firmware": Elem.STRING("Die Firmware-Version, die aktuell ausgeführt wird."),
+    Func("version", FuncType.STATE, Elem.OBJECT("Version der aktuell ausgeführten Firmware.", members={
+            "firmware": Elem.STRING("Die Firmware-Version, die aktuell ausgeführt wird. Siehe [Semantic Versioning](https://semver.org/)-Format."),
             "config": Elem.STRING("Die Version der Konfiguration, die aktuell verwendet wird."),
             "config_type": Elem.STRING("Typ der auf diesem Gerät gespeicherten Konfiguration."),
         })
