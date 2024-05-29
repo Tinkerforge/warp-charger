@@ -100,22 +100,20 @@ Zähler sind auch in der Liste mit aufgeführt.
 
 ## Bekannte kompatible Geräte
 
-Die folgende Liste führt Geräte auf, die erfolgreich getestet wurden. 
+Die folgende Liste führt Geräte auf, die bereits getestet wurden. 
 
 :::note
 
-Wenn du ein Gerät besitzt, das du erfolgreich 
-getestest hast und dieses noch nicht in der Liste aufgeführt ist, 
-schicke uns doch eine Email an 
+Wenn du ein Gerät besitzt, das du getestest hast und dieses noch nicht 
+in der Liste aufgeführt ist, schicke uns doch eine Email an 
 [info@tinkerforge.com](mailto://info@tinkerforge.com) damit wir die 
-Liste erweitern können.
+Liste erweitern können. Solltest du eine eigene Modbus/TCP 
+Registertabelle definiert haben, schicke uns diese gerne zu, damit wir
+diese für alle hinterlegen können.
 
-Solltest du einen Stromzähler/PV-Wechselrichter besitzen, den du mittels
-der generellen Modbus/TCP Schnittstelle eingebunden hast, so melde dich 
-gerne im Forum auf 
+Solltest du Probleme mit einem der aufgeführten Geräte haben, oder aber
+die Unterstützung eines Geräts wünschen, dann schreibe uns im Forum auf 
 [Tinkerunity](https://www.tinkerunity.org/forum/13-warp-charger/).
-Wir schauen dann, dass wir eine herstellerspezifische Lösung 
-implementieren.
 
 :::
 
