@@ -113,7 +113,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
         \Huge
         WARP3 Charger Betriebsanleitung\\\vspace{1cm}
         \large
-        Version 1.0.0\\\vspace{0.25cm}
+        Version 1.1\\\vspace{0.25cm}
         \today
     \end{center}
     \vfill \gfx{./img_warp3/resized/front.png}
@@ -715,7 +715,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Ladevorgang an. Diese Einstellung ist analog zum Zeitlimit zu verwenden.
 
     \textbf{Ladeverlauf} und \textbf{Leistung} sind nur in der Variante Pro
-    vorhanden. Hier werden die aktuelle Leistungsaufnahme sowie deren Verlauf in den letzen 48 Stunden in einem Diagramm angezeigt.
+    vorhanden. Hier werden die aktuelle Leistungsaufnahme sowie deren Verlauf in den letzen bis zu 48 Stunden in einem Diagramm angezeigt.
 
     \textbf{Letzte Ladevorgänge} zeigt den Verlauf der zuletzt durchgeführten
 	Ladevorgänge an. Je nach Variante und Konfiguration der Wallbox können Ladevorgänge Benutzern
@@ -886,9 +886,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\subsection{Energiemanagement}\label{energiemanagement}
 
-
-
 	\subsubsection{Stromzähler}\label{meter}
+	\vspace*{-0.1cm}
     Auf dieser Unterseite kann die Kommunikation mit Stromzählern konfiguriert werden.
     Da der WARP3 Charger Pro über einen eingebauten Stromzähler verfügt, ist dieser bei allen WARP3 Chargern vorkonfiguriert.
     Beim WARP3 Charger Smart kann dieser Zähler entfernt werden.
@@ -897,11 +896,15 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Live-Ansicht. Die Ansicht jeders Zählers kann aufgeklappt werden, um weitere Statistiken und Messwerte anzuzeigen. Dazu muss auf den
 	jeweiligen blauen Pfeil geklickt werden.
 
-    Es können insgesamt zwei Stromzähler konfiguriert werden, beispielsweise SunSpec-Zähler oder -Wechselrichter
+    \vspace*{-0.1cm}
+    Es können insgesamt fünf Stromzähler konfiguriert werden, beispielsweise SunSpec-Zähler oder -Wechselrichter, SMA Speedwire-Geräte
     sowie virtuelle Stromzähler, die über die API befüllt werden können. Für das
 	Photovoltaik-Überschussladen (siehe \fullref{pv_charge}) ist es notwendig,
 	einen Stromzähler anzulegen, der den Überschuss (typischerweise am Hausanschluss) misst. SunSpec-(Modbus TCP)-Geräte können nach Angabe des Hosts
     automatisch erkannt werden. Abhängig von den Fähigkeiten des SunSpec-Geräts werden verschiedene Messwerte abgerufen.
+
+    \vspace*{-0.1cm}
+    Es können auch Modbus-TCP-Geräte ausgelesen werden, die SunSpec nicht unterstützen. Wir bieten vordefinierte Registertabellen für bestimmte Geräte, siehe \rurl{https://docs.warp-charger.com/docs/compatible\_meters}{docs.warp-charger.com/docs/compatible\_meters}. Von uns nicht unterstützte Modbus-TCP-Geräte können über eine benutzerdefinierte Registertabelle ausgelesen werden.
 
     \gfx{./img_warp3/resized/web_meters}
 
@@ -1753,12 +1756,14 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
         \end{description}
     \end{minipage}
 
+    \vspace*{-0.2cm}
     \section{Dokumentversionen}
     \begin{tabular}{lll}
         \toprule
         Datum      & Version\hspace{-0.2pt} & Kommentar        \\
         \midrule
         28.03.2024 & 1.0     & Initialversion                  \\
+        28.03.2024 & 1.1     & Aktualisierung Firmware 2.4.0   \\
         \bottomrule
     \end{tabular}
 
