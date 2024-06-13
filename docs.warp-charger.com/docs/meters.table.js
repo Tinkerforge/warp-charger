@@ -83,10 +83,16 @@ export const meters = [
     note: "",
   },
   {
+    manufacturer: "SolarEdge",
+    name: "SolarEdge Home Wechselrichter",
+    protocol: "SunSpec",
+    note: "",
+  },
+  {
     manufacturer: "Solarmax",
     name: "Max.Storage",
     protocol: "Modbus/TCP",
-    note: "Support für Solarmax folgt in Kürze",
+    note: "",
   },
   {
     manufacturer: "Sungrow",

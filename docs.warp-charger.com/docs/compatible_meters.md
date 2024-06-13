@@ -66,6 +66,8 @@ gibt es zwei Möglichkeiten:
 Für uns bekannte Geräte haben wir bereits Registertabellen vordefiniert.
 Sind diese vorhanden, muss nur die entsprechende Voreinstellung 
 ausgewählt werden und die bereitgestellten Zähler zugeordnet werden.
+Diese Geräte werden in der nachfolgenden Tabelle
+mit dem Protokoll Modbus/TCP aufgeführt.
 
 
 ### Benutzerdefinierte Registertabelle
@@ -76,6 +78,7 @@ benutzerdefinierten Einstellungen muss nur der Adressmodus festgelegt
 und anschließend die gewünschten Register angelegt werden. Es können der
 Typ des Registers, ein Offset (Verschiebung), ein Skalierfaktor (Float)
 und die Zuordnung auf einen Zählerwert (z.B. Wirk-Leistung L1) definiert
+werden. Prinzipiell sollte damit jedes Modbus/TCP fähige Gerät unterstützt
 werden.
 
 
