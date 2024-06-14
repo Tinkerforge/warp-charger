@@ -34,12 +34,17 @@ STAND_WIRING_DISPLAY_NAME = {
 SUPPLY_CABLE_PLACEHOLDER_A = b'Anschlusskabel: 123,4 m'
 SUPPLY_CABLE_PLACEHOLDER_B = b'E:123.4;'
 
-CEE_PLACEHOLDER_A = b'CEE Stecker: Jawohl'
+CEE_PLACEHOLDER_A = b'CEE-Stecker: Jawohl'
 CEE_PLACEHOLDER_B = b'C:1;'
 
+CUSTOM_FRONT_PANEL_PLACEHOLDER_A = b'Frontplatte: SO/12345'
+CUSTOM_FRONT_PANEL_PLACEHOLDER_B = b'CFP:1;'
+
+CUSTOM_TYPE2_CABLE_PLACEHOLDER_A = b'Typ-2-Kabel: SO/54321'
+CUSTOM_TYPE2_CABLE_PLACEHOLDER_B = b'CT2:1;'
+
 COMMENT_1_PLACEHOLDER = b'Hier steht ein mehrzeiliger'
-COMMENT_2_PLACEHOLDER = b'Kommentar f\xC3\xBCr sonstige'
-COMMENT_3_PLACEHOLDER = b'Hinweise.'
+COMMENT_2_PLACEHOLDER = b'Kommentar f\xC3\xBCr sonstige Hinweise.'
 
 COPIES_FORMAT = '^C{0}\r'
 
@@ -101,7 +106,7 @@ def get_tf_printer_host(task):
     sys.exit(1)
 
 
-def print_accessories2_label(header, stand, stand_wiring, supply_cable, cee, comment_1, comment_2, comment_3, copies, stdout):
+def print_accessories2_label(header, stand, stand_wiring, supply_cable, cee, custom_front_panel, custom_type2_cable, comment_1, comment_2, copies, stdout):
     # check copies
     if copies < 1 or copies > 5:
         raise Exception('Invalid copies: {0}'.format(copies))
@@ -174,12 +179,34 @@ def print_accessories2_label(header, stand, stand_wiring, supply_cable, cee, com
     if template.find(CEE_PLACEHOLDER_A) < 0:
         raise Exception('CEE placeholder A missing in EZPL file')
 
-    template = template.replace(CEE_PLACEHOLDER_A, b'CEE Stecker: Ja' if cee else b'')
+    template = template.replace(CEE_PLACEHOLDER_A, b'CEE-Stecker: Ja' if cee else b'')
 
     if template.find(CEE_PLACEHOLDER_B) < 0:
         raise Exception('CEE placeholder B missing in EZPL file')
 
     template = template.replace(CEE_PLACEHOLDER_B, 'C:{0};'.format(int(cee)).encode('ascii'))
+
+    # patch custom front panel
+    if template.find(CUSTOM_FRONT_PANEL_PLACEHOLDER_A) < 0:
+        raise Exception('Custom front panel placeholder A missing in EZPL file')
+
+    template = template.replace(CUSTOM_FRONT_PANEL_PLACEHOLDER_A, 'Frontplatte: {0}'.format(custom_front_panel).encode('ascii') if custom_front_panel != '0' else b'')
+
+    if template.find(CUSTOM_FRONT_PANEL_PLACEHOLDER_B) < 0:
+        raise Exception('Custom front panel placeholder B missing in EZPL file')
+
+    template = template.replace(CUSTOM_FRONT_PANEL_PLACEHOLDER_B, 'CFP:{0};'.format(int(custom_front_panel != '0')).encode('ascii'))
+
+    # patch custom type2 cable
+    if template.find(CUSTOM_TYPE2_CABLE_PLACEHOLDER_A) < 0:
+        raise Exception('Custom type 2 cable placeholder A missing in EZPL file')
+
+    template = template.replace(CUSTOM_TYPE2_CABLE_PLACEHOLDER_A, 'Typ-2-Kabel: {0}'.format(custom_type2_cable).encode('ascii') if custom_type2_cable != '0' else b'')
+
+    if template.find(CUSTOM_TYPE2_CABLE_PLACEHOLDER_B) < 0:
+        raise Exception('Custom type 2 cable placeholder B missing in EZPL file')
+
+    template = template.replace(CUSTOM_TYPE2_CABLE_PLACEHOLDER_B, 'CT2:{0};'.format(int(custom_type2_cable != '0')).encode('ascii'))
 
     # patch comment 1
     if template.find(COMMENT_1_PLACEHOLDER) < 0:
@@ -192,12 +219,6 @@ def print_accessories2_label(header, stand, stand_wiring, supply_cable, cee, com
         raise Exception('Comment 2 placeholder missing in EZPL file')
 
     template = template.replace(COMMENT_2_PLACEHOLDER, comment_2.encode('latin1', errors='replace'))
-
-    # patch comment 3
-    if template.find(COMMENT_3_PLACEHOLDER) < 0:
-        raise Exception('Comment 3 placeholder missing in EZPL file')
-
-    template = template.replace(COMMENT_3_PLACEHOLDER, comment_3.encode('latin1', errors='replace'))
 
     # patch copies
     copies_command = COPIES_FORMAT.format(1).encode('ascii')
@@ -224,9 +245,10 @@ def main():
     parser.add_argument('stand_wiring', choices=['0', '1', '2'])
     parser.add_argument('supply_cable', type=float)
     parser.add_argument('cee', type=int, choices=[1, 0])
+    parser.add_argument('custom_front_panel')
+    parser.add_argument('custom_type2_cable')
     parser.add_argument('comment_1')
     parser.add_argument('comment_2')
-    parser.add_argument('comment_3')
     parser.add_argument('-c', '--copies', type=int, default=1)
     parser.add_argument('-s', '--stdout', action='store_true')
 
@@ -234,7 +256,7 @@ def main():
 
     assert args.copies > 0
 
-    print_accessories2_label(args.header, args.stand, args.stand_wiring, args.supply_cable, bool(args.cee), args.comment_1, args.comment_2, args.comment_3, args.copies, args.stdout)
+    print_accessories2_label(args.header, args.stand, args.stand_wiring, args.supply_cable, bool(args.cee), args.custom_front_panel, args.custom_type2_cable, args.comment_1, args.comment_2, args.copies, args.stdout)
 
 
 if __name__ == '__main__':
