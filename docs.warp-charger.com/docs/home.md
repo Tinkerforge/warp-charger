@@ -30,7 +30,9 @@ mittels den offenen Schnittstellen eingebunden werden:
 * [Modbus-Schnittstelle](/modbus/configuration.md)
 
 Für spezifische Systeme gibt es eine direkte Unterstützung:
+<!--- Comment me in when documented properly
 * [Heimautomatisierungs-Lösungen](/smart_home/warp_automation.md)
+-->
 * [EVCC](/evcc.md)
 
 ### Sonnenstrom nutzen - Photovoltaik-Überschussladen
