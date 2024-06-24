@@ -31,6 +31,9 @@ STAND_WIRING_DISPLAY_NAME = {
     '2': 'Doppelt',
 }
 
+STAND_LOCK_PLACEHOLDER_A = b'Schloss: Hier'
+STAND_LOCK_PLACEHOLDER_B = b'L:1;'
+
 SUPPLY_CABLE_PLACEHOLDER_A = b'Anschlusskabel: 123,4 m'
 SUPPLY_CABLE_PLACEHOLDER_B = b'E:123.4;'
 
@@ -106,7 +109,7 @@ def get_tf_printer_host(task):
     sys.exit(1)
 
 
-def print_accessories2_label(header, stand, stand_wiring, supply_cable, cee, custom_front_panel, custom_type2_cable, comment_1, comment_2, copies, stdout):
+def print_accessories2_label(header, stand, stand_wiring, stand_lock, supply_cable, cee, custom_front_panel, custom_type2_cable, comment_1, comment_2, copies, stdout):
     # check copies
     if copies < 1 or copies > 5:
         raise Exception('Invalid copies: {0}'.format(copies))
@@ -163,6 +166,17 @@ def print_accessories2_label(header, stand, stand_wiring, supply_cable, cee, cus
         raise Exception('Stand wiring placeholder B missing in EZPL file')
 
     template = template.replace(STAND_WIRING_PLACEHOLDER_B, 'W:{0};'.format(stand_wiring).encode('ascii'))
+
+    # patch stand lock
+    if template.find(STAND_LOCK_PLACEHOLDER_A) < 0:
+        raise Exception('Stand lock placeholder A missing in EZPL file')
+
+    template = template.replace(STAND_LOCK_PLACEHOLDER_A, b'Schloss: Ja' if stand_lock else b'')
+
+    if template.find(STAND_LOCK_PLACEHOLDER_B) < 0:
+        raise Exception('Stand lock placeholder B missing in EZPL file')
+
+    template = template.replace(STAND_LOCK_PLACEHOLDER_B, 'L:{0};'.format(int(stand_lock)).encode('ascii'))
 
     # patch supply cable
     if template.find(SUPPLY_CABLE_PLACEHOLDER_A) < 0:
@@ -243,6 +257,7 @@ def main():
     parser.add_argument('header')
     parser.add_argument('stand', choices=['0', '1', '2', '1-PC', '2-PC'])
     parser.add_argument('stand_wiring', choices=['0', '1', '2'])
+    parser.add_argument('stand_lock', choices=['0', '1'])
     parser.add_argument('supply_cable', type=float)
     parser.add_argument('cee', type=int, choices=[1, 0])
     parser.add_argument('custom_front_panel')
@@ -256,7 +271,7 @@ def main():
 
     assert args.copies > 0
 
-    print_accessories2_label(args.header, args.stand, args.stand_wiring, args.supply_cable, bool(args.cee), args.custom_front_panel, args.custom_type2_cable, args.comment_1, args.comment_2, args.copies, args.stdout)
+    print_accessories2_label(args.header, args.stand, args.stand_wiring, args.stand_lock, args.supply_cable, bool(args.cee), args.custom_front_panel, args.custom_type2_cable, args.comment_1, args.comment_2, args.copies, args.stdout)
 
 
 if __name__ == '__main__':
