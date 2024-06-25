@@ -52,8 +52,9 @@ Der Stromzähler wird über die Seite `Energiemanagement` -> `Stromzähler` hinz
 Dort kann unter "Einstellungen" über das "+" ein Zähler ausgewählt werden. Bei
 einem WARP Charger Pro ist hier bereits der Zähler in der Wallbox vorhanden und
 es muss ein weiterer hinzugefügt werden. Bei einer WARP Charter Smart reicht
-für das PV-Überschussladen der Zähler am Hausanschluss der den PV-Überschuss messsen
-kann.
+für das PV-Überschussladen der Zähler am Hausanschluss, der den PV-Überschuss messen
+kann. Dazu muss der Zähler den Wert "Wirkleistung (Bezug minus Einspeisung) Summe
+über L1, L2, L3" liefern.
 
 ![image](/img/first_steps/pv_add_meter.png)
 
