@@ -75,7 +75,7 @@ eingetragen werden und auf "Suche Starten" geklickt werden.
 Danach muss noch einmal auf übernehmen geklickt werden und dann auf
 "Speichern" damit die neuen Einstellungen übernommen werden.
 
-Der Zähöer taucht dann in der Liste der Zähler auf und wird auch im
+Der Zähler taucht dann in der Liste der Zähler auf und wird auch im
 Ladeverlauf angezeigt.
 
 ![image](/img/first_steps/pv_add_meter_sunspec_kostal.png)
