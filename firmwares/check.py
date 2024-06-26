@@ -119,7 +119,9 @@ def main():
 
                 if semver == None:
                     print(f'Cannot parse {repr(line)} from {name}')
-                elif last_semver != None and semver >= last_semver:
+                    continue
+
+                if last_semver != None and semver >= last_semver:
                     print(f'{semver} is not smaller than {last_semver} in {name}')
 
                 last_semver = semver
