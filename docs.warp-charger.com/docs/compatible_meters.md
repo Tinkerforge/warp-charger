@@ -248,7 +248,8 @@ auf dem diese Beschreibung ursprünglich basiert.
 
 Victron Geräte, wie zum Beispiel die bekannten Multiplus oder Quattro Wechselrichter, werden üblicherweise von einem [GX Gerät](https://www.victronenergy.com/live/venus-os:start) gesteuert. 
 Ein GX Gerät stellt unter "Services" eine Zusammenfassung aller angeschlossen Geräte wie Inverter, Batterien etc. dar. Auch wenn diese Geräte per VE.BUS angeschlossen sind. Die Daten werden unter "System" summiert.
-Werden als Beispiel mehrere Wechselrichter parallel betrieben, so stellt "System" die Summe der Erzeugung da. Wir unterstützen den Zugriff auf die "System"-Daten für "Grid" (Zählerdaten), "Inverter" (PV-Erzeugung) und "Battery" (Batteriedaten).
+Werden als Beispiel mehrere Wechselrichter parallel betrieben, so stellt "System" die Summe der Erzeugung da. Wir unterstützen den Zugriff auf die "System"-Daten für "Grid" (Zählerdaten Netzanschluss), 
+"Load" (Zählerdaten Last), "Inverter" (PV-Erzeugung) und "Battery" (Batteriedaten).
 
 Ist ein Stromzähler am Netzanschluss installiert ("Grid") kann dieser für ein PV-Überschussladen und das dynamische Lastmanagement genutzt werden.
 
