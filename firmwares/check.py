@@ -108,7 +108,9 @@ def parse_semver(string):
 
 
 def main():
-    for name in glob.glob('*_firmware.txt'):
+    for name in glob.glob('*_firmware_v1.txt'):
+        prefix = name.replace('_v1.txt', '')
+
         with open(name, 'r') as f:
             last_semver = None
 
@@ -117,13 +119,15 @@ def main():
 
                 if semver == None:
                     print(f'Cannot parse {repr(line)} from {name}')
-                elif last_semver != None and semver >= last_semver:
+                    continue
+
+                if last_semver != None and semver >= last_semver:
                     print(f'{semver} is not smaller than {last_semver} in {name}')
 
                 last_semver = semver
 
                 for suffix in ['.elf', '_changelog_en.txt', '_changelog_de.txt', '_merged.bin', '_merged.bin.sha256']:
-                    extra = name[:-4] + '_' + str(semver).replace('.', '_').replace('-', '_').replace('+', '_') + suffix
+                    extra = prefix + '_' + str(semver).replace('.', '_').replace('-', '_').replace('+', '_') + suffix
 
                     if not os.path.exists(extra):
                         print(f'{extra} is missing')
