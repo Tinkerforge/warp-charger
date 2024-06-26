@@ -204,6 +204,8 @@ Vermutlich sind auch größere Modelle, wie zum Beispiel der SG33, kompatibel we
 
 ### Tasmota
 Tasmota bietet ein [Smart Meter Interface](https://tasmota.github.io/docs/Smart-Meter-Interface/) damit können über ein IR-Lesekopf die Zählerwerte des Smart Meters vom Netzbetreiber ausgelesen werden.
+Netzbetreiber nutzen zum Beispiel Smart Meter der Marke DZG (z.B.: DWS, DVS), EMH (z.B.: ED300, eHZ) oder Holley (z.B.: DTZ, EHZ). Eine vollständige Liste lässt sich unter dem oben genannten Link finden.
+
 Das Smart Meter ist typischwerweise mit einem Pin gesichert und muss zuvor mittels Pin freigegeben werden. Den Pin erhält man von seinem Netzbetreiber. Es werden selbstgebaute Leseköpfe unterstützt, welche typischerweise aus einem 
 ESP32 und einer Fotodiode bestehen. Es gibt aber auch Fertiglösungen wie den "Hichi TTL - Lesekopf".
 
@@ -218,7 +220,7 @@ Dieser Wert wird dann aus dem Tasmota SML Skript mittels folgender Zeile übertr
 =>WebQuery http://192.168.2.30/meters/0/update POST [Content-Type:application/json] [%sml[3]%]
 ```
 
-Welcher Wert übertragen wird muss durch ausprobieren herausgefunden werden. Im Testfall war es sml\[3\]. Nachfolgend ein vollständiges Beispielskript für einen DWS7412.
+Welcher Wert übertragen wird muss durch ausprobieren herausgefunden werden. Im Testfall war es sml\[3\]. Nachfolgend ein vollständiges Beispielskript für einen DZG DWS7412.
 Es wird der Wert mittels HTTP Post an den API Zähler 0 übertragen. Zusätzlich werden alle sml Messwerte anschließend ausgegeben (Print). Mit dem Print lässt sich herausfinden, welcher Wert der korrekte zum übertragen ist.
 
 ```
@@ -245,10 +247,10 @@ auf dem diese Beschreibung ursprünglich basiert.
 ### Victron
 
 Victron Geräte, wie zum Beispiel die bekannten Multiplus oder Quattro Wechselrichter, werden üblicherweise von einem [GX Gerät](https://www.victronenergy.com/live/venus-os:start) gesteuert. 
-Auf diesen GX Geräten lässt sich unter "Services" die Modbus TCP Schnittstelle aktivieren. Damit kann dann über Modbus TCP auf alle Victron Geräte, auch wenn diese nur mittels VE.BUS angeschlossen sind, zugreifen.
-Wir unterstützen den Zugriff auf Zählerdaten, PV-Erzeugung und Batteriedaten.
+Ein GX Gerät stellt unter "Services" eine Zusammenfassung aller angeschlossen Geräte wie Inverter, Batterien etc. dar. Auch wenn diese Geräte per VE.BUS angeschlossen sind. Die Daten werden unter "System" summiert.
+Werden als Beispiel mehrere Wechselrichter parallel betrieben, so stellt "System" die Summe der Erzeugung da. Wir unterstützen den Zugriff auf die "System"-Daten für "Grid" (Zählerdaten), "Inverter" (PV-Erzeugung) und "Battery" (Batteriedaten).
 
-Ist ein Stromzähler am Netzanschluss installiert kann dieser für ein PV-Überschussladen und das dynamische Lastmanagement genutzt werden.
+Ist ein Stromzähler am Netzanschluss installiert ("Grid") kann dieser für ein PV-Überschussladen und das dynamische Lastmanagement genutzt werden.
 
 ### YTL
 

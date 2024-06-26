@@ -139,7 +139,7 @@ export const meters = [
     manufacturer: "Tasmota",
     name: "Smart Meter Interface - IR Lesekopf",
     protocol: "HTTP",
-    note: "SMART Meter Interface um Stromzähler mittels IR Lesekopf auszulesen",
+    note: "SMART Meter Interface um Netz-Stromzähler mittels IR Lesekopf auszulesen",
     note_url: ""
   },
   {
