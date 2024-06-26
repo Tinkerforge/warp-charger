@@ -134,7 +134,7 @@ die Unterstützung eines Geräts wünschen, dann schreibe uns im Forum auf
 ## Herstellerspezifische Informationen
 
 ### Deye
-Deye Hybrid-Wechselrichter der SUN Serie (Nieder- und Hochspannung) unterstützen Modbus RTU. 
+Deye Hybrid-Wechselrichter der SUN Serie (Nieder- und Hochspannung) unterstützen Modbus/RTU.
 Mit einem Umsetzer von Modbus/RTU auf Ethernet
 
 Wenn der Wechselrichter per WLAN im Netzwerk verfügbar ist kann über Modbus/TCP auf dessen Zählerwerte zugegriffen werden.
@@ -145,11 +145,11 @@ Im [Forumpost auf Tinkerunity](https://www.tinkerunity.org/topic/12271-weitere-w
 ### E3DC
 E3DCs Hauskraftwerke unterstützen SunSpec und können somit einfach eingebunden werden.
 Es werden S10 Hauskraftwerke unterstützt. Vermutlich gilt dies auch für die S20 Serie.
-Damit das Hauskraftwerk eingebunden werden kann muss Modbus TCP im SunSpec Modus aktiviert werden.
+Damit das Hauskraftwerk eingebunden werden kann muss Modbus/TCP im SunSpec Modus aktiviert werden.
 Für ein PV-Überschussladen und für das dyn. Lastmanagement ist ein Stromzähler am Netzanschluss notwendig, der vom Hauskraftwerk ausgelesen werden kann.
 
 ### Eastron
-Eastron Stromzähler mit RS485 (Modbus RTU) Schnittstelle können am WARP Energy Manager angeschlossen und von diesem ausgelesen werden.
+Eastron Stromzähler mit RS485 (Modbus/RTU) Schnittstelle können am WARP Energy Manager angeschlossen und von diesem ausgelesen werden.
 Bei den Typen SDM630 und SDM72V2 werd der Strom über den Zähler geführt. Diese Zähler werden also direkt in die Leitungen eingebaut.
 
 Mit dem Typ SDM630MCT wird auch ein Typ unterstützt der externe Wandler nutzt. Dieser Zähler wird also nicht in die Leitungen eingebaut, sondern es
@@ -159,10 +159,10 @@ werden nur die Wandler um die Leitungen gelegt. Durch die Wahl der entsprechend 
 Das elgris Smart Meter LAN 2.0 kann einfach mittels SunSpec eingebunden werden. SunSpec sollte direkt auf dem Stromzähler aktiviert sein.
 
 ### Eltako
-Der Eltako Stromzähler DSZ15DZMOD mit RS485 (Modbus RTU) Schnittstelle kann am WARP Energy Manager angeschlossen und von diesem ausgelesen werden.
+Der Eltako Stromzähler DSZ15DZMOD mit RS485 (Modbus/RTU) Schnittstelle kann am WARP Energy Manager angeschlossen und von diesem ausgelesen werden.
 
 ### Fronius
-Fronius Wechselrichter der Primo, Symo- und der GEN24-Serie sprechen SunSpec und können direkt ausgelesen werden. Es muss nur die Datenausgabe über Modbus TCP aktiviert werden.
+Fronius Wechselrichter der Primo, Symo- und der GEN24-Serie sprechen SunSpec und können direkt ausgelesen werden. Es muss nur die Datenausgabe über Modbus/TCP aktiviert werden.
 Als Port sollte 502 konfiguriert werden. Als SunSpec Model Type kann "float" gewählt werden.
 Für ein PV-Überschussladen und für das dyn. Lastmanagement ist ein Stromzähler am Netzanschluss notwendig, der vom Fronius Wechselrichter ausgelesen werden kann.
 
@@ -194,10 +194,10 @@ im WARP System angelegt werden müssen. SolarEdge arbeitet an einer Lösung.
 :::
 
 ### Solarmax
-Das Speichersystem MAX.STORAGE kann mittels Modbus TCP ausgelesen werden. Damit kann der Zustand der Batterie ausgelesen werden.
+Das Speichersystem MAX.STORAGE kann mittels Modbus/TCP ausgelesen werden. Damit kann der Zustand der Batterie ausgelesen werden.
 
 ### Sungrow
-Sungrow Wechselrichter der Serien SG (SG5.0/6.0/7.0/8.0/10/12RT/15/17RT/20RT) und SH (SH5.0/6.0/8.0/10RT sowie SH15/20/25T) können mittels Modbus TCP ausgelesen werden.
+Sungrow Wechselrichter der Serien SG (SG5.0/6.0/7.0/8.0/10/12RT/15/17RT/20RT) und SH (SH5.0/6.0/8.0/10RT sowie SH15/20/25T) können mittels Modbus/TCP ausgelesen werden.
 Daran angeschlossene Stromzähler vom Typ DSU555 o.ä., die vom Wechselrichter ausgelesen werden können, können ebenfalls ausgelesen werden. Damit ist ein PV-Überschussladen und ein dynamisches Lastmanagement möglich.
 
 Vermutlich sind auch größere Modelle, wie zum Beispiel der SG33, kompatibel wenn sie über ein LAN/WLAN Kommunikationsmodul verfügen.
@@ -255,4 +255,4 @@ Ist ein Stromzähler am Netzanschluss installiert ("Grid") kann dieser für ein 
 
 ### YTL
 
-Der YTL Stromzähler DEM4A mit RS485 (Modbus RTU) Schnittstelle kann am WARP Energy Manager angeschlossen und von diesem ausgelesen werden.
+Der YTL Stromzähler DEM4A mit RS485 (Modbus/RTU) Schnittstelle kann am WARP Energy Manager angeschlossen und von diesem ausgelesen werden.
