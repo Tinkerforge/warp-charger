@@ -135,9 +135,9 @@ die Unterstützung eines Geräts wünschen, dann schreibe uns im Forum auf
 
 ### Deye
 Deye Hybrid-Wechselrichter der SUN Serie (Nieder- und Hochspannung) unterstützen Modbus RTU. 
-Mit einem Umsetzer von Modbus RTU auf Eternet 
+Mit einem Umsetzer von Modbus/RTU auf Ethernet
 
-Wenn der Wechselrichter per Wifi im Netzwerk verfügbar ist kann auf dessen Zählerwerte zugegriffen werden.
+Wenn der Wechselrichter per WLAN im Netzwerk verfügbar ist kann über Modbus/TCP auf dessen Zählerwerte zugegriffen werden.
 Für ein PV-Überschussladen und für das dyn. Lastmanagement ist ein Stromzähler am Netzanschluss notwendig, der vom Deye Wechselrichter ausgelesen werden kann.
 
 Im [Forumpost auf Tinkerunity](https://www.tinkerunity.org/topic/12271-weitere-wechserichter-modbustcp-supporten-deye-hybrid-wechselrichter/) gibt es weitere Informationen hierzu.
