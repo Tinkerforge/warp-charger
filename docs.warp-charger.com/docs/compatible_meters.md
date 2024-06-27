@@ -73,6 +73,9 @@ ausgewählt werden und die bereitgestellten Zähler zugeordnet werden.
 Diese Geräte werden in der nachfolgenden Tabelle
 mit dem Protokoll Modbus/TCP aufgeführt.
 
+Einen technischen Einblick zu den jeweiligen Implementierungen findet
+man auf [Github ESP32-Firmware prepare.py](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters_modbus_tcp/prepare.py)
+
 
 ### Benutzerdefinierte Registertabelle
 
@@ -137,6 +140,12 @@ die Unterstützung eines Geräts wünschen, dann schreibe uns im Forum auf
 
 ## Herstellerspezifische Informationen
 
+### Alpha Ess
+
+Alpha Ess Smile Heimspeicher (G3, Hi5, Hi10) unterstützen eine Anbindung mittels Modbus/TCP.
+Die integration bietet die virtuellen Stromzähler "Wechselrichter", "Netzanschluss" und "Speicher".
+Die Messwerte des Netzanschlusses können für ein PV-Überschussladen und für ein dynamisches Lastmanagement genutzt werden.
+
 ### Deye
 Deye Hybrid-Wechselrichter der SUN Serie (Nieder- und Hochspannung) unterstützen Modbus/RTU.
 Mit einem Umsetzer von Modbus/RTU auf Ethernet kann auf diese auch mittels Modbus/TCP zugegriffen werden.
@@ -144,6 +153,9 @@ Mit einem Umsetzer von Modbus/RTU auf Ethernet kann auf diese auch mittels Modbu
 Wenn der Wechselrichter per WLAN im Netzwerk verfügbar ist kann über Modbus/TCP auf dessen Zählerwerte zugegriffen werden.
 Für ein PV-Überschussladen und für das dyn. Lastmanagement ist ein Stromzähler am Netzanschluss notwendig, der vom Deye Wechselrichter ausgelesen werden kann.
 Entgegen der Modbus/TCP Spezifikation muss für das offizielle WLAN Dongle von Deye 8899 anstatt 502 als Modbus/TCP Port ausgewählt werden.
+
+Es wird ein virtueller Stromzähler "Netzanschluss", "Speicher", "Last" und "Wechselrichter" bereitgestellt. Netzanschluss ist nur nutzbar wenn ein externer Hardware-Stromzähler
+am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 
 Im [Forumpost auf Tinkerunity](https://www.tinkerunity.org/topic/12271-weitere-wechserichter-modbustcp-supporten-deye-hybrid-wechselrichter/) gibt es weitere Informationen hierzu.
 
@@ -174,8 +186,20 @@ Für ein PV-Überschussladen und für das dyn. Lastmanagement ist ein Stromzähl
 ### Goodwe
 Die Einbindung eines Wechselrichters der ES, EM, SBP, ET, BT, EH, BH, EHB Serie ist mittels Modbus/TCP über das LAN bzw. Wifi+LAN Modul möglich. 
 Wir arbeiten zur Zeit daran eine Goodwe Registertabelle zu hinterlegen (Coming Soon). Aktuell muss die Registertabelle von Hand angegeben werden.
+Zukünftig werden die virtueller Stromzähler "Netzanschluss", "Speicher", "Last" und "Wechselrichter" bereitgestellt.
 
 Ist an dem Wechselrichter ein Stromzähler angeschlossen (z.B. GM300), der vom Wechselrichter ausgelesen werden kann, kann dieser Stromzähler für ein PV-Überschussladen und ein dynamisches Lastmanagement genutzt werden.
+
+### Huawei
+Wechselrichter der SUN2000 Serie (L1, M0, M1, M2, M3) können über das Huawei Smart Dongle (SmartdDongle ab Firmware SPC124) mittels Modbus/TCP ausgelesen werden. Aktuell ist noch keine Registertabelle hierfür hinterlegt.
+Diese muss noch per Hand angelegt werden. Wir werden aber zeitnah eine vorwählbare Registertabelle bereitstellen.
+
+Es werden die virtueller Stromzähler "Netzanschluss", "Speicher", "Last" und "Wechselrichter" bereitgestellt. Netzanschluss ist nur nutzbar, wenn ein externer Hardware-Stromzähler (Huawei Smart Power Sensor)
+vom Typ DTSU666-H oder DDSU666-H am Wechselrichter angeschlossen wurde. Speicher ist nur nutzbar im Zusammenspiel mit der Luna2000 Batterie.
+
+### RCT
+RCT Wechselrichter können leider nicht mittels SunSpec oder Modbus/TCP angesprochen werden. Dies ist aber über das offengelegte RCT Power Serial Communication protokoll mittels TCP/IP möglich.
+Wir planen die Implementierung des Protokolls um auch Wechselrichter von RCT einbinden zu können.
 
 ### Kostal
 Das Smart Energy Meter (KSEM G2) kann direkt mittels SunSpec kommunizieren.

@@ -5,6 +5,13 @@ import React from "react";
 // ----------------------------------------------------------------------------
 export const meters = [
   {
+    manufacturer: "Alpha ESS",
+    name: "Smile Heimspeicher",
+    protocol: "Modbus/TCP",
+    note: "Heimspeicher mit integriertem Hybrid-Wechselrichter",
+    note_url: "/docs/compatible_meters#alpha-ess",
+  },
+  {
     manufacturer: "Deye",
     name: "SUN-Serie",
     protocol: "Modbus/TCP",
@@ -68,21 +75,21 @@ export const meters = [
   {
     manufacturer: "Goodwe",
     name: "EHB Serie",
-    protocol: "Modbus TCP",
+    protocol: "Modbus/TCP",
     note: "String-Wechselrichter",
     note_url: "/docs/compatible_meters#goodwe",
   },
   {
     manufacturer: "Goodwe",
     name: "EH, EM, ES, ET",
-    protocol: "Modbus TCP",
+    protocol: "Modbus/TCP",
     note: "Hybrid-Wechselrichter",
     note_url: "/docs/compatible_meters#goodwe",
   },
   {
     manufacturer: "Goodwe",
     name: "BT, SBP, BH-Serie",
-    protocol: "Modbus TCP",
+    protocol: "Modbus/TCP",
     note: "Batterie-Wechselrichter",
     note_url: "/docs/compatible_meters#goodwe",
   },
@@ -99,6 +106,13 @@ export const meters = [
     protocol: "SunSpec",
     note: "Wechselrichter",
     note_url: "/docs/compatible_meters#kostal",
+  },
+  {
+    manufacturer: "RCT",
+    name: "RCT POWER INVERTER + STORAGE",
+    protocol: "RCT Power Serial Communication",
+    note: "Hybrid, Batterie und String-Wechselrichter",
+    note_url: "/docs/compatible_meters#rct",
   },
   {
     manufacturer: "Shelly",
