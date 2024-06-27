@@ -66,6 +66,27 @@ export const meters = [
     note_url: "/docs/compatible_meters#fronius",
   },
   {
+    manufacturer: "Goodwe",
+    name: "EHB Serie",
+    protocol: "Modbus TCP",
+    note: "String-Wechselrichter",
+    note_url: "/docs/compatible_meters#goodwe",
+  },
+  {
+    manufacturer: "Goodwe",
+    name: "EH, EM, ES, ET",
+    protocol: "Modbus TCP",
+    note: "Hybrid-Wechselrichter",
+    note_url: "/docs/compatible_meters#goodwe",
+  },
+  {
+    manufacturer: "Goodwe",
+    name: "BT, SBP, BH-Serie",
+    protocol: "Modbus TCP",
+    note: "Batterie-Wechselrichter",
+    note_url: "/docs/compatible_meters#goodwe",
+  },
+  {
     manufacturer: "Kostal",
     name: "Smart Energy Meter (KSEM G2)",
     protocol: "SunSpec",
@@ -140,7 +161,7 @@ export const meters = [
     name: "Smart Meter Interface - IR Lesekopf",
     protocol: "HTTP",
     note: "SMART Meter Interface um Netz-Stromzähler mittels IR Lesekopf auszulesen",
-    note_url: ""
+    note_url: "/docs/compatible_meters#tasmota"
   },
   {
     manufacturer: "Tinkerforge",

@@ -56,6 +56,10 @@ unterstützen. Der Zugriff mittels Modbus/TCP über LAN oder
 WLAN ist eine andere weit verbreitete Möglichkeit und wird von vielen
 Geräten unterstützt.
 
+Vier verschiedene Modelle für virtuelle Stromzähler stehen zur Verfügung:
+Wechselrichter, Netzanschluss, Speicher und Last. Je nach Gerät steht
+nur ein Teil dieser Stromzähler zur Verfügung.
+
 Bei Modbus/TCP müssen Informationen bereitgestellt werden, welche 
 Register gelesen und wie die Werte interpretiert werden müssen. Hierzu
 gibt es zwei Möglichkeiten:
@@ -166,6 +170,12 @@ Fronius Wechselrichter der Primo, Symo- und der GEN24-Serie sprechen SunSpec und
 Als Port sollte 502 konfiguriert werden. Als SunSpec Model Type kann "float" gewählt werden.
 Für ein PV-Überschussladen und für das dyn. Lastmanagement ist ein Stromzähler am Netzanschluss notwendig, der vom Fronius Wechselrichter ausgelesen werden kann.
 
+### Goodwe
+Die Einbindung eines Wechselrichters der ES, EM, SBP, ET, BT, EH, BH, EHB Serie ist mittels Modbus TCP über das LAN bzw. Wifi+LAN Modul möglich. 
+Wir arbeiten zur Zeit daran eine Goodwe Registertabelle zu hinterlegen (Coming Soon). Aktuell muss die Registertabelle von Hand angegeben werden.
+
+Ist an dem Wechselrichter ein Stromzähler angeschlossen (z.B. GM300), der vom Wechselrichter ausgelesen werden kann, kann dieser Stromzähler für ein PV-Überschussladen und ein dynamisches Lastmanagement genutzt werden.
+
 ### Kostal
 Das Smart Energy Meter (KSEM G2) kann direkt mittels SunSpec kommunizieren.
 
@@ -194,11 +204,15 @@ im WARP System angelegt werden müssen. SolarEdge arbeitet an einer Lösung.
 :::
 
 ### Solarmax
-Das Speichersystem MAX.STORAGE kann mittels Modbus TCP ausgelesen werden. Damit kann der Zustand der Batterie ausgelesen werden.
+Das Speichersystem MAX.STORAGE kann mittels Modbus TCP ausgelesen werden. Es steht der virtuelle Stromzähler "Wechselrichter" zur Verfügung. Dieser gibt Informationen zu den DC Leistungen des Wechselrichters der Batterie.
+Zusätzlich stellt der virtuelle Stromzähler "Netzanschluss" die Leistung am Netzanschluss zur Verfügung. Ein PV-Überschussladen ist mit diesem Wert möglich.
+Den SoC und die Leistung der Batterie werden mit dem virtuellen Stromzähler "Speicher" bereitgestellt.
 
 ### Sungrow
-Sungrow Wechselrichter der Serien SG (SG5.0/6.0/7.0/8.0/10/12RT/15/17RT/20RT) und SH (SH5.0/6.0/8.0/10RT sowie SH15/20/25T) können mittels Modbus TCP ausgelesen werden.
-Daran angeschlossene Stromzähler vom Typ DSU555 o.ä., die vom Wechselrichter ausgelesen werden können, können ebenfalls ausgelesen werden. Damit ist ein PV-Überschussladen und ein dynamisches Lastmanagement möglich.
+Sungrow Wechselrichter der Serien SG (SG5.0/6.0/7.0/8.0/10/12RT/15/17RT/20RT) und SH (SH5.0/6.0/8.0/10RT sowie SH15/20/25T) können mittels Modbus TCP ausgelesen werden. Es wird dann ein virtueller Stromzähler "Wechselrichter" erkannt.
+Am Wechselrichter angeschlossene Hardware-Stromzähler vom Typ DSU555 o.ä., die von diesem ausgelesen werden können, können ebenfalls ausgelesen werden. Dazu gibt es den virtuellen Stromzähler "Netzanschluss". 
+Damit ist ein PV-Überschussladen möglich. 
+Wird an dem Wechselrichter eine Batterie angeschlossen, so kann diese ebenfalls mit dem virtuellen Stromzähler "Speicher" ausgelesen werden. Zusätzlich wird ein virtueller Stromzähler "Last" zur Verfügung gestellt.
 
 Vermutlich sind auch größere Modelle, wie zum Beispiel der SG33, kompatibel wenn sie über ein LAN/WLAN Kommunikationsmodul verfügen.
 
@@ -248,10 +262,10 @@ auf dem diese Beschreibung ursprünglich basiert.
 
 Victron Geräte, wie zum Beispiel die bekannten Multiplus oder Quattro Wechselrichter, werden üblicherweise von einem [GX Gerät](https://www.victronenergy.com/live/venus-os:start) gesteuert. 
 Ein GX Gerät stellt unter "Services" eine Zusammenfassung aller angeschlossen Geräte wie Inverter, Batterien etc. dar. Auch wenn diese Geräte per VE.BUS angeschlossen sind. Die Daten werden unter "System" summiert.
-Werden als Beispiel mehrere Wechselrichter parallel betrieben, so stellt "System" die Summe der Erzeugung da. Wir unterstützen den Zugriff auf die "System"-Daten für "Grid" (Zählerdaten Netzanschluss), 
-"Load" (Zählerdaten Last), "Inverter" (PV-Erzeugung) und "Battery" (Batteriedaten).
+Werden als Beispiel mehrere Wechselrichter parallel betrieben, so stellt "System" die Summe der Erzeugung da. Wir unterstützen den Zugriff auf die "System"-Daten für "Netzanschluss",
+"Last", "Wechselrichter" und "Speicher".
 
-Ist ein Stromzähler am Netzanschluss installiert ("Grid") kann dieser für ein PV-Überschussladen und das dynamische Lastmanagement genutzt werden.
+Ist ein Stromzähler am Netzanschluss installiert ("Netzanschluss") kann dieser für ein PV-Überschussladen genutzt werden.
 
 ### YTL
 
