@@ -257,7 +257,7 @@ def main():
     parser.add_argument('header')
     parser.add_argument('stand', choices=['0', '1', '2', '1-PC', '2-PC'])
     parser.add_argument('stand_wiring', choices=['0', '1', '2'])
-    parser.add_argument('stand_lock', choices=['0', '1'])
+    parser.add_argument('stand_lock', type=int, choices=[0, 1])
     parser.add_argument('supply_cable', type=float)
     parser.add_argument('cee', type=int, choices=[1, 0])
     parser.add_argument('custom_front_panel')
