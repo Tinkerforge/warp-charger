@@ -116,9 +116,9 @@ export const meters = [
   },
   {
     manufacturer: "Shelly",
-    name: "Shelly TBD",
-    protocol: "HTTP",
-    note: "Support für Shelly kommt in Kürze",
+    name: "Shelly Pro EM und Shelly Pro 3EM",
+    protocol: "Modbus/TCP",
+    note: "1-phasige und 3-phasige Wandler-Stromzähler mit 1TE",
     note_url: "/docs/compatible_meters#shelly",
   },
   {

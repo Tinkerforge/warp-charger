@@ -208,7 +208,21 @@ Zusätzlich kann die Erzeugung der Piko und Plenticore Wechselrichter mittels Su
 da dafür ein Stromzähler am Netzanschluss notwendig ist.
 
 ### Shelly
-Wir werden zukünftig die Stromzähler der Marke Shelly und auch gewisse Aktoren unterstützen.
+Der einphasige Wandler-Stromzähler Shelly Pro EM und dreiphasige Wandler-Stromzähler Shelly Pro 3EM werden unterstützt. Beide besitzten nur eine Breite von 1 TE und messen mittels Wandler.
+Somit benötigen diese nur wenig Platz und können an verschiedene Maximalströme angepasst werden. (EM: 50A, 3EM: 120A, 400A).
+
+Wichtig ist ein Update auf die neuste Software, so dass Modbus TCP unterstützt wird. Dieses muss dann unter Settings->Modbus aktiviert werden. 
+
+Aktuell müssen die Stromzähler händisch über eine benutzerdefinierte Konfiguration eingebunden werden. Der Hostname/IP des Shellys ist zusammen mit dem Port 502 einzutragen. Registertabelle "Benutzerdefiniert", Geräteadresse 1 und Registeradresse beginnt bei 0.
+Anschließend können die jeweiligen Register angelegt werden. Hierzu sind als Registertyp "Input-Register" und dem Werttyp "Zwei-Register, 32-Bit, Gleitkommazahl, Little-Endian" für Float typen einzutragen. Als Beispiel gibt die Adresse (Startadresse) 1020 die Spannung für L1 an.
+Der Offset von 30000 ist also bei den Adressen abzuziehen (31020->1020).
+
+Hier die Registerinformationen zu den Shellys:
+
+[Shelly Pro EM: EM1 \(alle Daten\)](https://shelly-api-docs.shelly.cloud/gen2/ComponentsAndServices/EM1/#modbus-registers) \
+[Shelly Pro 3EM: EM \(Live Daten\)](https://shelly-api-docs.shelly.cloud/gen2/ComponentsAndServices/EM/#modbus-registers) und [Shelly Pro 3EM: EMData \(Historie\)](https://shelly-api-docs.shelly.cloud/gen2/ComponentsAndServices/EMData/#modbus-registers)
+
+Wir arbeiten daran kurzfristig für diese beiden Zähler eine eigene Registertabelle zu hinterlegen, so dass das manuelle Anlegen als benutzerdefinierte Registertabelle nicht mehr notwendig ist.
 
 ### SMA
 SMA Geräte unterstützen zum Teil SunSpec, so dass diese direkt ausgelesen werden können. Dazu zähler zum Beispiel die Sunny Boy Wechselrichter. Andere Geräte von SMA nutzen das SMA Speedwire Protokoll.
