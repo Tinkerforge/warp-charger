@@ -67,7 +67,7 @@ gibt es zwei Möglichkeiten:
 
 ### Vordefinierte Registertabelle
 
-Für uns bekannte Geräte haben wir bereits Registertabellen vordefiniert.
+Für uns bekannte Geräte haben wir bereits Registertabellen vordefiniert
 Sind diese vorhanden, muss nur die entsprechende Voreinstellung 
 ausgewählt werden und die bereitgestellten Zähler zugeordnet werden.
 Diese Geräte werden in der nachfolgenden Tabelle
@@ -88,6 +88,18 @@ und die Zuordnung auf einen Zählerwert (z.B. Wirk-Leistung L1) definiert
 werden. Prinzipiell sollte damit jedes Modbus/TCP fähige Gerät unterstützt
 werden.
 
+### Modbus/RTU (Wandler)
+
+Nicht alle Geräte unterstützten Modbus/TCP. Gerade ältere Geräte kommunizieren mittels
+Modbus/RTU, einem Zweidraht RS485 Bus. Somit können diese Geräte 
+nicht einfach ausgelesen werden. Es gibt aber Wandler, die einen RS485 Bus auf
+LAN umsetzen können. Wird so ein Wandler zwischen dem Modbus/RTU (RS485) Anschluss des Geräts und dem
+Netzwerk (LAN) gesetzt, kann das Gerät mittels Modbus/TCP ausgelesen werden. 
+
+Nutzer im WARP Forum [Tinkerunity.org](https://www.tinkerunity.org/forum/13-warp-charger/)
+setzen zum Beispiel den ***Ebytes NB114*** Wandler mit Ethernet-Anschluss ein. Dieser Wandler kostet ca. 20€.
+
+
 
 ## SMA Speedwire
 
@@ -100,13 +112,14 @@ kann genutzt werden um von extern Zählerdaten dem WARP Charger oder
 dem WARP Energy Manager mitzuteilen. Siehe 
 [API Referenz - Meters](/docs/mqtt_http/api_reference/meters).
 
-## WARP Energy Manager - Modbus/RTU (RS485)
+## Am WARP Energy Manager angeschlossene Stromzähler
 
-Der WARP Energy Manager kann Stromzähler direkt per Modbus/RTU (RS485) 
+Der WARP Energy Manager kann bestimmte Stromzähler direkt per Modbus/RTU (RS485) 
 auslesen. Dies ist vor allem interessant wenn noch kein Zähler am 
-Hausanschluss vorhanden ist. In dem Fall kann ein WARP Energy Manager 
-sowie ein kompatibler Modbus/RTU-Stromzähler gesetzt werden. Diese 
-Zähler sind auch in der Liste mit aufgeführt.
+Hausanschluss vorhanden ist. In dem Fall kann ein WARP Energy Manager installiert
+und zusätzlich ein kompatibler Modbus/RTU-Stromzähler an diesem angeschlossen werden. 
+Von dem WARP Energy Manager werden nicht alle Modbus/RTU Stromzähler unterstützt.
+Zum WARP Energy Manager kompatible Stromzähler sind in der Liste mit aufgeführt.
 
 ## Bekannte kompatible Geräte
 
@@ -142,7 +155,7 @@ die Unterstützung eines Geräts wünschen, dann schreibe uns im Forum auf
 
 ### Alpha Ess
 
-Alpha Ess Smile Heimspeicher (G3, Hi5, Hi10) unterstützen eine Anbindung mittels Modbus/TCP.
+Die folgenden Alpha ESS Smile Heimspeicher unterstützen eine Anbindung mittels Modbus/TCP: SMILE5, SMILE-Hi5, SMILE-Hi10, SMILE-G3-S3.6/B5/S5, SMILE-BAT-8.2PHA.
 Die integration bietet die virtuellen Stromzähler "Wechselrichter", "Netzanschluss" und "Speicher".
 Die Messwerte des Netzanschlusses können für ein PV-Überschussladen und für ein dynamisches Lastmanagement genutzt werden.
 
@@ -166,8 +179,8 @@ Damit das Hauskraftwerk eingebunden werden kann muss Modbus/TCP im SunSpec Modus
 Für ein PV-Überschussladen und für das dyn. Lastmanagement ist ein Stromzähler am Netzanschluss notwendig, der vom Hauskraftwerk ausgelesen werden kann.
 
 ### Eastron
-Eastron Stromzähler mit RS485 (Modbus/RTU) Schnittstelle können am WARP Energy Manager angeschlossen und von diesem ausgelesen werden.
-Bei den Typen SDM630 und SDM72V2 werd der Strom über den Zähler geführt. Diese Zähler werden also direkt in die Leitungen eingebaut.
+Eastron Stromzähler mit RS485 (Modbus/RTU) Schnittstelle können direkt am WARP Energy Manager angeschlossen und von diesem ausgelesen werden.
+Bei den Typen SDM630 und SDM72V2 wird der Strom über den Zähler geführt. Diese Zähler werden also direkt in die Leitungen eingebaut.
 
 Mit dem Typ SDM630MCT wird auch ein Typ unterstützt der externe Wandler nutzt. Dieser Zähler wird also nicht in die Leitungen eingebaut, sondern es
 werden nur die Wandler um die Leitungen gelegt. Durch die Wahl der entsprechend dimensionierten Wandler können auch sehr große Ströme gemessen werden.
@@ -306,4 +319,4 @@ Ist ein Stromzähler am Netzanschluss installiert ("Netzanschluss") kann dieser 
 
 ### YTL
 
-Der YTL Stromzähler DEM4A mit RS485 (Modbus/RTU) Schnittstelle kann am WARP Energy Manager angeschlossen und von diesem ausgelesen werden.
+Der YTL Stromzähler DEM4A mit RS485 (Modbus/RTU) Schnittstelle kann direkt am WARP Energy Manager angeschlossen und von diesem ausgelesen werden.
