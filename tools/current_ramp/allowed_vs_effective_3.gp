@@ -32,7 +32,9 @@ plot x 															lc rgbcolor hsv2rgb(  0/360.0,0.0,0.5)	title "ideal",\
      "spring_45_comfort_plus_one_phase_three_connected.csv"	using ($2):($6) 			with lines	lc rgbcolor hsv2rgb(300/360.0,0.5,1.0)	title "Scheinstrom Spring 1P",\
      "spring_45_comfort_plus_one_phase_three_connected.csv"	using ($2):($27/$3)			with lines	lc rgbcolor hsv2rgb(300/360.0,1.0,1.0)	title "Wirkstrom Spring 1P",\
      "polestar_2_one_phase.csv"					using ($2):($6) 			with lines	lc rgbcolor hsv2rgb(330/360.0,0.5,1.0)	title "Scheinstrom Polestar 2 1P",\
-     "polestar_2_one_phase.csv"					using ($2):($27/$3)			with lines	lc rgbcolor hsv2rgb(330/360.0,1.0,1.0)	title "Wirkstrom Polestar 2 1P"
+     "polestar_2_one_phase.csv"					using ($2):($27/$3)			with lines	lc rgbcolor hsv2rgb(330/360.0,1.0,1.0)	title "Wirkstrom Polestar 2 1P",\
+     "leaf_ze1_one_phase.csv"					using ($2):($6) 			with lines	lc rgbcolor hsv2rgb(330/360.0,0.5,1.0)	title "Scheinstrom Leaf 1P",\
+     "leaf_ze1_one_phase.csv"					using ($2):($27/$3)			with lines	lc rgbcolor hsv2rgb(330/360.0,1.0,1.0)	title "Wirkstrom Leaf 1P"
 
 pause mouse close
 quit
