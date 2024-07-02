@@ -87,6 +87,13 @@ export const meters = [
     note_url: "/docs/compatible_meters#goodwe",
   },
   {
+    manufacturer: "Huawei",
+    name: "SUN2000 Serie",
+    connection: "Modbus/TCP",
+    note: "Hybrid-Wechselrichter",
+    note_url: "/docs/compatible_meters#huawei",
+  },
+  {
     manufacturer: "Goodwe",
     name: "BT, SBP, BH-Serie",
     connection: "Modbus/TCP",

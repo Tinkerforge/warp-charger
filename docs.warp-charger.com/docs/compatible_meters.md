@@ -210,15 +210,15 @@ Diese muss noch per Hand angelegt werden. Wir werden aber zeitnah eine vorwählb
 Es werden die virtueller Stromzähler "Netzanschluss", "Speicher", "Last" und "Wechselrichter" bereitgestellt. Netzanschluss ist nur nutzbar, wenn ein externer Hardware-Stromzähler (Huawei Smart Power Sensor)
 vom Typ DTSU666-H oder DDSU666-H am Wechselrichter angeschlossen wurde. Speicher ist nur nutzbar im Zusammenspiel mit der Luna2000 Batterie.
 
-### RCT
-RCT Wechselrichter können leider nicht mittels SunSpec oder Modbus/TCP angesprochen werden. Dies ist aber über das offengelegte RCT Power Serial Communication protokoll mittels TCP/IP möglich.
-Wir planen die Implementierung des Protokolls um auch Wechselrichter von RCT einbinden zu können.
-
 ### Kostal
 Das Smart Energy Meter (KSEM G2) kann direkt mittels SunSpec kommunizieren.
 
 Zusätzlich kann die Erzeugung der Piko und Plenticore Wechselrichter mittels SunSpec ausgelesen werden. Ein PV-Überschussladen nur mit dieser Wechselrichterdaten ist nicht möglich,
 da dafür ein Stromzähler am Netzanschluss notwendig ist.
+
+### RCT
+RCT Wechselrichter können leider nicht mittels SunSpec oder Modbus/TCP angesprochen werden. Dies ist aber über das offengelegte RCT Power Serial Communication protokoll mittels TCP/IP möglich.
+Wir planen die Implementierung des Protokolls um auch Wechselrichter von RCT einbinden zu können.
 
 ### Shelly
 Der einphasige Wandler-Stromzähler Shelly Pro EM und dreiphasige Wandler-Stromzähler Shelly Pro 3EM werden unterstützt. Beide besitzten nur eine Breite von 1 TE und messen mittels Wandler.
