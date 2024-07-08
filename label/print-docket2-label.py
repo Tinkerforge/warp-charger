@@ -8,6 +8,7 @@ import socket
 from datetime import datetime
 import urllib.request
 import ssl
+import tinkerforge_util as tfutil  # sudo apt install python3-tinkerforge-util
 
 QR_CODE_COMMAND = b'W552,119,5,2,M,8,6,85,0\r'
 QR_CODE_PADDING = b';;\r'
@@ -37,63 +38,6 @@ CUSTOMER_PLACEHOLDER = b'Max Mustermann'
 COMMENT_PLACEHOLDER = b'Comment'
 
 COPIES_FORMAT = '^C{0}\r'
-
-
-def get_tf_printer_host(task):
-    import re
-    import os
-    import sys
-    import socket
-    import tkinter.messagebox
-
-    path = '~/tf_printer_host.txt'
-    x = re.compile(r'^([A-Za-z0-9_-]+)\s+([A-Za-z0-9_\.-]+)$')
-    host = None
-
-    try:
-        with open(os.path.expanduser(path), 'r', encoding='utf-8') as f:
-            for line in f.readlines():
-                line = line.strip()
-
-                if len(line) == 0 or line.startswith('#'):
-                    continue
-
-                m = x.match(line)
-
-                if m == None:
-                    message = 'WARNING: Invalid line in {0}: {1}'.format(path, repr(line))
-
-                    print(message)
-                    tkinter.messagebox.showerror(title=path, message=message)
-
-                    continue
-
-                other_task = m.group(1)
-                other_host = m.group(2)
-
-                if other_task != task:
-                    continue
-
-                host = other_host
-                break
-    except FileNotFoundError:
-        pass
-
-    if host == None:
-        message = 'ERROR: Printer host for task {0} not found in {1}'.format(task, path)
-    else:
-        try:
-            with socket.create_connection((host, 9100)) as s:
-                pass
-
-            return host
-        except:
-            message = 'ERROR: Coould not connect to printer at {0} for task {1}'.format(host, path)
-
-    print(message)
-    tkinter.messagebox.showerror(title=path, message=message)
-
-    sys.exit(1)
 
 
 def get_next_serial_number():
@@ -330,7 +274,7 @@ def print_docket2_label(sku, supply_cable, cee, version, serial_number, build_da
         sys.stdout.buffer.write(data)
         sys.stdout.buffer.flush()
     else:
-        with socket.create_connection((get_tf_printer_host('warp-docket'), 9100)) as s:
+        with socket.create_connection((tfutil.get_tf_printer_host('warp-docket'), 9100)) as s:
             s.send(data)
 
 
