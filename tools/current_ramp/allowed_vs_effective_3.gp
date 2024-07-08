@@ -36,7 +36,12 @@ plot x 																										lc rgbcolor hsv2rgb(  0/360.0,0.0,0.5)	title "i
      "leaf_ze1_one_phase.csv"								using ($2):($6) 					with lines	lc rgbcolor hsv2rgb(240/360.0,0.5,1.0)	title "Scheinstrom Leaf 1P",\
      "leaf_ze1_one_phase.csv"								using ($2):($27/$3)					with lines	lc rgbcolor hsv2rgb(240/360.0,1.0,1.0)	title "Wirkstrom Leaf 1P",\
      "ariya_one_phase.csv"									using ($2):($6) 					with lines	lc rgbcolor hsv2rgb(260/360.0,0.5,1.0)	title "Scheinstrom Ariya 1P",\
-     "ariya_one_phase.csv"									using ($2):($27/$3)					with lines	lc rgbcolor hsv2rgb(260/360.0,1.0,1.0)	title "Wirkstrom Ariya 1P"
+     "ariya_one_phase.csv"									using ($2):($27/$3)					with lines	lc rgbcolor hsv2rgb(260/360.0,1.0,1.0)	title "Wirkstrom Ariya 1P",\
+     "ioniq_5_one_phase.csv" 								using ($2):($6)						with lines	lc rgbcolor hsv2rgb(280/360.0,0.5,1.0)	title "Scheinstrom Ioniq 5 1P",\
+     "ioniq_5_one_phase.csv"								using ($2):($27/$3)					with lines	lc rgbcolor hsv2rgb(280/360.0,1.0,1.0)	title "Wirkstrom Ioniq 5 1P",\
+     "ioniq_5_three_phases.csv"								using ($2):($25)					with lines	lc rgbcolor hsv2rgb(300/360.0,0.5,1.0)	title "Scheinstrom Ioniq 5 3P",\
+     "ioniq_5_three_phases.csv"								using ($2):($27/($48/sqrt(3))/3)	with lines	lc rgbcolor hsv2rgb(300/360.0,1.0,1.0)	title "Wirkstrom Ioniq 5 3P"
+
 
 pause mouse close
 quit
