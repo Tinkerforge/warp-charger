@@ -277,8 +277,8 @@ Das Smart Meter ist typischwerweise mit einem Pin gesichert und muss zuvor mitte
 ESP32 und einer Fotodiode bestehen. Es gibt aber auch Fertiglösungen wie den "Hichi TTL - Lesekopf".
 
 Technisch muss für das jeweilige Zählermodell der entsprechende [Smart Meter Descriptor](https://tasmota.github.io/docs/Smart-Meter-Interface/#smart-meter-descriptors) im ESP32 des Lesekopf hinterlegt werden. 
-Kann darüber der Zähler ausgelesen werden, so kann der Leistungs-Messwert mittels der [HTTP API](https://docs.warp-charger.com/docs/mqtt_http/api_reference/meters)
- an einen WARP Charger oder einen WARP Energy Meter geschickt werden. 
+Kann darüber der Zähler ausgelesen werden, so kann der Leistungs-Messwert (ab Tasmota Version 13.x) mittels der [HTTP API](https://docs.warp-charger.com/docs/mqtt_http/api_reference/meters)
+ an einen WARP Charger oder einen WARP Energy Meter geschickt werden.
 
 Dazu wird auf dem WARP Energy Manager oder WARP Charger ein API Stromzähler konfiguriert. Dieser erhält nur einen einzigen Wert ("Wirk­leistung (Bezug minus Ein­speisung); Σ L1, L2, L3 \[W\]).
 Dieser Wert wird dann aus dem Tasmota SML Skript mittels folgender Zeile übertragen:
