@@ -88,6 +88,16 @@ und die Zuordnung auf einen Zählerwert (z.B. Wirk-Leistung L1) definiert
 werden. Prinzipiell sollte damit jedes Modbus/TCP fähige Gerät unterstützt
 werden.
 
+:::note
+
+Für das PV Überschussladen muss ein API Stromzähler konfiguriert werden, der mindestens folgenden Wert enthält:
+***"Wirk­leistung (Bezug minus Ein­speisung); Σ L1, L2, L3 \[W\]***
+
+Dieser Wert wird für die Regelung verwendet. Weitere Werte können angelegt werden, sind aber technisch nicht notwendig.
+
+:::
+
+
 ### Modbus/RTU (Wandler)
 
 Nicht alle Geräte unterstützten Modbus/TCP. Gerade ältere Geräte kommunizieren mittels
