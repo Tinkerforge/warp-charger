@@ -12,7 +12,7 @@ Stromzähler zugreifen.
 
 Dies sind Daten zur Erzeugung von PV-Wechselrichtern 
 aber auch Daten von Batteriespeicher und Daten
-vom Stromnetz- bzw. Hausanschluss. Die ausgelesenen Stromzählerwerte 
+vom Netzanschluss (auch Hausanschluss genannt). Die ausgelesenen Stromzählerwerte 
 können von einem WARP Charger oder Energy Manager 
 für Regelungen (PV-Überschuss, dyn. Lastmanagement) verwendet 
 bzw. zur Auswertung aufgezeichnet werden.
@@ -20,10 +20,10 @@ bzw. zur Auswertung aufgezeichnet werden.
 Für ein [PV-Überschlussladen](/warp_charger/pv_excess_charging.md) oder
 ein [dynamisches Lastmanagement](warp_charger/chargemanagement.md), muss
 der WARP Charger oder der WARP Energy Manager Zugriff auf einen 
-Stromzähler am **Hausanschluss (Netz)** haben, da nur dort der eigentliche 
+Stromzähler am **Netzanschluss (Netz)** haben, da nur dort der eigentliche 
 PV-Überschuss bzw. die aktuellen Phasenströme ermittelt werden können.
 
-Meistens ist bereits ein Zähler am Hausanschluss vorhanden. Wir 
+Meistens ist bereits ein Zähler am Netzanschluss vorhanden. Wir 
 unterstützen verschiedene Möglichkeiten um auf diese Zähler zuzugreifen. 
 Ist ein Stromzähler direkt am PV-Wechselrichter angeschlossen, dann kann
 oftmals über den Wechselrichter auf die Zählerdaten zugegriffen werden. 
@@ -38,8 +38,8 @@ Kommunikationsstandard für PV-Wechselrichter.
 WARP Charger und der WARP Energy Manager können SunSpec Geräte mittels 
 LAN oder WLAN direkt auslesen.
 
-Ist ein Wechselrichter oder Energiemanager vorhanden, 
-der **Zugriff auf einen Stromzähler am Hausanschluss hat**, kann dieser 
+Ist ein Wechselrichter oder Energiemanager vorhanden,
+der **Zugriff auf einen Stromzähler am Netzanschluss hat**, kann dieser 
 oft über SunSpec über das Netzwerk ausgelesen werden. 
 
 SunSpec bietet den Vorteil, dass kompatible Geräte direkt vom WARP 
@@ -126,7 +126,7 @@ dem WARP Energy Manager mitzuteilen. Siehe
 
 Der WARP Energy Manager kann bestimmte Stromzähler direkt per Modbus/RTU (RS485) 
 auslesen. Dies ist vor allem interessant wenn noch kein Zähler am 
-Hausanschluss vorhanden ist. In dem Fall kann ein WARP Energy Manager installiert
+Netzanschluss vorhanden ist. In dem Fall kann ein WARP Energy Manager installiert
 und zusätzlich ein kompatibler Modbus/RTU-Stromzähler an diesem angeschlossen werden. 
 Von dem WARP Energy Manager werden nicht alle Modbus/RTU Stromzähler unterstützt.
 Zum WARP Energy Manager kompatible Stromzähler sind in der Liste mit aufgeführt.

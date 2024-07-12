@@ -14,7 +14,8 @@ Eigenstromnutzung steht hier im Vordergrund.
 Steht ein entsprechender Stromzähler zur Verfügung, kann die Wallbox den
 Ladevorgang so steuern, dass auf einen Soll-Netzbezug geregelt wird.
 
-Typischerweise handelt es sich um einen Stromzähler am Hausanschluss,
+Typischerweise handelt es sich um einen Stromzähler am Netzanschluss
+(auch Hausanschluss genannt),
 der auf einen Bezug von 0 W geregelt werden soll. Das heißt, die gesamte
 PV-Leistung soll in das Fahrzeug geladen werden, ohne dass ein Netzbezug
 stattfindet ("PV-Überschuss").
@@ -52,7 +53,7 @@ Der Stromzähler wird über die Seite `Energiemanagement` -> `Stromzähler` hinz
 Dort kann unter "Einstellungen" über das "+" ein Zähler ausgewählt werden. Bei
 einem WARP Charger Pro ist hier bereits der Zähler in der Wallbox vorhanden und
 es muss ein weiterer hinzugefügt werden. Bei einer WARP Charter Smart reicht
-für das PV-Überschussladen der Zähler am Hausanschluss, der den PV-Überschuss messen
+für das PV-Überschussladen der Zähler am Netzanschluss, der den PV-Überschuss messen
 kann. Dazu muss der Zähler den Wert "Wirkleistung (Bezug minus Einspeisung) Summe
 über L1, L2, L3" liefern.
 
