@@ -19,7 +19,7 @@ Das neue Lastmanagement kann über einen [kompatiblen Stromzähler](/compatible_
 
 :::info
 
-Genau wie das neue Lastmanagement selbst ist die Dokumentation dazu noch in der Beta-Phase. Die Beta-Firmware findet sich im Tinkerunity-Forum: https://www.tinkerunity.org/topic/12420-beta-version-des-neuen-dynamischen-lastmanagements/
+Genau wie das neue Lastmanagement selbst ist die Dokumentation dazu noch in der Beta-Phase. Die Beta-Firmware findet sich im [Tinkerunity-Forum](https://www.tinkerunity.org/topic/12420-beta-version-des-neuen-dynamischen-lastmanagements/)
 
 :::
 
@@ -40,13 +40,19 @@ Stromlimits bestehen jeweils aus einem PV-Überschuss und drei Phasenwerten (L1,
 
 Die Stromlimits, die vom Regler bestimmt werden, sind:
 - `raw`: Der Strom, der in diesem Moment verwendet werden darf.
-- `min`: Der minimal verfügbare Strom der letzten Minuten. Die Wolkenfilter-Konfiguration legt für den `min`-PV-Wert fest, wie weit in die Vergangenheit der Wert bestimmt wird. Für die Phasenwerte wird immer das Minimum der letzten **TODO** Minuten verwendet.
+- `min`: Der minimal verfügbare Strom der letzten Minuten. Die Wolkenfilter-Konfiguration legt für den `min`-PV-Wert fest, wie weit in die Vergangenheit der Wert bestimmt wird. Für die Phasenwerte wird immer das Minimum der letzten vier Minuten verwendet.
 - `max_pv`: Der maximal verfügbare PV-Überschuss der letzten Minuten. Wird ebenfalls vom Wolkenfilter definiert.
-- `spread`: Ein Wert, der vorhersagt, wie viele Wallboxen gleichzeitig aktiv sein können. Im Moment implementiert als der minimal verfügbare Strom der letzten Stunde (**TODO**: eine oder zwei).
+- `spread`: Ein Wert, der vorhersagt, wie viele Wallboxen gleichzeitig aktiv sein können. Im Moment implementiert als der minimal verfügbare Strom der letzten Stunde.
 
 ## Regler
 
-**TODO**
+Wenn PV-Überschussladen oder dynamisches Lastmanagement aktiv sind, wird der verfügbare Strom, der vom Lastmanagement verteilt werden darf, durch zwei Regler berechnet, die Teil des Power Manager-Moduls sind.
+
+Der PV-Regler ist ein P-Regler mit adaptiver Schrittweite, der bei großen Abweichungen stark reagiert, um beispielsweise auf große Verbraucher oder plötzlich ändernde Bewölkung schnell reagieren zu können, und andererseits auf kleine Abweichungen nur schwach reagiert, um starke Oszillationen zu vermeiden, wenn ein angeschlossenes Fahrzeug seine Ladeleistung nur in großen, diskreten Schritten anpassen kann. Sollwert des Reglers ist üblicherweise null Watt am Hausanschluss, jedoch kann der Wert bei Bedarf angepasst werden, um bevorzugt Strombezug oder Stromeinspeisung zu vermeiden. Da die zur Verfügung stehende Menge Energie beim PV-Überschussladen bei bewölktem Wetter ständig schwankt, lässt sich durch die Stärke des Wolkenfilters einstellen, wie schnell aufgrund von sich ändernder Bewölkung bzw. Sonneneinstrahlung Wallboxen ein-, aus- oder umgeschaltet werden sollen. Ein schwacher Wolkenfilter führt zu häufigeren Schaltvorgängen, durch die die tatsächliche PV-Leistung besser ausgenutzt werden kann, aber auch die Ladeelektronik der angeschlossenen Fahrzeuge stärker verschlissen wird. Ein starker Wolkenfilter schont die Ladeelektronik mehr, führt aber zu mehr Strombezug oder -einspeisung, wenn die Fahrzeuge nicht auf die momentane PV-Leistung eingestellt werden können. Die Werte des Wolkenfilters werden als `min` und `max_pv` an das Lastmanagement übergeben. Solange sich die Ladeleistung im mittleren Bereich von Wallbox und Fahrzeug befindet, hat der Wolkenfilter keinen Einfluss.
+
+Der Regler für dynamisches Lastmanagement ist ebenfalls ein P-Regler mit adaptiver Schrittweite, der bei Überschreitung des eingestellten Phasenlimits stark reagiert, um ein Auslösen der Sicherungen zu vermeiden. Unterhalb des eingestellten Phasenlimits nähert er sich langsam dem Limit, um bei Verbrauchern mit gepulstem Stromverbrauch, wie z. B. Microwellen, mehr Sicherheitsabstand zu lassen. An Informationen über den zu überwachenden Netzanschluss werden der Nennwert der Absicherung sowie der größte zu erwartende Fremdverbraucher im Gebäude benötigt. Ein typischer Wert für die Absicherung des Netzanschlusses ist 63 A. Ein großer Fremdverbraucher kann ein 27 kW Durchlauferhitzer sein, bei dem mit einem plötzlich auftretenden Stromverbrauch von 39 A gerechnet werden muss. In diesem Fall darf das dynamische Lastmanagement den Netzanschluss nur mit 49 A belasten, da der Durchlauferhitzer jederzeit eingeschaltet werden könnte und die Absicherung nur begrenzt überlastfähig ist. Für jede Phase wird einzeln das Minimum der letzten vier Minuten berechnet und als `min` an das Lastmanagement übergeben, um abschätzen zu können, ob die Kapazität des Netzanschlusses ausreicht, um weitere Wallboxen einzuschalten.
+
+Das dynamische Lastmanagement verwendet nicht die momentanen Rohwerte der Phasenströme, da in dem Fall Verbraucher mit stark gepulstem Stromverbrauch entweder keinen oder einen zu starker Einfluss hätten. Stattdessen wird zwischen einem gleitenden Mittelwert der letzten zehn Sekunden und dem gewichteten Maximum aus dem selben Zeitintervall interpoliert. Kleine, gepulste Verbraucher wie Kaffeevollautomaten werden dabei geglättet, große Dauerverbraucher dagegen sofort beachtet.
 
 ## Verteilungsalgorithmus
 
@@ -144,7 +150,7 @@ Das `raw`-Stromlimit beträgt jetzt noch:
 
 #### Stufe 8
 
-Der übrige Strom wird jetzt, möglicherweise unfair, auf die Wallboxen verteilt. Da auf L3 kein Strom mehr zur Verfügung steht, kann der dreiphasig ladenden Wallbox nicht mehr Strom zugewiesen werden. Sie behält also die Allokation von 6 A (Minimalstrom) + 10 A (fairer Strom) = 16 A. Die einphasig ladende Wallbox kann noch 21 A PV-Überschuss erhalten, die auf der L1-Phase frei sind. Ihr werden also 6 A (Minimalstrom) + 16 A (fairer Strom) + 21 A (übriger Strom) = 43 A zugewiesen. Dieser Wert wird auf 32 A begrenzt, was das Maximum ist, dass einer (22kW-)Wallbox zugewiesen werden kann.
+Der übrige Strom wird jetzt, möglicherweise unfair, auf die Wallboxen verteilt. Da auf L3 kein Strom mehr zur Verfügung steht, kann der dreiphasig ladenden Wallbox nicht mehr Strom zugewiesen werden. Sie behält also die Zuteilung von 6 A (Minimalstrom) + 10 A (fairer Strom) = 16 A. Die einphasig ladende Wallbox kann noch 21 A PV-Überschuss erhalten, die auf der L1-Phase frei sind. Ihr werden also 6 A (Minimalstrom) + 16 A (fairer Strom) + 21 A (übriger Strom) = 43 A zugewiesen. Dieser Wert wird auf 32 A begrenzt, was das Maximum ist, dass einer (22kW-)Wallbox zugewiesen werden kann.
 
 Das `raw`-Stromlimit beträgt jetzt noch:
 
@@ -170,18 +176,18 @@ beträgt, dann kann einer niedrig priorisierten Wallbox, die einphasig auf L2 la
 
 Es kann aufgrund der PV- und Phasenlimits dazu kommen, dass nicht alle Wallboxen, die ladebereit sind, auch Strom erhalten. Um in diesem Fall sicherzustellen, dass alle Fahrzeuge einen fairen Anteil der verfügbaren Energie bekommen, können Wallboxen rotiert, das heißt, deaktiviert werden, damit andere ladebereite Wallboxen laden können.
 
-Eine Wallbox ist ladebereit wenn:
-- Sie ist nicht niedrig priorisiert ist [(siehe Aufwecken "voller" Fahrzeuge)](#wakeup)
-- Bereits während des letzten Verteilungsdurchlaufs ein Fahrzeug angeschlossen war und immer noch ist
-- Im letzten Verteilungsdurchlauf dieser Wallbox kein Strom zugewiesen wurde
-- Keine Ladestromgrenze der Wallbox *außer die des Lastmanagements* blockiert
+Eine Wallbox ist ladebereit wenn
+- sie ist nicht niedrig priorisiert ist [(siehe Aufwecken "voller" Fahrzeuge)](#wakeup),
+- bereits während des letzten Verteilungsdurchlaufs ein Fahrzeug angeschlossen war und immer noch ist,
+- im letzten Verteilungsdurchlauf dieser Wallbox kein Strom zugewiesen wurde und
+- keine Ladestromgrenze der Wallbox *außer die des Lastmanagements* blockiert.
 
 Sobald mindestens eine Wallbox ladebereit ist, wird bei jeder im Moment ladenden Wallbox geprüft ob
-1. Sie auf mindestens einer der Phasen aktiv ist, die von der ladebereiten Wallbox verwendet werden würde
-2. Die Wallbox eine gewisse Minimalzeit lang aktiv war (`minimum_active_time`, standardmäßig 15 Minuten)
-3. Die Wallbox eine gewisse Minimalenergie allokiert bekommen hat (`alloc_energy_rot_thres`, standardmäßig 5 kWh)
+1. sie auf mindestens einer der Phasen aktiv ist, die von der ladebereiten Wallbox verwendet werden würde,
+2. die Wallbox eine gewisse Minimalzeit lang aktiv war (`minimum_active_time`, standardmäßig 15 Minuten) und
+3. die Wallbox eine gewisse Minimalenergie zugeteilt bekommen hat (`alloc_energy_rot_thres`, standardmäßig 5 kWh).
 
-Eine Wallbox auf die diese Bedingungen zutreffen wird rotiert, d.h. sie wird deaktiviert um stattdessen die ladebereite Wallbox zu aktivieren.
+Eine Wallbox, auf die diese Bedingungen zutreffen, wird rotiert, d.h. sie wird deaktiviert, um stattdessen die ladebereite Wallbox zu aktivieren.
 
 ### Aktivieren bei Anstecken eines Fahrzeugs (Stufe 2)
 
@@ -193,4 +199,4 @@ Eine Wallbox wird nicht mehr als hoch priorisiert betrachtet, wenn sie eine gewi
 
 ### Globale Hysterese
 
-Um auch bei schwankenden Stromlimits nicht zu häufig Schaltvorgänge durchzuführen, wird eine globale Hysteresezeit (`global_hysteresis`, standardmäßig drei Minuten) verwendet. Wenn die Hysteresezeit nicht abgelaufen ist, werden keine Wallboxen zugeschaltet, von ein- auf dreiphasiges Laden umgeschaltet oder aufgrund des PV-Limits abgeschaltet. Jeder Ab- Zu und Umschaltvorgang setzt die Hysteresezeit zurück. Abschaltvorgänge aufgrund der Phasenlimits sind immer möglich.
+Um auch bei schwankenden Stromlimits nicht zu häufig Schaltvorgänge durchzuführen, wird eine globale Hysteresezeit (`global_hysteresis`, standardmäßig drei Minuten) verwendet. Wenn die Hysteresezeit nicht abgelaufen ist, werden keine Wallboxen zugeschaltet, von ein- auf dreiphasiges Laden umgeschaltet oder aufgrund des PV-Limits abgeschaltet. Jeder Ab-, Zu- und Umschaltvorgang setzt die Hysteresezeit zurück. Abschaltvorgänge aufgrund der Phasenlimits sind immer möglich.
