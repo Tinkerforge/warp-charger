@@ -13,9 +13,9 @@ graph TB
 
 Das neue Lastmanagement kann über einen [kompatiblen Stromzähler](/compatible_meters.md) den Hausanschluss überwachen und bietet damit folgende Funktionen, die einzeln oder kombiniert verwendet werden können:
 
-- **dynamisches Lastmanagement**: Der Lastmanager stellt sicher, dass der Hausanschluss nicht überlastet wird, auch wenn andere (ungesteuerte) Verbraucher den Hausanschluss dynamisch belasten.
+- **Dynamisches Lastmanagement**: Der Lastmanager stellt sicher, dass der Hausanschluss nicht überlastet wird, auch wenn andere (ungesteuerte) Verbraucher den Hausanschluss dynamisch belasten.
 - **PV-Überschussladen**: Der Lastmanager stellt sicher, dass nur der PV-Überschuss verwendet wird, um Fahrzeuge zu laden.
-- **statisches Lastmanagement** Der Lastmanager stellt sicher, dass die gemeinsame Zuleitung des Wallbox-Verbunds nicht überlastet wird.
+- **Statisches Lastmanagement** Der Lastmanager stellt sicher, dass die gemeinsame Zuleitung des Wallbox-Verbunds nicht überlastet wird.
 
 :::info
 
@@ -94,12 +94,12 @@ Nachdem das Regelfenster bestimmt wurde, wird es mit den Stromlimits verglichen 
 
 #### Stufe 3
 
-Wallboxen müssen abgeschaltet werden, wenn das Regelfenster-Minimum auf einer oder mehreren Phasen größer ist als die `raw`-Stromgrenze. Wenn das der Fall ist, dann sind die entsprechenden Phasen überlastet und es muss sofort reagiert werden. Wallboxen werden außerdem abgeschaltet, wenn das PV-Regelfenster-Minimum größer ist als die `max_pv`-Stromgrenze ist. Hier wird nicht die `raw`-Grenze verwendet, um sicherzustellen, dass bei einem kurzzeitigen Einbruch der PV-Produktion nicht sofort Wallboxen abgeschaltet werden. In diesem Fall kann Strom aus dem Netz bezogen werden, um den kurzen Einbruch zu überbrücken.
+Wallboxen müssen abgeschaltet werden, wenn das Regelfenster-Minimum auf einer oder mehreren Phasen größer ist als die `raw`-Stromgrenze. Wenn das der Fall ist, dann sind die entsprechenden Phasen überlastet und es muss sofort reagiert werden. Wallboxen werden außerdem abgeschaltet, wenn das PV-Regelfenster-Minimum größer als die `max_pv`-Stromgrenze ist. Hier wird nicht die `raw`-Grenze verwendet, um sicherzustellen, dass bei einem kurzzeitigen Einbruch der PV-Produktion nicht sofort Wallboxen abgeschaltet werden. In diesem Fall kann Strom aus dem Netz bezogen werden, um den kurzen Einbruch zu überbrücken.
 
 #### Stufe 4
 
 Wallboxen können zugeschaltet werden, wenn das Regelfenster-Maximum den verfügbaren Strom nicht komplett aufbrauchen kann. Um eine Wallbox zuzuschalten wird zunächst der **Einschaltstrom** bestimmt. Standardmäßig ist der Einschaltstrom 1,5-mal der Minimalstrom (`enable_current_factor_pct`), also (beim `Standard`-Fahrzeugmodell) 9 A auf jeder Phase, auf der die neue Wallbox aktiv sein wird und die Summe der Phasen-Einschaltströme als PV-Einschaltstrom. Es werden dann drei Bedingungen geprüft:
-1. Liegt die `min`-Stromgrenzen mindestens um den bestimmten Einschaltstrom unter dem Fensterminimum?
+1. Liegt die `min`-Stromgrenzen mindestens um den Einschaltstrom unter dem Fensterminimum?
 2. Gibt die `spread`-Stromgrenze vor, dass die neue Wallbox und alle bereits aktiven Wallboxen hätten aktiv sein können?
 3. Liegt das Fenstermaximum mindestens einer Phase unter der entsprechenden `min`-Stromgrenze?
 4. Liegt das Fenstermaximum des PV-Werts unter der `min`-Stromgrenze?
@@ -110,7 +110,7 @@ Es müssen entweder die Bedingungen 1 und 2 oder 1, 3 und 4 erfüllt sein, damit
 
 Eine Wallbox kann von einphasigem auf dreiphasiges Laden umgeschaltet werden, wenn noch Strom verfügbar ist. Die Entscheidung wird fast genauso getroffen wie die, ob eine Wallbox aktiviert werden soll, allerdings wird berücksichtigt, dass die betreffende Wallbox bereits auf einer Phase aktiv ist, und Bedingung 3 muss für die *beiden* anderen Phasen zutreffen.
 
-### Stromverteilung
+### Stromverteilung (Stufe 6, 7 und 8)git p
 
 Nachdem für jede Wallbox bestimmt wurde, ob sie laden darf und wenn ja ob ein- oder dreiphasig, wird allen jetzt aktiven Wallboxen Strom zugewiesen.
 
@@ -120,7 +120,7 @@ Zunächst wird allen Wallboxen der jeweilige Minimalstrom zugewiesen, damit der 
 
 #### Stufe 7
 
-Als nächstes wird ein fairer Strom pro Phase und für den PV-Überschuss bestimmt. Der faire Strom ist das noch übrige `raw`-Limit geteilt durch die Anzahl der Wallboxen, die auf dieser Phase aktiv sind. Beim PV-Überschuss wird eine Wallbox mit der Anzahl ihrer aktiven Phasen einbezogen, damit einphasig ladende Wallboxen nicht benachteiligt werden.
+Als nächstes wird ein fairer Strom pro Phase und für den PV-Überschuss bestimmt. Der faire Strom ist das noch übrige `raw`-Limit geteilt durch die Anzahl der Wallboxen, die auf dieser Phase aktiv sind. Beim PV-Überschuss geht eine Wallbox mit der Anzahl ihrer aktiven Phasen ein, damit einphasig ladende Wallboxen nicht benachteiligt werden.
 
 Wenn beispielsweise eine drei- und eine einphasig (auf L1) ladende Wallbox aktiv sind, und das `raw`-Stromlimit *nach Verteilung der Minimalströme* noch
 
