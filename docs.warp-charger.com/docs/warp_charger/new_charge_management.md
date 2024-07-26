@@ -3,7 +3,7 @@
 ```mermaid
 graph TB
     pv["PV-Anlage"]-->meter
-    grid["Hausanschluss"]<---->meter["Zähler"]
+    grid["Netzanschluss"]<---->meter["Zähler"]
     meter-->supply["Zuleitung"]
     meter---->consumer["Andere Verbraucher"]
     supply-->charger_1["WARP Charger 1"]
@@ -11,15 +11,15 @@ graph TB
     supply-->charger_3["WARP Charger 32"]
 ```
 
-Das neue Lastmanagement kann über einen [kompatiblen Stromzähler](/compatible_meters.md) den Hausanschluss überwachen und bietet damit folgende Funktionen, die einzeln oder kombiniert verwendet werden können:
+Das neue Lastmanagement kann über einen [kompatiblen Stromzähler](/compatible_meters.md) den Netzanschluss überwachen und bietet damit folgende Funktionen, die einzeln oder kombiniert verwendet werden können:
 
-- **Dynamisches Lastmanagement**: Der Lastmanager stellt sicher, dass der Hausanschluss nicht überlastet wird, auch wenn andere (ungesteuerte) Verbraucher den Hausanschluss dynamisch belasten.
+- **Dynamisches Lastmanagement**: Der Lastmanager stellt sicher, dass der Netzanschluss nicht überlastet wird, auch wenn andere (ungesteuerte) Verbraucher den Netzanschluss dynamisch belasten.
 - **PV-Überschussladen**: Der Lastmanager stellt sicher, dass nur der PV-Überschuss verwendet wird, um Fahrzeuge zu laden.
-- **Statisches Lastmanagement** Der Lastmanager stellt sicher, dass die gemeinsame Zuleitung des Wallbox-Verbunds nicht überlastet wird.
+- **Statisches Lastmanagement**: Der Lastmanager stellt sicher, dass die gemeinsame Zuleitung des Wallbox-Verbunds nicht überlastet wird.
 
 :::info
 
-Genau wie das neue Lastmanagement selbst ist die Dokumentation dazu noch in der Beta-Phase. Die Beta-Firmware findet sich im Tinkerunity-Forum: **TODO** Link
+Genau wie das neue Lastmanagement selbst ist die Dokumentation dazu noch in der Beta-Phase. Die Beta-Firmware findet sich im Tinkerunity-Forum: https://www.tinkerunity.org/topic/12420-beta-version-des-neuen-dynamischen-lastmanagements/
 
 :::
 
@@ -29,7 +29,7 @@ Die neue Implementierung balanciert mehrere Anforderungen:
 - Ausnutzung des PV-Überschusses
 - Minimierung von Ein-, Um- und Abschaltungen
 - Schnelle Reaktion auf neu angesteckte Fahrzeuge
-- Schnelle Reaktion auf Überlast am Hausanschluss
+- Schnelle Reaktion auf Überlast am Netzanschluss
 
 Das Lastmanagement ist in zwei Komponenten aufgeteilt: Der Regler bestimmt Stromlimits, die angeben, wie viel PV-Überschuss zur Verfügung steht und wie stark die drei Phasen belastet werden dürfen. Der Verteilungsalgorithmus verwendet diese Stromlimits, um den Wallboxen Strom zuzuweisen.
 
