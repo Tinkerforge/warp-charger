@@ -112,3 +112,25 @@ Typischerweise kann der zuletzt gesetzte Wert auf einem Topic gelesen werden. Be
 ### Warum meldet die Wallbox MQTT: Topic ... is an action. Ignoring retained message.?
 
 Bestimmte Kommandos sind Aktionen, setzen also keinen dauerhaften Zustand, sondern lösen einmalige Ereignisse aus. Eine "Retained Message" wird aber auf dem MQTT-Broker dauerhaft vorgehalten. Für Aktionen sind deshalb solche Messages verboten, da diese sonst, beispielsweise nach einem Neuverbinden des WARP Chargers zum MQTT-Broker, mehr als einmal verarbeitet werden könnten.
+
+
+
+## Upgrade von WARP Chargern
+
+Wir versuchen soweit möglich auch ältere WARP Charger mit den neusten Features auszustatten. Daher veröffentlichen wir auch für WARP1 Wallboxen nach wie vor Updates.
+
+### Upgrade von WARP Charger Smart auf WARP Charger Pro
+
+Der Unterschied zwischen den beiden Versionen besteht in dem zusätzlich installierten MID geeichten Stromzähler. Bei WARP3 kann dieser nachgerüstet werden. Dazu muss nur der Klemmblock nach links geschoben werden und zusätzlich der Stromzähler installiert werden. Dieser wird mit einem Daten-Verbindungskabel am EVSE angeschlossen. Zusätzlich ist ein Verbindungskabel zwischen Klemmen und Stromzähler notwendig. Alle drei Bauteile sind im Shop erhätlich:
+
+* [Stromzähler DSZ15DZMOD-3x80A](https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/electricity-meter-dsz15dzmod-3x80a.html)
+* [Anschlusskabel für DSZ15DZMOD-3x80A](https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/anschlusskabel-fuer-dsz15.html)
+* [WARP3 Kabelbaum](https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/warp3-cable-harness.html)
+
+### Upgrade WARP2 auf WARP3
+
+Aufgrund des modularen Aufbaus der Wallboxen ist auch ein Upgrade der Hardware prinzipiell möglich. Der Umbau ist vergleichsweise umfangreich, da die gesamte Technik der Wallbox getauscht werden muss. Nur das Ladekabel und das Gehäuse, der Stromzähler, sowie das verbaute NFC Bricklet können wiederverwendet werden. Alle Teile sind auch einzeln in unserem Shop erhätlich:
+
+* [WARP3 Ersatzteile](https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts.html)
+
+Auf Tinkerunity gibt es zu dem Thema auch weitere Informationen: [Link](https://www.tinkerunity.org/topic/12097-warp2-zu-warp3-aufr%C3%BCsten/?do=findComment&comment=55013)
