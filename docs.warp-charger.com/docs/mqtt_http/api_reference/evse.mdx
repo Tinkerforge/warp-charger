@@ -2224,7 +2224,12 @@ Stoppt ein Ladeprotokoll. Siehe [`evse/start_debug`](/mqtt_http/api_reference/ev
 ## `evse/meter_config` {#evse_meter_config_warp1}
 
 
-Gibt an, welcher Stromzähler für Berechnungen im Zusammenhang mit Ladevorgängen verwendet werden soll. (z.B. Ladetracker, Ladelimits, usw.)
+Gibt an, welcher Stromzähler die Werte der WARP Wallbox selbst misst. Diese Daten werden für Berechnungen im Zusammenhang mit Ladevorgängen verwendet, z.B.
+Ladetracker, Ladelimits, usw.
+
+**Anmerkung:** Für das PV-Überschussladen muss ein anderer Zähler genutzt werden, der die Werte am Hausanschlusspunkt misst. Die ID dieses Zählers wird nicht
+hier, sondern im Attribut `meter_slot_grid_power` in [`power_manager/config`](/mqtt_http/api_reference/power_manager#power_manager_config_warp1) gesetzt.
+
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
