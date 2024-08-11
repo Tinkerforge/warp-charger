@@ -1,8 +1,13 @@
 #!/usr/bin/python3 -u
 
+import sys
 import os
 import re
 import glob
+import hashlib
+
+
+has_error = False
 
 
 class SemVer:
@@ -107,6 +112,14 @@ def parse_semver(string):
     return None
 
 
+def print_error(*args):
+    global has_error
+
+    has_error = True
+
+    print(*args)
+
+
 def main():
     for name in glob.glob('*_firmware_v1.txt'):
         prefix = name.replace('_v1.txt', '')
@@ -118,19 +131,49 @@ def main():
                 semver = parse_semver(line)
 
                 if semver == None:
-                    print(f'Cannot parse {repr(line)} from {name}')
+                    print_error(f'Cannot parse {repr(line)} from {name}')
                     continue
 
                 if last_semver != None and semver >= last_semver:
-                    print(f'{semver} is not smaller than {last_semver} in {name}')
+                    print_error(f'{semver} is not smaller than {last_semver} in {name}')
 
                 last_semver = semver
 
                 for suffix in ['.elf', '_changelog_en.txt', '_changelog_de.txt', '_merged.bin', '_merged.bin.sha256']:
-                    extra = prefix + '_' + str(semver).replace('.', '_').replace('-', '_').replace('+', '_') + suffix
+                    path = prefix + '_' + str(semver).replace('.', '_').replace('-', '_').replace('+', '_') + suffix
 
-                    if not os.path.exists(extra):
-                        print(f'{extra} is missing')
+                    if not os.path.exists(path):
+                        print_error(f'{path} is missing')
+                    elif suffix == '_merged.bin':
+                        with open(path, 'rb') as k:
+                            firmware_data = k.read()
+
+                        firmware_info_offset = 0xd000 - 0x1000
+                        signature_info_offset = firmware_info_offset - 0x1000
+
+                        signature_info = bytearray(firmware_data[signature_info_offset:signature_info_offset + 0x1000])
+
+                        if signature_info[0:7] == bytes([0xff] * 7):
+                            print_error(f'{path} is not sodium signed')
+                    elif suffix == '_merged.bin.sha256':
+                        with open(path, 'r') as k:
+                            expected_sha256sum, expected_path = k.read().strip().split('  ', 1)
+
+                        actual_path = path.replace('.sha256', '')
+
+                        with open(actual_path, 'rb') as k:
+                            firmware_data = k.read()
+
+                        actual_sha256sum = hashlib.sha256(firmware_data).hexdigest()
+
+                        if actual_sha256sum != expected_sha256sum:
+                            print_error(f'{path} checksum mismatch: {repr(actual_sha256sum)} != {repr(expected_sha256sum)}')
+
+                        if actual_path != expected_path:
+                            print_error(f'{path} path mismatch: {repr(actual_path)} != {repr(expected_path)}')
+
+    return 1 if has_error else 0
+
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())
