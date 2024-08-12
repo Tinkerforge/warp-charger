@@ -26,7 +26,7 @@ export const meters = [
   },
   {
     manufacturer: "Eastron",
-    name: "SDM630",
+    name: "SDM630 (V2, V3)",
     connection: "WARP Energy Manager",
     note: "Stromzähler direkt am WARP Energy Manager angeschlossen",
     note_url: "/docs/compatible_meters#eastron",
