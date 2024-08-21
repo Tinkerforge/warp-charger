@@ -6,6 +6,8 @@ from mods import mods
 import json
 import sys
 
+# TODO: Check that no html links are used in the reference. Use markdown links instead. A markdown link gets an icon if it is an external link.
+
 UNDOCUMENTED_MODULES = [
     "automation_trigger", # This is a HTTP wildcard handler. We currently can't document those
     "debug",
@@ -302,6 +304,9 @@ def main():
 
         if impl_fn["type"] == "raw_command" or impl_type == FuncType.HTTP_ONLY:
             continue
+
+        if impl_type == FuncType.COMMAND and doc_fn.command_is_action != impl_fn["is_action"]:
+            print(red(f'{impl_fn["path"]}: Implementation is {"" if impl_fn["is_action"] else "not "}marked as action, but {"" if doc_fn.command_is_action else "not "}documented as action!'))
 
         check_element(doc_fn.root, impl_fn["content"], "[ROOT]", impl_fn["path"], impl_fn["keys_to_censor"], impl_version, api_info)
 
