@@ -28,21 +28,31 @@ def main():
     parser.add_argument('-c', '--current', type=int, default=32000)
     parser.add_argument('-s', '--step',  type=int, default=100)
     parser.add_argument('-d', '--delay',  type=int, default=10)
+    parser.add_argument('-a', '--ascending', action='store_true')
+    parser.add_argument('-m', '--min-current', type=int, default=6000)
     parser.add_argument('host')
 
     args = parser.parse_args()
 
     host = args.host
-    current = args.current
+    asc = args.ascending
+    max_current = args.current
+    min_current = args.min_current
+    current = min_current if asc else max_current
+    target_current = max_current if asc else min_current
+
     step = args.step
+    if (asc and step < 0) or (not asc and step > 0):
+        step = -step
+
     start = time.time()
-    end = start + (args.current - 6000) / args.step * args.delay
+    end = start + (abs(current - target_current) / args.step + 1) * args.delay
 
     value_count = 0
     with open("current_ramp.csv", "w") as f:
         f.write(header + "\n")
-        while current >= 6000:
-            end = time.time() + (current - 6000) / args.step * args.delay
+        while (asc and current <= target_current) or (not asc and current >= target_current):
+            end = time.time() + (abs(current - target_current) / args.step + 1) * args.delay
 
             if not set_current(current, host):
                 return -1
@@ -59,7 +69,7 @@ def main():
                 except URLError:
                     f.write(f"{time.time() - start:.3f}{',' * (value_count + 1)}\n")
                 print(f"\r{current / 1000.0:.3f}A ~{datetime.timedelta(seconds=int(end - time.time()))} {'.' * (i + 1)}", end="")
-            current -= step
+            current += step
         print()
     return 0
 
