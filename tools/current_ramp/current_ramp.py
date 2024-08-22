@@ -24,13 +24,13 @@ def set_current(current, host):
     return False
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--current', type=int, default=32000)
-    parser.add_argument('-s', '--step',  type=int, default=100)
-    parser.add_argument('-d', '--delay',  type=int, default=10)
-    parser.add_argument('-a', '--ascending', action='store_true')
-    parser.add_argument('-m', '--min-current', type=int, default=6000)
-    parser.add_argument('host')
+    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('-c', '--current', type=int, default=32000, help="maximum current (mA)")
+    parser.add_argument('-s', '--step',  type=int, default=100, help="step per delay (mA)")
+    parser.add_argument('-d', '--delay',  type=int, default=10, help="delay between steps (s)")
+    parser.add_argument('-a', '--ascending', action='store_true', help="ascending")
+    parser.add_argument('-m', '--min-current', type=int, default=6000, help="minimum current (mA)")
+    parser.add_argument('host', help="charger to control")
 
     args = parser.parse_args()
 
