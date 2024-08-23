@@ -102,13 +102,13 @@ Dieser Wert wird für die Regelung verwendet. Weitere Werte können angelegt wer
 
 Nicht alle Geräte unterstützten Modbus/TCP. Gerade ältere Geräte kommunizieren mittels
 Modbus/RTU, einem Zweidraht RS485 Bus. Somit können diese Geräte 
-nicht einfach ausgelesen werden. Es gibt aber Wandler, die einen RS485 Bus auf
-LAN umsetzen können. Wird so ein Wandler zwischen dem Modbus/RTU (RS485) Anschluss des Geräts und dem
-Netzwerk (LAN) gesetzt, kann das Gerät mittels Modbus/TCP ausgelesen werden. 
+nicht einfach über das Netzwerk ausgelesen werden. Es gibt aber Wandler, die einen RS485 Bus auf
+LAN oder WLAN umsetzen können. Wird so ein Wandler zwischen dem Modbus/RTU (RS485) Anschluss des Geräts und dem
+Netzwerk (LAN, WLAN) gesetzt, kann das Gerät mittels Modbus/TCP ausgelesen werden. 
 
 Nutzer im WARP Forum [Tinkerunity.org](https://www.tinkerunity.org/forum/13-warp-charger/)
 setzen zum Beispiel den ***Ebytes NB114*** Wandler mit Ethernet-Anschluss ein. Dieser Wandler kostet ca. 20€.
-
+Alternativ ist mit dem **Elfin EW11** ein Wandler mit Wifi kostengünstig verfügbar. Dieser Wandler kostet ca. 15€.
 
 
 ## SMA Speedwire
