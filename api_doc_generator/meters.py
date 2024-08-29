@@ -70,12 +70,16 @@ meters = Module("meters", "Stromzähler", "",
             "display_name": Elem.STRING("Anzeigename des Stromzählers"),
             "value_ids": Elem.ARRAY("MeterValueIDs, die über die API {{{ref:meters/X/values:meters/X/update}}} gesetzt werden können sollen. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)", member_type=EType.INT)
         }),
-        5: Elem.OBJECT("SunSpec-Stromzähler über Modbus-TCP", members={
-            "display_name": Elem.STRING("Anzeigename des Stromzählers"),
+        5: Elem.OBJECT("SunSpec-Gerät über Modbus-TCP", members={
+            "display_name": Elem.STRING("Anzeigename des Geräts"),
             "host": Elem.STRING("Hostname oder IP-Adresse des SunSpec-Geräts"),
             "port": Elem.INT("Port des SunSpec-Geräts. Typischerweise 502"),
             "device_address": Elem.INT("Modbus-Device-Adresse des Sunspec-Geräts"),
+            "manufacturer_name": Elem.STRING("Name des Herstellers des SunSpec-Geräts. Die Kombination aus `manufacturer_name`, `model_name` und `serial_number` sollte ein Gerät weltweit eindeutig identifizieren."),
+            "model_name": Elem.STRING("Name des Modells des SunSpec-Geräts."),
+            "serial_number": Elem.STRING("Seriennummer des SunSpec-Geräts."),
             "model_id": Elem.INT("SunSpec-Model-ID"),
+            "model_instance": Elem.INT("Gibt an wie viele SunSpec-Modelle mit gleicher `model_id` übersprungen werden, bis das gewünsche Modell gleicher ID erreicht ist."),
         }),
         6: Elem.OBJECT("Modbus-TCP-Stromzähler.", members={
             "display_name": Elem.STRING("Anzeigename des Stromzählers"),
@@ -167,6 +171,48 @@ meters = Module("meters", "Stromzähler", "",
                         Const(4, "Last")
                     ]),
                     "device_address": Elem.INT("Geräteadresse. Typischerweise 1."),
+                }),
+                7: Elem.OBJECT("AlphaESS Hybrid-Wechselrichter", members={
+                    "virtual_meter": Elem.INT("Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", constants=[
+                        Const(0, "Kein virtueller Zähler ausgewählt"),
+                        Const(1, "Wechselrichter"),
+                        Const(2, "Netzanschluss"),
+                        Const(3, "Speicher")
+                    ]),
+                    "device_address": Elem.INT("Geräteadresse. Typischerweise 1."),
+                }),
+                8: Elem.OBJECT("Shelly Pro EM", members={
+                    "device_address": Elem.INT("Geräteadresse. Typischerweise 1."),
+                    "monophase_channel": Elem.INT("Kanal, der gelesen werden soll.", constants=[
+                        Const(0, "Kein Kanal ausgewählt"),
+                        Const(1, "Kanal 1"),
+                        Const(2, "Kanal 2")
+                    ]),
+                    "monophase_mapping": Elem.INT("Phase der die Messwerte zugeordnet werden.", constants=[
+                        Const(0, "Keine Phase ausgewählt"),
+                        Const(1, "L1"),
+                        Const(2, "L2"),
+                        Const(3, "L3")
+                    ]),
+                }),
+                9: Elem.OBJECT("Shelly Pro 3EM", members={
+                    "device_address": Elem.INT("Geräteadresse. Typischerweise 1."),
+                    "device_profile": Elem.INT("Gibt an, ob eine oder alle drei Phasen gelesen werden sollen.", constants=[
+                        Const(0, "Dreiphasig. `monophase_channel` und `monophase_mapping` werden ignoriert."),
+                        Const(1, "Einphasig")
+                    ]),
+                    "monophase_channel": Elem.INT("Kanal, der gelesen werden soll.", constants=[
+                        Const(0, "Kein Kanal ausgewählt"),
+                        Const(1, "Kanal 1"),
+                        Const(2, "Kanal 2"),
+                        Const(3, "Kanal 3")
+                    ]),
+                    "monophase_mapping": Elem.INT("Phase der die Messwerte zugeordnet werden.", constants=[
+                        Const(0, "Keine Phase ausgewählt"),
+                        Const(1, "L1"),
+                        Const(2, "L2"),
+                        Const(3, "L3")
+                    ]),
                 }),
 
             })

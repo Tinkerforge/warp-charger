@@ -506,7 +506,7 @@ null: Kein Stromzähler konfiguriert.
 </table>
 </TabItem>
 
-<TabItem value="5" label="5 - SunSpec-Stromzähler über Modbus-TCP">
+<TabItem value="5" label="5 - SunSpec-Gerät über Modbus-TCP">
 
 <table>
     <thead>
@@ -520,7 +520,7 @@ null: Kein Stromzähler konfiguriert.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
     <td>
-        Anzeigename des Stromzählers
+        Anzeigename des Geräts
     </td>
 </tr>
 
@@ -546,9 +546,37 @@ null: Kein Stromzähler konfiguriert.
 </tr>
 
 <tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`manufacturer_name`<br/>string</th>
+    <td>
+        Name des Herstellers des SunSpec-Geräts. Die Kombination aus `manufacturer_name`, `model_name` und `serial_number` sollte ein Gerät weltweit eindeutig identifizieren.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`model_name`<br/>string</th>
+    <td>
+        Name des Modells des SunSpec-Geräts.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`serial_number`<br/>string</th>
+    <td>
+        Seriennummer des SunSpec-Geräts.
+    </td>
+</tr>
+
+<tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`model_id`<br/>int</th>
     <td>
         SunSpec-Model-ID
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`model_instance`<br/>int</th>
+    <td>
+        Gibt an wie viele SunSpec-Modelle mit gleicher `model_id` übersprungen werden, bis das gewünsche Modell gleicher ID erreicht ist.
     </td>
 </tr>
     </tbody>
@@ -859,6 +887,132 @@ null: Kein Stromzähler konfiguriert.
             <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
             <td>
                 Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="7" label="7 - AlphaESS Hybrid-Wechselrichter">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="8" label="8 - Shelly Pro EM">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_channel`<br/>int</th>
+            <td>
+                Kanal, der gelesen werden soll.
+                - **0** - Kein Kanal ausgewählt
+                - **1** - Kanal 1
+                - **2** - Kanal 2
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_mapping`<br/>int</th>
+            <td>
+                Phase der die Messwerte zugeordnet werden.
+                - **0** - Keine Phase ausgewählt
+                - **1** - L1
+                - **2** - L2
+                - **3** - L3
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="9" label="9 - Shelly Pro 3EM">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_profile`<br/>int</th>
+            <td>
+                Gibt an, ob eine oder alle drei Phasen gelesen werden sollen.
+                - **0** - Dreiphasig. `monophase_channel` und `monophase_mapping` werden ignoriert.
+                - **1** - Einphasig
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_channel`<br/>int</th>
+            <td>
+                Kanal, der gelesen werden soll.
+                - **0** - Kein Kanal ausgewählt
+                - **1** - Kanal 1
+                - **2** - Kanal 2
+                - **3** - Kanal 3
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_mapping`<br/>int</th>
+            <td>
+                Phase der die Messwerte zugeordnet werden.
+                - **0** - Keine Phase ausgewählt
+                - **1** - L1
+                - **2** - L2
+                - **3** - L3
             </td>
         </tr>
             </tbody>
@@ -1950,7 +2104,7 @@ null: Kein Stromzähler konfiguriert.
 </table>
 </TabItem>
 
-<TabItem value="5" label="5 - SunSpec-Stromzähler über Modbus-TCP">
+<TabItem value="5" label="5 - SunSpec-Gerät über Modbus-TCP">
 
 <table>
     <thead>
@@ -1964,7 +2118,7 @@ null: Kein Stromzähler konfiguriert.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
     <td>
-        Anzeigename des Stromzählers
+        Anzeigename des Geräts
     </td>
 </tr>
 
@@ -1990,9 +2144,37 @@ null: Kein Stromzähler konfiguriert.
 </tr>
 
 <tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`manufacturer_name`<br/>string</th>
+    <td>
+        Name des Herstellers des SunSpec-Geräts. Die Kombination aus `manufacturer_name`, `model_name` und `serial_number` sollte ein Gerät weltweit eindeutig identifizieren.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`model_name`<br/>string</th>
+    <td>
+        Name des Modells des SunSpec-Geräts.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`serial_number`<br/>string</th>
+    <td>
+        Seriennummer des SunSpec-Geräts.
+    </td>
+</tr>
+
+<tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`model_id`<br/>int</th>
     <td>
         SunSpec-Model-ID
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`model_instance`<br/>int</th>
+    <td>
+        Gibt an wie viele SunSpec-Modelle mit gleicher `model_id` übersprungen werden, bis das gewünsche Modell gleicher ID erreicht ist.
     </td>
 </tr>
     </tbody>
@@ -2303,6 +2485,132 @@ null: Kein Stromzähler konfiguriert.
             <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
             <td>
                 Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="7" label="7 - AlphaESS Hybrid-Wechselrichter">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="8" label="8 - Shelly Pro EM">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_channel`<br/>int</th>
+            <td>
+                Kanal, der gelesen werden soll.
+                - **0** - Kein Kanal ausgewählt
+                - **1** - Kanal 1
+                - **2** - Kanal 2
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_mapping`<br/>int</th>
+            <td>
+                Phase der die Messwerte zugeordnet werden.
+                - **0** - Keine Phase ausgewählt
+                - **1** - L1
+                - **2** - L2
+                - **3** - L3
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="9" label="9 - Shelly Pro 3EM">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_profile`<br/>int</th>
+            <td>
+                Gibt an, ob eine oder alle drei Phasen gelesen werden sollen.
+                - **0** - Dreiphasig. `monophase_channel` und `monophase_mapping` werden ignoriert.
+                - **1** - Einphasig
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_channel`<br/>int</th>
+            <td>
+                Kanal, der gelesen werden soll.
+                - **0** - Kein Kanal ausgewählt
+                - **1** - Kanal 1
+                - **2** - Kanal 2
+                - **3** - Kanal 3
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_mapping`<br/>int</th>
+            <td>
+                Phase der die Messwerte zugeordnet werden.
+                - **0** - Keine Phase ausgewählt
+                - **1** - L1
+                - **2** - L2
+                - **3** - L3
             </td>
         </tr>
             </tbody>
@@ -3394,7 +3702,7 @@ null: Kein Stromzähler konfiguriert.
 </table>
 </TabItem>
 
-<TabItem value="5" label="5 - SunSpec-Stromzähler über Modbus-TCP">
+<TabItem value="5" label="5 - SunSpec-Gerät über Modbus-TCP">
 
 <table>
     <thead>
@@ -3408,7 +3716,7 @@ null: Kein Stromzähler konfiguriert.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
     <td>
-        Anzeigename des Stromzählers
+        Anzeigename des Geräts
     </td>
 </tr>
 
@@ -3434,9 +3742,37 @@ null: Kein Stromzähler konfiguriert.
 </tr>
 
 <tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`manufacturer_name`<br/>string</th>
+    <td>
+        Name des Herstellers des SunSpec-Geräts. Die Kombination aus `manufacturer_name`, `model_name` und `serial_number` sollte ein Gerät weltweit eindeutig identifizieren.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`model_name`<br/>string</th>
+    <td>
+        Name des Modells des SunSpec-Geräts.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`serial_number`<br/>string</th>
+    <td>
+        Seriennummer des SunSpec-Geräts.
+    </td>
+</tr>
+
+<tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`model_id`<br/>int</th>
     <td>
         SunSpec-Model-ID
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`model_instance`<br/>int</th>
+    <td>
+        Gibt an wie viele SunSpec-Modelle mit gleicher `model_id` übersprungen werden, bis das gewünsche Modell gleicher ID erreicht ist.
     </td>
 </tr>
     </tbody>
@@ -3747,6 +4083,132 @@ null: Kein Stromzähler konfiguriert.
             <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
             <td>
                 Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="7" label="7 - AlphaESS Hybrid-Wechselrichter">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="8" label="8 - Shelly Pro EM">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_channel`<br/>int</th>
+            <td>
+                Kanal, der gelesen werden soll.
+                - **0** - Kein Kanal ausgewählt
+                - **1** - Kanal 1
+                - **2** - Kanal 2
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_mapping`<br/>int</th>
+            <td>
+                Phase der die Messwerte zugeordnet werden.
+                - **0** - Keine Phase ausgewählt
+                - **1** - L1
+                - **2** - L2
+                - **3** - L3
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="9" label="9 - Shelly Pro 3EM">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_profile`<br/>int</th>
+            <td>
+                Gibt an, ob eine oder alle drei Phasen gelesen werden sollen.
+                - **0** - Dreiphasig. `monophase_channel` und `monophase_mapping` werden ignoriert.
+                - **1** - Einphasig
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_channel`<br/>int</th>
+            <td>
+                Kanal, der gelesen werden soll.
+                - **0** - Kein Kanal ausgewählt
+                - **1** - Kanal 1
+                - **2** - Kanal 2
+                - **3** - Kanal 3
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_mapping`<br/>int</th>
+            <td>
+                Phase der die Messwerte zugeordnet werden.
+                - **0** - Keine Phase ausgewählt
+                - **1** - L1
+                - **2** - L2
+                - **3** - L3
             </td>
         </tr>
             </tbody>
@@ -4838,7 +5300,7 @@ null: Kein Stromzähler konfiguriert.
 </table>
 </TabItem>
 
-<TabItem value="5" label="5 - SunSpec-Stromzähler über Modbus-TCP">
+<TabItem value="5" label="5 - SunSpec-Gerät über Modbus-TCP">
 
 <table>
     <thead>
@@ -4852,7 +5314,7 @@ null: Kein Stromzähler konfiguriert.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
     <td>
-        Anzeigename des Stromzählers
+        Anzeigename des Geräts
     </td>
 </tr>
 
@@ -4878,9 +5340,37 @@ null: Kein Stromzähler konfiguriert.
 </tr>
 
 <tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`manufacturer_name`<br/>string</th>
+    <td>
+        Name des Herstellers des SunSpec-Geräts. Die Kombination aus `manufacturer_name`, `model_name` und `serial_number` sollte ein Gerät weltweit eindeutig identifizieren.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`model_name`<br/>string</th>
+    <td>
+        Name des Modells des SunSpec-Geräts.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`serial_number`<br/>string</th>
+    <td>
+        Seriennummer des SunSpec-Geräts.
+    </td>
+</tr>
+
+<tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`model_id`<br/>int</th>
     <td>
         SunSpec-Model-ID
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`model_instance`<br/>int</th>
+    <td>
+        Gibt an wie viele SunSpec-Modelle mit gleicher `model_id` übersprungen werden, bis das gewünsche Modell gleicher ID erreicht ist.
     </td>
 </tr>
     </tbody>
@@ -5191,6 +5681,132 @@ null: Kein Stromzähler konfiguriert.
             <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
             <td>
                 Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="7" label="7 - AlphaESS Hybrid-Wechselrichter">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="8" label="8 - Shelly Pro EM">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_channel`<br/>int</th>
+            <td>
+                Kanal, der gelesen werden soll.
+                - **0** - Kein Kanal ausgewählt
+                - **1** - Kanal 1
+                - **2** - Kanal 2
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_mapping`<br/>int</th>
+            <td>
+                Phase der die Messwerte zugeordnet werden.
+                - **0** - Keine Phase ausgewählt
+                - **1** - L1
+                - **2** - L2
+                - **3** - L3
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="9" label="9 - Shelly Pro 3EM">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_profile`<br/>int</th>
+            <td>
+                Gibt an, ob eine oder alle drei Phasen gelesen werden sollen.
+                - **0** - Dreiphasig. `monophase_channel` und `monophase_mapping` werden ignoriert.
+                - **1** - Einphasig
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_channel`<br/>int</th>
+            <td>
+                Kanal, der gelesen werden soll.
+                - **0** - Kein Kanal ausgewählt
+                - **1** - Kanal 1
+                - **2** - Kanal 2
+                - **3** - Kanal 3
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_mapping`<br/>int</th>
+            <td>
+                Phase der die Messwerte zugeordnet werden.
+                - **0** - Keine Phase ausgewählt
+                - **1** - L1
+                - **2** - L2
+                - **3** - L3
             </td>
         </tr>
             </tbody>
@@ -6339,7 +6955,7 @@ null: Kein Stromzähler konfiguriert.
 </table>
 </TabItem>
 
-<TabItem value="5" label="5 - SunSpec-Stromzähler über Modbus-TCP">
+<TabItem value="5" label="5 - SunSpec-Gerät über Modbus-TCP">
 
 <table>
     <thead>
@@ -6353,7 +6969,7 @@ null: Kein Stromzähler konfiguriert.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
     <td>
-        Anzeigename des Stromzählers
+        Anzeigename des Geräts
     </td>
 </tr>
 
@@ -6379,9 +6995,37 @@ null: Kein Stromzähler konfiguriert.
 </tr>
 
 <tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`manufacturer_name`<br/>string</th>
+    <td>
+        Name des Herstellers des SunSpec-Geräts. Die Kombination aus `manufacturer_name`, `model_name` und `serial_number` sollte ein Gerät weltweit eindeutig identifizieren.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`model_name`<br/>string</th>
+    <td>
+        Name des Modells des SunSpec-Geräts.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`serial_number`<br/>string</th>
+    <td>
+        Seriennummer des SunSpec-Geräts.
+    </td>
+</tr>
+
+<tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`model_id`<br/>int</th>
     <td>
         SunSpec-Model-ID
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`model_instance`<br/>int</th>
+    <td>
+        Gibt an wie viele SunSpec-Modelle mit gleicher `model_id` übersprungen werden, bis das gewünsche Modell gleicher ID erreicht ist.
     </td>
 </tr>
     </tbody>
@@ -6719,6 +7363,150 @@ null: Kein Stromzähler konfiguriert.
             <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
             <td>
                 Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="7" label="7 - AlphaESS Hybrid-Wechselrichter">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                
+                
+                
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="8" label="8 - Shelly Pro EM">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_channel`<br/>int</th>
+            <td>
+                Kanal, der gelesen werden soll.
+                
+                
+                
+                - **0** - Kein Kanal ausgewählt
+                - **1** - Kanal 1
+                - **2** - Kanal 2
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_mapping`<br/>int</th>
+            <td>
+                Phase der die Messwerte zugeordnet werden.
+                
+                
+                
+                - **0** - Keine Phase ausgewählt
+                - **1** - L1
+                - **2** - L2
+                - **3** - L3
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="9" label="9 - Shelly Pro 3EM">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_profile`<br/>int</th>
+            <td>
+                Gibt an, ob eine oder alle drei Phasen gelesen werden sollen.
+                
+                
+                
+                - **0** - Dreiphasig. `monophase_channel` und `monophase_mapping` werden ignoriert.
+                - **1** - Einphasig
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_channel`<br/>int</th>
+            <td>
+                Kanal, der gelesen werden soll.
+                
+                
+                
+                - **0** - Kein Kanal ausgewählt
+                - **1** - Kanal 1
+                - **2** - Kanal 2
+                - **3** - Kanal 3
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_mapping`<br/>int</th>
+            <td>
+                Phase der die Messwerte zugeordnet werden.
+                
+                
+                
+                - **0** - Keine Phase ausgewählt
+                - **1** - L1
+                - **2** - L2
+                - **3** - L3
             </td>
         </tr>
             </tbody>

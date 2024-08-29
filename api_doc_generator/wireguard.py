@@ -28,6 +28,7 @@ wireguard = Module("wireguard", "WireGuard-Verbindung", "", "", Version.ANY, [
             "internal_gateway": Elem.STRING("Gateway des WireGuard-Netzwerks"),
             "remote_host": Elem.STRING("öffentliche Adresse oder Hostname des Peers zu dem eine WireGuard-Verbindung aufgebaut werden soll"),
             "remote_port": Elem.INT("Port des Peers zu dem eine WireGuard-Verbindung aufgebaut werden soll"),
+            "local_port": Elem.INT("Port von dem aus die WireGuard-Verbindung aufgebaut wird"),
             "private_key": Elem.STRING("Privater Schlüssel des Geräts (44 Base64-Zeichen oder leer)", censored=True),
             "remote_public_key": Elem.STRING("Öffentlicher Schlüssel des Peers zu dem eine WireGuard-Verbindung aufgebaut werden soll (44 Base64-Zeichen oder leer)", censored=True),
             "preshared_key": Elem.STRING("Geteilter Schlüssel (PSK) der Verbindung zwischen Gerät und Peer (44 Base64-Zeichen oder leer)", censored=True),
