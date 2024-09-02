@@ -79,6 +79,7 @@ const sidebars: SidebarsConfig = {
       ]
     },
     'evcc',
+    'remote_access',
     'compatible_meters',
     'faq',
     {
