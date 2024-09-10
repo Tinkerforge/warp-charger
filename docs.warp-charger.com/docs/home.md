@@ -77,10 +77,3 @@ von einem WARP Charger übernommen werden. Einer Übersicht über die
 aktuell unterstützen Zählertypen, die die Leistung am Hausanschluss
 messen können, lassen sich im Artikel
 [kompatible Stromzähler](/compatible_meters.md) finden.
-
-Das dynamische Lastmanagement ist noch nicht verfügbar, wird aber
-zeitnah mittels Firmwareupdate ausgerollt.
-
-
-
-
