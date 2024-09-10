@@ -6,28 +6,35 @@ sidebar_position: 5
 
 Mit dem Lastmanagement ist es möglich, einen verfügbaren
 Gesamt-Ladestrom zwischen bis zu 32 WARP Chargern aufzuteilen. Hierbei
-wird eine Wallbox als Lastmanager konfiguriert, die die weiteren bis zu
-31 Wallboxen im Verbund steuert und ihnen Ladeströme zuweist. Es kann
-sowohl ein fester Gesamtstrom verteilt werden, um zum Beispiel den
-Hausanschluss nicht zu überlasten, als auch der Gesamtstrom über das
-Webinterface und die API dynamisch gesetzt werden, um einen
+wird ein WARP Charger oder ein WARP Energy Manager als Lastmanager konfiguriert, der die weiteren bis zu
+31 Wallboxen im Verbund steuert und ihnen Ladeströme zuweist.
+
+Ohne Stromzähler am Hausanschloss kann ein fester Gesamtstrom verteilt werden,
+um zum Beispiel den Hausanschluss nicht zu überlasten. Dieser Gesamtstrom kann über das
+Webinterface und die API gesetzt werden, um beispielsweise einen
 PV-Überschussstrom auf mehreren Wallboxen zu verteilen.
+
+Wenn ein Zähler am Hausanschluss vorhanden ist und vom Lastmanager ausgelesen werden kann
+(siehe [kompatible Stromzähler](/compatible_meters.md)), kann das dynamische Lastmanagement verwendet werden,
+das sicherstellt, dass der Hausanschluss nie durch die WARP Charger überlastet wird, auch wenn andere Verbraucher
+zu- oder abgeschaltet werden.
 
 ## Funktionsweise
 
 Durch das Lastmanagement kontrollierte Wallboxen laden nur, wenn ihnen
-von außen ein erlaubter Ladestrom mitgeteilt wird. Wenn eine gewisse
-Zeit lang kein erlaubter Ladestrom empfangen wurde, stoppt die Wallbox
-den Ladevorgang automatisch. Der Lastmanager stoppt seinerseits das
+vom Lastmanager ein Ladestrom freigegeben wird. Wenn eine gewisse
+Zeit lang kein Ladestrom freigegeben wurde, oder der Lastmanager nicht erreicht werden kann,
+stoppt die Wallbox den Ladevorgang automatisch.
+Der Lastmanager stoppt seinerseits das
 Laden an allen kontrollierten Wallboxen, wenn eine Wallbox nicht mehr
 reagiert oder erreicht wird. Damit wird sichergestellt, dass der
 verfügbare Strom nicht überschritten wird.
 
-Der Lastmanager verteilt den verfügbaren Strom gleichmäßig zwischen
-allen Wallboxen, die laden bzw. ladebereit sind. Falls bereits eine
-Wallbox lädt und an eine zweite ein Fahrzeug angeschlossen wird, wird
-der Ladestrom der ladenden Wallbox so beschränkt, dass für den zweiten
-Ladevorgang Strom verfügbar wird.
+Der Lastmanager verteilt den verfügbaren Strom möglichst fair zwischen
+Wallboxen, die laden bzw. ladebereit sind, stellt sicher,
+dass die Zuleitung zu den Wallboxen und der Hausanschluss nicht überlastet werden,
+nutzt gegebenenfalls einen vorhandenen PV-Überschuss aus (siehe [PV-Überschussladen](/warp_charger/pv_excess_charging.md))
+und versucht Schaltvorgänge zu minimieren.
 
 ## Schritt 1: Konfiguration fremdgesteuerte Wallboxen
 
@@ -46,7 +53,7 @@ Mehr ist für die fremdgesteuerten Wallboxen nicht einzustellen.
 :::info
 
 Es ist auch möglich den WARP Energy Manager als Lastmanager zu konfigurieren.
-Die Konfigurationsseite ist dort unter `Energiemanager` -> `Lastmanagement`
+Die Konfigurationsseite ist dort unter `Energiemanagement` -> `Lastmanagement`
 zu finden und genauso durchführbar wie hier beschrieben.
 
 :::
@@ -60,17 +67,49 @@ die vom Lastmanager erreicht werden können. Durch Klicken auf eine
 gefundene Wallbox wird diese hinzugefügt. Wallboxen, die nicht
 hinzugefügt werden können, werden grau hinterlegt.
 
-![image](/img/first_steps/load_management_add_wallbox.jpg)
+Hier kann auch die Phasenrotation einer Wallbox konfiguriert werden,
+so diese bekannt ist. Der Lastmanager kann bessere Entscheidungen treffen,
+wenn die Phasenrotation (eines Teils) der gesteuerten Wallboxen bekannst ist.
+[Siehe hier für Details](#phase_rotation)
+
+![image](/img/first_steps/load_management_add_wallbox.png)
 
 Im einfachsten Fall, in dem eine feste Menge Strom verteilt werden soll,
-muss nach zuordnung der Wallboxen noch der "Maximal Gesamtstrom" konfiguriert
-werden.
+muss nach Zuordnung der Wallboxen noch der "Maximale Gesamtstrom" konfiguriert
+werden. Dieser ist typischerweise die Belastbarkeit der gemeinsamen
+Zuleitung der Wallboxen.
 
 ![image](/img/first_steps/load_management_wallbox_added.png)
 
-Dies ist für gewöhnlich entweder der maximale Strom den die Zuleitung
-der Wallboxen hergibt oder der maximale Strom der beim Hausanschluss
-für das Laden von Elektroautos noch übrig ist.
+## Schritt 3: Konfiguration dynamisches Lastmanagement
+
+Damit das dynamische Lastmanagement verwendet werden kann, muss zunächst ein
+Stromzähler hinzugefügt werden, der die Phasenströme am Hausanschluss messen kann.
+Dieser kann, so gewünscht, auch für ein PV-Überschussladen verwendet werden,
+das dynamische Lastmanagement kann aber auch ohne PV-Anlage verwendet werden.
+Der Abschnitt [Konfiguration Stromzähler](/warp_charger/pv_excess_charging.md#add_meter) beschreibt,
+wie ein Zähler hinzugefügt wird.
+
+Nachdem ein Zähler hinzugefügt wurde, kann auf der `Energiemanagement`
+-> `Lastmanagement` das dynamsiche Lastmanagement aktiviert und konfiguriert werden.
+
+![image](/img/first_steps/load_management_dynamic.png)
+
+Zunächst muss der eben konfigurierte Stromzähler ausgewählt werden.
+
+Danach muss der **Maximale Strom am Netzanschluss** konfiguriert werden.
+Dieser ist typischerweise der Nennwert der Absicherung.
+Das dynamische Lastmanagment stellt sicher, dass dieser Wert nicht überschritten wird.
+
+Als letztes muss der zu erwartende **Stromverbrauch des größten Verbrauchers** konfiguriert werden.
+Dieser kann beispielsweise ein Durchlauferhitzer oder eine Wärmepumpe sein, mindestens aber
+16 Ampere aus einer Schuko-Dose. Der Wert gibt den größten zu er­war­ten­den plötz­li­chen Sprung des Strom­bezugs am Zähler an, den das dy­na­mi­sche Last­manage­ment kurz­fris­tig (in unter 30 Sekunden) kom­pen­sieren können muss.
+
+:::info
+
+Die vom Last­manage­ment ge­steu­er­ten Wallboxen müssen nicht be­rück­sich­tigt werden!
+
+:::
 
 ## Erweiterte Lastmanagement-Konfigurationen
 
@@ -126,6 +165,13 @@ voreingestellte Strom auf 0 konfiguriert werden, damit zwingend erst
 geladen wird, wenn die externe Steuerung mindestens einmal den
 verfügbaren Strom gesetzt hat.
 
+:::info
+
+Der voreingestellt verfügbare Strom kann nicht konfiguriert werden,
+falls PV-Überschussladen oder dynamisches Lastmanagement verwendet werden.
+
+:::
+
 ### Länge der Startphase und Spielraum des Phasenstroms
 
 WARP Charger Pro können den realen Strombezug des Fahrzeugs pro Phase
@@ -180,3 +226,16 @@ Ladevorgänge gleichzeitig möglich. Falls beispielsweise nicht möglichst
 viele Fahrzeuge zwar langsam, dafür aber gleichzeitig geladen werden
 sollen, sondern mehrere Fahrzeuge möglichst schnell nacheinander geladen
 werden sollen, kann der minimale Ladestrom auf 32 gesetzt werden.
+
+### Phasenrotation {#phase_rotation}
+
+Jeder kontrollierten Wallbox kann eine Phasenrotation zugewiesen werden.
+Diese gibt an, wie die Wallbox in Relation zum Netz­an­schluss- bzw. PV-Über­schuss-Zähler oder zu den anderen Wallboxen an­ge­schlos­sen ist. Ty­pi­scher­wei­se werden nur rechts­dre­hen­de Pha­sen­ro­ta­ti­o­nen verwendet.
+
+Eine Wallbox, die, wenn sie einphasig lädt, die Netz­an­schluss­pha­se L2 belastet, ist dann bei­spiels­weise mit der Pha­sen­ro­ta­ti­on L231 an­ge­schlos­sen.
+
+Wenn die Pha­sen­ro­ta­ti­on aller oder auch nur eines Teils der ge­steu­er­ten Wallboxen bekannt ist, können mehr Fahrzeuge parallel geladen werden und PV- und Netz­an­schluss­li­mits besser aus­ge­reizt werden: Eine Wallbox mit un­be­kann­ter Pha­sen­ro­ta­ti­on wird, wenn sie einphasig lädt, vom Last­manage­ment so behandelt als ob sie alle drei Phasen belasten würde.
+
+### Lastmanagement-Details
+
+[Hier finden sich Details zur Funktionsweise des Lastmanagements.](/warp_charger/charge_management_details.md)

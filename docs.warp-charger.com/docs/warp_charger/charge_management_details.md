@@ -1,4 +1,13 @@
-# Neues Lastmanagement (Beta!)
+---
+unlisted: true
+---
+# Lastmanagement-Details
+
+:::danger
+
+Für Konfiguration und Betrieb des Lastmanagements und PV-Überschussladens ist es **nicht** notwendig, diese Unterseite zu lesen und/oder zu verstehen! Diese Unterseite dokumentiert interna des Designs und Verhaltens des statischen und dynamischen Lastmanagements und des PV-Überschussladens.
+
+:::
 
 ```mermaid
 graph TB
@@ -11,19 +20,13 @@ graph TB
     supply-->charger_3["WARP Charger 32"]
 ```
 
-Das neue Lastmanagement kann über einen [kompatiblen Stromzähler](/compatible_meters.md) den Netzanschluss überwachen und bietet damit folgende Funktionen, die einzeln oder kombiniert verwendet werden können:
+Das Lastmanagement kann über einen [kompatiblen Stromzähler](/compatible_meters.md) den Netzanschluss überwachen und bietet damit folgende Funktionen, die einzeln oder kombiniert verwendet werden können:
 
 - **Dynamisches Lastmanagement**: Der Lastmanager stellt sicher, dass der Netzanschluss nicht überlastet wird, auch wenn andere (ungesteuerte) Verbraucher den Netzanschluss dynamisch belasten.
 - **PV-Überschussladen**: Der Lastmanager stellt sicher, dass nur der PV-Überschuss verwendet wird, um Fahrzeuge zu laden.
 - **Statisches Lastmanagement**: Der Lastmanager stellt sicher, dass die gemeinsame Zuleitung des Wallbox-Verbunds nicht überlastet wird.
 
-:::info
-
-Genau wie das neue Lastmanagement selbst ist die Dokumentation dazu noch in der Beta-Phase. Die Beta-Firmware findet sich im [Tinkerunity-Forum](https://www.tinkerunity.org/topic/12420-beta-version-des-neuen-dynamischen-lastmanagements/)
-
-:::
-
-Die neue Implementierung balanciert mehrere Anforderungen:
+Die Implementierung balanciert mehrere Anforderungen:
 - Fairness
 - Regelspielraum
 - Ausnutzung des PV-Überschusses
@@ -116,7 +119,7 @@ Es müssen entweder die Bedingungen 1 und 2 oder 1, 3 und 4 erfüllt sein, damit
 
 Eine Wallbox kann von einphasigem auf dreiphasiges Laden umgeschaltet werden, wenn noch Strom verfügbar ist. Die Entscheidung wird fast genauso getroffen wie die, ob eine Wallbox aktiviert werden soll, allerdings wird berücksichtigt, dass die betreffende Wallbox bereits auf einer Phase aktiv ist, und Bedingung 3 muss für die *beiden* anderen Phasen zutreffen.
 
-### Stromverteilung (Stufe 6, 7 und 8)git p
+### Stromverteilung (Stufe 6, 7 und 8)
 
 Nachdem für jede Wallbox bestimmt wurde, ob sie laden darf und wenn ja ob ein- oder dreiphasig, wird allen jetzt aktiven Wallboxen Strom zugewiesen.
 

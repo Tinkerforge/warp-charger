@@ -44,7 +44,7 @@ kann konfiguriert werden.
 **Schnell:** Fahrzeuge werden so schnell wie möglich geladen, unabhängig davon,
 wie viel PV-Überschuss zur Verfügung steht.
 
-## Schritt 1: Konfiguration Stromzähler
+## Schritt 1: Konfiguration Stromzähler {#add_meter}
 
 Um das PV-Überschussladen einzurichten muss zuerst ein Stromzähler hinzugefügt
 werden der den PV-Überschuss messen kann.
