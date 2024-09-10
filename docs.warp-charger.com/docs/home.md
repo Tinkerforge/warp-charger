@@ -55,22 +55,21 @@ messen können, lassen sich im Artikel
 Teilen sich mehrere WARP Charger eine Zuleitung, so müssen die
 Ladeströme der angeschlossenen Wallboxen gegebenenfalls begrenzt werden.
 WARP3 Charger Smart und WARP3 Charger Pro verfügen über ein integriertes
-[statisches Lastmanagement](warp_charger/chargemanagement.md).
+[Lastmanagement](warp_charger/chargemanagement.md).
 Die Wallboxen müssen sich nur innerhalb eines
 Netzwerks (LAN, WLAN) befinden. Ein gesonderter Stromzähler ist für das
-statische Lastmanagement nicht notwendig.
+*statische* Lastmanagement nicht notwendig.
 
 ### Nicht ausreichend dimensionierter Netzanschluss - Dynamisches Lastmanagement
 
 Ist der Netzanschluss nicht ausreichend dimensioniert um eine oder
-mehrere Wallboxen betreiben zu können, kann gegebenenfalls ein
-dynamisches Lastmanagement helfen. Gerade bei
-größeren Objekten ist der Netzanschluss oftmals rechnerisch ausgereizt,
+mehrere Wallboxen betreiben zu können, hilft das dynamische Lastmanagement.
+Gerade bei größeren Objekten ist der Netzanschluss oftmals rechnerisch ausgereizt,
 wenn angenommen wird, dass alle Verbraucher eingeschaltet werden.
 In der Praxis kommt dies aber eigentlich nie vor, so dass Wallboxen
 dennoch betrieben werden können. Die Wallboxen müssen dann abhängig von
-den aktuellen Phasenströmen am Netzanschluss lastgeregelt werden.
-Dabei muss sichergestellt werden, dass keine der drei Phasen überlastet
+den aktuellen Phasenströmen am Netzanschluss gesteuert werden, um sicherzustellen,
+dass keine der drei Phasen überlastet
 wird. Ist ein geeigneter Stromzähler am Netzanschluss vorhanden, der die
 Phasenströme messen kann, so kann das dynamische Lastmanagement direkt
 von einem WARP Charger übernommen werden. Einer Übersicht über die
