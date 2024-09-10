@@ -63,13 +63,13 @@ hinzugefügt werden können, werden grau hinterlegt.
 ![image](/img/first_steps/load_management_add_wallbox.jpg)
 
 Im einfachsten Fall, in dem eine feste Menge Strom verteilt werden soll,
-muss nach zuordnung der Wallboxen noch der "Maximal Gesamtstrom" konfiguriert 
+muss nach zuordnung der Wallboxen noch der "Maximal Gesamtstrom" konfiguriert
 werden.
 
 ![image](/img/first_steps/load_management_wallbox_added.png)
 
 Dies ist für gewöhnlich entweder der maximale Strom den die Zuleitung
-der Wallboxen hergibt oder der maximale Strom der beim Hausanschluss 
+der Wallboxen hergibt oder der maximale Strom der beim Hausanschluss
 für das Laden von Elektroautos noch übrig ist.
 
 ## Erweiterte Lastmanagement-Konfigurationen
