@@ -9,15 +9,14 @@ Gesamt-Ladestrom zwischen bis zu 32 WARP Chargern aufzuteilen. Hierbei
 wird ein WARP Charger oder ein WARP Energy Manager als Lastmanager konfiguriert, der die weiteren bis zu
 31 Wallboxen im Verbund steuert und ihnen Ladeströme zuweist.
 
-Ohne Stromzähler am Hausanschloss kann ein fester Gesamtstrom verteilt werden,
+Ohne Stromzähler am Hausanschluss kann ein fester Gesamtstrom verteilt werden,
 um zum Beispiel den Hausanschluss nicht zu überlasten. Dieser Gesamtstrom kann über das
-Webinterface und die API gesetzt werden, um beispielsweise einen
-PV-Überschussstrom auf mehreren Wallboxen zu verteilen.
+Webinterface und die API gesetzt werden.
 
 Wenn ein Zähler am Hausanschluss vorhanden ist und vom Lastmanager ausgelesen werden kann
 (siehe [kompatible Stromzähler](/compatible_meters.md)), kann das dynamische Lastmanagement verwendet werden,
 das sicherstellt, dass der Hausanschluss nie durch die WARP Charger überlastet wird, auch wenn andere Verbraucher
-zu- oder abgeschaltet werden.
+zu- oder abgeschaltet werden. Außerdem kann dann das PV-Überschussladen verwendet werden.
 
 ## Funktionsweise
 
@@ -74,8 +73,7 @@ wenn die Phasenrotation (eines Teils) der gesteuerten Wallboxen bekannst ist.
 
 ![image](/img/first_steps/load_management_add_wallbox.png)
 
-Im einfachsten Fall, in dem eine feste Menge Strom verteilt werden soll,
-muss nach Zuordnung der Wallboxen noch der "Maximale Gesamtstrom" konfiguriert
+Nach Zuordnung der Wallboxen muss der "Maximale Gesamtstrom" konfiguriert
 werden. Dieser ist typischerweise die Belastbarkeit der gemeinsamen
 Zuleitung der Wallboxen.
 
@@ -91,7 +89,7 @@ Der Abschnitt [Konfiguration Stromzähler](/warp_charger/pv_excess_charging.md#a
 wie ein Zähler hinzugefügt wird.
 
 Nachdem ein Zähler hinzugefügt wurde, kann auf der `Energiemanagement`
--> `Lastmanagement` das dynamsiche Lastmanagement aktiviert und konfiguriert werden.
+-> `Lastmanagement`-Unterseite das dynamische Lastmanagement aktiviert und konfiguriert werden.
 
 ![image](/img/first_steps/load_management_dynamic.png)
 
