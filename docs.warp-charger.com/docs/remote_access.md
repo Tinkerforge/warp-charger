@@ -7,7 +7,7 @@ sidebar_position: 9
 ### Einführung
 Seit der Firmware Version 2.5.0 ünterstützt dein WARP Charger unseren Fernzugriff. Mit diesen kannst du immer und von überall über [my.warp-charger.com](https://my.warp-charger.com) auf deine Wallbox zugreifen. 
 
-In dieser Anleitun lernst du wie der Fernzugriff funktioniert, welche Maßnahmen wir ergriffen haben um deine Daten best möglich zu schützen und vor allem wie du ihn einrichtest.
+In dieser Anleitung lernst du wie der Fernzugriff funktioniert, welche Maßnahmen wir ergriffen haben um deine Daten best möglich zu schützen und vor allem wie du ihn einrichtest.
 
 ### Funktionsweise und Datenschutz
 Kurz und knapp zusammengefasst wird bei jeder Verbindung über den Fernzugriff ein eigenes, verschlüsseltes VPN aufgemacht. Dieses VPN hat nur zwei Teilnehmen, das Gerät über welches du den Fernzugriff öffnest und deinen WARP Charger. Dadurch können wir sicherstellen, dass nur du  Daten von deiner Wallbox abrufen kannst (nichtmal wir können das!).
