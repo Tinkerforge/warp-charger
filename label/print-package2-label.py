@@ -44,33 +44,45 @@ EAN13_NUMBERS = {
 
     'WARP3-CB-11KW-50': b'4251640705596',
     'WARP3-CB-11KW-75': b'4251640705602',
+    'WARP3-CB-11KW-CC': b'4251640705978',
     'WARP3-CB-22KW-50': b'4251640705619',
     'WARP3-CB-22KW-75': b'4251640705626',
+    'WARP3-CB-22KW-CC': b'4251640705992',
 
     'WARP3-CS-11KW-50': b'4251640705633',
     'WARP3-CS-11KW-75': b'4251640705640',
+    'WARP3-CS-11KW-CC': b'4251640706012',
     'WARP3-CS-22KW-50': b'4251640705657',
     'WARP3-CS-22KW-75': b'4251640705664',
+    'WARP3-CS-22KW-CC': b'4251640706036',
 
     'WARP3-CP-11KW-50': b'4251640705671',
     'WARP3-CP-11KW-75': b'4251640705688',
+    'WARP3-CP-11KW-CC': b'4251640706050',
     'WARP3-CP-22KW-50': b'4251640705695',
     'WARP3-CP-22KW-75': b'4251640705701',
+    'WARP3-CP-22KW-CC': b'4251640706074',
 
     'WARP3-CB-11KW-50-PC': b'4251640705718',
     'WARP3-CB-11KW-75-PC': b'4251640705725',
+    'WARP3-CB-11KW-CC-PC': b'4251640705985',
     'WARP3-CB-22KW-50-PC': b'4251640705732',
     'WARP3-CB-22KW-75-PC': b'4251640705749',
+    'WARP3-CB-22KW-CC-PC': b'4251640706005',
 
     'WARP3-CS-11KW-50-PC': b'4251640705756',
     'WARP3-CS-11KW-75-PC': b'4251640705763',
+    'WARP3-CS-11KW-CC-PC': b'4251640706029',
     'WARP3-CS-22KW-50-PC': b'4251640705770',
     'WARP3-CS-22KW-75-PC': b'4251640705787',
+    'WARP3-CS-22KW-CC-PC': b'4251640706043',
 
     'WARP3-CP-11KW-50-PC': b'4251640705794',
     'WARP3-CP-11KW-75-PC': b'4251640705800',
+    'WARP3-CP-11KW-CC-PC': b'4251640706067',
     'WARP3-CP-22KW-50-PC': b'4251640705817',
     'WARP3-CP-22KW-75-PC': b'4251640705824',
+    'WARP3-CP-22KW-CC-PC': b'4251640706081',
 
     'WARP-EM': b'4251640705381',
 }
@@ -128,7 +140,7 @@ def print_package2_label(sku, version, serial_number, build_date, instances, cop
         version_major = 1
         serial_number_kind = 7
     else:
-        m = re.match(r'^(?:TF-)?WARP(2|3)-C(B|S|P)-(11|22)KW-(50|75)(-PC)?$', sku)
+        m = re.match(r'^(?:TF-)?WARP(2|3)-C(B|S|P)-(11|22)KW-(50|75|CC)(-PC)?$', sku)
 
         if m == None:
             raise Exception('Invalid SKU: {0}'.format(sku))
@@ -169,6 +181,9 @@ def print_package2_label(sku, version, serial_number, build_date, instances, cop
             description += b', 5 m'
         elif sku_cable == '75':
             description += b', 7,5 m'
+        elif sku_cable == 'CC':
+            if sku_gen == '2':
+                assert False, (sku_gen, sku_cable)
         else:
             assert False, sku_cable
 
