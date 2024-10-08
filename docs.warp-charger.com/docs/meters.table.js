@@ -72,6 +72,13 @@ export const meters = [
     note: "String-Wechselrichter",
     note_url: "/docs/compatible_meters#fronius",
   },
+  { 
+    manufacturer: "Fox ESS",
+    name: "Hybrid Serie H1, H3, AC Serie",
+    connection: "Modbus RTU mit Wandler",
+    note: "hybrid-Wechselrichter",
+    note_url: "/docs/compatible_meters#fox-ess",
+  },
   {
     manufacturer: "Goodwe",
     name: "EHB Serie",
@@ -162,6 +169,20 @@ export const meters = [
     connection: "Modbus/TCP",
     note: "Speichersystem",
     note_url: "/docs/compatible_meters#solarmax",
+  },
+  {
+    manufacturer: "Solax",
+    name: "X1 & X3 Hybrid",
+    connection: "Modbus/TCP",
+    note: "Hybridwechselrichter",
+    note_url: "/docs/compatible_meters#solax",
+  },
+  {
+    manufacturer: "Solax",
+    name: "X1 & X3 Mini Boost MIC und Pro",
+    connection: "Modbus/TCP",
+    note: "Stringwechselrichter",
+    note_url: "/docs/compatible_meters#solax",
   },
   {
     manufacturer: "Sungrow",

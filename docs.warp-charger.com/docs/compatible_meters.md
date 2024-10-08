@@ -110,6 +110,16 @@ Nutzer im WARP Forum [Tinkerunity.org](https://www.tinkerunity.org/forum/13-warp
 setzen zum Beispiel den ***Ebytes NB114*** Wandler mit Ethernet-Anschluss ein. Dieser Wandler kostet ca. 20€.
 Alternativ ist mit dem **Elfin EW11** ein Wandler mit Wifi kostengünstig verfügbar. Dieser Wandler kostet ca. 15€.
 
+#### Elfin EW11
+Der Elfin EW11 ist ein kleines Wifi Dongle, welches zwischen Modbus/TCP und Modbus/RTU wandeln kann.
+Folgende Einrichtungsschritte sind hier notwendig:
+
+ * Mit AP (typischerweise EW11_XXXXX) verbinden. Kein Passwort notwendig.
+ * http://10.10.100.254 öffnen, Zugangsdaten admin:admin
+ * Unter System->Settings AP+STA konfigurieren und STA Wifi einrichten
+ * Serial Port Settings korrekt für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1), Protocol Modbus
+ * Communication Settings "+Add", dann TCP server auf Port 502 mit Route "Uart" anlegen und speichern
+
 
 ## SMA Speedwire
 
@@ -206,6 +216,10 @@ Fronius Wechselrichter der Primo, Symo- und der GEN24-Serie sprechen SunSpec und
 Als Port sollte 502 konfiguriert werden. Als SunSpec Model Type kann "float" gewählt werden.
 Für ein PV-Überschussladen und für das dyn. Lastmanagement ist ein Stromzähler am Netzanschluss notwendig, der vom Fronius Wechselrichter ausgelesen werden kann.
 
+### Fox ESS
+Fox ESS Wechselrichter scheinen nicht mittels Modbus TCP über den Fox ESS LAN oder Wifi Dongle ausgelesen werden zu können. Sie sind aber mittels RS485 (Modbus RTU) auszulesen.
+Wird ein RS485 nach LAN oder WLAN Wandler installiert (siehe [Modbus RTU Wandler](/compatible_meters#modbusrtu-wandler)), so können diese Wechselrichter ebenfalls ausgelesen werden.
+
 ### Goodwe
 Die Einbindung eines Wechselrichters der ES, EM, SBP, ET, BT, EH, BH, EHB Serie ist mittels Modbus/TCP über das LAN bzw. Wifi+LAN Modul möglich. 
 Wir arbeiten zur Zeit daran eine Goodwe Registertabelle zu hinterlegen (Coming Soon). Aktuell muss die Registertabelle von Hand angegeben werden.
@@ -269,6 +283,9 @@ im WARP System angelegt werden müssen. SolarEdge arbeitet an einer Lösung.
 Das Speichersystem MAX.STORAGE kann mittels Modbus/TCP ausgelesen werden. Es steht der virtuelle Stromzähler "Wechselrichter" zur Verfügung. Dieser gibt Informationen zu den DC Leistungen des Wechselrichters der Batterie.
 Zusätzlich stellt der virtuelle Stromzähler "Netzanschluss" die Leistung am Netzanschluss zur Verfügung. Ein PV-Überschussladen ist mit diesem Wert möglich.
 Den SoC und die Leistung der Batterie werden mit dem virtuellen Stromzähler "Speicher" bereitgestellt.
+
+### Solax
+Solax String- und Hybridwechselrichter können über das Wi-Fi Dongle mittels Modbus/TCP ausgelesen werden. Eine Einrichtungsanleitung inkl. der unterstützen Wechselrichter gibt es in der [Solax Power Academy](https://kb.solaxpower.com/de/solution/detail/ff8080818eae9899018ec71a12ca1ea6).
 
 ### Sungrow
 Sungrow Wechselrichter der Serien SG (SG5.0/6.0/7.0/8.0/10/12RT/15/17RT/20RT) und SH (SH5.0/6.0/8.0/10RT sowie SH15/20/25T) können mittels Modbus/TCP ausgelesen werden. Es wird dann ein virtueller Stromzähler "Wechselrichter" erkannt.
