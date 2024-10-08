@@ -103,12 +103,12 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
     <td>
         Fehlercode der Schützüberwachung. Ein Wert ungleich 0 zeigt einen Fehler an.
         - **0** - Kein Fehler
-        - **1** - Schütz sollte durchschalten.<br/><span class="pe-4"></span>Kein Strom vor Schütz, kein Strom nach Schütz.<br/><span class="pe-4"></span>Stromversorgung prüfen.
-        - **2** - Schütz sollte durchschalten.<br/><span class="pe-4"></span>Strom vor Schütz, kein Strom nach Schütz.<br/><span class="pe-4"></span>Schütz defekt?
-        - **3** - Schütz sollte durchschalten.<br/><span class="pe-4"></span>Kein Strom vor Schütz, Strom nach Schütz.<br/><span class="pe-4"></span>Verkabelung prüfen.
-        - **4** - Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class="pe-4"></span>Kein Strom vor Schütz, kein Strom nach Schütz.<br/><span class="pe-4"></span>Stromversorgung prüfen.
-        - **5** - Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class="pe-4"></span>Kein Strom vor Schütz, Strom nach Schütz.<br/><span class="pe-4"></span>Verkabelung prüfen.
-        - **6** - Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class="pe-4"></span>Strom vor Schütz, Strom nach Schütz.<br/><span class="pe-4"></span>Schütz defekt?
+        - **1** - Schütz sollte durchschalten.<br/>Kein Strom vor Schütz, kein Strom nach Schütz.<br/>Stromversorgung prüfen.
+        - **2** - Schütz sollte durchschalten.<br/>Strom vor Schütz, kein Strom nach Schütz.<br/>Schütz defekt?
+        - **3** - Schütz sollte durchschalten.<br/>Kein Strom vor Schütz, Strom nach Schütz.<br/>Verkabelung prüfen.
+        - **4** - Schütz sollte <strong>nicht</strong> durchschalten.<br/>Kein Strom vor Schütz, kein Strom nach Schütz.<br/>Stromversorgung prüfen.
+        - **5** - Schütz sollte <strong>nicht</strong> durchschalten.<br/>Kein Strom vor Schütz, Strom nach Schütz.<br/>Verkabelung prüfen.
+        - **6** - Schütz sollte <strong>nicht</strong> durchschalten.<br/>Strom vor Schütz, Strom nach Schütz.<br/>Schütz defekt?
     </td>
 </tr>
 
@@ -2413,12 +2413,12 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
     <td>
         Fehlercode der Schützüberwachung. Ein Wert ungleich 0 zeigt einen Fehler an.
         - **0** - Kein Fehler
-        - **1** - Schütz sollte durchschalten.<br/><span class="pe-4"></span>Kein Strom vor Schütz, kein Strom nach Schütz.<br/><span class="pe-4"></span>Stromversorgung prüfen.
-        - **2** - Schütz sollte durchschalten.<br/><span class="pe-4"></span>Strom vor Schütz, kein Strom nach Schütz.<br/><span class="pe-4"></span>Schütz defekt?
-        - **3** - Schütz sollte durchschalten.<br/><span class="pe-4"></span>Kein Strom vor Schütz, Strom nach Schütz.<br/><span class="pe-4"></span>Verkabelung prüfen.
-        - **4** - Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class="pe-4"></span>Kein Strom vor Schütz, kein Strom nach Schütz.<br/><span class="pe-4"></span>Stromversorgung prüfen.
-        - **5** - Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class="pe-4"></span>Kein Strom vor Schütz, Strom nach Schütz.<br/><span class="pe-4"></span>Verkabelung prüfen.
-        - **6** - Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class="pe-4"></span>Strom vor Schütz, Strom nach Schütz.<br/><span class="pe-4"></span>Schütz defekt?
+        - **1** - Schütz sollte durchschalten.<br/>Kein Strom vor Schütz, kein Strom nach Schütz.<br/>Stromversorgung prüfen.
+        - **2** - Schütz sollte durchschalten.<br/>Strom vor Schütz, kein Strom nach Schütz.<br/>Schütz defekt?
+        - **3** - Schütz sollte durchschalten.<br/>Kein Strom vor Schütz, Strom nach Schütz.<br/>Verkabelung prüfen.
+        - **4** - Schütz sollte <strong>nicht</strong> durchschalten.<br/>Kein Strom vor Schütz, kein Strom nach Schütz.<br/>Stromversorgung prüfen.
+        - **5** - Schütz sollte <strong>nicht</strong> durchschalten.<br/>Kein Strom vor Schütz, Strom nach Schütz.<br/>Verkabelung prüfen.
+        - **6** - Schütz sollte <strong>nicht</strong> durchschalten.<br/>Strom vor Schütz, Strom nach Schütz.<br/>Schütz defekt?
     </td>
 </tr>
 
@@ -5354,18 +5354,18 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
     <td>
         Fehlercode der Schützüberwachung. Ein Wert ungleich 0 zeigt einen Fehler an.
         - **0** - Kein Fehler
-        - **1** - Schütz L2+L3 nicht durchgeschaltet.<br/><span class="pe-4"></span>Beide Schütze sollten durchgeschaltet sein.
-        - **2** - Schütz L1+N nicht durchgeschaltet.<br/><span class="pe-4"></span>Beide Schütze sollten durchgeschaltet sein.
-        - **3** - Beide Schütze nicht durchgeschaltet.<br/><span class="pe-4"></span>Beide Schütze sollten durchgeschaltet sein.
-        - **4** - Schütz L2+L3 durchgeschaltet.<br/><span class="pe-4"></span>Nur Schütz L1+N sollte durchgeschaltet sein.
-        - **5** - Schütz L2+L3 durchgeschaltet, Schütz L1+N nicht durchgeschaltet.<br/><span class="pe-4"></span>Nur Schütz L1+N sollte durchgeschaltet sein.
-        - **6** - Beide Schütze durchgeschaltet.<br/><span class="pe-4"></span>Nur Schütz L1+N sollte durchgeschaltet sein.
-        - **7** - Beide Schütze durchgeschaltet.<br/><span class="pe-4"></span>Kein Schütz sollte durchgeschaltet sein.
-        - **8** - Schütz L1+N durchgeschaltet.<br/><span class="pe-4"></span>Kein Schütz sollte durchgeschaltet sein.
-        - **9** - Schütz L2+L3 durchgeschaltet.<br/><span class="pe-4"></span>Kein Schütz sollte durchgeschaltet sein.
-        - **10** - Beide Schütze durchgeschaltet.<br/><span class="pe-4"></span>Kein Schütz sollte durchgeschaltet sein.
-        - **11** - Schütz L1+N durchgeschaltet.<br/><span class="pe-4"></span>Kein Schütz sollte durchgeschaltet sein.
-        - **12** - Schütz L2+L3 durchgeschaltet.<br/><span class="pe-4"></span>Kein Schütz sollte durchgeschaltet sein.
+        - **1** - Schütz L2+L3 nicht durchgeschaltet.<br/>Beide Schütze sollten durchgeschaltet sein.
+        - **2** - Schütz L1+N nicht durchgeschaltet.<br/>Beide Schütze sollten durchgeschaltet sein.
+        - **3** - Beide Schütze nicht durchgeschaltet.<br/>Beide Schütze sollten durchgeschaltet sein.
+        - **4** - Schütz L2+L3 durchgeschaltet.<br/>Nur Schütz L1+N sollte durchgeschaltet sein.
+        - **5** - Schütz L2+L3 durchgeschaltet, Schütz L1+N nicht durchgeschaltet.<br/>Nur Schütz L1+N sollte durchgeschaltet sein.
+        - **6** - Beide Schütze durchgeschaltet.<br/>Nur Schütz L1+N sollte durchgeschaltet sein.
+        - **7** - Beide Schütze durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.
+        - **8** - Schütz L1+N durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.
+        - **9** - Schütz L2+L3 durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.
+        - **10** - Beide Schütze durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.
+        - **11** - Schütz L1+N durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.
+        - **12** - Schütz L2+L3 durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.
         - **13** - Reserviert.
     </td>
 </tr>
@@ -8373,27 +8373,27 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
         
         <strong>WARP 1 und WARP 2:</strong><br/>
         
-        - **1** - Schütz sollte durchschalten.<br/><span class="pe-4"></span>Kein Strom vor Schütz, kein Strom nach Schütz.<br/><span class="pe-4"></span>Stromversorgung prüfen.
-        - **2** - Schütz sollte durchschalten.<br/><span class="pe-4"></span>Strom vor Schütz, kein Strom nach Schütz.<br/><span class="pe-4"></span>Schütz defekt?
-        - **3** - Schütz sollte durchschalten.<br/><span class="pe-4"></span>Kein Strom vor Schütz, Strom nach Schütz.<br/><span class="pe-4"></span>Verkabelung prüfen.
-        - **4** - Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class="pe-4"></span>Kein Strom vor Schütz, kein Strom nach Schütz.<br/><span class="pe-4"></span>Stromversorgung prüfen.
-        - **5** - Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class="pe-4"></span>Kein Strom vor Schütz, Strom nach Schütz.<br/><span class="pe-4"></span>Verkabelung prüfen.
-        - **6** - Schütz sollte <strong>nicht</strong> durchschalten.<br/><span class="pe-4"></span>Strom vor Schütz, Strom nach Schütz.<br/><span class="pe-4"></span>Schütz defekt?
+        - **1** - Schütz sollte durchschalten.<br/>Kein Strom vor Schütz, kein Strom nach Schütz.<br/>Stromversorgung prüfen.
+        - **2** - Schütz sollte durchschalten.<br/>Strom vor Schütz, kein Strom nach Schütz.<br/>Schütz defekt?
+        - **3** - Schütz sollte durchschalten.<br/>Kein Strom vor Schütz, Strom nach Schütz.<br/>Verkabelung prüfen.
+        - **4** - Schütz sollte <strong>nicht</strong> durchschalten.<br/>Kein Strom vor Schütz, kein Strom nach Schütz.<br/>Stromversorgung prüfen.
+        - **5** - Schütz sollte <strong>nicht</strong> durchschalten.<br/>Kein Strom vor Schütz, Strom nach Schütz.<br/>Verkabelung prüfen.
+        - **6** - Schütz sollte <strong>nicht</strong> durchschalten.<br/>Strom vor Schütz, Strom nach Schütz.<br/>Schütz defekt?
         
         <strong>WARP 3:</strong><br/>
         
-        - **1** - Schütz L2+L3 nicht durchgeschaltet.<br/><span class="pe-4"></span>Beide Schütze sollten durchgeschaltet sein.
-        - **2** - Schütz L1+N nicht durchgeschaltet.<br/><span class="pe-4"></span>Beide Schütze sollten durchgeschaltet sein.
-        - **3** - Beide Schütze nicht durchgeschaltet.<br/><span class="pe-4"></span>Beide Schütze sollten durchgeschaltet sein.
-        - **4** - Schütz L2+L3 durchgeschaltet.<br/><span class="pe-4"></span>Nur Schütz L1+N sollte durchgeschaltet sein.
-        - **5** - Schütz L2+L3 durchgeschaltet, Schütz L1+N nicht durchgeschaltet.<br/><span class="pe-4"></span>Nur Schütz L1+N sollte durchgeschaltet sein.
-        - **6** - Beide Schütze durchgeschaltet.<br/><span class="pe-4"></span>Nur Schütz L1+N sollte durchgeschaltet sein.
-        - **7** - Beide Schütze durchgeschaltet.<br/><span class="pe-4"></span>Kein Schütz sollte durchgeschaltet sein.
-        - **8** - Schütz L1+N durchgeschaltet.<br/><span class="pe-4"></span>Kein Schütz sollte durchgeschaltet sein.
-        - **9** - Schütz L2+L3 durchgeschaltet.<br/><span class="pe-4"></span>Kein Schütz sollte durchgeschaltet sein.
-        - **10** - Beide Schütze durchgeschaltet.<br/><span class="pe-4"></span>Kein Schütz sollte durchgeschaltet sein.
-        - **11** - Schütz L1+N durchgeschaltet.<br/><span class="pe-4"></span>Kein Schütz sollte durchgeschaltet sein.
-        - **12** - Schütz L2+L3 durchgeschaltet.<br/><span class="pe-4"></span>Kein Schütz sollte durchgeschaltet sein.
+        - **1** - Schütz L2+L3 nicht durchgeschaltet.<br/>Beide Schütze sollten durchgeschaltet sein.
+        - **2** - Schütz L1+N nicht durchgeschaltet.<br/>Beide Schütze sollten durchgeschaltet sein.
+        - **3** - Beide Schütze nicht durchgeschaltet.<br/>Beide Schütze sollten durchgeschaltet sein.
+        - **4** - Schütz L2+L3 durchgeschaltet.<br/>Nur Schütz L1+N sollte durchgeschaltet sein.
+        - **5** - Schütz L2+L3 durchgeschaltet, Schütz L1+N nicht durchgeschaltet.<br/>Nur Schütz L1+N sollte durchgeschaltet sein.
+        - **6** - Beide Schütze durchgeschaltet.<br/>Nur Schütz L1+N sollte durchgeschaltet sein.
+        - **7** - Beide Schütze durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.
+        - **8** - Schütz L1+N durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.
+        - **9** - Schütz L2+L3 durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.
+        - **10** - Beide Schütze durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.
+        - **11** - Schütz L1+N durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.
+        - **12** - Schütz L2+L3 durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.
         - **13** - Reserviert.
     </td>
 </tr>

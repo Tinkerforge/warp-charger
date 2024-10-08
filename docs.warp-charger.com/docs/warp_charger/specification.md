@@ -42,7 +42,7 @@ Der WARP3 Charger zeichnet sich durch folgende technische Spezifikation aus:
 | Phasenumschaltung | Intern zwischen einphasig und dreiphasig |
 | CP-Trennung | Automatische Simulation von an- und abstecken des Kabels zum Aufwecken von Autos |
 | Zugangsverriegelung | NFC (RFID), Webinterface, API |
-| Lastmanagement | Statisch / dynamisch (**) integriert, max. 32 WARP Charger |
+| Lastmanagement | Statisch / dynamisch integriert, max. 32 WARP Charger |
 | NFC‐Tags | 3 NFC Karten im Lieferumfang, max. 32 anlernbar |
 | NFC Typen | NFC Forum Typ1, Typ2, Typ3 und Mifare Classic unterstützt (auch eigene Karten anlernbar) |
 | Benutzer | Max. 32 konfigurierbar |
@@ -50,5 +50,3 @@ Der WARP3 Charger zeichnet sich durch folgende technische Spezifikation aus:
 | Modbus-Register | WARP Charger Tabelle und Simulation von Bender CC613 und Keba C-Series |
 
 (*) Je nach Variante der Wallbox (Basic / Smart / Pro, 5 m / 7,5 m, 11 kW / 22 kW).
-
-(**) Das Feature dynamisches Lastmanagement wird zeitnah mittels Softwareupdate ausgerollt.

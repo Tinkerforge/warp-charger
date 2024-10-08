@@ -113,7 +113,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
         \Huge
         WARP3 Charger Betriebsanleitung\\\vspace{1cm}
         \large
-        Version 1.1\\\vspace{0.25cm}
+        Version 1.2\\\vspace{0.25cm}
         \today
     \end{center}
     \vfill \gfx{./img_warp3/resized/front.png}
@@ -1204,26 +1204,18 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\newpage
     \section{Lastmanagement zwischen mehreren WARP Chargern}\label{charge_manager}
-    Mit dem Lastmanagement ist es möglich, einen verfügbaren Gesamt-Ladestrom
-    zwischen bis zu 32 WARP Chargern aufzuteilen. Hierbei wird eine Wallbox als
-    Lastmanager konfiguriert, die die weiteren bis zu 31 Wallboxen im Verbund steuert und ihnen Ladeströme
-    zuweist. Es kann sowohl ein fester Gesamtstrom verteilt werden, um zum Beispiel den Hausanschluss nicht zu überlasten,
-    als auch der Gesamtstrom über das Webinterface und die API dynamisch gesetzt
-	werden, um einen PV-Überschussstrom auf mehreren Wallboxen zu verteilen.
+    Mit dem Lastmanagement ist es möglich, einen verfügbaren Gesamt-Ladestrom zwischen bis zu 32 WARP Chargern aufzuteilen. Hierbei wird ein WARP Charger als Lastmanager konfiguriert, der die weiteren bis zu 31 Wallboxen im Verbund steuert und ihnen Ladeströme zuweist.
+
+    Ohne Stromzähler am Hausanschluss kann ein fester Gesamtstrom verteilt werden, um zum Beispiel den Hausanschluss nicht zu überlasten. Dieser Gesamtstrom kann über das Webinterface und die API gesetzt werden.
+
+    Wenn ein Zähler am Hausanschluss vorhanden ist und vom Lastmanager ausgelesen werden kann (die aktuelle Liste kompatibler Stromzähler findet sich hier: \rurl{https://docs.warp-charger.com/docs/compatible\_meters}{docs.warp-charger.com/docs/compatible\_meters}), kann das \textbf{dynamische Lastmanagement} verwendet werden, das sicherstellt, dass der Hausanschluss nie durch die WARP Charger überlastet wird, auch wenn andere Verbraucher zu- oder abgeschaltet werden. Außerdem kann dann das PV-Überschussladen verwendet werden.
 
     \gfx{./img_warp3/resized/web_charge_manager_settings}
 
     \subsection{Funktionsweise}
-    Durch das Lastmanagement kontrollierte Wallboxen laden nur,
-    wenn ihnen von außen ein erlaubter Ladestrom mitgeteilt wird. Wenn eine gewisse Zeit lang
-    kein erlaubter Ladestrom empfangen wurde, stoppt die Wallbox den Ladevorgang automatisch.
-    Der Lastmanager stoppt seinerseits das Laden an allen kontrollierten Wallboxen,
-    wenn eine Wallbox nicht mehr reagiert oder erreicht wird. Damit wird sichergestellt,
-    dass der verfügbare Strom nicht überschritten wird.
+    Durch das Lastmanagement kontrollierte Wallboxen laden nur, wenn ihnen vom Lastmanager ein Ladestrom freigegeben wird. Wenn eine gewisse Zeit lang kein Ladestrom freigegeben wurde, oder der Lastmanager nicht erreicht werden kann, stoppt die Wallbox den Ladevorgang automatisch. Der Lastmanager stoppt seinerseits das Laden an allen kontrollierten Wallboxen, wenn eine Wallbox nicht mehr reagiert oder erreicht wird. Damit wird sichergestellt, dass der verfügbare Strom nicht überschritten wird.
 
-    Der Lastmanager verteilt den verfügbaren Strom gleichmäßig zwischen allen Wallboxen, die laden bzw. ladebereit sind.
-    Falls bereits eine Wallbox lädt und an eine zweite ein Fahrzeug angeschlossen wird,
-    wird der Ladestrom der ladenden Wallbox so beschränkt, dass für den zweiten Ladevorgang Strom verfügbar wird.
+    Der Lastmanager verteilt den verfügbaren Strom möglichst fair zwischen Wallboxen, die laden bzw. ladebereit sind, stellt sicher, dass die Zuleitung zu den Wallboxen und der Hausanschluss nicht überlastet werden, nutzt gegebenenfalls einen vorhandenen PV-Überschuss aus (siehe PV-Überschussladen) und versucht Schaltvorgänge zu minimieren.
 
     \subsection{Konfiguration}
     Um das Lastmanagement zu verwenden, muss zunächst auf allen Wallboxen, die gesteuert werden sollen,
@@ -1235,82 +1227,30 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Bei Klick auf \enquote{Wallbox hinzufügen} erscheinen nach wenigen Sekunden alle Wallboxen, die vom Lastmanager erreicht werden können.
     Durch Klicken auf eine gefundene Wallbox wird diese hinzugefügt. Wallboxen, die nicht hinzugefügt werden können, werden grau hinterlegt.
 
-    Im einfachsten Fall, in dem eine feste Menge Strom verteilt werden soll, muss dieser
-    Strom als \enquote{Maximal verfügbarer Strom} konfiguriert werden.
+    Jeder kontrollierten Wallbox kann eine Phasenrotation zugewiesen werden. Diese gibt an, wie die Wallbox in Relation zum Netz­an­schluss- bzw. PV-Über­schuss-Zähler oder zu den anderen Wallboxen an­ge­schlos­sen ist. Ty­pi­scher­wei­se werden nur rechts­dre­hen­de Pha­sen­ro­ta­ti­o­nen verwendet. Eine Wallbox, die, wenn sie einphasig lädt, die Netz­an­schluss­pha­se L2 belastet, ist dann bei­spiels­weise mit der Pha­sen­ro­ta­ti­on L231 an­ge­schlos­sen.
+
+    Wenn die Pha­sen­ro­ta­ti­on aller oder auch nur eines Teils der ge­steu­er­ten Wallboxen bekannt ist, können mehr Fahrzeuge parallel geladen werden und PV- und Netz­an­schluss­li­mits besser aus­ge­reizt werden: Eine Wallbox mit un­be­kann­ter Pha­sen­ro­ta­ti­on wird, wenn sie einphasig lädt, vom Last­manage­ment so behandelt als ob sie alle drei Phasen belasten würde.
+
+    Nach Zuordnung der Wallboxen muss der \enquote{Maximal verfügbare Strom} konfiguriert werden. Dieser ist typischerweise die Belastbarkeit der gemeinsamen Zuleitung der Wallboxen.
 
     Weitere Einstellungen finden sich auf der Unterseite \texttt{Energiemanagement} $\rightarrow$ \texttt{Lastmanagement}
 
-    \subsection{Experteneinstellungen}
-    Je nach Einsatzzweck (z.B. PV-Überschussladen auf mehreren Wallboxen) können die folgenden Einstellungen hilfreich sein.
-    Diese werden für eine einfache Lastverteilung, z.B. \SI{16}{\ampere} auf zwei Wallboxen, \textit{nicht} benötigt.
-    Die Optionen finden sich unter den \enquote{Experteneinstellungen}.
+    \subsection{Dynamisches Lastmanagement}
 
-    \vspace{-0.2cm}
-    \paragraph{Stromverteilungsprotokoll aktiviert}
-    Wenn das Stromverteilungsprotokoll aktiv ist, fügt der Lastmanager dem Ereignis-Log detaillierte Ausgaben hinzu, wann immer Strom umverteilt wird. Damit kann unerwartetes Verhalten des
-    Lastmanagements untersucht werden.
+    Damit das dynamische Lastmanagement verwendet werden kann, muss zunächst ein
+    Stromzähler hinzugefügt werden, der die Phasenströme am Hausanschluss messen kann.
+    Dieser kann, so gewünscht, auch für ein PV-Überschussladen verwendet werden,
+    das dynamische Lastmanagement kann aber auch ohne PV-Anlage verwendet werden. Dieser Stromzähler muss vorher entsprechend \fullref{meter} angelegt werden.
 
-    \vspace{-0.2cm}
-    \paragraph{Watchdog aktiviert}
-    Der Watchdog erlaubt es der steuernden Wallbox, auf Ausfälle einer externen Steuerung zu reagieren. Falls über die API der Wallbox
-    nicht mindestens alle 30 Sekunden der verfügbare Strom gesetzt wird und der Watchdog aktiv ist, wird der verfügbare Strom wieder zurück auf den
-    \textbf{Voreingestellt verfügbarer Strom} gesetzt. Falls die externe Steuerung später wieder läuft, wird der Watchdog zurückgesetzt.
+    Nachdem ein Zähler hinzugefügt wurde, kann auf der \texttt{Energiemanagement} $\rightarrow$ \texttt{Lastmanagement}-Unterseite das dynamische Lastmanagement aktiviert und konfiguriert werden.
 
-    \hint{Der Watchdog sollte nur dann aktiviert werden,
-    wenn eine selbst programmierte Steuerung den für den Wallbox-Verbund verfügbaren Strom über die API dynamisch ändern soll.
-    Für den normalen Lastmanagement-Betrieb ist der Watchdog nicht notwendig.}
+    Zunächst muss der eben konfigurierte Stromzähler ausgewählt werden.
 
-    \paragraph{Maximaler Gesamtstrom}
-    Der maximal verfügbare Strom ist das Maximum, das über das Webinterface bzw. die API als verfügbarer Strom gesetzt werden darf.
-    Größere Ströme werden nicht akzeptiert. Falls eine externe Steuerung verwendet wird, empfehlen wir, den maximal verfügbaren Strom
-    anhand der Kapazität der Zuleitungen und des Hausanschlusses so zu beschränken, dass durch die externe Steuerung nie zu große
-    Ströme gesetzt werden können.
+    Danach muss der \enquote{Maximale Strom am Netzanschluss} konfiguriert werden. Dieser ist typischerweise der Nennwert der Absicherung. Das dynamische Lastmanagment stellt sicher, dass dieser Wert nicht überschritten wird.
 
-    \paragraph{Voreingestellt verfügbarer Strom}
-    Der voreingestellt verfügbare Strom ist der, der vom Lastmanagement verteilt werden darf, nachdem die steuernde Wallbox
-    neugestartet wurde. Der verfügbare Strom kann über die API neu gesetzt werden, nach einem Neustart der Wallbox wird aber
-    zunächst der voreingestellte Strom verwendet. Falls beispielsweise durch eine externe Steuerung der verfügbare PV-Überschussstrom
-    gesetzt werden soll, kann der voreingestellte Strom auf \SI{0}{\ampere} konfiguriert werden, damit zwingend erst geladen wird,
-    wenn die externe Steuerung mindestens einmal den verfügbaren Strom gesetzt
-	hat.
+    Als letztes muss der zu erwartende \enquote{Stromverbrauch des größten Verbrauchers} konfiguriert werden. Dieser kann beispielsweise ein Durchlauferhitzer oder eine Wärmepumpe sein, mindestens aber 16 Ampere aus einer Schuko-Dose. Der Wert gibt den größten zu er­war­ten­den plötz­li­chen Sprung des Strom­bezugs am Zähler an, den das dy­na­mi­sche Last­manage­ment kurz­fris­tig (in unter 30 Sekunden) kom­pen­sieren können muss.
 
-    \paragraph{Länge der Startphase und Spielraum des Phasenstroms}
-    WARP Charger Pro können den realen Strombezug des Fahrzeugs pro Phase messen.
-    Mit dieser Information kann das Lastmanagement effizienter Strom verteilen: Falls beispielsweise
-    der Strombezug eines Fahrzeug sinkt, weil der Akku bald voll ist, oder ein Fahrzeug, das nur mit \SI{16}{\ampere}
-    laden kann, an einer \SI{32}{\ampere} Wallbox angeschlossen ist, kann der übrige Strom auf andere Wallboxen
-    im Lastmanagementverbund verteilt werden.
-
-    Damit ein Fahrzeug mehr Strom anfordern kann, darf das Lastmanagement eine Wallbox nicht exakt
-    auf den realen Strombezug (den maximalen Phasenstrom) limitieren, sondern muss einen gewissen Spielraum
-    zulassen, damit Fahrzeug und Lastmanager nachregeln können.
-
-    Für WARP Charger Smart sind diese Einstellungen nicht relevant,
-    der Lastmanager nimmt bei Wallboxen ohne Stromzähler immer an, dass der zugeteilte Strom komplett vom Fahrzeug verwendet wird.
-
-    Die \textbf{Länge der Startphase} gibt an, wie lange der reale Strombezug eines Fahrzeugs ignoriert wird,
-    einer Wallbox also der maximal verfügbare Strom zugewiesen wird. Die Länge der Startphase sollte also
-    länger sein als die Startverzögerung eines angeschlossenen Fahrzeugs, damit dieses beim Ladebeginn
-    sofort den präferierten Strom beziehen kann.
-
-    Der \textbf{Spielraum des Phasenstroms} gibt an, wie viel mehr Strom als der reale Strombezug des Fahrzeugs
-    einer Wallbox zugeteilt werden soll, sobald die Startphase beendet ist. Dieser Spielraum ist notwendig, damit
-    das Fahrzeug mehr Strom anfordern kann.
-
-    Viele Fahrzeuge laden nicht exakt mit dem vorgegebenen Ladestrom, sondern unterstützen nur Abstufungen von beispielsweise \SI{0,5}{\ampere}.
-    Ein solches Fahrzeug würde also bei einer Stromvorgabe von \SI{6,23}{\ampere} nur mit \SI{6}{\ampere} laden und müsste mehr als \SI{6,5}{\ampere} zugeteilt bekommen, damit es von der Stufe \SI{6}{\ampere} auf die Stufe \SI{6,5}{\ampere} springt.
-    Damit dieses Fahrzeug mehr Strom anfordern kann, müsste der Spielraum also mehr als \SI{0,5}{\ampere} betragen.
-
-    \paragraph{Minimaler Ladestrom}
-    Der minimale Ladestrom ist der Strom, der für eine Wallbox zur Verfügung stehen muss, damit diese lädt. Dieser Strom muss mindestens \SI{6}{\ampere} betragen.
-    Bestimmte Fahrzeuge laden aber erst bei höheren Strömen effizient. Mit einem
-	WARP3 Charger Pro kann der Leistungsfaktor ermittelt werden.
-
-    \hint{Wir empfehlen die automatische Einstellung des minimalen Ladestroms, die sich nach der Wahl des Fahrzeugmodells richtet.}
-
-    Mit dem minimalen Ladestrom kann zusätzlich gesteuert werden, wie viele Fahrzeuge gleichzeitig laden können.
-    Maximal sind $\frac{\text{Verfügbarer Strom}}{\text{Minimaler Ladestrom}}$ Ladevorgänge gleichzeitig möglich. Falls beispielsweise nicht möglichst viele
-    Fahrzeuge zwar langsam, dafür aber gleichzeitig geladen werden sollen, sondern mehrere Fahrzeuge möglichst schnell nacheinander geladen werden sollen, kann der minimale Ladestrom auf \SI{32}{\ampere} gesetzt werden.
+    \hint{Die vom Last­manage­ment ge­steu­er­ten Wallboxen müssen nicht be­rück­sich­tigt werden!}
 
     \newpage
     \section{Ladetracker}\label{charge_tracker}
@@ -1685,31 +1625,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \end{tabular}
 	}
 
-    \section{Konformitätserklärung}
-    Die EU-Konformitätserklärung zur Wallbox ist in einem gesonderten Dokument verfügbar.
-
-    \section{Entsorgung}
-    \begin{minipage}{0.43\textwidth}
-        Wallbox und Verpackung sind bei Gebrauchsende ordnungsgemäß zu
-        entsorgen. Altgeräte dürfen nicht über den Hausmüll entsorgt werden.
-    \end{minipage}\hfill
-    \begin{minipage}{0.045\textwidth}
-        \includegraphics[width=\linewidth]{./img_warp3/resized/weee.pdf}
-    \end{minipage}
-
-
-    \section{Kontakt}
-    Tinkerforge GmbH\\ Helleforthstraße 22-28\\ 33758 Schloß Holte-Stukenbrock
-    \begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{Website}}]
-        \item[E-Mail] \href{mailto:info@tinkerforge.com}{\texttt{info@tinkerforge.com}}
-        \item[Website] \href{https://warp-charger.com}{\texttt{warp-charger.com}}
-        \item[Telefon] \phonenumber{+49 5207 897300-0}
-        \item[Shop] \href{https://tinkerforge.com/de/shop/warp.html}{\texttt{tinkerforge.com/de/shop/warp.html}}
-    \end{description}
-
-    \vfill
-    \null
-    \columnbreak
+    \newpage
     \section{Technische Daten}
     %use minipage here to control footnote placement
     \begin{minipage}{\linewidth}
@@ -1749,21 +1665,39 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
             \item[Standby, WLAN an] Basic/Smart $\leq\SI{3}{\watt}$; Pro $\leq\SI{5}{\watt}$
             \item[Strommessung] Integrierter MID-geeichter Strom\-zähler nach EU-Messgeräterichtlinie 2014/32/EU~\footref{fn:1}
-
-
-
-
         \end{description}
     \end{minipage}
 
-    \vspace*{-0.2cm}
+    \section{Konformitätserklärung}
+    Die EU-Konformitätserklärung zur Wallbox ist in einem gesonderten Dokument verfügbar.
+
+    \section{Entsorgung}
+    \begin{minipage}{0.43\textwidth}
+        Wallbox und Verpackung sind bei Gebrauchsende ordnungsgemäß zu
+        entsorgen. Altgeräte dürfen nicht über den Hausmüll entsorgt werden.
+    \end{minipage}\hfill
+    \begin{minipage}{0.045\textwidth}
+        \includegraphics[width=\linewidth]{./img_warp3/resized/weee.pdf}
+    \end{minipage}
+
+
+    \section{Kontakt}
+    Tinkerforge GmbH\\ Helleforthstraße 22-28\\ 33758 Schloß Holte-Stukenbrock
+    \begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{Website}}]
+        \item[E-Mail] \href{mailto:info@tinkerforge.com}{\texttt{info@tinkerforge.com}}
+        \item[Website] \href{https://warp-charger.com}{\texttt{warp-charger.com}}
+        \item[Telefon] \phonenumber{+49 5207 897300-0}
+        \item[Shop] \href{https://tinkerforge.com/de/shop/warp.html}{\texttt{tinkerforge.com/de/shop/warp.html}}
+    \end{description}
+
     \section{Dokumentversionen}
     \begin{tabular}{lll}
         \toprule
         Datum      & Version\hspace{-0.2pt} & Kommentar        \\
         \midrule
         28.03.2024 & 1.0     & Initialversion                  \\
-        28.03.2024 & 1.1     & Aktualisierung Firmware 2.4.0   \\
+        13.06.2024 & 1.1     & Aktualisierung Firmware 2.4.0   \\
+        11.09.2024 & 1.2     & Aktualisierung Firmware 2.6.0   \\
         \bottomrule
     \end{tabular}
 

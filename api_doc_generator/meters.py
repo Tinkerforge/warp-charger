@@ -214,6 +214,18 @@ meters = Module("meters", "Stromzähler", "",
                         Const(3, "L3")
                     ]),
                 }),
+                10: Elem.OBJECT("GoodWe Hybrid-Wechselrichter", members={
+                    "virtual_meter": Elem.INT("Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", constants=[
+                        Const(0, "Kein virtueller Zähler ausgewählt"),
+                        Const(1, "Wechselrichter"),
+                        Const(2, "Netzanschluss"),
+                        Const(3, "Speicher"),
+                        Const(4, "Last"),
+                        Const(5, "Backup-Last"),
+                        Const(6, "Zähler")
+                    ]),
+                    "device_address": Elem.INT("Geräteadresse. Typischerweise 247."),
+                }),
 
             })
         }),
