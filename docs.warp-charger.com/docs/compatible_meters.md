@@ -118,7 +118,7 @@ Folgende Einrichtungsschritte sind hier notwendig:
  * http://10.10.100.254 öffnen, Zugangsdaten admin:admin
  * Unter System->Settings AP+STA konfigurieren und STA Wifi einrichten
  * Serial Port Settings korrekt für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1), Protocol Modbus
- * Communication Settings "+Add", dann TCP server auf Port 502 mit Route "Uart" anlegen und speichern
+ * Communication Settings einen TCP server auf Port 502 mit Route "Uart" anlegen und speichern. Der bereits vordefinierte "netp" kann dafür verwendet werden.
 
 
 ## SMA Speedwire
@@ -219,6 +219,8 @@ Für ein PV-Überschussladen und für das dyn. Lastmanagement ist ein Stromzähl
 ### Fox ESS
 Fox ESS Wechselrichter scheinen nicht mittels Modbus TCP über den Fox ESS LAN oder Wifi Dongle ausgelesen werden zu können. Sie sind aber mittels RS485 (Modbus RTU) auszulesen.
 Wird ein RS485 nach LAN oder WLAN Wandler installiert (siehe [Modbus RTU Wandler](/compatible_meters#modbusrtu-wandler)), so können diese Wechselrichter ebenfalls ausgelesen werden.
+Am Wechselrichter muss die Geräte ID von 000 (Modbus RTU deaktiviert) auf 247 eingestellt werden. Die Einstellung dazu findet sich unter Settings -> Communication -> RS485 -> Device ID.
+Das Wechselrichterpasswort ist standardmäßig auf 0000 gesetzt.
 
 ### Goodwe
 Die Einbindung eines Wechselrichters der ES, EM, SBP, ET, BT, EH, BH, EHB Serie ist mittels Modbus/TCP über das LAN bzw. Wifi+LAN Modul möglich.
