@@ -12,6 +12,13 @@ export const meters = [
     note_url: "/docs/compatible_meters#alpha-ess",
   },
   {
+    manufacturer: "Carlo Galvazzi",
+    name: "EM24",
+    connection: "Modbus/TCP",
+    note: "Smart Meter",
+    note_url: "/docs/compatible_meters#carlo-galvazzi",
+  },
+  {
     manufacturer: "Deye",
     name: "SUN-Serie",
     connection: "Modbus/TCP",
@@ -49,6 +56,7 @@ export const meters = [
     manufacturer: "elgris",
     name: "Smart Meter LAN 2.0",
     connection: "SunSpec",
+    note: "Smart Meter",
     note_url: "/docs/compatible_meters#elgris",
   },
   {
@@ -93,6 +101,13 @@ export const meters = [
     note: "Hybrid-Wechselrichter",
     note_url: "/docs/compatible_meters#goodwe",
   },
+{
+    manufacturer: "Hailei",
+    name: "Hybrid Wechselrichter TBD",
+    connection: "Modbus/TCP",
+    note: "Hybrid-Wechselrichter",
+    note_url: "/docs/compatible_meters#hailei",
+  },
   {
     manufacturer: "Huawei",
     name: "SUN2000 Serie",
@@ -111,7 +126,7 @@ export const meters = [
     manufacturer: "Kostal",
     name: "Smart Energy Meter (KSEM G2)",
     connection: "SunSpec",
-    note: "Smart Energy Meter",
+    note: "Smart Meter",
     note_url: "/docs/compatible_meters#kostal",
   },
   {
@@ -134,6 +149,13 @@ export const meters = [
     connection: "Modbus/TCP",
     note: "1-phasige und 3-phasige Wandler-Stromzähler mit 1TE",
     note_url: "/docs/compatible_meters#shelly",
+  },
+  {
+    manufacturer: "Siemens",
+    name: "SENTRON PAC2200/PAC3200",
+    connection: "Modbus/TCP",
+    note: "Smart Meter",
+    note_url: "/docs/compatible_meters#siemens",
   },
   {
     manufacturer: "SMA",

@@ -174,10 +174,12 @@ die Unterstützung eines Geräts wünschen, dann schreibe uns im Forum auf
 ## Herstellerspezifische Informationen
 
 ### Alpha Ess
-
 Die folgenden Alpha ESS Smile Heimspeicher unterstützen eine Anbindung mittels Modbus/TCP: SMILE5, SMILE-Hi5, SMILE-Hi10, SMILE-G3-S3.6/B5/S5, SMILE-BAT-8.2PHA.
 Die integration bietet die virtuellen Stromzähler "Wechselrichter", "Netzanschluss" und "Speicher".
 Die Messwerte des Netzanschlusses können für ein PV-Überschussladen und für ein dynamisches Lastmanagement genutzt werden.
+
+### Carlo Galvazzi
+Der EM24 in der Ausführung mit Ethernet kann mittels Modbus/TCP ausgelesen werden.
 
 ### Deye
 Deye Hybrid-Wechselrichter der SUN Serie (Nieder- und Hochspannung) unterstützen Modbus/RTU.
@@ -229,6 +231,9 @@ Zukünftig werden die virtueller Stromzähler "Netzanschluss", "Speicher", "Last
 
 Ist an dem Wechselrichter ein Stromzähler angeschlossen (z.B. GM300), der vom Wechselrichter ausgelesen werden kann, kann dieser Stromzähler für ein PV-Überschussladen und ein dynamisches Lastmanagement genutzt werden.
 
+### Hailei
+Die Integration von Hailei Wechselrichtern folgt. Ein Auslesen ist mittels Modbus/TCP nach Modbus/RTU Wandlern (z.B. EW11) über die Modbus/RTU Schnittstelle des Wechselrichters möglich.
+
 ### Huawei
 Wechselrichter der SUN2000 Serie (L1, M0, M1, M2, M3) können über das Huawei Smart Dongle (SmartdDongle ab Firmware SPC124) mittels Modbus/TCP ausgelesen werden. Aktuell ist noch keine Registertabelle hierfür hinterlegt.
 Diese muss noch per Hand angelegt werden. Wir werden aber zeitnah eine vorwählbare Registertabelle bereitstellen.
@@ -247,21 +252,15 @@ RCT Wechselrichter können leider nicht mittels SunSpec oder Modbus/TCP angespro
 Wir planen die Implementierung des Protokolls um auch Wechselrichter von RCT einbinden zu können.
 
 ### Shelly
-Der einphasige Wandler-Stromzähler Shelly Pro EM und dreiphasige Wandler-Stromzähler Shelly Pro 3EM werden unterstützt. Beide besitzten nur eine Breite von 1 TE und messen mittels Wandler.
+Der einphasige Wandler-Stromzähler Shelly Pro EM und dreiphasige Wandler-Stromzähler Shelly Pro 3EM werden unterstützt und können mittels Modbus/TCP ausgelesen werden. Beide besitzten nur eine Breite von 1 TE und messen mittels Wandler.
 Somit benötigen diese nur wenig Platz und können an verschiedene Maximalströme angepasst werden. (EM: 50A, 3EM: 120A, 400A).
 
 Wichtig ist ein Update auf die neuste Software, so dass Modbus TCP unterstützt wird. Dieses muss dann unter Settings->Modbus aktiviert werden.
 
-Aktuell müssen die Stromzähler händisch über eine benutzerdefinierte Konfiguration eingebunden werden. Der Hostname/IP des Shellys ist zusammen mit dem Port 502 einzutragen. Registertabelle "Benutzerdefiniert", Geräteadresse 1 und Registeradresse beginnt bei 0.
-Anschließend können die jeweiligen Register angelegt werden. Hierzu sind als Registertyp "Input-Register" und dem Werttyp "Zwei-Register, 32-Bit, Gleitkommazahl, Little-Endian" für Float typen einzutragen. Als Beispiel gibt die Adresse (Startadresse) 1020 die Spannung für L1 an.
-Der Offset von 30000 ist also bei den Adressen abzuziehen (31020->1020).
+Für die Stromzähler sind jeweils spezifische Registertabellen implementiert und können einfach ausgewählt werden.
 
-Hier die Registerinformationen zu den Shellys:
-
-[Shelly Pro EM: EM1 \(alle Daten\)](https://shelly-api-docs.shelly.cloud/gen2/ComponentsAndServices/EM1/#modbus-registers) \
-[Shelly Pro 3EM: EM \(Live Daten\)](https://shelly-api-docs.shelly.cloud/gen2/ComponentsAndServices/EM/#modbus-registers) und [Shelly Pro 3EM: EMData \(Historie\)](https://shelly-api-docs.shelly.cloud/gen2/ComponentsAndServices/EMData/#modbus-registers)
-
-Wir arbeiten daran kurzfristig für diese beiden Zähler eine eigene Registertabelle zu hinterlegen, so dass das manuelle Anlegen als benutzerdefinierte Registertabelle nicht mehr notwendig ist.
+### Siemens
+Die Siemens SENTRON Energiezähler vom Typ 7KM2200 (PAC2200) und 7KM3200 (PAC3200) können mittels Modbus/TCP ausgelesen werden.
 
 ### SMA
 SMA Geräte unterstützen zum Teil SunSpec, so dass diese direkt ausgelesen werden können. Dazu zähler zum Beispiel die Sunny Boy Wechselrichter. Andere Geräte von SMA nutzen das SMA Speedwire Protokoll.
