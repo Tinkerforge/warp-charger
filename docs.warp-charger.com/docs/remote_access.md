@@ -10,7 +10,7 @@ Seit der Firmware Version 2.5.0 ünterstützt dein WARP Charger unseren Fernzugr
 In dieser Anleitung lernst du wie der Fernzugriff funktioniert, welche Maßnahmen wir ergriffen haben um deine Daten best möglich zu schützen und vor allem wie du ihn einrichtest.
 
 ### Funktionsweise und Datenschutz
-Kurz und knapp zusammengefasst wird bei jeder Verbindung über den Fernzugriff ein eigenes, verschlüsseltes VPN aufgemacht. Dieses VPN hat nur zwei Teilnehmen, das Gerät über welches du den Fernzugriff öffnest und deinen WARP Charger. Dadurch können wir sicherstellen, dass nur du  Daten von deiner Wallbox abrufen kannst (nichtmal wir können das!).
+Kurz und knapp zusammengefasst wird bei jeder Verbindung über den Fernzugriff ein eigenes, verschlüsseltes VPN aufgemacht. Dieses VPN hat nur zwei Teilnehmer, dass Gerät über welches du den Fernzugriff öffnest und deinen WARP Charger. Dadurch können wir sicherstellen, dass nur du Daten von deiner Wallbox abrufen kannst (nichtmal wir können das!).
 
 Alle Daten, bis auf deine E-Mail-Adresse und dein (frei wählbarer) Nutzername werden verschlüsselt auf userem Server gespeichert. So, dass auch wir diese Daten nicht entschlüsseln können.
 
