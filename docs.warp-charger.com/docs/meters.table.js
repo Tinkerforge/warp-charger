@@ -124,7 +124,14 @@ export const meters = [
   },
   {
     manufacturer: "Kaco",
-    name: "Blueplanet NX3 Wechselrichter",
+    name: "Blueplanet Hybrid NH3 Wechselrichter",
+    connection: "SunSpec",
+    note: "Hybrid-Wechselrichter",
+    note_url: "/docs/compatible_meters#kaco",
+  },
+  {
+    manufacturer: "Kaco",
+    name: "Blueplanet NX3 und TL3 Wechselrichter",
     connection: "SunSpec",
     note: "String-Wechselrichter",
     note_url: "/docs/compatible_meters#kaco",

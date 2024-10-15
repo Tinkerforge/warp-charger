@@ -242,7 +242,7 @@ Es werden die virtueller Stromzähler "Netzanschluss", "Speicher", "Last" und "W
 vom Typ DTSU666-H oder DDSU666-H am Wechselrichter angeschlossen wurde. Speicher ist nur nutzbar im Zusammenspiel mit der Luna2000 Batterie.
 
 ### Kaco
-Kaco Wechselrichter der NX3 Baureihe sprechen SunSpec und können direkt ausgelesen werden. Der Standardport ist 502. SunSpec muss im Protokoll Menü des Wechselrichters aktiviert werden.
+Kaco Wechselrichter der NH3, NX3 und TL3 Baureihe sprechen SunSpec und können direkt ausgelesen werden. Der Standardport ist 502. SunSpec muss im Protokoll Menü des Wechselrichters aktiviert werden.
 
 ### Kostal
 Das Smart Energy Meter (KSEM G2) kann direkt mittels SunSpec kommunizieren.
