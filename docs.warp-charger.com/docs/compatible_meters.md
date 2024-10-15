@@ -241,6 +241,9 @@ Diese muss noch per Hand angelegt werden. Wir werden aber zeitnah eine vorwählb
 Es werden die virtueller Stromzähler "Netzanschluss", "Speicher", "Last" und "Wechselrichter" bereitgestellt. Netzanschluss ist nur nutzbar, wenn ein externer Hardware-Stromzähler (Huawei Smart Power Sensor)
 vom Typ DTSU666-H oder DDSU666-H am Wechselrichter angeschlossen wurde. Speicher ist nur nutzbar im Zusammenspiel mit der Luna2000 Batterie.
 
+### Kaco
+Kaco Wechselrichter der NX3 Baureihe sprechen SunSpec und können direkt ausgelesen werden. Der Standardport ist 502. SunSpec muss im Protokoll Menü des Wechselrichters aktiviert werden.
+
 ### Kostal
 Das Smart Energy Meter (KSEM G2) kann direkt mittels SunSpec kommunizieren.
 

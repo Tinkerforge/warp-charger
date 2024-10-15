@@ -123,6 +123,13 @@ export const meters = [
     note_url: "/docs/compatible_meters#goodwe",
   },
   {
+    manufacturer: "Kaco",
+    name: "Blueplanet NX3 Wechselrichter",
+    connection: "SunSpec",
+    note: "String-Wechselrichter",
+    note_url: "/docs/compatible_meters#kaco",
+  },
+  {
     manufacturer: "Kostal",
     name: "Smart Energy Meter (KSEM G2)",
     connection: "SunSpec",
