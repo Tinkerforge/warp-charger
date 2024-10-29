@@ -135,11 +135,14 @@ dem WARP Energy Manager mitzuteilen. Siehe
 ## Am WARP Energy Manager angeschlossene Stromzähler
 
 Der WARP Energy Manager kann bestimmte Stromzähler direkt per Modbus/RTU (RS485)
-auslesen. Dies ist vor allem interessant wenn noch kein Zähler am
+auslesen. Er besitzt dazu einen RS485 Anschluss.
+Dies ist vor allem interessant wenn noch kein Zähler am
 Netzanschluss vorhanden ist. In dem Fall kann ein WARP Energy Manager installiert
-und zusätzlich ein kompatibler Modbus/RTU-Stromzähler an diesem angeschlossen werden.
-Von dem WARP Energy Manager werden nicht alle Modbus/RTU Stromzähler unterstützt.
-Zum WARP Energy Manager kompatible Stromzähler sind in der Liste mit aufgeführt.
+und zusätzlich ein kompatibler Modbus/RTU-Stromzähler an diesem direkt angeschlossen werden.
+Von dem WARP Energy Manager werden nicht alle Modbus/RTU Stromzähler unterstützt,
+nur die zum WARP Energy Manager in der Liste aufgeführten kompatiblen Stromzähler.
+Es kann genau ein Stromzähler per RS485 am WARP Energy Manager angeschlossen und
+ausgelesen werden. Mehrere Stromzähler am RS485 Anschluss sind nicht möglich.
 
 ## Bekannte kompatible Geräte
 
