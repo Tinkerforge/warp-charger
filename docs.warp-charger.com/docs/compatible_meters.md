@@ -90,7 +90,7 @@ werden.
 
 :::note
 
-Für das PV Überschussladen muss ein API Stromzähler konfiguriert werden, der mindestens folgenden Wert enthält:
+Für das PV Überschussladen muss ein Stromzähler konfiguriert werden, der mindestens folgenden Wert enthält:
 ***"Wirk­leistung (Bezug minus Ein­speisung); Σ L1, L2, L3 \[W\]***
 
 Dieser Wert wird für die Regelung verwendet. Weitere Werte können angelegt werden, sind aber technisch nicht notwendig.
@@ -131,6 +131,15 @@ Die MQTT und HTTP WARP Push API
 kann genutzt werden um von extern Zählerdaten dem WARP Charger oder
 dem WARP Energy Manager mitzuteilen. Siehe
 [API Referenz - Meters](/docs/mqtt_http/api_reference/meters).
+
+:::note
+
+Für das PV Überschussladen muss ein Stromzähler konfiguriert werden, der mindestens folgenden Wert enthält:
+***"Wirk­leistung (Bezug minus Ein­speisung); Σ L1, L2, L3 \[W\]***
+
+Dieser Wert wird für die Regelung verwendet. Weitere Werte können angelegt werden, sind aber technisch nicht notwendig.
+
+:::
 
 ## Am WARP Energy Manager angeschlossene Stromzähler
 
