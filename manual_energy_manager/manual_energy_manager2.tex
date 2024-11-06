@@ -80,7 +80,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 \fancyhf{}
 \fancyhead{\colorbox{boxgray}{
     \makebox[\dimexpr\linewidth-2\fboxsep - 2.17mm][l]{
-        \includegraphics[height=1cm]{./img/resized/logo}\hfill\color{white}\Huge\raisebox{.5ex}{\thepage}
+        \includegraphics[height=1cm]{./img_v2/logo}\hfill\color{white}\Huge\raisebox{.5ex}{\thepage}
         }
     }
 }
@@ -107,7 +107,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 \pagestyle{empty}
 \begin{titlepage}
 	\vspace*{-3.08cm}
-	\colorbox{boxgray}{\makebox[\dimexpr\linewidth-2\fboxsep][c]{\includegraphics[width=0.6\textwidth]{./img/resized/logo}}}
+	\colorbox{boxgray}{\makebox[\dimexpr\linewidth-2\fboxsep][c]{\includegraphics[width=0.6\textwidth]{./img_v2/logo}}}
 	\vfill
 	\begin{center}
 		\Huge
@@ -115,9 +115,10 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		WARP Energy Manager 2.0 Betriebsanleitung\\\vspace{1cm}
 		\large
 		Version 1.0.0\\\vspace{0.25cm}
-		17.10.2024
+		06.11.2024
 	\end{center}
-	\vfill \gfx{./img/resized/warp-energy-manager.png}
+	\vspace*{1cm} \gfx{./img_v2/warp-energy-manager2.png}
+    \vfill
    	\pagecolor{covergray}
 
 \end{titlepage}
@@ -135,7 +136,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	erhältst du unseren Energiemanager zur Schaltschrankmontage, mit dem du den
 	Energieverbrauch zu Hause überwachen, steuern und optimieren kannst.
 
-	\gfx{./img/resized/warp-energy-manager.png}
+	\gfx{./img_v2/warp-energy-manager2.png}
 
 	Der WARP Energy Manager kann abhängig von dynamischen Strompreisen, einem Photovoltaik-Überschuss oder dem aktuellen Strom am Netzanschluss
     Wärmepumpen über die SG-Ready Schnittstelle steuern, zusätzliche Verbraucher ein- bzw. ausschalten und in Verbindung mit WARP Charger Wallboxen 
@@ -189,18 +190,16 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\subsubsection{SG-Ready Schnittstelle zur Ansteuerung von Wärmepumpen}
     Der WARP Energy Manager besitzt eine SG-Ready Schnittstelle mit der Wärmepumpen gesteuert werden können.
-    Diese besteht laut Standard aus zwei Relais-Ausgängen. Damit kann die Wärmepumpe vollständig blockiert werden, 
-    zum Beispiel wenn der Strompreis einen Schwellwert übersteigt. Die Wärmepumpe kann aber auch in einen erweiterten Betrieb
-    versetzt werden, bei dem die Heizkreis- und Warmwassertemperaturen etwas erhöht werden. Damit lassen sich zum Beispiel
-    ein Photovoltaik-Überschuss oder günstige Strompreise effizient nutzen.
+    Diese besteht laut Standard aus zwei Relais-Ausgängen. Mit einem Ausgang kann die Wärmepumpe vollständig blockiert werden, 
+    zum Beispiel wenn der Strompreis einen Schwellwert übersteigt. Die Wärmepumpe kann mit dem zweiten
+    Ausgang in einen erweiterten Betrieb versetzt werden, bei dem die Heizkreis- und Warmwassertemperaturen etwas erhöht werden. 
+    Damit lassen sich zum Beispiel ein Photovoltaik-Überschuss oder günstige Strompreise effizient nutzen. Ist keiner
+    der Ausgänge geschaltet verrichtet die Wärmepumpe ganz normal ihren Dienst.
 
 	\subsubsection{Zwei Relaisausgänge zur Ansteuerung weiterer Verbraucher}
-	Der WARP Energy Manager verfügt über zwei Eingänge für potentialfreie
-	Schaltkontakte. Wird die Phasenumschaltung genutzt, wird einer dieser
-	Eingänge fest zur Schützüberwachung verwendet. Ansonsten kann die Reaktion
-	des Energiemanagers auf die Eingänge konfiguriert werden. Es kann zum
-	Beispiel eine generelle Ladefreigabe realisiert oder der
-	Ladestrom der Wallboxen begrenzt werden.
+	Der WARP Energy Manager verfügt über zwei Relaisausgänge. 
+    Mit diesen Ausgängen können zum Beispiel 230V Verbraucher direkt oder mittels zwischengeschaltetem Schütz auch größere Lasten
+    geschaltet werden. Als Beispiel können so Heizstäbe gesteuert werden.
 
 	\subsubsection{Vier Eingänge, z.B. für $\S14a$ EnWG - Steuerbare Verbrauchseinrichtung}
     An die vier Eingänge des WARP Energy Managers kann jeweils ein potentialfreier Kontakt (Schließer/Öffner) angeschlossen werden.
@@ -228,7 +227,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	von deinem produzierten Strom selbst nutzen. Der WARP Energy Manager kann
 	dir dabei helfen, indem Elektrofahrzeuge mit diesem Strom geladen werden (PV-Überschussladen).
     Der Strom kann aber auch genutzt werden um zum Beispiel die Wärmepumpe im erweiterten Betrieb 
-    betrieben wird. Zusätzlich können an den Relaisausgängen weitere Verbraucher, wie zum Beispiel Heizstäbe,
+    zu betreiben. Zusätzlich können an den Relaisausgängen weitere Verbraucher, wie zum Beispiel Heizstäbe,
     angeschlossen werden. Der Energy Manager kann diese dann abhängig von der Konfiguration zum Beispiel einschalten, wenn trotz 
     Elektrofahrzeug-Ladung und Ansteuern der Wärmepumpe noch Leistung übrig ist.
 
@@ -239,7 +238,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	(Netzbezug = 0) oder aber ein definierter Netzbezug eingehalten wird. Dies
 	ist abhängig von deinen Einstellungen.
 
-	Entscheidend ist hier, dass nur eine Leistungsregelung stattfindet, die einzelnen Phasenströme werden nicht geregelt. Da der Netzbetreiber-Stromzähler,
+	Entscheidend ist hier, dass nur eine Leistungsregelung stattfindet, 
+    die einzelnen Phasenströme werden nicht geregelt. Da der Netzbetreiber-Stromzähler,
 	der die Stromkosten ermittelt, saldierend arbeitet, ist eine Phasenstromregelung nicht notwendig.
 
 	\vspace{-0.05cm}
@@ -303,21 +303,18 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		werden.}
 
 	\subsection{Bestimmungsgemäße Verwendung}
-	Mit dem WARP Energy Manager kann in Verbindung mit einem externen
-	Stromzähler ein Energie-Monitoring realisiert werden. In Verbindung mit WARP
-	Charger Wallboxen kann somit eine leistungsbezogene Ladevorgangsteuerung von
-	Elektrofahrzeugen realisiert werden. Für andere Anwendungen ist der
-	Energiemanager nicht geeignet. Eine Verwendung
+    Der WARP Energy Manager wurde für die in diesem Dokument beschriebenen Anwendungen entwickelt.
+    Für andere Anwendungen ist dieser nicht geeignet. Eine Verwendung
 	an Orten, an denen explosionsfähige oder brennbare Substanzen lagern, ist nicht
 	zulässig. Jegliche Modifikation des Energiemanagers oder unsachgemäßer Betrieb ist verboten.
-	Der Energiemanager ist in einem geeigneten Verteilerschrank zu installieren
+	Der WARP Energy Manager ist in einem geeigneten Verteilerschrank zu installieren
 	und vor Beschädigungen, Feuchtigkeit/Verschmutzungen und unsachgemäßem
 	Zugriff zu schützen. Er darf nicht genutzt werden, wenn kein sicherer Betrieb
 	gewährleistet werden kann.
 
 	\subsection{Gerätestörung / Technischer Defekt}
 	Sollte es Anzeichen für einen technischen Defekt geben, ist sofort die
-	Stromversorgung des Energiemanagers zu trennen und gegen erneutes Einschalten zu
+	Stromversorgung des WARP Energy Manager zu trennen und gegen erneutes Einschalten zu
 	sichern. Danach ist eine Elektrofachkraft zu informieren.
 
 	\newpage
@@ -331,7 +328,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		\begin{itemize}
 			\item 2-pol Schraubklemme \SI{5}{\milli\meter} (\SI{230}{\volt} Stromversorgung (L+N))
 			\item 4-pol Schraubklemme \SI{5}{\milli\meter} (2x Relais-Ausgang)
-			\item 4-pol Schraubklemme \SI{3.5}{\milli\meter} (Sg-Ready Schnittstelle (2x Relais-Ausgang))
+			\item 4-pol Schraubklemme \SI{3.5}{\milli\meter} (SG-Ready Schnittstelle (2x Relais-Ausgang))
 			\item 6-pol Schraubklemme \SI{3.5}{\milli\meter} (4x Eingang für potentialfreien Kontakt)
 			\item 4-pol Schraubklemme \SI{3.5}{\milli\meter} (RS485 Modbus-RTU)
 		\end{itemize}
@@ -356,7 +353,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	gesetzt werden. Das Gehäuse muss so installiert werden, dass die Anschlüsse
 	nach unten zeigen.
 
-	\gfx{./img/wem_mounting.jpg}
+	\gfx{./img_v2/wem2_mounting.jpg}
 
 	Zuerst wird die obere Halterung auf die Hutschiene aufgesetzt und anschließend
 	die Untere. Der Energiemanager sollte sich selbstständig verriegeln, falls dies
@@ -370,14 +367,18 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	gehoben werden. Dabei sollte zuerst die untere Halterung angehoben werden,
 	gefolgt von der oberen Halterung.
 
+    \newpage
+
 	\subsection{Elektrischer Anschluss}
 	\hint{Die in diesem Kapitel beschriebenen Arbeiten dürfen nur von einer ausgewiesenen
 		Elektrofachkraft durchgeführt werden!}
+    
+    Auf der Oberseite des WARP Energy Managers sind folgende Anschlüsse zu finden:
+	\begin{center}
+        \includegraphics[width=0.5\linewidth]{./img_v2/wem2-connections-top.png}
+    \end{center}
 
-	\gfx{./img/wem_connections.jpg}
-
-
-	\subsubsection{Stromversorgung}
+	\subsubsection{Stromversorgung (230V)}
 	Nachdem der WARP Energy Manager montiert wurde, kann dieser angeschlossen werden.
 	Die Schraubklemmen sind steckbar, sodass der elektrische Anschluss
 	außerhalb erfolgen kann. Anschließend können die Schraubklemmen wieder in
@@ -388,13 +389,10 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	max.~\SI{16}{\ampere}~Leitungsschutzschalter mit B-Charakteristik abzusichern.
 
 	Die Stromversorgung des Energiemanagers ist zusätzlich intern über eine Glassicherung
-	(mittelträge (m), \SI{500}{\milli\ampere}) abgesichert.
+	(träge (T), \SI{2}{\ampere}) abgesichert.
     
     
     \subsubsection{RS485 Modbus Stromzähler}
-	\hint{Es ist nicht notwendig, einen RS485-Modbus-Stromzähler zu installieren. Dieser
-	Schritt ist optional, wenn ein anderer unterstützter Stromzähler konfiguriert
-	wird.}
 
 	Der WARP Energy Manager benötigt einen Stromzähler, um den Leistungsbezug regeln zu
 	können. Eine Möglichkeit dafür ist die Installation eines RS485-Modbus-Stromzählers vom Typ Eastron SDM72DMV2, SDM630MCT oder SDM630Modbus.
@@ -402,6 +400,14 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Die Steckerbelegung ist \textbf{12V, A, B, GND}. Der Anschluss \textbf{12V}
 	darf nicht belegt werden. \textbf{A~(+), B~(-), GND} sind entsprechend
 	am jeweiligen Stromzähler anzuschließen.
+    
+    \vspace{2cm}
+    
+    Auf der Unterseite des WARP Energy Managers sind folgende Anschlüsse zu finden:
+    \begin{center}
+        \includegraphics[width=0.5\linewidth]{./img_v2/wem2-connections-bottom.png}
+    \end{center}
+    
     
     
     \subsubsection{Eingänge}
@@ -414,9 +420,10 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\subsubsection{SG-Ready Schnittstelle}
     Wärmepumpen, die über eine SG-Ready Schnittstelle gesteuert werden können, können hier angeschlossen werden.
-    Dazu bietet der WARP Energy Manager zwei Relais-Ausgänge. Ausgang 1 wird geschlossen, wenn der Betrieb blockiert werden soll (Betriebszustand 1).
-    
-    Ausgang 2 wird geschlossen, wenn der Wärmepumpe eine Einschaltempfehlung für den verstärkten Betrieb für Raumheizung und Warmwasserbereitung gegeben werden soll (Betriebszustand 3).
+    Dazu bietet der WARP Energy Manager zwei Relais-Ausgänge. 
+    Ausgang 1 wird betätigt, wenn der Betrieb blockiert werden soll (Betriebszustand 1).
+    Ausgang 2 wird betätigt, wenn der Wärmepumpe eine Einschaltempfehlung für den verstärkten Betrieb 
+    für Raumheizung und Warmwasserbereitung gegeben werden soll (Betriebszustand 3).
 
 	\subsubsection{Relais-Ausgänge}
 	Mit den zwei potentialfreien Relaisschaltausgängen können bis zu \SI{230}{\volt AC}/\SI{3}{\ampere} geschaltet
@@ -485,7 +492,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	kabelgebundenen Netzwerk (LAN), wenn ein LAN-Kabel eingesteckt ist, und bezieht eine IP-Adresse
 	mittels DHCP. Der Energiemanager kann dann entweder über die zugewiesene IP-Adresse
 	(\url{http://[IP-des-Energy-Managers]}, z.\,B. \url{http://192.168.0.42})
-	oder den Hostnamen (\url{http://[hostname]}, z.\,B. \url{http://wem-ABC}) erreicht werden.
+	oder den Hostnamen (\url{http://[hostname]}, z.\,B. \url{http://wem2-ABC}) erreicht werden.
 
 	Der Hostname des Energiemanagers ist identisch zur SSID des WLANs. Den Hostnamen findest du
 	auf dem WLAN-Zugangsdaten-Aufkleber auf der Rückseite dieser Anleitung.
@@ -529,7 +536,6 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\vspace{-0.4cm}
 	\subsection{Status (Startseite)}
 	\label{status}
-    \todo{Todo Todo Todo}
 	Die Startseite des Webinterfaces bietet Schnelleinstellungen und zeigt Statusinformationen an.
 
 	Mittels Schaltflächen kann der Lademodus gesteuerter
@@ -790,7 +796,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Phasenstrom und gibt diesen den gesteuerten Wallboxen frei.
 	Dabei wird sichergestellt, dass der Maximalstrom jeder Phase nicht überschritten wird und keine Sicherung ausgelöst wird.
 
-  Damit das dynamische Lastmanagement verwendet werden kann, muss zunächst ein
+    Damit das dynamische Lastmanagement verwendet werden kann, muss zunächst ein
     Stromzähler hinzugefügt werden, der die Phasenströme am Hausanschluss messen kann.
     Dieser kann, so gewünscht, auch für ein PV-Überschussladen verwendet werden,
     das dynamische Lastmanagement kann aber auch ohne PV-Anlage verwendet werden. Dieser Stromzähler muss vorher entsprechend \fullref{meter} angelegt werden.
@@ -799,16 +805,32 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     Zunächst muss der eben konfigurierte Stromzähler ausgewählt werden.
 
-    Danach muss der \enquote{Maximale Strom am Netzanschluss} konfiguriert werden. Dieser ist typischerweise der Nennwert der Absicherung. Das dynamische Lastmanagment stellt sicher, dass dieser Wert nicht überschritten wird.
+    Danach muss der \enquote{Maximale Strom am Netzanschluss} konfiguriert werden. Dieser ist typischerweise der Nennwert der Absicherung. 
+    Das dynamische Lastmanagment stellt sicher, dass dieser Wert nicht überschritten wird.
 
-    Als letztes muss der zu erwartende \enquote{Stromverbrauch des größten Verbrauchers} konfiguriert werden. Dieser kann beispielsweise ein Durchlauferhitzer oder eine Wärmepumpe sein, mindestens aber 16 Ampere aus einer Schuko-Dose. Der Wert gibt den größten zu er­war­ten­den plötz­li­chen Sprung des Strom­bezugs am Zähler an, den das dy­na­mi­sche Last­manage­ment kurz­fris­tig (in unter 30 Sekunden) kom­pen­sieren können muss.
+    Als letztes muss der zu erwartende \enquote{Stromverbrauch des größten Verbrauchers} konfiguriert werden. 
+    Dieser kann beispielsweise ein Durchlauferhitzer oder eine Wärmepumpe sein, mindestens aber 16 Ampere aus einer Schuko-Dose. 
+    Der Wert gibt den größten zu er­war­ten­den plötz­li­chen Sprung des Strom­bezugs am Zähler an, den das dy­na­mi­sche Last­manage­ment kurz­fris­tig (in unter 30 Sekunden) kom­pen­sieren können muss.
 
     \hint{Die vom Last­manage­ment ge­steu­er­ten Wallboxen müssen nicht be­rück­sich­tigt werden!}
 
 
     \subsubsection{Dynamischer Strompreis}
+    Der WARP Energy Manager unterstützt dynamische Strompreise. Diese können zum Beispiel zur Steuerung von Wallboxen oder einer Heizung verwendet werden.
+    Hierbei werden nicht die Preise von einem spezifischen Stromanbieter abgefragt, sondern der Börsenstrompreis der jeweiligen Strombörse.
+    Diese kann über die Einstellung \textbf{Bereich} gewählt werden. Alle dynamischen Stromanbieter rechnen mit den gleichen Börsenstrompreis. Der Unterschied zwischen den verschiedenen Anbietern besteht 
+    in der zeitlichen Auflösung des Tarifs (60 Minuten oder 15 Minuten) und den Zusatzkosten (z.B.: Netznutzungsentgelt, Steuern, Abgaben und Umlagen). Diese ganzen Parameter können eingestellt werden um
+    die Kosten des Anbieters direkt abzubilden. Die im System angezeigten Stromkosten werden auch lokal in der Energiebilanz aufgezeichnet. Es müssen keine Zusatzkosten eingetragen werden. 
+    Dann zeigt das System die reinen netto Strombörsenpreise an. Werden alle Zusatzkosten eingetragen, so zeigt das System die Netto-Stromkosten an. Wird zusätzlich der MwSt. Satz eingetragen so
+    werden die Brutto-Stromkosten angezeigt und aufgezeichnet.
+    
+       
+    
     \subsubsection{Solarprognose}
-
+    Die Solarprognose kann für die Heizungssteuerung verwendet werden. Dazu können bis zu sechs verschiedene PV-Flächen angelegt werden. Für jede dieser Fläche wird eine Prognose berechnet.
+    Der Service begenzt die Prognoseabfragen auf 12 Abfragen pro 2 Stunden. Das heißt ist nur eine PV-Fläche konfiguriert, können die Daten für die Fläche 6 mal pro Stunde abgerufen werden.
+    Sind zwei Flächen konfiguriert, so sind nur noch 3 Abfragen möglich. Sind keine Abfragen mehr möglich, so muss bis zum Ablauf des zwei Stundenfensters gewartet werden. In der Praxis kann dies eigentlich nur 
+    durch häufiges Umkonfigurieren oder Neustarten des WARP Energy Managers erzeugt werden.
 
 
 	\subsection{Netzwerk}
@@ -912,15 +934,38 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\gfx{./img/resized/web_mqtt}
 
 	\subsection{System}
-	Im System-Unterabschnitt kannst du Einstellungen zur Zeitsynchronisation
-	vornehmen, die interne microSD-Karte formatieren und diverse Informationen zur Fehlerbehebung
-	bekommen. Auch das Aktualisieren der Firmware ist hier möglich.
+    Im System-Unterabschnitt können das Ereignis-Log eingesehen und Firmware-Aktualisierungen eingespielt werden. Zusätzlich sind hier Einstellungen zu TLS-Zertifikaten, die Konfiguration des Fernzugriffs und zur Systemzeit möglich.
     
     \subsubsection{Einstellungen}
+    \label{einstellungen}
+    
+    Hier kann die Systemsprache konfiguriert werden. Alternativ ist es möglich, dass der WARP Energy Manager
+    die Systemsprache mittels der Browsersprache festlegt.
+    
+    Es ist zusätzlich möglich den Energiemanager mittels Knopfdruck neu zu starten.
+    
+	Falls das Webinterface nicht korrekt funktioniert, oder die Konfiguration defekt ist,
+	kannst du hier auch alle Einstellungen auf den Werkszustand zurücksetzen.
+	\hint{Durch das Zurücksetzen auf Werkszustand gehen \mbox{\textbf{alle}} Konfigurationen verloren.}
+	Nach dem Zurücksetzen startet das Webinterface wieder und öffnet
+	den Access-Point mit der SSID und Passphrase, die auf dem Aufkleber vermerkt
+	sind. Der WARP Energy Manager kann jetzt wieder nach \fullref{setup} konfiguriert werden.
+    
     
     \subsubsection{TLS-Zertifikate}
+    Hier können bis zu acht TLS-Zertifikate hochgeladen werden. Diese Zertifikate können
+    für OCPP- und MQTT-Verbindungen sowie zum Aufbau einer WiFi-Enterprise-Verbindung genutzt werden.
     
     \subsubsection{Fernzugriff}
+
+    Über die Fernzugriffs-Funktion kann auch von außerhalb des eigenen Netzwerks auf das Webinterface des WARP Energy Managers zugegriffen werden.
+
+    Zur Verwendung des Fernzugriffs, bzw. der Apps muss zunächst ein Account auf \rurl{https://my.warp-charger.com}{my.warp-charger.com} erstellt werden. Die Account-Daten müssen dann auf dem Webinterface des WARP Energy Managers unter \texttt{System} $\rightarrow$ \texttt{Fernzugriff} eingetragen werden.
+
+    %\gfx{./img_warp3/resized/web_remote_access}
+
+    \hint{Fernzugriffsverbindungen sind Ende-zu-Ende verschlüsselt. Der \url{my.warp-charger.com}-Server überträgt die verschlüsselten Daten zwischen Energy Manager und Browser, bzw. App und hat weder Einsicht in die übertragenen Daten, noch Zugriff auf den Energy Manager.}
+
 
 	\subsubsection{Systemzeit}\label{ntp}
 	Um für die Aufzeichnung der Energiebilanz und das Ereignis-Log die aktuelle Uhrzeit zur
@@ -953,27 +998,27 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\subsubsection{Firmware-Aktualisierung}
 	\label{firmware-update}
-    \todo{Todo verschieben}
 	\gfx{./img/resized/web_firmware_update}
-	Hier kannst du die Firmware des Energy Managers aktualisieren und das Webinterface neustarten.
+	Hier kannst du die Firmware des Energy Managers aktualisieren.
 	Wir entwickeln die Funktionalität
 	des Energy Managers laufend weiter. Bitte beachte, dass daher ggf. auch eine neue
 	Version dieser Betriebsanleitung bereitgestellt wird.
 	Die aktuelle Firmware und die neuste Betriebsanleitung findest du unter
 	\rurl{https://warp-charger.com}{warp-charger.com} zum Download.
 
-	\subsection{Zurücksetzen auf Werkszustand}\label{reset}
-	Falls das Webinterface nicht korrekt funktioniert, oder die Konfiguration defekt ist,
-	kannst du auf der Firmware-Aktualisierungs-Unterseite alle Einstellungen auf den Werkszustand zurücksetzen.
-	\hint{Durch das Zurücksetzen auf Werkszustand gehen \mbox{\textbf{alle}} Konfigurationen verloren.}
-	Nach dem Zurücksetzen startet das Webinterface wieder und öffnet
-	den Access-Point mit der SSID und Passphrase, die auf dem Aufkleber vermerkt
-	sind. Der WARP Energy Manager kann jetzt wieder nach \fullref{setup} konfiguriert werden.
-
-	Falls du das Webinterface nicht mehr erreichen kannst, kannst du versuchen, die Recovery-Seite zu öffnen.
+	\newpage
+	\section{Fehlerbehebung}
+	\label{fehlerbehebung}
+	Die Taster-LED des WARP Energy Manager blinkt in Fehlerfällen rot. Weitere Infos zu den Fehlern gibt das Display.
+    
+    \subsection{Zurücksetzen auf Werkszustand}
+    
+    Im Webinterface kann der WARP Energy Manager mittels Knopfdruck auf Wekseinstellungen zurückgesetzt werden (siehe \ref{einstellungen})
+    
+    Falls das Webinterface nicht mehr erreichen kannst, kannst du versuchen, die Recovery-Seite zu öffnen.
 	Falls du über den Access Point der Wallbox verbunden bist, erreichst du diese unter \url{http://10.0.0.1/recovery},
 	bei einer bestehenden Verbindung zu einem LAN oder WLAN über
-	\url{http://[konfigurierter_hostname]/recovery}, also z.\,B. \url{http://wem-ABC/recovery}.
+	\url{http://[konfigurierter_hostname]/recovery}, also z.\,B. \url{http://wem2-ABC/recovery}.
 	Über die Recovery-Seite kannst du den WARP Energy Manager neustarten, Firmware-Updates einspielen,
 	den Energy Manager auf den Werkszustand zurücksetzen (Factory Reset) und Debug-Reports
 	herunterladen.
@@ -992,29 +1037,10 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\gfx{./img/resized/factory_reset_2}
 
-	\newpage
-	\section{Fehlerbehebung}
-	\label{fehlerbehebung}
-	Die Status-LED des WARP Energy Manager blinkt in Fehlerfällen. Die Farbe gibt dir die Art des Fehlers an.
-	\subsection{Status-LED blinkt gelb}
-	Ist PV-Überschussladen aktiviert, atmet die Status-LED gelb, sobald Strom
-	aus dem Netz bezogen wird. Dies ist kein Fehlerzustand.
-	Sollte PV-Überschussladen nicht aktiv sein und die Status-LED blinkt gelb,
-	dann ist der WARP Energy Manager nicht zum konfigurierten WLAN verbunden und es ist kein LAN-Kabel angeschlossen.
-
-	\subsection{Status-LED blinkt rot}
-	Blinkt die Status-LED rot, so ist der WARP Energy Manager in einem
-	Fehlerzustand. Gründe können eine fehlgeschlagene Schützüberwachung oder ein
-	interner Fehler sein. Das Webinterface gibt genauere Auskunft.
-
-	\subsection{Status-LED blinkt violett}
-	Blinkt die Status-LED violett, so ist die Konfiguration nicht vollständig. Es muss mindestens die in \fullref{setup} beschriebene Minimalkonfiguration vorgenommen werden, damit der Energy Manager korrekt funktioniert.
-
 	\subsection{Sicherungswechsel}
-	Der WARP Energy Manager ist intern über zwei 5$\times\SI{20}{\milli\meter}$ Feinsicherungen (mittelträge (m), \SI{500}{\milli\ampere}) abgesichert.
-	Tinkerforge verbaut Sicherungen vom Typ \enquote{ESKA 521.014}. Die eine
-	Sicherung befindet sich im Eingangspfad der 230V Stromversorgung (L). Die
-	andere Sicherung befindet sich im Schaltausgang der Schützsteuerung.
+	Der WARP Energy Manager ist intern über eine 5$\times\SI{20}{\milli\meter}$ Feinsicherungen (träge (t), \SI{2}{\ampere}) abgesichert.
+	Tinkerforge verbaut Sicherungen vom Typ \enquote{ESKA 522.520}. Die 
+	Sicherung befindet sich im Eingangspfad der 230V Stromversorgung (L).
 
 	\section{Konformitätserklärung}
 	Die EU-Konformitätserklärung zum WARP Energy Manager ist in einem gesonderten Dokument verfügbar.
@@ -1047,31 +1073,30 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 			\item[Betriebstemperatur] \SI{0}{\celsius}
 			      bis \SI{+30}{\celsius}
 			\item[Schutzklasse] II
-			\item[PV-Überschussladen] max. 10 WARP Charger\footnote[12]{\label{fn:1}WARP
-			Charger/WARP Charger 2 in Varianten Smart/Pro}
-			\item[Lastmanagement] max. 10 WARP Charger\footref{fn:1}
+			\item[PV-Überschussladen] max. 32 WARP Charger\footnote[12]{\label{fn:1}WARP
+			Charger/WARP Charger 3 in Varianten Smart/Pro}
+			\item[Lastmanagement] max. 32 WARP Charger\footref{fn:1}
 			\item[Netzwerk] LAN, WLAN
 			\item[Schnittstellen] HTTP, MQTT
 		\end{description}
 	\end{minipage}
 
 
-	\section{Kontakt}
-	Tinkerforge GmbH\\ Zur Brinke 7\\ 33758 Schloß Holte-Stukenbrock
-	\begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{Website}}]
-		\item[E-Mail] \href{mailto:info@tinkerforge.com}{\texttt{info@tinkerforge.com}}
-		\item[Website] \href{https://warp-charger.com}{\texttt{warp-charger.com}}
-		\item[Telefon] \phonenumber{+49 5207 897300-0}
-		\item[Shop] \href{https://tinkerforge.com/de/shop/warp.html}{\texttt{tinkerforge.com/de/shop/warp.html}}
-	\end{description}
+    \section{Kontakt}
+    Tinkerforge GmbH\\ Helleforthstraße 22-28\\ 33758 Schloß Holte-Stukenbrock
+    \begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{Website}}]
+        \item[E-Mail] \href{mailto:info@tinkerforge.com}{\texttt{info@tinkerforge.com}}
+        \item[Website] \href{https://warp-charger.com}{\texttt{warp-charger.com}}
+        \item[Telefon] \phonenumber{+49 5207 897300-0}
+        \item[Shop] \href{https://tinkerforge.com/de/shop/warp.html}{\texttt{tinkerforge.com/de/shop/warp.html}}
+    \end{description}
 
 	\section{Dokumentversionen}
 	\begin{tabular}{lll}
 		\toprule
 		Datum      & Version & Kommentar                       \\
 		\midrule
-		03.03.2023 & 1.0.0   & Initialversion                  \\
-		14.03.2023 & 1.0.1   & Aktualisiert für Firmware 1.0.1 \\
+		06.11.2024 & 1.0.0   & Initialversion                  \\
 		\bottomrule
 	\end{tabular}
 
