@@ -85,6 +85,7 @@ EAN13_NUMBERS = {
     'WARP3-CP-22KW-CC-PC': b'4251640706081',
 
     'WARP-EM': b'4251640705381',
+    'WARP-EM2': b'4251640706098',
 }
 
 DESCRIPTION_PLACEHOLDER = b'WARP2 Charger Smart, 11 kW, 5 m, pulverbeschichtet'
@@ -138,6 +139,10 @@ def print_package2_label(sku, version, serial_number, build_date, instances, cop
     if sku == 'WARP-EM':
         description = b'WARP Energy Manager'
         version_major = 1
+        serial_number_kind = 7
+    elif sku == 'WARP-EM2':
+        description = b'WARP Energy Manager 2.0'
+        version_major = 2
         serial_number_kind = 7
     else:
         m = re.match(r'^(?:TF-)?WARP(2|3)-C(B|S|P)-(11|22)KW-(50|75|CC)(-PC)?$', sku)

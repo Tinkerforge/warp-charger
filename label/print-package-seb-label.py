@@ -10,25 +10,21 @@ import urllib.request
 import ssl
 import tinkerforge_util as tfutil  # sudo apt install python3-tinkerforge-util
 
-QR_CODE_COMMAND = b'W649,209,5,2,M,8,6,65,0\r'
-QR_CODE_PADDING = b';;\r'
-
-DESCRIPTION_PLACEHOLDER = b'WARP Energy Manager'
-
-SKU_PLACEHOLDER = b'WARP-EM'
+EAN13_PLACEHOLDER = b'4251640705480'
+EAN13_NUMBERS = {
+    'SEB': b'4251640706104',
+}
 
 VERSION_PLACEHOLDER = b'2.17'
 
-SERIAL_NUMBER_PLACEHOLDER = b'6000000001'
+SERIAL_NUMBER_PLACEHOLDER = b'3000000001'
 
-BUILD_DATE_PLACEHOLDER = b'2023-01'
-
-MAC_ADDRESS_PLACEHOLDER = b'11:22:33:44:55:66'
+BUILD_DATE_PLACEHOLDER = b'2021-01'
 
 COPIES_FORMAT = '^C{0}\r'
 
 
-def get_next_serial_number():
+def get_next_serial_number(kind):
     with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'staging-password.txt'), 'r') as f:
         staging_password = f.read().strip()
 
@@ -50,10 +46,10 @@ def get_next_serial_number():
 
     serial_number = int(urllib.request.urlopen('https://stagingwww.tinkerforge.com/warpsn', timeout=15).read())
 
-    return '7{0:09}'.format(serial_number)
+    return '3{0:09}'.format(serial_number)
 
 
-def print_wem_label(sku, version, serial_number, build_date, mac_address, instances, copies, stdout, force_build_date):
+def print_package_seb_label(version, serial_number, build_date, instances, copies, stdout, force_build_date):
     # check instances
     if instances < 1 or instances > 25:
         raise Exception('Invalid instances: {0}'.format(instances))
@@ -62,29 +58,12 @@ def print_wem_label(sku, version, serial_number, build_date, mac_address, instan
     if copies < 1 or copies > 5:
         raise Exception('Invalid copies: {0}'.format(copies))
 
-    # parse SKU
-    m = re.match(r'^WARP-EM(2)?$', sku)
-
-    if m == None:
-        raise Exception('Invalid SKU: {0}'.format(sku))
-
-    sku_gen = m.group(1)
-
-    if sku_gen == None:
-        description = b'WARP Energy Manager'
-        version_major = 1
-    elif sku_gen == '2':
-        description = b'WARP Energy Manager 2.0'
-        version_major = 2
-    else:
-        assert False, sku_gen
-
     # check version
-    if re.match(r'^{0}\.(0|[1-9][0-9]*)$'.format(version_major), version) == None:
+    if re.match(r'^1\.(0|[1-9][0-9]*)$', version) == None:
         raise Exception('Invalid version: {0}'.format(version))
 
     # check serial number
-    if re.match(r'^(-|7[0-9]{9})$', serial_number) == None:
+    if re.match(r'^(-|3[0-9]{9})$', serial_number) == None:
         raise Exception('Invalid serial number: {0}'.format(serial_number))
 
     # check build date
@@ -98,39 +77,18 @@ def print_wem_label(sku, version, serial_number, build_date, mac_address, instan
     if not force_build_date and (parsed_build_date.year < now.year or (parsed_build_date.year == now.year and parsed_build_date.month < now.month)):
         raise Exception('Invalid build date: {0}'.format(build_date))
 
-    # check MAC address
-    if re.match(r'^[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}$', mac_address) == None:
-        raise Exception('Invalid MAC addressr: {0}'.format(mac_address))
-
     # read EZPL file
-    with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'wem.prn'), 'rb') as f:
+    with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'package-seb.prn'), 'rb') as f:
         template = f.read()
 
     if template.find(b'^H13\r') < 0:
         raise Exception('EZPL file is using wrong darkness setting')
 
-    # patch QR code
-    if template.find(QR_CODE_COMMAND) < 0:
-        raise Exception('QR code command missing in EZPL file')
+    # patch EAN13
+    if template.find(EAN13_PLACEHOLDER) < 0:
+        raise Exception('EAN13 placeholder missing in EZPL file')
 
-    offset = len(MAC_ADDRESS_PLACEHOLDER) - len(mac_address) + len(VERSION_PLACEHOLDER) - len(version)
-
-    if offset < 0:
-        raise Exception('QR code data too long')
-
-    template = template.replace(QR_CODE_PADDING, b';' * offset + QR_CODE_PADDING)
-
-    # patch description
-    if template.find(DESCRIPTION_PLACEHOLDER) < 0:
-        raise Exception('Description placeholder missing in EZPL file')
-
-    template = template.replace(DESCRIPTION_PLACEHOLDER, description)
-
-    # patch SKU
-    if template.find(SKU_PLACEHOLDER) < 0:
-        raise Exception('SKU placeholder missing in EZPL file')
-
-    template = template.replace(SKU_PLACEHOLDER, sku.encode('ascii'))
+    template = template.replace(EAN13_PLACEHOLDER, EAN13_NUMBERS['SEB'])
 
     # patch version
     if template.find(VERSION_PLACEHOLDER) < 0:
@@ -143,12 +101,6 @@ def print_wem_label(sku, version, serial_number, build_date, mac_address, instan
         raise Exception('Build date placeholder missing in EZPL file')
 
     template = template.replace(BUILD_DATE_PLACEHOLDER, build_date.encode('ascii'))
-
-    # patch MAC address
-    if template.find(MAC_ADDRESS_PLACEHOLDER) < 0:
-        raise Exception('MAC address placeholder missing in EZPL file')
-
-    template = template.replace(MAC_ADDRESS_PLACEHOLDER, mac_address.encode('ascii'))
 
     # patch copies
     copies_command = COPIES_FORMAT.format(1).encode('ascii')
@@ -184,11 +136,9 @@ def print_wem_label(sku, version, serial_number, build_date, mac_address, instan
 def main():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('sku')
     parser.add_argument('version')
     parser.add_argument('serial_number')
     parser.add_argument('build_date')
-    parser.add_argument('mac_address')
     parser.add_argument('-i', '--instances', type=int, default=1)
     parser.add_argument('-c', '--copies', type=int, default=1)
     parser.add_argument('-s', '--stdout', action='store_true')
@@ -199,7 +149,7 @@ def main():
     assert args.instances > 0
     assert args.copies > 0
 
-    print_wem_label(args.sku, args.version, args.serial_number, args.build_date, args.mac_address, args.instances, args.copies, args.stdout, args.force_build_date)
+    print_package_seb_label(args.version, args.serial_number, args.build_date, args.instances, args.copies, args.stdout, args.force_build_date)
 
 
 if __name__ == '__main__':
