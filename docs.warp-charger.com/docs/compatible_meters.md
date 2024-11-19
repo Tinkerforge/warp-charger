@@ -238,8 +238,7 @@ Das Wechselrichterpasswort ist standardmäßig auf 0000 gesetzt.
 
 ### Goodwe
 Die Einbindung eines Wechselrichters der ES, EM, SBP, ET, BT, EH, BH, EHB Serie ist mittels Modbus/TCP über das LAN bzw. Wifi+LAN Modul möglich.
-Wir arbeiten zur Zeit daran eine Goodwe Registertabelle zu hinterlegen (Coming Soon). Aktuell muss die Registertabelle von Hand angegeben werden.
-Zukünftig werden die virtueller Stromzähler "Netzanschluss", "Speicher", "Last" und "Wechselrichter" bereitgestellt.
+Es werden die virtueller Stromzähler "Netzanschluss", "Speicher", "Last", "Backup-Last" und "Wechselrichter" bereitgestellt.
 
 Ist an dem Wechselrichter ein Stromzähler angeschlossen (z.B. GM300), der vom Wechselrichter ausgelesen werden kann, kann dieser Stromzähler für ein PV-Überschussladen und ein dynamisches Lastmanagement genutzt werden.
 
