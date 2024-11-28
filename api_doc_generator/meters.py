@@ -227,11 +227,127 @@ meters = Module("meters", "Stromzähler", "",
                     "device_address": Elem.INT("Geräteadresse. Typischerweise 247."),
                 }),
 
+                11: Elem.OBJECT("Solax Hybrid-Wechselrichter", members={
+                    "virtual_meter": Elem.INT("Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", constants=[
+                        Const(0, "Kein virtueller Zähler ausgewählt"),
+                        Const(1, "Wechselrichter"),
+                        Const(2, "Netzanschluss"),
+                        Const(3, "Speicher")
+                    ]),
+                    "device_address": Elem.INT("Geräteadresse. Typischerweise 1."),
+                }),
+                12: Elem.OBJECT("Fronius GEN24 Plus", members={
+                    "virtual_meter": Elem.INT("Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", constants=[
+                        Const(0, "Kein virtueller Zähler ausgewählt"),
+                        Const(1, "Wechselrichter (wird nicht verwendet)"),
+                        Const(2, "Netzanschluss (wird nicht verwendet)"),
+                        Const(3, "Speicher")
+                    ]),
+                    "device_address": Elem.INT("Geräteadresse. Typischerweise 1."),
+                }),
+                13: Elem.OBJECT("Hailei Hybrid-Wechselrichter", members={
+                    "virtual_meter": Elem.INT("Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", constants=[
+                        Const(0, "Kein virtueller Zähler ausgewählt"),
+                        Const(1, "Wechselrichter"),
+                        Const(2, "Netzanschluss"),
+                        Const(3, "Speicher")
+                    ]),
+                    "device_address": Elem.INT("Geräteadresse. Typischerweise 85."),
+                }),
+                14: Elem.OBJECT("Fox ESS H3 Hybrid-Wechselrichter", members={
+                    "virtual_meter": Elem.INT("Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", constants=[
+                        Const(0, "Kein virtueller Zähler ausgewählt"),
+                        Const(1, "Wechselrichter"),
+                        Const(2, "Netzanschluss"),
+                        Const(3, "Speicher")
+                    ]),
+                    "device_address": Elem.INT("Geräteadresse. Typischerweise 247."),
+                }),
+
+                **{15 + i: Elem.OBJECT(f"Siemens {siemens_subtype} Stromzähler", members={
+                        "device_address": Elem.INT("Geräteadresse. Typischerweise 1."),
+                    }) for i, siemens_subtype in enumerate([
+                        "PAC2200",
+                        "PAC3120",
+                        "PAC3200",
+                        "PAC3220",
+                        "PAC4200",
+                        "PAC4220",
+                        ])
+                },
+
+                21: Elem.OBJECT("Carlo Gavazzi EM24 DIN Stromzähler", members={"device_address": Elem.INT("Geräteadresse. Typischerweise 1.")}),
+                22: Elem.OBJECT("Carlo Gavazzi EM24 E1 Stromzähler", members={"device_address": Elem.INT("Geräteadresse. Typischerweise 1.")}),
+
+                23: Elem.OBJECT("Carlo Gavazzi EM100 Stromzähler", members={
+                    "device_address": Elem.INT("Geräteadresse. Typischerweise 1."),
+                    "phase": Elem.INT("Phase der die Messwerte zugeordnet werden.", constants=[
+                        Const(0, "Keine Phase ausgewählt"),
+                        Const(1, "L1"),
+                        Const(2, "L2"),
+                        Const(3, "L3")
+                    ]),
+                }),
+                24: Elem.OBJECT("Carlo Gavazzi ET100 Stromzähler", members={
+                    "device_address": Elem.INT("Geräteadresse. Typischerweise 1."),
+                    "phase": Elem.INT("Phase der die Messwerte zugeordnet werden.", constants=[
+                        Const(0, "Keine Phase ausgewählt"),
+                        Const(1, "L1"),
+                        Const(2, "L2"),
+                        Const(3, "L3")
+                    ]),
+                }),
+
+                25: Elem.OBJECT("Carlo Gavazzi EM210 Stromzähler", members={"device_address": Elem.INT("Geräteadresse. Typischerweise 1.")}),
+
+                26: Elem.OBJECT("Carlo Gavazzi EM270 Stromzähler", members={
+                    "virtual_meter": Elem.INT("Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", constants=[
+                        Const(0, "Kein virtueller Zähler ausgewählt"),
+                        Const(1, "Zähler"),
+                        Const(2, "Stromwandler 1"),
+                        Const(3, "Stromwandler 2")
+                    ]),
+                    "device_address": Elem.INT("Geräteadresse. Typischerweise 1.")
+                }),
+                27: Elem.OBJECT("Carlo Gavazzi EM280 Stromzähler", members={
+                    "virtual_meter": Elem.INT("Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", constants=[
+                        Const(0, "Kein virtueller Zähler ausgewählt"),
+                        Const(1, "Zähler"),
+                        Const(2, "Stromwandler 1"),
+                        Const(3, "Stromwandler 2")
+                    ]),
+                    "device_address": Elem.INT("Geräteadresse. Typischerweise 1.")
+                }),
+
+                28: Elem.OBJECT("Carlo Gavazzi EM300 Stromzähler", members={"device_address": Elem.INT("Geräteadresse. Typischerweise 1.")}),
+                29: Elem.OBJECT("Carlo Gavazzi ET300 Stromzähler", members={"device_address": Elem.INT("Geräteadresse. Typischerweise 1.")}),
+                30: Elem.OBJECT("Carlo Gavazzi EM510 Stromzähler", members={
+                    "device_address": Elem.INT("Geräteadresse. Typischerweise 1."),
+                    "phase": Elem.INT("Phase der die Messwerte zugeordnet werden.", constants=[
+                        Const(0, "Keine Phase ausgewählt"),
+                        Const(1, "L1"),
+                        Const(2, "L2"),
+                        Const(3, "L3")
+                    ]),
+                }),
+                31: Elem.OBJECT("Carlo Gavazzi EM530 Stromzähler", members={"device_address": Elem.INT("Geräteadresse. Typischerweise 1.")}),
+                32: Elem.OBJECT("Carlo Gavazzi EM540 Stromzähler", members={"device_address": Elem.INT("Geräteadresse. Typischerweise 1.")})
             })
         }),
         7: Elem.OBJECT("SMA Speedwire-Stromzähler.", members={
             "display_name": Elem.STRING("Anzeigename des Stromzählers"),
         }),
+        8: Elem.OBJECT("RCT Power Wechselrichter", members={
+            "display_name": Elem.STRING("Anzeigename des Wechselrichters"),
+            "host": Elem.STRING("Hostname oder IP-Adresse des Wechselrichters"),
+            "port": Elem.INT("Port des Wechselrichters. Typischerweise 8899"),
+            "virtual_meter": Elem.INT("Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", constants=[
+                        Const(0, "Kein virtueller Zähler ausgewählt"),
+                        Const(1, "Wechselrichter (wird nicht verwendet)"),
+                        Const(2, "Netzanschluss"),
+                        Const(3, "Speicher")
+                    ]),
+        })
     })),
 
     Func("X/state", FuncType.STATE, Elem.HIDDEN_UNION("Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in {{{ref:meters/X/config}}} konfiguriert wurde.", tab_id="metersXConfig", get_tag_fn=meters_x_get_tag_fn, members={

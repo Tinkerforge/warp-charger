@@ -104,103 +104,26 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '
 </table>
 
 <br/><br/><br/>
-## `charge_manager/available_phases` {#charge_manager_available_phases_warp1}
-
-
-Anzahl der derzeit verbundenen Phasen der Wallboxen.
-:::info[Beispiel]
-    <Tabs groupId="apiType" queryString className="hidden-tabs">
-        <TabItem value="http" label="HTTP (curl)">
-```bash
-# $HOST z.B. warp-AbCd
-```
-
-#### Lesen
-```bash
-curl http://$HOST/charge_manager/available_phases
-```
-```jsx
-{ "phases": 1 }
-```
-
-
-
-#### Schreiben
-```bash
-curl http://$HOST/charge_manager/available_phases -d '{ "phases": 1 }'
-```
-
-oder abgekürzt:
-
-```bash
-curl http://$HOST/charge_manager/available_phases -d '1'
-```
-
-
-
-
-        </TabItem>
-        <TabItem value="mqtt" label="MQTT (mosquitto)">
-```bash
-# $BROKER z.B. my_mosquitto.localdomain
-# $PREFIX z.B. warp/AbCd
-```
-
-#### Lesen
-```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/available_phases
-```
-```jsx
-{ "phases": 1 }
-```
-
-
-
-#### Schreiben
-            Mit MQTT auf <code>$PREFIX/charge_manager/available_phases<strong>_update</strong></code>
-
-
-```bash
-mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '{ "phases": 1 }'
-```
-
-oder abgekürzt:
-
-```bash
-mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '1'
-```
-
-
-
-
-        </TabItem>
-    </Tabs>
-:::
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
-    <td>
-        Anzahl der verbundenen Phasen. Legt fest, ob der einphasige oder dreiphasige minimale Ladestrom für die Stromverteilung beachtet wird. Wird üblicherweise durch die Phasenumschaltung des Energy Managers vorgegeben.
-    </td>
-</tr>
-    </tbody>
-</table>
-
-<br/><br/><br/>
 ## `charge_manager/state` {#charge_manager_state_warp1}
 
 
 Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
+
+
+
+<br/><br/><br/>
+## `charge_manager/low_level_state` {#charge_manager_low_level_state_warp1}
+
+
+Der Low-Level-Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
+
+
+
+<br/><br/><br/>
+## `charge_manager/low_level_config` {#charge_manager_low_level_config_warp1}
+
+
+Die Low-Level-Konfiguration des Lastmanagers. Wird zum Fine-Tuning des Verteilungsalgorithmus verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
 
 
 
@@ -452,6 +375,20 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
                 Anzeigename der zu steuernden Wallbox
             </td>
         </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`rot`<br/>int</th>
+            <td>
+                Phasenrotation der zu steuernden Wallbox
+                - **0** - Unbekannt
+                - **1** - L123
+                - **2** - L132
+                - **3** - L231
+                - **4** - L213
+                - **5** - L321
+                - **6** - L312
+            </td>
+        </tr>
             </tbody>
         </table>
     </td>
@@ -553,103 +490,26 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '
 </table>
 
 <br/><br/><br/>
-## `charge_manager/available_phases` {#charge_manager_available_phases_warp2}
-
-
-Anzahl der derzeit verbundenen Phasen der Wallboxen.
-:::info[Beispiel]
-    <Tabs groupId="apiType" queryString className="hidden-tabs">
-        <TabItem value="http" label="HTTP (curl)">
-```bash
-# $HOST z.B. warp2-AbCd
-```
-
-#### Lesen
-```bash
-curl http://$HOST/charge_manager/available_phases
-```
-```jsx
-{ "phases": 1 }
-```
-
-
-
-#### Schreiben
-```bash
-curl http://$HOST/charge_manager/available_phases -d '{ "phases": 1 }'
-```
-
-oder abgekürzt:
-
-```bash
-curl http://$HOST/charge_manager/available_phases -d '1'
-```
-
-
-
-
-        </TabItem>
-        <TabItem value="mqtt" label="MQTT (mosquitto)">
-```bash
-# $BROKER z.B. my_mosquitto.localdomain
-# $PREFIX z.B. warp2/AbCd
-```
-
-#### Lesen
-```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/available_phases
-```
-```jsx
-{ "phases": 1 }
-```
-
-
-
-#### Schreiben
-            Mit MQTT auf <code>$PREFIX/charge_manager/available_phases<strong>_update</strong></code>
-
-
-```bash
-mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '{ "phases": 1 }'
-```
-
-oder abgekürzt:
-
-```bash
-mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '1'
-```
-
-
-
-
-        </TabItem>
-    </Tabs>
-:::
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
-    <td>
-        Anzahl der verbundenen Phasen. Legt fest, ob der einphasige oder dreiphasige minimale Ladestrom für die Stromverteilung beachtet wird. Wird üblicherweise durch die Phasenumschaltung des Energy Managers vorgegeben.
-    </td>
-</tr>
-    </tbody>
-</table>
-
-<br/><br/><br/>
 ## `charge_manager/state` {#charge_manager_state_warp2}
 
 
 Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
+
+
+
+<br/><br/><br/>
+## `charge_manager/low_level_state` {#charge_manager_low_level_state_warp2}
+
+
+Der Low-Level-Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
+
+
+
+<br/><br/><br/>
+## `charge_manager/low_level_config` {#charge_manager_low_level_config_warp2}
+
+
+Die Low-Level-Konfiguration des Lastmanagers. Wird zum Fine-Tuning des Verteilungsalgorithmus verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
 
 
 
@@ -901,6 +761,20 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
                 Anzeigename der zu steuernden Wallbox
             </td>
         </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`rot`<br/>int</th>
+            <td>
+                Phasenrotation der zu steuernden Wallbox
+                - **0** - Unbekannt
+                - **1** - L123
+                - **2** - L132
+                - **3** - L231
+                - **4** - L213
+                - **5** - L321
+                - **6** - L312
+            </td>
+        </tr>
             </tbody>
         </table>
     </td>
@@ -1002,103 +876,26 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '
 </table>
 
 <br/><br/><br/>
-## `charge_manager/available_phases` {#charge_manager_available_phases_warp3}
-
-
-Anzahl der derzeit verbundenen Phasen der Wallboxen.
-:::info[Beispiel]
-    <Tabs groupId="apiType" queryString className="hidden-tabs">
-        <TabItem value="http" label="HTTP (curl)">
-```bash
-# $HOST z.B. warp3-AbCd
-```
-
-#### Lesen
-```bash
-curl http://$HOST/charge_manager/available_phases
-```
-```jsx
-{ "phases": 1 }
-```
-
-
-
-#### Schreiben
-```bash
-curl http://$HOST/charge_manager/available_phases -d '{ "phases": 1 }'
-```
-
-oder abgekürzt:
-
-```bash
-curl http://$HOST/charge_manager/available_phases -d '1'
-```
-
-
-
-
-        </TabItem>
-        <TabItem value="mqtt" label="MQTT (mosquitto)">
-```bash
-# $BROKER z.B. my_mosquitto.localdomain
-# $PREFIX z.B. warp3/AbCd
-```
-
-#### Lesen
-```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/available_phases
-```
-```jsx
-{ "phases": 1 }
-```
-
-
-
-#### Schreiben
-            Mit MQTT auf <code>$PREFIX/charge_manager/available_phases<strong>_update</strong></code>
-
-
-```bash
-mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '{ "phases": 1 }'
-```
-
-oder abgekürzt:
-
-```bash
-mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '1'
-```
-
-
-
-
-        </TabItem>
-    </Tabs>
-:::
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
-    <td>
-        Anzahl der verbundenen Phasen. Legt fest, ob der einphasige oder dreiphasige minimale Ladestrom für die Stromverteilung beachtet wird. Wird üblicherweise durch die Phasenumschaltung des Energy Managers vorgegeben.
-    </td>
-</tr>
-    </tbody>
-</table>
-
-<br/><br/><br/>
 ## `charge_manager/state` {#charge_manager_state_warp3}
 
 
 Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
+
+
+
+<br/><br/><br/>
+## `charge_manager/low_level_state` {#charge_manager_low_level_state_warp3}
+
+
+Der Low-Level-Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
+
+
+
+<br/><br/><br/>
+## `charge_manager/low_level_config` {#charge_manager_low_level_config_warp3}
+
+
+Die Low-Level-Konfiguration des Lastmanagers. Wird zum Fine-Tuning des Verteilungsalgorithmus verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
 
 
 
@@ -1350,6 +1147,20 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
                 Anzeigename der zu steuernden Wallbox
             </td>
         </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`rot`<br/>int</th>
+            <td>
+                Phasenrotation der zu steuernden Wallbox
+                - **0** - Unbekannt
+                - **1** - L123
+                - **2** - L132
+                - **3** - L231
+                - **4** - L213
+                - **5** - L321
+                - **6** - L312
+            </td>
+        </tr>
             </tbody>
         </table>
     </td>
@@ -1451,103 +1262,26 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '
 </table>
 
 <br/><br/><br/>
-## `charge_manager/available_phases` {#charge_manager_available_phases_wem}
-
-
-Anzahl der derzeit verbundenen Phasen der Wallboxen.
-:::info[Beispiel]
-    <Tabs groupId="apiType" queryString className="hidden-tabs">
-        <TabItem value="http" label="HTTP (curl)">
-```bash
-# $HOST z.B. wem-AbCd
-```
-
-#### Lesen
-```bash
-curl http://$HOST/charge_manager/available_phases
-```
-```jsx
-{ "phases": 1 }
-```
-
-
-
-#### Schreiben
-```bash
-curl http://$HOST/charge_manager/available_phases -d '{ "phases": 1 }'
-```
-
-oder abgekürzt:
-
-```bash
-curl http://$HOST/charge_manager/available_phases -d '1'
-```
-
-
-
-
-        </TabItem>
-        <TabItem value="mqtt" label="MQTT (mosquitto)">
-```bash
-# $BROKER z.B. my_mosquitto.localdomain
-# $PREFIX z.B. wem/AbCd
-```
-
-#### Lesen
-```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/available_phases
-```
-```jsx
-{ "phases": 1 }
-```
-
-
-
-#### Schreiben
-            Mit MQTT auf <code>$PREFIX/charge_manager/available_phases<strong>_update</strong></code>
-
-
-```bash
-mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '{ "phases": 1 }'
-```
-
-oder abgekürzt:
-
-```bash
-mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '1'
-```
-
-
-
-
-        </TabItem>
-    </Tabs>
-:::
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
-    <td>
-        Anzahl der verbundenen Phasen. Legt fest, ob der einphasige oder dreiphasige minimale Ladestrom für die Stromverteilung beachtet wird. Wird üblicherweise durch die Phasenumschaltung des Energy Managers vorgegeben.
-    </td>
-</tr>
-    </tbody>
-</table>
-
-<br/><br/><br/>
 ## `charge_manager/state` {#charge_manager_state_wem}
 
 
 Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
+
+
+
+<br/><br/><br/>
+## `charge_manager/low_level_state` {#charge_manager_low_level_state_wem}
+
+
+Der Low-Level-Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
+
+
+
+<br/><br/><br/>
+## `charge_manager/low_level_config` {#charge_manager_low_level_config_wem}
+
+
+Die Low-Level-Konfiguration des Lastmanagers. Wird zum Fine-Tuning des Verteilungsalgorithmus verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
 
 
 
@@ -1799,6 +1533,20 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
                 Anzeigename der zu steuernden Wallbox
             </td>
         </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`rot`<br/>int</th>
+            <td>
+                Phasenrotation der zu steuernden Wallbox
+                - **0** - Unbekannt
+                - **1** - L123
+                - **2** - L132
+                - **3** - L231
+                - **4** - L213
+                - **5** - L321
+                - **6** - L312
+            </td>
+        </tr>
             </tbody>
         </table>
     </td>
@@ -1900,103 +1648,26 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '
 </table>
 
 <br/><br/><br/>
-## `charge_manager/available_phases` {#charge_manager_available_phases_any}
-
-
-Anzahl der derzeit verbundenen Phasen der Wallboxen.
-:::info[Beispiel]
-    <Tabs groupId="apiType" queryString className="hidden-tabs">
-        <TabItem value="http" label="HTTP (curl)">
-```bash
-# $HOST z.B. warp-AbCd
-```
-
-#### Lesen
-```bash
-curl http://$HOST/charge_manager/available_phases
-```
-```jsx
-{ "phases": 1 }
-```
-
-
-
-#### Schreiben
-```bash
-curl http://$HOST/charge_manager/available_phases -d '{ "phases": 1 }'
-```
-
-oder abgekürzt:
-
-```bash
-curl http://$HOST/charge_manager/available_phases -d '1'
-```
-
-
-
-
-        </TabItem>
-        <TabItem value="mqtt" label="MQTT (mosquitto)">
-```bash
-# $BROKER z.B. my_mosquitto.localdomain
-# $PREFIX z.B. warp/AbCd
-```
-
-#### Lesen
-```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/available_phases
-```
-```jsx
-{ "phases": 1 }
-```
-
-
-
-#### Schreiben
-            Mit MQTT auf <code>$PREFIX/charge_manager/available_phases<strong>_update</strong></code>
-
-
-```bash
-mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '{ "phases": 1 }'
-```
-
-oder abgekürzt:
-
-```bash
-mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_phases_update -m '1'
-```
-
-
-
-
-        </TabItem>
-    </Tabs>
-:::
-
-
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
-    <td>
-        Anzahl der verbundenen Phasen. Legt fest, ob der einphasige oder dreiphasige minimale Ladestrom für die Stromverteilung beachtet wird. Wird üblicherweise durch die Phasenumschaltung des Energy Managers vorgegeben.
-    </td>
-</tr>
-    </tbody>
-</table>
-
-<br/><br/><br/>
 ## `charge_manager/state` {#charge_manager_state_any}
 
 
 Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
+
+
+
+<br/><br/><br/>
+## `charge_manager/low_level_state` {#charge_manager_low_level_state_any}
+
+
+Der Low-Level-Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
+
+
+
+<br/><br/><br/>
+## `charge_manager/low_level_config` {#charge_manager_low_level_config_any}
+
+
+Die Low-Level-Konfiguration des Lastmanagers. Wird zum Fine-Tuning des Verteilungsalgorithmus verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
 
 
 
@@ -2266,6 +1937,23 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
                 Anzeigename der zu steuernden Wallbox
             </td>
         </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`rot`<br/>int</th>
+            <td>
+                Phasenrotation der zu steuernden Wallbox
+                
+                
+                
+                - **0** - Unbekannt
+                - **1** - L123
+                - **2** - L132
+                - **3** - L231
+                - **4** - L213
+                - **5** - L321
+                - **6** - L312
+            </td>
+        </tr>
             </tbody>
         </table>
         
@@ -2294,6 +1982,23 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
                 Anzeigename der zu steuernden Wallbox
             </td>
         </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`rot`<br/>int</th>
+            <td>
+                Phasenrotation der zu steuernden Wallbox
+                
+                
+                
+                - **0** - Unbekannt
+                - **1** - L123
+                - **2** - L132
+                - **3** - L231
+                - **4** - L213
+                - **5** - L321
+                - **6** - L312
+            </td>
+        </tr>
             </tbody>
         </table>
     </td>
@@ -2310,13 +2015,18 @@ export const toc = [
     "level": 2,
     
 },{
-    "value": "charge_manager/available_phases",
-    "id": "charge_manager_available_phases",
+    "value": "charge_manager/state",
+    "id": "charge_manager_state",
     "level": 2,
     
 },{
-    "value": "charge_manager/state",
-    "id": "charge_manager_state",
+    "value": "charge_manager/low_level_state",
+    "id": "charge_manager_low_level_state",
+    "level": 2,
+    
+},{
+    "value": "charge_manager/low_level_config",
+    "id": "charge_manager_low_level_config",
     "level": 2,
     
 },{

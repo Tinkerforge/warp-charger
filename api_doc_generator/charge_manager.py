@@ -3,7 +3,16 @@ from api_doc_common import *
 def charger(version):
     return [Elem.OBJECT("Eine zu steuernde Wallbox", version=version, members = {
         "host": Elem.STRING("IP-Adresse der zu steuernden Wallbox"),
-        "name": Elem.STRING("Anzeigename der zu steuernden Wallbox")
+        "name": Elem.STRING("Anzeigename der zu steuernden Wallbox"),
+        "rot": Elem.INT("Phasenrotation der zu steuernden Wallbox", constants=[
+                Const(0, "Unbekannt"),
+                Const(1, "L123"),
+                Const(2, "L132"),
+                Const(3, "L231"),
+                Const(4, "L213"),
+                Const(5, "L321"),
+                Const(6, "L312"),
+        ])
 })]
 
 charge_manager = Module("charge_manager", "Lastmanager", "", "Das `charge_manager`-Modul implementiert einen Lastmanager, der eine verfügbare Menge Strom auf ein oder mehrere WARP Charger (jeder Generation) verteilen kann. Der Lastmanager stellt sicher, dass der konfigurierte Verbund an WARP Chargern niemals mehr als den verfügbaren Strom beziehen und versucht diesen möglichst fair zu verteilen. Ein WARP Energy Manager verwendet den Lastmanager außerdem um die Phasenumschaltung eines Verbunds an WARP Chargern über ein externes Schütz sicher umzusetzen.", Version.ANY, [
@@ -12,12 +21,9 @@ charge_manager = Module("charge_manager", "Lastmanager", "", "Das `charge_manage
         })
     ),
 
-    Func("available_phases", FuncType.CONFIGURATION, Elem.OBJECT("Anzahl der derzeit verbundenen Phasen der Wallboxen.", members={
-            "phases": Elem.INT("Anzahl der verbundenen Phasen. Legt fest, ob der einphasige oder dreiphasige minimale Ladestrom für die Stromverteilung beachtet wird. Wird üblicherweise durch die Phasenumschaltung des Energy Managers vorgegeben.", unit=Units.mA),
-        })
-    ),
-
     Func("state", FuncType.STATE, Elem.OPAQUE("Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>")),
+    Func("low_level_state", FuncType.STATE, Elem.OPAQUE("Der Low-Level-Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>")),
+    Func("low_level_config", FuncType.CONFIGURATION, Elem.OPAQUE("Die Low-Level-Konfiguration des Lastmanagers. Wird zum Fine-Tuning des Verteilungsalgorithmus verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>")),
 
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die Lastmanager-Konfiguration.", members={
             "enable_charge_manager": Elem.BOOL("Gibt an, ob der Lastmanager aktiviert sein soll.", constants=[

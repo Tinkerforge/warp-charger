@@ -8,6 +8,10 @@ modbus_tcp = Module("modbus_tcp", "Modbus/TCP", "", "", Version.CHARGER, [
             Const(0, "WARP-Charger-Registertabelle"),
             Const(1, "Registertabelle kompatibel zu Bender CC612/613"),
             Const(2, "Registertabelle kompatibel zu Keba C-Series"),
-        ])
+        ]),
+        "send_illegal_data_address": Elem.BOOL("Gibt an, ob der Modbus/TCP-Server IllegalDataAddress-Fehler schickt, wenn unbekannte Register gelesen werden", constants=[
+            Const(True, "Der Server antwortet mit einem IllegalDataAddress-Fehler, wenn ein unbekanntes Register gelesen wird."),
+            Const(False, "Der Server antwortet mit dem Wert 0, wenn ein unbekanntes Register gelesen wird."),
+        ]),
     }))
 ])

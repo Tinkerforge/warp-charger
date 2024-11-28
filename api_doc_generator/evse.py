@@ -476,8 +476,8 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", "Das `evse`-Modul verwaltet Z
 
     Func("start_charging", FuncType.COMMAND, Elem.NULL("Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit {{{ref:evse/stop_charging}}} wieder gestoppt werden."), command_is_action=True),
 
-    Func("start_debug", FuncType.HTTP_ONLY, Elem.OPAQUE("Startet ein Ladeprotokoll. Es werden hochfrequent Messwerte des Ladecontrollers auf die WebSockets geschrieben, bis {{{ref:evse/stop_debug}}} aufgerufen wird.")),
-    Func("stop_debug", FuncType.HTTP_ONLY, Elem.OPAQUE("Stoppt ein Ladeprotokoll. Siehe {{{ref:evse/start_debug}}} für Details.")),
+    #Func("start_debug", FuncType.HTTP_ONLY, Elem.OPAQUE("Startet ein Ladeprotokoll. Es werden hochfrequent Messwerte des Ladecontrollers auf die WebSockets geschrieben, bis {{{ref:evse/stop_debug}}} aufgerufen wird.")),
+    #Func("stop_debug", FuncType.HTTP_ONLY, Elem.OPAQUE("Stoppt ein Ladeprotokoll. Siehe {{{ref:evse/start_debug}}} für Details.")),
 
     Func("meter_config", FuncType.CONFIGURATION, Elem.OBJECT("Gibt an, welcher Stromzähler als der im WARP Charger verbaute Stromzähler betrachtet werden soll, z.B. für Ladetracker, Ladelimits, usw. Damit kann beispielsweise ein externer Zähler für die Aufzeichnung von Ladevorgängen verwendet werden.\n\n:::tip\n\nFür das PV-Überschussladen muss ein anderer Zähler genutzt werden, der die Werte am Hausanschlusspunkt misst. Die ID dieses Zählers wird nicht hier, sondern mit `meter_slot_grid_power` in {{{ref:power_manager/config}}} gesetzt\n\n:::", members={
         "slot": Elem.INT("Stromzählerslot, der verwendet werden soll")

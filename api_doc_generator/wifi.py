@@ -15,6 +15,7 @@ wifi = Module("wifi", "WLAN-Konfiguration", "", "", Version.ANY, [
                 Const(3,"Fallback aktiv"),
             ]),
             "ap_bssid": Elem.STRING("BSSID des WLAN-Access-Points."),
+            "ap_sta_count": Elem.INT("Anzahl der aktuell zum WLAN-Access-Point verbundenen Geräte."),
             "sta_ip": Elem.STRING("Aktuelle IP des Geräts im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht."),
             "sta_subnet": Elem.STRING("Aktuelle Subnetzmaske des Geräts im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht."),
             "sta_rssi": Elem.INT("Die aktuelle Empfangsqualität. 0 falls keine Verbindung besteht, sonst negativ. Werte näher 0 entsprechen einem besseren Empfang."),

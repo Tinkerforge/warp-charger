@@ -22,6 +22,7 @@ UNDOCUMENTED_FUNCTIONS = [
         "state info/ws", # Web socket debug info. Maybe document as opaque?
         "http_only check_firmware", # Document if we document how to flash a firmware via HTTP
         "http_only event_log",
+        "http_only trace_log",
         "state ocpp/configuration",
         "state ocpp/state",
 
