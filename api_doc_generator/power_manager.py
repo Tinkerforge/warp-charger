@@ -2,10 +2,7 @@ from api_doc_common import *
 
 power_manager = Module("power_manager", "Konfiguration des PV-Überschussladens", "", "", Version.ANY, [
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Konfiguration des Power Managers", members={
-        "enabled": Elem.BOOL("Gibt an ob der Power Manager aktiviert ist.", constants=[
-                Const(True, "Wenn der Power Manager aktiviert ist."),
-                Const(False, "Wenn der Power Manager deaktiviert ist.")
-            ]),
+            "enabled": Elem.BOOL("Obsolet. Gibt an, ob der Power Manager aktiviert ist. Dieser Wert wird automatisch überschrieben, abhängig davon, ob PV-Überschussladen oder dynamisches Lastmanagement aktiviert sind."),
             "default_mode": Elem.INT("Der nach einem Neustart des Power Managers verwendete Lademodus", constants=[
                 Const(0, "Schnell. Lädt Fahrzeuge so schnell wie möglich, selbst wenn dafür Netzbezug notwendig ist."),
                 Const(1, "Aus. Fahrzeuge werden nicht geladen."),
@@ -27,7 +24,22 @@ power_manager = Module("power_manager", "Konfiguration des PV-Überschussladens"
                 Const(2, "Mittlerer Wolkenfilter."),
                 Const(3, "Starker Wolkenfilter."),
             ]),
-            "meter_slot_grid_power": Elem.INT("Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird")
+            "meter_slot_grid_power": Elem.INT("Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird."),
+            "meter_slot_battery_power": Elem.INT("Gibt an, welcher Stromzähler für die Regelung als Batteriespeicher-Stromzähler betrachtet wird."),
+            "battery_mode": Elem.INT("Speicherpriorität im Verhältnis zu Wallboxen", constants=[
+                Const(0, "Wallboxen bevorzugen, überschüssige Leistung für Speicher"),
+                Const(1, "Speicher bevorzugen, überschüssige Leistung für Wallboxen"),
+            ]),
+            "battery_inverted": Elem.BOOL("Invertiert das Vorzeichen der Speicherleistung für Batteriespeicher, die beim Laden negative und beim Entladen positive Leistungswerte melden."),
+            "battery_deadzone": Elem.INT("Bezugs- und Einspeise-Toleranz am Netzanschluss, während der Speicher aktiv ist. Für Batteriespeicher, die einen gewissen Bezug und Einspeisung beim Entladen bzw. Laden erlauben. Die Toleranz sollte auf das 1,5-fache des erwarteten Bezugs und Einspeisung gestellt werden."),
+        })
+    ),
+    Func("dynamic_load_config", FuncType.CONFIGURATION, Elem.OBJECT("Konfiguration des dynamischen Lastmanagements", members={
+            "enabled": Elem.BOOL("Aktiviert dynamisches Lastmanagement."),
+            "meter_slot_grid_currents": Elem.INT("Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird."),
+            "current_limit": Elem.INT("Maximal gewünschter Strom am Netzanschluss in Milliampere. Dies ist üblicherweise der Nennwert der Absicherung."),
+            "largest_consumer_current": Elem.INT("Strombedarf des größten Einzelverbrauchers pro Phase in Milliampere, ausgenommen gesteuerter Wallboxen."),
+            "safety_margin_pct": Elem.INT("Zusätzliche Sicherheitsmarge in Prozent, relativ zum maximalen Strom am Netzanschluss."),
         })
     ),
     Func("state", FuncType.STATE, Elem.OBJECT("Zustand des Power Managers", members={
@@ -46,61 +58,7 @@ power_manager = Module("power_manager", "Konfiguration des PV-Überschussladens"
             ]),
         })
     ),
-    Func("low_level_state", FuncType.STATE, Elem.OBJECT("Low-Level-Zustand des Power Managers", members={
-            "power_at_meter": Elem.FLOAT("Gemessene Leistung am Hausanschluss", unit=Units.W),
-            "power_at_meter_filtered": Elem.FLOAT("Geglättete gemessene Leistung am Hausanschluss", unit=Units.W),
-            "power_available": Elem.INT("Zum Laden verfügbare Leistung. Dies ist ein virtueller Wert, der nicht direkt der Ladeleistung entspricht.", unit=Units.W),
-            "power_available_filtered": Elem.INT("Geglättete zum Laden verfügbare Leistung. Dies ist ein virtueller Wert, der nicht direkt der Ladeleistung entspricht.", unit=Units.W),
-            "overall_min_power": Elem.INT("Ladeleistung, die der Power Manager in der aktuellen Konfiguration minimal einstellen kann, abhängig von Phasenanzahl und minimalem Ladestrom.", unit=Units.W),
-            "threshold_3to1": Elem.INT("Grenzwert der Ladeleistung, unter der der Power Manager vom dreiphasigen in den einphasigen Modus wechseln möchte.", unit=Units.W),
-            "threshold_1to3": Elem.INT("Grenzwert der Ladeleistung, über der der Power Manager vom einphasigen Modus in den dreiphasigen Modus wechseln möchte.", unit=Units.W),
-            "charge_manager_available_current": Elem.INT("Ladestrom, den der Power Manager dem Lastmanagement aktuell zur Verfügung stellt.", unit=Units.mA),
-            "charge_manager_allocated_current": Elem.INT("Ladestrom, der aktuell vom Lastmanager an Wallboxen verteilt wurde.", unit=Units.mA),
-            "max_current_limited": Elem.INT("Maximaler Ladestrom unter Beachtung externer Strombegrenzung", unit=Units.mA),
-            "uptime_past_hysteresis": Elem.BOOL("Zeitraum nach einem Start des Power Managers, in dem ohne Wartezeit umgeschaltet werden kann.", constants=[
-                Const(True, "Startphase beendet, Wartezeiten müssen eingehalten werden"),
-                Const(False, "Startphase läuft, Wartezeiten werden ignoriert"),
-            ]),
-            "is_3phase": Elem.BOOL("Zustand der Phasenumschaltung", constants=[
-                Const(True, "Kontrollierte Wallboxen werden dreiphasig versorgt"),
-                Const(False, "Kontrollierte Wallboxen werden einphasig versorgt"),
-            ]),
-            "wants_3phase": Elem.BOOL("Entscheidung der Phasenumschaltung", constants=[
-                Const(True, "Dreiphasiger Betrieb erwünscht"),
-                Const(False, "Einphasiger Betrieb erwünscht"),
-            ]),
-            "wants_3phase_last": Elem.BOOL("Vorige Entscheidung der Phasenumschaltung", constants=[
-                Const(True, "Dreiphasiger Betrieb war erwünscht"),
-                Const(False, "Einphasiger Betrieb war erwünscht"),
-            ]),
-            "is_on_last": Elem.BOOL("Voriger Zustand der Stromfreigabe", constants=[
-                Const(True, "Ladestrom für Wallboxen war freigegeben"),
-                Const(False, "Ladestrom für Wallboxen war nicht freigegeben"),
-            ]),
-            "wants_on_last": Elem.BOOL("Vorige Entscheidung der Stromfreigabe", constants=[
-                Const(True, "Freigabe für Ladestrom für Wallboxen war erwünscht"),
-                Const(False, "Freigabe für Ladestrom für Wallboxen war nicht erwünscht"),
-            ]),
-            "phase_state_change_blocked": Elem.BOOL("Blockierung der Phasenumschaltung aufgrund von Lastschwankungen", constants=[
-                Const(True, "Phasenumschaltung ist aufgrund kürzlicher Laständerungen blockiert"),
-                Const(False, "Phasenumschaltung ist nicht blockiert"),
-            ]),
-            "phase_state_change_delay": Elem.INT("Wartezeit, bis die Phasenumschaltung nicht mehr blockiert ist", unit=Units.ms),
-            "on_state_change_blocked": Elem.BOOL("Blockierung der Ladestromfreigabe aufgrund von Lastschwankungen", constants=[
-                Const(True, "Ladestrom darf aufgrund kürzlicher Laständerungen nicht freigegeben oder blockiert werden"),
-                Const(False, "Ladestrom darf freigegeben oder blockiert werden"),
-            ]),
-            "on_state_change_delay": Elem.INT("Wartezeit, bis die Ladestromfreigabe nicht mehr blockiert ist", unit=Units.ms),
-            "charging_blocked": Elem.INT("Ladefreigabe wird extern blockiert, falls Wert nicht 0."),
-            "switching_state": Elem.INT("Interne Automatenzustände der Phasenumschaltung", constants=[
-                Const(0, "Es wird gerade keine Phasenumschaltung durchgeführt. Strom und Leistung werden überwacht."),
-                Const(1, "Ladevorgänge aller Wallboxen werden beendet"),
-                Const(2, "Alle Wallboxen führen CP-Trennung durch"),
-                Const(3, "Schütz wird geschaltet"),
-                Const(4, "Alle Wallboxen heben CP-Trennung auf"),
-            ])
-        })
-    ),
+    Func("low_level_state", FuncType.STATE, Elem.OPAQUE("Der interne Zustand des Power Managers. Wird zum Anzeigen von Debug-Informationen verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>")),
     Func("charge_mode", FuncType.CONFIGURATION, Elem.OBJECT("Aktuell verwendeter Lademodus.", members={
             "mode": Elem.INT("", constants=[
                 Const(0, "Schnell. Lädt Fahrzeuge so schnell wie möglich, selbst wenn dafür Netzbezug notwendig ist."),
