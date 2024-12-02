@@ -119,9 +119,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled`<br/>bool</th>
     <td>
-        Gibt an ob der Power Manager aktiviert ist.
-        - **true** - Wenn der Power Manager aktiviert ist.
-        - **false** - Wenn der Power Manager deaktiviert ist.
+        Obsolet. Gibt an, ob der Power Manager aktiviert ist. Dieser Wert wird automatisch überschrieben, abhängig davon, ob PV-Überschussladen oder dynamisches Lastmanagement aktiviert sind.
     </td>
 </tr>
 
@@ -182,7 +180,90 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`meter_slot_grid_power`<br/>int</th>
     <td>
-        Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird
+        Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`meter_slot_battery_power`<br/>int</th>
+    <td>
+        Gibt an, welcher Stromzähler für die Regelung als Batteriespeicher-Stromzähler betrachtet wird.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_mode`<br/>int</th>
+    <td>
+        Speicherpriorität im Verhältnis zu Wallboxen
+        - **0** - Wallboxen bevorzugen, überschüssige Leistung für Speicher
+        - **1** - Speicher bevorzugen, überschüssige Leistung für Wallboxen
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_inverted`<br/>bool</th>
+    <td>
+        Invertiert das Vorzeichen der Speicherleistung für Batteriespeicher, die beim Laden negative und beim Entladen positive Leistungswerte melden.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_deadzone`<br/>int</th>
+    <td>
+        Bezugs- und Einspeise-Toleranz am Netzanschluss, während der Speicher aktiv ist. Für Batteriespeicher, die einen gewissen Bezug und Einspeisung beim Entladen bzw. Laden erlauben. Die Toleranz sollte auf das 1,5-fache des erwarteten Bezugs und Einspeisung gestellt werden.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `power_manager/dynamic_load_config` {#power_manager_dynamic_load_config_warp1}
+
+
+Konfiguration des dynamischen Lastmanagements
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled`<br/>bool</th>
+    <td>
+        Aktiviert dynamisches Lastmanagement.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`meter_slot_grid_currents`<br/>int</th>
+    <td>
+        Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`current_limit`<br/>int</th>
+    <td>
+        Maximal gewünschter Strom am Netzanschluss in Milliampere. Dies ist üblicherweise der Nennwert der Absicherung.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`largest_consumer_current`<br/>int</th>
+    <td>
+        Strombedarf des größten Einzelverbrauchers pro Phase in Milliampere, ausgenommen gesteuerter Wallboxen.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`safety_margin_pct`<br/>int</th>
+    <td>
+        Zusätzliche Sicherheitsmarge in Prozent, relativ zum maximalen Strom am Netzanschluss.
     </td>
 </tr>
     </tbody>
@@ -262,7 +343,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/state
 ## `power_manager/low_level_state` {#power_manager_low_level_state_warp1}
 
 
-Low-Level-Zustand des Power Managers
+Der interne Zustand des Power Managers. Wird zum Anzeigen von Debug-Informationen verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -317,191 +398,6 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/low_level_state
 :::
 
 
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_at_meter`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Gemessene Leistung am Hausanschluss
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_at_meter_filtered`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Geglättete gemessene Leistung am Hausanschluss
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_available`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Zum Laden verfügbare Leistung. Dies ist ein virtueller Wert, der nicht direkt der Ladeleistung entspricht.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_available_filtered`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Geglättete zum Laden verfügbare Leistung. Dies ist ein virtueller Wert, der nicht direkt der Ladeleistung entspricht.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`overall_min_power`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Ladeleistung, die der Power Manager in der aktuellen Konfiguration minimal einstellen kann, abhängig von Phasenanzahl und minimalem Ladestrom.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`threshold_3to1`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Grenzwert der Ladeleistung, unter der der Power Manager vom dreiphasigen in den einphasigen Modus wechseln möchte.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`threshold_1to3`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Grenzwert der Ladeleistung, über der der Power Manager vom einphasigen Modus in den dreiphasigen Modus wechseln möchte.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`charge_manager_available_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
-    <td>
-        Ladestrom, den der Power Manager dem Lastmanagement aktuell zur Verfügung stellt.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`charge_manager_allocated_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
-    <td>
-        Ladestrom, der aktuell vom Lastmanager an Wallboxen verteilt wurde.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`max_current_limited`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
-    <td>
-        Maximaler Ladestrom unter Beachtung externer Strombegrenzung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`uptime_past_hysteresis`<br/>bool</th>
-    <td>
-        Zeitraum nach einem Start des Power Managers, in dem ohne Wartezeit umgeschaltet werden kann.
-        - **true** - Startphase beendet, Wartezeiten müssen eingehalten werden
-        - **false** - Startphase läuft, Wartezeiten werden ignoriert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`is_3phase`<br/>bool</th>
-    <td>
-        Zustand der Phasenumschaltung
-        - **true** - Kontrollierte Wallboxen werden dreiphasig versorgt
-        - **false** - Kontrollierte Wallboxen werden einphasig versorgt
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`wants_3phase`<br/>bool</th>
-    <td>
-        Entscheidung der Phasenumschaltung
-        - **true** - Dreiphasiger Betrieb erwünscht
-        - **false** - Einphasiger Betrieb erwünscht
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`wants_3phase_last`<br/>bool</th>
-    <td>
-        Vorige Entscheidung der Phasenumschaltung
-        - **true** - Dreiphasiger Betrieb war erwünscht
-        - **false** - Einphasiger Betrieb war erwünscht
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`is_on_last`<br/>bool</th>
-    <td>
-        Voriger Zustand der Stromfreigabe
-        - **true** - Ladestrom für Wallboxen war freigegeben
-        - **false** - Ladestrom für Wallboxen war nicht freigegeben
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`wants_on_last`<br/>bool</th>
-    <td>
-        Vorige Entscheidung der Stromfreigabe
-        - **true** - Freigabe für Ladestrom für Wallboxen war erwünscht
-        - **false** - Freigabe für Ladestrom für Wallboxen war nicht erwünscht
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phase_state_change_blocked`<br/>bool</th>
-    <td>
-        Blockierung der Phasenumschaltung aufgrund von Lastschwankungen
-        - **true** - Phasenumschaltung ist aufgrund kürzlicher Laständerungen blockiert
-        - **false** - Phasenumschaltung ist nicht blockiert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phase_state_change_delay`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
-    <td>
-        Wartezeit, bis die Phasenumschaltung nicht mehr blockiert ist
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`on_state_change_blocked`<br/>bool</th>
-    <td>
-        Blockierung der Ladestromfreigabe aufgrund von Lastschwankungen
-        - **true** - Ladestrom darf aufgrund kürzlicher Laständerungen nicht freigegeben oder blockiert werden
-        - **false** - Ladestrom darf freigegeben oder blockiert werden
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`on_state_change_delay`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
-    <td>
-        Wartezeit, bis die Ladestromfreigabe nicht mehr blockiert ist
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`charging_blocked`<br/>int</th>
-    <td>
-        Ladefreigabe wird extern blockiert, falls Wert nicht 0.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`switching_state`<br/>int</th>
-    <td>
-        Interne Automatenzustände der Phasenumschaltung
-        - **0** - Es wird gerade keine Phasenumschaltung durchgeführt. Strom und Leistung werden überwacht.
-        - **1** - Ladevorgänge aller Wallboxen werden beendet
-        - **2** - Alle Wallboxen führen CP-Trennung durch
-        - **3** - Schütz wird geschaltet
-        - **4** - Alle Wallboxen heben CP-Trennung auf
-    </td>
-</tr>
-    </tbody>
-</table>
 
 <br/><br/><br/>
 ## `power_manager/charge_mode` {#power_manager_charge_mode_warp1}
@@ -805,9 +701,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled`<br/>bool</th>
     <td>
-        Gibt an ob der Power Manager aktiviert ist.
-        - **true** - Wenn der Power Manager aktiviert ist.
-        - **false** - Wenn der Power Manager deaktiviert ist.
+        Obsolet. Gibt an, ob der Power Manager aktiviert ist. Dieser Wert wird automatisch überschrieben, abhängig davon, ob PV-Überschussladen oder dynamisches Lastmanagement aktiviert sind.
     </td>
 </tr>
 
@@ -868,7 +762,90 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`meter_slot_grid_power`<br/>int</th>
     <td>
-        Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird
+        Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`meter_slot_battery_power`<br/>int</th>
+    <td>
+        Gibt an, welcher Stromzähler für die Regelung als Batteriespeicher-Stromzähler betrachtet wird.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_mode`<br/>int</th>
+    <td>
+        Speicherpriorität im Verhältnis zu Wallboxen
+        - **0** - Wallboxen bevorzugen, überschüssige Leistung für Speicher
+        - **1** - Speicher bevorzugen, überschüssige Leistung für Wallboxen
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_inverted`<br/>bool</th>
+    <td>
+        Invertiert das Vorzeichen der Speicherleistung für Batteriespeicher, die beim Laden negative und beim Entladen positive Leistungswerte melden.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_deadzone`<br/>int</th>
+    <td>
+        Bezugs- und Einspeise-Toleranz am Netzanschluss, während der Speicher aktiv ist. Für Batteriespeicher, die einen gewissen Bezug und Einspeisung beim Entladen bzw. Laden erlauben. Die Toleranz sollte auf das 1,5-fache des erwarteten Bezugs und Einspeisung gestellt werden.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `power_manager/dynamic_load_config` {#power_manager_dynamic_load_config_warp2}
+
+
+Konfiguration des dynamischen Lastmanagements
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled`<br/>bool</th>
+    <td>
+        Aktiviert dynamisches Lastmanagement.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`meter_slot_grid_currents`<br/>int</th>
+    <td>
+        Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`current_limit`<br/>int</th>
+    <td>
+        Maximal gewünschter Strom am Netzanschluss in Milliampere. Dies ist üblicherweise der Nennwert der Absicherung.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`largest_consumer_current`<br/>int</th>
+    <td>
+        Strombedarf des größten Einzelverbrauchers pro Phase in Milliampere, ausgenommen gesteuerter Wallboxen.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`safety_margin_pct`<br/>int</th>
+    <td>
+        Zusätzliche Sicherheitsmarge in Prozent, relativ zum maximalen Strom am Netzanschluss.
     </td>
 </tr>
     </tbody>
@@ -948,7 +925,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/state
 ## `power_manager/low_level_state` {#power_manager_low_level_state_warp2}
 
 
-Low-Level-Zustand des Power Managers
+Der interne Zustand des Power Managers. Wird zum Anzeigen von Debug-Informationen verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -1003,191 +980,6 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/low_level_state
 :::
 
 
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_at_meter`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Gemessene Leistung am Hausanschluss
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_at_meter_filtered`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Geglättete gemessene Leistung am Hausanschluss
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_available`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Zum Laden verfügbare Leistung. Dies ist ein virtueller Wert, der nicht direkt der Ladeleistung entspricht.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_available_filtered`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Geglättete zum Laden verfügbare Leistung. Dies ist ein virtueller Wert, der nicht direkt der Ladeleistung entspricht.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`overall_min_power`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Ladeleistung, die der Power Manager in der aktuellen Konfiguration minimal einstellen kann, abhängig von Phasenanzahl und minimalem Ladestrom.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`threshold_3to1`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Grenzwert der Ladeleistung, unter der der Power Manager vom dreiphasigen in den einphasigen Modus wechseln möchte.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`threshold_1to3`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Grenzwert der Ladeleistung, über der der Power Manager vom einphasigen Modus in den dreiphasigen Modus wechseln möchte.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`charge_manager_available_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
-    <td>
-        Ladestrom, den der Power Manager dem Lastmanagement aktuell zur Verfügung stellt.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`charge_manager_allocated_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
-    <td>
-        Ladestrom, der aktuell vom Lastmanager an Wallboxen verteilt wurde.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`max_current_limited`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
-    <td>
-        Maximaler Ladestrom unter Beachtung externer Strombegrenzung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`uptime_past_hysteresis`<br/>bool</th>
-    <td>
-        Zeitraum nach einem Start des Power Managers, in dem ohne Wartezeit umgeschaltet werden kann.
-        - **true** - Startphase beendet, Wartezeiten müssen eingehalten werden
-        - **false** - Startphase läuft, Wartezeiten werden ignoriert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`is_3phase`<br/>bool</th>
-    <td>
-        Zustand der Phasenumschaltung
-        - **true** - Kontrollierte Wallboxen werden dreiphasig versorgt
-        - **false** - Kontrollierte Wallboxen werden einphasig versorgt
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`wants_3phase`<br/>bool</th>
-    <td>
-        Entscheidung der Phasenumschaltung
-        - **true** - Dreiphasiger Betrieb erwünscht
-        - **false** - Einphasiger Betrieb erwünscht
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`wants_3phase_last`<br/>bool</th>
-    <td>
-        Vorige Entscheidung der Phasenumschaltung
-        - **true** - Dreiphasiger Betrieb war erwünscht
-        - **false** - Einphasiger Betrieb war erwünscht
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`is_on_last`<br/>bool</th>
-    <td>
-        Voriger Zustand der Stromfreigabe
-        - **true** - Ladestrom für Wallboxen war freigegeben
-        - **false** - Ladestrom für Wallboxen war nicht freigegeben
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`wants_on_last`<br/>bool</th>
-    <td>
-        Vorige Entscheidung der Stromfreigabe
-        - **true** - Freigabe für Ladestrom für Wallboxen war erwünscht
-        - **false** - Freigabe für Ladestrom für Wallboxen war nicht erwünscht
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phase_state_change_blocked`<br/>bool</th>
-    <td>
-        Blockierung der Phasenumschaltung aufgrund von Lastschwankungen
-        - **true** - Phasenumschaltung ist aufgrund kürzlicher Laständerungen blockiert
-        - **false** - Phasenumschaltung ist nicht blockiert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phase_state_change_delay`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
-    <td>
-        Wartezeit, bis die Phasenumschaltung nicht mehr blockiert ist
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`on_state_change_blocked`<br/>bool</th>
-    <td>
-        Blockierung der Ladestromfreigabe aufgrund von Lastschwankungen
-        - **true** - Ladestrom darf aufgrund kürzlicher Laständerungen nicht freigegeben oder blockiert werden
-        - **false** - Ladestrom darf freigegeben oder blockiert werden
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`on_state_change_delay`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
-    <td>
-        Wartezeit, bis die Ladestromfreigabe nicht mehr blockiert ist
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`charging_blocked`<br/>int</th>
-    <td>
-        Ladefreigabe wird extern blockiert, falls Wert nicht 0.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`switching_state`<br/>int</th>
-    <td>
-        Interne Automatenzustände der Phasenumschaltung
-        - **0** - Es wird gerade keine Phasenumschaltung durchgeführt. Strom und Leistung werden überwacht.
-        - **1** - Ladevorgänge aller Wallboxen werden beendet
-        - **2** - Alle Wallboxen führen CP-Trennung durch
-        - **3** - Schütz wird geschaltet
-        - **4** - Alle Wallboxen heben CP-Trennung auf
-    </td>
-</tr>
-    </tbody>
-</table>
 
 <br/><br/><br/>
 ## `power_manager/charge_mode` {#power_manager_charge_mode_warp2}
@@ -1491,9 +1283,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled`<br/>bool</th>
     <td>
-        Gibt an ob der Power Manager aktiviert ist.
-        - **true** - Wenn der Power Manager aktiviert ist.
-        - **false** - Wenn der Power Manager deaktiviert ist.
+        Obsolet. Gibt an, ob der Power Manager aktiviert ist. Dieser Wert wird automatisch überschrieben, abhängig davon, ob PV-Überschussladen oder dynamisches Lastmanagement aktiviert sind.
     </td>
 </tr>
 
@@ -1554,7 +1344,90 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`meter_slot_grid_power`<br/>int</th>
     <td>
-        Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird
+        Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`meter_slot_battery_power`<br/>int</th>
+    <td>
+        Gibt an, welcher Stromzähler für die Regelung als Batteriespeicher-Stromzähler betrachtet wird.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_mode`<br/>int</th>
+    <td>
+        Speicherpriorität im Verhältnis zu Wallboxen
+        - **0** - Wallboxen bevorzugen, überschüssige Leistung für Speicher
+        - **1** - Speicher bevorzugen, überschüssige Leistung für Wallboxen
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_inverted`<br/>bool</th>
+    <td>
+        Invertiert das Vorzeichen der Speicherleistung für Batteriespeicher, die beim Laden negative und beim Entladen positive Leistungswerte melden.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_deadzone`<br/>int</th>
+    <td>
+        Bezugs- und Einspeise-Toleranz am Netzanschluss, während der Speicher aktiv ist. Für Batteriespeicher, die einen gewissen Bezug und Einspeisung beim Entladen bzw. Laden erlauben. Die Toleranz sollte auf das 1,5-fache des erwarteten Bezugs und Einspeisung gestellt werden.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `power_manager/dynamic_load_config` {#power_manager_dynamic_load_config_warp3}
+
+
+Konfiguration des dynamischen Lastmanagements
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled`<br/>bool</th>
+    <td>
+        Aktiviert dynamisches Lastmanagement.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`meter_slot_grid_currents`<br/>int</th>
+    <td>
+        Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`current_limit`<br/>int</th>
+    <td>
+        Maximal gewünschter Strom am Netzanschluss in Milliampere. Dies ist üblicherweise der Nennwert der Absicherung.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`largest_consumer_current`<br/>int</th>
+    <td>
+        Strombedarf des größten Einzelverbrauchers pro Phase in Milliampere, ausgenommen gesteuerter Wallboxen.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`safety_margin_pct`<br/>int</th>
+    <td>
+        Zusätzliche Sicherheitsmarge in Prozent, relativ zum maximalen Strom am Netzanschluss.
     </td>
 </tr>
     </tbody>
@@ -1634,7 +1507,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/state
 ## `power_manager/low_level_state` {#power_manager_low_level_state_warp3}
 
 
-Low-Level-Zustand des Power Managers
+Der interne Zustand des Power Managers. Wird zum Anzeigen von Debug-Informationen verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -1689,191 +1562,6 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/low_level_state
 :::
 
 
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_at_meter`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Gemessene Leistung am Hausanschluss
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_at_meter_filtered`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Geglättete gemessene Leistung am Hausanschluss
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_available`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Zum Laden verfügbare Leistung. Dies ist ein virtueller Wert, der nicht direkt der Ladeleistung entspricht.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_available_filtered`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Geglättete zum Laden verfügbare Leistung. Dies ist ein virtueller Wert, der nicht direkt der Ladeleistung entspricht.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`overall_min_power`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Ladeleistung, die der Power Manager in der aktuellen Konfiguration minimal einstellen kann, abhängig von Phasenanzahl und minimalem Ladestrom.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`threshold_3to1`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Grenzwert der Ladeleistung, unter der der Power Manager vom dreiphasigen in den einphasigen Modus wechseln möchte.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`threshold_1to3`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Grenzwert der Ladeleistung, über der der Power Manager vom einphasigen Modus in den dreiphasigen Modus wechseln möchte.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`charge_manager_available_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
-    <td>
-        Ladestrom, den der Power Manager dem Lastmanagement aktuell zur Verfügung stellt.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`charge_manager_allocated_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
-    <td>
-        Ladestrom, der aktuell vom Lastmanager an Wallboxen verteilt wurde.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`max_current_limited`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
-    <td>
-        Maximaler Ladestrom unter Beachtung externer Strombegrenzung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`uptime_past_hysteresis`<br/>bool</th>
-    <td>
-        Zeitraum nach einem Start des Power Managers, in dem ohne Wartezeit umgeschaltet werden kann.
-        - **true** - Startphase beendet, Wartezeiten müssen eingehalten werden
-        - **false** - Startphase läuft, Wartezeiten werden ignoriert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`is_3phase`<br/>bool</th>
-    <td>
-        Zustand der Phasenumschaltung
-        - **true** - Kontrollierte Wallboxen werden dreiphasig versorgt
-        - **false** - Kontrollierte Wallboxen werden einphasig versorgt
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`wants_3phase`<br/>bool</th>
-    <td>
-        Entscheidung der Phasenumschaltung
-        - **true** - Dreiphasiger Betrieb erwünscht
-        - **false** - Einphasiger Betrieb erwünscht
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`wants_3phase_last`<br/>bool</th>
-    <td>
-        Vorige Entscheidung der Phasenumschaltung
-        - **true** - Dreiphasiger Betrieb war erwünscht
-        - **false** - Einphasiger Betrieb war erwünscht
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`is_on_last`<br/>bool</th>
-    <td>
-        Voriger Zustand der Stromfreigabe
-        - **true** - Ladestrom für Wallboxen war freigegeben
-        - **false** - Ladestrom für Wallboxen war nicht freigegeben
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`wants_on_last`<br/>bool</th>
-    <td>
-        Vorige Entscheidung der Stromfreigabe
-        - **true** - Freigabe für Ladestrom für Wallboxen war erwünscht
-        - **false** - Freigabe für Ladestrom für Wallboxen war nicht erwünscht
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phase_state_change_blocked`<br/>bool</th>
-    <td>
-        Blockierung der Phasenumschaltung aufgrund von Lastschwankungen
-        - **true** - Phasenumschaltung ist aufgrund kürzlicher Laständerungen blockiert
-        - **false** - Phasenumschaltung ist nicht blockiert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phase_state_change_delay`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
-    <td>
-        Wartezeit, bis die Phasenumschaltung nicht mehr blockiert ist
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`on_state_change_blocked`<br/>bool</th>
-    <td>
-        Blockierung der Ladestromfreigabe aufgrund von Lastschwankungen
-        - **true** - Ladestrom darf aufgrund kürzlicher Laständerungen nicht freigegeben oder blockiert werden
-        - **false** - Ladestrom darf freigegeben oder blockiert werden
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`on_state_change_delay`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
-    <td>
-        Wartezeit, bis die Ladestromfreigabe nicht mehr blockiert ist
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`charging_blocked`<br/>int</th>
-    <td>
-        Ladefreigabe wird extern blockiert, falls Wert nicht 0.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`switching_state`<br/>int</th>
-    <td>
-        Interne Automatenzustände der Phasenumschaltung
-        - **0** - Es wird gerade keine Phasenumschaltung durchgeführt. Strom und Leistung werden überwacht.
-        - **1** - Ladevorgänge aller Wallboxen werden beendet
-        - **2** - Alle Wallboxen führen CP-Trennung durch
-        - **3** - Schütz wird geschaltet
-        - **4** - Alle Wallboxen heben CP-Trennung auf
-    </td>
-</tr>
-    </tbody>
-</table>
 
 <br/><br/><br/>
 ## `power_manager/charge_mode` {#power_manager_charge_mode_warp3}
@@ -2177,9 +1865,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled`<br/>bool</th>
     <td>
-        Gibt an ob der Power Manager aktiviert ist.
-        - **true** - Wenn der Power Manager aktiviert ist.
-        - **false** - Wenn der Power Manager deaktiviert ist.
+        Obsolet. Gibt an, ob der Power Manager aktiviert ist. Dieser Wert wird automatisch überschrieben, abhängig davon, ob PV-Überschussladen oder dynamisches Lastmanagement aktiviert sind.
     </td>
 </tr>
 
@@ -2240,7 +1926,90 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`meter_slot_grid_power`<br/>int</th>
     <td>
-        Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird
+        Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`meter_slot_battery_power`<br/>int</th>
+    <td>
+        Gibt an, welcher Stromzähler für die Regelung als Batteriespeicher-Stromzähler betrachtet wird.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_mode`<br/>int</th>
+    <td>
+        Speicherpriorität im Verhältnis zu Wallboxen
+        - **0** - Wallboxen bevorzugen, überschüssige Leistung für Speicher
+        - **1** - Speicher bevorzugen, überschüssige Leistung für Wallboxen
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_inverted`<br/>bool</th>
+    <td>
+        Invertiert das Vorzeichen der Speicherleistung für Batteriespeicher, die beim Laden negative und beim Entladen positive Leistungswerte melden.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_deadzone`<br/>int</th>
+    <td>
+        Bezugs- und Einspeise-Toleranz am Netzanschluss, während der Speicher aktiv ist. Für Batteriespeicher, die einen gewissen Bezug und Einspeisung beim Entladen bzw. Laden erlauben. Die Toleranz sollte auf das 1,5-fache des erwarteten Bezugs und Einspeisung gestellt werden.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `power_manager/dynamic_load_config` {#power_manager_dynamic_load_config_wem}
+
+
+Konfiguration des dynamischen Lastmanagements
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled`<br/>bool</th>
+    <td>
+        Aktiviert dynamisches Lastmanagement.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`meter_slot_grid_currents`<br/>int</th>
+    <td>
+        Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`current_limit`<br/>int</th>
+    <td>
+        Maximal gewünschter Strom am Netzanschluss in Milliampere. Dies ist üblicherweise der Nennwert der Absicherung.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`largest_consumer_current`<br/>int</th>
+    <td>
+        Strombedarf des größten Einzelverbrauchers pro Phase in Milliampere, ausgenommen gesteuerter Wallboxen.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`safety_margin_pct`<br/>int</th>
+    <td>
+        Zusätzliche Sicherheitsmarge in Prozent, relativ zum maximalen Strom am Netzanschluss.
     </td>
 </tr>
     </tbody>
@@ -2320,7 +2089,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/state
 ## `power_manager/low_level_state` {#power_manager_low_level_state_wem}
 
 
-Low-Level-Zustand des Power Managers
+Der interne Zustand des Power Managers. Wird zum Anzeigen von Debug-Informationen verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -2375,191 +2144,6 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/low_level_state
 :::
 
 
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_at_meter`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Gemessene Leistung am Hausanschluss
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_at_meter_filtered`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Geglättete gemessene Leistung am Hausanschluss
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_available`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Zum Laden verfügbare Leistung. Dies ist ein virtueller Wert, der nicht direkt der Ladeleistung entspricht.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_available_filtered`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Geglättete zum Laden verfügbare Leistung. Dies ist ein virtueller Wert, der nicht direkt der Ladeleistung entspricht.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`overall_min_power`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Ladeleistung, die der Power Manager in der aktuellen Konfiguration minimal einstellen kann, abhängig von Phasenanzahl und minimalem Ladestrom.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`threshold_3to1`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Grenzwert der Ladeleistung, unter der der Power Manager vom dreiphasigen in den einphasigen Modus wechseln möchte.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`threshold_1to3`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Grenzwert der Ladeleistung, über der der Power Manager vom einphasigen Modus in den dreiphasigen Modus wechseln möchte.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`charge_manager_available_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
-    <td>
-        Ladestrom, den der Power Manager dem Lastmanagement aktuell zur Verfügung stellt.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`charge_manager_allocated_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
-    <td>
-        Ladestrom, der aktuell vom Lastmanager an Wallboxen verteilt wurde.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`max_current_limited`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
-    <td>
-        Maximaler Ladestrom unter Beachtung externer Strombegrenzung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`uptime_past_hysteresis`<br/>bool</th>
-    <td>
-        Zeitraum nach einem Start des Power Managers, in dem ohne Wartezeit umgeschaltet werden kann.
-        - **true** - Startphase beendet, Wartezeiten müssen eingehalten werden
-        - **false** - Startphase läuft, Wartezeiten werden ignoriert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`is_3phase`<br/>bool</th>
-    <td>
-        Zustand der Phasenumschaltung
-        - **true** - Kontrollierte Wallboxen werden dreiphasig versorgt
-        - **false** - Kontrollierte Wallboxen werden einphasig versorgt
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`wants_3phase`<br/>bool</th>
-    <td>
-        Entscheidung der Phasenumschaltung
-        - **true** - Dreiphasiger Betrieb erwünscht
-        - **false** - Einphasiger Betrieb erwünscht
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`wants_3phase_last`<br/>bool</th>
-    <td>
-        Vorige Entscheidung der Phasenumschaltung
-        - **true** - Dreiphasiger Betrieb war erwünscht
-        - **false** - Einphasiger Betrieb war erwünscht
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`is_on_last`<br/>bool</th>
-    <td>
-        Voriger Zustand der Stromfreigabe
-        - **true** - Ladestrom für Wallboxen war freigegeben
-        - **false** - Ladestrom für Wallboxen war nicht freigegeben
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`wants_on_last`<br/>bool</th>
-    <td>
-        Vorige Entscheidung der Stromfreigabe
-        - **true** - Freigabe für Ladestrom für Wallboxen war erwünscht
-        - **false** - Freigabe für Ladestrom für Wallboxen war nicht erwünscht
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phase_state_change_blocked`<br/>bool</th>
-    <td>
-        Blockierung der Phasenumschaltung aufgrund von Lastschwankungen
-        - **true** - Phasenumschaltung ist aufgrund kürzlicher Laständerungen blockiert
-        - **false** - Phasenumschaltung ist nicht blockiert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phase_state_change_delay`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
-    <td>
-        Wartezeit, bis die Phasenumschaltung nicht mehr blockiert ist
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`on_state_change_blocked`<br/>bool</th>
-    <td>
-        Blockierung der Ladestromfreigabe aufgrund von Lastschwankungen
-        - **true** - Ladestrom darf aufgrund kürzlicher Laständerungen nicht freigegeben oder blockiert werden
-        - **false** - Ladestrom darf freigegeben oder blockiert werden
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`on_state_change_delay`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
-    <td>
-        Wartezeit, bis die Ladestromfreigabe nicht mehr blockiert ist
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`charging_blocked`<br/>int</th>
-    <td>
-        Ladefreigabe wird extern blockiert, falls Wert nicht 0.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`switching_state`<br/>int</th>
-    <td>
-        Interne Automatenzustände der Phasenumschaltung
-        - **0** - Es wird gerade keine Phasenumschaltung durchgeführt. Strom und Leistung werden überwacht.
-        - **1** - Ladevorgänge aller Wallboxen werden beendet
-        - **2** - Alle Wallboxen führen CP-Trennung durch
-        - **3** - Schütz wird geschaltet
-        - **4** - Alle Wallboxen heben CP-Trennung auf
-    </td>
-</tr>
-    </tbody>
-</table>
 
 <br/><br/><br/>
 ## `power_manager/charge_mode` {#power_manager_charge_mode_wem}
@@ -2863,12 +2447,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled`<br/>bool</th>
     <td>
-        Gibt an ob der Power Manager aktiviert ist.
-        
-        
-        
-        - **true** - Wenn der Power Manager aktiviert ist.
-        - **false** - Wenn der Power Manager deaktiviert ist.
+        Obsolet. Gibt an, ob der Power Manager aktiviert ist. Dieser Wert wird automatisch überschrieben, abhängig davon, ob PV-Überschussladen oder dynamisches Lastmanagement aktiviert sind.
     </td>
 </tr>
 
@@ -2938,7 +2517,93 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`meter_slot_grid_power`<br/>int</th>
     <td>
-        Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird
+        Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`meter_slot_battery_power`<br/>int</th>
+    <td>
+        Gibt an, welcher Stromzähler für die Regelung als Batteriespeicher-Stromzähler betrachtet wird.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_mode`<br/>int</th>
+    <td>
+        Speicherpriorität im Verhältnis zu Wallboxen
+        
+        
+        
+        - **0** - Wallboxen bevorzugen, überschüssige Leistung für Speicher
+        - **1** - Speicher bevorzugen, überschüssige Leistung für Wallboxen
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_inverted`<br/>bool</th>
+    <td>
+        Invertiert das Vorzeichen der Speicherleistung für Batteriespeicher, die beim Laden negative und beim Entladen positive Leistungswerte melden.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_deadzone`<br/>int</th>
+    <td>
+        Bezugs- und Einspeise-Toleranz am Netzanschluss, während der Speicher aktiv ist. Für Batteriespeicher, die einen gewissen Bezug und Einspeisung beim Entladen bzw. Laden erlauben. Die Toleranz sollte auf das 1,5-fache des erwarteten Bezugs und Einspeisung gestellt werden.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `power_manager/dynamic_load_config` {#power_manager_dynamic_load_config_any}
+
+
+Konfiguration des dynamischen Lastmanagements
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled`<br/>bool</th>
+    <td>
+        Aktiviert dynamisches Lastmanagement.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`meter_slot_grid_currents`<br/>int</th>
+    <td>
+        Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`current_limit`<br/>int</th>
+    <td>
+        Maximal gewünschter Strom am Netzanschluss in Milliampere. Dies ist üblicherweise der Nennwert der Absicherung.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`largest_consumer_current`<br/>int</th>
+    <td>
+        Strombedarf des größten Einzelverbrauchers pro Phase in Milliampere, ausgenommen gesteuerter Wallboxen.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`safety_margin_pct`<br/>int</th>
+    <td>
+        Zusätzliche Sicherheitsmarge in Prozent, relativ zum maximalen Strom am Netzanschluss.
     </td>
 </tr>
     </tbody>
@@ -3024,7 +2689,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/state
 ## `power_manager/low_level_state` {#power_manager_low_level_state_any}
 
 
-Low-Level-Zustand des Power Managers
+Der interne Zustand des Power Managers. Wird zum Anzeigen von Debug-Informationen verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -3079,218 +2744,6 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/low_level_state
 :::
 
 
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Bedeutung</th>
-        </tr>
-    </thead>
-    <tbody>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_at_meter`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Gemessene Leistung am Hausanschluss
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_at_meter_filtered`<br/>float (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Geglättete gemessene Leistung am Hausanschluss
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_available`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Zum Laden verfügbare Leistung. Dies ist ein virtueller Wert, der nicht direkt der Ladeleistung entspricht.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`power_available_filtered`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Geglättete zum Laden verfügbare Leistung. Dies ist ein virtueller Wert, der nicht direkt der Ladeleistung entspricht.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`overall_min_power`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Ladeleistung, die der Power Manager in der aktuellen Konfiguration minimal einstellen kann, abhängig von Phasenanzahl und minimalem Ladestrom.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`threshold_3to1`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Grenzwert der Ladeleistung, unter der der Power Manager vom dreiphasigen in den einphasigen Modus wechseln möchte.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`threshold_1to3`<br/>int (<abbr title="Watt">W</abbr>)</th>
-    <td>
-        Grenzwert der Ladeleistung, über der der Power Manager vom einphasigen Modus in den dreiphasigen Modus wechseln möchte.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`charge_manager_available_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
-    <td>
-        Ladestrom, den der Power Manager dem Lastmanagement aktuell zur Verfügung stellt.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`charge_manager_allocated_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
-    <td>
-        Ladestrom, der aktuell vom Lastmanager an Wallboxen verteilt wurde.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`max_current_limited`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
-    <td>
-        Maximaler Ladestrom unter Beachtung externer Strombegrenzung
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`uptime_past_hysteresis`<br/>bool</th>
-    <td>
-        Zeitraum nach einem Start des Power Managers, in dem ohne Wartezeit umgeschaltet werden kann.
-        
-        
-        
-        - **true** - Startphase beendet, Wartezeiten müssen eingehalten werden
-        - **false** - Startphase läuft, Wartezeiten werden ignoriert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`is_3phase`<br/>bool</th>
-    <td>
-        Zustand der Phasenumschaltung
-        
-        
-        
-        - **true** - Kontrollierte Wallboxen werden dreiphasig versorgt
-        - **false** - Kontrollierte Wallboxen werden einphasig versorgt
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`wants_3phase`<br/>bool</th>
-    <td>
-        Entscheidung der Phasenumschaltung
-        
-        
-        
-        - **true** - Dreiphasiger Betrieb erwünscht
-        - **false** - Einphasiger Betrieb erwünscht
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`wants_3phase_last`<br/>bool</th>
-    <td>
-        Vorige Entscheidung der Phasenumschaltung
-        
-        
-        
-        - **true** - Dreiphasiger Betrieb war erwünscht
-        - **false** - Einphasiger Betrieb war erwünscht
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`is_on_last`<br/>bool</th>
-    <td>
-        Voriger Zustand der Stromfreigabe
-        
-        
-        
-        - **true** - Ladestrom für Wallboxen war freigegeben
-        - **false** - Ladestrom für Wallboxen war nicht freigegeben
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`wants_on_last`<br/>bool</th>
-    <td>
-        Vorige Entscheidung der Stromfreigabe
-        
-        
-        
-        - **true** - Freigabe für Ladestrom für Wallboxen war erwünscht
-        - **false** - Freigabe für Ladestrom für Wallboxen war nicht erwünscht
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phase_state_change_blocked`<br/>bool</th>
-    <td>
-        Blockierung der Phasenumschaltung aufgrund von Lastschwankungen
-        
-        
-        
-        - **true** - Phasenumschaltung ist aufgrund kürzlicher Laständerungen blockiert
-        - **false** - Phasenumschaltung ist nicht blockiert
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`phase_state_change_delay`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
-    <td>
-        Wartezeit, bis die Phasenumschaltung nicht mehr blockiert ist
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`on_state_change_blocked`<br/>bool</th>
-    <td>
-        Blockierung der Ladestromfreigabe aufgrund von Lastschwankungen
-        
-        
-        
-        - **true** - Ladestrom darf aufgrund kürzlicher Laständerungen nicht freigegeben oder blockiert werden
-        - **false** - Ladestrom darf freigegeben oder blockiert werden
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`on_state_change_delay`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
-    <td>
-        Wartezeit, bis die Ladestromfreigabe nicht mehr blockiert ist
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`charging_blocked`<br/>int</th>
-    <td>
-        Ladefreigabe wird extern blockiert, falls Wert nicht 0.
-    </td>
-</tr>
-
-<tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`switching_state`<br/>int</th>
-    <td>
-        Interne Automatenzustände der Phasenumschaltung
-        
-        
-        
-        - **0** - Es wird gerade keine Phasenumschaltung durchgeführt. Strom und Leistung werden überwacht.
-        - **1** - Ladevorgänge aller Wallboxen werden beendet
-        - **2** - Alle Wallboxen führen CP-Trennung durch
-        - **3** - Schütz wird geschaltet
-        - **4** - Alle Wallboxen heben CP-Trennung auf
-    </td>
-</tr>
-    </tbody>
-</table>
 
 <br/><br/><br/>
 ## `power_manager/charge_mode` {#power_manager_charge_mode_any}
@@ -3497,6 +2950,11 @@ export const toc = [
     {
     "value": "power_manager/config",
     "id": "power_manager_config",
+    "level": 2,
+    
+},{
+    "value": "power_manager/dynamic_load_config",
+    "id": "power_manager_dynamic_load_config",
     "level": 2,
     
 },{
