@@ -1,0 +1,26 @@
+2024-12-02: 2.6.2 (120d8bd2)
+- Passive Unterstützung von Batteriespeichern zum PV-Überschussladen hinzugefügt
+- Unterstützung für NFC-Tag-Typ 5 hinzugefügt (Durch Update auf NFC-Bricklet-Firmware 2.1.0
+- Einstellung für Systemsprache hinzugefügt. Wird beispielsweise für MQTT-Auto-Discovery verwendet
+- Unterstützung für RCT Power Hybrid-Wechselrichter hinzugefügt
+- Unterstützung für weitere Modbus-TCP-Geräte hinzugefügt: Hybrid-Wechselrichter: Solax, Hailei, Fox ESS H3; Stromzähler: Siemens PAC, Carlo Gavazzi; Batteriespeicher: Fronius GEN24 Plus
+- Unterstützung für ein- und zweiphasiges dynamisches Lastmanagement hinzugefügt
+- Modbus-TCP-Server überarbeitet
+- NFC-Tag-Vortäuschung zum WARP-Registerset hinzugefügt
+- Option zur (de-)aktivierung der externen Steuerung entfernt
+- SunSpec: Unterstützung mehrerer Modelle des selben Typs pro Gerät hinzugefügt
+- Erzeugung des Ladelog-PDFs beschleunigt
+- Mehr Wallboxen das gleichzeitige Laden erlaubt, wenn dynamisches Lastmanagement deaktiviert ist
+- Hinzugefügt, dass eine Wallbox erkennt und blockiert, wenn sie von mehreren Lastmanager gleichzeitig gesteuert wird
+- Hinzugefügt, dass erst bei bestehender Netzwerkverbindung Verbindungen zu Servern aufgebaut werden
+- charge_manager/available_current-API und entsprechende Automatisierungs-Aktion repariert
+- Zeitmessung über RTCs, NTP und andere Zeitquellen verbessert
+- Beschreibungstexte der Energiewerte des 4. Quadranten verbessert
+- Einphasigen Modues des Shelly Pro (3)EM repariert
+- Erlaubt, dass zurücksetzbare Energiewerte für den Ladetracker verwendet werden, falls keine nicht-zurücksetzbaren verfügbar sind (z.B. Shelly Pro (3)EM)
+- Lastmanagement: Startphase repariert
+- Lastmanagement: Phasenwechsel bei langsam reagierenden Fahrzeugen repariert
+- Lastmanagement: Sichergestellt, dass das Aufwecken eines Fahrzeugs keine Phasenumschaltung durchführt, falls globale Hysterese noch nicht abgelaufen ist
+- MQTT: Sichergestellt, dass bei einer Verbindung zu einem nicht-standard-konformen MQTT-Broker nicht der Arbeitsspeicher gefüllt wird
+- Häufige Modbus-Timeout-Meldungen im Ereignislog behoben
+- Mehrere Fernzugriffs-Bugs behoben

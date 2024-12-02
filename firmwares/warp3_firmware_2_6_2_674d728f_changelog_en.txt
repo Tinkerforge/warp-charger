@@ -1,0 +1,37 @@
+2024-12-02: 2.6.2 (120d8bd2)
+- Add passive battery storage support for PV excess charging
+- Add support for NFC type 5 tags (through NFC Bricklet firmware 2.1.0)
+- Add system language setting (currently used to translate MQTT auto discovery topics)
+- Add support for RCT Power hybrid inverters
+- Add support for more Modbus TCP devices: hybrid inverters: Solax, Hailei, Fox ESS H3; energy meters: Siemens PAC, Carlo Gavazzi; battery stoage: Fronius GEN24 Plus
+- Support single- and two-phase dynamic load management
+- Support up to 64 managed chargers
+- Rework Modbus TCP server
+- Add NFC Tag Injection to WARP register set
+- Add phase switch support to WARP and Keba register sets
+- Add LED color control to WARP register set
+- Remove external control enabled/disabled setting
+- SunSpec: Support multiple models of the same type per device
+- Speed up charge log PDF generation
+- Allow more active chargers in parallel if dynamic load management is disabled
+- Detect and reject multiple charge managers managing the same charger
+- Don't attempt to connect to servers if no network connection is available
+- Fix charge_manager/available_current API and automation action
+- Improve time keeping between RTCs, NTP and other time sources
+- Fix RTC clock drift
+- Fix descriptions of energy Q4 meter values
+- OCPP: Fix truncated charge point model
+- OCPP: Improve compatibility with SteVe
+- OCPP: Fix reconnect handling
+- Fix Shelly Pro (3)EM monophase mode
+- Allow charge tracker to fall back to resettable energy values if non-resettable are not available (f.e. Shelly Pro (3)EM)
+- Charge Manager: Fix fast ramp-up
+- Charge Manager: Fix phase switch with vehicles reacting slowly
+- Charge Manager: Don't let wake-up switch phases if hysteresis is not elapsed yet
+- MQTT: Fix leaking all DRAM with misbehaving brokers resulting in WiFi disconnects
+- Fix log spam of modbus timeouts
+- Fix multiple remote access bugs
+- Increase CP disconnect time to minimum 5 seconds (through EVSE 2.0 Bricklet firmware 2.2.7)
+- Wait up to 10 seconds for a car to react after a phase switch (through EVSE 2.0 Bricklet firmware 2.2.7)
+- Allow instant phase switch if contactor was not yet closed once or CP was disconnected (through EVSE 2.0 Bricklet firmware 2.2.7)
+- Fix glitch after 30 second CP disconnect (through EVSE 2.0 Bricklet firmware 2.2.7)
