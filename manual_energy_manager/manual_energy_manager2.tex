@@ -140,7 +140,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	Der WARP Energy Manager kann abhängig von dynamischen Strompreisen, einem Photovoltaik-Überschuss oder dem aktuellen Strom am Netzanschluss
     Wärmepumpen über die SG-Ready Schnittstelle steuern, zusätzliche Verbraucher ein- bzw. ausschalten und in Verbindung mit WARP Charger Wallboxen 
-    Elektrofahrzeuge laden.
+    Elektrofahrzeuge laden. Auch die Steuerung des Lade- und Entladevorgangs von Batteriespeichern ist zukünftig möglich.
 
 	\subsection{Features}
 	Der WARP Energy Manager verfügt über folgende Features:
@@ -154,6 +154,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
         \end{itemize}
         \item Zwei Relaisausgänge zur Ansteuerung weiterer Verbraucher
         \item Steuerung von WARP Charger Wallboxen
+		\item Steuerung von Batteriespeichern (zukünftig)
         \item Zugriff auf Stromzähler am Netzanschluss, Photovoltaik-Wechselrichter, Batteriespeicher
         \item Photovoltaik-Überschussnutzung
         \item Statisches und dynamisches Lastmanagement
@@ -175,7 +176,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Jahresbasis analysieren.
 
 	\subsubsection{Steuerung von Wallboxen}
-	Der WARP Energy Manager kann bis zu 32 Wallboxen vom Typ WARP Charger Smart oder WARP Charger Pro verbrauchsabhängig steuern.
+	Der WARP Energy Manager kann bis zu 64 Wallboxen vom Typ WARP Charger Smart oder WARP Charger Pro verbrauchsabhängig steuern.
 	Die Steuerung erfolgt über eine gemeinsames Netzwerk (LAN, WLAN) zwischen den Wallboxen und dem WARP Energy Manager.
 
     Es kann ein statisches Lastmanagement durchgeführt werden, bei dem ein fest eingestellter Strom je nach Anforderung
@@ -531,7 +532,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	diese Menüleiste stattdessen versteckt unter einem Menü-Symbol oben rechts
 	im grauen Balken neben dem WARP Logo angezeigt (\enquote{drei Striche untereinander}).
 	Hier kannst du das Menü durch antippen des Symbols ausklappen.
-	\gfx{./img/resized/web_status}
+	\gfx{./img_v2/wem2-web-status}
 
 	\vspace{-0.4cm}
 	\subsection{Status (Startseite)}
@@ -587,9 +588,11 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \subsubsection{Display}
     Hier kann eingestellt werden, welche Informationen auf dem Display angezeigt werden. Für sechs Kacheln kann der anzuzeigende Inhalt hier definiert werden.
     
+	\gfx{./img_v2/wem2-web-display}
+
 	\subsubsection{Energiebilanz}
 
-	\gfx{./img/resized/web_em_energy_analysis}
+	\gfx{./img_v2/wem2-web-energyanalysis}
 	\vspace{-0.2cm}
 
 	Die Seite Energiebilanz stellt Informationen zur Energieverteilung zur Verfügung.
@@ -625,7 +628,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \subsubsection{Stromzähler}
 	\label{stromzaehler}
 
-	\gfx{./img/resized/web_em_meter_config}
+	\gfx{./img_v2/wem2-web-meter}
 
 	Auf dieser Seite können bis zu sieben Stromzähler konfiguriert werden. 
     Dazu zählt ein Stromzähler am Netzanschluss aber auch als Stromzähler betrachtete PV-Wechselrichter und Batterien.
@@ -689,6 +692,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     die Phasenrotation eingestellt werden.
 
     \subsubsection{Heizung}
+
+	\gfx{./img_v2/wem2-web-heater}
+
     Auf dieser Seite kann die Ansteuerung einer Wärmepumpe mittels der SG-Ready Schnittstelle konfiguriert werden.
     
     Nachfolgend werden die Einstellungen kurz zusammengefasst. Weitere Informationen gibt es in den Hilfetexten
@@ -816,6 +822,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 
     \subsubsection{Dynamischer Strompreis}
+
+	\gfx{./img_v2/wem2-web-dyn-price}
+
     Der WARP Energy Manager unterstützt dynamische Strompreise. Diese können zum Beispiel zur Steuerung von Wallboxen oder einer Heizung verwendet werden.
     Hierbei werden nicht die Preise von einem spezifischen Stromanbieter abgefragt, sondern der Börsenstrompreis der jeweiligen Strombörse.
     Diese kann über die Einstellung \textbf{Bereich} gewählt werden. Alle dynamischen Stromanbieter rechnen mit den gleichen Börsenstrompreis. Der Unterschied zwischen den verschiedenen Anbietern besteht 
@@ -827,6 +836,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
        
     
     \subsubsection{Solarprognose}
+
+	\gfx{./img_v2/wem2-web-pv-prognosis}
+
     Die Solarprognose kann für die Heizungssteuerung verwendet werden. Dazu können bis zu sechs verschiedene PV-Flächen angelegt werden. Für jede dieser Fläche wird eine Prognose berechnet.
     Der Service begenzt die Prognoseabfragen auf 12 Abfragen pro 2 Stunden. Das heißt ist nur eine PV-Fläche konfiguriert, können die Daten für die Fläche 6 mal pro Stunde abgerufen werden.
     Sind zwei Flächen konfiguriert, so sind nur noch 3 Abfragen möglich. Sind keine Abfragen mehr möglich, so muss bis zum Ablauf des zwei Stundenfensters gewartet werden. In der Praxis kann dies eigentlich nur 
@@ -1073,9 +1085,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 			\item[Betriebstemperatur] \SI{0}{\celsius}
 			      bis \SI{+30}{\celsius}
 			\item[Schutzklasse] II
-			\item[PV-Überschussladen] max. 32 WARP Charger\footnote[12]{\label{fn:1}WARP
+			\item[PV-Überschussladen] max. 64 WARP Charger\footnote[12]{\label{fn:1}WARP
 			Charger/WARP Charger 3 in Varianten Smart/Pro}
-			\item[Lastmanagement] max. 32 WARP Charger\footref{fn:1}
+			\item[Lastmanagement] max. 64 WARP Charger\footref{fn:1}
 			\item[Netzwerk] LAN, WLAN
 			\item[Schnittstellen] HTTP, MQTT
 		\end{description}
