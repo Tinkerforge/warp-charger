@@ -115,7 +115,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		WARP Energy Manager 2.0 Betriebsanleitung\\\vspace{1cm}
 		\large
 		Version 1.0.0\\\vspace{0.25cm}
-		06.11.2024
+		06.12.2024
 	\end{center}
 	\vspace*{1cm} \gfx{./img_v2/warp-energy-manager2.png}
     \vfill
@@ -423,7 +423,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Wärmepumpen, die über eine SG-Ready Schnittstelle gesteuert werden können, können hier angeschlossen werden.
     Dazu bietet der WARP Energy Manager zwei Relais-Ausgänge. 
     Ausgang 1 wird betätigt, wenn der Betrieb blockiert werden soll (Betriebszustand 1).
-    Ausgang 2 wird betätigt, wenn der Wärmepumpe eine Einschaltempfehlung für den verstärkten Betrieb 
+    Ausgang 2 wird betätigt, wenn der Wärmepumpe eine Einschaltempfehlung für den erweiterten Betrieb 
     für Raumheizung und Warmwasserbereitung gegeben werden soll (Betriebszustand 3).
 
 	\subsubsection{Relais-Ausgänge}
@@ -538,6 +538,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\subsection{Status (Startseite)}
 	\label{status}
 	Die Startseite des Webinterfaces bietet Schnelleinstellungen und zeigt Statusinformationen an.
+    Je nach Konfiguration des Energy Managers stellt die Statusseite verschiedene Informationen dar und bietet andere Einstellungen.
 
 	Mittels Schaltflächen kann der Lademodus gesteuerter
 	Wallboxen gewählt werden:
@@ -558,37 +559,39 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\textbf{Energy Manager} zeigt den Zustand des Energy Managers an. Wenn der Zustand nicht OK ist, wird das Laden an allen gesteuerten Wallboxen deaktiviert.
 
-	\textbf{Verbrauchsverlauf} und \textbf{Leistungsaufnahme} sind nur vorhanden, wenn ein Stromzähler konfiguriert ist.
-	Hier werden dir der aktuelle Netzbezug und ein Diagramm über
-	die letzten 48~Stunden angezeigt.
+	Der Chart des \textbf{Leistungsverlaufs} ist vorhanden, wenn mindestens ein Stromzähler konfiguriert ist.
+	Es werden die Leistungsdaten der letzten 24~Stunden angezeigt.
+    
+    Ist der WARP Energy Manager als \textbf{Lastmanager} für WARP Charger Wallboxen konfiguriert, dann wird als nächstes der Status des Lastmanagers angezeigt, sowie 
+	der Status der \textbf{kontrollierte Wallboxen}.
+    
+    Ist die Heizungssteuerung mittels SG-Ready-Schnittstelle aktiv, so wird unter \textbf{SG-Ready} der Zustand vom blockierenden Ausgang und vom erweiterten Ausgang dargestellt.
+    
+    Wenn ein dynamischer Strompreis verwendet wird, wird der \textbf{Durchschnittspreis} von aktuellen Tag und vom morgigen Tag (sofern schon verfügbar) dargestellt.
+    
+    Wurde die \textbf{PV-Ertragsprognose} konfiguriert, so wird der noch zu erwartende PV-Ertrag ab jetzt und der erwartete PV-Ertrag auf tagesbasis für den aktuellen Tag und für den nächsten Tag dargestellt.
 
-	\textbf{Kontrollierte Wallboxen} zeigt den aktuellen Zustand des Lastmanagers und der vom Energiemanager gesteuerten
-	Wallboxen an.
-
-	\textbf{WLAN-Verbindung} zeigt an, ob eine Verbindung konfiguriert ist, ob sie erfolgreich aufgebaut wurde und
-	unter welcher IP-Adresse die Wallbox per WLAN erreichbar ist.
-
-	\textbf{LAN-Verbindung} zeigt analog dazu an, ob eine LAN-Verbindung besteht und unter welcher IP-Adresse die Wallbox erreichbar ist.
-
-	Der \textbf{WLAN-Access-Point}-Status bildet den Status des Access-Points ab.
-	\enquote{Deaktiviert} beziehungsweise \enquote{Aktiviert} zeigt den Zustand, wenn der Access-Point nicht
+	Der \textbf{WLAN-Access-Point}-Status bildet den Status des Access-Points ab. \enquote{Deaktiviert} beziehungsweise \enquote{Aktiviert} zeigt den Zustand, wenn der Access-Point nicht
 	nur als Fallback für die WLAN-Verbindung verwendet wird. Falls der Status \enquote{Fallback inaktiv} ist,
 	war die WLAN-Verbindung bzw. LAN-Verbindung erfolgreich und der Access-Point wurde deshalb deaktiviert.
 	Beim Status \enquote{Fallback aktiv} ist der Aufbau der WLAN-Verbindung fehlgeschlagen und der
 	Access-Point wurde deshalb aktiviert.
 
-	\textbf{Zeitsynchronisierung} zeigt an, ob Datum und Uhrzeit per Netzwerk-Zeitsynchronisierung (NTP) aktualisiert werden konnten.
+	\textbf{LAN-Verbindung} zeigt analog dazu an, ob eine LAN-Verbindung besteht und unter welcher IP-Adresse die Wallbox erreichbar ist.
+    
+    \textbf{MQTT-Verbindung} zeigt den aktuellen Status der MQTT-Verbindung zum konfigurierten Broker an.
+	
+	\textbf{Systemzeit} zeigt an, ob Datum und Uhrzeit per Netzwerk-Zeitsynchronisierung (NTP) aktualisiert werden konnten.
 
-	\textbf{WireGuard-Verbindung} zeigt an, ob die konfigurierte WireGuard-VPN-Verbindung aufgebaut werden konnte. Hierfür ist eine bestehende Zeitsynchronisierung notwendig.
+	\textbf{WireGuard-Verbindung}, sofern konfiguriert, zeigt an ob die konfigurierte WireGuard-VPN-Verbindung aufgebaut werden konnte. Hierfür ist eine bestehende Zeitsynchronisierung notwendig.
 
-	\textbf{MQTT-Verbindung} zeigt den aktuellen Status der MQTT-Verbindung
-	zum konfigurierten Broker an.
-
+	
     \subsection{Energy Manager}
     \subsubsection{Display}
-    Hier kann eingestellt werden, welche Informationen auf dem Display angezeigt werden. Für sechs Kacheln kann der anzuzeigende Inhalt hier definiert werden.
+    \gfx{./img_v2/wem2-web-display}
+    Hier kann eingestellt werden, welche Informationen auf dem Display des WARP Energy Managers angezeigt werden. Für sechs Kacheln kann der anzuzeigende Inhalt hier definiert werden.
     
-	\gfx{./img_v2/wem2-web-display}
+	
 
 	\subsubsection{Energiebilanz}
 
@@ -602,16 +605,20 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     die Schaltausgänge der SG-Ready Schnittstelle (Heizung) und der Verlauf des dynamischen Strompreises aufgezeichnet.
 
     \subsubsection{Automatisierung}
+    
+    \gfx{./img_v2/wem2-web-automation}
+    
     Es können bis zu 14 Regeln angelegt werden. Diese bestehen jeweils aus einer Bedingung (z.B.: \glqq Eingang 1 geschlossen\grqq) 
     und einer Aktion (z.B.: \glqq Schalte SG-Ready Ausgang 1 auf geschlossen\grqq).
     
     
     \subsubsection{SD-Karte}
+    
+    \gfx{./img/resized/web_em_sdcard}
+    
     Die Daten des WARP Energy Managers werden intern auf einer microSD-Karte
 	aufgezeichnet. Hier werden Informationen über die eingelegte Karte ausgegeben. Die microSD-Karte kann
 	hier formatiert werden. Dadurch werden alle aufgezeichneten Informationen gelöscht!
-
-	\gfx{./img/resized/web_em_sdcard}
     
 	\subsubsection{Debug}
 	Auf der Debug-Seite kann ein Energiemanager-Protokoll erstellt werden. Dies
@@ -638,8 +645,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\fullref{dynamisches_lastmanagement} ausführen soll.
 
     Im Graph wird die gemessene Leistung aller konfigurierten Stromzähler
-	angezeigt, entweder als Verlauf über die letzten \SI{48}{\hour} oder als
-	Live-Ansicht. Die Ansicht jeders Zählers kann aufgeklappt werden, um weitere Statistiken und Messwerte anzuzeigen. Dazu muss auf den
+	angezeigt, entweder als Verlauf über die letzten \SI{48}{\hour} oder in Abstufungen bis herunter zu einer Live-Ansicht (6 Minuten). Die Ansicht jeders Zählers kann aufgeklappt werden, um weitere Statistiken und Messwerte anzuzeigen. Dazu muss auf den
 	jeweiligen blauen Pfeil geklickt werden.
 
     \vspace*{-0.1cm}
@@ -653,7 +659,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\subsubsection{Wallboxen}
 	\label{chargers}
 
-	\gfx{./img/resized/web_charge_manager}
+	\gfx{./img_v2/wem2-web-wallbox}
 
 	Hier werden die vom Energiemanager kontrollierten Wallboxen konfiguriert.
 	Die hier vorgenommenen Einstellungen beeinflussen das Lastmanagement
@@ -695,48 +701,56 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\gfx{./img_v2/wem2-web-heater}
 
-    Auf dieser Seite kann die Ansteuerung einer Wärmepumpe mittels der SG-Ready Schnittstelle konfiguriert werden.
-    
-    Nachfolgend werden die Einstellungen kurz zusammengefasst. Weitere Informationen gibt es in den Hilfetexten
-    auf der Seite.
+    Auf dieser Seite kann die Ansteuerung einer Wärmepumpe mittels der SG-Ready Schnittstelle konfiguriert werden. Im Normalbetrieb der Wärmepumpe wird diese nicht gesteuert. 
+    Mittels SG-Ready kann die Wärmepumpe aber auch in einen blockierenden Betrieb versetzt werden. Das heißt die Wärmepumpe läuft dann nicht.
+    Alternativ kann die Heizung auch aufgefordert werden in einem erweiterten Betrieb zu laufen. Je nach Konfiguration der Wärmepumpe erhöht sie die Zieltemperaturen für Warmwasser und Heizungsvorlauf.
+        
+    Nachfolgend werden die Einstellungen kurz zusammengefasst. Weitere Informationen und Konfigurationsbeispiele gibt es in den Hilfetexten
+    im Webinterface.
     
    	\begin{description}
-    \item[Stromzähler] Hier muss der zuvor konfigurierte Stromzähler am Netzanschluss ausgewählt werden.
-    \item[Mindesthaltezeit] Mindestzeit für die der Zustand der Ausgänge beibehalten wird.
+    \item[Stromzähler] Hier muss ein zuvor konfigurierter Stromzähler am Netzanschluss ausgewählt werden, damit der PV-Überschuss gemessen werden kann.
+    \item[Mindesthaltezeit] Mindestzeit für die der Zustand der SG-Ready Ausgänge beibehalten wird.
+    \item[Resthaltezeit] Hier wird die aktuelle Resthaltezeit für die Ausgänge dargestellt. Dabei handelt es sich um die ablaufende Mindesthaltezeit. Für Tests kann die Resthaltezeit auch zurückgesetzt werden.
     \item[SG-Ready-Ausgang 1+2] Konfiguration der Ausgänge.
+    \item[Regelzeit] Zeitraum, der für die nachfolgenden Regeln betrachtet werden soll.
     \item[Erweitertes Logging] Wenn aktiv werden im Ereignis-Log weitere Informationen ausgegeben. 
    	\end{description}
 
-    Im Abschnitt \textbf{Sommereinstellungen} wird das Verhalten des WARP Energy Managers während der Sommerzeit konfiguriert.
-    Da im Sommer oftmals ein Großteil der elektrischen Energie über eine Photovoltaikanlage gedeckt werden kann, kann hier eine Aktivzeit definiert werden. 
-    Nur innerhalb dieser Zeit werden die Ausgände der SG-Ready Schnittstelle gesteuert. Die Idee dahinter ist es, das Einschalten der Wärmepumpe auf Grund
-    günstigen Nachtstroms zu unterbinden und somit die Nutzung der Photovoltaik zu präferieren.
-    
-    Gerade in der Übergangszeit gibt es aber Tage an denen in der Sommerzeit nicht genug Strom durch die PV-Anlage bereitgestellt werden kann. 
-    Wer in diesen Fällen dann zum Beispiel den günstigen Nachtstrom (dynamischer Strompreis) nutzen möchte, kann  die Beschränkung durch die
-    Aktivzeit außerkraft setzen, wenn die Erwartete PV-Ertragsprognose für den Tag unter einer eingestellten Schwelle liegt.
-    
-   	\begin{description}
-    \item[Sommeranfang + Sommerende] Hiermit wird konfiguriert was der WARP Energy Manager als Sommerzeit verstehen soll.
-    \item[Tägliche Aktivzeit] Wenn aktiviert wird die Wärmepumpe nur innderhalb dieses Zeitraums gesteuert.
-    \item[PV-Ertragsprognose] Schwellwert unter dem die Aktivzeit außer Kraft gesetzt wird.
-   	\end{description}
+    \paragraph{Erweiterter Betrieb}\ \\
+    \vspace{-0.5cm}
 
-    In den \textbf{Allgemeinen Einstellungen} wird das allgemeine Verhalten hinsichtlich PV-Überschuss und dynamischen Strompreisen konfiguriert.
-
-   	\begin{description}
-    \item[Einschalten bei PV-Überschuss] Schwellwert ab wie viel Watt am Netzanschluss eine Einschaltempfehlung gegeben wird.
-    \item[Einschalten bei niedrigem Strom­preis] Schwellwert unter welchen prozentualen Wert des Tagesdurchschnittpreises eine Einschaltempfehlung gegeben wird.
-    \item[Blo­ckie­ren bei hohem Strom­preis] Schwellwert ab welchen welchen prozentualen Wert des Tagesdurchschnittpreises die Wärmepumpe blockiert wird.
-   	\end{description}
+    Der erweiterte Betrieb wird geschaltet,
+    \begin{itemize}
+    \item immer wenn der Schwellwert zum \textbf{PV-Überschuss} überschritten wird (PV-Überschussnutzung).
+    \item Oder in einer zeitbasierten Steuerung:
+    \begin{itemize}
+    \item \textbf{für die günstigsten X Stunden} innerhalb der \textbf{Regelzeit}
+    \item aber nur wenn die \textbf{PV-Ertragsprognose} für den betrachteten Zeitraum unter dem eingestellten Schwellwert liegt.
+    \end{itemize}
+   	\end{itemize}
     
-    Im \textbf{Status} Abschnitt wird im Graph dargestellt wann eine Einschaltempfehlung (grün) gegeben und wann die Heizung blockiert wird (rot), basierend
-    auf den Strompreiseinstellungen.
+    \paragraph{Blockierender Betrieb}\ \\
+    Der blockierende Betrieb wird geschaltet,
+    \begin{itemize}
+    \item in einer zeitbasierten Steuerung:
+    \begin{itemize}
+    \item \textbf{bei den teuersten X Stunden} innerhalb der \textbf{Regelzeit}
+    \end{itemize}
+   	\end{itemize}
+    Wird der Schwellwert des zuvor konfigurierten PV-Überschuss am Netzanschluss überschritten, so wird der blockierende Betrieb aufgehoben und die Wärmepumpe in den erweiterten Betrieb versetzt.
     
-    Soll der SG-Ready Ausgang für den Blockierenden Betrieb genutzt werden um auf Grund von \textbf{S14a EnWG} die Heizung zu sperren, so ist dies im letzten Abschnitt möglich.
+    \hint{Maximal kann die Summe der konfigurierten Stunden für den erweiterten und dem blockierenden Betrieb der eingestellten Regelzeit entsprechen. In diesem Fall befindet sich die Wärmepumpe nie im Normalbetrieb.}
+    
+    \paragraph{Status}\ \\
+    In diesem Abschnitt wird im Graph dargestellt, wann für den aktuellen Strompreisverlauf eine Einschaltempfehlung (grün) gegeben und wann die Heizung blockiert wird (rot). Werden Zeitblöcke nicht markiert, dann befindet sich
+    die Wärmepumpe hier im Normalbetrieb. Im Graph wird nicht das Einschalten des erweiterten Betriebs für den Fall eines PV-Überschuss berücksichtigt, sondern nur die zeitbasierte Steuerung.
+    
+    \paragraph{S14a EnWG}\ \\
+    Soll der SG-Ready Ausgang für den blockierenden Betrieb genutzt werden um auf Grund von \textbf{S14a EnWG} die Heizung zu sperren, so kann in diesem Abschnitt der entsprechende Eingang des WARP Energy Managers gewählt werden.
 
 	\subsubsection{PV-Überschussladen}
-	Beim Photovoltaik-Überschussladen ist das Ziel, die nicht selbst genutzte Leistung einer
+    Beim Photovoltaik-Überschussladen ist das Ziel, die nicht selbst genutzte Leistung einer
 	Photovoltaikanlage in ein
 	Elektrofahrzeug zu laden, anstatt sie in das Stromnetz einzuspeisen. Die Maximierung der Eigenstromnutzung steht hier
 	im Vordergrund.
@@ -775,12 +789,12 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 
 	\paragraph{Konfiguration}\ \\
+    \gfx{./img_v2/wem2-web-pv-excess}
 	Folgende Einstellungen können vorgenommen werden:
 	\begin{description}[labelindent=0.5cm, leftmargin=0.5cm]
 		\item[Überschussladen aktiviert] Schaltet den PV-Über\-schuss\-regler ein oder aus.
-		\item[Umschaltungsmodus] Definiert das Verhalten der Phasenumschaltung.
 		\item[Standardlademodus] Der Lademodus, der bei einem Neustart des WARP3 Chargers verwendet wird.
-		\item[Stromzähler] Der Stromzähler, mit dem der PV-Überschuss gemessen wird. Dieser Stromzähler muss vorher entsprechend \fullref{meter} angelegt werden.
+		\item[Stromzähler] Der Stromzähler, mit dem der PV-Überschuss gemessen wird. Dieser Stromzähler muss vorher entsprechend \fullref{stromzaehler} angelegt werden.
 		\item[Min+PV: Mindestladeleistung] Legt fest, welche Leistung im \enquote{Min+PV}-Lademodus aus dem Netz bezogen werden darf.
 		\item[Regelverhalten] Legt fest, auf welchen
 		Netzbezug geregelt werden soll, damit beispielsweise ein Batteriespeicher höher oder niedriger priorisiert wird als das Laden von Fahrzeugen.
@@ -789,9 +803,21 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 		träge reagiert, damit kurze Schwankungen der PV-Leistung geglättet werden.
 	\end{description}
     
+    Mit den obigen Einstellungen kann der WARP Energy Manager nur die Leistung am Hausanschluss regeln, indem er den Ladevorgang steuert. Ein eventuell vorhandener 
+    Batteriespeicher versucht typischerweise seinerseits den Hausanschluss auszuregeln. Damit das Verhalten des Batteriespeichers vom System berücksichtigt werden kann,
+    müssen folgende Einstellungen vorgenommen werden:
+    
+    \begin{description}[labelindent=0.5cm, leftmargin=0.5cm]
+		\item[Stromzähler] Der Stromzähler, mit dem der Batteriespeicher gemessen wird. Dieser Stromzähler muss vorher entsprechend \fullref{stromzaehler} angelegt werden.
+		\item[Speicherpriorität] Einstellung was bevorzugt werden soll.
+		\item[Energieflussrichtung des Speichers] Legt fest wie die Werte vom Batteriespeicher-Stromzähler interpretiert werden sollen.
+		\item[Bezugs- und Einspeisetoleranz] Stellt die Regeltoleranz ein.
+	\end{description}
     
     
 	\subsubsection{Lastmanagement}
+    
+    \gfx{./img_v2/wem2-web-load-management}
 
 	Beim dynamischen Lastmanagement misst der WARP Energy Manager laufend mittels eines Stromzählers die
 	Ströme aller Phasen am Stromnetzanschluss. Der noch rechnerisch zur
@@ -805,16 +831,16 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Damit das dynamische Lastmanagement verwendet werden kann, muss zunächst ein
     Stromzähler hinzugefügt werden, der die Phasenströme am Hausanschluss messen kann.
     Dieser kann, so gewünscht, auch für ein PV-Überschussladen verwendet werden,
-    das dynamische Lastmanagement kann aber auch ohne PV-Anlage verwendet werden. Dieser Stromzähler muss vorher entsprechend \fullref{meter} angelegt werden.
+    das dynamische Lastmanagement kann aber auch ohne PV-Anlage verwendet werden. Dieser Stromzähler muss vorher entsprechend \fullref{stromzaehler} angelegt werden.
 
     Nachdem ein Zähler hinzugefügt wurde, kann auf der \texttt{Energiemanagement} $\rightarrow$ \texttt{Lastmanagement}-Unterseite das dynamische Lastmanagement aktiviert und konfiguriert werden.
 
     Zunächst muss der eben konfigurierte Stromzähler ausgewählt werden.
 
-    Danach muss der \enquote{Maximale Strom am Netzanschluss} konfiguriert werden. Dieser ist typischerweise der Nennwert der Absicherung. 
+    Danach muss der \textbf{Maximale Strom am Netzanschluss} konfiguriert werden. Dieser ist typischerweise der Nennwert der Absicherung. 
     Das dynamische Lastmanagment stellt sicher, dass dieser Wert nicht überschritten wird.
 
-    Als letztes muss der zu erwartende \enquote{Stromverbrauch des größten Verbrauchers} konfiguriert werden. 
+    Als letztes muss der zu erwartende \textbf{Stromverbrauch des größten Verbrauchers} konfiguriert werden. 
     Dieser kann beispielsweise ein Durchlauferhitzer oder eine Wärmepumpe sein, mindestens aber 16 Ampere aus einer Schuko-Dose. 
     Der Wert gibt den größten zu er­war­ten­den plötz­li­chen Sprung des Strom­bezugs am Zähler an, den das dy­na­mi­sche Last­manage­ment kurz­fris­tig (in unter 30 Sekunden) kom­pen­sieren können muss.
 
@@ -884,7 +910,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\hint{Wir empfehlen, den Access-Point nie komplett zu deaktivieren, da sonst bei einer
 		fehlgeschlagenen Verbindung zu einem anderen Netzwerk das Webinterface nicht mehr erreicht
-		werden kann. Der WARP Energy Manager kann dann nur über ein Zurücksetzen auf Werkszustand, siehe \ref{reset}, erreicht werden.}
+		werden kann. Der WARP Energy Manager kann dann nur über ein Zurücksetzen auf Werkszustand, siehe \ref{werkszustand}, erreicht werden.}
 
 	\gfx{./img/resized/web_wifi_ap}
 
@@ -966,7 +992,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     
     \subsubsection{TLS-Zertifikate}
     Hier können bis zu acht TLS-Zertifikate hochgeladen werden. Diese Zertifikate können
-    für OCPP- und MQTT-Verbindungen sowie zum Aufbau einer WiFi-Enterprise-Verbindung genutzt werden.
+    für MQTT-Verbindungen sowie zum Aufbau einer WiFi-Enterprise-Verbindung genutzt werden.
     
     \subsubsection{Fernzugriff}
 
@@ -997,7 +1023,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Auf dieser Unterseite kannst du einen Benutzernamen und ein Passwort konfigurieren, mit denen du den Zugriff auf das Web Interface
 	des WARP Energy Managers schützt. Zugriffe auf das Webinterface und die HTTP-API sind bei aktivierter Anmeldung nur möglich, wenn
 	die korrekten Zugangsdaten angegeben werden.
-	\hint{Falls du die Zugangsdaten vergisst ist ein Zugriff auf das Webinterface nur noch nach einem Zurücksetzen auf Werkszustand möglich. Siehe \fullref{reset}}
+	\hint{Falls du die Zugangsdaten vergisst ist ein Zugriff auf das Webinterface nur noch nach einem Zurücksetzen auf Werkszustand möglich. Siehe \fullref{werkszustand}}
 
 	\subsubsection{Ereignis-Log}
 	\gfx{./img/resized/web_event_log}
@@ -1015,7 +1041,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Wir entwickeln die Funktionalität
 	des Energy Managers laufend weiter. Bitte beachte, dass daher ggf. auch eine neue
 	Version dieser Betriebsanleitung bereitgestellt wird.
-	Die aktuelle Firmware und die neuste Betriebsanleitung findest du unter
+	Die aktuelle Firmware und die neuste Betriebsanleitung findest du auch unter
 	\rurl{https://warp-charger.com}{warp-charger.com} zum Download.
 
 	\newpage
@@ -1024,8 +1050,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Die Taster-LED des WARP Energy Manager blinkt in Fehlerfällen rot. Weitere Infos zu den Fehlern gibt das Display.
     
     \subsection{Zurücksetzen auf Werkszustand}
+    \label{werkszustand}
     
-    Im Webinterface kann der WARP Energy Manager mittels Knopfdruck auf Wekseinstellungen zurückgesetzt werden (siehe \ref{einstellungen})
+    Im Webinterface kann der WARP Energy Manager mittels Knopfdruck auf Werkseinstellungen zurückgesetzt werden (siehe \ref{einstellungen})
     
     Falls das Webinterface nicht mehr erreichen kannst, kannst du versuchen, die Recovery-Seite zu öffnen.
 	Falls du über den Access Point der Wallbox verbunden bist, erreichst du diese unter \url{http://10.0.0.1/recovery},
@@ -1038,14 +1065,15 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Falls der WARP Energy Manager weder seinen Access Point öffnet, noch über ein konfiguriertes Netzwerk auf das Webinterface zugegriffen werden kann,
 	kannst du wie folgt das Zurücksetzen auf Werkseinstellungen starten:
 	\begin{enumerate}
-	 \item Suche dir einen elektrisch nicht leitenden Stift (Kugelschreiber o.\,Ä.) und einen kleinen Schlitz-Schraubendreher (z.\,B. Phasenprüfer o.\,Ä.).
-	 \item Öffne den Energy Manager, indem du die bedruckte Frontplatte mit dem Schraubendreher entfernst. Setze dazu in einem der seitlichen Schlitze an.
+	 \item Öffne den Energy Manager, indem du den Boden dem Schraubendreher entfernst. Der Boden besitzt dazu vier Harken.
+     \item Baue den Platinenstapel aus WARP Energy Manager Bricklet 2.0 und ESP32 Ethernet Brick aus. Ggf. ist dazu das Verbindungskabel zum Frontpanel zu lösen.
+     \item Trenne die Kabelverbindung zwischen den beiden Platinen, so dass der ESP32 Ethernet Brick mit nichts mehr verbunden ist. Schließe eine USB-C Stromversorgung an den ESP32 Ethernet Brick an.
 	 \item Drücke mit dem Stift einmal kurz auf \textbf{EN} (1). Die blaue LED fängt an zu blinken.
 	 \item Drücke anschließend mit dem Stift \textbf{IO0} (2) und halte diesen gedrückt. Die blaue LED (3) fängt an schneller zu blinken.
 	 \item Halte \textbf{IO0} (2) ca. 8\,Sekunden gedrückt, bis die LED (3) dauerhaft leuchtet.
 	 \item Sobald die blaue LED (3) dauerhaft leuchtet, ist der Vorgang abgeschlossen. Sollte die LED (3) währenddessen ausgehen, so war der Vorgang nicht erfolgreich und muss wiederholt werden.
 	\end{enumerate}
-	Der WARP Energy Manager setzt jetzt alle Einstellungen auf den Werkszustand zurück. Bei Erfolg sollte es jetzt möglich sein, über den Access Point wieder auf den Energiemanager zuzugreifen.
+	Die WARP Energy Manager Firmware setzt jetzt alle Einstellungen auf den Werkszustand zurück. Bei Erfolg sollte es jetzt möglich sein, über den Access Point wieder auf den Energiemanager zuzugreifen.
 
 	\gfx{./img/resized/factory_reset_2}
 
@@ -1089,7 +1117,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 			Charger/WARP Charger 3 in Varianten Smart/Pro}
 			\item[Lastmanagement] max. 64 WARP Charger\footref{fn:1}
 			\item[Netzwerk] LAN, WLAN
-			\item[Schnittstellen] HTTP, MQTT
+			\item[Schnittstellen] HTTP, MQTT, RS485
 		\end{description}
 	\end{minipage}
 
