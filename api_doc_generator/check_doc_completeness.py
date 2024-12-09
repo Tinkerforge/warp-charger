@@ -242,8 +242,10 @@ def main():
         else:
             impl_mod_name, impl_fn_name = impl_fn["path"].split("/", 1)
 
-        if impl_mod_name == "meters" and re.match(r"\d/", impl_fn_name):
+        if re.match(r"^\d/", impl_fn_name):
             impl_fn_name = "X/" + impl_fn_name[2:]
+
+        impl_fn_name = re.sub(r"/\d+/", "/X/", impl_fn_name)
 
         try:
             doc_mod = next(m for m in mods if m.name == impl_mod_name)
