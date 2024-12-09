@@ -30,6 +30,6 @@ day_ahead_prices = Module("day_ahead_prices", "Dynamische Strompreise", "", "Üb
     Func("prices", FuncType.STATE, Elem.OBJECT("Die dynamischen Strompreise.", members={
         "first_date":  Elem.INT(""),
         "resolution":  Elem.INT(""),
-        "prices": Elem.ARRAY("", members=[* 25*4*2 * [Elem.INT("")]])
+        "prices": Elem.ARRAY("", members=25*4*2 * [Elem.INT("")])
     })),
 ])

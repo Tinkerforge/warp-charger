@@ -22,12 +22,12 @@ solar_forecast = Module("solar_forecast", "PV-Ertragsprogrnose", "", "Über das 
     ),
 
     Func("planes/X/config", FuncType.CONFIGURATION, Elem.OBJECT("", members={
-        "active": Elem.BOOL(""),
+        "enable": Elem.BOOL(""),
         "name": Elem.STRING(""),
-        "latitude": Elem.INT(""),
-        "longitude": Elem.INT(""),
-        "declination": Elem.INT(""),
-        "azimuth": Elem.INT(""),
+        "lat": Elem.INT(""),
+        "long": Elem.INT(""),
+        "decl": Elem.INT(""),
+        "azi": Elem.INT(""),
         "wp": Elem.INT(""),
     })),
 
