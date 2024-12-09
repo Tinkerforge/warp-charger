@@ -134,6 +134,7 @@ class Version(IntFlag):
     WARP3 = 4
     CHARGER = WARP1 | WARP2 | WARP3
     WEM = 8
+    WEM2 = 16
 
     def __init__(self, *args, **kwargs):
         self.desc = None
@@ -153,6 +154,7 @@ class Version(IntFlag):
             Version.WARP2: "WARP 2",
             Version.WARP3: "WARP 3",
             Version.WEM: "Energy Manager",
+            Version.WEM: "Energy Manager V2",
         }[x] for x in Version if x in self]) + suffix
 
     def with_desc(self, desc):
