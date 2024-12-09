@@ -16,4 +16,4 @@ front_panel = Module("front_panel", "Frontblende", "", "Über das `front_panel`-
             })]
         ])
     }))
-]),
+])

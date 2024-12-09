@@ -69,6 +69,9 @@ UNDOCUMENTED_FUNCTIONS = [
     "state energy_manager/identity",
     "command energy_manager/reflash",
     "command energy_manager/reset",
+    "state front_panel/identity",
+    "command front_panel/reflash",
+    "command front_panel/reset",
 ]
 
 colors = {"off":"\x1b[00m",

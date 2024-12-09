@@ -13,14 +13,13 @@ solar_forecast = Module("solar_forecast", "PV-Ertragsprogrnose", "", "Über das 
         "next_api_call": Elem.INT(""),
     })),
 
-    Func("planes/X/state", FuncType.STATE, Elem.ARRAY("", members=[
-        Elem.OBJECT("", members={
+    Func("planes/X/state", FuncType.STATE, Elem.OBJECT("", members={
             "last_sync": Elem.INT(""),
             "last_check": Elem.INT(""),
             "next_check": Elem.INT(""),
             "place": Elem.STRING(""),
         })
-    ])),
+    ),
 
     Func("planes/X/config", FuncType.CONFIGURATION, Elem.OBJECT("", members={
         "active": Elem.BOOL(""),
@@ -35,6 +34,6 @@ solar_forecast = Module("solar_forecast", "PV-Ertragsprogrnose", "", "Über das 
     Func("planes/X/forecast", FuncType.STATE, Elem.OBJECT("", members={
         "first_date": Elem.INT(""),
         "resolution": Elem.INT(""),
-        "forecast": Elem.ARRAY("", members=[* 49 * [Elem.INT("")]])
+        "forecast": Elem.ARRAY("", members=49 * [Elem.INT("")])
     })),
 ])

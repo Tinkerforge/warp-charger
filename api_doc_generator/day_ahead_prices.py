@@ -24,7 +24,7 @@ day_ahead_prices = Module("day_ahead_prices", "Dynamische Strompreise", "", "Üb
         "last_sync": Elem.INT(""),
         "last_check": Elem.INT(""),
         "next_check": Elem.INT(""),
-        "current_prices": Elem.INT(""),
+        "current_price": Elem.INT(""),
     })),
 
     Func("prices", FuncType.STATE, Elem.OBJECT("Die dynamischen Strompreise.", members={
