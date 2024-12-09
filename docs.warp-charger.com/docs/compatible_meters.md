@@ -262,8 +262,8 @@ Zusätzlich kann die Erzeugung der Piko und Plenticore Wechselrichter mittels Su
 da dafür ein Stromzähler am Netzanschluss notwendig ist.
 
 ### RCT
-RCT Wechselrichter können leider nicht mittels SunSpec oder Modbus/TCP angesprochen werden. Dies ist aber über das offengelegte RCT Power Serial Communication protokoll mittels TCP/IP möglich.
-Wir planen die Implementierung des Protokolls um auch Wechselrichter von RCT einbinden zu können.
+Batterie Wechselrichter der Firma RCT können mittels dem RCT Power Serial Communication Protokoll direkt angesprochen werden. Dazu ist ein Stromzähler mit der Klasse "RCT Power" anzulegen und die IP Adresse des Wechselrichters einzugeben.
+Es werden die virtuellen Stromzähler "Netzanschluss" und "Speicher" unterstützt.
 
 ### Shelly
 Der einphasige Wandler-Stromzähler Shelly Pro EM und dreiphasige Wandler-Stromzähler Shelly Pro 3EM werden unterstützt und können mittels Modbus/TCP ausgelesen werden. Beide besitzten nur eine Breite von 1 TE und messen mittels Wandler.

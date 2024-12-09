@@ -152,9 +152,9 @@ export const meters = [
   },
   {
     manufacturer: "RCT",
-    name: "RCT POWER INVERTER + STORAGE",
+    name: "RCT POWER STORAGE",
     connection: "RCT Power Serial Communication",
-    note: "Hybrid, Batterie und String-Wechselrichter",
+    note: "Batterie-Wechselrichter",
     note_url: "/docs/compatible_meters#rct",
   },
   {
