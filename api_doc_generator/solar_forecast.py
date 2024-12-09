@@ -26,8 +26,8 @@ solar_forecast = Module("solar_forecast", "PV-Ertragsprogrnose", "", "Über das 
         "name": Elem.STRING(""),
         "lat": Elem.INT(""),
         "long": Elem.INT(""),
-        "decl": Elem.INT(""),
-        "azi": Elem.INT(""),
+        "dec": Elem.INT(""),
+        "az": Elem.INT(""),
         "wp": Elem.INT(""),
     })),
 
