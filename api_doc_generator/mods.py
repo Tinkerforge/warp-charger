@@ -29,4 +29,35 @@ from front_panel import front_panel
 from heating import heating
 from solar_forecast import solar_forecast
 
-mods = [evse, meters, require_meter, charge_manager, users, charge_tracker, nfc, network, wifi, ethernet, ntp, mqtt, modbus_tcp, ocpp, wireguard, rtc, certs, info, authentication, misc, energy_manager, power_manager, charge_limits, automation, meters_legacy_api, meter, day_ahead_prices, front_panel, heating, solar_forecast]
+mods = [
+    evse,
+    meters,
+    require_meter,
+    charge_manager,
+    users,
+    charge_tracker,
+    nfc,
+    network,
+    wifi,
+    ethernet,
+    ntp,
+    mqtt,
+    modbus_tcp,
+    ocpp,
+    wireguard,
+    rtc,
+    certs,
+    info,
+    authentication,
+    misc,
+    energy_manager,
+    power_manager,
+    charge_limits,
+    automation,
+    meters_legacy_api,
+    meter,
+    day_ahead_prices,
+    front_panel,
+    heating,
+    solar_forecast,
+]
