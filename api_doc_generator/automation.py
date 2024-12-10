@@ -94,25 +94,25 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                         9: Elem.NULL("Auslösen des Watchdogs der externen Steuerung.", version=Version.WARPX),
                         10: Elem.NULL("Erkennen eines Fehlers durch die Zählerüberwachung", version=Version.WARPX),
                         11: Elem.NULL("Auslösen des Watchdogs des Lastmanagements."),
-                        12: Elem.OBJECT("Schalten von Eingang 3", version=Version.WEM1, members={
+                        12: Elem.OBJECT("Schalten von Eingang 3", version=Version.WEM, members={
                             "state": Elem.BOOL("Gibt an, ob bei geöffnetem oder geschlossenem Eingang reagiert werden soll", constants=[
                                 Const(True, "Reagieren bei geöffnetem Eingang"),
                                 Const(False, "Reagieren bei geschlossenem Eingang"),
                             ])
                         }),
-                        13: Elem.OBJECT("Schalten von Eingang 4", version=Version.WEM1, members={
+                        13: Elem.OBJECT("Schalten von Eingang 4", version=Version.WEM, members={
                             "state": Elem.BOOL("Gibt an, ob bei geöffnetem oder geschlossenem Eingang reagiert werden soll", constants=[
                                 Const(True, "Reagieren bei geöffnetem Eingang"),
                                 Const(False, "Reagieren bei geschlossenem Eingang"),
                             ])
                         }),
-                        14: Elem.OBJECT("Schalten der Phasenumschaltung", version=Version.WEM1, members={
+                        14: Elem.OBJECT("Schalten der Phasenumschaltung", version=Version.WEM, members={
                             "phase": Elem.INT("Gibt an, ob beim Umschalten auf ein- oder dreiphasig reagiert werden soll", constants=[
                                 Const(1, "Reagieren beim Wechsel auf einphasig"),
                                 Const(3, "Reagieren beim Wechsel auf dreiphasig"),
                             ])
                         }),
-                        15: Elem.OBJECT("Erkennen eines Fehlers durch die Schützüberwachung", version=Version.WEM1, members={
+                        15: Elem.OBJECT("Erkennen eines Fehlers durch die Schützüberwachung", version=Version.WEM, members={
                             "contactor_okay": Elem.BOOL("Gibt an, ob reagiert werden soll, wenn ein oder kein Schützfehler vorliegt.", constants=[
                                 Const(True, "Reagieren wenn ein Schützfehler erkannt wurde"),
                                 Const(False, "Reagieren wenn kein Schützfehler erkannt wurde"),
@@ -223,13 +223,13 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                             ])
                         }),
                         #10: Elem.OBJECT("Lösche die aufgezeichneten Ladevorgänge", version=Version.WARPX, members={}),
-                        11: Elem.OBJECT("Starte eine Phasenumschaltung", version=Version.WARP3 | Version.WEM1, members={
+                        11: Elem.OBJECT("Starte eine Phasenumschaltung", version=Version.WARP3 | Version.WEM, members={
                             "phases_wanted": Elem.INT("Gibt an, auf ein- oder dreiphasig umgeschalted werden soll", constants=[
                                 Const(1, "Wechsele auf einphasig"),
                                 Const(3, "Wechsele auf dreiphasig"),
                             ])
                         }),
-                        12: Elem.OBJECT("Wechsle den Lademodus", version=Version.WARP3 | Version.WEM1, members={
+                        12: Elem.OBJECT("Wechsle den Lademodus", version=Version.WARP3 | Version.WEM, members={
                             "mode": Elem.INT("Gewünschter Lademodus. Siehe {{{ref:power_manager/charge_mode}}}", constants=[
                                 Const(0, "Schnell"),
                                 Const(1, "Aus"),
@@ -237,18 +237,18 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                                 Const(3, "Min + PV"),
                             ])
                         }),
-                        13: Elem.OBJECT("Schalte den Relais-Ausgang", version=Version.WEM1, members={
+                        13: Elem.OBJECT("Schalte den Relais-Ausgang", version=Version.WEM, members={
                             "state": Elem.BOOL("Gibt an, ob der Relais-Ausgang geschlossen oder geöffnet werden soll.", constants=[
                                 Const(True, "Geschlossen"),
                                 Const(False, "Geöffnet"),
                             ])
                         }),
-                        14: Elem.OBJECT("Limitiere den ???TODO???-Strom", version=Version.WARP3 | Version.WEM1, members={
+                        14: Elem.OBJECT("Limitiere den ???TODO???-Strom", version=Version.WARP3 | Version.WEM, members={
                             "current": Elem.INT("Stromlimit, dass gesetzt werden soll", constants=[
                                 Const(-1, "Stromlimit aufheben")
                             ])
                         }),
-                        15: Elem.OBJECT("Blockiere oder gebe Ladevorgänge frei", version=Version.WEM1, members={
+                        15: Elem.OBJECT("Blockiere oder gebe Ladevorgänge frei", version=Version.WEM, members={
                             "slot": Elem.INT("Blockierslot, der verwendet werden soll. Ladevorgänge werden nur dann erlaubt, wenn alle 4 Blockierslots nicht blockieren."),
                             "block": Elem.BOOL("Gibt an, ob der gewählte Blockierslot blockiert, oder freigegeben werden soll", constants=[
                                 Const(False, "Gib gewählten Blockierslot frei"),
