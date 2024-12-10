@@ -48,7 +48,7 @@ mqtt = Module("mqtt", "MQTT-Verbindung", "", "", Version.ANY, [
         })
     ),
 
-    Func("auto_discovery_config", FuncType.CONFIGURATION, Elem.OBJECT("Die Konfiguration der MQTT Auto Discovery.", version=Version.CHARGER, members={
+    Func("auto_discovery_config", FuncType.CONFIGURATION, Elem.OBJECT("Die Konfiguration der MQTT Auto Discovery.", version=Version.WARPX, members={
             "auto_discovery_mode": Elem.INT("Gibt an ob eine MQTT-Verbindung zum konfigurierten Broker aufgebaut werden soll.", constants=[
                 Const(0, "Auto Discovery deaktiviert"),
                 Const(1, "Auto Discovery im generischen Modus; Kompatibel zu z.B. openHAB und Domoticz"),

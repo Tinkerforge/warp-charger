@@ -43,7 +43,7 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                                 Const(-1, "Minütlich"),
                             ])
                         }),
-                        2: Elem.OBJECT("Wechsel des Ladestatus", version=Version.CHARGER, members={
+                        2: Elem.OBJECT("Wechsel des Ladestatus", version=Version.WARPX, members={
                             "old_charger_state": Elem.INT("Ladestatus vor dem Übergang", constants=[
                                 Const(-1, "Beliebiger Ladestatus"),
                                 Const(0, "Fahrzeug getrennt"),
@@ -68,7 +68,7 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                             "use_prefix": Elem.BOOL("Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe {{{ref:mqtt/config}}}) vor dem konfigurierten Topic vorangestellt werden soll.")
                         }),
                         4: Elem.NULL("Drücken des Fronttasters", version=Version.WARP2 | Version.WARP3),
-                        5: Elem.OBJECT("Erkennen eines NFC-Tags", version=Version.CHARGER, members={
+                        5: Elem.OBJECT("Erkennen eines NFC-Tags", version=Version.WARPX, members={
                             "tag_type": Elem.INT("Typ des Tags", constants=[
                                 Const(0, "Mifare Classic"),
                                 Const(1, "NFC Forum Typ 1"),
@@ -78,7 +78,7 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                             ]),
                             "tag_id": Elem.STRING("ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:AB:3D"),
                         }),
-                        6: Elem.NULL("Erreichen des Ladezeit- oder Energie-Limits", version=Version.CHARGER),
+                        6: Elem.NULL("Erreichen des Ladezeit- oder Energie-Limits", version=Version.WARPX),
                         7: Elem.OBJECT("Schalten des Abschalteingangs", version=Version.WARP2 | Version.WARP3, members={
                             "closed": Elem.BOOL("Gibt an, ob bei geöffnetem oder geschlossenem Eingang reagiert werden soll", constants=[
                                 Const(True, "Reagieren bei geöffnetem Eingang"),
@@ -91,28 +91,28 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                                 Const(False, "Reagieren bei geschlossenem Eingang"),
                             ])
                         }),
-                        9: Elem.NULL("Auslösen des Watchdogs der externen Steuerung.", version=Version.CHARGER),
-                        10: Elem.NULL("Erkennen eines Fehlers durch die Zählerüberwachung", version=Version.CHARGER),
+                        9: Elem.NULL("Auslösen des Watchdogs der externen Steuerung.", version=Version.WARPX),
+                        10: Elem.NULL("Erkennen eines Fehlers durch die Zählerüberwachung", version=Version.WARPX),
                         11: Elem.NULL("Auslösen des Watchdogs des Lastmanagements."),
-                        12: Elem.OBJECT("Schalten von Eingang 3", version=Version.WEM, members={
+                        12: Elem.OBJECT("Schalten von Eingang 3", version=Version.WEM1, members={
                             "state": Elem.BOOL("Gibt an, ob bei geöffnetem oder geschlossenem Eingang reagiert werden soll", constants=[
                                 Const(True, "Reagieren bei geöffnetem Eingang"),
                                 Const(False, "Reagieren bei geschlossenem Eingang"),
                             ])
                         }),
-                        13: Elem.OBJECT("Schalten von Eingang 4", version=Version.WEM, members={
+                        13: Elem.OBJECT("Schalten von Eingang 4", version=Version.WEM1, members={
                             "state": Elem.BOOL("Gibt an, ob bei geöffnetem oder geschlossenem Eingang reagiert werden soll", constants=[
                                 Const(True, "Reagieren bei geöffnetem Eingang"),
                                 Const(False, "Reagieren bei geschlossenem Eingang"),
                             ])
                         }),
-                        14: Elem.OBJECT("Schalten der Phasenumschaltung", version=Version.WEM, members={
+                        14: Elem.OBJECT("Schalten der Phasenumschaltung", version=Version.WEM1, members={
                             "phase": Elem.INT("Gibt an, ob beim Umschalten auf ein- oder dreiphasig reagiert werden soll", constants=[
                                 Const(1, "Reagieren beim Wechsel auf einphasig"),
                                 Const(3, "Reagieren beim Wechsel auf dreiphasig"),
                             ])
                         }),
-                        15: Elem.OBJECT("Erkennen eines Fehlers durch die Schützüberwachung", version=Version.WEM, members={
+                        15: Elem.OBJECT("Erkennen eines Fehlers durch die Schützüberwachung", version=Version.WEM1, members={
                             "contactor_okay": Elem.BOOL("Gibt an, ob reagiert werden soll, wenn ein oder kein Schützfehler vorliegt.", constants=[
                                 Const(True, "Reagieren wenn ein Schützfehler erkannt wurde"),
                                 Const(False, "Reagieren wenn kein Schützfehler erkannt wurde"),
@@ -153,10 +153,10 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                             "retain": Elem.BOOL("Gibt an, ob die Nachricht retained werden soll"),
                             "use_prefix": Elem.BOOL("Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe {{{ref:mqtt/config}}}) vor dem konfigurierten Topic vorangestellt werden soll.")
                         }),
-                        3: Elem.OBJECT("Limitiere den Ladestrom", version=Version.CHARGER, members={
+                        3: Elem.OBJECT("Limitiere den Ladestrom", version=Version.WARPX, members={
                             "current": Elem.INT("Ladestromlimit, dass gesetzt werden soll")
                         }),
-                        4: Elem.OBJECT("Zeige auf der Fronttaster-LED an", version=Version.CHARGER, members={
+                        4: Elem.OBJECT("Zeige auf der Fronttaster-LED an", version=Version.WARPX, members={
                             "indication": Elem.INT("Blinkmuster, dass angezeigt werden soll.", constants=[
                                 Const(-1, "EVSE kontrolliert LED"),
                                 Const(0, "Aus"),
@@ -178,7 +178,7 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                         6: Elem.OBJECT("Setze den für den Lastmanager verfügbaren Strom.", members={
                             "current": Elem.INT("Verfügbarer Strom, der gesetzt werden soll")
                         }),
-                        7: Elem.OBJECT("Simuliere ein NFC-Tags", version=Version.CHARGER, members={
+                        7: Elem.OBJECT("Simuliere ein NFC-Tags", version=Version.WARPX, members={
                             "tag_type": Elem.INT("Typ des Tags.", constants=[
                                 Const(0, "Mifare Classic"),
                                 Const(1, "NFC Forum Typ 1"),
@@ -193,7 +193,7 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                                 Const(0, "Tag kann Ladevorgänge stoppen"),
                             ])
                         }),
-                        8: Elem.OBJECT("Setze das Ladezeit- oder Energielimit", version=Version.CHARGER, members={
+                        8: Elem.OBJECT("Setze das Ladezeit- oder Energielimit", version=Version.WARPX, members={
                             "restart": Elem.BOOL("Gibt an, ob die neuen Limits relativ zum bestehenden Ladevorgang, oder absolut gelten sollen. Wenn beispielsweise ein Ladevorgang seit 17 Minuten läuft und diese Aktion mit duration = 2 (30 Minuten) ausgelöst wird, dann darf, wenn restart false ist, der Ladevorgang noch weitere 13 Minuten laufen, sodass insgesamt 30 Minuten geladen wurde. Wenn restart true ist, darf weitere 30 Minuten, insgesamt also 47 Minuten geladen werden.", constants=[
                                 Const(False, "Neues Ladelimit gilt relativ zum laufenden Ladevorgang. Z.B. Verlängerung <strong>auf</strong> 30 Minuten."),
                                 Const(True, "Neues Ladelimit gilt absolut. Z.B. Verlängerung <strong>um</strong> 30 Minuten.")
@@ -222,14 +222,14 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                                 Const(1, "Geöffnet (hochohmig)"),
                             ])
                         }),
-                        #10: Elem.OBJECT("Lösche die aufgezeichneten Ladevorgänge", version=Version.CHARGER, members={}),
-                        11: Elem.OBJECT("Starte eine Phasenumschaltung", version=Version.WARP3 | Version.WEM, members={
+                        #10: Elem.OBJECT("Lösche die aufgezeichneten Ladevorgänge", version=Version.WARPX, members={}),
+                        11: Elem.OBJECT("Starte eine Phasenumschaltung", version=Version.WARP3 | Version.WEM1, members={
                             "phases_wanted": Elem.INT("Gibt an, auf ein- oder dreiphasig umgeschalted werden soll", constants=[
                                 Const(1, "Wechsele auf einphasig"),
                                 Const(3, "Wechsele auf dreiphasig"),
                             ])
                         }),
-                        12: Elem.OBJECT("Wechsle den Lademodus", version=Version.WARP3 | Version.WEM, members={
+                        12: Elem.OBJECT("Wechsle den Lademodus", version=Version.WARP3 | Version.WEM1, members={
                             "mode": Elem.INT("Gewünschter Lademodus. Siehe {{{ref:power_manager/charge_mode}}}", constants=[
                                 Const(0, "Schnell"),
                                 Const(1, "Aus"),
@@ -237,18 +237,18 @@ automation = Module("automation", "Automatisierung", "", "Mit dem `automation`-M
                                 Const(3, "Min + PV"),
                             ])
                         }),
-                        13: Elem.OBJECT("Schalte den Relais-Ausgang", version=Version.WEM, members={
+                        13: Elem.OBJECT("Schalte den Relais-Ausgang", version=Version.WEM1, members={
                             "state": Elem.BOOL("Gibt an, ob der Relais-Ausgang geschlossen oder geöffnet werden soll.", constants=[
                                 Const(True, "Geschlossen"),
                                 Const(False, "Geöffnet"),
                             ])
                         }),
-                        14: Elem.OBJECT("Limitiere den ???TODO???-Strom", version=Version.WARP3 | Version.WEM, members={
+                        14: Elem.OBJECT("Limitiere den ???TODO???-Strom", version=Version.WARP3 | Version.WEM1, members={
                             "current": Elem.INT("Stromlimit, dass gesetzt werden soll", constants=[
                                 Const(-1, "Stromlimit aufheben")
                             ])
                         }),
-                        15: Elem.OBJECT("Blockiere oder gebe Ladevorgänge frei", version=Version.WEM, members={
+                        15: Elem.OBJECT("Blockiere oder gebe Ladevorgänge frei", version=Version.WEM1, members={
                             "slot": Elem.INT("Blockierslot, der verwendet werden soll. Ladevorgänge werden nur dann erlaubt, wenn alle 4 Blockierslots nicht blockieren."),
                             "block": Elem.BOOL("Gibt an, ob der gewählte Blockierslot blockiert, oder freigegeben werden soll", constants=[
                                 Const(False, "Gib gewählten Blockierslot frei"),

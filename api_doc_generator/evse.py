@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-evse = Module("evse", "Ladecontroller (EVSE)", "", "Das `evse`-Modul verwaltet Zustand und Konfiguration des Ladecontrollers.", Version.CHARGER.with_desc('**Benötigt das Feature <a href="#features_evse"><code>"evse"</code></a>**'),[
+evse = Module("evse", "Ladecontroller (EVSE)", "", "Das `evse`-Modul verwaltet Zustand und Konfiguration des Ladecontrollers.", Version.WARPX.with_desc('**Benötigt das Feature <a href="#features_evse"><code>"evse"</code></a>**'),[
     Func("state", FuncType.STATE, Elem.OBJECT("Der Zustand des Ladecontrollers.", members={
             "iec61851_state": Elem.INT("Der aktuelle Zustand nach IEC 61851", constants=[
                     Const(0, "A: Nicht verbunden"),

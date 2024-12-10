@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-ethernet = Module("ethernet", "LAN-Verbindung", "Benötigt das Feature <a href=\"#features_ethernet\"><code>\"ethernet\"</code></a>.", "Mit dem `ethernet`-Modul und passender Hardware kann eine Verbindung zu einem LAN hergestellt werden.", Version.WARP2 | Version.WARP3 | Version.WEM, [
+ethernet = Module("ethernet", "LAN-Verbindung", "Benötigt das Feature <a href=\"#features_ethernet\"><code>\"ethernet\"</code></a>.", "Mit dem `ethernet`-Modul und passender Hardware kann eine Verbindung zu einem LAN hergestellt werden.", Version.WARP2 | Version.WARP3 | Version.WEMX, [
     Func("state", FuncType.STATE, Elem.OBJECT("Der Zustand der LAN/Ethernet-Verbindung.", members={
             "connection_state": Elem.INT("Verbindungszustand.", constants=[
                 Const(0,"Nicht konfiguriert"),

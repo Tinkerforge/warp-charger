@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-require_meter = Module("require_meter", "Zählerüberwachung", "", "", Version.CHARGER, [
+require_meter = Module("require_meter", "Zählerüberwachung", "", "", Version.WARPX, [
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die Konfiguration der Zählerüberwachung.", members={
         "config": Elem.INT("Konfiguration der Zählerüberwachung.", constants=[
             Const(0, "Es wurde noch nie ein Stromzähler gesehen. Zählerüberwachung deaktiviert. Sobald das erste Mal ein Stromzähler erkannt wird, wird dieser Wert automatisch auf 2 geändert."),

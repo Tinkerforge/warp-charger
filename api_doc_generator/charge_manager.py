@@ -54,7 +54,7 @@ charge_manager = Module("charge_manager", "Lastmanager", "", "Das `charge_manage
             "requested_current_margin": Elem.INT("Spielraum, der auf den größten gemessenen Phasenstrom aufgeschlagen wird.", unit=Units.mA),
             "chargers": Elem.ARRAY("Wallboxen, die vom Lastmanager gesteuert werden sollen.", members=
                   10 * charger(Version.WARP1)
-                + 32 * charger(Version.WARP2 | Version.WARP3 | Version.WEM)
+                + 32 * charger(Version.WARP2 | Version.WARP3 | Version.WEMX)
             )
         })
     )

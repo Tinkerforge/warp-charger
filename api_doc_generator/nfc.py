@@ -15,7 +15,7 @@ def tag(version):
         })
     ]
 
-nfc = Module("nfc", "NFC-Ladefreigabe", "Benötigt das Feature <a href=\"#features_nfc\"><code>\"nfc\"</code></a>.", "", Version.CHARGER, [
+nfc = Module("nfc", "NFC-Ladefreigabe", "Benötigt das Feature <a href=\"#features_nfc\"><code>\"nfc\"</code></a>.", "", Version.WARPX, [
     Func("seen_tags", FuncType.STATE, Elem.ARRAY("Die zuletzt von der Wallbox gesehenen NFC-Tags.", members=[
             * 8 * [Elem.OBJECT("Ein gesehenes NFC-Tag", members = {
                 "tag_type": Elem.INT("Typ des Tags", constants=[
@@ -79,7 +79,7 @@ nfc = Module("nfc", "NFC-Ladefreigabe", "Benötigt das Feature <a href=\"#featur
             "deadtime_post_start": Elem.INT("Erlaubt das Stoppen eines Ladevorgangs mit einem NFC-Tag erst nach dieser Zeit, um Fehlbedienung zu vermeiden.", unit=Units.s),
             "authorized_tags": Elem.ARRAY("Eine Liste authorisierter Tags.", members=
                   16 * tag(Version.WARP1)
-                + 32 * tag(Version.WARP2 | Version.WARP3 | Version.WEM)
+                + 32 * tag(Version.WARP2 | Version.WARP3 | Version.WEMX)
             ),
         })
     ),
