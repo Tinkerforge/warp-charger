@@ -52,7 +52,9 @@ plot x 																										lc rgbcolor hsv2rgb(  0/360.0,0.0,0.5)	title "i
      "id_4_three_phases.csv" 								using ($2):($25)					with lines	lc rgbcolor hsv2rgb(300/360.0,0.5,1.0)	title "Scheinstrom ID.4 3P",\
      "id_4_three_phases.csv" 								using ($2):($27/$24/3)				with lines	lc rgbcolor hsv2rgb(300/360.0,1.0,1.0)	title "Wirkstrom ID.4 3P",\
      "id_buzz_three_phases.csv" 							using ($2):($25)					with lines	lc rgbcolor hsv2rgb(315/360.0,0.5,1.0)	title "Scheinstrom ID.Buzz 3P",\
-     "id_buzz_three_phases.csv" 							using ($2):($27/$24/3)				with lines	lc rgbcolor hsv2rgb(315/360.0,1.0,1.0)	title "Wirkstrom ID.Buzz 3P"
+     "id_buzz_three_phases.csv" 							using ($2):($27/$24/3)				with lines	lc rgbcolor hsv2rgb(315/360.0,1.0,1.0)	title "Wirkstrom ID.Buzz 3P",\
+     "astra_l_sports_tourer_three_phases.csv" 				using ($2):($27/$24/3)				with lines	lc rgbcolor hsv2rgb(330/360.0,1.0,1.0)	title "Wirkstrom Astra L ST 3P",\
+     "astra_l_sports_tourer_three_phases.csv" 				using ($2):($25)					with lines	lc rgbcolor hsv2rgb(330/360.0,0.5,1.0)	title "Scheinstrom Astra L ST 3P"
 
 pause mouse close
 quit
