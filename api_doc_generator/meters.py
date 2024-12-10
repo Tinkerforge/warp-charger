@@ -406,7 +406,8 @@ meters = Module("meters", "Stromzähler", "",
     Func("history", FuncType.HTTP_ONLY, Elem.OBJECT("Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.", members={
         "offset": Elem.INT("Das Alter des zuletzt gemessenen Wertes.", unit=Units.ms),
         "samples": Elem.ARRAY("Die gemessenen Werte aller Stromzähler.", members=
-              (2 * [Elem.ARRAY("Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.", unit=Units.W, member_type=EType.INT, version=Version.WARPX)])
+              (2 * [Elem.ARRAY("Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.", unit=Units.W, member_type=EType.INT, version=Version.WARP1)])
+            + (5 * [Elem.ARRAY("Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.", unit=Units.W, member_type=EType.INT, version=Version.WARP2 | Version.WARP3)])
             + (7 * [Elem.ARRAY("Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.", unit=Units.W, member_type=EType.INT, version=Version.WEMX)])
         )
     })),
@@ -415,7 +416,8 @@ meters = Module("meters", "Stromzähler", "",
         "offset": Elem.INT("Das Alter des zuletzt gemessenen Wertes.", unit=Units.ms),
         "samples_per_second": Elem.FLOAT("Die Anzahl der gemessenen Werte pro Sekunde.", unit=Units.Hz),
         "samples": Elem.ARRAY("Die gemessenen Werte aller Stromzähler.", members=
-             (2 * [Elem.ARRAY("Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.", unit=Units.W, member_type=EType.INT, version=Version.WARPX)]
+             (2 * [Elem.ARRAY("Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.", unit=Units.W, member_type=EType.INT, version=Version.WARP1)]
+            + 5 * [Elem.ARRAY("Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.", unit=Units.W, member_type=EType.INT, version=Version.WARP2 | Version.WARP3)]
             + 7 * [Elem.ARRAY("Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.", unit=Units.W, member_type=EType.INT, version=Version.WEMX)])
         )
     }))
