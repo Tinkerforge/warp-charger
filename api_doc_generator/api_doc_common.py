@@ -73,7 +73,7 @@ class Units:
     ohm = Unit("Ohm", "Ω")
     percent = Unit("Prozent", "%")
     s = Unit("Sekunde", "s")
-    thousands_cent_per_kWh = Unit("Hundertstel Cent pro Kilowattstunde", "ct/kWh/1000")
+    thousands_cent_per_kWh = Unit("Tausendstel Cent pro Kilowattstunde", "ct/kWh/1000")
     tenthousands_degree = Unit("Zehntausendstel Grad", "°/10000")
     tenth_percent = Unit("Zehntel Prozent", "%/10")
     hundredth_cent_per_kWh = Unit("Hundertstel Cent pro Kilowattstunde", "ct/kWh/100")
