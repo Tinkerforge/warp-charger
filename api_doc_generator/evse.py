@@ -288,7 +288,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", "Das `evse`-Modul verwaltet Z
                 Const(0, "Umschaltungszustand normal"),
                 Const(1, "Ladecontroller hat automatische Umschaltung von drei- auf einphasig durchgeführt. Siehe {{{ref:evse/phase_auto_switch}}}")
             ]),
-            "temperature": Elem.INT("Temperatur des Ladecontrollers", version=Version.WARP3, unit=Units.hundreth_degree_celsius)
+            "temperature": Elem.INT("Temperatur des Ladecontrollers", version=Version.WARP3, unit=Units.hundredth_degree_celsius)
         })
     ),
 
