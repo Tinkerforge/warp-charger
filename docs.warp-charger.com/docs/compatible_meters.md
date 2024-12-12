@@ -108,7 +108,7 @@ Netzwerk (LAN, WLAN) gesetzt, kann das Gerät mittels Modbus/TCP ausgelesen werd
 
 Nachfolgend ein Auszug zu diversen Wandlern, mit den wichtigsten Einrichtungsschritten.
 
-### Ebytes NB114
+#### Ebytes NB114
 Dieser Wandler kann aufgeschraubt werden und wandelt zwischen Modbus/TCP und Modbus/RTU um. Er verfügt nicht über WIFI, dafür aber über einen LAN Anschluss. Standardmäßig wird der
 Wandler mit einer statischen IP Einstellung ausgeliefert. Die IP lautet 192.168.3.7. Die Zugangsdaten des Webinterfaces sind admin:admin. Folgende Einstellungen müssen gesetzt werden:
 
@@ -128,7 +128,16 @@ Folgende Einrichtungsschritte sind notwendig:
  * Unter "Serial Port Settings" die Einstellungen für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1), Protocol Modbus, CLI Disable
  * Unter "Communication Settings" einen TCP server auf Port 502 mit Route "Uart" anlegen und speichern. Der bereits vordefinierte "netp" kann dafür verwendet werden. 
 
-### Waveshare RS485 To ETH (B) oder Waveshare RS485 To POE ETH (B)
+
+#### PUSR USR-DR302
+Dieser Wandler kann auf eine Hutschiene montiert werden und wandelt zwischen Modbus/TCP und Modbus/RTU um. Er verfügt nicht über WIFI, dafür aber über einen LAN Anschluss.
+Folgende Einrichtungsschritte sind notwendig:
+
+ * Standardmäßig ist DHCP für den LAN Anschluss konfiguriert. Die Zugangsdaten für das Webinterface sind admin:admin.
+ * Unter "Serial Port" die Einstellungen für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1), Work Mode TCP Server.
+
+
+#### Waveshare RS485 To ETH (B) oder Waveshare RS485 To POE ETH (B)
 Dieser Wandler kann auf eine Hutschiene montiert werden und wandelt zwischen Modbus/TCP und Modbus/RTU um. Er verfügt nicht über WIFI, dafür aber über einen LAN Anschluss.
 Es gibt eine PoE fähige Ausführung. Anscheinend wird der Wandler mit einer statischen IP Einstellung ausgeliefert. Die IP lautet 192.168.1.200. Die Passwort des Webinterfaces lautet admin. 
 Im [Waveshare Wiki](https://www.waveshare.com/wiki/RS485_TO_ETH_(B)) gibt es weitere Informationen. Weitere Einstellungen können über das VirCom Tool von Waveshare vorgenommen werden.
@@ -141,7 +150,7 @@ Folgende Einrichtungsschritte sind notwendig:
  * Unter "Serial Settings" die Einstellungen für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1).
  * Unter "Multi-Host Settings" als Protocol "Modbus TCP to RTU".
 
-### Waveshare RS232/485/422 To ETH (B) oder Waveshare R232/S485/422 To POE ETH (B)
+#### Waveshare RS232/485/422 To ETH (B) oder Waveshare R232/S485/422 To POE ETH (B)
 Es gibt eine PoE fähige Ausführung. Anscheinend wird der Wandler mit einer statischen IP Einstellung ausgeliefert. Die IP lautet 192.168.1.200. Die Passwort des Webinterfaces lautet admin. 
 Im [Waveshare Wiki](https://www.waveshare.com/wiki/RS232/485/422_TO_POE_ETH_(B)) gibt es weitere Informationen. Weitere Einstellungen können über das VirCom Tool von Waveshare vorgenommen werden.
 Dieses Tool ermöglicht es auch die IP Adresse des Wandlers zu ermitteln.
@@ -152,15 +161,6 @@ Folgende Einrichtungsschritte sind notwendig:
  * Unter "Network Settings" als Work Mode "TCP Server".
  * Unter "Serial Settings" die Einstellungen für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1).
  * Unter "Multi-Host Settings" als Protocol "Modbus TCP to RTU".
-
-
-
-### PUSR USR-DR302
-Dieser Wandler kann auf eine Hutschiene montiert werden und wandelt zwischen Modbus/TCP und Modbus/RTU um. Er verfügt nicht über WIFI, dafür aber über einen LAN Anschluss.
-Folgende Einrichtungsschritte sind notwendig:
-
- * Standardmäßig ist DHCP für den LAN Anschluss konfiguriert. Die Zugangsdaten für das Webinterface sind admin:admin.
- * Unter "Serial Port" die Einstellungen für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1), Work Mode TCP Server.
 
 
 ## SMA Speedwire
