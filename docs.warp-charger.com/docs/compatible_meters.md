@@ -106,19 +106,61 @@ nicht einfach über das Netzwerk ausgelesen werden. Es gibt aber Wandler, die ei
 LAN oder WLAN umsetzen können. Wird so ein Wandler zwischen dem Modbus/RTU (RS485) Anschluss des Geräts und dem
 Netzwerk (LAN, WLAN) gesetzt, kann das Gerät mittels Modbus/TCP ausgelesen werden.
 
-Nutzer im WARP Forum [Tinkerunity.org](https://www.tinkerunity.org/forum/13-warp-charger/)
-setzen zum Beispiel den ***Ebytes NB114*** Wandler mit Ethernet-Anschluss ein. Dieser Wandler kostet ca. 20€.
-Alternativ ist mit dem **Elfin EW11** ein Wandler mit Wifi kostengünstig verfügbar. Dieser Wandler kostet ca. 15€.
+Nachfolgend ein Auszug zu diversen Wandlern, mit den wichtigsten Einrichtungsschritten.
+
+### Ebytes NB114
+Dieser Wandler kann aufgeschraubt werden und wandelt zwischen Modbus/TCP und Modbus/RTU um. Er verfügt nicht über WIFI, dafür aber über einen LAN Anschluss. Standardmäßig wird der
+Wandler mit einer statischen IP Einstellung ausgeliefert. Die IP lautet 192.168.3.7. Die Zugangsdaten des Webinterfaces sind admin:admin. Folgende Einstellungen müssen gesetzt werden:
+
+ * http://192.168.3.7 öffnen, Zugangsdaten admin:admin. Falls nicht erreichbar "Reload" Knopf am Gerät drücken.
+ * Unter "Network parameter" als Work Mode "TCP Server", Port 502.
+ * Unter "Serial parameter" die Einstellungen für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1).
+ * Unter "Modbus parameter" die Einstellung "MODBUS TCP to RTU" auf "Open" setzen.
+ 
 
 #### Elfin EW11
-Der Elfin EW11 ist ein kleines Wifi Dongle, welches zwischen Modbus/TCP und Modbus/RTU wandeln kann.
-Folgende Einrichtungsschritte sind hier notwendig:
+Der Elfin EW11 ist ein kleines WIFI Dongle, welches zwischen Modbus/TCP und Modbus/RTU wandeln kann.
+Folgende Einrichtungsschritte sind notwendig:
 
  * Mit AP (typischerweise EW11_XXXXX) verbinden. Kein Passwort notwendig.
  * http://10.10.100.254 öffnen, Zugangsdaten admin:admin
  * Unter "System Settings" AP+STA konfigurieren und STA Wifi einrichten
  * Unter "Serial Port Settings" die Einstellungen für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1), Protocol Modbus, CLI Disable
  * Unter "Communication Settings" einen TCP server auf Port 502 mit Route "Uart" anlegen und speichern. Der bereits vordefinierte "netp" kann dafür verwendet werden. 
+
+### Waveshare RS485 To ETH (B) oder Waveshare RS485 To POE ETH (B)
+Dieser Wandler kann auf eine Hutschiene montiert werden und wandelt zwischen Modbus/TCP und Modbus/RTU um. Er verfügt nicht über WIFI, dafür aber über einen LAN Anschluss.
+Es gibt eine PoE fähige Ausführung. Anscheinend wird der Wandler mit einer statischen IP Einstellung ausgeliefert. Die IP lautet 192.168.1.200. Die Passwort des Webinterfaces lautet admin. 
+Im [Waveshare Wiki](https://www.waveshare.com/wiki/RS485_TO_ETH_(B)) gibt es weitere Informationen. Weitere Einstellungen können über das VirCom Tool von Waveshare vorgenommen werden.
+Dieses Tool ermöglicht es auch die IP Adresse des Wandlers zu ermitteln.
+
+Folgende Einrichtungsschritte sind notwendig:
+
+ * http://192.168.1.200 öffnen, Password admin. Falls nicht erreichbar andere IP suchen.
+ * Unter "Network Settings" als Work Mode "TCP Server".
+ * Unter "Serial Settings" die Einstellungen für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1).
+ * Unter "Multi-Host Settings" als Protocol "Modbus TCP to RTU".
+
+### Waveshare RS232/485/422 To ETH (B) oder Waveshare R232/S485/422 To POE ETH (B)
+Es gibt eine PoE fähige Ausführung. Anscheinend wird der Wandler mit einer statischen IP Einstellung ausgeliefert. Die IP lautet 192.168.1.200. Die Passwort des Webinterfaces lautet admin. 
+Im [Waveshare Wiki](https://www.waveshare.com/wiki/RS232/485/422_TO_POE_ETH_(B)) gibt es weitere Informationen. Weitere Einstellungen können über das VirCom Tool von Waveshare vorgenommen werden.
+Dieses Tool ermöglicht es auch die IP Adresse des Wandlers zu ermitteln.
+
+Folgende Einrichtungsschritte sind notwendig:
+
+ * http://192.168.1.200 öffnen, Password admin. Falls nicht erreichbar andere IP suchen.
+ * Unter "Network Settings" als Work Mode "TCP Server".
+ * Unter "Serial Settings" die Einstellungen für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1).
+ * Unter "Multi-Host Settings" als Protocol "Modbus TCP to RTU".
+
+
+
+### PUSR USR-DR302
+Dieser Wandler kann auf eine Hutschiene montiert werden und wandelt zwischen Modbus/TCP und Modbus/RTU um. Er verfügt nicht über WIFI, dafür aber über einen LAN Anschluss.
+Folgende Einrichtungsschritte sind notwendig:
+
+ * Standardmäßig ist DHCP für den LAN Anschluss konfiguriert. Die Zugangsdaten für das Webinterface sind admin:admin.
+ * Unter "Serial Port" die Einstellungen für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1), Work Mode TCP Server.
 
 
 ## SMA Speedwire
