@@ -116,9 +116,9 @@ Folgende Einrichtungsschritte sind hier notwendig:
 
  * Mit AP (typischerweise EW11_XXXXX) verbinden. Kein Passwort notwendig.
  * http://10.10.100.254 öffnen, Zugangsdaten admin:admin
- * Unter System->Settings AP+STA konfigurieren und STA Wifi einrichten
- * Serial Port Settings korrekt für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1), Protocol Modbus
- * Communication Settings einen TCP server auf Port 502 mit Route "Uart" anlegen und speichern. Der bereits vordefinierte "netp" kann dafür verwendet werden.
+ * Unter "System Settings" AP+STA konfigurieren und STA Wifi einrichten
+ * Unter "Serial Port Settings" die Einstellungen für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1), Protocol Modbus, CLI Disable
+ * Unter "Communication Settings" einen TCP server auf Port 502 mit Route "Uart" anlegen und speichern. Der bereits vordefinierte "netp" kann dafür verwendet werden. 
 
 
 ## SMA Speedwire
