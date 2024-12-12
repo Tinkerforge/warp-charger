@@ -58,7 +58,12 @@ class Unit:
 class Units:
     A = Unit("Ampere", "A")
     Ah = Unit("Amperestunde", "Ah")
+    ct_per_month = Unit("Cent pro Monat", "ct/Monat")
     degree = Unit("Grad", "°")
+    h = Unit("Stunde", "h")
+    hundredth_cent_per_kWh = Unit("Hundertstel Cent pro Kilowattstunde", "ct/kWh/100")
+    hundredth_percent = Unit("Hundertstel Prozent", "%/100")
+    hundredth_degree_celsius = Unit("Hundertstel Grad Celsius", "°/100")
     Hz = Unit("Hertz", "Hz")
     kVAh = Unit("Kilovoltamperestunde", "kVAh")
     kvarh = Unit("Kilovoltampere Reaktiv Stunde", "kvarh")
@@ -71,14 +76,15 @@ class Units:
     ohm = Unit("Ohm", "Ω")
     percent = Unit("Prozent", "%")
     s = Unit("Sekunde", "s")
+    thousands_cent_per_kWh = Unit("Tausendstel Cent pro Kilowattstunde", "ct/kWh/1000")
+    tenthousands_degree = Unit("Zehntausendstel Grad", "°/10000")
     tenth_percent = Unit("Zehntel Prozent", "%/10")
     V = Unit("Volt", "V")
     VA = Unit("Voltampere", "VA")
     var = Unit("Voltampere Reaktiv", "var")
+    Wp = Unit("Watt Peak", "Wp")
     W = Unit("Watt", "W")
     Wh = Unit("Wattstunde", "Wh")
-    hundredth_cent_per_kWh = Unit("Hundertstel Cent pro Kilowattstunde", "ct/kWh/100")
-    hundreth_degree_celsius = Unit("Hundertstel Grad Celsius", "°/100")
 
 class FuncType(IntEnum):
     STATE = 0
