@@ -37,6 +37,6 @@ solar_forecast = Module("solar_forecast", "PV-Ertragsprogrnose", "", "Über das 
             Const(0, "15 Minuten"),
             Const(1, "60 Minuten"),
         ]),
-        "prices": Elem.ARRAY("Array von PV-Ertragsprognose-Werten für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest wie weit die Elemente zueinander zeitlich versetzt sind.", members=49 * [Elem.INT("")], unit=Units.Wh),
+        "forecast": Elem.ARRAY("Array von PV-Ertragsprognose-Werten für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest wie weit die Elemente zueinander zeitlich versetzt sind.", members=49 * [Elem.INT("")], unit=Units.Wh),
     })),
 ])
