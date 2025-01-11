@@ -4,6 +4,7 @@ import os
 import sys
 import argparse
 import socket
+import re
 import tinkerforge_util as tfutil  # sudo apt install python3-tinkerforge-util
 
 QR_CODE_COMMAND = b'W649,209,5,2,M,8,6,57,0\r'
@@ -158,7 +159,19 @@ def print_accessories2_label(header, stand, stand_wiring, stand_lock, supply_cab
     if template.find(CUSTOM_TYPE2_CABLE_PLACEHOLDER_A) < 0:
         raise Exception('Custom type 2 cable placeholder A missing in EZPL file')
 
-    template = template.replace(CUSTOM_TYPE2_CABLE_PLACEHOLDER_A, 'Typ-2-Kabel: {0}'.format(custom_type2_cable).encode('ascii') if custom_type2_cable != '0' else b'')
+    if custom_type2_cable == 'no':
+        custom_type2_cable = ''
+    else:
+        custom_type2_cable, order_id = custom_type2_cable.split(':')
+
+        if custom_type2_cable == 'customer':
+            custom_type2_cable = 'Kunde'
+        else:
+            custom_type2_cable = re.sub(r'0$', ' m', custom_type2_cable).replace('_', ' ').capitalize()
+
+        custom_type2_cable = 'Typ-2-Kabel: {0}, {1}'.format(custom_type2_cable, order_id)
+
+    template = template.replace(CUSTOM_TYPE2_CABLE_PLACEHOLDER_A, custom_type2_cable.encode('ascii'))
 
     if template.find(CUSTOM_TYPE2_CABLE_PLACEHOLDER_B) < 0:
         raise Exception('Custom type 2 cable placeholder B missing in EZPL file')
