@@ -64,7 +64,7 @@ Elektrischer Anschluss
 Die in diesem Kapitel beschriebenen Arbeiten dürfen nur von einer
 ausgewiesenen Elektrofachkraft durchgeführt werden!
 
-![image](/img/wem_shared_with_manual/wem_connections-2.jpg)
+![image](/img/wem2_shared_with_manual/wem2_connections_both.jpg)
 
 ### Stromversorgung
 
