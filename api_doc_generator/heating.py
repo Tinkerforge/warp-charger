@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-heating = Module("heating", "Heizung", "", "Über das `heating`-Modul können Einstellungen für die Heizungssteuerung vorgenommen werden.", Version.ANY, [
+heating = Module("heating", "Heizung", "", "Über das `heating`-Modul können Einstellungen für die Heizungssteuerung vorgenommen werden.", Version.WEM2, [
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die Konfiguration der Heizungssteuerung.", members={
         "sgr_blocking_type": Elem.INT("SG-Ready Ausgang 1 Konfiguration (wird für den blockierenden Betrieb verwendet).", constants=[
             Const(0, "Aktiv wenn geschlossen"),

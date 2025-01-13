@@ -15,7 +15,7 @@ users = Module("users", "Benutzerverwaltung", "", "", Version.WARPX, [
     Func("config", FuncType.STATE, Elem.OBJECT("Die Benutzerkonfiguration. Kann mit {{{ref:users/add}}}, {{{ref:users/modify}}}, {{{ref:users/remove}}} und {{{ref:users/http_auth_update}}} aktualisiert werden.", members={
             "users": Elem.ARRAY("Die Benutzer", members=
                   17 * user(Version.WARP1)
-                + 33 * user(Version.WARP2 | Version.WARP3 | Version.WEMX)
+                + 33 * user(Version.WARP2 | Version.WARP3)
             ),
             "next_user_id": Elem.INT("ID des nächsten anzulegenden Nutzers."),
             "http_auth_enabled": Elem.BOOL("Gibt an ob zur Verwendung von Webinterface und HTTP-API Zugangsdaten nötig sein sollen.", constants=[

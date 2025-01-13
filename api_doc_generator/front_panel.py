@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-front_panel = Module("front_panel", "Frontblende", "", "Über das `front_panel`-Modul können Einstellungen des Displays in der Frontblende vorgenommen werden.", Version.ANY, [
+front_panel = Module("front_panel", "Frontblende", "", "Über das `front_panel`-Modul können Einstellungen des Displays in der Frontblende vorgenommen werden.", Version.WEM2, [
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die Konfiguration der Frontblende.", members={
         "enable": Elem.BOOL("Gibt an, ob das Display aktiviert werden soll. Ist das Display deaktiviert kann es über den Taster an der Frontblende auch nicht wider aktiviert werden. Ist das Display aktiviert, geht es um Strom zu sparen nach 60 Minuten wieder aus, es kann allerdings durch einen betötigen des Tasters wieder aktiviert werden."),
         "tiles": Elem.ARRAY("Gibt an welche Kachel was anzeigen soll in der Reihenfolge oben links, mitte links, unten links, oben rechts, mitte rechts, unten rechts.", members=[

@@ -79,7 +79,7 @@ nfc = Module("nfc", "NFC-Ladefreigabe", "Benötigt das Feature <a href=\"#featur
             "deadtime_post_start": Elem.INT("Erlaubt das Stoppen eines Ladevorgangs mit einem NFC-Tag erst nach dieser Zeit, um Fehlbedienung zu vermeiden.", unit=Units.s),
             "authorized_tags": Elem.ARRAY("Eine Liste authorisierter Tags.", members=
                   16 * tag(Version.WARP1)
-                + 32 * tag(Version.WARP2 | Version.WARP3 | Version.WEMX)
+                + 32 * tag(Version.WARP2 | Version.WARP3)
             ),
         })
     ),
