@@ -20,7 +20,7 @@ type Props = WrapperProps<typeof DesktopType>;
 let interval: NodeJS.Timeout = null;
 let scrollHandled = "foobar";
 
-const hardwareTypes = ['warp1', 'warp2', 'warp3', 'wem', 'any'];
+const hardwareTypes = ['warp1', 'warp2', 'warp3', 'wem', 'wem2', 'any'];
 
 export default function DocItemTOCDesktop(props: Props): JSX.Element {
     const { toc, frontMatter, metadata } = useDoc();
@@ -124,6 +124,7 @@ export default function DocItemTOCDesktop(props: Props): JSX.Element {
             <TabItem value="warp2" label="WARP2 Charger"> </TabItem>
             <TabItem value="warp3" label="WARP3 Charger"> </TabItem>
             <TabItem value="wem" label="WARP Energy Manager"> </TabItem>
+            <TabItem value="wem2" label="WARP Energy Manager 2.0"> </TabItem>
             <TabItem value="any" label="Alle Typen"> </TabItem>
         </MultilineTabs>
 
@@ -141,6 +142,9 @@ export default function DocItemTOCDesktop(props: Props): JSX.Element {
             </TabItem>
             <TabItem value="wem" label="WARP Energy Manager">
                 <TOC toc={filterToC(toc, "wem")} {...tocprops} />
+            </TabItem>
+            <TabItem value="wem2" label="WARP Energy Manager 2.0">
+                <TOC toc={filterToC(toc, "wem2")} {...tocprops} />
             </TabItem>
             <TabItem value="any" label="Alle Typen">
                 <TOC toc={filterToC(toc, "any")} {...tocprops} />
