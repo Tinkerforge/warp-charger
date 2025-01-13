@@ -7,7 +7,7 @@ sidebar_position: 1
 :::note
 
 Diese Beschriebung bezieht sich auf den WARP Energymanager 2.0. Für Informationen zum älteren
-Modell, dem WARP Energy Manager (1.0), kann auf die Betriebsanleitung unter 
+Modell, dem WARP Energy Manager (1.0), kann auf die Betriebsanleitung unter
 https://warp-charger.com/downloads zurückgegeriffen werden.
 
 :::
@@ -83,9 +83,9 @@ Glassicherung (träge (T), 2A) abgesichert.
 ### Modbus (RS485)
 
 An diesen Anschluss kann ein kompatibler RS485 Modbus-RTU Stromzähler
-angeschlossen werden. Kompatible Stromzähler sind in der Liste unter dem 
-Eintrag Anbindung mit "WARP Energy Manager" gekennzeichnet. Die 
-Liste aller kompatibler Geräte lässt sich auf der Seite der 
+angeschlossen werden. Kompatible Stromzähler sind in der Liste unter dem
+Eintrag Anbindung mit "WARP Energy Manager" gekennzeichnet. Die
+Liste aller kompatibler Geräte lässt sich auf der Seite der
 [Kompatiblen Stromzähler](https://docs.warp-charger.com/docs/compatible_meters/#bekannte-kompatible-ger%C3%A4te)
 finden.
 
@@ -94,15 +94,14 @@ nicht belegt werden. **A (+), B (-), GND** sind entsprechend am
 jeweiligen Stromzähler anzuschließen. Je nach Zähler wird GND nicht
 angeschlossen.
 
-![image](/img/wem_shared_with_manual/wem_connections-1.jpg)
 
 ### Eingänge
 
-Der WARP Energy Manager 2.0 besitzt vier Eingänge für 
+Der WARP Energy Manager 2.0 besitzt vier Eingänge für
 potentialfreie Kontakte. An diesen können Schließer oder
-Öffner angeschlossen werden. Das Verhalten des Energiemanagers in Bezug 
+Öffner angeschlossen werden. Das Verhalten des Energiemanagers in Bezug
 auf diese Eingänge kann im Webinterface konfiguriert werden.
-Jeweils zwei Eingänge besitzen einen Common (C)-Anschluss. 
+Jeweils zwei Eingänge besitzen einen Common (C)-Anschluss.
 Dieser ist mit einer Seite des Schließes/ Öffners
 zu verbinden. Die andere Seite ist dann auf den jeweiligen
 Eingang zu legen.
@@ -110,18 +109,18 @@ Eingang zu legen.
 ### SG-Ready Ausgang
 
 Wärmepumpen, die über eine [SG-Ready](https://www.waermepumpe.de/normen-technik/sg-ready/)-Schnittstelle
-gesteuert werden können, können hier angeschlossen werden. 
-Dazu bietet der WARP Energy Manager 2.0 zwei Relais-Ausgänge. 
+gesteuert werden können, können hier angeschlossen werden.
+Dazu bietet der WARP Energy Manager 2.0 zwei Relais-Ausgänge.
 Ausgang 1 wird betätigt, wenn der Betrieb
 blockiert werden soll (Betriebszustand 1). Ausgang 2 wird
-betätigt, wenn der Wärmepumpe eine Einschaltempfehlung 
+betätigt, wenn der Wärmepumpe eine Einschaltempfehlung
 für den erweiterten Betrieb für Raumheizung und
 Warmwasserbereitung gegeben werden soll (Betriebszustand 3).
 
 ### Relais-Ausgänge
 
 Mit den zwei potentialfreien Relaisschaltausgängen können
-bis zu 230 VAC/ 3A geschaltet werden. Das Ansteuern dieser Relais 
+bis zu 230 VAC/ 3A geschaltet werden. Das Ansteuern dieser Relais
 erfolgt über vom Nutzer zu definierende Regeln.
 
 ### LAN-Anschluss
