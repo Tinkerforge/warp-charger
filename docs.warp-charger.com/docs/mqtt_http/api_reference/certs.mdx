@@ -1186,6 +1186,300 @@ mosquitto_pub -h $BROKER -t $PREFIX/certs/remove -m '0'
     </tbody>
 </table>
 </TabItem>
+<TabItem value="wem2">
+## `certs/state` {#certs_state_wem2}
+
+
+Der aktuelle Zustand der TLS-Zertifikatsverwaltung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/certs/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/certs/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "certs": [{ "id": 1, "name": "ISRG Root X1" }] }
+```
+
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`certs`<br/>object[8]</th>
+    <td>
+        Bekannte TLS-Zertifikate.
+        - **[0..7]** - Ein TLS-Zertifikat
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
+            <td>
+                ID des Zertifikats
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
+            <td>
+                Anzeigename des Zertifikats
+            </td>
+        </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `certs/add` {#certs_add_wem2}
+
+
+Fügt ein neues TLS-Zertifikat hinzu.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/certs/add -d '{
+  "id": 0,
+  "name": "ISRG Root X1",
+  "cert": "-----BEGIN CERTIFICATE-----\nMIIFYDCC[__Zertifikatspayload gekürzt__]psr6GtPAQw4dy753ec5\n-----END CERTIFICATE-----"
+}'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/certs/add -m '{
+  "id": 0,
+  "name": "ISRG Root X1",
+  "cert": "-----BEGIN CERTIFICATE-----\nMIIFYDCC[__Zertifikatspayload gekürzt__]psr6GtPAQw4dy753ec5\n-----END CERTIFICATE-----"
+}'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
+    <td>
+        ID des Zertifikats, dass hinzugefügt werden soll. Darf nicht bereits von einem Zertifikat verwendet werden.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
+    <td>
+        Anzeigename des Zertifikats.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`cert`<br/>string</th>
+    <td>
+        Zertifikat im PEM-Format
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `certs/modify` {#certs_modify_wem2}
+
+
+Modifiziert ein vorhandenes TLS-Zertifikat.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/certs/modify -d '{ "id": 0, "name": "ISRG Root X1 (Lets Encrypt)", "cert": null }'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/certs/modify -m '{ "id": 0, "name": "ISRG Root X1 (Lets Encrypt)", "cert": null }'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
+    <td>
+        ID des Zertifikats, dass modifiziert werden soll.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
+    <td>
+        Anzeigename des Zertifikats.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`cert`<br/>string</th>
+    <td>
+        Zertifikat im PEM-Format
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `certs/remove` {#certs_remove_wem2}
+
+
+Löscht ein vorhandenes TLS-Zertifikat.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/certs/remove -d '{ "id": 0 }'
+```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/certs/remove -d '0'
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/certs/remove -m '{ "id": 0 }'
+```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/certs/remove -m '0'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
+    <td>
+        ID des Zertifikats, dass gelöscht werden soll.
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
 <TabItem value="any">
 ## `certs/state` {#certs_state_any}
 

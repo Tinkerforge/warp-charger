@@ -136,6 +136,123 @@ mosquitto_pub -h $BROKER -t $PREFIX/authentication/config_update -m '{
     </tbody>
 </table>
 </TabItem>
+<TabItem value="wem2">
+## `authentication/config` {#authentication_config_wem2}
+
+
+Zugangsdaten, die für die Verwendung von Webinterface und HTTP-API abgefragt werden sollen.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/authentication/config
+```
+```jsx
+{
+  "enable_auth": true,
+  "username": "testuser",
+  // highlight-start
+  // Wird nicht zurückgegeben
+  "digest_hash": null
+  // highlight-end
+}
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/authentication/config -d '{
+  "enable_auth": true,
+  "username": "testuser",
+  "digest_hash": "926011006c2686471698e86690b7e500"
+}'
+```
+
+`"digest_hash" = MD5("testuser:esp32-lib:testpass")`
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/authentication/config
+```
+```jsx
+{
+  "enable_auth": true,
+  "username": "testuser",
+  // highlight-start
+  // Wird nicht zurückgegeben
+  "digest_hash": null
+  // highlight-end
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/authentication/config<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/authentication/config_update -m '{
+  "enable_auth": true,
+  "username": "testuser",
+  "digest_hash": "926011006c2686471698e86690b7e500"
+}'
+```
+
+`"digest_hash" = MD5("testuser:esp32-lib:testpass")`
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_auth`<br/>bool</th>
+    <td>
+        Gibt an, ob zur Verwendung von Webinterface und HTTP-API Zugangsdaten nötig sein sollen.
+        - **true** - Falls Zugangsdaten verlangt werden sollen.
+        - **false** - Wenn nicht.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`username`<br/>string</th>
+    <td>
+        Der Benutzername, dem Zugriff auf Webinterface und HTTP-API gewährt werden.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`digest_hash`<br/>string</th>
+    <td>
+        Der [Digest Hash (HA1)](https://en.wikipedia.org/wiki/Digest_access_authentication), dem Zugriff auf Webinterface und HTTP-API gewährt werden. Als realm wird `esp32-lib` verwendet.
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
 <TabItem value="any">
 ## `authentication/config` {#authentication_config_any}
 

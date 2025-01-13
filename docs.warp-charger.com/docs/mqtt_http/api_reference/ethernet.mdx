@@ -779,6 +779,261 @@ mosquitto_pub -h $BROKER -t $PREFIX/ethernet/config_update -m '{
     </tbody>
 </table>
 </TabItem>
+<TabItem value="wem2">
+## `ethernet/state` {#ethernet_state_wem2}
+
+
+Der Zustand der LAN/Ethernet-Verbindung.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/ethernet/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ethernet/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "connection_state": 3,
+  "connection_start": 4241,
+  "connection_end": 0,
+  "ip": "192.168.1.129",
+  "subnet": "255.255.255.0",
+  "full_duplex": true,
+  "link_speed": 100
+}
+```
+
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_state`<br/>int</th>
+    <td>
+        Verbindungszustand.
+        - **0** - Nicht konfiguriert
+        - **1** - Nicht verbunden
+        - **2** - Verbinde
+        - **3** - Verbunden
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
+    <td>
+        IP des Geräts im verbundenen Netzwerk. 0.0.0.0 falls keine Verbindung besteht.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
+    <td>
+        Verwendete Subnetzmaske des Geräts im verbundenen Netzwerk. 0.0.0.0 falls keine Verbindung besteht.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`full_duplex`<br/>bool</th>
+    <td>
+        true bei einer Full-Duplex-Verbindung, sonst false
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`link_speed`<br/>int (<abbr title="Megabit pro Sekunde">Mbit/s</abbr>)</th>
+    <td>
+        Ausgehandelte Verbindungsgeschwindigkeit.
+        - **0** - nicht verbunden
+        - **10** - 
+        - **100** - 
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_start`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
+    <td>
+        Zeit in Millisekunden zu der zuletzt eine Verbindung aufgebaut wurde.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_end`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
+    <td>
+        Zeit in Millisekunden zu der zuletzt eine Verbindung getrennt wurde.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `ethernet/config` {#ethernet_config_wem2}
+
+
+Die Konfiguration der LAN/Ethernet-Verbindung..
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/ethernet/config
+```
+```jsx
+{
+  "enable_ethernet": true,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/ethernet/config -d '{
+  "enable_ethernet": true,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0"
+}'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ethernet/config
+```
+```jsx
+{
+  "enable_ethernet": true,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/ethernet/config<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/ethernet/config_update -m '{
+  "enable_ethernet": true,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0"
+}'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_ethernet`<br/>bool</th>
+    <td>
+        Gibt an ob eine LAN-Verbindung aufgebaut werden soll.
+        - **true** - Wenn eine LAN-Verbindung aufgebaut werden soll.
+        - **false** - Wenn nicht.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
+    <td>
+        IP-Adresse, die das Gerät verwenden soll. Dieser Eintrag und die folgenden sind optional und können auf "0.0.0.0" gesetzt werden, falls die Addresskonfiguration automatisch per DHCP bezogen werden soll.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`gateway`<br/>string</th>
+    <td>
+        Gateway-Adresse, die das Gerät verwenden soll.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
+    <td>
+        Subnetzmaske, die das Gerät verwenden soll.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`dns`<br/>string</th>
+    <td>
+        DNS-Server-Adresse, die das Gerät verwenden soll.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`dns2`<br/>string</th>
+    <td>
+        Alternative DNS-Server-Adresse, die das Gerät verwenden soll.
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
 <TabItem value="any">
 ## `ethernet/state` {#ethernet_state_any}
 

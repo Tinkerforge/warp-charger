@@ -1655,6 +1655,320 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/last_boots
     </tbody>
 </table>
 </TabItem>
+<TabItem value="wem2">
+## `info/version` {#info_version_wem2}
+
+
+Version der aktuell ausgeführten Firmware.
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`firmware`<br/>string</th>
+    <td>
+        Die Firmware-Version, die aktuell ausgeführt wird. Siehe [Semantic Versioning](https://semver.org/)-Format.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`config`<br/>string</th>
+    <td>
+        Die Version der Konfiguration, die aktuell verwendet wird.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`config_type`<br/>string</th>
+    <td>
+        Typ der auf diesem Gerät gespeicherten Konfiguration.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `info/modules` {#info_modules_wem2}
+
+
+Initialisierungszustand der Firmware-Module.
+
+
+
+<br/><br/><br/>
+## `info/features` {#info_features_wem2}
+
+
+Unterstützte Hardwarefeatures. Siehe <a class="scrollto" href="#features_section">Features</a> für Details.
+
+
+
+<br/><br/><br/>
+## `info/name` {#info_name_wem2}
+
+
+Name und Typ des Geräts
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
+    <td>
+        Der Name des Geräts. Besteht aus Typ und UID des Geräts.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`type`<br/>string</th>
+    <td>
+        Typ des Geräts.
+        - **warp** - Ein WARP Charger
+        - **warp2** - Ein WARP2 Charger
+        - **warp3** - Ein WARP3 Charger
+        - **wem** - Ein WARP Energy Manager
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_type`<br/>string</th>
+    <td>
+        Benutzerlesbarer Typ des Geräts. Gibt neben der Hardware-Version die Variante (Smart, Pro), die maximale Ladeleistung und eventuelle Upgrades an, z.B. "WARP2 Charger Pro 11kW +NFC"
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`uid`<br/>string</th>
+    <td>
+        UID des Geräts bzw. des verbauten ESP (Ethernet) Bricks.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `info/display_name` {#info_display_name_wem2}
+
+
+Benutzerlesbarer Name des Geräts.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/info/display_name
+```
+```jsx
+{ "display_name": "Wallbox Garage links" }
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/info/display_name -d '{ "display_name": "Wallbox Garage links" }'
+```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/info/display_name -d '"Wallbox Garage links"'
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/display_name
+```
+```jsx
+{ "display_name": "Wallbox Garage links" }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/info/display_name<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/info/display_name_update -m '{ "display_name": "Wallbox Garage links" }'
+```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/info/display_name_update -m '"Wallbox Garage links"'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        Der Anzeigename.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `info/last_boots` {#info_last_boots_wem2}
+
+
+Debug-Informationen über die letzten Firmware-Ausführungen
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/info/last_boots
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/last_boots
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  {
+    "reset_reason": 3,
+    "boot_count": 1,
+    "timestamp_min": 28568911,
+    "uptime": 1648057,
+    "uptime_overflows": 0
+  },
+  // Ein Eintrag wird erst nach 5 Minuten Uptime aufgezeichnet.
+  // Zwischen Boot 1 und 4 wurde das Geräte zwei Mal innerhalb von 5 Minuten neugestartet (z.B. wegen Konfigurationsänderungen)
+  {
+    "reset_reason": 3,
+    "boot_count": 4,
+    "timestamp_min": 28568946,
+    "uptime": 28301027,
+    "uptime_overflows": 0
+  }
+]
+```
+
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Index</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..9]`<br/>object</th>
+    <td>
+        Debug-Informationen über eine Firmware-Ausführung
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`reset_reason`<br/>int</th>
+            <td>
+                Grund des Neustarts. Siehe [Espressif-Dokumentation](https://docs.espressif.com/projects/esp-idf/en/v4.4.3/esp32/api-reference/system/system.html?highlight=esp_reset_reason#_CPPv418esp_reset_reason_t).
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`boot_count`<br/>int</th>
+            <td>
+                Zähler der angibt, der wievielte Neustart seit dem das Gerät vom Strom getrennt wurde, durchgeführt wird. Ein Eintrag in last_boots wird erst fünf Minuten nach dem Start des Geräts geschrieben um den Flash zu schonen. Falls innerhalb der ersten fünf Minuten neugestartet wird, kann ein Eintrag verloren gehen, was anhand dieses Zählers bemerkt werden kann.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`uptime`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
+            <td>
+                Laufzeit der Firmware-Ausführung (32-Bit).
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`uptime_overflows`<br/>int</th>
+            <td>
+                Anzahl der Überläufe von uptime.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`timestamp_min`<br/>int</th>
+            <td>
+                Unix-Timestamp in Minuten der Firmware-Ausführung.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
 <TabItem value="any">
 ## `info/version` {#info_version_any}
 

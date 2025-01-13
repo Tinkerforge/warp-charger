@@ -735,10 +735,10 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[32]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[64]</th>
     <td>
         Wallboxen, die vom Lastmanager gesteuert werden sollen.
-        - **[0..31]** - Eine zu steuernde Wallbox
+        - **[0..63]** - Eine zu steuernde Wallbox
         <table>
             <thead>
                 <tr>
@@ -1121,10 +1121,10 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[32]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[64]</th>
     <td>
         Wallboxen, die vom Lastmanager gesteuert werden sollen.
-        - **[0..31]** - Eine zu steuernde Wallbox
+        - **[0..63]** - Eine zu steuernde Wallbox
         <table>
             <thead>
                 <tr>
@@ -1507,10 +1507,278 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[32]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[64]</th>
     <td>
         Wallboxen, die vom Lastmanager gesteuert werden sollen.
-        - **[0..31]** - Eine zu steuernde Wallbox
+        - **[0..63]** - Eine zu steuernde Wallbox
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`host`<br/>string</th>
+            <td>
+                IP-Adresse der zu steuernden Wallbox
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
+            <td>
+                Anzeigename der zu steuernden Wallbox
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`rot`<br/>int</th>
+            <td>
+                Phasenrotation der zu steuernden Wallbox
+                - **0** - Unbekannt
+                - **1** - L123
+                - **2** - L132
+                - **3** - L231
+                - **4** - L213
+                - **5** - L321
+                - **6** - L312
+            </td>
+        </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+<TabItem value="wem2">
+## `charge_manager/available_current` {#charge_manager_available_current_wem2}
+
+
+Der derzeit zur Verfügung stehende Strom. Dieser Strom wird unter den konfigurierten Wallboxen aufgeteilt.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/charge_manager/available_current
+```
+```jsx
+{ "current": 16000 }
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/charge_manager/available_current -d '{ "current": 16000 }'
+```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_manager/available_current -d '16000'
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/available_current
+```
+```jsx
+{ "current": 16000 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/charge_manager/available_current<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '{ "current": 16000 }'
+```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '16000'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+    <td>
+        Der zur Verfügung stehende Strom. Es werden nur Ströme akzeptiert, die kleiner als der konfigurierte Maximalstrom maximum_available_current aus [`charge_manager/config`](/mqtt_http/api_reference/charge_manager.mdx#charge_manager_config) sind.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `charge_manager/state` {#charge_manager_state_wem2}
+
+
+Der Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
+
+
+
+<br/><br/><br/>
+## `charge_manager/low_level_state` {#charge_manager_low_level_state_wem2}
+
+
+Der Low-Level-Zustand des Lastmanagers und aller konfigurierten Wallboxen. Wird vom Webinterface zur Anzeige verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
+
+
+
+<br/><br/><br/>
+## `charge_manager/low_level_config` {#charge_manager_low_level_config_wem2}
+
+
+Die Low-Level-Konfiguration des Lastmanagers. Wird zum Fine-Tuning des Verteilungsalgorithmus verwendet. <strong>Änderungen an diesem Objekt werden nicht als API-Bruch betrachtet!</strong>
+
+
+
+<br/><br/><br/>
+## `charge_manager/config` {#charge_manager_config_wem2}
+
+
+Die Lastmanager-Konfiguration.
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_charge_manager`<br/>bool</th>
+    <td>
+        Gibt an, ob der Lastmanager aktiviert sein soll.
+        - **true** - Wenn der Lastmanager aktiviert ist.
+        - **false** - Wenn der Lastmanager nicht aktiviert ist.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_watchdog`<br/>bool</th>
+    <td>
+        Gibt an, ob der Watchdog aktiviert sein soll. Der Watchdog setzt, wenn 30 Sekunden lang keine Nachricht auf [`charge_manager/available_current`](/mqtt_http/api_reference/charge_manager.mdx#charge_manager_available_current) einging, den verfügbaren Strom auf die Default-Einstellung (default_available_current). Damit kann die Robustheit gegen Ausfall einer externen Steuerung, z.B. bei PV-Überschussladung erhöht werden.
+        - **true** - Wenn der Watchdog aktiviert ist.
+        - **false** - Wenn der Watchdog nicht aktiviert ist.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`verbose`<br/>bool</th>
+    <td>
+        Gibt an, ob jeder Stromverteilung im Ereignis-Log vermerkt werden soll.
+        - **true** - Wenn Stromverteilungen geloggt werden sollen.
+        - **false** - Wenn Stromverteilungen nicht geloggt werden sollen.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`default_available_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+    <td>
+        Strom der nach Neustart des Lastmanagers zur Verfügung stehen soll. Beim Auslösen setzt der Watchdog den verfügbaren Strom auf diesen Strom zurück.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`maximum_available_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+    <td>
+        Maximum, das über die API und das Webinterface jeweils als verfügbarer Strom gesetzt werden darf. Sollte auf den maximal erlaubten Strom der Anbindung des Wallbox-Verbunds konfiguriert werden, der z.b. durch Hausanschlusses, die Absicherung oder die Zuleitung begrenzt ist.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`minimum_current_auto`<br/>bool</th>
+    <td>
+        Gibt an, ob der Minimal-Ladestrom anhand des gewählten Fahrzeugtypes (minimum_current_vehicle_type) gesetzt wird.
+        - **true** - Minimal-Ladestrom wird anhand des gewählten Fahrzeugtypes gesetzt. minimum_current und minimum_current_1p werden ignoriert, bzw. überschrieben.
+        - **false** - minimum_current und minimum_current_1p bestimmen den Minimal-Ladestrom.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`minimum_current_vehicle_type`<br/>int</th>
+    <td>
+        Fahrzeugtyp für den der Minimal-Ladestrom gewählt wird.
+        - **0** - Kein spezifischer Fahrzeugtyp gewählt.
+        - **1** - Renault Twingo Z.E., Renault ZOE R110 oder R135
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`minimum_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+    <td>
+        Kleinste Strommenge, die einer Wallbox im dreiphasigen Betrieb zugeteilt werden soll, damit diese einen Ladevorgang beginnt. Hiermit kann beeinflusst werden wie viele Wallboxen gleichzeitig laden.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`minimum_current_1p`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+    <td>
+        Kleinste Strommenge, die einer Wallbox im einphasigen Betrieb zugeteilt werden soll, damit diese einen Ladevorgang beginnt. Hiermit kann beeinflusst werden wie viele Wallboxen gleichzeitig laden.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`requested_current_threshold`<br/>int (<abbr title="Sekunde">s</abbr>)</th>
+    <td>
+        Wallboxen mit einem Stromzähler, der Phasenströme misst, werden requested_current_threshold Sekunden nach dem Ladestart auf den größten Phasenstrom plus den konfigurierten Spielraum limitiert. Damit kann der verfügbare Strom effizienter auf mehrere Wallboxen verteilt werden.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`requested_current_margin`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+    <td>
+        Spielraum, der auf den größten gemessenen Phasenstrom aufgeschlagen wird.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[64]</th>
+    <td>
+        Wallboxen, die vom Lastmanager gesteuert werden sollen.
+        - **[0..63]** - Eine zu steuernde Wallbox
         <table>
             <thead>
                 <tr>
@@ -1957,9 +2225,9 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
             </tbody>
         </table>
         
-        <strong>WARP 2 und WARP 3 und Energy Manager:</strong><br/>
+        <strong>WARP 2 und WARP 3 und Energy Manager und Energy Manager 2.0:</strong><br/>
         
-        - **[0..31]** - Eine zu steuernde Wallbox
+        - **[0..63]** - Eine zu steuernde Wallbox
         <table>
             <thead>
                 <tr>

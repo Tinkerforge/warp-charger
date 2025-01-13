@@ -4427,10 +4427,10 @@ curl http://$HOST/meters/history
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][2]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][5]</th>
     <td>
         Die gemessenen Werte aller Stromzähler.
-        - **[0..1]** - Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.
+        - **[0..4]** - Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.
     </td>
 </tr>
     </tbody>
@@ -4513,10 +4513,10 @@ curl http://$HOST/meters/live
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][2]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][5]</th>
     <td>
         Die gemessenen Werte aller Stromzähler.
-        - **[0..1]** - Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.
+        - **[0..4]** - Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.
     </td>
 </tr>
     </tbody>
@@ -6667,10 +6667,10 @@ curl http://$HOST/meters/history
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][2]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][5]</th>
     <td>
         Die gemessenen Werte aller Stromzähler.
-        - **[0..1]** - Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.
+        - **[0..4]** - Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.
     </td>
 </tr>
     </tbody>
@@ -6753,10 +6753,10 @@ curl http://$HOST/meters/live
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][2]</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][5]</th>
     <td>
         Die gemessenen Werte aller Stromzähler.
-        - **[0..1]** - Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.
+        - **[0..4]** - Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.
     </td>
 </tr>
     </tbody>
@@ -8967,6 +8967,2207 @@ curl http://$HOST/meters/live
         </TabItem>
     </Tabs>
 :::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
+    <td>
+        Das Alter des zuletzt gemessenen Wertes.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples_per_second`<br/>float (<abbr title="Hertz">Hz</abbr>)</th>
+    <td>
+        Die Anzahl der gemessenen Werte pro Sekunde.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][7]</th>
+    <td>
+        Die gemessenen Werte aller Stromzähler.
+        - **[0..6]** - Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.
+    </td>
+</tr>
+    </tbody>
+</table>
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
+</TabItem>
+<TabItem value="wem2">
+## `meters/X/values` {#meters_X_values_wem2}
+
+
+Die Messwerte des X. Stromzählers. Die Bedeutung der Messwerte kann aus [`meters/X/value_ids`](/mqtt_http/api_reference/meters.mdx#meters_X_value_ids) ermittelt werden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/1/values
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/values
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  // Index 0
+  217.6941223, 0, 0,
+  30.72553635, 0, 0,
+  6680.515625, 0, 0,
+  6681.138672, 0, 0,
+  // Index 12
+  -90.09844208, 0, 0,
+  1, 0, 0,
+  72.56191254, 10.24184513, 30.72553635,
+  6683.693359, 6680.666016, -90.09844208,
+  // Index 24
+  1, 50, 4644.044922,
+  3.992000103, 0, 0,
+  0, 0, 30.70857239,
+  4648.038086, 197.5639954, 4648.038086,
+  // Index 36
+  4644.044922, 3.992000103
+]
+```
+
+
+:::
+
+
+
+<br/><br/><br/>
+## `meters/X/update` {#meters_X_update_wem2}
+
+
+Aktualisiert die Messwerte des X. Stromzählers. Kann nur bei einem API-Stromzähler (Union-Tag 4 in der entsprechenden [`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config)) verwendet werden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/meters/1/update -d '[
+    15.9, 16, 16.1,
+    3657, 3680, 3703
+]'
+```
+
+Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+Die korrekte Konfiguration ([`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config)) für diesen Zähler wäre
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters/1/update -m '[
+    15.9, 16, 16.1,
+    3657, 3680, 3703
+]'
+```
+
+Beispiel für einen Zähler, der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+Die korrekte Konfiguration ([`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config)) für diesen Zähler wäre
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+
+<br/><br/><br/>
+## `meters/X/value_ids` {#meters_X_value_ids_wem2}
+
+
+Die MeterValueIDs des X. Stromzählers. Der n-te Eintrag in diesem Array gibt die Bedeutung des n-ten Messwerts aus [`meters/X/values`](/mqtt_http/api_reference/meters.mdx#meters_X_values) an. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/1/value_ids
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/value_ids
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  // Index 0
+  1, 2, 3,       // Spannung L1-N, L2-N, L3-N
+  13, 17, 21,    // Strom (Bezug + Einspeisung) L1-N, L2-N, L3-N
+  39, 48, 57,    // Wirkleistung (Bezug - Einspeisung) L1-N, L2-N, L3-N
+  122, 130, 138, // Scheinleistung (Bezug + Einspeisung) L1-N, L2-N, L3-N
+  // Index 12
+  83, 91, 99,    // Blindleistung (induktiv - kapazitiv)  L1-N, L2-N, L3-N
+  353, 354, 355, // Leistungsfaktor (gerichtet; Vorzeichen gibt Richtung des Stromflusses an) L1, L2, L3
+  7,             // Durchschnittliche Phasenspannung
+  29,            // Durchschnitt der (Bezug + Einspeisung)-Phasenströme
+  33,            // Summe der (Bezug + Einspeisung)-Phasenstöme
+  74,            // Summe der (Bezug - Einspeisung)-Phasenwirkleistungen
+  154,           // Summe der (Bezug + Einspeisung)-Phasenscheinleistungen
+  115,           // Summe der (induktiv - kapazitiv)-Phasenblindleistungen
+  // Index 24
+  356,           // Summe der gerichteten Leistungsfaktoren
+  364,           // Netzfrequenz
+  209, 211,      // Wirkenergie (Σ L1, L2, L3, seit Herstellung) Bezug, Einspeisung
+  4, 5, 6, 8,    // Spannung L1-L2; L2-L3; L3-L1; ⌀ L1-L2, L2-L3, L3-L1
+  25,            // Neutralleiterstrom
+  213,           // Wirkenergie (Σ L1, L2, L3, seit Herstellung) Bezug + Einspeisung
+  277,           // Blindenergie (Σ L1, L2, L3, seit Herstellung) induktiv + kapazitiv
+  214,           // Wirkenergie (Σ L1, L2, L3, seit letztem Zurücksetzen) Bezug + Einspeisung
+  // Index 36
+  210,           // Wirkenergie (Σ L1, L2, L3, seit letztem Zurücksetzen) Bezug
+  212            // Wirkenergie (Σ L1, L2, L3, seit letztem Zurücksetzen) Einspeisung
+]
+```
+
+
+:::
+
+
+
+<br/><br/><br/>
+## `meters/X/history` {#meters_X_history_wem2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
+
+Eine 48-Stunden-Historie der Ladeleistung des X. Stromzählers in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+```bash
+curl http://$HOST/meters/1/history
+```
+```jsx
+{
+  "offset": 60927,
+  "samples": [
+      null, null, null, null, null, null, null, null,
+      // 600 weitere null-Werte entfernt
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0, 1736, 6656, 6655, 6666,
+      6680, 6716, 6714, 6625, 6640, 6641, 6595, 6612,
+      6592, 6593, 6589, 6592, 6600, 6625, 6626, 6637,
+      6665, 6636, 6632, 6656, 6616, 6611, 6646, 6670,
+      6691, 6715, 6787, 6754, 6761, 6797, 6771, 6685,
+      6705, 6778, 6703, 6675, 6681, 6721, 6739, 6816,
+      6872, 6858, 6821, 6836, 6784, 6871, 6943, 6930,
+      6968, 6955, 6837, 6800, 6846, 6919, 6881, 6736,
+      6671, 6655, 6674, 6743, 6878, 5733, 4462, 3712,
+      3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
+         0,    0,    0,    0,    0,    0,    0,    0
+  ]
+}
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
+    <td>
+        Das Alter des zuletzt gemessenen Wertes.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..]</th>
+    <td>
+        Die gemessenen Werte.
+    </td>
+</tr>
+    </tbody>
+</table>
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
+
+<br/><br/><br/>
+## `meters/X/live` {#meters_X_live_wem2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
+
+Die letzten Ladeleistungs-Messwerte des X. Stromzählers. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/X/history`](/mqtt_http/api_reference/meters.mdx#meters_X_history) generiert.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+```bash
+curl http://$HOST/meters/1/live
+```
+```jsx
+{
+  "offset": 370,
+  "samples_per_second": 1.99565,
+  "samples": [
+    2626, 2626, 2626, 2626, 2626, 2626, 2626, 2673,
+    2673, 2673, 2673, 2673, 2673, 2673, 2673, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677,  988,
+     988,  988,  988,  988,  988,  988,  988,    3,
+       3,    3,    3,    3,    3,    3,    3,    1,
+       1,    1,    1,    1,    1,    1,    1,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    4
+   ]
+}
+```
+Es liegen 80 Werte vor, ~ 2 Werte pro Sekunde wurden erhoben, das Offset des letzten Werts sind 370 ms
+-> Die Messwerte reichen im Moment 40,370 Sekunden in die Vergangenheit.
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
+    <td>
+        Das Alter des zuletzt gemessenen Wertes.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples_per_second`<br/>float (<abbr title="Hertz">Hz</abbr>)</th>
+    <td>
+        Die Anzahl der gemessenen Werte pro Sekunde.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..]</th>
+    <td>
+        Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.
+    </td>
+</tr>
+    </tbody>
+</table>
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
+
+<br/><br/><br/>
+## `meters/X/config` {#meters_X_config_wem2}
+
+
+Die Konfiguration des X. Stromzählers. Das Union-Tag gibt die Zählerklasse an.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meters/1/config
+```
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
+
+
+#### Schreiben
+```bash
+curl http://$HOST/meters/1/config -d '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+```
+
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/config
+```
+```jsx
+[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]
+```
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meters/1/config<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters/1/config_update -m '[4, { "display_name": "API-Zähler", "value_ids": [13, 17, 21, 39, 48, 57] }]'
+```
+
+Konfiguriert für den Stromzähler-Slot 1
+einen über [meters/1/update](/mqtt_http/api_reference/meters.mdx#meters_X_update) mit Werten befüllbaren Stromzähler,
+der pro Phase Strom (Bezug + Einspeisung) und Wirkleistung (Bezug - Einspeisung) misst.
+4 ist das Union-Tag des API-Stromzählers.
+
+        </TabItem>
+    </Tabs>
+:::
+
+<MultilineTabs className="unique-tabs" groupId="metersXConfig">
+<TabItem value="0" label="0 - Kein Stromzähler konfiguriert.">
+null: Kein Stromzähler konfiguriert.
+</TabItem>
+
+<TabItem value="3" label="3 - Stromzähler angeschlossen am WARP Energy Manager">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        Anzeigename des Stromzählers
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+
+<TabItem value="4" label="4 - API-Stromzähler">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        Anzeigename des Stromzählers
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`value_ids`<br/>int[..]</th>
+    <td>
+        MeterValueIDs, die über die API [meters/X/update](/mqtt_http/api_reference/meters.mdx#meters_X_values) gesetzt werden können sollen. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+
+<TabItem value="5" label="5 - SunSpec-Gerät über Modbus-TCP">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        Anzeigename des Geräts
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`host`<br/>string</th>
+    <td>
+        Hostname oder IP-Adresse des SunSpec-Geräts
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`port`<br/>int</th>
+    <td>
+        Port des SunSpec-Geräts. Typischerweise 502
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+    <td>
+        Modbus-Device-Adresse des Sunspec-Geräts
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`manufacturer_name`<br/>string</th>
+    <td>
+        Name des Herstellers des SunSpec-Geräts. Die Kombination aus `manufacturer_name`, `model_name` und `serial_number` sollte ein Gerät weltweit eindeutig identifizieren.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`model_name`<br/>string</th>
+    <td>
+        Name des Modells des SunSpec-Geräts.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`serial_number`<br/>string</th>
+    <td>
+        Seriennummer des SunSpec-Geräts.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`model_id`<br/>int</th>
+    <td>
+        SunSpec-Model-ID
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`model_instance`<br/>int</th>
+    <td>
+        Gibt an wie viele SunSpec-Modelle mit gleicher `model_id` übersprungen werden, bis das gewünsche Modell gleicher ID erreicht ist.
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+
+<TabItem value="6" label="6 - Modbus-TCP-Stromzähler.">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        Anzeigename des Stromzählers
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`host`<br/>string</th>
+    <td>
+        Hostname oder IP-Adresse des SunSpec-Geräts
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`port`<br/>int</th>
+    <td>
+        Port des SunSpec-Geräts. Typischerweise 502
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`table`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
+    <td>
+        Registertabelle, die gelesen werden soll.
+        <MultilineTabs className="unique-tabs">
+        <TabItem value="0" label="0 - Keine Registertabelle konfiguriert.">
+        null: Keine Registertabelle konfiguriert.
+        </TabItem>
+        
+        <TabItem value="1" label="1 - Benutzerdefinierte Registertabelle">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`register_address_mode`<br/>int</th>
+            <td>
+                Gibt an, ob die konfigurierten Registerstartadressen im Webinterface als Adressen oder Registernummern angezeigt werden.
+                - **0** - Startadressen werden als Registeraddressen angezeigt. Die erste Adresse ist 0.
+                - **1** - Startadressen werden als Registernummern angezeigt. Die erste Registernummer ist 1.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`registers`<br/>object[36]</th>
+            <td>
+                Registertabelle
+                - **[0..35]** - Ein Register, dass gelesen werden soll
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`rtype`<br/>int</th>
+                    <td>
+                        Registertyp
+                        - **0** - Holding Register
+                        - **1** - Input Register
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`addr`<br/>int</th>
+                    <td>
+                        Startadresse des Registers.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`vtype`<br/>int</th>
+                    <td>
+                        Wert-Typ
+                        - **1** - Ein Register, 16-Bit, Ganzzahl, vorzeichenlos
+                        - **9** - Ein Register, 16-Bit, Ganzzahl, vorzeichenbehaftet
+                        - **2** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenlos, Big-Endian
+                        - **34** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenlos, Little-Endian
+                        - **10** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenbehaftet, Big-Endian
+                        - **42** - Zwei Register, 32-Bit, Ganzzahl, vorzeichenbehaftet, Little-Endian
+                        - **26** - Zwei Register, 32-Bit, Gleitkommazahl, Big-Endian
+                        - **58** - Zwei Register, 32-Bit, Gleitkommazahl, Little-Endian
+                        - **4** - Vier Register, 64-Bit, Ganzzahl, vorzeichenlos, Big-Endian
+                        - **36** - Vier Register, 64-Bit, Ganzzahl, vorzeichenlos, Little-Endian
+                        - **12** - Vier Register, 64-Bit, Ganzzahl, vorzeichenbehaftet, Big-Endian
+                        - **44** - Vier Register, 64-Bit, Ganzzahl, vorzeichenbehaftet, Little-Endian
+                        - **28** - Vier Register, 64-Bit, Gleitkommazahl, Big-Endian
+                        - **60** - Vier Register, 64-Bit, Gleitkommazahl, Little-Endian
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`off`<br/>float</th>
+                    <td>
+                        Offset, dass auf den gelesenen Wert addiert werden soll. Der Offset-Wert wird addiert, bevor der Skalierungsfaktor angewandt wird.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`scale`<br/>float</th>
+                    <td>
+                        Skalierungsfaktor, mit dem der gelesene Wert multipliziert werden soll. Der Skalierungsfaktor wirkt auf den Wert, der durch die Addition des gelesenen Wertes mit dem Offset entstanden ist.
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
+                    <td>
+                        MeterValueID, die die Interpretation des gelesenen Werts angibt. [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)
+                    </td>
+                </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="2" label="2 - Sungrow Hybrid-Wechselrichter (SH...)">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+                - **4** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="3" label="3 - Sungrow String-Wechselrichter (SG...)">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="4" label="4 - Solarmax Max.Storage">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="5" label="5 - Victron Energy GX">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+                - **4** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 100.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="6" label="6 - Deye Hybrid-Wechselrichter">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+                - **4** - Last
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="7" label="7 - AlphaESS Hybrid-Wechselrichter">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="8" label="8 - Shelly Pro EM">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_channel`<br/>int</th>
+            <td>
+                Kanal, der gelesen werden soll.
+                - **0** - Kein Kanal ausgewählt
+                - **1** - Kanal 1
+                - **2** - Kanal 2
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_mapping`<br/>int</th>
+            <td>
+                Phase der die Messwerte zugeordnet werden.
+                - **0** - Keine Phase ausgewählt
+                - **1** - L1
+                - **2** - L2
+                - **3** - L3
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="9" label="9 - Shelly Pro 3EM">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_profile`<br/>int</th>
+            <td>
+                Gibt an, ob eine oder alle drei Phasen gelesen werden sollen.
+                - **0** - Dreiphasig. `monophase_channel` und `monophase_mapping` werden ignoriert.
+                - **1** - Einphasig
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_channel`<br/>int</th>
+            <td>
+                Kanal, der gelesen werden soll.
+                - **0** - Kein Kanal ausgewählt
+                - **1** - Kanal 1
+                - **2** - Kanal 2
+                - **3** - Kanal 3
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`monophase_mapping`<br/>int</th>
+            <td>
+                Phase der die Messwerte zugeordnet werden.
+                - **0** - Keine Phase ausgewählt
+                - **1** - L1
+                - **2** - L2
+                - **3** - L3
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="10" label="10 - GoodWe Hybrid-Wechselrichter">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+                - **4** - Last
+                - **5** - Backup-Last
+                - **6** - Zähler
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 247.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="11" label="11 - Solax Hybrid-Wechselrichter">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="12" label="12 - Fronius GEN24 Plus">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter (wird nicht verwendet)
+                - **2** - Netzanschluss (wird nicht verwendet)
+                - **3** - Speicher
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="13" label="13 - Hailei Hybrid-Wechselrichter">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 85.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="14" label="14 - Fox ESS H3 Hybrid-Wechselrichter">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Wechselrichter
+                - **2** - Netzanschluss
+                - **3** - Speicher
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 247.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="15" label="15 - Siemens PAC2200 Stromzähler">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="16" label="16 - Siemens PAC3120 Stromzähler">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="17" label="17 - Siemens PAC3200 Stromzähler">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="18" label="18 - Siemens PAC3220 Stromzähler">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="19" label="19 - Siemens PAC4200 Stromzähler">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="20" label="20 - Siemens PAC4220 Stromzähler">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="21" label="21 - Carlo Gavazzi EM24 DIN Stromzähler">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="22" label="22 - Carlo Gavazzi EM24 E1 Stromzähler">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="23" label="23 - Carlo Gavazzi EM100 Stromzähler">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`phase`<br/>int</th>
+            <td>
+                Phase der die Messwerte zugeordnet werden.
+                - **0** - Keine Phase ausgewählt
+                - **1** - L1
+                - **2** - L2
+                - **3** - L3
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="24" label="24 - Carlo Gavazzi ET100 Stromzähler">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`phase`<br/>int</th>
+            <td>
+                Phase der die Messwerte zugeordnet werden.
+                - **0** - Keine Phase ausgewählt
+                - **1** - L1
+                - **2** - L2
+                - **3** - L3
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="25" label="25 - Carlo Gavazzi EM210 Stromzähler">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="26" label="26 - Carlo Gavazzi EM270 Stromzähler">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Zähler
+                - **2** - Stromwandler 1
+                - **3** - Stromwandler 2
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="27" label="27 - Carlo Gavazzi EM280 Stromzähler">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+            <td>
+                Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+                - **0** - Kein virtueller Zähler ausgewählt
+                - **1** - Zähler
+                - **2** - Stromwandler 1
+                - **3** - Stromwandler 2
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="28" label="28 - Carlo Gavazzi EM300 Stromzähler">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="29" label="29 - Carlo Gavazzi ET300 Stromzähler">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="30" label="30 - Carlo Gavazzi EM510 Stromzähler">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`phase`<br/>int</th>
+            <td>
+                Phase der die Messwerte zugeordnet werden.
+                - **0** - Keine Phase ausgewählt
+                - **1** - L1
+                - **2** - L2
+                - **3** - L3
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="31" label="31 - Carlo Gavazzi EM530 Stromzähler">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="32" label="32 - Carlo Gavazzi EM540 Stromzähler">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`device_address`<br/>int</th>
+            <td>
+                Geräteadresse. Typischerweise 1.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        </MultilineTabs>
+        
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+
+<TabItem value="7" label="7 - SMA Speedwire-Stromzähler.">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        Anzeigename des Stromzählers
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+
+<TabItem value="8" label="8 - RCT Power Wechselrichter">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        Anzeigename des Wechselrichters
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`host`<br/>string</th>
+    <td>
+        Hostname oder IP-Adresse des Wechselrichters
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`port`<br/>int</th>
+    <td>
+        Port des Wechselrichters. Typischerweise 8899
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`virtual_meter`<br/>int</th>
+    <td>
+        Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.
+        - **0** - Kein virtueller Zähler ausgewählt
+        - **1** - Wechselrichter (wird nicht verwendet)
+        - **2** - Netzanschluss
+        - **3** - Speicher
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+</MultilineTabs>
+
+
+<br/><br/><br/>
+## `meters/X/state` {#meters_X_state_wem2}
+
+
+Der Zustand des X. Stromzählers. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config) konfiguriert wurde.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/1/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+null
+```
+
+
+:::
+
+<Tabs className="hidden-tabs" groupId="metersXConfig">
+<TabItem value="0" label="0 - Kein Stromzähler konfiguriert.">
+null: Kein Stromzähler konfiguriert.
+</TabItem>
+
+<TabItem value="1" label="1 - Zustand des internen Stromzählers">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`type`<br/>int</th>
+    <td>
+        Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jedem Gerät unterstützt!
+        - **0** - Kein Stromzähler verfügbar
+        - **1** - SDM72
+        - **2** - SDM630
+        - **3** - SDM72V2
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+
+<TabItem value="2" label="2 - Zustand des internen Stromzählers">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`type`<br/>int</th>
+    <td>
+        Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jedem Gerät unterstützt!
+        - **0** - Kein Stromzähler verfügbar
+        - **2** - SDM630
+        - **3** - SDM72V2
+        - **4** - SDM72CTM
+        - **5** - SDM630MCT
+        - **6** - DSZ15DZMOD
+        - **7** - DEM4A
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+
+<TabItem value="3" label="3 - Zustand des internen Stromzählers">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`type`<br/>int</th>
+    <td>
+        Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jedem Gerät unterstützt!
+        - **0** - Kein Stromzähler verfügbar
+        - **2** - SDM630
+        - **3** - SDM72V2
+        - **4** - SDM72CTM
+        - **5** - SDM630MCT
+        - **6** - DSZ15DZMOD
+        - **7** - DEM4A
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+
+<TabItem value="4" label="4 - Zustand des API-Stromzählers. Im Moment leer.">
+null: Zustand des API-Stromzählers. Im Moment leer.
+</TabItem>
+
+<TabItem value="5" label="5 - Zustand des SunSpec-Stromzählers. Im Moment leer.">
+null: Zustand des SunSpec-Stromzählers. Im Moment leer.
+</TabItem>
+</Tabs>
+
+
+<br/><br/><br/>
+## `meters/X/errors` {#meters_X_errors_wem2}
+
+
+Fehlerzähler der Kommunikation mit dem Stromzähler. Der Inhalt dieser API hängt vom Typ des Stromzählers ab, der in [`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config) konfiguriert wurde.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/1/errors
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/errors
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+null
+```
+
+
+:::
+
+<Tabs className="hidden-tabs" groupId="metersXConfig">
+<TabItem value="0" label="0 - Kein Stromzähler konfiguriert.">
+null: Kein Stromzähler konfiguriert.
+</TabItem>
+
+<TabItem value="1" label="1 - Fehlerzähler des internen Stromzählers">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`meter`<br/>int</th>
+    <td>
+        Kommunikationsfehler zwischen RS485 Bricklet und Stromzähler.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`bricklet`<br/>int</th>
+    <td>
+        Kommunikationsfehler zwischen ESP Brick und RS485 Bricklet.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`bricklet_reset`<br/>int</th>
+    <td>
+        Unerwartete Resets des RS485 Bricklets.
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+
+<TabItem value="2" label="2 - Fehlerzähler des internen Stromzählers">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`local_timeout`<br/>int</th>
+    <td>
+        Local Timeout
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`global_timeout`<br/>int</th>
+    <td>
+        Global Timeout
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_function`<br/>int</th>
+    <td>
+        Illegal Function
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_data_access`<br/>int</th>
+    <td>
+        Illegal Data Access
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_data_value`<br/>int</th>
+    <td>
+        Illegal Data Value
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`slave_device_failure`<br/>int</th>
+    <td>
+        Slave Device Failure
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+
+<TabItem value="3" label="3 - Fehlerzähler des internen Stromzählers">
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`local_timeout`<br/>int</th>
+    <td>
+        Local Timeout
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`global_timeout`<br/>int</th>
+    <td>
+        Global Timeout
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_function`<br/>int</th>
+    <td>
+        Illegal Function
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_data_access`<br/>int</th>
+    <td>
+        Illegal Data Access
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_data_value`<br/>int</th>
+    <td>
+        Illegal Data Value
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`slave_device_failure`<br/>int</th>
+    <td>
+        Slave Device Failure
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
+
+<TabItem value="4" label="4 - Fehlerzähler des API-Stromzählers. Im Moment leer.">
+null: Fehlerzähler des API-Stromzählers. Im Moment leer.
+</TabItem>
+
+<TabItem value="5" label="5 - Fehlerzähler des SunSpec-Stromzählers. Im Moment leer.">
+null: Fehlerzähler des SunSpec-Stromzählers. Im Moment leer.
+</TabItem>
+</Tabs>
+
+
+<br/><br/><br/>
+## `meters/X/reset` {#meters_X_reset_wem2}
+
+
+Setzt alle zurücksetzbaren (Alle Werte deren `kind`-Eintrag `resettable` ist: [Liste aller MeterValueIDs](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters/meter_value_id.csv)) Zählerwerte des X. Stromzählers zurück.
+**Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/meters/1/reset -d 'null'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters/1/reset -m 'null'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+
+<br/><br/><br/>
+## `meters/X/last_reset` {#meters_X_last_reset_wem2}
+
+
+Der Zeitpunkt des letzten Zähler-Resets (siehe [`meters/X/reset`](/mqtt_http/api_reference/meters.mdx#meters_X_reset)) als Unix-Timestamp. 0 falls kein Reset durchgeführt wurde. Falls zum Zeitpunkt des letzten Resets keine Zeitsynchronisierung vorlag, ist dieser Wert stattdessen ein Zähler, der angibt, wie oft ein Reset durchgeführt wurde.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters/1/last_reset
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters/1/last_reset
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "last_reset": 1714728252 }
+```
+Zuletzt zurückgesetzt 2024-05-03T11:24:12+02:00
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`last_reset`<br/>int (<abbr title="Sekunde">s</abbr>)</th>
+    <td>
+        Unix-Timestamp des Zeitpunkts des letzten Zähler-Resets.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `meters/history` {#meters_history_wem2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
+
+Eine 48-Stunden-Historie der Ladeleistung in Watt. Bisher fehlende Werte werden durch null angezeigt. Die Historie wird von hinten nach vorne gefüllt, sodass null-Werte nur geschlossen am Anfang des Arrays auftreten, falls der ESP innerhalb der letzten 48 Stunden neugestartet wurde. Es werden bis zu 720 Werte ausgegeben, das entspricht einem Messwert alle 4 Minuten. Diese Messwerte sind der jeweilige Durchschnitt dieser 4 Minuten.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+```bash
+curl http://$HOST/meters/history
+```
+```jsx
+{
+  "offset": 9378,
+  "samples": [
+    [
+      null, null, null, null, null, null, null, null,
+      // 600 weitere null-Werte entfernt
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0, 1736, 6656, 6655, 6666,
+      6680, 6716, 6714, 6625, 6640, 6641, 6595, 6612,
+      6592, 6593, 6589, 6592, 6600, 6625, 6626, 6637,
+      6665, 6636, 6632, 6656, 6616, 6611, 6646, 6670,
+      6691, 6715, 6787, 6754, 6761, 6797, 6771, 6685,
+      6705, 6778, 6703, 6675, 6681, 6721, 6739, 6816,
+      6872, 6858, 6821, 6836, 6784, 6871, 6943, 6930,
+      6968, 6955, 6837, 6800, 6846, 6919, 6881, 6736,
+      6671, 6655, 6674, 6743, 6878, 5733, 4462, 3712,
+      3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
+         0,    0,    0,    0,    0,    0,    0,    0
+    ],
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ]
+}
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
+    <td>
+        Das Alter des zuletzt gemessenen Wertes.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..][7]</th>
+    <td>
+        Die gemessenen Werte aller Stromzähler.
+        - **[0..6]** - Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.
+    </td>
+</tr>
+    </tbody>
+</table>
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
+
+<br/><br/><br/>
+## `meters/live` {#meters_live_wem2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
+
+Die letzten Ladeleistungs-Messwerte. Auf Basis dieser Werte werden die Durchschnittswerte für [`meters/history`](/mqtt_http/api_reference/meters.mdx#meters_history) generiert. Es werden bis zu 720 Werte ausgegeben, das entspricht 6 Minuten bei einem Messwert alle 500 Millisekunden.
 
 
 <table>
@@ -11295,11 +13496,15 @@ curl http://$HOST/meters/history
     <td>
         Die gemessenen Werte aller Stromzähler.
         
-        <strong>WARP 1 und WARP 2 und WARP 3:</strong><br/>
+        <strong>WARP 1:</strong><br/>
         
         - **[0..1]** - Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.
         
-        <strong>Energy Manager:</strong><br/>
+        <strong>WARP 2 und WARP 3:</strong><br/>
+        
+        - **[0..4]** - Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.
+        
+        <strong>Energy Manager und Energy Manager 2.0:</strong><br/>
         
         - **[0..6]** - Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.
     </td>
@@ -11388,11 +13593,15 @@ curl http://$HOST/meters/live
     <td>
         Die gemessenen Werte aller Stromzähler.
         
-        <strong>WARP 1 und WARP 2 und WARP 3:</strong><br/>
+        <strong>WARP 1:</strong><br/>
         
         - **[0..1]** - Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.
         
-        <strong>Energy Manager:</strong><br/>
+        <strong>WARP 2 und WARP 3:</strong><br/>
+        
+        - **[0..4]** - Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.
+        
+        <strong>Energy Manager und Energy Manager 2.0:</strong><br/>
         
         - **[0..6]** - Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.
     </td>

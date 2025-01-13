@@ -562,6 +562,144 @@ Setzt alle Einstellungen zurück und löscht alle aufgezeichneten Ladevorgänge.
     </tbody>
 </table>
 </TabItem>
+<TabItem value="wem2">
+## `reboot` {#reboot_wem2}
+
+
+Startet den ESP neu, um beispielsweise Konfigurationsänderungen anzuwenden.
+**Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/reboot -d 'null'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/reboot -m 'null'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+
+<br/><br/><br/>
+## `debug_report` {#debug_report_wem2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
+
+Generiert einen Debug-Report. Dieser besteht aus allen Zuständen und Konfigurationen, sowie den letzten empfangenen Kommandos und Konfigurationsupdates. Passwörter werden, genau wie bei Konfigurationsabfragen, zensiert.
+
+
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
+
+<br/><br/><br/>
+## `force_reboot` {#force_reboot_wem2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
+
+Erzwingt einen sofortigen Neustart des ESPs. Nützlich, falls [reboot](/mqtt_http/api_reference/misc.mdx#reboot) aus irgendwelchen Gründen hängt.
+
+
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
+
+<br/><br/><br/>
+## `flash_firmware` {#flash_firmware_wem2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
+
+Nimmt ein Firmware-Update als POST entgegen, dass dann geflasht wird.
+
+
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
+
+<br/><br/><br/>
+## `config_reset` {#config_reset_wem2}
+
+
+Setzt alle Einstellungen zurück aber behält aufgezeichnete Ladevorgänge und die Nutzernamenhistorie. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`do_i_know_what_i_am_doing`<br/>bool</th>
+    <td>
+        Gibt an ob der Löschvorgang ausgeführt werden soll
+        - **true** - Alle Einstellungen löschen
+        - **false** - Keine Aktion durchführen
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `factory_reset` {#factory_reset_wem2}
+
+
+Setzt alle Einstellungen zurück und löscht alle aufgezeichneten Ladevorgänge. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`do_i_know_what_i_am_doing`<br/>bool</th>
+    <td>
+        Gibt an ob der Löschvorgang ausgeführt werden soll
+        - **true** - Alle Einstellungen, aufgezeichneten Ladevorgänge und die Nutzernamenhistorie löschen
+        - **false** - Keine Aktion durchführen
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
 <TabItem value="any">
 ## `reboot` {#reboot_any}
 

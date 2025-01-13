@@ -522,6 +522,509 @@ mosquitto_pub -h $BROKER -t $PREFIX/energy_manager/sdcard_format -m '{ "do_i_kno
     </tbody>
 </table>
 </TabItem>
+<TabItem value="wem2">
+## `energy_manager/config` {#energy_manager_config_wem2}
+
+
+Konfiguration des Energy Managers
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/energy_manager/config
+```
+```jsx
+{ "contactor_installed": true }
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/energy_manager/config -d '{ "contactor_installed": true }'
+```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/energy_manager/config -d 'true'
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/energy_manager/config
+```
+```jsx
+{ "contactor_installed": true }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/energy_manager/config<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/energy_manager/config_update -m '{ "contactor_installed": true }'
+```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/energy_manager/config_update -m 'true'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`contactor_installed`<br/>bool</th>
+    <td>
+        Gibt an, ob ein Schütz angeschlossen ist, mit dem die gesteuerten Wallboxen zwischen dreiphasigem und einphasigem Betrieb umgeschaltet werden können. Eingang 4 wird dann automatisch zur Schützüberwachung verwendet.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `energy_manager/state` {#energy_manager_state_wem2}
+
+
+Zustand des Energy Managers
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/energy_manager/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/energy_manager/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "phases_switched": 1,
+  "input3_state": false,
+  "input4_state": false,
+  "relay_state": false,
+  "error_flags": 0,
+  "config_error_flags": 0
+}
+```
+
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases_switched`<br/>int</th>
+    <td>
+        Zustand der Phasenumschaltung
+        - **1** - Eine Phase verbunden
+        - **3** - Drei Phasen verbunden
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`input3_state`<br/>bool</th>
+    <td>
+        Zustand des Eingangs 3
+        - **true** - Eingang geschlossen
+        - **false** - Eingang geöffnet
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`input4_state`<br/>bool</th>
+    <td>
+        Zustand des Eingangs 4
+        - **true** - Eingang geschlossen
+        - **false** - Eingang geöffnet
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`relay_state`<br/>bool</th>
+    <td>
+        Zustand des Relais
+        - **true** - Relais geschlossen
+        - **false** - Relais geöffnet
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`error_flags`<br/>int</th>
+    <td>
+        Aktive Fehlerzustände des Energy Managers. Es handelt sich hierbei um eine Bitmaske, sodass sämtliche Kombinationen aus Fehlerwerten auftreten können.
+        - **0** - Kein Fehler
+        - **0x00000002** - Keine Netzwerkverbindung (LAN/WLAN)
+        - **0x00010000** - Schützüberwachung hat ausgelöst
+        - **0x01000000** - Interner Fehler, Bricklet nicht erreichbar
+        - **0x02000000** - Interner Fehler, SD-Karten-Fehler
+        - **0x80000000** - Ungültige Konfiguration, Details in config_error_flags
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`config_error_flags`<br/>int</th>
+    <td>
+        Aktive Konfigurationsfehler des Energy Managers. Es handelt sich hierbei um eine Bitmaske, sodass sämtliche Kombinationen aus Konfigurationsfehlern auftreten können.
+        - **0** - Kein Fehler
+        - **0x00000001** - Phasenumschaltung oder Schütz nicht konfiguriert
+        - **0x00000002** - Maximaler Gesamtstrom der Wallboxen nicht konfiguriert
+        - **0x00000004** - Keine Wallboxen konfiguriert
+        - **0x00000008** - Überschussladen aktiviert aber kein Stromzähler eingerichtet
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `energy_manager/low_level_state` {#energy_manager_low_level_state_wem2}
+
+
+Low-Level-Zustand des Energy Managers
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/energy_manager/low_level_state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/energy_manager/low_level_state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "consecutive_bricklet_errors": 0,
+  "contactor": false,
+  "contactor_check_state": 1,
+  "input_voltage": 11925,
+  "led_rgb": [0, 0, 0],
+  "uptime": 940868435
+}
+```
+
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`consecutive_bricklet_errors`<br/>int</th>
+    <td>
+        Anzahl aufeinander folgender interner Kommunikationsfehler
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`contactor`<br/>bool</th>
+    <td>
+        Vom Energy Manager gesetzter Zustand des Schützes
+        - **true** - Schütz geschlossen
+        - **false** - Schütz geöffnet
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`contactor_check_state`<br/>int</th>
+    <td>
+        Zustand der Schützprüfung
+        - **0** - Schützüberwachung hat ausgelöst (Schütz defekt)
+        - **1** - Kein Schützfehler bekannt (Schütz in Ordnung)
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`input_voltage`<br/>int (<abbr title="Millivolt">mV</abbr>)</th>
+    <td>
+        Interne Versorgungsspannung in Millivolt.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`led_rgb`<br/>int[3]</th>
+    <td>
+        Farbe der Status-LED
+        - **[0]** - Rot: 0 (aus) bis 255 (maximale Intensität)
+        - **[1]** - Grün: 0 (aus) bis 255 (maximale Intensität)
+        - **[2]** - Blau: 0 (aus) bis 255 (maximale Intensität)
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`uptime`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
+    <td>
+        Zeit seit Starten des Energy Manager Bricklets.<br/><br/>Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `energy_manager/sdcard_state` {#energy_manager_sdcard_state_wem2}
+
+
+Informationen über die eingelegte MicroSD-Karte.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/energy_manager/sdcard_state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/energy_manager/sdcard_state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "sd_status": 0,
+  "lfs_status": 0,
+  "card_type": 12,
+  "sector_count": 15759360,
+  "sector_size": 512,
+  "manufacturer_id": 116,
+  "product_rev": 32,
+  "product_name": "USDU1"
+}
+```
+
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`sd_status`<br/>int</th>
+    <td>
+        Status der SD-Karte
+        - **0** - OK
+        - **1** - READ_BLOCK_TIMEOUT
+        - **2** - WRITE_BLOCK_TIMEOUT
+        - **3** - RESPONSE_TIMEOUT
+        - **11** - ERROR_INIT_TYPE
+        - **12** - ERROR_INIT_VER_OR_VOLTAGE
+        - **13** - ERROR_INIT_ACMD41
+        - **14** - ERROR_INIT_CMD58
+        - **15** - ERROR_INIT_CMD0
+        - **21** - ERROR_CID_START
+        - **22** - ERROR_CID_CMD10
+        - **31** - ERROR_CSD_START
+        - **32** - ERROR_CSD_CMD9
+        - **41** - ERROR_COUNT_TO_HIGH
+        - **51** - ERROR_NO_CARD
+        - **255** - ERROR_API_FAILURE
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`lfs_status`<br/>int</th>
+    <td>
+        Status des Dateisystems (LittleFS) auf der SD-Karte
+        - **0** - OK
+        - **255** - ERROR_API_FAILURE
+        - **256** - SD-Karte wird gerade formatiert
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`card_type`<br/>int</th>
+    <td>
+        SD-Kartentyp
+        - **0** - Keine SD-Karte gefunden
+        - **1** - MMC
+        - **2** - SD
+        - **4** - SDSC
+        - **12** - SDHC/SDXC
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`sector_count`<br/>int</th>
+    <td>
+        Größe der SD-Karte in Sektoren
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`sector_size`<br/>int</th>
+    <td>
+        Größe eines Sektors
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`manufacturer_id`<br/>int</th>
+    <td>
+        Hersteller-ID
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`product_rev`<br/>int</th>
+    <td>
+        Produktrevision
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`product_name`<br/>string</th>
+    <td>
+        Produktname
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `energy_manager/sdcard_format` {#energy_manager_sdcard_format_wem2}
+
+
+Formatiert die eingelegte SD-Karte und löscht damit die Historie der Energiebilanz. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/energy_manager/sdcard_format -d '{ "do_i_know_what_i_am_doing": false }'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/energy_manager/sdcard_format -m '{ "do_i_know_what_i_am_doing": false }'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`do_i_know_what_i_am_doing`<br/>bool</th>
+    <td>
+        Gibt an ob die SD-Karte formatiert werden soll
+        - **true** - SD-Karte formatieren
+        - **false** - Keine Aktion durchführen
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
 <TabItem value="any">
 ## `energy_manager/config` {#energy_manager_config_any}
 

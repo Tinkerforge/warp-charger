@@ -1230,6 +1230,311 @@ mosquitto_pub -h $BROKER -t $PREFIX/wireguard/config_update -m '{
     </tbody>
 </table>
 </TabItem>
+<TabItem value="wem2">
+## `wireguard/state` {#wireguard_state_wem2}
+
+
+Der aktuelle WireGuard-Zustand.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/wireguard/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wireguard/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "state": 3, "connection_start": 15346, "connection_end": 0 }
+```
+
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`state`<br/>int</th>
+    <td>
+        Zustand der Verbindung zum WireGuard-Peer
+        - **0** - Nicht konfiguriert
+        - **1** - Warte auf Zeitsynchronisierung
+        - **2** - Nicht verbunden
+        - **3** - Verbunden
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_start`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
+    <td>
+        Zeit in Millisekunden zu der die letzte Verbindung aufgebaut wurde.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_end`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
+    <td>
+        Zeit in Millisekunden zu der die letzte Verbindung getrennt wurde.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `wireguard/config` {#wireguard_config_wem2}
+
+
+Die WireGuard-Konfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/wireguard/config
+```
+```jsx
+{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  // highlight-start
+  // werden nicht zurückgegeben
+  // null = key gesetzt
+  // "" = key nicht gesetzt
+  "private_key": null,
+  "remote_public_key": null,
+  "preshared_key": "",
+  // highlight-end
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/wireguard/config -d '{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  "private_key": "7aufw3iiQRVs9HyN8sGPeAHtVKVMVgV+bdRrql5S6ac=",
+  "remote_public_key": "VKKqmbJ97OTKbqCBszfUaa/H1Tzy7IO9f+TWhwH7m9o=",
+  "preshared_key": "tZtZ59nx5uIQma7phYTA4b8P28ogSzKHFC40izC6y4c=",
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wireguard/config
+```
+```jsx
+{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  // highlight-start
+  // werden nicht zurückgegeben
+  // null = key gesetzt
+  // "" = key nicht gesetzt
+  "private_key": null,
+  "remote_public_key": null,
+  "preshared_key": "",
+  // highlight-end
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/wireguard/config<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wireguard/config_update -m '{
+  "enable": true,
+  "make_default_interface": true,
+  "internal_ip": "123.145.167.189",
+  "internal_subnet": "255.255.255.0",
+  "internal_gateway": "123.145.167.1",
+  "remote_host": "1.2.3.4",
+  "remote_port": 51820,
+  "local_port": 51820,
+  "private_key": "7aufw3iiQRVs9HyN8sGPeAHtVKVMVgV+bdRrql5S6ac=",
+  "remote_public_key": "VKKqmbJ97OTKbqCBszfUaa/H1Tzy7IO9f+TWhwH7m9o=",
+  "preshared_key": "tZtZ59nx5uIQma7phYTA4b8P28ogSzKHFC40izC6y4c=",
+  "allowed_ip": "0.0.0.0",
+  "allowed_subnet": "0.0.0.0"
+}'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable`<br/>bool</th>
+    <td>
+        Gibt an ob eine WireGuard-Verbindung zum konfigurierten Peer aufgebaut werden soll.
+        - **true** - Wenn WireGuard aktiviert ist.
+        - **false** - Wenn WireGuard deaktiviert ist.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`make_default_interface`<br/>bool</th>
+    <td>
+        Gibt an ob aller nicht-lokaler Netzwerkverkehr über WireGuard geroutet werden soll.
+        - **true** - Wenn WireGuard das Default-Interface ist: Sämtlicher nicht-lokaler Netzwerkverkehr wird über WireGuard geroutet.
+        - **false** - Wenn WireGuard nicht das Default-Interface ist: Nur Netzwerkverkehr im WireGuard-Subnetz wird über WireGuard geroutet.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`internal_ip`<br/>string</th>
+    <td>
+        IP-Adresse des Geräts im WireGuard-Netzwerk
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`internal_subnet`<br/>string</th>
+    <td>
+        Subnetzmaske des WireGuard-Netzwerks
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`internal_gateway`<br/>string</th>
+    <td>
+        Gateway des WireGuard-Netzwerks
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`remote_host`<br/>string</th>
+    <td>
+        öffentliche Adresse oder Hostname des Peers zu dem eine WireGuard-Verbindung aufgebaut werden soll
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`remote_port`<br/>int</th>
+    <td>
+        Port des Peers zu dem eine WireGuard-Verbindung aufgebaut werden soll
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`local_port`<br/>int</th>
+    <td>
+        Port von dem aus die WireGuard-Verbindung aufgebaut wird
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`private_key`<br/>string</th>
+    <td>
+        Privater Schlüssel des Geräts (44 Base64-Zeichen oder leer)
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`remote_public_key`<br/>string</th>
+    <td>
+        Öffentlicher Schlüssel des Peers zu dem eine WireGuard-Verbindung aufgebaut werden soll (44 Base64-Zeichen oder leer)
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`preshared_key`<br/>string</th>
+    <td>
+        Geteilter Schlüssel (PSK) der Verbindung zwischen Gerät und Peer (44 Base64-Zeichen oder leer)
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`allowed_ip`<br/>string</th>
+    <td>
+        Erlaubte Quell-IP von Paketen, die über die WireGuard-Verbindung empfangen werden. 0.0.0.0 damit alle empfangenen Pakete verarbeitet werden
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`allowed_subnet`<br/>string</th>
+    <td>
+        Erlaubte Subnetzmaske von Paketen, die über die WireGuard-Verbindung empfangen werden. 0.0.0.0 damit alle empfangenen Pakete verarbeitet werden
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
 <TabItem value="any">
 ## `wireguard/state` {#wireguard_state_any}
 

@@ -356,10 +356,10 @@ curl http://$HOST/charge_tracker/charge_log
 ```
 
 ```
-offset      timestamp kwh_start id duration kwh_end
-0x00000000: c2eb b301 3bf8 8c45 00 57 6b00  f236 8e45
-0x00000010: f4fc b301 2738 8e45 00 ae 9300  a846 8f45
-0x00000020: 2c02 b401 df46 8f45 00 0b 6d00  be58 9045
+offset      timestamp | kwh_start | id | duration | kwh_end
+0x00000000: c2eb b301 | 3bf8 8c45 | 00 | 57 6b00  | f236 8e45
+0x00000010: f4fc b301 | 2738 8e45 | 00 | ae 9300  | a846 8f45
+0x00000020: 2c02 b401 | df46 8f45 | 00 | 0b 6d00  | be58 9045
 ```
 Dieses Beispiel enthält die selben Ladevorgänge wie das [`charge_tracker/last_charges`](/mqtt_http/api_reference/charge_tracker.mdx#charge_tracker_last_charges)-Beispiel
 
@@ -862,10 +862,10 @@ curl http://$HOST/charge_tracker/charge_log
 ```
 
 ```
-offset      timestamp kwh_start id duration kwh_end
-0x00000000: c2eb b301 3bf8 8c45 00 57 6b00  f236 8e45
-0x00000010: f4fc b301 2738 8e45 00 ae 9300  a846 8f45
-0x00000020: 2c02 b401 df46 8f45 00 0b 6d00  be58 9045
+offset      timestamp | kwh_start | id | duration | kwh_end
+0x00000000: c2eb b301 | 3bf8 8c45 | 00 | 57 6b00  | f236 8e45
+0x00000010: f4fc b301 | 2738 8e45 | 00 | ae 9300  | a846 8f45
+0x00000020: 2c02 b401 | df46 8f45 | 00 | 0b 6d00  | be58 9045
 ```
 Dieses Beispiel enthält die selben Ladevorgänge wie das [`charge_tracker/last_charges`](/mqtt_http/api_reference/charge_tracker.mdx#charge_tracker_last_charges)-Beispiel
 
@@ -1368,10 +1368,10 @@ curl http://$HOST/charge_tracker/charge_log
 ```
 
 ```
-offset      timestamp kwh_start id duration kwh_end
-0x00000000: c2eb b301 3bf8 8c45 00 57 6b00  f236 8e45
-0x00000010: f4fc b301 2738 8e45 00 ae 9300  a846 8f45
-0x00000020: 2c02 b401 df46 8f45 00 0b 6d00  be58 9045
+offset      timestamp | kwh_start | id | duration | kwh_end
+0x00000000: c2eb b301 | 3bf8 8c45 | 00 | 57 6b00  | f236 8e45
+0x00000010: f4fc b301 | 2738 8e45 | 00 | ae 9300  | a846 8f45
+0x00000020: 2c02 b401 | df46 8f45 | 00 | 0b 6d00  | be58 9045
 ```
 Dieses Beispiel enthält die selben Ladevorgänge wie das [`charge_tracker/last_charges`](/mqtt_http/api_reference/charge_tracker.mdx#charge_tracker_last_charges)-Beispiel
 
@@ -1529,6 +1529,9 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_tracker/config_update -m '3381'
 </table>
 </TabItem>
 <TabItem value="wem">
+Auf dieser Hardware nicht unterstützt!
+</TabItem>
+<TabItem value="wem2">
 Auf dieser Hardware nicht unterstützt!
 </TabItem>
 <TabItem value="any">
@@ -1883,10 +1886,10 @@ curl http://$HOST/charge_tracker/charge_log
 ```
 
 ```
-offset      timestamp kwh_start id duration kwh_end
-0x00000000: c2eb b301 3bf8 8c45 00 57 6b00  f236 8e45
-0x00000010: f4fc b301 2738 8e45 00 ae 9300  a846 8f45
-0x00000020: 2c02 b401 df46 8f45 00 0b 6d00  be58 9045
+offset      timestamp | kwh_start | id | duration | kwh_end
+0x00000000: c2eb b301 | 3bf8 8c45 | 00 | 57 6b00  | f236 8e45
+0x00000010: f4fc b301 | 2738 8e45 | 00 | ae 9300  | a846 8f45
+0x00000020: 2c02 b401 | df46 8f45 | 00 | 0b 6d00  | be58 9045
 ```
 Dieses Beispiel enthält die selben Ladevorgänge wie das [`charge_tracker/last_charges`](/mqtt_http/api_reference/charge_tracker.mdx#charge_tracker_last_charges)-Beispiel
 

@@ -598,6 +598,153 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters_legacy_api/config_update -m '0'
     </tbody>
 </table>
 </TabItem>
+<TabItem value="wem2">
+## `meters_legacy_api/state` {#meters_legacy_api_state_wem2}
+
+
+Der Zustand der emulierten veralteten Stromzähler-API
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/meters_legacy_api/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters_legacy_api/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{"writable":false}
+```
+
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`writable`<br/>bool</th>
+    <td>
+        Gibt an, ob die veraltete Stromzähler-API geschrieben werden kann. Das ist nur der Fall, wenn der unter [`meters_legacy_api/config`](/mqtt_http/api_reference/meters_legacy_api.mdx#meters_legacy_api_config) als `linked_meter_slot` eingetragene Stromzähler ein Stromzähler ist, der in seiner [`meters/X/config`](/mqtt_http/api_reference/meters.mdx#meters_X_config) als API-Zähler konfiguriert ist.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `meters_legacy_api/config` {#meters_legacy_api_config_wem2}
+
+
+Die Konfiguration der emulierten veralteten Stromzähler-API
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/meters_legacy_api/config
+```
+```jsx
+{"linked_meter_slot":0}
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/meters_legacy_api/config -d '{"linked_meter_slot":0}'
+```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/meters_legacy_api/config -d '0'
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters_legacy_api/config
+```
+```jsx
+{"linked_meter_slot":0}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/meters_legacy_api/config<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters_legacy_api/config_update -m '{"linked_meter_slot":0}'
+```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters_legacy_api/config_update -m '0'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`linked_meter_slot`<br/>int</th>
+    <td>
+        Stromzähler, auf den die emulierte veraltete Stromzähler-API abgebildet werden soll
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
 <TabItem value="any">
 ## `meters_legacy_api/state` {#meters_legacy_api_state_any}
 

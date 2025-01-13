@@ -3100,6 +3100,708 @@ erzwungen werden.
     </TabItem>
 </Tabs>
 </TabItem>
+<TabItem value="wem2">
+## `wifi/state` {#wifi_state_wem2}
+
+
+Der aktuelle WLAN-Zustand.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/wifi/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "connection_state": 3,
+  "connection_start": 10117,
+  "connection_end": 0,
+  "ap_state": 2,
+  "ap_bssid": "C4:5B:BE:C0:FF:EE",
+  "sta_ip": "10.1.2.3",
+  "sta_subnet": "255.255.255.0",
+  "sta_rssi": -38,
+  "sta_bssid": "71:21:CE:12:F0:12"
+}
+```
+
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_state`<br/>int</th>
+    <td>
+        Zustand der Verbindung zum konfigurierten WLAN. Siehe [`wifi/sta_config`](/mqtt_http/api_reference/wifi.mdx#wifi_sta_config)
+        - **0** - Nicht konfiguriert
+        - **1** - Nicht verbunden
+        - **2** - Verbinde
+        - **3** - Verbunden
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`ap_state`<br/>int</th>
+    <td>
+        Zustand des WLAN-Access-Points. Siehe [`wifi/ap_config`](/mqtt_http/api_reference/wifi.mdx#wifi_ap_config)
+        - **0** - Deaktiviert
+        - **1** - Aktiviert
+        - **2** - Fallback inaktiv
+        - **3** - Fallback aktiv
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`ap_bssid`<br/>string</th>
+    <td>
+        BSSID des WLAN-Access-Points.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`ap_sta_count`<br/>int</th>
+    <td>
+        Anzahl der aktuell zum WLAN-Access-Point verbundenen Geräte.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`sta_ip`<br/>string</th>
+    <td>
+        Aktuelle IP des Geräts im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`sta_subnet`<br/>string</th>
+    <td>
+        Aktuelle Subnetzmaske des Geräts im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`sta_rssi`<br/>int</th>
+    <td>
+        Die aktuelle Empfangsqualität. 0 falls keine Verbindung besteht, sonst negativ. Werte näher 0 entsprechen einem besseren Empfang.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`sta_bssid`<br/>string</th>
+    <td>
+        Die BSSID der Gegenstelle, zu der das Gerät verbunden ist.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_start`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
+    <td>
+        Zeit in Millisekunden zu der die letzte Verbindung aufgebaut wurde.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_end`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
+    <td>
+        Zeit in Millisekunden zu der die letzte Verbindung getrennt wurde.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `wifi/scan` {#wifi_scan_wem2}
+
+
+Löst einen Scan nach WLANs aus. Die Scan-Ergebnisse können derzeit nur über HTTP abgefragt werden.
+**Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/wifi/scan -d 'null'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wifi/scan -m 'null'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+
+<br/><br/><br/>
+## `wifi/sta_config` {#wifi_sta_config_wem2}
+
+
+Die WLAN-Verbindungskonfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/wifi/sta_config
+```
+```jsx
+{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/wifi/sta_config -d '{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. wem2/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/sta_config
+```
+```jsx
+{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/wifi/sta_config<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
+  "enable_sta": true,
+  "ssid": "Mein WLAN",
+  "bssid": [12, 34, 56, 78, 90, 12],
+  "bssid_lock": true,
+  "passphrase": null,
+  "ip": "0.0.0.0",
+  "gateway": "0.0.0.0",
+  "subnet": "0.0.0.0",
+  "dns": "0.0.0.0",
+  "dns2": "0.0.0.0",
+  "wpa_eap_config": [0, null]
+}'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_sta`<br/>bool</th>
+    <td>
+        Gibt an ob eine WLAN-Verbindung zum konfigurierten Netzwerk aufgebaut werden soll.
+        - **true** - Wenn eine WLAN-Verbindung aufgebaut werden soll.
+        - **false** - Wenn nicht.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
+    <td>
+        SSID zu der sich verbunden werden soll.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`bssid`<br/>int[6]</th>
+    <td>
+        BSSID zu der sich verbunden werden soll. Dieser Eintrag ist optional und kann leer übergeben werden, wird aber für das bssid_lock benötigt.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`bssid_lock`<br/>bool</th>
+    <td>
+        Legt fest, ob sich nur zum WLAN mit der gesetzten BSSID verbunden werden soll. Deaktiviert lassen, falls Repeater o.Ä. verwendet werden sollen.
+        - **true** - Verbindet sich nur zum Access Point mit der übergebenen BSSID.
+        - **false** - Verbindet sich nur zu jedem Access Point mit der konfigurierten SSID, z.B. mit Repeatern.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_11b`<br/>bool</th>
+    <td>
+        Legt fest, ob der veraltete und langsame [802.11b-Modus](https://de.wikipedia.org/wiki/Wireless_Local_Area_Network#IEEE_802.11b) verwendet werden darf. Dieser verlangsamt auch andere Geräte, die zum WLAN verbunden sind, kann aber die Empfangsqualität und Robustheit der Verbindung leicht verbessern.
+        - **true** - Erlaube Verwendung des 802.11b-Modus
+        - **false** - Verbiete Verwendung des 802.11b-Modus
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`passphrase`<br/>string</th>
+    <td>
+        Die WLAN-Passphrase. Maximal 63 Byte. Dieser Eintrag ist optional und kann leer übergeben werden, falls sich zu einem unverschlüsselten WLAN verbunden werden soll.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
+    <td>
+        IP-Adresse, die das Gerät im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`gateway`<br/>string</th>
+    <td>
+        Gateway-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
+    <td>
+        Subnetzmaske, die das Gerät im konfigurierten Netz verwenden soll.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`dns`<br/>string</th>
+    <td>
+        DNS-Server-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`dns2`<br/>string</th>
+    <td>
+        Alternative DNS-Server-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wpa_eap_config`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
+    <td>
+        WPA-Enterprise-Konfiguration
+        <MultilineTabs className="unique-tabs">
+        <TabItem value="0" label="0 - WPA Personal">
+        null: WPA Personal
+        </TabItem>
+        
+        <TabItem value="1" label="1 - EAP-TLS">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`ca_cert_id`<br/>int</th>
+            <td>
+                ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/mqtt_http/api_reference/certs.mdx#certs_state)
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`identity`<br/>string</th>
+            <td>
+                Anonyme Identität für dem Verbindungsaufbau zum RADIUS-Server. (Optional) [Siehe hier für Details](https://security.stackexchange.com/a/201848)
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`client_cert_id`<br/>int</th>
+            <td>
+                ID des Client-Zertifikats mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/mqtt_http/api_reference/certs.mdx#certs_state)
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`client_key_id`<br/>int</th>
+            <td>
+                ID des Zertifikats-Keys mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/mqtt_http/api_reference/certs.mdx#certs_state)
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        
+        <TabItem value="2" label="2 - EAP-PEAP oder EAP-TTLS">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`ca_cert_id`<br/>int</th>
+            <td>
+                ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/mqtt_http/api_reference/certs.mdx#certs_state)
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`identity`<br/>string</th>
+            <td>
+                Anonyme Identität für dem Verbindungsaufbau zum RADIUS-Server. (Optional) [Siehe hier für Details](https://security.stackexchange.com/a/201848)
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`username`<br/>string</th>
+            <td>
+                Benutzername
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`password`<br/>string</th>
+            <td>
+                Passwort
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`client_cert_id`<br/>int</th>
+            <td>
+                ID des Client-Zertifikats mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/mqtt_http/api_reference/certs.mdx#certs_state)
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`client_key_id`<br/>int</th>
+            <td>
+                ID des Zertifikats-Keys mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/mqtt_http/api_reference/certs.mdx#certs_state)
+            </td>
+        </tr>
+            </tbody>
+        </table>
+        </TabItem>
+        </MultilineTabs>
+        
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `wifi/ap_config` {#wifi_ap_config_wem2}
+
+
+Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deaktiviert wird, und die WLAN-Verbindung bzw. LAN-Verbindung nicht aufgebaut werden kann, bzw. nicht konfiguriert wurde, kann der ESP nur noch durch einen Factory-Reset erreicht werden!</strong> Wir empfehlen, den Access Point immer im Fallback-Modus zu belassen.
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_ap`<br/>bool</th>
+    <td>
+        Gibt an ob der Access Point aktiviert werden soll.
+        - **true** - Der AP soll aktiviert werden. Ggfalls. nur als Fallback (siehe ap_fallback_only)
+        - **false** - Der AP soll immer deaktiviert bleiben.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`ap_fallback_only`<br/>bool</th>
+    <td>
+        Gibt an ob der Access Point nur aktiviert werden soll, falls die WLAN- und LAN-Verbindungen nicht aufgebaut werden können. Wird ignoriert, falls enable_ap false ist.
+        - **true** - Der AP soll nur aktiviert werden, falls die WLAN- und LAN-Verbindungen nicht aufgebaut werden können.
+        - **false** - Der AP soll immer aktiviert bleiben.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
+    <td>
+        SSID zu der sich verbunden werden soll.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`hide_ssid`<br/>bool</th>
+    <td>
+        true falls die SSID versteckt werden soll, ansonsten false.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`passphrase`<br/>string</th>
+    <td>
+        Die WLAN-Passphrase. Maximal 63 Byte.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`channel`<br/>int</th>
+    <td>
+        Kanal, auf dem der Access Point erreichbar sein soll. Gültige Werte sind 1 bis 13 und 0, falls beim Start ein möglichst unbelegter Kanal ausgewählt werden soll.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`ip`<br/>string</th>
+    <td>
+        IP-Adresse, die das Gerät im konfigurierten Netz verwenden soll. Dieser Eintrag und die folgenden sind optional und können als "0.0.0.0" übergeben werden, falls die automatische IP-Adressvergabe (DHCP) verwendet werden soll.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`gateway`<br/>string</th>
+    <td>
+        Gateway-Adresse, die das Gerät im konfigurierten Netz verwenden soll.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`subnet`<br/>string</th>
+    <td>
+        Subnetzmaske, die das Gerät im konfigurierten Netz verwenden soll.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `wifi/scan_results` {#wifi_scan_results_wem2}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
+
+Die WLANs, die aufgrund einer durch wifi/scan ausgelösten Suche gefunden wurden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. wem2-AbCd
+```
+```bash
+curl http://$HOST/wifi/scan_results
+```
+```jsx
+[
+  {
+    "ssid": "Mein WLAN",
+    "bssid": "0C:22:38:4E:5A:0C",
+    "rssi": -43,
+    "channel": 9,
+    "encryption": 3
+  },
+  {
+    "ssid": "Mein WLAN",
+    "bssid": "0C:22:38:4E:5A:0D",
+    "rssi": -43,
+    "channel": 13,
+    "encryption": 3
+  },
+  {
+    "ssid": "Anderes WLAN",
+    "bssid": "C0:FF:EE:4E:5A:0C",
+    "rssi": -75,
+    "channel": 1,
+    "encryption": 3
+  }
+]
+```
+Zwei Repeater des selben WLANs haben die gleiche SSID, aber unterschiedliche BSSIDs.
+Durch das bssid_lock in [`wifi/sta_config`](/mqtt_http/api_reference/wifi.mdx#wifi_sta_config) kann eine Verbindung zu einem spezifischen Repeater
+erzwungen werden.
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Index</th>
+            <th scope="col">Bedeutung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[..]`<br/>object</th>
+    <td>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Bedeutung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
+            <td>
+                SSID des gefundenen WLANs. Leer bei versteckten Access Points.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`bssid`<br/>string</th>
+            <td>
+                BSSID des gefundenen WLANs.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`rssi`<br/>int</th>
+            <td>
+                Die Empfangsqualität des gefundenen WLANs. Immer ein negativer Wert, wobei Werte nahe 0 eine bessere Empfangsqualität bedeuten. [Siehe hier für Details](https://de.wikipedia.org/wiki/Received_Signal_Strength_Indication)
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`channel`<br/>int</th>
+            <td>
+                Kanal des gefundenen WLANs.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`encryption`<br/>int</th>
+            <td>
+                Verschlüsselungsstandard des gefundenen WLANs
+                - **0** - Unverschlüsselt
+                - **1** - WEP
+                - **2** - WPA-PSK
+                - **3** - WPA2-PSK
+                - **4** - WPA/WPA2-PSK
+                - **5** - WPA2-Enterprise
+                - **6** - Unbekannt
+            </td>
+        </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+    </tbody>
+</table>
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
+</TabItem>
 <TabItem value="any">
 ## `wifi/state` {#wifi_state_any}
 
