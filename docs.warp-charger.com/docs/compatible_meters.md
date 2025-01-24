@@ -232,6 +232,13 @@ Die folgenden Alpha ESS Smile Heimspeicher unterstützen eine Anbindung mittels 
 Die integration bietet die virtuellen Stromzähler "Wechselrichter", "Netzanschluss" und "Speicher".
 Die Messwerte des Netzanschlusses können für ein PV-Überschussladen und für ein dynamisches Lastmanagement genutzt werden.
 
+### APsystems
+APsystems Mikrowechselrichter können von APsystems ECU-R und ECU-C mittels SunSpec ausgelesen werden. Die Kommunikation zwischen Mikrowechselrichter und ECU erfolgt
+über Zigbee. Folgende ECUs sind kompatibel:
+ ECU-R mit ID rule 2160XXXXXXXX und Version > 1.3.7
+ ECU-R mit ID rule 2162XXXXXXXX und Version > 2.0.2
+ ECU-C mit ID rule 215XXXXXXXXX und Version > C1.1.3
+
 ### Carlo Galvazzi
 Der EM24 in der Ausführung mit Ethernet kann mittels Modbus/TCP ausgelesen werden.
 
@@ -286,6 +293,9 @@ Ist an dem Wechselrichter ein Stromzähler angeschlossen (z.B. GM300), der vom W
 
 ### Hailei
 Die Integration von Hailei Wechselrichtern folgt. Ein Auslesen ist mittels Modbus/TCP nach Modbus/RTU Wandlern (z.B. EW11) über die Modbus/RTU Schnittstelle des Wechselrichters möglich.
+
+### Hoymiles
+Hoymiles Wechselrichter der Generation HMS und HMT können über die Hoymiles DTU-Pro-S Datenübertragungseinheit mittels SunSpec ausgelesen werden. Die Kommunikation erfolgt mittels Sub-1G.
 
 ### Huawei
 Wechselrichter der SUN2000 Serie (L1, M0, M1, M2, M3) können über das Huawei Smart Dongle (SmartdDongle ab Firmware SPC124) mittels Modbus/TCP ausgelesen werden. Aktuell ist noch keine Registertabelle hierfür hinterlegt.

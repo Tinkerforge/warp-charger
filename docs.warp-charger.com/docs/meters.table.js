@@ -12,6 +12,13 @@ export const meters = [
     note_url: "/docs/compatible_meters#alpha-ess",
   },
   {
+    manufacturer: "APsystems",
+    name: "Mikrowechselrichter",
+    connection: "SunSpec",
+    note: "APsystems Mikrowechselrichter mittels ECU-R oder ECU-C",
+    note_url: "/docs/compatible_meters#apsystems",
+  },
+  {
     manufacturer: "Carlo Galvazzi",
     name: "EM24",
     connection: "Modbus/TCP",
@@ -73,13 +80,13 @@ export const meters = [
     note: "Hybrid-Wechselrichter",
     note_url: "/docs/compatible_meters#fronius",
   },
-  {
-    manufacturer: "Fronius",
-    name: "Primo- und Symo-Serie",
-    connection: "SunSpec",
-    note: "String-Wechselrichter",
-    note_url: "/docs/compatible_meters#fronius",
-  },
+{
+  manufacturer: "Fronius",
+  name: "Primo- und Symo-Serie",
+  connection: "SunSpec",
+  note: "String-Wechselrichter",
+  note_url: "/docs/compatible_meters#fronius",
+},
   { 
     manufacturer: "Fox ESS",
     name: "Hybrid Serie H1, H3, AC Serie",
@@ -101,12 +108,19 @@ export const meters = [
     note: "Hybrid-Wechselrichter",
     note_url: "/docs/compatible_meters#goodwe",
   },
-{
+  {
     manufacturer: "Hailei",
     name: "Hybrid Wechselrichter TBD",
     connection: "Modbus/TCP",
     note: "Hybrid-Wechselrichter",
     note_url: "/docs/compatible_meters#hailei",
+  },
+  {
+    manufacturer: "Hoymiles",
+    name: "Mikrowechselrichter HMS/HMT",
+    connection: "SunSpec",
+    note: "Mikrowechselrichter der HMS und HMT Serie mittel DTU-Pro-S",
+    note_url: "/docs/compatible_meters#hoymiles",
   },
   {
     manufacturer: "Huawei",
