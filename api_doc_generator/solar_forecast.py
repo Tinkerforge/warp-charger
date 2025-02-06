@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-solar_forecast = Module("solar_forecast", "PV-Ertragsprogrnose", "", "Über das `solar_forecast`-Modul kann eine PV-Ertragsprognose konfiguriert und ausgelesen werden.", Version.ANY, [
+solar_forecast = Module("solar_forecast", "PV-Ertragsprogrnose", "", "Über das `solar_forecast`-Modul kann eine PV-Ertragsprognose konfiguriert und ausgelesen werden.", Version.WARP2 | Version.WARP3 | Version.WEMX, [
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die Konfiguration der PV-Ertragsprognose.", members={
         "enable": Elem.BOOL("Gibt an, ob die PV-Ertragsprognose verwendet werden soll."),
         "api_url": Elem.STRING("Endpoint-URL des Servers für dynamische Strompreise."),

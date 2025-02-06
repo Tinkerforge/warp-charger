@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-day_ahead_prices = Module("day_ahead_prices", "Dynamische Strompreise", "", "Über das `day_ahead_prices`-Modul können dynamische Strompreise konfiguriert und ausgelesen werden.", Version.ANY, [
+day_ahead_prices = Module("day_ahead_prices", "Dynamische Strompreise", "", "Über das `day_ahead_prices`-Modul können dynamische Strompreise konfiguriert und ausgelesen werden.", Version.WARP2 | Version.WARP3 | Version.WEMX, [
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die Konfiguration der dynamischen Strompreise.", members={
         "enable": Elem.BOOL("Gibt an, ob dynamische Strompreise verwendet werden sollen. Wenn aktiviert, werden die Preise einmal pro Tag für die nächsten 24 Stunden von einem externen Server abgerufen. Um dynamische Strompreise nutzen zu können wird ein Internetzugang benötigt."),
         "api_url":  Elem.STRING("Endpoint-URL des Servers für dynamische Strompreise."),

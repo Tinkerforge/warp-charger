@@ -1719,28 +1719,67 @@ Der von der Automatisierung erlaubte Ladestrom.
 ```bash
 # $HOST z.B. warp-AbCd
 ```
+
 #### Lesen
 ```bash
 curl http://$HOST/evse/automation_current
 ```
+```jsx
+{ "current": 14000 }
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/evse/automation_current -d '{ "current": 14000 }'
+```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/evse/automation_current -d '14000'
+```
+
+
+
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
 # $BROKER z.B. my_mosquitto.localdomain
 # $PREFIX z.B. warp/AbCd
 ```
+
 #### Lesen
 ```bash
 mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/automation_current
 ```
-        </TabItem>
-    </Tabs>
-
 ```jsx
 { "current": 14000 }
 ```
 
 
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/automation_current<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/automation_current_update -m '{ "current": 14000 }'
+```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/automation_current_update -m '14000'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
 :::
 
 
@@ -4094,28 +4133,67 @@ Der von der Automatisierung erlaubte Ladestrom.
 ```bash
 # $HOST z.B. warp2-AbCd
 ```
+
 #### Lesen
 ```bash
 curl http://$HOST/evse/automation_current
 ```
+```jsx
+{ "current": 14000 }
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/evse/automation_current -d '{ "current": 14000 }'
+```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/evse/automation_current -d '14000'
+```
+
+
+
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
 # $BROKER z.B. my_mosquitto.localdomain
 # $PREFIX z.B. warp2/AbCd
 ```
+
 #### Lesen
 ```bash
 mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/automation_current
 ```
-        </TabItem>
-    </Tabs>
-
 ```jsx
 { "current": 14000 }
 ```
 
 
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/automation_current<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/automation_current_update -m '{ "current": 14000 }'
+```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/automation_current_update -m '14000'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
 :::
 
 
@@ -7061,28 +7139,67 @@ Der von der Automatisierung erlaubte Ladestrom.
 ```bash
 # $HOST z.B. warp3-AbCd
 ```
+
 #### Lesen
 ```bash
 curl http://$HOST/evse/automation_current
 ```
+```jsx
+{ "current": 14000 }
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/evse/automation_current -d '{ "current": 14000 }'
+```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/evse/automation_current -d '14000'
+```
+
+
+
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
 # $BROKER z.B. my_mosquitto.localdomain
 # $PREFIX z.B. warp3/AbCd
 ```
+
 #### Lesen
 ```bash
 mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/automation_current
 ```
-        </TabItem>
-    </Tabs>
-
 ```jsx
 { "current": 14000 }
 ```
 
 
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/automation_current<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/automation_current_update -m '{ "current": 14000 }'
+```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/automation_current_update -m '14000'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
 :::
 
 
@@ -10179,28 +10296,67 @@ Der von der Automatisierung erlaubte Ladestrom.
 ```bash
 # $HOST z.B. warp-AbCd
 ```
+
 #### Lesen
 ```bash
 curl http://$HOST/evse/automation_current
 ```
+```jsx
+{ "current": 14000 }
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/evse/automation_current -d '{ "current": 14000 }'
+```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/evse/automation_current -d '14000'
+```
+
+
+
+
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
 # $BROKER z.B. my_mosquitto.localdomain
 # $PREFIX z.B. warp/AbCd
 ```
+
 #### Lesen
 ```bash
 mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/automation_current
 ```
-        </TabItem>
-    </Tabs>
-
 ```jsx
 { "current": 14000 }
 ```
 
 
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/evse/automation_current<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/automation_current_update -m '{ "current": 14000 }'
+```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/evse/automation_current_update -m '14000'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
 :::
 
 

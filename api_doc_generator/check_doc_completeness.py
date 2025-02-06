@@ -223,6 +223,9 @@ def main():
     if firmware_type_name == "warp":
         firmware_type_name = "warp1"
 
+    if firmware_type_name == "seb":
+        firmware_type_name = "wem2"
+
     impl_version = next(x for x in Version if x.name.lower() == firmware_type_name)
 
     undocumented_modules = set()
