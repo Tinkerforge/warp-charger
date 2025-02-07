@@ -45,7 +45,7 @@ Die Preisogergrenze gibt einen Preis in Cent an, über dem ein Lade­vorgang, un
 
 Die Untergrenze für die PV-Ertragsprognose gibt einen Schwell­wert in Kilowattstunden an, über dem ein Lade­vorgang nur bei PV-Über­schuss frei­gegeben wird (der Ladeplan wird ignoriert). Beispiel: `Nur wenn PV-Er­trags­pro­gno­se unter` ist auf 75 kWh/Tag kon­figu­riert und die PV-Er­trags­pro­gno­se für heute liegt bei 80 kWh/Tag. In diesem Fall würde der Ladeplan nicht aus­geführt und nur geladen wenn PV-Über­schuss verfügbar ist. Es wird also kein Strom eingekauft, auch nicht wenn er sehr günstig wäre, wenn bekannt ist, dass genug PV-Über­schuss verfügbar sein wird.
 
-Um die Ladeplanung nutzen zu können muss der [Dynamische Strompreis](/warp_charger/dynamic_tariffs.md). aktiviert sein. Wenn die PV-Ertragsprognose mit einfließen soll muss zusätzklich die [PV-Ertragsprognose](/warp_charger/solar_forecast.md) aktiviert sein.
+Um die Ladeplanung nutzen zu können muss der [Dynamische Strompreis](/warp_charger/dynamic_tariffs.md) aktiviert sein. Wenn die PV-Ertragsprognose mit einfließen soll muss zusätzlich die [PV-Ertragsprognose](/warp_charger/solar_forecast.md) aktiviert sein.
 
 ## Konfigurierbarer Ladeplan (Status-Seite)
 
