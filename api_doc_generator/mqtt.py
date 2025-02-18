@@ -15,9 +15,13 @@ mqtt = Module("mqtt", "MQTT-Verbindung", "", "", Version.ANY, [
     ),
 
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT("Die MQTT-Konfiguration.", members={
-            "enable_mqtt": Elem.BOOL("Gibt an ob eine MQTT-Verbindung zum konfigurierten Broker aufgebaut werden soll.", constants=[
+            "enable_mqtt": Elem.BOOL("Gibt an, ob eine MQTT-Verbindung zum konfigurierten Broker aufgebaut werden soll.", constants=[
                 Const(True, "Wenn MQTT aktiviert ist."),
                 Const(False, "Wenn MQTT deaktiviert ist.")
+            ]),
+            "read_only": Elem.BOOL("Gibt an, ob die MQTT-API nur gelesen, oder auch geschrieben werden darf.", constants=[
+                Const(True, "Wenn die MQTT-API nur gelesen werden darf."),
+                Const(False, "Wenn die MQTT-API gelesen und geschrieben werden darf.")
             ]),
             "protocol": Elem.INT("Das zu verwendende MQTT-Protokoll", constants=[
                 Const(0, "MQTT (MQTT über TCP; unverschlüsselt)"),

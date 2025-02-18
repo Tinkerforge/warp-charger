@@ -1,5 +1,5 @@
 ---
-sidebar_position: 8
+sidebar_position: 11
 ---
 
 # OCPP
@@ -24,7 +24,7 @@ jeden OCPP-Server vorzunehmen.
 Auf ladefoxx.one wird insbesondere die Ladepunkt-Identität eingetragen
 (im Screenshot "Controller ID" genannent). Diese gibt der WARP Charger vor.
 
-Nach dem Speichern wird dann von der Cloud ein Passwort oder Hex-Key 
+Nach dem Speichern wird dann von der Cloud ein Passwort oder Hex-Key
 bereitgestellt. Dieses muss zusammen mit mit der passenden Endpoint-URL
 beim WARP Charger unter `Schnittstellen` -> `OCPP` eingetragen werden
 

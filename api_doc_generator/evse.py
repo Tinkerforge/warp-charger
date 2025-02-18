@@ -359,7 +359,7 @@ evse = Module("evse", "Ladecontroller (EVSE)", "", "Das `evse`-Modul verwaltet Z
         })
     ),
 
-    Func("automation_current", FuncType.STATE, Elem.OBJECT("Der von der Automatisierung erlaubte Ladestrom.", members={
+    Func("automation_current", FuncType.CONFIGURATION, Elem.OBJECT("Der von der Automatisierung erlaubte Ladestrom.", members={
             "current": Elem.INT("Der von der Automatisierung erlaubte Ladestrom. 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockiert.", unit=Units.mA)
         })
     ),

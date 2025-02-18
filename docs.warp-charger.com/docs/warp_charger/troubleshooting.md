@@ -1,5 +1,5 @@
 ---
-sidebar_position: 10
+sidebar_position: 13
 ---
 
 # Fehlerbehebung
@@ -14,8 +14,8 @@ Weitere Informationen hierzu gibt es auch in der [PDF Betriebsanleitung](https:/
 Für diesen Fehlerzustand gibt es verschiedene mögliche Ursachen:
 
  * Die LED geht nach etwa 15 Minuten Inaktivität aus. Das Drücken des Tasters oder das Anschließen eines Elektrofahrzeugs weckt die Wallbox wieder und die LED sollte wieder dauerhaft blau leuchten.
- * Die Wallbox ist nicht mit Strom versorgt. Mögliche Ursachen: Stromausfall, Sicherung oder Fehlerstromschutzschalter haben ausgelöst. 
- * Der interne Ladecontroller ist ohne Strom. Die Wallbox verfügt intern über eine Feinsicherung, gegebenenfalls ist diese defekt. 
+ * Die Wallbox ist nicht mit Strom versorgt. Mögliche Ursachen: Stromausfall, Sicherung oder Fehlerstromschutzschalter haben ausgelöst.
+ * Der interne Ladecontroller ist ohne Strom. Die Wallbox verfügt intern über eine Feinsicherung, gegebenenfalls ist diese defekt.
  * Das innere Anschlusskabel zum Deckel wurde nicht korrekt aufgesteckt (zum Beispiel am Taster 180° verdreht).
 
 ### LED blinkt sehr schnell magenta
@@ -37,9 +37,9 @@ Für diesen Blinkcode gibt es zwei verschiedene Fehlerzustände mit verschiedene
 Schützfehler:
 
  * Eines der Schütze schaltet nicht korrekt ein
- * Eines der Schütze schaltet nicht korrekt ab, 
+ * Eines der Schütze schaltet nicht korrekt ab,
  * "Das Schütz klebt"
- 
+
 Das Webinterface der Wallbox gibt weitere Informationen, um welches Schütz es sich handelt.
 
 PE-Fehler:
@@ -57,7 +57,7 @@ Sollte das Problem bestehen bleiben, so kann es verschiedene Gründe dafür gebe
  * Es liegt ein technischer Defekt bei der Wallbox vor (Ladecontroller defekt o.ä.).
  * Das Fahrzeug fordert den IEC 61851-1 Status "D - Laden mit Belüftung" an. Dieser Modus wird von der Wallbox nicht unterstützt.
  * Das Fahrzeug übermittelt den IEC 61851-1 Status E oder F. In beiden Fällen handelt es sich um einen Fehler, den das Fahrzeug erkannt hat.
- 
+
 ### Die Wallbox ist nicht über LAN / WLAN erreichbar, aber die LED leuchtet blau
 
 In diesem Fall ist zu prüfen, ob die Wallbox gegebenenfalls in den Access-Point-Fallback gegangen ist. Wie im Werkszustand eröffnet die Wallbox dann ein eigenes WLAN.
@@ -71,7 +71,7 @@ Falls die Wallbox weder ihren Access-Point öffnet noch über ein konfiguriertes
  2. Taster im Deckel gedrückt halten
  3. Stromversorgung der Wallbox wieder herstellen (ggf. mit einer zweiten Person).
  4. Taster ungefähr 20 Sekunden lang (mindestens 10, aber maximal 30) gedrückt halten.
- 
+
 Die Wallbox startet dann im Wiederherstellungsmodus. Zunächst werden die Netzwerkeinstellungen gelöscht sowie die Anmeldung deaktiviert. Anschließend sollte es wieder möglich sein, über den Access-Point auf die Wallbox zuzugreifen.
 Durch erneutes Trennen und Verbinden der Stromversorgung innerhalb der ersten Minute im Wiederherstellungsmodus kann ein Zurücksetzen auf Werkszustand ausgelöst werden.
 
@@ -92,9 +92,9 @@ neugestartet oder auf den Werkszustand zurückgesetzt (Factory Reset) werden und
 Treten Ladeabbrüche auf, so kann dies verschiedene Ursachen haben. Mögliche Ursachen können eine fehlerhafte Installation der Wallbox oder ein technischer Defekt der Wallbox oder des Fahrzeugs sein. Folgende Punkte sollten überprüft werden:
 
  * **Sitz des Typ-2-Steckers:** Ein nicht vollständig eingesteckter Typ-2-Stecker kann dazu führen, dass ein Fahrzeug nicht oder nur in einem Notlademodus mit minimaler Leistung lädt. Ein Indiz hierfür kann sein, dass das Fahrzeug den Typ-2-Stecker nicht korrekt verriegelt.
- * **Inspektion aller Komponenten:** Es sollten alle Komponenten auf Beschädigungen und Nässe kontrolliert werden. 
+ * **Inspektion aller Komponenten:** Es sollten alle Komponenten auf Beschädigungen und Nässe kontrolliert werden.
  * **Webinterface der Wallbox:** Steht nur bei den Varianten Smart und Pro zur Verfügung. Die Statusseite gibt den Ladestatus, den erlaubten Ladestrom und den Grund für eventuelle Limitierungen aus Sicht der Wallbox an. Detailliertere Informationen gibt die Unterseite Ladestatus. Hier kann außerdem ein Ladeprotokoll erzeugt werden,
-welches alle Werte des Ladevorgangs aufzeichnet. 
+welches alle Werte des Ladevorgangs aufzeichnet.
  * **Messung durch eine Elektrofachkraft:** Elektrische Probleme können von einer Elektrofachkraft diagnostiziert werden. Sie kann prüfen, ob alle Leiter korrekt angeschlossen sind.
 
 ## Lastmanagementfehler
