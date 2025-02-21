@@ -123,6 +123,15 @@ def print_error(*args):
 def main():
     for name in glob.glob('*_firmware_v1.txt'):
         prefix = name.replace('_v1.txt', '')
+        size = os.stat(name).st_size
+
+        # There is a bug in WARP <= 2.7.2, WARP2 <= 2.7.3, WARP3 <= 2.7.3, WEM <= 2.3.2, WEM2 <= 1.2.2 and SEB <= 1.2.2
+        # that makes the firmware update check report a wrong malformed-index error in case the index file was received
+        # in more than one chunk. Being hosted on warp-charger.com makes the index file being received as more than one
+        # chunk if it's bigger than 708 byte. For backwards compatibility limit the size of the index file to 708 byte.
+        if size > 708:
+            print_error(f'{name} is too big: {size} > 708')
+            continue
 
         with open(name, 'r') as f:
             last_semver = None
