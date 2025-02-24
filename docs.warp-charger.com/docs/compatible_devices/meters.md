@@ -116,7 +116,7 @@ Wandler mit einer statischen IP Einstellung ausgeliefert. Die IP lautet 192.168.
  * Unter "Network parameter" als Work Mode "TCP Server", Port 502.
  * Unter "Serial parameter" die Einstellungen für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1).
  * Unter "Modbus parameter" die Einstellung "MODBUS TCP to RTU" auf "Open" setzen.
- 
+
 
 #### Elfin EW11
 Der Elfin EW11 ist ein kleines WIFI Dongle, welches zwischen Modbus/TCP und Modbus/RTU wandeln kann.
@@ -126,7 +126,7 @@ Folgende Einrichtungsschritte sind notwendig:
  * http://10.10.100.254 öffnen, Zugangsdaten admin:admin
  * Unter "System Settings" AP+STA konfigurieren und STA Wifi einrichten
  * Unter "Serial Port Settings" die Einstellungen für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1), Protocol Modbus, CLI Disable
- * Unter "Communication Settings" einen TCP server auf Port 502 mit Route "Uart" anlegen und speichern. Der bereits vordefinierte "netp" kann dafür verwendet werden. 
+ * Unter "Communication Settings" einen TCP server auf Port 502 mit Route "Uart" anlegen und speichern. Der bereits vordefinierte "netp" kann dafür verwendet werden.
 
 
 #### PUSR USR-DR302
@@ -139,7 +139,7 @@ Folgende Einrichtungsschritte sind notwendig:
 
 #### Waveshare RS485 To ETH (B) oder Waveshare RS485 To POE ETH (B)
 Dieser Wandler kann auf eine Hutschiene montiert werden und wandelt zwischen Modbus/TCP und Modbus/RTU um. Er verfügt nicht über WIFI, dafür aber über einen LAN Anschluss.
-Es gibt eine PoE fähige Ausführung. Anscheinend wird der Wandler mit einer statischen IP Einstellung ausgeliefert. Die IP lautet 192.168.1.200. Die Passwort des Webinterfaces lautet admin. 
+Es gibt eine PoE fähige Ausführung. Anscheinend wird der Wandler mit einer statischen IP Einstellung ausgeliefert. Die IP lautet 192.168.1.200. Die Passwort des Webinterfaces lautet admin.
 Im [Waveshare Wiki](https://www.waveshare.com/wiki/RS485_TO_ETH_(B)) gibt es weitere Informationen. Weitere Einstellungen können über das VirCom Tool von Waveshare vorgenommen werden.
 Dieses Tool ermöglicht es auch die IP Adresse des Wandlers zu ermitteln.
 
@@ -151,7 +151,7 @@ Folgende Einrichtungsschritte sind notwendig:
  * Unter "Multi-Host Settings" als Protocol "Modbus TCP to RTU".
 
 #### Waveshare RS232/485/422 To ETH (B) oder Waveshare R232/S485/422 To POE ETH (B)
-Es gibt eine PoE fähige Ausführung. Anscheinend wird der Wandler mit einer statischen IP Einstellung ausgeliefert. Die IP lautet 192.168.1.200. Die Passwort des Webinterfaces lautet admin. 
+Es gibt eine PoE fähige Ausführung. Anscheinend wird der Wandler mit einer statischen IP Einstellung ausgeliefert. Die IP lautet 192.168.1.200. Die Passwort des Webinterfaces lautet admin.
 Im [Waveshare Wiki](https://www.waveshare.com/wiki/RS232/485/422_TO_POE_ETH_(B)) gibt es weitere Informationen. Weitere Einstellungen können über das VirCom Tool von Waveshare vorgenommen werden.
 Dieses Tool ermöglicht es auch die IP Adresse des Wandlers zu ermitteln.
 
@@ -371,7 +371,7 @@ Das Smart Meter ist typischwerweise mit einem Pin gesichert und muss zuvor mitte
 ESP32 und einer Fotodiode bestehen. Es gibt aber auch Fertiglösungen wie den "Hichi TTL - Lesekopf".
 
 Technisch muss für das jeweilige Zählermodell der entsprechende [Smart Meter Descriptor](https://tasmota.github.io/docs/Smart-Meter-Interface/#smart-meter-descriptors) im ESP32 des Lesekopf hinterlegt werden.
-Kann darüber der Zähler ausgelesen werden, so kann der Leistungs-Messwert (ab Tasmota Version 13.x) mittels der [HTTP API](https://docs.warp-charger.com/docs/mqtt_http/api_reference/meters)
+Kann darüber der Zähler ausgelesen werden, so kann der Leistungs-Messwert (ab Tasmota Version 13.x) mittels der [HTTP API](https://docs.warp-charger.com/docs/interfaces/mqtt_http/api_reference/meters)
  an einen WARP Charger oder einen WARP Energy Meter geschickt werden.
 
 Dazu wird auf dem WARP Energy Manager oder WARP Charger ein API Stromzähler konfiguriert. Dieser erhält nur einen einzigen Wert ("Wirk­leistung (Bezug minus Ein­speisung); Σ L1, L2, L3 \[W\]).
