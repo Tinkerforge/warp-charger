@@ -32,7 +32,7 @@ Aus unserer Sicht ist es deshalb nicht seriös damit zu werben, dass eine AC-Wal
 
 PV-Überschussladen kann direkt mit dem WARP3 Charger (ohne zusätzliche Hardware) oder über dem [WARP Energy Manager](https://warp-charger.com/warp-energy-manager/) realisiert werden. Dazu kann ein vorhandener Zähler am Hausanschluss per SunSpec ausgelesen werden.
 
-Technisch versierte Nutzer können alternativ eine PV-Überschusssteuerung mit EVCC einrichten. [Die Einrichtung von EVCC wird hier beschrieben.](/evcc.md)
+Technisch versierte Nutzer können alternativ eine PV-Überschusssteuerung mit EVCC einrichten. [Die Einrichtung von EVCC wird hier beschrieben.](/smart_home/evcc.md)
 
 Mehr Informationen dazu gibt es auf [https://warp-charger.com/pv-ueberschussladen](https://warp-charger.com/pv-ueberschussladen/).
 
@@ -72,7 +72,7 @@ Ja. WARP Charger können sich über das eingebaute Lastmanagement einen Hausansc
 
 Es gibt verschiedene Möglichkeiten, die Ladefunktion einen WARP Chargers zu kontrollieren:
 
-* Über HTTP, MQTT, OCPP bzw. Modbus/TCP kann die Wallbox gesteuert werden. Siehe auch [API-Dokumentation](mqtt_http/getting_started)
+* Über HTTP, MQTT, OCPP bzw. Modbus/TCP kann die Wallbox gesteuert werden. Siehe auch [API-Dokumentation](/interfaces/mqtt_http/getting_started)
 * Das Verhalten auf die Eingänge des WARP Energy Managers können konfiguriert werden. Unter anderem ist eine Reduktion der Ladeleistung/Abschaltung möglich. Der WARP Energy Manager steuert die Wallboxen über eine (WLAN/LAN-)Netzwerkverbindung, so dass eine Steuerung aus der Ferne möglich ist.
 * Es ist auch möglich einen Rundsteuerempfänger oder ähnlichen Abschalter direkt an die Wallbox anschließen. Hierzu gibt es in der Wallbox einen konfigurierbaren Abschalteingang. Eventuell muss zur Durchführung des Abschalters ein Loch in das Gehäuse der Wallbox gebohrt werden.
 * Mehr Informationen zu diesem Thema gibt es auch auf der Infoseite zu [§14a EnWG](https://warp-charger.com/%c2%a714a-enwg/).

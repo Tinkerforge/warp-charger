@@ -8,9 +8,9 @@ Willkommen auf den Dokumentationsseiten der WARP-Produktreihe von
 Tinkerforge.
 
 Hier findest du die Dokumentation zur Installation und Konfiguration von
-* [WARP3 Charger](/warp_charger/assembly_and_installation.md),
-* [WARP Energy Manager](/warp_energy_manager/assembly_and_installation.md) und
-* [WARP Ladesäule](/warp_ladesäule/assembly_and_installation.md).
+* [WARP3 Charger](/warp_charger/introduction.md),
+* [WARP Energy Manager](/warp_energy_manager/introduction.md) und
+* [WARP Ladesäule](/warp_ladesäule/introduction.md).
 
 Es gibt viele Anwendungsfälle für den WARP3 Charger. Nachfolgend werden
 klassische Anwendungsfälle für WARP3 Charger Smart und WARP3 Charger Pro
@@ -19,7 +19,7 @@ Eine Detailbeschreibung folgt in der jeweiligen Produktbeschreibung.
 
 Diese Dokumentation wird ständig gepflegt und erweitert. Wenn ihr Ideen für
 weitere Dokumentation oder Beispiele habt teilt uns diese gerne mit. Auch
-nehmen wir gerne weitere [kompatible Stromzähler](/compatible_meters.md)
+nehmen wir gerne weitere [kompatible Stromzähler](/compatible_devices/meters.md)
 in die Liste auf oder gute Fragen/Antworten für die [FAQ](/faq.md).
 
 ### Einbindung in andere Systeme
@@ -27,13 +27,13 @@ in die Liste auf oder gute Fragen/Antworten für die [FAQ](/faq.md).
 WARP3 Charger Smart und WARP3 Charger Pro können in andere Systeme
 mittels den offenen Schnittstellen eingebunden werden:
 * [MQTT/HTTP API](/interfaces/mqtt_http/getting_started.md)
-* [Modbus-Schnittstelle](/modbus/configuration.md)
+* [Modbus-Schnittstelle](/interfaces/modbus/configuration.md)
 
 Für spezifische Systeme gibt es eine direkte Unterstützung:
 <!--- Comment me in when documented properly
 * [Heimautomatisierungs-Lösungen](/smart_home/warp_automation.md)
 -->
-* [EVCC](/evcc.md)
+* [EVCC](/smart_home/evcc.md)
 
 ### Sonnenstrom nutzen - Photovoltaik-Überschussladen
 
@@ -48,7 +48,7 @@ ausgewertet werden kann. Mittels der Leistungs-Messwerte von diesem
 Stromzähler erfolgt dann das PV-Überschussladen. Einer Übersicht über
 die aktuell unterstützen Zählertypen, die die Leistung am Hausanschluss
 messen können, lassen sich im Artikel
-[kompatible Stromzähler](/compatible_meters.md) finden.
+[kompatible Stromzähler](/compatible_devices/meters.md) finden.
 
 ### Mehrere Wallboxen an einer Leitung betreiben - Statisches Lastmanagement
 
@@ -75,4 +75,4 @@ Phasenströme messen kann, so kann das dynamische Lastmanagement direkt
 von einem WARP Charger übernommen werden. Einer Übersicht über die
 aktuell unterstützen Zählertypen, die die Leistung am Hausanschluss
 messen können, lassen sich im Artikel
-[kompatible Stromzähler](/compatible_meters.md) finden.
+[kompatible Stromzähler](/compatible_devices/meters.md) finden.
