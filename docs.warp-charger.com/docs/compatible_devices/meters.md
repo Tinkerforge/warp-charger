@@ -1,11 +1,11 @@
 ---
-sidebar_position: 10
+sidebar_position: 2
 ---
 
 import { SortableDataTable, SortableDataButton } from "@site/src/components/SortableDataTable";
 import { columns, meters, moduleTests } from "./meters.table";
 
-# Kompatible Stromzähler
+# Stromzähler
 
 WARP Charger und der WARP Energy Manager können direkt auf die Daten von
 Stromzähler zugreifen.
