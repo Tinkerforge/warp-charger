@@ -15,14 +15,14 @@ https://warp-charger.com/downloads zurückgegeriffen werden.
 
 
 Vielen Dank, dass du dich für einen WARP Energy Manager 2.0 von Tinkerforge entschieden hast!
-Mit dem WARP Energy Manager erhältst du unseren Energiemanager zur Schaltschrankmontage, 
+Mit dem WARP Energy Manager erhältst du unseren Energiemanager zur Schaltschrankmontage,
 mit dem du den Energieverbrauch zu Hause überwachen, steuern und optimieren kannst.
 
 ![image](/img/wem2_shared_with_manual/energymanager_2_face_side_800-white.jpg)
 
-Der WARP Energy Manager kann abhängig von dynamischen Strompreisen, 
-einem Photovoltaik-Überschuss oder dem aktuellen Strom am Netzanschluss Wärmepumpen über die 
-SG-Ready-Schnittstelle steuern, zusätzliche Verbraucher ein- bzw. ausschalten und in 
+Der WARP Energy Manager kann abhängig von dynamischen Strompreisen,
+einem Photovoltaik-Überschuss oder dem aktuellen Strom am Netzanschluss Wärmepumpen über die
+SG-Ready-Schnittstelle steuern, zusätzliche Verbraucher ein- bzw. ausschalten und in
 Verbindung mit WARP Charger Wallboxen Elektrofahrzeuge laden. Auch die Steuerung des Lade- und Entladevorgangs von Batteriespeichern ist zukünftig möglich.
 
 ## Features
@@ -72,7 +72,7 @@ Der WARP Energy Manager verfügt über zwei Relais-Ausgänge. Mit diesen Ausgän
 230V Verbraucher direkt oder mittels zwischengeschaltetem Schütz auch größere Lasten geschaltet werden. Als Beispiel können so Heizstäbe gesteuert werden.
 
 ### Vier Eingänge, z.B. für §14a EnWG - Steuerbare Verbrauchseinrichtung
-An die vier Eingänge des WARP Energy Managers kann jeweils ein potentialfreier Kontakt (Schließer/Öffner) angeschlossen werden. 
+An die vier Eingänge des WARP Energy Managers kann jeweils ein potentialfreier Kontakt (Schließer/Öffner) angeschlossen werden.
 Diese Eingänge können fur vom Anwender konfigurierbare Regeln genutzt werden. Eine Anwendung ist die Nutzung eines Eingangs um nach §14a
 EnWG vom Energy Manager gesteuerte Wallboxen und die Wärmepumpe in der Leistung zu reduzieren.
 

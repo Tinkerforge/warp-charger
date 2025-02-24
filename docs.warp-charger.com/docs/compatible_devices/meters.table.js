@@ -87,7 +87,7 @@ export const meters = [
   note: "String-Wechselrichter",
   note_url: "/docs/compatible_meters#fronius",
 },
-  { 
+  {
     manufacturer: "Fox ESS",
     name: "Hybrid Serie H1, H3, AC Serie",
     connection: "Modbus RTU mit Wandler",
@@ -308,7 +308,7 @@ export const columns = [
     header: "Hinweis",
     accessorKey: "note",
     className: "sortable-data-table left",
-    cell: ({ cell, row: { original } }) => (original.note != undefined || original.note == "" )? 
+    cell: ({ cell, row: { original } }) => (original.note != undefined || original.note == "" )?
       original.note_url != undefined ? (
         <a href={original.note_url}>{cell.getValue()}</a>
       ) : (
