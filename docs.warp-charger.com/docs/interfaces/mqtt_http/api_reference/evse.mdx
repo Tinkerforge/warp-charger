@@ -231,7 +231,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
 ## `evse/slots` {#evse_slots_warp1}
 
 
-Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](/mqtt_http/api_reference/evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Siehe TODO LINK für Details.
+Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Siehe TODO LINK für Details.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -412,7 +412,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/button_state
 ## `evse/indicator_led` {#evse_indicator_led_warp1}
 
 
-Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung per API (siehe [`evse/led_configuration`](/mqtt_http/api_reference/evse.mdx#evse_led_configuration)) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.
+Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung per API (siehe [`evse/led_configuration`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_led_configuration)) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -599,7 +599,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/low_level_state
         - **2** - Blinkt
         - **3** - Flackert
         - **4** - Atmet
-        - **5** - API, siehe [`evse/indicator_led`](/mqtt_http/api_reference/evse.mdx#evse_indicator_led)
+        - **5** - API, siehe [`evse/indicator_led`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_indicator_led)
     </td>
 </tr>
 
@@ -1002,7 +1002,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/auto_start_charging_update -m 'true'
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`auto_start_charging`<br/>bool</th>
     <td>
-        Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Falls aktiviert, beginnt sofort, wenn das Fahrzeug angeschlossen wird der Ladevorgang. Falls deaktiviert, kann das Laden mit [`evse/start_charging`](/mqtt_http/api_reference/evse.mdx#evse_start_charging) gestartet werden. Diese Einstellung setzt `clear_on_disconnect` der Ladestromgrenze 4 (Manuelle Ladefreigabe)
+        Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Falls aktiviert, beginnt sofort, wenn das Fahrzeug angeschlossen wird der Ladevorgang. Falls deaktiviert, kann das Laden mit [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) gestartet werden. Diese Einstellung setzt `clear_on_disconnect` der Ladestromgrenze 4 (Manuelle Ladefreigabe)
     </td>
 </tr>
     </tbody>
@@ -1012,7 +1012,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/auto_start_charging_update -m 'true'
 ## `evse/global_current` {#evse_global_current_warp1}
 
 
-Der über das Webinterface vorgegebene Ladestrom. **Achtung: Dieser Strom wird auf dem Ladecontroller persistent gespeichert. Für häufige Änderungen sollte stattdessen [`evse/external_current`](/mqtt_http/api_reference/evse.mdx#evse_external_current) verwendet werden, um den Flash des Ladecontrollers zu schonen!**
+Der über das Webinterface vorgegebene Ladestrom. **Achtung: Dieser Strom wird auf dem Ladecontroller persistent gespeichert. Für häufige Änderungen sollte stattdessen [`evse/external_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_external_current) verwendet werden, um den Flash des Ladecontrollers zu schonen!**
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -1888,9 +1888,9 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/led_configuration_update -m 'false'
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_api`<br/>bool</th>
     <td>
-        Legt fest, ob die LED über die [`evse/indicator_led`](/mqtt_http/api_reference/evse.mdx#evse_indicator_led)-API oder über Modbus TCP gesteuert werden darf.
-        - **false** - LED darf nicht gesteuert werden. Aufrufe von [`evse/indicator_led`](/mqtt_http/api_reference/evse.mdx#evse_indicator_led) werden ignoriert
-        - **true** - LED darf gesteuert werden. Aufrufe von [`evse/indicator_led`](/mqtt_http/api_reference/evse.mdx#evse_indicator_led) werden nur dann ignoriert, wenn das EVSE einen Fehlerzustand anzeigen möchte.
+        Legt fest, ob die LED über die [`evse/indicator_led`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_indicator_led)-API oder über Modbus TCP gesteuert werden darf.
+        - **false** - LED darf nicht gesteuert werden. Aufrufe von [`evse/indicator_led`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_indicator_led) werden ignoriert
+        - **true** - LED darf gesteuert werden. Aufrufe von [`evse/indicator_led`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_indicator_led) werden nur dann ignoriert, wenn das EVSE einen Fehlerzustand anzeigen möchte.
     </td>
 </tr>
     </tbody>
@@ -2155,7 +2155,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/boost_mode_update -m 'true'
 ## `evse/stop_charging` {#evse_stop_charging_warp1}
 
 
-Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit [`evse/start_charging`](/mqtt_http/api_reference/evse.mdx#evse_start_charging) wieder gestartet werden.
+Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) wieder gestartet werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -2194,7 +2194,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
 ## `evse/start_charging` {#evse_start_charging_warp1}
 
 
-Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit [`evse/stop_charging`](/mqtt_http/api_reference/evse.mdx#evse_stop_charging) wieder gestoppt werden.
+Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging) wieder gestoppt werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -2237,7 +2237,7 @@ Gibt an, welcher Stromzähler als der im WARP Charger verbaute Stromzähler betr
 
 :::tip
 
-Für das PV-Überschussladen muss ein anderer Zähler genutzt werden, der die Werte am Hausanschlusspunkt misst. Die ID dieses Zählers wird nicht hier, sondern mit `meter_slot_grid_power` in [`power_manager/config`](/mqtt_http/api_reference/power_manager.mdx#power_manager_config) gesetzt
+Für das PV-Überschussladen muss ein anderer Zähler genutzt werden, der die Werte am Hausanschlusspunkt misst. Die ID dieses Zählers wird nicht hier, sondern mit `meter_slot_grid_power` in [`power_manager/config`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_config) gesetzt
 
 :::
 :::info[Beispiel]
@@ -2466,7 +2466,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`dc_fault_current_state`<br/>int</th>
     <td>
-        <strong>(Nur WARP 2 und WARP 3)</strong> Der Zustand des DC-Fehlerstrom-Schutzmoduls. Falls ein Gleichstromfehler auftritt, kann nicht mehr geladen werden, bis das Schutzmodul zurückgesetzt wurde. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong> [`evse/reset_dc_fault_current_state`](/mqtt_http/api_reference/evse.mdx#evse_reset_dc_fault_current_state) setzt das Modul zurück.
+        <strong>(Nur WARP 2 und WARP 3)</strong> Der Zustand des DC-Fehlerstrom-Schutzmoduls. Falls ein Gleichstromfehler auftritt, kann nicht mehr geladen werden, bis das Schutzmodul zurückgesetzt wurde. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong> [`evse/reset_dc_fault_current_state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_reset_dc_fault_current_state) setzt das Modul zurück.
         - **0** - Kein Fehler
         - **1** - 6 mA Fehlerstrom detektiert
         - **2** - Systemfehler
@@ -2582,7 +2582,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
 ## `evse/slots` {#evse_slots_warp2}
 
 
-Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](/mqtt_http/api_reference/evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Siehe TODO LINK für Details.
+Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Siehe TODO LINK für Details.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -2763,7 +2763,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/button_state
 ## `evse/indicator_led` {#evse_indicator_led_warp2}
 
 
-Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung per API (siehe [`evse/led_configuration`](/mqtt_http/api_reference/evse.mdx#evse_led_configuration)) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.
+Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung per API (siehe [`evse/led_configuration`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_led_configuration)) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -2965,7 +2965,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/low_level_state
         - **2** - Blinkt
         - **3** - Flackert
         - **4** - Atmet
-        - **5** - API, siehe [`evse/indicator_led`](/mqtt_http/api_reference/evse.mdx#evse_indicator_led)
+        - **5** - API, siehe [`evse/indicator_led`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_indicator_led)
     </td>
 </tr>
 
@@ -3416,7 +3416,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/auto_start_charging_update -m 'true'
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`auto_start_charging`<br/>bool</th>
     <td>
-        Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Falls aktiviert, beginnt sofort, wenn das Fahrzeug angeschlossen wird der Ladevorgang. Falls deaktiviert, kann das Laden mit [`evse/start_charging`](/mqtt_http/api_reference/evse.mdx#evse_start_charging) gestartet werden. Diese Einstellung setzt `clear_on_disconnect` der Ladestromgrenze 4 (Manuelle Ladefreigabe)
+        Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Falls aktiviert, beginnt sofort, wenn das Fahrzeug angeschlossen wird der Ladevorgang. Falls deaktiviert, kann das Laden mit [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) gestartet werden. Diese Einstellung setzt `clear_on_disconnect` der Ladestromgrenze 4 (Manuelle Ladefreigabe)
     </td>
 </tr>
     </tbody>
@@ -3426,7 +3426,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/auto_start_charging_update -m 'true'
 ## `evse/global_current` {#evse_global_current_warp2}
 
 
-Der über das Webinterface vorgegebene Ladestrom. **Achtung: Dieser Strom wird auf dem Ladecontroller persistent gespeichert. Für häufige Änderungen sollte stattdessen [`evse/external_current`](/mqtt_http/api_reference/evse.mdx#evse_external_current) verwendet werden, um den Flash des Ladecontrollers zu schonen!**
+Der über das Webinterface vorgegebene Ladestrom. **Achtung: Dieser Strom wird auf dem Ladecontroller persistent gespeichert. Für häufige Änderungen sollte stattdessen [`evse/external_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_external_current) verwendet werden, um den Flash des Ladecontrollers zu schonen!**
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -4516,9 +4516,9 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/led_configuration_update -m 'false'
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_api`<br/>bool</th>
     <td>
-        Legt fest, ob die LED über die [`evse/indicator_led`](/mqtt_http/api_reference/evse.mdx#evse_indicator_led)-API oder über Modbus TCP gesteuert werden darf.
-        - **false** - LED darf nicht gesteuert werden. Aufrufe von [`evse/indicator_led`](/mqtt_http/api_reference/evse.mdx#evse_indicator_led) werden ignoriert
-        - **true** - LED darf gesteuert werden. Aufrufe von [`evse/indicator_led`](/mqtt_http/api_reference/evse.mdx#evse_indicator_led) werden nur dann ignoriert, wenn das EVSE einen Fehlerzustand anzeigen möchte.
+        Legt fest, ob die LED über die [`evse/indicator_led`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_indicator_led)-API oder über Modbus TCP gesteuert werden darf.
+        - **false** - LED darf nicht gesteuert werden. Aufrufe von [`evse/indicator_led`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_indicator_led) werden ignoriert
+        - **true** - LED darf gesteuert werden. Aufrufe von [`evse/indicator_led`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_indicator_led) werden nur dann ignoriert, wenn das EVSE einen Fehlerzustand anzeigen möchte.
     </td>
 </tr>
     </tbody>
@@ -4621,7 +4621,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/ev_wakeup_update -m 'true'
 ## `evse/control_pilot_disconnect` {#evse_control_pilot_disconnect_warp2}
 
 
-Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe [`evse/management_enabled`](/mqtt_http/api_reference/evse.mdx#evse_management_enabled).  Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
+Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe [`evse/management_enabled`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_management_enabled).  Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -5103,7 +5103,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/gp_output_update -m '1'
 ## `evse/stop_charging` {#evse_stop_charging_warp2}
 
 
-Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit [`evse/start_charging`](/mqtt_http/api_reference/evse.mdx#evse_start_charging) wieder gestartet werden.
+Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) wieder gestartet werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -5142,7 +5142,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
 ## `evse/start_charging` {#evse_start_charging_warp2}
 
 
-Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit [`evse/stop_charging`](/mqtt_http/api_reference/evse.mdx#evse_stop_charging) wieder gestoppt werden.
+Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging) wieder gestoppt werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -5185,7 +5185,7 @@ Gibt an, welcher Stromzähler als der im WARP Charger verbaute Stromzähler betr
 
 :::tip
 
-Für das PV-Überschussladen muss ein anderer Zähler genutzt werden, der die Werte am Hausanschlusspunkt misst. Die ID dieses Zählers wird nicht hier, sondern mit `meter_slot_grid_power` in [`power_manager/config`](/mqtt_http/api_reference/power_manager.mdx#power_manager_config) gesetzt
+Für das PV-Überschussladen muss ein anderer Zähler genutzt werden, der die Werte am Hausanschlusspunkt misst. Die ID dieses Zählers wird nicht hier, sondern mit `meter_slot_grid_power` in [`power_manager/config`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_config) gesetzt
 
 :::
 :::info[Beispiel]
@@ -5423,7 +5423,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`dc_fault_current_state`<br/>int</th>
     <td>
-        <strong>(Nur WARP 2 und WARP 3)</strong> Der Zustand des DC-Fehlerstrom-Schutzmoduls. Falls ein Gleichstromfehler auftritt, kann nicht mehr geladen werden, bis das Schutzmodul zurückgesetzt wurde. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong> [`evse/reset_dc_fault_current_state`](/mqtt_http/api_reference/evse.mdx#evse_reset_dc_fault_current_state) setzt das Modul zurück.
+        <strong>(Nur WARP 2 und WARP 3)</strong> Der Zustand des DC-Fehlerstrom-Schutzmoduls. Falls ein Gleichstromfehler auftritt, kann nicht mehr geladen werden, bis das Schutzmodul zurückgesetzt wurde. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong> [`evse/reset_dc_fault_current_state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_reset_dc_fault_current_state) setzt das Modul zurück.
         - **0** - Kein Fehler
         - **1** - 6 mA Fehlerstrom detektiert
         - **2** - Systemfehler
@@ -5539,7 +5539,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
 ## `evse/slots` {#evse_slots_warp3}
 
 
-Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](/mqtt_http/api_reference/evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Siehe TODO LINK für Details.
+Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Siehe TODO LINK für Details.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -5720,7 +5720,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/button_state
 ## `evse/indicator_led` {#evse_indicator_led_warp3}
 
 
-Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung per API (siehe [`evse/led_configuration`](/mqtt_http/api_reference/evse.mdx#evse_led_configuration)) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.
+Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung per API (siehe [`evse/led_configuration`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_led_configuration)) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -5922,7 +5922,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/low_level_state
         - **2** - Blinkt
         - **3** - Flackert
         - **4** - Atmet
-        - **5** - API, siehe [`evse/indicator_led`](/mqtt_http/api_reference/evse.mdx#evse_indicator_led)
+        - **5** - API, siehe [`evse/indicator_led`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_indicator_led)
     </td>
 </tr>
 
@@ -6080,7 +6080,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/low_level_state
     <td>
         <strong>(Nur WARP 3)</strong> Weitere Informationen zur Phasenumschaltung
         - **0** - Umschaltungszustand normal
-        - **1** - Ladecontroller hat automatische Umschaltung von drei- auf einphasig durchgeführt. Siehe [`evse/phase_auto_switch`](/mqtt_http/api_reference/evse.mdx#evse_phase_auto_switch)
+        - **1** - Ladecontroller hat automatische Umschaltung von drei- auf einphasig durchgeführt. Siehe [`evse/phase_auto_switch`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_phase_auto_switch)
     </td>
 </tr>
 
@@ -6422,7 +6422,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/auto_start_charging_update -m 'true'
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`auto_start_charging`<br/>bool</th>
     <td>
-        Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Falls aktiviert, beginnt sofort, wenn das Fahrzeug angeschlossen wird der Ladevorgang. Falls deaktiviert, kann das Laden mit [`evse/start_charging`](/mqtt_http/api_reference/evse.mdx#evse_start_charging) gestartet werden. Diese Einstellung setzt `clear_on_disconnect` der Ladestromgrenze 4 (Manuelle Ladefreigabe)
+        Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Falls aktiviert, beginnt sofort, wenn das Fahrzeug angeschlossen wird der Ladevorgang. Falls deaktiviert, kann das Laden mit [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) gestartet werden. Diese Einstellung setzt `clear_on_disconnect` der Ladestromgrenze 4 (Manuelle Ladefreigabe)
     </td>
 </tr>
     </tbody>
@@ -6432,7 +6432,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/auto_start_charging_update -m 'true'
 ## `evse/global_current` {#evse_global_current_warp3}
 
 
-Der über das Webinterface vorgegebene Ladestrom. **Achtung: Dieser Strom wird auf dem Ladecontroller persistent gespeichert. Für häufige Änderungen sollte stattdessen [`evse/external_current`](/mqtt_http/api_reference/evse.mdx#evse_external_current) verwendet werden, um den Flash des Ladecontrollers zu schonen!**
+Der über das Webinterface vorgegebene Ladestrom. **Achtung: Dieser Strom wird auf dem Ladecontroller persistent gespeichert. Für häufige Änderungen sollte stattdessen [`evse/external_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_external_current) verwendet werden, um den Flash des Ladecontrollers zu schonen!**
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -7522,9 +7522,9 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/led_configuration_update -m 'false'
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_api`<br/>bool</th>
     <td>
-        Legt fest, ob die LED über die [`evse/indicator_led`](/mqtt_http/api_reference/evse.mdx#evse_indicator_led)-API oder über Modbus TCP gesteuert werden darf.
-        - **false** - LED darf nicht gesteuert werden. Aufrufe von [`evse/indicator_led`](/mqtt_http/api_reference/evse.mdx#evse_indicator_led) werden ignoriert
-        - **true** - LED darf gesteuert werden. Aufrufe von [`evse/indicator_led`](/mqtt_http/api_reference/evse.mdx#evse_indicator_led) werden nur dann ignoriert, wenn das EVSE einen Fehlerzustand anzeigen möchte.
+        Legt fest, ob die LED über die [`evse/indicator_led`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_indicator_led)-API oder über Modbus TCP gesteuert werden darf.
+        - **false** - LED darf nicht gesteuert werden. Aufrufe von [`evse/indicator_led`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_indicator_led) werden ignoriert
+        - **true** - LED darf gesteuert werden. Aufrufe von [`evse/indicator_led`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_indicator_led) werden nur dann ignoriert, wenn das EVSE einen Fehlerzustand anzeigen möchte.
     </td>
 </tr>
     </tbody>
@@ -7627,7 +7627,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/ev_wakeup_update -m 'true'
 ## `evse/control_pilot_disconnect` {#evse_control_pilot_disconnect_warp3}
 
 
-Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe [`evse/management_enabled`](/mqtt_http/api_reference/evse.mdx#evse_management_enabled).  Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
+Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe [`evse/management_enabled`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_management_enabled).  Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -8107,7 +8107,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/trigger_dc_fault_test -m 'null'
 ## `evse/stop_charging` {#evse_stop_charging_warp3}
 
 
-Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit [`evse/start_charging`](/mqtt_http/api_reference/evse.mdx#evse_start_charging) wieder gestartet werden.
+Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) wieder gestartet werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -8146,7 +8146,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
 ## `evse/start_charging` {#evse_start_charging_warp3}
 
 
-Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit [`evse/stop_charging`](/mqtt_http/api_reference/evse.mdx#evse_stop_charging) wieder gestoppt werden.
+Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging) wieder gestoppt werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -8189,7 +8189,7 @@ Gibt an, welcher Stromzähler als der im WARP Charger verbaute Stromzähler betr
 
 :::tip
 
-Für das PV-Überschussladen muss ein anderer Zähler genutzt werden, der die Werte am Hausanschlusspunkt misst. Die ID dieses Zählers wird nicht hier, sondern mit `meter_slot_grid_power` in [`power_manager/config`](/mqtt_http/api_reference/power_manager.mdx#power_manager_config) gesetzt
+Für das PV-Überschussladen muss ein anderer Zähler genutzt werden, der die Werte am Hausanschlusspunkt misst. Die ID dieses Zählers wird nicht hier, sondern mit `meter_slot_grid_power` in [`power_manager/config`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_config) gesetzt
 
 :::
 :::info[Beispiel]
@@ -8469,7 +8469,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`dc_fault_current_state`<br/>int</th>
     <td>
-        <strong>(Nur WARP 2 und WARP 3)</strong> Der Zustand des DC-Fehlerstrom-Schutzmoduls. Falls ein Gleichstromfehler auftritt, kann nicht mehr geladen werden, bis das Schutzmodul zurückgesetzt wurde. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong> [`evse/reset_dc_fault_current_state`](/mqtt_http/api_reference/evse.mdx#evse_reset_dc_fault_current_state) setzt das Modul zurück.
+        <strong>(Nur WARP 2 und WARP 3)</strong> Der Zustand des DC-Fehlerstrom-Schutzmoduls. Falls ein Gleichstromfehler auftritt, kann nicht mehr geladen werden, bis das Schutzmodul zurückgesetzt wurde. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong> [`evse/reset_dc_fault_current_state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_reset_dc_fault_current_state) setzt das Modul zurück.
         
         
         
@@ -8611,7 +8611,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
 ## `evse/slots` {#evse_slots_any}
 
 
-Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](/mqtt_http/api_reference/evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Siehe TODO LINK für Details.
+Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Siehe TODO LINK für Details.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -8798,7 +8798,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/button_state
 ## `evse/indicator_led` {#evse_indicator_led_any}
 
 
-Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung per API (siehe [`evse/led_configuration`](/mqtt_http/api_reference/evse.mdx#evse_led_configuration)) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.
+Der Zustand der LED im Taster. Kann geschrieben werden, falls die LED-Steuerung per API (siehe [`evse/led_configuration`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_led_configuration)) erlaubt wurde. Die Farbe der LED kann nur bei WARP3 gesteuert werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -9003,7 +9003,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/low_level_state
         - **2** - Blinkt
         - **3** - Flackert
         - **4** - Atmet
-        - **5** - API, siehe [`evse/indicator_led`](/mqtt_http/api_reference/evse.mdx#evse_indicator_led)
+        - **5** - API, siehe [`evse/indicator_led`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_indicator_led)
     </td>
 </tr>
 
@@ -9231,7 +9231,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/low_level_state
         
         
         - **0** - Umschaltungszustand normal
-        - **1** - Ladecontroller hat automatische Umschaltung von drei- auf einphasig durchgeführt. Siehe [`evse/phase_auto_switch`](/mqtt_http/api_reference/evse.mdx#evse_phase_auto_switch)
+        - **1** - Ladecontroller hat automatische Umschaltung von drei- auf einphasig durchgeführt. Siehe [`evse/phase_auto_switch`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_phase_auto_switch)
     </td>
 </tr>
 
@@ -9576,7 +9576,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/auto_start_charging_update -m 'true'
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`auto_start_charging`<br/>bool</th>
     <td>
-        Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Falls aktiviert, beginnt sofort, wenn das Fahrzeug angeschlossen wird der Ladevorgang. Falls deaktiviert, kann das Laden mit [`evse/start_charging`](/mqtt_http/api_reference/evse.mdx#evse_start_charging) gestartet werden. Diese Einstellung setzt `clear_on_disconnect` der Ladestromgrenze 4 (Manuelle Ladefreigabe)
+        Konfiguriert, ob ein angeschlossenes Fahrzeug selbstständig geladen wird. Falls aktiviert, beginnt sofort, wenn das Fahrzeug angeschlossen wird der Ladevorgang. Falls deaktiviert, kann das Laden mit [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) gestartet werden. Diese Einstellung setzt `clear_on_disconnect` der Ladestromgrenze 4 (Manuelle Ladefreigabe)
     </td>
 </tr>
     </tbody>
@@ -9586,7 +9586,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/auto_start_charging_update -m 'true'
 ## `evse/global_current` {#evse_global_current_any}
 
 
-Der über das Webinterface vorgegebene Ladestrom. **Achtung: Dieser Strom wird auf dem Ladecontroller persistent gespeichert. Für häufige Änderungen sollte stattdessen [`evse/external_current`](/mqtt_http/api_reference/evse.mdx#evse_external_current) verwendet werden, um den Flash des Ladecontrollers zu schonen!**
+Der über das Webinterface vorgegebene Ladestrom. **Achtung: Dieser Strom wird auf dem Ladecontroller persistent gespeichert. Für häufige Änderungen sollte stattdessen [`evse/external_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_external_current) verwendet werden, um den Flash des Ladecontrollers zu schonen!**
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -10691,12 +10691,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/led_configuration_update -m 'false'
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_api`<br/>bool</th>
     <td>
-        Legt fest, ob die LED über die [`evse/indicator_led`](/mqtt_http/api_reference/evse.mdx#evse_indicator_led)-API oder über Modbus TCP gesteuert werden darf.
+        Legt fest, ob die LED über die [`evse/indicator_led`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_indicator_led)-API oder über Modbus TCP gesteuert werden darf.
         
         
         
-        - **false** - LED darf nicht gesteuert werden. Aufrufe von [`evse/indicator_led`](/mqtt_http/api_reference/evse.mdx#evse_indicator_led) werden ignoriert
-        - **true** - LED darf gesteuert werden. Aufrufe von [`evse/indicator_led`](/mqtt_http/api_reference/evse.mdx#evse_indicator_led) werden nur dann ignoriert, wenn das EVSE einen Fehlerzustand anzeigen möchte.
+        - **false** - LED darf nicht gesteuert werden. Aufrufe von [`evse/indicator_led`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_indicator_led) werden ignoriert
+        - **true** - LED darf gesteuert werden. Aufrufe von [`evse/indicator_led`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_indicator_led) werden nur dann ignoriert, wenn das EVSE einen Fehlerzustand anzeigen möchte.
     </td>
 </tr>
     </tbody>
@@ -10961,7 +10961,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/ev_wakeup_update -m 'true'
 ## `evse/control_pilot_disconnect` {#evse_control_pilot_disconnect_any}
 
 <strong>(Nur WARP 2 und WARP 3)</strong> 
-Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe [`evse/management_enabled`](/mqtt_http/api_reference/evse.mdx#evse_management_enabled).  Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
+Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe [`evse/management_enabled`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_management_enabled).  Benötigt das Feature <a href="#features_cp_disconnect"><code>"cp_disconnect"</code></a>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -11542,7 +11542,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/gp_output_update -m '1'
 ## `evse/stop_charging` {#evse_stop_charging_any}
 
 
-Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit [`evse/start_charging`](/mqtt_http/api_reference/evse.mdx#evse_start_charging) wieder gestartet werden.
+Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) wieder gestartet werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -11581,7 +11581,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
 ## `evse/start_charging` {#evse_start_charging_any}
 
 
-Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit [`evse/stop_charging`](/mqtt_http/api_reference/evse.mdx#evse_stop_charging) wieder gestoppt werden.
+Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging) wieder gestoppt werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -11624,7 +11624,7 @@ Gibt an, welcher Stromzähler als der im WARP Charger verbaute Stromzähler betr
 
 :::tip
 
-Für das PV-Überschussladen muss ein anderer Zähler genutzt werden, der die Werte am Hausanschlusspunkt misst. Die ID dieses Zählers wird nicht hier, sondern mit `meter_slot_grid_power` in [`power_manager/config`](/mqtt_http/api_reference/power_manager.mdx#power_manager_config) gesetzt
+Für das PV-Überschussladen muss ein anderer Zähler genutzt werden, der die Werte am Hausanschlusspunkt misst. Die ID dieses Zählers wird nicht hier, sondern mit `meter_slot_grid_power` in [`power_manager/config`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_config) gesetzt
 
 :::
 :::info[Beispiel]

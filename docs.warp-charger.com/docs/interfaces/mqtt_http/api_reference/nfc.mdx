@@ -112,7 +112,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/nfc/seen_tags
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`[8]`<br/>object</th>
     <td>
-        Das von [`nfc/inject_tag`](/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag) vorgetäuschte Tag
+        Das von [`nfc/inject_tag`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag) vorgetäuschte Tag
         <table>
             <thead>
                 <tr>
@@ -158,7 +158,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/nfc/seen_tags
 ## `nfc/inject_tag` {#nfc_inject_tag_warp1}
 
 
-Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die API ein Ladevorgang für einen bestimmten Benutzer gestartet oder gestoppt werden. Analog zur physischen Verwendung eines Tags wird der Ladevorgang bei Aufruf der API abwechselnd freigegeben oder blockiert. Siehe [`nfc/inject_tag_start`](/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag_start) und [`nfc/inject_tag_stop`](/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag_stop) für genauere Kontrolle. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
+Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die API ein Ladevorgang für einen bestimmten Benutzer gestartet oder gestoppt werden. Analog zur physischen Verwendung eines Tags wird der Ladevorgang bei Aufruf der API abwechselnd freigegeben oder blockiert. Siehe [`nfc/inject_tag_start`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag_start) und [`nfc/inject_tag_stop`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag_stop) für genauere Kontrolle. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
@@ -225,7 +225,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag -m '{ "tag_type": 0, "tag_id"
 ## `nfc/inject_tag_start` {#nfc_inject_tag_start_warp1}
 
 
-Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Starten</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
+Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Starten</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
@@ -292,7 +292,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag_start -m '{ "tag_type": 0, "t
 ## `nfc/inject_tag_stop` {#nfc_inject_tag_stop_warp1}
 
 
-Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Stoppen</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
+Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Stoppen</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
@@ -599,7 +599,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/nfc/seen_tags
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`[8]`<br/>object</th>
     <td>
-        Das von [`nfc/inject_tag`](/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag) vorgetäuschte Tag
+        Das von [`nfc/inject_tag`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag) vorgetäuschte Tag
         <table>
             <thead>
                 <tr>
@@ -645,7 +645,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/nfc/seen_tags
 ## `nfc/inject_tag` {#nfc_inject_tag_warp2}
 
 
-Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die API ein Ladevorgang für einen bestimmten Benutzer gestartet oder gestoppt werden. Analog zur physischen Verwendung eines Tags wird der Ladevorgang bei Aufruf der API abwechselnd freigegeben oder blockiert. Siehe [`nfc/inject_tag_start`](/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag_start) und [`nfc/inject_tag_stop`](/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag_stop) für genauere Kontrolle. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
+Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die API ein Ladevorgang für einen bestimmten Benutzer gestartet oder gestoppt werden. Analog zur physischen Verwendung eines Tags wird der Ladevorgang bei Aufruf der API abwechselnd freigegeben oder blockiert. Siehe [`nfc/inject_tag_start`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag_start) und [`nfc/inject_tag_stop`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag_stop) für genauere Kontrolle. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
@@ -712,7 +712,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag -m '{ "tag_type": 0, "tag_id"
 ## `nfc/inject_tag_start` {#nfc_inject_tag_start_warp2}
 
 
-Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Starten</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
+Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Starten</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
@@ -779,7 +779,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag_start -m '{ "tag_type": 0, "t
 ## `nfc/inject_tag_stop` {#nfc_inject_tag_stop_warp2}
 
 
-Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Stoppen</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
+Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Stoppen</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
@@ -1086,7 +1086,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/nfc/seen_tags
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`[8]`<br/>object</th>
     <td>
-        Das von [`nfc/inject_tag`](/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag) vorgetäuschte Tag
+        Das von [`nfc/inject_tag`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag) vorgetäuschte Tag
         <table>
             <thead>
                 <tr>
@@ -1132,7 +1132,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/nfc/seen_tags
 ## `nfc/inject_tag` {#nfc_inject_tag_warp3}
 
 
-Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die API ein Ladevorgang für einen bestimmten Benutzer gestartet oder gestoppt werden. Analog zur physischen Verwendung eines Tags wird der Ladevorgang bei Aufruf der API abwechselnd freigegeben oder blockiert. Siehe [`nfc/inject_tag_start`](/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag_start) und [`nfc/inject_tag_stop`](/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag_stop) für genauere Kontrolle. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
+Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die API ein Ladevorgang für einen bestimmten Benutzer gestartet oder gestoppt werden. Analog zur physischen Verwendung eines Tags wird der Ladevorgang bei Aufruf der API abwechselnd freigegeben oder blockiert. Siehe [`nfc/inject_tag_start`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag_start) und [`nfc/inject_tag_stop`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag_stop) für genauere Kontrolle. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
@@ -1199,7 +1199,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag -m '{ "tag_type": 0, "tag_id"
 ## `nfc/inject_tag_start` {#nfc_inject_tag_start_warp3}
 
 
-Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Starten</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
+Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Starten</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
@@ -1266,7 +1266,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag_start -m '{ "tag_type": 0, "t
 ## `nfc/inject_tag_stop` {#nfc_inject_tag_stop_warp3}
 
 
-Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Stoppen</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
+Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Stoppen</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
@@ -1582,7 +1582,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/nfc/seen_tags
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`[8]`<br/>object</th>
     <td>
-        Das von [`nfc/inject_tag`](/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag) vorgetäuschte Tag
+        Das von [`nfc/inject_tag`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag) vorgetäuschte Tag
         <table>
             <thead>
                 <tr>
@@ -1631,7 +1631,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/nfc/seen_tags
 ## `nfc/inject_tag` {#nfc_inject_tag_any}
 
 
-Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die API ein Ladevorgang für einen bestimmten Benutzer gestartet oder gestoppt werden. Analog zur physischen Verwendung eines Tags wird der Ladevorgang bei Aufruf der API abwechselnd freigegeben oder blockiert. Siehe [`nfc/inject_tag_start`](/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag_start) und [`nfc/inject_tag_stop`](/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag_stop) für genauere Kontrolle. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
+Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Hiermit kann über die API ein Ladevorgang für einen bestimmten Benutzer gestartet oder gestoppt werden. Analog zur physischen Verwendung eines Tags wird der Ladevorgang bei Aufruf der API abwechselnd freigegeben oder blockiert. Siehe [`nfc/inject_tag_start`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag_start) und [`nfc/inject_tag_stop`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag_stop) für genauere Kontrolle. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
@@ -1701,7 +1701,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag -m '{ "tag_type": 0, "tag_id"
 ## `nfc/inject_tag_start` {#nfc_inject_tag_start_any}
 
 
-Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Starten</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
+Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Starten</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
@@ -1771,7 +1771,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag_start -m '{ "tag_type": 0, "t
 ## `nfc/inject_tag_stop` {#nfc_inject_tag_stop_any}
 
 
-Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Stoppen</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
+Täuscht vor, dass ein Tag vom NFC-Leser erkannt wurde. Das Tag wird nur zum <strong>Stoppen</strong> eines Ladevorgangs verwendet. Das vorgetauschte Tag ist immer der letzte Eintrag in [`nfc/seen_tags`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_seen_tags)
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">

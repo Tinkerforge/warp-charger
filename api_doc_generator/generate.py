@@ -21,7 +21,7 @@ def resolve_ref_md(match):
         anchor = "{}_{}".format(module, fn.replace("/", "_"))
         link_text = "`{}/{}`".format(module, fn) if label is None else label
 
-    return f"[{link_text}](/mqtt_http/api_reference/{module}.mdx#{anchor})"
+    return f"[{link_text}](/interfaces/mqtt_http/api_reference/{module}.mdx#{anchor})"
 
 def resolve_mod_ref_md(match):
     ref = match.group(1)
@@ -39,11 +39,11 @@ def resolve_mod_ref_md(match):
     #     link_text = "{}/{}".format(module, fn) if label is None else label
 
 
-    return f"[{label}](/mqtt_http/api_reference/{ref}.mdx)"
+    return f"[{label}](/interfaces/mqtt_http/api_reference/{ref}.mdx)"
 
 for x in mods:
     content = x.to_md()
     content = re.sub("{{{ref:([^}]*)}}}", resolve_ref_md, content)
     content = re.sub("{{{mod_ref:([^}]*)}}}", resolve_mod_ref_md, content)
-    with open(f"../docs.warp-charger.com/docs/mqtt_http/api_reference/{x.name}.mdx", "w") as f:
+    with open(f"../docs.warp-charger.com/docs/interfaces/mqtt_http/api_reference/{x.name}.mdx", "w") as f:
         f.write(content)

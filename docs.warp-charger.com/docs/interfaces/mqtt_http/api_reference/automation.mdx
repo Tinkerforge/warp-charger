@@ -63,7 +63,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_triggers`<br/>int[19]</th>
     <td>
-        Dieser Firmware bekannte Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)).
+        Dieser Firmware bekannte Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config)).
         - **[0..18]** - Eine bekannte Bedingung.
     </td>
 </tr>
@@ -71,7 +71,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_actions`<br/>int[16]</th>
     <td>
-        Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config))
+        Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config))
         - **[0..15]** - Eine bekannte Aktion.
     </td>
 </tr>
@@ -79,7 +79,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_triggers`<br/>int[19]</th>
     <td>
-        Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_triggers`.
+        Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_triggers`.
         - **[0..18]** - Eine ausführbare Bedingung.
     </td>
 </tr>
@@ -87,7 +87,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_actions`<br/>int[16]</th>
     <td>
-        Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_actions`.
+        Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_actions`.
         - **[0..15]** - Eine ausführbare Aktion.
     </td>
 </tr>
@@ -329,7 +329,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
             <tbody>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/interfaces/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Bedingung, die zutreffen muss, damit Aktion ausgeführt wird
                 <MultilineTabs className="unique-tabs">
@@ -470,7 +470,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 <tr>
                     <th scope="row" style={{whiteSpace: "nowrap"}}>`use_prefix`<br/>bool</th>
                     <td>
-                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
+                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/interfaces/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
                     </td>
                 </tr>
                     </tbody>
@@ -617,7 +617,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
         </tr>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/interfaces/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Aktion, die ausgeführt werden soll
                 <MultilineTabs className="unique-tabs">
@@ -681,7 +681,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 <tr>
                     <th scope="row" style={{whiteSpace: "nowrap"}}>`use_prefix`<br/>bool</th>
                     <td>
-                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
+                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/interfaces/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
                     </td>
                 </tr>
                     </tbody>
@@ -964,7 +964,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_triggers`<br/>int[19]</th>
     <td>
-        Dieser Firmware bekannte Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)).
+        Dieser Firmware bekannte Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config)).
         - **[0..18]** - Eine bekannte Bedingung.
     </td>
 </tr>
@@ -972,7 +972,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_actions`<br/>int[16]</th>
     <td>
-        Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config))
+        Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config))
         - **[0..15]** - Eine bekannte Aktion.
     </td>
 </tr>
@@ -980,7 +980,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_triggers`<br/>int[19]</th>
     <td>
-        Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_triggers`.
+        Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_triggers`.
         - **[0..18]** - Eine ausführbare Bedingung.
     </td>
 </tr>
@@ -988,7 +988,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_actions`<br/>int[16]</th>
     <td>
-        Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_actions`.
+        Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_actions`.
         - **[0..15]** - Eine ausführbare Aktion.
     </td>
 </tr>
@@ -1230,7 +1230,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
             <tbody>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/interfaces/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Bedingung, die zutreffen muss, damit Aktion ausgeführt wird
                 <MultilineTabs className="unique-tabs">
@@ -1371,7 +1371,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 <tr>
                     <th scope="row" style={{whiteSpace: "nowrap"}}>`use_prefix`<br/>bool</th>
                     <td>
-                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
+                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/interfaces/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
                     </td>
                 </tr>
                     </tbody>
@@ -1568,7 +1568,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
         </tr>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/interfaces/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Aktion, die ausgeführt werden soll
                 <MultilineTabs className="unique-tabs">
@@ -1632,7 +1632,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 <tr>
                     <th scope="row" style={{whiteSpace: "nowrap"}}>`use_prefix`<br/>bool</th>
                     <td>
-                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
+                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/interfaces/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
                     </td>
                 </tr>
                     </tbody>
@@ -1938,7 +1938,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_triggers`<br/>int[19]</th>
     <td>
-        Dieser Firmware bekannte Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)).
+        Dieser Firmware bekannte Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config)).
         - **[0..18]** - Eine bekannte Bedingung.
     </td>
 </tr>
@@ -1946,7 +1946,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_actions`<br/>int[16]</th>
     <td>
-        Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config))
+        Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config))
         - **[0..15]** - Eine bekannte Aktion.
     </td>
 </tr>
@@ -1954,7 +1954,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_triggers`<br/>int[19]</th>
     <td>
-        Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_triggers`.
+        Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_triggers`.
         - **[0..18]** - Eine ausführbare Bedingung.
     </td>
 </tr>
@@ -1962,7 +1962,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_actions`<br/>int[16]</th>
     <td>
-        Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_actions`.
+        Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_actions`.
         - **[0..15]** - Eine ausführbare Aktion.
     </td>
 </tr>
@@ -2204,7 +2204,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
             <tbody>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/interfaces/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Bedingung, die zutreffen muss, damit Aktion ausgeführt wird
                 <MultilineTabs className="unique-tabs">
@@ -2345,7 +2345,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 <tr>
                     <th scope="row" style={{whiteSpace: "nowrap"}}>`use_prefix`<br/>bool</th>
                     <td>
-                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
+                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/interfaces/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
                     </td>
                 </tr>
                     </tbody>
@@ -2519,7 +2519,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
         </tr>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/interfaces/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Aktion, die ausgeführt werden soll
                 <MultilineTabs className="unique-tabs">
@@ -2583,7 +2583,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 <tr>
                     <th scope="row" style={{whiteSpace: "nowrap"}}>`use_prefix`<br/>bool</th>
                     <td>
-                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
+                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/interfaces/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
                     </td>
                 </tr>
                     </tbody>
@@ -2840,7 +2840,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 <tr>
                     <th scope="row" style={{whiteSpace: "nowrap"}}>`mode`<br/>int</th>
                     <td>
-                        Gewünschter Lademodus. Siehe [`power_manager/charge_mode`](/mqtt_http/api_reference/power_manager.mdx#power_manager_charge_mode)
+                        Gewünschter Lademodus. Siehe [`power_manager/charge_mode`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_charge_mode)
                         - **0** - Schnell
                         - **1** - Aus
                         - **2** - PV
@@ -2936,7 +2936,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_triggers`<br/>int[19]</th>
     <td>
-        Dieser Firmware bekannte Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)).
+        Dieser Firmware bekannte Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config)).
         - **[0..18]** - Eine bekannte Bedingung.
     </td>
 </tr>
@@ -2944,7 +2944,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_actions`<br/>int[16]</th>
     <td>
-        Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config))
+        Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config))
         - **[0..15]** - Eine bekannte Aktion.
     </td>
 </tr>
@@ -2952,7 +2952,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_triggers`<br/>int[19]</th>
     <td>
-        Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_triggers`.
+        Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_triggers`.
         - **[0..18]** - Eine ausführbare Bedingung.
     </td>
 </tr>
@@ -2960,7 +2960,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_actions`<br/>int[16]</th>
     <td>
-        Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_actions`.
+        Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_actions`.
         - **[0..15]** - Eine ausführbare Aktion.
     </td>
 </tr>
@@ -3202,7 +3202,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
             <tbody>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/interfaces/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Bedingung, die zutreffen muss, damit Aktion ausgeführt wird
                 <MultilineTabs className="unique-tabs">
@@ -3303,7 +3303,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 <tr>
                     <th scope="row" style={{whiteSpace: "nowrap"}}>`use_prefix`<br/>bool</th>
                     <td>
-                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
+                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/interfaces/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
                     </td>
                 </tr>
                     </tbody>
@@ -3497,7 +3497,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
         </tr>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/interfaces/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Aktion, die ausgeführt werden soll
                 <MultilineTabs className="unique-tabs">
@@ -3561,7 +3561,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 <tr>
                     <th scope="row" style={{whiteSpace: "nowrap"}}>`use_prefix`<br/>bool</th>
                     <td>
-                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
+                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/interfaces/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
                     </td>
                 </tr>
                     </tbody>
@@ -3647,7 +3647,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 <tr>
                     <th scope="row" style={{whiteSpace: "nowrap"}}>`mode`<br/>int</th>
                     <td>
-                        Gewünschter Lademodus. Siehe [`power_manager/charge_mode`](/mqtt_http/api_reference/power_manager.mdx#power_manager_charge_mode)
+                        Gewünschter Lademodus. Siehe [`power_manager/charge_mode`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_charge_mode)
                         - **0** - Schnell
                         - **1** - Aus
                         - **2** - PV
@@ -3762,7 +3762,7 @@ Der Zustand der Automatisierung. Gibt an, welche Bedingungen und Aktionen von di
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_triggers`<br/>int[19]</th>
     <td>
-        Dieser Firmware bekannte Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)).
+        Dieser Firmware bekannte Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config)).
         - **[0..18]** - Eine bekannte Bedingung.
     </td>
 </tr>
@@ -3770,7 +3770,7 @@ Der Zustand der Automatisierung. Gibt an, welche Bedingungen und Aktionen von di
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_actions`<br/>int[16]</th>
     <td>
-        Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config))
+        Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config))
         - **[0..15]** - Eine bekannte Aktion.
     </td>
 </tr>
@@ -3778,7 +3778,7 @@ Der Zustand der Automatisierung. Gibt an, welche Bedingungen und Aktionen von di
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_triggers`<br/>int[19]</th>
     <td>
-        Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_triggers`.
+        Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_triggers`.
         - **[0..18]** - Eine ausführbare Bedingung.
     </td>
 </tr>
@@ -3786,7 +3786,7 @@ Der Zustand der Automatisierung. Gibt an, welche Bedingungen und Aktionen von di
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_actions`<br/>int[16]</th>
     <td>
-        Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_actions`.
+        Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_actions`.
         - **[0..15]** - Eine ausführbare Aktion.
     </td>
 </tr>
@@ -4028,7 +4028,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
             <tbody>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/interfaces/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Bedingung, die zutreffen muss, damit Aktion ausgeführt wird
                 <MultilineTabs className="unique-tabs">
@@ -4129,7 +4129,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 <tr>
                     <th scope="row" style={{whiteSpace: "nowrap"}}>`use_prefix`<br/>bool</th>
                     <td>
-                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
+                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/interfaces/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
                     </td>
                 </tr>
                     </tbody>
@@ -4231,7 +4231,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
         </tr>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/interfaces/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Aktion, die ausgeführt werden soll
                 <MultilineTabs className="unique-tabs">
@@ -4295,7 +4295,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 <tr>
                     <th scope="row" style={{whiteSpace: "nowrap"}}>`use_prefix`<br/>bool</th>
                     <td>
-                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
+                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/interfaces/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
                     </td>
                 </tr>
                     </tbody>
@@ -4407,7 +4407,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_triggers`<br/>int[19]</th>
     <td>
-        Dieser Firmware bekannte Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)).
+        Dieser Firmware bekannte Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config)).
         
         
         
@@ -4418,7 +4418,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`registered_actions`<br/>int[16]</th>
     <td>
-        Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config))
+        Dieser Firmware bekannte Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config))
         
         
         
@@ -4429,7 +4429,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_triggers`<br/>int[19]</th>
     <td>
-        Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_triggers`.
+        Aktuell ausführbare Bedingungen (Union-Tags des Triggers einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_triggers`.
         
         
         
@@ -4440,7 +4440,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/automation/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled_actions`<br/>int[16]</th>
     <td>
-        Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_actions`.
+        Aktuell ausführbare Aktionen (Union-Tags der Aktion einer Regel aus [`automation/config`](/interfaces/mqtt_http/api_reference/automation.mdx#automation_config)). Ist immer eine Teilmenge der `registered_actions`.
         
         
         
@@ -4688,7 +4688,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
             <tbody>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`trigger`<br/>[Union](/interfaces/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Bedingung, die zutreffen muss, damit Aktion ausgeführt wird
                 <MultilineTabs className="unique-tabs">
@@ -4847,7 +4847,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 <tr>
                     <th scope="row" style={{whiteSpace: "nowrap"}}>`use_prefix`<br/>bool</th>
                     <td>
-                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
+                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/interfaces/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
                     </td>
                 </tr>
                     </tbody>
@@ -5166,7 +5166,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
         </tr>
         
         <tr>
-            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/mqtt_http/getting_started.md#unions)</th>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`action`<br/>[Union](/interfaces/mqtt_http/getting_started.md#unions)</th>
             <td>
                 Aktion, die ausgeführt werden soll
                 <MultilineTabs className="unique-tabs">
@@ -5230,7 +5230,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 <tr>
                     <th scope="row" style={{whiteSpace: "nowrap"}}>`use_prefix`<br/>bool</th>
                     <td>
-                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
+                        Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe [`mqtt/config`](/interfaces/mqtt_http/api_reference/mqtt.mdx#mqtt_config)) vor dem konfigurierten Topic vorangestellt werden soll.
                     </td>
                 </tr>
                     </tbody>
@@ -5534,7 +5534,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/automation/config_update -m '[
                 <tr>
                     <th scope="row" style={{whiteSpace: "nowrap"}}>`mode`<br/>int</th>
                     <td>
-                        Gewünschter Lademodus. Siehe [`power_manager/charge_mode`](/mqtt_http/api_reference/power_manager.mdx#power_manager_charge_mode)
+                        Gewünschter Lademodus. Siehe [`power_manager/charge_mode`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_charge_mode)
                         
                         
                         
