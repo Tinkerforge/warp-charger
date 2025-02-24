@@ -26,7 +26,7 @@ in die Liste auf oder gute Fragen/Antworten für die [FAQ](/faq.md).
 
 WARP3 Charger Smart und WARP3 Charger Pro können in andere Systeme
 mittels den offenen Schnittstellen eingebunden werden:
-* [MQTT/HTTP API](/mqtt_http/getting_started.md)
+* [MQTT/HTTP API](/interfaces/mqtt_http/getting_started.md)
 * [Modbus-Schnittstelle](/modbus/configuration.md)
 
 Für spezifische Systeme gibt es eine direkte Unterstützung:

@@ -14,7 +14,7 @@ import Admonition from '@theme/Admonition';
 ## `users/config` {#users_config_warp1}
 
 
-Die Benutzerkonfiguration. Kann mit [`users/add`](/mqtt_http/api_reference/users.mdx#users_add), [`users/modify`](/mqtt_http/api_reference/users.mdx#users_modify), [`users/remove`](/mqtt_http/api_reference/users.mdx#users_remove) und [`users/http_auth_update`](/mqtt_http/api_reference/users.mdx#users_http_auth_update) aktualisiert werden.
+Die Benutzerkonfiguration. Kann mit [`users/add`](/interfaces/mqtt_http/api_reference/users.mdx#users_add), [`users/modify`](/interfaces/mqtt_http/api_reference/users.mdx#users_modify), [`users/remove`](/interfaces/mqtt_http/api_reference/users.mdx#users_remove) und [`users/http_auth_update`](/interfaces/mqtt_http/api_reference/users.mdx#users_http_auth_update) aktualisiert werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -199,7 +199,7 @@ curl http://$HOST/users/add -d '{
   }'
 ```
 
-`id` muss der `next_user_id` aus [`users/config`](/mqtt_http/api_reference/users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
+`id` muss der `next_user_id` aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
 `digest_hash = MD5("testuser:esp32-lib:testpass")`
 
         </TabItem>
@@ -220,7 +220,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/users/add -m '{
   }'
 ```
 
-`id` muss der `next_user_id` aus [`users/config`](/mqtt_http/api_reference/users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
+`id` muss der `next_user_id` aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
 `digest_hash = MD5("testuser:esp32-lib:testpass")`
 
         </TabItem>
@@ -240,7 +240,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/users/add -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
     <td>
-        ID des anzulegenden Nutzers. Muss dem aktuellen Wert von next_user_id aus [`users/config`](/mqtt_http/api_reference/users.mdx#users_config) entsprechen.
+        ID des anzulegenden Nutzers. Muss dem aktuellen Wert von next_user_id aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config) entsprechen.
     </td>
 </tr>
 
@@ -460,7 +460,7 @@ Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-
 ## `users/http_auth_update` {#users_http_auth_update_warp1}
 
 
-Schreibt http_auth_enabled aus [`users/config`](/mqtt_http/api_reference/users.mdx#users_config).
+Schreibt http_auth_enabled aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config).
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
@@ -546,7 +546,7 @@ Für das Ladetracking werden die Anzeigenamen gelöschter Benutzer separat im Fl
 ## `users/config` {#users_config_warp2}
 
 
-Die Benutzerkonfiguration. Kann mit [`users/add`](/mqtt_http/api_reference/users.mdx#users_add), [`users/modify`](/mqtt_http/api_reference/users.mdx#users_modify), [`users/remove`](/mqtt_http/api_reference/users.mdx#users_remove) und [`users/http_auth_update`](/mqtt_http/api_reference/users.mdx#users_http_auth_update) aktualisiert werden.
+Die Benutzerkonfiguration. Kann mit [`users/add`](/interfaces/mqtt_http/api_reference/users.mdx#users_add), [`users/modify`](/interfaces/mqtt_http/api_reference/users.mdx#users_modify), [`users/remove`](/interfaces/mqtt_http/api_reference/users.mdx#users_remove) und [`users/http_auth_update`](/interfaces/mqtt_http/api_reference/users.mdx#users_http_auth_update) aktualisiert werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -731,7 +731,7 @@ curl http://$HOST/users/add -d '{
   }'
 ```
 
-`id` muss der `next_user_id` aus [`users/config`](/mqtt_http/api_reference/users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
+`id` muss der `next_user_id` aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
 `digest_hash = MD5("testuser:esp32-lib:testpass")`
 
         </TabItem>
@@ -752,7 +752,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/users/add -m '{
   }'
 ```
 
-`id` muss der `next_user_id` aus [`users/config`](/mqtt_http/api_reference/users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
+`id` muss der `next_user_id` aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
 `digest_hash = MD5("testuser:esp32-lib:testpass")`
 
         </TabItem>
@@ -772,7 +772,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/users/add -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
     <td>
-        ID des anzulegenden Nutzers. Muss dem aktuellen Wert von next_user_id aus [`users/config`](/mqtt_http/api_reference/users.mdx#users_config) entsprechen.
+        ID des anzulegenden Nutzers. Muss dem aktuellen Wert von next_user_id aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config) entsprechen.
     </td>
 </tr>
 
@@ -992,7 +992,7 @@ Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-
 ## `users/http_auth_update` {#users_http_auth_update_warp2}
 
 
-Schreibt http_auth_enabled aus [`users/config`](/mqtt_http/api_reference/users.mdx#users_config).
+Schreibt http_auth_enabled aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config).
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
@@ -1078,7 +1078,7 @@ Für das Ladetracking werden die Anzeigenamen gelöschter Benutzer separat im Fl
 ## `users/config` {#users_config_warp3}
 
 
-Die Benutzerkonfiguration. Kann mit [`users/add`](/mqtt_http/api_reference/users.mdx#users_add), [`users/modify`](/mqtt_http/api_reference/users.mdx#users_modify), [`users/remove`](/mqtt_http/api_reference/users.mdx#users_remove) und [`users/http_auth_update`](/mqtt_http/api_reference/users.mdx#users_http_auth_update) aktualisiert werden.
+Die Benutzerkonfiguration. Kann mit [`users/add`](/interfaces/mqtt_http/api_reference/users.mdx#users_add), [`users/modify`](/interfaces/mqtt_http/api_reference/users.mdx#users_modify), [`users/remove`](/interfaces/mqtt_http/api_reference/users.mdx#users_remove) und [`users/http_auth_update`](/interfaces/mqtt_http/api_reference/users.mdx#users_http_auth_update) aktualisiert werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -1263,7 +1263,7 @@ curl http://$HOST/users/add -d '{
   }'
 ```
 
-`id` muss der `next_user_id` aus [`users/config`](/mqtt_http/api_reference/users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
+`id` muss der `next_user_id` aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
 `digest_hash = MD5("testuser:esp32-lib:testpass")`
 
         </TabItem>
@@ -1284,7 +1284,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/users/add -m '{
   }'
 ```
 
-`id` muss der `next_user_id` aus [`users/config`](/mqtt_http/api_reference/users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
+`id` muss der `next_user_id` aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
 `digest_hash = MD5("testuser:esp32-lib:testpass")`
 
         </TabItem>
@@ -1304,7 +1304,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/users/add -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
     <td>
-        ID des anzulegenden Nutzers. Muss dem aktuellen Wert von next_user_id aus [`users/config`](/mqtt_http/api_reference/users.mdx#users_config) entsprechen.
+        ID des anzulegenden Nutzers. Muss dem aktuellen Wert von next_user_id aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config) entsprechen.
     </td>
 </tr>
 
@@ -1524,7 +1524,7 @@ Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-
 ## `users/http_auth_update` {#users_http_auth_update_warp3}
 
 
-Schreibt http_auth_enabled aus [`users/config`](/mqtt_http/api_reference/users.mdx#users_config).
+Schreibt http_auth_enabled aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config).
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
@@ -1616,7 +1616,7 @@ Auf dieser Hardware nicht unterstützt!
 ## `users/config` {#users_config_any}
 
 
-Die Benutzerkonfiguration. Kann mit [`users/add`](/mqtt_http/api_reference/users.mdx#users_add), [`users/modify`](/mqtt_http/api_reference/users.mdx#users_modify), [`users/remove`](/mqtt_http/api_reference/users.mdx#users_remove) und [`users/http_auth_update`](/mqtt_http/api_reference/users.mdx#users_http_auth_update) aktualisiert werden.
+Die Benutzerkonfiguration. Kann mit [`users/add`](/interfaces/mqtt_http/api_reference/users.mdx#users_add), [`users/modify`](/interfaces/mqtt_http/api_reference/users.mdx#users_modify), [`users/remove`](/interfaces/mqtt_http/api_reference/users.mdx#users_remove) und [`users/http_auth_update`](/interfaces/mqtt_http/api_reference/users.mdx#users_http_auth_update) aktualisiert werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -1863,7 +1863,7 @@ curl http://$HOST/users/add -d '{
   }'
 ```
 
-`id` muss der `next_user_id` aus [`users/config`](/mqtt_http/api_reference/users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
+`id` muss der `next_user_id` aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
 `digest_hash = MD5("testuser:esp32-lib:testpass")`
 
         </TabItem>
@@ -1884,7 +1884,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/users/add -m '{
   }'
 ```
 
-`id` muss der `next_user_id` aus [`users/config`](/mqtt_http/api_reference/users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
+`id` muss der `next_user_id` aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
 `digest_hash = MD5("testuser:esp32-lib:testpass")`
 
         </TabItem>
@@ -1904,7 +1904,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/users/add -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
     <td>
-        ID des anzulegenden Nutzers. Muss dem aktuellen Wert von next_user_id aus [`users/config`](/mqtt_http/api_reference/users.mdx#users_config) entsprechen.
+        ID des anzulegenden Nutzers. Muss dem aktuellen Wert von next_user_id aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config) entsprechen.
     </td>
 </tr>
 
@@ -2124,7 +2124,7 @@ Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-
 ## `users/http_auth_update` {#users_http_auth_update_any}
 
 
-Schreibt http_auth_enabled aus [`users/config`](/mqtt_http/api_reference/users.mdx#users_config).
+Schreibt http_auth_enabled aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config).
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">

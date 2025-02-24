@@ -260,14 +260,14 @@ export const meters = [
     name: "WARP API",
     connection: "HTTP",
     note: "Siehe MQTT und HTTP Meter API",
-    note_url: "/docs/mqtt_http/api_reference/meters",
+    note_url: "/docs/interfaces/mqtt_http/api_reference/meters",
   },
   {
     manufacturer: "Tinkerforge",
     name: "WARP API",
     connection: "MQTT",
     note: "Siehe MQTT und HTTP Meter API",
-    note_url: "/docs/mqtt_http/api_reference/meters",
+    note_url: "/docs/interfaces/mqtt_http/api_reference/meters",
   },
   {
     manufacturer: "Victron Energy",

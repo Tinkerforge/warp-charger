@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 import Admonition from '@theme/Admonition';
 
 # Ladezeit- und -energielimits
-Mit dem `charge_limits`-Modul können Energie- und Zeitlimits definiert werden, nach denen ein Ladevorgang beendet wird. Es können sowohl Standardlimits gesetzt werden ([`charge_limits/default_limits`](/mqtt_http/api_reference/charge_limits.mdx#charge_limits_default_limits), als auch Limits für den laufenden oder nächsten Ladevorgang überschrieben werden ([`charge_limits/override_duration`](/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_duration) und [`charge_limits/override_energy`](/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_energy))
+Mit dem `charge_limits`-Modul können Energie- und Zeitlimits definiert werden, nach denen ein Ladevorgang beendet wird. Es können sowohl Standardlimits gesetzt werden ([`charge_limits/default_limits`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_default_limits), als auch Limits für den laufenden oder nächsten Ladevorgang überschrieben werden ([`charge_limits/override_duration`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_duration) und [`charge_limits/override_energy`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_energy))
 <Tabs groupId="hardwareType" queryString className="hidden-tabs">
 <TabItem value="warp1">
 ## `charge_limits/state` {#charge_limits_state_warp1}
@@ -191,7 +191,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/default_limits_update -m '{ "d
 ## `charge_limits/active_limits` {#charge_limits_active_limits_warp1}
 
 
-Aktive Zeit- und Energielimits für den aktuellen oder nächsten Ladevorgang. Können über [`charge_limits/override_duration`](/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_duration) und [`charge_limits/override_energy`](/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_energy) aktualisiert werden.
+Aktive Zeit- und Energielimits für den aktuellen oder nächsten Ladevorgang. Können über [`charge_limits/override_duration`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_duration) und [`charge_limits/override_energy`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_energy) aktualisiert werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -410,7 +410,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_energy -m '25000'
 ## `charge_limits/restart` {#charge_limits_restart_warp1}
 
 
-Setzt die Ladelimits zurück, so als ob ein neuer Ladevorgang begonnen hätte, behält aber die überschriebenen Ladelimits bei. Mit dieser API und [`charge_limits/override_duration`](/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_duration) und [`charge_limits/override_energy`](/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_energy) kann zu einem beliebigen Zeitpunkt ein neues "absolutes" Ladelimit gesetzt werden.
+Setzt die Ladelimits zurück, so als ob ein neuer Ladevorgang begonnen hätte, behält aber die überschriebenen Ladelimits bei. Mit dieser API und [`charge_limits/override_duration`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_duration) und [`charge_limits/override_energy`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_energy) kann zu einem beliebigen Zeitpunkt ein neues "absolutes" Ladelimit gesetzt werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
@@ -625,7 +625,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/default_limits_update -m '{ "d
 ## `charge_limits/active_limits` {#charge_limits_active_limits_warp2}
 
 
-Aktive Zeit- und Energielimits für den aktuellen oder nächsten Ladevorgang. Können über [`charge_limits/override_duration`](/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_duration) und [`charge_limits/override_energy`](/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_energy) aktualisiert werden.
+Aktive Zeit- und Energielimits für den aktuellen oder nächsten Ladevorgang. Können über [`charge_limits/override_duration`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_duration) und [`charge_limits/override_energy`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_energy) aktualisiert werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -844,7 +844,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_energy -m '25000'
 ## `charge_limits/restart` {#charge_limits_restart_warp2}
 
 
-Setzt die Ladelimits zurück, so als ob ein neuer Ladevorgang begonnen hätte, behält aber die überschriebenen Ladelimits bei. Mit dieser API und [`charge_limits/override_duration`](/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_duration) und [`charge_limits/override_energy`](/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_energy) kann zu einem beliebigen Zeitpunkt ein neues "absolutes" Ladelimit gesetzt werden.
+Setzt die Ladelimits zurück, so als ob ein neuer Ladevorgang begonnen hätte, behält aber die überschriebenen Ladelimits bei. Mit dieser API und [`charge_limits/override_duration`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_duration) und [`charge_limits/override_energy`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_energy) kann zu einem beliebigen Zeitpunkt ein neues "absolutes" Ladelimit gesetzt werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
@@ -1059,7 +1059,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/default_limits_update -m '{ "d
 ## `charge_limits/active_limits` {#charge_limits_active_limits_warp3}
 
 
-Aktive Zeit- und Energielimits für den aktuellen oder nächsten Ladevorgang. Können über [`charge_limits/override_duration`](/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_duration) und [`charge_limits/override_energy`](/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_energy) aktualisiert werden.
+Aktive Zeit- und Energielimits für den aktuellen oder nächsten Ladevorgang. Können über [`charge_limits/override_duration`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_duration) und [`charge_limits/override_energy`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_energy) aktualisiert werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -1278,7 +1278,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_energy -m '25000'
 ## `charge_limits/restart` {#charge_limits_restart_warp3}
 
 
-Setzt die Ladelimits zurück, so als ob ein neuer Ladevorgang begonnen hätte, behält aber die überschriebenen Ladelimits bei. Mit dieser API und [`charge_limits/override_duration`](/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_duration) und [`charge_limits/override_energy`](/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_energy) kann zu einem beliebigen Zeitpunkt ein neues "absolutes" Ladelimit gesetzt werden.
+Setzt die Ladelimits zurück, so als ob ein neuer Ladevorgang begonnen hätte, behält aber die überschriebenen Ladelimits bei. Mit dieser API und [`charge_limits/override_duration`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_duration) und [`charge_limits/override_energy`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_energy) kann zu einem beliebigen Zeitpunkt ein neues "absolutes" Ladelimit gesetzt werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
@@ -1502,7 +1502,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/default_limits_update -m '{ "d
 ## `charge_limits/active_limits` {#charge_limits_active_limits_any}
 
 
-Aktive Zeit- und Energielimits für den aktuellen oder nächsten Ladevorgang. Können über [`charge_limits/override_duration`](/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_duration) und [`charge_limits/override_energy`](/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_energy) aktualisiert werden.
+Aktive Zeit- und Energielimits für den aktuellen oder nächsten Ladevorgang. Können über [`charge_limits/override_duration`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_duration) und [`charge_limits/override_energy`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_energy) aktualisiert werden.
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -1727,7 +1727,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_energy -m '25000'
 ## `charge_limits/restart` {#charge_limits_restart_any}
 
 
-Setzt die Ladelimits zurück, so als ob ein neuer Ladevorgang begonnen hätte, behält aber die überschriebenen Ladelimits bei. Mit dieser API und [`charge_limits/override_duration`](/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_duration) und [`charge_limits/override_energy`](/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_energy) kann zu einem beliebigen Zeitpunkt ein neues "absolutes" Ladelimit gesetzt werden.
+Setzt die Ladelimits zurück, so als ob ein neuer Ladevorgang begonnen hätte, behält aber die überschriebenen Ladelimits bei. Mit dieser API und [`charge_limits/override_duration`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_duration) und [`charge_limits/override_energy`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_energy) kann zu einem beliebigen Zeitpunkt ein neues "absolutes" Ladelimit gesetzt werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">

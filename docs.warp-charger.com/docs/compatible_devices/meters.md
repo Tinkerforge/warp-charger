@@ -172,7 +172,7 @@ SMA Geräte können über die SMA Speedwire Schnittstelle ausgelesen werden.
 Die MQTT und HTTP WARP Push API
 kann genutzt werden um von extern Zählerdaten dem WARP Charger oder
 dem WARP Energy Manager mitzuteilen. Siehe
-[API Referenz - Meters](/docs/mqtt_http/api_reference/meters).
+[API Referenz - Meters](/docs/interfaces/mqtt_http/api_reference/meters).
 
 :::note
 
