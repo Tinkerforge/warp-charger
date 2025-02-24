@@ -18,7 +18,7 @@ für Regelungen (PV-Überschuss, dyn. Lastmanagement) verwendet
 bzw. zur Auswertung aufgezeichnet werden.
 
 Für ein [PV-Überschlussladen](/warp_charger/pv_excess_charging.md) oder
-ein [dynamisches Lastmanagement](warp_charger/chargemanagement.md), muss
+ein [dynamisches Lastmanagement](/warp_charger/chargemanagement.md), muss
 der WARP Charger oder der WARP Energy Manager Zugriff auf einen
 Stromzähler am **Netzanschluss (Netz)** haben, da nur dort der eigentliche
 PV-Überschuss bzw. die aktuellen Phasenströme ermittelt werden können.
@@ -172,7 +172,7 @@ SMA Geräte können über die SMA Speedwire Schnittstelle ausgelesen werden.
 Die MQTT und HTTP WARP Push API
 kann genutzt werden um von extern Zählerdaten dem WARP Charger oder
 dem WARP Energy Manager mitzuteilen. Siehe
-[API Referenz - Meters](/docs/interfaces/mqtt_http/api_reference/meters).
+[API Referenz - Meters](/interfaces/mqtt_http/api_reference/meters).
 
 :::note
 
@@ -281,7 +281,7 @@ Für ein PV-Überschussladen und für das dyn. Lastmanagement ist ein Stromzähl
 
 ### Fox ESS
 Fox ESS Wechselrichter scheinen nicht mittels Modbus TCP über den Fox ESS LAN oder Wifi Dongle ausgelesen werden zu können. Sie sind aber mittels RS485 (Modbus RTU) auszulesen.
-Wird ein RS485 nach LAN oder WLAN Wandler installiert (siehe [Modbus RTU Wandler](/compatible_meters#modbusrtu-wandler)), so können diese Wechselrichter ebenfalls ausgelesen werden.
+Wird ein RS485 nach LAN oder WLAN Wandler installiert (siehe [Modbus RTU Wandler](/compatible_devices/meters.md#modbusrtu-wandler)), so können diese Wechselrichter ebenfalls ausgelesen werden.
 Am Wechselrichter muss die Geräte ID von 000 (Modbus RTU deaktiviert) auf 247 eingestellt werden. Die Einstellung dazu findet sich unter Settings -> Communication -> RS485 -> Device ID.
 Das Wechselrichterpasswort ist standardmäßig auf 0000 gesetzt.
 
@@ -371,7 +371,7 @@ Das Smart Meter ist typischwerweise mit einem Pin gesichert und muss zuvor mitte
 ESP32 und einer Fotodiode bestehen. Es gibt aber auch Fertiglösungen wie den "Hichi TTL - Lesekopf".
 
 Technisch muss für das jeweilige Zählermodell der entsprechende [Smart Meter Descriptor](https://tasmota.github.io/docs/Smart-Meter-Interface/#smart-meter-descriptors) im ESP32 des Lesekopf hinterlegt werden.
-Kann darüber der Zähler ausgelesen werden, so kann der Leistungs-Messwert (ab Tasmota Version 13.x) mittels der [HTTP API](https://docs.warp-charger.com/docs/interfaces/mqtt_http/api_reference/meters)
+Kann darüber der Zähler ausgelesen werden, so kann der Leistungs-Messwert (ab Tasmota Version 13.x) mittels der [HTTP API](/interfaces/mqtt_http/api_reference/meters)
  an einen WARP Charger oder einen WARP Energy Meter geschickt werden.
 
 Dazu wird auf dem WARP Energy Manager oder WARP Charger ein API Stromzähler konfiguriert. Dieser erhält nur einen einzigen Wert ("Wirk­leistung (Bezug minus Ein­speisung); Σ L1, L2, L3 \[W\]).
