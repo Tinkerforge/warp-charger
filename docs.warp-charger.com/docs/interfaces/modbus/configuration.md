@@ -24,7 +24,7 @@ ausgewählt werden:
 
 ![image](/img/modbus/modbus_table.png)
 
-Aktuell wird die [WARP Charger Registertablle](/modbus/registertable.mdx) sowie
+Aktuell wird die [WARP Charger Registertablle](/interfaces/modbus/registertable.mdx) sowie
 die Registertabellen von `Bender CC613` und der `Keba C-Series` unterstützt.
 
 Wählt man eine der Fremd-Registertabellen simuliert der WARP Charger die

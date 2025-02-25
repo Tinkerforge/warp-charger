@@ -2,19 +2,24 @@
 sidebar_position: 2
 ---
 
+Die Netzwerk-Konfiguration für WARP Charger und WARP Energy Manager
+ist im wesentlichen identisch. Beide Geräte können per WLAN oder LAN
+in ein Netzwerk eingebunden werden. Da der WARP Energy Manager typischerweise
+in einer Verteilung eingebaut wird, empfehlen wir hier die Nutzung von LAN.
+
 # Netzwerk-Konfiguration
 
 Um weitere Einstellungen durchführen zu können, muss zuerst eine
 Verbindung zum Energiemanager hergestellt werden, damit diese über das
 Webinterface mittels Webbrowser konfiguriert werden kann.
 
-## Schritt 1: Verbindung zum Energiemanager herstellen
+## Schritt 1: Verbindung zum WARP Charger / WARP Energy Manager herstellen
 
 ### Option 1: WLAN
 
-Im Werkszustand öffnet der Energiemanager einen WLAN-Access-Point. Über diesen
-kann die Konfiguration des Energiemanagers vorgenommen werden, indem auf das
-Webinterface des Energiemanagers zugegriffen wird.
+Im Werkszustand öffnet das Gerät einen WLAN-Access-Point. Über diesen
+kann die Konfiguration des Geräts vorgenommen werden, indem auf das
+Webinterface des Geräts zugegriffen wird.
 
 Die Zugangsdaten des Access-Points finden sich auf dem
 WLAN-Zugangsdaten-Aufkleber auf der Rückseite der Betriebsanleitung. Es kann
@@ -22,52 +27,53 @@ entweder der QR-Code des Aufklebers, der das WLAN automatisch
 konfiguriert, oder die SSID und Passphrase verwendet werden. Die meisten
 Kamera-Apps von Smartphones unterstützen das Auslesen des QR-Codes und
 das automatische Verbinden mit dem WLAN. Viele Smartphones erkennen,
-dass über den Access-Point des Energiemanagers kein Zugriff auf das Internet
+dass über den Access-Point des Geräts kein Zugriff auf das Internet
 möglich ist. Deshalb muss gegebenenfalls die mobile Datenverbindung
 (z.B. LTE) deaktiviert werden, oder eine Nachfrage, ob die Verbindung
-zum Access-Point des Energiemanagers getrennt werden soll, verneint werden.
+zum Access-Point des Geräts getrennt werden soll, verneint werden.
 
-Wenn die Verbindung mit dem Access-Point des Energiemanagers hergestellt ist,
+Wenn die Verbindung mit dem Access-Point des Geräts hergestellt ist,
 kann das Webinterface unter [http://10.0.0.1](http://10.0.0.1) über einen beliebigen
 Browser erreicht werden. Alternativ kann dazu der nebenstehende QR-Code
 gescannt werden.
 
 ### Option 2: LAN
 
-Wenn ein LAN-Kabel eingesteckt wird verbindet sich der Energiemanager
+Wenn ein LAN-Kabel eingesteckt wird verbindet sich der WARP Charger / WARP Energy Manager
 automatisch mit einem kabelgebundenen Netzwerk, (IP-Address-Bezug per
-DHCP). Der Energiemanager kann dann entweder über die zugewiesene IP Adresse
-http://[IP-des-Energiemanagers], z.B.
-http://192.168.0.42 oder den Hostnamen des Energiemanagers
-http://[hostname], z.B. http://warp3-ABC erreicht werden.
+DHCP). Das Gerät kann dann entweder über die zugewiesene IP Adresse
+http://[IP-des-Geräts], z.B.
+http://192.168.0.42 oder den Hostnamen des Geräts
+http://[hostname], z.B. http://warp3-ABC oder http://wem2-ABC erreicht werden.
 
-Der Hostname des Energiemanagers ist identisch zur SSID des WLAN-Access-Points.
+Der Hostname des Geräts ist identisch zur SSID des WLAN-Access-Points.
 Der Hostnamen findet sich auf dem WLAN-Zugangsdaten-Aufkleber auf der
 Rückseite dieser Anleitung.
 
-Kann die per DHCP an der Energiemanager vergebene IP nicht ermittelt werden, so
+Kann die per DHCP an der Wallbox/Energiemanager vergebene IP nicht ermittelt werden, so
 kann der zuvor genannte Zugriff auf das Webinterface über den
 WLAN-Access-Point genutzt werden, um die IP-Adresse der
 LAN-Schnittstelle zu ermitteln.
 
 ## Schritt 2: Integration in das eigene Netzwerk
 
-Der Energiemanager kann per WLAN oder LAN in ein Netzwerk eingebunden werden.
+Der WARP Charger / WARP Energy Manager kann per WLAN oder LAN in ein Netzwerk eingebunden werden.
 Im Menüpunkt Netzwerk finden sich alle Einstellungsmöglichkeiten:
 
 ![image](/img/first_steps/network_config_with_menu.png)
 
 
-Unter Einstellungen kann der Hostname des WARP3 Chargers in allen verbundenen
+Unter Einstellungen kann der Hostname des WARP3 Chargers /
+WARP Energy Manager 2.0 in allen verbundenen
 Netzwerken konfiguriert werden. Außerdem kann mDNS aktiviert oder
-deaktiviert werden. Über mDNS können andere Geräte im Netzwerk den WARP3
-Charger finden. Damit wird zum Beispiel das Einrichten eines
+deaktiviert werden. Über mDNS können andere Geräte im Netzwerk das Gerät
+finden. Damit wird zum Beispiel das Einrichten eines
 Lastmanagementverbunds vereinfacht. Zusätzlich kann der Port, auf dem
 das Webinterface erreichbar ist, geändert werden (Standard ist Port 80).
 
 ### WLAN-Verbindung
 
-Eine Möglichkeit, um der Energiemanager in ein Netzwerk zu integrieren, ist
+Eine Möglichkeit, um den WARP Charger / WARP Energy Manager in ein Netzwerk zu integrieren, ist
 mittels WLAN. Durch Drücken des "Netzwerksuche"-Buttons öffnet sich ein
 Menü, in dem das gewünschte WLAN ausgewählt werden kann.
 
@@ -88,9 +94,10 @@ Konfigurationsfehler behoben werden können. Da der Access-Point den
 gleichen Kanal wie ein eventuell verbundenes Netz verwendet, kann es
 sein, dass die Verbindung zum Access-Point neu aufgebaut werden muss.
 
-Bei einer erfolgreichen Verbindung sollte der Energiemanager jetzt im
+Bei einer erfolgreichen Verbindung sollte das Gerät jetzt im
 konfigurierten Netzwerk unter
-http://[konfigurierter_hostname], z.B. http://warp3-ABC erreichbar sein.
+http://[konfigurierter_hostname], z.B. http://warp3-ABC oder http://wem2-ABC
+erreichbar sein.
 
 ### WLAN-Access-Point
 
@@ -112,7 +119,7 @@ festgelegt werden.
 
 ### LAN-Verbindung
 
-Alternativ zur WLAN-Verbindung kann der Energiemanager auch per LAN
+Alternativ zur WLAN-Verbindung kann der WARP Charger / WARP Energy Manager auch per LAN
 kabelgebunden ins Netzwerk integriert werden. In den meisten Fällen wird
 eine LAN-Verbindung automatisch hergestellt, falls ein Kabel eingesteckt
 ist (IP-Adresse wird per DHCP bezogen). Es ist aber auch möglich, eine
@@ -121,8 +128,8 @@ LAN-Verbindung komplett zu deaktivieren.
 
 ![image](/img/first_steps/network_lan.png)
 
-Bei einer erfolgreichen Verbindung sollte der Energiemanager jetzt im LAN unter
-http://[konfigurierter_hostname], z.B. http://warp3-ABC erreichbar sein.
+Bei einer erfolgreichen Verbindung sollte das Gerät jetzt im LAN unter
+http://[konfigurierter_hostname], z.B. http://warp3-ABC oder http://wem2-ABC erreichbar sein.
 
 Die LAN- und WLAN-Verbindung sollten nicht gleichzeitig zum selben
 Netzwerk bzw. IP-Bereich verbunden sein, da es sonst zu
@@ -130,11 +137,10 @@ Verbindungsproblemen kommen kann.
 
 ### WireGuard
 
-Mit WireGuard kann der Energiemanager mittels einer verschlüsselten Verbindung
+Mit WireGuard kann der WARP Charger / WARP Energy Manager mittels einer verschlüsselten Verbindung
 in ein virtuelles privates Netzwerk (VPN) eingebunden werden. WireGuard
 wird von verschiedenen Routern direkt unterstützt. Das VPN kann zum
-Beispiel genutzt werden, um aus der Ferne auf der Energiemanageren zuzugreifen,
-das Energiemanager-Netzwerk vor einem Zugriff zu schützen.
+Beispiel genutzt werden, um aus der Ferne auf das Gerät zuzugreifen.
 
 Die notwendigen Parameter sind WireGuard-spezifisch und werden an dieser
 Stelle nicht gesondert erläutert. Weitere Informationen finden sich auf
@@ -142,12 +148,11 @@ https://www.wireguard.com.
 
 ![image](/img/first_steps/network_wireguard.png)
 
-Ist der Energiemanager per WLAN (Accesspoint) oder LAN mittels Browser
-erreichbar, kann die weitere Konfiguration durchgeführt werden. Das
-Webinterface ist im Abschnitt vollständig beschrieben.
+Ist der WARP Charger / WARP Energy Manager per WLAN (Accesspoint) oder LAN mittels Browser
+erreichbar, kann die weitere Konfiguration durchgeführt werden. 
 
 ## Schritt 3: Firmware-Aktualisierung
 
 Generell empfehlen wir, nach der Installation ein Update der
-Energiemanager-Firmware durchzuführen, um die neusten Funktionen und ggf.
-Bugfixes zu erhalten. Siehe [Firmware-Aktualisierung](/warp_energy_manager/firmware_update.md).
+Geräte-Firmware durchzuführen, um die neusten Funktionen und ggf.
+Bugfixes zu erhalten.
