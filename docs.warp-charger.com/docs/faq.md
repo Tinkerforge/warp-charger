@@ -38,7 +38,7 @@ Mehr Informationen dazu gibt es auf [https://warp-charger.com/pv-ueberschusslade
 
 ### Kann der WARP Charger den Ladezustand eines angeschlossenen Fahrzeugs abfragen? Kann bis zu einem gewissen Ladezustand (z.B. bis 80 %) geladen werden?
 
-Nein. Es gibt aber die Möglichkeit mit EVCC über die APIs, die von vielen Fahrzeugherstellern angeboten werden, den Ladezustand abzufragen. EVCC kann dann einen WARP Charger so steuern, dass nur bis zu einem gewissen Ladezustand geladen wird. [Die Einrichtung von EVCC wird hier beschrieben.](/evcc.md)
+Nein. Es gibt aber die Möglichkeit mit EVCC über die APIs, die von vielen Fahrzeugherstellern angeboten werden, den Ladezustand abzufragen. EVCC kann dann einen WARP Charger so steuern, dass nur bis zu einem gewissen Ladezustand geladen wird. [Die Einrichtung von EVCC wird hier beschrieben.](/smart_home/evcc.md)
 
 ### Ist es möglich den Ladestrom auf unter 6 Ampere zu konfigurieren?
 

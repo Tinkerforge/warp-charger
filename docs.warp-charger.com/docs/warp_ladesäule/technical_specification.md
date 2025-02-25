@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Spezifikation
+# Technische Spezifikation
 
 Die WARP Ladesäule ist mit einem oder zwei WARP Chargern und in Edelstahl oder pulverbeschichtet erhältlich.
 Die Säulen zeichnen sich durch folgende technische Spezifikation aus:

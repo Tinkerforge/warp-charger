@@ -12,9 +12,13 @@ Der WARP Energy Manager zeichnet sich durch folgende technische Spezifikation au
 |-|-|
 | PV-Überschussladen | max. 64 WARP Charger |
 | Lastmanagement | Statisch / dynamisch integriert, max. 64 WARP Charger |
-| Heizungssteuerung | SG-Ready |
-| Features | Dynamische Strompreise, PV-Prognose
-| Abmessungen | 70 × 90 × 63 mm (B/H/T, Bounding Box) |
+| Heizungssteuerung | 1x SG-Ready (PV-Nutzung, dynamische Strompreise)|
+| Eingänge | 4x Eingang für potentialfreien Kontakt |
+| Ausgänge | 2x Relaisausgang (potentialfrei) |
+| Features | Dynamische Strompreise, PV-Prognose, Fernzugriff, iOS und Android App |
+| Netzwerk | LAN, WLAN |
+| Display | 320 x 240 Pixel TFT |
+| Abmessungen | 70 × 90 × 63 mm (B/H/T) |
 | Anbringung | Hutschienenmontage (4TE) |
 | Schutzklasse | II |
 | Lieferumfang | WARP Energy Manager, Betriebsanleitung, RJ45-LAN-Winkeladapter, steckbare Schraubklemmen |
