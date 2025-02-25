@@ -10,6 +10,8 @@ Fehlerzustände werden vom WARP Energy Manager 2.0 LED des Fronttasters rot darg
 
 ### Display ist aus, Fronttaster-LED leuchtet nicht
 
+Vermutlich ist der WARP Energy Manager ohne Strom. Prüfe den 230V Stromanschluss und die interne Sicherung.
+
 ### Display ist aus, Fronttaster-LED leuchtet grün
 
 Die Hintergrundbeleuchtung des Displays geht nach einer Zeit Inaktivität aus. Das Drücken des Fronttasters  weckt es wieder auf.

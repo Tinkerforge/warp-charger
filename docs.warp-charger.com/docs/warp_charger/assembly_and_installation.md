@@ -24,7 +24,7 @@ Im Lieferumfang der Wallbox befinden sich:
     -   [Bohrschablone](https://www.warp-charger.com/documents/WARP3_Bohrschablone.pdf)
 
 Bei den Varianten Smart und Pro zusätzlich:
--   drei NFC-Karten
+-   Drei NFC-Karten
 
 Die Wallbox wird in einer Wellpappverpackung geliefert, der Umschlag mit dem
 Zubehör befindet sich in der oberen ebene der Verpackung. Das Kabel ist in der
@@ -70,6 +70,8 @@ die entsprechende Öffnung im Gehäuse passt. Bei einer Montage auf einer
 Steinwand können beispielsweise
 5×80 mm-Holzschrauben mit
 8×50 mm-Dübeln verwendet werden.
+
+Die Bohrschablone gibt es hier auch zum Download: [Bohrschablone WARP Charger 3](https://www.warp-charger.com/documents/WARP3_Bohrschablone.pdf)
 
 ### Anforderungen an die Elektroinstallation
 
@@ -185,6 +187,16 @@ Die Schalterstellung und der damit verbundene maximale Ladestrom dürfen
 nach der Installation nur von einer ausgewiesenen Elektrofachkraft unter
 Berücksichtigung der genannten Bedingungen geändert werden!
 
+:::note
+
+Wird kein maximaler Ladestrom eingestellt (0A), so geht die Wallbox
+in einem Fehlerzustand. 
+
+:::
+
+
+
+
 ### LAN- / RJ45-Kabel anfertigen
 
 Um den WARP3 Charger mittels LAN anzubinden, muss ein LAN- / RJ45-Kabel
@@ -264,6 +276,6 @@ Ladekabels definiert wird.
 Zusätzlich befindet sich hier der Abschalteingang ("EN"). Dieser Eingang
 muss mit PE kurzgeschlossen werden, um aktiv zu sein. PE ist mehrfach
 auf dem Klemmblock vorhanden. Zur Konfiguration des Abschalteingangs
-siehe [Steuerbare Verbrauseinrichtung nach §14a EnWG](/warp_charger/verbrauchseinrichtung.md).
+siehe [Steuerbare Verbrauseinrichtung nach §14a EnWG](/docs/tutorials/verbrauchseinrichtung.md).
 
 ![image](/img/warp3_shared_with_manual/resized/evse_clamp.jpg)
