@@ -14,8 +14,7 @@ https://warp-charger.com/downloads zurückgegeriffen werden.
 
 
 
-Vielen Dank, dass du dich für einen WARP Energy Manager 2.0 von Tinkerforge entschieden hast!
-Mit dem WARP Energy Manager erhältst du unseren Energiemanager zur Schaltschrankmontage,
+Mit dem WARP Energy Manager bieten wir dir unseren Energiemanager zur Schaltschrankmontage,
 mit dem du den Energieverbrauch zu Hause überwachen, steuern und optimieren kannst.
 
 ![image](/img/wem2_shared_with_manual/energymanager_2_face_side_800-white.jpg)

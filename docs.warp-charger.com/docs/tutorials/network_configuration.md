@@ -2,15 +2,21 @@
 sidebar_position: 2
 ---
 
+
+# Netzwerk-Konfiguration
+
+:::note
+
 Die Netzwerk-Konfiguration für WARP Charger und WARP Energy Manager
 ist im wesentlichen identisch. Beide Geräte können per WLAN oder LAN
 in ein Netzwerk eingebunden werden. Da der WARP Energy Manager typischerweise
 in einer Verteilung eingebaut wird, empfehlen wir hier die Nutzung von LAN.
 
-# Netzwerk-Konfiguration
+:::
 
-Um weitere Einstellungen durchführen zu können, muss zuerst eine
-Verbindung zum Energiemanager hergestellt werden, damit diese über das
+
+Damit das Gerät (WARP Charger oder WARP Energy Manager) konfiguriert werden kann,
+muss zuerst eine Verbindung zum Gerät hergestellt werden, damit diese über das
 Webinterface mittels Webbrowser konfiguriert werden kann.
 
 ## Schritt 1: Verbindung zum WARP Charger / WARP Energy Manager herstellen

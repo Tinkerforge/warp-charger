@@ -32,7 +32,7 @@ Der WARP3 Charger zeichnet sich durch folgende technische Spezifikation aus:
 | Anbringung | [Siehe Bohrschablone](https://www.warp-charger.com/documents/WARP3_Bohrschablone.pdf) |
 | Gewicht | Je nach Kabellänge, ca. 8 kg (*) |
 | Schutzart | IP54 (spritzwassergeschützt, für den Außenbereich geeignet) |
-| Lieferumfang | Wallbox, Betriebsanleitung inkl. Installationsanleitung, Bohrschablone, Prüfprotokoll, 3 NFC‐Karten |
+| Lieferumfang | Wallbox, Betriebsanleitung inkl. Installationsanleitung, Bohrschablone, Prüfprotokoll, 3x NFC‐Karten |
 
 ### Software Eigenschaften
 
@@ -42,7 +42,8 @@ Der WARP3 Charger zeichnet sich durch folgende technische Spezifikation aus:
 | Phasenumschaltung | Intern zwischen einphasig und dreiphasig |
 | CP-Trennung | Automatische Simulation von an- und abstecken des Kabels zum Aufwecken von Autos |
 | Zugangsverriegelung | NFC (RFID), Webinterface, API |
-| Lastmanagement | Statisch / dynamisch integriert, max. 32 WARP Charger |
+| Lastmanagement | Statisch / dynamisch integriert, max. 64 WARP Charger |
+| Lademodi | PV-Überschussladen, Eco-Modus mit dynamischen Strompreisen und PV-Prognose, Schnellladen |
 | NFC‐Tags | 3 NFC Karten im Lieferumfang, max. 32 anlernbar |
 | NFC Typen | NFC Forum Typ1, Typ2, Typ3 und Mifare Classic unterstützt (auch eigene Karten anlernbar) |
 | Benutzer | Max. 32 konfigurierbar |

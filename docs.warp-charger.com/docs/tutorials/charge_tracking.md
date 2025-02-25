@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Ladelogbuch
+# Einrichten des Ladelogbuchs
 
 ## Funktionsweise
 
