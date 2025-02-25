@@ -121,6 +121,8 @@ def print_error(*args):
 
 
 def main():
+    v1_lines = {}
+
     for name in glob.glob('*_firmware_v1.txt'):
         prefix = name.replace('_v1.txt', '')
         size = os.stat(name).st_size
@@ -134,9 +136,22 @@ def main():
             continue
 
         with open(name, 'r') as f:
-            last_semver = None
+            v1_lines[prefix] = list(f.readlines())
 
-            for line in f.readlines():
+    for name in glob.glob('*_firmware_v2.txt'):
+        prefix = name.replace('_v2.txt', '')
+
+        if prefix not in v1_lines:
+            print_error(f'{prefix}_v1.txt is missing')
+
+        with open(name, 'r') as f:
+            last_semver = None
+            lines = list(f.readlines())
+
+            if prefix in v1_lines and lines[:len(v1_lines[prefix])] != v1_lines[prefix]:
+                print_error(f'{prefix}_v1.txt is not matching the beginning of {prefix}_v2.txt')
+
+            for line in lines:
                 semver = parse_semver(line)
 
                 if semver == None:
