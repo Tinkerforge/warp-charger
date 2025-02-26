@@ -7,8 +7,8 @@ sidebar_position: 2
 ### Lieferumfang
 
 Im Lieferumfang der Ladesäule befinden sich:
--   Edelstahlstele
--   gewählte WARP3 Charger Wallboxen inkl. Zubehör
+-   Ladesäule
+-   Falls vormontiert: Gewählte WARP3 Charger Wallboxen inkl. Zubehör
 -   Befestigungsmaterial
     -   1x Montagehilfe
     -   4x M8 Schrauben
@@ -95,7 +95,7 @@ Beschreibung für diese Variante. Alternativ kann auch die Ladesäule ohne
 Vorinstallation bestellt werden. Die Verteilergehäuse fehlen dann und
 die Wallboxen müssen direkt angeschlossen werden.
 
-![image](/img/stand_shared_with_manual/warp-charger-stand-back-opened.jpg)
+![image](/img/stand/warp-charger-stand-back-opened.jpg)
 
 Im Verteilergehäuse befinden sich Klemmen vom Typ SRK 10 oder
 vergleichbar. Es können ein- und mehrdrähtige Leiter mit einem
@@ -104,7 +104,7 @@ Querschnitt von bis zu 10 mm² angeschlossen werden. Die Abisolierlänge
 beträgt 10 mm. Der Anschluss erfolgt anhand der Beschriftung der Klemmen
 im Verteilergehäuse.
 
-![image](/img/stand_shared_with_manual/warp-charger-stand-clamps.jpg)
+![image](/img/stand/warp-charger-stand-grey-back-opened-detail2.jpg)
 
 Anschließend sind die in der Betriebsanleitung des WARP3 Chargers
 geforderten Prüfungen für die Wallboxen durchzuführen.
@@ -120,6 +120,3 @@ anzuschließen und die Erdung zu überprüfen.
 Zum Anschluss der Ethernetleitung dient ebenfalls ein Verteilergehäuse.
 Im Gehäuse können die bestehenden Ethernetleitungen der Wallbox
 angeschlossen werden.
-
-![image](/img/stand_shared_with_manual/warp-charger-stand-eth.jpg)
-

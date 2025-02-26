@@ -1,13 +1,13 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 
-# Netzwerk-Konfiguration
+# Erste Schritte
 
 :::note
 
-Die Netzwerk-Konfiguration für WARP Charger und WARP Energy Manager
+Die Erstinbetriebnahme für WARP Charger und WARP Energy Manager
 ist im wesentlichen identisch. Beide Geräte können per WLAN oder LAN
 in ein Netzwerk eingebunden werden. Da der WARP Energy Manager typischerweise
 in einer Verteilung eingebaut wird, empfehlen wir hier die Nutzung von LAN.
@@ -141,24 +141,25 @@ Die LAN- und WLAN-Verbindung sollten nicht gleichzeitig zum selben
 Netzwerk bzw. IP-Bereich verbunden sein, da es sonst zu
 Verbindungsproblemen kommen kann.
 
-### WireGuard
-
-Mit WireGuard kann der WARP Charger / WARP Energy Manager mittels einer verschlüsselten Verbindung
-in ein virtuelles privates Netzwerk (VPN) eingebunden werden. WireGuard
-wird von verschiedenen Routern direkt unterstützt. Das VPN kann zum
-Beispiel genutzt werden, um aus der Ferne auf das Gerät zuzugreifen.
-
-Die notwendigen Parameter sind WireGuard-spezifisch und werden an dieser
-Stelle nicht gesondert erläutert. Weitere Informationen finden sich auf
-https://www.wireguard.com.
-
-![image](/img/first_steps/network_wireguard.png)
-
-Ist der WARP Charger / WARP Energy Manager per WLAN (Accesspoint) oder LAN mittels Browser
-erreichbar, kann die weitere Konfiguration durchgeführt werden. 
-
 ## Schritt 3: Firmware-Aktualisierung
 
 Generell empfehlen wir, nach der Installation ein Update der
 Geräte-Firmware durchzuführen, um die neusten Funktionen und ggf.
-Bugfixes zu erhalten.
+Bugfixes zu erhalten. Besitzt das Netzwerk einen Internetzugriff, so kann
+einfach mittels Knopfdruck nach einer neuen Firmware gesucht und diese
+installiert werden.
+
+Ist kein Internetzugriff über das Netzwerk möglich, so kann die Firmware
+auch extern heruntergeladen und manuell installiert werden.
+
+## Schritt 4: Konfiguration
+
+Nachdem der WARP Charger oder WARP Energy Manager nun in ein Netzwerk eingebunden
+wurde und über die neuste Firmware verfügt kann mit der Konfiguration begonnen werden.
+
+Die Konfiguration richtet sich nach den individuellen Gegebenheiten.
+Ein WARP Charger ist von Werk aus so konfiguriert, dass Ladevorgänge direkt
+nach dem Anschließen eines Fahrzeugs beginnen. NFC Nutzerfreigaben, Lastmanagement,
+das Einrichten anderer Geräte (Stromzähler) oder ein PV-Überschussladen kann nun konfiguriert werden.
+
+Für viele Themen bieten wir Tutorials.

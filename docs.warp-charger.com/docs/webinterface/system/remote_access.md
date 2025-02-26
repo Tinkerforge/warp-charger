@@ -1,5 +1,5 @@
 ---
-sidebar_position: 9
+sidebar_position: 3
 ---
 
 # Fernzugriff
@@ -30,5 +30,6 @@ Alternativ gibt es einen Knopf zum Entfernen auf der Übersichtsseite des Fernzu
 Coming soon.
 
 ### Android App
-Coming soon.
+
+Unsere Android App ist im Android Playstore verfügbar: [WARP Charger Android App](https://play.google.com/store/apps/details?id=com.tinkerforge.warp)
 
