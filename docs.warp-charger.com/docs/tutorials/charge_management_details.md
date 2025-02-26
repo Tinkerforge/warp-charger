@@ -20,7 +20,7 @@ graph TB
     supply-->charger_3["WARP Charger 32"]
 ```
 
-Das Lastmanagement kann über einen [kompatiblen Stromzähler](/compatible_meters.md) den Netzanschluss überwachen und bietet damit folgende Funktionen, die einzeln oder kombiniert verwendet werden können:
+Das Lastmanagement kann über einen [kompatiblen Stromzähler](/compatible_devices/meters.md) den Netzanschluss überwachen und bietet damit folgende Funktionen, die einzeln oder kombiniert verwendet werden können:
 
 - **Dynamisches Lastmanagement**: Der Lastmanager stellt sicher, dass der Netzanschluss nicht überlastet wird, auch wenn andere (ungesteuerte) Verbraucher den Netzanschluss dynamisch belasten.
 - **PV-Überschussladen**: Der Lastmanager stellt sicher, dass nur der PV-Überschuss verwendet wird, um Fahrzeuge zu laden.

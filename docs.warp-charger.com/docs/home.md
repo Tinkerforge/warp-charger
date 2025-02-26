@@ -38,8 +38,8 @@ Egal ob neue Ideen, Bugreports oder Beta-Tester wir freuen uns über die intensi
 
 WARP Energy Manager 2.0, WARP3 Charger Smart und WARP3 Charger Pro können
 in andere Systeme mittels den offenen Schnittstellen eingebunden werden:
-* [MQTT/HTTP API](/interfaces/mqtt_http/getting_started.md)
-* [Modbus-Schnittstelle](/interfaces/modbus/configuration.md)
+* [MQTT/HTTP API](/interfaces/mqtt_http/introduction.md)
+* [Modbus-Schnittstelle](/interfaces/modbus/introduction.md)
 * [OCPP](/interfaces/ocpp.md) (nur WARP Charger)
 
 #### Verzicht auf Cloud
