@@ -4,8 +4,8 @@ sidebar_position: 1
 
 # Status
 
-Die Statusseite unterscheidet sich zwischen einem WARP3 Charger und
-einem WARP Energy Manager. Sie stellt generelle Informationen zu dem
+Die Statusseite unterscheidet sich zwischen einem [WARP3 Charger](/docs/warp_charger/introduction) und
+einem [WARP Energy Manager 2.0](/docs/warp_energy_manager/introduction). Sie stellt generelle Informationen zu dem
 Zustand des Geräts bereit. Zum Teil bietet sie auch
 Einstellungsmöglichkeiten, so zum Beispiel das Umschalten des Lademodus
 von Wallboxen.
