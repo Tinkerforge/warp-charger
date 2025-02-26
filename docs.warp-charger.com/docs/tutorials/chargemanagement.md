@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 4
 ---
 
 # Lastmanagement
@@ -14,7 +14,7 @@ um zum Beispiel den Hausanschluss nicht zu überlasten. Dieser Gesamtstrom kann 
 Webinterface und die API gesetzt werden.
 
 Wenn ein Zähler am Hausanschluss vorhanden ist und vom Lastmanager ausgelesen werden kann
-(siehe [kompatible Stromzähler](/compatible_meters.md)), kann das dynamische Lastmanagement verwendet werden,
+(siehe [kompatible Geräte](/compatible_devices/introduction.md)), kann das dynamische Lastmanagement verwendet werden,
 das sicherstellt, dass der Hausanschluss nie durch die WARP Charger überlastet wird, auch wenn andere Verbraucher
 zu- oder abgeschaltet werden. Außerdem kann dann das PV-Überschussladen verwendet werden.
 
@@ -32,7 +32,7 @@ verfügbare Strom nicht überschritten wird.
 Der Lastmanager verteilt den verfügbaren Strom möglichst fair zwischen
 Wallboxen, die laden bzw. ladebereit sind, stellt sicher,
 dass die Zuleitung zu den Wallboxen und der Hausanschluss nicht überlastet werden,
-nutzt gegebenenfalls einen vorhandenen PV-Überschuss aus (siehe [PV-Überschussladen](/warp_charger/pv_excess_charging.md))
+nutzt gegebenenfalls einen vorhandenen PV-Überschuss aus (siehe [PV-Überschussladen](/tutorials/pv_excess_charging.md))
 und versucht Schaltvorgänge zu minimieren.
 
 ## Schritt 1: Konfiguration fremdgesteuerte Wallboxen
@@ -85,7 +85,7 @@ Damit das dynamische Lastmanagement verwendet werden kann, muss zunächst ein
 Stromzähler hinzugefügt werden, der die Phasenströme am Hausanschluss messen kann.
 Dieser kann, so gewünscht, auch für ein PV-Überschussladen verwendet werden,
 das dynamische Lastmanagement kann aber auch ohne PV-Anlage verwendet werden.
-Der Abschnitt [Konfiguration Stromzähler](/warp_charger/pv_excess_charging.md#add_meter) beschreibt,
+Der Abschnitt [Konfiguration Stromzähler](/tutorials/pv_excess_charging.md#add_meter) beschreibt,
 wie ein Zähler hinzugefügt wird.
 
 Nachdem ein Zähler hinzugefügt wurde, kann auf der `Energiemanagement`
@@ -236,4 +236,4 @@ Wenn die Pha­sen­ro­ta­ti­on aller oder auch nur eines Teils der ge­steu­
 
 ### Lastmanagement-Details
 
-[Hier finden sich Details zur Funktionsweise des Lastmanagements.](/warp_charger/charge_management_details.md)
+[Hier finden sich Details zur Funktionsweise des Lastmanagements.](/tutorials/charge_management_details.md)

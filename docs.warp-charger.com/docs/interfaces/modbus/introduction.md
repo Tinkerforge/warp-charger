@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Konfiguration
+# Einführung
 
 Das Modbus-Protokoll ist ein Kommunikationsprotokoll welches es in
 verschiedenen Varianten gibt.

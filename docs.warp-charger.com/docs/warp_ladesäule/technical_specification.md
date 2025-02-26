@@ -13,25 +13,25 @@ Die Säulen zeichnen sich durch folgende technische Spezifikation aus:
 |-|-|
 | Anzahl WARP Charger | 1‐2 |
 | Abmessungen | 300 × 1500 × 100 mm (B/H/T), siehe Unten für Details |
-| Lieferumfang | Ladesäule mit 1 oder 2 WARP Chargern, Bodenplatte, Lochbildschablone |
+| Lieferumfang | Ladesäule mit 1 oder 2 WARP Chargern (auf Wunsch vorverdrahtet), Montagehilfe, Lochbildschablone |
 
-### Eigenschaften pulverbeschicht
+### Eigenschaften verzinkter Stahl DB703 pulverbeschicht
 
 | Eigenschaft | Wert |
 |-|-|
 | Material | Stahl, verzinkt |
 | Materialstärke | 2,0 mm |
-| Gewicht | 19,6 kg |
+| Gewicht | ca. 25 kg ohne Wallboxen |
 | Farbe | DB703, Eisenglimmerlack |
 
 
-### Eigenschaften Edelstahl
+### Eigenschaften V4A Edelstahl
 
 | Eigenschaft | Wert |
 |-|-|
 | Material | V4A |
 | Materialstärke | 1,5 mm |
-| Gewicht | 19,8 kg |
+| Gewicht | ca. 22 kg ohne Wallboxen|
 | Farbe | Edelstahl |
 
 ### Maße der Ladesäule mit einem WARP Charger
