@@ -15,7 +15,7 @@ Die PV-Ertragsprognose ist in folgende Produkte integriert:
 
 :::
 
-Wenn eine PV-Anlage vorhanden ist, kann eine PV-Ertragsprognose von [forecast.solar](https://forecast.solar/) verwendet werden um die [Heizungssteuerung](/doc/webinterface/energy_management/heating.md) (Energy Manager) und den [Ladeplan des Eco-Modus](/doc/webinterface/energy_management/eco_mode.md) zu verbessern.
+Wenn eine PV-Anlage vorhanden ist, kann eine PV-Ertragsprognose von [forecast.solar](https://forecast.solar/) verwendet werden um die [Heizungssteuerung](/docs/webinterface/energy_management/heater.md) (Energy Manager) und den [Ladeplan des Eco-Modus](/docs/webinterface/energy_management/eco_mode.md) zu verbessern.
 
 Dazu muss das Feature unter `Energiemanagement -> PV-Ertragsprognose` aktiviert werden.
 

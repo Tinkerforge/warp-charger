@@ -25,7 +25,7 @@ Kontakt (spannungsfreier Schaltkontakt) angeschlossen werden. Dazu muss
 eine Steuerleitung vom Rundsteuerempfänger oder der Steuerbox des
 Netzbetreibers in die Wallbox gelegt und am Ladecontroller angeschlossen
 werden. Für Details zum Anschluss am Klemmbock siehe
-[Montage und Installation](assembly_and_installation.md#evse-klemmblock--abschalteingang).
+[Montage und Installation](/docs/warp_charger/assembly_and_installation.md#evse-klemmblock--abschalteingang).
 
 In der Standardkonfiguration der Wallbox wird auf 4200 W limitiert, wenn
 der Abschalteingang geschlossen ist. Dieses Verhalten kann im
