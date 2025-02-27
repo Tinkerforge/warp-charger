@@ -57,7 +57,7 @@ für das PV-Überschussladen der Zähler am Netzanschluss, der den PV-Überschus
 kann. Dazu muss der Zähler den Wert "Wirkleistung (Bezug minus Einspeisung) Summe
 über L1, L2, L3" liefern.
 
-![image](/img/first_steps/pv_add_meter.png)
+![image](/img/tutorials/pv_excess_charging/pv_add_meter.png)
 
 Es können unterschiedliche Zählerarten hinzugefügt werden. Es werden
 Geräte (für gewöhnlich Wechselrichter) unterstützt die SunSpec
@@ -72,7 +72,7 @@ Im folgenden Beispiel für wir einen KOSTAL Smart Energy Meter als
 Zähler hinzugefügt. Dafür muss nur einmal die IP-Adresse des Zählers
 eingetragen werden und auf "Suche Starten" geklickt werden.
 
-![image](/img/first_steps/pv_add_meter_sunspec.png)
+![image](/img/tutorials/pv_excess_charging/pv_add_meter_sunspec.png)
 
 Danach muss noch einmal auf übernehmen geklickt werden und dann auf
 "Speichern" damit die neuen Einstellungen übernommen werden.
@@ -80,14 +80,14 @@ Danach muss noch einmal auf übernehmen geklickt werden und dann auf
 Der Zähler taucht dann in der Liste der Zähler auf und wird auch im
 Ladeverlauf angezeigt.
 
-![image](/img/first_steps/pv_add_meter_sunspec_kostal.png)
+![image](/img/tutorials/pv_excess_charging/pv_add_meter_sunspec_kostal.png)
 
 ## Schritt 2: Konfiguration Überschussladen
 
 Nachdem der Zähler hinzugefügt wurde kann das PV-Überschussladen unter
 `Energiemanagement` -> `PV-Überschussladen` konfiguriert werden.
 
-![image](/img/first_steps/pv_configuration.png)
+![image](/img/tutorials/pv_excess_charging/pv_configuration.png)
 
 Folgende Einstellungen können vorgenommen werden:
 

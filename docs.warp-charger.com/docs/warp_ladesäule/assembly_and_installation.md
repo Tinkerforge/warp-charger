@@ -58,7 +58,7 @@ ist in der Montagehilfe eine Ovale-Aussparung mit Außenabmessungen von
 der Kabel sorgen. Schutzhüllen müssen mindestens 300 mm aus dem Beton
 herausreichen. Ein Erdungsanschluss ist zwingend erforderlich.
 
-![image](/img/stand_shared_with_manual/stand_overview.jpg)
+![image](/img/warp_ladesäule/stand_overview.jpg)
 
 ### Montage der Ladesäule
 
@@ -73,7 +73,7 @@ Befestigungsschrauben. Nach dem Auftstellen der Stele auf die Schrauben
 kann diese mittels der zuvor entfernten Unterlegscheiben und Muttern auf
 das Fundament geschraubt werden.
 
-![image](/img/first_steps/installation_stand_cropped.jpg)
+![image](/img/warp_ladesäule/installation_stand_cropped.jpg)
 
 ## Elektrischer Anschluss
 
@@ -95,7 +95,7 @@ Beschreibung für diese Variante. Alternativ kann auch die Ladesäule ohne
 Vorinstallation bestellt werden. Die Verteilergehäuse fehlen dann und
 die Wallboxen müssen direkt angeschlossen werden.
 
-![image](/img/stand/warp-charger-stand-back-opened.jpg)
+![image](/img/warp_ladesäule/warp-charger-stand-back-opened.jpg)
 
 Im Verteilergehäuse befinden sich Klemmen vom Typ SRK 10 oder
 vergleichbar. Es können ein- und mehrdrähtige Leiter mit einem
@@ -104,7 +104,7 @@ Querschnitt von bis zu 10 mm² angeschlossen werden. Die Abisolierlänge
 beträgt 10 mm. Der Anschluss erfolgt anhand der Beschriftung der Klemmen
 im Verteilergehäuse.
 
-![image](/img/stand/warp-charger-stand-grey-back-opened-detail2.jpg)
+![image](/img/warp_ladesäule/warp-charger-stand-grey-back-opened-detail2.jpg)
 
 Anschließend sind die in der Betriebsanleitung des WARP3 Chargers
 geforderten Prüfungen für die Wallboxen durchzuführen.

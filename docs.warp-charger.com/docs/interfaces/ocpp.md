@@ -19,7 +19,7 @@ hinzugefügt werden. Wir nutzen in diesem Beispiel https://ladefoxx.one.
 Die notwendingen Einstellungen sind allerdings auf jede Cloud bzw
 jeden OCPP-Server vorzunehmen.
 
-![image](/img/first_steps/ocpp_configuration_ladefoxx.png)
+![image](/img/interfaces/ocpp/ocpp_configuration_ladefoxx.png)
 
 Auf ladefoxx.one wird insbesondere die Ladepunkt-Identität eingetragen
 (im Screenshot "Controller ID" genannent). Diese gibt der WARP Charger vor.
@@ -28,7 +28,7 @@ Nach dem Speichern wird dann von der Cloud ein Passwort oder Hex-Key
 bereitgestellt. Dieses muss zusammen mit mit der passenden Endpoint-URL
 beim WARP Charger unter `Schnittstellen` -> `OCPP` eingetragen werden
 
-![image](/img/first_steps/ocpp_configuration_warp.png)
+![image](/img/interfaces/ocpp/ocpp_configuration_warp.png)
 
 Wenn das eingegebene Passwort exakt 40 Zeichen lang ist und nur aus
 Hexadezimal-Zeichen (0-9, A-F, a-f) besteht, wird es als Hex-Key

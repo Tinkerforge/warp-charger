@@ -32,7 +32,7 @@ der Abschalteingang geschlossen ist. Dieses Verhalten kann im
 Webinterface unter `Wallbox` -> `Einstellungen` angepasst
 werden.
 
-![image](/img/first_steps/14enwg_input.png)
+![image](/img/tutorials/verbrauchseinrichtung/14enwg_input.png)
 
 ### Rundsteuerempfänger/Steuerbox mittels WARP Energy Manager
 
@@ -45,11 +45,11 @@ Manager muss hierfür als Lastmanager der betreffenden Wallbox(en)
 konfiguriert werden. Anschließend muss in `Energiemanager` ->
 `Automatisierung` folgende Regel angelegt werden:
 
-![image](/img/first_steps/14enwg_wem_add_rule.png)
+![image](/img/tutorials/verbrauchseinrichtung/14enwg_wem_add_rule.png)
 
 Statt 6 A muss bei einphasigem Betrieb 18 A ausgewählt werden.
 
 In der Automatisierungsliste sieht die hinzugefügte Automatisierungsregel
 dann wie folgt aus
 
-![image](/img/first_steps/14enwg_wem_rule_added.png)
+![image](/img/tutorials/verbrauchseinrichtung/14enwg_wem_rule_added.png)

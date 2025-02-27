@@ -14,4 +14,4 @@ des WARP Chargers oder des WARP Energy Managers notwendig.
 
 Ist keine Internetverbindung vorhanden kann auch eine Firmwaredatei manuell hochgeladen und installiert werden.
 
-![image](/img/first_steps/firmware_update.png)
+![image](/img/webinterface/system/firmware_update.png)

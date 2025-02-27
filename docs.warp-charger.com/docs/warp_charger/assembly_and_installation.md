@@ -30,7 +30,7 @@ Die Wallbox wird in einer Wellpappverpackung geliefert, der Umschlag mit dem
 Zubehör befindet sich in der oberen ebene der Verpackung. Das Kabel ist in der
 unteren ebene aufgerollt.
 
-![image](/img/first_steps/packaging_opened.jpg)
+![image](/img/warp_charger/packaging_opened.jpg)
 
 ### Montageort
 
@@ -47,12 +47,12 @@ Zur Montage der Wallbox muss der Deckel entfernt werden. Dazu müssen die
 vier Kreuzschlitzschrauben (rot) gelöst werden. Nach dem Lösen der
 Schrauben kann dieser von der Wallbox heruntergenommen werden.
 
-![image](/img/warp3_shared_with_manual/resized/warp_screw_points_ready.jpg)
+![image](/img/warp_charger/warp_screw_points_ready.jpg)
 
 Der Taster im Deckel ist über ein Anschlusskabel verbunden und muss
 durch Drücken des Rasthebels (blau) vom Kabel gelöst werden.
 
-![image](/img/warp3_shared_with_manual/resized/warp3_frontLEDcable_arrow.jpg)
+![image](/img/warp_charger/warp3_frontLEDcable_arrow.jpg)
 
 Zusätzlich muss der Erdungsstecker (grün) von der Frontblende abgesteckt
 werden. Erst danach kann der Deckel vollständig zur Seite gelegt werden.
@@ -98,7 +98,7 @@ Dazu muss der Deckel entfernt werden.
 
 ### Anschluss der Zuleitung
 
-![image](/img/warp3_shared_with_manual/resized/warp_cable_cut_ready.jpg)
+![image](/img/warp_charger/warp_cable_cut_ready.jpg)
 
 Die Zuleitung sollte für alle Varianten wie auf dem Foto oben abgebildet
 angefertigt werden. Wir empfehlen, das Kabel dafür auf einer Länge von
@@ -111,7 +111,7 @@ in einer kleinen Schlaufe über den Klemmenblock geführt und an den
 freien Federklemmplätzen angeschlossen. Die Adern werden anhand der
 Reihenfolge und Klemmenbeschriftungen in die Klemmen gesteckt.
 
-![image](/img/warp3_shared_with_manual/resized/warp3_smart_open_connected.jpg)
+![image](/img/warp_charger/warp3_smart_open_connected.jpg)
 
 Als Letztes muss die Kabelverschraubung festgezogen werden. Die
 Verschraubung hat einen Klemmbereich von 11 mm bis 22 mm und soll laut
@@ -135,7 +135,7 @@ Bohrungen an der Unterseite eingeschraubt werden. Die Kabeleinführungen
 werden anschließend von der Rückseite in das Wallbox-Gehäuse
 eingeschraubt.
 
-![image](/img/warp3_shared_with_manual/resized/warp3_back.jpg)
+![image](/img/warp_charger/warp3_back.jpg)
 
 ### Variante mit werkseitig angeschlossener Zuleitung
 
@@ -170,7 +170,7 @@ geöffnet werden. Über vier DIP-Schalter rechts auf dem Ladecontroller
 (EVSE) wird der maximale Ladestrom wie folgt eingestellt (maximal
 zulässiger Ladestrom in grau):
 
-![image](/img/warp3_shared_with_manual/resized/warp3_switch_location.jpg)
+![image](/img/warp_charger/warp3_switch_location.jpg)
 
 Die verschiedenen Schalterstellungen sind im nachfolgenden Foto
 dokumentiert. Im Werkszustand sind die Schalter so eingestellt, dass die
@@ -181,7 +181,7 @@ ca. 4 kW (3×6 A) vorgegeben. Wird die Wallbox nur
 einphasig angeschlossen, können vom Fahrzeug maximal 1,4 kW (1×6 A)
 über die Wallbox bezogen werden.
 
-![image](/img/first_steps/hardware_dip_vertical.png)
+![image](/img/warp_charger/hardware_dip_vertical.png)
 
 Die Schalterstellung und der damit verbundene maximale Ladestrom dürfen
 nach der Installation nur von einer ausgewiesenen Elektrofachkraft unter
@@ -207,7 +207,7 @@ eingesteckt werden kann. Wir empfehlen, das Kabel in einem Bogen links
 über den Klemmblock zu führen. Es können auch größere, zum Beispiel
 werkzeuglose oder RJ45-Stecker mit einem LSA-Anschluss, genutzt werden.
 
-![image](/img/warp3_shared_with_manual/resized/warp3_pro_open_highlighted_LAN.jpg)
+![image](/img/warp_charger/warp3_pro_open_highlighted_LAN.jpg)
 
 ## Prüfungen
 
@@ -278,4 +278,4 @@ muss mit PE kurzgeschlossen werden, um aktiv zu sein. PE ist mehrfach
 auf dem Klemmblock vorhanden. Zur Konfiguration des Abschalteingangs
 siehe [Steuerbare Verbrauseinrichtung nach §14a EnWG](/docs/tutorials/verbrauchseinrichtung.md).
 
-![image](/img/warp3_shared_with_manual/resized/evse_clamp.jpg)
+![image](/img/warp_charger/evse_clamp.jpg)

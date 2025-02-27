@@ -43,7 +43,7 @@ die gesteuert werden sollen, der Fremdsteuerungsmodus unter
 konfiguriert werden. In diesem Modus lädt eine Wallbox nur noch, wenn
 der Ladevorgang vom Lastmanager freigegeben wird.
 
-![image](/img/first_steps/load_management_external_control.jpg)
+![image](/img/tutorials/chargemanagement/load_management_external_control.jpg)
 
 Mehr ist für die fremdgesteuerten Wallboxen nicht einzustellen.
 
@@ -71,13 +71,13 @@ so diese bekannt ist. Der Lastmanager kann bessere Entscheidungen treffen,
 wenn die Phasenrotation (eines Teils) der gesteuerten Wallboxen bekannst ist.
 [Siehe hier für Details](#phase_rotation)
 
-![image](/img/first_steps/load_management_add_wallbox.png)
+![image](/img/tutorials/chargemanagement/load_management_add_wallbox.png)
 
 Nach Zuordnung der Wallboxen muss der "Maximale Gesamtstrom" konfiguriert
 werden. Dieser ist typischerweise die Belastbarkeit der gemeinsamen
 Zuleitung der Wallboxen.
 
-![image](/img/first_steps/load_management_wallbox_added.png)
+![image](/img/tutorials/chargemanagement/load_management_wallbox_added.png)
 
 ## Schritt 3: Konfiguration dynamisches Lastmanagement
 
@@ -91,7 +91,7 @@ wie ein Zähler hinzugefügt wird.
 Nachdem ein Zähler hinzugefügt wurde, kann auf der `Energiemanagement`
 -> `Lastmanagement`-Unterseite das dynamische Lastmanagement aktiviert und konfiguriert werden.
 
-![image](/img/first_steps/load_management_dynamic.png)
+![image](/img/tutorials/chargemanagement/load_management_dynamic.png)
 
 Zunächst muss der eben konfigurierte Stromzähler ausgewählt werden.
 
@@ -119,7 +119,7 @@ können die folgenden Einstellungen hilfreich sein. Diese werden für eine
 einfache Lastverteilung, z.B. 16 A auf zwei Wallboxen, *nicht* benötigt.
 Die Optionen finden sich unter den "Experteneinstellungen".
 
-![image](/img/first_steps/load_management_expert.png)
+![image](/img/tutorials/chargemanagement/load_management_expert.png)
 
 ### Stromverteilungsprotokoll aktiviert
 

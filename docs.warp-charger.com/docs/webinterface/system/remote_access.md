@@ -27,7 +27,7 @@ Um deinen WARP Charger aus dem Fernzugriff zu entfernen reicht es, wenn du den F
 Alternativ gibt es einen Knopf zum Entfernen auf der Übersichtsseite des Fernzugriffs. Bitte beachte, dass dein WARP Charger dabei zwar aus deinem Account entfernt und jeglicher Zugang über den Fernzugriff blockiert wird, der Fernzugriff auf der Wallbox selber bleibt allerdings aktiviert.
 
 ### iOS App
-Unsere iOS App ist im Apple App Store verfügbar: [WARP Charger iOS App](https://apps.apple.com/us/app/warp-by-tinkerforge/id6736695801)
+Unsere iOS App ist im Apple App Storte verfügbar: [WARP Charger iOS App](https://apps.apple.com/us/app/warp-by-tinkerforge/id6736695801)
 
 ### Android App
 

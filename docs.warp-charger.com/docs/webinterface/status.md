@@ -44,6 +44,10 @@ Energiemenge.
 Die Statusseite stellt, sofern aktiviert, auch Informationen zum Lastmanagement dar.
 Zusätzlich werden Informationen zu den Schnittstellen gegeben. Darunter IP-Adressen, die Stärke der WLAN-Verbindung etc.
 
+### Weitere Beispiele
+Beispiele mit Eco-Lademodus und aktiviertem Ladeplan in einem Lastmanagement mit mehreren Wallboxen.
+![image](/img/webinterface/status/warp3-status2.jpeg)
+![image](/img/webinterface/status/warp3-status3.jpeg)
 
 ## Status (WARP Energy Manager)
 

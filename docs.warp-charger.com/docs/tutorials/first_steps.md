@@ -40,8 +40,10 @@ zum Access-Point des Geräts getrennt werden soll, verneint werden.
 
 Wenn die Verbindung mit dem Access-Point des Geräts hergestellt ist,
 kann das Webinterface unter [http://10.0.0.1](http://10.0.0.1) über einen beliebigen
-Browser erreicht werden. Alternativ kann dazu der nebenstehende QR-Code
+Browser erreicht werden. Alternativ kann dazu der nachfolgende QR-Code
 gescannt werden.
+
+![image](/img/tutorials/first_steps/qr-code-10_0_0_1.jpeg)
 
 ### Option 2: LAN
 
@@ -66,7 +68,7 @@ LAN-Schnittstelle zu ermitteln.
 Der WARP Charger / WARP Energy Manager kann per WLAN oder LAN in ein Netzwerk eingebunden werden.
 Im Menüpunkt Netzwerk finden sich alle Einstellungsmöglichkeiten:
 
-![image](/img/first_steps/network_config_with_menu.png)
+![image](/img/tutorials/first_steps/network_config_with_menu.png)
 
 
 Unter Einstellungen kann der Hostname des WARP3 Chargers /
@@ -83,14 +85,14 @@ Eine Möglichkeit, um den WARP Charger / WARP Energy Manager in ein Netzwerk zu 
 mittels WLAN. Durch Drücken des "Netzwerksuche"-Buttons öffnet sich ein
 Menü, in dem das gewünschte WLAN ausgewählt werden kann.
 
-![image](/img/first_steps/network_wifi_search.png)
+![image](/img/tutorials/first_steps/network_wifi_search.png)
 
 Es werden dann
 automatisch Netzwerkname (SSID) und BSSID eingetragen, sowie die
 Verbindung beim Neustart aktiviert. Gegebenenfalls muss jetzt noch die
 Passphrase des gewählten Netzes eintragen werden.
 
-![image](/img/first_steps/network_wifi.png)
+![image](/img/tutorials/first_steps/network_wifi.png)
 
 Die Konfiguration kann jetzt mit dem Speichern-Button abgespeichert
 werden. Das Webinterface startet dann neu und verbindet sich mit dem
@@ -112,7 +114,7 @@ kann er immer aktiv sein oder nur dann, wenn die Verbindung zu einem
 anderen WLAN bzw. zu einem LAN nicht konfiguriert oder fehlgeschlagen
 ist. Außerdem kann der Access-Point komplett deaktiviert werden.
 
-![image](/img/first_steps/network_wifi_ap.png)
+![image](/img/tutorials/first_steps/network_wifi_ap.png)
 
 Wir empfehlen, den Access-Point nie komplett zu deaktivieren, da sonst
 bei einer fehlgeschlagenen Verbindung zu einem anderen Netzwerk das
@@ -132,7 +134,7 @@ ist (IP-Adresse wird per DHCP bezogen). Es ist aber auch möglich, eine
 statische IP-Konfiguration einzutragen, oder, falls gewünscht, die
 LAN-Verbindung komplett zu deaktivieren.
 
-![image](/img/first_steps/network_lan.png)
+![image](/img/tutorials/first_steps/network_lan.png)
 
 Bei einer erfolgreichen Verbindung sollte das Gerät jetzt im LAN unter
 http://[konfigurierter_hostname], z.B. http://warp3-ABC oder http://wem2-ABC erreichbar sein.
