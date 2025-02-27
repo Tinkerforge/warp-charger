@@ -4,22 +4,10 @@ sidebar_position: 6
 
 # Dynamischer Strompreis
 
-:::note
+Wenn ein dynamischer Stromtarif (z.B. über Tibber oder Awattar) vorhanden ist, können die dynamischen Strompreise verwendet werden um die [Heizungssteuerung](/webinterface/energy_management/heater.md) ([WARP Energy Manager](/docs/warp_energy_manager/introduction)) und den [Ladeplan des Eco-Modus](/webinterface/energy_management/eco_mode.md) ([WARP Charger](/docs/warp_charger/introduction)) zu verbessern.
 
-Dynamische Strompreise sind in folgende Produkte integriert:
 
-* WARP2 Charger
-* WARP3 Charger
-* WARP Energy Manager 1.0
-* WARP Energy Manager 2.0
-
-:::
-
-Wenn ein dynamischer Stromtarif (z.B. über Tibber oder Awattar) vorhanden ist, können die dynamischen Strompreise verwendet werden um die [Heizungssteuerung](/webinterface/energy_management/heater.md) (Energy Manager) und den [Ladeplan des Eco-Modus](/webinterface/energy_management/eco_mode.md) zu verbessern.
-
-Dazu muss das Feature unter `Energiemanagement -> Dynamischer Strompreis` aktiviert werden.
-
-![image](/img/dynamic_tariffs/configuration.png)
+![image](/img/webinterface/energy_management/wem2-dynamic_tarrif1.png)
 
 Notwendige Einstellungen sind die Region und die Auflösung welche vom Stromanbieter verwendet werden.
 
@@ -39,4 +27,5 @@ Zur Regelung werden unabhängig von den Zusatzkosten immer nur die dyna­mischen
 
 Nachdem die dynamischen Strompreise konfiguriert und aktiviert sind, gibt es weiter unten auf der Seite eine Übersicht der Strompreise.
 
-![image](/img/dynamic_tariffs/status.png)
+![image](/img/webinterface/energy_management/wem2-dynamic_tarrif2.png)
+

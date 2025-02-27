@@ -9,8 +9,7 @@ sidebar_position: 1
 
 Die Erstinbetriebnahme für WARP Charger und WARP Energy Manager
 ist im wesentlichen identisch. Beide Geräte können per WLAN oder LAN
-in ein Netzwerk eingebunden werden. Da der WARP Energy Manager typischerweise
-in einer Verteilung eingebaut wird, empfehlen wir hier die Nutzung von LAN.
+in ein Netzwerk eingebunden werden.
 
 :::
 
@@ -23,9 +22,19 @@ Webinterface mittels Webbrowser konfiguriert werden kann.
 
 ### Option 1: WLAN
 
+:::note
+
+Da der WARP Energy Manager typischerweise
+in einer Verteilung eingebaut wird, empfehlen wir für diesen die
+Nutzung von LAN.
+
+:::
+
 Im Werkszustand öffnet das Gerät einen WLAN-Access-Point. Über diesen
 kann die Konfiguration des Geräts vorgenommen werden, indem auf das
-Webinterface des Geräts zugegriffen wird.
+Webinterface des Geräts zugegriffen wird. Der Name des WLANs (SSID) und
+das Passwort ist für jedes Gerät individuell.
+Die SSID besitzt die Struktur ***warp3-ABCD*** oder  ***wem2-ABCD***.
 
 Die Zugangsdaten des Access-Points finden sich auf dem
 WLAN-Zugangsdaten-Aufkleber auf der Rückseite der Betriebsanleitung. Es kann
@@ -44,6 +53,20 @@ Browser erreicht werden. Alternativ kann dazu der nachfolgende QR-Code
 gescannt werden.
 
 ![image](/img/tutorials/first_steps/qr-code-10_0_0_1.jpeg)
+
+:::note
+
+Sind die Zugangsdaten zum WLAN-Access-Point nicht mehr bekannt und ist
+die Betriebsanleitung nicht mehr auffindbar, so können die werkseitig
+eingestellten Zugangsdaten wie folgt gefunden werden:
+
+***WARP Charger***: In der Wallbox ist der Zugangsdatenaufkleber auf eines der
+Schütze geklebt.
+
+***WARP Energy Manager***: Der Zugangsdatenaufkleber klebt auf der Unterseite
+der Platine. Um diesen zu sehen muss der Gehäuseboden entfernt werden.
+
+:::
 
 ### Option 2: LAN
 
@@ -154,6 +177,9 @@ installiert werden.
 Ist kein Internetzugriff über das Netzwerk möglich, so kann die Firmware
 auch extern heruntergeladen und manuell installiert werden.
 
+Weitere Informationen gibt es in der Webinterface-Dokumentation:
+[Firmware-Aktualisierung](/docs/webinterface/system/firmware_update.md)
+
 ## Schritt 4: Konfiguration
 
 Nachdem der WARP Charger oder WARP Energy Manager nun in ein Netzwerk eingebunden
@@ -163,5 +189,3 @@ Die Konfiguration richtet sich nach den individuellen Gegebenheiten.
 Ein WARP Charger ist von Werk aus so konfiguriert, dass Ladevorgänge direkt
 nach dem Anschließen eines Fahrzeugs beginnen. NFC Nutzerfreigaben, Lastmanagement,
 das Einrichten anderer Geräte (Stromzähler) oder ein PV-Überschussladen kann nun konfiguriert werden.
-
-Für viele Themen bieten wir Tutorials.

@@ -4,30 +4,17 @@ sidebar_position: 8
 
 # Eco-Modus
 
-:::note
-
-Der Eco-Modus ist in folgende Produkte integriert:
-
-* WARP2 Charger
-* WARP3 Charger
-* WARP Energy Manager 1.0
-* WARP Energy Manager 2.0
-
-:::
-
 Mit dem Eco-Modus ist es möglich Ladevorgänge ökonomisch und ökologisch zu optimieren.
 In die Planung fließen dynamische Strompreise, PV-Ertragsprognose und die
 gewünsche Abfahrtszeit sowie maximale Standzeit des Elektrofahrzeugs ein.
 
 Anhand der Planung wird ein optimierter Ladeplan erstellt. Wird der Eco-Modus auf einem
-WARP Energy Manager oder einem WARP Charger verwendet der als Lastmanager konfiguriert ist,
+[WARP Charger](/docs/warp_charger/introduction) oder [WARP Energy Manager](/docs/warp_energy_manager/introduction) verwendet der als Lastmanager konfiguriert ist,
 werden individuelle Ladepläne für alle verwalteten Wallboxen erstellt.
 
 ## Konfiguration
 
-Der Eco-Modus kann unter Energiemanagement -> Eco-Modus aktiviert und konfiguriert werden.
-
-![image](/img/eco_mode/configuration.png)
+![image](/img/webinterface/energy_management/warp-eco_mode1.png)
 
 Wenn die Ladeplanung aktiviert ist, wird auf der Status-Seite der konfigurierbare Ladeplan angezeigt.
 Es kann folgendes konfiguriert werden:
@@ -51,7 +38,7 @@ Um die Ladeplanung nutzen zu können muss der [Dynamische Strompreis](/docs/webi
 
 Wenn der Eco-Modus aktiviert ist und auf der Status-Seite ein Eco-Lademodus ausgewählt ist, erscheint ein konfigurierbarer Ladeplan:
 
-![image](/img/eco_mode/charge_plan.png)
+![image]((/img/webinterface/energy_management/warp-eco_mode2.png)
 
 Im Ladeplan kann die Abfahrt auf
 
@@ -63,7 +50,7 @@ konfiguriert werden und eine Abfahrtszeit sowie Ladedauer angegeben werden.
 
 Wenn der Eco-Modus auf einem Lastmanager aktiviert ist, dann wird der Ladeplan automatisch auf alle verwalteten WARP Charger angewedet. Die individuellen Ladepläne werden auch auf der Status-Seite angezeigt:
 
-![image](/img/eco_mode/charge_plan_multi.png)
+![image]((/img/webinterface/energy_management/warp-eco_mode3.png)
 
 ## Beispielkonfigurationen
 
