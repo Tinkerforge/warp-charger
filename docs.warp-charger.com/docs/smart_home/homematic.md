@@ -1,3 +1,0 @@
-# Homematic
-
-Coming Soon...

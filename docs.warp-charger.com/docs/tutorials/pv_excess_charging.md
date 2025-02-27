@@ -87,7 +87,7 @@ Ladeverlauf angezeigt.
 Nachdem der Zähler hinzugefügt wurde kann das PV-Überschussladen unter
 `Energiemanagement` -> `PV-Überschussladen` konfiguriert werden.
 
-![image](/img/tutorials/pv_excess_charging/pv_configuration.png)
+![image](/img/tutorials/pv_excess_charging/pv_configuration.jpeg)
 
 Folgende Einstellungen können vorgenommen werden:
 
@@ -111,3 +111,16 @@ wird als das Laden von Fahrzeugen.
 **Wolkenfilter**: Stellt die Trägheit der Regelung ein. Bei wechselnd bewölktem Wetter
 ist es sinnvoll, dass die Regelung träge reagiert, damit kurze
 Schwankungen der PV-Leistung geglättet werden.
+
+### Batteriespeicher
+
+Ist ein Batteriespeicher vorhanden regelt dieser gegen die PV-Überschussregelung an. Wenn der Batteriespeicher über einen [Stromzähler](/docs/webinterface/energy_management/energy_meters) ausgelesen werden kann, kann der Speicher direkt von der Regelung beachtet werden.
+Dazu müssen folgende Einstellungen vorgenommen werden:
+
+**Stromzähler**: Der Stromzähler, der dem Batteriespeicher zugeordnet ist
+
+**Speicherpriorität**: Hier kann konfiguriert werden ob Wallboxen oder der Speicher höher priorisiert werden.
+
+**Energieflussrichtung des Speichers**: Manche Speicher liefern je nach Konfiguration abweichende Vorzeichen beim Laden und dem Entladen. Das verhalten kann hier konfiguriert werden.
+
+**Bezugs- und Einspeisetoleranz**: Der Regelwert auf dem geregelt wird. 

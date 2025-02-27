@@ -5,12 +5,10 @@ sidebar_position: 3
 # Fernzugriff
 
 ### Einführung
-Seit der Firmware Version 2.5.0 ünterstützt dein WARP Charger unseren Fernzugriff. Mit diesen kannst du immer und von überall über [my.warp-charger.com](https://my.warp-charger.com) auf deine Wallbox zugreifen. 
-
-In dieser Anleitung lernst du wie der Fernzugriff funktioniert, welche Maßnahmen wir ergriffen haben um deine Daten best möglich zu schützen und vor allem wie du ihn einrichtest.
+Mit Dem Fernzugriff kannst du immer und von überall über [my.warp-charger.com](https://my.warp-charger.com) auf deinen [WARP Charger](/docs/warp_charger/introduction) oder [WARP Energy Manager](/docs/warp_energy_manager/introduction) zugreifen. 
 
 ### Funktionsweise und Datenschutz
-Kurz und knapp zusammengefasst wird bei jeder Verbindung über den Fernzugriff ein eigenes, verschlüsseltes VPN aufgemacht. Dieses VPN hat nur zwei Teilnehmer, dass Gerät über welches du den Fernzugriff öffnest und deinen WARP Charger. Dadurch können wir sicherstellen, dass nur du Daten von deiner Wallbox abrufen kannst (nichtmal wir können das!).
+Kurz und knapp zusammengefasst wird bei jeder Verbindung über den Fernzugriff ein eigenes, verschlüsseltes VPN aufgemacht. Dieses VPN hat nur zwei Teilnehmer, dass Gerät über welches du den Fernzugriff öffnest und deinen WARP Charger/WARP Energy Manager. Dadurch können wir sicherstellen, dass nur du Daten von deiner Wallbox abrufen kannst (nichtmal wir können das!).
 
 Alle Daten, bis auf deine E-Mail-Adresse und dein (frei wählbarer) Nutzername werden verschlüsselt auf userem Server gespeichert. So, dass auch wir diese Daten nicht entschlüsseln können.
 
@@ -18,6 +16,8 @@ Eine detailiertere Beschreibung, die auch technisch mehr in die Tiefe geht finde
 
 ### Einrichtung
 Zuerst brauchst du einen Account unter [my.warp-charger.com](https://my.warp-charger.com). Bitte beachte, dass du diesen auch bestätigen musst.
+
+![image](/img/webinterface/system/warp-system_remote_access.jpeg)
 
 Danach aktivierst du den Fernzugriff auf deinem WARP Charger unter `System -> Fernzugriff`, trägst einfach deine Zugangsdaten ein, speicherst und startest die Wallbox neu.
 

@@ -10,3 +10,10 @@ Diese Option ist nur für den WARP Energy Manager verfügbar, da dieser über
 kein eigenes Benutzermanagement verfügt.
 
 :::
+
+![image](/img/webinterface/system/wem2-system_login_details.jpeg)
+
+Auf dieser Unterseite kannst du einen Benutzernamen und ein Passwort konfigurieren, mit denen du den Zugriff auf
+das Web Interface des [WARP Energy Managers](/docs/warp_energy_manager/introduction) schützt.
+Zugriffe auf das Webinterface und die HTTP-API sind bei aktivierter Anmeldung nur möglich, wenn die korrekten
+Zugangsdaten angegeben werden.
