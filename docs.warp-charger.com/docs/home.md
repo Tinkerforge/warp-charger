@@ -36,7 +36,7 @@ Egal ob neue Ideen, Bugreports oder Beta-Tester wir freuen uns über die intensi
 
 #### Offene Schnittstellen
 
-WARP Energy Manager 2.0, WARP3 Charger Smart und WARP3 Charger Pro können
+[WARP Energy Manager 2.0](/docs/warp_energy_manager/introduction), [WARP3 Charger Smart und WARP3 Charger Pro](/docs/warp_charger/introduction) können
 in andere Systeme mittels den offenen Schnittstellen eingebunden werden:
 * [MQTT/HTTP API](/interfaces/mqtt_http/introduction.md)
 * [Modbus-Schnittstelle](/interfaces/modbus/introduction.md)
@@ -50,12 +50,12 @@ daraus eine Abrechnung als PDF generiert werden, so erfolgt dies auf der
 Wallbox und in deinem Browser. Also ohne eine Cloud.
 
 In den Fällen, bei denen wir auf Daten aus einer Cloud technisch angewiesen sind
-(z.B.: PV-Prognose, dynamische Strompreise, Fernzugriff), versuchen wir dennoch möglichst
+(z.B.: [PV-Prognose](/docs/webinterface/energy_management/solar_forecast.md), [dynamische Strompreise](/docs/webinterface/energy_management/dynamic_tariffs.md), [Fernzugriff](/docs/webinterface/system/remote_access.md)), versuchen wir dennoch möglichst
 viele Funktionen auf dem jeweiligen Gerät zu implementieren und nicht in der Cloud.
 Das heißt wir versuchen nach Möglichkeit keine Daten in der Cloud zu speichern, sondern
 lokal auf den Geräten.
 
-Als Beispiel ist der Fernzugriff, der auch von den Android und iOS Apps genutzt wird,
+Als Beispiel ist der [Fernzugriff](/docs/webinterface/system/remote_access.md), der auch von den Android und iOS Apps genutzt wird,
 technisch ein VPN Tunnel zwischen dem Browser/der App und dem Gerät (WARP Charger oder WARP Energy Manager).
 Der Datenaustausch erfolgt also zwischen den beiden Teilnehmern und nicht über [my.warp-charger.com](https://my.warp-charger.com).
 
