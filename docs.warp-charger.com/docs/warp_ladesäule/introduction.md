@@ -21,13 +21,13 @@ Die WARP Ladesäule ist in zwei verschiedenen Varianten verfügbar:
 
 Diese Ladesäule besteht aus 1,5mm starken 4VA Edelstahl.
 
-![image](/img/stand/warp-charger-stand-stainless.png)
+![image](/img/warp_ladesäule/warp-charger-stand-stainless.png)
 
 ### Variante Verzinkter Stahl DB703
 
 Diese Ladesäule besteht aus 2,0mm starkem verzinkten Stahl und wurde zusätzlich in DB703 pulverbeschichtet.
 
-![image](/img/stand/warp-charger-stand-powder.png)
+![image](/img/warp_ladesäule/warp-charger-stand-powder.png)
 
 
 
@@ -36,7 +36,7 @@ Diese Ladesäule besteht aus 2,0mm starkem verzinkten Stahl und wurde zusätzlic
 Die WARP Ladesäule besitzt auf der Rückseite zwei Türen. Jede Tür ist mit zwei Drehriegel verschlossen.
 Soll der Zugriff geschützt werden können diese Türen mit Schlössern versehen werden. Diese werden als Zubehör angeboten.
 
-![image](/img/stand/warp_accesoires_lock_stand_pc_key.jpg)
+![image](/img/warp_ladesäule/warp_accesoires_lock_stand_pc_key.jpg)
 
 Es sind mindestens zwei Schlösser pro Ladesäule notwendig. Mit je einem Schloss wird eine Tür auf der
 Rückseite gesichert, indem ein Drehriegel durch ein Schloss ersetzt wird.
@@ -45,7 +45,7 @@ Die Wallboxen können mit einem Schraubendreher geöffnet werden. Sollen diese z
 können spezielle Sicherheitsschrauben eingesetzt werden. Nur mit dem mitgelieferten Spezialbit können dann die Schrauben gedreht werden.
 Diese Sicherheitsschrauben sind ebenfalls als Zubehör erhältlich.
 
-![image](/img/stand/warp_security_screws.jpg)
+![image](/img/warp_ladesäule/warp_security_screws.jpg)
 
 
 

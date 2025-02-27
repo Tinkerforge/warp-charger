@@ -41,7 +41,7 @@ Im Werkszustand sind drei Benutzer mit je einem NFC-Tag eingerichtet. Die
 NFC-Tags sind Teil des Lieferumfangs der Wallbox
 Die Benutzer können unter `Benutzer` -> `Benutzerverwaltung` bearbeitet werden.
 
-![image](/img/first_steps/user_configuration.png)
+![image](/img/tutorials/charge_tracking/user_configuration.png)
 
 Im Screenshot haben wir zusätzlich zu den Default-Benutzern einen "Doku Nutzer"
 hinzugefügt der im auf 16A Ladestrom begrenzt ist.
@@ -60,7 +60,7 @@ NFC-Forum-Typ1, NFC-Forum-Typ2, NFC-Forum-Typ3 und Mifare Classic.
 Es können beliebige NFC-Tags von den unterstützten Typen angelernt werden
 (z.B. die Zutrittskarte vom Fitnessstudio).
 
-![image](/img/first_steps/nfc_configuration.png)
+![image](/img/tutorials/charge_tracking/nfc_configuration.png)
 
 Zum Hinzufügen eins NFC-Tags wieder auf das "+" unten rechts klicken.
 Im Tag-hinzufügen-Fenster werden die zuletzt erkannten NFC-Tags angezeigt.
@@ -69,7 +69,7 @@ einmal an die Wallbox halten um es dann hier auszuwählen.
 
 Im Beispiel ordnen wir dem "Doku Nutzer" ein NFC-Forum-Typ2-Tag zu.
 
-![image](/img/first_steps/nfc_configuration_done.png)
+![image](/img/tutorials/charge_tracking/nfc_configuration_done.png)
 
 Nach dem hinzufügen muss noch gespeichert werden und danach kennt die
 Wallbox einen neuen Benutzer der auch vom Ladelogbuch genutzt wird.
@@ -83,7 +83,7 @@ werden. Außerdem kann das erzeugte Dokument vorgefiltert werden, um
 beispielsweise nur Ladevorgänge eines bestimmten Benutzers in einem
 festgelegten Zeitraum zu erhalten.
 
-![image](/img/first_steps/charge_tracker_export.png)
+![image](/img/tutorials/charge_tracking/charge_tracker_export.png)
 
 Werden die Ladevorgänge als PDF heruntergeladen, so kann zusätzlich ein
 Briefkopf angegeben werden. Dieser kann maximal 6 Zeilen zu je 50
@@ -116,4 +116,4 @@ Feldtrenner ist ein Komma, die Datei wird UTF-8 kodiert.
 Weiter unten auf der `Ladetracker`-Unterseite können die letzten 30
 Ladevorgänge auch direkt eingesehen werden.
 
-![image](/img/first_steps/charge_tracker_records.png)
+![image](/img/tutorials/charge_tracking/charge_tracker_records.png)
