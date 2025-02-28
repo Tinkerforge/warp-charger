@@ -244,7 +244,7 @@ class Elem:
             return self.type_.name.lower()
 
         if self.type_ == EType.UNION:
-            return "[Union](/interfaces/mqtt_http/getting_started.md#unions)"
+            return "[Union](/interfaces/mqtt_http/introduction.md#unions)"
 
         if self.type_ == EType.HIDDEN_UNION:
             raise Exception("not supported")
