@@ -15,7 +15,7 @@ Diese Konfiguration ist nur für [WARP Charger](/docs/warp_charger/introduction)
 
 
 Es können bis zu 32 Benutzer angelegt werden. Einem angelegten Benutzer, dem ein
-NFC-Tag zugeordnet wurde (siehe Abschnitt [NFC](/docs/webinterface/users/nfc)), können vom Ladetracker Ladevorgänge
+NFC-Tag zugeordnet wurde (siehe Abschnitt [NFC](/docs/webinterface/users/nfc-tags.md)), können vom Ladetracker Ladevorgänge
 zugeordnet werden. In der Werkseinstellung sind drei Nutzer angelegt, denen
 jeweils eine der mitgelieferten NFC-Karten zugeordnet wurde. Diese können umbenannt oder gelöscht werden.
 
