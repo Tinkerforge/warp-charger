@@ -17,7 +17,7 @@ https://warp-charger.com/downloads zurückgegeriffen werden.
 Mit dem WARP Energy Manager bieten wir dir unseren Energiemanager zur Schaltschrankmontage,
 mit dem du den Energieverbrauch zu Hause überwachen, steuern und optimieren kannst.
 
-![image](/img/wem2_shared_with_manual/energymanager_2_face_side_800-white.jpg)
+![image](/img/warp_energy_manager/wem2_face_side.jpg)
 
 Der WARP Energy Manager kann abhängig von dynamischen Strompreisen,
 einem Photovoltaik-Überschuss oder dem aktuellen Strom am Netzanschluss Wärmepumpen über die
