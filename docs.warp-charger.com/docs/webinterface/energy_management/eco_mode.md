@@ -38,7 +38,7 @@ Um die Ladeplanung nutzen zu können muss der [Dynamische Strompreis](/docs/webi
 
 Wenn der Eco-Modus aktiviert ist und auf der Status-Seite ein Eco-Lademodus ausgewählt ist, erscheint ein konfigurierbarer Ladeplan:
 
-![image]((/img/webinterface/energy_management/warp-eco_mode2.png)
+![image](/img/webinterface/energy_management/warp-eco_mode2.png)
 
 Im Ladeplan kann die Abfahrt auf
 
@@ -50,7 +50,7 @@ konfiguriert werden und eine Abfahrtszeit sowie Ladedauer angegeben werden.
 
 Wenn der Eco-Modus auf einem Lastmanager aktiviert ist, dann wird der Ladeplan automatisch auf alle verwalteten WARP Charger angewedet. Die individuellen Ladepläne werden auch auf der Status-Seite angezeigt:
 
-![image]((/img/webinterface/energy_management/warp-eco_mode3.png)
+![image](/img/webinterface/energy_management/warp-eco_mode3.png)
 
 ## Beispielkonfigurationen
 

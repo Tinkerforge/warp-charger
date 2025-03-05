@@ -25,18 +25,19 @@ Typ-2-Wallboxen kommunizieren den angeschlossenen Fahrzeugen den maximal zur Ver
 Das Fahrzeug entscheidet, ob dieser Ladestrom voll ausgenutzt wird und ob ein Ladevorgang ein-, zwei oder dreiphasig durchgeführt wird.
 
 
-Handelt es sich um einen WARP Charger, so muss als erste Einstellung konfiguriert werden wie die Wallbox gesteuert wird (***Fremdsteuerung***):
+Handelt es sich um einen WARP Charger, so muss als erste Einstellung konfiguriert werden wie die Wallbox gesteuert wird (**Fremdsteuerung**):
 
- * ***Deaktiviert***: Es findet kein Lastmanagement statt. Die Wallbox ist vollständig eigenständig.
- * ***Fremdgesteuert***: Die Wallbox wird von einem anderen Lastmanager verwaltet. Es müssen keine weiteren Einstellungen vorgenommen werden.
- * ***Lastmanager/PV-Überschussladen***: Die Wallbox arbeitet als Lastmanager. Dies ist auch der Fall, wenn sie nur eigenständig die Funktion [PV-Überschussladen](/docs/tutorials/pv_excess_charging) ausführen soll. Es sind weitere Einstellungen vorzunehmen.
+ * **Deaktiviert**: Es findet kein Lastmanagement statt. Die Wallbox ist vollständig eigenständig.
+ * **Fremdgesteuert**: Die Wallbox wird von einem anderen Lastmanager verwaltet. Es müssen keine weiteren Einstellungen vorgenommen werden.
+ * **Lastmanager/PV-Überschussladen**: Die Wallbox arbeitet als Lastmanager. Dies ist auch der Fall, wenn sie nur eigenständig die Funktion [PV-Überschussladen](/docs/tutorials/pv_excess_charging) ausführen soll. Es sind weitere Einstellungen vorzunehmen.
 
 
 ## Konfiguration Lastmanager
 
 Wird ein WARP Charger oder WARP Energy Manager als Lastmanager konfiguriert sind folgende Einstellungen vorzunehmen:
 
-***Maximale Gesamtstrom***
+### Maximale Gesamtstrom
+
 Dies ist der maximale Strom der Zuleitung zu den Wallboxen gelastmangeten Wallboxen. Der
 Lastmanager stellt sicher, dass dieser Strom auf keiner Phase überschritten wird, indem niemals mehr als dieser Strom an die Wallboxen verteilt wird (statisches Lastmanagement).
 
@@ -52,7 +53,7 @@ Andere Verbraucher als WARP Charger, welche vom Lastmanager nicht gesteuert werd
 :::
 
 
-Am Ende der Seite werden die vom Lastmanager ***Kontrollierten Wallboxen*** konfiguriert und dargestellt.
+Am Ende der Seite werden die vom Lastmanager *Kontrollierten Wallboxen* konfiguriert und dargestellt.
 Weitere Wallboxen können mittels Klick auf *+* hinzugefügt werden. Dazu muss der Anzeigename und die IP-Adresse oder der Hostname der
 Wallbox eingetragen werden und mittels Klick auf *hinzufügen* übernommen werden. Automatisch ermittelte Wallboxen, die noch nicht vom
 Lastmanager gesteuert werden, werden als Liste dargestellt. Fur jede Wallbox kann zusätzlich die Phasenrotation eingestellt werden. Diese Information ist für das dynamische Lastmanagement relevant.
