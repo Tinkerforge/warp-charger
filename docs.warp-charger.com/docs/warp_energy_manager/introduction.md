@@ -6,8 +6,8 @@ sidebar_position: 1
 
 :::note
 
-Diese Beschriebung bezieht sich auf den WARP Energymanager 2.0. Für Informationen zum älteren
-Modell, dem WARP Energy Manager (1.0), kann auf die Betriebsanleitung unter
+Diese Beschriebung bezieht sich auf den WARP Energy Manager 2.0. Für Informationen zum älteren
+Modell (WARP Energy Manager 1.0) kann auf die Betriebsanleitung unter
 https://warp-charger.com/downloads zurückgegeriffen werden.
 
 :::
