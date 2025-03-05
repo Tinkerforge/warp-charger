@@ -57,6 +57,8 @@ für das PV-Überschussladen der Zähler am Netzanschluss, der den PV-Überschus
 kann. Dazu muss der Zähler den Wert "Wirkleistung (Bezug minus Einspeisung) Summe
 über L1, L2, L3" liefern.
 
+Weitere Informationen hierzu gibt es in der Webinterface-Dokumentation: [Stromzähler](/webinterface/energy_management/energy_meters.md)
+
 ![image](/img/tutorials/pv_excess_charging/pv_add_meter.png)
 
 Es können unterschiedliche Zählerarten hinzugefügt werden. Es werden
@@ -111,6 +113,8 @@ wird als das Laden von Fahrzeugen.
 **Wolkenfilter**: Stellt die Trägheit der Regelung ein. Bei wechselnd bewölktem Wetter
 ist es sinnvoll, dass die Regelung träge reagiert, damit kurze
 Schwankungen der PV-Leistung geglättet werden.
+
+Weitere Informationen hierzu gibt es in der Webinterface-Dokumentation: [PV-Überschussladen](/webinterface/energy_management/pv-excess-charging.md)
 
 ### Batteriespeicher
 

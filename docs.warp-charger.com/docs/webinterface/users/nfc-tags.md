@@ -29,3 +29,9 @@ können die Einstellungen gespeichert und die Wallbox neugestartet werden.
 
 Alternativ können Tag-ID und -Typ manuell eingegeben werden. Dies ist zum Beispiel sinnvoll, wenn Tag-ID und
 -Typ mittels externer Geräte (z.B. Smartphone mit passender App) ermittelt und eingetragen werden sollen.
+
+:::note
+
+Es gibt ein Tutorial, welches auch das Nutzermanagement inkl. NFC und Ladelogbuch behandelt: [Einrichten des Ladelogbuchs](/tutorials/charge_tracking.md)
+
+:::

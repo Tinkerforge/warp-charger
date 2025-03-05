@@ -16,7 +16,7 @@ einzuspeisen. Die Maximierung der Eigenstromnutzung steht hier im Vordergrund. D
 ![image](/img/webinterface/energy_management/warp-pv_excess_charging.jpeg)
 
 Folgende Einstellungen können auf der Seite vorgenommen werden:
- * **Uberschussladen aktiviert**: Schaltet den PV-Überschussregler ein oder aus.
+ * **Überschussladen aktiviert**: Schaltet den PV-Überschussregler ein oder aus.
  * **Standardlademodus**: Der Lademodus, der bei einem Neustart des WARP3 Chargers verwendet wird.
  * **Stromzähler**: Der Stromzähler, mit dem der PV-Überschuss gemessen wird. Dieser Stromzähler muss unter [Stromzähler](/docs/webinterface/energy_management/energy_meters) angelegt werden.
  * **Min+PV: Mindestladeleistung**: Legt fest, welche Leistung im *Min+PV*-Lademodus aus dem Netz bezogen werden darf.

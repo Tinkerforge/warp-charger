@@ -17,7 +17,7 @@ zurückgegeriffen werden.
 ### Lieferumfang
 
 Im Lieferumfang der Wallbox befinden sich:
--   vormontierte Wallbox inkl. Deckel
+-   Vormontierte Wallbox inkl. Deckel
 -   DIN-A4-Umschlag mit:
     -   [Betriebsanleitung](https://www.warp-charger.com/documents/WARP3_Betriebsanleitung.pdf)
     -   Testprotokoll der Wallbox
@@ -39,22 +39,22 @@ installiert werden. Direkte Sonneneinstrahlung ist zu vermeiden, um ein
 unnötiges Aufheizen der Wallbox zu verhindern. Auf eine ausreichende
 Belüftung ist zu achten. Die Staubschutzkappe des Typ-2-Steckers sollte
 nicht aufgesteckt werden, wenn sich diese durch Regen o.ä. mit Wasser
-füllen könnte. In diesem Fall droht eine Korrosion der Kontakte.
+füllen könnte. In diesem Fall droht eine Korrosion der Steckerkontakte.
 
 ### Wandmontage
 
 Zur Montage der Wallbox muss der Deckel entfernt werden. Dazu müssen die
-vier Kreuzschlitzschrauben (rot) gelöst werden. Nach dem Lösen der
+vier Kreuzschlitzschrauben (im Bild rot markiert) gelöst werden. Nach dem Lösen der
 Schrauben kann dieser von der Wallbox heruntergenommen werden.
 
 ![image](/img/warp_charger/warp_screw_points_ready.jpg)
 
 Der Taster im Deckel ist über ein Anschlusskabel verbunden und muss
-durch Drücken des Rasthebels (blau) vom Kabel gelöst werden.
+durch Drücken des Rasthebels (blau markiert) vom Kabel gelöst werden.
 
 ![image](/img/warp_charger/warp3_frontLEDcable_arrow.jpg)
 
-Zusätzlich muss der Erdungsstecker (grün) von der Frontblende abgesteckt
+Zusätzlich muss der Erdungsstecker (grün markiert) von der Frontblende abgesteckt
 werden. Erst danach kann der Deckel vollständig zur Seite gelegt werden.
 
 Nach dem Entfernen des Deckels kann das Gehäuse an der Wand montiert
@@ -63,9 +63,9 @@ Bohrschablone genutzt werden. Bei der Montage ist auf einen ausreichend
 stabilen Untergrund zu achten.
 
 Wir empfehlen zur Montage den Einsatz von 5 mm- oder
-6 mm-Schrauben. Die Schraubenlänge ist abhängig vom
+6 mm-Schrauben. Die benötigte Schraubenlänge ist abhängig vom
 Untergrund. Der Schraubenkopfdurchmesser darf nicht mehr als
-11 mm betragen, da ansonsten die Schraube nicht durch
+11 mm betragen, da ansonsten die Schraube nicht in
 die entsprechende Öffnung im Gehäuse passt. Bei einer Montage auf einer
 Steinwand können beispielsweise
 5×80 mm-Holzschrauben mit
@@ -82,16 +82,19 @@ dreiphasig. Dafür sollte ein dreiphasiger Leitungsschutzschalter mit
 C-Charakteristik verwendet werden. Bei einem einphasigen Betrieb der
 Wallbox ist dementsprechend ein einphasiger Leitungsschutzschalter
 einzusetzen. Die Wallbox verfügt über eine interne
-DC-Fehlerstromerkennung, welche bei einem DC-Fehlerstrom ≥ 6 mA
-den Ladevorgang unterbricht. Daher ist nur
-ein vorgeschalteter Typ-A 30-AC-Fehlerstromschutzschalter (RCCB)
+DC-Fehlerstromerkennung. Diese unterbricht den Ladevorgang bei einem DC-Fehlerstrom ≥ 6 mA. 
+Daher ist nur ein vorgeschalteter Typ-A 30mA-AC-Fehlerstromschutzschalter (RCCB)
 notwendig. Die Wallbox darf nur in einem TN / TT-Netz angeschlossen
 werden.
 
 ## Elektrischer Anschluss
 
+:::note
+
 Die in diesem Abschnitt beschriebenen Arbeiten dürfen nur von einer
 ausgewiesenen Elektrofachkraft durchgeführt werden.
+
+:::
 
 Nachdem die Wallbox montiert wurde, kann sie nun angeschlossen werden.
 Dazu muss der Deckel entfernt werden.
@@ -103,7 +106,7 @@ Dazu muss der Deckel entfernt werden.
 Die Zuleitung sollte für alle Varianten wie auf dem Foto oben abgebildet
 angefertigt werden. Wir empfehlen, das Kabel dafür auf einer Länge von
 mindestens 130 mm abzumanteln. Für die Klemmen wird eine Abisolierlänge
-von 10 bis 12 mm vorgegeben.
+von 10 mm bis 12 mm vorgegeben.
 
 Die Zuleitung wird am internen Klemmenblock angeschlossen. Um bei
 starren Leitern maximalen Bewegungsspielraum zu bieten, werden die Adern
@@ -115,14 +118,14 @@ Reihenfolge und Klemmenbeschriftungen in die Klemmen gesteckt.
 
 Als Letztes muss die Kabelverschraubung festgezogen werden. Die
 Verschraubung hat einen Klemmbereich von 11 mm bis 22 mm und soll laut
-Hersteller mit 10 angezogen werden.
+Hersteller mit 10 Nm angezogen werden.
 
 Der korrekte Sitz der Adern und die Phasenzugehörigkeit sind nach der
 Installation zu prüfen! Alle Verschraubungen innerhalb der Wallbox sind
 nachzuziehen. Als Nächstes muss der maximale Ladestrom eingestellt
 werden.
 
-### Kabeleinführung von der Rückseite
+### Alternative: Kabeleinführung von der Rückseite
 
 Die Kabeleinführung des WARP3 Chargers von der Unterseite
 (Auslieferungszustand) kann umgebaut werden, so dass eine
@@ -150,14 +153,14 @@ werden.
 
 ### Einphasiger Betrieb
 
-Alle Wallboxen können auch einphasig angeschlossen und betrieben werden.
+Alle Wallboxen können einphasig angeschlossen und betrieben werden.
 Dazu ist unbedingt die Phase L1 anzuschließen, da diese ebenfalls zur
 Stromversorgung der Wallbox genutzt wird. L2 und L3 werden von der
 Wallbox nur durchgeschaltet und können dementsprechend unangeschlossen
 bleiben.
 
 Ein WARP3 Charger Smart oder Pro sollte im Webinterface auf den
-einphasigen Betrieb konfiguriert werden.
+[einphasigen Betrieb](/webinterface/wallbox/settings.md) konfiguriert werden.
 
 ### Einstellen des Ladestroms
 
@@ -189,7 +192,7 @@ Berücksichtigung der genannten Bedingungen geändert werden!
 
 :::note
 
-Wird kein maximaler Ladestrom eingestellt (0A), so geht die Wallbox
+Wird kein maximaler Ladestrom eingestellt (0A), so befindet sich die Wallbox
 in einem Fehlerzustand. 
 
 :::
@@ -263,7 +266,7 @@ im Webinterface der Wallbox konfiguriert werden.
 
 Zusätzlich verfügen die Wallbox-Varianten Smart und Pro über ein
 NFC-Modul, mit dem eine Ladefreigabe z.B. per Chipkarte möglich ist.
-Eine genaue Beschreibung findet sich im Abschnitt .
+Eine genaue Beschreibung findet sich im Abschnitt [NFC-Tags](/webinterface/users/nfc-tags.md).
 
 ## EVSE Klemmblock / Abschalteingang
 

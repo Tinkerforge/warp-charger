@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Konfiguration und Einrichtung
 
-WARP Charger und WARP Energy Manager basieren auf derselben Software. Folgende Einstellungen sind für den WARP Energy Manager verfügbar:
+[WARP Charger](/docs/warp_charger/introduction.md) und [WARP Energy Manager](/docs/warp_energy_manager/introduction.md) basieren auf derselben Software. Folgende Einstellungen sind für den WARP Energy Manager im Webinterface verfügbar:
  
  * [Status](/docs/webinterface/status.md)
  * EnergyManager

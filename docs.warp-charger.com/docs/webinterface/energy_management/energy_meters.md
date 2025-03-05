@@ -12,7 +12,7 @@ Stromzähler können bei WARP Chargern und beim WARP Energy Manager konfiguriert
 
 ![image](/img/webinterface/energy_management/wem2-energy_meters.jpeg)
 
-Auf dieser Seite kann die Kommunikation mit Stromzählern konfiguriert werden. Da der WARP3 Charger Pro uber einen eingebauten Stromzähler verfügt, ist
+Auf dieser Seite kann die Kommunikation mit Stromzählern konfiguriert werden. Da der WARP3 Charger Pro über einen eingebauten Stromzähler verfügt, ist
 dieser bei allen WARP3 Chargern Pro vorkonfiguriert. Beim WARP3 Charger Smart kann dieser Zähler entfernt werden.
 
 Im Graph wird die gemessene Leistung aller konfigurierten Stromzähler angezeigt, entweder als Verlauf über

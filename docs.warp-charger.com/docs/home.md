@@ -73,7 +73,7 @@ Die Liste der kompatiblen Geräte lässt sich hier finden: [Liste kompatibler Ge
 #### Photovoltaik-Überschussladen
 
 [WARP3 Charger Smart und Pro](/warp_charger/introduction.md)
-können direkt und ohne zusätzliche Hardware ein PV-Überschussladen
+können direkt und ohne zusätzliche Hardware ein [PV-Überschussladen](/tutorials/pv_excess_charging.md)
 durchführen. Das heißt anstatt das überschüssige Energie der PV-Anlage
 in das Stromnetz eingespeist wird, wird diese in das Elektrofahrzeug
 geladen. Dazu muss die Wallbox nur elektrisch angeschlossen und mittels
@@ -88,7 +88,7 @@ messen können, lassen sich im Artikel
 #### Heizung mit dem Photovoltaik-Überschuss betreiben
 
 Analog zum PV-Überschussladen kann ein [WARP Energy Manager 2.0](/warp_energy_manager/introduction.md)
-genutzt werden um eine Wärmepumpe mit SG-Ready Schnittstelle in den erweiterten
+genutzt werden um eine [Wärmepumpe mit SG-Ready Schnittstelle](/webinterface/energy_management/heater.md) in den erweiterten
 Betrieb zu versetzen. Somit kann der PV-Überschuss auch für die Heizung genutzt werden.
 
 ### Dynamische Strompreise
@@ -118,7 +118,7 @@ Netzwerks (LAN, WLAN) befinden. Ein gesonderter Stromzähler ist für das
 #### Nicht ausreichend dimensionierter Netzanschluss - Dynamisches Lastmanagement
 
 Ist der Netzanschluss nicht ausreichend dimensioniert um eine oder
-mehrere Wallboxen betreiben zu können, hilft das dynamische Lastmanagement.
+mehrere Wallboxen betreiben zu können, hilft das [dynamische Lastmanagement](/docs/tutorials/chargemanagement.md).
 Gerade bei größeren Objekten ist der Netzanschluss oftmals rechnerisch ausgereizt,
 wenn angenommen wird, dass alle Verbraucher eingeschaltet werden.
 In der Praxis kommt dies aber eigentlich nie vor, so dass Wallboxen

@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Technische Spezifikation
 
-Der WARP Energy Manager zeichnet sich durch folgende technische Spezifikation aus:
+Der WARP Energy Manager besitzt folgende technische Spezifikation:
 
 ### Eigenschaften
 
