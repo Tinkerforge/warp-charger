@@ -7,7 +7,7 @@ sidebar_position: 1
 
 :::note
 
-Die Erstinbetriebnahme für WARP Charger und WARP Energy Manager
+Die Erstinbetriebnahme für [WARP3 Charger](/warp_charger/introduction.md) und [WARP Energy Manager](/warp_energy_manager/introduction.md)
 ist im wesentlichen identisch. Beide Geräte können per WLAN oder LAN
 in ein Netzwerk eingebunden werden.
 
@@ -48,7 +48,7 @@ möglich ist. Deshalb muss gegebenenfalls die mobile Datenverbindung
 zum Access-Point des Geräts getrennt werden soll, verneint werden.
 
 Wenn die Verbindung mit dem Access-Point des Geräts hergestellt ist,
-kann das Webinterface unter [http://10.0.0.1](http://10.0.0.1) über einen beliebigen
+kann das [Webinterface](/webinterface/status.md) unter [http://10.0.0.1](http://10.0.0.1) über einen beliebigen
 Browser erreicht werden. Alternativ kann dazu der nachfolgende QR-Code
 gescannt werden.
 
@@ -94,13 +94,15 @@ Im Menüpunkt Netzwerk finden sich alle Einstellungsmöglichkeiten:
 ![image](/img/tutorials/first_steps/network_config_with_menu.png)
 
 
-Unter Einstellungen kann der Hostname des WARP3 Chargers /
+Unter [Einstellungen](/webinterface/network/settings.md) kann der Hostname des WARP3 Chargers /
 WARP Energy Manager 2.0 in allen verbundenen
 Netzwerken konfiguriert werden. Außerdem kann mDNS aktiviert oder
 deaktiviert werden. Über mDNS können andere Geräte im Netzwerk das Gerät
 finden. Damit wird zum Beispiel das Einrichten eines
 Lastmanagementverbunds vereinfacht. Zusätzlich kann der Port, auf dem
 das Webinterface erreichbar ist, geändert werden (Standard ist Port 80).
+
+Weitere Informationen hierzu gibt es in der Webinterface-Dokumentation: [Einstellungen](/webinterface/network/settings.md)
 
 ### WLAN-Verbindung
 
@@ -130,6 +132,8 @@ konfigurierten Netzwerk unter
 http://[konfigurierter_hostname], z.B. http://warp3-ABC oder http://wem2-ABC
 erreichbar sein.
 
+Weitere Informationen hierzu gibt es in der Webinterface-Dokumentation: [WLAN-Verbindung](/webinterface/network/wifi-connection.md)
+
 ### WLAN-Access-Point
 
 Der Access-Point kann in einem von zwei Modi betrieben werden: Entweder
@@ -148,6 +152,8 @@ Zurücksetzen auf Werkszustand erreicht werden.
 Der Modus des Access-Points, Netzwerkname, Passphrase usw. können hier
 festgelegt werden.
 
+Weitere Informationen hierzu gibt es in der Webinterface-Dokumentation: [WLAN-Access-Point](/webinterface/network/wifi-accesspoint.md)
+
 ### LAN-Verbindung
 
 Alternativ zur WLAN-Verbindung kann der WARP Charger / WARP Energy Manager auch per LAN
@@ -165,6 +171,8 @@ http://[konfigurierter_hostname], z.B. http://warp3-ABC oder http://wem2-ABC err
 Die LAN- und WLAN-Verbindung sollten nicht gleichzeitig zum selben
 Netzwerk bzw. IP-Bereich verbunden sein, da es sonst zu
 Verbindungsproblemen kommen kann.
+
+Weitere Informationen hierzu gibt es in der Webinterface-Dokumentation: [LAN-Verbindung](/webinterface/network/lan-connection.md)
 
 ## Schritt 3: Firmware-Aktualisierung
 

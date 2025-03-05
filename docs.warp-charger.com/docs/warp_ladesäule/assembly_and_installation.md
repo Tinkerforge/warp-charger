@@ -41,8 +41,8 @@ empfohlen. Auslegung, Konstruktion und Ausführung des Fundaments sind
 Aufgabe des Herstellers des Betonfundaments und gegebenenfalls den
 örtlichen Gegebenheiten anzupassen.
 
-Die Größe des Betonfundaments ist als Mindestgröße anzusehen um einen
-sicheren Stand zu gewährleisten.
+Die Größe des Betonfundaments von 250 mm x 470 mm x 800 mm ist als Mindestgröße 
+anzusehen um einen sicheren Stand zu gewährleisten.
 
 Die Montagehilfe muss wie angegeben mit den mitgelieferten Schrauben,
 Unterlegscheiben und Muttern aufgebaut werden. Die angegebenen Maße sind
@@ -79,13 +79,12 @@ das Fundament geschraubt werden.
 
 Der elektrische Anschluss der Wallboxen erfolgt für jede Wallbox
 separat. Die Hinweise der Elektroinstallation der WARP3 Charger aus
-deren Betriebsanleitung sind zu beachten.
+deren [Montage und Installationsanleitung](/warp_charger/assembly_and_installation.md#montageort) sind zu beachten.
 
 ### Anforderungen an die Elektroinstallation
 
-Die Anforderungen an die Elektroinstallation der gewählten WARP3 Charger
-Wallboxen sind zu beachten. Diese sind der mitgelieferten
-Betriebsanleitung der Wallbox zu entnehmen.
+Die Anforderungen an die [Elektroinstallation](/warp_charger/assembly_and_installation.md#anforderungen-an-die-elektroinstallation) der gewählten WARP3 Charger
+Wallboxen sind zu beachten.
 
 ### Elektrische Installation
 
@@ -106,8 +105,7 @@ im Verteilergehäuse.
 
 ![image](/img/warp_ladesäule/warp-charger-stand-grey-back-opened-detail2.jpg)
 
-Anschließend sind die in der Betriebsanleitung des WARP3 Chargers
-geforderten Prüfungen für die Wallboxen durchzuführen.
+Anschließend sind die in der [Betriebsanleitung des WARP3 Chargers geforderten Prüfungen](/warp_charger/assembly_and_installation.md#prüfungen) für die Wallboxen durchzuführen.
 
 ### Erdung
 

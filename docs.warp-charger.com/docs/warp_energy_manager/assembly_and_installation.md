@@ -53,8 +53,12 @@ die untere Halterung angehoben werden, gefolgt von der oberen Halterung.
 Elektrischer Anschluss
 ----------------------
 
+:::note 
+
 Die in diesem Kapitel beschriebenen Arbeiten dürfen nur von einer
 ausgewiesenen Elektrofachkraft durchgeführt werden!
+
+:::
 
 ![image](/img/wem2_shared_with_manual/wem2_connections_both.jpg)
 

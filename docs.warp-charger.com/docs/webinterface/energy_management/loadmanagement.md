@@ -27,7 +27,7 @@ kann aber auch ohne PV-Anlage verwendet werden. Dieser Stromzähler muss vorher 
 Für das dynamische Lastmanagement sind dann folgende Einstellungen notwendig:
 
 * **Stromzähler**: Stromzähler auf dem das dynamische Lastmanagement regelt.
-* **Maximaler Strom am Netzanschluss**: Maximal zulässiger Phasenstrom am Netzanschluss. Dieser ist typischerweise der Nennwert der Absicherung. Das dynamische Lastmanagment stellt sicher, dass dieser Wert nicht uberschritten wird.
+* **Maximaler Strom am Netzanschluss**: Maximal zulässiger Phasenstrom am Netzanschluss. Dieser ist typischerweise der Nennwert der Absicherung. Das dynamische Lastmanagment stellt sicher, dass dieser Wert nicht überschritten wird.
 * **Strombedarf des größten Eizelverbrauchers**: Zu erwartende Stromverbrauch des größten Verbrauchers. Dieser kann beispielsweise ein Durchlauferhitzer oder eine Wärmepumpe sein, mindestens aber 16 Ampere aus einer Schuko-Dose. Der Wert gibt den größten zu erwartenden
 plötzlichen Sprung des Strombezugs am Zähler an, den das dynamische Lastmanagement kurzfristig (in unter 30 Sekunden) kompensieren können muss.
 * **Zusätzliche Sicherheitsmarge**: Zusätzliche prozentuale Sicherheitsmarge, die vom dynamischen Lastmanagement einkalkuliert wird.

@@ -4,8 +4,8 @@ sidebar_position: 1
 
 # Einführung
 
-Mit der WARP Ladesäule bieten wir dir eine hochwertige Montagemöglichkeit für unsere [WARP Charger](/warp_charger/introduction.md) Wallboxen. Es kann eine WARP Charger Wallbox auf der Vorderseite der ladesäule montiert werden.
-Je nach Ausführung kann eine zweite WARP Charger Wallbox auch auf der Rückseite montiert werden. Eine nachträgliche Umrüstung von einer auf zwei Wallboxen ist denkbar, da nur das Rückteil ausgetauscht werden muss.
+Mit der WARP Ladesäule bieten wir eine hochwertige Montagemöglichkeit für unsere [WARP Charger](/warp_charger/introduction.md) Wallboxen. Es kann eine WARP Charger Wallbox auf der Vorderseite der Ladesäule montiert werden.
+Je nach Ausführung kann eine zweite WARP Charger Wallbox auch auf der Rückseite montiert werden. Eine nachträgliche Umrüstung von einer auf zwei Wallboxen ist denkbar, da nur das Rückteil der Ladesäule ausgetauscht werden muss.
 
 Über eine mitgelieferte Montagehilfe kann das Fundament für die Ladesäule inkl. Kabeleinführung vorbereitet werden. Nach dem Aushärten kann anschließend die Ladesäule einfach auf die Montagehilfe geschraubt werden. Die Montagehilfe führt ein Leerrohr oder
 direkt die Anschlussleitungen in die Säule. Die Befestigungsschrauben sind innenliegend und somit vor einen Zugriff von außen geschützt. Die Säule besitzt eine geteilte Rückwand. Über den unteren Teil der Rückwand sind die Zuleitungen einfach zu erreichen

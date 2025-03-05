@@ -22,7 +22,7 @@ per OCPP kontrolliert werden.
 ## Status-LED-Steuerung
 
 Ermöglicht die Steuerung der Front-LED mit einer externen Steuerung oder über
-die API, z.B. fur eine externe NFC-Freigabe.
+die API, z.B. für eine externe NFC-Freigabe.
 
 ## Boost-Modus
 
@@ -34,7 +34,7 @@ Der Boost-Modus versucht, diesen Effekt auszugleichen, indem ein leicht höherer
 
 Im WARP3 Charger Pro ist ein Stromzähler verbaut. Wenn diese Option aktiviert ist, wird ein Ladevorgang unterbrochen
 bzw. nicht freigegeben, falls der Stromzähler bzw. die Kommunikation mit diesem gestört zu sein scheint. Wenn die
-Zähleruberwachung aktiviert ist, wird somit sichergestellt, dass die geladene Energie zu jedem aufgezeichneten Ladevorgang erfasst wird.
+Zählerüberwachung aktiviert ist, wird somit sichergestellt, dass die geladene Energie zu jedem aufgezeichneten Ladevorgang erfasst wird.
 
 
 ## Zeitlimit
@@ -44,7 +44,7 @@ nächsten oder laufenden Ladevorgang auf der Statusseite überschrieben werden.
 
 ## Energielimit
 
-Setzt beim WARP3 Charger Pro ein generelles Energielimit fur Ladevorgänge. Diese Funktion
+Setzt beim WARP3 Charger Pro ein generelles Energielimit für Ladevorgänge. Diese Funktion
 wird analog zum Zeitlimit eingerichtet.
 
 ## Tastereinstellung
@@ -64,12 +64,12 @@ am Abschalteingang reagiert werden soll. In der Standardkonfiguration der Wallbo
 Die Ladeelektronik mancher Fahrzeuge wechselt in einen Energiesparmodus, falls ein
 Ladevorgang nicht innerhalb einer gewissen Zeit gestartet wird. Der Fahrzeug-Weckruf versucht, solche
 Ladeelektroniken automatisch zu wecken, falls das Fahrzeug nicht innerhalb von 30 Sekunden reagiert, wenn
-Strom zur Verfugung steht. Umgesetzt wird dies durch eine kurzzeitige Trennung des Control-Pilot- bzw. CPSignals.
+Strom zur Verfugung steht. Umgesetzt wird dies durch eine kurzzeitige Trennung des Control-Pilot- bzw. CP-Signals.
 
 
 ***Automatischer Phasenwechsel***
 
-Diese Option steht nur fur den WARP3 Charger Pro zur Verfügung. Ist
+Diese Option steht nur für den WARP3 Charger Pro zur Verfügung. Ist
 die Option aktiviert, wird bei einem laufenden Ladevorgang mit dem internen Stromzähler ermittelt, ob das
 Fahrzeug nur einphasig lädt. Ist dies der Fall, schaltet die Wallbox automatisch auf einphasiges Laden um.
 
@@ -78,5 +78,5 @@ Fahrzeug nur einphasig lädt. Ist dies der Fall, schaltet die Wallbox automatisc
 
 Hier wird konfiguriert, ob die Wallbox dreiphasig oder
 einphasig angeschlossen ist. Ist die Wallbox nur einphasig angeschlossen und hier auch so konfiguriert, wird
-das zweite Schutz für die Phasen L2 und L3 nie geschaltet, außerdem wird die Begrenzung der Ladeleistung
+das zweite Schütz für die Phasen L2 und L3 nie geschaltet, außerdem wird die Begrenzung der Ladeleistung
 nach §14 EnWG entsprechend berechnet.

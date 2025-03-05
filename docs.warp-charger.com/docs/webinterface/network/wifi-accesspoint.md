@@ -27,3 +27,9 @@ zu einem anderen Netzwerk das Webinterface nicht mehr erreicht werden kann.
 
 
 Der Modus des Access-Points, Netzwerkname, Passphrase usw. sollten selbsterklärend sein und können hier festgelegt werden
+
+:::note
+
+Ein Routing zwischen dem Access-Point und dem anderen Netzwerk (LAN, WLAN) wird nicht unterstützt. Der Access-Point kann also nicht genutzt werden um einen WLAN-Access-Point der zu einem LAN verbindet zu ersetzen.
+
+:::

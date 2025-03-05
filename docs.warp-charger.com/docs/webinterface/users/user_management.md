@@ -49,3 +49,9 @@ oder nach einem Zurücksetzen auf den Werkszustand wieder darauf
 zugegriffen werden.
 
 :::
+
+:::note
+
+Es gibt ein Tutorial, welches auch das Nutzermanagement inkl. NFC und Ladelogbuch behandelt: [Einrichten des Ladelogbuchs](/tutorials/charge_tracking.md)
+
+:::

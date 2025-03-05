@@ -17,7 +17,7 @@ graph TB
     meter---->consumer["Andere Verbraucher"]
     supply-->charger_1["WARP Charger 1"]
     supply-->charger_2["..."]
-    supply-->charger_3["WARP Charger 32"]
+    supply-->charger_3["WARP Charger 64"]
 ```
 
 Das Lastmanagement kann über einen [kompatiblen Stromzähler](/compatible_devices/meters.md) den Netzanschluss überwachen und bietet damit folgende Funktionen, die einzeln oder kombiniert verwendet werden können:

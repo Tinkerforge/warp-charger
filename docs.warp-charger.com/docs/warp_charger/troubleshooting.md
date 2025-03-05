@@ -4,8 +4,7 @@ sidebar_position: 5
 
 # Fehlerbehebung
 
-Fehlerzustände werden von der Wallbox durch die LED im Fronttaster rot dargestellt. Bei den Varianten WARP3 Charger Smart und WARP3 Charger Pro gibt das Webinterface bzw. die Ladestatus-Unterseite weitere Informationen.
-Weitere Informationen hierzu gibt es auch in der [PDF Betriebsanleitung](https://www.warp-charger.com/downloads/)
+Fehlerzustände werden von der Wallbox durch die LED im Fronttaster rot dargestellt. Bei den Varianten WARP3 Charger Smart und WARP3 Charger Pro gibt das Webinterface bzw. die [Ladestatus-Unterseite](/webinterface/wallbox/charge_status.md) weitere Informationen.
 
 ## Fehlersuche
 
@@ -100,7 +99,7 @@ welches alle Werte des Ladevorgangs aufzeichnet.
 ## Lastmanagementfehler
 
 Bei der Verwendung des Lastmanagements können zwei Arten von Fehlern auftreten: Wallbox-Fehler, die nur eine spezifische Wallbox betreffen, und Management-Fehler, bei deren Auftreten das Laden an allen gesteuerten Wallboxen gestoppt wird.
-Wallbox-Fehler müssen an der entsprechenden Wallbox behoben werden. Hier hilft die [PDF Betriebsanleitung](https://www.warp-charger.com/downloads/) weiter.
+Wallbox-Fehler müssen an der entsprechenden Wallbox behoben werden. Hier hilft der [Ladestatus](/webinterface/wallbox/charge_status.md) der jeweiligen Wallbox weiter.
 
 Im Folgenden wird die Diagnose von Management-Fehlern erläutert:
 

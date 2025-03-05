@@ -14,8 +14,8 @@ https://warp-charger.com/downloads zurückgegeriffen werden.
 
 
 
-Mit dem WARP Energy Manager bieten wir dir unseren Energiemanager zur Schaltschrankmontage,
-mit dem du den Energieverbrauch zu Hause überwachen, steuern und optimieren kannst.
+Mit dem WARP Energy Manager bieten wir unseren Energiemanager zur Schaltschrankmontage,
+mit dem der Energieverbrauch zu Hause überwacht, gesteuert und optimiert werden kann.
 
 ![image](/img/warp_energy_manager/wem2_face_side.jpg)
 
@@ -28,7 +28,7 @@ Verbindung mit WARP Charger Wallboxen Elektrofahrzeuge laden. Auch die Steuerung
 
 Der WARP Energy Manager verfügt über folgende Features:
 
- * Integriertes lokales Energiemonitoring
+ * Integriertes lokales Energiemonitoring (Datenspeicherung auf dem Gerät)
  * Steuerung von Wärmepumpen mittels SG-Ready-Schnittstelle
  * Vier Eingänge für potentialfreie Kontake, z.B.: §14a EnwG - Steuerbare Verbrauchseinrichtung
  * Zwei Relaisausgänge zur Ansteuerung weiterer Verbraucher
@@ -36,15 +36,17 @@ Der WARP Energy Manager verfügt über folgende Features:
  * Steuerung von Batteriespeichern (zukünftig)
  * Zugriff auf Stromzähler am Netzanschluss, Photovoltaik-Wechselrichter, Batteriespeicher
  * Photovoltaik-Überschussnutzung
- * Statisches und dynamisches Lastmanagement
+ * Statisches und dynamisches Lastmanagement von WARP Chargern
  * Photovoltaik-Prognose
  * Dynamische Strompreise
 
 ### Integriertes Energiemonitoring
 Die Messwerte der Stromzähler stellt der WARP Energy Manager in seinem Webinterface dar. Dort wird angezeigt,
-wie groß die Leistung ist, die aus dem Stromnetz bezogen bzw., (falls du eine Photovoltaik-Anlage besitzt) eingespeist wird. Zusätzlich können weitere Daten, zum Beispiel
+wie groß die Leistung ist, die aus dem Stromnetz bezogen bzw., (falls eine Photovoltaik-Anlage vorhanden ist) eingespeist wird. Zusätzlich können weitere Daten, zum Beispiel
 von PV-Wechselrichtern und Batteriespeichern, oder der dynamische Strompreis angezeigt werden. Leistungs- und weitere Messwerte werden dir live auf dem Webinterface
 dargestellt.
+
+![image](/img/webinterface/status/wem2-status.jpeg)
 
 Alle fünf Minuten werden die Messwerte lokal auf der microSD-Karte des Energiemanagers gespeichert. Damit
 ist der WARP Energy Manager unabhängig von Datenaufzeichnungen auf Cloud-Servern. Diese Daten kannst du
@@ -60,7 +62,7 @@ Mit verschiedenen Einstellungen kannst du definieren, unter welchen Bedingungen 
 
 
 ### SG-Ready-Schnittstelle zur Ansteuerung von Wärmepumpen
-Der WARP Energy Manager besitzt eine SG-ReadySchnittstelle mit der Wärmepumpen gesteuert werden können. Diese besteht laut Standard aus zwei Relais-Ausgängen. Mit einem Ausgang kann die Wärmepumpe
+Der WARP Energy Manager besitzt eine [SG-Ready Schnittstelle](/webinterface/energy_management/heater.md) mit der Wärmepumpen gesteuert werden können. Diese besteht laut Standard aus zwei Relais-Ausgängen. Mit einem Ausgang kann die Wärmepumpe
 vollständig blockiert werden, zum Beispiel wenn der Strompreis einen Schwellwert ubersteigt. Die Wärmepumpe kann mit dem zweiten Ausgang in einen erweiterten Betrieb
 versetzt werden, bei dem die Heizkreis- und Warmwassertemperaturen etwas erhöht werden. Damit lassen sich zum
 Beispiel ein Photovoltaik-Überschuss oder günstige Strompreise effizient nutzen. Ist keiner der Ausgänge geschaltet
@@ -76,25 +78,25 @@ Diese Eingänge können fur vom Anwender konfigurierbare Regeln genutzt werden. 
 EnWG vom Energy Manager gesteuerte Wallboxen und die Wärmepumpe in der Leistung zu reduzieren.
 
 ### Fronttaster mit Display
-Ein 320x240 Pixel TFT Display zeigt Systeminformationen an. Dazu können bis zu sechs Kacheln vom Nutzer auf dem
-Display konfiguriert werden. Der Anzeigewert jeder Kachel kann vom Nutzer festgelegt werden. Es können zum Beispiel die Leistung am Netzanschluss, Zustandsinformationen von Wallboxen, der Status der SG-Ready-Schnittstelle,
-der Wert des dyn. Strompreis etc. angezeigt werden. Das Display schaltet sich nach 5 Minuten inaktivität ab.
+Ein 320x240 Pixel TFT Display zeigt Systeminformationen an. Dazu kann die Anzeige der sechs Kacheln auf dem
+Display konfiguriert werden. Es können zum Beispiel die Leistung am Netzanschluss, Zustandsinformationen von Wallboxen, der Status der SG-Ready-Schnittstelle,
+der Wert des dynamischen Strompreises etc. angezeigt werden. Das Display schaltet sich nach 5 Minuten Inaktivität ab.
 
-Zusätzlich verfugt der WARP Energy Manager über einen Fronttaster. Durch Drucken dieses Tasters kann zwischen verschiedenen Screens gewechselt werden. Zusätzlich zeigt
-die Farbe des Tasters an ob es Probleme gibt (Farbe rot) oder nicht (Farbe grun).
+Zusätzlich verfügt der WARP Energy Manager über einen Fronttaster. Durch Drücken dieses Tasters kann zwischen verschiedenen Screens gewechselt werden. Zusätzlich zeigt
+die Farbe des Tasters an ob es Probleme gibt (Farbe rot) oder nicht (Farbe grün).
 
 ## Anwendungen
 
 ### PV-Überschussnutzung
 
-Besitzt du eine Photovoltaik-Anlage, möchtest du vermutlich möglichst viel von deinem produzierten Strom selbst nutzen. Der WARP Energy Manager kann
-dir dabei helfen, indem Elektrofahrzeuge mit diesem Strom geladen werden (PV-Überschussladen). Der Strom kann aber auch genutzt werden um zum Beispiel eine Wärmepumpe im erweiterten Betrieb
+Ist eine Photovoltaik-Anlage vorhanden, möchte man möglichst viel vom selbst produzierten Strom nutzen. Der WARP Energy Manager kann
+dabei helfen, indem Elektrofahrzeuge mit diesem Strom geladen werden ([PV-Überschussladen](/tutorials/pv_excess_charging.md)). Der Strom kann aber auch genutzt werden um zum Beispiel eine Wärmepumpe im erweiterten Betrieb
 zu betreiben. Zusätzlich können an den Relaisausgängen weitere Verbraucher, wie zum Beispiel Heizstäbe, angeschlossen werden. Der Energy Manager kann diese dann zum Beispiel einschalten, wenn trotz
 Elektrofahrzeug-Ladung und Ansteuern der Wärmepumpe noch PV-Überschuss übrig ist.
 
 Für die PV-Überschussnutzung benötigt der WARP Energy Manager einen Stromzähler an deinem Stromnetzanschluss, um den Überschuss, d.h. die Einspeisung von
 elektrischer Leistung ins Stromnetz, zu ermitteln. Der WARP Energy Manager steuert dann die Geräte so, dass keine Leistung ins Netz eingespeist wird
-(Netzbezug = 0) oder aber ein definierter Netzbezug eingehalten wird. Dies ist abhängig von deinen Einstellungen.
+(Netzbezug = 0) oder aber ein definierter Netzbezug eingehalten wird. Dies ist abhängig von den Einstellungen. Siehe dazu die [Liste kompatibler Stromzähler](/docs/compatible_devices/introduction.md).
 
 Entscheidend ist hier, dass nur eine Leistungsregelung stattfindet, die einzelnen Phasenströme werden nicht geregelt. Da der Netzbetreiber-Stromzähler, der die Stromkosten ermittelt, saldierend arbeitet, ist eine Phasenstromregelung nicht notwendig.
 
@@ -102,7 +104,7 @@ Entscheidend ist hier, dass nur eine Leistungsregelung stattfindet, die einzelne
 
 Teilen sich mehrere Wallboxen eine gemeinsame Zuleitung, ist oft der Maximalstrom durch diese Zuleitung begrenzt. Als Beispiel könnten sich mehrere
 Wallboxen eine 32A Leitung teilen. Zwei Wallboxen könnten jeweils als 11kW Wallboxen (2x16A) betrieben werden. Es wäre aber auch möglich, eine
-Wallbox mit 32kW (32A) zu betreiben, wenn die zweite Wallbox nicht genutzt wird. Für diese Anwendungen kommt das statische Lastmanagement zum Einsatz.
+Wallbox mit 32kW (32A) zu betreiben, wenn die zweite Wallbox nicht genutzt wird. Für diese Anwendungen kommt das [statische Lastmanagement](/docs/tutorials/chargemanagement.md) zum Einsatz.
 
 Der WARP Energy Manager kann das statische Lastmanagement für die Wallboxen übernehmen. Hierbei ist kein Stromzähler notwendig, es ist nur der
 Maximalstrom der Zuleitung zu definieren. Dieser Strom muss jederzeit zur Verfügung stehen. Der Energiemanager verteilt den Strom
@@ -110,7 +112,7 @@ je nach Anforderung an die kontrollierten Wallboxen.
 
 ### Dynamisches Lastmanagement
 
-In manchen Fällen ist ein dynamisches Lastmanagement auf Phasenstromebene erforderlich. Ein typisches Beispiel dafür sind Mietobjekte, bei denen der Stromnetzanschluss der
+In manchen Fällen ist ein [dynamisches Lastmanagement](/docs/tutorials/chargemanagement.md) auf Phasenstromebene erforderlich. Ein typisches Beispiel dafür sind Mietobjekte, bei denen der Stromnetzanschluss der
 Immobilie nicht ausreicht, um mehrere Wallboxen gleichzeitig zu betreiben. Die Absicherung des Netzanschlusses beschränkt den zulässigen Phasenstrom.
 
 Im einfachsten Fall kann für alle Wallboxen ein bestimmter Phasenstrom garantiert werden. In diesem Fall können die Wallboxen ein statisches Lastmanagement durchführen,

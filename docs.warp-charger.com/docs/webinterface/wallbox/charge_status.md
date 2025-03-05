@@ -6,7 +6,7 @@ sidebar_position: 2
 
 ![image](/img/webinterface/wallbox/warp-charge_status.jpeg)
 
-Die Unterseite Ladestatus gibt Auskunft uber den Zustand des
+Die Unterseite Ladestatus gibt Auskunft über den Zustand des
 Ladecontrollers (EVSE) und dessen Hardwarekonfiguration.
 Probleme beim Laden können mithilfe der
 Informationen auf dieser Seite diagnostiziert werden.
@@ -25,7 +25,7 @@ Grenzen.
 
 Folgende Grenzen können Teil der Berechnung sein:
 
- * **Zuleitung**: Maximalstrom der Zuleitung zum WARP3 Charger. Dieser wird uber die Schalter auf dem Ladecontroller konfiguriert.
+ * **Zuleitung**: Maximalstrom der Zuleitung zum WARP3 Charger. Dieser wird über die Schalter auf dem Ladecontroller konfiguriert.
 
  * **Typ-2-Ladekabel**: Maximalstrom des Typ-2-Ladekabels.
 
@@ -69,7 +69,7 @@ Die Farbmarkierung neben einer Grenze hat folgende Bedeutung:
 
 ## Hardware-Konfiguration
 
-Unter der Uberschrift Hardware-Konfiguration werden Informationen zur verbauten Hardware aufgeführt.
+Unter der Überschrift Hardware-Konfiguration werden Informationen zur verbauten Hardware aufgeführt.
 
 ## Ladeprotokoll
 

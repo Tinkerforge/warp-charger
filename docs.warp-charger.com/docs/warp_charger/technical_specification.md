@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Technische Spezifikation
 
-Der WARP3 Charger zeichnet sich durch folgende technische Spezifikation aus:
+Der WARP3 Charger besitzt folgende technische Spezifikation:
 
 ### Elektrische Eigenschaften
 
@@ -14,11 +14,11 @@ Der WARP3 Charger zeichnet sich durch folgende technische Spezifikation aus:
 | Nennspannung | 230 V 1-phasig AC / 400 V 3-phasig AC |
 | Nennfrequenz | 50 Hz |
 | Stromverbrauch | Basic / Smart ≤ 3 W; Pro ≤ 5 W (Standby, WLAN aktiv) |
-| Nennstrom | 16 A / 32 A (*) |
+| Nennstrom | 16 A / 32 A (abhängig von Variante 11 kW/22 kW) |
 | Betriebstemperatur | ‐25 °C bis +50 °C (Durchschnitt in 24 h: < 35 °C) |
 | Fehlerstromerkennung | DC 6 mA (integriert) |
 | Strommessung | Integrierter MID‐geeichter Stromzähler nach EU‐Messgeräterichtlinie 2014/32/EU (nur Pro) |
-| §14a EnWG steuerbar | Mittels internen Abschalteingang, über Schnittstellen oder WARP Energy Manager |
+| §14a EnWG steuerbar | Mittels internen Abschalteingang, über Schnittstellen oder [WARP Energy Manager](/docs/warp_energy_manager/introduction.md) |
 
 ### Mechanische Eigenschaften
 

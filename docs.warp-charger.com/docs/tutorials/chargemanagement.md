@@ -5,9 +5,9 @@ sidebar_position: 4
 # Lastmanagement
 
 Mit dem Lastmanagement ist es möglich, einen verfügbaren
-Gesamt-Ladestrom zwischen bis zu 32 WARP Chargern aufzuteilen. Hierbei
+Gesamt-Ladestrom zwischen bis zu 64 WARP Chargern aufzuteilen. Hierbei
 wird ein WARP Charger oder ein WARP Energy Manager als Lastmanager konfiguriert, der die weiteren bis zu
-31 Wallboxen im Verbund steuert und ihnen Ladeströme zuweist.
+63 Wallboxen im Verbund steuert und ihnen Ladeströme zuweist.
 
 Ohne Stromzähler am Hausanschluss kann ein fester Gesamtstrom verteilt werden,
 um zum Beispiel den Hausanschluss nicht zu überlasten. Dieser Gesamtstrom kann über das
@@ -47,6 +47,8 @@ der Ladevorgang vom Lastmanager freigegeben wird.
 
 Mehr ist für die fremdgesteuerten Wallboxen nicht einzustellen.
 
+Weitere Informationen hierzu gibt es in der Webinterface-Dokumentation: [Wallboxen](/webinterface/energy_management/wallboxes.md)
+
 ## Schritt 2: Konfiguration Lastmanager
 
 :::info
@@ -78,6 +80,8 @@ werden. Dieser ist typischerweise die Belastbarkeit der gemeinsamen
 Zuleitung der Wallboxen.
 
 ![image](/img/tutorials/chargemanagement/load_management_wallbox_added.png)
+
+Weitere Informationen hierzu gibt es in der Webinterface-Dokumentation: [Lastmanagement](/webinterface/energy_management/loadmanagement.md)
 
 ## Schritt 3: Konfiguration dynamisches Lastmanagement
 
@@ -176,7 +180,7 @@ WARP Charger Pro können den realen Strombezug des Fahrzeugs pro Phase
 messen. Mit dieser Information kann das Lastmanagement effizienter Strom
 verteilen: Falls beispielsweise der Strombezug eines Fahrzeug sinkt,
 weil der Akku bald voll ist, oder ein Fahrzeug, das nur mit 16 laden
-kann, an einer 32 Wallbox angeschlossen ist, kann der übrige Strom auf
+kann, an einer 64 Wallbox angeschlossen ist, kann der übrige Strom auf
 andere Wallboxen im Lastmanagementverbund verteilt werden.
 
 Damit ein Fahrzeug mehr Strom anfordern kann, darf das Lastmanagement

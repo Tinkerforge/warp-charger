@@ -41,6 +41,8 @@ Im Werkszustand sind drei Benutzer mit je einem NFC-Tag eingerichtet. Die
 NFC-Tags sind Teil des Lieferumfangs der Wallbox
 Die Benutzer können unter `Benutzer` -> `Benutzerverwaltung` bearbeitet werden.
 
+Weitere Informationen hierzu gibt es in der Webinterface-Dokumentation: [Benutzerverwaltung](/webinterface/users/user_management.md)
+
 ![image](/img/tutorials/charge_tracking/user_configuration.png)
 
 Im Screenshot haben wir zusätzlich zu den Default-Benutzern einen "Doku Nutzer"
@@ -73,6 +75,8 @@ Im Beispiel ordnen wir dem "Doku Nutzer" ein NFC-Forum-Typ2-Tag zu.
 
 Nach dem hinzufügen muss noch gespeichert werden und danach kennt die
 Wallbox einen neuen Benutzer der auch vom Ladelogbuch genutzt wird.
+
+Weitere Informationen hierzu gibt es in der Webinterface-Dokumentation: [NFC-Tags](/webinterface/users/nfc-tags.md)
 
 ## Ladelog-Export als PDF oder CSV
 
@@ -117,3 +121,5 @@ Weiter unten auf der `Ladetracker`-Unterseite können die letzten 30
 Ladevorgänge auch direkt eingesehen werden.
 
 ![image](/img/tutorials/charge_tracking/charge_tracker_records.png)
+
+Weitere Informationen hierzu gibt es in der Webinterface-Dokumentation: [Ladetracker](/webinterface/wallbox/charge_tracker.md)
