@@ -6,8 +6,8 @@ sidebar_position: 1
 
 :::note
 
-Diese Beschriebung bezieht sich auf den WARP Charger 3.0. Für Informationen zu älteren
-Modellen, dem WARP Charger 2.0 oder WARP Charger 1.0, kann auf die Betriebsanleitung unter
+Diese Beschriebung bezieht sich auf den WARP3 Charger. Für Informationen zu älteren
+Modellen, dem WARP2 Charger oder WARP1 Charger, kann auf die Betriebsanleitung unter
 https://warp-charger.com/downloads zurückgegriffen werden.
 
 :::
@@ -21,7 +21,7 @@ sind Open Source. Die nachfolgende Betriebsanleitung gibt dir alle notwendigen I
 
 ## Features
 
-Die WARP Charger 3 Wallbox verfügt, abhängig von der Variante, über folgende Features:
+Die WARP3 Charger Wallbox verfügt, abhängig von der Variante, über folgende Features:
 
  * Typ 2 Ladekabel (DIN EN 61851-1)
  * 1,4kW bis zu 11kW oder 22kW (je nach Modell), integrierte Phasenumschaltung
@@ -32,7 +32,7 @@ Die WARP Charger 3 Wallbox verfügt, abhängig von der Variante, über folgende 
  * Photovoltaik-Prognose
  * Dynamische Strompreise unabhängig vom Stromanbieter
  * Unterstützung von 14a EnwG - "Steuerbare Verbrauchseinrichtung"
- 
+
 ## Varianten
 
 Den WARP3 Charger bieten wir in drei Varianten an:
@@ -58,7 +58,7 @@ LED-Rings befindet sich ein Taster.
 
 Der WARP3 Charger Smart ist im Vergleich zur Variante Basic zusätzlich mit einem WLAN- und LAN-fähigen
 Controller ausgestattet. Dieser kann als Access Point ein eigenes WLAN eröffnen oder in ein vorhandenes Netzwerk
-eingebunden werden. Alternativ ist ein Anschluss per LAN möglich. Dazu kann ein LAN-Kabel in die Wallbox geführt 
+eingebunden werden. Alternativ ist ein Anschluss per LAN möglich. Dazu kann ein LAN-Kabel in die Wallbox geführt
 werden. Per WLAN oder LAN kannst du auf das Webinterface des WARP3 Chargers Smart zugreifen. Auf diesem kannst du
 den aktuellen Ladezustand einsehen und Einstellungen an der Wallbox vornehmen. Beispielsweise kannst du über
 das Webinterface das Ladeverhalten und die maximale Ladeleistung konfigurieren.
@@ -70,7 +70,7 @@ Ladelogbuch der Ladevorgänge mit Zeitstempel, Dauer und der verwendeten Ladekar
 
 Mehrere WARP3 Charger können sich einen Stromanschluss teilen. Das eingebaute Lastmanagement kann dabei den Gesamtstrom aller Wallboxen dynamisch begrenzen.
 Das integrierte Energiemanagement ermöglicht die Anbindung der Wallbox direkt an Photovoltaik-Wechselrichter oder Stromzähler und ermöglicht ein photovoltaikgefuhrtes
-Überschussladen. Die Wallbox kann dazu zwischen ein- und dreiphasigem Laden umschalten (Phasenumschaltung). Damit  kann ein Elektrofahrzeug bereits mit einem Überschuss 
+Überschussladen. Die Wallbox kann dazu zwischen ein- und dreiphasigem Laden umschalten (Phasenumschaltung). Damit  kann ein Elektrofahrzeug bereits mit einem Überschuss
 von 1,4 kW geladen werden (einphasige Ladung mit 6 A Ladestrom). Mittels Automatisierungsregeln kannst du deine eigenen Ideen umsetzen. Die Regeln basieren auf einer Bedingung
 und einer damit verknupften Aktion. Zum Beispiel kannst du Ladezeiten definieren oder abhängig von der erkannten NFC-Karte oder einer empfangenen MQTT-Nachricht
 zwischen verschiedenen Lademodi wechseln.
@@ -87,7 +87,7 @@ des Fahrzeugs genutzt werden soll, oder ob auf einen PV-Überschuss gewartet wer
 ![image](/img/warp3_shared_with_manual/resized/warp3_pro_open.jpg)
 
 Der WARP3 Charger Pro bietet dir alle Funktionen der Variante Smart. Zusätzlich ist dieser mit einem MID-geeichten Stromzähler (EU-Messgeräterichtlinie 2014/32/EU) ausgestattet, der misst, wie viel Energie
-(kWh) geladen wurde. Die geladene Energie wird bei aktiviertem Ladelogbuch bei jedem Ladevorgang erfasst und ermöglicht somit zum Beispiel die Abrechnung von Ladevorgängen für Dienstwagen. Der auf der Hutschiene im 
+(kWh) geladen wurde. Die geladene Energie wird bei aktiviertem Ladelogbuch bei jedem Ladevorgang erfasst und ermöglicht somit zum Beispiel die Abrechnung von Ladevorgängen für Dienstwagen. Der auf der Hutschiene im
 WARP3 Charger Pro montierte Stromzähler des Herstellers Eltako ist ein MID-geeichtes deutsches Markenprodukt.
 
 WARP3 Charger Pro Wallboxen besitzen zusätzlich einen Vorteil im Vergleich zu den WARP3 Charger Smart Wallboxen, wenn sie in einem gemeinsamen dynamischen Lastmanagement eingesetzt werden:
@@ -100,12 +100,12 @@ der Standardausführung werden alle WARP3 Charger ohne Anschlusskabel (Zuleitung
 diesem Fall muss bei der Installation ein Anschlusskabel bereitgestellt und in der Wallbox angeschlossen werden.
 Die Einfuhrung des Anschlusskabels kann entweder von der Unter- oder von der Rückseite der Wallbox erfolgen.
 Optional kannst du jede Wallbox mit einem bereits ab Werk installierten Anschlusskabel bestellen. Du hast zusätzlich
-die Möglichkeit, dieses mit einem CEE-Stecker ausstatten zu lassen. Fur die optionalen Anschlusskabel verwenden 
+die Möglichkeit, dieses mit einem CEE-Stecker ausstatten zu lassen. Fur die optionalen Anschlusskabel verwenden
 wir folgende Leitungen und CEE-Stecker:
 
  * 11 kW Gummianschlussleitung H07RN-F 5G4 (4mm2 Querschnitt) + 16 A-CEE-Stecker
  * 22 kW Gummianschlussleitung H07RN-F 5G6 (6mm2 Querschnitt) + 32 A-CEE-Stecker
- 
+
 ### Individuelle Gravur/Eigenes Logo
 
 Du kannst deine Wallbox mit einer individuellen Gravur bestellen. In diesem Fall wird das standardmäßig auf die
