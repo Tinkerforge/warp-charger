@@ -20,9 +20,9 @@ in die Liste auf oder gute Fragen/Antworten für die [FAQ](/faq.md).
 
 ### Philosophie
 
-Wir glauben, dass die Produkte den Kunden gehören. Deswegen entwickeln
+Wir glauben, dass die Produkte den Kunden gehören. Deswegen entwickeln wir
 Lösungen mit offenen Schnittstellen und verfolgen konsequent ein
-Open-Source-Konzept (Hardware- und Software). Die Entwicklung und Fertigung
+Open-Source-Konzept (Hard- und Software). Die Entwicklung und Fertigung
 unserer Produkte erfolgt in Deutschland (Made in Germany). Wir legen unsere
 Produkte auf eine lange Lebensdauer aus, achten auf Qualität und einfache
 Reparierbarkeit.
@@ -57,7 +57,7 @@ lokal auf den Geräten.
 
 Als Beispiel ist der [Fernzugriff](/docs/webinterface/system/remote_access.md), der auch von den Android und iOS Apps genutzt wird,
 technisch ein VPN Tunnel zwischen dem Browser/der App und dem Gerät (WARP Charger oder WARP Energy Manager).
-Der Datenaustausch erfolgt also zwischen den beiden Teilnehmern und nicht über [my.warp-charger.com](https://my.warp-charger.com).
+Der Datenaustausch erfolgt verschlüsselt zwischen den beiden Teilnehmern. Wir haben keinen Zugriff auf euer Gerät oder eure Daten.
 
 ### Kompatibilität zu Fremdgeräten
 
@@ -89,7 +89,7 @@ messen können, lassen sich im Artikel
 
 Analog zum PV-Überschussladen kann ein [WARP Energy Manager 2.0](/warp_energy_manager/introduction.md)
 genutzt werden um eine Wärmepumpe mit SG-Ready Schnittstelle in den erweiterten
-Betrieb zu versetzen. Somit kann ein PV-Überschuss auch für die Heizung genutzt werden.
+Betrieb zu versetzen. Somit kann der PV-Überschuss auch für die Heizung genutzt werden.
 
 ### Dynamische Strompreise
 
