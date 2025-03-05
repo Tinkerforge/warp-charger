@@ -799,11 +799,16 @@ import Admonition from '@theme/Admonition';
             fns = list(fns)
 
             for f in fns:
+                if f.root.version != Version.ANY:
+                    v = f.root.version
+                else:
+                    v = self.version
+
                 toc.append(f"""{{
     "value": "{"{}/{}".format(self.name, f.name) if not self.hide_prefix else f.name}",
     "id": "{"{}_{}".format(self.name, f.name.replace("/", "_")) if not self.hide_prefix else f.name}",
     "level": 2,
-    {"" if f.root.version == Version.ANY else ('"hardwareType": ["' + '","'.join(f.root.version.css_classes().split(" ")) + '"]')}
+    {"" if v == Version.ANY else ('"hardwareType": ["' + '","'.join(v.css_classes().split(" ")) + '"]')}
 }},""")
 
         result += f"""
