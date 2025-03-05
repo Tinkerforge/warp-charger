@@ -148,7 +148,7 @@ def print_accessories2_label(header, stand, stand_wiring, stand_lock, supply_cab
     if template.find(CUSTOM_FRONT_PANEL_PLACEHOLDER_A) < 0:
         raise Exception('Custom front panel placeholder A missing in EZPL file')
 
-    template = template.replace(CUSTOM_FRONT_PANEL_PLACEHOLDER_A, 'Frontplatte: {0}'.format(custom_front_panel).encode('ascii') if custom_front_panel != '0' else b'')
+    template = template.replace(CUSTOM_FRONT_PANEL_PLACEHOLDER_A, 'Front: {0}'.format(custom_front_panel[:28]).encode('ascii') if custom_front_panel != '0' else b'')
 
     if template.find(CUSTOM_FRONT_PANEL_PLACEHOLDER_B) < 0:
         raise Exception('Custom front panel placeholder B missing in EZPL file')
