@@ -381,8 +381,7 @@ Dieser Wert wird dann aus dem Tasmota SML Skript mittels folgender Zeile übertr
 =>WebQuery http://192.168.2.30/meters/0/update POST [Content-Type:application/json] [%sml[3]%]
 ```
 
-Welcher Wert übertragen wird muss durch ausprobieren herausgefunden werden. Im Testfall war es sml\[3\]. Nachfolgend ein vollständiges Beispielskript für einen DZG DWS7412.
-Es wird der Wert mittels HTTP Post an den API Zähler 0 übertragen. Zusätzlich werden alle sml Messwerte anschließend ausgegeben (Print). Mit dem Print lässt sich herausfinden, welcher Wert der korrekte zum übertragen ist.
+Im unten angegeben Beispielskript für einen DZG DWS7412 werden insgesamt 4 Messwerte extrahiert, die dann entsprechend ihrer Reihenfolge über die Variablen sml\[1\] bis sml\[4\] zugreifbar sind. Im Bespielfall enthält sml\[3\] den gewünschten Wert für Leistung in W. Dieser Wert Wert wird mittels HTTP Post an den API Zähler 0 übertragen. Zusätzlich werden alle sml Messwerte anschließend im Log ausgegeben (print). Das print Statement dient nur der Kontrolle und kann nach erfolgreicher Bestimmung des gewünschten Wertes entfernt werden.
 
 ```
 >D
@@ -390,7 +389,7 @@ Es wird der Wert mittels HTTP Post an den API Zähler 0 übertragen. Zusätzlich
 =>sensor53 r
 >S
 =>WebQuery http://192.168.2.30/meters/0/update POST [Content-Type:application/json] [%sml[3]%]
-print %sml[0]%,%sml[1]%,%sml[2]%,%sml[3]%
+print %sml[1]%,%sml[2]%,%sml[3]%,%sml[4]%
 >M 1
 +1,3,s,16,9600,DWS7412
 1,77070100010800ff@1000,Energie,kWh,energy,4
@@ -399,8 +398,7 @@ print %sml[0]%,%sml[1]%,%sml[2]%,%sml[3]%
 1,7707010060320101@#,SID,,meter_id,0
 ```
 
-Diese Lösung lässt sich nur für ein PV-Überschussladen verwenden, da nur die Gesamtleistung übertragen wird. Für ein dynamisches Lastmanagement ist auch die Übertragung der Phasenströme notwendig. Diese kann man typischerweise
-nicht von einem Smart Meter erhalten.
+Diese Lösung lässt sich nur für ein PV-Überschussladen verwenden, da nur die Gesamtleistung übertragen wird. Für ein dynamisches Lastmanagement ist auch die Übertragung der Phasenströme notwendig. Auch diese werden von einigen Smart Metern mit übertragen. In diesem muss der API Zähler entsprechend um die zusätzlichen 3 Werte erweitert und im Skript der POST Request ergämzt werden.
 
 Hier der [Tinkerunity Blogpost](https://www.tinkerunity.org/topic/12255-z%C3%A4hler-des-netzbetreibers-sml-ir-hichi%E2%80%A6-f%C3%BCr-pv-%C3%BCberschuss/?do=findComment&comment=55374)
 auf dem diese Beschreibung ursprünglich basiert.
