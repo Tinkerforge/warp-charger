@@ -46,7 +46,7 @@ gibt es zwei Möglichkeiten:
 
 ### Vordefinierte Registertabelle
 
-Für uns bekannte Geräte haben wir bereits Registertabellen vordefiniert
+Für uns bekannte Geräte haben wir bereits Registertabellen vordefiniert.
 Sind diese vorhanden, muss nur die entsprechende Voreinstellung
 ausgewählt werden und die bereitgestellten Zähler zugeordnet werden.
 Diese Geräte werden in der nachfolgenden Tabelle
@@ -226,14 +226,17 @@ Der EM24 in der Ausführung mit Ethernet kann mittels Modbus/TCP ausgelesen werd
 Deye Hybrid-Wechselrichter der SUN Serie (Nieder- und Hochspannung) unterstützen Modbus/RTU.
 Mit einem Umsetzer von Modbus/RTU auf Ethernet kann auf diese auch mittels Modbus/TCP zugegriffen werden.
 
-Wenn der Wechselrichter per WLAN im Netzwerk verfügbar ist kann über Modbus/TCP auf dessen Zählerwerte zugegriffen werden.
-Für ein PV-Überschussladen und für das dyn. Lastmanagement ist ein Stromzähler am Netzanschluss notwendig, der vom Deye Wechselrichter ausgelesen werden kann.
-Entgegen der Modbus/TCP Spezifikation muss für das offizielle WLAN Dongle von Deye 8899 anstatt 502 als Modbus/TCP Port ausgewählt werden.
-
-Es wird ein virtueller Stromzähler "Netzanschluss", "Speicher", "Last" und "Wechselrichter" bereitgestellt. Netzanschluss ist nur nutzbar wenn ein externer Hardware-Stromzähler
+Unser Modbus/TCP-Deye Profil stellt die virtuellen Stromzähler "Netzanschluss", "Speicher", "Last" und "Wechselrichter" bereit. Netzanschluss ist nur nutzbar wenn ein externer Hardware-Stromzähler
 am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 
-Im [Forumpost auf Tinkerunity](https://www.tinkerunity.org/topic/12271-weitere-wechserichter-modbustcp-supporten-deye-hybrid-wechselrichter/) gibt es weitere Informationen hierzu.
+Die Deye-Unterstützung  wird auch im Forum diskutiert: [Forumpost auf Tinkerunity](https://www.tinkerunity.org/topic/12271-weitere-wechserichter-modbustcp-supporten-deye-hybrid-wechselrichter/).
+
+
+:::note
+Anscheinend stellt, je nach Firmwareversion, auch das Deye WLAN Dongle direkt Modbus/TCP zur Verfügung. Es muss dann Port 8899 anstatt 502 als Modbus/TCP Port ausgewählt werden.
+Es sieht aber so aus, als wenn das Dongle kein konformes Modbus/TCP spricht, so dass dies für uns nicht nutzbar ist. Leider gibt es hierzu unterschiedliche Berichte im Netz und keine offiziellen Informationen
+von Deye.
+:::
 
 ### E3DC
 E3DCs Hauskraftwerke unterstützen SunSpec und können somit einfach eingebunden werden.
@@ -273,6 +276,7 @@ Ist an dem Wechselrichter ein Stromzähler angeschlossen (z.B. GM300), der vom W
 
 ### Hailei
 Die Integration von Hailei Wechselrichtern folgt. Ein Auslesen ist mittels Modbus/TCP nach Modbus/RTU Wandlern (z.B. EW11) über die Modbus/RTU Schnittstelle des Wechselrichters möglich.
+Wechselrichter, die direkt einen LAN Anschluss bieten, können direkt über diesen LAN Anschluss mit Modbus/TCP ausgelesen werden.
 
 ### Hoymiles
 Hoymiles Wechselrichter der Generation HMS und HMT können über die Hoymiles DTU-Pro-S Datenübertragungseinheit mittels SunSpec ausgelesen werden. Die Kommunikation erfolgt mittels Sub-1G.
@@ -318,13 +322,6 @@ SolarEdge Home Wechselrichter verfügen über eine SunSpec Schnittstelle. Unsere
 
 Ist die Schnittstelle aktiviert, so kann der Wechselrichter inklusive einem angeschlossenen Energiezähler ausgelesen werden. Ist ein Energiezähler vorhanden, so ist damit ein PV-Überschussladen und
 ein dynamisches Lastmanagement möglich.
-
-:::note
-
-Ein Kunde berichtet davon, dass die SunSpec IDs der Geräte (Energiezähler, Wechselrichter) sich nach einem Neustart dieser Geräte ändert. Dieses führt dazu, dass die Geräte nicht mehr erreichbar sind und neu
-im WARP System angelegt werden müssen. SolarEdge arbeitet an einer Lösung.
-
-:::
 
 ### Solarmax
 Das Speichersystem MAX.STORAGE kann mittels Modbus/TCP ausgelesen werden. Es steht der virtuelle Stromzähler "Wechselrichter" zur Verfügung. Dieser gibt Informationen zu den DC Leistungen des Wechselrichters der Batterie.
