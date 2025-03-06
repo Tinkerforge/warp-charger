@@ -145,6 +145,7 @@ Folgende Einrichtungsschritte sind notwendig:
 ## SMA Speedwire
 
 SMA Geräte können über die SMA Speedwire Schnittstelle ausgelesen werden.
+Stand jetzt kann damit, sofern verfügbar, nur der Netzanschlusszähler gelesen werden.
 
 ## API
 
@@ -310,7 +311,7 @@ Die Siemens SENTRON Energiezähler vom Typ 7KM2200 (PAC2200) und 7KM3200 (PAC320
 ### SMA
 SMA Geräte unterstützen zum Teil SunSpec, so dass diese direkt ausgelesen werden können. Dazu zähler zum Beispiel die Sunny Boy Wechselrichter. Andere Geräte von SMA nutzen das SMA Speedwire Protokoll.
 Dieses wird ebenfalls unterstützt, so dass auch auf die Daten vom SMA Energy Meter 2.0 oder dem Sunny Home Manager zugegriffen werden können. Über diese beiden kann die Leistung am Netzanschluss gemessen
-werden so dass ein PV-Überschussladen und ein dynamisches Lastmanagement mit diesen Zählerwerten möglich ist.
+werden so dass ein PV-Überschussladen und ein dynamisches Lastmanagement mit diesen Zählerwerten möglich ist. Ein Zugriff auf andere Werte als Netzdaten ist nicht möglich (PV, Speicher etc.)
 
 ### SolarEdge
 SolarEdge Home Wechselrichter verfügen über eine SunSpec Schnittstelle. Unseres Wissens kann diese Schnittstelle nicht selbst aktiviert werden, sondern muss vom SolarEdge Support aktiviert werden.

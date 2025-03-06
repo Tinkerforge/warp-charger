@@ -17,8 +17,9 @@ werden, um Vorgänge zu automatisieren. Dazu sind jeweils
 eine Bedingung und die Aktion der Wallbox bei Erfüllung
 der Bedingung zu definieren.
 
-**Beispiel**: Ladevorgänge nur zu bestimmten Uhrzeiten
-zulassen Hierzu muss als Bedingung *Zeitpunkt*
+## Beispiel: Ladevorgänge nur zu bestimmten Uhrzeiten zulassen
+
+Hierzu muss als Bedingung *Zeitpunkt*
 gewählt werden. Anschließend kann über die Einstellung *Tag* und
 *Uhrzeit* ein Zeitpunkt definiert werden, an
 dem die Wallbox eine Aktion ausführt. In diesem Fall soll
