@@ -18,7 +18,7 @@ Der WARP Energy Manager zeichnet zusätzlich der ermittelten Daten lokal auf sei
 die aufgezeichneten Daten analysiert werden.
 
 Um auf die Daten zugreifen zu können, sind wir auf die von dem jeweiligen Geräte-Hersteller bereitgestellte [Schnittstellen](/compatible_devices/interfaces.md) angewiesen.
-Abhängig vom Gerät und Hersteller muss dazu die passende [Schnittstelle](/compatible_devices/interfaces.md) im Webinterface unter [Stromzähler](/energy_management/energy_meters.md)
+Abhängig vom Gerät und Hersteller muss dazu die passende [Schnittstelle](/compatible_devices/interfaces.md) im Webinterface unter [Stromzähler](/webinterface/energy_management/energy_meters.md)
 auf dem [WARP Charger](/warp_charger/introduction) oder [WARP Energy Manager](/warp_energy_manager/introduction) konfiguriert werden.
 
 
