@@ -29,7 +29,7 @@ export const devices = [
     device: "EM24 Smart Meter",
     connection: "Modbus/TCP",
     link: "/docs/compatible_devices/devices#carlo-galvazzi",
-    grid: "y",
+    grid: "(x)",
     pv: "(x)",
     battery: "(x)",
     load: "(x)"
