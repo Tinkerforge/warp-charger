@@ -1,228 +1,68 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 import { SortableDataTable, SortableDataButton } from "@site/src/components/SortableDataTable";
-import { columns, meters, moduleTests } from "./meters.table";
+import { columns, devices, moduleTests } from "./devices.table";
 
-# Stromzähler
+# Geräte
 
-Folgende Möglichkeiten gibt es auf Zählerdaten vom Netzanschluss,
-PV-Wechselrichter oder der Batterie zuzugreifen:
-
-## SunSpec
-
-[SunSpec](https://sunspec.org/sunspec-modbus-specifications/) ist ein
-Kommunikationsstandard für PV-Wechselrichter.
-WARP Charger und der WARP Energy Manager können SunSpec Geräte mittels
-LAN oder WLAN direkt auslesen.
-
-Ist ein Wechselrichter oder Energiemanager vorhanden,
-der **Zugriff auf einen Stromzähler am Netzanschluss hat**, kann dieser
-oft über SunSpec über das Netzwerk ausgelesen werden.
-
-SunSpec bietet den Vorteil, dass kompatible Geräte direkt vom WARP
-Charger und WARP Energy Manager erkannt und ausgelesen werden können.
-Bei der Konfiguration muss nur SunSpec als Klasse ausgewählt und die IP
-Adresse des Geräts ausgewählt werden. Das System listet alle erkannten
-Geräte auf, so dass diese einfach zugeordnet werden können.
-
-## Modbus/TCP
-
-Nicht alle Geräte unterstützen SunSpec. Wir arbeiten daran die
-wichtigsten Geräte, welche nicht per SunSpec nutzbar sind, dennoch zu
-unterstützen. Der Zugriff mittels Modbus/TCP über LAN oder
-WLAN ist eine andere weit verbreitete Möglichkeit und wird von vielen
-Geräten unterstützt.
-
-Vier verschiedene Modelle für virtuelle Stromzähler stehen zur Verfügung:
-Wechselrichter, Netzanschluss, Speicher und Last. Je nach Gerät steht
-nur ein Teil dieser Stromzähler zur Verfügung.
-
-Bei Modbus/TCP müssen Informationen bereitgestellt werden, welche
-Register gelesen und wie die Werte interpretiert werden müssen. Hierzu
-gibt es zwei Möglichkeiten:
-
-
-### Vordefinierte Registertabelle
-
-Für uns bekannte Geräte haben wir bereits Registertabellen vordefiniert.
-Sind diese vorhanden, muss nur die entsprechende Voreinstellung
-ausgewählt werden und die bereitgestellten Zähler zugeordnet werden.
-Diese Geräte werden in der nachfolgenden Tabelle
-mit dem Protokoll Modbus/TCP aufgeführt.
-
-Einen technischen Einblick zu den jeweiligen Implementierungen findet
-man auf [Github ESP32-Firmware prepare.py](https://github.com/Tinkerforge/esp32-firmware/blob/master/software/src/modules/meters_modbus_tcp/prepare.py)
-
-
-### Benutzerdefinierte Registertabelle
-
-Wird von uns noch keine gerätespezifische Registertabelle zur Verfügung
-gestellt, so kann diese auch selbst definiert werden. In den
-benutzerdefinierten Einstellungen muss nur der Adressmodus festgelegt
-und anschließend die gewünschten Register angelegt werden. Es können der
-Typ des Registers, ein Offset (Verschiebung), ein Skalierfaktor (Float)
-und die Zuordnung auf einen Zählerwert (z.B. Wirk-Leistung L1) definiert
-werden. Prinzipiell sollte damit jedes Modbus/TCP fähige Gerät unterstützt
-werden.
+Die folgende Liste führt Geräte auf, die unterstützt werden:
 
 :::note
 
-Für das PV Überschussladen muss ein Stromzähler konfiguriert werden, der mindestens folgenden Wert enthält:
-***"Wirk­leistung (Bezug minus Ein­speisung); Σ L1, L2, L3 \[W\]***
-
-Dieser Wert wird für die Regelung verwendet. Weitere Werte können angelegt werden, sind aber technisch nicht notwendig.
-
-:::
-
-
-### Modbus/RTU (Wandler)
-
-Nicht alle Geräte unterstützten Modbus/TCP. Gerade ältere Geräte kommunizieren mittels
-Modbus/RTU, einem Zweidraht RS485 Bus. Somit können diese Geräte
-nicht einfach über das Netzwerk ausgelesen werden. Es gibt aber Wandler, die einen RS485 Bus auf
-LAN oder WLAN umsetzen können. Wird so ein Wandler zwischen dem Modbus/RTU (RS485) Anschluss des Geräts und dem
-Netzwerk (LAN, WLAN) gesetzt, kann das Gerät mittels Modbus/TCP ausgelesen werden.
-
-Nachfolgend ein Auszug zu diversen Wandlern, mit den wichtigsten Einrichtungsschritten.
-
-#### Ebytes NB114
-Dieser Wandler kann aufgeschraubt werden und wandelt zwischen Modbus/TCP und Modbus/RTU um. Er verfügt nicht über WIFI, dafür aber über einen LAN Anschluss. Standardmäßig wird der
-Wandler mit einer statischen IP Einstellung ausgeliefert. Die IP lautet 192.168.3.7. Die Zugangsdaten des Webinterfaces sind admin:admin. Folgende Einstellungen müssen gesetzt werden:
-
- * http://192.168.3.7 öffnen, Zugangsdaten admin:admin. Falls nicht erreichbar "Reload" Knopf am Gerät drücken.
- * Unter "Network parameter" als Work Mode "TCP Server", Port 502.
- * Unter "Serial parameter" die Einstellungen für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1).
- * Unter "Modbus parameter" die Einstellung "MODBUS TCP to RTU" auf "Open" setzen.
-
-
-#### Elfin EW11
-Der Elfin EW11 ist ein kleines WIFI Dongle, welches zwischen Modbus/TCP und Modbus/RTU wandeln kann.
-Folgende Einrichtungsschritte sind notwendig:
-
- * Mit AP (typischerweise EW11_XXXXX) verbinden. Kein Passwort notwendig.
- * http://10.10.100.254 öffnen, Zugangsdaten admin:admin
- * Unter "System Settings" AP+STA konfigurieren und STA Wifi einrichten
- * Unter "Serial Port Settings" die Einstellungen für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1), Protocol Modbus, CLI Disable
- * Unter "Communication Settings" einen TCP server auf Port 502 mit Route "Uart" anlegen und speichern. Der bereits vordefinierte "netp" kann dafür verwendet werden.
-
-
-#### PUSR USR-DR302
-Dieser Wandler kann auf eine Hutschiene montiert werden und wandelt zwischen Modbus/TCP und Modbus/RTU um. Er verfügt nicht über WIFI, dafür aber über einen LAN Anschluss.
-Folgende Einrichtungsschritte sind notwendig:
-
- * Standardmäßig ist DHCP für den LAN Anschluss konfiguriert. Die Zugangsdaten für das Webinterface sind admin:admin.
- * Unter "Serial Port" die Einstellungen für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1), Work Mode TCP Server.
-
-
-#### Waveshare RS485 To ETH (B) oder Waveshare RS485 To POE ETH (B)
-Dieser Wandler kann auf eine Hutschiene montiert werden und wandelt zwischen Modbus/TCP und Modbus/RTU um. Er verfügt nicht über WIFI, dafür aber über einen LAN Anschluss.
-Es gibt eine PoE fähige Ausführung. Anscheinend wird der Wandler mit einer statischen IP Einstellung ausgeliefert. Die IP lautet 192.168.1.200. Die Passwort des Webinterfaces lautet admin.
-Im [Waveshare Wiki](https://www.waveshare.com/wiki/RS485_TO_ETH_(B)) gibt es weitere Informationen. Weitere Einstellungen können über das VirCom Tool von Waveshare vorgenommen werden.
-Dieses Tool ermöglicht es auch die IP Adresse des Wandlers zu ermitteln.
-
-Folgende Einrichtungsschritte sind notwendig:
-
- * http://192.168.1.200 öffnen, Password admin. Falls nicht erreichbar andere IP suchen.
- * Unter "Network Settings" als Work Mode "TCP Server".
- * Unter "Serial Settings" die Einstellungen für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1).
- * Unter "Multi-Host Settings" als Protocol "Modbus TCP to RTU".
-
-#### Waveshare RS232/485/422 To ETH (B) oder Waveshare R232/S485/422 To POE ETH (B)
-Es gibt eine PoE fähige Ausführung. Anscheinend wird der Wandler mit einer statischen IP Einstellung ausgeliefert. Die IP lautet 192.168.1.200. Die Passwort des Webinterfaces lautet admin.
-Im [Waveshare Wiki](https://www.waveshare.com/wiki/RS232/485/422_TO_POE_ETH_(B)) gibt es weitere Informationen. Weitere Einstellungen können über das VirCom Tool von Waveshare vorgenommen werden.
-Dieses Tool ermöglicht es auch die IP Adresse des Wandlers zu ermitteln.
-
-Folgende Einrichtungsschritte sind notwendig:
-
- * http://192.168.1.200 öffnen, Password admin. Falls nicht erreichbar andere IP suchen.
- * Unter "Network Settings" als Work Mode "TCP Server".
- * Unter "Serial Settings" die Einstellungen für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1).
- * Unter "Multi-Host Settings" als Protocol "Modbus TCP to RTU".
-
-
-## SMA Speedwire
-
-SMA Geräte können über die SMA Speedwire Schnittstelle ausgelesen werden.
-Stand jetzt kann damit, sofern verfügbar, nur der Netzanschlusszähler gelesen werden.
-
-## API
-
-Die MQTT und HTTP WARP Push API
-kann genutzt werden um von extern Zählerdaten dem WARP Charger oder
-dem WARP Energy Manager mitzuteilen. Siehe
-i[API Referenz - Meters](/docs/interfaces/mqtt_http/api_reference/meters.mdx).
-
-:::note
-
-Für das PV Überschussladen muss ein Stromzähler konfiguriert werden, der mindestens folgenden Wert enthält:
-***"Wirk­leistung (Bezug minus Ein­speisung); Σ L1, L2, L3 \[W\]***
-
-Dieser Wert wird für die Regelung verwendet. Weitere Werte können angelegt werden, sind aber technisch nicht notwendig.
-
-:::
-
-## Am WARP Energy Manager angeschlossene Stromzähler
-
-Der WARP Energy Manager kann bestimmte Stromzähler direkt per Modbus/RTU (RS485)
-auslesen. Er besitzt dazu einen RS485 Anschluss.
-Dies ist vor allem interessant wenn noch kein Zähler am
-Netzanschluss vorhanden ist. In dem Fall kann ein WARP Energy Manager installiert
-und zusätzlich ein kompatibler Modbus/RTU-Stromzähler an diesem direkt angeschlossen werden.
-Von dem WARP Energy Manager werden nicht alle Modbus/RTU Stromzähler unterstützt,
-nur die zum WARP Energy Manager in der Liste aufgeführten kompatiblen Stromzähler.
-Es kann genau ein Stromzähler per RS485 am WARP Energy Manager angeschlossen und
-ausgelesen werden. Mehrere Stromzähler am RS485 Anschluss sind nicht möglich.
-
-## Bekannte kompatible Geräte
-
-Die folgende Liste führt Geräte auf, die bereits getestet wurden.
-
-:::note
+Verschiedene oder auch neue Firmwareversionen seitens der Hersteller führen dazu,
+dass sich manchmal Schnittstellen ändern. 
+Solltest du Probleme mit einem der aufgeführten Geräte haben, oder aber
+die Unterstützung eines Geräts wünschen, dann schreibe uns im Forum auf
+[Tinkerunity](https://www.tinkerunity.org/forum/13-warp-charger/).
 
 Wenn du ein Gerät besitzt, das du getestest hast und dieses noch nicht
 in der Liste aufgeführt ist, schicke uns doch eine Email an
 [info@tinkerforge.com](mailto://info@tinkerforge.com) damit wir die
 Liste erweitern können. Solltest du eine eigene Modbus/TCP
 Registertabelle definiert haben, schicke uns diese gerne zu, damit wir
-diese für alle hinterlegen können.
-
-Solltest du Probleme mit einem der aufgeführten Geräte haben, oder aber
-die Unterstützung eines Geräts wünschen, dann schreibe uns im Forum auf
-[Tinkerunity](https://www.tinkerunity.org/forum/13-warp-charger/).
+diese hinterlegen können.
 
 :::
 
 <SortableDataTable
   columns={columns}
-  data={ meters }
+  data={ devices }
 />
+***Legende:***
 
-<SortableDataButton
-  text="Füge neuen Stromzähler hinzu"
-  editUrl="https://github.com/Tinkerforge/warp-charger/blob/master/docs.warp-charger.com/docs/meters.table.js"
-/>
+ * ***x*** :  Generell vom Gerät unterstützt. Entsprechende Hardware muss aber verbaut sein.
+ * ***(x)*** : Die zugeordnete Klasse des Geräts/des Stromzählers kann vom Nutzer frei definiert werden. Was korrekt ist hängt vom Einbauort ab. Zum Beispiel als Stromzähler am Netzanschluss.
+ * ***-*** : Nicht vom Gerät unterstützt.
+ * ***?*** : Diese Information liegt uns nicht vor.
 
 
-## Herstellerspezifische Informationen
+:::note
 
-### Alpha Ess
+Je nach Gerät gibt es oft diverse Anschlussmöglichkeiten und Hardwarekonfigurationen. Es erklärt sich von selbst, dass zum Beispiel auf Daten zum Netzanschluss
+nur zugegriffen werden kann, wenn auch ein entsprechender Stromzähler an diesem Ort installiert ist.
+
+:::
+
+# Herstellerspezifische Informationen
+
+## Alpha Ess
 Die folgenden Alpha ESS Smile Heimspeicher unterstützen eine Anbindung mittels Modbus/TCP: SMILE5, SMILE-Hi5, SMILE-Hi10, SMILE-G3-S3.6/B5/S5, SMILE-BAT-8.2PHA.
 Die integration bietet die virtuellen Stromzähler "Wechselrichter", "Netzanschluss" und "Speicher".
 Die Messwerte des Netzanschlusses können für ein PV-Überschussladen und für ein dynamisches Lastmanagement genutzt werden.
 
-### APsystems
+## APsystems
 APsystems Mikrowechselrichter können von APsystems ECU-R und ECU-C mittels SunSpec ausgelesen werden. Die Kommunikation zwischen Mikrowechselrichter und ECU erfolgt
 über Zigbee. Folgende ECUs sind kompatibel:
  ECU-R mit ID rule 2160XXXXXXXX und Version > 1.3.7
  ECU-R mit ID rule 2162XXXXXXXX und Version > 2.0.2
  ECU-C mit ID rule 215XXXXXXXXX und Version > C1.1.3
 
-### Carlo Galvazzi
-Der EM24 in der Ausführung mit Ethernet kann mittels Modbus/TCP ausgelesen werden.
+## Carlo Galvazzi
+Der EM24 in der Ausführung mit Ethernet kann mittels Modbus/TCP ausgelesen werden. Der Zähler kann je nach Montageort einer beliebigen Klasse zugeordnet werden: Netz, PV, Batterie, Last.
 
-### Deye
+## Deye
 Deye Hybrid-Wechselrichter der SUN Serie (Nieder- und Hochspannung) unterstützen Modbus/RTU.
 Mit einem Umsetzer von Modbus/RTU auf Ethernet kann auf diese auch mittels Modbus/TCP zugegriffen werden.
 
@@ -238,100 +78,105 @@ Es sieht aber so aus, als wenn das Dongle kein konformes Modbus/TCP spricht, so 
 von Deye.
 :::
 
-### E3DC
+## E3DC
 E3DCs Hauskraftwerke unterstützen SunSpec und können somit einfach eingebunden werden.
 Es werden S10 Hauskraftwerke unterstützt. Vermutlich gilt dies auch für die S20 Serie.
 Damit das Hauskraftwerk eingebunden werden kann muss Modbus/TCP im SunSpec Modus aktiviert werden.
 Für ein PV-Überschussladen und für das dyn. Lastmanagement ist ein Stromzähler am Netzanschluss notwendig, der vom Hauskraftwerk ausgelesen werden kann.
 
-### Eastron
+## Eastron
 Eastron Stromzähler mit RS485 (Modbus/RTU) Schnittstelle können direkt am WARP Energy Manager angeschlossen und von diesem ausgelesen werden.
 Bei den Typen SDM630 und SDM72V2 wird der Strom über den Zähler geführt. Diese Zähler werden also direkt in die Leitungen eingebaut.
 
 Mit dem Typ SDM630MCT wird auch ein Typ unterstützt der externe Wandler nutzt. Dieser Zähler wird also nicht in die Leitungen eingebaut, sondern es
 werden nur die Wandler um die Leitungen gelegt. Durch die Wahl der entsprechend dimensionierten Wandler können auch sehr große Ströme gemessen werden.
 
-### Elgris
+Der Zähler kann je nach Montageort einer beliebigen Klasse zugeordnet werden: Netz, PV, Batterie, Last.
+
+## Elgris
 Das elgris Smart Meter LAN 2.0 kann einfach mittels SunSpec eingebunden werden. SunSpec sollte direkt auf dem Stromzähler aktiviert sein.
+Der Zähler kann je nach Montageort einer beliebigen Klasse zugeordnet werden: Netz, PV, Batterie, Last.
 
-### Eltako
+## Eltako
 Der Eltako Stromzähler DSZ15DZMOD mit RS485 (Modbus/RTU) Schnittstelle kann am WARP Energy Manager angeschlossen und von diesem ausgelesen werden.
+ Der Zähler kann je nach Montageort einer beliebigen Klasse zugeordnet werden: Netz, PV, Batterie, Last.
 
-### Fronius
+## Fronius
 Fronius Wechselrichter der Primo, Symo- und der GEN24-Serie sprechen SunSpec und können direkt ausgelesen werden. Es muss nur die Datenausgabe über Modbus/TCP aktiviert werden.
 Als Port sollte 502 konfiguriert werden. Als SunSpec Model Type kann "float" gewählt werden.
 Für ein PV-Überschussladen und für das dyn. Lastmanagement ist ein Stromzähler am Netzanschluss notwendig, der vom Fronius Wechselrichter ausgelesen werden kann.
 
-### Fox ESS
-Fox ESS Wechselrichter scheinen nicht mittels Modbus TCP über den Fox ESS LAN oder Wifi Dongle ausgelesen werden zu können. Sie sind aber mittels RS485 (Modbus RTU) auszulesen.
-Wird ein RS485 nach LAN oder WLAN Wandler installiert (siehe [Modbus RTU Wandler](/compatible_devices/meters.md#modbusrtu-wandler)), so können diese Wechselrichter ebenfalls ausgelesen werden.
+## Fox ESS
+Fox ESS Wechselrichter scheinen nicht mittels Modbus TCP über den Fox ESS LAN oder Wifi Dongle ausgelesen werden zu können. Sie sind aber mittels RS485 (Modbus/RTU) auszulesen.
+Wird ein RS485 nach LAN oder WLAN Wandler installiert (siehe [Modbus RTU Wandler](/compatible_devices/interfaces.md#modbusrtu-wandler)), so können diese Wechselrichter ebenfalls ausgelesen werden.
 Am Wechselrichter muss die Geräte ID von 000 (Modbus RTU deaktiviert) auf 247 eingestellt werden. Die Einstellung dazu findet sich unter Settings -> Communication -> RS485 -> Device ID.
 Das Wechselrichterpasswort ist standardmäßig auf 0000 gesetzt.
 
-### Goodwe
+## Goodwe
 Die Einbindung eines Wechselrichters der ES, EM, SBP, ET, BT, EH, BH, EHB Serie ist mittels Modbus/TCP über das LAN bzw. Wifi+LAN Modul möglich.
 Es werden die virtueller Stromzähler "Netzanschluss", "Speicher", "Last", "Backup-Last" und "Wechselrichter" bereitgestellt.
 
 Ist an dem Wechselrichter ein Stromzähler angeschlossen (z.B. GM300), der vom Wechselrichter ausgelesen werden kann, kann dieser Stromzähler für ein PV-Überschussladen und ein dynamisches Lastmanagement genutzt werden.
 
-### Hailei
+## Hailei
 Die Integration von Hailei Wechselrichtern folgt. Ein Auslesen ist mittels Modbus/TCP nach Modbus/RTU Wandlern (z.B. EW11) über die Modbus/RTU Schnittstelle des Wechselrichters möglich.
 Wechselrichter, die direkt einen LAN Anschluss bieten, können direkt über diesen LAN Anschluss mit Modbus/TCP ausgelesen werden.
 
-### Hoymiles
+## Hoymiles
 Hoymiles Wechselrichter der Generation HMS und HMT können über die Hoymiles DTU-Pro-S Datenübertragungseinheit mittels SunSpec ausgelesen werden. Die Kommunikation erfolgt mittels Sub-1G.
 
-### Huawei
+## Huawei
 Wechselrichter der SUN2000 Serie (L1, M0, M1, M2, M3) können über das Huawei Smart Dongle (SmartdDongle ab Firmware SPC124) mittels Modbus/TCP ausgelesen werden. Aktuell ist noch keine Registertabelle hierfür hinterlegt.
 Diese muss noch per Hand angelegt werden. Wir werden aber zeitnah eine vorwählbare Registertabelle bereitstellen.
 
 Es werden die virtueller Stromzähler "Netzanschluss", "Speicher", "Last" und "Wechselrichter" bereitgestellt. Netzanschluss ist nur nutzbar, wenn ein externer Hardware-Stromzähler (Huawei Smart Power Sensor)
 vom Typ DTSU666-H oder DDSU666-H am Wechselrichter angeschlossen wurde. Speicher ist nur nutzbar im Zusammenspiel mit der Luna2000 Batterie.
 
-### Kaco
+## Kaco
 Kaco Wechselrichter der NH3, NX3 und TL3 Baureihe sprechen SunSpec und können direkt ausgelesen werden. Der Standardport ist 502. SunSpec muss im Protokoll Menü des Wechselrichters aktiviert werden.
 
-### Kostal
-Das Smart Energy Meter (KSEM G2) kann direkt mittels SunSpec kommunizieren.
+## Kostal
+Das Smart Energy Meter (KSEM G2) kann direkt mittels SunSpec kommunizieren. Der Zähler kann je nach Montageort einer beliebigen Klasse zugeordnet werden: Netz, PV, Batterie, Last.
 
 Zusätzlich kann die Erzeugung der Piko und Plenticore Wechselrichter mittels SunSpec ausgelesen werden. Ein PV-Überschussladen nur mit dieser Wechselrichterdaten ist nicht möglich,
 da dafür ein Stromzähler am Netzanschluss notwendig ist.
 
-### RCT
+## RCT
 Batterie Wechselrichter der Firma RCT können mittels dem RCT Power Serial Communication Protokoll direkt angesprochen werden. Dazu ist ein Stromzähler mit der Klasse "RCT Power" anzulegen und die IP Adresse des Wechselrichters einzugeben.
 Es werden die virtuellen Stromzähler "Netzanschluss" und "Speicher" unterstützt.
 
-### Shelly
+## Shelly
 Der einphasige Wandler-Stromzähler Shelly Pro EM und dreiphasige Wandler-Stromzähler Shelly Pro 3EM werden unterstützt und können mittels Modbus/TCP ausgelesen werden. Beide besitzten nur eine Breite von 1 TE und messen mittels Wandler.
 Somit benötigen diese nur wenig Platz und können an verschiedene Maximalströme angepasst werden. (EM: 50A, 3EM: 120A, 400A).
 
 Wichtig ist ein Update auf die neuste Software, so dass Modbus TCP unterstützt wird. Dieses muss dann unter Settings->Modbus aktiviert werden.
 
 Für die Stromzähler sind jeweils spezifische Registertabellen implementiert und können einfach ausgewählt werden.
+Der Zähler kann je nach Montageort einer beliebigen Klasse zugeordnet werden: Netz, PV, Batterie, Last.
 
-### Siemens
-Die Siemens SENTRON Energiezähler vom Typ 7KM2200 (PAC2200) und 7KM3200 (PAC3200) können mittels Modbus/TCP ausgelesen werden.
+## Siemens
+Die Siemens SENTRON Energiezähler vom Typ 7KM2200 (PAC2200) und 7KM3200 (PAC3200) können mittels Modbus/TCP ausgelesen werden. Der Zähler kann je nach Montageort einer beliebigen Klasse zugeordnet werden: Netz, PV, Batterie, Last.
 
-### SMA
+## SMA
 SMA Geräte unterstützen zum Teil SunSpec, so dass diese direkt ausgelesen werden können. Dazu zähler zum Beispiel die Sunny Boy Wechselrichter. Andere Geräte von SMA nutzen das SMA Speedwire Protokoll.
 Dieses wird ebenfalls unterstützt, so dass auch auf die Daten vom SMA Energy Meter 2.0 oder dem Sunny Home Manager zugegriffen werden können. Über diese beiden kann die Leistung am Netzanschluss gemessen
 werden so dass ein PV-Überschussladen und ein dynamisches Lastmanagement mit diesen Zählerwerten möglich ist. Ein Zugriff auf andere Werte als Netzdaten ist nicht möglich (PV, Speicher etc.)
 
-### SolarEdge
+## SolarEdge
 SolarEdge Home Wechselrichter verfügen über eine SunSpec Schnittstelle. Unseres Wissens kann diese Schnittstelle nicht selbst aktiviert werden, sondern muss vom SolarEdge Support aktiviert werden.
 
 Ist die Schnittstelle aktiviert, so kann der Wechselrichter inklusive einem angeschlossenen Energiezähler ausgelesen werden. Ist ein Energiezähler vorhanden, so ist damit ein PV-Überschussladen und
 ein dynamisches Lastmanagement möglich.
 
-### Solarmax
+## Solarmax
 Das Speichersystem MAX.STORAGE kann mittels Modbus/TCP ausgelesen werden. Es steht der virtuelle Stromzähler "Wechselrichter" zur Verfügung. Dieser gibt Informationen zu den DC Leistungen des Wechselrichters der Batterie.
 Zusätzlich stellt der virtuelle Stromzähler "Netzanschluss" die Leistung am Netzanschluss zur Verfügung. Ein PV-Überschussladen ist mit diesem Wert möglich.
 Den SoC und die Leistung der Batterie werden mit dem virtuellen Stromzähler "Speicher" bereitgestellt.
 
-### Solax
+## Solax
 Solax String- und Hybridwechselrichter können über das Wi-Fi Dongle mittels Modbus/TCP ausgelesen werden. Eine Einrichtungsanleitung inkl. der unterstützen Wechselrichter gibt es in der [Solax Power Academy](https://kb.solaxpower.com/de/solution/detail/ff8080818eae9899018ec71a12ca1ea6).
 
-### Sungrow
+## Sungrow
 Sungrow Wechselrichter der Serien SGxxRT/SGxxRS/SGxxCX/SDxxCX-P2 und SHxxRT/SHxxRS können mittels Modbus/TCP ausgelesen werden. Es wird dann ein virtueller Stromzähler "Wechselrichter" erkannt.
 Am Wechselrichter angeschlossene Hardware-Stromzähler vom Typ DSU555 o.ä., die von diesem ausgelesen werden können, können ebenfalls ausgelesen werden. Dazu gibt es den virtuellen Stromzähler "Netzanschluss".
 Damit ist ein PV-Überschussladen möglich.
@@ -340,7 +185,7 @@ Wird an dem Wechselrichter eine Batterie angeschlossen, so kann diese ebenfalls 
 Das Auslesen kann über einen WiNet-S mittels LAN/WLAN erfolgen (versionsabhängig). Hierbei scheint es aber je nach Hardwareversion und Firmware Probleme geben zu können. SunGrow empfielt, sofern vorhanden, direkt den LAN Anschluss
 des Wechselrichters zu verwenden. Die Modbus/TCP Verbindung unterstützt oftmals anscheinend nur einen Client.
 
-### Tasmota
+## Tasmota
 Tasmota bietet ein [Smart Meter Interface](https://tasmota.github.io/docs/Smart-Meter-Interface/) damit können über ein IR-Lesekopf die Zählerwerte des Smart Meters vom Netzbetreiber ausgelesen werden.
 Netzbetreiber nutzen zum Beispiel Smart Meter der Marke DZG (z.B.: DWS, DVS), EMH (z.B.: ED300, eHZ) oder Holley (z.B.: DTZ, EHZ). Eine vollständige Liste lässt sich unter dem oben genannten Link finden.
 
@@ -380,7 +225,7 @@ Diese Lösung lässt sich nur für ein PV-Überschussladen verwenden, da nur die
 Hier der [Tinkerunity Blogpost](https://www.tinkerunity.org/topic/12255-z%C3%A4hler-des-netzbetreibers-sml-ir-hichi%E2%80%A6-f%C3%BCr-pv-%C3%BCberschuss/?do=findComment&comment=55374)
 auf dem diese Beschreibung ursprünglich basiert.
 
-### Victron
+## Victron
 
 Victron Geräte, wie zum Beispiel die bekannten Multiplus oder Quattro Wechselrichter, werden üblicherweise von einem [GX Gerät](https://www.victronenergy.com/live/venus-os:start) gesteuert.
 Ein GX Gerät stellt unter "Services" eine Zusammenfassung aller angeschlossen Geräte wie Inverter, Batterien etc. dar. Auch wenn diese Geräte per VE.BUS angeschlossen sind. Die Daten werden unter "System" summiert.
@@ -389,6 +234,6 @@ Werden als Beispiel mehrere Wechselrichter parallel betrieben, so stellt "System
 
 Ist ein Stromzähler am Netzanschluss installiert ("Netzanschluss") kann dieser für ein PV-Überschussladen genutzt werden.
 
-### YTL
+## YTL
 
-Der YTL Stromzähler DEM4A mit RS485 (Modbus/RTU) Schnittstelle kann direkt am WARP Energy Manager angeschlossen und von diesem ausgelesen werden.
+Der YTL Stromzähler DEM4A mit RS485 (Modbus/RTU) Schnittstelle kann direkt am WARP Energy Manager angeschlossen und von diesem ausgelesen werden. Der Zähler kann je nach Montageort einer beliebigen Klasse zugeordnet werden: Netz, PV, Batterie, Last.
