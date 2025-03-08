@@ -91,9 +91,9 @@ Phasenströme ermittelt werden können.
 :::note
 
 Für das dynamisches Lastmanagement muss ein Stromzähler konfiguriert werden, der mindestens folgenden Wert enthält:
- * ***"Strom (Bezug minus Ein­speisung); L1 \[W\]*** bzw. ***"Strom (Bezug plus Ein­speisung); L1 \[W\]*** oder ***"Strom (Bezug); L1 \[W\]***
- * ***"Strom (Bezug minus Ein­speisung); L2 \[W\]*** bzw. ***"Strom (Bezug plus Ein­speisung); L2 \[W\]*** oder ***"Strom (Bezug); L2 \[W\]***
- * ***"Strom (Bezug minus Ein­speisung); L3 \[W\]*** bzw. ***"Strom (Bezug plus Ein­speisung); L3 \[W\]*** oder ***"Strom (Bezug); L3 \[W\]***
+ * ***"Strom (Bezug minus Ein­speisung); L1 \[A\]*** bzw. ***"Strom (Bezug plus Ein­speisung); L1 \[A\]*** oder ***"Strom (Bezug); L1 \[A\]***
+ * ***"Strom (Bezug minus Ein­speisung); L2 \[A\]*** bzw. ***"Strom (Bezug plus Ein­speisung); L2 \[A\]*** oder ***"Strom (Bezug); L2 \[A\]***
+ * ***"Strom (Bezug minus Ein­speisung); L3 \[A\]*** bzw. ***"Strom (Bezug plus Ein­speisung); L3 \[A\]*** oder ***"Strom (Bezug); L3 \[A\]***
 
 Dieser Wert wird für die Regelung verwendet. Weitere Werte können angelegt werden, sind aber technisch nicht notwendig.
 Ob ***"Bezug"***, ***"Bezug minus Einspeisung"***, ***"Bezug plus Einspeisung"*** gewählt werden muss, hängt von dem jeweiligen Stromzähler ab. Dies kann im Zweifelsfall ausprobiert werden.
