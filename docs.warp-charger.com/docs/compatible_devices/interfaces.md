@@ -193,6 +193,8 @@ Für das dynamisches Lastmanagement muss ein Stromzähler konfiguriert werden, d
 Dieser Wert wird für die Regelung verwendet. Weitere Werte können angelegt werden, sind aber technisch nicht notwendig.
 Ob ***"Bezug"***, ***"Bezug minus Einspeisung"***, ***"Bezug plus Einspeisung"*** gewählt werden muss, hängt von dem jeweiligen Stromzähler ab. Dies kann im Zweifelsfall ausprobiert werden.
 
+Beim Anlegen eines API-Stromzählers können vordefinierte API-Stromzähler (Vorlagen) gewählt werden, welche die benötigten Messwerte anlegen.
+
 :::
 
 ## Am WARP Energy Manager angeschlossene Stromzähler
