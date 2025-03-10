@@ -164,6 +164,16 @@ export const devices = [
     load: "x"
   },
   {
+    manufacturer: "Goodwe",
+    device: "BT, SBP, BH-Serie Batterie-Wechselrichter",
+    connection: "Modbus/TCP",
+    link: "/docs/compatible_devices/devices#goodwe",
+    grid: "?",
+    pv: "-",
+    battery: "x",
+    load: "x"
+  },
+  {
     manufacturer: "Hailei",
     device: "Hybrid Wechselrichter (x)",
     connection: "Modbus/TCP",
@@ -189,20 +199,10 @@ export const devices = [
     device: "SUN2000 Serie Hybrid-Wechselrichter",
     connection: "Modbus/TCP",
     link: "/docs/compatible_devices/devices#huawei",
-    grid: "x",
-    pv: "x",
-    battery: "x",
-    load: "x"
-  },
-  {
-    manufacturer: "Goodwe",
-    device: "BT, SBP, BH-Serie Batterie-Wechselrichter",
-    connection: "Modbus/TCP",
-    link: "/docs/compatible_devices/devices#goodwe",
-    grid: "x",
-    pv: "x",
-    battery: "x",
-    load: "x"
+    grid: "(x)",
+    pv: "(x)",
+    battery: "(x)",
+    load: "(x)"
   },
   {
     manufacturer: "Kaco",
@@ -297,7 +297,7 @@ export const devices = [
   },
   {
     manufacturer: "SMA",
-    device: "Sunny Home Manager 1.0 / 2.0",
+    device: "Sunny Home Manager 1.0 / 2.0, SMA Energy Meter 2.0",
     connection: "SMA Speedwire",
     link: "/docs/compatible_devices/devices#sma",
     grid: "x",
@@ -457,7 +457,7 @@ export function manufacturer_to_bubbles(manufacturer, device = undefined) {
   return <div class="manufacturer_devices">
     <div>{text_to_bubble(data.grid,    "Netz"    )}</div>
     <div>{text_to_bubble(data.pv,      "PV"      )}</div>
-    <div>{text_to_bubble(data.battery, "Batterie")}</div>
+    <div>{text_to_bubble(data.battery, "Speicher")}</div>
     <div>{text_to_bubble(data.load,    "Last"    )}</div>
   </div>
 }
@@ -501,7 +501,7 @@ export const columns = [
         <div style={{display: 'flex'}}>
             <div>{text_to_bubble(original.grid,    "Netz"    )}</div>
             <div>{text_to_bubble(original.pv,      "PV"      )}</div>
-            <div>{text_to_bubble(original.battery, "Batterie")}</div>
+            <div>{text_to_bubble(original.battery, "Speicher")}</div>
             <div>{text_to_bubble(original.load,    "Last"    )}</div>
         </div>
     ),
