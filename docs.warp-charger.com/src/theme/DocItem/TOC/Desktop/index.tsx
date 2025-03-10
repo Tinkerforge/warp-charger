@@ -77,7 +77,7 @@ export default function DocItemTOCDesktop(props: Props): ReactNode {
                     return;
 
                 scrollHandled = hardwareType + hash;
-                history.replaceState(null, "", window.location.pathname + hash)
+                history.replaceState(null, "", window.location.pathname + window.location.search + hash)
                 if (window.location.hash == hash) {
                     window.location.hash = '';
                     setTimeout(() => window.location.hash = hash, 0);
