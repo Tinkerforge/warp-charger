@@ -159,14 +159,14 @@ Folgende Einrichtungsschritte sind notwendig:
 SMA hat mit Speedwire ein eigenes netzwerkbasiertes Kommunikationsprotokoll. Dieses wird vom Sunny Home Manager, SMA Energy Meter und
 manchen Wechselrichtern unterstützt. Mit dieser Schnittstelle kann nur der Netzanschlusszähler gelesen werden.
 
-Hier geht es zu den unterstützten SMA Geräten: [SMA Geräte](/docs/compatible_devices/devices.md#sma)
+Hier geht es zu den unterstützten SMA Geräten: [SMA Geräte](/docs/compatible_devices/devices.mdx#sma)
 
 ## RCT Power Serial Communication
 
 RCT hat mit der RCT Power Serial Communikation ein netzwerkbasiertes Kommunikationsprotokoll. Dieses wird von Batteriewechselrichtern unterstützt.
 Mit dieser Schnittstelle kann ein Netzanschlusszähler und der Batteriespeicher gelesen werden.
 
-Hier geht es zu den unterstützten RCT Geräten: [RCT Geräte](/docs/compatible_devices/devices.md#rct)
+Hier geht es zu den unterstützten RCT Geräten: [RCT Geräte](/docs/compatible_devices/devices.mdx#rct)
 
 ## API
 
