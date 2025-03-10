@@ -427,7 +427,7 @@ export const devices = [
   },
 ];
 
-function text_to_bubble(text, name) {
+function text_to_bubble(text, name, show_unavailable = true) {
     if (text === "x") {
         return <div class="device available">{name}</div>
     } else if (text === "(x)") {
@@ -435,7 +435,11 @@ function text_to_bubble(text, name) {
     } else if (text === "?") {
         return <div class="device maybe">{name}</div>
     } else if (text === "-") {
-        return <div class="device unavailable">{name}</div>
+        if (show_unavailable) {
+            return <div class="device unavailable">{name}</div>
+        } else {
+            return <div></div>
+        }
     } else {
         return <div>ERROR</div>
     }
@@ -455,10 +459,10 @@ export function manufacturer_to_bubbles(manufacturer, device = undefined) {
   }
 
   return <div class="manufacturer_devices">
-    <div>{text_to_bubble(data.grid,    "Netz"    )}</div>
-    <div>{text_to_bubble(data.pv,      "PV"      )}</div>
-    <div>{text_to_bubble(data.battery, "Speicher")}</div>
-    <div>{text_to_bubble(data.load,    "Last"    )}</div>
+    <div>{text_to_bubble(data.grid,    "Netz",     false)}</div>
+    <div>{text_to_bubble(data.pv,      "PV",       false)}</div>
+    <div>{text_to_bubble(data.battery, "Speicher", false)}</div>
+    <div>{text_to_bubble(data.load,    "Last",     false)}</div>
   </div>
 }
 
