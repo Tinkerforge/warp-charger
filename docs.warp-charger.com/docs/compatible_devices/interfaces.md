@@ -172,8 +172,12 @@ Hier geht es zu den unterstützten RCT Geräten: [RCT Geräte](/docs/compatible_
 
 Die MQTT und HTTP WARP Push API
 kann genutzt werden um von extern Zählerdaten dem WARP Charger oder
-dem WARP Energy Manager mitzuteilen. Siehe
-i[API Referenz - Meters](/docs/interfaces/mqtt_http/api_reference/meters.mdx).
+dem WARP Energy Manager mitzuteilen. Siehe [API Referenz - Meters](/docs/interfaces/mqtt_http/api_reference/meters.mdx).
+
+### 1. API Stromzähler anlegen
+
+Beim Anlegen eines API-Stromzählers können vordefinierte API-Stromzähler (Vorlagen) gewählt werden, welche die benötigten Messwerte anlegen.
+Siehe [Webinterface - Stromzähler](/docs/webinterface/energy_management/energy_meters).
 
 :::note
 
@@ -193,9 +197,16 @@ Für das dynamisches Lastmanagement muss ein Stromzähler konfiguriert werden, d
 Dieser Wert wird für die Regelung verwendet. Weitere Werte können angelegt werden, sind aber technisch nicht notwendig.
 Ob ***"Bezug"***, ***"Bezug minus Einspeisung"***, ***"Bezug plus Einspeisung"*** gewählt werden muss, hängt von dem jeweiligen Stromzähler ab. Dies kann im Zweifelsfall ausprobiert werden.
 
-Beim Anlegen eines API-Stromzählers können vordefinierte API-Stromzähler (Vorlagen) gewählt werden, welche die benötigten Messwerte anlegen.
-
 :::
+
+### 2. Daten an API Stromzähler senden
+
+Abhängig von den angelegten Werten muss der API Stromzähler mit Werten versorgt werden. Dazu dient die Funktion [update](/docs/interfaces/mqtt_http/api_reference/meters#meters_X_update_warp1).
+Anstatt **X** muss die jeweilige Nummer des angelegten Stromzähler angegeben werden.
+
+ * [HTTP](/docs/interfaces/mqtt_http/api_reference/meters?apiType=http#meters_X_update_warp3)
+ * [MQTT](/docs/interfaces/mqtt_http/api_reference/meters?apiType=mqtt#meters_X_update_warp3)
+
 
 ## Am WARP Energy Manager angeschlossene Stromzähler
 

@@ -4,6 +4,13 @@ import React from "react";
 // ----------------------------------------------------------------------------
 // Please respect order by manufacturer, then by name, when adding new entries.
 // ----------------------------------------------------------------------------
+
+// Syntax
+// x -> available
+// (x) -> available, position dependend
+// ? -> we have no information
+// - -> not availble
+
 export const devices = [
   {
     manufacturer: "Alpha ESS",
