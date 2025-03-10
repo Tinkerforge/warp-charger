@@ -18,7 +18,7 @@ const SortableDataTable = ({
 
   // Render the UI for your table
   return (
-    <table role="table">
+    <table role="table" class="sortable-table">
       <thead>
         {table.getHeaderGroups().map(headerGroup => (
           <tr key={headerGroup.id} role="row">

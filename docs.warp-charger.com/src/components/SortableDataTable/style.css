@@ -13,3 +13,81 @@
 .sortable-data-table, .sortable-data-table.center {
   text-align: center;
 }
+
+@media(max-width: 1600px) {
+  .sortable-table, .sortable-table tbody, .sortable-table thead, .sortable-table tbody, .sortable-table th, .sortable-table td, .sortable-table tr {
+    display: block;
+    float: left; /* ie9 fix */
+    width: 100%;
+    clear: both;
+  }
+
+  .sortable-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .sortable-table tr {
+    border: 10px transparent;
+    padding-bottom: 5px;
+    border-top: 1px solid #ccc;
+  }
+
+  .sortable-table td:before {
+    float: left;
+    width: 35%;
+    padding: 0 0 0 1%;
+  }
+
+  .sortable-table td {
+    padding-left: 10%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  .sortable-table td {
+    border: none;
+    padding: 2px 0 2px 0;
+  }
+
+  .sortable-table td:nth-of-type(1):before { content: "Hersteller:"; }
+  .sortable-table td:nth-of-type(2):before { content: "Gerät/Serie:"; }
+  .sortable-table td:nth-of-type(3):before { content: "Schnittstelle:"; }
+  .sortable-table td:nth-of-type(4):before { content: "Klasse (Messort):"; }
+}
+
+.device {
+  display: flex;
+  align-items: center;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-right: 2px;
+  text-align: center;
+  border-radius: 25px;
+  height: 25px;
+  width: min-content;
+}
+
+.device.available {
+  color: #ffffff;
+  background: #008000;
+  border: solid 1px #008000;
+}
+
+.device.optional {
+  color: #008000;
+  background: #ffffff;
+  border: solid 1px #008000;
+}
+
+.device.maybe {
+  color: #D3D3D3;
+  background: #ffffff;
+  border: solid 1px #d3d3d3;
+}
+
+.device.unavailable {
+  visibility: hidden;
+}

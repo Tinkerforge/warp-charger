@@ -1,3 +1,4 @@
+import { text } from "cheerio";
 import React from "react";
 
 // ----------------------------------------------------------------------------
@@ -419,6 +420,20 @@ export const devices = [
   },
 ];
 
+function text_to_bubble(text, name) {
+    if (text === "x") {
+        return <div class="device available">{name}</div>
+    } else if (text === "(x)") {
+        return <div class="device optional">{name}</div>
+    } else if (text === "?") {
+        return <div class="device maybe">{name}</div>
+    } else if (text === "-") {
+        return <div class="device unavailable">{name}</div>
+    } else {
+        return <div>ERROR</div>
+    }
+}
+
 // ----------------------------------------------------------------------------
 // SortableDataTable column definition
 // ----------------------------------------------------------------------------
@@ -451,23 +466,16 @@ export const columns = [
     className: "sortable-data-table left nowrap",
   },
   {
-    header: "Netz",
-    accessorKey: "grid",
-    className: "sortable-data-table left",
-  },
-  {
-    header: "PV",
-    accessorKey: "pv",
-    className: "sortable-data-table left",
-  },
-  {
-    header: "Batterie",
-    accessorKey: "battery",
-    className: "sortable-data-table left",
-  },
-  {
-    header: "Last",
+    header: "Klasse (Messort)",
     accessorKey: "load",
     className: "sortable-data-table left",
+    cell: ({ cell, row: { original } }) => (
+        <div style={{display: 'flex'}}>
+            <div>{text_to_bubble(original.grid,    "Netz"    )}</div>
+            <div>{text_to_bubble(original.pv,      "PV"      )}</div>
+            <div>{text_to_bubble(original.battery, "Batterie")}</div>
+            <div>{text_to_bubble(original.load,    "Last"    )}</div>
+        </div>
+    ),
   },
 ];
