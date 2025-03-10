@@ -441,6 +441,27 @@ function text_to_bubble(text, name) {
     }
 }
 
+export function manufacturer_to_bubbles(manufacturer, device = undefined) {
+  let data = devices.find(device => device.manufacturer === manufacturer)
+  if (data === undefined) {
+    return <div>ERROR1</div>
+  }
+
+  if(device != undefined) {
+    data = devices.find(data => data.device === device)
+    if (data === undefined) {
+      return <div>ERROR2</div>
+    }
+  }
+
+  return <div class="manufacturer_devices">
+    <div>{text_to_bubble(data.grid,    "Netz"    )}</div>
+    <div>{text_to_bubble(data.pv,      "PV"      )}</div>
+    <div>{text_to_bubble(data.battery, "Batterie")}</div>
+    <div>{text_to_bubble(data.load,    "Last"    )}</div>
+  </div>
+}
+
 // ----------------------------------------------------------------------------
 // SortableDataTable column definition
 // ----------------------------------------------------------------------------
