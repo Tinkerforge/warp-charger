@@ -201,11 +201,11 @@ Ob ***"Bezug"***, ***"Bezug minus Einspeisung"***, ***"Bezug plus Einspeisung"**
 
 ### 2. Daten an API Stromzähler senden
 
-Abhängig von den angelegten Werten muss der API Stromzähler mit Werten versorgt werden. Dazu dient die Funktion [update](/docs/interfaces/mqtt_http/api_reference/meters#meters_X_update_warp1).
+Abhängig von den angelegten Werten muss der API Stromzähler mit Werten versorgt werden. Dazu dient die Funktion [update](/docs/interfaces/mqtt_http/api_reference/meters#meters_X_update_warp3).
 Anstatt **X** muss die jeweilige Nummer des angelegten Stromzähler angegeben werden.
 
- * [HTTP](/docs/interfaces/mqtt_http/api_reference/meters?apiType=http#meters_X_update_warp3)
- * [MQTT](/docs/interfaces/mqtt_http/api_reference/meters?apiType=mqtt#meters_X_update_warp3)
+ * [HTTP API](/docs/interfaces/mqtt_http/api_reference/meters?apiType=http#meters_X_update_warp3)
+ * [MQTT API](/docs/interfaces/mqtt_http/api_reference/meters?apiType=mqtt#meters_X_update_warp3)
 
 
 ## Am WARP Energy Manager angeschlossene Stromzähler
