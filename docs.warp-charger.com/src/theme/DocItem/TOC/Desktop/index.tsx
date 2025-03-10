@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { type ReactNode, useEffect } from 'react';
 import Desktop from '@theme-original/DocItem/TOC/Desktop';
 import type DesktopType from '@theme/DocItem/TOC/Desktop';
 import type { WrapperProps } from '@docusaurus/types';
@@ -22,7 +22,7 @@ let scrollHandled = "foobar";
 
 const hardwareTypes = ['warp1', 'warp2', 'warp3', 'wem', 'wem2', 'any'];
 
-export default function DocItemTOCDesktop(props: Props): JSX.Element {
+export default function DocItemTOCDesktop(props: Props): ReactNode {
     const { toc, frontMatter, metadata } = useDoc();
 
     // We are not in the API documentation. Show the default TOC.
