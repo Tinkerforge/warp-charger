@@ -45,7 +45,7 @@ export default function DocItemTOCDesktop(props: Props): JSX.Element {
         useEffect(() => {
             interval = setInterval(() => {
                 let storedHardwareType = window?.localStorage?.getItem("docusaurus.tab.hardwareType");
-                let hardwareType = new URLSearchParams(window.location.search)?.get("hardwareType") ?? storedHardwareType;
+                let hardwareType = new URLSearchParams(window.location.search)?.get("hardwareType") ?? storedHardwareType ?? window.location.hash.split('_').slice(-1)[0];
 
                 if (hardwareType == null) {
                     scrollHandled = "foobar";
@@ -78,6 +78,10 @@ export default function DocItemTOCDesktop(props: Props): JSX.Element {
 
                 scrollHandled = hardwareType + hash;
                 history.replaceState(null, "", window.location.pathname + hash)
+                if (window.location.hash == hash) {
+                    window.location.hash = '';
+                    setTimeout(() => window.location.hash = hash, 0);
+                }
                 window.location.hash = hash;
             }, 100);
         }, []);
