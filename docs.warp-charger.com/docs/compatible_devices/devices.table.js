@@ -387,9 +387,9 @@ export const devices = [
   },
   {
     manufacturer: "Tinkerforge",
-    device: "WARP API",
+    device: "WARP API HTTP",
     connection: "HTTP",
-    link: "/docs/interfaces/mqtt_http/api_reference/meters",
+    link: "/docs/compatible_devices/devices#http-api",
     grid: "x",
     pv: "x",
     battery: "x",
@@ -397,9 +397,9 @@ export const devices = [
   },
   {
     manufacturer: "Tinkerforge",
-    device: "WARP API",
+    device: "WARP API MQTT",
     connection: "MQTT",
-    link: "/docs/interfaces/mqtt_http/api_reference/meters",
+    link: "/docs/compatible_devices/devices#mqtt-api",
     grid: "x",
     pv: "x",
     battery: "x",
