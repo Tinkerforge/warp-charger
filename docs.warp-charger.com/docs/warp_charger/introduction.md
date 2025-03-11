@@ -17,7 +17,7 @@ Mit dem WARP3 Charger bieten wir die dritte Generation der hochwertigen und lang
 und gefertigt. Sie ist modular aufgebaut, sodass einzelne Komponenten einfach ausgetauscht werden können. Bei der Auswahl der Bauteile legen wir großen Wert auf eine hohe Qualität. Sowohl die Hardware als auch die Software
 sind Open Source.
 
-![image](/img/warp3_shared_with_manual/resized/front.png)
+![image](/img/warp_charger/front.png)
 
 ## Features
 
@@ -42,7 +42,7 @@ DB703 pulverbeschichtet geliefert werden kann.
 
 ### WARP3 Charger Basic
 
-![image](/img/warp3_shared_with_manual/resized/warp3_basic_open.jpg)
+![image](/img/warp_charger/warp3_basic_open.jpg)
 
 Der WARP3 Charger Basic ist das einfachste Modell. Mit diesem kann ein Elektrofahrzeug nach DIN EN 61851-1 Mode 3 geladen werden. Das eigentliche
 Ladegerät ist im Elektrofahrzeug verbaut. Dieses entscheidet ob es an der Wallbox ein-, zwei- oder dreiphasig lädt.
@@ -56,7 +56,7 @@ LED-Rings befindet sich ein Taster.
 
 ### WARP3 Charger Smart
 
-![image](/img/warp3_shared_with_manual/resized/warp3_smart_open.jpg)
+![image](/img/warp_charger/warp3_smart_open.jpg)
 
 Der WARP3 Charger Smart ist im Vergleich zur Variante Basic zusätzlich mit einem WLAN- und LAN-fähigen
 Controller ausgestattet. Dieser kann als Access Point ein eigenes WLAN eröffnen oder in ein vorhandenes Netzwerk
@@ -86,7 +86,7 @@ des Fahrzeugs genutzt werden soll, oder ob auf einen PV-Überschuss gewartet wer
 
 ### WARP3 Charger Pro
 
-![image](/img/warp3_shared_with_manual/resized/warp3_pro_open.jpg)
+![image](/img/warp_charger/warp3_pro_open.jpg)
 
 Der WARP3 Charger Pro bietet alle Funktionen der Variante Smart. Zusätzlich ist dieser mit einem MID-geeichten Stromzähler (EU-Messgeräterichtlinie 2014/32/EU) ausgestattet, der misst, wie viel Energie
 (kWh) geladen wurde. Die geladene Energie wird bei aktiviertem Ladelogbuch bei jedem Ladevorgang erfasst und ermöglicht somit zum Beispiel die Abrechnung von Ladevorgängen für Dienstwagen. Der auf der Hutschiene im
