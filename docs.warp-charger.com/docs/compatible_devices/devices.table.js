@@ -498,7 +498,7 @@ export const columns = [
     className: "sortable-data-table left nowrap",
   },
   {
-    header: "Klasse (Messort)",
+    header: "Messort",
     accessorKey: "load",
     className: "sortable-data-table left",
     cell: ({ cell, row: { original } }) => (

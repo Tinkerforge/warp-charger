@@ -25,18 +25,18 @@ auf dem [WARP Charger](/warp_charger/introduction) oder [WARP Energy Manager](/w
 
 
 
-## Klassen von Gerätedaten
+## Messort von Gerätedaten
 
-Wir unterscheiden zwischen vier verschiedenen Klassen von Datenquellen. Diese sind nachfolgend aufgeführt.
-Teilweise unterstützen Geräte mehrere Klassen parallel. So gibt es zum Beispiel Hybrid-Wechselrichter die Daten
-zu allen vier Klassen liefern.
+Wir unterscheiden zwischen vier verschiedenen Messorten von Datenquellen. Diese sind nachfolgend aufgeführt.
+Teilweise unterstützen Geräte mehrere Messorte parallel. So gibt es zum Beispiel Hybrid-Wechselrichter die Daten
+zu allen vier Messorten liefern.
 
-Die Klassen werden genutzt um die einzelnen Datenquellen zuordnen und zusammenfassen zu können und
+Die Messorte werden genutzt um die einzelnen Datenquellen zuordnen und zusammenfassen zu können und
 daraus eine Energie-Übersicht erstellen zu können.
 
-Stromzählern ohne feste Rolle können einer Klasse händisch zugeordnet werden. Somit kann ein Stromzähler installiert werden
+Stromzählern ohne feste Rolle können einem Messort händisch zugeordnet werden. Somit kann ein Stromzähler installiert werden
 um zum Beispiel die Last zu erfassen. Ebenso ist es möglich einen Stromzähler am Netzanschluss zu installieren
-und ihn der Klasse "Netzanschluss" zuzuordnen, sollte kein auswertbarer Stromzähler vorhanden sein.
+und ihm den Messorte "Netzanschluss" zuzuordnen, sollte kein auswertbarer Stromzähler vorhanden sein.
 
 ### Netzanschluss
 
@@ -58,7 +58,7 @@ Zukünftig wird für viele Modelle auch eine Steuerung des Speichers möglich se
 
 ### Last
 
-Um erfassen zu können wohin die erzeugte Leistung fliest gibt es die Klasse "Last". Manche Wechselrichter verfügen auch über einen auslesbaren Lastausgang.
+Um erfassen zu können wohin die erzeugte Leistung fliest gibt es den Messort "Last". Manche Wechselrichter verfügen auch über einen auslesbaren Lastausgang.
 
 ## Anwendungen
 ### PV-Überschussladen
