@@ -390,20 +390,20 @@ export const devices = [
     device: "WARP Meters API HTTP",
     connection: "HTTP",
     link: "/docs/compatible_devices/devices#http-api",
-    grid: "x",
-    pv: "x",
-    battery: "x",
-    load: "x"
+    grid: "(x)",
+    pv: "(x)",
+    battery: "(x)",
+    load: "(x)"
   },
   {
     manufacturer: "Tinkerforge",
     device: "WARP Meters API MQTT",
     connection: "MQTT",
     link: "/docs/compatible_devices/devices#mqtt-api",
-    grid: "x",
-    pv: "x",
-    battery: "x",
-    load: "x"
+    grid: "(x)",
+    pv: "(x)",
+    battery: "(x)",
+    load: "(x)"
   },
   {
     manufacturer: "Victron Energy",

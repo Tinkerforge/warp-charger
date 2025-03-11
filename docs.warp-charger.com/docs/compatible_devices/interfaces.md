@@ -190,9 +190,9 @@ Dieser Wert wird für die Regelung verwendet. Weitere Werte können angelegt wer
 :::note
 
 Für das dynamisches Lastmanagement muss ein Stromzähler konfiguriert werden, der mindestens folgenden Wert enthält:
- * ***"Strom (Bezug minus Ein­speisung); L1 \[A\]*** bzw. ***"Strom (Bezug plus Ein­speisung); L1 \[A\]*** oder ***"Strom (Bezug); L1 \[A\]***
- * ***"Strom (Bezug minus Ein­speisung); L2 \[A\]*** bzw. ***"Strom (Bezug plus Ein­speisung); L2 \[A\]*** oder ***"Strom (Bezug); L2 \[A\]***
- * ***"Strom (Bezug minus Ein­speisung); L3 \[A\]*** bzw. ***"Strom (Bezug plus Ein­speisung); L3 \[A\]*** oder ***"Strom (Bezug); L3 \[A\]***
+ * ***Strom (Bezug minus Ein­speisung); L1 \[A\]*** bzw. ***Strom (Bezug plus Ein­speisung); L1 \[A\]*** oder ***Strom (Bezug); L1 \[A\]***
+ * ***Strom (Bezug minus Ein­speisung); L2 \[A\]*** bzw. ***Strom (Bezug plus Ein­speisung); L2 \[A\]*** oder ***Strom (Bezug); L2 \[A\]***
+ * ***Strom (Bezug minus Ein­speisung); L3 \[A\]*** bzw. ***Strom (Bezug plus Ein­speisung); L3 \[A\]*** oder ***Strom (Bezug); L3 \[A\]***
 
 Dieser Wert wird für die Regelung verwendet. Weitere Werte können angelegt werden, sind aber technisch nicht notwendig.
 Ob ***"Bezug"***, ***"Bezug minus Einspeisung"***, ***"Bezug plus Einspeisung"*** gewählt werden muss, hängt von dem jeweiligen Stromzähler ab. Dies kann im Zweifelsfall ausprobiert werden.
@@ -206,6 +206,15 @@ Anstatt **X** muss die jeweilige Nummer des angelegten Stromzähler angegeben we
 
  * [HTTP API](/docs/interfaces/mqtt_http/api_reference/meters?apiType=http#meters_X_update_warp3)
  * [MQTT API](/docs/interfaces/mqtt_http/api_reference/meters?apiType=mqtt#meters_X_update_warp3)
+
+ :::note
+
+Wurde als Beispiel ein API Stromzähler nur mit dem Wert: ***Wirk­leistung (Bezug minus Ein­speisung); Σ L1, L2, L3 \[W\]*** mit der Zählernummer ***1*** angelegt, so kann an diesen der Wert ***234 Watt*** wie folgt gesendet werden:
+
+ * HTTP: *curl http://$HOST/meters/1/update -d 234*
+ * MQTT: *mosquitto_pub -h $BROKER -t $PREFIX/meters/1/update -m 234*
+
+:::
 
 
 ## Am WARP Energy Manager angeschlossene Stromzähler

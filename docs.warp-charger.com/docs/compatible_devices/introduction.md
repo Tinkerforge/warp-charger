@@ -71,7 +71,7 @@ PV-Überschuss bzw. die aktuellen Phasenströme ermittelt werden können.
 :::note
 
 Für das PV-Überschussladen muss ein Stromzähler konfiguriert werden, der mindestens folgenden Wert enthält:
-***"Wirk­leistung (Bezug minus Ein­speisung); Σ L1, L2, L3 \[W\]***
+***Wirk­leistung (Bezug minus Ein­speisung); Σ L1, L2, L3 \[W\]***
 
 Dieser Wert wird für die Regelung verwendet. Weitere Werte können angelegt werden, sind aber technisch nicht notwendig.
 
@@ -91,9 +91,9 @@ Phasenströme ermittelt werden können.
 :::note
 
 Für das dynamisches Lastmanagement muss ein Stromzähler konfiguriert werden, der mindestens folgenden Wert enthält:
- * ***"Strom (Bezug minus Ein­speisung); L1 \[A\]*** bzw. ***"Strom (Bezug plus Ein­speisung); L1 \[A\]*** oder ***"Strom (Bezug); L1 \[A\]***
- * ***"Strom (Bezug minus Ein­speisung); L2 \[A\]*** bzw. ***"Strom (Bezug plus Ein­speisung); L2 \[A\]*** oder ***"Strom (Bezug); L2 \[A\]***
- * ***"Strom (Bezug minus Ein­speisung); L3 \[A\]*** bzw. ***"Strom (Bezug plus Ein­speisung); L3 \[A\]*** oder ***"Strom (Bezug); L3 \[A\]***
+ * ***Strom (Bezug minus Ein­speisung); L1 \[A\]*** bzw. ***Strom (Bezug plus Ein­speisung); L1 \[A\]*** oder ***Strom (Bezug); L1 \[A\]***
+ * ***Strom (Bezug minus Ein­speisung); L2 \[A\]*** bzw. ***Strom (Bezug plus Ein­speisung); L2 \[A\]*** oder ***Strom (Bezug); L2 \[A\]***
+ * ***Strom (Bezug minus Ein­speisung); L3 \[A\]*** bzw. ***Strom (Bezug plus Ein­speisung); L3 \[A\]*** oder ***Strom (Bezug); L3 \[A\]***
 
 Dieser Wert wird für die Regelung verwendet. Weitere Werte können angelegt werden, sind aber technisch nicht notwendig.
 Ob ***"Bezug"***, ***"Bezug minus Einspeisung"***, ***"Bezug plus Einspeisung"*** gewählt werden muss, hängt von dem jeweiligen Stromzähler ab. Dies kann im Zweifelsfall ausprobiert werden.
