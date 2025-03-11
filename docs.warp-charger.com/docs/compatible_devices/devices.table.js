@@ -389,21 +389,21 @@ export const devices = [
     manufacturer: "Tinkerforge",
     device: "WARP API",
     connection: "HTTP",
-    link: "/interfaces/mqtt_http/api_reference/meters",
-    grid: "(x)",
-    pv: "(x)",
-    battery: "(x)",
-    load: "(x)"
+    link: "/docs/interfaces/mqtt_http/api_reference/meters",
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "x"
   },
   {
     manufacturer: "Tinkerforge",
     device: "WARP API",
     connection: "MQTT",
-    link: "/interfaces/mqtt_http/api_reference/meters",
-    grid: "(x)",
-    pv: "(x)",
-    battery: "(x)",
-    load: "(x)"
+    link: "/docs/interfaces/mqtt_http/api_reference/meters",
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "x"
   },
   {
     manufacturer: "Victron Energy",
