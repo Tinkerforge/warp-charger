@@ -23,8 +23,8 @@ Das Gerät muss nach dem Hinzufügen des ersten Nutzers neugestartet werden. Nac
 ![image](/img/webinterface/system/warp-system_remote_access.jpeg)
 
 ### Mit Zugangsdaten
-Über den "+" Button das Menü zum Hinzufügen eines Fernzugriff-Nutzers öffnen, die Zugangsdaten zum Account eintragen (die Daten werden nicht gespeichert),
-auf "Hinzufügen" klicken.
+Über den "+" Button das Menü zum Hinzufügen eines Fernzugriff-Nutzers öffnen, die Zugangsdaten zum Account eintragen (die Daten werden nicht gespeichert)
+und auf "Hinzufügen" klicken.
 
 ### Mit Authorisierungstoken
 Das Hinzufügen eines Accounts mit einem Authorisierungstoken geht schneller, da das Authorisierungstoken bereits alle benötigten Informationen enthält.
@@ -39,6 +39,7 @@ Um ein Gerät temporär aus dem Fernzugriff zu entfernen reicht es, wenn der Fer
 
 Wenn ein Nutzer dauerhaft vom Gerät entfernt werden soll kann diesüber den "Löschen"-Knopf neben der E-Mail-Adresse getan werden.
 Der Zugriff des Nutzers ist damit bereits entfernt. Um dies mit dem Server zu synchronisieren muss das Gerät neu gestartet werden.
+Beim entfernen des letzten Nutzers wird das Gerät automatisch beim Server deregistriert.
 
 Alternativ gibt es einen Knopf zum Entfernen auf der Übersichtsseite des Fernzugriffs.
 Dabei ist zu beachten, dass das Gerät dabei zwar aus dem Account entfernt und jeglicher Zugang über den Fernzugriff blockiert wird, der Fernzugriff auf der Wallbox selber allerdings aktiviert bleibt.
