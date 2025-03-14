@@ -16,7 +16,7 @@ und Smart Charging Profile.
 
 Um OCPP zu nutzen, muss die Wallbox zunächst in der verwendeten Cloud
 hinzugefügt werden. Wir nutzen in diesem Beispiel https://ladefoxx.one.
-Die notwendingen Einstellungen sind allerdings auf jede Cloud bzw
+Die notwendingen Einstellungen sind allerdings auf jeder Cloud bzw
 jeden OCPP-Server vorzunehmen.
 
 ![image](/img/interfaces/ocpp/ocpp_configuration_ladefoxx.png)
