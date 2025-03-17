@@ -21,7 +21,11 @@ Um auf die Daten zugreifen zu können, sind wir auf die von dem jeweiligen Gerä
 Abhängig vom Gerät und Hersteller muss dazu die passende [Schnittstelle](/compatible_devices/interfaces.md) im Webinterface unter [Stromzähler](/webinterface/energy_management/energy_meters.md)
 auf dem [WARP Charger](/warp_charger/introduction) oder [WARP Energy Manager](/warp_energy_manager/introduction) konfiguriert werden.
 
+:::note
 
+Die Liste der kompatiblen Geräte befindet sich hier: [Liste kompatibler Geräte](/docs/compatible_devices/devices)
+
+:::
 
 
 
