@@ -12,11 +12,14 @@ WARP3 Charger können auf verschiedenen Arten vom Netzbetreiber gesteuert
 werden. Welche Möglichkeit genutzt werden kann, hängt von den Vorgaben
 des örtlichen Netzbetreibers ab.
 
-### Schnittstellen (OCPP, Modbus TCP, HTTP, MQTT)
+### Schnittstellen (EEBus, OCPP, Modbus TCP, HTTP, MQTT)
 
 Generell kann die Ladeleistung der Wallbox über alle implementierten
 Schnittstellen gesteuert werden. Netzbetreiber setzen
-zur Steuerung typischerweise OCPP oder Modbus TCP ein.
+zur Steuerung aktuell wenn überhaupt OCPP oder Modbus TCP ein.
+
+Zukünftig soll [EEBus](/docs/interfaces/eebus) als die Schnittstelle
+zur Steuerung von Verbrauchseinrichtungen seitens der Netzbetreiber dienen.
 
 ### Rundsteuerempfänger/Steuerbox direkt am WARP Charger
 
