@@ -11,6 +11,8 @@ import React from "react";
 // ? -> we have no information
 // - -> not availble
 
+//battery not documented yet
+
 export const devices = [
   {
     manufacturer: "Alpha ESS",
@@ -20,7 +22,10 @@ export const devices = [
     grid: "x",
     pv: "x",
     battery: "x",
-    load: "-"
+    load: "-",  // should be available
+    dlm: "x",
+    pve: "x",
+    bat: "-"
   },
   {
     manufacturer: "APsystems",
@@ -30,27 +35,36 @@ export const devices = [
     grid: "-",
     pv: "x",
     battery: "-",
-    load: "-"
+    load: "-",
+    dlm: "-",
+    pve: "-",
+    bat: "-"
   },
   {
     manufacturer: "Carlo Galvazzi",
-    device: "EM24 Smart Meter",
+    device: "Smart Meter: EM24, EM100, ET100, EM210, EM270, EM280, EM300, ET300, EM510, EM530, EM540",
     connection: "Modbus/TCP",
     link: "/docs/compatible_devices/devices#carlo-galvazzi",
     grid: "(x)",
     pv: "(x)",
     battery: "(x)",
-    load: "(x)"
+    load: "(x)",
+    dlm: "(x)",
+    pve: "(x)",
+    bat: "-"
   },
   {
     manufacturer: "Deye",
     device: "SUN-Serie Hybrid-Wechselrichter",
     connection: "Modbus/TCP",
     link: "/docs/compatible_devices/devices#deye",
-    grid: "x",
+    grid: "(x)",
     pv: "x",
     battery: "x",
-    load: "x"
+    load: "x",
+    dlm: "(x)",
+    pve: "(x)",
+    bat: "-"
   },
   {
     manufacturer: "E3DC",
@@ -60,7 +74,10 @@ export const devices = [
     grid: "x",
     pv: "x",
     battery: "?",
-    load: "?"
+    load: "?",
+    dlm: "?",
+    pve: "?",
+    bat: "-"
   },
   {
     manufacturer: "Eastron",
@@ -70,7 +87,10 @@ export const devices = [
     grid: "(x)",
     pv: "(x)",
     battery: "(x)",
-    load: "(x)"
+    load: "(x)",
+    dlm: "(x)",
+    pve: "(x)",
+    bat: "-"
   },
   {
     manufacturer: "Eastron",
@@ -80,7 +100,10 @@ export const devices = [
     grid: "(x)",
     pv: "(x)",
     battery: "(x)",
-    load: "(x)"
+    load: "(x)",
+    dlm: "(x)",
+    pve: "(x)",
+    bat: "-"
   },
   {
     manufacturer: "Eastron",
@@ -90,7 +113,10 @@ export const devices = [
     grid: "(x)",
     pv: "(x)",
     battery: "(x)",
-    load: "(x)"
+    load: "(x)",
+    dlm: "?",
+    pve: "?",
+    bat: "?"
   },
   {
     manufacturer: "elgris",
@@ -100,7 +126,10 @@ export const devices = [
     grid: "(x)",
     pv: "(x)",
     battery: "(x)",
-    load: "(x)"
+    load: "(x)",
+    dlm: "(x)",
+    pve: "(x)",
+    bat: "-"
   },
   {
     manufacturer: "Eltako",
@@ -110,27 +139,10 @@ export const devices = [
     grid: "(x)",
     pv: "(x)",
     battery: "(x)",
-    load: "(x)"
-  },
-  {
-    manufacturer: "Fronius",
-    device: "GEN24-Serie Hybrid-Wechselrichter",
-    connection: "SunSpec",
-    link: "/docs/compatible_devices/devices#fronius",
-    grid: "x",
-    pv: "x",
-    battery: "x",
-    load: "?"
-  },
-  {
-    manufacturer: "Fronius",
-    device: "Primo- und Symo-Serie String-Wechselrichter",
-    connection: "SunSpec",
-    link: "/docs/compatible_devices/devices#fronius",
-    grid: "x",
-    pv: "x",
-    battery: "-",
-    load: "-"
+    load: "(x)",
+    dlm: "(x)",
+    pve: "(x)",
+    bat: "-"
   },
   {
     manufacturer: "Fox ESS",
@@ -141,7 +153,36 @@ export const devices = [
     grid: "x",
     pv: "x",
     battery: "x",
-    load: "?"
+    load: "-",
+    dlm: "-", //meter no currents available
+    pve: "x",
+    bat: "-"
+  },
+  {
+    manufacturer: "Fronius",
+    device: "GEN24-Serie Hybrid-Wechselrichter",
+    connection: "SunSpec",
+    link: "/docs/compatible_devices/devices#fronius",
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "-",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
+  },
+  {
+    manufacturer: "Fronius",
+    device: "Primo- und Symo-Serie String-Wechselrichter",
+    connection: "SunSpec",
+    link: "/docs/compatible_devices/devices#fronius",
+    grid: "x",
+    pv: "x",
+    battery: "-",
+    load: "-",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
   },
   {
     manufacturer: "Goodwe",
@@ -151,7 +192,10 @@ export const devices = [
     grid: "x",
     pv: "x",
     battery: "-",
-    load: "-"
+    load: "-",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
   },
   {
     manufacturer: "Goodwe",
@@ -161,7 +205,10 @@ export const devices = [
     grid: "x",
     pv: "x",
     battery: "x",
-    load: "x"
+    load: "x",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
   },
   {
     manufacturer: "Goodwe",
@@ -171,17 +218,23 @@ export const devices = [
     grid: "?",
     pv: "-",
     battery: "x",
-    load: "x"
+    load: "x",
+    dlm: "?",
+    pve: "?",
+    bat: "-"
   },
   {
-    manufacturer: "Hailei",
+    manufacturer: "Hailei", //is alpha ess
     device: "Hybrid Wechselrichter (x)",
     connection: "Modbus/TCP",
     link: "/docs/compatible_devices/devices#hailei",
     grid: "x",
     pv: "x",
     battery: "x",
-    load: "x"
+    load: "-", // should be available
+    dlm: "x",
+    pve: "x",
+    bat: "-"
   },
   {
     manufacturer: "Hoymiles",
@@ -192,17 +245,23 @@ export const devices = [
     grid: "-",
     pv: "x",
     battery: "-",
-    load: "-"
+    load: "-",
+    dlm: "-",
+    pve: "-",
+    bat: "-"
   },
   {
-    manufacturer: "Huawei",
+    manufacturer: "Huawei", //todo
     device: "SUN2000 Serie Hybrid-Wechselrichter",
     connection: "Modbus/TCP",
     link: "/docs/compatible_devices/devices#huawei",
-    grid: "(x)",
-    pv: "(x)",
-    battery: "(x)",
-    load: "(x)"
+    grid: "?",
+    pv: "?",
+    battery: "?",
+    load: "?",
+    dlm: "?",
+    pve: "?",
+    bat: "-"
   },
   {
     manufacturer: "Kaco",
@@ -213,7 +272,10 @@ export const devices = [
     grid: "x",
     pv: "x",
     battery: "x",
-    load: "?"
+    load: "-",
+    dlm: "?",
+    pve: "?",
+    bat: "-"
   },
   {
     manufacturer: "Kaco",
@@ -223,7 +285,10 @@ export const devices = [
     grid: "?",
     pv: "x",
     battery: "-",
-    load: "-"
+    load: "-",
+    dlm: "?",
+    pve: "?",
+    bat: "-"
   },
   {
     manufacturer: "Kostal",
@@ -233,7 +298,10 @@ export const devices = [
     grid: "(x)",
     pv: "(x)",
     battery: "(x)",
-    load: "(x)"
+    load: "(x)",
+    dlm: "(x)",
+    pve: "(x)",
+    bat: "-"
   },
   {
     manufacturer: "Kostal",
@@ -243,7 +311,10 @@ export const devices = [
     grid: "x",
     pv: "x",
     battery: "x",
-    load: "?"
+    load: "-",
+    dlm: "?",
+    pve: "x",
+    bat: "-"
   },
   {
     manufacturer: "RCT",
@@ -251,9 +322,12 @@ export const devices = [
     connection: "RCT PSC",
     link: "/docs/compatible_devices/devices#rct",
     grid: "x",
-    pv: "-",
+    pv: "-", //no pv
     battery: "x",
-    load: "-"
+    load: "-",
+    dlm: "-", //not available
+    pve: "x",
+    bat: "-"
   },
   {
     manufacturer: "Shelly",
@@ -263,17 +337,23 @@ export const devices = [
     grid: "(x)",
     pv: "(x)",
     battery: "(x)",
-    load: "(x)"
+    load: "(x)",
+    dlm: "(x)",
+    pve: "(x)",
+    bat: "-"
   },
   {
     manufacturer: "Siemens",
-    device: "SENTRON PAC2200/PAC3200",
+    device: "SENTRON PAC2200, PAC3120, PAC3200, PAC3220, PAC4200, PAC4220",
     connection: "Modbus/TCP",
     link: "/docs/compatible_devices/devices#siemens",
     grid: "(x)",
     pv: "(x)",
     battery: "(x)",
-    load: "(x)"
+    load: "(x)",
+    dlm: "(x)",
+    pve: "(x)",
+    bat: "-"
   },
   {
     manufacturer: "SMA",
@@ -283,27 +363,75 @@ export const devices = [
     grid: "(x)",
     pv: "(x)",
     battery: "(x)",
-    load: "(x)"
+    load: "(x)",
+    dlm: "?",
+    pve: "?",
+    bat: "?"
   },
   {
     manufacturer: "SMA",
-    device: "Sunny Boy 2.5 / 3.6",
+    device: "Sunny Boy 3.0 / 3.6 / 4.0 / 5.0 / 6.0",
     connection: "SunSpec",
     link: "/docs/compatible_devices/devices#sma",
-    grid: "?",
+    grid: "-",
     pv: "x",
     battery: "-",
-    load: "-"
+    load: "-",
+    dlm: "-",
+    pve: "-",
+    bat: "-"
+  },
+  {
+    manufacturer: "SMA",
+    device: "Sunny Tripower 3.0 / 4.0 / 5.0 / 6.0 / 8.0 / 10.0",
+    connection: "SunSpec",
+    link: "/docs/compatible_devices/devices#sma",
+    grid: "-",
+    pv: "x",
+    battery: "-",
+    load: "-",
+    dlm: "-",
+    pve: "-",
+    bat: "-"
+  },
+  {
+    manufacturer: "SMA",
+    device: "Sunny Tripower CORE1",
+    connection: "SunSpec",
+    link: "/docs/compatible_devices/devices#sma",
+    grid: "-",
+    pv: "x",
+    battery: "-",
+    load: "-",
+    dlm: "-",
+    pve: "-",
+    bat: "-"
+  },
+  {
+    manufacturer: "SMA",
+    device: "Sunny Highpower PEAK3",
+    connection: "SunSpec",
+    link: "/docs/compatible_devices/devices#sma",
+    grid: "-",
+    pv: "x",
+    battery: "-",
+    load: "-",
+    dlm: "-",
+    pve: "-",
+    bat: "-"
   },
   {
     manufacturer: "SMA",
     device: "Sunny Home Manager 1.0 / 2.0, SMA Energy Meter 2.0",
     connection: "SMA Speedwire",
-    link: "/docs/compatible_devices/devices#sma",
+    link: "/docs/compatible_devices/devic&nbsp;	es#sma",
     grid: "x",
     pv: "-",
     battery: "-",
-    load: "-"
+    load: "-",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
   },
   {
     manufacturer: "SolarEdge",
@@ -313,7 +441,10 @@ export const devices = [
     grid: "x",
     pv: "x",
     battery: "-",
-    load: "-"
+    load: "-",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
   },
   {
     manufacturer: "SolarEdge",
@@ -323,7 +454,10 @@ export const devices = [
     grid: "x",
     pv: "x",
     battery: "x",
-    load: "?"
+    load: "-",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
   },
   {
     manufacturer: "Solarmax",
@@ -333,7 +467,10 @@ export const devices = [
     grid: "x",
     pv: "-",
     battery: "x",
-    load: "-"
+    load: "-",
+    dlm: "-", //currents not available
+    pve: "x",
+    bat: "-"
   },
   {
     manufacturer: "Solax",
@@ -343,7 +480,10 @@ export const devices = [
     grid: "x",
     pv: "x",
     battery: "x",
-    load: "?"
+    load: "-",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
   },
   {
     manufacturer: "Solax",
@@ -353,7 +493,10 @@ export const devices = [
     grid: "x",
     pv: "x",
     battery: "-",
-    load: "-"
+    load: "-",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
   },
   {
     manufacturer: "Sungrow",
@@ -363,7 +506,10 @@ export const devices = [
     grid: "x",
     pv: "x",
     battery: "-",
-    load: "-"
+    load: "-",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
   },
   {
     manufacturer: "Sungrow",
@@ -373,7 +519,10 @@ export const devices = [
     grid: "x",
     pv: "x",
     battery: "x",
-    load: "x"
+    load: "x",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
   },
   {
     manufacturer: "Tasmota",
@@ -383,27 +532,36 @@ export const devices = [
     grid: "x",
     pv: "-",
     battery: "-",
-    load: "-"
+    load: "-",
+    dlm: "-",
+    pve: "x",
+    bat: "-"
   },
   {
     manufacturer: "Tinkerforge",
     device: "WARP Meters API HTTP",
     connection: "HTTP",
     link: "/docs/compatible_devices/devices#http-api",
-    grid: "(x)",
-    pv: "(x)",
-    battery: "(x)",
-    load: "(x)"
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "x",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
   },
   {
     manufacturer: "Tinkerforge",
     device: "WARP Meters API MQTT",
     connection: "MQTT",
     link: "/docs/compatible_devices/devices#mqtt-api",
-    grid: "(x)",
-    pv: "(x)",
-    battery: "(x)",
-    load: "(x)"
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "x",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
   },
   {
     manufacturer: "Victron Energy",
@@ -413,7 +571,23 @@ export const devices = [
     grid: "x",
     pv: "x",
     battery: "x",
-    load: "x"
+    load: "x",
+    dlm: "-",
+    pve: "x",
+    bat: "-"
+  },
+  {
+    manufacturer: "Victron Energy",
+    device: "EM540, ET340, ET112, EM24 Stromzähler",
+    connection: "Modbus/TCP",
+    link: "/docs/compatible_devices/devices#victron",
+    grid: "(x)",
+    pv: "(x)",
+    battery: "(x)",
+    load: "(x)",
+    dlm: "(x)",
+    pve: "(x)",
+    bat: "-"
   },
   {
     manufacturer: "YTL",
@@ -423,7 +597,10 @@ export const devices = [
     grid: "(x)",
     pv: "(x)",
     battery: "(x)",
-    load: "(x)"
+    load: "(x)",
+    dlm: "(x)",
+    pve: "(x)",
+    bat: "-"
   },
 ];
 
@@ -437,6 +614,24 @@ function text_to_bubble(text, name, show_unavailable = true) {
     } else if (text === "-") {
         if (show_unavailable) {
             return <div class="device unavailable">{name}</div>
+        } else {
+            return <div></div>
+        }
+    } else {
+        return <div>ERROR</div>
+    }
+}
+
+function text_to_bubble2(text, name, show_unavailable = true) {
+    if (text === "x") {
+        return <div class="application available">{name}</div>
+    } else if (text === "(x)") {
+        return <div class="application optional">{name}</div>
+    } else if (text === "?") {
+        return <div class="application maybe">{name}</div>
+    } else if (text === "-") {
+        if (show_unavailable) {
+            return <div class="application unavailable">{name}</div>
         } else {
             return <div></div>
         }
@@ -463,6 +658,10 @@ export function manufacturer_to_bubbles(manufacturer, device = undefined) {
     <div>{text_to_bubble(data.pv,      "PV",       false)}</div>
     <div>{text_to_bubble(data.battery, "Speicher", false)}</div>
     <div>{text_to_bubble(data.load,    "Last",     false)}</div>
+    <div>&nbsp; &nbsp; &nbsp; </div>
+    <div>{text_to_bubble2(data.pve,    "PVÜ", false)}</div>
+    <div>{text_to_bubble2(data.dlm,    "dLM", false)}</div>
+    <div>{text_to_bubble2(data.bat,    "BAT", false)}</div>
   </div>
 }
 
@@ -507,6 +706,18 @@ export const columns = [
             <div>{text_to_bubble(original.pv,      "PV"      )}</div>
             <div>{text_to_bubble(original.battery, "Speicher")}</div>
             <div>{text_to_bubble(original.load,    "Last"    )}</div>
+        </div>
+    ),
+  },
+  {
+    header: "Anwendung",
+    accessorKey: "dlm",
+    className: "sortable-data-table left",
+    cell: ({ cell, row: { original } }) => (
+        <div style={{display: 'flex'}}>
+            <div>{text_to_bubble2(original.pve,    "dLM"  )}</div>
+            <div>{text_to_bubble2(original.dlm,    "PVÜ"  )}</div>
+            <div>{text_to_bubble2(original.bat,    "BAT"  )}</div>
         </div>
     ),
   },

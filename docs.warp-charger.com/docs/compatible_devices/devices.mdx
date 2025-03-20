@@ -7,12 +7,38 @@ import { columns, devices, moduleTests, manufacturer_to_bubbles } from "./device
 
 # Geräte
 
-Die folgende Liste führt Geräte auf, die unterstützt werden:
+Die folgende Tabelle führt Geräte auf, die unterstützt werden. Zusätzlich werden Informationen zu den bereitgestellten Daten und den Anwendungsmöglichkeiten aufgelistet:
+
+***Messort***
+
+In grün dargestellt sind die unterstützten Messorte. Mögliche Messorte sind: *Netzanschluss*, *PV*, *Speicher* und *Last*.
+Weitere Informationen dazu unter [Einführung - Messort](/docs/compatible_devices/introduction#messort-von-ger%C3%A4tedaten).
+
+<table>
+<tr><td><div class="device available">Messort</div></td><td>Generell vom Gerät unterstützt. Entsprechende Hardware muss aber verbaut sein.</td></tr>
+<tr><td><div class="device optional">Messort</div></td><td>Der zugeordnete Messort des Geräts/des Stromzählers kann vom Nutzer frei definiert werden. Was korrekt ist hängt vom Einbauort ab. Zum Beispiel als Stromzähler am Netzanschluss.</td></tr>
+<tr><td><div class="device maybe">Messort</div></td><td>Diese Information liegt uns nicht vor. Solltest du Informationen hierzu besitzen, schicke uns doch eine Email an [info@tinkerforge.com](mailto:info@tinkerforge.com). Wir tragen diese Information dann nach.</td></tr>
+</table>
+
+
+***Anwendung***
+
+In blau dargestellt sind die unterstützten Anwendungen. Mögliche Anwendungen sind: *dynamisches Lastmanagement (dLM)*, *PV-Überschussladen (PVÜ)* und die Steuerung eines *Batteriespeichers (BAT)*.
+Weitere Informationen dazu unter [Einführung - Anwendungen](/docs/compatible_devices/introduction#anwendungen).
+
+:::note
+Coming soon - Batteriesteuerung: Diese ist noch in der Entwicklung und hier noch nicht dokumentiert.
+:::
+
+<table>
+<tr><td><div class="application available">Anwendung</div></td><td>Die Anwendung wird generell vom Gerät unterstützt. Entsprechende Hardware muss aber verbaut sein.</td></tr>
+<tr><td><div class="application maybe">Anwendung</div></td><td>Diese Information liegt uns nicht vor. Solltest du Informationen hierzu besitzen, schicke uns doch eine Email an [info@tinkerforge.com](mailto:info@tinkerforge.com). Wir tragen diese Information dann nach.</td></tr>
+</table>
 
 :::note
 
 Verschiedene oder auch neue Firmwareversionen seitens der Hersteller führen dazu,
-dass sich manchmal Schnittstellen ändern.
+dass sich manchmal Geräte-Schnittstellen ändern.
 Solltest du Probleme mit einem der aufgeführten Geräte haben, oder aber
 die Unterstützung eines Geräts wünschen, dann schreibe uns im Forum auf
 [Tinkerunity](https://www.tinkerunity.org/forum/13-warp-charger/).
@@ -26,11 +52,7 @@ diese hinterlegen können.
 
 :::
 
-<table>
-<tr><td><div class="device available">Messort</div></td><td>Generell vom Gerät unterstützt. Entsprechende Hardware muss aber verbaut sein.</td></tr>
-<tr><td><div class="device optional">Messort</div></td><td>Der zugeordnete Messort des Geräts/des Stromzählers kann vom Nutzer frei definiert werden. Was korrekt ist hängt vom Einbauort ab. Zum Beispiel als Stromzähler am Netzanschluss.</td></tr>
-<tr><td><div class="device maybe">Messort</div></td><td>Diese Information liegt uns nicht vor. Solltest du Informationen hierzu besitzen, schicke uns doch eine Email an [info@tinkerforge.com](mailto:info@tinkerforge.com). Wir tragen diese Information dann nach.</td></tr>
-</table>
+# Geräteübersicht
 
 <SortableDataTable
   columns={columns}
@@ -50,8 +72,8 @@ nur zugegriffen werden kann, wenn auch ein entsprechender Stromzähler an diesem
 {manufacturer_to_bubbles("Alpha ESS")}
 
 Die folgenden Alpha ESS Smile Heimspeicher unterstützen eine Anbindung mittels Modbus/TCP: SMILE5, SMILE-Hi5, SMILE-Hi10, SMILE-G3-S3.6/B5/S5, SMILE-BAT-8.2PHA.
-Die Messwerte des Netzanschlusses können für ein PV-Überschussladen und für ein dynamisches Lastmanagement genutzt werden.
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
+Die Geräteadresse bei Alpha ESS ist üblicherweise 85.
 
 ## APsystems
 {manufacturer_to_bubbles("APsystems")}
@@ -65,7 +87,23 @@ APsystems Mikrowechselrichter können von APsystems ECU-R und ECU-C mittels SunS
 ## Carlo Galvazzi
 {manufacturer_to_bubbles("Carlo Galvazzi")}
 
-Der EM24 in der Ausführung mit Ethernet kann mittels Modbus/TCP ausgelesen werden. Der Zähler kann je nach Montageort einem beliebigen Messort zugeordnet werden.
+Die Stromzähler können je nach Montageort einem beliebigen Messort zugeordnet werden.
+Carlo Galvazzi Stromzähler mit Modbus/TCP (über Ethernet) Schnittstelle können direkt ausgelesen werden.
+Für Stromzähler mit Modbus/RTU (RS485) Schnittstelle ist zusätzlich ein [Modbus/RTU Wandler](/docs/compatible_devices/interfaces/#modbusrtu-wandler) notwendig,
+der Modbus/RTU auf Modbus/TCP umsetzt.
+
+Folgende Stromzähler können daher direkt per Ethernet ausgelesen werden:
+ * Der EM24 in der Ausführung mit Ethernet
+ 
+Folgende Stromzähler sind RS485 bzw. Modbus/RTU Stromzähler, so dass ein [Modbus/RTU Wandler](/docs/compatible_devices/interfaces/#modbusrtu-wandler) erforderlich ist:
+ * EM100 bzw. EM300 Serie
+ * EM210
+ * EM270
+ * EM280
+ * ET300
+ * EM510
+ * EM530
+ * EM540
 
 ## Deye
 {manufacturer_to_bubbles("Deye")}
@@ -73,7 +111,8 @@ Der EM24 in der Ausführung mit Ethernet kann mittels Modbus/TCP ausgelesen werd
 Deye Hybrid-Wechselrichter der SUN Serie (Nieder- und Hochspannung) unterstützen Modbus/RTU.
 Mit einem Umsetzer von Modbus/RTU auf Ethernet kann auf diese auch mittels Modbus/TCP zugegriffen werden. Siehe [Modbus RTU Wandler](/compatible_devices/interfaces.md#modbusrtu-wandler).
 
-Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
+Die ausgelesenen Werte für "Netz" beziehen sich auf den Netzanschluss des Wechselrichters. Der über diesen Anschluss geführte Strom wird gemessen. Das ggf. verbaute Smartmeter (Chint DSU666 etc.)
+kann nicht über Modbus/TCP ausgelesen werden. Ist nur ein Wechselrichter vorhanden und wird der gesamte Strom über dessen Netzanschluss geführt, kann der Messwert "Netz" für ein PV-Überschussladen und ein dynamisches Lastmanagement verwendet werden.
 
 Die Deye-Unterstützung  wird auch im Forum diskutiert: [Forumpost auf Tinkerunity](https://www.tinkerunity.org/topic/12271-weitere-wechserichter-modbustcp-supporten-deye-hybrid-wechselrichter/).
 
@@ -115,6 +154,16 @@ Der Zähler kann je nach Montageort einem beliebigen Messort zugeordnet werden.
 Der Eltako Stromzähler DSZ15DZMOD mit RS485 (Modbus/RTU) Schnittstelle kann am WARP Energy Manager angeschlossen und von diesem ausgelesen werden.
 Der Zähler kann je nach Montageort einem beliebigen Messort zugeordnet werden.
 
+## Fox ESS
+{manufacturer_to_bubbles("Fox ESS")}
+
+Fox ESS Wechselrichter scheinen nicht mittels Modbus TCP über den Fox ESS LAN oder Wifi Dongle ausgelesen werden zu können. Sie sind aber mittels RS485 (Modbus/RTU) auszulesen.
+Wird ein RS485 nach LAN oder WLAN Wandler installiert (siehe [Modbus RTU Wandler](/compatible_devices/interfaces.md#modbusrtu-wandler)), so können diese Wechselrichter ebenfalls ausgelesen werden.
+Am Wechselrichter muss die Geräte ID von 000 (Modbus RTU deaktiviert) auf 247 eingestellt werden. Die Einstellung dazu findet sich unter Settings -> Communication -> RS485 -> Device ID.
+Das Wechselrichterpasswort ist standardmäßig auf 0000 gesetzt.
+
+Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
+
 ## Fronius
 
 ### GEN24-Serie Hybrid-Wechselrichter
@@ -129,16 +178,6 @@ Als Port sollte 502 konfiguriert werden. Als SunSpec Model Type kann "float" gew
 Fronius Wechselrichter der Primo- und Symo-Serie sprechen SunSpec und können direkt ausgelesen werden. Es muss nur die Datenausgabe über Modbus/TCP aktiviert werden.
 Als Port sollte 502 konfiguriert werden. Als SunSpec Model Type kann "float" gewählt werden. Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 
-## Fox ESS
-{manufacturer_to_bubbles("Fox ESS")}
-
-Fox ESS Wechselrichter scheinen nicht mittels Modbus TCP über den Fox ESS LAN oder Wifi Dongle ausgelesen werden zu können. Sie sind aber mittels RS485 (Modbus/RTU) auszulesen.
-Wird ein RS485 nach LAN oder WLAN Wandler installiert (siehe [Modbus RTU Wandler](/compatible_devices/interfaces.md#modbusrtu-wandler)), so können diese Wechselrichter ebenfalls ausgelesen werden.
-Am Wechselrichter muss die Geräte ID von 000 (Modbus RTU deaktiviert) auf 247 eingestellt werden. Die Einstellung dazu findet sich unter Settings -> Communication -> RS485 -> Device ID.
-Das Wechselrichterpasswort ist standardmäßig auf 0000 gesetzt.
-
-Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
-
 ## Goodwe
 
 ### EHB Serie String-Wechselrichter
@@ -146,17 +185,20 @@ Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler 
 
 Die Einbindung eines Wechselrichters der EHB Serie ist mittels Modbus/TCP über das LAN bzw. Wifi+LAN Modul möglich.
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler (z.B. GM300) am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
+Die Geräteadresse ist typischerweise 247.
 
 ### EH, EM, ES, ET Hybrid-Wechselrichter
 {manufacturer_to_bubbles("Goodwe", "EH, EM, ES, ET Hybrid-Wechselrichter")}
 
 Die Einbindung eines Wechselrichters der EH, EM, ES, ET Serie ist mittels Modbus/TCP über das LAN bzw. Wifi+LAN Modul möglich.
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler (z.B. GM300) am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
+Die Geräteadresse ist typischerweise 247.
 
 ### BT, SBP, BH-Serie Batterie-Wechselrichter
 {manufacturer_to_bubbles("Goodwe", "BT, SBP, BH-Serie Batterie-Wechselrichter")}
 Die Einbindung eines Wechselrichters der BT, SBP, BH-Serie ist mittels Modbus/TCP über das LAN bzw. Wifi+LAN Modul möglich.
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler (z.B. GM300) am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
+Die Geräteadresse ist typischerweise 247.
 
 ## Hailei
 {manufacturer_to_bubbles("Hailei")}
@@ -166,6 +208,7 @@ Siehe [Modbus RTU Wandler](/compatible_devices/interfaces.md#modbusrtu-wandler).
 Wechselrichter, die direkt einen LAN Anschluss bieten, können direkt über diesen LAN Anschluss mit Modbus/TCP ausgelesen werden.
 
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
+Die Geräteadresse ist typischerweise 85.
 
 ## Hoymiles
 {manufacturer_to_bubbles("Hoymiles")}
@@ -224,12 +267,30 @@ Der Zähler kann je nach Montageort einem beliebigen Messort zugeordnet werden.
 
 Die Siemens SENTRON Energiezähler vom Typ 7KM2200 (PAC2200) und 7KM3200 (PAC3200) können mittels Modbus/TCP ausgelesen werden. Der Zähler kann je nach Montageort einem beliebigen Messort zugeordnet werden.
 
+TODO TODO TODO SENTRON PAC2200, PAC3120, PAC3200, PAC3220, PAC4200, PAC4220 -> 7KM?
+
 ## SMA
 
-### Sunny Boy 2.5 / 3.6
-{manufacturer_to_bubbles("SMA", "Sunny Boy 2.5 / 3.6")}
+### Sunny Boy 3.0 / 3.6 / 4.0 / 5.0 / 6.0
+{manufacturer_to_bubbles("SMA", "Sunny Boy 3.0 / 3.6 / 4.0 / 5.0 / 6.0")}
 
-SMA Wechselrichter unterstützen zum Teil SunSpec, so dass diese direkt ausgelesen werden können. Dazu zähler zum Beispiel die Sunny Boy Wechselrichter.
+Zum Auslesen der Wechselrichterleistung ist mindestens Firmwareversion 4.00.23.R erforderlich.
+
+### Sunny Tripower 3.0 / 4.0 / 5.0 / 6.0 / 8.0 / 10.0
+{manufacturer_to_bubbles("SMA", "Sunny Tripower 3.0 / 4.0 / 5.0 / 6.0 / 8.0 / 10.0")}
+
+Zum Auslesen der Wechselrichterleistung ist mindestens Firmwareversion 4.00.02.R erforderlich.
+
+### Sunny Tripower CORE1
+{manufacturer_to_bubbles("SMA", "Sunny Tripower CORE1")}
+
+Zum Auslesen der Wechselrichterleistung ist mindestens Firmwareversion 3.14.##.R erforderlich.
+
+### Sunny Highpower PEAK3
+{manufacturer_to_bubbles("SMA", "Sunny Highpower PEAK3")}
+
+Zum Auslesen der Wechselrichterleistung ist mindestens Firmwareversion 4.##.##.R erforderlich.
+
 
 ### Sunny Home Manager 1.0 / 2.0, SMA Energy Meter 2.0
 {manufacturer_to_bubbles("SMA", "Sunny Home Manager 1.0 / 2.0, SMA Energy Meter 2.0")}
@@ -285,18 +346,25 @@ Sungrow Wechselrichter der Serien SGxxRT/SGxxRS/SGxxCX/SDxxCX-P2 können mittels
 Dazu gibt es den virtuellen Stromzähler "Netz". Damit ist ein PV-Überschussladen möglich.
 
 Das Auslesen kann über einen WiNet-S mittels LAN/WLAN erfolgen (versionsabhängig). Hierbei scheint es aber je nach Hardwareversion und Firmware Probleme geben zu können. SunGrow empfielt, sofern vorhanden, direkt den LAN Anschluss
-des Wechselrichters zu verwenden. Die Modbus/TCP Verbindung unterstützt oftmals anscheinend nur einen Client.
+des Wechselrichters zu verwenden. Die Modbus/TCP Verbindung unterstützt oftmals anscheinend nur einen Client. Generell ist ein Softwareupdate beim Wechselrichter und Dongle (WiNet-S) zu prüfen.
+
+Ein älterer Dongle vom Typ Typ ***WiNet-S*** scheint immer Modbus TCP über Port 502 bereitzustellen. Ist ein neuerer Dongle vom Typ ***WiNet-S2*** vorhanden, so muss die Option "Modbus TCP-Port 502 EIN/AUS" aktiviert werden. Ggf. ist dies nur über den Installateurzugang möglich.
+
+Generell sollte das Gerät mit Geräteadresse 1 erreichbar sein. Anscheinend ist die Adresse nicht vom Nutzer konfiguriertbar. Ein Nutzer hat uns mitgeteilt, dass bei ihm Geräteadresse 1 nicht funktioniert, das System aber unter Geräteadresse 4 erreichbar ist.
 
 ### SH-Serie
 {manufacturer_to_bubbles("Sungrow", "SH-Serie")}
-
 
 Sungrow Wechselrichter der Serien SHxxRT/SHxxRS können mittels Modbus/TCP ausgelesen werden. Am Wechselrichter angeschlossene Hardware-Stromzähler vom Typ DSU555 o.ä., die von diesem ausgelesen werden können, können ebenfalls ausgelesen werden.
 Dazu gibt es den virtuellen Stromzähler "Netz". Damit ist ein PV-Überschussladen möglich.
 Wird an dem Wechselrichter eine Batterie angeschlossen, so kann diese ebenfalls mit dem virtuellen Stromzähler "Speicher" ausgelesen werden. Zusätzlich wird ein virtueller Stromzähler "Last" zur Verfügung gestellt.
 
 Das Auslesen kann über einen WiNet-S mittels LAN/WLAN erfolgen (versionsabhängig). Hierbei scheint es aber je nach Hardwareversion und Firmware Probleme geben zu können. SunGrow empfielt, sofern vorhanden, direkt den LAN Anschluss
-des Wechselrichters zu verwenden. Die Modbus/TCP Verbindung unterstützt oftmals anscheinend nur einen Client.
+des Wechselrichters zu verwenden. Die Modbus/TCP Verbindung unterstützt oftmals anscheinend nur einen Client. Generell ist ein Softwareupdate beim Wechselrichter und Dongle (WiNet-S) zu prüfen.
+
+Ein älterer Dongle vom Typ Typ ***WiNet-S*** scheint immer Modbus TCP über Port 502 bereitzustellen. Ist ein neuerer Dongle vom Typ ***WiNet-S2*** vorhanden, so muss die Option "Modbus TCP-Port 502 EIN/AUS" aktiviert werden. Ggf. ist dies nur über den Installateurzugang möglich.
+
+Generell sollte das Gerät mit Geräteadresse 1 erreichbar sein. Anscheinend ist die Adresse nicht vom Nutzer konfiguriertbar. Ein Nutzer hat uns mitgeteilt, dass bei ihm Geräteadresse 1 nicht funktioniert, das System aber unter Geräteadresse 4 erreichbar ist.
 
 ## Tasmota
 {manufacturer_to_bubbles("Tasmota")}
@@ -355,14 +423,20 @@ Weitere Informationen wie dies funktioniert gibt es auf der Seite [Schnittstelle
 Weitere Informationen wie dies funktioniert gibt es auf der Seite [Schnittstellen](/docs/compatible_devices/interfaces#api).
 
 ## Victron Energy
-{manufacturer_to_bubbles("Victron Energy")}
+
+### GX und damit verbundene Geräte
+{manufacturer_to_bubbles("Victron Energy", "GX und damit verbundene Geräte")}
 
 Victron Geräte, wie zum Beispiel die bekannten Multiplus oder Quattro Wechselrichter, werden üblicherweise von einem [GX Gerät](https://www.victronenergy.com/live/venus-os:start) gesteuert.
 Ein GX Gerät stellt unter "Services" eine Zusammenfassung aller angeschlossen Geräte wie Inverter, Batterien etc. dar. Auch wenn diese Geräte per VE.BUS angeschlossen sind. Die Daten werden unter "System" summiert.
 Werden als Beispiel mehrere Wechselrichter parallel betrieben, so stellt "System" die Summe der Erzeugung da. Wir unterstützen den Zugriff auf die "System"-Daten für "Netzanschluss",
-"Last", "Wechselrichter" und "Speicher".
+"Last", "Wechselrichter" und "Speicher". Üblicherweise ist die Geräteadresse 100.
 
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
+
+### EM540, ET340, ET112, EM24 Stromzähler
+{manufacturer_to_bubbles("Victron Energy", "EM540, ET340, ET112, EM24 Stromzähler")}
+Diese Stromzähler sind technisch Carlo Galvazzi Stromzähler und können somit als [Carlo Galvazzi Stromzähler](/docs/compatible_devices/devices#carlo-galvazzi) angelegt werden.
 
 ## YTL
 {manufacturer_to_bubbles("YTL")}

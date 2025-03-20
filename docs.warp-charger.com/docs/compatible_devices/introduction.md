@@ -70,7 +70,7 @@ Um erfassen zu können wohin die erzeugte Leistung fliest gibt es den Messort "L
 Für ein [PV-Überschlussladen](/tutorials/pv_excess_charging.md) muss
 der WARP Charger oder der WARP Energy Manager Zugriff auf einen
 Stromzähler am **Netzanschluss (Netz)** haben, da nur dort der eigentliche
-PV-Überschuss bzw. die aktuellen Phasenströme ermittelt werden können.
+PV-Überschuss ermittelt werden kann.
 
 :::note
 
@@ -84,6 +84,9 @@ Dieser Wert wird für die Regelung verwendet. Weitere Werte können angelegt wer
 Ist zusätzlich ein Batteriespeicher vorhanden und ist dieser ebenfalls auslesbar,
 macht es Sinn diesen ebenfalls anzulegen, so dass das PV-Überschussladen diesen
 berücksichtigen kann.
+
+*Das PV-Überschussladen regelt die Summe der Wirkleistung so, dass überschüssige Leistung
+in ein Fahrzeug geladen anstatt in das Stromnetz zurückgespeist wird.*
 
 ### Dynamisches Lastmanagement
 
@@ -104,7 +107,14 @@ Ob ***"Bezug"***, ***"Bezug minus Einspeisung"***, ***"Bezug plus Einspeisung"**
 
 :::
 
+*Das dynamische Lastmanagement regelt Ladevorgänge so, dass auf keiner Phase (L1, L2, L3) der maximal eingestellte Phasenstrom überschritten wird.*
+
 ### Batteriesteuerung
+
+:::note
+Coming soon - Wird mittels Softwareupdate bereitgestellt.
+:::
+
 Bisher kann die Leistung von Batteriespeichern nur gelesen werden. Zukünftig wird es für gewisse Modelle möglich sein, dass der Lade- und Entladevorgang gesteuert werden kann (wenn der Hersteller es unterstützt).
 Zum Einen kann somit auf Wunsch bei einem Schnelllade-Vorgang das Entladen eines Speichers verhindert werden. Zum Anderen kann der Speicher auch auf Grundlage von dynamischen Strompreisen gesteuert werden. Somit ist zum
 Beispiel im Winter das Laden des Speichers bei günstigen Strompreisen aus dem Netz möglich.
