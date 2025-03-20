@@ -114,9 +114,9 @@ export const devices = [
     pv: "(x)",
     battery: "(x)",
     load: "(x)",
-    dlm: "?",
-    pve: "?",
-    bat: "?"
+    dlm: "(x)",
+    pve: "(x)",
+    bat: "-"
   },
   {
     manufacturer: "elgris",
@@ -354,19 +354,6 @@ export const devices = [
     dlm: "(x)",
     pve: "(x)",
     bat: "-"
-  },
-  {
-    manufacturer: "SMA",
-    device: "Energy Meter 2.0",
-    connection: "SMA Speedwire",
-    link: "/docs/compatible_devices/devices#sma",
-    grid: "(x)",
-    pv: "(x)",
-    battery: "(x)",
-    load: "(x)",
-    dlm: "?",
-    pve: "?",
-    bat: "?"
   },
   {
     manufacturer: "SMA",
