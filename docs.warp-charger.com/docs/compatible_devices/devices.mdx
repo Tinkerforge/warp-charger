@@ -7,32 +7,38 @@ import { columns, devices, moduleTests, manufacturer_to_bubbles } from "./device
 
 # Geräte
 
-Die folgende Tabelle führt Geräte auf, die unterstützt werden. Zusätzlich werden Informationen zu den bereitgestellten Daten und den Anwendungsmöglichkeiten aufgelistet:
+Die folgende Tabelle führt Geräte auf, die unterstützt werden. Zusätzlich werden Informationen zu den bereitgestellten Daten und den Anwendungsmöglichkeiten aufgelistet.
+
+:::note
+
+***WARP Charger und WARP Energy Manager können direkt auf fremde Geräte zugreifen und Daten von diesen abrufen. Befinden sich die Geräte in einem gemeinsamen Netzwerk,
+so kann meistens ein PV-Überschussladen oder ein dynamisches Lastmanagement OHNE zusätzliche Hardware realisiert werden!***
+:::
 
 ***Messort***
 
+Siehe hierzu: [Einführung - Messort](/docs/compatible_devices/introduction#messort-von-ger%C3%A4tedaten).
 In grün dargestellt sind die unterstützten Messorte. Mögliche Messorte sind: *Netzanschluss*, *PV*, *Speicher* und *Last*.
-Weitere Informationen dazu unter [Einführung - Messort](/docs/compatible_devices/introduction#messort-von-ger%C3%A4tedaten).
+
 
 <table>
 <tr><td><div class="device available">Messort</div></td><td>Generell vom Gerät unterstützt. Entsprechende Hardware muss aber verbaut sein.</td></tr>
-<tr><td><div class="device optional">Messort</div></td><td>Der zugeordnete Messort des Geräts/des Stromzählers kann vom Nutzer frei definiert werden. Was korrekt ist hängt vom Einbauort ab. Zum Beispiel als Stromzähler am Netzanschluss.</td></tr>
 <tr><td><div class="device maybe">Messort</div></td><td>Diese Information liegt uns nicht vor. Solltest du Informationen hierzu besitzen, schicke uns doch eine Email an [info@tinkerforge.com](mailto:info@tinkerforge.com). Wir tragen diese Information dann nach.</td></tr>
 </table>
 
 
 ***Anwendung***
 
-In blau dargestellt sind die unterstützten Anwendungen. Mögliche Anwendungen sind: *dynamisches Lastmanagement (dLM)*, *PV-Überschussladen (PVÜ)* und die Steuerung eines *Batteriespeichers (BAT)*.
-Weitere Informationen dazu unter [Einführung - Anwendungen](/docs/compatible_devices/introduction#anwendungen).
+Siehe hierzu: [Einführung - Anwendungen](/docs/compatible_devices/introduction#anwendungen)
+In blau dargestellt sind die unterstützten Anwendungen. Mögliche Anwendungen sind: [*Dynamisches Lastmanagement (dLM)*](/docs/compatible_devices/introduction#dynamisches-lastmanagement), [*PV-Überschussladen (PVÜ)*](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und die Steuerung eines [*Batteriespeichers (BAT)*](/docs/compatible_devices/introduction#batteriesteuerung).
+
 
 :::note
-Coming soon - Batteriesteuerung: Diese ist noch in der Entwicklung und hier noch nicht dokumentiert.
+Coming soon - Batteriesteuerung: Diese ist noch in der Entwicklung und hier aktuell noch nicht dokumentiert.
 :::
 
 <table>
 <tr><td><div class="application available">Anwendung</div></td><td>Die Anwendung wird generell vom Gerät unterstützt. Entsprechende Hardware muss aber verbaut sein.</td></tr>
-<tr><td><div class="application optional">Anwendung</div></td><td>Die Anwendung wird generell vom Gerät unterstützt. Die Hardware muss aber am Netzanschluss verbaut sein.</td></tr>
 <tr><td><div class="application maybe">Anwendung</div></td><td>Diese Information liegt uns nicht vor. Solltest du Informationen hierzu besitzen, schicke uns doch eine Email an [info@tinkerforge.com](mailto:info@tinkerforge.com). Wir tragen diese Information dann nach.</td></tr>
 </table>
 
@@ -167,17 +173,29 @@ Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler 
 
 ## Fronius
 
-### GEN24-Serie Hybrid-Wechselrichter
-{manufacturer_to_bubbles("Fronius", "GEN24-Serie Hybrid-Wechselrichter")}
+### Argeno String-Wechselrichter
+{manufacturer_to_bubbles("Fronius", "Argeno String-Wechselrichter")}
 
-Fronius Wechselrichter der GEN24-Serie sprechen SunSpec und können direkt ausgelesen werden. Es muss nur die Datenausgabe über Modbus/TCP aktiviert werden.
-Als Port sollte 502 konfiguriert werden. Als SunSpec Model Type kann "float" gewählt werden. Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
+Fronius Wechselrichter der Argeno-Serie sprechen SunSpec und können direkt ausgelesen werden. Es muss nur die Datenausgabe über Modbus/TCP aktiviert werden.
+Als Port sollte 502 konfiguriert werden. Als SunSpec Model Type kann "float" gewählt werden.
+
+### GEN24-Serie Hybrid-Wechselrichter
+{manufacturer_to_bubbles("Fronius", "GEN24- und GEN24 Plus-Serie Hybrid-Wechselrichter")}
+
+Fronius Wechselrichter der GEN24-Serie (GEN24 und GEN24 Plus) sprechen SunSpec und können direkt ausgelesen werden. Es muss nur die Datenausgabe über Modbus/TCP aktiviert werden.
+Als Port sollte 502 konfiguriert werden. Als SunSpec Model Type kann "float" gewählt werden. Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler (Fronius Smart Meter) am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 
 ### Primo- und Symo-Serie String-Wechselrichter
 {manufacturer_to_bubbles("Fronius", "Primo- und Symo-Serie String-Wechselrichter")}
 
-Fronius Wechselrichter der Primo- und Symo-Serie sprechen SunSpec und können direkt ausgelesen werden. Es muss nur die Datenausgabe über Modbus/TCP aktiviert werden.
-Als Port sollte 502 konfiguriert werden. Als SunSpec Model Type kann "float" gewählt werden. Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
+Fronius Wechselrichter der Primo- und Symo-Serie und Symo Advanced-Serie sprechen SunSpec und können direkt ausgelesen werden. Es muss nur die Datenausgabe über Modbus/TCP aktiviert werden.
+Als Port sollte 502 konfiguriert werden. Als SunSpec Model Type kann "float" gewählt werden. Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler (Fronius Smart Meter) am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
+
+### Tauro-Serie String-Wechselrichter
+{manufacturer_to_bubbles("Fronius", "Tauro-Serie String-Wechselrichter")}
+
+Fronius Wechselrichter der Tauro-Serie sprechen SunSpec und können direkt ausgelesen werden. Es muss nur die Datenausgabe über Modbus/TCP aktiviert werden.
+Als Port sollte 502 konfiguriert werden. Als SunSpec Model Type kann "float" gewählt werden. Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler (Fronius Smart Meter) am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 
 ## Goodwe
 
@@ -214,13 +232,15 @@ Die Geräteadresse ist typischerweise 85.
 ## Hoymiles
 {manufacturer_to_bubbles("Hoymiles")}
 
-Hoymiles Wechselrichter der Generation HMS und HMT können über die Hoymiles DTU-Pro-S Datenübertragungseinheit mittels SunSpec ausgelesen werden. Die Kommunikation erfolgt mittels Sub-1G.
+Hoymiles Mikrowechselrichter der Generation HMS und HMT können über die Hoymiles DTU-Pro-S Datenübertragungseinheit mittels SunSpec ausgelesen werden. Die Kommunikation erfolgt mittels Sub-1G.
 
 ## Huawei
 {manufacturer_to_bubbles("Huawei")}
 
-Wechselrichter der SUN2000 Serie (L1, M0, M1, M2, M3) können über das Huawei Smart Dongle (SmartdDongle ab Firmware SPC124) mittels Modbus/TCP ausgelesen werden. Aktuell ist noch keine Registertabelle hierfür hinterlegt.
+Wechselrichter der SUN2000 Serie (2kW - 215kW) und der SUN8000-500KTL können über das Huawei Smart Dongle (SmartdDongle ab Firmware SPC124) mittels Modbus/TCP ausgelesen werden. Aktuell ist noch keine Registertabelle hierfür hinterlegt.
 Diese muss noch per Hand angelegt werden. Wir werden aber zeitnah eine vorwählbare Registertabelle bereitstellen.
+
+Die unterstützen Modelle sind ab Seite 1 in dem Dokument [SUN2000MA Modbus Interface Definitions](https://support.huawei.com/enterprise/de/doc/EDOC1100387581?currentPartNo=k004&togo=content&section=k004) aufgeführt.
 
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann (typischerweise "Huawei Smart Power Sensor" vom Typ DTSU666-H oder DDSU666-H)
 Speicher ist nur nutzbar im Zusammenspiel mit der Luna2000 Batterie.
