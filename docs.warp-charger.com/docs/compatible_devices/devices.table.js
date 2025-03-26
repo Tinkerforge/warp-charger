@@ -73,8 +73,8 @@ export const devices = [
     link: "/docs/compatible_devices/devices#e3dc",
     grid: "x",
     pv: "x",
-    battery: "?",
-    load: "?",
+    battery: "x",
+    load: "x",
     dlm: "?",
     pve: "?",
     bat: "-"
@@ -342,6 +342,32 @@ export const devices = [
     pve: "x",
     bat: "-"
   },
+    {
+    manufacturer: "Q-Cells",
+    device: "Q.HOME Serie",
+    connection: "Modbus/TCP",
+    link: "/docs/compatible_devices/devices#q-cells",
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "-",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
+  },
+  {
+    manufacturer: "Q-Cells",
+    device: "Q.VOLT Serie",
+    connection: "Modbus/TCP",
+    link: "/docs/compatible_devices/devices#q-cells",
+    grid: "x",
+    pv: "x",
+    battery: "-",
+    load: "-",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
+  },
   {
     manufacturer: "RCT",
     device: "RCT POWER STORAGE",
@@ -396,6 +422,19 @@ export const devices = [
   },
   {
     manufacturer: "SMA",
+    device: "Sunny Boy  Smart Energy 3.6 / 4.0 / 5.0 / 6.0",
+    connection: "SunSpec",
+    link: "/docs/compatible_devices/devices#sma",
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "-",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
+  },
+  {
+    manufacturer: "SMA",
     device: "Sunny Tripower 3.0 / 4.0 / 5.0 / 6.0 / 8.0 / 10.0",
     connection: "SunSpec",
     link: "/docs/compatible_devices/devices#sma",
@@ -405,6 +444,19 @@ export const devices = [
     load: "-",
     dlm: "-",
     pve: "-",
+    bat: "-"
+  },
+  {
+    manufacturer: "SMA",
+    device: "Sunny Tripower Smart Energy 5.0 / 6.0 / 8.0 / 10.0",
+    connection: "SunSpec",
+    link: "/docs/compatible_devices/devices#sma",
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "-",
+    dlm: "x",
+    pve: "x",
     bat: "-"
   },
   {
