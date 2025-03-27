@@ -76,7 +76,7 @@ export const devices = [
     battery: "x",
     load: "x",
     dlm: "?",
-    pve: "?",
+    pve: "x",
     bat: "-"
   },
   {
@@ -422,7 +422,7 @@ export const devices = [
   },
   {
     manufacturer: "SMA",
-    device: "Sunny Boy  Smart Energy 3.6 / 4.0 / 5.0 / 6.0",
+    device: "Sunny Boy Smart Energy 3.6 / 4.0 / 5.0 / 6.0",
     connection: "SunSpec",
     link: "/docs/compatible_devices/devices#sma",
     grid: "x",
@@ -489,7 +489,7 @@ export const devices = [
     manufacturer: "SMA",
     device: "Sunny Home Manager 1.0 / 2.0, SMA Energy Meter 2.0",
     connection: "SMA Speedwire",
-    link: "/docs/compatible_devices/devic&nbsp;	es#sma",
+    link: "/docs/compatible_devices/devices#sma",
     grid: "x",
     pv: "-",
     battery: "-",
@@ -780,8 +780,8 @@ export const columns = [
     className: "sortable-data-table left",
     cell: ({ cell, row: { original } }) => (
         <div style={{display: 'flex'}}>
-            <div>{text_to_bubble2(original.pve,    "dLM"  )}</div>
             <div>{text_to_bubble2(original.dlm,    "PVÜ"  )}</div>
+            <div>{text_to_bubble2(original.pve,    "dLM"  )}</div>
             <div>{text_to_bubble2(original.bat,    "BAT"  )}</div>
         </div>
     ),
