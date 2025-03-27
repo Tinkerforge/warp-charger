@@ -530,8 +530,14 @@ Ein GX Gerät stellt unter "Services" eine Zusammenfassung aller angeschlossen G
 Werden als Beispiel mehrere Wechselrichter parallel betrieben, so stellt "System" die Summe der Erzeugung da. Wir unterstützen den Zugriff auf die "System"-Daten für "Netzanschluss",
 "Last", "Wechselrichter" und "Speicher". Üblicherweise ist die Geräteadresse 100.
 
+Technisch sind dies folgende Modbus/TCP Register:
+ * Netzanschluss: Grid Power L1-L3 (Register 820-822)
+ * PV : AC Coupled PV On Output L1-L3 (Register 808-810)
+ * Speicher: Voltage (Register 840), Current (Register 841), Power (Register 842) und SoC (Register 843)
+ * Last: AC Consumption L1-L3 (Register 817-819) 
+
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom System ausgelesen werden kann.
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+Nur in diesem Fall wird die Anwendung PV-Überschussladen (PVÜ) unterstützt.
 
 ### EM540, ET340, ET112, EM24 Stromzähler
 {manufacturer_to_bubbles("Victron Energy", "EM540, ET340, ET112, EM24 Stromzähler")}
