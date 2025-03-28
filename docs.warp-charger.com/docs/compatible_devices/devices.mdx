@@ -149,7 +149,7 @@ Es werden S10 Hauskraftwerke unterstützt. Vermutlich gilt dies auch für die S2
 Damit das Hauskraftwerk eingebunden werden kann muss Modbus/TCP im SunSpec Modus aktiviert werden.
 Um die Anwendung PV-Überschussladen (PVÜ) nutzen zu können, muss ein Stromzähler am Netzanschluss verbaut sein.
 
-Es sieht zur Zeit so aus, als wenn die Anwendung dynamisches Lastmanagement (dLM) mit den von E3DC zur Verfügung gestellten Zählerwerten nicht möglich ist, da die Phasenströme fehlen.
+E3DC stellt keine Phasenströme zur Verfügung. Daher ist die Anwendung dynamisches Lastmanagement (dLM) nicht möglich. Soll dennoch ein dynamisches Lastmanagement realisiert werden, muss ein zusätzlicher Stromzähler, der Phasenströme bereitstellt, installiert werden.
 
 ## Eastron
 {manufacturer_to_bubbles("Eastron")}
@@ -186,7 +186,7 @@ Am Wechselrichter muss die Geräte ID von 000 (Modbus RTU deaktiviert) auf 247 e
 Das Wechselrichterpasswort ist standardmäßig auf 0000 gesetzt.
 
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann. Nur in diesem Fall wird die Anwendung PV-Überschussladen (PVÜ) unterstützt.
-Ein dynamisches Lastmanagement (dLM) scheint mit en Zählerdaten nicht möglich zu sein, da keine Phasenströme geliefert werden.
+Ein dynamisches Lastmanagement (dLM) scheint mit den Zählerdaten nicht möglich zu sein, da keine Phasenströme geliefert werden. Soll dennoch ein dynamisches Lastmanagement realisiert werden, muss ein zusätzlicher Stromzähler, der Phasenströme bereitstellt, installiert werden.
 
 ## Fronius
 
@@ -432,7 +432,7 @@ Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamis
 {manufacturer_to_bubbles("Solax", "X1 & X3 Mini Boost MIC und Pro")}
 
 Solax Stringwechselrichter können über das Wi-Fi Dongle mittels Modbus/TCP ausgelesen werden. Eine Einrichtungsanleitung inkl. der unterstützen Wechselrichter gibt es in der [Solax Power Academy](https://kb.solaxpower.com/de/solution/detail/ff8080818eae9899018ec71a12ca1ea6).
-Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
+Der Stromzähler "Netz" ist nur nutzbar w3enn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
 
 ## Sungrow
@@ -537,7 +537,7 @@ Technisch sind dies folgende Modbus/TCP Register:
  * Last: AC Consumption L1-L3 (Register 817-819) 
 
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom System ausgelesen werden kann.
-Nur in diesem Fall wird die Anwendung PV-Überschussladen (PVÜ) unterstützt.
+Nur in diesem Fall wird die Anwendung PV-Überschussladen (PVÜ) unterstützt. Ein dynamisches Lastmanagement (dLM) ist mit den "System"-Zählerdaten nicht möglich, da keine Phasenströme geliefert werden. Soll dennoch ein dynamisches Lastmanagement realisiert werden, muss ein zusätzlicher Stromzähler, der Phasenströme bereitstellt, installiert werden.
 
 ### EM540, ET340, ET112, EM24 Stromzähler
 {manufacturer_to_bubbles("Victron Energy", "EM540, ET340, ET112, EM24 Stromzähler")}

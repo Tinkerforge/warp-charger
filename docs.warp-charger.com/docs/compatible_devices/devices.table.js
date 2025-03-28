@@ -75,7 +75,7 @@ export const devices = [
     pv: "x",
     battery: "x",
     load: "x",
-    dlm: "?",
+    dlm: "-",
     pve: "x",
     bat: "-"
   },
@@ -338,7 +338,7 @@ export const devices = [
     pv: "x",
     battery: "x",
     load: "-",
-    dlm: "?",
+    dlm: "x",
     pve: "x",
     bat: "-"
   },
@@ -632,7 +632,7 @@ export const devices = [
     manufacturer: "Victron Energy",
     device: "GX und damit verbundene Geräte",
     connection: "Modbus/TCP",
-    link: "/docs/compatible_devices/devices#victron",
+    link: "/docs/compatible_devices/devices#victron-energy",
     grid: "x",
     pv: "x",
     battery: "x",
@@ -645,7 +645,7 @@ export const devices = [
     manufacturer: "Victron Energy",
     device: "EM540, ET340, ET112, EM24 Stromzähler",
     connection: "Modbus/TCP",
-    link: "/docs/compatible_devices/devices#victron",
+    link: "/docs/compatible_devices/devices#victron-energy",
     grid: "x",
     pv: "x",
     battery: "x",
@@ -780,8 +780,8 @@ export const columns = [
     className: "sortable-data-table left",
     cell: ({ cell, row: { original } }) => (
         <div style={{display: 'flex'}}>
-            <div>{text_to_bubble2(original.dlm,    "PVÜ"  )}</div>
-            <div>{text_to_bubble2(original.pve,    "dLM"  )}</div>
+            <div>{text_to_bubble2(original.pve,    "PVÜ"  )}</div>
+            <div>{text_to_bubble2(original.dlm,    "dLM"  )}</div>
             <div>{text_to_bubble2(original.bat,    "BAT"  )}</div>
         </div>
     ),
