@@ -144,12 +144,19 @@ von Deye.
 ## E3DC
 {manufacturer_to_bubbles("E3DC")}
 
-E3DCs Hauskraftwerke unterstützen SunSpec und können somit einfach eingebunden werden.
 Es werden S10 Hauskraftwerke unterstützt. Vermutlich gilt dies auch für die S20 Serie.
-Damit das Hauskraftwerk eingebunden werden kann muss Modbus/TCP im SunSpec Modus aktiviert werden.
+E3DCs Hauskraftwerke unterstützen SunSpec und können somit einfach eingebunden werden. Damit das Hauskraftwerk eingebunden werden kann muss Modbus/TCP im SunSpec Modus aktiviert werden.
+Dazu muss unter "Hauptmenü > Funktionen > Funktion Modbus" das Protokoll auf "SUN_SPEC" gestellt werden.
 Um die Anwendung PV-Überschussladen (PVÜ) nutzen zu können, muss ein Stromzähler am Netzanschluss verbaut sein.
 
 E3DC stellt keine Phasenströme zur Verfügung. Daher ist die Anwendung dynamisches Lastmanagement (dLM) nicht möglich. Soll dennoch ein dynamisches Lastmanagement realisiert werden, muss ein zusätzlicher Stromzähler, der Phasenströme bereitstellt, installiert werden.
+
+:::note
+
+Die aktuellen E3DC Firmware (Stand 28.03.25) liefert keine korrekten Werte über SunSpec für den Speicher. Wir arbeiten daran für E3DC eine spezifische Registertabelle zu implementieren (E3/DC Simple-Mode).
+Diese kann jetzt schon selbst als benutzerdefinierte Registertabelle hinterlegt werden.
+
+:::
 
 ## Eastron
 {manufacturer_to_bubbles("Eastron")}
