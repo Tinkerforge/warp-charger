@@ -342,7 +342,7 @@ export const devices = [
     pve: "x",
     bat: "-"
   },
-    {
+  {
     manufacturer: "Q-Cells",
     device: "Q.HOME Serie",
     connection: "Modbus/TCP",

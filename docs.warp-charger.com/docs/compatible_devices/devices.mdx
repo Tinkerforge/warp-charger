@@ -302,10 +302,14 @@ Das Smart Energy Meter (KSEM G2) kann direkt mittels SunSpec kommunizieren.
 Ein Stromzähler kann immer genau nur einem Messort zugeordnet werden. Der Messort ist abhängig vom Montageort des Stromzählers. Es können mehrere Stromzähler dieses Typs angelegt werden.
 Nur wenn der Stromzähler am Netzanschluss montiert wurde, werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
 
-### Piko und Plenticore Wechselrichter
+### PIKO und PLENTICORE Wechselrichter
 {manufacturer_to_bubbles("Kostal", "Piko und Plenticore")}
-Zusätzlich kann die Erzeugung der Piko und Plenticore Wechselrichter mittels SunSpec ausgelesen werden. Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+Kostal PIKO und PLENTICORE (G1, G2, G3, MP) können mittels SunSpec ausgelesen werden. Dazu muss auf dem Webinterface des Wechselrichters unter "Einstellungen" Modbus/TCP aktiviert werden.
+Anschließend ist Erzeugung der Piko und Plenticore Wechselrichter (PV) auslesbar. Der Stromzähler "Netz" ist nur nutzbar, wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter direkt ausgelesen werden kann.
+Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt. Verfügt der Wechselrichter über eine angeschlossene Batterie, so können
+auch die Batteriedaten ausgelesen werden. Batteriewechselrichter, wie der PLENTICORE BI, liefern selbsterklärend keine PV Daten. Ist kein Stromzähler direkt am Wechselrichter angeschlossen,
+so wird typischerweise ein KSEM G2 (siehe oben) von den Installateuren verbaut, so dass über diesen dann die Netzdaten abgerufen werden können.
+
 
 ## Q-Cells
 
