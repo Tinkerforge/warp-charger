@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Einführung
 
-[WARP Charger](/warp_charger/introduction) oder [WARP Energy Manager](/warp_energy_manager/introduction) können direkt auf die Daten von
+[WARP Charger](/docs/warp_charger/introduction) oder [WARP Energy Manager](/docs/warp_energy_manager/introduction) können direkt auf die Daten von
 anderen Fremdgeräten zugreifen.
 
 Dazu zählen die Daten von Stromzählern (zum Beispiel am Netzanschluss),
@@ -14,12 +14,12 @@ können von einem WARP Charger oder WARP Energy Manager
 zur Regelung von Wallboxen (PV-Überschussladen), zur PV-Überschussnutzung einer Wärmepumpe oder aber für ein
 dynamisches Lastmanagement verwendet werden.
 
-Der WARP Energy Manager zeichnet zusätzlich der ermittelten Daten lokal auf seiner SD-Karte auf. Über das Webinterface können in der [Energiebilanz](/webinterface/energy_manager/energy_analysis)
+Der WARP Energy Manager zeichnet zusätzlich der ermittelten Daten lokal auf seiner SD-Karte auf. Über das Webinterface können in der [Energiebilanz](/docs/webinterface/energy_manager/energy_analysis)
 die aufgezeichneten Daten analysiert werden.
 
 Um auf die Daten zugreifen zu können, sind wir auf die von dem jeweiligen Geräte-Hersteller bereitgestellte [Schnittstellen](/compatible_devices/interfaces.md) angewiesen.
 Abhängig vom Gerät und Hersteller muss dazu die passende [Schnittstelle](/compatible_devices/interfaces.md) im Webinterface unter [Stromzähler](/webinterface/energy_management/energy_meters.md)
-auf dem [WARP Charger](/warp_charger/introduction) oder [WARP Energy Manager](/warp_energy_manager/introduction) konfiguriert werden.
+auf dem [WARP Charger](/docs/warp_charger/introduction) oder [WARP Energy Manager](/docs/warp_energy_manager/introduction) konfiguriert werden.
 
 :::note
 

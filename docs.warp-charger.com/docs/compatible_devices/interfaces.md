@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Schnittstellen
 
-Mit Ausname der zum [WARP Energy Manager](/warp_energy_manager/introduction)
+Mit Ausname der zum [WARP Energy Manager](/docs/warp_energy_manager/introduction)
 kompatiblen Stromzählern, die an diesen [direkt angeschlossen](/compatible_devices/interfaces.md#am-warp-energy-manager-angeschlossene-stromz%C3%A4hler) werden können,
 wird auf alle anderen Schnittstellen über das Netzwerk (LAN, WLAN) zugegriffen.
 
