@@ -54,3 +54,8 @@ Unsere Android App ist im Android Playstore verfügbar: [WARP Charger Android Ap
 Die Recovery Seite der Wallbox/des Energy Managers kann auch über den Fernzugriff aufgerufen werden. Dazu ist ein Gerät mit Tastatur erforderlich.
 Mit der Tastenkombination Strg + Shift + Alt + R kann die Recovery Seite geladen werden während eine Verbindung besteht. Sollte das nicht funktionieren
 muss eventuell der Fokus vom Webinterface genommen werden, indem der Footer einmal mit der Maus angeklickt wird.
+
+## Technische Details
+
+### Ports
+Der Fernzugriff nutzt eine HTTPS Verbindung (Port 443/TCP) und eine UDP Verbindung auf den Ports 51820-51825.
