@@ -24,7 +24,7 @@ an:
 * [Modbus/TCP](/docs/interfaces/modbus/introduction)
 
 
-## Einbinden von Victron Geräten in WARP Geräten
+## Einbinden von Victron Geräten in WARP Geräte
 
 Alternativ ist es auch möglich Victron Geräte in [WARP Chargern](/docs/warp_charger/introduction) oder dem
 [WARP Energy Manager](/docs/warp_energy_manager/introduction) einzubinden.
