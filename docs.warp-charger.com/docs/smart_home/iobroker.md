@@ -15,5 +15,5 @@ Alternativ verfügen [WARP Charger](/docs/warp_charger/introduction) und der [WA
 um in andere Systeme integriert zu werden. Dazu zählen:
 
 * [MQTT/HTTP API](/docs/interfaces/mqtt_http/introduction)
-* [Modbus/TCP](http://localhost:3000/docs/interfaces/modbus/introduction)
+* [Modbus/TCP](/docs/interfaces/modbus/introduction)
 
