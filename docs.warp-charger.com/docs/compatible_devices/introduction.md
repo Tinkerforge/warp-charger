@@ -165,4 +165,11 @@ erreicht lädt der Speicher aus dem Netz. Sind diese Zeitpläne vorhanden und k�
 Eine Implementierung wäre dann für den Befehl: "*Laden vom Netz erlauben*" so, dass ein Zeitplan aktiviert wird, der zu allen Uhrzeiten den Speicher zu 100% lädt.
 Für den Befehl: "*Erlaubnis zum Laden vom Netz zurücknehmen*" wäre dieser Zeitplan dann zu deaktivieren oder den Ziel-State of Charge auf ein Minimum, zum Beispiel 20%, zu setzen.
 
+Alternativ ist es bei anderen Geräten auch möglich einen Speicher direkt in den Modus "laden" zu bringen. In diesem Fall muss zwischen "normal" und "laden" gewechselt werden.
 
+:::note
+
+Um Voreinstellungen auslesen zu können oder Einstellungen testen zu können, ermöglich die Beta-Firmware auch das Auslesen von Modbus/TCP Registern.
+Der Debug-Client ist unter "Schnittstellen > Modbus/TCP" zu finden.
+
+:::
