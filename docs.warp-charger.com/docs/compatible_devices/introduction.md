@@ -119,3 +119,50 @@ Bisher kann die Leistung von Batteriespeichern nur gelesen werden. Zukünftig wi
 Zum Einen kann somit auf Wunsch bei einem Schnelllade-Vorgang das Entladen eines Speichers verhindert werden. Zum Anderen kann der Speicher auch auf Grundlage von dynamischen Strompreisen gesteuert werden. Somit ist zum
 Beispiel im Winter das Laden des Speichers bei günstigen Strompreisen aus dem Netz möglich.
 
+:::note
+
+Auf Tinkerunity haben wir eine Beta-Firmware veröffentlicht, die generell das Steuern eines Batteriespeichers mittels Modbus/TCP Befehlen unterstützt. Download hier: [Tinkerunity -  Beta-Test Batteriespeicher-Steuerung
+](https://www.tinkerunity.org/topic/12962-beta-test-batteriespeicher-steuerung/).
+
+:::
+
+
+Die Firmware ist dazu gedacht erste Erfahrungen zu sammeln und je nach Hersteller und Gerät die korrekten Registereinstellungen zu bestimmen. Die Firmware ist daher an erfahrene Benutzer gerichtet und nicht für einen produktiven Einsatz gedacht.
+
+Folgende Aktionen werden unterstützt und jeweils durch zwei Befehle implementiert:
+ * Steuerung des Ladevorgangs aus dem Netz
+   * Befehl: "*Laden vom Netz erlauben*"
+   * Befehl: "*Erlaubnis zum Laden vom Netz zurücknehmen*"
+ * Steuerung der Speicher Entladung
+   * Befehl: "*Entladen verbieten*"
+   * Befehl: "*Verbot zum Entladen zurücknehmen*"
+
+Die ersten beiden Befehle steuern den Ladevorgang des Speichers aus dem Netz. Die anderen Beiden steuern den generellen Entladevorgang des Speichers. Bis zu 16 Modbus/TCP Register können zur Implementierung jedes Befehls geschrieben werden.
+Alle Befehle können manuell durch Klicken auf den "Ausführen" Taster ausgelöst werden. Die eigentliche Logik zur Steuerung des Speichers, die auf diese Befehle zurückgreift, wird zur Zeit noch implementiert (Laden bei günstigen Strompreisen etc.).
+Sie wird zeitnah mit einer weiteren Beta-Firmware veröffenlicht.
+
+Die aktuelle Beta-Firmware nutzt aber bereits die Steuerung der Speicher Entladung um, sofern aktiviert, bei einem Schnellladevorgang die Entladung des Speichers zu unterbinden.
+
+
+:::note Herstellerspezifische Implementierung
+
+Es gibt kein generelles Vorgehen für alle Hersteller und Geräte, wie die jeweiligen Befehle implementiert werden können. Generell muss das Gerät eine Steuerung des Speichers mittels Modbus/TCP erlauben.
+Es muss eine Sequenz von Schreibbefehlen in Register gefunden werden, die den jeweiligen Befehl implementiert.
+
+:::
+
+**Steuerung der Speicher Entladung**
+
+Zur Steuerung der Entladung kann oftmals einfach der maximale Entladestrom gesetzt werden.
+Wird dieser auf 0A gesetzt, so kann hiermit der Befehl "*Entladen verbieten*" implementiert werden. Um den Befehl "*Verbot zum Entladen zurücknehmen*" zu implementieren, kann der Entladestrom dann wieder auf den Ursprungswert
+zurückgesetzt werden.
+
+**Steuerung des Ladevorgangs aus dem Netz**
+
+Die Steuerung der Ladung aus dem Netz ist oftmals komplizierter. Viele Hersteller bieten die Aktivierung von Zeitplänen, bei denen für einen gewissen Zeitraum ein Ziel-State of Charge (Target SoC o.ä.) definiert werden kann. Ist dieser SoC nicht
+erreicht lädt der Speicher aus dem Netz. Sind diese Zeitpläne vorhanden und können per Modbus/TCP konfiguriert werden, so kann damit die Netzladung implementiert werden.
+
+Eine Implementierung wäre dann für den Befehl: "*Laden vom Netz erlauben*" so, dass ein Zeitplan aktiviert wird, der zu allen Uhrzeiten den Speicher zu 100% lädt.
+Für den Befehl: "*Erlaubnis zum Laden vom Netz zurücknehmen*" wäre dieser Zeitplan dann zu deaktivieren oder den Ziel-State of Charge auf ein Minimum, zum Beispiel 20%, zu setzen.
+
+
