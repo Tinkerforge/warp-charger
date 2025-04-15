@@ -78,6 +78,7 @@ nur zugegriffen werden kann, wenn auch ein entsprechender Stromzähler an diesem
 # Herstellerspezifische Informationen
 
 ## Alpha ESS
+### SMILE-Serie
 {manufacturer_to_bubbles("Alpha ESS")}
 
 Die folgenden Alpha ESS Smile Heimspeicher unterstützen eine Anbindung mittels Modbus/TCP:
@@ -93,6 +94,7 @@ Die Geräteadresse bei Alpha ESS ist üblicherweise 85.
 Um die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) nutzen zu können, muss ein mit dem Wechselrichter verbundener Stromzähler am Netzanschluss verbaut sein.
 
 ## APsystems
+### Mikro-Wechselrichter
 {manufacturer_to_bubbles("APsystems")}
 
 APsystems Mikrowechselrichter können von APsystems ECU-R und ECU-C mittels SunSpec ausgelesen werden. Die Kommunikation zwischen Mikrowechselrichter und ECU erfolgt
@@ -104,14 +106,17 @@ APsystems Mikrowechselrichter können von APsystems ECU-R und ECU-C mittels SunS
 Es steht nur der Messwert für die Erzeugung (PV) bereit.
 
 ## Carlo Galvazzi
+### EM24 (Ethernet)
 {manufacturer_to_bubbles("Carlo Galvazzi")}
-
 Carlo Galvazzi Stromzähler mit Modbus/TCP (über Ethernet) Schnittstelle können direkt ausgelesen werden.
-Für Stromzähler mit Modbus/RTU (RS485) Schnittstelle ist zusätzlich ein [Modbus/RTU Wandler](/docs/compatible_devices/interfaces/#modbusrtu-wandler) notwendig,
-der Modbus/RTU auf Modbus/TCP umsetzt.
-
 Folgende Stromzähler können direkt per Ethernet ausgelesen werden:
  * EM24 (in der Ausführung mit Ethernet)
+
+Ein Stromzähler kann immer genau nur einem Messort zugeordnet werden. Der Messort ist abhängig vom Montageort des Stromzählers. Es können mehrere Stromzähler dieses Typs angelegt werden.
+Um die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) nutzen zu können, muss der Stromzähler am Netzanschluss verbaut sein.
+
+### EM-Serie Modbus/RTU Stromzähler
+{manufacturer_to_bubbles("Carlo Galvazzi")}
  
 Folgende Stromzähler sind RS485 bzw. Modbus/RTU Stromzähler, so dass ein [Modbus/RTU Wandler](/docs/compatible_devices/interfaces/#modbusrtu-wandler) erforderlich ist:
  * EM100 bzw. EM300 Serie
@@ -127,6 +132,7 @@ Ein Stromzähler kann immer genau nur einem Messort zugeordnet werden. Der Messo
 Um die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) nutzen zu können, muss der Stromzähler am Netzanschluss verbaut sein.
 
 ## Deye
+### SUN-Serie
 {manufacturer_to_bubbles("Deye")}
 
 Deye Hybrid-Wechselrichter der SUN Serie (Nieder- und Hochspannung) unterstützen Modbus/RTU.
@@ -144,6 +150,7 @@ von Deye.
 :::
 
 ## E3DC
+### Hauskraftwerk
 {manufacturer_to_bubbles("E3DC")}
 
 Es werden S10 Hauskraftwerke unterstützt. Vermutlich gilt dies auch für die S20 Serie.
@@ -161,6 +168,7 @@ Diese kann jetzt schon selbst als benutzerdefinierte Registertabelle hinterlegt 
 :::
 
 ## Eastron
+### SDM630 und SMD72V2
 {manufacturer_to_bubbles("Eastron")}
 
 Eastron Stromzähler mit RS485 (Modbus/RTU) Schnittstelle können direkt am WARP Energy Manager angeschlossen und von diesem ausgelesen werden.
@@ -173,6 +181,7 @@ Ein Stromzähler kann immer genau nur einem Messort zugeordnet werden. Der Messo
 des WARP Energy Managers nur einen Stromzähler unterstützt. Um die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) nutzen zu können, muss der Stromzähler am Netzanschluss verbaut sein.
 
 ## elgris
+### Smart Meter LAN 2.0
 {manufacturer_to_bubbles("elgris")}
 
 Das elgris Smart Meter LAN 2.0 kann einfach mittels SunSpec eingebunden werden. SunSpec sollte direkt auf dem Stromzähler aktiviert sein.
@@ -180,6 +189,7 @@ Ein Stromzähler kann immer genau nur einem Messort zugeordnet werden. Der Messo
 Um die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) nutzen zu können, muss der Stromzähler am Netzanschluss verbaut sein.
 
 ## Eltako
+### DSZ15DZMOD Stromzähler
 {manufacturer_to_bubbles("Eltako")}
 
 Der Eltako Stromzähler DSZ15DZMOD mit RS485 (Modbus/RTU) Schnittstelle kann am WARP Energy Manager angeschlossen und von diesem ausgelesen werden.
@@ -187,6 +197,7 @@ Ein Stromzähler kann immer genau nur einem Messort zugeordnet werden. Der Messo
 des WARP Energy Managers nur einen Stromzähler unterstützt. Um die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) nutzen zu können, muss der Stromzähler am Netzanschluss verbaut sein.
 
 ## Fox ESS
+### H3 Hybridwechselrichter
 {manufacturer_to_bubbles("Fox ESS")}
 
 Fox ESS Wechselrichter scheinen nicht mittels Modbus TCP über den Fox ESS LAN oder Wifi Dongle ausgelesen werden zu können. Sie sind aber mittels RS485 (Modbus/RTU) auszulesen.
@@ -252,6 +263,7 @@ Es ist uns leider unbekannt ob ein Stromzähler Netz zur Verfügung steht und ob
 Die Geräteadresse ist typischerweise 247.
 
 ## Hailei
+### HL-TPH10K
 {manufacturer_to_bubbles("Hailei")}
 
 Die Integration von Hailei Wechselrichtern folgt. Ein Auslesen ist mittels Modbus/TCP nach Modbus/RTU Wandlern (z.B. EW11) über die Modbus/RTU Schnittstelle des Wechselrichters möglich.
@@ -263,12 +275,14 @@ Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamis
 Die Geräteadresse ist typischerweise 85.
 
 ## Hoymiles
+### HMS- und HMT-Serie
 {manufacturer_to_bubbles("Hoymiles")}
 
 Hoymiles Mikrowechselrichter der Generation HMS und HMT können über die Hoymiles DTU-Pro-S Datenübertragungseinheit mittels SunSpec ausgelesen werden. Die Kommunikation erfolgt mittels Sub-1G.
 Es steht nur der Messwert für die Erzeugung (PV) bereit.
 
 ## Huawei
+### SUN-Serie
 {manufacturer_to_bubbles("Huawei")}
 
 Wechselrichter der SUN2000 Serie (2kW - 215kW) und der SUN8000-500KTL können über das Huawei Smart Dongle (SmartdDongle ab Firmware SPC124) mittels Modbus/TCP ausgelesen werden. Aktuell ist noch keine Registertabelle hierfür hinterlegt.
@@ -332,6 +346,8 @@ Batterie Wechselrichter der Firma RCT können mittels dem RCT Power Serial Commu
 Nur wenn ein Stromzähler am Netzanschluss montiert wurde, wird die Anwendung PV-Überschussladen (PVÜ) unterstützt. Ein dynamisches Lastmanagement (dLM) ist über diesen Zähler leider nicht möglich, da keine Phasenströme übermittelt werden.
 
 ## SAX Power
+
+### SAX Power Home und Power Home Plus
 {manufacturer_to_bubbles("SAX Power", "Power Home und Power Home Plus")}
 
 Die SAX Power Batterien Power Home und Power Home Plus können mittels Modbus/TCP ausgelesen werden. Bei den älteren Varianten ist dazu Port 3600 und bei den neueren Varianten der Port 502 einzustellen.
@@ -340,6 +356,8 @@ Nur wenn ein Stromzähler am Netzanschluss montiert wurde, wird die Anwendung PV
 
 
 ## Shelly
+
+### Shelly Pro EM und Shelly Pro 3EM
 {manufacturer_to_bubbles("Shelly")}
 
 Der einphasige Wandler-Stromzähler Shelly Pro EM und dreiphasige Wandler-Stromzähler Shelly Pro 3EM werden unterstützt und können mittels Modbus/TCP ausgelesen werden. Beide besitzten nur eine Breite von 1 TE und messen mittels Wandler.
@@ -352,6 +370,7 @@ Ein Stromzähler kann immer genau nur einem Messort zugeordnet werden. Der Messo
 Nur wenn der Stromzähler am Netzanschluss montiert wurde, werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
 
 ## Siemens
+### SENTRON Energiezähler PAC-Serie
 {manufacturer_to_bubbles("Siemens")}
 
 Die folgenden Siemens SENTRON Energiezähler können abhängig vom konkreten Modell mittels Modbus/TCP ausgelesen werden:
@@ -489,6 +508,7 @@ Ein älterer Dongle vom Typ Typ ***WiNet-S*** scheint immer Modbus TCP über Por
 Generell sollte das Gerät mit Geräteadresse 1 erreichbar sein. Anscheinend ist die Adresse nicht vom Nutzer konfiguriertbar. Ein Nutzer hat uns mitgeteilt, dass bei ihm Geräteadresse 1 nicht funktioniert, das System aber unter Geräteadresse 4 erreichbar ist.
 
 ## Tasmota
+### Smart Meter Interface
 {manufacturer_to_bubbles("Tasmota")}
 
 Tasmota bietet ein [Smart Meter Interface](https://tasmota.github.io/docs/Smart-Meter-Interface/) damit können über ein IR-Lesekopf die Zählerwerte des Smart Meters vom Netzbetreiber ausgelesen werden.
@@ -568,6 +588,7 @@ Nur in diesem Fall wird die Anwendung PV-Überschussladen (PVÜ) unterstützt. E
 Diese Stromzähler sind technisch Carlo Galvazzi Stromzähler und können somit als [Carlo Galvazzi Stromzähler](/docs/compatible_devices/devices#carlo-galvazzi) angelegt werden.
 
 ## YTL
+### DEM4A Stromzähler
 {manufacturer_to_bubbles("YTL")}
 
 Der YTL Stromzähler DEM4A mit RS485 (Modbus/RTU) Schnittstelle kann direkt am WARP Energy Manager angeschlossen und von diesem ausgelesen werden.
