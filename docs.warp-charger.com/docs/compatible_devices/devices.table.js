@@ -382,6 +382,19 @@ export const devices = [
     bat: "-"
   },
   {
+    manufacturer: "SAX Power",
+    device: "Power Home und Power Home Plus",
+    connection: "Modbus/TCP",
+    link: "/docs/compatible_devices/devices#sax-power",
+    grid: "x",
+    pv: "-",
+    battery: "x",
+    load: "-",
+    dlm: "-",
+    pve: "x",
+    bat: "-"
+  },
+  {
     manufacturer: "Shelly",
     device: "Shelly Pro EM und Shelly Pro 3EM",
     connection: "Modbus/TCP",
