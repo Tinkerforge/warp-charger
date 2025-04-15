@@ -18,7 +18,7 @@ konfiguriert werden.
 
 ![image](/img/webinterface/energy_management/wem2-wallboxes.jpeg)
 
-Auf dieser Seite werden kontrollierten Wallboxen konfiguriert. Die hier vorgenommenen Einstellungen
+Auf dieser Seite werden die kontrollierten Wallboxen konfiguriert. Die hier vorgenommenen Einstellungen
 beeinflussen das [Lastmanagement](/docs/tutorials/chargemanagement) zwischen den Wallboxen.
 
 Typ-2-Wallboxen kommunizieren den angeschlossenen Fahrzeugen den maximal zur Verfügung stehenden Ladestrom.
