@@ -67,14 +67,14 @@ Ladeelektroniken automatisch zu wecken, falls das Fahrzeug nicht innerhalb von 3
 Strom zur Verfugung steht. Umgesetzt wird dies durch eine kurzzeitige Trennung des Control-Pilot- bzw. CP-Signals.
 
 
-***Automatischer Phasenwechsel***
+## Automatischer Phasenwechsel
 
 Diese Option steht nur für den WARP3 Charger Pro zur Verfügung. Ist
 die Option aktiviert, wird bei einem laufenden Ladevorgang mit dem internen Stromzähler ermittelt, ob das
 Fahrzeug nur einphasig lädt. Ist dies der Fall, schaltet die Wallbox automatisch auf einphasiges Laden um.
 
 
-***Zuleitung***
+## Zuleitung
 
 Hier wird konfiguriert, ob die Wallbox dreiphasig oder
 einphasig angeschlossen ist. Ist die Wallbox nur einphasig angeschlossen und hier auch so konfiguriert, wird
