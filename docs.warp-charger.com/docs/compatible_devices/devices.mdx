@@ -158,19 +158,14 @@ von Deye.
 ### Hauskraftwerk
 {manufacturer_to_bubbles("E3DC")}
 
-Es werden S10 Hauskraftwerke unterstützt. Vermutlich gilt dies auch für die S20 Serie.
-E3DCs Hauskraftwerke unterstützen SunSpec und können somit einfach eingebunden werden. Damit das Hauskraftwerk eingebunden werden kann muss Modbus/TCP im SunSpec Modus aktiviert werden.
-Dazu muss unter "Hauptmenü > Funktionen > Funktion Modbus" das Protokoll auf "SUN_SPEC" gestellt werden.
-Um die Anwendung PV-Überschussladen (PVÜ) nutzen zu können, muss ein Stromzähler am Netzanschluss verbaut sein.
+Es werden S10 und S20 Hauskraftwerke unterstützt.
+E3DCs Hauskraftwerke unterstützen SunSpec und können somit einfach eingebunden werden. Die aktuellen E3DC Firmware (Stand 28.03.25) liefert aber keine korrekten Werte über SunSpec für den Speicher.
 
+Daher stellen wir ein spezifisches E3DC Modbus/TCP Profil bereit. Um dieses nutzen zu können muss im Hauskraftwerk unter "Hauptmenü > Funktionen > Funktion Modbus" das Protokoll auf "E3/DC Simple-Mode" gestellt werden.
+
+Um die Anwendung PV-Überschussladen (PVÜ) nutzen zu können, muss ein Stromzähler am Netzanschluss verbaut sein. Dies sollte bei E3DC immer der Fall sein.
 E3DC stellt keine Phasenströme zur Verfügung. Daher ist die Anwendung dynamisches Lastmanagement (dLM) nicht möglich. Soll dennoch ein dynamisches Lastmanagement realisiert werden, muss ein zusätzlicher Stromzähler, der Phasenströme bereitstellt, installiert werden.
 
-:::note
-
-Die aktuellen E3DC Firmware (Stand 28.03.25) liefert keine korrekten Werte über SunSpec für den Speicher. Wir arbeiten daran für E3DC eine spezifische Registertabelle zu implementieren (E3/DC Simple-Mode).
-Diese kann jetzt schon selbst als benutzerdefinierte Registertabelle hinterlegt werden.
-
-:::
 
 ## Eastron
 
@@ -297,14 +292,12 @@ Es steht nur der Messwert für die Erzeugung (PV) bereit.
 ### SUN-Serie
 {manufacturer_to_bubbles("Huawei")}
 
-Wechselrichter der SUN2000 Serie (2kW - 215kW) und der SUN8000-500KTL können über das Huawei Smart Dongle (SmartdDongle ab Firmware SPC124) mittels Modbus/TCP ausgelesen werden. Aktuell ist noch keine Registertabelle hierfür hinterlegt.
-Diese muss noch per Hand angelegt werden. Wir werden aber zeitnah eine vorwählbare Registertabelle bereitstellen.
+Wechselrichter der SUN2000 Serie (2kW - 215kW) und der SUN8000-500KTL können über das Huawei Smart Dongle (SmartDongle ab Firmware SPC124) mittels Modbus/TCP ausgelesen werden.
 
 Die unterstützen Modelle sind ab Seite 1 in dem Dokument [SUN2000MA Modbus Interface Definitions](https://support.huawei.com/enterprise/de/doc/EDOC1100387581?currentPartNo=k004&togo=content&section=k004) aufgeführt.
 
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann (typischerweise "Huawei Smart Power Sensor" vom Typ DTSU666-H oder DDSU666-H).
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
-Speicher ist nur nutzbar im Zusammenspiel mit der Luna2000 Batterie.
+Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt. Speicher ist nur nutzbar im Zusammenspiel mit der Luna2000 Batterie.
 
 ## Kaco
 

@@ -278,7 +278,7 @@ export const devices = [
   },
   {
     manufacturer: "Huawei",
-    device: "SUN2000 Serie Hybrid-Wechselrichter",
+    device: "SUN-Serie Hybrid-Wechselrichter",
     connection: "Modbus/TCP",
     link: "/docs/compatible_devices/devices#huawei",
     grid: "x",
