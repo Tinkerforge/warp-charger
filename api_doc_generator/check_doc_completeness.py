@@ -105,7 +105,9 @@ def check_element(elem: Elem, info: dict, name: str, path: str, keys_to_censor: 
         "object": EType.OBJECT,
         "string": EType.STRING,
         "uint": EType.INT,
-        "union": EType.UNION
+        "union": EType.UNION,
+        "int64": EType.INT,
+        "uint64": EType.INT,
     }
 
     if elem.type_ == EType.OPAQUE:
