@@ -13,7 +13,7 @@ wenn zum Beispiel ein Stromzähler für eine PV-Anlage bereits installiert wurde
 Die folgende Geräteübersicht führt Geräte auf, die direkt unterstützt werden. Zusätzlich werden Informationen zu den bereitgestellten Daten und den Anwendungsmöglichkeiten aufgelistet.
 
 :::note
-Ist ein Gerät nicht aufgelistet besteht die Möglichkeit, das es dennoch über eine der [Schnittstellen](/docs/compatible_devices/interfaces) (z.B. Modbus/TCP mit benuzterdefinierter Registertabelle) integriert werden kann.
+Ist ein Gerät nicht aufgelistet besteht die Möglichkeit, das es dennoch über eine der [Schnittstellen](/docs/compatible_devices/interfaces) (z.B. Modbus/TCP mit benutzerdefinierter Registertabelle) integriert werden kann.
 
 :::
 
@@ -52,7 +52,7 @@ Solltest du Probleme mit einem der aufgeführten Geräte haben, oder aber
 die Unterstützung eines Geräts wünschen, dann schreibe uns im Forum auf
 [Tinkerunity](https://www.tinkerunity.org/forum/13-warp-charger/).
 
-Wenn du ein Gerät besitzt, das du getestest hast und dieses noch nicht
+Wenn du ein Gerät besitzt, das du getestet hast und dieses noch nicht
 in der Liste aufgeführt ist, schicke uns doch eine Email an
 [info@tinkerforge.com](mailto:info@tinkerforge.com) damit wir die
 Liste erweitern können. Solltest du eine eigene Modbus/TCP
@@ -365,7 +365,7 @@ Nur wenn ein Stromzähler am Netzanschluss montiert wurde, wird die Anwendung PV
 {manufacturer_to_bubbles("SAX Power", "Power Home und Power Home Plus")}
 
 Die SAX Power Batterien Power Home und Power Home Plus können mittels Modbus/TCP ausgelesen werden. Bei den älteren Varianten ist dazu Port 3600 und bei den neueren Varianten der Port 502 einzustellen.
-Die Einstellung "Basic mMde" ist getestet. Der "Extended Mode" konnte bisher von uns noch nicht getestet werden.
+Die Einstellung "Basic Mode" ist getestet. Der "Extended Mode" konnte bisher von uns noch nicht getestet werden.
 Nur wenn ein Stromzähler am Netzanschluss montiert wurde, wird die Anwendung PV-Überschussladen (PVÜ) unterstützt. Ein dynamisches Lastmanagement (dLM) ist über diesen Zähler leider nicht möglich, da keine Phasenströme übermittelt werden.
 
 
@@ -374,7 +374,7 @@ Nur wenn ein Stromzähler am Netzanschluss montiert wurde, wird die Anwendung PV
 ### Shelly Pro EM und Shelly Pro 3EM
 {manufacturer_to_bubbles("Shelly")}
 
-Der einphasige Wandler-Stromzähler Shelly Pro EM und dreiphasige Wandler-Stromzähler Shelly Pro 3EM werden unterstützt und können mittels Modbus/TCP ausgelesen werden. Beide besitzten nur eine Breite von 1 TE und messen mittels Wandler.
+Der einphasige Wandler-Stromzähler Shelly Pro EM und dreiphasige Wandler-Stromzähler Shelly Pro 3EM werden unterstützt und können mittels Modbus/TCP ausgelesen werden. Beide besitzen nur eine Breite von 1 TE und messen mittels Wandler.
 Somit benötigen diese nur wenig Platz und können an verschiedene Maximalströme angepasst werden. (EM: 50A, 3EM: 120A, 400A).
 
 Wichtig ist ein Update auf die neuste Software, so dass Modbus/TCP unterstützt wird. Dieses muss dann unter Settings -> Modbus aktiviert werden.
@@ -469,8 +469,8 @@ Ist die Schnittstelle nicht unter Port 1502 und auch nicht unter Port 502 freige
 Unseres Wissens kann diese Schnittstelle nicht selbst aktiviert werden, sondern muss vom SolarEdge Support aktiviert werden.
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
-Über SunSpec steht zwar auch das Speicherkapazitäts Modell 713 zur Verfügung, allderings liefert dieses nicht die Leistung der Batterie. Anstelle des
-SunSpec Speicherkapazitäts Modells kann über Modbus/TCP mit einen virtuellen Stromzähler "Speicher" der SoC und die Leistung der Batterie ausgelesen werden.
+Über SunSpec steht zwar auch das Speicherkapazitäts-Modell 713 zur Verfügung, allerdings liefert dieses nicht die Leistung der Batterie. Anstelle des
+SunSpec Speicherkapazitäts-Modells kann über Modbus/TCP mit einen virtuellen Stromzähler "Speicher" der SoC und die Leistung der Batterie ausgelesen werden.
 
 ## Solarmax
 {manufacturer_to_bubbles("Solarmax")}
@@ -484,14 +484,14 @@ Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamis
 ### X1 & X3 Hybrid
 {manufacturer_to_bubbles("Solax", "X1 & X3 Hybrid")}
 
-Solax Hybridwechselrichter können über das WLAN Dongle mittels Modbus/TCP ausgelesen werden. Eine Einrichtungsanleitung inkl. der unterstützen Wechselrichter gibt es in der [Solax Power Academy](https://kb.solaxpower.com/de/solution/detail/ff8080818eae9899018ec71a12ca1ea6).
+Solax Hybrid-Wechselrichter können über das WLAN Dongle mittels Modbus/TCP ausgelesen werden. Eine Einrichtungsanleitung inkl. der unterstützen Wechselrichter gibt es in der [Solax Power Academy](https://kb.solaxpower.com/de/solution/detail/ff8080818eae9899018ec71a12ca1ea6).
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
 
 ### X1 & X3 Mini Boost MIC und Pro
 {manufacturer_to_bubbles("Solax", "X1 & X3 Mini Boost MIC und Pro")}
 
-Solax Stringwechselrichter können über das WLAN Dongle mittels Modbus/TCP ausgelesen werden. Eine Einrichtungsanleitung inkl. der unterstützen Wechselrichter gibt es in der [Solax Power Academy](https://kb.solaxpower.com/de/solution/detail/ff8080818eae9899018ec71a12ca1ea6).
+Solax String-Wechselrichter können über das WLAN Dongle mittels Modbus/TCP ausgelesen werden. Eine Einrichtungsanleitung inkl. der unterstützen Wechselrichter gibt es in der [Solax Power Academy](https://kb.solaxpower.com/de/solution/detail/ff8080818eae9899018ec71a12ca1ea6).
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
 
@@ -503,12 +503,12 @@ Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamis
 Sungrow Wechselrichter der Serien SGxxRT/SGxxRS/SGxxCX/SDxxCX-P2 können mittels Modbus/TCP ausgelesen werden. Am Wechselrichter angeschlossene Hardware-Stromzähler vom Typ DSU555 o.ä., die von diesem ausgelesen werden können, können ebenfalls ausgelesen werden.
 Nur wenn ein Stromzähler am Netzanschluss installiert wurde werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
 
-Das Auslesen kann über einen WiNet-S mittels LAN/WLAN erfolgen (versionsabhängig). Hierbei scheint es aber je nach Hardwareversion und Firmware Probleme geben zu können. Sungrow empfielt, sofern vorhanden, direkt den LAN Anschluss
+Das Auslesen kann über einen WiNet-S mittels LAN/WLAN erfolgen (versionsabhängig). Hierbei scheint es aber je nach Hardwareversion und Firmware Probleme geben zu können. Sungrow empfiehlt, sofern vorhanden, direkt den LAN Anschluss
 des Wechselrichters zu verwenden. Die Modbus/TCP Verbindung unterstützt oftmals anscheinend nur einen Client. Generell ist ein Softwareupdate beim Wechselrichter und Dongle (WiNet-S) zu prüfen.
 
 Ein älterer Dongle vom Typ Typ ***WiNet-S*** scheint immer Modbus/TCP über Port 502 bereitzustellen. Ist ein neuerer Dongle vom Typ **WiNet-S2** vorhanden, so muss die Option "Modbus TCP-Port 502 EIN/AUS" aktiviert werden. Ggf. ist dies nur über den Installateurzugang möglich.
 
-Generell sollte das Gerät mit Geräteadresse 1 erreichbar sein. Anscheinend ist die Adresse nicht vom Nutzer konfiguriertbar. Ein Nutzer hat uns mitgeteilt, dass bei ihm Geräteadresse 1 nicht funktioniert, das System aber unter Geräteadresse 4 erreichbar ist.
+Generell sollte das Gerät mit Geräteadresse 1 erreichbar sein. Anscheinend ist die Adresse nicht vom Nutzer konfigurierbar. Ein Nutzer hat uns mitgeteilt, dass bei ihm Geräteadresse 1 nicht funktioniert, das System aber unter Geräteadresse 4 erreichbar ist.
 
 ### SH-Serie
 {manufacturer_to_bubbles("Sungrow", "SH-Serie")}
@@ -517,12 +517,12 @@ Sungrow Wechselrichter der Serien SHxxRT/SHxxRS können mittels Modbus/TCP ausge
 Nur wenn ein Stromzähler am Netzanschluss installiert wurde werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
 Wird an dem Wechselrichter eine Batterie angeschlossen, so kann diese ebenfalls mit dem virtuellen Stromzähler "Speicher" ausgelesen werden. Zusätzlich wird ein virtueller Stromzähler "Last" zur Verfügung gestellt.
 
-Das Auslesen kann über einen WiNet-S mittels LAN/WLAN erfolgen (versionsabhängig). Hierbei scheint es aber je nach Hardwareversion und Firmware Probleme geben zu können. Sungrow empfielt, sofern vorhanden, direkt den LAN Anschluss
+Das Auslesen kann über einen WiNet-S mittels LAN/WLAN erfolgen (versionsabhängig). Hierbei scheint es aber je nach Hardwareversion und Firmware Probleme geben zu können. Sungrow empfiehlt, sofern vorhanden, direkt den LAN Anschluss
 des Wechselrichters zu verwenden. Die Modbus/TCP Verbindung unterstützt oftmals anscheinend nur einen Client. Generell ist ein Softwareupdate beim Wechselrichter und Dongle (WiNet-S) zu prüfen.
 
 Ein älterer Dongle vom Typ Typ **WiNet-S** scheint immer Modbus/TCP über Port 502 bereitzustellen. Ist ein neuerer Dongle vom Typ **WiNet-S2** vorhanden, so muss die Option "Modbus TCP-Port 502 EIN/AUS" aktiviert werden. Ggf. ist dies nur über den Installateurzugang möglich.
 
-Generell sollte das Gerät mit Geräteadresse 1 erreichbar sein. Anscheinend ist die Adresse nicht vom Nutzer konfiguriertbar. Ein Nutzer hat uns mitgeteilt, dass bei ihm Geräteadresse 1 nicht funktioniert, das System aber unter Geräteadresse 4 erreichbar ist.
+Generell sollte das Gerät mit Geräteadresse 1 erreichbar sein. Anscheinend ist die Adresse nicht vom Nutzer konfigurierbar. Ein Nutzer hat uns mitgeteilt, dass bei ihm Geräteadresse 1 nicht funktioniert, das System aber unter Geräteadresse 4 erreichbar ist.
 
 ## Tasmota
 
@@ -532,21 +532,21 @@ Generell sollte das Gerät mit Geräteadresse 1 erreichbar sein. Anscheinend ist
 Tasmota bietet ein [Smart Meter Interface](https://tasmota.github.io/docs/Smart-Meter-Interface/) damit können über ein IR-Lesekopf die Zählerwerte des Smart Meters vom Netzbetreiber ausgelesen werden.
 Netzbetreiber nutzen zum Beispiel Smart Meter der Marke DZG (z.B.: DWS, DVS), EMH (z.B.: ED300, eHZ) oder Holley (z.B.: DTZ, EHZ). Eine vollständige Liste lässt sich unter dem oben genannten Link finden.
 
-Das Smart Meter ist typischwerweise mit einem Pin gesichert und muss zuvor mittels Pin freigegeben werden. Den Pin erhält man von seinem Netzbetreiber. Es werden selbstgebaute Leseköpfe unterstützt, welche typischerweise aus einem
+Das Smart Meter ist typischerweise mit einem Pin gesichert und muss zuvor mittels Pin freigegeben werden. Den Pin erhält man von seinem Netzbetreiber. Es werden selbstgebaute Leseköpfe unterstützt, welche typischerweise aus einem
 ESP32 und einer Fotodiode bestehen. Es gibt aber auch Fertiglösungen wie den "Hichi TTL - Lesekopf".
 
 Technisch muss für das jeweilige Zählermodell der entsprechende [Smart Meter Descriptor](https://tasmota.github.io/docs/Smart-Meter-Interface/#smart-meter-descriptors) im ESP32 des Lesekopf hinterlegt werden.
 Kann darüber der Zähler ausgelesen werden, so kann der Leistungs-Messwert (ab Tasmota Version 13.x) mittels der [HTTP API](/docs/interfaces/mqtt_http/api_reference/meters.mdx)
  an einen WARP Charger oder einen WARP Energy Meter geschickt werden.
 
-Dazu wird auf dem WARP Energy Manager oder WARP Charger ein API Stromzähler konfiguriert. Dieser erhält nur den einzigen Wert "Wirk­leistung (Bezug minus Ein­speisung); Σ L1, L2, L3 \[W\]".
+Dazu wird auf dem WARP Energy Manager oder WARP Charger ein API Stromzähler konfiguriert. Dieser erhält nur den einzigen Wert "Wirkleistung (Bezug minus Einspeisung); Σ L1, L2, L3 \[W\]".
 Dieser Wert wird dann aus dem Tasmota SML Skript mittels folgender Zeile übertragen:
 
 ```
 =>WebQuery http://192.168.2.30/meters/0/update POST [Content-Type:application/json] [%sml[3]%]
 ```
 
-Im unten angegeben Beispielskript für einen DZG DWS7412 werden insgesamt 4 Messwerte extrahiert, die dann entsprechend ihrer Reihenfolge über die Variablen sml\[1\] bis sml\[4\] zugreifbar sind. Im Bespielfall enthält sml\[3\] den gewünschten Wert für Leistung in W. Dieser Wert Wert wird mittels HTTP Post an den API Zähler 0 übertragen. Zusätzlich werden alle sml Messwerte anschließend im Log ausgegeben (print). Das print Statement dient nur der Kontrolle und kann nach erfolgreicher Bestimmung des gewünschten Wertes entfernt werden.
+Im unten angegeben Beispielskript für einen DZG DWS7412 werden insgesamt 4 Messwerte extrahiert, die dann entsprechend ihrer Reihenfolge über die Variablen sml\[1\] bis sml\[4\] zugreifbar sind. Im Beispielfall enthält sml\[3\] den gewünschten Wert für Leistung in W. Dieser Wert Wert wird mittels HTTP Post an den API Zähler 0 übertragen. Zusätzlich werden alle sml Messwerte anschließend im Log ausgegeben (print). Das print Statement dient nur der Kontrolle und kann nach erfolgreicher Bestimmung des gewünschten Wertes entfernt werden.
 
 ```
 >D
@@ -563,7 +563,7 @@ print %sml[1]%,%sml[2]%,%sml[3]%,%sml[4]%
 1,7707010060320101@#,SID,,meter_id,0
 ```
 
-Diese Lösung lässt sich nur für ein PV-Überschussladen (PVÜ) verwenden, da nur die Gesamtleistung übertragen wird. Für ein dynamisches Lastmanagement (dLM) ist auch die Übertragung der Phasenströme notwendig. Auch diese werden von einigen Smart Metern mit übertragen. In diesem muss der API Zähler entsprechend um die zusätzlichen 3 Werte erweitert und im Skript der POST Request ergämzt werden.
+Diese Lösung lässt sich nur für ein PV-Überschussladen (PVÜ) verwenden, da nur die Gesamtleistung übertragen wird. Für ein dynamisches Lastmanagement (dLM) ist auch die Übertragung der Phasenströme notwendig. Auch diese werden von einigen Smart Metern mit übertragen. In diesem muss der API Zähler entsprechend um die zusätzlichen 3 Werte erweitert und im Skript der POST Request ergänzt werden.
 
 Hier der [Tinkerunity Blogpost](https://www.tinkerunity.org/topic/12255-z%C3%A4hler-des-netzbetreibers-sml-ir-hichi%E2%80%A6-f%C3%BCr-pv-%C3%BCberschuss/?do=findComment&comment=55374)
 auf dem diese Beschreibung ursprünglich basiert.
