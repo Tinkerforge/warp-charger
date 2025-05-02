@@ -140,7 +140,7 @@ Um die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dL
 {manufacturer_to_bubbles("Deye")}
 
 Deye Hybrid-Wechselrichter der SUN Serie (Nieder- und Hochspannung) unterstützen Modbus/RTU.
-Mit einem Umsetzer von Modbus/RTU auf Ethernet kann auf diese auch mittels Modbus/TCP zugegriffen werden. Siehe [Modbus RTU Wandler](/compatible_devices/interfaces.md#modbusrtu-wandler).
+Mit einem Umsetzer von Modbus/RTU auf Ethernet kann auf diese auch mittels Modbus/TCP zugegriffen werden. Siehe [Modbus/RTU Wandler](/compatible_devices/interfaces.md#modbusrtu-wandler).
 Die ausgelesenen Werte für "Netz" beziehen sich auf den Netzanschluss des Wechselrichters. Der über diesen Anschluss geführte Strom wird gemessen. Das ggf. verbaute Smartmeter (Chint DSU666 etc.)
 kann anscheinend NICHT über die Modbus/TCP Schnittstelle des Wechselrichters ausgelesen werden! Ist nur ein Wechselrichter vorhanden und wird der gesamte Strom über dessen Netzanschluss geführt, kann der Messwert "Netz" für ein PV-Überschussladen (PVÜ) und ein dynamisches Lastmanagement (dLM) verwendet werden.
 
@@ -211,9 +211,9 @@ des WARP Energy Managers nur einen Stromzähler unterstützt. Um die Anwendungen
 ### H3 Hybridwechselrichter
 {manufacturer_to_bubbles("Fox ESS")}
 
-Fox ESS Wechselrichter scheinen nicht mittels Modbus TCP über den Fox ESS LAN oder Wifi Dongle ausgelesen werden zu können. Sie sind aber mittels RS485 (Modbus/RTU) auszulesen.
-Wird ein RS485 nach LAN oder WLAN Wandler installiert (siehe [Modbus RTU Wandler](/compatible_devices/interfaces.md#modbusrtu-wandler)), so können diese Wechselrichter ebenfalls ausgelesen werden.
-Am Wechselrichter muss die Geräte ID von 000 (Modbus RTU deaktiviert) auf 247 eingestellt werden. Die Einstellung dazu findet sich unter Settings -> Communication -> RS485 -> Device ID.
+Fox ESS Wechselrichter scheinen nicht mittels Modbus/TCP über den Fox ESS LAN oder WLAN Dongle ausgelesen werden zu können. Sie sind aber mittels RS485 (Modbus/RTU) auszulesen.
+Wird ein RS485 nach LAN oder WLAN Wandler installiert (siehe [Modbus/RTU Wandler](/compatible_devices/interfaces.md#modbusrtu-wandler)), so können diese Wechselrichter ebenfalls ausgelesen werden.
+Am Wechselrichter muss die Geräte-ID von 000 (Modbus/RTU deaktiviert) auf 247 eingestellt werden. Die Einstellung dazu findet sich unter Settings -> Communication -> RS485 -> Device ID.
 Das Wechselrichterpasswort ist standardmäßig auf 0000 gesetzt.
 
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann. Nur in diesem Fall wird die Anwendung PV-Überschussladen (PVÜ) unterstützt.
@@ -254,7 +254,7 @@ Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamis
 ### EHB Serie String-Wechselrichter
 {manufacturer_to_bubbles("Goodwe", "EHB Serie String-Wechselrichter")}
 
-Die Einbindung eines Wechselrichters der EHB Serie ist mittels Modbus/TCP über das LAN bzw. Wifi+LAN Modul möglich.
+Die Einbindung eines Wechselrichters der EHB Serie ist mittels Modbus/TCP über das LAN bzw. WiFi+LAN Modul möglich.
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler (z.B. GM300) am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
 Die Geräteadresse ist typischerweise 247.
@@ -262,14 +262,14 @@ Die Geräteadresse ist typischerweise 247.
 ### EH, EM, ES, ET Hybrid-Wechselrichter
 {manufacturer_to_bubbles("Goodwe", "EH, EM, ES, ET Hybrid-Wechselrichter")}
 
-Die Einbindung eines Wechselrichters der EH, EM, ES, ET Serie ist mittels Modbus/TCP über das LAN bzw. Wifi+LAN Modul möglich.
+Die Einbindung eines Wechselrichters der EH, EM, ES, ET Serie ist mittels Modbus/TCP über das LAN bzw. WiFi+LAN Modul möglich.
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler (z.B. GM300) am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
 Die Geräteadresse ist typischerweise 247.
 
 ### BT, SBP, BH-Serie Batterie-Wechselrichter
 {manufacturer_to_bubbles("Goodwe", "BT, SBP, BH-Serie Batterie-Wechselrichter")}
-Die Einbindung eines Wechselrichters der BT, SBP, BH-Serie ist mittels Modbus/TCP über das LAN bzw. Wifi+LAN Modul möglich.
+Die Einbindung eines Wechselrichters der BT, SBP, BH-Serie ist mittels Modbus/TCP über das LAN bzw. WiFi+LAN Modul möglich.
 Es ist uns leider unbekannt ob ein Stromzähler Netz zur Verfügung steht und ob dieser für ein PV-Überschussladen oder dynamisches Lastmanagement genutzt werden kann.
 Die Geräteadresse ist typischerweise 247.
 
@@ -278,8 +278,8 @@ Die Geräteadresse ist typischerweise 247.
 ### HL-TPH10K
 {manufacturer_to_bubbles("Hailei")}
 
-Die Integration von Hailei Wechselrichtern folgt. Ein Auslesen ist mittels Modbus/TCP nach Modbus/RTU Wandlern (z.B. EW11) über die Modbus/RTU Schnittstelle des Wechselrichters möglich.
-Siehe [Modbus RTU Wandler](/compatible_devices/interfaces.md#modbusrtu-wandler).
+Ein Auslesen ist mittels Modbus/TCP nach Modbus/RTU Wandlern (z.B. EW11) über die Modbus/RTU Schnittstelle des Wechselrichters möglich.
+Siehe [Modbus/RTU Wandler](/compatible_devices/interfaces.md#modbusrtu-wandler).
 Wechselrichter, die direkt einen LAN Anschluss bieten, können direkt über diesen LAN Anschluss mit Modbus/TCP ausgelesen werden.
 
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
@@ -299,12 +299,12 @@ Es steht nur der Messwert für die Erzeugung (PV) bereit.
 ### SUN-Serie
 {manufacturer_to_bubbles("Huawei")}
 
-Wechselrichter der SUN2000 Serie (2kW - 215kW) und der SUN8000-500KTL können über das Huawei Smart Dongle (SmartDongle ab Firmware SPC124) mittels Modbus/TCP ausgelesen werden.
+Wechselrichter der SUN2000 Serie (2kW - 215kW) und der SUN8000-500KTL können über das Huawei Smart Dongle (ab Firmware SPC124) mittels Modbus/TCP ausgelesen werden.
 
 Die unterstützen Modelle sind ab Seite 1 in dem Dokument [SUN2000MA Modbus Interface Definitions](https://support.huawei.com/enterprise/de/doc/EDOC1100387581?currentPartNo=k004&togo=content&section=k004) aufgeführt.
 
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann (typischerweise "Huawei Smart Power Sensor" vom Typ DTSU666-H oder DDSU666-H).
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt. Speicher ist nur nutzbar im Zusammenspiel mit der Luna2000 Batterie.
+Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt. Speicher ist nur nutzbar im Zusammenspiel mit der LUNA2000 Batterie.
 
 ## Kaco
 
@@ -365,7 +365,7 @@ Nur wenn ein Stromzähler am Netzanschluss montiert wurde, wird die Anwendung PV
 {manufacturer_to_bubbles("SAX Power", "Power Home und Power Home Plus")}
 
 Die SAX Power Batterien Power Home und Power Home Plus können mittels Modbus/TCP ausgelesen werden. Bei den älteren Varianten ist dazu Port 3600 und bei den neueren Varianten der Port 502 einzustellen.
-Die Einstellung "basic mode" ist getestet. Der "extended mode" konnte bisher von uns noch nicht getestet werden.
+Die Einstellung "Basic mMde" ist getestet. Der "Extended Mode" konnte bisher von uns noch nicht getestet werden.
 Nur wenn ein Stromzähler am Netzanschluss montiert wurde, wird die Anwendung PV-Überschussladen (PVÜ) unterstützt. Ein dynamisches Lastmanagement (dLM) ist über diesen Zähler leider nicht möglich, da keine Phasenströme übermittelt werden.
 
 
@@ -377,7 +377,7 @@ Nur wenn ein Stromzähler am Netzanschluss montiert wurde, wird die Anwendung PV
 Der einphasige Wandler-Stromzähler Shelly Pro EM und dreiphasige Wandler-Stromzähler Shelly Pro 3EM werden unterstützt und können mittels Modbus/TCP ausgelesen werden. Beide besitzten nur eine Breite von 1 TE und messen mittels Wandler.
 Somit benötigen diese nur wenig Platz und können an verschiedene Maximalströme angepasst werden. (EM: 50A, 3EM: 120A, 400A).
 
-Wichtig ist ein Update auf die neuste Software, so dass Modbus TCP unterstützt wird. Dieses muss dann unter Settings->Modbus aktiviert werden.
+Wichtig ist ein Update auf die neuste Software, so dass Modbus/TCP unterstützt wird. Dieses muss dann unter Settings -> Modbus aktiviert werden.
 
 Für die Stromzähler sind jeweils spezifische Registertabellen implementiert und können einfach ausgewählt werden.
 Ein Stromzähler kann immer genau nur einem Messort zugeordnet werden. Der Messort ist abhängig vom Montageort des Stromzählers. Es können mehrere Stromzähler dieses Typs angelegt werden.
@@ -454,7 +454,7 @@ werden, so dass ein PV-Überschussladen (PVÜ) und ein dynamisches Lastmanagemen
 ### SolarEdge Synergie PV-Wechselrichter
 {manufacturer_to_bubbles("SolarEdge", "SolarEdge Synergie PV-Wechselrichter")}
 
-SolarEdge Home Wechselrichter verfügen über eine SunSpec Schnittstelle. Der Port scheint für SolarEdge nicht **502** zu sein, sondern **1502**.
+SolarEdge Synergie PV-Wechselrichter verfügen über eine SunSpec Schnittstelle. Der Port scheint für SolarEdge nicht **502** zu sein, sondern **1502**.
 Ist die Schnittstelle nicht unter Port 1502 und auch nicht unter Port 502 freigegeben, muss die SunSpec Schnittstelle vermutlich erst aktiviert werden.
 Unseres Wissens kann diese Schnittstelle nicht selbst aktiviert werden, sondern muss vom SolarEdge Support aktiviert werden.
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
@@ -466,7 +466,7 @@ Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamis
 
 SolarEdge Home Wechselrichter verfügen über eine SunSpec Schnittstelle. Der Port scheint für SolarEdge nicht **502** zu sein, sondern **1502**.
 Ist die Schnittstelle nicht unter Port 1502 und auch nicht unter Port 502 freigegeben, muss die SunSpec Schnittstelle vermutlich erst aktiviert werden.
-SolarEdge Home Wechselrichter verfügen über eine SunSpec Schnittstelle. Unseres Wissens kann diese Schnittstelle nicht selbst aktiviert werden, sondern muss vom SolarEdge Support aktiviert werden.
+Unseres Wissens kann diese Schnittstelle nicht selbst aktiviert werden, sondern muss vom SolarEdge Support aktiviert werden.
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
 
@@ -482,15 +482,15 @@ Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamis
 ### X1 & X3 Hybrid
 {manufacturer_to_bubbles("Solax", "X1 & X3 Hybrid")}
 
-Solax Hybridwechselrichter können über das Wi-Fi Dongle mittels Modbus/TCP ausgelesen werden. Eine Einrichtungsanleitung inkl. der unterstützen Wechselrichter gibt es in der [Solax Power Academy](https://kb.solaxpower.com/de/solution/detail/ff8080818eae9899018ec71a12ca1ea6).
+Solax Hybridwechselrichter können über das WLAN Dongle mittels Modbus/TCP ausgelesen werden. Eine Einrichtungsanleitung inkl. der unterstützen Wechselrichter gibt es in der [Solax Power Academy](https://kb.solaxpower.com/de/solution/detail/ff8080818eae9899018ec71a12ca1ea6).
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
 
 ### X1 & X3 Mini Boost MIC und Pro
 {manufacturer_to_bubbles("Solax", "X1 & X3 Mini Boost MIC und Pro")}
 
-Solax Stringwechselrichter können über das Wi-Fi Dongle mittels Modbus/TCP ausgelesen werden. Eine Einrichtungsanleitung inkl. der unterstützen Wechselrichter gibt es in der [Solax Power Academy](https://kb.solaxpower.com/de/solution/detail/ff8080818eae9899018ec71a12ca1ea6).
-Der Stromzähler "Netz" ist nur nutzbar w3enn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
+Solax Stringwechselrichter können über das WLAN Dongle mittels Modbus/TCP ausgelesen werden. Eine Einrichtungsanleitung inkl. der unterstützen Wechselrichter gibt es in der [Solax Power Academy](https://kb.solaxpower.com/de/solution/detail/ff8080818eae9899018ec71a12ca1ea6).
+Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
 
 ## Sungrow
@@ -501,10 +501,10 @@ Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamis
 Sungrow Wechselrichter der Serien SGxxRT/SGxxRS/SGxxCX/SDxxCX-P2 können mittels Modbus/TCP ausgelesen werden. Am Wechselrichter angeschlossene Hardware-Stromzähler vom Typ DSU555 o.ä., die von diesem ausgelesen werden können, können ebenfalls ausgelesen werden.
 Nur wenn ein Stromzähler am Netzanschluss installiert wurde werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
 
-Das Auslesen kann über einen WiNet-S mittels LAN/WLAN erfolgen (versionsabhängig). Hierbei scheint es aber je nach Hardwareversion und Firmware Probleme geben zu können. SunGrow empfielt, sofern vorhanden, direkt den LAN Anschluss
+Das Auslesen kann über einen WiNet-S mittels LAN/WLAN erfolgen (versionsabhängig). Hierbei scheint es aber je nach Hardwareversion und Firmware Probleme geben zu können. Sungrow empfielt, sofern vorhanden, direkt den LAN Anschluss
 des Wechselrichters zu verwenden. Die Modbus/TCP Verbindung unterstützt oftmals anscheinend nur einen Client. Generell ist ein Softwareupdate beim Wechselrichter und Dongle (WiNet-S) zu prüfen.
 
-Ein älterer Dongle vom Typ Typ ***WiNet-S*** scheint immer Modbus TCP über Port 502 bereitzustellen. Ist ein neuerer Dongle vom Typ ***WiNet-S2*** vorhanden, so muss die Option "Modbus TCP-Port 502 EIN/AUS" aktiviert werden. Ggf. ist dies nur über den Installateurzugang möglich.
+Ein älterer Dongle vom Typ Typ ***WiNet-S*** scheint immer Modbus/TCP über Port 502 bereitzustellen. Ist ein neuerer Dongle vom Typ **WiNet-S2** vorhanden, so muss die Option "Modbus TCP-Port 502 EIN/AUS" aktiviert werden. Ggf. ist dies nur über den Installateurzugang möglich.
 
 Generell sollte das Gerät mit Geräteadresse 1 erreichbar sein. Anscheinend ist die Adresse nicht vom Nutzer konfiguriertbar. Ein Nutzer hat uns mitgeteilt, dass bei ihm Geräteadresse 1 nicht funktioniert, das System aber unter Geräteadresse 4 erreichbar ist.
 
@@ -515,10 +515,10 @@ Sungrow Wechselrichter der Serien SHxxRT/SHxxRS können mittels Modbus/TCP ausge
 Nur wenn ein Stromzähler am Netzanschluss installiert wurde werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
 Wird an dem Wechselrichter eine Batterie angeschlossen, so kann diese ebenfalls mit dem virtuellen Stromzähler "Speicher" ausgelesen werden. Zusätzlich wird ein virtueller Stromzähler "Last" zur Verfügung gestellt.
 
-Das Auslesen kann über einen WiNet-S mittels LAN/WLAN erfolgen (versionsabhängig). Hierbei scheint es aber je nach Hardwareversion und Firmware Probleme geben zu können. SunGrow empfielt, sofern vorhanden, direkt den LAN Anschluss
+Das Auslesen kann über einen WiNet-S mittels LAN/WLAN erfolgen (versionsabhängig). Hierbei scheint es aber je nach Hardwareversion und Firmware Probleme geben zu können. Sungrow empfielt, sofern vorhanden, direkt den LAN Anschluss
 des Wechselrichters zu verwenden. Die Modbus/TCP Verbindung unterstützt oftmals anscheinend nur einen Client. Generell ist ein Softwareupdate beim Wechselrichter und Dongle (WiNet-S) zu prüfen.
 
-Ein älterer Dongle vom Typ Typ ***WiNet-S*** scheint immer Modbus TCP über Port 502 bereitzustellen. Ist ein neuerer Dongle vom Typ ***WiNet-S2*** vorhanden, so muss die Option "Modbus TCP-Port 502 EIN/AUS" aktiviert werden. Ggf. ist dies nur über den Installateurzugang möglich.
+Ein älterer Dongle vom Typ Typ **WiNet-S** scheint immer Modbus/TCP über Port 502 bereitzustellen. Ist ein neuerer Dongle vom Typ **WiNet-S2** vorhanden, so muss die Option "Modbus TCP-Port 502 EIN/AUS" aktiviert werden. Ggf. ist dies nur über den Installateurzugang möglich.
 
 Generell sollte das Gerät mit Geräteadresse 1 erreichbar sein. Anscheinend ist die Adresse nicht vom Nutzer konfiguriertbar. Ein Nutzer hat uns mitgeteilt, dass bei ihm Geräteadresse 1 nicht funktioniert, das System aber unter Geräteadresse 4 erreichbar ist.
 
@@ -537,7 +537,7 @@ Technisch muss für das jeweilige Zählermodell der entsprechende [Smart Meter D
 Kann darüber der Zähler ausgelesen werden, so kann der Leistungs-Messwert (ab Tasmota Version 13.x) mittels der [HTTP API](/docs/interfaces/mqtt_http/api_reference/meters.mdx)
  an einen WARP Charger oder einen WARP Energy Meter geschickt werden.
 
-Dazu wird auf dem WARP Energy Manager oder WARP Charger ein API Stromzähler konfiguriert. Dieser erhält nur einen einzigen Wert ("Wirk­leistung (Bezug minus Ein­speisung); Σ L1, L2, L3 \[W\]).
+Dazu wird auf dem WARP Energy Manager oder WARP Charger ein API Stromzähler konfiguriert. Dieser erhält nur den einzigen Wert "Wirk­leistung (Bezug minus Ein­speisung); Σ L1, L2, L3 \[W\]".
 Dieser Wert wird dann aus dem Tasmota SML Skript mittels folgender Zeile übertragen:
 
 ```
