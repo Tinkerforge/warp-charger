@@ -69,6 +69,13 @@ Strom zur Verfugung steht. Umgesetzt wird dies durch eine kurzzeitige Trennung d
 
 ## Automatischer Phasenwechsel
 
+:::note
+
+Diese Funktion beeinflusst nur das Lastmanagement, da nicht genutzte Phasen erkannt und für andere Wallboxen freigegeben werden können
+(Phasenoptimiertes Lastmanagement).
+
+:::
+
 Diese Option steht nur für den WARP3 Charger Pro zur Verfügung. Ist
 die Option aktiviert, wird bei einem laufenden Ladevorgang mit dem internen Stromzähler ermittelt, ob das
 Fahrzeug nur einphasig lädt. Ist dies der Fall, schaltet die Wallbox automatisch auf einphasiges Laden um.
