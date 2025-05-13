@@ -295,12 +295,12 @@ export const devices = [
     connection: "SunSpec",
     note: "Hybrid-Wechselrichter",
     link: "/docs/compatible_devices/devices#kaco",
-    grid: "x",
+    grid: "-",
     pv: "x",
-    battery: "x",
+    battery: "-",
     load: "-",
-    dlm: "?",
-    pve: "?",
+    dlm: "-",
+    pve: "-",
     bat: "-"
   },
   {
@@ -308,12 +308,12 @@ export const devices = [
     device: "Blueplanet NX3 und TL3 String-Wechselrichter",
     connection: "SunSpec",
     link: "/docs/compatible_devices/devices#kaco",
-    grid: "?",
+    grid: "-",
     pv: "x",
     battery: "-",
     load: "-",
-    dlm: "?",
-    pve: "?",
+    dlm: "-",
+    pve: "-",
     bat: "-"
   },
   {
