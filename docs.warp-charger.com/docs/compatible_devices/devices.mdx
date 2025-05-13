@@ -281,7 +281,8 @@ Die Geräteadresse ist typischerweise 247.
 Ein Auslesen ist mittels Modbus/TCP nach Modbus/RTU Wandlern (z.B. EW11) über die Modbus/RTU Schnittstelle des Wechselrichters möglich.
 Siehe [Modbus/RTU Wandler](/compatible_devices/interfaces.md#modbusrtu-wandler).
 Wechselrichter, die direkt einen LAN Anschluss bieten, können direkt über diesen LAN Anschluss mit Modbus/TCP ausgelesen werden. Die IP Adresse des Wechselrichters
-lässt sich über das Display des Wechselrichters unter "Settings", dann "Ethernet" konfigurieren und auch einsehen.
+lässt sich über das Display des Wechselrichters unter "Settings", dann "Ethernet" konfigurieren und auch einsehen. Bei Anschluss direkt über den LAN Port des Wechselrichters
+wird nur eine gleichzeitige Verbindung vom Wechselrichter unterstützt. Ein paralleler Zugriff von WARP Charger oder WARP Energy Manager zusammen mit anderen Geräten ist somit nicht möglich.
 
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
@@ -312,13 +313,15 @@ Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamis
 ### Blueplanet Hybrid NH3 Hybrid-Wechselrichter
 {manufacturer_to_bubbles("Kaco", "Blueplanet Hybrid NH3 Hybrid-Wechselrichter")}
 Kaco Wechselrichter der NH3 Baureihe sprechen SunSpec und können direkt ausgelesen werden. Der Standardport ist 502. SunSpec muss im Protokoll Menü des Wechselrichters aktiviert werden.
-Leider bietet Kaco über SunSpec anscheinend nur die Messung der Erzeugung (PV) auch wenn ein externer Stromzähler am Wechselrichter angeschlossen wurde. Auf die Zählerdaten haben wir also keinen Zugriff.
+Leider bietet Kaco über SunSpec anscheinend nur die Messung der Erzeugung (PV) auch wenn ein externer Stromzähler am Wechselrichter angeschlossen wurde. Auf die Netz-Zählerdaten kann man somit nicht zugreifen.
+Es wird nur eine gleichzeitige Verbindung vom Wechselrichter unterstützt. Ein paralleler Zugriff von WARP Charger oder WARP Energy Manager zusammen mit anderen Geräten ist somit nicht möglich.
 
 ### Blueplanet NX3 und TL3 String-Wechselrichter
 {manufacturer_to_bubbles("Kaco", "Blueplanet NX3 und TL3 String-Wechselrichter")}
 
 Kaco Wechselrichter der NX3 und TL3 Baureihe sprechen SunSpec und können direkt ausgelesen werden. Der Standardport ist 502. SunSpec muss im Protokoll Menü des Wechselrichters aktiviert werden.
-Leider bietet Kaco über SunSpec anscheinend nur die Messung der Erzeugung (PV) auch wenn ein externer Stromzähler am Wechselrichter angeschlossen wurde. Auf die Zählerdaten haben wir also keinen Zugriff.
+Leider bietet Kaco über SunSpec anscheinend nur die Messung der Erzeugung (PV) auch wenn ein externer Stromzähler am Wechselrichter angeschlossen wurde.  Auf die Netz-Zählerdaten kann man somit nicht zugreifen.
+Es wird nur eine gleichzeitige Verbindung vom Wechselrichter unterstützt. Ein paralleler Zugriff von WARP Charger oder WARP Energy Manager zusammen mit anderen Geräten ist somit nicht möglich.
 
 ## Kostal
 
