@@ -139,7 +139,7 @@ Folgende Einrichtungsschritte sind notwendig:
  * http://192.168.1.200 öffnen, Password admin. Falls nicht erreichbar andere IP suchen.
  * Unter "Network Settings" als Work Mode "TCP Server".
  * Unter "Serial Settings" die Einstellungen für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1).
- * Unter "Multi-Host Settings" als Protocol "Modbus TCP to RTU".
+ * Unter "Multi-Host Settings" als Protocol "Modbus TCP to RTU" und "Enable Multi-host" auf "True", wenn auch andere Geräte auf den Wechselrichter zugreifen sollen.
 
 #### Waveshare RS232/485/422 To ETH (B) oder Waveshare R232/S485/422 To POE ETH (B)
 Es gibt eine PoE fähige Ausführung. Anscheinend wird der Wandler mit einer statischen IP Einstellung ausgeliefert. Die IP lautet 192.168.1.200. Die Passwort des Webinterfaces lautet admin.
@@ -151,7 +151,7 @@ Folgende Einrichtungsschritte sind notwendig:
  * http://192.168.1.200 öffnen, Password admin. Falls nicht erreichbar andere IP suchen.
  * Unter "Network Settings" als Work Mode "TCP Server".
  * Unter "Serial Settings" die Einstellungen für den jeweiligen Wechselrichter konfigurieren (oftmals 9600 8N1).
- * Unter "Multi-Host Settings" als Protocol "Modbus TCP to RTU".
+ * Unter "Multi-Host Settings" als Protocol "Modbus TCP to RTU" und "Enable Multi-host" auf "True", wenn auch andere Geräte auf den Wechselrichter zugreifen sollen.
 
 
 ## SMA Speedwire
