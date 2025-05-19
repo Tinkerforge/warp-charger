@@ -123,7 +123,7 @@ def print_error(*args):
 def main():
     v1_lines = {}
 
-    for name in glob.glob('*_firmware_v1.txt'):
+    for name in sorted(glob.glob('*_firmware_v1.txt')):
         prefix = name.replace('_v1.txt', '')
         size = os.stat(name).st_size
 
@@ -133,12 +133,11 @@ def main():
         # chunk if it's bigger than 708 byte. For backwards compatibility limit the size of the index file to 708 byte.
         if size > 708:
             print_error(f'{name} is too big: {size} > 708')
-            continue
 
         with open(name, 'r') as f:
             v1_lines[prefix] = list(f.readlines())
 
-    for name in glob.glob('*_firmware_v2.txt'):
+    for name in sorted(glob.glob('*_firmware_v2.txt')):
         prefix = name.replace('_v2.txt', '')
 
         if prefix not in v1_lines:
