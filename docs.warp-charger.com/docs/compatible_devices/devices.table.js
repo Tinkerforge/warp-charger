@@ -211,6 +211,32 @@ export const devices = [
     bat: "-"
   },
   {
+    manufacturer: "Fronius",
+    device: "Verto-Serie String-Wechselrichter",
+    connection: "SunSpec",
+    link: "/docs/compatible_devices/devices#fronius",
+    grid: "x",
+    pv: "x",
+    battery: "-",
+    load: "-",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
+  },
+  {
+    manufacturer: "Fronius",
+    device: "Verto Plus-Serie Hybrid-Wechselrichter",
+    connection: "SunSpec",
+    link: "/docs/compatible_devices/devices#fronius",
+    grid: "x",
+    pv: "x",
+    battery: "-",
+    load: "-",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
+  },
+  {
     manufacturer: "Goodwe",
     device: "EHB Serie String-Wechselrichter",
     connection: "Modbus/TCP",
