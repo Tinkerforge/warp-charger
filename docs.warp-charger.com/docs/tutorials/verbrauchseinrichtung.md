@@ -56,3 +56,6 @@ In der Automatisierungsliste sieht die hinzugefügte Automatisierungsregel
 dann wie folgt aus
 
 ![image](/img/tutorials/verbrauchseinrichtung/14enwg_wem_rule_added.png)
+
+Analog dazu muss eine weitere Regel angelegt werden, die bei geöffneten Eingang die Begrenzung des maximalen Gesamtstroms wieder aufhebt.
+Dazu muss als Aktion erneut "Begrenze maximalen Gesamtstrom" gewählt werden, diesmal aber als Modus die Option "Maximalen Gestamtstrom zurücksetzen (0A)".
