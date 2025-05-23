@@ -611,7 +611,7 @@ export const devices = [
     pv: "x",
     battery: "-",
     load: "-",
-    dlm: "x",
+    dlm: "-",
     pve: "x",
     bat: "-"
   },
@@ -624,7 +624,7 @@ export const devices = [
     pv: "x",
     battery: "x",
     load: "x",
-    dlm: "x",
+    dlm: "-",
     pve: "x",
     bat: "-"
   },
