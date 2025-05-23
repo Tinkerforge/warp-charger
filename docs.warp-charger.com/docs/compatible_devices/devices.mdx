@@ -531,30 +531,42 @@ Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamis
 ### SG-Serie
 {manufacturer_to_bubbles("Sungrow", "SG-Serie")}
 
+:::note
+
+Wechselrichter und Dongle (WiNet-S/WiNet-S2) besitzen jeweils eine eigene Software. Beide sollten auf den aktuellen Stand gebracht werden!
+
+:::
+
 Sungrow Wechselrichter der Serien SGxxRT/SGxxRS/SGxxCX/SDxxCX-P2 können mittels Modbus/TCP ausgelesen werden. Am Wechselrichter angeschlossene Hardware-Stromzähler vom Typ DSU555 o.ä., die von diesem ausgelesen werden können, können ebenfalls ausgelesen werden.
 Nur wenn ein Stromzähler am Netzanschluss installiert wurde werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
 
 Das Auslesen kann über einen WiNet-S mittels LAN/WLAN erfolgen (versionsabhängig). Hierbei scheint es aber je nach Hardwareversion und Firmware Probleme geben zu können. Sungrow empfiehlt, sofern vorhanden, direkt den LAN Anschluss
-des Wechselrichters zu verwenden. Die Modbus/TCP Verbindung unterstützt oftmals anscheinend nur einen Client. Generell ist ein Softwareupdate beim Wechselrichter und Dongle (WiNet-S) zu prüfen.
+des Wechselrichters zu verwenden. Die Modbus/TCP Verbindung unterstützt oftmals anscheinend nur einen Client.
 
-Ein älterer Dongle vom Typ Typ ***WiNet-S*** scheint immer Modbus/TCP über Port 502 bereitzustellen. Ist ein neuerer Dongle vom Typ **WiNet-S2** vorhanden, so muss die Option "Modbus TCP-Port 502 EIN/AUS" aktiviert werden. Ggf. ist dies nur über den Installateurzugang möglich.
+Ein älterer Dongle vom Typ Typ ***WiNet-S*** scheint immer Modbus/TCP über Port 502 bereitzustellen. Ist ein neuerer Dongle vom Typ **WiNet-S2** vorhanden, so muss die Option "Modbus TCP-Port 502 EIN/AUS" aktiviert werden. Vermutlich ist dies nur über den Installateurzugang möglich.
+Die Aktivierung von Modbus/TCP für den WiNet-S2 ist in der iSolarCloud in der jeweiligen Anlage unter Geräte->Einstellungen->Allgemeine Parametereinstellungen zu finden.
 
 Generell sollte das Gerät mit Geräteadresse 1 erreichbar sein. Anscheinend ist die Adresse nicht vom Nutzer konfigurierbar. Ein Nutzer hat uns mitgeteilt, dass bei ihm Geräteadresse 1 nicht funktioniert, das System aber unter Geräteadresse 4 erreichbar ist.
 
 ### SH-Serie
 {manufacturer_to_bubbles("Sungrow", "SH-Serie")}
 
+:::note
+
+Wechselrichter und Dongle (WiNet-S/WiNet-S2) besitzen jeweils eine eigene Software. Beide sollten auf den aktuellen Stand gebracht werden!
+
+:::
+
 Sungrow Wechselrichter der Serien SHxxRT/SHxxRS können mittels Modbus/TCP ausgelesen werden. Am Wechselrichter angeschlossene Hardware-Stromzähler vom Typ DSU555 o.ä., die von diesem ausgelesen werden können, können ebenfalls ausgelesen werden.
 Nur wenn ein Stromzähler am Netzanschluss installiert wurde werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
-Wird an dem Wechselrichter eine Batterie angeschlossen, so kann diese ebenfalls mit dem virtuellen Stromzähler "Speicher" ausgelesen werden. Zusätzlich wird ein virtueller Stromzähler "Last" zur Verfügung gestellt.
 
 Das Auslesen kann über einen WiNet-S mittels LAN/WLAN erfolgen (versionsabhängig). Hierbei scheint es aber je nach Hardwareversion und Firmware Probleme geben zu können. Sungrow empfiehlt, sofern vorhanden, direkt den LAN Anschluss
-des Wechselrichters zu verwenden. Die Modbus/TCP Verbindung unterstützt oftmals anscheinend nur einen Client. Generell ist ein Softwareupdate beim Wechselrichter und Dongle (WiNet-S) zu prüfen.
+des Wechselrichters zu verwenden. Die Modbus/TCP Verbindung unterstützt oftmals anscheinend nur einen Client.
 
-Ein älterer Dongle vom Typ Typ **WiNet-S** scheint immer Modbus/TCP über Port 502 bereitzustellen. Ist ein neuerer Dongle vom Typ **WiNet-S2** vorhanden, so muss die Option "Modbus TCP-Port 502 EIN/AUS" aktiviert werden. Ggf. ist dies nur über den Installateurzugang möglich.
+Ein älterer Dongle vom Typ Typ ***WiNet-S*** scheint immer Modbus/TCP über Port 502 bereitzustellen. Ist ein neuerer Dongle vom Typ **WiNet-S2** vorhanden, so muss die Option "Modbus TCP-Port 502 EIN/AUS" aktiviert werden. Vermutlich ist dies nur über den Installateurzugang möglich.
+Die Aktivierung von Modbus/TCP für den WiNet-S2 ist in der iSolarCloud in der jeweiligen Anlage unter Geräte->Einstellungen->Allgemeine Parametereinstellungen zu finden.
 
 Generell sollte das Gerät mit Geräteadresse 1 erreichbar sein. Anscheinend ist die Adresse nicht vom Nutzer konfigurierbar. Ein Nutzer hat uns mitgeteilt, dass bei ihm Geräteadresse 1 nicht funktioniert, das System aber unter Geräteadresse 4 erreichbar ist.
-
 ## Tasmota
 
 ### Smart Meter Interface
