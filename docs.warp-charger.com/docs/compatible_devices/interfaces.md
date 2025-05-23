@@ -126,7 +126,17 @@ Folgende Einrichtungsschritte sind notwendig:
  * Unter "Communication Settings" einen TCP server auf Port 502 mit Route "Uart" anlegen und speichern. Der bereits vordefinierte "netp" kann dafür verwendet werden.
 
 
+#### Eltako ZGW16WL-IP
+
+![image](/img/compatible_devices/eltako-zgw-400.jpg)
+
+Das Eltako ZGW16WL-IP ist ein Modbus/TCP nach Modbus/RTU Gateway. Es besitzt eine Breite von 2TE und besitzt einen Ethernet-Anschluss.
+
+
 #### PUSR USR-DR302
+
+![image](/img/compatible_devices/pusr-400.jpg)
+
 Dieser Wandler kann auf eine Hutschiene montiert werden und wandelt zwischen Modbus/TCP und Modbus/RTU um. Er verfügt nicht über WIFI, dafür aber über einen LAN Anschluss.
 Folgende Einrichtungsschritte sind notwendig:
 
@@ -152,6 +162,9 @@ Folgende Einrichtungsschritte sind notwendig:
 
 
 #### Waveshare RS485 To ETH (B) oder Waveshare RS485 To POE ETH (B)
+
+![image](/img/compatible_devices/waveshare-rstoe-400.jpg)
+
 Dieser Wandler kann auf eine Hutschiene montiert werden und wandelt zwischen Modbus/TCP und Modbus/RTU um. Er verfügt nicht über WIFI, dafür aber über einen LAN Anschluss.
 Es gibt eine PoE fähige Ausführung. Anscheinend wird der Wandler mit einer statischen IP Einstellung ausgeliefert. Die IP lautet 192.168.1.200. Die Passwort des Webinterfaces lautet admin.
 Im [Waveshare Wiki](https://www.waveshare.com/wiki/RS485_TO_ETH_(B)) gibt es weitere Informationen. Weitere Einstellungen können über das VirCom Tool von Waveshare vorgenommen werden.
