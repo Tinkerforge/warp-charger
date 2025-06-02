@@ -46,13 +46,15 @@ Mehr Informationen zur MQTT-Konfiguration findest du in der [API-Dokumentation](
 
 Im Webinterface des WARP Chargers kannst du jetzt die Verbindung zum MQTT-Broker konfigurieren. Hierzu musst du unter `Schnittstellen -> MQTT` die Verbindung aktivieren und den Host eintragen (`raspberrypi` falls du ihn nicht geändert hast). Alternativ kannst du die IP-Adresse des Pis verwenden. Diese kannst du in der Konsole mit `ip -brief a` auslesen: unter eth0 die der LAN-Verbindung, oder unter wlan0 die der WLAN-Verbindung. Danach kannst du die Konfigurationsänderung durch Klicken auf Speichern anwenden. Das Webinterface startet dann neu.
 
-Um zu Testen, ob die Verbindung zum MQTT-Broker funktioniert, kannst du zunächst die Status-Seite des Webinterfaces prüfen. Der Status der MQTT-Verbindung sollte auf Verbunden stehen. Falls das nicht der Fall ist, kannst du im Ereignislog nachsehen, was das Problem ist. Als weiteren Test kannst du in der Konsole des Pis die empfangenen Nachrichten mitlesen: `mosquitto_sub -v -t 'warp/#'` bzw. bei einem WARP2 Charger `mosquitto_sub -v -t 'warp2/#'` und bei einem WARP3 Charger `mosquitto_sub -v -t 'warp3/#'` liefert empfangene Nachrichten aller Wallboxen, die mit dem Broker verbunden sind.
-
-Damit EVCC später den WARP Charger steuern darf, musst du unter `Wallbox -> Ladeeinstellungen` die externe Steuerung erlauben.
-
 ![MQTT UI](/img/mqtt/mqtt_ui.png)
 
-MQTT-Konfiguration
+Um zu Testen, ob die Verbindung zum MQTT-Broker funktioniert, kannst du zunächst die Status-Seite des Webinterfaces prüfen. Der Status der MQTT-Verbindung sollte auf Verbunden stehen. Falls das nicht der Fall ist, kannst du im Ereignislog nachsehen, was das Problem ist. Als weiteren Test kannst du in der Konsole des Pis die empfangenen Nachrichten mitlesen: `mosquitto_sub -v -t 'warp/#'` bzw. bei einem WARP2 Charger `mosquitto_sub -v -t 'warp2/#'` und bei einem WARP3 Charger `mosquitto_sub -v -t 'warp3/#'` liefert empfangene Nachrichten aller Wallboxen, die mit dem Broker verbunden sind.
+
+Es muss sonst nichts weiter auf der dem WARP Charger konfiguriert werden.
+
+:::note
+Insbesondere sollte unter `Energiemanagement -> Wallboxen` die Fremdsteuerung deaktiviert werden. Die Fremdsteuerung an dieser Stelle bezieht sich nur das Lastmanagement von WARP Chargern untereinander. Wenn per EVCC ein PV-Überschussladen erfolgen soll, dann muss auch unter `Energiemanagement -> PV-Überschussladen` das Überschussladen deaktiviert werden. Das Überschussladen kann nur entweder vom WARP Charger selbst oder von EVCC geregelt werden. Nicht von beiden gleichzeitig
+:::
 
 ### Verknüpfen des WARP Energy Managers (optional)
 
