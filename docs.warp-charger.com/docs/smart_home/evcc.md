@@ -53,7 +53,7 @@ Um zu Testen, ob die Verbindung zum MQTT-Broker funktioniert, kannst du zunächs
 Es muss sonst nichts weiter auf der dem WARP Charger konfiguriert werden.
 
 :::note
-Insbesondere sollte unter `Energiemanagement -> Wallboxen` die Fremdsteuerung deaktiviert werden. Die Fremdsteuerung an dieser Stelle bezieht sich nur das Lastmanagement von WARP Chargern untereinander. Wenn per EVCC ein PV-Überschussladen erfolgen soll, dann muss auch unter `Energiemanagement -> PV-Überschussladen` das Überschussladen deaktiviert werden. Das Überschussladen kann nur entweder vom WARP Charger selbst oder von EVCC geregelt werden. Nicht von beiden gleichzeitig
+Insbesondere sollte unter `Energiemanagement -> Wallboxen` die Fremdsteuerung deaktiviert werden. Die Fremdsteuerung an dieser Stelle bezieht sich nur das Lastmanagement von WARP Chargern untereinander. Wenn per EVCC ein PV-Überschussladen erfolgen soll, dann muss auch unter `Energiemanagement -> PV-Überschussladen` das Überschussladen deaktiviert werden. Das Überschussladen kann nur entweder vom WARP Charger selbst oder von EVCC geregelt werden. Nicht von beiden gleichzeitig.
 :::
 
 ### Verknüpfen des WARP Energy Managers (optional)
