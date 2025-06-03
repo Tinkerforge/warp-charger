@@ -541,9 +541,13 @@ Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamis
 
 Wechselrichter und Dongle (WiNet-S/WiNet-S2) besitzen jeweils eine eigene Software. Beide sollten auf den aktuellen Stand gebracht werden!
 
+Beim WiNet-S2 Firmware-Update v16 wird ggf. Port 502 deaktiviert und encrypted Port 516 aktiviert. Bei Nicht-Erreichbarkeit des WR nach einem Update bitte mit dem WiNet-S2 Hotspot ggf. Port 502 wieder aktivieren (i.d.R. ohne „SSL-Verschlüsselung“) falls ein bauseitiges EMS oder ein Proxy zugreift. Dann dem WiNet-S2 15-40 Minuten Zeit geben zum eventuellen Re-Initialisieren am Router.
+
+Bei Auffälligkeiten mit der iSolarCloud WiNet-S(2) für 1 Minute abstecken. Falls weiterhin dann Aufruf mit https:// (mit s) und/oder im WiNet-S WebUI (https://192...) manuell auf iot.isolarcloud.eu umstellen, ggf. auch auf Port 16668.
+
 :::
 
-Sungrow Wechselrichter der Serien SGxxRT/SGxxRS/SGxxCX/SDxxCX-P2 können mittels Modbus/TCP ausgelesen werden. Am Wechselrichter angeschlossene Hardware-Stromzähler vom Typ DSU555 o.ä., die von diesem ausgelesen werden können, können ebenfalls ausgelesen werden.
+Sungrow Wechselrichter der Serien SGxxRT/SGxxRS/SGxxCX/SDxxCX-P2 können mittels Modbus/TCP ausgelesen werden. Am Wechselrichter angeschlossene Hardware-Stromzähler vom Typ DTSU666 o.ä., die von diesem ausgelesen werden können, können ebenfalls ausgelesen werden.
 Nur wenn ein Stromzähler am Netzanschluss installiert wurde wird die Anwendung PV-Überschussladen (PVÜ) unterstützt. Ein dynamisches Lastmanagement (dLM) ist mit den Zählerdaten nicht möglich, da keine Phasenströme zur Verfügung gestellt werden.
 
 Das Auslesen kann über einen WiNet-S mittels LAN/WLAN erfolgen (versionsabhängig). Hierbei scheint es aber je nach Hardwareversion und Firmware Probleme geben zu können. Sungrow empfiehlt, sofern vorhanden, direkt den LAN Anschluss
@@ -561,9 +565,13 @@ Generell sollte das Gerät mit Geräteadresse 1 erreichbar sein. Anscheinend ist
 
 Wechselrichter und Dongle (WiNet-S/WiNet-S2) besitzen jeweils eine eigene Software. Beide sollten auf den aktuellen Stand gebracht werden!
 
+Beim WiNet-S2 Firmware-Update v16 wird ggf. Port 502 deaktiviert und encrypted Port 516 aktiviert. Bei Nicht-Erreichbarkeit des WR nach einem Update bitte mit dem WiNet-S2 Hotspot ggf. Port 502 wieder aktivieren (i.d.R. ohne „SSL-Verschlüsselung“) falls ein bauseitiges EMS oder ein Proxy zugreift. Dann dem WiNet-S2 15-40 Minuten Zeit geben zum eventuellen Re-Initialisieren am Router.
+
+Bei Auffälligkeiten mit der iSolarCloud WiNet-S(2) für 1 Minute abstecken. Falls weiterhin dann Aufruf mit https:// (mit s) und/oder im WiNet-S WebUI (https://192...) manuell auf iot.isolarcloud.eu umstellen, ggf. auch auf Port 16668.
+
 :::
 
-Sungrow Wechselrichter der Serien SHxxRT/SHxxRS können mittels Modbus/TCP ausgelesen werden. Am Wechselrichter angeschlossene Hardware-Stromzähler vom Typ DSU555 o.ä., die von diesem ausgelesen werden können, können ebenfalls ausgelesen werden.
+Sungrow Wechselrichter der Serien SHxxRT/SHxxRS/SHxxT können mittels Modbus/TCP ausgelesen werden. Am Wechselrichter angeschlossene Hardware-Stromzähler vom Typ DTSU666 o.ä., die von diesem ausgelesen werden können, können ebenfalls ausgelesen werden.
 Nur wenn ein Stromzähler am Netzanschluss installiert wurde wird die Anwendung PV-Überschussladen (PVÜ) unterstützt. Ein dynamisches Lastmanagement (dLM) ist mit den Zählerdaten nicht möglich, da keine Phasenströme zur Verfügung gestellt werden.
 
 Das Auslesen kann über einen WiNet-S mittels LAN/WLAN erfolgen (versionsabhängig). Hierbei scheint es aber je nach Hardwareversion und Firmware Probleme geben zu können. Sungrow empfiehlt, sofern vorhanden, direkt den LAN Anschluss
