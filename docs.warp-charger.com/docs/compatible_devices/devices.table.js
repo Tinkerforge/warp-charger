@@ -277,7 +277,7 @@ export const devices = [
   },
   {
     manufacturer: "Hailei", //is alpha ess
-    device: "Hybrid Wechselrichter (x)",
+    device: "HL-TPH10K Hybrid Wechselrichter",
     connection: "Modbus/TCP",
     link: "/docs/compatible_devices/devices#hailei",
     grid: "x",
@@ -304,13 +304,26 @@ export const devices = [
   },
   {
     manufacturer: "Huawei",
-    device: "SUN-Serie Hybrid-Wechselrichter",
+    device: "SUN2000 Hybrid-Wechselrichter",
     connection: "Modbus/TCP",
-    link: "/docs/compatible_devices/devices#huawei",
+    link: "/docs/compatible_devices/devices#sun2000",
     grid: "x",
     pv: "x",
     battery: "x",
     load: "-",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
+  },
+  {
+    manufacturer: "Huawei",
+    device: "EMMA Energiemanager",
+    connection: "Modbus/TCP",
+    link: "/docs/compatible_devices/devices#emma",
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "x",
     dlm: "x",
     pve: "x",
     bat: "-"
