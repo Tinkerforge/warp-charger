@@ -474,6 +474,19 @@ export const devices = [
   },
   {
     manufacturer: "SMA",
+    device: "Sunny Boy Storage 3.7 / 4.0 / 5.0 / 6.0",
+    connection: "SunSpec",
+    link: "/docs/compatible_devices/devices#sma",
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "-",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
+  },
+  {
+    manufacturer: "SMA",
     device: "Sunny Boy Smart Energy 3.6 / 4.0 / 5.0 / 6.0",
     connection: "SunSpec",
     link: "/docs/compatible_devices/devices#sma",
