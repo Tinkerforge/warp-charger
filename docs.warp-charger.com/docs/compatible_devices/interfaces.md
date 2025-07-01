@@ -193,6 +193,13 @@ Folgende Einrichtungsschritte sind notwendig:
 
 ## SMA Speedwire
 
+:::note
+
+SMA Speedwire wird per Multicast im Netzwerk verbreitet. Laut SMA müssen alle verwendeten Netzwerkkomponenten IGMP in Version 3 (IGMPv3) unterstützen.
+Je nach verwendeter Hardware und den Einstellungen kann es sein, dass die Nachrichten nicht weitergeleitet werden. Es wird empfohlen IGMP Snooping, sofern verfügbar, zu deaktivieren.
+
+:::
+
 SMA hat mit Speedwire ein eigenes netzwerkbasiertes Kommunikationsprotokoll. Dieses wird vom Sunny Home Manager, SMA Energy Meter und
 manchen Wechselrichtern unterstützt. Mit dieser Schnittstelle kann nur der Netzanschlusszähler gelesen werden.
 
