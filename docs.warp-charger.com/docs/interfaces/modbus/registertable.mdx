@@ -24,11 +24,13 @@ ausgelesen werden. Eine Steuerung der Wallbox ist über die *Holding
 Registers* und *Coils* möglich.
 
 ### Input Registers (Funktionscodes: Lesen: 4)
+{/*LAST_COMMIT_ID=5f3c405e2173812ed2d4126b8117a5b63796a092*/}
 {/*
   Don't edit this table.
   Update https://github.com/Tinkerforge/esp32-firmware/blob/master/software/web/src/modules/modbus_tcp/translation_de.tsx
   and translation_en.tsx instead.
-  Then copy that table and paste it below.*/}
+  Then diff that table with the one below and add/update registers.
+  Don't forget to update LAST_COMMIT_ID to the ID of the last commit that modified translation_de.tsx*/}
 <table>
 <thead>
     <tr>
@@ -320,7 +322,7 @@ Registers* und *Coils* möglich.
             Damit die LED kontrolliert werden kann muss die Option "Status-LED-Steuerung" aktiviert sein.
 
             <ul>
-                <li>-1: EVSE kontrolliert LED</li>
+                <li>0xFFFFFFFF: EVSE kontrolliert LED</li>
                 <li>0: LED aus</li>
                 <li>1 bis 254: LED gedimmt</li>
                 <li>255: LED an</li>
@@ -483,7 +485,7 @@ Registers* und *Coils* möglich.
         <td>---</td>
         <td>Ein NFC-Bricklet ist verbaut und aktiv.</td>
     </tr>
-        <tr>
+    <tr>
         <td>6</td>
         <td>Feature "evse_sd_input" verfügbar</td>
         <td>bool</td>
@@ -509,14 +511,14 @@ Registers* und *Coils* möglich.
         <td>Zustand des Abschalteingangs</td>
         <td>bool</td>
         <td>evse_sd_input</td>
-        <td> 0 - geschlossen, 1 - geöffnet</td>
+        <td>0 - geschlossen, 1 - geöffnet</td>
     </tr>
     <tr>
         <td>1101</td>
         <td>Zustand des konfigurierbaren Eingangs</td>
         <td>bool</td>
         <td>evse_gp_input</td>
-        <td> 0 - geschlossen, 1 - geöffnet</td>
+        <td>0 - geschlossen, 1 - geöffnet</td>
     </tr>
     <tr>
         <td>2100</td>
@@ -594,17 +596,10 @@ Registers* und *Coils* möglich.
     </tr>
     <tr>
         <td>1100</td>
-        <td>Zustand des Abschalteingangs</td>
+        <td>Setzt den Zustand des konfigurierbaren Ausgangs</td>
         <td>bool</td>
-        <td>evse_sd_input</td>
-        <td> 0 - geschlossen, 1 - geöffnet</td>
-    </tr>
-    <tr>
-        <td>1101</td>
-        <td>Zustand des konfigurierbaren Eingangs</td>
-        <td>bool</td>
-        <td>evse_gp_input</td>
-        <td> 0 - geschlossen, 1 - geöffnet</td>
+        <td>evse_gp_output</td>
+        <td>0 - Verbunden mit Masse, 1 - Hochohmig</td>
     </tr>
 </tbody>
 </table>
