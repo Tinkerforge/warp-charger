@@ -6,6 +6,12 @@ sidebar_position: 6
 
 Wenn ein dynamischer Stromtarif (z.B. über Tibber oder Awattar) vorhanden ist, können die dynamischen Strompreise verwendet werden um die [Heizungssteuerung](/webinterface/energy_management/heater.md) ([WARP Energy Manager](/docs/warp_energy_manager/introduction)) und den [Ladeplan des Eco-Modus](/webinterface/energy_management/eco_mode.md) ([WARP Charger](/docs/warp_charger/introduction)) zu verbessern.
 
+:::note
+
+Anstatt für jeden Stromanbieter eine andere Schnittstelle zu implementieren, bezieht das System die allgemeinen Strombörsendaten (Day-Ahead Preise) vom Verband Europäischer Übertragungsnetzbetreiber (ENTSO-E).
+Der jeweilige dynamische Strompreis (von Tibber, Awattar o.ä.) setzt sich aus diesen Stromkosten, sowie anbieterspezifischen Zusatzkosten (Netzentgelte, Steuern, Preisaufschläge, MwSt) zusammen.
+Konfiguriert man diese dem jeweiligen Anbieter entsprechend, so wird der dynamische Strompreis des Anbieters berechnet.
+:::
 
 ![image](/img/webinterface/energy_management/wem2-dynamic_tarrif1.png)
 
