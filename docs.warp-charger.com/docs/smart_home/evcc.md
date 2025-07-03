@@ -56,13 +56,18 @@ Es muss sonst nichts weiter auf der dem WARP Charger konfiguriert werden.
 Insbesondere sollte unter `Energiemanagement -> Wallboxen` die Fremdsteuerung deaktiviert werden. Die Fremdsteuerung an dieser Stelle bezieht sich nur das Lastmanagement von WARP Chargern untereinander. Wenn per EVCC ein PV-Überschussladen erfolgen soll, dann muss auch unter `Energiemanagement -> PV-Überschussladen` das Überschussladen deaktiviert werden. Das Überschussladen kann nur entweder vom WARP Charger selbst oder von EVCC geregelt werden. Nicht von beiden gleichzeitig.
 :::
 
-### Verknüpfen des WARP Energy Managers (optional)
+### Verknüpfen des WARP Energy Managers 1.0 (optional)
 
-Falls du einen WARP Energy Manager und das zugehörige Schütz zur Phasenumschaltung installiert hast, kannst du EVCC die Phasenumschaltung steuern lassen, um deinen PV-Überschuss besser auszunutzen.
+
+Falls du einen WARP Energy Manager 1.0 und das zugehörige Schütz zur Phasenumschaltung installiert hast, kannst du EVCC die Phasenumschaltung steuern lassen, um deinen PV-Überschuss besser auszunutzen.
 
 Hierzu musst du zuerst, analog zum WARP Charger, die MQTT-Verbindung des Energy Managers konfigurieren. Die Verbindung kannst du wieder in der Konsole des Pis testen: `mosquitto_sub -v -t 'wem/#'` liefert empfangene Nachrichten aller Energy Manager, die mit dem Broker verbunden sind.
 
 Damit EVCC später den WARP Energy Manager steuern darf, musst du unter `Energiemanager -> Einstellungen` den Umschaltungsmodus auf externe Steuerung (EVCC) ändern. Das PV-Überschussladen des Energy Managers wird dann deaktiviert, da EVCC diese Aufgabe übernehmen soll.
+
+:::note
+Wird eine WARP Energy Manager 1.0 von EVCC verwendet um die Phasenumschaltung einer WARP2 Wallbox durchzuführen, dann sollten auf dem WARP Energy Manager keine Einstellungen zum PV-Überschussladen oder Lastmanagement vorgenommen werden. Diese Funktionen konkurrieren ansonsten mit der Steuerung durch EVCC.
+:::
 
 ![EVCC WARP Energy Manager](/img/evcc/evcc_wem.png)
 
