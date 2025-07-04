@@ -680,6 +680,11 @@ Ein GX Gerät stellt unter "Services" eine Zusammenfassung aller angeschlossen G
 Werden als Beispiel mehrere Wechselrichter parallel betrieben, so stellt "System" die Summe der Erzeugung da. Wir unterstützen den Zugriff auf die "System"-Daten für "Netzanschluss",
 "Last", "Wechselrichter" und "Speicher". Üblicherweise ist die Geräteadresse 100.
 
+:::note
+Die Geräteadressen für Modbus/TCP entsprechen typischerweise Victrons "Unit IDs". Laut Victron können sich diese auch unterscheiden, wenn die "Device Instance IDs" größer als 247 sind.
+Unter "Settings → Integrations → Modbus TCP server → Available services" können die Geräteadressen für Modbus/TCP gefunden werden.
+:::
+
 Technisch sind dies folgende Modbus/TCP Register:
  * Netzanschluss: Grid Power L1-L3 (Register 820-822)
  * PV : AC Coupled PV On Output L1-L3 (Register 808-810)
