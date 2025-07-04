@@ -153,7 +153,7 @@ export const devices = [
     grid: "x",
     pv: "x",
     battery: "x",
-    load: "-",
+    load: "x",
     dlm: "-", //meter no currents available
     pve: "x",
     bat: "-"
