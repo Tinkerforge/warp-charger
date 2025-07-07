@@ -24,7 +24,7 @@ ausgelesen werden. Eine Steuerung der Wallbox ist über die *Holding
 Registers* und *Coils* möglich.
 
 ### Input Registers (Funktionscodes: Lesen: 4)
-{/*LAST_COMMIT_ID=5f3c405e2173812ed2d4126b8117a5b63796a092*/}
+{/*LAST_COMMIT_ID=512dd09c79c5c41131c0c77816873294f78f01b9*/}
 {/*
   Don't edit this table.
   Update https://github.com/Tinkerforge/esp32-firmware/blob/master/software/web/src/modules/modbus_tcp/translation_de.tsx
@@ -47,7 +47,7 @@ Registers* und *Coils* möglich.
         <td>Version der Registertabelle</td>
         <td>uint32</td>
         <td>---</td>
-        <td>Aktuelle Version: 3</td>
+        <td>Aktuelle Version: 4</td>
     </tr>
     <tr>
         <td>2</td>
@@ -161,6 +161,20 @@ Registers* und *Coils* möglich.
         <td>evse</td>
         <td>Aktueller Wert der Ladestromgrenzen in Milliampere. 0xFFFFFFFF falls eine Stromgrenze nicht aktiv
             ist. 0 falls eine Stromgrenze blockiert. Sonst zwischen 6000 (6A) und 32000 (32A).</td>
+    </tr>
+    <tr>
+        <td>1100</td>
+        <td>"Taster gedrückt"-Zeitstempel</td>
+        <td>uint32</td>
+        <td>evse</td>
+        <td>Zeit zu der zuletzt der Taster gedrückt wurde. 0 falls der Taster seit dem Start des Ladecontrollers nicht betätigt wurde. Um auf einen Tasterdruck zu reagieren kann dieser Wert periodisch gelesen werden. Bei jeder Änderung des Wertes wurde der Taster mindestens einmal gedrückt.</td>
+    </tr>
+    <tr>
+        <td>1102</td>
+        <td>"Taster losgelassen"-Zeitstempel</td>
+        <td>uint32</td>
+        <td>evse</td>
+        <td>Zeit zu der zuletzt der Taster losgelassen wurde wurde. 0 falls der Taster seit dem Start des Ladecontrollers nicht betätigt wurde. Um auf einen Tasterdruck zu reagieren kann dieser Wert periodisch gelesen werden. Bei jeder Änderung des Wertes wurde der Taster mindestens einmal losgelassen.</td>
     </tr>
     <tr>
         <td>2000</td>
@@ -519,6 +533,13 @@ Registers* und *Coils* möglich.
         <td>bool</td>
         <td>evse_gp_input</td>
         <td>0 - geschlossen, 1 - geöffnet</td>
+    </tr>
+    <tr>
+        <td>1102</td>
+        <td>Zustand des Fronttasters</td>
+        <td>bool</td>
+        <td>evse</td>
+        <td>0 - nicht gedrückt, 1 - gedrückt</td>
     </tr>
     <tr>
         <td>2100</td>
