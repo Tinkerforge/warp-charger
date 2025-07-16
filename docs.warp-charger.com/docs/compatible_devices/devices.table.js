@@ -413,9 +413,9 @@ export const devices = [
     connection: "RCT PSC",
     link: "/docs/compatible_devices/devices#rct",
     grid: "x",
-    pv: "-", //no pv
+    pv: "x",
     battery: "x",
-    load: "-",
+    load: "x",
     dlm: "-", //not available
     pve: "x",
     bat: "-"
