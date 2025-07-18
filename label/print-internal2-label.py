@@ -4,6 +4,7 @@ import os
 import sys
 import argparse
 import socket
+import time
 import tinkerforge_util as tfutil  # sudo apt install python3-tinkerforge-util
 
 INTERNAL_1_PLACEHOLDER = b'Hier steht ein mehrzeiliger'
@@ -93,6 +94,7 @@ def print_internal2_label(internal_1, internal_2, internal_3, internal_4, intern
     else:
         with socket.create_connection((tfutil.get_tf_printer_host('warp-docket'), 9100)) as s:
             s.send(template)
+            time.sleep(1)
 
 
 def main():

@@ -8,6 +8,7 @@ import socket
 from datetime import datetime
 import urllib.request
 import ssl
+import time
 import tinkerforge_util as tfutil  # sudo apt install python3-tinkerforge-util
 
 QR_CODE_COMMAND = b'W619,119,5,2,M,8,6,84,0\r'
@@ -269,6 +270,7 @@ def print_docket_label(sku, extra_supply_cable, version, serial_number, build_da
     else:
         with socket.create_connection((tfutil.get_tf_printer_host('warp-docket'), 9100)) as s:
             s.send(data)
+            time.sleep(1)
 
 
 def main():

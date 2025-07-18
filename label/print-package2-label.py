@@ -8,6 +8,7 @@ import socket
 from datetime import datetime
 import urllib.request
 import ssl
+import time
 import tinkerforge_util as tfutil  # sudo apt install python3-tinkerforge-util
 
 EAN13_PLACEHOLDER = b'4251640705480'
@@ -289,6 +290,7 @@ def print_package2_label(sku, version, serial_number, build_date, instances, cop
     else:
         with socket.create_connection((tfutil.get_tf_printer_host('warp-docket'), 9100)) as s:
             s.send(data)
+            time.sleep(1)
 
 
 def main():

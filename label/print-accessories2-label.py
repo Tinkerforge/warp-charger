@@ -5,6 +5,7 @@ import sys
 import argparse
 import socket
 import re
+import time
 import tinkerforge_util as tfutil  # sudo apt install python3-tinkerforge-util
 
 QR_CODE_COMMAND = b'W649,209,5,2,M,8,6,57,0\r'
@@ -205,6 +206,7 @@ def print_accessories2_label(header, stand, stand_wiring, stand_lock, supply_cab
     else:
         with socket.create_connection((tfutil.get_tf_printer_host('warp-docket'), 9100)) as s:
             s.send(template)
+            time.sleep(1)
 
 
 def main():
