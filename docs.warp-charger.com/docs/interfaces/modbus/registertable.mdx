@@ -328,12 +328,10 @@ Registers* und *Coils* möglich.
         <td>uint32</td>
         <td>evse</td>
         <td>
-            Steuert die LED des Tasters in der Wallbox-Front.
-            <strong>
-            Blinkmuster und -dauer müssen mit einem Modbus-Befehl geschrieben werden!
-            Falls auch die Farbe gesetzt werden soll (nur WARP3), müssen die Register 1004 bis einschließlich 1013 in einem Befehl geschrieben werden.
-            </strong>
-            Damit die LED kontrolliert werden kann muss die Option "Status-LED-Steuerung" aktiviert sein.
+            Steuert die LED des Tasters in der Wallbox-Front. <strong>Blinkmuster und -dauer müssen mit einem Modbus-Befehl geschrieben
+            werden! Falls auch die Farbe gesetzt werden soll (nur WARP3),
+            müssen die Register 1004 bis einschließlich 1013 in einem Befehl geschrieben werden.</strong> Damit die LED kontrolliert
+            werden kann muss die Option "Status-LED-Steuerung" aktiviert sein.
 
             <ul>
                 <li>0xFFFFFFFF: EVSE kontrolliert LED</li>
@@ -420,9 +418,12 @@ Registers* und *Coils* möglich.
                 </li>
             </ul>
             <br/>
-            <strong>Schreiben der Register 4012 und 4013 startet das Vortäuschen das Tags. Danach werden die Holding Register 4000 bis 4013 geleert!</strong>
-            Das Datenformat der Holding Register 4000 bis 4013 ist identisch zum Format der Input Register 4000 bis 4013 (die das zuletzt gesehen NFC-Tag enthalten).
-            Ein physisch existierendes Tag kann also (wieder) vorgetäuscht werden, indem es einmal an die Wallbox gehalten wird und die dabei erzeugten Werte in den Input Registern 4000 bis 4013 später in die Holding Register 4000 bis 4013 geschrieben werden.
+            <strong>Schreiben der Register 4012 und 4013 startet das Vortäuschen das Tags. Danach werden die Holding
+            Register 4000 bis 4013 geleert!</strong> Das Datenformat der Holding Register 4000 bis 4013 ist identisch
+            zum Format der Input Register 4000 bis 4013 (die das zuletzt gesehen NFC-Tag enthalten). Ein physisch
+            existierendes Tag kann also (wieder) vorgetäuscht werden, indem es einmal an die Wallbox gehalten wird
+            und die dabei erzeugten Werte in den Input Registern 4000 bis 4013 später in die Holding Register 4000
+            bis 4013 geschrieben werden.
         </td>
     </tr>
     <tr>
@@ -460,7 +461,7 @@ Registers* und *Coils* möglich.
         <td>Feature "evse" verfügbar</td>
         <td>bool</td>
         <td>---</td>
-        <td>Ein Ladecontroller steht zur Verfügung. Dieses Feature sollte bei allen WARP Chargern, deren Hardware
+        <td>Ein Ladecontroller steht zur Verfügung. Dieses Feature sollte bei allen Wallboxen, deren Hardware
             funktionsfähig ist, vorhanden sein.</td>
     </tr>
     <tr>
