@@ -11,9 +11,9 @@ Die Apps (iOS und Android) nutzen den Fernzugriff, so dass dieser auch für die 
 ## Funktionsweise und Datenschutz
 Kurz und knapp zusammengefasst wird bei jeder Verbindung über den Fernzugriff ein eigenes, verschlüsseltes VPN aufgemacht. Dieses VPN hat nur zwei Teilnehmer, das Gerät, über welches der Fernzugriff geöffnet wird und der WARP Charger/WARP Energy Manager auf den zugegriffen wird. Dadurch können wir sicherstellen, dass nur du Daten von deiner Wallbox abrufen kannst (nichtmal wir können das!).
 
-Alle Daten, bis auf deine E-Mail-Adresse und dein (frei wählbarer) Nutzername werden verschlüsselt auf userem Server gespeichert. So, dass auch wir diese Daten nicht entschlüsseln können.
+Alle Daten, bis auf deine E-Mail-Adresse und dein (frei wählbarer) Nutzername werden verschlüsselt auf unserem Server gespeichert. So, dass auch wir diese Daten nicht entschlüsseln können.
 
-Eine detailiertere Beschreibung, die auch technisch mehr in die Tiefe geht findest du in userem [Forum](https://www.tinkerunity.org/topic/12365-fernzugriff-alpha).
+Eine detailiertere Beschreibung, die auch technisch mehr in die Tiefe geht findest du in unserem [Forum](https://www.tinkerunity.org/topic/12365-fernzugriff-alpha).
 
 ## Einrichtung
 Zuerst wird ein Account unter [my.warp-charger.com](https://my.warp-charger.com) benötigt. Dieser muss angelegt und bestätigt werden.
