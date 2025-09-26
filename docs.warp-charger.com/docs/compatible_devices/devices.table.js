@@ -42,9 +42,22 @@ export const devices = [
   },
   {
     manufacturer: "Carlo Galvazzi",
-    device: "Smart Meter: EM24, EM100, ET100, EM210, EM270, EM280, EM300, ET300, EM510, EM530, EM540",
+    device: "Smart Meter: EM24, EM100, EM111, EM112, ET100, ET111, ET112, EM210, EM270, EM280, EM300, EM330, EM340, ET300, ET330, ET340, EM510, ET511, EM530, EM540, EM580",
     connection: "Modbus/TCP",
     link: "/docs/compatible_devices/devices#carlo-galvazzi",
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "x",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
+  },
+  {
+    manufacturer: "Chisage",
+    device: "ESS-Hybrid-Wechselrichter",
+    connection: "Modbus/TCP",
+    link: "/docs/compatible_devices/devices#chisage",
     grid: "x",
     pv: "x",
     battery: "x",
@@ -690,6 +703,19 @@ export const devices = [
     battery: "x",
     load: "x",
     dlm: "x",
+    pve: "x",
+    bat: "-"
+  },
+  {
+    manufacturer: "Varta",
+    device: "VARTA Element, One, Pulse, Pulse neo, Link, Flex Storage",
+    connection: "Modbus/TCP",
+    link: "/docs/compatible_devices/devices#varta",
+    grid: "x",
+    pv: "-",
+    battery: "x",
+    load: "-",
+    dlm: "-",
     pve: "x",
     bat: "-"
   },
