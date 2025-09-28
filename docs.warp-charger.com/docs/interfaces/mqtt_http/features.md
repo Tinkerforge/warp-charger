@@ -16,7 +16,7 @@ Der Ladecontroller kann das Control Pilot-Signal unterbrechen.
 
 ## `phase_switch` Phasenwechsel
 
-Hardware und Konfiguration erlauben eine manuelle Phasenumschaltung mit der API [`power_manager/external_current_update`](api_reference/power_manager#power_manager_external_current_update).
+Hardware und Konfiguration erlauben eine manuelle Phasenumschaltung mit der API [`power_manager/external_control_update`](api_reference/power_manager#power_manager_external_control_update).
 
 ## `button_configuration` Button-Konfiguration
 

@@ -1,4 +1,4 @@
-#!/usr/bin/python3 -u
+#!/usr/bin/env -S python3 -u
 
 import sys
 import os
@@ -11,7 +11,7 @@ has_error = False
 
 
 class SemVer:
-    def __init__(self, major, minor, patch, beta, build=None):
+    def __init__(self, major, minor, patch, beta=0, build=None):
         assert build == None or len(build) > 0, build
 
         self.major = major
@@ -163,10 +163,21 @@ def main():
                 last_semver = semver
 
                 for suffix in ['.elf', '_changelog_en.txt', '_changelog_de.txt', '_merged.bin', '_merged.bin.sha256']:
-                    path = prefix + '_' + str(semver).replace('.', '_').replace('-', '_').replace('+', '_') + suffix
+                    semver_path = str(semver).replace('.', '_').replace('-', '_').replace('+', '_')
+                    path = prefix + '_' + semver_path + suffix
 
                     if not os.path.exists(path):
                         print_error(f'{path} is missing')
+
+                    if suffix == '.elf':
+                        if ((prefix == 'warp_firmware' or prefix == 'warp2_firmware' or prefix == 'warp3_firmware') and semver >= SemVer(2, 5, 0)) or \
+                           (prefix == 'energy_manager_firmware' and semver >= SemVer(2, 2, 0)) or \
+                           prefix == 'energy_manager_v2_firmware' or \
+                           prefix == 'smart_energy_broker_firmware':
+                            index_html_path = f'static_html/{semver_path}_index.html'
+
+                            if not os.path.exists(index_html_path):
+                                print_error(f'{index_html_path} is missing')
                     elif suffix == '_merged.bin':
                         with open(path, 'rb') as k:
                             firmware_data = k.read()
