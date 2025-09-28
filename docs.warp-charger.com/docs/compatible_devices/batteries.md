@@ -56,6 +56,10 @@ Diese Funktion verbietet dem Speicher das Laden. Folgende Möglichkeiten sind un
  * Setzen des "Maximalen Ladestroms" auf 0A.
  * Setzen der "Maximalen Ladeleistung" auf 0W.
 
+## Zeitplan für dy­na­mi­schen Strom­preis
+
+Mit dem Strompreisplan können günstige und teure Stunden definiert werden. Diese Eigenschaften können dann in den Regeln verwendet werden. Es müssen nur die Anzahl der jeweiligen Stunden in 15min Schritten definiert werden.
+Ein Graph zeigt die Stunden dann für den aktuellen Strompreisverlauf an.
 
 ## Verwendung des Batteriespeichers - Definition von Regeln
 
