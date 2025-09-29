@@ -448,7 +448,7 @@ export const devices = [
   },
   {
     manufacturer: "Shelly",
-    device: "Shelly Pro EM und Shelly Pro 3EM",
+    device: "Shelly Pro EM, Shelly Pro 3EM, Shelly 3EM",
     connection: "Modbus/TCP",
     link: "/docs/compatible_devices/devices#shelly",
     grid: "x",

@@ -412,20 +412,19 @@ Nur wenn ein Stromzähler am Netzanschluss montiert wurde, wird die Anwendung PV
 
 ## Shelly
 
-### Shelly Pro EM und Shelly Pro 3EM
+### Shelly Pro EM, Shelly Pro 3EM, Shelly 3EM
 {manufacturer_to_bubbles("Shelly")}
 
-:::note
+Alle Shelly Stromzähler, die über Modbus/TCP verfügen, werden unterstützt.
+Shelly Stromzähler sind sehr schmal und benötigen nur wenig Platz und werden für verschiedene Maximalströme angeboten. Folgende Modelle werden direkt als Template unterstützt:
 
-Der Shelly 3EM (ohne "Pro") wird nicht unterstützt, da dieser keine Modbus/TCP Schnittstelle bietet.
-:::
-
-Der einphasige Wandler-Stromzähler Shelly Pro EM und dreiphasige Wandler-Stromzähler Shelly Pro 3EM werden unterstützt und können mittels Modbus/TCP ausgelesen werden. Beide besitzen nur eine Breite von 1 TE und messen mittels Wandler.
-Somit benötigen diese nur wenig Platz und können an verschiedene Maximalströme angepasst werden. (EM: 50A, 3EM: 120A, 400A).
+ * Shelly Pro EM-50 (1-phasig)
+ * Shelly Pro 3EM 120A
+ * Shelly Pro 3EM 400A
+ * Shelly Pro 3EM 3CT 63
+ * Shelly 3EM-63T Gen3 / 3EM-63W Gen3 
 
 Wichtig ist ein Update auf die neuste Software, so dass Modbus/TCP unterstützt wird. Dieses muss dann unter Settings -> Modbus aktiviert werden.
-
-Für die Stromzähler sind jeweils spezifische Registertabellen implementiert und können einfach ausgewählt werden.
 Ein Stromzähler kann immer genau nur einem Messort zugeordnet werden. Der Messort ist abhängig vom Montageort des Stromzählers. Es können mehrere Stromzähler dieses Typs angelegt werden.
 Nur wenn der Stromzähler am Netzanschluss montiert wurde, werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
 
