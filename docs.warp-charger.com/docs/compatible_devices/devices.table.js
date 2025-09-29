@@ -159,7 +159,7 @@ export const devices = [
   },
   {
     manufacturer: "Fox ESS",
-    device: "Hybrid Serie H1, H3, AC Serie",
+    device: "Hybrid Serie H3/AC3, H3 Smart, H3 Pro",
     connection: "Modbus/RTU",
     note: "hybrid-Wechselrichter",
     link: "/docs/compatible_devices/devices#fox-ess",
@@ -191,10 +191,23 @@ export const devices = [
     link: "/docs/compatible_devices/devices#fronius",
     grid: "x",
     pv: "x",
-    battery: "x",
+    battery: "-",
     load: "-",
     dlm: "x",
     pve: "x",
+    bat: "-"
+  },
+  {
+    manufacturer: "Fronius",
+    device: "GEN24- und GEN24 Plus-Serie Hybrid-Wechselrichter (Speicher)",
+    connection: "Modbus/TCP",
+    link: "/docs/compatible_devices/devices#fronius",
+    grid: "-",
+    pv: "-",
+    battery: "x",
+    load: "-",
+    dlm: "-",
+    pve: "-",
     bat: "-"
   },
   {

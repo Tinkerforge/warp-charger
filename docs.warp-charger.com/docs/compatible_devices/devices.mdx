@@ -140,8 +140,9 @@ Um die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dL
 ## Chisage
 
 ### ESS-Hybrid-Wechselrichter
+{manufacturer_to_bubbles("Chisage")}
 
-Chisage ESS-Hyrid-Wechselrichter werden unterstützt.
+Chisage ESS-Hybrid-Wechselrichter werden unterstützt. Getestet wurde die Implementierung mit einem Mars-Wechselrichter.
 
 ## Deye
 
@@ -217,7 +218,7 @@ des WARP Energy Managers nur einen Stromzähler unterstützt. Um die Anwendungen
 
 ## Fox ESS
 
-### H3 Hybridwechselrichter
+### Hybrid Serie H3/AC3, H3 Smart, H3 Pro
 {manufacturer_to_bubbles("Fox ESS")}
 
 Fox ESS Wechselrichter scheinen nicht mittels Modbus/TCP über den Fox ESS LAN oder WLAN Dongle ausgelesen werden zu können. Sie sind aber mittels RS485 (Modbus/RTU) auszulesen.
@@ -243,6 +244,12 @@ Es steht nur der Messwert für die Erzeugung (PV) bereit.
 Fronius Wechselrichter der GEN24-Serie (GEN24 und GEN24 Plus) sprechen SunSpec und können direkt ausgelesen werden. Es muss nur die Datenausgabe über Modbus/TCP aktiviert werden.
 Als Port sollte 502 konfiguriert werden. Als SunSpec Model Type kann "float" gewählt werden. Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler (Fronius Smart Meter) am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+
+### GEN24-Serie Hybrid-Wechselrichter (Speicher)
+{manufacturer_to_bubbles("Fronius", "GEN24- und GEN24 Plus-Serie Hybrid-Wechselrichter (Speicher)")}
+Die SunSpec Implementierung von Fronius ist leider unzureichend um einen angeschlossenen Speicher auslesen zu können. Aus diesem Grund haben wir zum Auslesen des Speichers eine eigenes Template für Modbus/TCP angelegt. Dieses ist für den Stromzähler "Speicher" zu wählen.
+
+
 
 ### Primo- und Symo-Serie String-Wechselrichter
 {manufacturer_to_bubbles("Fronius", "Primo- und Symo-Serie String-Wechselrichter")}
