@@ -836,15 +836,36 @@ export function manufacturer_to_bubbles(manufacturer, device = undefined) {
   }
 
   return <div class="manufacturer_devices">
-    <div>{text_to_bubble(data.grid,    "Netz",     false)}</div>
-    <div>{text_to_bubble(data.pv,      "PV",       false)}</div>
-    <div>{text_to_bubble(data.battery, "Speicher", false)}</div>
-    <div>{text_to_bubble(data.load,    "Last",     false)}</div>
-    <div>&nbsp; &nbsp; &nbsp; </div>
-    <div>{text_to_bubble2(data.pve,    "PVÜ", false)}</div>
-    <div>{text_to_bubble2(data.dlm,    "dLM", false)}</div>
-    <div>{text_to_bubble2(data.bat,    "BAT", false)}</div>
-  </div>
+   <table role="table" class="sortable-table">
+    <thead>
+        <tr>
+          <td>Schnittstelle</td>
+          <td>Messort</td>
+          <td>Features</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{data.connection}</td>
+            <td>
+                <div class="meters">
+                    <div>{text_to_bubble(data.grid,    "Netz",     false)}</div>
+                    <div>{text_to_bubble(data.pv,      "PV",       false)}</div>
+                    <div>{text_to_bubble(data.battery, "Speicher", false)}</div>
+                    <div>{text_to_bubble(data.load,    "Last",     false)}</div>
+                </div>
+            </td>
+            <td>
+                <div class="features">
+                    <div>{text_to_bubble2(data.pve,    "PVÜ", false)}</div>
+                    <div>{text_to_bubble2(data.dlm,    "dLM", false)}</div>
+                    <div>{text_to_bubble2(data.bat,    "BAT", false)}</div>
+                </div>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+   </div>
 }
 
 // ----------------------------------------------------------------------------
