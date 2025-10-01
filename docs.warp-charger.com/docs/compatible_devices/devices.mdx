@@ -551,8 +551,13 @@ In der App für Installateure "SetApp" (zur Inbetriebnahme) kann die Schnittstel
 
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
-Über SunSpec steht zwar auch das Speicherkapazitäts-Modell 713 zur Verfügung, allerdings liefert dieses nicht die Leistung der Batterie. Anstelle des
-SunSpec Speicherkapazitäts-Modells kann über Modbus/TCP mit einen virtuellen Stromzähler "Speicher" der SoC und die Leistung der Batterie ausgelesen werden.
+Über SunSpec steht zwar auch das Speicherkapazitäts-Modell 713 zur Verfügung, allerdings liefert dieses nicht die Leistung der Batterie. Daher haben wir ein Modbus/TCP
+Profil erstellt um auch die Leistung und den SoC erfassen zu können (siehe nächsten Eintrag).
+
+### SolarEdge Home Wechselrichter (Speicher)
+{manufacturer_to_bubbles("SolarEdge", "SolarEdge Home Wechselrichter (Speicher)")}
+SolarEdge stellt leider keine Leistungsdaten und den SoC per SunSpec zur Verfügung. Daher haben wir ein eigenes Modbus/TCP Profil für SunSpec angelegt.
+Dieses dient nur dazu den Messort "Speicher" erfassen zu können. Alle anderen Messorte (PV, Netz etc.) erfolgen mittels SunSpec (siehe oben).
 
 ## Solarmax
 {manufacturer_to_bubbles("Solarmax")}

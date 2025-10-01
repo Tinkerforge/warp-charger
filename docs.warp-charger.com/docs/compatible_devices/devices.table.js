@@ -609,10 +609,23 @@ export const devices = [
     link: "/docs/compatible_devices/devices#solaredge",
     grid: "x",
     pv: "x",
-    battery: "x",
+    battery: "-",
     load: "-",
     dlm: "x",
     pve: "x",
+    bat: "-"
+  },
+  {
+    manufacturer: "SolarEdge",
+    device: "SolarEdge Home Wechselrichter (Speicher)",
+    connection: "Modbus/TCP",
+    link: "/docs/compatible_devices/devices#solaredge",
+    grid: "-",
+    pv: "-",
+    battery: "x",
+    load: "-",
+    dlm: "-",
+    pve: "-",
     bat: "-"
   },
   {
