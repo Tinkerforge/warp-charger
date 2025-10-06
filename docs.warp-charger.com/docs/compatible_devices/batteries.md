@@ -8,7 +8,7 @@ sidebar_position: 4
 
     Die Steuerung von Batteriespeichern befindet sich zur Zeit noch in der Entwicklung und ist noch nicht Teil der Release-Firmware!
     
-    Eine Beta-Firmware wird zeitnah im Forum auf [Tinkerunity](https://tinkerunity.org) veröffentlicht.
+    Auf Tinkerunity haben wir eine Beta-Firmware veröffentlicht, die generell das Steuern eines Batteriespeichers mittels Modbus/TCP Befehlen unterstützt. Download hier: [Tinkerunity -  Beta-Test Batteriespeicher-Steuerung](https://www.tinkerunity.org/topic/13229-beta-test-batteriespeicher-steuerung-phase-2/).
 
     Es kann nicht garantiert werden, dass diese Batteriespeicher-Einstellungen bei einem Firmwareupdate korrekt übernommen werden!
 :::
