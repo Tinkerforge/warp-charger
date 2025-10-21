@@ -723,7 +723,8 @@ Technisch nutzen wir folgende Modbus/TCP Register:
  * Speicher: Voltage (Register 840), Current (Register 841), Power (Register 842) und SoC (Register 843)
  * Last: AC Consumption L1-L3 (Register 817-819) 
 
-Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom System ausgelesen werden kann.
+Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom System ausgelesen werden kann. Wird der gesamte Netz-Anschluss über Multiplus-Wechselrichter geleitet, so können diese
+als Netzstromzähler fungieren. In diesem Fall ist nicht ein extra Netzstromzähler notwendig.
 Nur in diesem Fall wird die Anwendung PV-Überschussladen (PVÜ) unterstützt. Ein dynamisches Lastmanagement (dLM) ist mit den "System"-Zählerdaten nicht möglich, da keine Phasenströme geliefert werden. Soll dennoch ein dynamisches Lastmanagement realisiert werden, muss ein zusätzlicher Stromzähler, der Phasenströme bereitstellt, installiert werden.
 
 ### EM540, ET340, ET112, EM24 Stromzähler
