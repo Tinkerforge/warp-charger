@@ -1,0 +1,29 @@
+2025-11-03: 2.8.11 (dcf64e9e)
+- Monatlichen E-Mail-Versand des Ladelogs über den Fernzugriff hinzugefügt
+- Unterstützung der Phasenumschaltung über OCPP hinzugefügt
+- Lastmanagement-Statusseite überarbeitet
+- Informationen über Lastmanagement-Entscheidungen hinzugefügt
+- Hinzugefügt, dass Lademodus für einzelne Wallbox pro Ladevorgang überschreibbar ist
+- Hinzugefügt, dass Lademodus optional persistent sein kann
+- Hinzugefügt, dass Ladeplan des Eco-Modus persistent ist
+- Hinzugefügt, dass Eco-Ladeplan-Plots bei Klick vergrößert werden
+- Schlüsselgenerierung zur WireGuard-Unterseite hinzugefügt
+- Überprüfung der Versorgungsspannung hinzugefügt
+- Modbus TCP: Sungrow Batterieleistungs- und -energiewerte repariert
+- Modbus TCP: Goodwe Wechselrichter- und Netzenergiewerte repariert
+- Modbus TCP: Fox ESS H3 Batteriewerte repariert; Unterstützung für zweite Batterie hinzugefügt
+- Sichergestellt, dass Lastmanagement nicht zu viel Strom allokiert, wenn ein Fahrzeug keinen Strom bezieht
+- Sichergestellt, dass Lastmanager beim Neustart nicht alle laufenden Ladevorgänge stoppt
+- Modbus TCP-Server: Lesen bekannter Register ist jetzt immer erlaubt, selbst wenn das zugehörige Feature nicht verfügbar ist
+- Sichergestellt, dass Eco-Ladeplan-Entscheidungen nur zwischen 15-Minuten-Slots geändert weden
+- Behoben, dass Abfrage von dynamischen Strompreisen, Firmware-Updates und PV-Prognose, sowie Verbindungen zum Fernzugriff nur funktionierten, wenn Netzwerklatenz unter 50ms lag
+- Behoben, dass automatische Kanalwahl des WLAN-Access Points den ersten WLAN-Verbindungsversuch gestört hat
+- Behoben, dass über API vorgetäuschte NFC-Tags nicht im Webinterface angezeigt wurden
+- Fehlermeldung, wenn dynamische Strompreise nicht verfügbar sind, verbessert
+- Behoben, dass Ladestatus-Automatisierungsbedingungen fälschlicherweise nach Neustart ausgelöst wurden
+- Sichergestellt, dass ein nicht funktionaler Web Server zu einem Rollback auf die letzte Firmware führt
+- Wartezeit beim Phasenwechsel auf 45 Sekunden erhöht, um mit langsam schaltenden Fahrzeugen kompatibel zu sein (durch Update auf Ladecontroller-Firmware 2.2.17)
+- Konfigurierbare Wartezeit beim Phasenwechsel hinzugefügt (durch Update auf Ladecontroller-Firmware 2.2.17)
+- Unterstützung für Iskra WM3M4C hinzugefügt (durch Update auf Ladecontroller-Firmware 2.2.17)
+- Sporadisch angezeigten Fehlerzustand 5 behoben (durch Update auf Ladecontroller-Firmware 2.2.17)
+- Robustheit der Phasenumschaltung verbessert(durch Update auf Ladecontroller-Firmware 2.2.17)
