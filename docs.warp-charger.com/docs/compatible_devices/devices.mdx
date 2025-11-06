@@ -527,6 +527,14 @@ Es steht nur der Messwert für die Erzeugung (PV) bereit.
 Auf die Daten vom SMA Energy Meter 2.0 oder dem Sunny Home Manager kann mittels Speedwire Protokoll werden können. Über diese beiden kann die Leistung am Netzanschluss gemessen
 werden, so dass ein PV-Überschussladen (PVÜ) und ein dynamisches Lastmanagement (dLM) mit diesen Zählerwerten möglich ist. Ein Zugriff auf andere Werte als Netzdaten ist nicht möglich (PV, Speicher etc.)
 
+:::note
+Speedwire nutzt Multicast. Nicht alle Switche und insbesondere viele DLAN/Powerline Komponenten leiten die Pakete nicht weiter. In diesem Fall empfängt die Wallbox oder der Energy Manager
+dann keine Daten.
+
+Im Sunnyportal können aber bis zu 3 IP-Adressen angegeben werden, zu denen die Daten per Unicast geschickt werden. Tritt ein Problem mit Multicast auf, kann somit dieses gelöst werden
+indem die IP Adresse der Wallbox oder des Energy Managers eingetragen wird.
+:::
+
 ## SolarEdge
 
 ### SolarEdge Synergie PV-Wechselrichter
