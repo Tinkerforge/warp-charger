@@ -1,0 +1,117 @@
+diff --git a/docs.warp-charger.com/docs/compatible_devices/devices.table.js b/docs.warp-charger.com/docs/compatible_devices/devices.table.js
+index 68e1bbe..930777d 100644
+--- a/docs.warp-charger.com/docs/compatible_devices/devices.table.js
++++ b/docs.warp-charger.com/docs/compatible_devices/devices.table.js
+@@ -451,23 +451,96 @@ export const columns = [
+     className: "sortable-data-table left nowrap",
+   },
+   {
+-    header: "Netz",
+-    accessorKey: "grid",
+-    className: "sortable-data-table left",
+-  },
+-  {
+-    header: "PV",
+-    accessorKey: "pv",
+-    className: "sortable-data-table left",
+-  },
+-  {
+-    header: "Batterie",
+-    accessorKey: "battery",
+-    className: "sortable-data-table left",
+-  },
+-  {
+-    header: "Last",
++    header: "Klasse (Messort)",
+     accessorKey: "load",
+     className: "sortable-data-table left",
++    cell: ({ cell, row: { original } }) => (
++        <div style={{display: 'flex'}}>
++            <div>
++            {
++            original.grid === "x" ? (
++                <div style={{display: 'flex', alignItems: 'center', border: 'solid 1px white', background:'green', paddingLeft:'5px', paddingRight:'5px', verticalAlign: 'middle', textAlign:'center', 'border-radius': '25px', height: '25px', color: 'white'}}>Netz</div>
++            ) : (
++            original.grid === "(x)" ? (
++                <div style={{display: 'flex', alignItems: 'center', border: 'solid 1px green', background:'white', paddingRight:'5px', paddingLeft:'5px', textAlign:'center', 'border-radius': '25px', height: '25px', color: 'green'}}>Netz</div>
++            ) : (
++            original.grid === "?" ? (
++                <div style={{display: 'flex', alignItems: 'center', border: 'solid 1px #D3D3D3', background:'white', paddingRight:'5px', paddingLeft:'5px', textAlign:'center', 'border-radius': '25px', height: '25px', color: '#D3D3D3	'}}>Netz</div>
++            ) : (
++            original.grid === "-" ? (
++                <div></div>
++            ) : (
++                <a>ERROR{cell.getValue()}</a>
++            )
++            )
++            )
++            )
++            }
++            </div>
++            <div>
++            {
++            original.pv === "x" ? (
++                <div style={{display: 'flex', alignItems: 'center', border: 'solid 1px white', background:'green', paddingLeft:'5px', paddingRight:'5px', verticalAlign: 'middle', textAlign:'center', 'border-radius': '25px', height: '25px', color: 'white'}}>PV</div>
++            ) : (
++            original.pv === "(x)" ? (
++                <div style={{display: 'flex', alignItems: 'center', border: 'solid 1px green', background:'white', paddingRight:'5px', paddingLeft:'5px', textAlign:'center', 'border-radius': '25px', height: '25px', color: 'green'}}>PV</div>
++            ) : (
++            original.pv === "?" ? (
++                <div style={{display: 'flex', alignItems: 'center', border: 'solid 1px #D3D3D3', background:'white', paddingRight:'5px', paddingLeft:'5px', textAlign:'center', 'border-radius': '25px', height: '25px', color: '#D3D3D3'}}>PV</div>
++            ) : (
++            original.pv === "-" ? (
++                <div></div>
++            ) : (
++                <a>ERROR{cell.getValue()}</a>
++            )
++            )
++            )
++            )
++            }
++            </div>
++            <div>
++            {
++            original.battery === "x" ? (
++                <div style={{display: 'flex', alignItems: 'center', border: 'solid 1px white', background:'green', paddingLeft:'5px', paddingRight:'5px', verticalAlign: 'middle', textAlign:'center', 'border-radius': '25px', height: '25px', color: 'white'}}>Batterie</div>
++            ) : (
++            original.battery === "(x)" ? (
++                <div style={{display: 'flex', alignItems: 'center', border: 'solid 1px green', background:'white', paddingRight:'5px', paddingLeft:'5px', textAlign:'center', 'border-radius': '25px', height: '25px', color: 'green'}}>Batterie</div>
++            ) : (
++            original.battery === "?" ? (
++                <div style={{display: 'flex', alignItems: 'center', border: 'solid 1px #D3D3D3', background:'white', paddingRight:'5px', paddingLeft:'5px', textAlign:'center', 'border-radius': '25px', height: '25px', color: '#D3D3D3'}}>Batterie</div>
++            ) : (
++            original.battery === "-" ? (
++                <div></div>
++            ) : (
++                <a>ERROR{cell.getValue()}</a>
++            )
++            )
++            )
++            )
++            }
++            </div>
++            <div>
++            {
++            original.load === "x" ? (
++                <div style={{display: 'flex', alignItems: 'center', border: 'solid 1px white', background:'green', paddingLeft:'5px', paddingRight:'5px', verticalAlign: 'middle', textAlign:'center', 'border-radius': '25px', height: '25px', color: 'white'}}>Last</div>
++            ) : (
++            original.load === "(x)" ? (
++                <div style={{display: 'flex', alignItems: 'center', border: 'solid 1px green', background:'white', paddingRight:'5px', paddingLeft:'5px', textAlign:'center', 'border-radius': '25px', height: '25px', color: 'green'}}>Last</div>
++            ) : (
++            original.load === "?" ? (
++                <div style={{display: 'flex', alignItems: 'center', border: 'solid 1px #D3D3D3', background:'white', paddingRight:'5px', paddingLeft:'5px', textAlign:'center', 'border-radius': '25px', height: '25px', color: '#D3D3D3'}}>Last</div>
++            ) : (
++            original.load === "-" ? (
++                <div></div>
++            ) : (
++                <a>ERROR{cell.getValue()}</a>
++            )
++            )
++            )
++            )
++            }
++            </div>
++        </div>
++    ),
+   },
+ ];
