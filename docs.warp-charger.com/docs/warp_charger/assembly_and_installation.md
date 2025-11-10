@@ -177,7 +177,9 @@ zulässiger Ladestrom in grau):
 
 Die verschiedenen Schalterstellungen sind im nachfolgenden Foto
 dokumentiert. Im Werkszustand sind die Schalter so eingestellt, dass die
-Wallbox inaktiv ist ("ungültig"). Als Beispiel ist in der zweiten Zeile
+Wallbox inaktiv ist ("ungültig").
+
+Als Beispiel ist in der ersten Zeile zweites Foto von links der
 Schalter 1 auf "ON" und die Schalter 2, 3 und 4 auf "OFF" gestellt.
 Damit wird bei einem dreiphasigen Betrieb eine maximale Ladeleistung von
 ca. 4 kW (3×6 A) vorgegeben. Wird die Wallbox nur
