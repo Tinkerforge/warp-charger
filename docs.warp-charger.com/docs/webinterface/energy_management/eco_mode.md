@@ -8,9 +8,10 @@ Mit dem Eco-Modus ist es möglich Ladevorgänge ökonomisch und ökologisch zu o
 In die Planung fließen dynamische Strompreise, PV-Ertragsprognose und die
 gewünsche Abfahrtszeit sowie maximale Standzeit des Elektrofahrzeugs ein.
 
-Anhand der Planung wird ein optimierter Ladeplan erstellt. Wird der Eco-Modus auf einem
-[WARP Charger](/docs/warp_charger/introduction) oder [WARP Energy Manager](/docs/warp_energy_manager/introduction) verwendet der als Lastmanager konfiguriert ist,
-werden individuelle Ladepläne für alle verwalteten Wallboxen erstellt.
+Anhand der Planung wird ein optimierter Ladeplan erstellt. Für den Eco-Modus
+ist es notwendig die Wallbox als Lastmanager zu konfigurieren. Werden mehrere
+Wallboxen verwaltet, so werden individuelle Ladepläne für alle
+verwalteten Wallboxen erstellt.
 
 ## Konfiguration
 
