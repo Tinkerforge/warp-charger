@@ -125,6 +125,4 @@ Dazu müssen folgende Einstellungen vorgenommen werden:
 
 **Speicherpriorität**: Hier kann konfiguriert werden ob Wallboxen oder der Speicher höher priorisiert werden.
 
-**Energieflussrichtung des Speichers**: Manche Speicher liefern je nach Konfiguration abweichende Vorzeichen beim Laden und dem Entladen. Das verhalten kann hier konfiguriert werden.
-
 **Bezugs- und Einspeisetoleranz**: Der Regelwert auf dem geregelt wird. 
