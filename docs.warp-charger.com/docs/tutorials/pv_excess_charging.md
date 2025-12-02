@@ -121,7 +121,7 @@ Weitere Informationen hierzu gibt es in der Webinterface-Dokumentation: [PV-Übe
 Ist ein Batteriespeicher vorhanden regelt dieser gegen die PV-Überschussregelung an. Wenn der Batteriespeicher über einen [Stromzähler](/docs/webinterface/energy_management/energy_meters) ausgelesen werden kann, kann der Speicher direkt von der Regelung beachtet werden.
 Dazu müssen folgende Einstellungen vorgenommen werden:
 
-**Stromzähler**: Der Stromzähler, der dem Batteriespeicher zugeordnet ist
+**Stromzähler**: Der Stromzähler, der dem Batteriespeicher zugeordnet ist.
 
 **Speicherpriorität**: Hier kann konfiguriert werden ob Wallboxen oder der Speicher höher priorisiert werden.
 
