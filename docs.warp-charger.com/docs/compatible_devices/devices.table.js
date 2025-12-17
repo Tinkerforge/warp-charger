@@ -277,7 +277,7 @@ export const devices = [
   },
   {
     manufacturer: "Goodwe",
-    device: "EH, EM, ES, ET Hybrid-Wechselrichter",
+    device: "EH, EM, ES, ET, GW Hybrid-Wechselrichter",
     connection: "Modbus/TCP",
     link: "/docs/compatible_devices/devices#goodwe",
     grid: "x",
