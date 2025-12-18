@@ -340,6 +340,14 @@ Es steht nur der Messwert für die Erzeugung (PV) bereit.
 
 ## Huawei
 
+### SmartLogger 3000
+{manufacturer_to_bubbles("Huawei", "SmartLogger 3000")}
+Anstatt die Daten über einen Wechselrichter abzufragen können Daten auch von einem SmartLogger 3000 per Modbus/TCP abgerufen werden.
+Dieser stellt Messdaten zur PV Erzeugung und zum Netzanschluss bereit, sofern ein Stromzähler am Netzanschluss installiert wurde.
+
+Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom SmartLogger ausgelesen werden kann 
+(typischerweise "Huawei Smart Power Sensor" vom Typ DTSU666-H oder DDSU666-H). Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt. 
+
 ### SUN2000
 {manufacturer_to_bubbles("Huawei", "SUN-Serie Hybrid-Wechselrichter")}
 
@@ -355,6 +363,15 @@ Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamis
 
 Der Huawei EMMA-A02 Energiemanager kann mittels Modbus/TCP ausgelesen werden.
 
+Der Stromzähler "Netz" ist nur nutzbar wenn der EMMA am Netzanschluss als Stromzähler installiert wurde.
+Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt. Speicher ist nur nutzbar im Zusammenspiel mit der LUNA2000 Batterie.
+
+
+## Janitza
+
+### UMG-Serie
+{manufacturer_to_bubbles("Janitza", "UMG-Serie")}
+Stromzähler des Herstellers Janitza aus der UMG-Serie, die über Mdobus/TCP verfügen werden unterstützt. Der Messort muss im System entsprechend dem Installationsort des Stromzählers (z.B. "Netz") angelegt werden.
 
 ## Kaco
 
