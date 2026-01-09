@@ -24,7 +24,7 @@ Raspberry Pi Imager
 
 Du kannst jetzt die Micro-SD-Karte in den Raspberry Pi einlegen und ihn booten. Nachdem du dich gegebenenfalls eingeloggt hast (per SSH auf `pi@raspberry`, oder in der Textkonsole als `pi`; Passwort ist jeweils `raspberrypi`), solltest du zunächst, falls du die graphische Oberfläche gebootet hast, dem Einrichtungs-Wizard folgen. In beiden Fällen solltest du danach in der Konsole mit `sudo apt update` und `sudo apt upgrade` das System aktualisieren. Danach kannst du den Pi mit `sudo reboot` neustarten.
 
-### Verknüpfen des WARP Chargers über die HTTP-API ab EVCC Version >= 300.3
+### Verknüpfen des WARP Chargers über die HTTP-API ab EVCC Version >= 300.4
 
 Im Webinterface von EVCC muss in der Konfiguration (Laden & Heizen) / Wallbox nun nichts weiter eingegeben werden als die IP-Adresse oder der mDNS Hostname.
 
