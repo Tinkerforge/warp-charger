@@ -6,8 +6,8 @@ sidebar_position: 1
 
 :::note
 
-Diese Beschriebung bezieht sich auf den WARP3 Charger. Für Informationen zu älteren
-Modellen, also dem WARP2 Charger oder WARP1 Charger, kann auf die 
+Diese Beschreibung bezieht sich auf den WARP3 Charger. Für Informationen zu älteren
+Modellen, also dem WARP2 Charger oder WARP1 Charger, kann auf die
 jeweilige Betriebsanleitung unter https://warp-charger.com/downloads zurückgegriffen werden.
 
 :::
