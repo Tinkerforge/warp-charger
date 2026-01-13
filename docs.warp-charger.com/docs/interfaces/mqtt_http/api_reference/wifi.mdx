@@ -132,14 +132,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_start`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
-        Zeit in Millisekunden zu der die letzte Verbindung aufgebaut wurde.
+        Zeit in Millisekunden, zu der die letzte Verbindung aufgebaut wurde.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_end`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
-        Zeit in Millisekunden zu der die letzte Verbindung getrennt wurde.
+        Zeit in Millisekunden, zu der die letzte Verbindung getrennt wurde.
     </td>
 </tr>
     </tbody>
@@ -305,7 +305,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_sta`<br/>bool</th>
     <td>
-        Gibt an ob eine WLAN-Verbindung zum konfigurierten Netzwerk aufgebaut werden soll.
+        Gibt an, ob eine WLAN-Verbindung zum konfigurierten Netzwerk aufgebaut werden soll.
         - **true** - Wenn eine WLAN-Verbindung aufgebaut werden soll.
         - **false** - Wenn nicht.
     </td>
@@ -314,14 +314,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
     <td>
-        SSID zu der sich verbunden werden soll.
+        SSID, zu der sich verbunden werden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`bssid`<br/>int[6]</th>
     <td>
-        BSSID zu der sich verbunden werden soll. Dieser Eintrag ist optional und kann leer übergeben werden, wird aber für das bssid_lock benötigt.
+        BSSID, zu der sich verbunden werden soll. Dieser Eintrag ist optional und kann leer übergeben werden, wird aber für das bssid_lock benötigt.
     </td>
 </tr>
 
@@ -330,7 +330,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
     <td>
         Legt fest, ob sich nur zum WLAN mit der gesetzten BSSID verbunden werden soll. Deaktiviert lassen, falls Repeater o.Ä. verwendet werden sollen.
         - **true** - Verbindet sich nur zum Access Point mit der übergebenen BSSID.
-        - **false** - Verbindet sich nur zu jedem Access Point mit der konfigurierten SSID, z.B. mit Repeatern.
+        - **false** - Verbindet sich zu jedem Access Point mit der konfigurierten SSID, z.B. mit Repeatern.
     </td>
 </tr>
 
@@ -408,7 +408,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`ca_cert_id`<br/>int</th>
             <td>
-                ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des CA-Zertifikats, das zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
@@ -422,14 +422,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_cert_id`<br/>int</th>
             <td>
-                ID des Client-Zertifikats mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Client-Zertifikats, mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_key_id`<br/>int</th>
             <td>
-                ID des Zertifikats-Keys mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Zertifikats-Keys, mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
             </tbody>
@@ -450,7 +450,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`ca_cert_id`<br/>int</th>
             <td>
-                ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des CA-Zertifikats, das zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
@@ -478,14 +478,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_cert_id`<br/>int</th>
             <td>
-                ID des Client-Zertifikats mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Client-Zertifikats, mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_key_id`<br/>int</th>
             <td>
-                ID des Zertifikats-Keys mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Zertifikats-Keys, mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
             </tbody>
@@ -611,7 +611,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/ap_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_ap`<br/>bool</th>
     <td>
-        Gibt an ob der Access Point aktiviert werden soll.
+        Gibt an, ob der Access Point aktiviert werden soll.
         - **true** - Der AP soll aktiviert werden. Ggfalls. nur als Fallback (siehe ap_fallback_only)
         - **false** - Der AP soll immer deaktiviert bleiben.
     </td>
@@ -620,7 +620,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/ap_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ap_fallback_only`<br/>bool</th>
     <td>
-        Gibt an ob der Access Point nur aktiviert werden soll, falls die WLAN- und LAN-Verbindungen nicht aufgebaut werden können. Wird ignoriert, falls enable_ap false ist.
+        Gibt an, ob der Access Point nur aktiviert werden soll, falls die WLAN- und LAN-Verbindungen nicht aufgebaut werden können. Wird ignoriert, falls enable_ap false ist.
         - **true** - Der AP soll nur aktiviert werden, falls die WLAN- und LAN-Verbindungen nicht aufgebaut werden können.
         - **false** - Der AP soll immer aktiviert bleiben.
     </td>
@@ -629,7 +629,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/ap_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
     <td>
-        SSID zu der sich verbunden werden soll.
+        SSID, zu der sich verbunden werden soll.
     </td>
 </tr>
 
@@ -650,7 +650,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/ap_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`channel`<br/>int</th>
     <td>
-        Kanal, auf dem der Access Point erreichbar sein soll. Gültige Werte sind 1 bis 13 und 0, falls beim Start ein möglichst unbelegter Kanal ausgewählt werden soll.
+        Kanal, auf dem der Access Point erreichbar sein soll. Gültige Werte sind 1 bis 13 oder 0, falls beim Start ein möglichst unbelegter Kanal ausgewählt werden soll.
     </td>
 </tr>
 
@@ -928,14 +928,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_start`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
-        Zeit in Millisekunden zu der die letzte Verbindung aufgebaut wurde.
+        Zeit in Millisekunden, zu der die letzte Verbindung aufgebaut wurde.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_end`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
-        Zeit in Millisekunden zu der die letzte Verbindung getrennt wurde.
+        Zeit in Millisekunden, zu der die letzte Verbindung getrennt wurde.
     </td>
 </tr>
     </tbody>
@@ -1101,7 +1101,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_sta`<br/>bool</th>
     <td>
-        Gibt an ob eine WLAN-Verbindung zum konfigurierten Netzwerk aufgebaut werden soll.
+        Gibt an, ob eine WLAN-Verbindung zum konfigurierten Netzwerk aufgebaut werden soll.
         - **true** - Wenn eine WLAN-Verbindung aufgebaut werden soll.
         - **false** - Wenn nicht.
     </td>
@@ -1110,14 +1110,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
     <td>
-        SSID zu der sich verbunden werden soll.
+        SSID, zu der sich verbunden werden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`bssid`<br/>int[6]</th>
     <td>
-        BSSID zu der sich verbunden werden soll. Dieser Eintrag ist optional und kann leer übergeben werden, wird aber für das bssid_lock benötigt.
+        BSSID, zu der sich verbunden werden soll. Dieser Eintrag ist optional und kann leer übergeben werden, wird aber für das bssid_lock benötigt.
     </td>
 </tr>
 
@@ -1126,7 +1126,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
     <td>
         Legt fest, ob sich nur zum WLAN mit der gesetzten BSSID verbunden werden soll. Deaktiviert lassen, falls Repeater o.Ä. verwendet werden sollen.
         - **true** - Verbindet sich nur zum Access Point mit der übergebenen BSSID.
-        - **false** - Verbindet sich nur zu jedem Access Point mit der konfigurierten SSID, z.B. mit Repeatern.
+        - **false** - Verbindet sich zu jedem Access Point mit der konfigurierten SSID, z.B. mit Repeatern.
     </td>
 </tr>
 
@@ -1204,7 +1204,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`ca_cert_id`<br/>int</th>
             <td>
-                ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des CA-Zertifikats, das zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
@@ -1218,14 +1218,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_cert_id`<br/>int</th>
             <td>
-                ID des Client-Zertifikats mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Client-Zertifikats, mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_key_id`<br/>int</th>
             <td>
-                ID des Zertifikats-Keys mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Zertifikats-Keys, mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
             </tbody>
@@ -1246,7 +1246,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`ca_cert_id`<br/>int</th>
             <td>
-                ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des CA-Zertifikats, das zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
@@ -1274,14 +1274,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_cert_id`<br/>int</th>
             <td>
-                ID des Client-Zertifikats mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Client-Zertifikats, mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_key_id`<br/>int</th>
             <td>
-                ID des Zertifikats-Keys mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Zertifikats-Keys, mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
             </tbody>
@@ -1407,7 +1407,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/ap_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_ap`<br/>bool</th>
     <td>
-        Gibt an ob der Access Point aktiviert werden soll.
+        Gibt an, ob der Access Point aktiviert werden soll.
         - **true** - Der AP soll aktiviert werden. Ggfalls. nur als Fallback (siehe ap_fallback_only)
         - **false** - Der AP soll immer deaktiviert bleiben.
     </td>
@@ -1416,7 +1416,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/ap_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ap_fallback_only`<br/>bool</th>
     <td>
-        Gibt an ob der Access Point nur aktiviert werden soll, falls die WLAN- und LAN-Verbindungen nicht aufgebaut werden können. Wird ignoriert, falls enable_ap false ist.
+        Gibt an, ob der Access Point nur aktiviert werden soll, falls die WLAN- und LAN-Verbindungen nicht aufgebaut werden können. Wird ignoriert, falls enable_ap false ist.
         - **true** - Der AP soll nur aktiviert werden, falls die WLAN- und LAN-Verbindungen nicht aufgebaut werden können.
         - **false** - Der AP soll immer aktiviert bleiben.
     </td>
@@ -1425,7 +1425,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/ap_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
     <td>
-        SSID zu der sich verbunden werden soll.
+        SSID, zu der sich verbunden werden soll.
     </td>
 </tr>
 
@@ -1446,7 +1446,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/ap_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`channel`<br/>int</th>
     <td>
-        Kanal, auf dem der Access Point erreichbar sein soll. Gültige Werte sind 1 bis 13 und 0, falls beim Start ein möglichst unbelegter Kanal ausgewählt werden soll.
+        Kanal, auf dem der Access Point erreichbar sein soll. Gültige Werte sind 1 bis 13 oder 0, falls beim Start ein möglichst unbelegter Kanal ausgewählt werden soll.
     </td>
 </tr>
 
@@ -1724,14 +1724,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_start`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
-        Zeit in Millisekunden zu der die letzte Verbindung aufgebaut wurde.
+        Zeit in Millisekunden, zu der die letzte Verbindung aufgebaut wurde.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_end`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
-        Zeit in Millisekunden zu der die letzte Verbindung getrennt wurde.
+        Zeit in Millisekunden, zu der die letzte Verbindung getrennt wurde.
     </td>
 </tr>
     </tbody>
@@ -1897,7 +1897,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_sta`<br/>bool</th>
     <td>
-        Gibt an ob eine WLAN-Verbindung zum konfigurierten Netzwerk aufgebaut werden soll.
+        Gibt an, ob eine WLAN-Verbindung zum konfigurierten Netzwerk aufgebaut werden soll.
         - **true** - Wenn eine WLAN-Verbindung aufgebaut werden soll.
         - **false** - Wenn nicht.
     </td>
@@ -1906,14 +1906,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
     <td>
-        SSID zu der sich verbunden werden soll.
+        SSID, zu der sich verbunden werden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`bssid`<br/>int[6]</th>
     <td>
-        BSSID zu der sich verbunden werden soll. Dieser Eintrag ist optional und kann leer übergeben werden, wird aber für das bssid_lock benötigt.
+        BSSID, zu der sich verbunden werden soll. Dieser Eintrag ist optional und kann leer übergeben werden, wird aber für das bssid_lock benötigt.
     </td>
 </tr>
 
@@ -1922,7 +1922,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
     <td>
         Legt fest, ob sich nur zum WLAN mit der gesetzten BSSID verbunden werden soll. Deaktiviert lassen, falls Repeater o.Ä. verwendet werden sollen.
         - **true** - Verbindet sich nur zum Access Point mit der übergebenen BSSID.
-        - **false** - Verbindet sich nur zu jedem Access Point mit der konfigurierten SSID, z.B. mit Repeatern.
+        - **false** - Verbindet sich zu jedem Access Point mit der konfigurierten SSID, z.B. mit Repeatern.
     </td>
 </tr>
 
@@ -2000,7 +2000,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`ca_cert_id`<br/>int</th>
             <td>
-                ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des CA-Zertifikats, das zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
@@ -2014,14 +2014,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_cert_id`<br/>int</th>
             <td>
-                ID des Client-Zertifikats mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Client-Zertifikats, mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_key_id`<br/>int</th>
             <td>
-                ID des Zertifikats-Keys mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Zertifikats-Keys, mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
             </tbody>
@@ -2042,7 +2042,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`ca_cert_id`<br/>int</th>
             <td>
-                ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des CA-Zertifikats, das zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
@@ -2070,14 +2070,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_cert_id`<br/>int</th>
             <td>
-                ID des Client-Zertifikats mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Client-Zertifikats, mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_key_id`<br/>int</th>
             <td>
-                ID des Zertifikats-Keys mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Zertifikats-Keys, mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
             </tbody>
@@ -2203,7 +2203,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/ap_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_ap`<br/>bool</th>
     <td>
-        Gibt an ob der Access Point aktiviert werden soll.
+        Gibt an, ob der Access Point aktiviert werden soll.
         - **true** - Der AP soll aktiviert werden. Ggfalls. nur als Fallback (siehe ap_fallback_only)
         - **false** - Der AP soll immer deaktiviert bleiben.
     </td>
@@ -2212,7 +2212,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/ap_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ap_fallback_only`<br/>bool</th>
     <td>
-        Gibt an ob der Access Point nur aktiviert werden soll, falls die WLAN- und LAN-Verbindungen nicht aufgebaut werden können. Wird ignoriert, falls enable_ap false ist.
+        Gibt an, ob der Access Point nur aktiviert werden soll, falls die WLAN- und LAN-Verbindungen nicht aufgebaut werden können. Wird ignoriert, falls enable_ap false ist.
         - **true** - Der AP soll nur aktiviert werden, falls die WLAN- und LAN-Verbindungen nicht aufgebaut werden können.
         - **false** - Der AP soll immer aktiviert bleiben.
     </td>
@@ -2221,7 +2221,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/ap_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
     <td>
-        SSID zu der sich verbunden werden soll.
+        SSID, zu der sich verbunden werden soll.
     </td>
 </tr>
 
@@ -2242,7 +2242,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/ap_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`channel`<br/>int</th>
     <td>
-        Kanal, auf dem der Access Point erreichbar sein soll. Gültige Werte sind 1 bis 13 und 0, falls beim Start ein möglichst unbelegter Kanal ausgewählt werden soll.
+        Kanal, auf dem der Access Point erreichbar sein soll. Gültige Werte sind 1 bis 13 oder 0, falls beim Start ein möglichst unbelegter Kanal ausgewählt werden soll.
     </td>
 </tr>
 
@@ -2520,14 +2520,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_start`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
-        Zeit in Millisekunden zu der die letzte Verbindung aufgebaut wurde.
+        Zeit in Millisekunden, zu der die letzte Verbindung aufgebaut wurde.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_end`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
-        Zeit in Millisekunden zu der die letzte Verbindung getrennt wurde.
+        Zeit in Millisekunden, zu der die letzte Verbindung getrennt wurde.
     </td>
 </tr>
     </tbody>
@@ -2693,7 +2693,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_sta`<br/>bool</th>
     <td>
-        Gibt an ob eine WLAN-Verbindung zum konfigurierten Netzwerk aufgebaut werden soll.
+        Gibt an, ob eine WLAN-Verbindung zum konfigurierten Netzwerk aufgebaut werden soll.
         - **true** - Wenn eine WLAN-Verbindung aufgebaut werden soll.
         - **false** - Wenn nicht.
     </td>
@@ -2702,14 +2702,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
     <td>
-        SSID zu der sich verbunden werden soll.
+        SSID, zu der sich verbunden werden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`bssid`<br/>int[6]</th>
     <td>
-        BSSID zu der sich verbunden werden soll. Dieser Eintrag ist optional und kann leer übergeben werden, wird aber für das bssid_lock benötigt.
+        BSSID, zu der sich verbunden werden soll. Dieser Eintrag ist optional und kann leer übergeben werden, wird aber für das bssid_lock benötigt.
     </td>
 </tr>
 
@@ -2718,7 +2718,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
     <td>
         Legt fest, ob sich nur zum WLAN mit der gesetzten BSSID verbunden werden soll. Deaktiviert lassen, falls Repeater o.Ä. verwendet werden sollen.
         - **true** - Verbindet sich nur zum Access Point mit der übergebenen BSSID.
-        - **false** - Verbindet sich nur zu jedem Access Point mit der konfigurierten SSID, z.B. mit Repeatern.
+        - **false** - Verbindet sich zu jedem Access Point mit der konfigurierten SSID, z.B. mit Repeatern.
     </td>
 </tr>
 
@@ -2796,7 +2796,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`ca_cert_id`<br/>int</th>
             <td>
-                ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des CA-Zertifikats, das zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
@@ -2810,14 +2810,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_cert_id`<br/>int</th>
             <td>
-                ID des Client-Zertifikats mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Client-Zertifikats, mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_key_id`<br/>int</th>
             <td>
-                ID des Zertifikats-Keys mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Zertifikats-Keys, mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
             </tbody>
@@ -2838,7 +2838,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`ca_cert_id`<br/>int</th>
             <td>
-                ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des CA-Zertifikats, das zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
@@ -2866,14 +2866,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_cert_id`<br/>int</th>
             <td>
-                ID des Client-Zertifikats mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Client-Zertifikats, mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_key_id`<br/>int</th>
             <td>
-                ID des Zertifikats-Keys mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Zertifikats-Keys, mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
             </tbody>
@@ -2905,7 +2905,7 @@ Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deak
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_ap`<br/>bool</th>
     <td>
-        Gibt an ob der Access Point aktiviert werden soll.
+        Gibt an, ob der Access Point aktiviert werden soll.
         - **true** - Der AP soll aktiviert werden. Ggfalls. nur als Fallback (siehe ap_fallback_only)
         - **false** - Der AP soll immer deaktiviert bleiben.
     </td>
@@ -2914,7 +2914,7 @@ Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deak
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ap_fallback_only`<br/>bool</th>
     <td>
-        Gibt an ob der Access Point nur aktiviert werden soll, falls die WLAN- und LAN-Verbindungen nicht aufgebaut werden können. Wird ignoriert, falls enable_ap false ist.
+        Gibt an, ob der Access Point nur aktiviert werden soll, falls die WLAN- und LAN-Verbindungen nicht aufgebaut werden können. Wird ignoriert, falls enable_ap false ist.
         - **true** - Der AP soll nur aktiviert werden, falls die WLAN- und LAN-Verbindungen nicht aufgebaut werden können.
         - **false** - Der AP soll immer aktiviert bleiben.
     </td>
@@ -2923,7 +2923,7 @@ Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deak
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
     <td>
-        SSID zu der sich verbunden werden soll.
+        SSID, zu der sich verbunden werden soll.
     </td>
 </tr>
 
@@ -2944,7 +2944,7 @@ Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deak
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`channel`<br/>int</th>
     <td>
-        Kanal, auf dem der Access Point erreichbar sein soll. Gültige Werte sind 1 bis 13 und 0, falls beim Start ein möglichst unbelegter Kanal ausgewählt werden soll.
+        Kanal, auf dem der Access Point erreichbar sein soll. Gültige Werte sind 1 bis 13 oder 0, falls beim Start ein möglichst unbelegter Kanal ausgewählt werden soll.
     </td>
 </tr>
 
@@ -3222,14 +3222,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_start`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
-        Zeit in Millisekunden zu der die letzte Verbindung aufgebaut wurde.
+        Zeit in Millisekunden, zu der die letzte Verbindung aufgebaut wurde.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_end`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
-        Zeit in Millisekunden zu der die letzte Verbindung getrennt wurde.
+        Zeit in Millisekunden, zu der die letzte Verbindung getrennt wurde.
     </td>
 </tr>
     </tbody>
@@ -3395,7 +3395,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_sta`<br/>bool</th>
     <td>
-        Gibt an ob eine WLAN-Verbindung zum konfigurierten Netzwerk aufgebaut werden soll.
+        Gibt an, ob eine WLAN-Verbindung zum konfigurierten Netzwerk aufgebaut werden soll.
         - **true** - Wenn eine WLAN-Verbindung aufgebaut werden soll.
         - **false** - Wenn nicht.
     </td>
@@ -3404,14 +3404,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
     <td>
-        SSID zu der sich verbunden werden soll.
+        SSID, zu der sich verbunden werden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`bssid`<br/>int[6]</th>
     <td>
-        BSSID zu der sich verbunden werden soll. Dieser Eintrag ist optional und kann leer übergeben werden, wird aber für das bssid_lock benötigt.
+        BSSID, zu der sich verbunden werden soll. Dieser Eintrag ist optional und kann leer übergeben werden, wird aber für das bssid_lock benötigt.
     </td>
 </tr>
 
@@ -3420,7 +3420,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
     <td>
         Legt fest, ob sich nur zum WLAN mit der gesetzten BSSID verbunden werden soll. Deaktiviert lassen, falls Repeater o.Ä. verwendet werden sollen.
         - **true** - Verbindet sich nur zum Access Point mit der übergebenen BSSID.
-        - **false** - Verbindet sich nur zu jedem Access Point mit der konfigurierten SSID, z.B. mit Repeatern.
+        - **false** - Verbindet sich zu jedem Access Point mit der konfigurierten SSID, z.B. mit Repeatern.
     </td>
 </tr>
 
@@ -3498,7 +3498,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`ca_cert_id`<br/>int</th>
             <td>
-                ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des CA-Zertifikats, das zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
@@ -3512,14 +3512,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_cert_id`<br/>int</th>
             <td>
-                ID des Client-Zertifikats mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Client-Zertifikats, mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_key_id`<br/>int</th>
             <td>
-                ID des Zertifikats-Keys mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Zertifikats-Keys, mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
             </tbody>
@@ -3540,7 +3540,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`ca_cert_id`<br/>int</th>
             <td>
-                ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des CA-Zertifikats, das zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
@@ -3568,14 +3568,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_cert_id`<br/>int</th>
             <td>
-                ID des Client-Zertifikats mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Client-Zertifikats, mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_key_id`<br/>int</th>
             <td>
-                ID des Zertifikats-Keys mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Zertifikats-Keys, mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
             </tbody>
@@ -3607,7 +3607,7 @@ Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deak
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_ap`<br/>bool</th>
     <td>
-        Gibt an ob der Access Point aktiviert werden soll.
+        Gibt an, ob der Access Point aktiviert werden soll.
         - **true** - Der AP soll aktiviert werden. Ggfalls. nur als Fallback (siehe ap_fallback_only)
         - **false** - Der AP soll immer deaktiviert bleiben.
     </td>
@@ -3616,7 +3616,7 @@ Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deak
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ap_fallback_only`<br/>bool</th>
     <td>
-        Gibt an ob der Access Point nur aktiviert werden soll, falls die WLAN- und LAN-Verbindungen nicht aufgebaut werden können. Wird ignoriert, falls enable_ap false ist.
+        Gibt an, ob der Access Point nur aktiviert werden soll, falls die WLAN- und LAN-Verbindungen nicht aufgebaut werden können. Wird ignoriert, falls enable_ap false ist.
         - **true** - Der AP soll nur aktiviert werden, falls die WLAN- und LAN-Verbindungen nicht aufgebaut werden können.
         - **false** - Der AP soll immer aktiviert bleiben.
     </td>
@@ -3625,7 +3625,7 @@ Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deak
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
     <td>
-        SSID zu der sich verbunden werden soll.
+        SSID, zu der sich verbunden werden soll.
     </td>
 </tr>
 
@@ -3646,7 +3646,7 @@ Die WLAN-Access-Point-Konfiguration. <strong>Achtung! Wenn der Access Point deak
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`channel`<br/>int</th>
     <td>
-        Kanal, auf dem der Access Point erreichbar sein soll. Gültige Werte sind 1 bis 13 und 0, falls beim Start ein möglichst unbelegter Kanal ausgewählt werden soll.
+        Kanal, auf dem der Access Point erreichbar sein soll. Gültige Werte sind 1 bis 13 oder 0, falls beim Start ein möglichst unbelegter Kanal ausgewählt werden soll.
     </td>
 </tr>
 
@@ -3930,14 +3930,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/wifi/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_start`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
-        Zeit in Millisekunden zu der die letzte Verbindung aufgebaut wurde.
+        Zeit in Millisekunden, zu der die letzte Verbindung aufgebaut wurde.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`connection_end`<br/>int (<abbr title="Millisekunde">ms</abbr>)</th>
     <td>
-        Zeit in Millisekunden zu der die letzte Verbindung getrennt wurde.
+        Zeit in Millisekunden, zu der die letzte Verbindung getrennt wurde.
     </td>
 </tr>
     </tbody>
@@ -4103,7 +4103,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_sta`<br/>bool</th>
     <td>
-        Gibt an ob eine WLAN-Verbindung zum konfigurierten Netzwerk aufgebaut werden soll.
+        Gibt an, ob eine WLAN-Verbindung zum konfigurierten Netzwerk aufgebaut werden soll.
         
         
         
@@ -4115,14 +4115,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
     <td>
-        SSID zu der sich verbunden werden soll.
+        SSID, zu der sich verbunden werden soll.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`bssid`<br/>int[6]</th>
     <td>
-        BSSID zu der sich verbunden werden soll. Dieser Eintrag ist optional und kann leer übergeben werden, wird aber für das bssid_lock benötigt.
+        BSSID, zu der sich verbunden werden soll. Dieser Eintrag ist optional und kann leer übergeben werden, wird aber für das bssid_lock benötigt.
     </td>
 </tr>
 
@@ -4134,7 +4134,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         
         
         - **true** - Verbindet sich nur zum Access Point mit der übergebenen BSSID.
-        - **false** - Verbindet sich nur zu jedem Access Point mit der konfigurierten SSID, z.B. mit Repeatern.
+        - **false** - Verbindet sich zu jedem Access Point mit der konfigurierten SSID, z.B. mit Repeatern.
     </td>
 </tr>
 
@@ -4215,7 +4215,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`ca_cert_id`<br/>int</th>
             <td>
-                ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des CA-Zertifikats, das zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
@@ -4229,14 +4229,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_cert_id`<br/>int</th>
             <td>
-                ID des Client-Zertifikats mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Client-Zertifikats, mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_key_id`<br/>int</th>
             <td>
-                ID des Zertifikats-Keys mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Zertifikats-Keys, mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
             </tbody>
@@ -4257,7 +4257,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`ca_cert_id`<br/>int</th>
             <td>
-                ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des CA-Zertifikats, das zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
@@ -4285,14 +4285,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/sta_config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_cert_id`<br/>int</th>
             <td>
-                ID des Client-Zertifikats mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Client-Zertifikats, mit dem sich beim RADIUS-Server autorisiert werden soll. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`client_key_id`<br/>int</th>
             <td>
-                ID des Zertifikats-Keys mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
+                ID des Zertifikats-Keys, mit dem das Client-Zertifikat verschlüsselt ist. (Optional) Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state)
             </td>
         </tr>
             </tbody>
@@ -4418,7 +4418,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/ap_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_ap`<br/>bool</th>
     <td>
-        Gibt an ob der Access Point aktiviert werden soll.
+        Gibt an, ob der Access Point aktiviert werden soll.
         
         
         
@@ -4430,7 +4430,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/ap_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ap_fallback_only`<br/>bool</th>
     <td>
-        Gibt an ob der Access Point nur aktiviert werden soll, falls die WLAN- und LAN-Verbindungen nicht aufgebaut werden können. Wird ignoriert, falls enable_ap false ist.
+        Gibt an, ob der Access Point nur aktiviert werden soll, falls die WLAN- und LAN-Verbindungen nicht aufgebaut werden können. Wird ignoriert, falls enable_ap false ist.
         
         
         
@@ -4442,7 +4442,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/ap_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`ssid`<br/>string</th>
     <td>
-        SSID zu der sich verbunden werden soll.
+        SSID, zu der sich verbunden werden soll.
     </td>
 </tr>
 
@@ -4463,7 +4463,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/wifi/ap_config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`channel`<br/>int</th>
     <td>
-        Kanal, auf dem der Access Point erreichbar sein soll. Gültige Werte sind 1 bis 13 und 0, falls beim Start ein möglichst unbelegter Kanal ausgewählt werden soll.
+        Kanal, auf dem der Access Point erreichbar sein soll. Gültige Werte sind 1 bis 13 oder 0, falls beim Start ein möglichst unbelegter Kanal ausgewählt werden soll.
     </td>
 </tr>
 

@@ -150,7 +150,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/day_ahead_prices/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
     <td>
-        Auflösung der dynamischen Strompreise.
+        Zeitliche Auflösung der dynamischen Strompreise.
         - **0** - 15 Minuten
         - **1** - 60 Minuten
     </td>
@@ -159,14 +159,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/day_ahead_prices/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`cert_id`<br/>int</th>
     <td>
-        ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state).
+        ID des CA-Zertifikats, das zur Prüfung des Zertifikats des Strompreis-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state).
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`vat`<br/>int (<abbr title="Hundertstel Prozent">%/100</abbr>)</th>
     <td>
-        Mehrwersteuersatz der auf den Börsenstrompreis anfällt.
+        Mehrwersteuersatz, der auf den Börsenstrompreis anfällt.
     </td>
 </tr>
 
@@ -180,14 +180,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/day_ahead_prices/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`supplier_markup`<br/>int (<abbr title="Tausendstel Cent pro Kilowattstunde">ct/kWh/1000</abbr>)</th>
     <td>
-        Stromanbieter Preisaufschlag (brutto falls MwSt-Satz angegeben ist).
+        Stromanbieter-Preisaufschlag (brutto falls MwSt-Satz angegeben ist).
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`supplier_base_fee`<br/>int (<abbr title="Cent pro Monat">ct/Monat</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`supplier_base_fee`<br/>int (<abbr title="Cent pro Monat">ct/M</abbr>)</th>
     <td>
-        Stromanbieter Grundgebühr
+        Stromanbieter-Grundgebühr
     </td>
 </tr>
     </tbody>
@@ -246,21 +246,21 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/day_ahead_prices/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`last_sync`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die Börsenstrompreise das letzte Mal aktualisiert wurden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die Börsenstrompreise das letzte Mal aktualisiert wurden.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`last_check`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die Börsenstrompreise das letzte Mal abgefragt wurden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die Börsenstrompreise das letzte Mal abgefragt wurden.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`next_check`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die Börsenstrompreise das nächste Mal abgefragt werden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die Börsenstrompreise das nächste Mal abgefragt werden.
     </td>
 </tr>
 
@@ -332,14 +332,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/day_ahead_prices/prices
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`first_date`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt zu welchem Zeitpunkt der erste Preise im `prices`-Array gilt.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, zu welchem Zeitpunkt der erste Preise im `prices`-Array gilt.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
     <td>
-        Auflösung der dynamischen Strompreise im `prices`-Array.
+        Zeitliche Auflösung der dynamischen Strompreise im `prices`-Array.
         - **0** - 15 Minuten
         - **1** - 60 Minuten
     </td>
@@ -348,7 +348,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/day_ahead_prices/prices
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`prices`<br/>int[200] (<abbr title="Tausendstel Cent pro Kilowattstunde">ct/kWh/1000</abbr>)</th>
     <td>
-        Array von dynamischen Strompreisen für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest wie weit die Elemente zueinander zeitlich versetzt sind.
+        Array von dynamischen Strompreisen für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest, wie weit die Elemente zueinander zeitlich versetzt sind.
     </td>
 </tr>
     </tbody>
@@ -491,7 +491,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/day_ahead_prices/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
     <td>
-        Auflösung der dynamischen Strompreise.
+        Zeitliche Auflösung der dynamischen Strompreise.
         - **0** - 15 Minuten
         - **1** - 60 Minuten
     </td>
@@ -500,14 +500,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/day_ahead_prices/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`cert_id`<br/>int</th>
     <td>
-        ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state).
+        ID des CA-Zertifikats, das zur Prüfung des Zertifikats des Strompreis-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state).
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`vat`<br/>int (<abbr title="Hundertstel Prozent">%/100</abbr>)</th>
     <td>
-        Mehrwersteuersatz der auf den Börsenstrompreis anfällt.
+        Mehrwersteuersatz, der auf den Börsenstrompreis anfällt.
     </td>
 </tr>
 
@@ -521,14 +521,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/day_ahead_prices/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`supplier_markup`<br/>int (<abbr title="Tausendstel Cent pro Kilowattstunde">ct/kWh/1000</abbr>)</th>
     <td>
-        Stromanbieter Preisaufschlag (brutto falls MwSt-Satz angegeben ist).
+        Stromanbieter-Preisaufschlag (brutto falls MwSt-Satz angegeben ist).
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`supplier_base_fee`<br/>int (<abbr title="Cent pro Monat">ct/Monat</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`supplier_base_fee`<br/>int (<abbr title="Cent pro Monat">ct/M</abbr>)</th>
     <td>
-        Stromanbieter Grundgebühr
+        Stromanbieter-Grundgebühr
     </td>
 </tr>
     </tbody>
@@ -587,21 +587,21 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/day_ahead_prices/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`last_sync`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die Börsenstrompreise das letzte Mal aktualisiert wurden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die Börsenstrompreise das letzte Mal aktualisiert wurden.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`last_check`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die Börsenstrompreise das letzte Mal abgefragt wurden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die Börsenstrompreise das letzte Mal abgefragt wurden.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`next_check`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die Börsenstrompreise das nächste Mal abgefragt werden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die Börsenstrompreise das nächste Mal abgefragt werden.
     </td>
 </tr>
 
@@ -673,14 +673,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/day_ahead_prices/prices
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`first_date`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt zu welchem Zeitpunkt der erste Preise im `prices`-Array gilt.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, zu welchem Zeitpunkt der erste Preise im `prices`-Array gilt.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
     <td>
-        Auflösung der dynamischen Strompreise im `prices`-Array.
+        Zeitliche Auflösung der dynamischen Strompreise im `prices`-Array.
         - **0** - 15 Minuten
         - **1** - 60 Minuten
     </td>
@@ -689,7 +689,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/day_ahead_prices/prices
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`prices`<br/>int[200] (<abbr title="Tausendstel Cent pro Kilowattstunde">ct/kWh/1000</abbr>)</th>
     <td>
-        Array von dynamischen Strompreisen für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest wie weit die Elemente zueinander zeitlich versetzt sind.
+        Array von dynamischen Strompreisen für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest, wie weit die Elemente zueinander zeitlich versetzt sind.
     </td>
 </tr>
     </tbody>
@@ -832,7 +832,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/day_ahead_prices/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
     <td>
-        Auflösung der dynamischen Strompreise.
+        Zeitliche Auflösung der dynamischen Strompreise.
         - **0** - 15 Minuten
         - **1** - 60 Minuten
     </td>
@@ -841,14 +841,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/day_ahead_prices/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`cert_id`<br/>int</th>
     <td>
-        ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state).
+        ID des CA-Zertifikats, das zur Prüfung des Zertifikats des Strompreis-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state).
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`vat`<br/>int (<abbr title="Hundertstel Prozent">%/100</abbr>)</th>
     <td>
-        Mehrwersteuersatz der auf den Börsenstrompreis anfällt.
+        Mehrwersteuersatz, der auf den Börsenstrompreis anfällt.
     </td>
 </tr>
 
@@ -862,14 +862,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/day_ahead_prices/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`supplier_markup`<br/>int (<abbr title="Tausendstel Cent pro Kilowattstunde">ct/kWh/1000</abbr>)</th>
     <td>
-        Stromanbieter Preisaufschlag (brutto falls MwSt-Satz angegeben ist).
+        Stromanbieter-Preisaufschlag (brutto falls MwSt-Satz angegeben ist).
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`supplier_base_fee`<br/>int (<abbr title="Cent pro Monat">ct/Monat</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`supplier_base_fee`<br/>int (<abbr title="Cent pro Monat">ct/M</abbr>)</th>
     <td>
-        Stromanbieter Grundgebühr
+        Stromanbieter-Grundgebühr
     </td>
 </tr>
     </tbody>
@@ -928,21 +928,21 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/day_ahead_prices/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`last_sync`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die Börsenstrompreise das letzte Mal aktualisiert wurden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die Börsenstrompreise das letzte Mal aktualisiert wurden.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`last_check`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die Börsenstrompreise das letzte Mal abgefragt wurden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die Börsenstrompreise das letzte Mal abgefragt wurden.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`next_check`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die Börsenstrompreise das nächste Mal abgefragt werden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die Börsenstrompreise das nächste Mal abgefragt werden.
     </td>
 </tr>
 
@@ -1014,14 +1014,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/day_ahead_prices/prices
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`first_date`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt zu welchem Zeitpunkt der erste Preise im `prices`-Array gilt.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, zu welchem Zeitpunkt der erste Preise im `prices`-Array gilt.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
     <td>
-        Auflösung der dynamischen Strompreise im `prices`-Array.
+        Zeitliche Auflösung der dynamischen Strompreise im `prices`-Array.
         - **0** - 15 Minuten
         - **1** - 60 Minuten
     </td>
@@ -1030,7 +1030,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/day_ahead_prices/prices
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`prices`<br/>int[200] (<abbr title="Tausendstel Cent pro Kilowattstunde">ct/kWh/1000</abbr>)</th>
     <td>
-        Array von dynamischen Strompreisen für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest wie weit die Elemente zueinander zeitlich versetzt sind.
+        Array von dynamischen Strompreisen für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest, wie weit die Elemente zueinander zeitlich versetzt sind.
     </td>
 </tr>
     </tbody>
@@ -1173,7 +1173,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/day_ahead_prices/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
     <td>
-        Auflösung der dynamischen Strompreise.
+        Zeitliche Auflösung der dynamischen Strompreise.
         - **0** - 15 Minuten
         - **1** - 60 Minuten
     </td>
@@ -1182,14 +1182,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/day_ahead_prices/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`cert_id`<br/>int</th>
     <td>
-        ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state).
+        ID des CA-Zertifikats, das zur Prüfung des Zertifikats des Strompreis-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state).
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`vat`<br/>int (<abbr title="Hundertstel Prozent">%/100</abbr>)</th>
     <td>
-        Mehrwersteuersatz der auf den Börsenstrompreis anfällt.
+        Mehrwersteuersatz, der auf den Börsenstrompreis anfällt.
     </td>
 </tr>
 
@@ -1203,14 +1203,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/day_ahead_prices/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`supplier_markup`<br/>int (<abbr title="Tausendstel Cent pro Kilowattstunde">ct/kWh/1000</abbr>)</th>
     <td>
-        Stromanbieter Preisaufschlag (brutto falls MwSt-Satz angegeben ist).
+        Stromanbieter-Preisaufschlag (brutto falls MwSt-Satz angegeben ist).
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`supplier_base_fee`<br/>int (<abbr title="Cent pro Monat">ct/Monat</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`supplier_base_fee`<br/>int (<abbr title="Cent pro Monat">ct/M</abbr>)</th>
     <td>
-        Stromanbieter Grundgebühr
+        Stromanbieter-Grundgebühr
     </td>
 </tr>
     </tbody>
@@ -1269,21 +1269,21 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/day_ahead_prices/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`last_sync`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die Börsenstrompreise das letzte Mal aktualisiert wurden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die Börsenstrompreise das letzte Mal aktualisiert wurden.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`last_check`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die Börsenstrompreise das letzte Mal abgefragt wurden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die Börsenstrompreise das letzte Mal abgefragt wurden.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`next_check`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die Börsenstrompreise das nächste Mal abgefragt werden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die Börsenstrompreise das nächste Mal abgefragt werden.
     </td>
 </tr>
 
@@ -1355,14 +1355,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/day_ahead_prices/prices
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`first_date`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt zu welchem Zeitpunkt der erste Preise im `prices`-Array gilt.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, zu welchem Zeitpunkt der erste Preise im `prices`-Array gilt.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
     <td>
-        Auflösung der dynamischen Strompreise im `prices`-Array.
+        Zeitliche Auflösung der dynamischen Strompreise im `prices`-Array.
         - **0** - 15 Minuten
         - **1** - 60 Minuten
     </td>
@@ -1371,7 +1371,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/day_ahead_prices/prices
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`prices`<br/>int[200] (<abbr title="Tausendstel Cent pro Kilowattstunde">ct/kWh/1000</abbr>)</th>
     <td>
-        Array von dynamischen Strompreisen für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest wie weit die Elemente zueinander zeitlich versetzt sind.
+        Array von dynamischen Strompreisen für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest, wie weit die Elemente zueinander zeitlich versetzt sind.
     </td>
 </tr>
     </tbody>
@@ -1517,7 +1517,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/day_ahead_prices/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
     <td>
-        Auflösung der dynamischen Strompreise.
+        Zeitliche Auflösung der dynamischen Strompreise.
         
         
         
@@ -1529,14 +1529,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/day_ahead_prices/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`cert_id`<br/>int</th>
     <td>
-        ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state).
+        ID des CA-Zertifikats, das zur Prüfung des Zertifikats des Strompreis-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state).
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`vat`<br/>int (<abbr title="Hundertstel Prozent">%/100</abbr>)</th>
     <td>
-        Mehrwersteuersatz der auf den Börsenstrompreis anfällt.
+        Mehrwersteuersatz, der auf den Börsenstrompreis anfällt.
     </td>
 </tr>
 
@@ -1550,14 +1550,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/day_ahead_prices/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`supplier_markup`<br/>int (<abbr title="Tausendstel Cent pro Kilowattstunde">ct/kWh/1000</abbr>)</th>
     <td>
-        Stromanbieter Preisaufschlag (brutto falls MwSt-Satz angegeben ist).
+        Stromanbieter-Preisaufschlag (brutto falls MwSt-Satz angegeben ist).
     </td>
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`supplier_base_fee`<br/>int (<abbr title="Cent pro Monat">ct/Monat</abbr>)</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`supplier_base_fee`<br/>int (<abbr title="Cent pro Monat">ct/M</abbr>)</th>
     <td>
-        Stromanbieter Grundgebühr
+        Stromanbieter-Grundgebühr
     </td>
 </tr>
     </tbody>
@@ -1616,21 +1616,21 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/day_ahead_prices/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`last_sync`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die Börsenstrompreise das letzte Mal aktualisiert wurden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die Börsenstrompreise das letzte Mal aktualisiert wurden.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`last_check`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die Börsenstrompreise das letzte Mal abgefragt wurden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die Börsenstrompreise das letzte Mal abgefragt wurden.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`next_check`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die Börsenstrompreise das nächste Mal abgefragt werden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die Börsenstrompreise das nächste Mal abgefragt werden.
     </td>
 </tr>
 
@@ -1702,14 +1702,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/day_ahead_prices/prices
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`first_date`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt zu welchem Zeitpunkt der erste Preise im `prices`-Array gilt.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, zu welchem Zeitpunkt der erste Preise im `prices`-Array gilt.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
     <td>
-        Auflösung der dynamischen Strompreise im `prices`-Array.
+        Zeitliche Auflösung der dynamischen Strompreise im `prices`-Array.
         
         
         
@@ -1721,7 +1721,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/day_ahead_prices/prices
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`prices`<br/>int[200] (<abbr title="Tausendstel Cent pro Kilowattstunde">ct/kWh/1000</abbr>)</th>
     <td>
-        Array von dynamischen Strompreisen für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest wie weit die Elemente zueinander zeitlich versetzt sind.
+        Array von dynamischen Strompreisen für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest, wie weit die Elemente zueinander zeitlich versetzt sind.
     </td>
 </tr>
     </tbody>

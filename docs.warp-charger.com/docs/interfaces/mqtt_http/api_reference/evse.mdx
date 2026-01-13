@@ -3037,7 +3037,10 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/low_level_state
         - **[17]** - DC X6
         - **[18]** - DC X30
         - **[19]** - LED
-        - **[20..23]** - Nicht belegt
+        - **[20]** - Nicht belegt
+        - **[21]** - Nicht belegt
+        - **[22]** - Nicht belegt
+        - **[23]** - Nicht belegt
     </td>
 </tr>
 
@@ -5994,7 +5997,10 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/low_level_state
         - **[17]** - Stromkonfiguration 0
         - **[18]** - Abschalteingang
         - **[19]** - Versionsdetektion
-        - **[20..23]** - Nicht belegt
+        - **[20]** - Nicht belegt
+        - **[21]** - Nicht belegt
+        - **[22]** - Nicht belegt
+        - **[23]** - Nicht belegt
     </td>
 </tr>
 
@@ -8374,14 +8380,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
     <td>
         Zustand der Schützüberwachung.
         
-        <strong>WARP 1 und WARP 2:</strong><br/>
+        <strong>(Nur WARP 1 und WARP 2)</strong> 
         
         - **0** - Nicht stromführend vor und nach dem Schütz
         - **1** - Stromführend vor, aber nicht stromführend nach dem Schütz
         - **2** - Nicht stromführend vor, aber stromführend nach dem Schütz
         - **3** - Stromführend vor und nach dem Schütz
         
-        <strong>WARP 3:</strong><br/>
+        <strong>(Nur WARP 3)</strong> 
         
         - **00000..11111** - Bitmaske, die den Schützzustand angibt. Von Bit 0 bis Bit 4:
                         - **0** - Schütz-L1+N-Hilfskontakt: (gibt an ob das Schütz geschaltet ist) 1 = geschlossen; 0 = geöffnet
@@ -8401,7 +8407,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
         
         - **0** - Kein Fehler
         
-        <strong>WARP 1 und WARP 2:</strong><br/>
+        <strong>(Nur WARP 1 und WARP 2)</strong> 
         
         - **1** - Schütz sollte durchschalten.<br/>Kein Strom vor Schütz, kein Strom nach Schütz.<br/>Stromversorgung prüfen.
         - **2** - Schütz sollte durchschalten.<br/>Strom vor Schütz, kein Strom nach Schütz.<br/>Schütz defekt?
@@ -8410,7 +8416,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
         - **5** - Schütz sollte <strong>nicht</strong> durchschalten.<br/>Kein Strom vor Schütz, Strom nach Schütz.<br/>Verkabelung prüfen.
         - **6** - Schütz sollte <strong>nicht</strong> durchschalten.<br/>Strom vor Schütz, Strom nach Schütz.<br/>Schütz defekt?
         
-        <strong>WARP 3:</strong><br/>
+        <strong>(Nur WARP 3)</strong> 
         
         - **1** - Schütz L2+L3 nicht durchgeschaltet.<br/>Beide Schütze sollten durchgeschaltet sein.
         - **2** - Schütz L1+N nicht durchgeschaltet.<br/>Beide Schütze sollten durchgeschaltet sein.
@@ -8566,16 +8572,16 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
     <td>
         Hardware-Version des Ladecontrollers
         
-        <strong>WARP 1:</strong><br/>
+        <strong>(Nur WARP 1)</strong> 
         
         - **14** - EVSE 1.4
         - **15** - EVSE 1.5
         
-        <strong>WARP 2:</strong><br/>
+        <strong>(Nur WARP 2)</strong> 
         
         - **20** - EVSE 2.0
         
-        <strong>WARP 3:</strong><br/>
+        <strong>(Nur WARP 3)</strong> 
         
         - **30** - EVSE 3.0
     </td>
@@ -8590,11 +8596,11 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
         
         - **0** - Kein Stromzähler verfügbar
         
-        <strong>WARP 1:</strong><br/>
+        <strong>(Nur WARP 1)</strong> 
         
         - **1** - SDM72
         
-        <strong>WARP 2 und WARP 3:</strong><br/>
+        <strong>(Nur WARP 2 und WARP 3)</strong> 
         
         - **2** - SDM630
         - **3** - SDM72V2
@@ -8886,7 +8892,7 @@ Zeigt 20 Sekunden lang das Blinkmuster 3xBlinken+längere Pause auf der LED im F
         - **-1** - EVSE kontrolliert LED
         - **0** - Aus
         
-        <strong>WARP 1 und WARP 2:</strong><br/>
+        <strong>(Nur WARP 1 und WARP 2)</strong> 
         
         - **1..254** - Per PWM gedimmtes leuchten
         - **255** - An
@@ -8895,7 +8901,7 @@ Zeigt 20 Sekunden lang das Blinkmuster 3xBlinken+längere Pause auf der LED im F
         - **1003** - Aufforderndes Blinken (z.B: NFC-Tag wird zum Laden benötigt)
         - **2001..2010** - Fehler-Blinken 1 bis 10.
         
-        <strong>WARP 3:</strong><br/>
+        <strong>(Nur WARP 3)</strong> 
         
         - **1..254** - Per PWM gedimmtes Leuchten; Standardfarbe Blau
         - **255** - An; Standardfarbe Blau
@@ -9019,12 +9025,12 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/low_level_state
     <td>
         16-Bit ADC-Rohwerte der Spannungsmessungen
         
-        <strong>WARP 1:</strong><br/>
+        <strong>(Nur WARP 1)</strong> 
         
         - **[0]** - CP/PE
         - **[1]** - PP/PE
         
-        <strong>WARP 2 und WARP 3:</strong><br/>
+        <strong>(Nur WARP 2 und WARP 3)</strong> 
         
         - **[0]** - CP/PE vor Widerstand (PWM High)
         - **[1]** - CP/PE nach Widerstand (PWM High)
@@ -9041,13 +9047,13 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/low_level_state
     <td>
         Aus den ADC-Werten berechnete Spannungen
         
-        <strong>WARP 1:</strong><br/>
+        <strong>(Nur WARP 1)</strong> 
         
         - **[0]** - CP/PE
         - **[1]** - PP/PE
         - **[2]** - Maximalspannung CP/PE
         
-        <strong>WARP 2 und WARP 3:</strong><br/>
+        <strong>(Nur WARP 2 und WARP 3)</strong> 
         
         - **[0]** - CP/PE vor Widerstand (PWM High)
         - **[1]** - CP/PE nach Widerstand (PWM High)
@@ -9076,7 +9082,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/low_level_state
     <td>
         Signale auf den GPIOs
         
-        <strong>WARP 1:</strong><br/>
+        <strong>(Nur WARP 1)</strong> 
         
         - **[0]** - Eingang
         - **[1]** - Ausgang
@@ -9084,7 +9090,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/low_level_state
         - **[3]** - Relais
         - **[4]** - Motorfehler
         
-        <strong>WARP 2:</strong><br/>
+        <strong>(Nur WARP 2)</strong> 
         
         - **[0]** - Stromkonfiguration 0
         - **[1]** - Motorfehler
@@ -9106,9 +9112,12 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/low_level_state
         - **[17]** - DC X6
         - **[18]** - DC X30
         - **[19]** - LED
-        - **[20..23]** - Nicht belegt
+        - **[20]** - Nicht belegt
+        - **[21]** - Nicht belegt
+        - **[22]** - Nicht belegt
+        - **[23]** - Nicht belegt
         
-        <strong>WARP 3:</strong><br/>
+        <strong>(Nur WARP 3)</strong> 
         
         - **[0]** - DC X30
         - **[1]** - DC X6
@@ -9130,7 +9139,10 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/low_level_state
         - **[17]** - Stromkonfiguration 0
         - **[18]** - Abschalteingang
         - **[19]** - Versionsdetektion
-        - **[20..23]** - Nicht belegt
+        - **[20]** - Nicht belegt
+        - **[21]** - Nicht belegt
+        - **[22]** - Nicht belegt
+        - **[23]** - Nicht belegt
     </td>
 </tr>
 

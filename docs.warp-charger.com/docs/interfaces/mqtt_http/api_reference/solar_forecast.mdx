@@ -116,7 +116,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`cert_id`<br/>int</th>
     <td>
-        ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state).
+        ID des CA-Zertifikats, das zur Prüfung des Zertifikats des Prognose-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state).
     </td>
 </tr>
     </tbody>
@@ -172,23 +172,44 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/state
     <tbody>
 
 <tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wh_today`<br/>int</th>
+    <td>
+        Gesamttagesvorhersage für heute über alle PV-Flächen in Wh. -1 falls keine Vorhersagedaten für heute verfügbar sind.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wh_today_remaining`<br/>int</th>
+    <td>
+        Verbleibende Energie der Tagesvorhersage von jetzt bis Mitternacht über alle PV-Flächen in Wh. -1 falls keine Vorhersagedaten für heute verfügbar sind.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wh_tomorrow`<br/>int</th>
+    <td>
+        Gesamttagesvorhersage für morgen über alle PV-Flächen in Wh. -1 falls keine Vorhersagedaten für morgen verfügbar sind.
+    </td>
+</tr>
+
+<tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`rate_limit`<br/>int</th>
     <td>
-        Gibt an wie viele API-Aufrufe alle zwei Stunden getätigt werden dürfen.
+        Gibt an, wie viele API-Aufrufe alle zwei Stunden getätigt werden dürfen.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`rate_remaining`<br/>int</th>
     <td>
-        Gibt an wie viele API-Aufrufe im aktuellen Zeitfenster getätigt wurden.
+        Gibt an, wie viele API-Aufrufe im aktuellen Zeitfenster getätigt wurden.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`next_api_call`<br/>int</th>
     <td>
-        Gibt an wann der nächste API-Aufruf getätigt wird.
+        Gibt an, wann der nächste API-Aufruf getätigt wird.
     </td>
 </tr>
     </tbody>
@@ -247,21 +268,21 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`last_sync`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die PV-Ertragsprognose das letzte Mal aktualisiert wurden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die PV-Ertragsprognose das letzte Mal aktualisiert wurde.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`last_check`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die PV-Ertragsprognose das letzte Mal abgefragt wurden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die PV-Ertragsprognose das letzte Mal abgefragt wurde.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`next_check`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die PV-Ertragsprognose das nächste Mal abgefragt werden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die PV-Ertragsprognose das nächste Mal abgefragt wird.
     </td>
 </tr>
 
@@ -386,21 +407,21 @@ mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/planes/X/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
     <td>
-        Anzeige der PV-Fläche.
+        Anzeigename der PV-Fläche.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`lat`<br/>int (<abbr title="Zehntausendstel Grad">°/10000</abbr>)</th>
     <td>
-        Breitengrad (z.B. 51,8847°)
+        Breitengrad (z.B. 51.8847°)
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`long`<br/>int (<abbr title="Zehntausendstel Grad">°/10000</abbr>)</th>
     <td>
-        Längengrad (z.B. 8,6225°)
+        Längengrad (z.B. 8.6225°)
     </td>
 </tr>
 
@@ -486,14 +507,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`first_date`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt zu welchem Zeitpunkt die erste PV-Ertragsprognose im `forecast`-Array gilt.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, zu welchem Zeitpunkt die erste PV-Ertragsprognose im `forecast`-Array gilt.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
     <td>
-        Auflösung der PV-Ertragsprognose im `forecast`-Array.
+        Zeitliche Auflösung der PV-Ertragsprognose im `forecast`-Array.
         - **0** - 15 Minuten
         - **1** - 60 Minuten
     </td>
@@ -502,7 +523,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`forecast`<br/>int[49] (<abbr title="Wattstunde">Wh</abbr>)</th>
     <td>
-        Array von PV-Ertragsprognose-Werten für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest wie weit die Elemente zueinander zeitlich versetzt sind.
+        Array von PV-Ertragsprognose-Werten für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest, wie weit die Elemente zueinander zeitlich versetzt sind.
     </td>
 </tr>
     </tbody>
@@ -611,7 +632,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`cert_id`<br/>int</th>
     <td>
-        ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state).
+        ID des CA-Zertifikats, das zur Prüfung des Zertifikats des Prognose-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state).
     </td>
 </tr>
     </tbody>
@@ -667,23 +688,44 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/state
     <tbody>
 
 <tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wh_today`<br/>int</th>
+    <td>
+        Gesamttagesvorhersage für heute über alle PV-Flächen in Wh. -1 falls keine Vorhersagedaten für heute verfügbar sind.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wh_today_remaining`<br/>int</th>
+    <td>
+        Verbleibende Energie der Tagesvorhersage von jetzt bis Mitternacht über alle PV-Flächen in Wh. -1 falls keine Vorhersagedaten für heute verfügbar sind.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wh_tomorrow`<br/>int</th>
+    <td>
+        Gesamttagesvorhersage für morgen über alle PV-Flächen in Wh. -1 falls keine Vorhersagedaten für morgen verfügbar sind.
+    </td>
+</tr>
+
+<tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`rate_limit`<br/>int</th>
     <td>
-        Gibt an wie viele API-Aufrufe alle zwei Stunden getätigt werden dürfen.
+        Gibt an, wie viele API-Aufrufe alle zwei Stunden getätigt werden dürfen.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`rate_remaining`<br/>int</th>
     <td>
-        Gibt an wie viele API-Aufrufe im aktuellen Zeitfenster getätigt wurden.
+        Gibt an, wie viele API-Aufrufe im aktuellen Zeitfenster getätigt wurden.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`next_api_call`<br/>int</th>
     <td>
-        Gibt an wann der nächste API-Aufruf getätigt wird.
+        Gibt an, wann der nächste API-Aufruf getätigt wird.
     </td>
 </tr>
     </tbody>
@@ -742,21 +784,21 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`last_sync`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die PV-Ertragsprognose das letzte Mal aktualisiert wurden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die PV-Ertragsprognose das letzte Mal aktualisiert wurde.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`last_check`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die PV-Ertragsprognose das letzte Mal abgefragt wurden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die PV-Ertragsprognose das letzte Mal abgefragt wurde.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`next_check`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die PV-Ertragsprognose das nächste Mal abgefragt werden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die PV-Ertragsprognose das nächste Mal abgefragt wird.
     </td>
 </tr>
 
@@ -881,21 +923,21 @@ mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/planes/X/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
     <td>
-        Anzeige der PV-Fläche.
+        Anzeigename der PV-Fläche.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`lat`<br/>int (<abbr title="Zehntausendstel Grad">°/10000</abbr>)</th>
     <td>
-        Breitengrad (z.B. 51,8847°)
+        Breitengrad (z.B. 51.8847°)
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`long`<br/>int (<abbr title="Zehntausendstel Grad">°/10000</abbr>)</th>
     <td>
-        Längengrad (z.B. 8,6225°)
+        Längengrad (z.B. 8.6225°)
     </td>
 </tr>
 
@@ -981,14 +1023,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`first_date`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt zu welchem Zeitpunkt die erste PV-Ertragsprognose im `forecast`-Array gilt.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, zu welchem Zeitpunkt die erste PV-Ertragsprognose im `forecast`-Array gilt.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
     <td>
-        Auflösung der PV-Ertragsprognose im `forecast`-Array.
+        Zeitliche Auflösung der PV-Ertragsprognose im `forecast`-Array.
         - **0** - 15 Minuten
         - **1** - 60 Minuten
     </td>
@@ -997,7 +1039,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`forecast`<br/>int[49] (<abbr title="Wattstunde">Wh</abbr>)</th>
     <td>
-        Array von PV-Ertragsprognose-Werten für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest wie weit die Elemente zueinander zeitlich versetzt sind.
+        Array von PV-Ertragsprognose-Werten für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest, wie weit die Elemente zueinander zeitlich versetzt sind.
     </td>
 </tr>
     </tbody>
@@ -1106,7 +1148,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`cert_id`<br/>int</th>
     <td>
-        ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state).
+        ID des CA-Zertifikats, das zur Prüfung des Zertifikats des Prognose-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state).
     </td>
 </tr>
     </tbody>
@@ -1162,23 +1204,44 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/state
     <tbody>
 
 <tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wh_today`<br/>int</th>
+    <td>
+        Gesamttagesvorhersage für heute über alle PV-Flächen in Wh. -1 falls keine Vorhersagedaten für heute verfügbar sind.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wh_today_remaining`<br/>int</th>
+    <td>
+        Verbleibende Energie der Tagesvorhersage von jetzt bis Mitternacht über alle PV-Flächen in Wh. -1 falls keine Vorhersagedaten für heute verfügbar sind.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wh_tomorrow`<br/>int</th>
+    <td>
+        Gesamttagesvorhersage für morgen über alle PV-Flächen in Wh. -1 falls keine Vorhersagedaten für morgen verfügbar sind.
+    </td>
+</tr>
+
+<tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`rate_limit`<br/>int</th>
     <td>
-        Gibt an wie viele API-Aufrufe alle zwei Stunden getätigt werden dürfen.
+        Gibt an, wie viele API-Aufrufe alle zwei Stunden getätigt werden dürfen.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`rate_remaining`<br/>int</th>
     <td>
-        Gibt an wie viele API-Aufrufe im aktuellen Zeitfenster getätigt wurden.
+        Gibt an, wie viele API-Aufrufe im aktuellen Zeitfenster getätigt wurden.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`next_api_call`<br/>int</th>
     <td>
-        Gibt an wann der nächste API-Aufruf getätigt wird.
+        Gibt an, wann der nächste API-Aufruf getätigt wird.
     </td>
 </tr>
     </tbody>
@@ -1237,21 +1300,21 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`last_sync`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die PV-Ertragsprognose das letzte Mal aktualisiert wurden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die PV-Ertragsprognose das letzte Mal aktualisiert wurde.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`last_check`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die PV-Ertragsprognose das letzte Mal abgefragt wurden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die PV-Ertragsprognose das letzte Mal abgefragt wurde.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`next_check`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die PV-Ertragsprognose das nächste Mal abgefragt werden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die PV-Ertragsprognose das nächste Mal abgefragt wird.
     </td>
 </tr>
 
@@ -1376,21 +1439,21 @@ mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/planes/X/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
     <td>
-        Anzeige der PV-Fläche.
+        Anzeigename der PV-Fläche.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`lat`<br/>int (<abbr title="Zehntausendstel Grad">°/10000</abbr>)</th>
     <td>
-        Breitengrad (z.B. 51,8847°)
+        Breitengrad (z.B. 51.8847°)
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`long`<br/>int (<abbr title="Zehntausendstel Grad">°/10000</abbr>)</th>
     <td>
-        Längengrad (z.B. 8,6225°)
+        Längengrad (z.B. 8.6225°)
     </td>
 </tr>
 
@@ -1476,14 +1539,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`first_date`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt zu welchem Zeitpunkt die erste PV-Ertragsprognose im `forecast`-Array gilt.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, zu welchem Zeitpunkt die erste PV-Ertragsprognose im `forecast`-Array gilt.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
     <td>
-        Auflösung der PV-Ertragsprognose im `forecast`-Array.
+        Zeitliche Auflösung der PV-Ertragsprognose im `forecast`-Array.
         - **0** - 15 Minuten
         - **1** - 60 Minuten
     </td>
@@ -1492,7 +1555,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`forecast`<br/>int[49] (<abbr title="Wattstunde">Wh</abbr>)</th>
     <td>
-        Array von PV-Ertragsprognose-Werten für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest wie weit die Elemente zueinander zeitlich versetzt sind.
+        Array von PV-Ertragsprognose-Werten für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest, wie weit die Elemente zueinander zeitlich versetzt sind.
     </td>
 </tr>
     </tbody>
@@ -1601,7 +1664,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`cert_id`<br/>int</th>
     <td>
-        ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state).
+        ID des CA-Zertifikats, das zur Prüfung des Zertifikats des Prognose-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state).
     </td>
 </tr>
     </tbody>
@@ -1657,23 +1720,44 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/state
     <tbody>
 
 <tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wh_today`<br/>int</th>
+    <td>
+        Gesamttagesvorhersage für heute über alle PV-Flächen in Wh. -1 falls keine Vorhersagedaten für heute verfügbar sind.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wh_today_remaining`<br/>int</th>
+    <td>
+        Verbleibende Energie der Tagesvorhersage von jetzt bis Mitternacht über alle PV-Flächen in Wh. -1 falls keine Vorhersagedaten für heute verfügbar sind.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wh_tomorrow`<br/>int</th>
+    <td>
+        Gesamttagesvorhersage für morgen über alle PV-Flächen in Wh. -1 falls keine Vorhersagedaten für morgen verfügbar sind.
+    </td>
+</tr>
+
+<tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`rate_limit`<br/>int</th>
     <td>
-        Gibt an wie viele API-Aufrufe alle zwei Stunden getätigt werden dürfen.
+        Gibt an, wie viele API-Aufrufe alle zwei Stunden getätigt werden dürfen.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`rate_remaining`<br/>int</th>
     <td>
-        Gibt an wie viele API-Aufrufe im aktuellen Zeitfenster getätigt wurden.
+        Gibt an, wie viele API-Aufrufe im aktuellen Zeitfenster getätigt wurden.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`next_api_call`<br/>int</th>
     <td>
-        Gibt an wann der nächste API-Aufruf getätigt wird.
+        Gibt an, wann der nächste API-Aufruf getätigt wird.
     </td>
 </tr>
     </tbody>
@@ -1732,21 +1816,21 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`last_sync`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die PV-Ertragsprognose das letzte Mal aktualisiert wurden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die PV-Ertragsprognose das letzte Mal aktualisiert wurde.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`last_check`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die PV-Ertragsprognose das letzte Mal abgefragt wurden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die PV-Ertragsprognose das letzte Mal abgefragt wurde.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`next_check`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die PV-Ertragsprognose das nächste Mal abgefragt werden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die PV-Ertragsprognose das nächste Mal abgefragt wird.
     </td>
 </tr>
 
@@ -1871,21 +1955,21 @@ mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/planes/X/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
     <td>
-        Anzeige der PV-Fläche.
+        Anzeigename der PV-Fläche.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`lat`<br/>int (<abbr title="Zehntausendstel Grad">°/10000</abbr>)</th>
     <td>
-        Breitengrad (z.B. 51,8847°)
+        Breitengrad (z.B. 51.8847°)
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`long`<br/>int (<abbr title="Zehntausendstel Grad">°/10000</abbr>)</th>
     <td>
-        Längengrad (z.B. 8,6225°)
+        Längengrad (z.B. 8.6225°)
     </td>
 </tr>
 
@@ -1971,14 +2055,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`first_date`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt zu welchem Zeitpunkt die erste PV-Ertragsprognose im `forecast`-Array gilt.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, zu welchem Zeitpunkt die erste PV-Ertragsprognose im `forecast`-Array gilt.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
     <td>
-        Auflösung der PV-Ertragsprognose im `forecast`-Array.
+        Zeitliche Auflösung der PV-Ertragsprognose im `forecast`-Array.
         - **0** - 15 Minuten
         - **1** - 60 Minuten
     </td>
@@ -1987,7 +2071,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`forecast`<br/>int[49] (<abbr title="Wattstunde">Wh</abbr>)</th>
     <td>
-        Array von PV-Ertragsprognose-Werten für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest wie weit die Elemente zueinander zeitlich versetzt sind.
+        Array von PV-Ertragsprognose-Werten für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest, wie weit die Elemente zueinander zeitlich versetzt sind.
     </td>
 </tr>
     </tbody>
@@ -2096,7 +2180,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`cert_id`<br/>int</th>
     <td>
-        ID des CA-Zertifikats, dass zur Prüfung des Zertifikats des RADIUS-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state).
+        ID des CA-Zertifikats, das zur Prüfung des Zertifikats des Prognose-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state).
     </td>
 </tr>
     </tbody>
@@ -2152,23 +2236,44 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/state
     <tbody>
 
 <tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wh_today`<br/>int</th>
+    <td>
+        Gesamttagesvorhersage für heute über alle PV-Flächen in Wh. -1 falls keine Vorhersagedaten für heute verfügbar sind.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wh_today_remaining`<br/>int</th>
+    <td>
+        Verbleibende Energie der Tagesvorhersage von jetzt bis Mitternacht über alle PV-Flächen in Wh. -1 falls keine Vorhersagedaten für heute verfügbar sind.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wh_tomorrow`<br/>int</th>
+    <td>
+        Gesamttagesvorhersage für morgen über alle PV-Flächen in Wh. -1 falls keine Vorhersagedaten für morgen verfügbar sind.
+    </td>
+</tr>
+
+<tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`rate_limit`<br/>int</th>
     <td>
-        Gibt an wie viele API-Aufrufe alle zwei Stunden getätigt werden dürfen.
+        Gibt an, wie viele API-Aufrufe alle zwei Stunden getätigt werden dürfen.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`rate_remaining`<br/>int</th>
     <td>
-        Gibt an wie viele API-Aufrufe im aktuellen Zeitfenster getätigt wurden.
+        Gibt an, wie viele API-Aufrufe im aktuellen Zeitfenster getätigt wurden.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`next_api_call`<br/>int</th>
     <td>
-        Gibt an wann der nächste API-Aufruf getätigt wird.
+        Gibt an, wann der nächste API-Aufruf getätigt wird.
     </td>
 </tr>
     </tbody>
@@ -2227,21 +2332,21 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`last_sync`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die PV-Ertragsprognose das letzte Mal aktualisiert wurden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die PV-Ertragsprognose das letzte Mal aktualisiert wurde.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`last_check`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die PV-Ertragsprognose das letzte Mal abgefragt wurden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die PV-Ertragsprognose das letzte Mal abgefragt wurde.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`next_check`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt wann die PV-Ertragsprognose das nächste Mal abgefragt werden.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die PV-Ertragsprognose das nächste Mal abgefragt wird.
     </td>
 </tr>
 
@@ -2366,21 +2471,21 @@ mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/planes/X/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
     <td>
-        Anzeige der PV-Fläche.
+        Anzeigename der PV-Fläche.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`lat`<br/>int (<abbr title="Zehntausendstel Grad">°/10000</abbr>)</th>
     <td>
-        Breitengrad (z.B. 51,8847°)
+        Breitengrad (z.B. 51.8847°)
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`long`<br/>int (<abbr title="Zehntausendstel Grad">°/10000</abbr>)</th>
     <td>
-        Längengrad (z.B. 8,6225°)
+        Längengrad (z.B. 8.6225°)
     </td>
 </tr>
 
@@ -2466,14 +2571,14 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`first_date`<br/>int</th>
     <td>
-        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt zu welchem Zeitpunkt die erste PV-Ertragsprognose im `forecast`-Array gilt.
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, zu welchem Zeitpunkt die erste PV-Ertragsprognose im `forecast`-Array gilt.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
     <td>
-        Auflösung der PV-Ertragsprognose im `forecast`-Array.
+        Zeitliche Auflösung der PV-Ertragsprognose im `forecast`-Array.
         
         
         
@@ -2485,7 +2590,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`forecast`<br/>int[49] (<abbr title="Wattstunde">Wh</abbr>)</th>
     <td>
-        Array von PV-Ertragsprognose-Werten für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest wie weit die Elemente zueinander zeitlich versetzt sind.
+        Array von PV-Ertragsprognose-Werten für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest, wie weit die Elemente zueinander zeitlich versetzt sind.
     </td>
 </tr>
     </tbody>
