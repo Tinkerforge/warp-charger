@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>WARP Dokumentation</title>
+  <script>
+    (function() {
+      // Get browser language
+      var browserLang = navigator.language || navigator.userLanguage;
+      var langCode = browserLang.split('-')[0];
+
+      // Redirect to /de/ or /en/ based on browser language
+      var targetPath;
+      if (langCode === 'de') {
+        targetPath = '/de/docs/home';
+      } else {
+        targetPath = '/en/docs/home';
+      }
+
+      window.location.href = targetPath;
+    })();
+  </script>
+  <noscript>
+    <meta http-equiv="refresh" content="0; url=/de/docs/home">
+  </noscript>
+</head>
+<body>
+  <p>Redirecting...</p>
+  <p>If you are not redirected, please click <a href="/de/docs/home">here for German</a> or <a href="/en/docs/home">here for English</a>.</p>
+</body>
+</html>

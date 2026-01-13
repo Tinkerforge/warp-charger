@@ -1,6 +1,7 @@
 import React from "react";
-import { Redirect } from "@docusaurus/router";
 
 export default function Home() {
-  return <Redirect to="./docs/home" />;
+  // This page is only for routing purposes
+  // The actual redirect happens via static/index.html at build root
+  return null;
 }
