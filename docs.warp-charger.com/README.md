@@ -23,3 +23,15 @@ $ npm run build
 ```
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
+
+### Translations
+
+```sh
+$ npm run write-translations --locale en
+```
+
+When source files change, re-run write-translations to update (it appends new translations without overriding existing ones)
+We use this for the menu.
+
+This also generates some docusaurus internal translations (code.json, etc).
+We just keep them as is and update them when docusaurus updates.

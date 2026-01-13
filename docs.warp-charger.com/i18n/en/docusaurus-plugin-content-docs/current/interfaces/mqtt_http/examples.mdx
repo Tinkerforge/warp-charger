@@ -1,0 +1,251 @@
+---
+sidebar_position: 2
+---
+
+import MultilineTabs from '@site/src/components/MultilineTabs';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
+
+# Examples
+
+## Controlling the Charging Process of a WARP Charger
+
+The charging process can be controlled using the following APIs:
+
+- [`evse/start_charging`](api_reference/evse#evse_start_charging) starts a charging process. A charging process starts automatically unless manual charging authorization (under Wallbox -> Settings or [`evse/auto_start_charging`](api_reference/evse#evse_auto_start_charging)) is enabled.
+- [`evse/stop_charging`](api_reference/evse#evse_stop_charging) stops a charging process. A stopped charging process can be reactivated with [`evse/start_charging`](api_reference/evse#evse_start_charging).
+- [`evse/external_current`](api_reference/evse#evse_external_current) sets a charging current limit. For this, external control (under Wallbox -> Settings or [`evse/external_enabled`](api_reference/evse#evse_external_enabled)) must be enabled.
+
+:::tip
+
+A charging process can also be stopped or blocked for other reasons, for example because load management, NFC authorization, or OCPP are blocking. For details see TODO LINK LADESLOTS
+
+:::
+
+
+### Starting a Charging Process
+
+:::info[Example]
+<Tabs groupId="exampleApiType" queryString>
+    <TabItem value="http" label="HTTP (curl)">
+        ```bash
+        # $HOST e.g. warp-AbCd
+        ```
+        ```bash
+        curl http://$HOST/evse/start_charging -d 'null'
+        ```
+
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Triggers a one-time action. Messages retained by the broker are ignored."></Admonition>
+        ```bash
+        # $BROKER e.g. my_mosquitto.localdomain
+        # $PREFIX e.g. warp/AbCd
+        ```
+        ```bash
+        mosquitto_pub -h $BROKER -t $PREFIX/evse/start_charging -m 'null'
+        ```
+    </TabItem>
+</Tabs>
+:::
+
+### Stopping a Charging Process
+
+:::info[Example]
+<Tabs groupId="exampleApiType" queryString>
+    <TabItem value="http" label="HTTP (curl)">
+        ```bash
+        # $HOST e.g. warp-AbCd
+        ```
+        ```bash
+        curl http://$HOST/evse/stop_charging -d 'null'
+        ```
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Triggers a one-time action. Messages retained by the broker are ignored."></Admonition>
+        ```bash
+        # $BROKER e.g. my_mosquitto.localdomain
+        # $PREFIX e.g. warp/AbCd
+        ```
+        ```bash
+        mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
+        ```
+    </TabItem>
+</Tabs>
+:::
+
+### Reading/Writing the Charging Current Limit
+
+:::tip
+
+A charging current limit can also be set via [`evse/global_current`](api_reference/evse#evse_global_current).
+However, this limit is stored in the flash memory of the charge controller.
+When frequently setting the charging current limit, [`evse/external_current`](api_reference/evse#evse_external_current) should be used (to protect the flash memory of the charge controller).
+
+:::
+
+:::info[Example]
+<Tabs groupId="exampleApiType" queryString>
+    <TabItem value="http" label="HTTP (curl)">
+        ```bash
+        # $HOST e.g. warp-AbCd
+        ```
+
+        #### Read
+        ```bash
+        curl http://$HOST/evse/external_current
+        ```
+        ```jsx
+        { "current": 16000 }
+        ```
+
+        #### Write
+        ```bash
+        curl http://$HOST/evse/external_current -d '{ "current": 16000 }'
+        ```
+
+        or shortened:
+
+        ```bash
+        curl http://$HOST/evse/external_current -d '16000'
+        ```
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        ```bash
+        # $BROKER e.g. my_mosquitto.localdomain
+        # $PREFIX e.g. warp/AbCd
+        ```
+
+        #### Read
+        ```bash
+        mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/external_current
+        ```
+        ```jsx
+        { "current": 16000 }
+        ```
+
+        #### Write
+        With MQTT to <code>$PREFIX/evse/external_current<strong>_update</strong></code>
+
+        ```bash
+        mosquitto_pub -h $BROKER -t $PREFIX/evse/external_current_update -m '{ "current": 16000 }'
+        ```
+
+        or shortened:
+
+        ```bash
+        mosquitto_pub -h $BROKER -t $PREFIX/evse/external_current_update -m '16000'
+        ```
+    </TabItem>
+</Tabs>
+:::
+
+## Simulating an NFC Tag
+
+Via the API, a WARP Charger can be made to believe that an NFC tag was detected. Both tags assigned to users and unknown tags (which can be used in an automation rule, for example) can be simulated.
+
+The following APIs can be used to simulate a tag:
+
+- [`nfc/inject_tag_start`](api_reference/nfc#nfc_inject_tag_start) Simulates an NFC tag. The tag can start a charging process if it is known and assigned to a user. If a charging process is already running, this tag is ignored.
+- [`nfc/inject_tag_stop`](api_reference/nfc#nfc_inject_tag_stop) Simulates an NFC tag. The tag can stop a charging process if it is known and assigned to a user. If no charging process is running, this tag is ignored.
+- [`nfc/inject_tag`](api_reference/nfc#nfc_inject_tag) Simulates an NFC tag that can both start and stop a charging process if it is known and assigned to a user.
+
+All three APIs must be passed the type and ID of the tag.
+
+:::info[Example]
+<Tabs groupId="exampleApiType" queryString>
+    <TabItem value="http" label="HTTP (curl)">
+        ```bash
+        # $HOST e.g. warp-AbCd
+        ```
+        ```bash
+        curl http://$HOST/nfc/inject_tag -d '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+        ```
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Triggers a one-time action. Messages retained by the broker are ignored."></Admonition>
+        ```bash
+        # $BROKER e.g. my_mosquitto.localdomain
+        # $PREFIX e.g. warp/AbCd
+        ```
+        ```bash
+        mosquitto_pub -h $BROKER -t $PREFIX/nfc/inject_tag -m '{ "tag_type": 0, "tag_id": "01:23:AB:3D" }'
+        ```
+    </TabItem>
+</Tabs>
+:::
+
+## API Meter for PV Excess
+
+For a power meter to be used for PV excess charging, it must measure the active power at the grid connection.
+So that the controller can react quickly to available PV excess, the measured values should be updated approximately every second.
+
+### Creating the API Meter
+
+An API meter can be configured as follows:
+
+1. Create a new power meter on the power meter subpage
+   ![Power meter subpage](/img/mqtt/api_meter_1.png)
+2. Enter power meter class `API` and display name, then add value
+   ![Power meter subpage](/img/mqtt/api_meter_2.png)
+3. Select the active power (sum of all phases) consumption minus feed-in as value
+   ![Power meter subpage](/img/mqtt/api_meter_3.png)
+
+Alternatively, the API meter can be configured via API:
+
+:::info[Example]
+<Tabs groupId="exampleApiType" queryString>
+    <TabItem value="http" label="HTTP (curl)">
+        ```bash
+        # $HOST e.g. warp-AbCd
+        ```
+        ```bash
+        curl http://$HOST/meters/1/config -d '[4,{"display_name":"Grid connection","value_ids":[74]}]'
+        ```
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        ```bash
+        # $BROKER e.g. my_mosquitto.localdomain
+        # $PREFIX e.g. warp/AbCd
+        ```
+        ```bash
+        mosquitto_pub -h $BROKER -t $PREFIX/meters/1/config -m '[4,{"display_name":"Grid connection","value_ids":[74]}]'
+        ```
+    </TabItem>
+</Tabs>
+:::
+
+### Configuration of PV Excess Charging
+
+For the new API meter to be used for PV excess charging, it must be selected in its settings:
+![PV excess charging settings](/img/mqtt/api_meter_4.png)
+
+### Writing Measured Values via API
+
+The PV excess at the grid connection can now be reported via the API.
+Positive values represent consumption, i.e., the house is drawing power from the grid.
+Negative values represent feed-in to the power grid.
+If there is a PV excess of 2030.5 watts, it can be reported as follows:
+
+:::info[Example]
+<Tabs groupId="exampleApiType" queryString>
+    <TabItem value="http" label="HTTP (curl)">
+        ```bash
+        # $HOST e.g. warp-AbCd
+        ```
+        ```bash
+        curl http://$HOST/meters/1/update -d '[-2030.5]'
+        ```
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        ```bash
+        # $BROKER e.g. my_mosquitto.localdomain
+        # $PREFIX e.g. warp/AbCd
+        ```
+        ```bash
+        mosquitto_pub -h $BROKER -t $PREFIX/meters/1/update -m '[-2030.5]'
+        ```
+    </TabItem>
+</Tabs>
+:::

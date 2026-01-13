@@ -1,0 +1,800 @@
+---
+sidebar_position: 3
+---
+
+import { SortableDataTable, SortableDataButton } from "@site/src/components/SortableDataTable";
+import { columns, devices, moduleTests, manufacturer_to_bubbles } from "./devices.table";
+
+# Devices
+
+***WARP Charger and WARP Energy Manager can directly access third-party devices and retrieve data from them. This means that PV excess charging or dynamic load management can usually be implemented WITHOUT additional hardware,
+if, for example, a power meter for a PV system has already been installed!***
+
+The following device overview lists devices that are directly supported. Additionally, information about the data provided and application possibilities is listed.
+
+:::note
+If a device is not listed, there is a possibility that it can still be integrated via one of the [interfaces](/compatible_devices/interfaces.md) (e.g., Modbus/TCP with custom register table).
+
+:::
+
+***Measurement Location***
+
+See: [Introduction - Measurement Location](/compatible_devices/introduction.md#measurement-location-of-device-data).
+The supported measurement locations are shown in green. Possible measurement locations are: *Grid Connection*, *PV*, *Storage*, and *Load*.
+
+
+<table>
+<tr><td><div class="device available">Measurement Location</div></td><td>Generally supported by the device. However, corresponding hardware must be installed.</td></tr>
+<tr><td><div class="device maybe">Measurement Location</div></td><td>We do not have this information. If you have information about this, please send us an email to [info@tinkerforge.com](mailto:info@tinkerforge.com). We will then add this information.</td></tr>
+</table>
+
+
+***Application***
+
+See: [Introduction - Applications](/compatible_devices/introduction.md#applications)
+The supported applications are shown in blue. Possible applications are: [*Dynamic Load Management (DLM)*](/compatible_devices/introduction.md#dynamic-load-management), [*PV Excess Charging (PVE)*](/compatible_devices/introduction.md#pv-excess-charging), and control of [*Battery Storage (BAT)*](/compatible_devices/introduction.md#battery-control).
+
+
+:::note
+Coming soon - Battery Control: This is still in development and not yet documented here.
+:::
+
+<table>
+<tr><td><div class="application available">Application</div></td><td>The application is generally supported by the device. However, corresponding hardware must be installed.</td></tr>
+<tr><td><div class="application maybe">Application</div></td><td>We do not have this information. If you have information about this, please send us an email to [info@tinkerforge.com](mailto:info@tinkerforge.com). We will then add this information.</td></tr>
+</table>
+
+:::note
+
+Different or new firmware versions from manufacturers sometimes lead to
+changes in device interfaces.
+If you have problems with one of the listed devices, or
+want support for a device, please write to us in the forum at
+[Tinkerunity](https://www.tinkerunity.org/forum/13-warp-charger/).
+
+If you have a device that you have tested and it is not yet
+listed, please send us an email to
+[info@tinkerforge.com](mailto:info@tinkerforge.com) so we can
+expand the list. If you have defined your own Modbus/TCP
+register table, please send it to us so we can
+store it.
+
+:::
+
+# Device Overview
+
+<SortableDataTable
+  columns={columns}
+  data={ devices }
+/>
+
+:::note
+
+Depending on the device, there are often various connection options and hardware configurations. It goes without saying that, for example, data about the grid connection
+can only be accessed if a corresponding power meter is installed at that location.
+
+:::
+
+# Manufacturer-Specific Information
+
+## Alpha ESS
+
+### SMILE Series
+{manufacturer_to_bubbles("Alpha ESS")}
+
+The following Alpha ESS Smile home storage systems support connection via Modbus/TCP:
+ * SMILE5
+ * SMILE-Hi5
+ * SMILE-Hi10
+ * SMILE-G3-S3.6/B5/S5
+ * SMILE-BAT-8.2PHA
+ 
+The "Grid" power meter is only usable if an external hardware power meter has been installed at the grid connection and can be read by the inverter.
+The device address for Alpha ESS is typically 85.
+
+To use the PV excess charging (PVE) and dynamic load management (DLM) applications, a power meter connected to the inverter must be installed at the grid connection.
+
+## APsystems
+
+### Micro Inverters
+{manufacturer_to_bubbles("APsystems")}
+
+APsystems micro inverters can be read by APsystems ECU-R and ECU-C via SunSpec. Communication between micro inverters and ECU is via
+Zigbee. The following ECUs are compatible:
+ * ECU-R with ID rule 2160XXXXXXXX and version > 1.3.7
+ * ECU-R with ID rule 2162XXXXXXXX and version > 2.0.2
+ * ECU-C with ID rule 215XXXXXXXXX and version > C1.1.3
+
+Only the measurement value for generation (PV) is available.
+
+## Carlo Gavazzi
+
+### EM24 (Ethernet) Modbus/TCP Power Meter
+{manufacturer_to_bubbles("Carlo Galvazzi")}
+Carlo Gavazzi power meters with Modbus/TCP (via Ethernet) interface can be read directly.
+The following power meters can be read directly via Ethernet:
+ * EM24 in the version with Ethernet (EM24-DIN, EM24-E1)
+
+A power meter can always be assigned to exactly one measurement location. The measurement location depends on the installation location of the power meter. Multiple power meters of this type can be configured.
+To use the PV excess charging (PVE) and dynamic load management (DLM) applications, the power meter must be installed at the grid connection.
+
+### EM Series and ET Series Modbus/RTU Power Meters
+{manufacturer_to_bubbles("Carlo Galvazzi")}
+ 
+The following power meters are RS485 or Modbus/RTU power meters, so a [Modbus/RTU converter](/compatible_devices/interfaces.md#modbusrtu-converter) is required:
+ * EM100 / EM111 / EM112
+ * ET100 / ET111 / ET112
+ * EM210
+ * EM270
+ * EM280
+ * EM300 / EM330 / EM340
+ * ET300 / ET330 / ET340
+ * EM510 / EM511
+ * EM530
+ * EM540
+ * EM580
+
+A power meter can always be assigned to exactly one measurement location. The measurement location depends on the installation location of the power meter. Multiple power meters of this type can be configured.
+To use the PV excess charging (PVE) and dynamic load management (DLM) applications, the power meter must be installed at the grid connection.
+
+## Chisage
+
+### ESS Hybrid Inverter
+{manufacturer_to_bubbles("Chisage")}
+
+Chisage ESS hybrid inverters are supported. The implementation was tested with a Mars inverter.
+
+## Deye
+
+### SUN Series
+{manufacturer_to_bubbles("Deye")}
+
+Deye hybrid inverters of the SUN series (low and high voltage) support Modbus/RTU.
+With a converter from Modbus/RTU to Ethernet, they can also be accessed via Modbus/TCP. See [Modbus/RTU Converter](/compatible_devices/interfaces.md#modbusrtu-converter).
+The read values for "Grid" refer to the grid connection of the inverter. The current flowing through this connection is measured. The possibly installed smart meter (Chint DSU666 etc.)
+apparently CANNOT be read via the Modbus/TCP interface of the inverter! If there is only one inverter and all power flows through its grid connection, the "Grid" measurement value can be used for PV excess charging (PVE) and dynamic load management (DLM).
+
+Deye support is also discussed in the forum: [Forum post on Tinkerunity](https://www.tinkerunity.org/topic/12271-weitere-wechserichter-modbustcp-supporten-deye-hybrid-wechselrichter/).
+
+
+:::note
+Apparently, depending on the firmware version, the Deye WLAN dongle also directly provides Modbus/TCP. Port 8899 must then be selected instead of 502 as the Modbus/TCP port.
+However, it appears that the dongle does not speak compliant Modbus/TCP, making it unusable for us. Unfortunately, there are conflicting reports online and no official information
+from Deye.
+:::
+
+## E3DC
+
+### Home Power Station
+{manufacturer_to_bubbles("E3DC")}
+
+S10 and S20 home power stations are supported.
+E3DC home power stations support SunSpec and can therefore be easily integrated. However, the current E3DC firmware (as of March 28, 2025) does not provide correct values via SunSpec for the storage.
+Therefore, we provide a specific E3DC Modbus/TCP profile.
+
+To use this, the following settings must be made in the home power station under "Main Menu > Functions > Modbus Function":
+
+ * Modbus active
+ * Modbus/TCP active
+ * Protocol to "E3DC" (E3/DC Simple-Mode)
+ * Device to "1" (Device ID)
+ * Port to "502"
+
+To use the PV excess charging (PVE) application, a power meter must be installed at the grid connection. This should always be the case with E3DC.
+E3DC does not provide phase currents. Therefore, the dynamic load management (DLM) application is not possible. If dynamic load management should still be implemented, an additional power meter that provides phase currents must be installed.
+
+
+## Eastron
+
+### SDM630 and SDM72V2
+{manufacturer_to_bubbles("Eastron")}
+
+Eastron power meters with RS485 (Modbus/RTU) interface can be directly connected to the WARP Energy Manager and read by it.
+For the types SDM630 and SDM72V2, the current flows through the meter. These meters are therefore built directly into the lines.
+
+The type SDM630MCT is also supported, which uses external transformers. This meter is therefore not built into the lines, but
+only the transformers are placed around the lines. By choosing appropriately sized transformers, very large currents can also be measured.
+
+A power meter can always be assigned to exactly one measurement location. The measurement location depends on the installation location of the power meter. Only one power meter of this type can be configured, as the RS485 (Modbus/RTU) interface
+of the WARP Energy Manager only supports one power meter. To use the PV excess charging (PVE) and dynamic load management (DLM) applications, the power meter must be installed at the grid connection.
+
+## elgris
+
+### Smart Meter LAN 2.0
+{manufacturer_to_bubbles("elgris")}
+
+The elgris Smart Meter LAN 2.0 can be easily integrated via SunSpec. SunSpec should be activated directly on the power meter.
+A power meter can always be assigned to exactly one measurement location. The measurement location depends on the installation location of the power meter. Multiple power meters of this type can be configured.
+To use the PV excess charging (PVE) and dynamic load management (DLM) applications, the power meter must be installed at the grid connection.
+
+## Eltako
+
+### DSZ15DZMOD Power Meter
+{manufacturer_to_bubbles("Eltako")}
+
+The Eltako power meter DSZ15DZMOD with RS485 (Modbus/RTU) interface can be directly connected to the WARP Energy Manager and read by it.
+A power meter can always be assigned to exactly one measurement location. The measurement location depends on the installation location of the power meter. Only one power meter of this type can be configured, as the RS485 (Modbus/RTU) interface
+of the WARP Energy Manager only supports one power meter. To use the PV excess charging (PVE) and dynamic load management (DLM) applications, the power meter must be installed at the grid connection.
+
+## Fox ESS
+
+### Hybrid Serie H3/AC3, H3 Smart, H3 Pro
+{manufacturer_to_bubbles("Fox ESS")}
+
+Fox ESS inverters do not seem to be readable via Modbus/TCP via the Fox ESS LAN or WLAN dongle. However, they can be read via RS485 (Modbus/RTU).
+If an RS485 to LAN or WLAN converter is installed (see [Modbus/RTU Converter](/compatible_devices/interfaces.md#modbusrtu-converter)), these inverters can also be read.
+The device ID on the inverter must be set from 000 (Modbus/RTU deactivated) to 247. The setting can be found under Settings -> Communication -> RS485 -> Device ID.
+The inverter password is set to 0000 by default.
+
+The "Grid" power meter is only usable if an external hardware power meter has been installed at the grid connection and can be read by the inverter. Only in this case is the PV excess charging (PVE) application supported.
+Dynamic load management (DLM) does not seem possible with the meter data, as no phase currents are provided. If dynamic load management should still be implemented, an additional power meter that provides phase currents must be installed.
+
+## Fronius
+
+### Argeno String Inverters
+{manufacturer_to_bubbles("Fronius", "Argeno String Inverter")}
+
+Fronius inverters of the Argeno series speak SunSpec and can be read directly. Only the data output via Modbus/TCP needs to be activated.
+Port 502 should be configured. "float" can be selected as the SunSpec Model Type.
+Only the measurement value for generation (PV) is available.
+
+### GEN24 Series Hybrid Inverters
+{manufacturer_to_bubbles("Fronius", "GEN24 and GEN24 Plus Series Hybrid Inverter")}
+
+Fronius inverters of the GEN24 series (GEN24 and GEN24 Plus) speak SunSpec and can be read directly. Only the data output via Modbus/TCP needs to be activated.
+Port 502 should be configured. "float" can be selected as the SunSpec Model Type. The "Grid" power meter is only usable if an external hardware power meter (Fronius Smart Meter) has been installed at the grid connection and can be read by the inverter.
+Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+
+### GEN24 Series Hybrid Inverters (Storage)
+{manufacturer_to_bubbles("Fronius", "GEN24 and GEN24 Plus Series Hybrid Inverter (Storage)")}
+The SunSpec implementation by Fronius is unfortunately insufficient to read a connected storage. For this reason, we have created a custom Modbus/TCP template for reading the storage. This should be selected for the "Storage" power meter.
+
+
+
+### Primo and Symo Series String Inverters
+{manufacturer_to_bubbles("Fronius", "Primo and Symo Series String Inverter")}
+
+Fronius inverters of the Primo and Symo series and Symo Advanced series speak SunSpec and can be read directly. Only the data output via Modbus/TCP needs to be activated.
+Port 502 should be configured. "float" can be selected as the SunSpec Model Type. The "Grid" power meter is only usable if an external hardware power meter (Fronius Smart Meter) has been installed at the grid connection and can be read by the inverter.
+Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+
+### Tauro Series String Inverters
+{manufacturer_to_bubbles("Fronius", "Tauro Series String Inverter")}
+
+Fronius inverters of the Tauro series speak SunSpec and can be read directly. Only the data output via Modbus/TCP needs to be activated.
+Port 502 should be configured. "float" can be selected as the SunSpec Model Type. The "Grid" power meter is only usable if an external hardware power meter (Fronius Smart Meter) has been installed at the grid connection and can be read by the inverter.
+Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+
+### Verto Series String Inverters
+{manufacturer_to_bubbles("Fronius", "Verto Series String Inverter")}
+
+Fronius inverters of the Verto series speak SunSpec and can be read directly. Only the data output via Modbus/TCP needs to be activated.
+Port 502 should be configured. "float" can be selected as the SunSpec Model Type. The "Grid" power meter is only usable if an external hardware power meter (Fronius Smart Meter) has been installed at the grid connection and can be read by the inverter.
+Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+
+### Verto Plus Series Hybrid Inverters
+{manufacturer_to_bubbles("Fronius", "Verto Plus Series Hybrid Inverter")}
+
+Fronius hybrid inverters of the Verto Plus series speak SunSpec and can be read directly. Only the data output via Modbus/TCP needs to be activated.
+Port 502 should be configured. "float" can be selected as the SunSpec Model Type. The "Grid" power meter is only usable if an external hardware power meter (Fronius Smart Meter) has been installed at the grid connection and can be read by the inverter.
+Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+
+Unfortunately, it seems that Fronius currently does not support SunSpec models for reading the storage (as of May 2025).
+
+
+## Goodwe
+
+### EHB Series String Inverters
+{manufacturer_to_bubbles("Goodwe", "EHB Series String Inverter")}
+
+Integration of an EHB series inverter is possible via Modbus/TCP over the LAN or WiFi+LAN module (Wi-Fi/LAN Kit).
+The "Grid" power meter is only usable if an external hardware power meter (e.g., GM300) has been installed at the grid connection and can be read by the inverter.
+Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+The device address is typically 247.
+
+### EH, EM, ES, ET, GW Hybrid Inverters
+{manufacturer_to_bubbles("Goodwe", "EH, EM, ES, ET, GW Hybrid Inverter")}
+
+Integration of an EH, EM, ES, ET, GW series inverter is possible via Modbus/TCP over the LAN or WiFi+LAN module (Wi-Fi/LAN Kit). Unfortunately, detailed information is scarce.
+The latest Wi-Fi/LAN Kit-20 with current firmware enables access via Modbus/TCP. However, this function must first be activated in the Goodwe APP (SolarGo).
+According to users, this works under "Settings" -> "Communication Settings" -> "Other Settings".
+
+The "Grid" power meter is only usable if an external hardware power meter (e.g., GM300) has been installed at the grid connection and can be read by the inverter.
+Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+The device address is typically 247.
+
+### BT, SBP, BH Series Battery Inverters
+{manufacturer_to_bubbles("Goodwe", "BT, SBP, BH Series Battery Inverter")}
+Integration of a BT, SBP, BH series inverter is possible via Modbus/TCP over the LAN or WiFi+LAN module.
+Unfortunately, we do not know if a grid power meter is available and whether it can be used for PV excess charging or dynamic load management.
+The device address is typically 247.
+
+## Hailei
+
+### HL-TPH10K
+{manufacturer_to_bubbles("Hailei")}
+
+Reading is possible via Modbus/TCP after Modbus/RTU converters (e.g., EW11) via the Modbus/RTU interface of the inverter.
+See [Modbus/RTU Converter](/compatible_devices/interfaces.md#modbusrtu-converter).
+Inverters that directly provide a LAN connection can be read directly via this LAN connection using Modbus/TCP. The IP address of the inverter
+can be configured and viewed via the inverter display under "Settings", then "Ethernet".
+
+:::note
+
+When connecting directly via the LAN port of the inverter,
+only one simultaneous connection from the inverter is supported. Parallel access from WARP Charger or WARP Energy Manager together with other devices is therefore not possible.
+:::
+
+
+The "Grid" power meter is only usable if an external hardware power meter has been installed at the grid connection and can be read by the inverter.
+Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+The device address is typically 85.
+
+## Hoymiles
+
+### HMS and HMT Series
+{manufacturer_to_bubbles("Hoymiles")}
+
+Hoymiles micro inverters of the HMS and HMT generation can be read via the Hoymiles DTU-Pro-S data transmission unit using SunSpec. Communication is via Sub-1G.
+Only the measurement value for generation (PV) is available.
+
+## Huawei
+
+### SmartLogger 3000
+{manufacturer_to_bubbles("Huawei", "SmartLogger 3000")}
+Instead of querying data from an inverter, data can also be retrieved from a SmartLogger 3000 via Modbus/TCP.
+It provides measurement data for PV generation and grid connection, provided a power meter has been installed at the grid connection.
+
+The "Grid" power meter is only usable if an external hardware power meter has been installed at the grid connection and can be read by the SmartLogger
+(typically "Huawei Smart Power Sensor" of type DTSU666-H or DDSU666-H). Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+
+### SUN2000
+{manufacturer_to_bubbles("Huawei", "SUN2000 Hybrid Inverter")}
+
+Inverters of the SUN2000 series (2kW - 215kW) and the SUN8000-500KTL can be read via Modbus/TCP through the Huawei Smart Dongle (from firmware SPC124).
+
+The supported models are listed from page 1 in the document [SUN2000MA Modbus Interface Definitions](https://support.huawei.com/enterprise/it/doc/EDOC1100480297?currentPartNo=k001&togo=content&section=k001).
+
+The "Grid" power meter is only usable if an external hardware power meter has been installed at the grid connection and can be read by the inverter (typically "Huawei Smart Power Sensor" of type DTSU666-H or DDSU666-H).
+Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported. Storage is only usable in combination with the LUNA2000 battery.
+
+### EMMA
+{manufacturer_to_bubbles("Huawei", "EMMA Energy Manager")}
+
+The Huawei EMMA-A02 energy manager can be read via Modbus/TCP.
+
+The "Grid" power meter is only usable if the EMMA has been installed as a power meter at the grid connection.
+Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported. Storage is only usable in combination with the LUNA2000 battery.
+
+
+## Janitza
+
+### UMG Series
+{manufacturer_to_bubbles("Janitza", "UMG Series")}
+Power meters from manufacturer Janitza from the UMG series that have Modbus/TCP are supported. The measurement location must be created in the system according to the installation location of the power meter (e.g., "Grid").
+
+## Kaco
+
+### Blueplanet Hybrid NH3 Hybrid Inverter
+{manufacturer_to_bubbles("Kaco", "Blueplanet Hybrid NH3 Hybrid Inverter")}
+Kaco inverters of the NH3 series speak SunSpec and can be read directly. The standard port is 502. SunSpec must be activated in the protocol menu of the inverter.
+Unfortunately, Kaco apparently only provides measurement of generation (PV) via SunSpec, even if an external power meter has been connected to the inverter. Grid meter data cannot be accessed.
+Only one simultaneous connection from the inverter is supported. Parallel access from WARP Charger or WARP Energy Manager together with other devices is therefore not possible.
+
+### Blueplanet NX3 and TL3 String Inverters
+{manufacturer_to_bubbles("Kaco", "Blueplanet NX3 and TL3 String Inverter")}
+
+Kaco inverters of the NX3 and TL3 series speak SunSpec and can be read directly. The standard port is 502. SunSpec must be activated in the protocol menu of the inverter.
+Unfortunately, Kaco apparently only provides measurement of generation (PV) via SunSpec, even if an external power meter has been connected to the inverter. Grid meter data cannot be accessed.
+Only one simultaneous connection from the inverter is supported. Parallel access from WARP Charger or WARP Energy Manager together with other devices is therefore not possible.
+
+## Kostal
+
+### Smart Energy Meter (KSEM G2)
+{manufacturer_to_bubbles("Kostal", "Smart Energy Meter (KSEM G2)")}
+The Smart Energy Meter (KSEM G2) can communicate directly via SunSpec.
+A power meter can always be assigned to exactly one measurement location. The measurement location depends on the installation location of the power meter. Multiple power meters of this type can be configured.
+Only if the power meter was installed at the grid connection are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+
+Since Kostal Smart Energy Meter firmware version 2.7.0, the Modbus/TCP slave function must first be activated on the device. This is possible under Modbus settings -> Modbus TCP -> Slave -> "Enable TCP slave".
+
+
+### PIKO and PLENTICORE Inverters
+{manufacturer_to_bubbles("Kostal", "Piko and Plenticore")}
+Kostal PIKO and PLENTICORE (G1, G2, G3, MP) can be read via SunSpec. For this, Modbus/TCP must be activated in the web interface of the inverter under "Settings".
+Subsequently, generation of the Piko and Plenticore inverters (PV) can be read. The "Grid" power meter is only usable if an external hardware power meter has been installed at the grid connection and can be read directly by the inverter.
+Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported. If the inverter has a connected battery,
+the battery data can also be read. Battery inverters, such as the PLENTICORE BI, obviously do not provide PV data. If no power meter is directly connected to the inverter,
+typically a KSEM G2 (see above) is installed by the installers, so that grid data can then be retrieved via this.
+
+
+## Q-Cells
+
+### Q.HOME Series
+{manufacturer_to_bubbles("Solax", "Q.HOME Series")}
+
+Q-Cells uses Solax hybrid inverters and offers them under the product name Q.Home.
+See [Solax](/compatible_devices/devices.mdx#solax).
+
+### Q.VOLT Series
+{manufacturer_to_bubbles("Solax", "Q.VOLT Series")}
+
+Q-Cells uses Solax string inverters and offers them under the product name Q.Volt.
+See [Solax](/compatible_devices/devices.mdx#solax).
+
+## RCT
+
+### RCT Power Storage Systems
+{manufacturer_to_bubbles("RCT")}
+
+Battery inverters from RCT can be addressed directly using the RCT Power Serial Communication Protocol. For this, a power meter with the class "RCT Power" must be created and the IP address of the inverter entered.
+Only if a power meter has been installed at the grid connection is the PV excess charging (PVE) application supported. Dynamic load management (DLM) is unfortunately not possible via this meter, as no phase currents are transmitted.
+
+## SAX Power
+
+### SAX Power Home and Power Home Plus
+{manufacturer_to_bubbles("SAX Power", "Power Home and Power Home Plus")}
+
+The SAX Power batteries Power Home and Power Home Plus can be read via Modbus/TCP. For the older variants, port 3600 should be set, and for the newer variants port 502.
+The "Basic Mode" setting has been tested. The "Extended Mode" could not yet be tested by us.
+Only if a power meter has been installed at the grid connection is the PV excess charging (PVE) application supported. Dynamic load management (DLM) is unfortunately not possible via this meter, as no phase currents are transmitted.
+
+
+## Shelly
+
+### Shelly Pro EM, Shelly Pro 3EM, Shelly 3EM
+{manufacturer_to_bubbles("Shelly")}
+
+All Shelly power meters that have Modbus/TCP are supported.
+Shelly power meters are very narrow and require little space and are offered for various maximum currents. The following models are directly supported as templates:
+
+ * Shelly Pro EM-50 (1-phase)
+ * Shelly Pro 3EM 120A
+ * Shelly Pro 3EM 400A
+ * Shelly Pro 3EM 3CT 63
+ * Shelly 3EM-63T Gen3 / 3EM-63W Gen3 
+
+It is important to update to the latest software so that Modbus/TCP is supported. This must then be activated under Settings -> Modbus.
+A power meter can always be assigned to exactly one measurement location. The measurement location depends on the installation location of the power meter. Multiple power meters of this type can be configured.
+Only if the power meter was installed at the grid connection are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+
+## Siemens
+
+### SENTRON Energy Meter PAC Series
+{manufacturer_to_bubbles("Siemens")}
+
+The following Siemens SENTRON energy meters can be read via Modbus/TCP depending on the specific model:
+ * PAC2200
+ * PAC3120
+ * PAC3200
+ * PAC3220
+ * PAC4200
+ * PAC4220
+
+The power meters are also available in variants that do not have an RJ45 connection and therefore do not support Modbus/TCP! These are not supported.
+There are various models either as direct power meters with different measuring ranges or as current transformer meters.
+
+A power meter can always be assigned to exactly one measurement location. The measurement location depends on the installation location of the power meter. Multiple power meters of this type can be configured.
+Only if the power meter was installed at the grid connection are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+
+## SMA
+
+### Sunny Boy 3.0 / 3.6 / 4.0 / 5.0 / 6.0
+{manufacturer_to_bubbles("SMA", "Sunny Boy 3.0 / 3.6 / 4.0 / 5.0 / 6.0")}
+
+Sunny Boy inverters speak SunSpec and can be read directly. For this, the "SunSpec Modbus profile" must be activated as the Modbus profile on the inverter.
+According to SMA, the Unit ID for the "SMA Modbus profile" + 123 is used. This is set to 3 by default, so the Unit ID for SunSpec is 126.
+To read the inverter power, firmware version 4.00.23.R or higher is required.
+Only the measurement value for generation (PV) is available.
+
+### Sunny Boy Storage 3.7 / 4.0 / 5.0 / 6.0
+{manufacturer_to_bubbles("SMA", "Sunny Boy Storage 3.7 / 4.0 / 5.0 / 6.0")}
+
+Sunny Boy Storage inverters speak SunSpec and can be read directly. For this, the "SunSpec Modbus profile" must be activated as the Modbus profile on the inverter.
+According to SMA, the Unit ID for the "SMA Modbus profile" + 123 is used. This is set to 3 by default, so the Unit ID for SunSpec is 126.
+
+The "Grid" power meter is only usable if an external hardware power meter has been installed at the grid connection and can be read by the inverter.
+Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+
+### Sunny Boy Smart Energy 3.6 / 4.0 / 5.0 / 6.0
+{manufacturer_to_bubbles("SMA", "Sunny Boy Smart Energy 3.6 / 4.0 / 5.0 / 6.0")}
+
+Sunny Boy Smart Energy inverters speak SunSpec and can be read directly. For this, the "SunSpec Modbus profile" must be activated as the Modbus profile on the inverter.
+According to SMA, the Unit ID for the "SMA Modbus profile" + 123 is used. This is set to 3 by default, so the Unit ID for SunSpec is 126.
+
+To read the inverter power, firmware version 3.01.09.R or higher is required.
+The "Grid" power meter is only usable if an external hardware power meter has been installed at the grid connection and can be read by the inverter.
+Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+
+### Sunny Tripower 3.0 / 4.0 / 5.0 / 6.0 / 8.0 / 10.0
+{manufacturer_to_bubbles("SMA", "Sunny Tripower 3.0 / 4.0 / 5.0 / 6.0 / 8.0 / 10.0")}
+
+Sunny Tripower inverters speak SunSpec and can be read directly. For this, the "SunSpec Modbus profile" must be activated as the Modbus profile on the inverter.
+According to SMA, the Unit ID for the "SMA Modbus profile" + 123 is used. This is set to 3 by default, so the Unit ID for SunSpec is 126.
+
+To read the inverter power, firmware version 4.00.02.R or higher is required.
+Only the measurement value for generation (PV) is available.
+
+### Sunny Tripower Smart Energy 5.0 / 6.0 / 8.0 / 10.0
+{manufacturer_to_bubbles("SMA", "Sunny Tripower Smart Energy 5.0 / 6.0 / 8.0 / 10.0")}
+
+Sunny Tripower Smart Energy inverters speak SunSpec and can be read directly. For this, the "SunSpec Modbus profile" must be activated as the Modbus profile on the inverter.
+According to SMA, the Unit ID for the "SMA Modbus profile" + 123 is used. This is set to 3 by default, so the Unit ID for SunSpec is 126.
+
+To read the inverter power, firmware version 3.01.09.R or higher is required.
+The "Grid" power meter is only usable if an external hardware power meter has been installed at the grid connection and can be read by the inverter.
+Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+
+### Sunny Tripower CORE1
+{manufacturer_to_bubbles("SMA", "Sunny Tripower CORE1")}
+
+Sunny Tripower CORE1 inverters speak SunSpec and can be read directly. For this, the "SunSpec Modbus profile" must be activated as the Modbus profile on the inverter.
+According to SMA, the Unit ID for the "SMA Modbus profile" + 123 is used. This is set to 3 by default, so the Unit ID for SunSpec is 126.
+
+To read the inverter power, firmware version 3.14.##.R or higher is required.
+Only the measurement value for generation (PV) is available.
+
+### Sunny Highpower PEAK3
+{manufacturer_to_bubbles("SMA", "Sunny Highpower PEAK3")}
+
+Sunny Highpower PEAK3 inverters speak SunSpec and can be read directly. For this, the "SunSpec Modbus profile" must be activated as the Modbus profile on the inverter.
+According to SMA, the Unit ID for the "SMA Modbus profile" + 123 is used. This is set to 3 by default, so the Unit ID for SunSpec is 126.
+
+To read the inverter power, firmware version 4.##.##.R or higher is required.
+Only the measurement value for generation (PV) is available.
+
+
+### Sunny Home Manager 1.0 / 2.0, SMA Energy Meter 2.0
+{manufacturer_to_bubbles("SMA", "Sunny Home Manager 1.0 / 2.0, SMA Energy Meter 2.0")}
+
+The data from the SMA Energy Meter 2.0 or the Sunny Home Manager can be accessed using the Speedwire protocol. Via these two, the power at the grid connection can be measured,
+so that PV excess charging (PVE) and dynamic load management (DLM) are possible with these meter values. Access to values other than grid data is not possible (PV, storage, etc.)
+
+:::note
+Speedwire uses multicast. Not all switches and especially many powerline/DLAN components do not forward the packets. In this case, the wallbox or the Energy Manager
+will not receive any data.
+
+However, in the Sunnyportal, up to 3 IP addresses can be specified to which the data is sent via unicast. If a problem with multicast occurs, it can be solved
+by entering the IP address of the wallbox or Energy Manager.
+These can be specified under Configuration->Device overview->HomeManager then under Properties->Meter configuration->Direct meter communication.
+The account access must have admin rights!
+
+:::
+
+## SolarEdge
+
+### SolarEdge Synergie PV Inverters
+{manufacturer_to_bubbles("SolarEdge", "SolarEdge Synergie PV Inverter")}
+
+SolarEdge Synergie PV inverters have a SunSpec interface. The port for SolarEdge appears to be **1502** rather than **502**.
+If the interface is not enabled under port 1502 or port 502, the SunSpec interface probably needs to be activated first.
+To our knowledge, this interface cannot be activated by yourself, but must be activated by SolarEdge support or the installer.
+In the installer app "SetApp" (for commissioning), the interface can be activated under Plant communication -> Modbus TCP.
+
+The "Grid" power meter is only usable if an external hardware power meter has been installed at the grid connection and can be read by the inverter.
+Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+
+
+### SolarEdge Home Inverters
+{manufacturer_to_bubbles("SolarEdge", "SolarEdge Home Inverter")}
+
+SolarEdge Home inverters have a SunSpec interface. The port for SolarEdge appears to be **1502** rather than **502**.
+If the interface is not enabled under port 1502 or port 502, the SunSpec interface probably needs to be activated first.
+To our knowledge, this interface cannot be activated by yourself, but must be activated by SolarEdge support or the installer.
+In the installer app "SetApp" (for commissioning), the interface can be activated under Plant communication -> Modbus TCP.
+
+The "Grid" power meter is only usable if an external hardware power meter has been installed at the grid connection and can be read by the inverter.
+Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+Via SunSpec, the storage capacity model 713 is also available, but it does not provide the battery power. Therefore, we have created a Modbus/TCP
+profile to also capture the power and SoC (see next entry).
+
+### SolarEdge Home Inverters (Storage)
+{manufacturer_to_bubbles("SolarEdge", "SolarEdge Home Inverter (Storage)")}
+Unfortunately, SolarEdge does not provide power data and the SoC via SunSpec. Therefore, we have created a custom Modbus/TCP profile for SunSpec.
+This only serves to capture the "Storage" measurement location. All other measurement locations (PV, Grid, etc.) are done via SunSpec (see above).
+
+## Solarmax
+{manufacturer_to_bubbles("Solarmax")}
+
+The MAX.STORAGE storage system can be read via Modbus/TCP. The SoC and the power of the battery are provided with the virtual power meter "Storage".
+The "Grid" power meter is only usable if an external hardware power meter has been installed at the grid connection and can be read by the inverter.
+Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+
+## Solax
+
+### X1 & X3 Hybrid
+{manufacturer_to_bubbles("Solax", "X1 & X3 Hybrid")}
+
+Solax hybrid inverters can be read via the WLAN dongle using Modbus/TCP. A setup guide including the supported inverters is available in the [Solax Power Academy](https://kb.solaxpower.com/de/solution/detail/ff8080818eae9899018ec71a12ca1ea6).
+The "Grid" power meter is only usable if an external hardware power meter has been installed at the grid connection and can be read by the inverter.
+Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+
+### X1 & X3 Mini Boost MIC and Pro
+{manufacturer_to_bubbles("Solax", "X1 & X3 Mini Boost MIC and Pro")}
+
+Solax string inverters can be read via the WLAN dongle using Modbus/TCP. A setup guide including the supported inverters is available in the [Solax Power Academy](https://kb.solaxpower.com/de/solution/detail/ff8080818eae9899018ec71a12ca1ea6).
+The "Grid" power meter is only usable if an external hardware power meter has been installed at the grid connection and can be read by the inverter.
+Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+
+## Sungrow
+
+### SG Series
+{manufacturer_to_bubbles("Sungrow", "SG Series")}
+
+:::note
+
+Inverter and dongle (WiNet-S/WiNet-S2) each have their own software. Both should be updated!
+
+With WiNet-S2 firmware update v16, port 502 may be deactivated and encrypted port 516 activated. If the inverter is not reachable after an update, please reactivate port 502 via the WiNet-S2 hotspot (usually without "SSL encryption") if an on-site EMS or proxy is accessing it. Then give the WiNet-S2 15-40 minutes for possible re-initialization on the router.
+
+If there are issues with iSolarCloud, disconnect WiNet-S(2) for 1 minute. If issues persist, then access with https:// (with s) and/or manually switch to iot.isolarcloud.eu in the WiNet-S WebUI (https://192...), possibly also to port 16668.
+
+:::
+
+Sungrow inverters of the SGxxRT/SGxxRS/SGxxCX/SDxxCX-P2 series can be read via Modbus/TCP. Hardware power meters of type DTSU666 or similar connected to the inverter that can be read by it can also be read.
+Only if a power meter has been installed at the grid connection is the PV excess charging (PVE) application supported. Dynamic load management (DLM) is not possible with the meter data, as no phase currents are provided.
+
+Reading can be done via a WiNet-S using LAN/WLAN (version dependent). However, there may be problems depending on the hardware version and firmware. Sungrow recommends using the LAN connection
+of the inverter directly if available. The Modbus/TCP connection often only seems to support one client.
+
+An older dongle of type ***WiNet-S*** always seems to provide Modbus/TCP via port 502. If a newer dongle of type **WiNet-S2** is available, the option "Modbus TCP port 502 ON/OFF" must be activated. This is probably only possible via the installer access.
+Activation of Modbus/TCP for the WiNet-S2 can be found in iSolarCloud in the respective system under Devices->Settings->General parameter settings.
+
+Generally, the device should be reachable with device address 1. Apparently, the address is not user-configurable. A user has informed us that device address 1 does not work for them, but the system is reachable under device address 4.
+
+### SH Series
+{manufacturer_to_bubbles("Sungrow", "SH Series")}
+
+:::note
+
+Inverter and dongle (WiNet-S/WiNet-S2) each have their own software. Both should be updated!
+
+With WiNet-S2 firmware update v16, port 502 may be deactivated and encrypted port 516 activated. If the inverter is not reachable after an update, please reactivate port 502 via the WiNet-S2 hotspot (usually without "SSL encryption") if an on-site EMS or proxy is accessing it. Then give the WiNet-S2 15-40 minutes for possible re-initialization on the router.
+
+If there are issues with iSolarCloud, disconnect WiNet-S(2) for 1 minute. If issues persist, then access with https:// (with s) and/or manually switch to iot.isolarcloud.eu in the WiNet-S WebUI (https://192...), possibly also to port 16668.
+
+:::
+
+Sungrow inverters of the SHxxRT/SHxxRS/SHxxT series can be read via Modbus/TCP. Hardware power meters of type DTSU666 or similar connected to the inverter that can be read by it can also be read.
+Only if a power meter has been installed at the grid connection is the PV excess charging (PVE) application supported. Dynamic load management (DLM) is not possible with the meter data, as no phase currents are provided.
+
+Reading can be done via a WiNet-S using LAN/WLAN (version dependent). However, there may be problems depending on the hardware version and firmware. Sungrow recommends using the LAN connection
+of the inverter directly if available. The Modbus/TCP connection often only seems to support one client.
+
+An older dongle of type ***WiNet-S*** always seems to provide Modbus/TCP via port 502. If a newer dongle of type **WiNet-S2** is available, the option "Modbus TCP port 502 ON/OFF" must be activated. This is probably only possible via the installer access.
+Activation of Modbus/TCP for the WiNet-S2 can be found in iSolarCloud in the respective system under Devices->Settings->General parameter settings.
+
+Generally, the device should be reachable with device address 1. Apparently, the address is not user-configurable. A user has informed us that device address 1 does not work for them, but the system is reachable under device address 4.
+
+### SH Series
+{manufacturer_to_bubbles("Sungrow", "SH Series")}
+
+:::note
+
+Inverter and dongle (WiNet-S/WiNet-S2) each have their own software. Both should be updated!
+
+With WiNet-S2 firmware update v16, port 502 may be deactivated and encrypted port 516 activated. If the inverter is not reachable after an update, please reactivate port 502 via the WiNet-S2 hotspot (usually without "SSL encryption") if an on-site EMS or proxy is accessing it. Then give the WiNet-S2 15-40 minutes for possible re-initialization on the router.
+
+If there are issues with iSolarCloud, disconnect WiNet-S(2) for 1 minute. If issues persist, then access with https:// (with s) and/or manually switch to iot.isolarcloud.eu in the WiNet-S WebUI (https://192...), possibly also to port 16668.
+
+:::
+
+Sungrow inverters of the SHxxRT/SHxxRS/SHxxT series can be read via Modbus/TCP. Hardware power meters of type DTSU666 or similar connected to the inverter that can be read by it can also be read.
+Only if a power meter has been installed at the grid connection is the PV excess charging (PVE) application supported. Dynamic load management (DLM) is not possible with the meter data, as no phase currents are provided.
+
+Reading can be done via a WiNet-S using LAN/WLAN (version dependent). However, there may be problems depending on the hardware version and firmware. Sungrow recommends using the LAN connection
+of the inverter directly if available. The Modbus/TCP connection often only seems to support one client.
+
+An older dongle of type ***WiNet-S*** always seems to provide Modbus/TCP via port 502. If a newer dongle of type **WiNet-S2** is available, the option "Modbus TCP port 502 ON/OFF" must be activated. This is probably only possible via the installer access.
+Activation of Modbus/TCP for the WiNet-S2 can be found in iSolarCloud in the respective system under Devices->Settings->General parameter settings.
+
+Generally, the device should be reachable with device address 1. Apparently, the address is not user-configurable. A user has informed us that device address 1 does not work for them, but the system is reachable under device address 4.
+## Tasmota
+
+### Smart Meter Interface
+{manufacturer_to_bubbles("Tasmota")}
+
+Tasmota offers a [Smart Meter Interface](https://tasmota.github.io/docs/Smart-Meter-Interface/) that allows reading the meter values of the smart meter from the grid operator via an IR reading head.
+Grid operators use smart meters from brands such as DZG (e.g., DWS, DVS), EMH (e.g., ED300, eHZ), or Holley (e.g., DTZ, EHZ). A complete list can be found at the link above.
+
+The smart meter is typically secured with a PIN and must be unlocked with the PIN beforehand. The PIN is obtained from your grid operator. Self-built reading heads are supported, which typically consist of an
+ESP32 and a photodiode. However, there are also ready-made solutions such as the "Hichi TTL - reading head".
+
+Technically, the corresponding [Smart Meter Descriptor](https://tasmota.github.io/docs/Smart-Meter-Interface/#smart-meter-descriptors) must be stored in the ESP32 of the reading head for the respective meter model.
+If the meter can be read via this, the power measurement value (from Tasmota version 13.x) can be sent to a WARP Charger or WARP Energy Manager using the [HTTP API](/interfaces/mqtt_http/api_reference/meters.mdx).
+
+For this, an API power meter is configured on the WARP Energy Manager or WARP Charger. This receives only the single value "Active power (consumption minus feed-in); Σ L1, L2, L3 \[W\]".
+This value is then transmitted from the Tasmota SML script using the following line:
+
+```
+=>WebQuery http://192.168.2.30/meters/0/update POST [Content-Type:application/json] [%sml[3]%]
+```
+
+In the example script below for a DZG DWS7412, a total of 4 measurement values are extracted, which are then accessible via the variables sml\[1\] to sml\[4\] according to their order. In the example case, sml\[3\] contains the desired value for power in W. This value is transmitted via HTTP Post to API meter 0. Additionally, all sml measurement values are then output in the log (print). The print statement is only for verification and can be removed after successful determination of the desired value.
+
+```
+>D
+>B
+=>sensor53 r
+>S
+=>WebQuery http://192.168.2.30/meters/0/update POST [Content-Type:application/json] [%sml[3]%]
+print %sml[1]%,%sml[2]%,%sml[3]%,%sml[4]%
+>M 1
++1,3,s,16,9600,DWS7412
+1,77070100010800ff@1000,Energie,kWh,energy,4
+1,77070100020800ff@1000,Lieferung,kWh,en_out,4
+1,77070100100700ff@1,Leistung,W,power,2
+1,7707010060320101@#,SID,,meter_id,0
+```
+
+This solution can only be used for PV excess charging (PVE), as only the total power is transmitted. For dynamic load management (DLM), the transmission of phase currents is also necessary. These are also transmitted by some smart meters. In this case, the API meter must be extended by the additional 3 values and the POST request in the script must be supplemented.
+
+Here is the [Tinkerunity blog post](https://www.tinkerunity.org/topic/12255-z%C3%A4hler-des-netzbetreibers-sml-ir-hichi%E2%80%A6-f%C3%BCr-pv-%C3%BCberschuss/?do=findComment&comment=55374)
+on which this description was originally based.
+
+## Tinkerforge
+
+### HTTP API
+{manufacturer_to_bubbles("Tinkerforge", "WARP Meters API HTTP")}
+
+WARP products can be accessed via the [HTTP API](/interfaces/mqtt_http/introduction.md#http). The [Meters](/interfaces/mqtt_http/api_reference/meters.mdx) module is part of the API and allows created API power meters to be supplied with data.
+Further information on how this works is available on the [Interfaces](/compatible_devices/interfaces.md#api) page.
+
+### MQTT API
+{manufacturer_to_bubbles("Tinkerforge", "WARP Meters API MQTT")}
+
+WARP products can be accessed via the [MQTT API](/interfaces/mqtt_http/introduction.md#mqtt). The [Meters](/interfaces/mqtt_http/api_reference/meters.mdx) module is part of the API and allows created API power meters to be supplied with data.
+Further information on how this works is available on the [Interfaces](/compatible_devices/interfaces.md#api) page.
+
+## Varta
+
+### VARTA Element, One, Pulse, Pulse neo, Link, Flex Storage
+{manufacturer_to_bubbles("Varta", "VARTA Element, One, Pulse, Pulse neo, Link, Flex Storage")}
+
+Varta storage can be accessed via Modbus/TCP. The devices support access to data from the grid connection (if available) and from storage.
+
+## Victron Energy
+
+### GX and Connected Devices
+{manufacturer_to_bubbles("Victron Energy", "GX and connected devices")}
+
+Victron devices, such as the well-known Multiplus or Quattro inverters, are typically controlled by a [GX device](https://www.victronenergy.com/live/venus-os:start).
+Modbus/TCP can be activated for these devices so that data can be accessed via Modbus/TCP.
+
+A GX device provides a summary of all connected devices such as inverters, batteries, etc. under "Services", even if these devices are connected via VE.BUS. The data is summed under "System".
+For example, if multiple inverters are operated in parallel, "System" represents the sum of generation. We support access to the "System" data for "Grid connection",
+"Load", "Inverter", and "Storage". The **device address is typically 100**.
+
+:::note
+The device addresses for Modbus/TCP typically correspond to Victron's "Unit IDs". According to Victron, these can also differ if the "Device Instance IDs" are greater than 247.
+The device addresses for Modbus/TCP can be found under "Settings → Integrations → Modbus TCP server → Available services".
+:::
+
+Technically, we use the following Modbus/TCP registers:
+ * Grid connection: Grid Power L1-L3 (Register 820-822)
+ * PV - Sum of all PV generators (AC, DC):
+   * AC Coupled PV On Output L1-L3 (Register 808-810)
+   * PV - AC-coupled on input L1-L3 (Register 811-813)
+   * PV - AC-coupled on generator L1-L3 (Register 814-816)
+   * PV - DC-coupled power (Register 850)
+ * Storage: Voltage (Register 840), Current (Register 841), Power (Register 842), and SoC (Register 843)
+ * Load: AC Consumption L1-L3 (Register 817-819) 
+
+The "Grid" power meter is only usable if an external hardware power meter has been installed at the grid connection and can be read by the system. If the entire grid connection is routed through Multiplus inverters, they can
+function as grid power meters. In this case, an extra grid power meter is not necessary.
+The PV excess charging (PVE) application is only supported if measurement values from the grid connection are available.
+Dynamic load management (DLM) is not possible with the "System" meter data, as no phase currents are provided. If dynamic load management should still be implemented, an additional power meter that provides phase currents must be installed.
+
+### EM540, ET340, ET112, EM24 Power Meters
+{manufacturer_to_bubbles("Victron Energy", "EM540, ET340, ET112, EM24 Electricity Meter")}
+These power meters are technically Carlo Gavazzi power meters and can therefore be created as [Carlo Gavazzi power meters](/compatible_devices/devices.mdx#carlo-galvazzi).
+
+## YTL
+
+### DEM4A Power Meter
+{manufacturer_to_bubbles("YTL")}
+
+The YTL power meter DEM4A with RS485 (Modbus/RTU) interface can be directly connected to the WARP Energy Manager and read by it.
+A power meter can always be assigned to exactly one measurement location. The measurement location depends on the installation location of the power meter. Only one power meter of this type can be configured, as the RS485 (Modbus/RTU) interface
+of the WARP Energy Manager only supports one power meter. To use the PV excess charging (PVE) and dynamic load management (DLM) applications, the power meter must be installed at the grid connection.
+

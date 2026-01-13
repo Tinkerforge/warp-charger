@@ -1598,42 +1598,6 @@ mosquitto_pub -h $BROKER -t $PREFIX/meter/phases_update -m '{
 
 
 Fehlerzähler der Kommunikation mit dem Stromzähler.
-:::info[Beispiel]
-    <Tabs groupId="apiType" queryString className="hidden-tabs">
-        <TabItem value="http" label="HTTP (curl)">
-```bash
-# $HOST z.B. warp2-AbCd
-```
-#### Lesen
-```bash
-curl http://$HOST/meter/error_counters
-```
-        </TabItem>
-        <TabItem value="mqtt" label="MQTT (mosquitto)">
-```bash
-# $BROKER z.B. my_mosquitto.localdomain
-# $PREFIX z.B. warp2/AbCd
-```
-#### Lesen
-```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/error_counters
-```
-        </TabItem>
-    </Tabs>
-
-```jsx
-{
-  "local_timeout": 0,
-  "global_timeout": 0,
-  "illegal_function": 0,
-  "illegal_data_access": 0,
-  "illegal_data_value": 0,
-  "slave_device_failure": 0
-}
-```
-
-
-:::
 
 
 <table>
@@ -2824,42 +2788,6 @@ mosquitto_pub -h $BROKER -t $PREFIX/meter/phases_update -m '{
 
 
 Fehlerzähler der Kommunikation mit dem Stromzähler.
-:::info[Beispiel]
-    <Tabs groupId="apiType" queryString className="hidden-tabs">
-        <TabItem value="http" label="HTTP (curl)">
-```bash
-# $HOST z.B. warp3-AbCd
-```
-#### Lesen
-```bash
-curl http://$HOST/meter/error_counters
-```
-        </TabItem>
-        <TabItem value="mqtt" label="MQTT (mosquitto)">
-```bash
-# $BROKER z.B. my_mosquitto.localdomain
-# $PREFIX z.B. warp3/AbCd
-```
-#### Lesen
-```bash
-mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/error_counters
-```
-        </TabItem>
-    </Tabs>
-
-```jsx
-{
-  "local_timeout": 0,
-  "global_timeout": 0,
-  "illegal_function": 0,
-  "illegal_data_access": 0,
-  "illegal_data_value": 0,
-  "slave_device_failure": 0
-}
-```
-
-
-:::
 
 
 <table>

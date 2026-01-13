@@ -432,16 +432,10 @@ curl http://$HOST/evse/indicator_led
 
 #### Schreiben
 ```bash
-curl http://$HOST/evse/indicator_led -d '{
-  "indication": 2003,
-  "duration": 20000,
-  "color_h": 120,
-  "color_s": 255,
-  "color_v": 255
-}'
+curl http://$HOST/evse/indicator_led -d '{ "indication": -1, "duration": 0, "color_h": 0, "color_s": 0, "color_v": 0 }'
 ```
 
-Zeigt 20 Sekunden lang das Blinkmuster 3xBlinken+längere Pause auf der LED im Fronttaster an. Die gewählte Farbe wird ignoriert, da diese Hardware nur eine blaue LED besitzt.
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -465,16 +459,10 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/indicator_led
 
 
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/evse/indicator_led_update -m '{
-  "indication": 2003,
-  "duration": 20000,
-  "color_h": 120,
-  "color_s": 255,
-  "color_v": 255
-}'
+mosquitto_pub -h $BROKER -t $PREFIX/evse/indicator_led_update -m '{ "indication": -1, "duration": 0, "color_h": 0, "color_s": 0, "color_v": 0 }'
 ```
 
-Zeigt 20 Sekunden lang das Blinkmuster 3xBlinken+längere Pause auf der LED im Fronttaster an. Die gewählte Farbe wird ignoriert, da diese Hardware nur eine blaue LED besitzt.
+
 
         </TabItem>
     </Tabs>
@@ -2365,7 +2353,10 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
   "allowed_charging_current": 32000,
   "error_state": 0,
   "lock_state": 0,
+  // highlight-start
+  // Nur WARP2 und WARP3
   "dc_fault_current_state": 0
+  // highlight-end
 }
 ```
 
@@ -8824,16 +8815,10 @@ curl http://$HOST/evse/indicator_led
 
 #### Schreiben
 ```bash
-curl http://$HOST/evse/indicator_led -d '{
-  "indication": 2003,
-  "duration": 20000,
-  "color_h": 120,
-  "color_s": 255,
-  "color_v": 255
-}'
+curl http://$HOST/evse/indicator_led -d '{ "indication": -1, "duration": 0, "color_h": 0, "color_s": 0, "color_v": 0 }'
 ```
 
-Zeigt 20 Sekunden lang das Blinkmuster 3xBlinken+längere Pause auf der LED im Fronttaster an. Die gewählte Farbe wird ignoriert, da diese Hardware nur eine blaue LED besitzt.
+
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
@@ -8857,16 +8842,10 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/indicator_led
 
 
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/evse/indicator_led_update -m '{
-  "indication": 2003,
-  "duration": 20000,
-  "color_h": 120,
-  "color_s": 255,
-  "color_v": 255
-}'
+mosquitto_pub -h $BROKER -t $PREFIX/evse/indicator_led_update -m '{ "indication": -1, "duration": 0, "color_h": 0, "color_s": 0, "color_v": 0 }'
 ```
 
-Zeigt 20 Sekunden lang das Blinkmuster 3xBlinken+längere Pause auf der LED im Fronttaster an. Die gewählte Farbe wird ignoriert, da diese Hardware nur eine blaue LED besitzt.
+
 
         </TabItem>
     </Tabs>

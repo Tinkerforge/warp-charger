@@ -25,7 +25,7 @@ const config: Config = {
   // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'de',
-    locales: ['de'],
+    locales: ['de', 'en'],
   },
 
   presets: [
@@ -34,6 +34,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
+          routeBasePath: 'docs',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
@@ -90,6 +91,10 @@ const config: Config = {
         height: '25px',
       },
       items: [
+        {
+          type: 'localeDropdown',
+          position: 'right',
+        },
         {
           href: 'https://warp-charger.com',
           label: 'warp-charger.com',

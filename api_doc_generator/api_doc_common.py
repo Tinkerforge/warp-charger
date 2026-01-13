@@ -7,17 +7,49 @@ import re
 
 import os
 
-def get_example_from_file(api: str, prefix_version: str):
+# Translatable string helper class
+class T:
+    def __init__(self, translations: Union[str, dict]):
+        if isinstance(translations, str):
+            # Print plain strings during generation to see where T() is still missing
+            # (for some stuff plain strings might be OK)
+            print(f"Plain string passed to T(): '{translations[:50]}'")
+            self.translations = {'de': translations, 'en': translations}
+        elif isinstance(translations, dict):
+            self.translations = translations
+        else:
+            raise TypeError(f"T() expects str or dict, got {type(translations)}")
+
+    def get(self, locale: str) -> str:
+        if locale in self.translations:
+            return self.translations[locale]
+        elif 'de' in self.translations:
+            return self.translations['de']
+        else:
+            return list(self.translations.values())[0]
+
+    def __repr__(self):
+        return f"T({self.translations})"
+
+def _ensure_T(value):
+    if isinstance(value, T):
+        return value
+    elif isinstance(value, str):
+        return T(value)
+    else:
+        raise TypeError(f"Expected T or str, got {type(value)}")
+
+def get_example_from_file(api: str, prefix_version: str, locale: str = 'de'):
     if prefix_version == "warp":
         prefix_version = "warp1"
 
     try:
-        path = f'./examples/{api}.jsonc'
+        path = f'./examples/{api}_{locale}.jsonc'
 
         _dir, file = api.rsplit("/", 1)
         versioned_dir = f'./examples/{_dir}'
         for x in os.listdir(versioned_dir):
-            if x.split('.', 1)[0] == file and f'.{prefix_version}.' in x and x.endswith('.jsonc'):
+            if x.split('.', 1)[0] == file and f'.{prefix_version}_{locale}.jsonc' in x:
                 path = os.path.join(versioned_dir, x)
                 break
 
@@ -49,42 +81,42 @@ def parse_api_name(api_name):
 
 @dataclass
 class Unit:
-    name: str
+    name: 'T'
     abbr: str
 
-    def to_html(self):
-        return '(<abbr title="{}">{}</abbr>)'.format(self.name, self.abbr)
+    def to_html(self, locale: str = 'de'):
+        return '(<abbr title="{}">{}</abbr>)'.format(self.name.get(locale), self.abbr)
 
 class Units:
-    A = Unit("Ampere", "A")
-    Ah = Unit("Amperestunde", "Ah")
-    ct_per_month = Unit("Cent pro Monat", "ct/Monat")
-    degree = Unit("Grad", "°")
-    h = Unit("Stunde", "h")
-    hundredth_cent_per_kWh = Unit("Hundertstel Cent pro Kilowattstunde", "ct/kWh/100")
-    hundredth_percent = Unit("Hundertstel Prozent", "%/100")
-    hundredth_degree_celsius = Unit("Hundertstel Grad Celsius", "°/100")
-    Hz = Unit("Hertz", "Hz")
-    kVAh = Unit("Kilovoltamperestunde", "kVAh")
-    kvarh = Unit("Kilovoltampere Reaktiv Stunde", "kvarh")
-    kWh = Unit("Kilowattstunde", "kWh")
-    min_ = Unit("Minute", "min")
-    mA = Unit("Milliampere", "mA")
-    ms = Unit("Millisekunde", "ms")
-    mV = Unit("Millivolt", "mV")
-    Mbps = Unit("Megabit pro Sekunde", "Mbit/s")
-    ohm = Unit("Ohm", "Ω")
-    percent = Unit("Prozent", "%")
-    s = Unit("Sekunde", "s")
-    thousands_cent_per_kWh = Unit("Tausendstel Cent pro Kilowattstunde", "ct/kWh/1000")
-    tenthousands_degree = Unit("Zehntausendstel Grad", "°/10000")
-    tenth_percent = Unit("Zehntel Prozent", "%/10")
-    V = Unit("Volt", "V")
-    VA = Unit("Voltampere", "VA")
-    var = Unit("Voltampere Reaktiv", "var")
-    Wp = Unit("Watt Peak", "Wp")
-    W = Unit("Watt", "W")
-    Wh = Unit("Wattstunde", "Wh")
+    A = Unit(T({'de': "Ampere", 'en': "Ampere"}), "A")
+    Ah = Unit(T({'de': "Amperestunde", 'en': "Ampere-hour"}), "Ah")
+    ct_per_month = Unit(T({'de': "Cent pro Monat", 'en': "Cent per month"}), "ct/M")
+    degree = Unit(T({'de': "Grad", 'en': "Degree"}), "°")
+    h = Unit(T({'de': "Stunde", 'en': "Hour"}), "h")
+    hundredth_cent_per_kWh = Unit(T({'de': "Hundertstel Cent pro Kilowattstunde", 'en': "Hundredth cent per kilowatt-hour"}), "ct/kWh/100")
+    hundredth_percent = Unit(T({'de': "Hundertstel Prozent", 'en': "Hundredth percent"}), "%/100")
+    hundredth_degree_celsius = Unit(T({'de': "Hundertstel Grad Celsius", 'en': "Hundredth degree Celsius"}), "°/100")
+    Hz = Unit(T({'de': "Hertz", 'en': "Hertz"}), "Hz")
+    kVAh = Unit(T({'de': "Kilovoltamperestunde", 'en': "Kilovolt-ampere-hour"}), "kVAh")
+    kvarh = Unit(T({'de': "Kilovoltampere Reaktiv Stunde", 'en': "Kilovolt-ampere reactive hour"}), "kvarh")
+    kWh = Unit(T({'de': "Kilowattstunde", 'en': "Kilowatt-hour"}), "kWh")
+    min_ = Unit(T({'de': "Minute", 'en': "Minute"}), "min")
+    mA = Unit(T({'de': "Milliampere", 'en': "Milliampere"}), "mA")
+    ms = Unit(T({'de': "Millisekunde", 'en': "Millisecond"}), "ms")
+    mV = Unit(T({'de': "Millivolt", 'en': "Millivolt"}), "mV")
+    Mbps = Unit(T({'de': "Megabit pro Sekunde", 'en': "Megabit per second"}), "Mbit/s")
+    ohm = Unit(T({'de': "Ohm", 'en': "Ohm"}), "Ω")
+    percent = Unit(T({'de': "Prozent", 'en': "Percent"}), "%")
+    s = Unit(T({'de': "Sekunde", 'en': "Second"}), "s")
+    thousands_cent_per_kWh = Unit(T({'de': "Tausendstel Cent pro Kilowattstunde", 'en': "Thousandth cent per kilowatt-hour"}), "ct/kWh/1000")
+    tenthousands_degree = Unit(T({'de': "Zehntausendstel Grad", 'en': "Ten-thousandth degree"}), "°/10000")
+    tenth_percent = Unit(T({'de': "Zehntel Prozent", 'en': "Tenth percent"}), "%/10")
+    V = Unit(T({'de': "Volt", 'en': "Volt"}), "V")
+    VA = Unit(T({'de': "Voltampere", 'en': "Volt-ampere"}), "VA")
+    var = Unit(T({'de': "Voltampere Reaktiv", 'en': "Volt-ampere reactive"}), "var")
+    Wp = Unit(T({'de': "Watt Peak", 'en': "Watt peak"}), "Wp")
+    W = Unit(T({'de': "Watt", 'en': "Watt"}), "W")
+    Wh = Unit(T({'de': "Wattstunde", 'en': "Watt-hour"}), "Wh")
 
 class FuncType(IntEnum):
     STATE = 0
@@ -151,12 +183,32 @@ class Version(IntFlag):
             return Version.ANY.name.lower()
         return " ".join([x.name for x in Version if x in self]).lower()
 
-    def label(self, row=False):
+    def label(self, row=False, locale: str = 'de'):
         if self == Version.ANY:
             return ""
-        prefix = "<strong>" if not row else "<strong>(Nur "
-        suffix = ":</strong><br/>" if not row else ")</strong> "
-        return prefix + " und ".join([{
+
+        translations = {
+            'de': {
+                'prefix_normal': "<strong>",
+                'prefix_row': "<strong>(Nur ",
+                'suffix_normal': ":</strong><br/>",
+                'suffix_row': ")</strong> ",
+                'and': " und "
+            },
+            'en': {
+                'prefix_normal': "<strong>",
+                'prefix_row': "<strong>(Only ",
+                'suffix_normal': ":</strong><br/>",
+                'suffix_row': ")</strong> ",
+                'and': " and "
+            }
+        }
+
+        t = translations.get(locale, translations['de'])
+        prefix = t['prefix_normal'] if not row else t['prefix_row']
+        suffix = t['suffix_normal'] if not row else t['suffix_row']
+
+        return prefix + t['and'].join([{
             Version.WARP1: "WARP 1",
             Version.WARP2: "WARP 2",
             Version.WARP3: "WARP 3",
@@ -171,13 +223,17 @@ class Version(IntFlag):
 @dataclass
 class Const:
     val: str
-    desc: str
+    desc: 'T'
     version: Version = Version.ANY
+
+    def __post_init__(self):
+        # Ensure desc field is wrapped in T()
+        self.desc = _ensure_T(self.desc)
 
 @dataclass
 class Elem:
     type_: EType
-    desc: str
+    desc: 'T'
     unit: Optional[Unit]
     val: Optional[Union[list['Elem'], dict[str, 'Elem'], dict[int, 'Elem']]]
     constants: Optional[list[Const]]
@@ -191,48 +247,48 @@ class Elem:
     hidden_union_get_tag: Optional[Callable[[str, dict], int]]
 
     @staticmethod
-    def OBJECT(desc: str, *, members: dict[str, 'Elem'], censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.OBJECT, desc, None, members, None, False, None, None, censored, version, None, None, None)
+    def OBJECT(desc: 'T', *, members: dict[str, 'Elem'], censored: bool = False, version: Version = Version.ANY):
+        return Elem(EType.OBJECT, _ensure_T(desc), None, members, None, False, None, None, censored, version, None, None, None)
 
     @staticmethod
-    def ARRAY(desc: str, *, unit: Optional[Unit] = None, members: Optional[list['Elem']] = None, member_type: Optional[EType] = None, member_unit: Optional[Unit] = None, censored: bool = False, version: Version = Version.ANY, is_var_length_array: bool = False):
+    def ARRAY(desc: 'T', *, unit: Optional[Unit] = None, members: Optional[list['Elem']] = None, member_type: Optional[EType] = None, member_unit: Optional[Unit] = None, censored: bool = False, version: Version = Version.ANY, is_var_length_array: bool = False):
         if members is None and member_type is None:
             raise Exception("Array without members and member_type is not supported!")
         if members is not None and member_type is not None and any(x.type_ != member_type for x in members):
             raise Exception("Type mismatch between members and member_type!")
-        return Elem(EType.ARRAY, desc, unit, members, None, is_var_length_array or (members is None), member_type if member_type is not None else members[0].type_, member_unit, censored, version, None, None, None)
+        return Elem(EType.ARRAY, _ensure_T(desc), unit, members, None, is_var_length_array or (members is None), member_type if member_type is not None else members[0].type_, member_unit, censored, version, None, None, None)
 
     @staticmethod
-    def STRING(desc: str, *, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.STRING, desc, None, None, constants, False, None, None, censored, version, None, None, None)
+    def STRING(desc: 'T', *, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
+        return Elem(EType.STRING, _ensure_T(desc), None, None, constants, False, None, None, censored, version, None, None, None)
 
     @staticmethod
-    def INT(desc: str, *, type_name_override: Optional[str] = None, unit: Optional[Unit] = None, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.INT, desc, unit, None, constants, False, None, None, censored, version, type_name_override, None, None)
+    def INT(desc: 'T', *, type_name_override: Optional[str] = None, unit: Optional[Unit] = None, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
+        return Elem(EType.INT, _ensure_T(desc), unit, None, constants, False, None, None, censored, version, type_name_override, None, None)
 
     @staticmethod
-    def FLOAT(desc: str, *, unit: Optional[Unit] = None, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.FLOAT, desc, unit, None, constants, False, None, None, censored, version, None, None, None)
+    def FLOAT(desc: 'T', *, unit: Optional[Unit] = None, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
+        return Elem(EType.FLOAT, _ensure_T(desc), unit, None, constants, False, None, None, censored, version, None, None, None)
 
     @staticmethod
-    def BOOL(desc: str, *, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.BOOL, desc, None, None, constants, False, None, None, censored, version, None, None, None)
+    def BOOL(desc: 'T', *, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
+        return Elem(EType.BOOL, _ensure_T(desc), None, None, constants, False, None, None, censored, version, None, None, None)
 
     @staticmethod
-    def NULL(desc: str, *, version: Version = Version.ANY):
-        return Elem(EType.NULL, desc, None, None, None, False, None, None, False, version, None, None, None)
+    def NULL(desc: 'T', *, version: Version = Version.ANY):
+        return Elem(EType.NULL, _ensure_T(desc), None, None, None, False, None, None, False, version, None, None, None)
 
     @staticmethod
-    def OPAQUE(desc: str):
-        return Elem(EType.OPAQUE, desc, None, None, None, False, None, None, False, Version.ANY, None, None, None)
+    def OPAQUE(desc: 'T'):
+        return Elem(EType.OPAQUE, _ensure_T(desc), None, None, None, False, None, None, False, Version.ANY, None, None, None)
 
     @staticmethod
-    def UNION(desc: str, *, members: dict[int, 'Elem'], censored: bool = False, version: Version = Version.ANY, tab_id = None):
-        return Elem(EType.UNION, desc, None, members, None, False, None, None, censored, version, None, tab_id, None)
+    def UNION(desc: 'T', *, members: dict[int, 'Elem'], censored: bool = False, version: Version = Version.ANY, tab_id = None):
+        return Elem(EType.UNION, _ensure_T(desc), None, members, None, False, None, None, censored, version, None, tab_id, None)
 
     @staticmethod
-    def HIDDEN_UNION(desc: str, *, members: dict[int, 'Elem'], get_tag_fn: Optional[Callable[[str, dict], int]], censored: bool = False, version: Version = Version.ANY, tab_id = None):
-        return Elem(EType.HIDDEN_UNION, desc, None, members, None, False, None, None, censored, version, None, tab_id, get_tag_fn)
+    def HIDDEN_UNION(desc: 'T', *, members: dict[int, 'Elem'], get_tag_fn: Optional[Callable[[str, dict], int]], censored: bool = False, version: Version = Version.ANY, tab_id = None):
+        return Elem(EType.HIDDEN_UNION, _ensure_T(desc), None, members, None, False, None, None, censored, version, None, tab_id, get_tag_fn)
 
     def get_type(self, version=Version.ANY) -> str:
         if self.type_ in (EType.OBJECT,
@@ -258,7 +314,7 @@ class Elem:
 
             return [x for x in self.val if version in x.version or version == Version.ANY][0].get_type() + "[{}]".format(len([x for x in self.val if version in x.version or version == Version.ANY]))
 
-    def get_unit(self) -> str:
+    def get_unit(self, locale: str = 'de') -> str:
         if self.type_ in (EType.OBJECT,
                           EType.STRING,
                           EType.INT,
@@ -267,25 +323,25 @@ class Elem:
                           EType.OPAQUE,
                           EType.UNION,
                           EType.NULL):
-            return self.unit.to_html() if self.unit is not None else ''
+            return self.unit.to_html(locale) if self.unit is not None else ''
 
         if self.type_ == EType.HIDDEN_UNION:
             raise Exception("not supported")
 
         if self.type_ == EType.ARRAY:
             if self.is_var_length_array:
-                return self.var_length_array_unit.to_html() if self.var_length_array_unit is not None else ''
+                return self.var_length_array_unit.to_html(locale) if self.var_length_array_unit is not None else ''
 
-            if all(x.get_unit() == '' for x in self.val):
-                return self.unit.to_html() if self.unit is not None else ''
+            if all(x.get_unit(locale) == '' for x in self.val):
+                return self.unit.to_html(locale) if self.unit is not None else ''
 
-            if len(set([x.get_unit() for x in self.val])) == len(self.val):
-                return self.val[0].get_unit()
+            if len(set([x.get_unit(locale) for x in self.val])) == len(self.val):
+                return self.val[0].get_unit(locale)
 
             print("Warning: Array with more than one unit found! Those units will not be documented")
             return ''
 
-    def to_table_row(self, key_name: str, version: Version) -> str:
+    def to_table_row(self, key_name: str, version: Version, locale: str = 'de') -> str:
         row_template = """
 <tr>
     <th scope="row" style={{{{whiteSpace: "nowrap"}}}}>{name}</th>
@@ -301,9 +357,9 @@ class Elem:
         name = '`{name}`<br/>{type}{unit}'.format(
                     name=key_name,
                     type=self.get_type(version=version),
-                    unit=wrap_non_empty(' ', self.get_unit(), ''))
+                    unit=wrap_non_empty(' ', self.get_unit(locale), ''))
 
-        desc = self.desc
+        desc = self.desc.get(locale)
 
         if self.constants is not None:
             for ver, constants in itertools.groupby(sorted(self.constants, key=lambda c: c.version), key=lambda c: c.version):
@@ -315,12 +371,12 @@ class Elem:
                     val = c.val
                     if self.type_ == EType.BOOL:
                         val = str(val).lower()
-                    consts.append(constant_entry_template.format(val=val, desc=c.desc))
+                    consts.append(constant_entry_template.format(val=val, desc=c.desc.get(locale)))
 
                 if len(consts) == 0:
                     continue
 
-                desc += constants_template.format(version_label=("\n" + ver.label() + "\n\n") if version == Version.ANY else "",
+                desc += constants_template.format(version_label=("\n" + ver.label(row=True, locale=locale) + "\n\n") if version == Version.ANY else "",
                                                   entries='\n'.join(consts))
 
         if self.type_ == EType.ARRAY and self.val is not None:
@@ -337,36 +393,36 @@ class Elem:
                     idx = 0
                     for m, elements in itertools.groupby(members):
                         count = len(list(elements))
-                        d = m.desc
+                        d = m.desc.get(locale)
                         # If the whole array is composed of identical entries without description, skip the whole list. This is used for example in IPs.
                         if d == "":
                             if count == len(members):
                                 return result
 
                         if m.type_ == EType.OBJECT:
-                            d += m.to_table(False, version)
+                            d += m.to_table(False, version, locale)
                         mems.append(constant_entry_template.format(val="[{}]".format(idx) if count == 1 else "[{}..{}]".format(idx, idx + count - 1), desc=d))
                         idx += count
 
                     if len(mems) == 0:
                         continue
 
-                    result += constants_template.format(version_label=("\n" + ver.label() + "\n\n") if version == Version.ANY else "",
+                    result += constants_template.format(version_label=("\n" + ver.label(row=True, locale=locale) + "\n\n") if version == Version.ANY else "",
                                                         entries='\n'.join(mems))
                 return result
             desc = get_desc(desc)
 
         if self.type_ == EType.OBJECT:
-            desc += self.to_table(is_root=False, version=version)
+            desc += self.to_table(is_root=False, version=version, locale=locale)
         elif self.type_ == EType.UNION or self.type_ == EType.HIDDEN_UNION:
-            desc += "\n" + self.to_tabs(is_root=False, version=version)
+            desc += "\n" + self.to_tabs(is_root=False, version=version, locale=locale)
 
         return row_template.format(version_class=self.version.css_classes(),
                                    name=name,
-                                   version_prefix=self.version.label(row=True),
+                                   version_prefix=self.version.label(row=True, locale=locale),
                                    desc=desc.replace("\n", "\n        "))
 
-    def to_tabs(self, is_root: bool, version: Version):
+    def to_tabs(self, is_root: bool, version: Version, locale: str = 'de'):
         groupId = ""
         if self.union_tab_id is not None:
             groupId = f' groupId="{self.union_tab_id}"'
@@ -377,20 +433,20 @@ class Elem:
             result = f'<Tabs className="hidden-tabs"{groupId}>\n'
 
         if self.version != Version.ANY and all(v.version == self.version for k, v in self.val.items()):
-            print(f"Union element '{self.desc}' and all its children specify the same version {self.version.name}. Remove version from children!")
+            print(f"Union element '{self.desc.get(locale)}' and all its children specify the same version {self.version.name}. Remove version from children!")
 
         members = []
         for k, v in self.val.items():
             if not(version in v.version or version == Version.ANY):
                 continue
 
-            members.append(f"""<TabItem value="{k}" label="{k} - {v.desc}">
-{v.to_table(False, version)}
+            members.append(f"""<TabItem value="{k}" label="{k} - {v.desc.get(locale)}">
+{v.to_table(False, version, locale)}
 </TabItem>
 """)
 
         if len(members) == 0:
-            print(f"Union element '{self.desc}' is empty in version {version.name} but is marked as supported in this version!")
+            print(f"Union element '{v.desc.get(locale)}' is empty in version {version.name} but is marked as supported in this version!")
 
         result += "\n".join(members)
 
@@ -401,7 +457,29 @@ class Elem:
 
         return result
 
-    def get_examples(self, f: Func, module: str, version: Version) -> str:
+    def get_examples(self, f: Func, module: str, version: Version, locale: str = 'de') -> str:
+        translations = {
+            'de': {
+                'example': 'Beispiel',
+                'read': 'Lesen',
+                'write': 'Schreiben',
+                'or_abbreviated': 'oder abgekürzt:',
+                'with_mqtt_on': 'Mit MQTT auf',
+                'http_only': 'Wird nur von der HTTP-API unterstützt',
+                'eg': 'z.B.'
+            },
+            'en': {
+                'example': 'Example',
+                'read': 'Read',
+                'write': 'Write',
+                'or_abbreviated': 'or abbreviated:',
+                'with_mqtt_on': 'With MQTT on',
+                'http_only': 'Only supported by the HTTP API',
+                'eg': 'e.g.'
+            }
+        }
+        t = translations.get(locale, translations['de'])
+
         prefix_version = version
         if version == Version.ANY:
             if self.version == Version.ANY:
@@ -418,23 +496,23 @@ class Elem:
         def api_name(f: Func, module: str):
             return f.api_name(module).replace("meters/X/", "meters/1/")
 
-        example_state_template = f""":::info[Beispiel]
+        example_state_template = f""":::info[{t['example']}]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
 ```bash
-# $HOST z.B. {prefix_version}-AbCd
+# $HOST {t['eg']} {prefix_version}-AbCd
 ```
-#### Lesen
+#### {t['read']}
 ```bash
 curl http://$HOST/{api_name(f, module)}
 ```
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
-# $BROKER z.B. my_mosquitto.localdomain
-# $PREFIX z.B. {prefix_version}/AbCd
+# $BROKER {t['eg']} my_mosquitto.localdomain
+# $PREFIX {t['eg']} {prefix_version}/AbCd
 ```
-#### Lesen
+#### {t['read']}
 ```bash
 mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/{api_name(f, module)}
 ```
@@ -447,9 +525,9 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/{api_name(f, module)}
 :::
 """
 
-        shortcut_template = """
-oder abgekürzt:
-{}
+        shortcut_template = f"""
+{t['or_abbreviated']}
+{{}}
 """
 
         write_http_template = f"""
@@ -463,22 +541,22 @@ mosquitto_pub -h $BROKER -t $PREFIX/{api_name(f, module)}{{update}} -m '{{payloa
 ```
 """
 
-        example_command_template = f""":::info[Beispiel]
+        example_command_template = f""":::info[{t['example']}]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
 ```bash
-# $HOST z.B. {prefix_version}-AbCd
+# $HOST {t['eg']} {prefix_version}-AbCd
 ```
-#### Schreiben{{http}}{{http_shortcut}}
+#### {t['write']}{{http}}{{http_shortcut}}
 {{comment}}
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
-# $BROKER z.B. my_mosquitto.localdomain
-# $PREFIX z.B. {prefix_version}/AbCd
+# $BROKER {t['eg']} my_mosquitto.localdomain
+# $PREFIX {t['eg']} {prefix_version}/AbCd
 ```
-#### Schreiben{{mqtt}}{{mqtt_shortcut}}
+#### {t['write']}{{mqtt}}{{mqtt_shortcut}}
 {{comment}}
 
         </TabItem>
@@ -486,14 +564,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/{api_name(f, module)}{{update}} -m '{{payloa
 :::
 """
 
-        example_config_template = f""":::info[Beispiel]
+        example_config_template = f""":::info[{t['example']}]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
 ```bash
-# $HOST z.B. {prefix_version}-AbCd
+# $HOST {t['eg']} {prefix_version}-AbCd
 ```
 
-#### Lesen
+#### {t['read']}
 ```bash
 curl http://$HOST/{api_name(f, module)}
 ```
@@ -501,17 +579,17 @@ curl http://$HOST/{api_name(f, module)}
 {{read_comment}}
 
 
-#### Schreiben{{http}}{{http_shortcut}}
+#### {t['write']}{{http}}{{http_shortcut}}
 {{write_comment}}
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
 ```bash
-# $BROKER z.B. my_mosquitto.localdomain
-# $PREFIX z.B. {prefix_version}/AbCd
+# $BROKER {t['eg']} my_mosquitto.localdomain
+# $PREFIX {t['eg']} {prefix_version}/AbCd
 ```
 
-#### Lesen
+#### {t['read']}
 ```bash
 mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/{api_name(f, module)}
 ```
@@ -519,8 +597,8 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/{api_name(f, module)}
 {{read_comment}}
 
 
-#### Schreiben
-            Mit MQTT auf <code>$PREFIX/{api_name(f, module)}<strong>_update</strong></code>
+#### {t['write']}
+            {t['with_mqtt_on']} <code>$PREFIX/{api_name(f, module)}<strong>_update</strong></code>
 
 {{mqtt}}{{mqtt_shortcut}}
 {{write_comment}}
@@ -530,11 +608,11 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/{api_name(f, module)}
 :::
 """
 
-        example_http_only_template = f""":::info[Beispiel]
+        example_http_only_template = f""":::info[{t['example']}]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
 ```bash
-# $HOST z.B. {prefix_version}-AbCd
+# $HOST {t['eg']} {prefix_version}-AbCd
 ```
 ```bash
 curl http://$HOST/{api_name(f, module)}
@@ -545,7 +623,7 @@ curl http://$HOST/{api_name(f, module)}
 
         </TabItem>
         <TabItem value="mqtt" label="MQTT (mosquitto)">
-            **Wird nur von der HTTP-API unterstützt**
+            **{t['http_only']}**
         </TabItem>
     </Tabs>
 :::
@@ -555,12 +633,12 @@ curl http://$HOST/{api_name(f, module)}
             return re.sub(r'^\s*\{\s*"[^"]*":\s*', "", payload[:-1], 1).strip()
 
         if f.type_ == FuncType.STATE:
-            payload, comment = get_example_from_file(f.api_name(module), prefix_version)
+            payload, comment = get_example_from_file(f.api_name(module), prefix_version, locale)
             if payload is not None:
                 return example_state_template.format(payload=wrap_non_empty("```jsx\n", payload, "\n```"), comment=comment)
             return ""
         elif f.type_ == FuncType.COMMAND:
-            payload, comment = get_example_from_file(f.api_name(module), prefix_version)
+            payload, comment = get_example_from_file(f.api_name(module), prefix_version, locale)
             if payload is None and f.root.type_ == EType.NULL:
                 payload = "null"
                 comment = ""
@@ -578,8 +656,8 @@ curl http://$HOST/{api_name(f, module)}
                     comment=comment)
             return ""
         elif f.type_ == FuncType.CONFIGURATION:
-            read_payload, read_comment = get_example_from_file(f.api_name(module), prefix_version)
-            write_payload, write_comment = get_example_from_file(f.api_name(module) + "_update", prefix_version)
+            read_payload, read_comment = get_example_from_file(f.api_name(module), prefix_version, locale)
+            write_payload, write_comment = get_example_from_file(f.api_name(module) + "_update", prefix_version, locale)
             if read_payload is not None:
                 if write_payload is None:
                     write_payload = read_payload
@@ -599,7 +677,7 @@ curl http://$HOST/{api_name(f, module)}
                                                       write_comment=write_comment)
             return ""
         elif f.type_ == FuncType.HTTP_ONLY:
-            payload, comment = get_example_from_file(f.api_name(module), prefix_version)
+            payload, comment = get_example_from_file(f.api_name(module), prefix_version, locale)
             if payload is not None:
                 return example_http_only_template.format(payload=wrap_non_empty("```jsx\n",payload, "\n```"), comment=comment)
             return ""
@@ -607,13 +685,27 @@ curl http://$HOST/{api_name(f, module)}
             print(f"Function type {f.type_} not supported for examples yet!")
             return ""
 
-    def root_to_md(self, f: Func, module: str, version: Version) -> str:
+    def root_to_md(self, f: Func, module: str, version: Version, locale: str = 'de') -> str:
         if not(version in self.version or version == Version.ANY):
             return ""
 
+        translations = {
+            'de': {
+                'empty_payload': '**Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**\n',
+                'triggers_action': 'Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert.',
+                'http_only': 'Wird nur von der HTTP-API unterstützt'
+            },
+            'en': {
+                'empty_payload': '**Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**\n',
+                'triggers_action': 'Triggers a one-time action. Messages retained via the broker are ignored.',
+                'http_only': 'Only supported by the HTTP API'
+            }
+        }
+        t = translations.get(locale, translations['de'])
+
         version_desc = ""
         if version == Version.ANY:
-            version_desc = self.version.desc if hasattr(self.version, "desc") and self.version.desc is not None else self.version.label(row=True)
+            version_desc = self.version.desc if hasattr(self.version, "desc") and self.version.desc is not None else self.version.label(row=True, locale=locale)
 
         content = f'## `{f.api_name(module)}` {{#{(f.api_name(module)).replace("/", "_") + "_" + version.name.lower()}}}\n'
 
@@ -623,18 +715,18 @@ curl http://$HOST/{api_name(f, module)}
 """
         content += f"""
 {version_desc}
-{self.desc}
+{self.desc.get(locale)}
 """
 
         if self.type_ == EType.NULL:
-            content += '**Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**\n'
+            content += t['empty_payload']
             if f.type_ != FuncType.COMMAND:
                 print("Function {} has a null payload but is not a command?!?".format(f.name))
 
         if f.command_is_action:
-            content += '<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>\n'
+            content += f'<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="{t["triggers_action"]}"></Admonition></TabItem></Tabs>\n'
 
-        examples = self.get_examples(f, module, version)
+        examples = self.get_examples(f, module, version, locale)
         # Only log this once per API
         if examples == "" and version == Version.ANY:
             print(f"No examples for {f.api_name(module)}")
@@ -643,31 +735,37 @@ curl http://$HOST/{api_name(f, module)}
         if self.type_ == EType.NULL:
             table = ""
         elif self.type_ == EType.ARRAY and self.is_var_length_array:
-            table = self.to_table(is_root=True, version=version)
+            table = self.to_table(is_root=True, version=version, locale=locale)
         elif self.type_ == EType.UNION or self.type_ == EType.HIDDEN_UNION:
-            table = self.to_tabs(is_root=True, version=version)
+            table = self.to_tabs(is_root=True, version=version, locale=locale)
         else:
-            table = self.to_table(is_root=True, version=version)
+            table = self.to_table(is_root=True, version=version, locale=locale)
 
         content += "\n" + table + "\n"
 
         if f.type_ == FuncType.HTTP_ONLY:
-            content += """    </TabItem>
+            content += f"""    </TabItem>
     <TabItem value="mqtt" label="MQTT (mosquitto)">
-        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+        <Admonition type="warning" title="{t['http_only']}"></Admonition>
     </TabItem>
 </Tabs>
 """
 
         return content
 
-    def to_table(self, is_root: bool, version: Version) -> str:
+    def to_table(self, is_root: bool, version: Version, locale: str = 'de') -> str:
+        translations = {
+            'de': {'meaning': 'Bedeutung', 'name': 'Name', 'index': 'Index'},
+            'en': {'meaning': 'Meaning', 'name': 'Name', 'index': 'Index'}
+        }
+        t = translations.get(locale, translations['de'])
+
         table_template = """
 <table>
     <thead>
         <tr>
             <th scope="col">{name_or_index}</th>
-            <th scope="col">Bedeutung</th>
+            <th scope="col">""" + t['meaning'] + """</th>
         </tr>
     </thead>
     <tbody>
@@ -679,12 +777,13 @@ curl http://$HOST/{api_name(f, module)}
             raise Exception("Don't document union as table!")
 
         if self.type_ == EType.OBJECT:
+            desc_str = self.desc.get(locale)
             if self.version != Version.ANY and all(v.version == self.version for k, v in self.val.items()):
-                print(f"Object element '{self.desc}' and all its children specify the same version {self.version.name}. Remove version from children!")
-            rows = [v.to_table_row(k, version) for k, v in self.val.items() if version in v.version or version == Version.ANY]
+                print(f"Object element '{desc_str}' and all its children specify the same version {self.version.name}. Remove version from children!")
+            rows = [v.to_table_row(k, version, locale) for k, v in self.val.items() if version in v.version or version == Version.ANY]
             if len(rows) == 0:
-                print(f"Object element '{self.desc}' is empty in version {version.name} but is marked as supported in this version!")
-            return table_template.format(name_or_index="Name", rows='\n'.join(rows))
+                print(f"Object element '{desc_str}' is empty in version {version.name} but is marked as supported in this version!")
+            return table_template.format(name_or_index=t['name'], rows='\n'.join(rows))
 
         if self.type_ == EType.ARRAY:
             idx = 0
@@ -700,20 +799,19 @@ curl http://$HOST/{api_name(f, module)}
                     length = "[..]"
                 else:
                     length = "[{}]".format(idx) if count == 1 else "[{}..{}]".format(idx, idx + count - 1)
-                rows.append(group.to_table_row(length, version))
+                rows.append(group.to_table_row(length, version, locale))
                 idx += count
 
-            return table_template.format(name_or_index="Index", rows='\n'.join(rows))
+            return table_template.format(name_or_index=t['index'], rows='\n'.join(rows))
 
         if self.type_ == EType.OPAQUE:
             return ""
 
         # primitive
-
         result = '{type}{unit}: {desc}'.format(
                     type=self.get_type(version=version),
-                    unit=wrap_non_empty(' ', self.get_unit(), ''),
-                    desc=self.desc)
+                    unit=wrap_non_empty(' ', self.get_unit(locale), ''),
+                    desc=self.desc.get(locale))
 
         constants_template = """
 {version_label}{entries}"""
@@ -729,12 +827,13 @@ curl http://$HOST/{api_name(f, module)}
                     val = c.val
                     if self.type_ == EType.BOOL:
                         val = str(val).lower()
-                    consts.append(constant_entry_template.format(val=val, desc=c.desc))
+                    const_desc = c.desc.get(locale)
+                    consts.append(constant_entry_template.format(val=val, desc=const_desc))
 
                 if len(consts) == 0:
                     continue
 
-                result += constants_template.format(version_label=("\n" + ver.label() + "\n\n") if version == Version.ANY else "",
+                result += constants_template.format(version_label=("\n" + ver.label(row=True, locale=locale) + "\n\n") if version == Version.ANY else "",
                                                   entries='\n'.join(consts))
 
         return result
@@ -743,17 +842,30 @@ curl http://$HOST/{api_name(f, module)}
 @dataclass
 class Module:
     name: str
-    display_name: str
-    subheader: str
-    intro_section: str
+    display_name: 'T'
+    subheader: 'T'
+    intro_section: 'T'
     version: Version
     functions: list[Func]
     hide_prefix: bool = False
-    not_supported_text: str = 'Auf dieser Hardware nicht unterstützt!'
+    not_supported_text: 'T' = T({'de': 'Auf dieser Hardware nicht unterstützt!', 'en': 'Not supported on this hardware!'})
 
-    def to_md(self) -> str:
+    def __post_init__(self):
+        # Ensure all string fields are wrapped in T()
+        # maybe a little bit hacky, but it works well
+        self.display_name = _ensure_T(self.display_name)
+        self.subheader = _ensure_T(self.subheader)
+        self.intro_section = _ensure_T(self.intro_section)
+        self.not_supported_text = _ensure_T(self.not_supported_text)
+
+    def to_md(self, locale: str = 'de') -> str:
+        display_name = self.display_name.get(locale)
+        subheader = self.subheader.get(locale)
+        intro = self.intro_section.get(locale)
+        not_supported = self.not_supported_text.get(locale)
+
         result = f"""---
-description: {self.display_name}
+description: {display_name}
 ---
 {{/* This file is autogenerated. Edit warp-charger/api_doc_generator/{self.name}.py! */}}
 import MultilineTabs from '@site/src/components/MultilineTabs';
@@ -761,11 +873,11 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Admonition from '@theme/Admonition';
 
-# {self.display_name}
+# {display_name}
 """
 
-        result += f"**{self.subheader}**\n" if len(self.subheader) > 0 else ""
-        result += self.intro_section + "\n"
+        result += f"**{subheader}**\n" if len(subheader) > 0 else ""
+        result += intro + "\n"
 
         # Just create all versions in separate tabs for now.
         # This is inefficient because modules that are the same in every firmware
@@ -777,7 +889,7 @@ import Admonition from '@theme/Admonition';
             result += f'<TabItem value="{ver.name.lower()}">\n'
 
             if ver not in self.version and ver != Version.ANY:
-                result += f'{self.not_supported_text}\n</TabItem>\n'
+                result += f'{not_supported}\n</TabItem>\n'
                 continue
 
             functions = []
@@ -786,7 +898,7 @@ import Admonition from '@theme/Admonition';
                 fns = list(fns)
 
                 for f in fns:
-                    functions.append(f.root.root_to_md(f, self.name if not self.hide_prefix else None, ver))
+                    functions.append(f.root.root_to_md(f, self.name if not self.hide_prefix else None, ver, locale))
 
             result += "\n<br/><br/><br/>\n".join([x for x in functions if len(x) > 0])
             result += '</TabItem>\n'

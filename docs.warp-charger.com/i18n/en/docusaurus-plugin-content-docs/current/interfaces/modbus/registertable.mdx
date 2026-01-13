@@ -1,0 +1,626 @@
+---
+sidebar_position: 3
+---
+
+import MultilineTabs from '@site/src/components/MultilineTabs';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Register Table
+
+Below is the register table for Modbus TCP for the "WARP Charger" setting.
+
+*Input Registers* can only be read and provide information about the state 
+of the wallbox. Certain registers are only available if the specified 
+*Feature* is available. For example, the information about charging power, 
+energy, etc. is only available if the wallbox has a *Meter*: A WARP3 Charger 
+Pro (version with power meter) provides these values, a WARP3 Charger Smart 
+(version without power meter) does not.
+
+Which features the wallbox offers can be read via *Discrete Inputs*. 
+Control of the wallbox is possible via the *Holding Registers* and *Coils*.
+
+### Input Registers (Function codes: Read: 4)
+{/*LAST_COMMIT_ID=c763854182a49fe46fee625402c6cb88ce4287df*/}
+{/*
+  Don't edit this table.
+  Update https://github.com/Tinkerforge/esp32-firmware/blob/master/software/web/src/modules/modbus_tcp/translation_de.tsx
+  and translation_en.tsx instead.
+  Then diff that table with the one below and add/update registers.
+  Don't forget to update LAST_COMMIT_ID to the ID of the last commit that modified translation_de.tsx*/}
+<table>
+<thead>
+    <tr>
+        <th scope="col">Register Address</th>
+        <th scope="col">Name</th>
+        <th scope="col">Type</th>
+        <th scope="col">Required Feature</th>
+        <th scope="col">Description</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td>0</td>
+        <td>Register table version</td>
+        <td>uint32</td>
+        <td>---</td>
+        <td>Current version: 4</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Firmware version major</td>
+        <td>uint32</td>
+        <td>---</td>
+        <td>For example 2 for firmware 2.4.0+66558ade</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Firmware version minor</td>
+        <td>uint32</td>
+        <td>---</td>
+        <td>For example 4 for firmware 2.4.0+66558ade</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>Firmware version patch</td>
+        <td>uint32</td>
+        <td>---</td>
+        <td>For example 0 for firmware 2.4.0+66558ade</td>
+    </tr>
+    <tr>
+        <td>8</td>
+        <td>Firmware timestamp</td>
+        <td>uint32</td>
+        <td>---</td>
+        <td>Unix timestamp of the time when the firmware was built. For example 0x66558ADE for
+            firmware 2.4.0+66558ade (1716882142 in decimal), corresponding to May 28, 2024 07:42:22 UTC.</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>Charger ID</td>
+        <td>uint32</td>
+        <td>---</td>
+        <td>Decoded form of the Base58 UID used for default hostnames, SSIDs, etc. For example
+            185460 for X8A.</td>
+    </tr>
+    <tr>
+        <td>12</td>
+        <td>Uptime (s)</td>
+        <td>uint32</td>
+        <td>---</td>
+        <td>Time in seconds since the wallbox firmware started.</td>
+    </tr>
+    <tr>
+        <td>1000</td>
+        <td>IEC 61851 state</td>
+        <td>uint32</td>
+        <td>evse</td>
+        <td>
+            <ul>
+                <li>0: A</li>
+                <li>1: B</li>
+                <li>2: C</li>
+                <li>3: D</li>
+                <li>4: E/F</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>1002</td>
+        <td>Charging state</td>
+        <td>uint32</td>
+        <td>evse</td>
+        <td>
+            <ul>
+                <li>0: Not connected</li>
+                <li>1: Waiting for release</li>
+                <li>2: Ready to charge</li>
+                <li>3: Charging</li>
+                <li>4: Error</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>1004</td>
+        <td>User ID</td>
+        <td>uint32</td>
+        <td>evse</td>
+        <td>ID of the user who started the charging process. 0 if release occurred without user assignment.
+            0xFFFFFFFF if no charging process is currently running.</td>
+    </tr>
+    <tr>
+        <td>1006</td>
+        <td>Start timestamp (min)</td>
+        <td>uint32</td>
+        <td>evse</td>
+        <td>A Unix timestamp in <strong>minutes</strong> indicating the start time of the charging process. 0
+            if no time synchronization was available at the start time.</td>
+    </tr>
+    <tr>
+        <td>1008</td>
+        <td>Charging duration (s)</td>
+        <td>uint32</td>
+        <td>evse</td>
+        <td>Duration of the current charging process in seconds. Available even without time synchronization.</td>
+    </tr>
+    <tr>
+        <td>1010</td>
+        <td>Allowed charging current</td>
+        <td>uint32</td>
+        <td>evse</td>
+        <td>Maximum allowed charging current provided to the vehicle. This current is the minimum
+            of the current limits of all charge slots.</td>
+    </tr>
+    <tr>
+        <td>1012 to 1050</td>
+        <td>Charging current limits (mA)</td>
+        <td>uint32 (20x)</td>
+        <td>evse</td>
+        <td>Current value of the charging current limits in milliamperes. 0xFFFFFFFF if a current limit is not active.
+            0 if a current limit is blocking. Otherwise between 6000 (6A) and 32000 (32A).</td>
+    </tr>
+    <tr>
+        <td>1100</td>
+        <td>"Button pressed" timestamp</td>
+        <td>uint32</td>
+        <td>evse</td>
+        <td>Time when the button was last pressed. 0 if the button has not been pressed since the charge controller started. To react to a button press, this value can be read periodically. With each change of the value, the button was pressed at least once.</td>
+    </tr>
+    <tr>
+        <td>1102</td>
+        <td>"Button released" timestamp</td>
+        <td>uint32</td>
+        <td>evse</td>
+        <td>Time when the button was last released. 0 if the button has not been pressed since the charge controller started. To react to a button press, this value can be read periodically. With each change of the value, the button was released at least once.</td>
+    </tr>
+    <tr>
+        <td>2000</td>
+        <td>Power meter type</td>
+        <td>uint32</td>
+        <td>meter</td>
+        <td>
+            <ul>
+                <li>0: No power meter available</li>
+                <li>1: SDM72 (WARP1 only)</li>
+                <li>2: SDM630</li>
+                <li>3: SDM72 V2</li>
+                <li>4: SDM72CTM</li>
+                <li>5: SDM630MCT V2</li>
+                <li>6: DSZ15DZMOD</li>
+                <li>7: DEM4A</li>
+                <li>8: DMED341MID7ER</li>
+                <li>9: DSZ16DZE</li>
+                <li>10: WM3M4C</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>2002</td>
+        <td>Charging power (W)</td>
+        <td>float32</td>
+        <td>meter</td>
+        <td>The current charging power in watts.</td>
+    </tr>
+    <tr>
+        <td>2004</td>
+        <td>Absolute energy (kWh)</td>
+        <td>float32</td>
+        <td>meter</td>
+        <td>The charged energy since the power meter was manufactured.</td>
+    </tr>
+    <tr>
+        <td>2006</td>
+        <td>Relative energy (kWh)</td>
+        <td>float32</td>
+        <td>meter</td>
+        <td>The charged energy since the last reset (see Holding Register 2000).</td>
+    </tr>
+    <tr>
+        <td>2008</td>
+        <td>Charging process energy</td>
+        <td>float32</td>
+        <td>meter</td>
+        <td>The energy charged during the current charging process.</td>
+    </tr>
+    <tr>
+        <td>2100 to 2268</td>
+        <td>Additional power meter values</td>
+        <td>float32 (85x)</td>
+        <td>all_values</td>
+        <td>See <a href="/docs/mqtt_http/api_reference/meter/#meter_all_values_any">API documentation</a></td>
+    </tr>
+    <tr>
+        <td>3100</td>
+        <td>Connected phases</td>
+        <td>uint32</td>
+        <td>phase_switch</td>
+        <td>Indicates how many phases are connected to the vehicle (1 or 3).</td>
+    </tr>
+    <tr>
+        <td>3102</td>
+        <td>Phase switching state</td>
+        <td>uint32</td>
+        <td>phase_switch</td>
+        <td>
+            Current phase switching state:
+            <ul>
+                <li>0: Phase switching is ready for commands.</li>
+                <li>1: Phase switching is disabled via settings.</li>
+                <li>2: Phase switching is enabled but currently not available.</li>
+                <li>3: Phase switching is currently in progress; incoming commands will be ignored.</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>4000 to 4009</td>
+        <td>Last NFC tag ID</td>
+        <td>uint8 (20x)</td>
+        <td>nfc</td>
+        <td>The ID of the last detected NFC tag as ASCII-encoded hex string.</td>
+    </tr>
+    <tr>
+        <td>4010</td>
+        <td>Last NFC tag age</td>
+        <td>uint32</td>
+        <td>nfc</td>
+        <td>Time in milliseconds since the last detected NFC tag was last detected. Times &lt;
+            1000 ms typically mean that the tag is currently being held to the wallbox.</td>
+    </tr>
+    <tr>
+        <td>4012 to 4013</td>
+        <td>Last NFC tag type</td>
+        <td>uint8 (4x)</td>
+        <td>nfc</td>
+        <td>
+            Type of the last detected NFC tag as ASCII-encoded hex string.
+            <ul>
+                <li>"0000": Mifare Classic</li>
+                <li>"0001": NFC Forum Type 1</li>
+                <li>"0002": NFC Forum Type 2</li>
+                <li>"0003": NFC Forum Type 3</li>
+                <li>"0004": NFC Forum Type 4</li>
+                <li>"0005": NFC Forum Type 5</li>
+            </ul>
+        </td>
+    </tr>
+</tbody>
+</table>
+
+### Holding Registers (Function codes: Read: 3, Write: 16)
+
+<table>
+<thead>
+    <tr>
+        <th scope="col">Register Address</th>
+        <th scope="col">Name</th>
+        <th scope="col">Type</th>
+        <th scope="col">Required Feature</th>
+        <th scope="col">Description</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td>0</td>
+        <td>Reboot</td>
+        <td>uint32</td>
+        <td>---</td>
+        <td>Restarts the wallbox (or the ESP brick) to apply configuration changes, for example.
+            Password: 0x012EB007</td>
+    </tr>
+    <tr>
+        <td>1000</td>
+        <td>Charging release</td>
+        <td>uint32</td>
+        <td>evse</td>
+        <td><strong>Deprecated. Use Coil 1000 instead!</strong> 0 to block the charging process; a
+            value other than 0 to release.</td>
+    </tr>
+    <tr>
+        <td>1002</td>
+        <td>Allowed charging current (mA)</td>
+        <td>uint32</td>
+        <td>evse</td>
+        <td>0 mA or 6000 mA to 32000 mA. Other charging current limits can further reduce the current!</td>
+    </tr>
+    <tr>
+        <td>1004</td>
+        <td>Front LED blink pattern</td>
+        <td>uint32</td>
+        <td>evse</td>
+        <td>
+            Controls the LED of the button in the wallbox front. <strong>Blink pattern and duration must be written with one Modbus command!
+            If the color is also to be set (WARP3 only),
+            registers 1004 through 1013 must be written in one command.</strong> To control the LED,
+            the "Status LED control" option must be enabled.
+
+            <ul>
+                <li>0xFFFFFFFF: EVSE controls LED</li>
+                <li>0: LED off</li>
+                <li>1 to 254: LED dimmed</li>
+                <li>255: LED on</li>
+                <li>1001: Known NFC tag detected</li>
+                <li>1002: Unknown NFC tag detected</li>
+                <li>1003: NFC tag required</li>
+                <li>2001 to 2010: Error blinking 1 to 10 times</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>1006</td>
+        <td>Front LED blink duration</td>
+        <td>uint32</td>
+        <td>evse</td>
+        <td>The duration in milliseconds for which the blink pattern set in register 1004 should be displayed.
+            Maximum 65535 ms are supported.</td>
+    </tr>
+    <tr>
+        <td>1008</td>
+        <td>Front LED blink color hue</td>
+        <td>uint32</td>
+        <td>evse</td>
+        <td>The hue value of the color (in the <a href="https://en.wikipedia.org/wiki/HSL_and_HSV">HSV color space</a>) in which the blink pattern set in register 1004 should be displayed. Only values between 0 and 359 (°) are allowed. The color can only be set on a WARP3 Charger. WARP and WARP2 Chargers have a solid blue LED.</td>
+    </tr>
+    <tr>
+        <td>1010</td>
+        <td>Front LED blink color saturation</td>
+        <td>uint32</td>
+        <td>evse</td>
+        <td>The saturation of the color (in the <a href="https://en.wikipedia.org/wiki/HSL_and_HSV">HSV color space</a>) in which the blink pattern set in register 1004 should be displayed. Only values between 0 and 255 are allowed. The color can only be set on a WARP3 Charger. WARP and WARP2 Chargers have a solid blue LED.</td>
+    </tr>
+    <tr>
+        <td>1012</td>
+        <td>Front LED blink color value</td>
+        <td>uint32</td>
+        <td>evse</td>
+        <td>The brightness of the color (in the <a href="https://en.wikipedia.org/wiki/HSL_and_HSV">HSV color space</a>) in which the blink pattern set in register 1004 should be displayed. Only values between 0 and 255 are allowed. The color can only be set on a WARP3 Charger. WARP and WARP2 Chargers have a solid blue LED.</td>
+    </tr>
+    <tr>
+        <td>2000</td>
+        <td>Reset relative energy</td>
+        <td>uint32</td>
+        <td>meter</td>
+        <td>Resets the relative energy value (Input Register 2006). Password: 0x3E12E5E7</td>
+    </tr>
+    <tr>
+        <td>3100</td>
+        <td>Trigger phase switching</td>
+        <td>uint32</td>
+        <td>phase_switch</td>
+        <td>1 for single-phase charging. 3 for three-phase charging.</td>
+    </tr>
+    <tr>
+        <td>4000 to 4009</td>
+        <td>ID of simulated NFC tag</td>
+        <td>uint8 (20x)</td>
+        <td>nfc</td>
+        <td>
+            With registers 4000 through 4013 an NFC tag can be simulated (analogous to API nfc/inject_tag):
+            <ul>
+                <li>Registers 4000 to 4009: The ID of the tag as ASCII-encoded hex string.</li>
+                <li>
+                    Registers 4010 and 4011:
+                    <ul>
+                        <li>"0001": The simulated tag can only start a charging process (analogous to API nfc/inject_tag_start)</li>
+                        <li>"0002": The simulated tag can only stop a charging process (analogous to API nfc/inject_tag_stop)</li>
+                        <li>All other values: The simulated tag can start and stop a charging process (analogous to API nfc/inject_tag)</li>
+                    </ul>
+                </li>
+                <li>
+                    Registers 4012 and 4013: The type of the NFC tag as ASCII-encoded hex string:
+                    <ul>
+                        <li>"0000": Mifare Classic</li>
+                        <li>"0001": NFC Forum Type 1</li>
+                        <li>"0002": NFC Forum Type 2</li>
+                        <li>"0003": NFC Forum Type 3</li>
+                        <li>"0004": NFC Forum Type 4</li>
+                        <li>"0005": NFC Forum Type 5</li>
+                    </ul>
+                </li>
+            </ul>
+            <strong>Writing registers 4012 and 4013 starts simulating the tag. Afterwards, the Holding
+            Registers 4000 to 4013 are cleared!</strong> The data format of Holding Registers 4000 to 4013 is identical
+            to the format of Input Registers 4000 to 4013 (which contain the last seen NFC tag). A physically
+            existing tag can be simulated (again) by holding it to the wallbox once
+            and later writing the values generated in Input Registers 4000 to 4013 to Holding Registers 4000
+            to 4013.
+        </td>
+    </tr>
+    <tr>
+        <td>4010 to 4011</td>
+        <td>Purpose of simulated NFC tag</td>
+        <td>uint8 (4x)</td>
+        <td>nfc</td>
+        <td>See description of Holding Registers 4000 to 4009.</td>
+    </tr>
+    <tr>
+        <td>4012 to 4013</td>
+        <td>Type of simulated NFC tag</td>
+        <td>uint8 (4x)</td>
+        <td>nfc</td>
+        <td>See description of Holding Registers 4000 to 4009.</td>
+    </tr>
+</tbody>
+</table>
+
+### Discrete Inputs (Function codes: Read: 2)
+
+<table>
+<thead>
+    <tr>
+        <th scope="col">Register Address</th>
+        <th scope="col">Name</th>
+        <th scope="col">Type</th>
+        <th scope="col">Required Feature</th>
+        <th scope="col">Description</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td>0</td>
+        <td>Feature "evse" available</td>
+        <td>bool</td>
+        <td>---</td>
+        <td>A charge controller is available. This feature should be present on all wallboxes whose hardware
+            is functional.</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Feature "meter" available</td>
+        <td>bool</td>
+        <td>---</td>
+        <td>A power meter and hardware for reading it via RS485 is available. This feature is only
+            set when a power meter has been successfully read via Modbus at least once.</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Feature "phases" available</td>
+        <td>bool</td>
+        <td>---</td>
+        <td>The installed power meter can measure energy and other values of individual phases.</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Feature "all_values" available</td>
+        <td>bool</td>
+        <td>---</td>
+        <td>The installed power meter can read additional measurement values.</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Feature "phase_switch" available</td>
+        <td>bool</td>
+        <td>---</td>
+        <td>Hardware and configuration allow phase switching.</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>Feature "nfc" available</td>
+        <td>bool</td>
+        <td>---</td>
+        <td>An NFC Bricklet is installed and active.</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>Feature "evse_sd_input" available</td>
+        <td>bool</td>
+        <td>---</td>
+        <td>The charge controller has a shutdown input.</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>Feature "evse_gp_input" available</td>
+        <td>bool</td>
+        <td>---</td>
+        <td>The charge controller has a configurable input.</td>
+    </tr>
+    <tr>
+        <td>8</td>
+        <td>Feature "evse_gp_output" available</td>
+        <td>bool</td>
+        <td>---</td>
+        <td>The charge controller has a configurable output.</td>
+    </tr>
+    <tr>
+        <td>1100</td>
+        <td>Shutdown input state</td>
+        <td>bool</td>
+        <td>evse_sd_input</td>
+        <td>0 - closed, 1 - open</td>
+    </tr>
+    <tr>
+        <td>1101</td>
+        <td>Configurable input state</td>
+        <td>bool</td>
+        <td>evse_gp_input</td>
+        <td>0 - closed, 1 - open</td>
+    </tr>
+    <tr>
+        <td>1102</td>
+        <td>Front button state</td>
+        <td>bool</td>
+        <td>evse</td>
+        <td>0 - not pressed, 1 - pressed</td>
+    </tr>
+    <tr>
+        <td>2100</td>
+        <td>Phase L1 connected</td>
+        <td>bool</td>
+        <td>phases</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>2101</td>
+        <td>Phase L2 connected</td>
+        <td>bool</td>
+        <td>phases</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>2102</td>
+        <td>Phase L3 connected</td>
+        <td>bool</td>
+        <td>phases</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>2103</td>
+        <td>Phase L1 active</td>
+        <td>bool</td>
+        <td>phases</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>2104</td>
+        <td>Phase L2 active</td>
+        <td>bool</td>
+        <td>phases</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>2105</td>
+        <td>Phase L3 active</td>
+        <td>bool</td>
+        <td>phases</td>
+        <td></td>
+    </tr>
+</tbody>
+</table>
+
+### Coils (Function codes: Read: 1, Single write: 5, Multiple write: 15)
+<table>
+<thead>
+    <tr>
+        <th scope="col">Register Address</th>
+        <th scope="col">Name</th>
+        <th scope="col">Type</th>
+        <th scope="col">Required Feature</th>
+        <th scope="col">Description</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td>1000</td>
+        <td>Charging release</td>
+        <td>bool</td>
+        <td>evse</td>
+        <td>false or 0 to block the charging process. true or 1 to release. Identical to Holding
+            Register 1000.</td>
+    </tr>
+    <tr>
+        <td>1001</td>
+        <td>Manual charging release</td>
+        <td>bool</td>
+        <td>evse</td>
+        <td>false or 0 to block the charging process. true or 1 to release. Sets the charging release that is
+            also used (depending on configuration) by the button, the start/stop buttons on the web interface status page,
+            and the evse/[start/stop]_charging API.</td>
+    </tr>
+    <tr>
+        <td>1100</td>
+        <td>Sets the state of the configurable output</td>
+        <td>bool</td>
+        <td>evse_gp_output</td>
+        <td>0 - Connected to ground, 1 - High impedance</td>
+    </tr>
+</tbody>
+</table>

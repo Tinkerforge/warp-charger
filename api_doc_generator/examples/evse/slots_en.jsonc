@@ -1,0 +1,21 @@
+[
+  // Slot is active, but allows charging without limit (= 32 A).
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  // Slot is not active, but would still allow charging.
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  // Slot limits charging to 19 A.
+  { "max_current": 19000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": true },
+  // Slot is not active, would otherwise block charging.
+  { "max_current": 0, "active": false, "clear_on_disconnect": true },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": true, "clear_on_disconnect": false },
+  { "max_current": 32000, "active": false, "clear_on_disconnect": false }
+]
