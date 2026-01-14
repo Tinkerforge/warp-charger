@@ -58,7 +58,7 @@ If the WiFi access point credentials are no longer known and the
 operating manual cannot be found, the factory-set
 credentials can be found as follows:
 
-***WARP Charger***: Inside the wallbox, the credentials sticker is attached to one of the
+***WARP Charger***: Inside the charger, the credentials sticker is attached to one of the
 contactors.
 
 ***WARP Energy Manager***: The credentials sticker is on the underside
@@ -79,7 +79,7 @@ The device's hostname is identical to the SSID of the WiFi access point.
 The hostname can be found on the WiFi credentials sticker on the back
 of this manual.
 
-If the IP assigned to the wallbox/energy manager via DHCP cannot be determined,
+If the IP assigned to the charger/energy manager via DHCP cannot be determined,
 the previously mentioned access to the web interface via the
 WiFi access point can be used to determine the IP address of the
 LAN interface.

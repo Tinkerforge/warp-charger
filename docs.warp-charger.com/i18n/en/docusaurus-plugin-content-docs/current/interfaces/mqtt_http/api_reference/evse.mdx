@@ -134,7 +134,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`lock_state`<br/>int</th>
     <td>
-        State of the cable lock (only relevant for wallboxes with Type 2 socket; as of now, no WARP Charger with Type 2 socket has been manufactured)
+        State of the cable lock (only relevant for chargers with Type 2 socket; as of now, no WARP Charger with Type 2 socket has been manufactured)
         - **0** - Initialization
         - **1** - Open
         - **2** - Closing
@@ -210,9 +210,9 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`has_lock_switch`<br/>bool</th>
     <td>
-        Indicates whether the wallbox has a cable lock.
-        - **false** - Wallbox has permanently attached Type 2 charging cable
-        - **true** - Wallbox has a Type 2 socket with cable lock
+        Indicates whether the charger has a cable lock.
+        - **false** - Charger has permanently attached Type 2 charging cable
+        - **true** - Charger has a Type 2 socket with cable lock
     </td>
 </tr>
 
@@ -2143,7 +2143,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/boost_mode_update -m 'true'
 ## `evse/stop_charging` {#evse_stop_charging_warp1}
 
 
-Stops the current charging process. Calling this function is equivalent to stopping via the button on the wallbox: TODO LINK Slot 4 is blocked. Charging can be restarted with [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging).
+Stops the current charging process. Calling this function is equivalent to stopping via the button on the charger: TODO LINK Slot 4 is blocked. Charging can be restarted with [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging).
 **Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
 :::info[Example]
@@ -2182,7 +2182,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
 ## `evse/start_charging` {#evse_start_charging_warp1}
 
 
-Starts a charging process. Calling this function is equivalent to starting via the button on the wallbox: TODO LINK Slot 4 is released. Charging can be stopped again with [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
+Starts a charging process. Calling this function is equivalent to starting via the button on the charger: TODO LINK Slot 4 is released. Charging can be stopped again with [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
 **Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
 :::info[Example]
@@ -2444,7 +2444,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`lock_state`<br/>int</th>
     <td>
-        State of the cable lock (only relevant for wallboxes with Type 2 socket; as of now, no WARP Charger with Type 2 socket has been manufactured)
+        State of the cable lock (only relevant for chargers with Type 2 socket; as of now, no WARP Charger with Type 2 socket has been manufactured)
         - **0** - Initialization
         - **1** - Open
         - **2** - Closing
@@ -2539,9 +2539,9 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`has_lock_switch`<br/>bool</th>
     <td>
-        Indicates whether the wallbox has a cable lock.
-        - **false** - Wallbox has permanently attached Type 2 charging cable
-        - **true** - Wallbox has a Type 2 socket with cable lock
+        Indicates whether the charger has a cable lock.
+        - **false** - Charger has permanently attached Type 2 charging cable
+        - **true** - Charger has a Type 2 socket with cable lock
     </td>
 </tr>
 
@@ -2556,7 +2556,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_meter_type`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3)</strong> Type of the installed energy meter. Not every energy meter is supported by every wallbox!
+        <strong>(Only WARP 2 and WARP 3)</strong> Type of the installed energy meter. Not every energy meter is supported by every charger!
         - **0** - No energy meter available
         - **2** - Eastron SDM630
         - **3** - Eastron SDM72V2
@@ -4801,7 +4801,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/boost_mode_update -m 'true'
 ## `evse/phases_connected` {#evse_phases_connected_warp2}
 
 
-Configures whether the wallbox is permanently connected single-phase or three-phase. This is used to calculate the 4200 W limitation according to §14 EnWG
+Configures whether the charger is permanently connected single-phase or three-phase. This is used to calculate the 4200 W limitation according to §14 EnWG
 :::info[Example]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -4884,9 +4884,9 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/phases_connected_update -m '1'
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`phases`<br/>int</th>
     <td>
-        Maximum number of connected phases. A wallbox behind a phase switching contactor (e.g. with the WARP Energy Manager) is connected three-phase.
-        - **1** - Wallbox is permanently connected single-phase
-        - **3** - Wallbox is permanently connected three-phase, or behind a phase switching contactor
+        Maximum number of connected phases. A charger behind a phase switching contactor (e.g. with the WARP Energy Manager) is connected three-phase.
+        - **1** - Charger is permanently connected single-phase
+        - **3** - Charger is permanently connected three-phase, or behind a phase switching contactor
     </td>
 </tr>
     </tbody>
@@ -5097,7 +5097,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/gp_output_update -m '1'
 ## `evse/stop_charging` {#evse_stop_charging_warp2}
 
 
-Stops the current charging process. Calling this function is equivalent to stopping via the button on the wallbox: TODO LINK Slot 4 is blocked. Charging can be restarted with [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging).
+Stops the current charging process. Calling this function is equivalent to stopping via the button on the charger: TODO LINK Slot 4 is blocked. Charging can be restarted with [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging).
 **Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
 :::info[Example]
@@ -5136,7 +5136,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
 ## `evse/start_charging` {#evse_start_charging_warp2}
 
 
-Starts a charging process. Calling this function is equivalent to starting via the button on the wallbox: TODO LINK Slot 4 is released. Charging can be stopped again with [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
+Starts a charging process. Calling this function is equivalent to starting via the button on the charger: TODO LINK Slot 4 is released. Charging can be stopped again with [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
 **Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
 :::info[Example]
@@ -5404,7 +5404,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`lock_state`<br/>int</th>
     <td>
-        State of the cable lock (only relevant for wallboxes with Type 2 socket; as of now, no WARP Charger with Type 2 socket has been manufactured)
+        State of the cable lock (only relevant for chargers with Type 2 socket; as of now, no WARP Charger with Type 2 socket has been manufactured)
         - **0** - Initialization
         - **1** - Open
         - **2** - Closing
@@ -5499,9 +5499,9 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`has_lock_switch`<br/>bool</th>
     <td>
-        Indicates whether the wallbox has a cable lock.
-        - **false** - Wallbox has permanently attached Type 2 charging cable
-        - **true** - Wallbox has a Type 2 socket with cable lock
+        Indicates whether the charger has a cable lock.
+        - **false** - Charger has permanently attached Type 2 charging cable
+        - **true** - Charger has a Type 2 socket with cable lock
     </td>
 </tr>
 
@@ -5516,7 +5516,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_meter_type`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3)</strong> Type of the installed energy meter. Not every energy meter is supported by every wallbox!
+        <strong>(Only WARP 2 and WARP 3)</strong> Type of the installed energy meter. Not every energy meter is supported by every charger!
         - **0** - No energy meter available
         - **2** - Eastron SDM630
         - **3** - Eastron SDM72V2
@@ -7903,7 +7903,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/phase_auto_switch_update -m 'true'
 ## `evse/phases_connected` {#evse_phases_connected_warp3}
 
 
-Configures whether the wallbox is permanently connected single-phase or three-phase. This is used to calculate the 4200 W limitation according to §14 EnWG
+Configures whether the charger is permanently connected single-phase or three-phase. This is used to calculate the 4200 W limitation according to §14 EnWG
 :::info[Example]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -7986,9 +7986,9 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/phases_connected_update -m '1'
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`phases`<br/>int</th>
     <td>
-        Maximum number of connected phases. A wallbox behind a phase switching contactor (e.g. with the WARP Energy Manager) is connected three-phase.
-        - **1** - Wallbox is permanently connected single-phase
-        - **3** - Wallbox is permanently connected three-phase, or behind a phase switching contactor
+        Maximum number of connected phases. A charger behind a phase switching contactor (e.g. with the WARP Energy Manager) is connected three-phase.
+        - **1** - Charger is permanently connected single-phase
+        - **3** - Charger is permanently connected three-phase, or behind a phase switching contactor
     </td>
 </tr>
     </tbody>
@@ -8104,7 +8104,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/trigger_dc_fault_test -m 'null'
 ## `evse/stop_charging` {#evse_stop_charging_warp3}
 
 
-Stops the current charging process. Calling this function is equivalent to stopping via the button on the wallbox: TODO LINK Slot 4 is blocked. Charging can be restarted with [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging).
+Stops the current charging process. Calling this function is equivalent to stopping via the button on the charger: TODO LINK Slot 4 is blocked. Charging can be restarted with [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging).
 **Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
 :::info[Example]
@@ -8143,7 +8143,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
 ## `evse/start_charging` {#evse_start_charging_warp3}
 
 
-Starts a charging process. Calling this function is equivalent to starting via the button on the wallbox: TODO LINK Slot 4 is released. Charging can be stopped again with [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
+Starts a charging process. Calling this function is equivalent to starting via the button on the charger: TODO LINK Slot 4 is released. Charging can be stopped again with [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
 **Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
 :::info[Example]
@@ -8450,7 +8450,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`lock_state`<br/>int</th>
     <td>
-        State of the cable lock (only relevant for wallboxes with Type 2 socket; as of now, no WARP Charger with Type 2 socket has been manufactured)
+        State of the cable lock (only relevant for chargers with Type 2 socket; as of now, no WARP Charger with Type 2 socket has been manufactured)
         
         
         
@@ -8549,12 +8549,12 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`has_lock_switch`<br/>bool</th>
     <td>
-        Indicates whether the wallbox has a cable lock.
+        Indicates whether the charger has a cable lock.
         
         
         
-        - **false** - Wallbox has permanently attached Type 2 charging cable
-        - **true** - Wallbox has a Type 2 socket with cable lock
+        - **false** - Charger has permanently attached Type 2 charging cable
+        - **true** - Charger has a Type 2 socket with cable lock
     </td>
 </tr>
 
@@ -8581,7 +8581,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_meter_type`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3)</strong> Type of the installed energy meter. Not every energy meter is supported by every wallbox!
+        <strong>(Only WARP 2 and WARP 3)</strong> Type of the installed energy meter. Not every energy meter is supported by every charger!
         
         
         
@@ -11231,7 +11231,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/phase_auto_switch_update -m 'true'
 ## `evse/phases_connected` {#evse_phases_connected_any}
 
 <strong>(Only WARP 2 and WARP 3)</strong> 
-Configures whether the wallbox is permanently connected single-phase or three-phase. This is used to calculate the 4200 W limitation according to §14 EnWG
+Configures whether the charger is permanently connected single-phase or three-phase. This is used to calculate the 4200 W limitation according to §14 EnWG
 :::info[Example]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -11314,12 +11314,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/phases_connected_update -m '1'
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`phases`<br/>int</th>
     <td>
-        Maximum number of connected phases. A wallbox behind a phase switching contactor (e.g. with the WARP Energy Manager) is connected three-phase.
+        Maximum number of connected phases. A charger behind a phase switching contactor (e.g. with the WARP Energy Manager) is connected three-phase.
         
         
         
-        - **1** - Wallbox is permanently connected single-phase
-        - **3** - Wallbox is permanently connected three-phase, or behind a phase switching contactor
+        - **1** - Charger is permanently connected single-phase
+        - **3** - Charger is permanently connected three-phase, or behind a phase switching contactor
     </td>
 </tr>
     </tbody>
@@ -11533,7 +11533,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/gp_output_update -m '1'
 ## `evse/stop_charging` {#evse_stop_charging_any}
 
 
-Stops the current charging process. Calling this function is equivalent to stopping via the button on the wallbox: TODO LINK Slot 4 is blocked. Charging can be restarted with [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging).
+Stops the current charging process. Calling this function is equivalent to stopping via the button on the charger: TODO LINK Slot 4 is blocked. Charging can be restarted with [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging).
 **Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
 :::info[Example]
@@ -11572,7 +11572,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
 ## `evse/start_charging` {#evse_start_charging_any}
 
 
-Starts a charging process. Calling this function is equivalent to starting via the button on the wallbox: TODO LINK Slot 4 is released. Charging can be stopped again with [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
+Starts a charging process. Calling this function is equivalent to starting via the button on the charger: TODO LINK Slot 4 is released. Charging can be stopped again with [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
 **Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
 :::info[Example]

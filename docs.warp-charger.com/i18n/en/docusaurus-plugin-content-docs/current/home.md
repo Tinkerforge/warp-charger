@@ -45,9 +45,9 @@ be integrated into other systems using open interfaces:
 #### No Cloud Required
 
 We try to implement as many functions as possible locally on the device.
-For example, the charging log is stored locally on the wallboxes. If
+For example, the charging log is stored locally on the chargers. If
 a billing PDF should be generated from it, this is done on the
-wallbox and in your browser without a cloud.
+charger and in your browser without a cloud.
 
 In cases where we technically depend on data from a cloud
 (e.g.: [PV Forecast](/webinterface/energy_management/solar_forecast.md), [Dynamic Electricity Prices](/webinterface/energy_management/dynamic_tariffs.md), [Remote Access](/webinterface/system/remote_access.md)), we still try to implement as many
@@ -76,10 +76,10 @@ The list of compatible devices can be found here: [List of Compatible Devices](/
 can perform [PV excess charging](/tutorials/pv_excess_charging.md) directly and without additional hardware.
 This means that instead of feeding excess energy from the PV system
 into the power grid, it is charged into the electric vehicle.
-To do this, the wallbox only needs to be electrically connected and brought
+To do this, the charger only needs to be electrically connected and brought
 into the network via LAN or WLAN. Additionally, an
 electricity meter must be available at the house connection, which can be
-read by the wallbox. PV excess charging is then performed using the power measurement values from this
+read by the charger. PV excess charging is then performed using the power measurement values from this
 electricity meter. An overview of
 currently supported devices that can measure power at the house connection
 can be found in the article
@@ -99,7 +99,7 @@ individually configured. This way we support any provider of dynamic electricity
 of the provider's interfaces.
 
 ### §14a - Controllable Consumption Devices
-Wallboxes, heat pumps and battery storage systems are so-called controllable consumption devices according to §14A. We offer
+Chargers, heat pumps and battery storage systems are so-called controllable consumption devices according to §14A. We offer
 various options for meeting the legal requirements. See [Tutorial - Controllable Consumption Devices](/tutorials/verbrauchseinrichtung.md)
 
 

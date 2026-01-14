@@ -50,4 +50,4 @@ The WARP3 Charger has the following technical specification:
 | Interfaces | HTTP, MQTT, Modbus/TCP, OCPP, SunSpec |
 | Modbus Registers | WARP Charger table and simulation of Bender CC613 and Keba C-Series |
 
-(*) Depending on wallbox variant (Basic / Smart / Pro, 5 m / 7.5 m, 11 kW / 22 kW).
+(*) Depending on charger variant (Basic / Smart / Pro, 5 m / 7.5 m, 11 kW / 22 kW).

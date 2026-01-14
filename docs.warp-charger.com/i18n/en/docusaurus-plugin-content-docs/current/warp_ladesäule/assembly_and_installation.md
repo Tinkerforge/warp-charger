@@ -8,14 +8,14 @@ sidebar_position: 2
 
 The stand delivery includes:
 -   Stand
--   If pre-assembled: Selected WARP3 Charger wallboxes incl. accessories
+-   If pre-assembled: Selected WARP3 Chargeres incl. accessories
 -   Mounting materials
     -   1x mounting aid
     -   4x M8 screws
     -   4x washers
     -   8x M8 nuts
 -   Operating manual, operating manuals and test protocols of the
-    wallboxes
+    chargers
 
 ### Installation Location
 
@@ -75,21 +75,21 @@ washers and nuts.
 
 ## Electrical Connection
 
-The electrical connection of the wallboxes is made separately
-for each wallbox. The electrical installation notes for the WARP3 Charger from
+The electrical connection of the chargeres is made separately
+for each charger. The electrical installation notes for the WARP3 Charger from
 the [Assembly and Installation Manual](/warp_charger/assembly_and_installation.md#installation-location) must be observed.
 
 ### Requirements for Electrical Installation
 
 The requirements for [electrical installation](/warp_charger/assembly_and_installation.md#requirements-for-electrical-installation) of the selected WARP3 Charger
-wallboxes must be observed.
+chargers must be observed.
 
 ### Electrical Installation
 
-Each wallbox can be ordered from the factory with a connection cable and
+Each charger can be ordered from the factory with a connection cable and
 connected distribution box. The following describes this variant. Alternatively,
 the stand can be ordered without pre-installation. The distribution boxes
-are then missing and the wallboxes must be connected directly.
+are then missing and the chargeres must be connected directly.
 
 ![image](/img/warp_ladesäule/warp-charger-stand-back-opened.jpg)
 
@@ -102,16 +102,16 @@ in the distribution box.
 
 ![image](/img/warp_ladesäule/warp-charger-stand-grey-back-opened-detail2.jpg)
 
-Subsequently, the [tests required in the WARP3 Charger operating manual](/warp_charger/assembly_and_installation.md#testing) must be performed for the wallboxes.
+Subsequently, the [tests required in the WARP3 Charger operating manual](/warp_charger/assembly_and_installation.md#testing) must be performed for the chargeres.
 
 ### Grounding
 
 The stand must definitely be grounded. For this purpose, there is a
-grounding point in the column at wallbox height. This must be
+grounding point in the column at charger height. This must be
 connected and the grounding verified.
 
 ### RJ45 - Ethernet
 
 A distribution box is also used for connecting the Ethernet cable.
-The existing Ethernet cables of the wallbox can be connected
+The existing Ethernet cables of the charger can be connected
 in the box.

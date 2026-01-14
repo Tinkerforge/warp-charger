@@ -48,12 +48,12 @@ In the web interface of the WARP Charger, you can now configure the connection t
 
 ![MQTT UI](/img/mqtt/mqtt_ui.png)
 
-To test whether the connection to the MQTT broker works, you can first check the status page of the web interface. The status of the MQTT connection should be Connected. If this is not the case, you can check the event log to see what the problem is. As a further test, you can read the received messages in the Pi's console: `mosquitto_sub -v -t 'warp/#'` or for a WARP2 Charger `mosquitto_sub -v -t 'warp2/#'` and for a WARP3 Charger `mosquitto_sub -v -t 'warp3/#'` delivers received messages from all wallboxes that are connected to the broker.
+To test whether the connection to the MQTT broker works, you can first check the status page of the web interface. The status of the MQTT connection should be Connected. If this is not the case, you can check the event log to see what the problem is. As a further test, you can read the received messages in the Pi's console: `mosquitto_sub -v -t 'warp/#'` or for a WARP2 Charger `mosquitto_sub -v -t 'warp2/#'` and for a WARP3 Charger `mosquitto_sub -v -t 'warp3/#'` delivers received messages from all chargers that are connected to the broker.
 
 Nothing else needs to be configured on the WARP Charger.
 
 :::note
-In particular, external control should be disabled under `Energy Management -> Wallboxes`. External control at this point only refers to load management between WARP Chargers. If PV excess charging is to be done via EVCC, then excess charging must also be disabled under `Energy Management -> PV Excess Charging`. Excess charging can only be controlled either by the WARP Charger itself or by EVCC. Not by both simultaneously.
+In particular, external control should be disabled under `Energy Management -> Chargers`. External control at this point only refers to load management between WARP Chargers. If PV excess charging is to be done via EVCC, then excess charging must also be disabled under `Energy Management -> PV Excess Charging`. Excess charging can only be controlled either by the WARP Charger itself or by EVCC. Not by both simultaneously.
 :::
 
 ### Linking the WARP Energy Manager 1.0 (optional)
@@ -66,7 +66,7 @@ To do this, you must first configure the MQTT connection of the Energy Manager, 
 So that EVCC can later control the WARP Energy Manager, you must change the switching mode to external control (EVCC) under `Energy Manager -> Settings`. The PV excess charging of the Energy Manager is then deactivated, since EVCC should take over this task.
 
 :::note
-If a WARP Energy Manager 1.0 is used by EVCC to perform phase switching of a WARP2 wallbox, then no settings for PV excess charging or load management should be made on the WARP Energy Manager. These functions would otherwise compete with the control by EVCC.
+If a WARP Energy Manager 1.0 is used by EVCC to perform phase switching of a WARP2 charger, then no settings for PV excess charging or load management should be made on the WARP Energy Manager. These functions would otherwise compete with the control by EVCC.
 :::
 
 ![EVCC WARP Energy Manager](/img/evcc/evcc_wem.png)
@@ -77,9 +77,9 @@ Energy Manager configuration
 
 The installation and configuration of EVCC on a Raspberry Pi is explained in the [EVCC documentation](https://docs.evcc.io/docs/installation/linux). Alternatively, EVCC can be installed as a Docker container as [described here](https://docs.evcc.io/docs/installation/docker). If you want to test the connection between EVCC and the WARP Charger without setting up the necessary meters, you can simulate them as described in the next section.
 
-When running `evcc configure`, you can select `TinkerForge WARP Charger Smart` or `TinkerForge WARP Charger Pro` as the wallbox and note the following:
+When running `evcc configure`, you can select `TinkerForge WARP Charger Smart` or `TinkerForge WARP Charger Pro` as the charger and note the following:
 
-*   As the IP address or hostname, you must **not** enter the corresponding value of the wallbox, but the broker hostname or its IP address configured in the previous section.
+*   As the IP address or hostname, you must **not** enter the corresponding value of the charger, but the broker hostname or its IP address configured in the previous section.
 *   The topic is the topic prefix set in the MQTT configuration, e.g. warp/ABC. Every message topic begins with this, which you can see with `mosquitto_sub -v -t 'warp/#'` or `mosquitto_sub -v -t 'warp2/#'` or `mosquitto_sub -v -t 'warp3/#'`.
 *   If you want to use a WARP Energy Manager for phase switching as described above, you must specify the MQTT topic prefix of the Energy Manager (e.g. wem/XYZ) when `evcc configure` asks for energymanager.
 

@@ -26,7 +26,7 @@ In this example, three independent rules were defined:
 * When MQTT message "Current" is received at topic "/Control/Test", limit the maximum total current to 16A
 * When energy is fed into the grid, switch relay 1.
 
-The first two rules set load management configurations of the wallboxes controlled by the Energy Manager in their action, and the third rule switches one of the relays installed in the WARP Energy Manager as an action.
+The first two rules set load management configurations of the chargers controlled by the Energy Manager in their action, and the third rule switches one of the relays installed in the WARP Energy Manager as an action.
 
 Example screenshot of the modal window for editing the first rule:
 ![image](/img/webinterface/energy_manager/wem2-automation2.jpeg)

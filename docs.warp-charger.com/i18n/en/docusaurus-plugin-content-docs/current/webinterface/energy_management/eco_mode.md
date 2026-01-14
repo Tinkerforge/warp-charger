@@ -65,7 +65,7 @@ In this case, the following configuration of the WARP Charger would be useful:
 
 If in this example the electric vehicle is plugged in at 15:00, Eco Mode calculates which 5 hours until tomorrow 08:00 are the cheapest and charges accordingly during these hours. PV excess charging is naturally prioritized (if configured).
 
-### Example Configuration 2: In a company with multiple wallboxes, each employee should be able to charge during the cheapest 3 hours per day.
+### Example Configuration 2: In a company with multiple chargers, each employee should be able to charge during the cheapest 3 hours per day.
 
 In this case, the following configuration of the load manager would be useful:
 

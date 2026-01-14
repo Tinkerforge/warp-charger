@@ -25,5 +25,5 @@ The following settings can be configured on this page:
 If a battery storage system is present, it will regulate against the PV excess controller. If the battery storage can be read via a [power meter](/webinterface/energy_management/energy_meters.md), the storage can be directly considered by the controller.
 For this, the following settings must be configured:
  * **Power meter**: The power meter assigned to the battery storage
- * **Storage priority**: Here you can configure whether wallboxes or storage are prioritized higher.
+ * **Storage priority**: Here you can configure whether chargers or storage are prioritized higher.
  * **Grid consumption and feed-in tolerance**: The control target value for regulation.

@@ -8,7 +8,7 @@ sidebar_position: 8
 
 Victron uses dbus on Venus OS devices (e.g. the Cerbo GX). Other
 devices can also be connected via dbus. Victron itself offers
-integration of wallboxes into Venus OS. With the project
+integration of chargers into Venus OS. With the project
 
 [dbus-warp-charger](https://github.com/Tinkerforge/dbus-warp-charger)
 

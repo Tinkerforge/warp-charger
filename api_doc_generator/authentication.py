@@ -30,4 +30,4 @@ authentication = Module("authentication",
     ),
 ],
     not_supported_text=T({'de': 'Wallboxen verwenden das mächtigere {{{mod_ref:users}}}.',
-                          'en': 'Wallboxes use the more powerful {{{mod_ref:users}}}.'}))
+                          'en': 'Chargers use the more powerful {{{mod_ref:users}}}.'}))

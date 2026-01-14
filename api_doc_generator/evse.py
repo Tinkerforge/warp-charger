@@ -64,7 +64,7 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
                 Const(4, T({'de': "Schützfehler", 'en': "Contactor error"})),
                 Const(5, T({'de': "Kommunikationsfehler", 'en': "Communication error"})),
             ]),
-            "lock_state": Elem.INT(T({'de': "Zustand der Kabelverriegelung (nur relevant für Wallboxen mit Typ-2-Dose; Stand jetzt wurde kein WARP Charger mit Typ-2-Dose hergestellt)", 'en': "State of the cable lock (only relevant for wallboxes with Type 2 socket; as of now, no WARP Charger with Type 2 socket has been manufactured)"}), constants=[
+            "lock_state": Elem.INT(T({'de': "Zustand der Kabelverriegelung (nur relevant für Wallboxen mit Typ-2-Dose; Stand jetzt wurde kein WARP Charger mit Typ-2-Dose hergestellt)", 'en': "State of the cable lock (only relevant for chargers with Type 2 socket; as of now, no WARP Charger with Type 2 socket has been manufactured)"}), constants=[
                 Const(0, T({'de': "Initialisierung", 'en': "Initialization"})),
                 Const(1, T({'de': "Offen", 'en': "Open"})),
                 Const(2, T({'de': "Schließend", 'en': "Closing"})),
@@ -96,9 +96,9 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
                     Const(7, T({'de': "Kontrolliert durch Software", 'en': "Controlled by software"})),
                     Const(8, T({'de': "Nicht konfiguriert", 'en': "Not configured"})),
             ]),
-            "has_lock_switch": Elem.BOOL(T({'de': "Gibt an, ob die Wallbox über eine Kabelverriegelung verfügt.", 'en': "Indicates whether the wallbox has a cable lock."}), constants=[
-                Const(False, T({'de': "Wallbox hat fest angeschlagenes Typ-2-Ladekabel", 'en': "Wallbox has permanently attached Type 2 charging cable"})),
-                Const(True, T({'de': "Wallbox hat eine Typ-2-Dose mit Kabelverriegelung", 'en': "Wallbox has a Type 2 socket with cable lock"})),
+            "has_lock_switch": Elem.BOOL(T({'de': "Gibt an, ob die Wallbox über eine Kabelverriegelung verfügt.", 'en': "Indicates whether the charger has a cable lock."}), constants=[
+                Const(False, T({'de': "Wallbox hat fest angeschlagenes Typ-2-Ladekabel", 'en': "Charger has permanently attached Type 2 charging cable"})),
+                Const(True, T({'de': "Wallbox hat eine Typ-2-Dose mit Kabelverriegelung", 'en': "Charger has a Type 2 socket with cable lock"})),
             ]),
             "evse_version": Elem.INT(T({'de': "Hardware-Version des Ladecontrollers", 'en': "Hardware version of the charge controller"}), constants=[
                 Const(14, U("EVSE 1.4"), Version.WARP1),
@@ -106,7 +106,7 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
                 Const(20, U("EVSE 2.0"), Version.WARP2),
                 Const(30, U("EVSE 3.0"), Version.WARP3)
             ]),
-            "energy_meter_type": Elem.INT(T({'de': "Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!", 'en': "Type of the installed energy meter. Not every energy meter is supported by every wallbox!"}), constants=[
+            "energy_meter_type": Elem.INT(T({'de': "Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!", 'en': "Type of the installed energy meter. Not every energy meter is supported by every charger!"}), constants=[
                 Const(0, T({'de': "Kein Stromzähler verfügbar", 'en': "No energy meter available"})),
                 Const(1, U("Eastron SDM72"), Version.WARP1),
                 Const(2, U("Eastron SDM630"), Version.WARP2 | Version.WARP3),
@@ -453,10 +453,10 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
         })
     ),
 
-    Func("phases_connected", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Konfiguriert, ob die Wallbox fest ein- oder dreiphasig angeschlossen ist. Damit wird z.B. die 4200 W-Limitierung nach §14 EnWG berechnet", 'en': "Configures whether the wallbox is permanently connected single-phase or three-phase. This is used to calculate the 4200 W limitation according to §14 EnWG"}), version=Version.WARP2 | Version.WARP3, members={
-            "phases": Elem.INT(T({'de': "Maximale Anzahl der angeschlossenen Phasen. Eine Wallbox hinter einem Phasenumschaltungsschütz (z.B mit dem WARP Energy Manager) ist dreiphasig angeschlossen.", 'en': "Maximum number of connected phases. A wallbox behind a phase switching contactor (e.g. with the WARP Energy Manager) is connected three-phase."}), constants=[
-                Const(1, T({'de': "Wallbox ist fest einphasig angeschlossen", 'en': "Wallbox is permanently connected single-phase"})),
-                Const(3, T({'de': "Wallbox ist fest dreiphasig, oder hinter einem Phasenumschaltungsschütz angeschlossen", 'en': "Wallbox is permanently connected three-phase, or behind a phase switching contactor"}))
+    Func("phases_connected", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Konfiguriert, ob die Wallbox fest ein- oder dreiphasig angeschlossen ist. Damit wird z.B. die 4200 W-Limitierung nach §14 EnWG berechnet", 'en': "Configures whether the charger is permanently connected single-phase or three-phase. This is used to calculate the 4200 W limitation according to §14 EnWG"}), version=Version.WARP2 | Version.WARP3, members={
+            "phases": Elem.INT(T({'de': "Maximale Anzahl der angeschlossenen Phasen. Eine Wallbox hinter einem Phasenumschaltungsschütz (z.B mit dem WARP Energy Manager) ist dreiphasig angeschlossen.", 'en': "Maximum number of connected phases. A charger behind a phase switching contactor (e.g. with the WARP Energy Manager) is connected three-phase."}), constants=[
+                Const(1, T({'de': "Wallbox ist fest einphasig angeschlossen", 'en': "Charger is permanently connected single-phase"})),
+                Const(3, T({'de': "Wallbox ist fest dreiphasig, oder hinter einem Phasenumschaltungsschütz angeschlossen", 'en': "Charger is permanently connected three-phase, or behind a phase switching contactor"}))
             ])
         })
     ),
@@ -477,9 +477,9 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
         })
     ),
 
-    Func("stop_charging", FuncType.COMMAND, Elem.NULL(T({'de': "Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit {{{ref:evse/start_charging}}} wieder gestartet werden.", 'en': "Stops the current charging process. Calling this function is equivalent to stopping via the button on the wallbox: TODO LINK Slot 4 is blocked. Charging can be restarted with {{{ref:evse/start_charging}}}."})), command_is_action=True),
+    Func("stop_charging", FuncType.COMMAND, Elem.NULL(T({'de': "Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit {{{ref:evse/start_charging}}} wieder gestartet werden.", 'en': "Stops the current charging process. Calling this function is equivalent to stopping via the button on the charger: TODO LINK Slot 4 is blocked. Charging can be restarted with {{{ref:evse/start_charging}}}."})), command_is_action=True),
 
-    Func("start_charging", FuncType.COMMAND, Elem.NULL(T({'de': "Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit {{{ref:evse/stop_charging}}} wieder gestoppt werden.", 'en': "Starts a charging process. Calling this function is equivalent to starting via the button on the wallbox: TODO LINK Slot 4 is released. Charging can be stopped again with {{{ref:evse/stop_charging}}}."})), command_is_action=True),
+    Func("start_charging", FuncType.COMMAND, Elem.NULL(T({'de': "Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit {{{ref:evse/stop_charging}}} wieder gestoppt werden.", 'en': "Starts a charging process. Calling this function is equivalent to starting via the button on the charger: TODO LINK Slot 4 is released. Charging can be stopped again with {{{ref:evse/stop_charging}}}."})), command_is_action=True),
 
     #Func("start_debug", FuncType.HTTP_ONLY, Elem.OPAQUE("Startet ein Ladeprotokoll. Es werden hochfrequent Messwerte des Ladecontrollers auf die WebSockets geschrieben, bis {{{ref:evse/stop_debug}}} aufgerufen wird.")),
     #Func("stop_debug", FuncType.HTTP_ONLY, Elem.OPAQUE("Stoppt ein Ladeprotokoll. Siehe {{{ref:evse/start_debug}}} für Details.")),

@@ -9,7 +9,7 @@ With remote access, you can always access a [WARP Charger](/warp_charger/introdu
 The apps (iOS and Android) use remote access, so it must also be configured for app usage.
 
 ## How it Works and Privacy
-In short, every connection via remote access establishes a separate, encrypted VPN. This VPN has only two participants: the device from which remote access is opened and the WARP Charger/WARP Energy Manager being accessed. This ensures that only you can retrieve data from your wallbox (not even we can!).
+In short, every connection via remote access establishes a separate, encrypted VPN. This VPN has only two participants: the device from which remote access is opened and the WARP Charger/WARP Energy Manager being accessed. This ensures that only you can retrieve data from your charger (not even we can!).
 
 All data, except for your email address and your (freely selectable) username, is stored encrypted on our server. In such a way that even we cannot decrypt this data.
 
@@ -42,7 +42,7 @@ The user's access is then already removed. To synchronize this with the server, 
 When removing the last user, the device is automatically deregistered from the server.
 
 Alternatively, there is a button for removal on the remote access overview page.
-Note that while the device is removed from the account and all access via remote access is blocked, remote access on the wallbox itself remains enabled.
+Note that while the device is removed from the account and all access via remote access is blocked, remote access on the charger itself remains enabled.
 
 ## iOS App
 Our iOS app is available in the Apple App Store: [WARP Charger iOS App](https://apps.apple.com/us/app/warp-by-tinkerforge/id6736695801)
@@ -51,7 +51,7 @@ Our iOS app is available in the Apple App Store: [WARP Charger iOS App](https://
 Our Android app is available in the Android Play Store: [WARP Charger Android App](https://play.google.com/store/apps/details?id=com.tinkerforge.warp)
 
 ## Recovery Page
-The recovery page of the wallbox/Energy Manager can also be accessed via remote access. A device with a keyboard is required for this.
+The recovery page of the charger/Energy Manager can also be accessed via remote access. A device with a keyboard is required for this.
 With the key combination Ctrl + Shift + Alt + R, the recovery page can be loaded while a connection exists. If this does not work,
 focus may need to be removed from the web interface by clicking the footer once with the mouse.
 

@@ -27,7 +27,7 @@ for HTTP login (see following section).
 ![image](/img/webinterface/users/warp-users-user_management2.jpeg)
 
 If multiple users are to be created, we recommend creating them directly one after another. Afterwards, the
-changes must be saved and the wallbox restarted for the changes to take effect.
+changes must be saved and the charger restarted for the changes to take effect.
 
 If only charge authorization via NFC/user authorization is desired, user authorization must be enabled.
 

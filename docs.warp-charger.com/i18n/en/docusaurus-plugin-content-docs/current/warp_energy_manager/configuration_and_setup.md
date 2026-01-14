@@ -5,7 +5,7 @@ sidebar_position: 3
 # Configuration and Setup
 
 [WARP Charger](/warp_charger/introduction.md) and [WARP Energy Manager](/warp_energy_manager/introduction.md) are based on the same software. The following settings are available for the WARP Energy Manager in the web interface:
- 
+
  * [Status](/webinterface/status.md)
  * EnergyManager
    * [Display](/webinterface/energy_manager/display.md)

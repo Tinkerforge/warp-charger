@@ -21,7 +21,7 @@ The stands have the following technical specification:
 |-|-|
 | Material | Steel, galvanized |
 | Material Thickness | 2.0 mm |
-| Weight | approx. 25 kg without wallboxes |
+| Weight | approx. 25 kg without chargers |
 | Color | DB703, micaceous iron oxide paint |
 
 
@@ -31,7 +31,7 @@ The stands have the following technical specification:
 |-|-|
 | Material | V4A |
 | Material Thickness | 1.5 mm |
-| Weight | approx. 22 kg without wallboxes|
+| Weight | approx. 22 kg without chargers|
 | Color | Stainless steel |
 
 ### Dimensions of Stand with One WARP Charger

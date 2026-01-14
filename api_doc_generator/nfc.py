@@ -16,7 +16,7 @@ def tag(version):
     ]
 
 nfc = Module("nfc", T({'de': "NFC-Ladefreigabe", 'en': "NFC Charge Authorization"}), T({'de': "Benötigt das Feature <a href=\"#features_nfc\"><code>\"nfc\"</code></a>.", 'en': "Requires the <a href=\"#features_nfc\"><code>\"nfc\"</code></a> feature."}), "", Version.WARPX, [
-    Func("seen_tags", FuncType.STATE, Elem.ARRAY(T({'de': "Die zuletzt von der Wallbox gesehenen NFC-Tags.", 'en': "The NFC tags most recently seen by the wallbox."}), members=[
+    Func("seen_tags", FuncType.STATE, Elem.ARRAY(T({'de': "Die zuletzt von der Wallbox gesehenen NFC-Tags.", 'en': "The NFC tags most recently seen by the charger."}), members=[
             * 8 * [Elem.OBJECT(T({'de': "Ein gesehenes NFC-Tag", 'en': "A seen NFC tag"}), members = {
                 "tag_type": Elem.INT(T({'de': "Typ des Tags", 'en': "Type of the tag"}), constants=[
                     Const(0, U("Mifare Classic")),

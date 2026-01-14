@@ -2,7 +2,7 @@ from api_doc_common import *
 
 energy_manager = Module("energy_manager", T({'de': "Energy-Manager-Konfiguration", 'en': "Energy Manager Configuration"}), "", T({'de': "Das `energy_manager`-Modul verwaltet Zustand und Konfiguration des WARP Energy Manager Bricklets.", 'en': "The `energy_manager` module manages the state and configuration of the WARP Energy Manager Bricklet."}), Version.WEMX, [
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Konfiguration des Energy Managers", 'en': "Energy Manager configuration"}), members={
-            "contactor_installed": Elem.BOOL(T({'de': "Gibt an, ob ein Schütz angeschlossen ist, mit dem die gesteuerten Wallboxen zwischen dreiphasigem und einphasigem Betrieb umgeschaltet werden können. Eingang 4 wird dann automatisch zur Schützüberwachung verwendet.", 'en': "Indicates whether a contactor is connected that can switch the controlled wallboxes between three-phase and single-phase operation. Input 4 is then automatically used for contactor monitoring."}))
+            "contactor_installed": Elem.BOOL(T({'de': "Gibt an, ob ein Schütz angeschlossen ist, mit dem die gesteuerten Wallboxen zwischen dreiphasigem und einphasigem Betrieb umgeschaltet werden können. Eingang 4 wird dann automatisch zur Schützüberwachung verwendet.", 'en': "Indicates whether a contactor is connected that can switch the controlled chargers between three-phase and single-phase operation. Input 4 is then automatically used for contactor monitoring."}))
         })
     ),
     Func("state", FuncType.STATE, Elem.OBJECT(T({'de': "Zustand des Energy Managers", 'en': "Energy Manager state"}), members={
@@ -33,8 +33,8 @@ energy_manager = Module("energy_manager", T({'de': "Energy-Manager-Konfiguration
             "config_error_flags": Elem.INT(T({'de': "Aktive Konfigurationsfehler des Energy Managers. Es handelt sich hierbei um eine Bitmaske, sodass sämtliche Kombinationen aus Konfigurationsfehlern auftreten können.", 'en': "Active configuration errors of the Energy Manager. This is a bitmask, so any combination of configuration errors can occur."}), constants=[
                 Const(0, T({'de': "Kein Fehler", 'en': "No error"})),
                 Const("0x00000001", T({'de': "Phasenumschaltung oder Schütz nicht konfiguriert", 'en': "Phase switching or contactor not configured"})),
-                Const("0x00000002", T({'de': "Maximaler Gesamtstrom der Wallboxen nicht konfiguriert", 'en': "Maximum total current of wallboxes not configured"})),
-                Const("0x00000004", T({'de': "Keine Wallboxen konfiguriert", 'en': "No wallboxes configured"})),
+                Const("0x00000002", T({'de': "Maximaler Gesamtstrom der Wallboxen nicht konfiguriert", 'en': "Maximum total current of chargers not configured"})),
+                Const("0x00000004", T({'de': "Keine Wallboxen konfiguriert", 'en': "No chargers configured"})),
                 Const("0x00000008", T({'de': "Überschussladen aktiviert aber kein Stromzähler eingerichtet", 'en': "Excess charging enabled but no electricity meter configured"})),
             ])
         })

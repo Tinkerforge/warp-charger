@@ -11,7 +11,7 @@ Coming soon! - This interface is currently in development. Support for EEBus wil
 :::
 
 EEBus is a communication standard that will be used in the future by energy network operators, among others, to reduce the load on the power grid. EEBus is therefore intended to be used
-to control controllable consumption devices (e.g. wallboxes) that fall under [§14a EnWG](/tutorials/verbrauchseinrichtung.md). EEBus is standardized, but many detailed questions remain regarding
+to control controllable consumption devices (e.g. chargers) that fall under [§14a EnWG](/tutorials/verbrauchseinrichtung.md). EEBus is standardized, but many detailed questions remain regarding
 the exact implementation by the grid operators. We are therefore currently developing the EEBus interface, but are still waiting for information and testing opportunities from the grid operators.
 
 EEBus defines various use cases. For control by the grid operator, the LPC (Limitation of Power Consumption) use case is required. This is currently being implemented by us.

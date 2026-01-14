@@ -29,9 +29,9 @@ power_manager = Module("power_manager", T({'de': "Konfiguration des PV-Überschu
             ]),
             "meter_slot_grid_power": Elem.INT(T({'de': "Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird.", 'en': "Specifies which electricity meter is considered the grid connection meter for control."})),
             "meter_slot_battery_power": Elem.INT(T({'de': "Gibt an, welcher Stromzähler für die Regelung als Batteriespeicher-Stromzähler betrachtet wird.", 'en': "Specifies which electricity meter is considered the battery storage meter for control."})),
-            "battery_mode": Elem.INT(T({'de': "Speicherpriorität im Verhältnis zu Wallboxen", 'en': "Storage priority relative to wallboxes"}), constants=[
-                Const(0, T({'de': "Wallboxen bevorzugen, überschüssige Leistung für Speicher", 'en': "Prefer wallboxes, excess power for storage"})),
-                Const(1, T({'de': "Speicher bevorzugen, überschüssige Leistung für Wallboxen", 'en': "Prefer storage, excess power for wallboxes"})),
+            "battery_mode": Elem.INT(T({'de': "Speicherpriorität im Verhältnis zu Wallboxen", 'en': "Storage priority relative to chargers"}), constants=[
+                Const(0, T({'de': "Wallboxen bevorzugen, überschüssige Leistung für Speicher", 'en': "Prefer chargers, excess power for storage"})),
+                Const(1, T({'de': "Speicher bevorzugen, überschüssige Leistung für Wallboxen", 'en': "Prefer storage, excess power for chargers"})),
             ]),
             "battery_inverted": Elem.BOOL(T({'de': "Invertiert das Vorzeichen der Speicherleistung für Batteriespeicher, die beim Laden negative und beim Entladen positive Leistungswerte melden.", 'en': "Inverts the sign of storage power for battery storage systems that report negative power values when charging and positive values when discharging."})),
             "battery_deadzone": Elem.INT(T({'de': "Bezugs- und Einspeise-Toleranz am Netzanschluss, während der Speicher aktiv ist. Für Batteriespeicher, die einen gewissen Bezug und Einspeisung beim Entladen bzw. Laden erlauben. Die Toleranz sollte auf das 1,5-fache des erwarteten Bezugs und Einspeisung gestellt werden.", 'en': "Grid consumption and feed-in tolerance at the grid connection while storage is active. For battery storage systems that allow a certain amount of consumption and feed-in during discharging or charging. The tolerance should be set to 1.5 times the expected consumption and feed-in."})),
@@ -41,7 +41,7 @@ power_manager = Module("power_manager", T({'de': "Konfiguration des PV-Überschu
             "enabled": Elem.BOOL(T({'de': "Aktiviert dynamisches Lastmanagement.", 'en': "Enables dynamic load management."})),
             "meter_slot_grid_currents": Elem.INT(T({'de': "Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird.", 'en': "Specifies which electricity meter is considered the grid connection meter for control."})),
             "current_limit": Elem.INT(T({'de': "Maximal gewünschter Strom am Netzanschluss in Milliampere. Dies ist üblicherweise der Nennwert der Absicherung.", 'en': "Maximum desired current at the grid connection in milliamperes. This is typically the rated value of the fuse."})),
-            "largest_consumer_current": Elem.INT(T({'de': "Strombedarf des größten Einzelverbrauchers pro Phase in Milliampere, ausgenommen gesteuerter Wallboxen.", 'en': "Current demand of the largest individual consumer per phase in milliamperes, excluding controlled wallboxes."})),
+            "largest_consumer_current": Elem.INT(T({'de': "Strombedarf des größten Einzelverbrauchers pro Phase in Milliampere, ausgenommen gesteuerter Wallboxen.", 'en': "Current demand of the largest individual consumer per phase in milliamperes, excluding controlled chargers."})),
             "safety_margin_pct": Elem.INT(T({'de': "Zusätzliche Sicherheitsmarge in Prozent, relativ zum maximalen Strom am Netzanschluss.", 'en': "Additional safety margin in percent, relative to the maximum current at the grid connection."})),
         })
     ),
@@ -49,14 +49,14 @@ power_manager = Module("power_manager", T({'de': "Konfiguration des PV-Überschu
             "config_error_flags": Elem.INT(T({'de': "Aktive Konfigurationsfehler des Power Managers. Es handelt sich hierbei um eine Bitmaske, sodass sämtliche Kombinationen aus Konfigurationsfehlern auftreten können.", 'en': "Active configuration errors of the Power Manager. This is a bitmask, so any combination of configuration errors can occur."}), constants=[
                 Const(0, T({'de': "Kein Fehler", 'en': "No error"})),
                 Const("0x00000001", T({'de': "Phasenumschaltung oder Schütz nicht konfiguriert", 'en': "Phase switching or contactor not configured"})),
-                Const("0x00000002", T({'de': "Maximaler Gesamtstrom der Wallboxen nicht konfiguriert", 'en': "Maximum total current of wallboxes not configured"})),
-                Const("0x00000004", T({'de': "Keine Wallboxen konfiguriert", 'en': "No wallboxes configured"})),
+                Const("0x00000002", T({'de': "Maximaler Gesamtstrom der Wallboxen nicht konfiguriert", 'en': "Maximum total current of chargers not configured"})),
+                Const("0x00000004", T({'de': "Keine Wallboxen konfiguriert", 'en': "No chargers configured"})),
                 Const("0x00000008", T({'de': "Überschussladen aktiviert aber kein Stromzähler eingerichtet", 'en': "Excess charging enabled but no electricity meter configured"})),
             ]),
             "external_control": Elem.INT(T({'de': "Status der externen Steuerung zur Phasenumschaltung.", 'en': "Status of external control for phase switching."}), constants=[
                 Const(0, T({'de': "Externe Steuerung bereit für Kommandos.", 'en': "External control ready for commands."})),
                 Const(1, T({'de': "Externe Steuerung über die Einstellungen deaktiviert.", 'en': "External control disabled via settings."})),
-                Const(2, T({'de': "Externe Steuerung ist aktiviert aber aktuell nicht verfügbar. Gründe sind unter anderem: ausgelöste Schützüberwachung, eine oder mehrere Wallboxen nicht erreichbar oder unterstützen keine CP-Trennung, Ladevorgang blockiert durch Eingang 3.", 'en': "External control is enabled but currently unavailable. Reasons include: triggered contactor monitoring, one or more wallboxes unreachable or do not support CP disconnect, charging session blocked by input 3."})),
+                Const(2, T({'de': "Externe Steuerung ist aktiviert aber aktuell nicht verfügbar. Gründe sind unter anderem: ausgelöste Schützüberwachung, eine oder mehrere Wallboxen nicht erreichbar oder unterstützen keine CP-Trennung, Ladevorgang blockiert durch Eingang 3.", 'en': "External control is enabled but currently unavailable. Reasons include: triggered contactor monitoring, one or more chargers unreachable or do not support CP disconnect, charging session blocked by input 3."})),
                 Const(3, T({'de': "Phasenumschaltung wird gerade durchgeführt; ankommende Kommandos werden ignoriert.", 'en': "Phase switching is currently being performed; incoming commands are ignored."})),
             ]),
         })

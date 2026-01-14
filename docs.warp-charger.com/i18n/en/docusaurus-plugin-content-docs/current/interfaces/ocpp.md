@@ -4,8 +4,8 @@ sidebar_position: 3
 
 # OCPP
 
-When a wallbox needs to be integrated into a cloud or a large number of
-wallboxes need to be managed, the OCPP standard is often used.
+When a charger needs to be integrated into a cloud or a large number of
+chargers need to be managed, the OCPP standard is often used.
 
 OCPP (Open Charge Point Protocol) is a standardized
 communication protocol between charging stations and a central
@@ -14,7 +14,7 @@ and Smart Charging Profile.
 
 ## Configuration
 
-To use OCPP, the wallbox must first be added to the cloud being used.
+To use OCPP, the charger must first be added to the cloud being used.
 In this example we use https://ladefoxx.one.
 However, the necessary settings must be configured on every cloud or
 OCPP server.

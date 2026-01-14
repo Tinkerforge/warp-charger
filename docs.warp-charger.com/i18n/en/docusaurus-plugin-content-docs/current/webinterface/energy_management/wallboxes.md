@@ -20,7 +20,7 @@ The WARP Energy Manager can also be configured as a charge manager for up to 64 
 On this page, the controlled chargers are configured. The settings made here
 affect the [charge management](/tutorials/chargemanagement.md) between the chargers.
 
-Type 2 wallboxes communicate the maximum available charging current to the connected vehicles.
+Type 2 chargers communicate the maximum available charging current to the connected vehicles.
 The vehicle decides whether this charging current is fully utilized and whether a charging process is carried out single-phase, two-phase, or three-phase.
 
 

@@ -38,7 +38,7 @@ user management must be enabled and
 * an NFC tag must be assigned to the user.
 
 In factory state, three users with one NFC tag each are configured. The
-NFC tags are part of the wallbox delivery.
+NFC tags are part of the charger delivery.
 Users can be edited under `Users` -> `User Management`.
 
 Further information is available in the web interface documentation: [User Management](/webinterface/users/user_management.md)
@@ -51,7 +51,7 @@ To do this, simply click on the "+" at the bottom right and enter a
 username, a display name, and the maximum charging current for this user.
 
 Additionally, charge authorization was enabled. With charge authorization enabled,
-a charge must first be authorized via NFC before the wallbox
+a charge must first be authorized via NFC before the charger
 starts charging.
 
 An NFC card can be assigned to the user under `Users` -> `NFC Tags`.
@@ -65,7 +65,7 @@ Any NFC tags of the supported types can be learned
 
 To add an NFC tag, click on the "+" at the bottom right again.
 In the add-tag window, the most recently detected NFC tags are displayed.
-This means you can simply hold the tag in front of the wallbox once before configuration
+This means you can simply hold the tag in front of the charger once before configuration
 to then select it here.
 
 In the example, we assign an NFC-Forum-Type2 tag to the "Doku Nutzer".
@@ -73,7 +73,7 @@ In the example, we assign an NFC-Forum-Type2 tag to the "Doku Nutzer".
 ![image](/img/tutorials/charge_tracking/nfc_configuration_done.png)
 
 After adding, you must save, and then the
-wallbox knows a new user who is also used by the charge log.
+charger knows a new user who is also used by the charge log.
 
 Further information is available in the web interface documentation: [NFC Tags](/webinterface/users/nfc-tags.md)
 

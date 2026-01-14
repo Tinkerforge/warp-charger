@@ -45,7 +45,7 @@ The current limits determined by the controller are:
 - `raw`: The current that may be used at this moment.
 - `min`: The minimum available current of the last few minutes. The cloud filter configuration specifies how far back in time the `min` PV value is determined. For the phase values, the minimum of the last four minutes is always used.
 - `max_pv`: The maximum available PV excess of the last few minutes. Also defined by the cloud filter.
-- `spread`: A value that predicts how many wallboxes can be active simultaneously. Currently implemented as the minimum available current of the last hour.
+- `spread`: A value that predicts how many chargers can be active simultaneously. Currently implemented as the minimum available current of the last hour.
 
 ## Controller
 

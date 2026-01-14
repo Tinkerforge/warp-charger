@@ -119,7 +119,7 @@ controlled by user-defined rules.
 
 ### LAN Connection
 
-Control of the wallboxes is via a network. We recommend
+Control of the chargers is via a network. We recommend
 connecting the WARP Energy Manager 2.0 via LAN. The
 LAN connection required for this is located in front of the other
 connections when installed. To avoid damage, the LAN socket is

@@ -106,7 +106,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/energy_manager/config_update -m 'true'
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`contactor_installed`<br/>bool</th>
     <td>
-        Indicates whether a contactor is connected that can switch the controlled wallboxes between three-phase and single-phase operation. Input 4 is then automatically used for contactor monitoring.
+        Indicates whether a contactor is connected that can switch the controlled chargers between three-phase and single-phase operation. Input 4 is then automatically used for contactor monitoring.
     </td>
 </tr>
     </tbody>
@@ -219,8 +219,8 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/energy_manager/state
         Active configuration errors of the Energy Manager. This is a bitmask, so any combination of configuration errors can occur.
         - **0** - No error
         - **0x00000001** - Phase switching or contactor not configured
-        - **0x00000002** - Maximum total current of wallboxes not configured
-        - **0x00000004** - No wallboxes configured
+        - **0x00000002** - Maximum total current of chargers not configured
+        - **0x00000004** - No chargers configured
         - **0x00000008** - Excess charging enabled but no electricity meter configured
     </td>
 </tr>
@@ -609,7 +609,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/energy_manager/config_update -m 'true'
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`contactor_installed`<br/>bool</th>
     <td>
-        Indicates whether a contactor is connected that can switch the controlled wallboxes between three-phase and single-phase operation. Input 4 is then automatically used for contactor monitoring.
+        Indicates whether a contactor is connected that can switch the controlled chargers between three-phase and single-phase operation. Input 4 is then automatically used for contactor monitoring.
     </td>
 </tr>
     </tbody>
@@ -722,8 +722,8 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/energy_manager/state
         Active configuration errors of the Energy Manager. This is a bitmask, so any combination of configuration errors can occur.
         - **0** - No error
         - **0x00000001** - Phase switching or contactor not configured
-        - **0x00000002** - Maximum total current of wallboxes not configured
-        - **0x00000004** - No wallboxes configured
+        - **0x00000002** - Maximum total current of chargers not configured
+        - **0x00000004** - No chargers configured
         - **0x00000008** - Excess charging enabled but no electricity meter configured
     </td>
 </tr>
@@ -1112,7 +1112,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/energy_manager/config_update -m 'true'
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`contactor_installed`<br/>bool</th>
     <td>
-        Indicates whether a contactor is connected that can switch the controlled wallboxes between three-phase and single-phase operation. Input 4 is then automatically used for contactor monitoring.
+        Indicates whether a contactor is connected that can switch the controlled chargers between three-phase and single-phase operation. Input 4 is then automatically used for contactor monitoring.
     </td>
 </tr>
     </tbody>
@@ -1243,8 +1243,8 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/energy_manager/state
         
         - **0** - No error
         - **0x00000001** - Phase switching or contactor not configured
-        - **0x00000002** - Maximum total current of wallboxes not configured
-        - **0x00000004** - No wallboxes configured
+        - **0x00000002** - Maximum total current of chargers not configured
+        - **0x00000004** - No chargers configured
         - **0x00000008** - Excess charging enabled but no electricity meter configured
     </td>
 </tr>

@@ -21,7 +21,7 @@ with which energy consumption at home can be monitored, controlled and optimized
 
 The WARP Energy Manager can control heat pumps via the SG-Ready interface depending on dynamic electricity prices,
 photovoltaic excess or current load at the grid connection, switch additional consumers
-on or off, and charge electric vehicles in conjunction with WARP Charger wallboxes. Control of battery storage charging and discharging processes will also be possible in the future.
+on or off, and charge electric vehicles in conjunction with WARP Charger chargers. Control of battery storage charging and discharging processes will also be possible in the future.
 
 ## Features
 
@@ -31,7 +31,7 @@ The WARP Energy Manager has the following features:
  * Control of heat pumps via SG-Ready interface
  * Four inputs for potential-free contacts, e.g.: §14a EnWG - Controllable Consumption Device
  * Two relay outputs for controlling additional consumers
- * Control of up to 64 WARP Charger wallboxes
+ * Control of up to 64 WARP Charger chargers
  * Control of battery storage (future)
  * Access to electricity meters at grid connection, photovoltaic inverters, battery storage
  * Photovoltaic excess utilization
@@ -51,12 +51,12 @@ Every five minutes, the measured values are saved locally on the energy manager'
 the WARP Energy Manager independent of data recording on cloud servers. You can
 view this data graphically for each day. This allows you to analyze your energy consumption on a daily, monthly and annual basis.
 
-### Control of Wallboxes
-The WARP Energy Manager can control up to 64 wallboxes of type WARP Charger Smart or WARP Charger Pro
-depending on consumption. Control is via a common network (LAN, WiFi) between the wallboxes and the WARP Energy Manager.
-Static load management can be performed, where a fixed current is divided among the wallboxes according to demand.
+### Control of Chargers
+The WARP Energy Manager can control up to 64 chargers of type WARP Charger Smart or WARP Charger Pro
+depending on consumption. Control is via a common network (LAN, WiFi) between the chargers and the WARP Energy Manager.
+Static load management can be performed, where a fixed current is divided among the chargers according to demand.
 Alternatively, dynamic load management can also be set up. The current at the grid connection is measured by an electricity meter. The WARP
-Energy Manager then regulates the wallboxes so that the set maximum current at the grid connection is not exceeded.
+Energy Manager then regulates the chargers so that the set maximum current at the grid connection is not exceeded.
 With various settings, you can define under which conditions and with how much power vehicles are charged.
 
 
@@ -74,11 +74,11 @@ The WARP Energy Manager has two relay outputs. With these outputs, for example,
 ### Four Inputs, e.g. for §14a EnWG - Controllable Consumption Device
 A potential-free contact (normally open/normally closed) can be connected to each of the four inputs of the WARP Energy Manager.
 These inputs can be used for user-configurable rules. One application is using an input to
-reduce the power of wallboxes and heat pumps controlled by the Energy Manager according to §14a EnWG.
+reduce the power of chargers and heat pumps controlled by the Energy Manager according to §14a EnWG.
 
 ### Front Button with Display
 A 320x240 pixel TFT display shows system information. The display of six tiles on the
-display can be configured. For example, the power at the grid connection, status information of wallboxes, the status of the SG-Ready interface,
+display can be configured. For example, the power at the grid connection, status information of chargers, the status of the SG-Ready interface,
 the value of the dynamic electricity price, etc. can be displayed. The display turns off after 5 minutes of inactivity.
 
 Additionally, the WARP Energy Manager has a front button. Pressing this button switches between different screens. Additionally,

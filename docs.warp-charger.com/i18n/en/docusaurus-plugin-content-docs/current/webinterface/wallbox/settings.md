@@ -69,19 +69,19 @@ power is available. This is implemented by briefly disconnecting the control pil
 
 :::note
 
-This function only affects load management, as unused phases can be detected and released for other wallboxes
+This function only affects load management, as unused phases can be detected and released for other chargers
 (phase-optimized load management).
 
 :::
 
 This option is only available for the WARP3 Charger Pro. If
 the option is enabled, during an ongoing charging process the internal power meter determines whether the
-vehicle is only charging single-phase. If this is the case, the wallbox automatically switches to single-phase charging.
+vehicle is only charging single-phase. If this is the case, the charger automatically switches to single-phase charging.
 
 
 ## Supply Line
 
-Here you configure whether the wallbox is connected three-phase or
-single-phase. If the wallbox is only connected single-phase and configured as such here,
+Here you configure whether the charger is connected three-phase or
+single-phase. If the charger is only connected single-phase and configured as such here,
 the second contactor for phases L2 and L3 is never switched, and the charging power limitation
 according to §14a EnWG is calculated accordingly.

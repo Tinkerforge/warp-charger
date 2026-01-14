@@ -10,19 +10,19 @@ WARP Charger Smart Pro can report their current state and be controlled via MQTT
 
 :::warning
 
-If the wallbox is used with ioBroker, a different MQTT broker than the one available as an ioBroker addon should be used. The ioBroker MQTT broker does not conform to the MQTT specification in several respects, which leads to various problems.
+If the charger is used with ioBroker, a different MQTT broker than the one available as an ioBroker addon should be used. The ioBroker MQTT broker does not conform to the MQTT specification in several respects, which leads to various problems.
 
 :::
 
 ### Configuration
 
-For the wallbox to communicate via MQTT, the connection to the MQTT broker must first be configured in the web interface. The following settings can be configured:
+For the charger to communicate via MQTT, the connection to the MQTT broker must first be configured in the web interface. The following settings can be configured:
 
-- **Broker hostname or IP address** The hostname or IP address of the broker to which the wallbox should connect.
+- **Broker hostname or IP address** The hostname or IP address of the broker to which the charger should connect.
 - **Broker port** The port under which the broker is reachable. The typical MQTT port 1883 is preset.
 - **Broker username and password** Some brokers support authentication with username and password.
-- **Topic prefix** This prefix is prepended to all topics used by the wallbox. The default is `warp/AbCd`, `warp2/AbCd`, `warp3/AbCd` or `wem/AbCd` where `AbCd` is a unique identifier per wallbox, but other prefixes such as garage_left are possible. If multiple wallboxes communicate with the same broker, unique prefixes must be chosen per box.
-- **Client ID** The wallbox registers with the broker using this ID.
+- **Topic prefix** This prefix is prepended to all topics used by the charger. The default is `warp/AbCd`, `warp2/AbCd`, `warp3/AbCd` or `wem/AbCd` where `AbCd` is a unique identifier per charger, but other prefixes such as garage_left are possible. If multiple chargers communicate with the same broker, unique prefixes must be chosen per box.
+- **Client ID** The charger registers with the broker using this ID.
 
 After the configuration is set and the "MQTT enabled" switch is set, the configuration can be saved. The ESP then restarts and connects to the broker. The status page shows whether the connection could be established.
 
@@ -32,13 +32,13 @@ In the following, the [`mosquitto_pub`](https://mosquitto.org/man/mosquitto_pub-
 
 ### Basics
 
-Once the connection to the broker has been successfully established, the first messages from the wallbox should now arrive. All messages from the wallbox are strings in [JSON format](https://www.json.org/json-de.html). Likewise, all messages sent to the wallbox must comply with the JSON format.
+Once the connection to the broker has been successfully established, the first messages from the charger should now arrive. All messages from the charger are strings in [JSON format](https://www.json.org/json-de.html). Likewise, all messages sent to the charger must comply with the JSON format.
 
 With
 ```bash
 mosquitto_sub -v -t "warp/AbCd/#"
 ```
-all messages from the wallbox can be displayed. (Replace the prefix `warp/AbCd` with the configured one) For example, the following message could be received on [`warp/AbCd/evse/state`](api_reference/evse#evse_state):
+all messages from the charger can be displayed. (Replace the prefix `warp/AbCd` with the configured one) For example, the following message could be received on [`warp/AbCd/evse/state`](api_reference/evse#evse_state):
 ```jsx
 {
   "iec61851_state": 1,
@@ -61,11 +61,11 @@ mosquitto_pub -t "warp/AbCd/evse/global_current_update" -m "{\"current\": 8000}"
 
 :::info
 
-For simplification, [`evse/global_current_update`](api_reference/evse#evse_global_current) is used here. The current set with this API is stored in the flash memory of the charge controller and should therefore **not be set frequently** to preserve the flash memory. Frequent changes to the charging current (e.g. for external control, PV excess charging, etc.) should instead be made via the API [`evse/external_current_update`](api_reference/evse#evse_external_current), which can be activated on the Wallbox -> Settings page with the "External control" option.
+For simplification, [`evse/global_current_update`](api_reference/evse#evse_global_current) is used here. The current set with this API is stored in the flash memory of the charge controller and should therefore **not be set frequently** to preserve the flash memory. Frequent changes to the charging current (e.g. for external control, PV excess charging, etc.) should instead be made via the API [`evse/external_current_update`](api_reference/evse#evse_external_current), which can be activated on the Charger -> Settings page with the "External control" option.
 
 :::
 
-The charging current is now limited to 8 amperes, which the wallbox indicates with a new message:
+The charging current is now limited to 8 amperes, which the charger indicates with a new message:
 
 ```jsx
 {
@@ -93,9 +93,9 @@ The HTTP API can be used without prior configuration. Optionally, access credent
 
 ### Basics
 
-The HTTP API is structurally identical to the MQTT API: If the MQTT API uses the topic [`warp/AbCd/evse/state`](api_reference/evse#evse_state), for example, the same API can be accessed via the URL `http://warp-AbCd/evse/state`. However, the HTTP API has some advanced features that are not available via MQTT. Additionally, [WebSockets](https://en.wikipedia.org/wiki/WebSocket) can be used at, for example, `ws://warp-AbCd/ws`. Via a WebSocket connection, the wallbox (analogous to MQTT) automatically transmits updated values.
+The HTTP API is structurally identical to the MQTT API: If the MQTT API uses the topic [`warp/AbCd/evse/state`](api_reference/evse#evse_state), for example, the same API can be accessed via the URL `http://warp-AbCd/evse/state`. However, the HTTP API has some advanced features that are not available via MQTT. Additionally, [WebSockets](https://en.wikipedia.org/wiki/WebSocket) can be used at, for example, `ws://warp-AbCd/ws`. Via a WebSocket connection, the charger (analogous to MQTT) automatically transmits updated values.
 
-To receive all messages sent by the wallbox analogous to the MQTT example, a WebSocket connection can be used. For this and for the further examples, [websocat](https://github.com/vi/websocat) and [curl](https://curl.se/) are used and it is assumed that the wallbox is reachable under the hostname warp-AbCd.
+To receive all messages sent by the charger analogous to the MQTT example, a WebSocket connection can be used. For this and for the further examples, [websocat](https://github.com/vi/websocat) and [curl](https://curl.se/) are used and it is assumed that the charger is reachable under the hostname warp-AbCd.
 
 With websocat ws://warp-AbCd/ws, among other things, the following message could be received:
 ```jsx
@@ -146,7 +146,7 @@ curl -X PUT -d "{\"current\":8000}" warp-AbCd/evse/global_current_update
 
 :::info
 
-For simplification, [`evse/global_current_update`](api_reference/evse#evse_global_current) is used here. The current set with this API is stored in the flash memory of the charge controller and should therefore **not be set frequently** to preserve the flash memory. Frequent changes to the charging current (e.g. for external control, PV excess charging, etc.) should instead be made via the API [`evse/external_current_update`](api_reference/evse#evse_external_current), which can be activated on the Wallbox -> Settings page with the "External control" option.
+For simplification, [`evse/global_current_update`](api_reference/evse#evse_global_current) is used here. The current set with this API is stored in the flash memory of the charge controller and should therefore **not be set frequently** to preserve the flash memory. Frequent changes to the charging current (e.g. for external control, PV excess charging, etc.) should instead be made via the API [`evse/external_current_update`](api_reference/evse#evse_external_current), which can be activated on the Charger -> Settings page with the "External control" option.
 
 :::
 
@@ -177,7 +177,7 @@ or
 [1, "Hello World"]
 ```
 
-A more concrete example: The API [`meters/1/config`](api_reference/meters#meters_X_config) configures the power meter in slot 1. A wallbox in its default state has only one power meter configured on slot 0 (the possibly internally integrated meter). Therefore, `meters/1/config` has the default value
+A more concrete example: The API [`meters/1/config`](api_reference/meters#meters_X_config) configures the power meter in slot 1. A charger in its default state has only one power meter configured on slot 0 (the possibly internally integrated meter). Therefore, `meters/1/config` has the default value
 ```jsx
 [0, null]
 ```

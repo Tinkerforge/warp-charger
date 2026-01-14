@@ -11,7 +11,7 @@ This includes data from power meters (for example at the grid connection),
 data from PV inverters about current generation,
 as well as data on battery storage power or power consumption data from loads. The read data
 can be used by a WARP Charger or WARP Energy Manager
-to control wallboxes (PV excess charging), for PV excess utilization of a heat pump, or for
+to control chargers (PV excess charging), for PV excess utilization of a heat pump, or for
 dynamic load management.
 
 The WARP Energy Manager additionally records the collected data locally on its SD card. Via the web interface, the recorded data can be analyzed in the [Energy Analysis](/webinterface/energy_manager/energy_analysis.md).

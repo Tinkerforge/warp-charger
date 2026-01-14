@@ -20,7 +20,7 @@ Hardware and configuration allow manual phase switching with the API [`power_man
 
 ## `button_configuration` Button Configuration
 
-The behavior of the button on the front of the wallbox can be reconfigured. With WARP1 this is not possible, as the button and the key switch cannot be distinguished from each other.
+The behavior of the button on the front of the charger can be reconfigured. With WARP1 this is not possible, as the button and the key switch cannot be distinguished from each other.
 
 ## `ethernet` Ethernet
 

@@ -19,7 +19,7 @@ from pymodbus.payload   import BinaryPayloadDecoder
 REGISTER_POWER = 2002
 
 # Create client object and connect to it
-client = ModbusTcpClient('wallbox-2.localdomain')  
+client = ModbusTcpClient('charger-2.localdomain')
 client.connect()
 
 # Read input register REGISTER_POWER (2002) and convert it to float

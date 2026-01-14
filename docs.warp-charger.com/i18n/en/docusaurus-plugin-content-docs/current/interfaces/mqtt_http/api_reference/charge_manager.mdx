@@ -14,7 +14,7 @@ The `charge_manager` module implements a charge manager that can distribute an a
 ## `charge_manager/available_current` {#charge_manager_available_current_warp1}
 
 
-The currently available current. This current is distributed among the configured wallboxes.
+The currently available current. This current is distributed among the configured chargers.
 :::info[Example]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -107,7 +107,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '
 ## `charge_manager/state` {#charge_manager_state_warp1}
 
 
-The state of the charge manager and all configured wallboxes. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
+The state of the charge manager and all configured chargers. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
 
 
 
@@ -115,7 +115,7 @@ The state of the charge manager and all configured wallboxes. Used by the web in
 ## `charge_manager/low_level_state` {#charge_manager_low_level_state_warp1}
 
 
-The low-level state of the charge manager and all configured wallboxes. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
+The low-level state of the charge manager and all configured chargers. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
 
 
 
@@ -298,7 +298,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`maximum_available_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
     <td>
-        Maximum that may be set as available current via the API and web interface. Should be configured to the maximum permitted current of the wallbox group connection, which is limited e.g. by the grid connection, fusing or supply line.
+        Maximum that may be set as available current via the API and web interface. Should be configured to the maximum permitted current of the charger group connection, which is limited e.g. by the grid connection, fusing or supply line.
     </td>
 </tr>
 
@@ -323,21 +323,21 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`minimum_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
     <td>
-        Smallest amount of current to be allocated to a wallbox in three-phase operation for it to start a charging session. This can influence how many wallboxes charge simultaneously.
+        Smallest amount of current to be allocated to a charger in three-phase operation for it to start a charging session. This can influence how many chargers charge simultaneously.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`minimum_current_1p`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
     <td>
-        Smallest amount of current to be allocated to a wallbox in single-phase operation for it to start a charging session. This can influence how many wallboxes charge simultaneously.
+        Smallest amount of current to be allocated to a charger in single-phase operation for it to start a charging session. This can influence how many chargers charge simultaneously.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`requested_current_threshold`<br/>int (<abbr title="Second">s</abbr>)</th>
     <td>
-        Wallboxes with an electricity meter that measures phase currents are limited to the largest phase current plus the configured margin requested_current_threshold seconds after charge start. This allows the available current to be distributed more efficiently across multiple wallboxes.
+        Chargers with an electricity meter that measures phase currents are limited to the largest phase current plus the configured margin requested_current_threshold seconds after charge start. This allows the available current to be distributed more efficiently across multiple chargers.
     </td>
 </tr>
 
@@ -351,8 +351,8 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[10]</th>
     <td>
-        Wallboxes to be controlled by the charge manager.
-        - **[0..9]** - A wallbox to be controlled
+        Chargers to be controlled by the charge manager.
+        - **[0..9]** - A charger to be controlled
         <table>
             <thead>
                 <tr>
@@ -365,21 +365,21 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`host`<br/>string</th>
             <td>
-                IP address of the wallbox to be controlled
+                IP address of the charger to be controlled
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
             <td>
-                Display name of the wallbox to be controlled
+                Display name of the charger to be controlled
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`rot`<br/>int</th>
             <td>
-                Phase rotation of the wallbox to be controlled
+                Phase rotation of the charger to be controlled
                 - **0** - Unknown
                 - **1** - L123
                 - **2** - L132
@@ -400,7 +400,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 ## `charge_manager/available_current` {#charge_manager_available_current_warp2}
 
 
-The currently available current. This current is distributed among the configured wallboxes.
+The currently available current. This current is distributed among the configured chargers.
 :::info[Example]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -493,7 +493,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '
 ## `charge_manager/state` {#charge_manager_state_warp2}
 
 
-The state of the charge manager and all configured wallboxes. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
+The state of the charge manager and all configured chargers. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
 
 
 
@@ -501,7 +501,7 @@ The state of the charge manager and all configured wallboxes. Used by the web in
 ## `charge_manager/low_level_state` {#charge_manager_low_level_state_warp2}
 
 
-The low-level state of the charge manager and all configured wallboxes. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
+The low-level state of the charge manager and all configured chargers. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
 
 
 
@@ -684,7 +684,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`maximum_available_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
     <td>
-        Maximum that may be set as available current via the API and web interface. Should be configured to the maximum permitted current of the wallbox group connection, which is limited e.g. by the grid connection, fusing or supply line.
+        Maximum that may be set as available current via the API and web interface. Should be configured to the maximum permitted current of the charger group connection, which is limited e.g. by the grid connection, fusing or supply line.
     </td>
 </tr>
 
@@ -709,21 +709,21 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`minimum_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
     <td>
-        Smallest amount of current to be allocated to a wallbox in three-phase operation for it to start a charging session. This can influence how many wallboxes charge simultaneously.
+        Smallest amount of current to be allocated to a charger in three-phase operation for it to start a charging session. This can influence how many chargers charge simultaneously.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`minimum_current_1p`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
     <td>
-        Smallest amount of current to be allocated to a wallbox in single-phase operation for it to start a charging session. This can influence how many wallboxes charge simultaneously.
+        Smallest amount of current to be allocated to a charger in single-phase operation for it to start a charging session. This can influence how many chargers charge simultaneously.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`requested_current_threshold`<br/>int (<abbr title="Second">s</abbr>)</th>
     <td>
-        Wallboxes with an electricity meter that measures phase currents are limited to the largest phase current plus the configured margin requested_current_threshold seconds after charge start. This allows the available current to be distributed more efficiently across multiple wallboxes.
+        Chargers with an electricity meter that measures phase currents are limited to the largest phase current plus the configured margin requested_current_threshold seconds after charge start. This allows the available current to be distributed more efficiently across multiple chargers.
     </td>
 </tr>
 
@@ -737,8 +737,8 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[64]</th>
     <td>
-        Wallboxes to be controlled by the charge manager.
-        - **[0..63]** - A wallbox to be controlled
+        Chargers to be controlled by the charge manager.
+        - **[0..63]** - A charger to be controlled
         <table>
             <thead>
                 <tr>
@@ -751,21 +751,21 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`host`<br/>string</th>
             <td>
-                IP address of the wallbox to be controlled
+                IP address of the charger to be controlled
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
             <td>
-                Display name of the wallbox to be controlled
+                Display name of the charger to be controlled
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`rot`<br/>int</th>
             <td>
-                Phase rotation of the wallbox to be controlled
+                Phase rotation of the charger to be controlled
                 - **0** - Unknown
                 - **1** - L123
                 - **2** - L132
@@ -786,7 +786,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 ## `charge_manager/available_current` {#charge_manager_available_current_warp3}
 
 
-The currently available current. This current is distributed among the configured wallboxes.
+The currently available current. This current is distributed among the configured chargers.
 :::info[Example]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -879,7 +879,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '
 ## `charge_manager/state` {#charge_manager_state_warp3}
 
 
-The state of the charge manager and all configured wallboxes. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
+The state of the charge manager and all configured chargers. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
 
 
 
@@ -887,7 +887,7 @@ The state of the charge manager and all configured wallboxes. Used by the web in
 ## `charge_manager/low_level_state` {#charge_manager_low_level_state_warp3}
 
 
-The low-level state of the charge manager and all configured wallboxes. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
+The low-level state of the charge manager and all configured chargers. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
 
 
 
@@ -1070,7 +1070,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`maximum_available_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
     <td>
-        Maximum that may be set as available current via the API and web interface. Should be configured to the maximum permitted current of the wallbox group connection, which is limited e.g. by the grid connection, fusing or supply line.
+        Maximum that may be set as available current via the API and web interface. Should be configured to the maximum permitted current of the charger group connection, which is limited e.g. by the grid connection, fusing or supply line.
     </td>
 </tr>
 
@@ -1095,21 +1095,21 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`minimum_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
     <td>
-        Smallest amount of current to be allocated to a wallbox in three-phase operation for it to start a charging session. This can influence how many wallboxes charge simultaneously.
+        Smallest amount of current to be allocated to a charger in three-phase operation for it to start a charging session. This can influence how many chargers charge simultaneously.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`minimum_current_1p`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
     <td>
-        Smallest amount of current to be allocated to a wallbox in single-phase operation for it to start a charging session. This can influence how many wallboxes charge simultaneously.
+        Smallest amount of current to be allocated to a charger in single-phase operation for it to start a charging session. This can influence how many chargers charge simultaneously.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`requested_current_threshold`<br/>int (<abbr title="Second">s</abbr>)</th>
     <td>
-        Wallboxes with an electricity meter that measures phase currents are limited to the largest phase current plus the configured margin requested_current_threshold seconds after charge start. This allows the available current to be distributed more efficiently across multiple wallboxes.
+        Chargers with an electricity meter that measures phase currents are limited to the largest phase current plus the configured margin requested_current_threshold seconds after charge start. This allows the available current to be distributed more efficiently across multiple chargers.
     </td>
 </tr>
 
@@ -1123,8 +1123,8 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[64]</th>
     <td>
-        Wallboxes to be controlled by the charge manager.
-        - **[0..63]** - A wallbox to be controlled
+        Chargers to be controlled by the charge manager.
+        - **[0..63]** - A charger to be controlled
         <table>
             <thead>
                 <tr>
@@ -1137,21 +1137,21 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`host`<br/>string</th>
             <td>
-                IP address of the wallbox to be controlled
+                IP address of the charger to be controlled
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
             <td>
-                Display name of the wallbox to be controlled
+                Display name of the charger to be controlled
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`rot`<br/>int</th>
             <td>
-                Phase rotation of the wallbox to be controlled
+                Phase rotation of the charger to be controlled
                 - **0** - Unknown
                 - **1** - L123
                 - **2** - L132
@@ -1172,7 +1172,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 ## `charge_manager/available_current` {#charge_manager_available_current_wem}
 
 
-The currently available current. This current is distributed among the configured wallboxes.
+The currently available current. This current is distributed among the configured chargers.
 :::info[Example]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -1265,7 +1265,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '
 ## `charge_manager/state` {#charge_manager_state_wem}
 
 
-The state of the charge manager and all configured wallboxes. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
+The state of the charge manager and all configured chargers. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
 
 
 
@@ -1273,7 +1273,7 @@ The state of the charge manager and all configured wallboxes. Used by the web in
 ## `charge_manager/low_level_state` {#charge_manager_low_level_state_wem}
 
 
-The low-level state of the charge manager and all configured wallboxes. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
+The low-level state of the charge manager and all configured chargers. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
 
 
 
@@ -1456,7 +1456,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`maximum_available_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
     <td>
-        Maximum that may be set as available current via the API and web interface. Should be configured to the maximum permitted current of the wallbox group connection, which is limited e.g. by the grid connection, fusing or supply line.
+        Maximum that may be set as available current via the API and web interface. Should be configured to the maximum permitted current of the charger group connection, which is limited e.g. by the grid connection, fusing or supply line.
     </td>
 </tr>
 
@@ -1481,21 +1481,21 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`minimum_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
     <td>
-        Smallest amount of current to be allocated to a wallbox in three-phase operation for it to start a charging session. This can influence how many wallboxes charge simultaneously.
+        Smallest amount of current to be allocated to a charger in three-phase operation for it to start a charging session. This can influence how many chargers charge simultaneously.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`minimum_current_1p`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
     <td>
-        Smallest amount of current to be allocated to a wallbox in single-phase operation for it to start a charging session. This can influence how many wallboxes charge simultaneously.
+        Smallest amount of current to be allocated to a charger in single-phase operation for it to start a charging session. This can influence how many chargers charge simultaneously.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`requested_current_threshold`<br/>int (<abbr title="Second">s</abbr>)</th>
     <td>
-        Wallboxes with an electricity meter that measures phase currents are limited to the largest phase current plus the configured margin requested_current_threshold seconds after charge start. This allows the available current to be distributed more efficiently across multiple wallboxes.
+        Chargers with an electricity meter that measures phase currents are limited to the largest phase current plus the configured margin requested_current_threshold seconds after charge start. This allows the available current to be distributed more efficiently across multiple chargers.
     </td>
 </tr>
 
@@ -1509,8 +1509,8 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[64]</th>
     <td>
-        Wallboxes to be controlled by the charge manager.
-        - **[0..63]** - A wallbox to be controlled
+        Chargers to be controlled by the charge manager.
+        - **[0..63]** - A charger to be controlled
         <table>
             <thead>
                 <tr>
@@ -1523,21 +1523,21 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`host`<br/>string</th>
             <td>
-                IP address of the wallbox to be controlled
+                IP address of the charger to be controlled
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
             <td>
-                Display name of the wallbox to be controlled
+                Display name of the charger to be controlled
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`rot`<br/>int</th>
             <td>
-                Phase rotation of the wallbox to be controlled
+                Phase rotation of the charger to be controlled
                 - **0** - Unknown
                 - **1** - L123
                 - **2** - L132
@@ -1558,7 +1558,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 ## `charge_manager/available_current` {#charge_manager_available_current_wem2}
 
 
-The currently available current. This current is distributed among the configured wallboxes.
+The currently available current. This current is distributed among the configured chargers.
 :::info[Example]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -1651,7 +1651,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '
 ## `charge_manager/state` {#charge_manager_state_wem2}
 
 
-The state of the charge manager and all configured wallboxes. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
+The state of the charge manager and all configured chargers. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
 
 
 
@@ -1659,7 +1659,7 @@ The state of the charge manager and all configured wallboxes. Used by the web in
 ## `charge_manager/low_level_state` {#charge_manager_low_level_state_wem2}
 
 
-The low-level state of the charge manager and all configured wallboxes. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
+The low-level state of the charge manager and all configured chargers. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
 
 
 
@@ -1724,7 +1724,7 @@ The charge manager configuration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`maximum_available_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
     <td>
-        Maximum that may be set as available current via the API and web interface. Should be configured to the maximum permitted current of the wallbox group connection, which is limited e.g. by the grid connection, fusing or supply line.
+        Maximum that may be set as available current via the API and web interface. Should be configured to the maximum permitted current of the charger group connection, which is limited e.g. by the grid connection, fusing or supply line.
     </td>
 </tr>
 
@@ -1749,21 +1749,21 @@ The charge manager configuration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`minimum_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
     <td>
-        Smallest amount of current to be allocated to a wallbox in three-phase operation for it to start a charging session. This can influence how many wallboxes charge simultaneously.
+        Smallest amount of current to be allocated to a charger in three-phase operation for it to start a charging session. This can influence how many chargers charge simultaneously.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`minimum_current_1p`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
     <td>
-        Smallest amount of current to be allocated to a wallbox in single-phase operation for it to start a charging session. This can influence how many wallboxes charge simultaneously.
+        Smallest amount of current to be allocated to a charger in single-phase operation for it to start a charging session. This can influence how many chargers charge simultaneously.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`requested_current_threshold`<br/>int (<abbr title="Second">s</abbr>)</th>
     <td>
-        Wallboxes with an electricity meter that measures phase currents are limited to the largest phase current plus the configured margin requested_current_threshold seconds after charge start. This allows the available current to be distributed more efficiently across multiple wallboxes.
+        Chargers with an electricity meter that measures phase currents are limited to the largest phase current plus the configured margin requested_current_threshold seconds after charge start. This allows the available current to be distributed more efficiently across multiple chargers.
     </td>
 </tr>
 
@@ -1777,8 +1777,8 @@ The charge manager configuration.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[64]</th>
     <td>
-        Wallboxes to be controlled by the charge manager.
-        - **[0..63]** - A wallbox to be controlled
+        Chargers to be controlled by the charge manager.
+        - **[0..63]** - A charger to be controlled
         <table>
             <thead>
                 <tr>
@@ -1791,21 +1791,21 @@ The charge manager configuration.
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`host`<br/>string</th>
             <td>
-                IP address of the wallbox to be controlled
+                IP address of the charger to be controlled
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
             <td>
-                Display name of the wallbox to be controlled
+                Display name of the charger to be controlled
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`rot`<br/>int</th>
             <td>
-                Phase rotation of the wallbox to be controlled
+                Phase rotation of the charger to be controlled
                 - **0** - Unknown
                 - **1** - L123
                 - **2** - L132
@@ -1826,7 +1826,7 @@ The charge manager configuration.
 ## `charge_manager/available_current` {#charge_manager_available_current_any}
 
 
-The currently available current. This current is distributed among the configured wallboxes.
+The currently available current. This current is distributed among the configured chargers.
 :::info[Example]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -1919,7 +1919,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '
 ## `charge_manager/state` {#charge_manager_state_any}
 
 
-The state of the charge manager and all configured wallboxes. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
+The state of the charge manager and all configured chargers. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
 
 
 
@@ -1927,7 +1927,7 @@ The state of the charge manager and all configured wallboxes. Used by the web in
 ## `charge_manager/low_level_state` {#charge_manager_low_level_state_any}
 
 
-The low-level state of the charge manager and all configured wallboxes. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
+The low-level state of the charge manager and all configured chargers. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
 
 
 
@@ -2119,7 +2119,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`maximum_available_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
     <td>
-        Maximum that may be set as available current via the API and web interface. Should be configured to the maximum permitted current of the wallbox group connection, which is limited e.g. by the grid connection, fusing or supply line.
+        Maximum that may be set as available current via the API and web interface. Should be configured to the maximum permitted current of the charger group connection, which is limited e.g. by the grid connection, fusing or supply line.
     </td>
 </tr>
 
@@ -2150,21 +2150,21 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`minimum_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
     <td>
-        Smallest amount of current to be allocated to a wallbox in three-phase operation for it to start a charging session. This can influence how many wallboxes charge simultaneously.
+        Smallest amount of current to be allocated to a charger in three-phase operation for it to start a charging session. This can influence how many chargers charge simultaneously.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`minimum_current_1p`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
     <td>
-        Smallest amount of current to be allocated to a wallbox in single-phase operation for it to start a charging session. This can influence how many wallboxes charge simultaneously.
+        Smallest amount of current to be allocated to a charger in single-phase operation for it to start a charging session. This can influence how many chargers charge simultaneously.
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`requested_current_threshold`<br/>int (<abbr title="Second">s</abbr>)</th>
     <td>
-        Wallboxes with an electricity meter that measures phase currents are limited to the largest phase current plus the configured margin requested_current_threshold seconds after charge start. This allows the available current to be distributed more efficiently across multiple wallboxes.
+        Chargers with an electricity meter that measures phase currents are limited to the largest phase current plus the configured margin requested_current_threshold seconds after charge start. This allows the available current to be distributed more efficiently across multiple chargers.
     </td>
 </tr>
 
@@ -2178,11 +2178,11 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[..]</th>
     <td>
-        Wallboxes to be controlled by the charge manager.
+        Chargers to be controlled by the charge manager.
         
         <strong>(Only WARP 1)</strong> 
         
-        - **[0..9]** - A wallbox to be controlled
+        - **[0..9]** - A charger to be controlled
         <table>
             <thead>
                 <tr>
@@ -2195,21 +2195,21 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`host`<br/>string</th>
             <td>
-                IP address of the wallbox to be controlled
+                IP address of the charger to be controlled
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
             <td>
-                Display name of the wallbox to be controlled
+                Display name of the charger to be controlled
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`rot`<br/>int</th>
             <td>
-                Phase rotation of the wallbox to be controlled
+                Phase rotation of the charger to be controlled
                 
                 
                 
@@ -2227,7 +2227,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
         
         <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> 
         
-        - **[0..63]** - A wallbox to be controlled
+        - **[0..63]** - A charger to be controlled
         <table>
             <thead>
                 <tr>
@@ -2240,21 +2240,21 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`host`<br/>string</th>
             <td>
-                IP address of the wallbox to be controlled
+                IP address of the charger to be controlled
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
             <td>
-                Display name of the wallbox to be controlled
+                Display name of the charger to be controlled
             </td>
         </tr>
         
         <tr>
             <th scope="row" style={{whiteSpace: "nowrap"}}>`rot`<br/>int</th>
             <td>
-                Phase rotation of the wallbox to be controlled
+                Phase rotation of the charger to be controlled
                 
                 
                 

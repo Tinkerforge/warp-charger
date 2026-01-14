@@ -194,9 +194,9 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_mode`<br/>int</th>
     <td>
-        Storage priority relative to wallboxes
-        - **0** - Prefer wallboxes, excess power for storage
-        - **1** - Prefer storage, excess power for wallboxes
+        Storage priority relative to chargers
+        - **0** - Prefer chargers, excess power for storage
+        - **1** - Prefer storage, excess power for chargers
     </td>
 </tr>
 
@@ -256,7 +256,7 @@ Dynamic load management configuration
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`largest_consumer_current`<br/>int</th>
     <td>
-        Current demand of the largest individual consumer per phase in milliamperes, excluding controlled wallboxes.
+        Current demand of the largest individual consumer per phase in milliamperes, excluding controlled chargers.
     </td>
 </tr>
 
@@ -320,8 +320,8 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/state
         Active configuration errors of the Power Manager. This is a bitmask, so any combination of configuration errors can occur.
         - **0** - No error
         - **0x00000001** - Phase switching or contactor not configured
-        - **0x00000002** - Maximum total current of wallboxes not configured
-        - **0x00000004** - No wallboxes configured
+        - **0x00000002** - Maximum total current of chargers not configured
+        - **0x00000004** - No chargers configured
         - **0x00000008** - Excess charging enabled but no electricity meter configured
     </td>
 </tr>
@@ -332,7 +332,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/state
         Status of external control for phase switching.
         - **0** - External control ready for commands.
         - **1** - External control disabled via settings.
-        - **2** - External control is enabled but currently unavailable. Reasons include: triggered contactor monitoring, one or more wallboxes unreachable or do not support CP disconnect, charging session blocked by input 3.
+        - **2** - External control is enabled but currently unavailable. Reasons include: triggered contactor monitoring, one or more chargers unreachable or do not support CP disconnect, charging session blocked by input 3.
         - **3** - Phase switching is currently being performed; incoming commands are ignored.
     </td>
 </tr>
@@ -776,9 +776,9 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_mode`<br/>int</th>
     <td>
-        Storage priority relative to wallboxes
-        - **0** - Prefer wallboxes, excess power for storage
-        - **1** - Prefer storage, excess power for wallboxes
+        Storage priority relative to chargers
+        - **0** - Prefer chargers, excess power for storage
+        - **1** - Prefer storage, excess power for chargers
     </td>
 </tr>
 
@@ -838,7 +838,7 @@ Dynamic load management configuration
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`largest_consumer_current`<br/>int</th>
     <td>
-        Current demand of the largest individual consumer per phase in milliamperes, excluding controlled wallboxes.
+        Current demand of the largest individual consumer per phase in milliamperes, excluding controlled chargers.
     </td>
 </tr>
 
@@ -902,8 +902,8 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/state
         Active configuration errors of the Power Manager. This is a bitmask, so any combination of configuration errors can occur.
         - **0** - No error
         - **0x00000001** - Phase switching or contactor not configured
-        - **0x00000002** - Maximum total current of wallboxes not configured
-        - **0x00000004** - No wallboxes configured
+        - **0x00000002** - Maximum total current of chargers not configured
+        - **0x00000004** - No chargers configured
         - **0x00000008** - Excess charging enabled but no electricity meter configured
     </td>
 </tr>
@@ -914,7 +914,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/state
         Status of external control for phase switching.
         - **0** - External control ready for commands.
         - **1** - External control disabled via settings.
-        - **2** - External control is enabled but currently unavailable. Reasons include: triggered contactor monitoring, one or more wallboxes unreachable or do not support CP disconnect, charging session blocked by input 3.
+        - **2** - External control is enabled but currently unavailable. Reasons include: triggered contactor monitoring, one or more chargers unreachable or do not support CP disconnect, charging session blocked by input 3.
         - **3** - Phase switching is currently being performed; incoming commands are ignored.
     </td>
 </tr>
@@ -1358,9 +1358,9 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_mode`<br/>int</th>
     <td>
-        Storage priority relative to wallboxes
-        - **0** - Prefer wallboxes, excess power for storage
-        - **1** - Prefer storage, excess power for wallboxes
+        Storage priority relative to chargers
+        - **0** - Prefer chargers, excess power for storage
+        - **1** - Prefer storage, excess power for chargers
     </td>
 </tr>
 
@@ -1420,7 +1420,7 @@ Dynamic load management configuration
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`largest_consumer_current`<br/>int</th>
     <td>
-        Current demand of the largest individual consumer per phase in milliamperes, excluding controlled wallboxes.
+        Current demand of the largest individual consumer per phase in milliamperes, excluding controlled chargers.
     </td>
 </tr>
 
@@ -1484,8 +1484,8 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/state
         Active configuration errors of the Power Manager. This is a bitmask, so any combination of configuration errors can occur.
         - **0** - No error
         - **0x00000001** - Phase switching or contactor not configured
-        - **0x00000002** - Maximum total current of wallboxes not configured
-        - **0x00000004** - No wallboxes configured
+        - **0x00000002** - Maximum total current of chargers not configured
+        - **0x00000004** - No chargers configured
         - **0x00000008** - Excess charging enabled but no electricity meter configured
     </td>
 </tr>
@@ -1496,7 +1496,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/state
         Status of external control for phase switching.
         - **0** - External control ready for commands.
         - **1** - External control disabled via settings.
-        - **2** - External control is enabled but currently unavailable. Reasons include: triggered contactor monitoring, one or more wallboxes unreachable or do not support CP disconnect, charging session blocked by input 3.
+        - **2** - External control is enabled but currently unavailable. Reasons include: triggered contactor monitoring, one or more chargers unreachable or do not support CP disconnect, charging session blocked by input 3.
         - **3** - Phase switching is currently being performed; incoming commands are ignored.
     </td>
 </tr>
@@ -1940,9 +1940,9 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_mode`<br/>int</th>
     <td>
-        Storage priority relative to wallboxes
-        - **0** - Prefer wallboxes, excess power for storage
-        - **1** - Prefer storage, excess power for wallboxes
+        Storage priority relative to chargers
+        - **0** - Prefer chargers, excess power for storage
+        - **1** - Prefer storage, excess power for chargers
     </td>
 </tr>
 
@@ -2002,7 +2002,7 @@ Dynamic load management configuration
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`largest_consumer_current`<br/>int</th>
     <td>
-        Current demand of the largest individual consumer per phase in milliamperes, excluding controlled wallboxes.
+        Current demand of the largest individual consumer per phase in milliamperes, excluding controlled chargers.
     </td>
 </tr>
 
@@ -2066,8 +2066,8 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/state
         Active configuration errors of the Power Manager. This is a bitmask, so any combination of configuration errors can occur.
         - **0** - No error
         - **0x00000001** - Phase switching or contactor not configured
-        - **0x00000002** - Maximum total current of wallboxes not configured
-        - **0x00000004** - No wallboxes configured
+        - **0x00000002** - Maximum total current of chargers not configured
+        - **0x00000004** - No chargers configured
         - **0x00000008** - Excess charging enabled but no electricity meter configured
     </td>
 </tr>
@@ -2078,7 +2078,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/state
         Status of external control for phase switching.
         - **0** - External control ready for commands.
         - **1** - External control disabled via settings.
-        - **2** - External control is enabled but currently unavailable. Reasons include: triggered contactor monitoring, one or more wallboxes unreachable or do not support CP disconnect, charging session blocked by input 3.
+        - **2** - External control is enabled but currently unavailable. Reasons include: triggered contactor monitoring, one or more chargers unreachable or do not support CP disconnect, charging session blocked by input 3.
         - **3** - Phase switching is currently being performed; incoming commands are ignored.
     </td>
 </tr>
@@ -2522,9 +2522,9 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_mode`<br/>int</th>
     <td>
-        Storage priority relative to wallboxes
-        - **0** - Prefer wallboxes, excess power for storage
-        - **1** - Prefer storage, excess power for wallboxes
+        Storage priority relative to chargers
+        - **0** - Prefer chargers, excess power for storage
+        - **1** - Prefer storage, excess power for chargers
     </td>
 </tr>
 
@@ -2584,7 +2584,7 @@ Dynamic load management configuration
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`largest_consumer_current`<br/>int</th>
     <td>
-        Current demand of the largest individual consumer per phase in milliamperes, excluding controlled wallboxes.
+        Current demand of the largest individual consumer per phase in milliamperes, excluding controlled chargers.
     </td>
 </tr>
 
@@ -2648,8 +2648,8 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/state
         Active configuration errors of the Power Manager. This is a bitmask, so any combination of configuration errors can occur.
         - **0** - No error
         - **0x00000001** - Phase switching or contactor not configured
-        - **0x00000002** - Maximum total current of wallboxes not configured
-        - **0x00000004** - No wallboxes configured
+        - **0x00000002** - Maximum total current of chargers not configured
+        - **0x00000004** - No chargers configured
         - **0x00000008** - Excess charging enabled but no electricity meter configured
     </td>
 </tr>
@@ -2660,7 +2660,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/state
         Status of external control for phase switching.
         - **0** - External control ready for commands.
         - **1** - External control disabled via settings.
-        - **2** - External control is enabled but currently unavailable. Reasons include: triggered contactor monitoring, one or more wallboxes unreachable or do not support CP disconnect, charging session blocked by input 3.
+        - **2** - External control is enabled but currently unavailable. Reasons include: triggered contactor monitoring, one or more chargers unreachable or do not support CP disconnect, charging session blocked by input 3.
         - **3** - Phase switching is currently being performed; incoming commands are ignored.
     </td>
 </tr>
@@ -3113,12 +3113,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_mode`<br/>int</th>
     <td>
-        Storage priority relative to wallboxes
+        Storage priority relative to chargers
         
         
         
-        - **0** - Prefer wallboxes, excess power for storage
-        - **1** - Prefer storage, excess power for wallboxes
+        - **0** - Prefer chargers, excess power for storage
+        - **1** - Prefer storage, excess power for chargers
     </td>
 </tr>
 
@@ -3178,7 +3178,7 @@ Dynamic load management configuration
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`largest_consumer_current`<br/>int</th>
     <td>
-        Current demand of the largest individual consumer per phase in milliamperes, excluding controlled wallboxes.
+        Current demand of the largest individual consumer per phase in milliamperes, excluding controlled chargers.
     </td>
 </tr>
 
@@ -3245,8 +3245,8 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/state
         
         - **0** - No error
         - **0x00000001** - Phase switching or contactor not configured
-        - **0x00000002** - Maximum total current of wallboxes not configured
-        - **0x00000004** - No wallboxes configured
+        - **0x00000002** - Maximum total current of chargers not configured
+        - **0x00000004** - No chargers configured
         - **0x00000008** - Excess charging enabled but no electricity meter configured
     </td>
 </tr>
@@ -3260,7 +3260,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/power_manager/state
         
         - **0** - External control ready for commands.
         - **1** - External control disabled via settings.
-        - **2** - External control is enabled but currently unavailable. Reasons include: triggered contactor monitoring, one or more wallboxes unreachable or do not support CP disconnect, charging session blocked by input 3.
+        - **2** - External control is enabled but currently unavailable. Reasons include: triggered contactor monitoring, one or more chargers unreachable or do not support CP disconnect, charging session blocked by input 3.
         - **3** - Phase switching is currently being performed; incoming commands are ignored.
     </td>
 </tr>

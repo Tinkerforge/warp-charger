@@ -11,7 +11,7 @@ self-consumption of electricity is the priority here.
 
 ## How It Works
 
-If an appropriate power meter is available, the wallbox can control the
+If an appropriate power meter is available, the charger can control the
 charging process to regulate to a target grid consumption.
 
 Typically, this involves a power meter at the grid connection
@@ -24,7 +24,7 @@ WARP3 Charger Smart and Pro are equipped with two separate contactors
 and can thus internally switch between single-phase and
 three-phase charging. Switching to single-phase
 charging offers the advantage that even small power surpluses can be charged into a
-vehicle (from approx. 1.4 kW), whereas three-phase charging enables the respective maximum power of the wallbox
+vehicle (from approx. 1.4 kW), whereas three-phase charging enables the respective maximum power of the charger
 (11 kW or 22 kW).
 
 When PV excess charging is set up, four **charging modes** are available:
@@ -50,7 +50,7 @@ that can measure the PV excess.
 
 The power meter is added via the `Energy Management` -> `Power Meters` page.
 There, under "Settings", a meter can be selected via the "+". For
-a WARP Charger Pro, the meter in the wallbox is already present here and
+a WARP Charger Pro, the meter in the charger is already present here and
 another must be added. For a WARP Charger Smart, the meter at the grid connection
 is sufficient for PV excess charging, which can measure the PV excess.
 For this, the meter must supply the value "Active power (consumption minus feed-in) sum
@@ -119,6 +119,6 @@ For this, the following settings must be made:
 
 **Power meter**: The power meter associated with the battery storage.
 
-**Storage priority**: Here you can configure whether wallboxes or the storage are prioritized higher.
+**Storage priority**: Here you can configure whether chargers or the storage are prioritized higher.
 
 **Consumption and feed-in tolerance**: The control value to which the system regulates. 

@@ -140,7 +140,7 @@ current is reset back to the **Default Available Current**. If the external
 controller runs again later, the watchdog is reset.
 
 The watchdog should only be enabled when a custom-programmed
-controller should dynamically change the available current for the wallbox cluster
+controller should dynamically change the available current for the charger cluster
 via the API. For normal load management operation, the watchdog
 is not necessary.
 
@@ -156,8 +156,8 @@ can never set currents that are too high.
 ### Default Available Current
 
 The default available current is the current that the load management
-is allowed to distribute after the controlling wallbox has been restarted.
-The available current can be reset via the API, but after a wallbox restart,
+is allowed to distribute after the controlling charger has been restarted.
+The available current can be reset via the API, but after a charger restart,
 the default current is initially used. For example, if an external
 controller should set the available PV excess current, the default current
 can be configured to 0, so that charging only starts when the external
@@ -176,25 +176,25 @@ WARP Charger Pro can measure the actual power consumption of the vehicle per pha
 With this information, load management can distribute current more efficiently:
 If, for example, a vehicle's power consumption drops because the battery
 is almost full, or a vehicle that can only charge at 16 A is connected to a
-22 kW wallbox, the remaining current can be distributed to other wallboxes
+22 kW charger, the remaining current can be distributed to other chargers
 in the load management cluster.
 
 To allow a vehicle to request more current, load management must not limit
-a wallbox exactly to the actual power consumption (the maximum phase current),
+a charger exactly to the actual power consumption (the maximum phase current),
 but must allow a certain margin so that the vehicle and load manager can readjust.
 
 For WARP Charger Smart, these settings are not relevant; the load manager
-always assumes for wallboxes without a power meter that the allocated
+always assumes for chargers without a power meter that the allocated
 current is completely used by the vehicle.
 
 The **Start Phase Duration** indicates how long the actual power consumption
 of a vehicle is ignored, i.e. the maximum available current is assigned
-to a wallbox. The start phase duration should therefore be longer than the
+to a charger. The start phase duration should therefore be longer than the
 start delay of a connected vehicle, so that it can immediately draw
 the preferred current when charging begins.
 
 The **Phase Current Margin** indicates how much more current than the vehicle's
-actual power consumption should be allocated to a wallbox once the start phase
+actual power consumption should be allocated to a charger once the start phase
 has ended. This margin is necessary so that the vehicle can request more current.
 
 Many vehicles do not charge exactly at the specified charging current, but only
@@ -205,7 +205,7 @@ to be able to request more current, the margin would therefore have to be more t
 
 ### Minimum Charging Current
 
-The minimum charging current is the current that must be available for a wallbox
+The minimum charging current is the current that must be available for a charger
 in order for it to charge. This current must be at least 6 A.
 Certain vehicles, however, only charge efficiently at higher currents. With
 a WARP3 Charger Pro, the power factor can be determined.
