@@ -2,6 +2,8 @@ from dataclasses import dataclass
 from enum import Enum, IntEnum, IntFlag, auto
 from typing import Union, Optional, Callable
 import itertools
+import traceback
+from pathlib import Path
 
 import re
 
@@ -13,7 +15,14 @@ class T:
         if isinstance(translations, str):
             # Print plain strings during generation to see where T() is still missing
             # (for some stuff plain strings might be OK)
-            print(f"Plain string passed to T(): '{translations[:50]}'")
+            if len(translations) > 0:
+                f = ''
+                for frame in reversed(traceback.extract_stack()):
+                    p = Path(frame.filename)
+                    if p.parent.name == 'api_doc_generator' and p.name not in ['api_doc_common.py', 'generator.py']:
+                        f = f'{frame.filename}:{frame.lineno} '
+                        break
+                print(f"{f}Plain string passed to T(): '{translations[:50]}'")
             self.translations = {'de': translations, 'en': translations}
         elif isinstance(translations, dict):
             self.translations = translations
