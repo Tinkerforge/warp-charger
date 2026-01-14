@@ -4,7 +4,7 @@ day_ahead_prices = Module("day_ahead_prices", T({'de': "Dynamische Strompreise",
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Die Konfiguration der dynamischen Strompreise.", 'en': "The dynamic electricity prices configuration."}), members={
         "enable": Elem.BOOL(T({'de': "Gibt an, ob dynamische Strompreise verwendet werden sollen. Wenn aktiviert, werden die Preise einmal pro Tag für die nächsten 24 Stunden von einem externen Server abgerufen. Um dynamische Strompreise nutzen zu können wird ein Internetzugang benötigt.", 'en': "Indicates whether dynamic electricity prices should be used. When enabled, prices are retrieved once per day for the next 24 hours from an external server. Internet access is required to use dynamic electricity prices."})),
         "api_url":  Elem.STRING(T({'de': "Endpoint-URL des Servers für dynamische Strompreise.", 'en': "Endpoint URL of the dynamic electricity prices server."})),
-        "region":  Elem.INT(T({'de': "Gebiet der dynmischen Strompreise", 'en': "Region of the dynamic electricity prices"}), constants=[
+        "region":  Elem.INT(T({'de': "Gebiet der dynamischen Strompreise", 'en': "Region of the dynamic electricity prices"}), constants=[
             Const(0, "DE"),
             Const(1, "AT"),
             Const(2, "LU"),
