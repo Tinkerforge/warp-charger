@@ -108,9 +108,9 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
             ]),
             "energy_meter_type": Elem.INT(T({'de': "Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!", 'en': "Type of the installed energy meter. Not every energy meter is supported by every wallbox!"}), constants=[
                 Const(0, T({'de': "Kein Stromzähler verfügbar", 'en': "No energy meter available"})),
-                Const(1, "SDM72", Version.WARP1),
-                Const(2, "SDM630", Version.WARP2 | Version.WARP3),
-                Const(3, "SDM72V2", Version.WARP2 | Version.WARP3),
+                Const(1, "Eastron SDM72", Version.WARP1),
+                Const(2, "Eastron SDM630", Version.WARP2 | Version.WARP3),
+                Const(3, "Eastron SDM72V2", Version.WARP2 | Version.WARP3),
                 Const(4, "Eastron SDM72CTM", Version.WARP2 | Version.WARP3),
                 Const(5, "Eastron SDM630MCT", Version.WARP2 | Version.WARP3),
                 Const(6, "Eltako DSZ15DZMOD", Version.WARP2 | Version.WARP3),

@@ -127,9 +127,9 @@ meter = Module("meter", T({'de': "Veraltete Stromzähler-API", 'en': "Legacy Ele
     Func("type_override", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Erlaubt es den verbauten Zählertyp zu überschreiben, falls die Auto-Detektion nicht funktioniert.", 'en': "Allows overriding the installed meter type if auto-detection does not work."}), version=Version.WARP1, members={
             "type": Elem.INT(T({'de': "Stromzählertyp, der verwendet werden soll", 'en': "Electricity meter type to be used"}), constants=[
                 Const(0, T({'de': "Kein Stromzähler verfügbar", 'en': "No electricity meter available"})),
-                Const(1, "SDM72"),
-                Const(2, "SDM630"),
-                Const(3, "SDM72V2"),
+                Const(1, "Eastron SDM72"),
+                Const(2, "Eastron SDM630"),
+                Const(3, "Eastron SDM72V2"),
                 Const(255, T({'de': "Typ-Override nicht aktiv. Stromzählertyp wird automatisch detektiert.", 'en': "Type override not active. Electricity meter type is automatically detected."}))
             ])
         })

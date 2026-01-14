@@ -92,9 +92,9 @@ meters = Module("meters", T({'de': "Stromzähler", 'en': "Electricity Meters"}),
             "location": Elem.INT(T({'de': "Messort", 'en': "Measurement location"}), constants=LOCATION_CONSTANTS),
             "type_override": Elem.INT(T({'de': "Erlaubt es den verbauten Zählertyp zu überschreiben, falls die Auto-Detektion nicht funktioniert.", 'en': "Allows overriding the installed meter type if auto-detection does not work."}), constants=[
                 Const(0, T({'de': "Kein Stromzähler verfügbar", 'en': "No electricity meter available"})),
-                Const(1, "SDM72"),
-                Const(2, "SDM630"),
-                Const(3, "SDM72V2"),
+                Const(1, "Eastron SDM72"),
+                Const(2, "Eastron SDM630"),
+                Const(3, "Eastron SDM72V2"),
                 Const(255, T({'de': "Typ-Override nicht aktiv. Stromzählertyp wird automatisch detektiert.", 'en': "Type override not active. Electricity meter type is automatically detected."}))
             ])
         }),
@@ -400,20 +400,20 @@ meters = Module("meters", T({'de': "Stromzähler", 'en': "Electricity Meters"}),
             1: Elem.OBJECT(T({'de': "Zustand des internen Stromzählers", 'en': "State of the internal electricity meter"}), members={
                 "type": Elem.INT(T({'de': "Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jedem Gerät unterstützt!", 'en': "Type of the installed electricity meter. Not every meter is supported by every device!"}), constants=[
                     Const(0, T({'de': "Kein Stromzähler verfügbar", 'en': "No electricity meter available"})),
-                    Const(1, "SDM72"),
-                    Const(2, "SDM630"),
-                    Const(3, "SDM72V2")
+                    Const(1, "Eastron SDM72"),
+                    Const(2, "Eastron SDM630"),
+                    Const(3, "Eastron SDM72V2")
                 ])
             }),
             **{x: Elem.OBJECT(T({'de': "Zustand des internen Stromzählers", 'en': "State of the internal electricity meter"}), members={
                 "type": Elem.INT(T({'de': "Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jedem Gerät unterstützt!", 'en': "Type of the installed electricity meter. Not every meter is supported by every device!"}), constants=[
                     Const(0, T({'de': "Kein Stromzähler verfügbar", 'en': "No electricity meter available"})),
-                    Const(2, "SDM630"),
-                    Const(3, "SDM72V2"),
-                    Const(4, "SDM72CTM"),
-                    Const(5, "SDM630MCT"),
-                    Const(6, "DSZ15DZMOD"),
-                    Const(7, "DEM4A"),
+                    Const(2, "Eastron SDM630"),
+                    Const(3, "Eastron SDM72V2"),
+                    Const(4, "Eastron SDM72CTM"),
+                    Const(5, "Eastron SDM630MCT"),
+                    Const(6, "Eltako DSZ15DZMOD"),
+                    Const(7, "YTL DEM4A"),
                 ]),
             }) for x in [2, 3]},
             4: Elem.NULL(T({'de': "Zustand des API-Stromzählers. Im Moment leer.", 'en': "State of the API electricity meter. Currently empty."})),
