@@ -767,8 +767,8 @@ curl http://$HOST/{api_name(f, module)}
 
     def to_table(self, is_root: bool, version: Version, locale: str = 'de') -> str:
         translations = {
-            'de': {'meaning': 'Bedeutung', 'name': 'Name', 'index': 'Index'},
-            'en': {'meaning': 'Meaning', 'name': 'Name', 'index': 'Index'}
+            'de': {'meaning': 'Beschreibung', 'name': 'Name', 'index': 'Index'},
+            'en': {'meaning': 'Description', 'name': 'Name', 'index': 'Index'}
         }
         t = translations.get(locale, translations['de'])
 
