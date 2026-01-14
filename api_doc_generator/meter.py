@@ -11,13 +11,13 @@ meter = Module("meter", T({'de': "Veraltete Stromzähler-API", 'en': "Legacy Ele
             ]),
             "type": Elem.INT(T({'de': "Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jedem Gerät unterstützt!", 'en': "Type of the installed electricity meter. Not every meter is supported by every device!"}), constants=[
                 Const(0, T({'de': "Kein Stromzähler verfügbar", 'en': "No electricity meter available"})),
-                Const(1, "Eastron SDM72", Version.WARP1),
-                Const(2, "Eastron SDM630", Version.ANY),
-                Const(3, "Eastron SDM72V2", Version.ANY),
-                Const(4, "Eastron SDM72CTM", Version.WARP2 | Version.WARP3 | Version.WEMX),
-                Const(5, "Eastron SDM630MCT", Version.WARP2 | Version.WARP3 | Version.WEMX),
-                Const(6, "Eltako DSZ15DZMOD", Version.WARP2 | Version.WARP3 | Version.WEMX),
-                Const(7, "YTL DEM4A", Version.WARP2 | Version.WARP3 | Version.WEMX),
+                Const(1, U("Eastron SDM72"), Version.WARP1),
+                Const(2, U("Eastron SDM630"), Version.ANY),
+                Const(3, U("Eastron SDM72V2"), Version.ANY),
+                Const(4, U("Eastron SDM72CTM"), Version.WARP2 | Version.WARP3 | Version.WEMX),
+                Const(5, U("Eastron SDM630MCT"), Version.WARP2 | Version.WARP3 | Version.WEMX),
+                Const(6, U("Eltako DSZ15DZMOD"), Version.WARP2 | Version.WARP3 | Version.WEMX),
+                Const(7, U("YTL DEM4A"), Version.WARP2 | Version.WARP3 | Version.WEMX),
             ])
         })
     ),
@@ -50,10 +50,10 @@ meter = Module("meter", T({'de': "Veraltete Stromzähler-API", 'en': "Legacy Ele
 
             "local_timeout": Elem.INT("Local Timeout", version=Version.WARP2 | Version.WARP3 | Version.WEMX),
             "global_timeout": Elem.INT("Global Timeout", version=Version.WARP2 | Version.WARP3 | Version.WEMX),
-            "illegal_function": Elem.INT("Illegal Function", version=Version.WARP2 | Version.WARP3 | Version.WEMX),
-            "illegal_data_access": Elem.INT("Illegal Data Access", version=Version.WARP2 | Version.WARP3 | Version.WEMX),
-            "illegal_data_value": Elem.INT("Illegal Data Value", version=Version.WARP2 | Version.WARP3 | Version.WEMX),
-            "slave_device_failure": Elem.INT("Slave Device Failure", version=Version.WARP2 | Version.WARP3 | Version.WEMX),
+            "illegal_function": Elem.INT(U("Illegal Function"), version=Version.WARP2 | Version.WARP3 | Version.WEMX),
+            "illegal_data_access": Elem.INT(U("Illegal Data Access"), version=Version.WARP2 | Version.WARP3 | Version.WEMX),
+            "illegal_data_value": Elem.INT(U("Illegal Data Value"), version=Version.WARP2 | Version.WARP3 | Version.WEMX),
+            "slave_device_failure": Elem.INT(U("Slave Device Failure"), version=Version.WARP2 | Version.WARP3 | Version.WEMX),
         })
     ),
 
@@ -127,9 +127,9 @@ meter = Module("meter", T({'de': "Veraltete Stromzähler-API", 'en': "Legacy Ele
     Func("type_override", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Erlaubt es den verbauten Zählertyp zu überschreiben, falls die Auto-Detektion nicht funktioniert.", 'en': "Allows overriding the installed meter type if auto-detection does not work."}), version=Version.WARP1, members={
             "type": Elem.INT(T({'de': "Stromzählertyp, der verwendet werden soll", 'en': "Electricity meter type to be used"}), constants=[
                 Const(0, T({'de': "Kein Stromzähler verfügbar", 'en': "No electricity meter available"})),
-                Const(1, "Eastron SDM72"),
-                Const(2, "Eastron SDM630"),
-                Const(3, "Eastron SDM72V2"),
+                Const(1, U("Eastron SDM72")),
+                Const(2, U("Eastron SDM630")),
+                Const(3, U("Eastron SDM72V2")),
                 Const(255, T({'de': "Typ-Override nicht aktiv. Stromzählertyp wird automatisch detektiert.", 'en': "Type override not active. Electricity meter type is automatically detected."}))
             ])
         })

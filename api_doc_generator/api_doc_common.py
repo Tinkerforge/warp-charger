@@ -40,6 +40,9 @@ class T:
     def __repr__(self):
         return f"T({self.translations})"
 
+def U(value):
+    return T({'de': value, 'en': value})
+
 def _ensure_T(value):
     if isinstance(value, T):
         return value

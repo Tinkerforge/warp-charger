@@ -70,7 +70,7 @@ automation = Module("automation", T({'de': "Automatisierung", 'en': "Automation"
                         4: Elem.NULL(T({'de': "Drücken des Fronttasters", 'en': "Pressing the front button"}), version=Version.WARP2 | Version.WARP3),
                         5: Elem.OBJECT(T({'de': "Erkennen eines NFC-Tags", 'en': "Detection of an NFC tag"}), version=Version.WARPX, members={
                             "tag_type": Elem.INT(T({'de': "Typ des Tags", 'en': "Type of tag"}), constants=[
-                                Const(0, "Mifare Classic"),
+                                Const(0, U("Mifare Classic")),
                                 Const(1, T({'de': "NFC Forum Typ 1", 'en': "NFC Forum Type 1"})),
                                 Const(2, T({'de': "NFC Forum Typ 2", 'en': "NFC Forum Type 2"})),
                                 Const(3, T({'de': "NFC Forum Typ 3", 'en': "NFC Forum Type 3"})),
@@ -180,7 +180,7 @@ automation = Module("automation", T({'de': "Automatisierung", 'en': "Automation"
                         }),
                         7: Elem.OBJECT(T({'de': "Simuliere ein NFC-Tags", 'en': "Simulate an NFC tag"}), version=Version.WARPX, members={
                             "tag_type": Elem.INT(T({'de': "Typ des Tags.", 'en': "Type of tag."}), constants=[
-                                Const(0, "Mifare Classic"),
+                                Const(0, U("Mifare Classic")),
                                 Const(1, T({'de': "NFC Forum Typ 1", 'en': "NFC Forum Type 1"})),
                                 Const(2, T({'de': "NFC Forum Typ 2", 'en': "NFC Forum Type 2"})),
                                 Const(3, T({'de': "NFC Forum Typ 3", 'en': "NFC Forum Type 3"})),
@@ -233,8 +233,8 @@ automation = Module("automation", T({'de': "Automatisierung", 'en': "Automation"
                             "mode": Elem.INT(T({'de': "Gewünschter Lademodus. Siehe {{{ref:power_manager/charge_mode}}}", 'en': "Desired charging mode. See {{{ref:power_manager/charge_mode}}}"}), constants=[
                                 Const(0, T({'de': "Schnell", 'en': "Fast"})),
                                 Const(1, T({'de': "Aus", 'en': "Off"})),
-                                Const(2, "PV"),
-                                Const(3, "Min + PV"),
+                                Const(2, U("PV")),
+                                Const(3, U("Min + PV")),
                             ])
                         }),
                         13: Elem.OBJECT(T({'de': "Schalte den Relais-Ausgang", 'en': "Switch the relay output"}), version=Version.WEM, members={

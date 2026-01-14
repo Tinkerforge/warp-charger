@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-modbus_tcp = Module("modbus_tcp", "Modbus/TCP", "", "", Version.WARPX, [
+modbus_tcp = Module("modbus_tcp", U("Modbus/TCP"), "", "", Version.WARPX, [
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Konfiguration des Modbus/TCP-Servers", 'en': "Modbus/TCP server configuration"}), members={
         "enable": Elem.BOOL(T({'de': "Gibt an, ob der Modbus/TCP-Server aktiv ist. Damit nicht nur das Auslesen des Zustands, sondern zusätzlich eine Steuerung möglich ist, muss außerdem {{{ref:evse/modbus_tcp_enabled}}} true sein.", 'en': "Indicates whether the Modbus/TCP server is active. For control functionality in addition to state readout, {{{ref:evse/modbus_tcp_enabled}}} must also be true."})),
         "port": Elem.INT(T({'de': "Port auf dem der Modbus/TCP-Server auf eingehende Verbindungen wartet. Typischerweise 502.", 'en': "Port on which the Modbus/TCP server listens for incoming connections. Typically 502."})),

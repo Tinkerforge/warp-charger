@@ -101,20 +101,20 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
                 Const(True, T({'de': "Wallbox hat eine Typ-2-Dose mit Kabelverriegelung", 'en': "Wallbox has a Type 2 socket with cable lock"})),
             ]),
             "evse_version": Elem.INT(T({'de': "Hardware-Version des Ladecontrollers", 'en': "Hardware version of the charge controller"}), constants=[
-                Const(14, "EVSE 1.4", Version.WARP1),
-                Const(15, "EVSE 1.5", Version.WARP1),
-                Const(20, "EVSE 2.0", Version.WARP2),
-                Const(30, "EVSE 3.0", Version.WARP3)
+                Const(14, U("EVSE 1.4"), Version.WARP1),
+                Const(15, U("EVSE 1.5"), Version.WARP1),
+                Const(20, U("EVSE 2.0"), Version.WARP2),
+                Const(30, U("EVSE 3.0"), Version.WARP3)
             ]),
             "energy_meter_type": Elem.INT(T({'de': "Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!", 'en': "Type of the installed energy meter. Not every energy meter is supported by every wallbox!"}), constants=[
                 Const(0, T({'de': "Kein Stromzähler verfügbar", 'en': "No energy meter available"})),
-                Const(1, "Eastron SDM72", Version.WARP1),
-                Const(2, "Eastron SDM630", Version.WARP2 | Version.WARP3),
-                Const(3, "Eastron SDM72V2", Version.WARP2 | Version.WARP3),
-                Const(4, "Eastron SDM72CTM", Version.WARP2 | Version.WARP3),
-                Const(5, "Eastron SDM630MCT", Version.WARP2 | Version.WARP3),
-                Const(6, "Eltako DSZ15DZMOD", Version.WARP2 | Version.WARP3),
-                Const(7, "YTL DEM4A", Version.WARP2 | Version.WARP3)
+                Const(1, U("Eastron SDM72"), Version.WARP1),
+                Const(2, U("Eastron SDM630"), Version.WARP2 | Version.WARP3),
+                Const(3, U("Eastron SDM72V2"), Version.WARP2 | Version.WARP3),
+                Const(4, U("Eastron SDM72CTM"), Version.WARP2 | Version.WARP3),
+                Const(5, U("Eastron SDM630MCT"), Version.WARP2 | Version.WARP3),
+                Const(6, U("Eltako DSZ15DZMOD"), Version.WARP2 | Version.WARP3),
+                Const(7, U("YTL DEM4A"), Version.WARP2 | Version.WARP3)
             ], version=Version.WARP2 | Version.WARP3)
         })
     ),
@@ -177,33 +177,33 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
             ]),
             "cp_pwm_duty_cycle": Elem.INT(T({'de': "Tastverhältnis der Pulsweitenmodulation auf dem CP-Signal.", 'en': "Duty cycle of the pulse width modulation on the CP signal."}), unit=Units.tenth_percent),
             "adc_values": Elem.ARRAY(T({'de': "16-Bit ADC-Rohwerte der Spannungsmessungen", 'en': "16-bit ADC raw values of the voltage measurements"}), members=[
-                Elem.INT("CP/PE", version=Version.WARP1),
-                Elem.INT("PP/PE", version=Version.WARP1),
+                Elem.INT(U("CP/PE"), version=Version.WARP1),
+                Elem.INT(U("PP/PE"), version=Version.WARP1),
 
                 Elem.INT(T({'de': "CP/PE vor Widerstand (PWM High)", 'en': "CP/PE before resistor (PWM High)"}), version=Version.WARP2 | Version.WARP3),
                 Elem.INT(T({'de': "CP/PE nach Widerstand (PWM High)", 'en': "CP/PE after resistor (PWM High)"}), version=Version.WARP2 | Version.WARP3),
                 Elem.INT(T({'de': "CP/PE vor Widerstand (PWM Low)", 'en': "CP/PE before resistor (PWM Low)"}), version=Version.WARP2 | Version.WARP3),
                 Elem.INT(T({'de': "CP/PE nach Widerstand (PWM Low)", 'en': "CP/PE after resistor (PWM Low)"}), version=Version.WARP2 | Version.WARP3),
-                Elem.INT("PP/PE", version=Version.WARP2 | Version.WARP3),
-                Elem.INT("+12V Rail", version=Version.WARP2 | Version.WARP3),
-                Elem.INT("-12V Rail", version=Version.WARP2 | Version.WARP3),
+                Elem.INT(U("PP/PE"), version=Version.WARP2 | Version.WARP3),
+                Elem.INT(U("+12V Rail"), version=Version.WARP2 | Version.WARP3),
+                Elem.INT(U("-12V Rail"), version=Version.WARP2 | Version.WARP3),
             ]),
             "voltages": Elem.ARRAY(T({'de': "Aus den ADC-Werten berechnete Spannungen", 'en': "Voltages calculated from ADC values"}), unit=Units.mV, members=[
-                Elem.INT("CP/PE", version=Version.WARP1),
-                Elem.INT("PP/PE", version=Version.WARP1),
+                Elem.INT(U("CP/PE"), version=Version.WARP1),
+                Elem.INT(U("PP/PE"), version=Version.WARP1),
                 Elem.INT(T({'de': "Maximalspannung CP/PE", 'en': "Maximum voltage CP/PE"}), version=Version.WARP1),
 
                 Elem.INT(T({'de': "CP/PE vor Widerstand (PWM High)", 'en': "CP/PE before resistor (PWM High)"}), version=Version.WARP2 | Version.WARP3),
                 Elem.INT(T({'de': "CP/PE nach Widerstand (PWM High)", 'en': "CP/PE after resistor (PWM High)"}), version=Version.WARP2 | Version.WARP3),
                 Elem.INT(T({'de': "CP/PE vor Widerstand (PWM Low)", 'en': "CP/PE before resistor (PWM Low)"}), version=Version.WARP2 | Version.WARP3),
                 Elem.INT(T({'de': "CP/PE nach Widerstand (PWM Low)", 'en': "CP/PE after resistor (PWM Low)"}), version=Version.WARP2 | Version.WARP3),
-                Elem.INT("PP/PE", version=Version.WARP2 | Version.WARP3),
-                Elem.INT("+12V Rail", version=Version.WARP2 | Version.WARP3),
-                Elem.INT("-12V Rail", version=Version.WARP2 | Version.WARP3),
+                Elem.INT(U("PP/PE"), version=Version.WARP2 | Version.WARP3),
+                Elem.INT(U("+12V Rail"), version=Version.WARP2 | Version.WARP3),
+                Elem.INT(U("-12V Rail"), version=Version.WARP2 | Version.WARP3),
             ]),
             "resistances": Elem.ARRAY(T({'de': "Aus den Spannungen berechnete Widerstände", 'en': "Resistances calculated from voltages"}), unit=Units.ohm, members=[
-                Elem.INT("CP/PE"),
-                Elem.INT("PP/PE"),
+                Elem.INT(U("CP/PE")),
+                Elem.INT(U("PP/PE")),
             ]),
             "gpio": Elem.ARRAY(T({'de': "Signale auf den GPIOs", 'en': "Signals on the GPIOs"}), members=[
                 Elem.BOOL(T({'de': "Eingang", 'en': "Input"}), version=Version.WARP1),
@@ -219,7 +219,7 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
                 Elem.BOOL(T({'de': "DC-Fehlerstromschutz-Test", 'en': "DC residual current protection test"}), version=Version.WARP2),
                 Elem.BOOL(T({'de': "Abschalteingang", 'en': "Shutdown input"}), version=Version.WARP2),
                 Elem.BOOL(T({'de': "Taster", 'en': "Button"}), version=Version.WARP2),
-                Elem.BOOL("CP-PWM", version=Version.WARP2),
+                Elem.BOOL(U("CP-PWM"), version=Version.WARP2),
                 Elem.BOOL(T({'de': "Motoreingangsschalter", 'en': "Motor input switch"}), version=Version.WARP2),
                 Elem.BOOL(T({'de': "Schützsteuerung", 'en': "Contactor control"}), version=Version.WARP2),
                 Elem.BOOL(T({'de': "Konfigurierbarer Ausgang", 'en': "Configurable output"}), version=Version.WARP2),
@@ -229,16 +229,16 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
                 Elem.BOOL(T({'de': "Schützprüfung vorher", 'en': "Contactor check before"}), version=Version.WARP2),
                 Elem.BOOL(T({'de': "Schützprüfung nachher", 'en': "Contactor check after"}), version=Version.WARP2),
                 Elem.BOOL(T({'de': "Konfigurierbarer Eingang", 'en': "Configurable input"}), version=Version.WARP2),
-                Elem.BOOL("DC X6", version=Version.WARP2),
-                Elem.BOOL("DC X30", version=Version.WARP2),
-                Elem.BOOL("LED", version=Version.WARP2),
+                Elem.BOOL(U("DC X6"), version=Version.WARP2),
+                Elem.BOOL(U("DC X30"), version=Version.WARP2),
+                Elem.BOOL(U("LED"), version=Version.WARP2),
                 Elem.BOOL(T({'de': "Nicht belegt", 'en': "Not assigned"}), version=Version.WARP2),
                 Elem.BOOL(T({'de': "Nicht belegt", 'en': "Not assigned"}), version=Version.WARP2),
                 Elem.BOOL(T({'de': "Nicht belegt", 'en': "Not assigned"}), version=Version.WARP2),
                 Elem.BOOL(T({'de': "Nicht belegt", 'en': "Not assigned"}), version=Version.WARP2),
 
-                Elem.BOOL("DC X30", version=Version.WARP3),
-                Elem.BOOL("DC X6", version=Version.WARP3),
+                Elem.BOOL(U("DC X30"), version=Version.WARP3),
+                Elem.BOOL(U("DC X6"), version=Version.WARP3),
                 Elem.BOOL(T({'de': "DC-Fehler", 'en': "DC fault"}), version=Version.WARP3),
                 Elem.BOOL(T({'de': "DC-Fehlerstromschutz-Test", 'en': "DC residual current protection test"}), version=Version.WARP3),
                 Elem.BOOL(T({'de': "EVSE-Status-LED", 'en': "EVSE status LED"}), version=Version.WARP3),
@@ -246,7 +246,7 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
                 Elem.BOOL(T({'de': "LED rot", 'en': "LED red"}), version=Version.WARP3),
                 Elem.BOOL(T({'de': "LED blau", 'en': "LED blue"}), version=Version.WARP3),
                 Elem.BOOL(T({'de': "LED grün", 'en': "LED green"}), version=Version.WARP3),
-                Elem.BOOL("CP-PWM", version=Version.WARP3),
+                Elem.BOOL(U("CP-PWM"), version=Version.WARP3),
                 Elem.BOOL(T({'de': "Schütz 1", 'en': "Contactor 1"}), version=Version.WARP3),
                 Elem.BOOL(T({'de': "Schütz 0", 'en': "Contactor 0"}), version=Version.WARP3),
                 Elem.BOOL(T({'de': "Schütz 1 Feedback", 'en': "Contactor 1 feedback"}), version=Version.WARP3),
@@ -267,8 +267,8 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
             "uptime": Elem.INT(T({'de': "Zeit seit Starten des Ladecontrollers.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", 'en': "Time since the charge controller started.<br/><br/> Warning: This time is measured directly via the processor clock. The accuracy is therefore only sufficient for time measurements in the range of minutes to a few hours. The time measurement overflows after approximately 50 days and starts again at 0."}), unit=Units.ms),
             "time_since_dc_fault_check": Elem.INT(T({'de': "Zeit seit dem letzten Test des DC-Fehlerstrom-Schutzmoduls. Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", 'en': "Time since the last test of the DC residual current protection module. Warning: This time is measured directly via the processor clock. The accuracy is therefore only sufficient for time measurements in the range of minutes to a few hours. The time measurement overflows after approximately 50 days and starts again at 0."}), unit=Units.ms, version=Version.WARP2 | Version.WARP3),
             "dc_fault_sensor_type": Elem.INT(T({'de': "Typ des DC-Fehlerstrom-Sensors", 'en': "Type of DC residual current sensor"}), version=Version.WARP2 | Version.WARP3, constants=[
-                Const(0, "X904"),
-                Const(1, "X804")
+                Const(0, U("X904")),
+                Const(1, U("X804"))
             ]),
             "dc_fault_pins": Elem.INT(T({'de': "Zustand der Pins des DC-Schutzmodul beim letzten Fehler, falls ein Fehler aufgetreten ist. Kalibrierungsfehlercode, falls ein Kalibrierungsfehler aufgetreten ist.", 'en': "State of the DC protection module pins at the last error, if an error occurred. Calibration error code, if a calibration error occurred."}), version=Version.WARP2 | Version.WARP3),
             "phases_current": Elem.INT(T({'de': "Aktueller Zustand der Phasenumschaltung", 'en': "Current state of phase switching"}), version=Version.WARP3, constants=[

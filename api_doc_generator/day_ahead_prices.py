@@ -5,9 +5,9 @@ day_ahead_prices = Module("day_ahead_prices", T({'de': "Dynamische Strompreise",
         "enable": Elem.BOOL(T({'de': "Gibt an, ob dynamische Strompreise verwendet werden sollen. Wenn aktiviert, werden die Preise einmal pro Tag für die nächsten 24 Stunden von einem externen Server abgerufen. Um dynamische Strompreise nutzen zu können wird ein Internetzugang benötigt.", 'en': "Indicates whether dynamic electricity prices should be used. When enabled, prices are retrieved once per day for the next 24 hours from an external server. Internet access is required to use dynamic electricity prices."})),
         "api_url":  Elem.STRING(T({'de': "Endpoint-URL des Servers für dynamische Strompreise.", 'en': "Endpoint URL of the dynamic electricity prices server."})),
         "region":  Elem.INT(T({'de': "Gebiet der dynamischen Strompreise", 'en': "Region of the dynamic electricity prices"}), constants=[
-            Const(0, "DE"),
-            Const(1, "AT"),
-            Const(2, "LU"),
+            Const(0, U("DE")),
+            Const(1, U("AT")),
+            Const(2, U("LU")),
         ]),
         "resolution":  Elem.INT(T({'de': "Zeitliche Auflösung der dynamischen Strompreise.", 'en': "Time resolution of the dynamic electricity prices."}), constants=[
             Const(0, T({'de': "15 Minuten", 'en': "15 minutes"})),

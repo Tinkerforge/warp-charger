@@ -6,12 +6,12 @@ def charger(version):
         "name": Elem.STRING(T({'de': "Anzeigename der zu steuernden Wallbox", 'en': "Display name of the wallbox to be controlled"})),
         "rot": Elem.INT(T({'de': "Phasenrotation der zu steuernden Wallbox", 'en': "Phase rotation of the wallbox to be controlled"}), constants=[
                 Const(0, T({'de': "Unbekannt", 'en': "Unknown"})),
-                Const(1, "L123"),
-                Const(2, "L132"),
-                Const(3, "L231"),
-                Const(4, "L213"),
-                Const(5, "L321"),
-                Const(6, "L312"),
+                Const(1, U("L123")),
+                Const(2, U("L132")),
+                Const(3, U("L231")),
+                Const(4, U("L213")),
+                Const(5, U("L321")),
+                Const(6, U("L312")),
         ])
 })]
 

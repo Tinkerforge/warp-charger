@@ -4,12 +4,12 @@ from api_doc_common import *
 LOCATION_CONSTANTS = [
     Const(0, T({'de': "Unbekannt", 'en': "Unknown"})),
     Const(1, T({'de': "Andere", 'en': "Other"})),
-    Const(2, "Wallbox"),
+    Const(2, T({'de': "Wallbox", 'en': 'Charger'})),
     Const(3, T({'de': "Wechselrichter", 'en': "Inverter"})),
     Const(4, T({'de': "Netzanschluss", 'en': "Grid connection"})),
     Const(5, T({'de': "Speicher", 'en': "Storage"})),
     Const(6, T({'de': "Last", 'en': "Load"})),
-    Const(7, "PV"),
+    Const(7, U("PV")),
 ]
 
 def meters_x_get_tag_fn(api: str, info: list):
@@ -92,9 +92,9 @@ meters = Module("meters", T({'de': "Stromzähler", 'en': "Electricity Meters"}),
             "location": Elem.INT(T({'de': "Messort", 'en': "Measurement location"}), constants=LOCATION_CONSTANTS),
             "type_override": Elem.INT(T({'de': "Erlaubt es den verbauten Zählertyp zu überschreiben, falls die Auto-Detektion nicht funktioniert.", 'en': "Allows overriding the installed meter type if auto-detection does not work."}), constants=[
                 Const(0, T({'de': "Kein Stromzähler verfügbar", 'en': "No electricity meter available"})),
-                Const(1, "Eastron SDM72"),
-                Const(2, "Eastron SDM630"),
-                Const(3, "Eastron SDM72V2"),
+                Const(1, U("Eastron SDM72")),
+                Const(2, U("Eastron SDM630")),
+                Const(3, U("Eastron SDM72V2")),
                 Const(255, T({'de': "Typ-Override nicht aktiv. Stromzählertyp wird automatisch detektiert.", 'en': "Type override not active. Electricity meter type is automatically detected."}))
             ])
         }),
@@ -140,8 +140,8 @@ meters = Module("meters", T({'de': "Stromzähler", 'en': "Electricity Meters"}),
                         36 * [
                             Elem.OBJECT(T({'de': "Ein Register, dass gelesen werden soll", 'en': "A register to be read"}), members={
                                 "rtype": Elem.INT(T({'de': "Registertyp", 'en': "Register type"}), constants=[
-                                    Const(0, "Holding Register"),
-                                    Const(1, "Input Register"),
+                                    Const(0, U("Holding Register")),
+                                    Const(1, U("Input Register")),
                                 ]),
                                 "addr": Elem.INT(T({'de': "Startadresse des Registers.", 'en': "Start address of the register."})),
                                 "vtype": Elem.INT(T({'de': "Wert-Typ", 'en': "Value type"}), constants=[
@@ -233,9 +233,9 @@ meters = Module("meters", T({'de': "Stromzähler", 'en': "Electricity Meters"}),
                     ]),
                     "monophase_mapping": Elem.INT(T({'de': "Phase der die Messwerte zugeordnet werden.", 'en': "Phase to which the measurement values are assigned."}), constants=[
                         Const(0, T({'de': "Keine Phase ausgewählt", 'en': "No phase selected"})),
-                        Const(1, "L1"),
-                        Const(2, "L2"),
-                        Const(3, "L3")
+                        Const(1, U("L1")),
+                        Const(2, U("L2")),
+                        Const(3, U("L3"))
                     ]),
                 }),
                 9: Elem.OBJECT(T({'de': "Shelly Pro 3EM", 'en': "Shelly Pro 3EM"}), members={
@@ -252,9 +252,9 @@ meters = Module("meters", T({'de': "Stromzähler", 'en': "Electricity Meters"}),
                     ]),
                     "monophase_mapping": Elem.INT(T({'de': "Phase der die Messwerte zugeordnet werden.", 'en': "Phase to which the measurement values are assigned."}), constants=[
                         Const(0, T({'de': "Keine Phase ausgewählt", 'en': "No phase selected"})),
-                        Const(1, "L1"),
-                        Const(2, "L2"),
-                        Const(3, "L3")
+                        Const(1, U("L1")),
+                        Const(2, U("L2")),
+                        Const(3, U("L3"))
                     ]),
                 }),
                 10: Elem.OBJECT(T({'de': "GoodWe Hybrid-Wechselrichter", 'en': "GoodWe hybrid inverter"}), members={
@@ -326,18 +326,18 @@ meters = Module("meters", T({'de': "Stromzähler", 'en': "Electricity Meters"}),
                     "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 1.", 'en': "Device address. Typically 1."})),
                     "phase": Elem.INT(T({'de': "Phase der die Messwerte zugeordnet werden.", 'en': "Phase to which the measurement values are assigned."}), constants=[
                         Const(0, T({'de': "Keine Phase ausgewählt", 'en': "No phase selected"})),
-                        Const(1, "L1"),
-                        Const(2, "L2"),
-                        Const(3, "L3")
+                        Const(1, U("L1")),
+                        Const(2, U("L2")),
+                        Const(3, U("L3"))
                     ]),
                 }),
                 24: Elem.OBJECT(T({'de': "Carlo Gavazzi ET100 Stromzähler", 'en': "Carlo Gavazzi ET100 electricity meter"}), members={
                     "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 1.", 'en': "Device address. Typically 1."})),
                     "phase": Elem.INT(T({'de': "Phase der die Messwerte zugeordnet werden.", 'en': "Phase to which the measurement values are assigned."}), constants=[
                         Const(0, T({'de': "Keine Phase ausgewählt", 'en': "No phase selected"})),
-                        Const(1, "L1"),
-                        Const(2, "L2"),
-                        Const(3, "L3")
+                        Const(1, U("L1")),
+                        Const(2, U("L2")),
+                        Const(3, U("L3"))
                     ]),
                 }),
 
@@ -368,9 +368,9 @@ meters = Module("meters", T({'de': "Stromzähler", 'en': "Electricity Meters"}),
                     "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 1.", 'en': "Device address. Typically 1."})),
                     "phase": Elem.INT(T({'de': "Phase der die Messwerte zugeordnet werden.", 'en': "Phase to which the measurement values are assigned."}), constants=[
                         Const(0, T({'de': "Keine Phase ausgewählt", 'en': "No phase selected"})),
-                        Const(1, "L1"),
-                        Const(2, "L2"),
-                        Const(3, "L3")
+                        Const(1, U("L1")),
+                        Const(2, U("L2")),
+                        Const(3, U("L3"))
                     ]),
                 }),
                 31: Elem.OBJECT(T({'de': "Carlo Gavazzi EM530 Stromzähler", 'en': "Carlo Gavazzi EM530 electricity meter"}), members={"device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 1.", 'en': "Device address. Typically 1."}))}),
@@ -400,20 +400,20 @@ meters = Module("meters", T({'de': "Stromzähler", 'en': "Electricity Meters"}),
             1: Elem.OBJECT(T({'de': "Zustand des internen Stromzählers", 'en': "State of the internal electricity meter"}), members={
                 "type": Elem.INT(T({'de': "Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jedem Gerät unterstützt!", 'en': "Type of the installed electricity meter. Not every meter is supported by every device!"}), constants=[
                     Const(0, T({'de': "Kein Stromzähler verfügbar", 'en': "No electricity meter available"})),
-                    Const(1, "Eastron SDM72"),
-                    Const(2, "Eastron SDM630"),
-                    Const(3, "Eastron SDM72V2")
+                    Const(1, U("Eastron SDM72")),
+                    Const(2, U("Eastron SDM630")),
+                    Const(3, U("Eastron SDM72V2"))
                 ])
             }),
             **{x: Elem.OBJECT(T({'de': "Zustand des internen Stromzählers", 'en': "State of the internal electricity meter"}), members={
                 "type": Elem.INT(T({'de': "Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jedem Gerät unterstützt!", 'en': "Type of the installed electricity meter. Not every meter is supported by every device!"}), constants=[
                     Const(0, T({'de': "Kein Stromzähler verfügbar", 'en': "No electricity meter available"})),
-                    Const(2, "Eastron SDM630"),
-                    Const(3, "Eastron SDM72V2"),
-                    Const(4, "Eastron SDM72CTM"),
-                    Const(5, "Eastron SDM630MCT"),
-                    Const(6, "Eltako DSZ15DZMOD"),
-                    Const(7, "YTL DEM4A"),
+                    Const(2, U("Eastron SDM630")),
+                    Const(3, U("Eastron SDM72V2")),
+                    Const(4, U("Eastron SDM72CTM")),
+                    Const(5, U("Eastron SDM630MCT")),
+                    Const(6, U("Eltako DSZ15DZMOD")),
+                    Const(7, U("YTL DEM4A")),
                 ]),
             }) for x in [2, 3]},
             4: Elem.NULL(T({'de': "Zustand des API-Stromzählers. Im Moment leer.", 'en': "State of the API electricity meter. Currently empty."})),

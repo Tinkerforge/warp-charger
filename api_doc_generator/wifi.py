@@ -97,11 +97,11 @@ wifi = Module("wifi", T({'de': "WLAN-Konfiguration", 'en': "Wi-Fi Configuration"
             "channel": Elem.INT(T({'de': 'Kanal des gefundenen WLANs.', 'en': 'Channel of the found Wi-Fi network.'})),
             "encryption": Elem.INT(T({'de': "Verschlüsselungsstandard des gefundenen WLANs", 'en': "Encryption standard of the found Wi-Fi network"}), constants=[
                 Const(0, T({'de': "Unverschlüsselt", 'en': "Unencrypted"})),
-                Const(1, "WEP"),
-                Const(2, "WPA-PSK"),
-                Const(3, "WPA2-PSK"),
-                Const(4, "WPA/WPA2-PSK"),
-                Const(5, "WPA2-Enterprise"),
+                Const(1, U("WEP")),
+                Const(2, U("WPA-PSK")),
+                Const(3, U("WPA2-PSK")),
+                Const(4, U("WPA/WPA2-PSK")),
+                Const(5, U("WPA2-Enterprise")),
                 Const(6, T({'de': "Unbekannt", 'en': "Unknown"}))
             ])
             })
