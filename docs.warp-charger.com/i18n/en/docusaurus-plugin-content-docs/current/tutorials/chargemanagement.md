@@ -9,7 +9,7 @@ total charging current among up to 64 WARP Chargers. In this case,
 a WARP Charger or a WARP Energy Manager is configured as the charge manager, which controls the other up to
 63 chargers in the cluster and assigns them charging currents.
 
-Without a power meter at the mains connection, a fixed total current can be distributed,
+Without an energy meter at the mains connection, a fixed total current can be distributed,
 for example to avoid overloading the mains connection. This total current can be set via the
 web interface and the API.
 
@@ -85,11 +85,11 @@ Further information is available in the web interface documentation: [Charge Man
 
 ## Step 3: Dynamic Load Management Configuration
 
-To use dynamic load management, a power meter must first be added
+To use dynamic load management, an energy meter must first be added
 that can measure the phase currents at the mains connection.
 This can also be used for PV excess charging if desired,
 but dynamic load management can also be used without a PV system.
-The section [Power Meter Configuration](/tutorials/pv_excess_charging.md#add_meter) describes
+The section [Energy Meter Configuration](/tutorials/pv_excess_charging.md#add_meter) describes
 how to add a meter.
 
 After a meter has been added, dynamic load management can be activated and configured
@@ -97,7 +97,7 @@ on the `Energy Management` -> `Charge Management` page.
 
 ![image](/img/tutorials/chargemanagement/load_management_dynamic.png)
 
-First, the just configured power meter must be selected.
+First, the just configured energy meter must be selected.
 
 Then the **Maximum Current at Grid Connection** must be configured.
 This is typically the rated value of the circuit breaker.
@@ -184,7 +184,7 @@ a charger exactly to the actual power consumption (the maximum phase current),
 but must allow a certain margin so that the vehicle and load manager can readjust.
 
 For WARP Charger Smart, these settings are not relevant; the load manager
-always assumes for chargers without a power meter that the allocated
+always assumes for chargers without an energy meter that the allocated
 current is completely used by the vehicle.
 
 The **Start Phase Duration** indicates how long the actual power consumption

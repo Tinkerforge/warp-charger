@@ -7,7 +7,7 @@ sidebar_position: 1
 The [WARP Charger](/warp_charger/introduction.md) or [WARP Energy Manager](/warp_energy_manager/introduction.md) can directly access data from
 other third-party devices.
 
-This includes data from power meters (for example at the grid connection),
+This includes data from energy meters (for example at the grid connection),
 data from PV inverters about current generation,
 as well as data on battery storage power or power consumption data from loads. The read data
 can be used by a WARP Charger or WARP Energy Manager
@@ -17,7 +17,7 @@ dynamic load management.
 The WARP Energy Manager additionally records the collected data locally on its SD card. Via the web interface, the recorded data can be analyzed in the [Energy Analysis](/webinterface/energy_manager/energy_analysis.md).
 
 To access the data, we depend on the [interfaces](/compatible_devices/interfaces.md) provided by the respective device manufacturer.
-Depending on the device and manufacturer, the appropriate [interface](/compatible_devices/interfaces.md) must be configured in the web interface under [Power Meters](/webinterface/energy_management/energy_meters.md)
+Depending on the device and manufacturer, the appropriate [interface](/compatible_devices/interfaces.md) must be configured in the web interface under [Energy Meters](/webinterface/energy_management/energy_meters.md)
 on the [WARP Charger](/warp_charger/introduction.md) or [WARP Energy Manager](/warp_energy_manager/introduction.md).
 
 :::note
@@ -37,9 +37,9 @@ for all four measurement locations.
 The measurement locations are used to assign and consolidate individual data sources and
 to create an energy overview from them.
 
-Power meters without a fixed role can be manually assigned to a measurement location. Thus, a power meter can be installed
-to measure, for example, the load. It is also possible to install a power meter at the grid connection
-and assign it the measurement location "Grid Connection" if no readable power meter is available.
+Energy meters without a fixed role can be manually assigned to a measurement location. Thus, an energy meter can be installed
+to measure, for example, the load. It is also possible to install an energy meter at the grid connection
+and assign it the measurement location "Grid Connection" if no readable energy meter is available.
 
 ### Grid Connection
 
@@ -67,13 +67,13 @@ To capture where the generated power flows, there is the measurement location "L
 ### PV Excess Charging
 
 For [PV excess charging](/tutorials/pv_excess_charging.md), the
-WARP Charger or WARP Energy Manager must have access to a
-power meter at the **Grid Connection (Grid)**, as only there can the actual
+WARP Charger or WARP Energy Manager must have access to an
+energy meter at the **Grid Connection (Grid)**, as only there can the actual
 PV excess be determined.
 
 :::note
 
-For PV excess charging, a power meter must be configured that contains at least the following value:
+For PV excess charging, an energy meter must be configured that contains at least the following value:
 ***Active Power (Import minus Export); Σ L1, L2, L3 [W]***
 
 This value is used for control. Additional values can be configured but are not technically necessary.
@@ -90,19 +90,19 @@ is charged into a vehicle instead of being fed back into the power grid.*
 ### Dynamic Load Management
 
 For [dynamic load management](/tutorials/chargemanagement.md), the
-WARP Charger or WARP Energy Manager must have access to a
-power meter at the **Grid Connection (Grid)**, as only there can the current
+WARP Charger or WARP Energy Manager must have access to an
+energy meter at the **Grid Connection (Grid)**, as only there can the current
 phase currents be determined.
 
 :::note
 
-For dynamic load management, a power meter must be configured that contains at least the following values:
+For dynamic load management, an energy meter must be configured that contains at least the following values:
  * ***Current (Import minus Export); L1 [A]*** or ***Current (Import plus Export); L1 [A]*** or ***Current (Import); L1 [A]***
  * ***Current (Import minus Export); L2 [A]*** or ***Current (Import plus Export); L2 [A]*** or ***Current (Import); L2 [A]***
  * ***Current (Import minus Export); L3 [A]*** or ***Current (Import plus Export); L3 [A]*** or ***Current (Import); L3 [A]***
 
 These values are used for control. Additional values can be configured but are not technically necessary.
-Whether ***"Import"***, ***"Import minus Export"***, ***"Import plus Export"*** must be selected depends on the respective power meter. This can be tested if in doubt.
+Whether ***"Import"***, ***"Import minus Export"***, ***"Import plus Export"*** must be selected depends on the respective energy meter. This can be tested if in doubt.
 
 :::
 

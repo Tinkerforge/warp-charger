@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Interfaces
 
-With the exception of power meters compatible with the [WARP Energy Manager](/warp_energy_manager/introduction.md),
+With the exception of energy meters compatible with the [WARP Energy Manager](/warp_energy_manager/introduction.md),
 which can be [directly connected](/compatible_devices/interfaces.md#power-meters-connected-to-warp-energy-manager) to it,
 all other interfaces are accessed via the network (LAN, WLAN).
 
@@ -18,7 +18,7 @@ WARP Charger and WARP Energy Manager can directly read SunSpec devices via
 LAN or WLAN.
 
 If an inverter or energy manager is present that has
-**access to a power meter at the grid connection**, it can
+**access to an energy meter at the grid connection**, it can
 often be read via SunSpec over the network.
 
 SunSpec offers the advantage that compatible devices can be directly detected and read by the WARP
@@ -35,7 +35,7 @@ Access via Modbus/TCP over LAN or
 WLAN is another widely used option and is supported by many
 devices.
 
-Four different models for virtual power meters are available:
+Four different models for virtual energy meters are available:
 Inverter, Grid Connection, Storage, and Load. Depending on the device, only
 some of these meters are available.
 
@@ -68,7 +68,7 @@ In principle, any Modbus/TCP-capable device should be supported this way.
 
 :::note
 
-For PV excess charging, a power meter must be configured that contains at least the following value:
+For PV excess charging, an energy meter must be configured that contains at least the following value:
 ***"Active Power (Import minus Export); Σ L1, L2, L3 [W]***
 
 This value is used for control. Additional values can be configured but are not technically necessary.
@@ -76,13 +76,13 @@ This value is used for control. Additional values can be configured but are not 
 :::
 :::note
 
-For dynamic load management, a power meter must be configured that contains at least the following values:
+For dynamic load management, an energy meter must be configured that contains at least the following values:
  * ***"Current (Import minus Export); L1 [A]*** or ***"Current (Import plus Export); L1 [A]*** or ***"Current (Import); L1 [A]***
  * ***"Current (Import minus Export); L2 [A]*** or ***"Current (Import plus Export); L2 [A]*** or ***"Current (Import); L2 [A]***
  * ***"Current (Import minus Export); L3 [A]*** or ***"Current (Import plus Export); L3 [A]*** or ***"Current (Import); L3 [A]***
 
 These values are used for control. Additional values can be configured but are not technically necessary.
-Whether ***"Import"***, ***"Import minus Export"***, ***"Import plus Export"*** must be selected depends on the respective power meter. This can be tested if in doubt.
+Whether ***"Import"***, ***"Import minus Export"***, ***"Import plus Export"*** must be selected depends on the respective energy meter. This can be tested if in doubt.
 
 :::
 
@@ -217,14 +217,14 @@ The MQTT and HTTP WARP Push API
 can be used to send meter data to the WARP Charger or
 WARP Energy Manager from external sources. See [API Reference - Meters](/interfaces/mqtt_http/api_reference/meters.mdx).
 
-### 1. Create API Power Meter
+### 1. Create API Energy Meter
 
-When creating an API power meter, predefined API power meters (templates) can be selected, which create the required measurement values.
-See [Web Interface - Power Meters](/webinterface/energy_management/energy_meters.md).
+When creating an API energy meter, predefined API energy meters (templates) can be selected, which create the required measurement values.
+See [Web Interface - Energy Meters](/webinterface/energy_management/energy_meters.md).
 
 :::note
 
-For PV excess charging, a power meter must be configured that contains at least the following value:
+For PV excess charging, an energy meter must be configured that contains at least the following value:
 ***"Active Power (Import minus Export); Σ L1, L2, L3 [W]***
 
 This value is used for control. Additional values can be configured but are not technically necessary.
@@ -232,27 +232,27 @@ This value is used for control. Additional values can be configured but are not 
 :::
 :::note
 
-For dynamic load management, a power meter must be configured that contains at least the following values:
+For dynamic load management, an energy meter must be configured that contains at least the following values:
  * ***Current (Import minus Export); L1 [A]*** or ***Current (Import plus Export); L1 [A]*** or ***Current (Import); L1 [A]***
  * ***Current (Import minus Export); L2 [A]*** or ***Current (Import plus Export); L2 [A]*** or ***Current (Import); L2 [A]***
  * ***Current (Import minus Export); L3 [A]*** or ***Current (Import plus Export); L3 [A]*** or ***Current (Import); L3 [A]***
 
 These values are used for control. Additional values can be configured but are not technically necessary.
-Whether ***"Import"***, ***"Import minus Export"***, ***"Import plus Export"*** must be selected depends on the respective power meter. This can be tested if in doubt.
+Whether ***"Import"***, ***"Import minus Export"***, ***"Import plus Export"*** must be selected depends on the respective energy meter. This can be tested if in doubt.
 
 :::
 
-### 2. Send Data to API Power Meter
+### 2. Send Data to API Energy Meter
 
-Depending on the configured values, the API power meter must be supplied with values. The [update](/interfaces/mqtt_http/api_reference/meters.mdx#meters_X_update_warp3) function is used for this.
-Instead of **X**, the respective number of the created power meter must be specified.
+Depending on the configured values, the API energy meter must be supplied with values. The [update](/interfaces/mqtt_http/api_reference/meters.mdx#meters_X_update_warp3) function is used for this.
+Instead of **X**, the respective number of the created energy meter must be specified.
 
  * [HTTP API](/interfaces/mqtt_http/api_reference/meters.mdx?apiType=http#meters_X_update_warp3)
  * [MQTT API](/interfaces/mqtt_http/api_reference/meters.mdx?apiType=mqtt#meters_X_update_warp3)
 
  :::note
 
-If, for example, an API power meter was only created with the value: ***Active Power (Import minus Export); Σ L1, L2, L3 [W]*** with meter number ***1***, the value ***234 Watts*** can be sent to it as follows:
+If, for example, an API energy meter was only created with the value: ***Active Power (Import minus Export); Σ L1, L2, L3 [W]*** with meter number ***1***, the value ***234 Watts*** can be sent to it as follows:
 
  * HTTP: *curl http://$HOST/meters/1/update -d 234*
  * MQTT: *mosquitto_pub -h $BROKER -t $PREFIX/meters/1/update -m 234*
@@ -260,14 +260,14 @@ If, for example, an API power meter was only created with the value: ***Active P
 :::
 
 
-## Power Meters Connected to WARP Energy Manager
+## Energy Meters Connected to WARP Energy Manager
 
-The WARP Energy Manager can directly read certain power meters via Modbus/RTU (RS485).
+The WARP Energy Manager can directly read certain energy meters via Modbus/RTU (RS485).
 It has an RS485 connection for this purpose.
 This is especially interesting if no meter is yet available at the
 grid connection. In that case, a WARP Energy Manager can be installed
-and additionally a compatible Modbus/RTU power meter can be directly connected to it.
-Not all Modbus/RTU power meters are supported by the WARP Energy Manager,
-only the compatible power meters listed for the WARP Energy Manager.
-Exactly one power meter can be connected and
-read via RS485 on the WARP Energy Manager. Multiple power meters on the RS485 connection are not possible.
+and additionally a compatible Modbus/RTU energy meter can be directly connected to it.
+Not all Modbus/RTU energy meters are supported by the WARP Energy Manager,
+only the compatible energy meters listed for the WARP Energy Manager.
+Exactly one energy meter can be connected and
+read via RS485 on the WARP Energy Manager. Multiple energy meters on the RS485 connection are not possible.

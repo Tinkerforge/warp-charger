@@ -177,12 +177,12 @@ or
 [1, "Hello World"]
 ```
 
-A more concrete example: The API [`meters/1/config`](api_reference/meters#meters_X_config) configures the power meter in slot 1. A charger in its default state has only one power meter configured on slot 0 (the possibly internally integrated meter). Therefore, `meters/1/config` has the default value
+A more concrete example: The API [`meters/1/config`](api_reference/meters#meters_X_config) configures the energy meter in slot 1. A charger in its default state has only one energy meter configured on slot 0 (the possibly internally integrated meter). Therefore, `meters/1/config` has the default value
 ```jsx
 [0, null]
 ```
 i.e. tag 0 with no additional data (expressed by `null`)
-According to the [documentation of this API](api_reference/meters#meters_X_config), tag 0 means that no power meter is configured.
+According to the [documentation of this API](api_reference/meters#meters_X_config), tag 0 means that no energy meter is configured.
 
 If instead a meter should be configured that receives its values via the SMA Speedwire protocol (tag 7), the display name of the meter is additionally required. The following configuration must therefore be set:
 ```jsx

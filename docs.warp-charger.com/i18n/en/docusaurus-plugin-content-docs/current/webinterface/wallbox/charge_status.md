@@ -53,7 +53,7 @@ The following limits can be part of the calculation:
 
  * **Energy/time limit***: Limitation by configured energy or time limits.
 
- * **Meter monitoring**: Blocked when meter monitoring is enabled and no communication with the power meter is possible.
+ * **Meter monitoring**: Blocked when meter monitoring is enabled and no communication with the energy meter is possible.
 
  * **Automation**: Limitation by a rule configured on the automation subpage.
 

@@ -30,8 +30,8 @@ Boost mode attempts to compensate for this effect by communicating a slightly hi
 
 ## Meter Monitoring
 
-A power meter is installed in the WARP3 Charger Pro. When this option is enabled, a charging process is interrupted
-or not released if the power meter or communication with it appears to be faulty. When
+An energy meter is installed in the WARP3 Charger Pro. When this option is enabled, a charging process is interrupted
+or not released if the energy meter or communication with it appears to be faulty. When
 meter monitoring is enabled, it is thus ensured that the charged energy is recorded for every logged charging process.
 
 
@@ -75,7 +75,7 @@ This function only affects load management, as unused phases can be detected and
 :::
 
 This option is only available for the WARP3 Charger Pro. If
-the option is enabled, during an ongoing charging process the internal power meter determines whether the
+the option is enabled, during an ongoing charging process the internal energy meter determines whether the
 vehicle is only charging single-phase. If this is the case, the charger automatically switches to single-phase charging.
 
 

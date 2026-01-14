@@ -15,7 +15,7 @@ are available in the help texts in the web interface.
 
 ![image](/img/webinterface/energy_management/wem2-heating1.jpg)
 
-- **Power meter**: A previously configured power meter at the grid connection must be selected here so that the PV excess can be measured.
+- **Energy meter**: A previously configured energy meter at the grid connection must be selected here so that the PV excess can be measured.
 - **Minimum hold time**: Minimum time for which the state of the SG-Ready outputs is maintained.
 - **Remaining hold time**: The current remaining hold time for the outputs is displayed here. This is the running minimum hold time. For testing, the remaining hold time can also be reset.
 - **SG-Ready output 1+2**: Configuration of the outputs.

@@ -17,13 +17,13 @@ The goal of photovoltaic excess charging is to charge an electric vehicle with t
 The following settings can be configured on this page:
  * **Excess charging enabled**: Enables or disables the PV excess controller.
  * **Default charging mode**: The charging mode that is used after a restart of the WARP3 Charger.
- * **Power meter**: The power meter used to measure the PV excess. This power meter must be created under [Power Meters](/webinterface/energy_management/energy_meters.md).
+ * **Energy meter**: The energy meter used to measure the PV excess. This energy meter must be created under [Energy Meters](/webinterface/energy_management/energy_meters.md).
  * **Min+PV: Minimum charging power**: Specifies the power that may be drawn from the grid in *Min+PV* charging mode.
  * **Control behavior**: Specifies the grid consumption target for regulation, for example to prioritize a battery storage higher or lower than vehicle charging.
  * **Cloud filter**: Adjusts the inertia of the controller. In partly cloudy weather, it is useful for the controller to react sluggishly so that brief fluctuations in PV power are smoothed out.
 
-If a battery storage system is present, it will regulate against the PV excess controller. If the battery storage can be read via a [power meter](/webinterface/energy_management/energy_meters.md), the storage can be directly considered by the controller.
+If a battery storage system is present, it will regulate against the PV excess controller. If the battery storage can be read via an [energy meter](/webinterface/energy_management/energy_meters.md), the storage can be directly considered by the controller.
 For this, the following settings must be configured:
- * **Power meter**: The power meter assigned to the battery storage
+ * **Energy meter**: The energy meter assigned to the battery storage
  * **Storage priority**: Here you can configure whether chargers or storage are prioritized higher.
  * **Grid consumption and feed-in tolerance**: The control target value for regulation.

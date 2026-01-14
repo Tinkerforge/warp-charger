@@ -83,7 +83,7 @@ When running `evcc configure`, you can select `TinkerForge WARP Charger Smart` o
 *   The topic is the topic prefix set in the MQTT configuration, e.g. warp/ABC. Every message topic begins with this, which you can see with `mosquitto_sub -v -t 'warp/#'` or `mosquitto_sub -v -t 'warp2/#'` or `mosquitto_sub -v -t 'warp3/#'`.
 *   If you want to use a WARP Energy Manager for phase switching as described above, you must specify the MQTT topic prefix of the Energy Manager (e.g. wem/XYZ) when `evcc configure` asks for energymanager.
 
-### Simulation of Power Meters
+### Simulation of Energy Meters
 
 `evcc configure` currently only supports the configuration of "real" meters. However, simulated meters can be manually entered into the evcc.yaml file created by `evcc configure`.
 
@@ -95,7 +95,7 @@ site:
   meters:
 ```
 
-Above the site block, we now add two simulated power meters. The first meter (gridmeter) measures the current grid consumption or grid feed-in at the house connection, the second measures the current feed-in from the solar system (pvmeter). We simulate a permanent feed-in of 10 kW and a grid feed-in of 9 kW:
+Above the site block, we now add two simulated energy meters. The first meter (gridmeter) measures the current grid consumption or grid feed-in at the house connection, the second measures the current feed-in from the solar system (pvmeter). We simulate a permanent feed-in of 10 kW and a grid feed-in of 9 kW:
 
 ```
 meters:
@@ -111,7 +111,7 @@ meters:
     cmd: /bin/sh -c 'echo 10000'
 ```
 
-The added power meters must then be registered in the site block:
+The added energy meters must then be registered in the site block:
 
 ```
 site:
@@ -121,7 +121,7 @@ site:
     pv: pvmeter
 ```
 
-After a restart with `sudo systemctl restart evcc`, the EVCC page should display the simulated meters. Real power meters can be added later with `evcc configure`.
+After a restart with `sudo systemctl restart evcc`, the EVCC page should display the simulated meters. Real energy meters can be added later with `evcc configure`.
 
 Here is the complete configuration file (tested with EVCC version 0.95):
 

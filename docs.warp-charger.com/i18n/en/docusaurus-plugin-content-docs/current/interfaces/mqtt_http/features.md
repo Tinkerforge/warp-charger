@@ -26,9 +26,9 @@ The behavior of the button on the front of the charger can be reconfigured. With
 
 An ESP Ethernet Brick is installed. A LAN connection is possible.
 
-## `meters` Power Meters
+## `meters` Energy Meters
 
-Values could be successfully read from at least one power meter.
+Values could be successfully read from at least one energy meter.
 
 ## `nfc` NFC Bricklet
 
@@ -38,14 +38,14 @@ An NFC bricklet was found. Authorization via NFC is possible.
 
 An RTC bricklet or the RTC chip of a WARP3 or an Energy Manager was found. The system time is retained across restarts even without network time synchronization.
 
-## `meter` (deprecated API) Power Meter
+## `meter` (deprecated API) Energy Meter
 
-A power meter and hardware for reading it via RS485 is available. This feature is only set when a power meter has been successfully read via Modbus at least once.
+An energy meter and hardware for reading it via RS485 is available. This feature is only set when an energy meter has been successfully read via Modbus at least once.
 
-## `meter_phases` (deprecated API) Power Meter Measures by Phase
+## `meter_phases` (deprecated API) Energy Meter Measures by Phase
 
-The installed power meter can measure energy and other measurement values of individual phases.
+The installed energy meter can measure energy and other measurement values of individual phases.
 
-## `meter_all_values` (deprecated API) Power Meter Measures Additional Values
+## `meter_all_values` (deprecated API) Energy Meter Measures Additional Values
 
-The installed power meter can read additional measurement values.
+The installed energy meter can read additional measurement values.

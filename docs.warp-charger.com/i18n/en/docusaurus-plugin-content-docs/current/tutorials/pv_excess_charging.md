@@ -11,10 +11,10 @@ self-consumption of electricity is the priority here.
 
 ## How It Works
 
-If an appropriate power meter is available, the charger can control the
+If an appropriate energy meter is available, the charger can control the
 charging process to regulate to a target grid consumption.
 
-Typically, this involves a power meter at the grid connection
+Typically, this involves an energy meter at the grid connection
 (also called mains connection),
 which should be regulated to a consumption of 0 W. This means all
 PV power should be charged into the vehicle without drawing from the grid
@@ -43,12 +43,12 @@ can be configured.
 **Fast:** Vehicles are charged as fast as possible, regardless of
 how much PV excess is available.
 
-## Step 1: Power Meter Configuration {#add_meter}
+## Step 1: Energy Meter Configuration {#add_meter}
 
-To set up PV excess charging, a power meter must first be added
+To set up PV excess charging, an energy meter must first be added
 that can measure the PV excess.
 
-The power meter is added via the `Energy Management` -> `Power Meters` page.
+The energy meter is added via the `Energy Management` -> `Energy Meters` page.
 There, under "Settings", a meter can be selected via the "+". For
 a WARP Charger Pro, the meter in the charger is already present here and
 another must be added. For a WARP Charger Smart, the meter at the grid connection
@@ -56,7 +56,7 @@ is sufficient for PV excess charging, which can measure the PV excess.
 For this, the meter must supply the value "Active power (consumption minus feed-in) sum
 across L1, L2, L3".
 
-Further information is available in the web interface documentation: [Power Meters](/webinterface/energy_management/energy_meters.md)
+Further information is available in the web interface documentation: [Energy Meters](/webinterface/energy_management/energy_meters.md)
 
 ![image](/img/tutorials/pv_excess_charging/pv_add_meter.png)
 
@@ -96,8 +96,8 @@ The following settings can be made:
 
 **Default charging mode**: The charging mode used when the WARP3 Charger restarts.
 
-**Power meter**: The power meter used to measure PV excess. This
-power meter must be created beforehand according to the section above.
+**Energy meter**: The energy meter used to measure PV excess. This
+energy meter must be created beforehand according to the section above.
 
 **Min+PV: Minimum charging power**: Defines which power may be drawn from the grid
 in "Min+PV" charging mode.
@@ -114,10 +114,10 @@ Further information is available in the web interface documentation: [PV Excess 
 
 ### Battery Storage
 
-If battery storage is present, it regulates against the PV excess control. If the battery storage can be read via a [power meter](/webinterface/energy_management/energy_meters.md), the storage can be directly considered by the control.
+If battery storage is present, it regulates against the PV excess control. If the battery storage can be read via an [energy meter](/webinterface/energy_management/energy_meters.md), the storage can be directly considered by the control.
 For this, the following settings must be made:
 
-**Power meter**: The power meter associated with the battery storage.
+**Energy meter**: The energy meter associated with the battery storage.
 
 **Storage priority**: Here you can configure whether chargers or the storage are prioritized higher.
 

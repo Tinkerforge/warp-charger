@@ -60,7 +60,7 @@ modules have been enabled in the Energy Manager web interface.
 :::
 
 On the Energy Manager status page, information about the
-current **power** from power meters is displayed. If the power meters have been
+current **power** from energy meters is displayed. If the energy meters have been
 configured, an overview of the power progression related to
 PV generation, grid consumption or feed-in, home battery, and consumption can be viewed here.
 

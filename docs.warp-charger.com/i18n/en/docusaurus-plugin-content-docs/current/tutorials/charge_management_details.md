@@ -20,7 +20,7 @@ graph TB
     supply-->charger_3["WARP Charger 64"]
 ```
 
-Charge management can monitor the grid connection via a [compatible power meter](/compatible_devices/devices.mdx) and provides the following functions, which can be used individually or in combination:
+Charge management can monitor the grid connection via a [compatible energy meter](/compatible_devices/devices.mdx) and provides the following functions, which can be used individually or in combination:
 
 - **Dynamic Load Management**: The charge manager ensures that the grid connection is not overloaded, even when other (uncontrolled) consumers dynamically load the grid connection.
 - **PV Excess Charging**: The charge manager ensures that only PV excess is used to charge vehicles.

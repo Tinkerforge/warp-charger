@@ -192,4 +192,4 @@ and has the latest firmware, configuration can begin.
 The configuration depends on the individual circumstances.
 A WARP Charger is configured from the factory so that charging processes begin directly
 after connecting a vehicle. NFC user authorization, load management,
-setting up other devices (power meters), or PV excess charging can now be configured.
+setting up other devices (energy meters), or PV excess charging can now be configured.
