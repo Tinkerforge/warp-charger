@@ -26,4 +26,4 @@ REMOTE_HASH=$(/usr/bin/git rev-parse "origin/$BRANCH")
 /usr/local/bin/npm run build
 
 # Deploy build output
-cp -r build/* build_release/
+/usr/bin/rsync -a --delete build/ build_release/
