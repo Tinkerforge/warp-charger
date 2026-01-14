@@ -24,7 +24,7 @@ ausgelesen werden. Eine Steuerung der Wallbox ist über die *Holding
 Registers* und *Coils* möglich.
 
 ### Input Registers (Funktionscodes: Lesen: 4)
-{/*LAST_COMMIT_ID=c763854182a49fe46fee625402c6cb88ce4287df*/}
+{/*LAST_COMMIT_ID=91cd96436f9c9f2a4888298024c34d1ec6dbc1c8*/}
 {/*
   Don't edit this table.
   Update https://github.com/Tinkerforge/esp32-firmware/blob/master/software/web/src/modules/modbus_tcp/translation_de.tsx
@@ -151,8 +151,7 @@ Registers* und *Coils* möglich.
         <td>Erlaubter Ladestrom</td>
         <td>uint32</td>
         <td>evse</td>
-        <td>Maximal erlaubter Ladestrom, der dem Fahrzeug zur Verfügung gestellt wird. Dieser Strom ist das Minimum
-            der Stromgrenzen aller Ladeslots.</td>
+        <td>Maximal erlaubter Ladestrom, der dem Fahrzeug zur Verfügung gestellt wird. Minimum aller aktiven Ladestromgrenzen.</td>
     </tr>
     <tr>
         <td>1012 bis 1050</td>
@@ -184,22 +183,22 @@ Registers* und *Coils* möglich.
         <td>
             <ul>
                 <li>0: Kein Stromzähler verfügbar</li>
-                <li>1: SDM72 (nur WARP1)</li>
-                <li>2: SDM630</li>
-                <li>3: SDM72 V2</li>
-                <li>4: SDM72CTM</li>
-                <li>5: SDM630MCT V2</li>
-                <li>6: DSZ15DZMOD</li>
-                <li>7: DEM4A</li>
-                <li>8: DMED341MID7ER</li>
-                <li>9: DSZ16DZE</li>
-                <li>10: WM3M4C</li>
+                <li>1: Eastron SDM72 (nur WARP1)</li>
+                <li>2: Eastron SDM630</li>
+                <li>3: Eastron SDM72 V2</li>
+                <li>4: Eastron SDM72CTM</li>
+                <li>5: Eastron SDM630MCT V2</li>
+                <li>6: Eltako DSZ15DZMOD</li>
+                <li>7: YTL DEM4A</li>
+                <li>8: Lovato DMED341MID7ER</li>
+                <li>9: Eltako DSZ16DZE</li>
+                <li>10: Iskra WM3M4C</li>
             </ul>
         </td>
     </tr>
     <tr>
         <td>2002</td>
-        <td>Ladeleistung (W)</td>
+        <td>Leistung (W)</td>
         <td>float32</td>
         <td>meter</td>
         <td>Die aktuelle Ladeleistung in Watt.</td>
@@ -230,7 +229,7 @@ Registers* und *Coils* möglich.
         <td>weitere Stromzähler-Werte</td>
         <td>float32 (85x)</td>
         <td>all_values</td>
-        <td>Siehe <a href="/docs/mqtt_http/api_reference/meter/#meter_all_values_any">API-Dokumentation</a></td>
+        <td>Siehe <a href="/de/docs/interfaces/mqtt_http/api_reference/meter/#meter_all_values_any">API-Dokumentation</a></td>
     </tr>
     <tr>
         <td>3100</td>
@@ -266,7 +265,7 @@ Registers* und *Coils* möglich.
         <td>Alter des letzten NFC-Tags</td>
         <td>uint32</td>
         <td>nfc</td>
-        <td>Zeit in Millisekunden seitdem das zuletzt erkannten NFC-Tag das letzte mal erkannt wurde. Zeiten &lt;
+        <td>Zeit in Millisekunden seitdem das zuletzt erkannten NFC-Tag das letzte mal erkannt wurde. Zeiten kleiner
             1000 ms bedeuten typischerweise, dass das Tag gerade an die Wallbox gehalten wird.</td>
     </tr>
     <tr>
@@ -430,7 +429,7 @@ Registers* und *Coils* möglich.
     </tr>
     <tr>
         <td>4010 bis 4011</td>
-        <td>Verwendungszweck des vorgetäuschten NFC-Tags</td>
+        <td>Erlaubte Aktion des vorgetäuschten NFC-Tags</td>
         <td>uint8 (4x)</td>
         <td>nfc</td>
         <td>Siehe Beschreibung der Holding Register 4000 bis 4009.</td>
@@ -493,7 +492,7 @@ Registers* und *Coils* möglich.
         <td>Feature "phase_switch" verfügbar</td>
         <td>bool</td>
         <td>---</td>
-        <td>Hardware und Konfiguration erlauben eine Phasenumschaltung.</td>
+        <td>Hardware und Konfiguration erlauben eine Umschaltung zwischen ein- und dreiphasigem Laden.</td>
     </tr>
     <tr>
         <td>5</td>
