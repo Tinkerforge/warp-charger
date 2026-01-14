@@ -97,6 +97,7 @@ const config: Config = {
         alt: 'WARP Logo',
         src: 'img/logo.png',
         height: '25px',
+        href: '/docs/home',
       },
       items: [
         {
