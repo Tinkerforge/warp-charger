@@ -41,9 +41,17 @@ firmware_type_to_display_name = {
     'wem2':  'WARP Energy Manager 2.0',
 }
 
+firmware_type_to_base_block_id = {
+    'warp':  0x51000000,
+    'warp2': 0x52000000,
+    'warp3': 0x53000000,
+    'wem':   0x31000000,
+    'wem2':  0x32000000,
+}
+
 firmware_type_prefix = '''
-<!-- wp:uagb/container {{"block_id":"{block_id_1}","widthDesktop":90,"widthMobile":96,"alignItemsTablet":"center","alignItemsMobile":"center","alignContentDesktop":"center","backgroundType":"color","backgroundColor":"var(\\u002d\\u002dast-global-color-4)","boxShadowVOffset":18,"boxShadowBlur":40,"boxShadowSpread":-10,"boxShadowVOffsetHover":20,"boxShadowBlurHover":30,"boxShadowSpreadHover":0,"topPaddingDesktop":10,"bottomPaddingDesktop":10,"leftPaddingDesktop":10,"rightPaddingDesktop":10,"rowGapDesktop":5,"widthSetByUser":true,"containerBorderTopLeftRadius":10,"containerBorderTopRightRadius":10,"containerBorderBottomLeftRadius":10,"containerBorderBottomRightRadius":10}} -->
-<div class="wp-block-uagb-container uagb-block-{block_id_1}">
+<!-- wp:uagb/container {{"block_id":"{block_id_1:08x}","widthDesktop":90,"widthMobile":96,"alignItemsTablet":"center","alignItemsMobile":"center","alignContentDesktop":"center","backgroundType":"color","backgroundColor":"var(\\u002d\\u002dast-global-color-4)","boxShadowVOffset":18,"boxShadowBlur":40,"boxShadowSpread":-10,"boxShadowVOffsetHover":20,"boxShadowBlurHover":30,"boxShadowSpreadHover":0,"topPaddingDesktop":10,"bottomPaddingDesktop":10,"leftPaddingDesktop":10,"rightPaddingDesktop":10,"rowGapDesktop":5,"widthSetByUser":true,"containerBorderTopLeftRadius":10,"containerBorderTopRightRadius":10,"containerBorderBottomLeftRadius":10,"containerBorderBottomRightRadius":10}} -->
+<div class="wp-block-uagb-container uagb-block-{block_id_1:08x}">
 
 <!-- wp:paragraph {{"align":"center","style":{{"spacing":{{"margin":{{"top":"0px","bottom":"0px"}}}},"elements":{{"link":{{"color":{{"text":"var:preset|color|ast-global-color-5"}}}}}}}},"textColor":"ast-global-color-5"}} -->
 <p class="has-text-align-center has-ast-global-color-5-color has-text-color has-link-color" style="margin-top:0px;margin-bottom:0px">{latest_firmware_date}</p>
@@ -53,8 +61,8 @@ firmware_type_prefix = '''
 <h3 class="wp-block-heading has-text-align-center" id="firmwares-{firmware_type_wordpress_id}" style="margin-top:0px;margin-bottom:0px"><a href="https://www.warp-charger.com/firmwares/{latest_firmware_filename}" target="_blank" rel="noreferrer noopener">{firmware_display_name} Firmware {latest_firmware_version}</a></h3>
 <!-- /wp:heading -->
 
-<!-- wp:uagb/separator {{"block_id":"{block_id_2}","separatorColor":"var(\\u002d\\u002dast-global-color-0)","separatorHeight":0,"separatorHeightMobile":0,"separatorHeightTablet":0,"blockTopPadding":0,"blockBottomPadding":0,"blockTopPaddingTablet":10,"blockBottomPaddingTablet":10,"blockTopPaddingMobile":10,"blockBottomPaddingMobile":10,"blockPaddingUnit":"px","blockPaddingUnitTablet":"px","blockPaddingUnitMobile":"px"}} -->
-<div class="wp-block-uagb-separator uagb-block-{block_id_2}"><div class="uagb-separator-spacing-wrapper"><div class="wp-block-uagb-separator__inner" style="--my-background-image:"></div></div></div>
+<!-- wp:uagb/separator {{"block_id":"{block_id_2:08x}","separatorColor":"var(\\u002d\\u002dast-global-color-0)","separatorHeight":0,"separatorHeightMobile":0,"separatorHeightTablet":0,"blockTopPadding":0,"blockBottomPadding":0,"blockTopPaddingTablet":10,"blockBottomPaddingTablet":10,"blockTopPaddingMobile":10,"blockBottomPaddingMobile":10,"blockPaddingUnit":"px","blockPaddingUnitTablet":"px","blockPaddingUnitMobile":"px"}} -->
+<div class="wp-block-uagb-separator uagb-block-{block_id_2:08x}"><div class="uagb-separator-spacing-wrapper"><div class="wp-block-uagb-separator__inner" style="--my-background-image:"></div></div></div>
 <!-- /wp:uagb/separator -->
 
 <!-- wp:details {{"style":{{"spacing":{{"blockGap":"0"}},"elements":{{"link":{{"color":{{"text":"var:preset|color|ast-global-color-5"}}}}}}}},"textColor":"ast-global-color-5"}} -->
@@ -70,8 +78,8 @@ firmware_type_suffix = '''
 '''
 
 firmware_changelog = '''
-<!-- wp:uagb/container {{"block_id":"{block_id_1}","rowGapDesktop":10,"textColor":"","linkColor":"","linkHoverColor":""}} -->
-<div class="wp-block-uagb-container uagb-block-{block_id_1}">
+<!-- wp:uagb/container {{"block_id":"{block_id_1:08x}","rowGapDesktop":10,"textColor":"","linkColor":"","linkHoverColor":""}} -->
+<div class="wp-block-uagb-container uagb-block-{block_id_1:08x}">
 
 <!-- wp:paragraph {{"style":{{"spacing":{{"margin":{{"top":"0px","bottom":"0px"}}}}}}}} -->
 <p style="margin-top:0px;margin-bottom:0px"><a href="https://www.warp-charger.com/firmwares/{firmware_filename}" target="_blank" rel="noreferrer noopener">Firmware {firmware_version}</a> (<a href="https://www.warp-charger.com/firmwares/{firmware_filename}.sha256" target="_blank" rel="noreferrer noopener">Prüfsumme</a>) wurde am {firmware_date} veröffentlicht. Changelog:</p>
@@ -83,8 +91,8 @@ firmware_changelog = '''
 </ul>
 <!-- /wp:list -->
 
-<!-- wp:uagb/separator {{"block_id":"{block_id_2}","separatorColor":"var(\\u002d\\u002dast-global-color-0)","separatorHeight":0,"separatorHeightMobile":0,"separatorHeightTablet":0,"blockTopPadding":0,"blockBottomPadding":0,"blockTopPaddingTablet":10,"blockBottomPaddingTablet":10,"blockTopPaddingMobile":10,"blockBottomPaddingMobile":10,"blockPaddingUnit":"px","blockPaddingUnitTablet":"px","blockPaddingUnitMobile":"px"}} -->
-<div class="wp-block-uagb-separator uagb-block-{block_id_2}"><div class="uagb-separator-spacing-wrapper"><div class="wp-block-uagb-separator__inner" style="--my-background-image:"></div></div></div>
+<!-- wp:uagb/separator {{"block_id":"{block_id_2:08x}","separatorColor":"var(\\u002d\\u002dast-global-color-0)","separatorHeight":0,"separatorHeightMobile":0,"separatorHeightTablet":0,"blockTopPadding":0,"blockBottomPadding":0,"blockTopPaddingTablet":10,"blockBottomPaddingTablet":10,"blockTopPaddingMobile":10,"blockBottomPaddingMobile":10,"blockPaddingUnit":"px","blockPaddingUnitTablet":"px","blockPaddingUnitMobile":"px"}} -->
+<div class="wp-block-uagb-separator uagb-block-{block_id_2:08x}"><div class="uagb-separator-spacing-wrapper"><div class="wp-block-uagb-separator__inner" style="--my-background-image:"></div></div></div>
 <!-- /wp:uagb/separator -->
 
 </div>
@@ -97,8 +105,6 @@ firmware_changelog_item = '''
 <!-- /wp:list-item -->
 '''
 
-next_block_id = 0x70000000
-
 
 def fatal(msg):
     print(msg)
@@ -110,12 +116,10 @@ def basic_auth(username, password):
     return f'Basic {token}'
 
 
-def get_next_block_id():
-    global next_block_id
+def decrease(value_ref):
+    value_ref[0] -= 1
 
-    next_block_id += 1
-
-    return f'{next_block_id:08x}'
+    return value_ref[0]
 
 
 def main():
@@ -156,11 +160,14 @@ def main():
 
     content = content_prefix
 
-    for firmware_type in firmware_types:
+    for k, firmware_type in enumerate(firmware_types):
         index_path = f'{firmware_type_to_env_name[firmware_type]}_firmware_v2.txt'
 
         with open(index_path, 'r') as f:
             index_lines = f.readlines()
+
+        base_block_id = firmware_type_to_base_block_id[firmware_type]
+        next_block_id_ref = [base_block_id + len(index_lines) * 2]
 
         for i, index_line in enumerate(index_lines):
             index_version = index_line.strip().replace('.', '_').replace('-', '_').replace('+', '_')
@@ -179,8 +186,8 @@ def main():
             firmware_filename = f'{firmware_type_to_env_name[firmware_type]}_firmware_{index_version}_merged.bin'
 
             if i == 0:
-                content += firmware_type_prefix.format(block_id_1=get_next_block_id(),
-                                                       block_id_2=get_next_block_id(),
+                content += firmware_type_prefix.format(block_id_1=base_block_id + 0x00010001,
+                                                       block_id_2=base_block_id + 0x00010000,
                                                        firmware_type_wordpress_id=firmware_type_to_wordpress_id[firmware_type],
                                                        firmware_display_name=firmware_type_to_display_name[firmware_type],
                                                        latest_firmware_date=firmware_date,
@@ -205,8 +212,8 @@ def main():
 
                 firmware_changelog_items.append(firmware_changelog_item.format(text=changelog_line))
 
-            content += firmware_changelog.format(block_id_1=get_next_block_id(),
-                                                 block_id_2=get_next_block_id(),
+            content += firmware_changelog.format(block_id_1=decrease(next_block_id_ref),
+                                                 block_id_2=decrease(next_block_id_ref),
                                                  firmware_date=firmware_date,
                                                  firmware_version=firmware_version,
                                                  firmware_filename=firmware_filename,
