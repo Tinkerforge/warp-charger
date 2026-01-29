@@ -7,6 +7,7 @@ import json
 import re
 import html
 from base64 import b64encode
+from pathlib import Path
 
 firmware_types = [
     'warp3',
@@ -120,7 +121,7 @@ def get_next_block_id():
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--dry-run', action='store_true')
-    parser.add_argument('--dump', action='store_true')
+    parser.add_argument('--dump-dir')
     parser.add_argument('username')
     parser.add_argument('password')
 
@@ -134,8 +135,8 @@ def main():
 
     content_before = data['content']['raw'].replace('--><', '-->\n\n<').replace('><!--', '>\n\n<!--')
 
-    if args.dump:
-        with open('content_before.txt', 'w') as f:
+    if args.dump_dir != None:
+        with open(Path(args.dump_dir) / 'content_before.txt', 'w') as f:
             f.write(content_before)
 
     wp_group_begin = '<!-- wp:group {"layout":{"type":"flex","orientation":"vertical","justifyContent":"center"}} -->'
@@ -215,8 +216,8 @@ def main():
 
     content += content_suffix
 
-    if args.dump:
-        with open('content.txt', 'w') as f:
+    if args.dump_dir:
+        with open(Path(args.dump_dir) / 'content.txt', 'w') as f:
             f.write(content)
 
     if not args.dry_run:
@@ -227,8 +228,8 @@ def main():
 
         content_after = data['content']['raw']
 
-        if args.dump:
-            with open('content_after.txt', 'w') as f:
+        if args.dump_dir:
+            with open(Path(args.dump_dir) / 'content_after.txt', 'w') as f:
                 f.write(content_after)
 
         if content_after != content:
