@@ -25,7 +25,7 @@ export const devices = [
     load: "-",  // should be available
     dlm: "x",
     pve: "x",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "APsystems",
@@ -77,7 +77,7 @@ export const devices = [
     load: "x",
     dlm: "x",
     pve: "x",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "E3DC",
@@ -312,7 +312,7 @@ export const devices = [
     load: "-", // should be available
     dlm: "x",
     pve: "x",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "Hoymiles",
@@ -717,7 +717,7 @@ export const devices = [
     load: "x",
     dlm: "-",
     pve: "x",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "Tasmota",
@@ -782,7 +782,7 @@ export const devices = [
     load: "x",
     dlm: "-",
     pve: "x",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "Victron Energy",
@@ -885,7 +885,7 @@ export function manufacturer_to_bubbles(manufacturer, device = undefined) {
                 <div class="features">
                     <div>{text_to_bubble2(data.pve,    "PVÜ", false)}</div>
                     <div>{text_to_bubble2(data.dlm,    "dLM", false)}</div>
-                    <div>{text_to_bubble2(data.bat,    "BAT", false)}</div>
+                    <div>{text_to_bubble2(data.bat,    "BS", false)}</div>
                 </div>
             </td>
         </tr>
@@ -946,7 +946,7 @@ export const columns = [
         <div style={{display: 'flex'}}>
             <div>{text_to_bubble2(original.pve,    "PVÜ"  )}</div>
             <div>{text_to_bubble2(original.dlm,    "dLM"  )}</div>
-            <div>{text_to_bubble2(original.bat,    "BAT"  )}</div>
+            <div>{text_to_bubble2(original.bat,    "BS"  )}</div>
         </div>
     ),
   },

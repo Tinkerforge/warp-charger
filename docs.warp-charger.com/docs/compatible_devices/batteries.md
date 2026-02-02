@@ -6,24 +6,27 @@ sidebar_position: 4
 
 :::note
 
-    Die Steuerung von Batteriespeichern befindet sich zur Zeit noch in der Entwicklung und ist noch nicht Teil der Release-Firmware!
+    Die Steuerung von Batteriespeichern befindet sich zur Zeit noch in der Entwicklung!
     
-    Auf Tinkerunity haben wir eine Beta-Firmware veröffentlicht, die generell das Steuern eines Batteriespeichers mittels Modbus/TCP Befehlen unterstützt. Download hier: [Tinkerunity -  Beta-Test Batteriespeicher-Steuerung](https://www.tinkerunity.org/topic/13229-beta-test-batteriespeicher-steuerung-phase-2/).
+    Generell werden Speicher unterstützt, die mittels [Modbus/TCP](/docs/compatible_devices/interfaces#modbustcp) Befehlen gesteuert werden können.
+    Es können eigene (benutzerdefinierte) Registertabellen angelegt werden, mit dem ein Speicher gesteuert werden kann. 
+    Da dies ein größeres technisches Know-How benötigt arbeiten wir daran Voreinstellungen für Speicher zu bieten.
+    Aktuell bieten wir nur wenige dieser Voreinstellungen. Wir erweitern die Liste aber laufend!
 
-    Es kann nicht garantiert werden, dass diese Batteriespeicher-Einstellungen bei einem Firmwareupdate korrekt übernommen werden!
 :::
 
 
 ## Steuerung von Batteriespeichern
 
 Viele Hersteller unterstützen die externe Steuerung von Batteriespeichern mittels [Modbus/TCP](/docs/compatible_devices/interfaces#modbustcp) Schnittstelle.
-Meist wird der Batteriespeicher über den angeschlossenen Wechselrichter gesteuert und nicht die Batterie direkt. Die zur Verfügung gestellten Register zur Steuerung unterscheiden sich je nach Hersteller und Gerät, so dass nicht alle Geräte
-alle Funktionen unterstützen. Auch die Umsetzung der jeweiligen Funktion unterscheidet sich stark von Gerät zu Gerät!
+Meist wird der Batteriespeicher über den angeschlossenen Wechselrichter gesteuert und nicht die Batterie direkt. Die zur Verfügung gestellten Register zur Steuerung 
+unterscheiden sich je nach Hersteller und Gerät, so dass nicht alle Geräte alle Funktionen unterstützen. 
+Auch die Umsetzung der jeweiligen Funktion unterscheidet sich stark von Gerät zu Gerät!
 
 ### Generelle Idee
 
 Der Speicher wird von uns nicht geregelt. Er übt seine vom Hersteller definierte Funktion aus. Das heißt im Normalfall wird ein PV-Überschuss zur Ladung des Speichers genutzt und der Speicher versucht die Leistungsaufnahme eines Verbrauchers
-zu kompensieren. Mit den nachfolgend aufgeführten Funktionen kann aber in diese Regelung eingegriffen werden.
+zu kompensieren. Mit den nachfolgend aufgeführten Funktionen kann aber in diese Regelung eingegriffen werden und der Speicher in einen bestimmten Zustand bewegt werden.
 
 ## Anlegen eines Batteriespeichers
 
@@ -35,26 +38,43 @@ Es müssen nicht alle Funktionen für den jeweiligen Speicher implementiert werd
 
 Es können einzelne Register, aber auch mehrere Register in einem Befehl geschrieben werden. Es wird empfohlen Register, die aufeinanderfolgend sind, als ein Block in einem Befehl zu schreiben. 
 
-### Laden vom Netz erlauben
+## Steuerung des Batteriespeichers - Speichermodi
 
-Diese Funktion versucht den Speicher zu zwingen, auf 100% SoC zu laden. Wird die Ladeleistung nicht über PV gedeckt, so soll der Speicher mit Strom aus dem Netz laden. Folgende Möglichkeiten sind uns bekannt diese Funktion zu implementieren:
+Ein Batteriespeicher kann in verschiedenen Modi betrieben werden. Nachfolgend eine Auflistung aller Modi:
 
- * Genereller "Minimum SoC" auf 100% setzen. Dies funktioniert aber nur, wenn das System dann auch Strom aus dem Netz zum Laden bezieht.
- * Setzen und Aktivieren eines Ladeplans mit dem Uhrzeitbereich 00:00-23:59 Uhr und einem Ziel-SoC von 100%.
+### Speichermodus: Normal Laden, normal Entladen
 
-### Entladen verbieten
+Dies ist der Standardmodus eines Speichers. Der Speicher versucht den Netzanschluss auszuregeln. Ein PV-Überschuss wird zum Laden des Speichers verwendet, wohingegen eine Last durch Entladen des
+Speichers ausgeregelt wird.
 
-Mit dieser Funktion wird dem Speicher verboten zu entladen. Folgende Möglichkeiten sind uns bekannt diese Funktion zu implementieren:
+### Speichermodus: Normal Laden, Entladen blo­ckie­ren
+
+In diesem Modi wird dem Speicher verboten zu entladen. Folgende Möglichkeiten sind uns bekannt diese Funktion zu implementieren:
 
  * Setzen des "Maximalen Entladestroms" auf 0A.
  * Setzen des "Minimum SoC" auf 100%. Dies funktioniert nur, wenn das System dann NICHT Strom aus dem Netz zum Laden bezieht sonder nur das Entladen deaktiviert.
 
-### Laden verbieten
+### Speichermodus: Laden blo­ckie­ren, normal Entladen
 
-Diese Funktion verbietet dem Speicher das Laden. Folgende Möglichkeiten sind uns bekannt diese Funktion zu implementieren:
+Dieser Modi verbietet dem Speicher das Laden. Folgende Möglichkeiten sind uns bekannt diese Funktion zu implementieren:
 
  * Setzen des "Maximalen Ladestroms" auf 0A.
  * Setzen der "Maximalen Ladeleistung" auf 0W.
+ 
+### Speichermodus: Laden blo­ckie­ren, Entladen blo­ckie­ren
+
+In diesem Modi wird der Speicher passiv. Er lädt nicht und entlädt auch nicht. Möglichkeiten dies zu implementieren sind:
+
+ * Setzen des "Maximalen Ladestroms" auf 0A und des "Maximalen Entladestroms" auf 0A.
+ * Setzen der "Maximalen Ladeleistung" auf 0W und der "Maximalen Entladeleistung" auf 0W.
+
+### Speichermodus: Laden blo­ckie­ren, Entladen erzwingen
+
+Um Leistung in das Netz abzugeben ist dieser Modus gedacht. Der Speicher lädt nicht, aber entlädt mit der definierten Leistung ins Netz.
+
+### Speichermodus: Laden erzwingen, Entladen blo­ckie­ren
+ 
+ 
 
 ## Zeitplan für dy­na­mi­schen Strom­preis
 
