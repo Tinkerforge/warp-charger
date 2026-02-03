@@ -535,7 +535,7 @@ export const devices = [
     load: "-",
     dlm: "x",
     pve: "x",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "SMA",
@@ -548,7 +548,7 @@ export const devices = [
     load: "-",
     dlm: "x",
     pve: "x",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "SMA",
@@ -574,7 +574,7 @@ export const devices = [
     load: "-",
     dlm: "x",
     pve: "x",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "SMA",
@@ -867,7 +867,7 @@ export function manufacturer_to_bubbles(manufacturer, device = undefined) {
         <tr>
           <td>Schnittstelle</td>
           <td>Messort</td>
-          <td>Features</td>
+          <td>Feature</td>
         </tr>
     </thead>
     <tbody>
@@ -939,7 +939,7 @@ export const columns = [
     ),
   },
   {
-    header: "Anwendung",
+    header: "Feature",
     accessorKey: "dlm",
     className: "sortable-data-table left",
     cell: ({ cell, row: { original } }) => (

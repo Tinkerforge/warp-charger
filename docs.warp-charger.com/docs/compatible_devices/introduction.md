@@ -21,6 +21,8 @@ Um auf die Daten zugreifen zu können, sind wir auf die von dem jeweiligen Gerä
 Abhängig vom Gerät und Hersteller muss dazu die passende [Schnittstelle](/compatible_devices/interfaces.md) im Webinterface unter [Stromzähler](/webinterface/energy_management/energy_meters.md)
 auf dem [WARP Charger](/docs/warp_charger/introduction) oder [WARP Energy Manager](/docs/warp_energy_manager/introduction) konfiguriert werden.
 
+Zusätzlich ist es möglich das Lade- und Entladeverhalten von Stromspeichern zu steuern: [Batteriespeicher](/docs/compatible_devices/batteries)
+
 :::note
 
 Die Liste der kompatiblen Geräte befindet sich hier: [Liste kompatibler Geräte](/docs/compatible_devices/devices)
@@ -58,14 +60,14 @@ Ein Hybrid-Wechselrichter ist eine Kombination aus Photovoltaik-Wechselrichter u
 Diese Wechselrichter stellen oftmals neben den Daten zur PV-Erzeugung auch Daten zur aktuellen Leistung der Batterie (Laden/Entladen) bereit.
 Es gibt auch reine Batteriewechselrichter auf die zugegriffen werden kann.
 
-Zukünftig wird für viele Modelle auch eine Steuerung des Speichers möglich sein.
+Zusätzlich können Batteriespeicher über Modbus/TCP gesteuert und somit das Laden und Entladen kontrolliert werden. Siehe dazu: [Batteriesteuerung](/docs/compatible_devices/introduction#batteriesteuerung-bs)
 
 ### Last
 
 Um erfassen zu können wohin die erzeugte Leistung fliest gibt es den Messort "Last". Manche Wechselrichter verfügen auch über einen auslesbaren Lastausgang.
 
-## Anwendungen
-### PV-Überschussladen
+## Features
+### PV-Überschussladen (PVÜ)
 
 Für ein [PV-Überschlussladen](/tutorials/pv_excess_charging.md) muss
 der WARP Charger oder der WARP Energy Manager Zugriff auf einen
@@ -88,7 +90,7 @@ berücksichtigen kann.
 *Das PV-Überschussladen regelt die Summe der Wirkleistung so, dass überschüssige Leistung
 in ein Fahrzeug geladen anstatt in das Stromnetz zurückgespeist wird.*
 
-### Dynamisches Lastmanagement
+### Dynamisches Lastmanagement (dLM)
 
 Für das [dynamisches Lastmanagement](/tutorials/chargemanagement.md), muss
 der WARP Charger oder der WARP Energy Manager Zugriff auf einen
@@ -109,6 +111,13 @@ Ob ***"Bezug"***, ***"Bezug minus Einspeisung"***, ***"Bezug plus Einspeisung"**
 
 *Das dynamische Lastmanagement regelt Ladevorgänge so, dass auf keiner Phase (L1, L2, L3) der maximal eingestellte Phasenstrom überschritten wird.*
 
-### Batteriesteuerung
+### Batteriesteuerung (BS)
 
-Zur Steuerung von Batteriespeichern gibt es eine eigene Seite: [Batteriespeicher](compatible_devices/batteries.md)
+Gewisse Batteriespeicher können von der Batteriesteuerung gesteuert werden. Abhängig vom aktuellen State-of-Charge (SoC), dem aktuellen dynamischen Strompreis, der PV-Prognose und weiteren Bedingungen
+kann der Speicher seinen Normalbetrieb verlassen (Überschuss lädt Speicher, Speicher gleicht Lasten aus) aus dem Netz laden, das Entladen blockieren oder in das Netz einspeisen.
+
+Zur Steuerung von Batteriespeichern ist es notwendig, dass der Speicher mittels Modbus/TCP gesteuert werden kann.
+Hierzu gibt es zwei Seiten:
+
+ * [Technische Beschreibung zu Batteriespeichern](compatible_devices/batteries.md)
+ * [Webinterface - Batteriesteuerung (Konfiguration)](/docs/webinterface/energy_management/battery_control.md)

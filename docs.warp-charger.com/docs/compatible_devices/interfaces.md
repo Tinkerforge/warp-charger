@@ -39,6 +39,8 @@ Vier verschiedene Modelle für virtuelle Stromzähler stehen zur Verfügung:
 Wechselrichter, Netzanschluss, Speicher und Last. Je nach Gerät steht
 nur ein Teil dieser Stromzähler zur Verfügung.
 
+Modbus/TCP wird auch genutzt um [Batteriespeicher](/docs/compatible_devices/batteries) zu steuern.
+
 Bei Modbus/TCP müssen Informationen bereitgestellt werden, welche
 Register gelesen und wie die Werte interpretiert werden müssen. Hierzu
 gibt es zwei Möglichkeiten:

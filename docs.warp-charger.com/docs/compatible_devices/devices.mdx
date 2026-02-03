@@ -29,10 +29,10 @@ In grün dargestellt sind die unterstützten Messorte. Mögliche Messorte sind: 
 </table>
 
 
-***Anwendung***
+***Feature***
 
-Siehe hierzu: [Einführung - Anwendungen](/docs/compatible_devices/introduction#anwendungen)
-In blau dargestellt sind die unterstützten Anwendungen. Mögliche Anwendungen sind: [*Dynamisches Lastmanagement (dLM)*](/docs/compatible_devices/introduction#dynamisches-lastmanagement), [*PV-Überschussladen (PVÜ)*](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und die Steuerung eines [*Batteriespeichers (BS)*](/docs/compatible_devices/introduction#batteriesteuerung).
+Siehe hierzu: [Einführung - Features](/docs/compatible_devices/introduction#features)
+In blau dargestellt sind die unterstützten Features. Mögliche Features sind: [*Dynamisches Lastmanagement (dLM)*](/docs/compatible_devices/introduction#dynamisches-lastmanagement), [*PV-Überschussladen (PVÜ)*](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und die Steuerung eines [*Batteriespeichers (BS)*](/docs/compatible_devices/introduction#batteriesteuerung-bs).
 
 
 :::note
@@ -41,8 +41,8 @@ In blau dargestellt sind die unterstützten Anwendungen. Mögliche Anwendungen s
 :::
 
 <table>
-<tr><td><div class="application available">Anwendung</div></td><td>Die Anwendung wird generell vom Gerät unterstützt. Entsprechende Hardware muss aber verbaut sein.</td></tr>
-<tr><td><div class="application maybe">Anwendung</div></td><td>Diese Information liegt uns nicht vor. Solltest du Informationen hierzu besitzen, schicke uns doch eine Email an [info@tinkerforge.com](mailto:info@tinkerforge.com). Wir tragen diese Information dann nach.</td></tr>
+<tr><td><div class="application available">Feature</div></td><td>Das Feature wird generell vom Gerät unterstützt. Entsprechende Hardware muss aber verbaut sein.</td></tr>
+<tr><td><div class="application maybe">Feature</div></td><td>Diese Information liegt uns nicht vor. Solltest du Informationen hierzu besitzen, schicke uns doch eine Email an [info@tinkerforge.com](mailto:info@tinkerforge.com). Wir tragen diese Information dann nach.</td></tr>
 </table>
 
 :::note
@@ -93,7 +93,8 @@ Die folgenden Alpha ESS Smile Heimspeicher unterstützen eine Anbindung mittels 
 Der Stromzähler "Netz" ist nur nutzbar, wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 Die Geräteadresse bei Alpha ESS ist üblicherweise 85.
 
-Um die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) nutzen zu können, muss ein mit dem Wechselrichter verbundener Stromzähler am Netzanschluss verbaut sein.
+Um die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) nutzen zu können, muss ein mit dem Wechselrichter verbundener Stromzähler am Netzanschluss verbaut sein.
+SMILE Batteriespeicher können über die [Batteriesteuerung (BS)](/docs/compatible_devices/introduction#batteriesteuerung-bs) gesteuert werden.
 
 ## APsystems
 
@@ -117,7 +118,7 @@ Folgende Stromzähler können direkt per Ethernet ausgelesen werden:
  * EM24 in der Ausführung mit Ethernet (EM24-DIN, EM24-E1)
 
 Ein Stromzähler kann immer genau nur einem Messort zugeordnet werden. Der Messort ist abhängig vom Montageort des Stromzählers. Es können mehrere Stromzähler dieses Typs angelegt werden.
-Um die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) nutzen zu können, muss der Stromzähler am Netzanschluss verbaut sein.
+Um die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) nutzen zu können, muss der Stromzähler am Netzanschluss verbaut sein.
 
 ### EM-Serie und ET-Serie Modbus/RTU Stromzähler
 {manufacturer_to_bubbles("Carlo Galvazzi")}
@@ -136,7 +137,7 @@ Folgende Stromzähler sind RS485 bzw. Modbus/RTU Stromzähler, so dass ein [Modb
  * EM580
 
 Ein Stromzähler kann immer genau nur einem Messort zugeordnet werden. Der Messort ist abhängig vom Montageort des Stromzählers. Es können mehrere Stromzähler dieses Typs angelegt werden.
-Um die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) nutzen zu können, muss der Stromzähler am Netzanschluss verbaut sein.
+Um die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) nutzen zu können, muss der Stromzähler am Netzanschluss verbaut sein.
 
 ## Chisage
 
@@ -153,9 +154,11 @@ Chisage ESS-Hybrid-Wechselrichter werden unterstützt. Getestet wurde die Implem
 Deye Hybrid-Wechselrichter der SUN Serie (Nieder- und Hochspannung) unterstützen Modbus/RTU.
 Mit einem Umsetzer von Modbus/RTU auf Ethernet kann auf diese auch mittels Modbus/TCP zugegriffen werden. Siehe [Modbus/RTU Wandler](/compatible_devices/interfaces.md#modbusrtu-wandler).
 Die ausgelesenen Werte für "Netz" beziehen sich auf den Netzanschluss des Wechselrichters. Der über diesen Anschluss geführte Strom wird gemessen. Das ggf. verbaute Smartmeter (Chint DSU666 etc.)
-kann anscheinend NICHT über die Modbus/TCP Schnittstelle des Wechselrichters ausgelesen werden! Ist nur ein Wechselrichter vorhanden und wird der gesamte Strom über dessen Netzanschluss geführt, kann der Messwert "Netz" für ein PV-Überschussladen (PVÜ) und ein dynamisches Lastmanagement (dLM) verwendet werden.
+kann anscheinend NICHT über die Modbus/TCP Schnittstelle des Wechselrichters ausgelesen werden! Ist nur ein Wechselrichter vorhanden und wird der gesamte Strom über dessen Netzanschluss geführt, kann der Messwert "Netz" für ein [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und ein [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) verwendet werden.
 
 Die Deye-Unterstützung  wird auch im Forum diskutiert: [Forumpost auf Tinkerunity](https://www.tinkerunity.org/topic/12271-weitere-wechserichter-modbustcp-supporten-deye-hybrid-wechselrichter/).
+
+Speicher, die an Hybrid-Wechselrichter der SUN Serie angeschlossen sind können über die [Batteriesteuerung (BS)](/docs/compatible_devices/introduction#batteriesteuerung-bs) gesteuert werden.
 
 
 :::note
@@ -181,8 +184,8 @@ Um dieses nutzen zu können müssen im Hauskraftwerk unter "Hauptmenü > Funktio
  * Gerät auf "1" (Geräte ID)
  * Port auf "502"
 
-Um die Anwendung PV-Überschussladen (PVÜ) nutzen zu können, muss ein Stromzähler am Netzanschluss verbaut sein. Dies sollte bei E3DC immer der Fall sein.
-E3DC stellt keine Phasenströme zur Verfügung. Daher ist die Anwendung dynamisches Lastmanagement (dLM) nicht möglich. Soll dennoch ein dynamisches Lastmanagement realisiert werden, muss ein zusätzlicher Stromzähler, der Phasenströme bereitstellt, installiert werden.
+Um das Feature [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) nutzen zu können, muss ein Stromzähler am Netzanschluss verbaut sein. Dies sollte bei E3DC immer der Fall sein.
+E3DC stellt keine Phasenströme zur Verfügung. Daher ist das Feature [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) nicht möglich. Soll dennoch ein dynamisches Lastmanagement realisiert werden, muss ein zusätzlicher Stromzähler, der Phasenströme bereitstellt, installiert werden.
 
 
 ## Eastron
@@ -197,7 +200,7 @@ Mit dem Typ SDM630MCT wird auch ein Typ unterstützt der externe Wandler nutzt. 
 werden nur die Wandler um die Leitungen gelegt. Durch die Wahl der entsprechend dimensionierten Wandler können auch sehr große Ströme gemessen werden.
 
 Ein Stromzähler kann immer genau nur einem Messort zugeordnet werden. Der Messort ist abhängig vom Montageort des Stromzählers. Es kann nur ein Stromzähler dieses Typs angelegt werden, da die RS485 (Modbus/RTU) Schnittstelle
-des WARP Energy Managers nur einen Stromzähler unterstützt. Um die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) nutzen zu können, muss der Stromzähler am Netzanschluss verbaut sein.
+des WARP Energy Managers nur einen Stromzähler unterstützt. Um die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) nutzen zu können, muss der Stromzähler am Netzanschluss verbaut sein.
 
 ## elgris
 
@@ -206,7 +209,7 @@ des WARP Energy Managers nur einen Stromzähler unterstützt. Um die Anwendungen
 
 Das elgris Smart Meter LAN 2.0 kann einfach mittels SunSpec eingebunden werden. SunSpec sollte direkt auf dem Stromzähler aktiviert sein.
 Ein Stromzähler kann immer genau nur einem Messort zugeordnet werden. Der Messort ist abhängig vom Montageort des Stromzählers. Es können mehrere Stromzähler dieses Typs angelegt werden.
-Um die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) nutzen zu können, muss der Stromzähler am Netzanschluss verbaut sein.
+Um die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) nutzen zu können, muss der Stromzähler am Netzanschluss verbaut sein.
 
 ## Eltako
 
@@ -215,7 +218,7 @@ Um die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dL
 
 Der Eltako Stromzähler DSZ15DZMOD mit RS485 (Modbus/RTU) Schnittstelle kann am WARP Energy Manager angeschlossen und von diesem ausgelesen werden.
 Ein Stromzähler kann immer genau nur einem Messort zugeordnet werden. Der Messort ist abhängig vom Montageort des Stromzählers. Es kann nur ein Stromzähler dieses Typs angelegt werden, da die RS485 (Modbus/RTU) Schnittstelle
-des WARP Energy Managers nur einen Stromzähler unterstützt. Um die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) nutzen zu können, muss der Stromzähler am Netzanschluss verbaut sein.
+des WARP Energy Managers nur einen Stromzähler unterstützt. Um die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) nutzen zu können, muss der Stromzähler am Netzanschluss verbaut sein.
 
 ## Fox ESS
 
@@ -227,8 +230,8 @@ Wird ein RS485 nach LAN oder WLAN Wandler installiert (siehe [Modbus/RTU Wandler
 Am Wechselrichter muss die Geräte-ID von 000 (Modbus/RTU deaktiviert) auf 247 eingestellt werden. Die Einstellung dazu findet sich unter Settings -> Communication -> RS485 -> Device ID.
 Das Wechselrichterpasswort ist standardmäßig auf 0000 gesetzt.
 
-Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann. Nur in diesem Fall wird die Anwendung PV-Überschussladen (PVÜ) unterstützt.
-Ein dynamisches Lastmanagement (dLM) scheint mit den Zählerdaten nicht möglich zu sein, da keine Phasenströme geliefert werden. Soll dennoch ein dynamisches Lastmanagement realisiert werden, muss ein zusätzlicher Stromzähler, der Phasenströme bereitstellt, installiert werden.
+Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann. Nur in diesem Fall wird das Feature [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) unterstützt.
+Ein [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) scheint mit den Zählerdaten nicht möglich zu sein, da keine Phasenströme geliefert werden. Soll dennoch ein dynamisches Lastmanagement realisiert werden, muss ein zusätzlicher Stromzähler, der Phasenströme bereitstellt, installiert werden.
 
 ## Fronius
 
@@ -244,7 +247,7 @@ Es steht nur der Messwert für die Erzeugung (PV) bereit.
 
 Fronius Wechselrichter der GEN24-Serie (GEN24 und GEN24 Plus) sprechen SunSpec und können direkt ausgelesen werden. Es muss nur die Datenausgabe über Modbus/TCP aktiviert werden.
 Als Port sollte 502 konfiguriert werden. Als SunSpec Model Type kann "float" gewählt werden. Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler (Fronius Smart Meter) am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt.
 
 ### GEN24-Serie Hybrid-Wechselrichter (Speicher)
 {manufacturer_to_bubbles("Fronius", "GEN24- und GEN24 Plus-Serie Hybrid-Wechselrichter (Speicher)")}
@@ -257,28 +260,28 @@ Die SunSpec Implementierung von Fronius ist leider unzureichend um einen angesch
 
 Fronius Wechselrichter der Primo- und Symo-Serie und Symo Advanced-Serie sprechen SunSpec und können direkt ausgelesen werden. Es muss nur die Datenausgabe über Modbus/TCP aktiviert werden.
 Als Port sollte 502 konfiguriert werden. Als SunSpec Model Type kann "float" gewählt werden. Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler (Fronius Smart Meter) am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt.
 
 ### Tauro-Serie String-Wechselrichter
 {manufacturer_to_bubbles("Fronius", "Tauro-Serie String-Wechselrichter")}
 
 Fronius Wechselrichter der Tauro-Serie sprechen SunSpec und können direkt ausgelesen werden. Es muss nur die Datenausgabe über Modbus/TCP aktiviert werden.
 Als Port sollte 502 konfiguriert werden. Als SunSpec Model Type kann "float" gewählt werden. Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler (Fronius Smart Meter) am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt.
 
 ### Verto-Serie String-Wechselrichter
 {manufacturer_to_bubbles("Fronius", "Verto-Serie String-Wechselrichter")}
 
 Fronius Wechselrichter der Verto-Serie sprechen SunSpec und können direkt ausgelesen werden. Es muss nur die Datenausgabe über Modbus/TCP aktiviert werden.
 Als Port sollte 502 konfiguriert werden. Als SunSpec Model Type kann "float" gewählt werden. Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler (Fronius Smart Meter) am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt.
 
 ### Verto Plus-Serie Hybrid-Wechselrichter
 {manufacturer_to_bubbles("Fronius", "Verto Plus-Serie Hybrid-Wechselrichter")}
 
 Fronius Hybrid-Wechselrichter der Verto Plus-Serie sprechen SunSpec und können direkt ausgelesen werden. Es muss nur die Datenausgabe über Modbus/TCP aktiviert werden.
 Als Port sollte 502 konfiguriert werden. Als SunSpec Model Type kann "float" gewählt werden. Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler (Fronius Smart Meter) am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt.
 
 Leider scheint es so, als wenn Fronius aktuell keine SunSpec Modelle zum Auslesen des Speichers unterstützen (Stand Mai 2025).
 
@@ -290,7 +293,7 @@ Leider scheint es so, als wenn Fronius aktuell keine SunSpec Modelle zum Auslese
 
 Die Einbindung eines Wechselrichters der EHB Serie ist mittels Modbus/TCP über das LAN bzw. WiFi+LAN Modul (Wi-Fi/LAN Kit) möglich.
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler (z.B. GM300) am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt.
 Die Geräteadresse ist typischerweise 247.
 
 ### EH, EM, ES, ET, GW Hybrid-Wechselrichter
@@ -301,7 +304,7 @@ Die neusten Wi-Fi/LAN Kit-20 mit aktueller Firmware ermöglichen einen Zugriff m
 Dies funktioniert laut Nutzern unter "Einstellungen"->"Kommunikation Einstellung"->"Andere Einstellungen".
 
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler (z.B. GM300) am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt.
 Die Geräteadresse ist typischerweise 247.
 
 ### BT, SBP, BH-Serie Batterie-Wechselrichter
@@ -328,7 +331,9 @@ wird nur eine gleichzeitige Verbindung vom Wechselrichter unterstützt. Ein para
 
 
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt. Ein Batteriespeicher angeschlossen am Wechselrichter kann über die
+[Batteriesteuerung (BS)](/docs/compatible_devices/introduction#batteriesteuerung-bs) gesteuert werden.
+
 Die Geräteadresse ist typischerweise 85.
 
 ## Hoymiles
@@ -347,17 +352,17 @@ Anstatt die Daten über einen Wechselrichter abzufragen können Daten auch von e
 Dieser stellt Messdaten zur PV Erzeugung und zum Netzanschluss bereit, sofern ein Stromzähler am Netzanschluss installiert wurde.
 
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom SmartLogger ausgelesen werden kann 
-(typischerweise "Huawei Smart Power Sensor" vom Typ DTSU666-H oder DDSU666-H). Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt. 
+(typischerweise "Huawei Smart Power Sensor" vom Typ DTSU666-H oder DDSU666-H). Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt. 
 
 ### SUN2000
-{manufacturer_to_bubbles("Huawei", "SUN-Serie Hybrid-Wechselrichter")}
+{manufacturer_to_bubbles("Huawei", "SUN2000 Hybrid-Wechselrichter")}
 
 Wechselrichter der SUN2000 Serie (2kW - 215kW) und der SUN8000-500KTL können über das Huawei Smart Dongle (ab Firmware SPC124) mittels Modbus/TCP ausgelesen werden.
 
 Die unterstützen Modelle sind ab Seite 1 in dem Dokument [SUN2000MA Modbus Interface Definitions](https://support.huawei.com/enterprise/it/doc/EDOC1100480297?currentPartNo=k001&togo=content&section=k001) aufgeführt.
 
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann (typischerweise "Huawei Smart Power Sensor" vom Typ DTSU666-H oder DDSU666-H).
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt. Speicher ist nur nutzbar im Zusammenspiel mit der LUNA2000 Batterie.
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt. Speicher ist nur nutzbar im Zusammenspiel mit der LUNA2000 Batterie.
 
 ### EMMA
 {manufacturer_to_bubbles("Huawei", "EMMA Energiemanager")}
@@ -365,7 +370,7 @@ Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamis
 Der Huawei EMMA-A02 Energiemanager kann mittels Modbus/TCP ausgelesen werden.
 
 Der Stromzähler "Netz" ist nur nutzbar wenn der EMMA am Netzanschluss als Stromzähler installiert wurde.
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt. Speicher ist nur nutzbar im Zusammenspiel mit der LUNA2000 Batterie.
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt. Der Stromzähler Speicher ist nur nutzbar im Zusammenspiel mit einer angeschlossenen LUNA2000 Batterie.
 
 
 ## Janitza
@@ -395,7 +400,7 @@ Es wird nur eine gleichzeitige Verbindung vom Wechselrichter unterstützt. Ein p
 {manufacturer_to_bubbles("Kostal", "Smart Energy Meter (KSEM G2)")}
 Das Smart Energy Meter (KSEM G2) kann direkt mittels SunSpec kommunizieren.
 Ein Stromzähler kann immer genau nur einem Messort zugeordnet werden. Der Messort ist abhängig vom Montageort des Stromzählers. Es können mehrere Stromzähler dieses Typs angelegt werden.
-Nur wenn der Stromzähler am Netzanschluss montiert wurde, werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+Nur wenn der Stromzähler am Netzanschluss montiert wurde, werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt.
 
 Seit Kostal Smart Eneergy Meter Firmware Version 2.7.0 muss auf dem Gerät die Modbus/TCP Slave Funktion erst aktiviert werden. Dies ist unter Modbus-Einstellungen -> Modbus TCP -> Slave -> "Aktiviere TCP-Slave" möglich.
 
@@ -404,7 +409,7 @@ Seit Kostal Smart Eneergy Meter Firmware Version 2.7.0 muss auf dem Gerät die M
 {manufacturer_to_bubbles("Kostal", "Piko und Plenticore")}
 Kostal PIKO und PLENTICORE (G1, G2, G3, MP) können mittels SunSpec ausgelesen werden. Dazu muss auf dem Webinterface des Wechselrichters unter "Einstellungen" Modbus/TCP aktiviert werden.
 Anschließend ist Erzeugung der Piko und Plenticore Wechselrichter (PV) auslesbar. Der Stromzähler "Netz" ist nur nutzbar, wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter direkt ausgelesen werden kann.
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt. Verfügt der Wechselrichter über eine angeschlossene Batterie, so können
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt. Verfügt der Wechselrichter über eine angeschlossene Batterie, so können
 auch die Batteriedaten ausgelesen werden. Batteriewechselrichter, wie der PLENTICORE BI, liefern selbsterklärend keine PV Daten. Ist kein Stromzähler direkt am Wechselrichter angeschlossen,
 so wird typischerweise ein KSEM G2 (siehe oben) von den Installateuren verbaut, so dass über diesen dann die Netzdaten abgerufen werden können.
 
@@ -429,7 +434,7 @@ Siehe [Solax](/docs/compatible_devices/devices#solax).
 {manufacturer_to_bubbles("RCT")}
 
 Batterie Wechselrichter der Firma RCT können mittels dem RCT Power Serial Communication Protokoll direkt angesprochen werden. Dazu ist ein Stromzähler mit der Klasse "RCT Power" anzulegen und die IP Adresse des Wechselrichters einzugeben.
-Nur wenn ein Stromzähler am Netzanschluss montiert wurde, wird die Anwendung PV-Überschussladen (PVÜ) unterstützt. Ein dynamisches Lastmanagement (dLM) ist über diesen Zähler leider nicht möglich, da keine Phasenströme übermittelt werden.
+Nur wenn ein Stromzähler am Netzanschluss montiert wurde, wird das Feature [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) unterstützt. Ein [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) ist über diesen Zähler leider nicht möglich, da keine Phasenströme übermittelt werden.
 
 ## SAX Power
 
@@ -438,7 +443,7 @@ Nur wenn ein Stromzähler am Netzanschluss montiert wurde, wird die Anwendung PV
 
 Die SAX Power Batterien Power Home und Power Home Plus können mittels Modbus/TCP ausgelesen werden. Bei den älteren Varianten ist dazu Port 3600 und bei den neueren Varianten der Port 502 einzustellen.
 Die Einstellung "Basic Mode" ist getestet. Der "Extended Mode" konnte bisher von uns noch nicht getestet werden.
-Nur wenn ein Stromzähler am Netzanschluss montiert wurde, wird die Anwendung PV-Überschussladen (PVÜ) unterstützt. Ein dynamisches Lastmanagement (dLM) ist über diesen Zähler leider nicht möglich, da keine Phasenströme übermittelt werden.
+Nur wenn ein Stromzähler am Netzanschluss montiert wurde, wird das Feature [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) unterstützt. Ein [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) ist über diesen Zähler leider nicht möglich, da keine Phasenströme übermittelt werden.
 
 
 ## Shelly
@@ -457,7 +462,7 @@ Shelly Stromzähler sind sehr schmal und benötigen nur wenig Platz und werden f
 
 Wichtig ist ein Update auf die neuste Software, so dass Modbus/TCP unterstützt wird. Dieses muss dann unter Settings -> Modbus aktiviert werden.
 Ein Stromzähler kann immer genau nur einem Messort zugeordnet werden. Der Messort ist abhängig vom Montageort des Stromzählers. Es können mehrere Stromzähler dieses Typs angelegt werden.
-Nur wenn der Stromzähler am Netzanschluss montiert wurde, werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+Nur wenn der Stromzähler am Netzanschluss montiert wurde, werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt.
 
 ## Siemens
 
@@ -476,7 +481,7 @@ Die Stromzähler gibt es auch in Varianten, die nicht über einen RJ45 Anschluss
 Es gibt diverse Modelle entweder als direkter Stromzähler mit verschiedenen Messbereichen oder als Wandlerstromzähler.
 
 Ein Stromzähler kann immer genau nur einem Messort zugeordnet werden. Der Messort ist abhängig vom Montageort des Stromzählers. Es können mehrere Stromzähler dieses Typs angelegt werden.
-Nur wenn der Stromzähler am Netzanschluss montiert wurde, werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+Nur wenn der Stromzähler am Netzanschluss montiert wurde, werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt.
 
 Es bietet sich zum Beispiel der Senstron PAC2200 an. Diesen gibt es in verschiedenen Versionen. Es müssen Versionen mit Modbus/TCP gewählt werden. Als Beispiel:
  * Version für Wandlermessungen (5A): 7KM2200-2EA30-1EA1
@@ -500,7 +505,8 @@ Sunny Boy Storage Wechselrichter sprechen SunSpec und können direkt ausgelesen 
 Laut SMA wird als Unit ID die für das "SMA Modbus-Profil" + 123 verwendet. Diese ist standardmäßig auf 3 gestellt, so dass die Unit ID für SunSpec 126 ist.
 
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt. Ein Batteriespeicher angeschlossen am Wechselrichter kann über die
+[Batteriesteuerung (BS)](/docs/compatible_devices/introduction#batteriesteuerung-bs) gesteuert werden.
 
 ### Sunny Boy Smart Energy 3.6 / 4.0 / 5.0 / 6.0
 {manufacturer_to_bubbles("SMA", "Sunny Boy Smart Energy 3.6 / 4.0 / 5.0 / 6.0")}
@@ -510,7 +516,8 @@ Laut SMA wird als Unit ID die für das "SMA Modbus-Profil" + 123 verwendet. Dies
 
 Zum Auslesen der Wechselrichterleistung ist mindestens Firmwareversion  3.01.09.R erforderlich.
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt. Ein Batteriespeicher angeschlossen am Wechselrichter kann über die
+[Batteriesteuerung (BS)](/docs/compatible_devices/introduction#batteriesteuerung-bs) gesteuert werden.
 
 ### Sunny Tripower 3.0 / 4.0 / 5.0 / 6.0 / 8.0 / 10.0
 {manufacturer_to_bubbles("SMA", "Sunny Tripower 3.0 / 4.0 / 5.0 / 6.0 / 8.0 / 10.0")}
@@ -529,7 +536,8 @@ Laut SMA wird als Unit ID die für das "SMA Modbus-Profil" + 123 verwendet. Dies
 
 Zum Auslesen der Wechselrichterleistung ist mindestens Firmwareversion 3.01.09.R erforderlich.
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt. Ein Batteriespeicher angeschlossen am Wechselrichter kann über die
+[Batteriesteuerung (BS)](/docs/compatible_devices/introduction#batteriesteuerung-bs) gesteuert werden.
 
 ### Sunny Tripower CORE1
 {manufacturer_to_bubbles("SMA", "Sunny Tripower CORE1")}
@@ -554,7 +562,7 @@ Es steht nur der Messwert für die Erzeugung (PV) bereit.
 {manufacturer_to_bubbles("SMA", "Sunny Home Manager 1.0 / 2.0, SMA Energy Meter 2.0")}
 
 Auf die Daten vom SMA Energy Meter 2.0 oder dem Sunny Home Manager kann mittels Speedwire Protokoll werden können. Über diese beiden kann die Leistung am Netzanschluss gemessen
-werden, so dass ein PV-Überschussladen (PVÜ) und ein dynamisches Lastmanagement (dLM) mit diesen Zählerwerten möglich ist. Ein Zugriff auf andere Werte als Netzdaten ist nicht möglich (PV, Speicher etc.)
+werden, so dass ein [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und ein [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) mit diesen Zählerwerten möglich ist. Ein Zugriff auf andere Werte als Netzdaten ist nicht möglich (PV, Speicher etc.)
 
 :::note
 Speedwire nutzt Multicast. Nicht alle Switche und insbesondere viele DLAN/Powerline Komponenten leiten die Pakete nicht weiter. In diesem Fall empfängt die Wallbox oder der Energy Manager
@@ -578,7 +586,7 @@ Unseres Wissens kann diese Schnittstelle nicht selbst aktiviert werden, sondern 
 In der App für Installateure "SetApp" (zur Inbetriebnahme) kann die Schnittstelle unter Anlagekommunikation -> Modbus TCP aktiviert werden.
 
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt.
 
 
 ### SolarEdge Home Wechselrichter
@@ -590,7 +598,7 @@ Unseres Wissens kann diese Schnittstelle nicht selbst aktiviert werden, sondern 
 In der App für Installateure "SetApp" (zur Inbetriebnahme) kann die Schnittstelle unter Anlagekommunikation -> Modbus TCP aktiviert werden.
 
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt.
 Über SunSpec steht zwar auch das Speicherkapazitäts-Modell 713 zur Verfügung, allerdings liefert dieses nicht die Leistung der Batterie. Daher haben wir ein Modbus/TCP
 Profil erstellt um auch die Leistung und den SoC erfassen zu können (siehe nächsten Eintrag).
 
@@ -604,7 +612,7 @@ Dieses dient nur dazu den Messort "Speicher" erfassen zu können. Alle anderen M
 
 Das Speichersystem MAX.STORAGE kann mittels Modbus/TCP ausgelesen werden. Den SoC und die Leistung der Batterie werden mit dem virtuellen Stromzähler "Speicher" bereitgestellt.
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt.
 
 ## Solax
 
@@ -613,14 +621,14 @@ Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamis
 
 Solax Hybrid-Wechselrichter können über das WLAN Dongle mittels Modbus/TCP ausgelesen werden. Eine Einrichtungsanleitung inkl. der unterstützen Wechselrichter gibt es in der [Solax Power Academy](https://kb.solaxpower.com/de/solution/detail/ff8080818eae9899018ec71a12ca1ea6).
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt.
 
 ### X1 & X3 Mini Boost MIC und Pro
 {manufacturer_to_bubbles("Solax", "X1 & X3 Mini Boost MIC und Pro")}
 
 Solax String-Wechselrichter können über das WLAN Dongle mittels Modbus/TCP ausgelesen werden. Eine Einrichtungsanleitung inkl. der unterstützen Wechselrichter gibt es in der [Solax Power Academy](https://kb.solaxpower.com/de/solution/detail/ff8080818eae9899018ec71a12ca1ea6).
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
-Nur in diesem Fall werden die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) unterstützt.
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt.
 
 ## Sungrow
 
@@ -638,7 +646,7 @@ Bei Auffälligkeiten mit der iSolarCloud WiNet-S(2) für 1 Minute abstecken. Fal
 :::
 
 Sungrow Wechselrichter der Serien SGxxRT/SGxxRS/SGxxCX/SDxxCX-P2 können mittels Modbus/TCP ausgelesen werden. Am Wechselrichter angeschlossene Hardware-Stromzähler vom Typ DTSU666 o.ä., die von diesem ausgelesen werden können, können ebenfalls ausgelesen werden.
-Nur wenn ein Stromzähler am Netzanschluss installiert wurde wird die Anwendung PV-Überschussladen (PVÜ) unterstützt. Ein dynamisches Lastmanagement (dLM) ist mit den Zählerdaten nicht möglich, da keine Phasenströme zur Verfügung gestellt werden.
+Nur wenn ein Stromzähler am Netzanschluss installiert wurde, wird das Feature [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) unterstützt. Ein [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) ist mit den Zählerdaten nicht möglich, da keine Phasenströme zur Verfügung gestellt werden.
 
 Das Auslesen kann über einen WiNet-S mittels LAN/WLAN erfolgen (versionsabhängig). Hierbei scheint es aber je nach Hardwareversion und Firmware Probleme geben zu können. Sungrow empfiehlt, sofern vorhanden, direkt den LAN Anschluss
 des Wechselrichters zu verwenden. Die Modbus/TCP Verbindung unterstützt oftmals anscheinend nur einen Client.
@@ -662,7 +670,8 @@ Bei Auffälligkeiten mit der iSolarCloud WiNet-S(2) für 1 Minute abstecken. Fal
 :::
 
 Sungrow Wechselrichter der Serien SHxxRT/SHxxRS/SHxxT können mittels Modbus/TCP ausgelesen werden. Am Wechselrichter angeschlossene Hardware-Stromzähler vom Typ DTSU666 o.ä., die von diesem ausgelesen werden können, können ebenfalls ausgelesen werden.
-Nur wenn ein Stromzähler am Netzanschluss installiert wurde wird die Anwendung PV-Überschussladen (PVÜ) unterstützt. Ein dynamisches Lastmanagement (dLM) ist mit den Zählerdaten nicht möglich, da keine Phasenströme zur Verfügung gestellt werden.
+Nur wenn ein Stromzähler am Netzanschluss installiert wurde, wird das Feature [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) unterstützt. Ein [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) ist mit den Zählerdaten nicht möglich, da keine Phasenströme zur Verfügung gestellt werden.
+Ein Batteriespeicher angeschlossen am Wechselrichter kann über die [Batteriesteuerung (BS)](/docs/compatible_devices/introduction#batteriesteuerung-bs) gesteuert werden.
 
 Das Auslesen kann über einen WiNet-S mittels LAN/WLAN erfolgen (versionsabhängig). Hierbei scheint es aber je nach Hardwareversion und Firmware Probleme geben zu können. Sungrow empfiehlt, sofern vorhanden, direkt den LAN Anschluss
 des Wechselrichters zu verwenden. Die Modbus/TCP Verbindung unterstützt oftmals anscheinend nur einen Client.
@@ -710,7 +719,7 @@ print %sml[1]%,%sml[2]%,%sml[3]%,%sml[4]%
 1,7707010060320101@#,SID,,meter_id,0
 ```
 
-Diese Lösung lässt sich nur für ein PV-Überschussladen (PVÜ) verwenden, da nur die Gesamtleistung übertragen wird. Für ein dynamisches Lastmanagement (dLM) ist auch die Übertragung der Phasenströme notwendig. Auch diese werden von einigen Smart Metern mit übertragen. In diesem muss der API Zähler entsprechend um die zusätzlichen 3 Werte erweitert und im Skript der POST Request ergänzt werden.
+Diese Lösung lässt sich nur für ein [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) verwenden, da nur die Gesamtleistung übertragen wird. Für ein [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) ist auch die Übertragung der Phasenströme notwendig. Auch diese werden von einigen Smart Metern mit übertragen. In diesem muss der API Zähler entsprechend um die zusätzlichen 3 Werte erweitert und im Skript der POST Request ergänzt werden.
 
 Hier der [Tinkerunity Blogpost](https://www.tinkerunity.org/topic/12255-z%C3%A4hler-des-netzbetreibers-sml-ir-hichi%E2%80%A6-f%C3%BCr-pv-%C3%BCberschuss/?do=findComment&comment=55374)
 auf dem diese Beschreibung ursprünglich basiert.
@@ -765,8 +774,9 @@ Technisch nutzen wir folgende Modbus/TCP Register:
 
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom System ausgelesen werden kann. Wird der gesamte Netz-Anschluss über Multiplus-Wechselrichter geleitet, so können diese
 als Netzstromzähler fungieren. In diesem Fall ist nicht ein extra Netzstromzähler notwendig.
-Die Anwendung PV-Überschussladen (PVÜ) wird nur unterstützt, wenn Messwerte vom Netzanschluss zur Verfügung stehen.
-Ein dynamisches Lastmanagement (dLM) ist mit den "System"-Zählerdaten nicht möglich, da keine Phasenströme geliefert werden. Soll dennoch ein dynamisches Lastmanagement realisiert werden, muss ein zusätzlicher Stromzähler, der Phasenströme bereitstellt, installiert werden.
+Das Feature [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) wird nur unterstützt, wenn Messwerte vom Netzanschluss zur Verfügung stehen.
+Ein [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) ist mit den "System"-Zählerdaten nicht möglich, da keine Phasenströme geliefert werden. Soll dennoch ein dynamisches Lastmanagement realisiert werden, muss ein zusätzlicher Stromzähler, der Phasenströme bereitstellt, installiert werden.
+Ein Batteriespeicher angeschlossen an einem Multiplus kann über das GX-Gerät und die [Batteriesteuerung (BS)](/docs/compatible_devices/introduction#batteriesteuerung-bs) gesteuert werden.
 
 ### EM540, ET340, ET112, EM24 Stromzähler
 {manufacturer_to_bubbles("Victron Energy", "EM540, ET340, ET112, EM24 Stromzähler")}
@@ -779,5 +789,5 @@ Diese Stromzähler sind technisch Carlo Galvazzi Stromzähler und können somit 
 
 Der YTL Stromzähler DEM4A mit RS485 (Modbus/RTU) Schnittstelle kann direkt am WARP Energy Manager angeschlossen und von diesem ausgelesen werden.
 Ein Stromzähler kann immer genau nur einem Messort zugeordnet werden. Der Messort ist abhängig vom Montageort des Stromzählers. Es kann nur ein Stromzähler dieses Typs angelegt werden, da die RS485 (Modbus/RTU) Schnittstelle
-des WARP Energy Managers nur einen Stromzähler unterstützt. Um die Anwendungen PV-Überschussladen (PVÜ) und dynamisches Lastmanagement (dLM) nutzen zu können, muss der Stromzähler am Netzanschluss verbaut sein.
+des WARP Energy Managers nur einen Stromzähler unterstützt. Um die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) nutzen zu können, muss der Stromzähler am Netzanschluss verbaut sein.
 

@@ -20,115 +20,75 @@ sidebar_position: 4
 
 Viele Hersteller unterstützen die externe Steuerung von Batteriespeichern mittels [Modbus/TCP](/docs/compatible_devices/interfaces#modbustcp) Schnittstelle.
 Meist wird der Batteriespeicher über den angeschlossenen Wechselrichter gesteuert und nicht die Batterie direkt. Die zur Verfügung gestellten Register zur Steuerung 
-unterscheiden sich je nach Hersteller und Gerät, so dass nicht alle Geräte alle Funktionen unterstützen. 
-Auch die Umsetzung der jeweiligen Funktion unterscheidet sich stark von Gerät zu Gerät!
+unterscheiden sich je nach Hersteller und Gerät. Die Umsetzung der jeweiligen Funktion unterscheidet sich ebenfalls stark,
+so dass sich die Einstellungen zwischen verschiedenen Geräten nicht zwingend vergleichen lassen.
 
-### Generelle Idee
-
-Der Speicher wird von uns nicht geregelt. Er übt seine vom Hersteller definierte Funktion aus. Das heißt im Normalfall wird ein PV-Überschuss zur Ladung des Speichers genutzt und der Speicher versucht die Leistungsaufnahme eines Verbrauchers
-zu kompensieren. Mit den nachfolgend aufgeführten Funktionen kann aber in diese Regelung eingegriffen werden und der Speicher in einen bestimmten Zustand bewegt werden.
+Der Speicher wird von uns NICHT geregelt. Er übt seine vom Hersteller definierte Funktion aus. Das heißt im Normalfall wird ein PV-Überschuss zur Ladung des Speichers genutzt und der Speicher versucht die Leistungsaufnahme eines Verbrauchers
+zu kompensieren. Mittels nutzerdefinierbarer Regeln in der Batteriesteuerung können aber Parameter so gesetzt werden, dass zum Beispiel das Laden gesperrt ist und ein Überschuss nicht in den Speicher fliest.
 
 ## Anlegen eines Batteriespeichers
 
-Wir ermöglichen es einen Batteriespeicher mittels Modbus/TCP zu steuern. Wir versuchen für uns bekannte Speicher Voreinstellungen zu bieten, die direkt ausgewählt werden können.
-Leider ist es nicht einfach die korrekten Werte ohne Zugriff auf eine Anlage zu ermitteln. Daher sind wir hier sehr auf die Community angewiesen.
+:::note
 
-Ist keine Voreinstellung für einen Speicher hinterlegt, so können die jeweiligen Register händisch angelegt werden. Es können drei nachfolgend aufgelistet Funktionen implementiert werden. 
-Es müssen nicht alle Funktionen für den jeweiligen Speicher implementiert werden. Wird aber eine Funktion implementiert, so muss auch die Aufhebung dieser Funktion implementiert werden.
+    Das Anlegen eines Batteriespeichers ist im Webinterface beschrieben: Siehe [Batteriesteuerung](/docs/webinterface/energy_management/battery_control)
 
-Es können einzelne Register, aber auch mehrere Register in einem Befehl geschrieben werden. Es wird empfohlen Register, die aufeinanderfolgend sind, als ein Block in einem Befehl zu schreiben. 
+:::
 
-## Steuerung des Batteriespeichers - Speichermodi
 
-Ein Batteriespeicher kann in verschiedenen Modi betrieben werden. Nachfolgend eine Auflistung aller Modi:
+Wir ermöglichen es einen Batteriespeicher mittels [Modbus/TCP](/docs/compatible_devices/interfaces#modbustcp) zu steuern. Wir versuchen für uns bekannte Speicher Voreinstellungen zu bieten, die direkt ausgewählt werden können.
+Leider ist es nicht einfach die korrekten Werte ohne Zugriff auf eine Anlage zu ermitteln. Daher sind wir hier sehr auf die Community angewiesen. In der [Liste der kompatiblen Geräte](/docs/compatible_devices/devices) sind
+Batteriespeicher die wir steuern können mit "BS" gekennzeichnet.
 
-### Speichermodus: Normal Laden, normal Entladen
+Ist keine Voreinstellung für einen Speicher hinterlegt, so können die jeweiligen Register händisch angelegt werden. Dazu müssen die Registersets für die nachfolgend genannten sechs verschiedenen Modi
+implementiert werden. Es können einzelne Register, aber auch mehrere Register in einem Befehl geschrieben werden. Es wird empfohlen Register, die aufeinanderfolgend sind, als ein Block in einem Befehl zu schreiben.
+Siehe dazu den nachfolgenden Abschnitt [Benutzerdefinierte Batteriespeicher - Speichermodi](/docs/compatible_devices/batteries#benutzerdefinierte-batteriespeicher---speichermodi).
+Wichtig ist unbedingt den "Speichermodus: Normal Laden, normal Entladen" zu implementieren und in diesem die Standardparameter des Speichers zu setzen.
+
+
+## Benutzerdefinierte Batteriespeicher - Speichermodi
+
+Die Batteriesteuerung befindet sich immer in einem von den sechs nachfolgend genannten Modi. Über Regeln kann definiert werden unter welchen Bedingungen in welchen Modi gewechselt wird.
+Existiert keine Voreinstellung für einen Speicher, so können die Registersets händisch (benutzerdefiniert) angelegt werden. In diesem Fall muss jeweils ein Registerset für jeden Modi hinterlegt werden, so dass
+die Batteriesteuerung zwischen den jeweiligen Modi wechseln kann.
+
+**Speichermodus: Normal Laden, normal Entladen**
 
 Dies ist der Standardmodus eines Speichers. Der Speicher versucht den Netzanschluss auszuregeln. Ein PV-Überschuss wird zum Laden des Speichers verwendet, wohingegen eine Last durch Entladen des
-Speichers ausgeregelt wird.
+Speichers ausgeregelt wird. In diesem Modus greift die Batteriesteuerung nicht in die Parameter des Speichers ein, sondern setzt die Standardparameter des Speichers. Dies kann zum Beispiel der volle
+Lade- und Entladestrom sein.
 
-### Speichermodus: Normal Laden, Entladen blo­ckie­ren
+**Speichermodus: Normal Laden, Entladen blo­ckie­ren**
 
-In diesem Modi wird dem Speicher verboten zu entladen. Folgende Möglichkeiten sind uns bekannt diese Funktion zu implementieren:
+In diesem Modi wird dem Speicher verboten zu entladen. Typische Möglichkeiten diesen Modus zu implementieren sind:
 
  * Setzen des "Maximalen Entladestroms" auf 0A.
  * Setzen des "Minimum SoC" auf 100%. Dies funktioniert nur, wenn das System dann NICHT Strom aus dem Netz zum Laden bezieht sonder nur das Entladen deaktiviert.
 
-### Speichermodus: Laden blo­ckie­ren, normal Entladen
+**Speichermodus: Laden blo­ckie­ren, normal Entladen**
 
-Dieser Modi verbietet dem Speicher das Laden. Folgende Möglichkeiten sind uns bekannt diese Funktion zu implementieren:
+Dieser Modi verbietet dem Speicher das Laden. Folgende Möglichkeiten sind uns bekannt diesen Modus zu implementieren:
 
  * Setzen des "Maximalen Ladestroms" auf 0A.
  * Setzen der "Maximalen Ladeleistung" auf 0W.
  
-### Speichermodus: Laden blo­ckie­ren, Entladen blo­ckie­ren
+**Speichermodus: Laden blo­ckie­ren, Entladen blo­ckie­ren**
 
 In diesem Modi wird der Speicher passiv. Er lädt nicht und entlädt auch nicht. Möglichkeiten dies zu implementieren sind:
 
  * Setzen des "Maximalen Ladestroms" auf 0A und des "Maximalen Entladestroms" auf 0A.
  * Setzen der "Maximalen Ladeleistung" auf 0W und der "Maximalen Entladeleistung" auf 0W.
 
-### Speichermodus: Laden blo­ckie­ren, Entladen erzwingen
+**Speichermodus: Laden blo­ckie­ren, Entladen erzwingen**
 
-Um Leistung in das Netz abzugeben ist dieser Modus gedacht. Der Speicher lädt nicht, aber entlädt mit der definierten Leistung ins Netz.
+Um Leistung in das Netz abzugeben ist dieser Modus gedacht. Der Speicher lädt nicht, aber entlädt mit der definierten Leistung ins Netz. Möglichkeiten dies zu implementieren sind:
 
-### Speichermodus: Laden erzwingen, Entladen blo­ckie­ren
- 
- 
+ * Setzen des "EMS Modus" auf "Force Discharge" und setzen der "Maximalen Ladeleistung" auf 0W .
+ * Setzen des "Netzbezugs" auf -xW. Hierdurch wird der Speicher mit -(xW + Hauslast) entladen.
 
-## Zeitplan für dy­na­mi­schen Strom­preis
+**Speichermodus: Laden erzwingen, Entladen blo­ckie­ren**
 
-Mit dem Strompreisplan können günstige und teure Stunden definiert werden. Diese Eigenschaften können dann in den Regeln verwendet werden. Es müssen nur die Anzahl der jeweiligen Stunden in 15min Schritten definiert werden.
-Ein Graph zeigt die Stunden dann für den aktuellen Strompreisverlauf an.
+Um aktiv aus dem Netz zu laden wird dieser Modus verwendet. Der Speicher entlädt nicht, aber lädt mit einer definierten Leistung. Typische Möglichkeiten diesen Modus zu implementieren sind:
 
-## Verwendung des Batteriespeichers - Definition von Regeln
+ * Setzen des "EMS Modus" auf "Force Charge" und setzen der "Maximalen Entladeleistung" auf 0W .
+ * Setzen des "Netzbezugs" auf xW. Hierdurch wird der Speicher mit xW - Hauslast geladen.
 
-Für jede Funktion können mehrere Regeln definiert werden. Eine Funktion wird ausgeführt, wenn alle Bedingungen einer zugeordneten Regel erfüllt sind. Ist keine Regel für eine Funktion erfüllt, so wird die Funktion deaktiviert. 
-Sprich es wird zyklisch die Aufhebung der Funktion ausgeführt (die jeweiligen Modbus-Register geschrieben).
-
-Jede Regel besteht aus einer Beschreibung (Freitext für den Nutzer) und mehreren Bedingungen. Es müssen nicht alle Bedinungen definiert werden. Sollen nur zwei Bedingungen genutzt werden, so kann der Rest auf "ignoriert" gestellt werden.
-Folgende Bedingungen können definiert werden: Einem Zeitraum, der Angabe eines Batterieladestands (SoC), eines Strompreises und der Wert der PV-Ertragsprognose. Zusätzlich kann ein Strompreisplan aktiviert werden, in dem die teuersten
-und die günstigesten X Stunden definiert werden. Als letztes kann der Lademodus "Schnellladung" als Bedingung genutzt werden.
-
-Der Vergleich zu den angegebenen Werten kann als "kleiner als" oder "größer als" definiert werden. Soll ein Wert nicht verwendet werden, so ist "wird ignoriert" zu konfigurieren.
-
-## Beispiel-Regeln
-Die nachfolgenden Regeln dienen als Beispiel. Für die eigene Nutzung müssen die Parameter angepasst werden.
-
-### Ladung-vom-Netz-Erlaubnis
-
-Sind alle definierten Bedingungen einer Regel erfüllt, so wird der Speicher aus dem Netz geladen.
-
-<table>
-<tr><td><b>Beschreibung</b></td><td><b>Zeit</b></td><td><b>Batterie</b></td><td><b>Strompreis</b></td><td><b>PV-Ertrag</b></td><td><b>Strompreisplan</b></td><td><b>Schnellladung</b></td></tr>
-<tr><td>1.</td><td>-</td><td>< 60 %</td><td>< 5,0ct</td><td>< 20kWh</td><td>Günstig</td><td>-</td></tr>
-<tr><td>2.</td><td>-</td><td>< 30%</td><td>-</td><td>-</td><td>Günstig</td><td>-</td></tr>
-</table>
-
-Die erste Regel dient dazu den Speicher wieder bis zu 60% mit "günstigen" Strom zu laden, wenn der erwartete PV-Ertrag an dem aktuellen Tag nicht ausreicht. Dazu werden die im Strompreisplan definierten "günstigen" Stunden genutzt. Aber nur, wenn deren Kosten unter 5ct liegen.
-Die zweite Regel ist dazu gedacht, dass wenn die erste Regel nicht greift, bei einem SoC unter 30% dennoch zu den günstigen Stunden bis 30% zu laden.
-
-### Bat­te­rie­ent­la­dungs-Verbot
-
-Sind alle definierten Bedingungen einer Regel erfüllt, so wird der Speicher nicht mehr entladen.
-
-<table>
-<tr><td><b>Beschreibung</b></td><td><b>Zeit</b></td><td><b>Batterie</b></td><td><b>Strompreis</b></td><td><b>PV-Ertrag</b></td><td><b>Strompreisplan</b></td><td><b>Schnellladung</b></td></tr>
-<tr><td>1.</td><td>-</td><td>< 20%</td><td>-</td><td>-</td><td>Nicht teuer</td><td>-</td></tr>
-<tr><td>2.</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>Aktiv</td></tr>
-</table>
-
-Die erste Regel dient dazu eine Reserve von 20% gegen hohe Strompreise zu lassen. Ist der Strom "Nicht teuer" und der SoC kleiner 20% wird der Speicher nicht mehr weiter entladen. Wechselt der Strom allerdings auf "teuer", so greift diese Regel nicht und der Speicher wird entladen.
-Die zweite Regel dient dazu den Speicher nicht zu entladen, wenn ein Fahrzeug mittels "Schnelladung" entladen wird. Wenn gewünscht kann dies auch mit einem SoC verknüpft werden.
-
-
-### Bat­te­rie­la­dungs-Verbot
-
-Sind alle definierten Bedingungen einer Regel erfüllt, so wird der Speicher nicht mehr geladen.
-
-<table>
-<tr><td><b>Beschreibung</b></td><td><b>Zeit</b></td><td><b>Batterie</b></td><td><b>Strompreis</b></td><td><b>PV-Ertrag</b></td><td><b>Strompreisplan</b></td><td><b>Schnellladung</b></td></tr>
-<tr><td>1.</td><td>00:00-12:00</td><td>> 70%</td><td>-</td><td>> 32kWh</td><td>Nicht günstig</td><td>-</td></tr>
-</table>
-
-Ganz im Sinne der HTW Berlin Aktion: [Dein Stromspreicher kann mehr](https://solar.htw-berlin.de/dein-stromspeicher-kann-mehr/) soll mit dieser Regel verhindert werden, dass an sonnereichen Tagen morgens der Speicher erst geladen wird um dann gegen Mittag voll zu sein und ins Netz einzuspeisen.
