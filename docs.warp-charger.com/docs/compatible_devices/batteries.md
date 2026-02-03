@@ -11,12 +11,12 @@ sidebar_position: 4
     Generell werden Speicher unterstützt, die mittels [Modbus/TCP](/docs/compatible_devices/interfaces#modbustcp) Befehlen gesteuert werden können.
     Es können eigene (benutzerdefinierte) Registertabellen angelegt werden, mit dem ein Speicher gesteuert werden kann. 
     Da dies ein größeres technisches Know-How benötigt arbeiten wir daran Voreinstellungen für Speicher zu bieten.
-    Aktuell bieten wir nur wenige dieser Voreinstellungen. Wir erweitern die Liste aber laufend!
+    Wir erweitern die Liste laufend!
 
 :::
 
 
-## Steuerung von Batteriespeichern
+## Was heißt Steuerung eines Batteriespeichers?
 
 Viele Hersteller unterstützen die externe Steuerung von Batteriespeichern mittels [Modbus/TCP](/docs/compatible_devices/interfaces#modbustcp) Schnittstelle.
 Meist wird der Batteriespeicher über den angeschlossenen Wechselrichter gesteuert und nicht die Batterie direkt. Die zur Verfügung gestellten Register zur Steuerung 

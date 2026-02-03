@@ -119,5 +119,5 @@ kann der Speicher seinen Normalbetrieb verlassen (Überschuss lädt Speicher, Sp
 Zur Steuerung von Batteriespeichern ist es notwendig, dass der Speicher mittels Modbus/TCP gesteuert werden kann.
 Hierzu gibt es zwei Seiten:
 
- * [Technische Beschreibung zu Batteriespeichern](compatible_devices/batteries.md)
  * [Webinterface - Batteriesteuerung (Konfiguration)](/docs/webinterface/energy_management/battery_control.md)
+ * [Technische Beschreibung zu Batteriespeichern](compatible_devices/batteries.md)
