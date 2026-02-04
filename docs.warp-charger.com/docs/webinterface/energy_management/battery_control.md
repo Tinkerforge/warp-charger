@@ -8,7 +8,7 @@ sidebar_position: 2
 
     Die Steuerung von Batteriespeichern befindet sich zur Zeit noch in der Entwicklung!
 
-    Speicher können von einem [WARP Charger 1,2,3](/docs/warp_charger/introduction) (ab Firmware 2.9.0) oder [WARP Energy Manager 2](/docs/warp_energy_manager/introduction) (ab Firmware 2.5.0) über das Netzwerk gesteuert werden.
+    Speicher können von einem [WARP Charger 1,2,3](/docs/warp_charger/introduction) (ab Firmware 2.9.0) oder [WARP Energy Manager 2](/docs/warp_energy_manager/introduction) (ab Firmware 1.4.0) über das Netzwerk gesteuert werden.
     
     Generell werden Speicher unterstützt, die mittels [Modbus/TCP](/docs/compatible_devices/interfaces#modbustcp) Befehlen gesteuert werden können.
     Es können eigene (benutzerdefinierte) Registertabellen angelegt werden, mit dem ein Speicher gesteuert werden kann. 

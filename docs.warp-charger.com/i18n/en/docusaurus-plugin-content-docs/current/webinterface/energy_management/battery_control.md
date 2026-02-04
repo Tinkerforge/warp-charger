@@ -8,7 +8,7 @@ sidebar_position: 2
 
     Battery storage control is currently still in development!
 
-    Storage systems can be controlled from a [WARP Charger 1,2,3](/warp_charger/introduction.md) (from firmware 2.9.0) or [WARP Energy Manager 2](/warp_energy_manager/introduction.md) (from firmware 2.5.0) over the network.
+    Storage systems can be controlled from a [WARP Charger 1,2,3](/warp_charger/introduction.md) (from firmware 2.9.0) or [WARP Energy Manager 2](/warp_energy_manager/introduction.md) (from firmware 1.4.0) over the network.
     
     Generally, storage systems are supported that can be controlled via [Modbus/TCP](/compatible_devices/interfaces.md#modbustcp) commands.
     Custom (user-defined) register tables can be created to control a storage system. 
