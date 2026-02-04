@@ -29,19 +29,20 @@ The supported measurement locations are shown in green. Possible measurement loc
 </table>
 
 
-***Application***
+***Feature***
 
-See: [Introduction - Applications](/compatible_devices/introduction.md#applications)
-The supported applications are shown in blue. Possible applications are: [*Dynamic Load Management (DLM)*](/compatible_devices/introduction.md#dynamic-load-management), [*PV Excess Charging (PVE)*](/compatible_devices/introduction.md#pv-excess-charging), and control of [*Battery Storage (BAT)*](/compatible_devices/introduction.md#battery-control).
+See: [Introduction - Features](/compatible_devices/introduction.md#features)
+The supported features are shown in blue. Possible features are: [*Dynamic Load Management (DLM)*](/compatible_devices/introduction.md#dynamic-load-management-dlm), [*PV Excess Charging (PVE)*](/compatible_devices/introduction.md#pv-excess-charging-pve), and [*Battery Control (BC)*](/compatible_devices/introduction.md#battery-control-bc).
 
 
 :::note
-Coming soon - Battery Control: This is still in development and not yet documented here.
+ Battery Control:
+ We offer the ability to control storage systems via Modbus/TCP. Currently, only a few devices are directly supported. We are working to support more devices. However, there is the option to create custom Modbus/TCP register commands.
 :::
 
 <table>
-<tr><td><div class="application available">Application</div></td><td>The application is generally supported by the device. However, corresponding hardware must be installed.</td></tr>
-<tr><td><div class="application maybe">Application</div></td><td>We do not have this information. If you have information about this, please send us an email to [info@tinkerforge.com](mailto:info@tinkerforge.com). We will then add this information.</td></tr>
+<tr><td><div class="application available">Feature</div></td><td>The feature is generally supported by the device. However, corresponding hardware must be installed.</td></tr>
+<tr><td><div class="application maybe">Feature</div></td><td>We do not have this information. If you have information about this, please send us an email to [info@tinkerforge.com](mailto:info@tinkerforge.com). We will then add this information.</td></tr>
 </table>
 
 :::note
@@ -92,7 +93,8 @@ The following Alpha ESS Smile home storage systems support connection via Modbus
 The "Grid" energy meter is only usable if an external hardware energy meter has been installed at the grid connection and can be read by the inverter.
 The device address for Alpha ESS is typically 85.
 
-To use the PV excess charging (PVE) and dynamic load management (DLM) applications, an energy meter connected to the inverter must be installed at the grid connection.
+To use the [PV Excess Charging (PVE)](/compatible_devices/introduction.md#pv-excess-charging-pve) and [Dynamic Load Management (DLM)](/compatible_devices/introduction.md#dynamic-load-management-dlm) features, an energy meter connected to the inverter must be installed at the grid connection.
+SMILE battery storage systems can be controlled via [Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc).
 
 ## APsystems
 
@@ -156,6 +158,7 @@ apparently CANNOT be read via the Modbus/TCP interface of the inverter! If there
 
 Deye support is also discussed in the forum: [Forum post on Tinkerunity](https://www.tinkerunity.org/topic/12271-weitere-wechserichter-modbustcp-supporten-deye-hybrid-wechselrichter/).
 
+Storage systems connected to SUN series hybrid inverters can be controlled via [Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc).
 
 :::note
 Apparently, depending on the firmware version, the Deye WLAN dongle also directly provides Modbus/TCP. Port 8899 must then be selected instead of 502 as the Modbus/TCP port.
@@ -328,6 +331,7 @@ only one simultaneous connection from the inverter is supported. Parallel access
 
 The "Grid" energy meter is only usable if an external hardware energy meter has been installed at the grid connection and can be read by the inverter.
 Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+A battery storage system connected to the inverter can be controlled via [Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc).
 The device address is typically 85.
 
 ## Hoymiles
@@ -495,6 +499,7 @@ According to SMA, the Unit ID for the "SMA Modbus profile" + 123 is used. This i
 
 The "Grid" energy meter is only usable if an external hardware energy meter has been installed at the grid connection and can be read by the inverter.
 Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+Battery storage systems connected to the inverter can be controlled via [Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc).
 
 ### Sunny Boy Smart Energy 3.6 / 4.0 / 5.0 / 6.0
 {manufacturer_to_bubbles("SMA", "Sunny Boy Smart Energy 3.6 / 4.0 / 5.0 / 6.0")}
@@ -505,6 +510,7 @@ According to SMA, the Unit ID for the "SMA Modbus profile" + 123 is used. This i
 To read the inverter power, firmware version 3.01.09.R or higher is required.
 The "Grid" energy meter is only usable if an external hardware energy meter has been installed at the grid connection and can be read by the inverter.
 Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+Battery storage systems connected to the inverter can be controlled via [Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc).
 
 ### Sunny Tripower 3.0 / 4.0 / 5.0 / 6.0 / 8.0 / 10.0
 {manufacturer_to_bubbles("SMA", "Sunny Tripower 3.0 / 4.0 / 5.0 / 6.0 / 8.0 / 10.0")}
@@ -524,6 +530,7 @@ According to SMA, the Unit ID for the "SMA Modbus profile" + 123 is used. This i
 To read the inverter power, firmware version 3.01.09.R or higher is required.
 The "Grid" energy meter is only usable if an external hardware energy meter has been installed at the grid connection and can be read by the inverter.
 Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+Battery storage systems connected to the inverter can be controlled via [Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc).
 
 ### Sunny Tripower CORE1
 {manufacturer_to_bubbles("SMA", "Sunny Tripower CORE1")}
@@ -657,6 +664,7 @@ If there are issues with iSolarCloud, disconnect WiNet-S(2) for 1 minute. If iss
 
 Sungrow inverters of the SHxxRT/SHxxRS/SHxxT series can be read via Modbus/TCP. Hardware energy meters of type DTSU666 or similar connected to the inverter that can be read by it can also be read.
 Only if an energy meter has been installed at the grid connection is the PV excess charging (PVE) application supported. Dynamic load management (DLM) is not possible with the meter data, as no phase currents are provided.
+A battery storage system connected to the inverter can be controlled via [Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc).
 
 Reading can be done via a WiNet-S using LAN/WLAN (version dependent). However, there may be problems depending on the hardware version and firmware. Sungrow recommends using the LAN connection
 of the inverter directly if available. The Modbus/TCP connection often only seems to support one client.
@@ -666,29 +674,6 @@ Activation of Modbus/TCP for the WiNet-S2 can be found in iSolarCloud in the res
 
 Generally, the device should be reachable with device address 1. Apparently, the address is not user-configurable. A user has informed us that device address 1 does not work for them, but the system is reachable under device address 4.
 
-### SH Series
-{manufacturer_to_bubbles("Sungrow", "SH Series")}
-
-:::note
-
-Inverter and dongle (WiNet-S/WiNet-S2) each have their own software. Both should be updated!
-
-With WiNet-S2 firmware update v16, port 502 may be deactivated and encrypted port 516 activated. If the inverter is not reachable after an update, please reactivate port 502 via the WiNet-S2 hotspot (usually without "SSL encryption") if an on-site EMS or proxy is accessing it. Then give the WiNet-S2 15-40 minutes for possible re-initialization on the router.
-
-If there are issues with iSolarCloud, disconnect WiNet-S(2) for 1 minute. If issues persist, then access with https:// (with s) and/or manually switch to iot.isolarcloud.eu in the WiNet-S WebUI (https://192...), possibly also to port 16668.
-
-:::
-
-Sungrow inverters of the SHxxRT/SHxxRS/SHxxT series can be read via Modbus/TCP. Hardware energy meters of type DTSU666 or similar connected to the inverter that can be read by it can also be read.
-Only if an energy meter has been installed at the grid connection is the PV excess charging (PVE) application supported. Dynamic load management (DLM) is not possible with the meter data, as no phase currents are provided.
-
-Reading can be done via a WiNet-S using LAN/WLAN (version dependent). However, there may be problems depending on the hardware version and firmware. Sungrow recommends using the LAN connection
-of the inverter directly if available. The Modbus/TCP connection often only seems to support one client.
-
-An older dongle of type ***WiNet-S*** always seems to provide Modbus/TCP via port 502. If a newer dongle of type **WiNet-S2** is available, the option "Modbus TCP port 502 ON/OFF" must be activated. This is probably only possible via the installer access.
-Activation of Modbus/TCP for the WiNet-S2 can be found in iSolarCloud in the respective system under Devices->Settings->General parameter settings.
-
-Generally, the device should be reachable with device address 1. Apparently, the address is not user-configurable. A user has informed us that device address 1 does not work for them, but the system is reachable under device address 4.
 ## Tasmota
 
 ### Smart Meter Interface
@@ -784,6 +769,7 @@ The "Grid" energy meter is only usable if an external hardware energy meter has 
 function as grid energy meters. In this case, an extra grid energy meter is not necessary.
 
 Dynamic load management (DLM) is not possible with the "System" meter data, as no phase currents are provided. If dynamic load management should still be implemented, an additional energy meter that provides phase currents must be installed.
+A battery storage system connected to a Multiplus can be controlled via the GX device and [Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc).
 
 ### EM540, ET340, ET112, EM24 Energy Meters
 {manufacturer_to_bubbles("Victron Energy", "EM540, ET340, ET112, EM24 Electricity Meter")}

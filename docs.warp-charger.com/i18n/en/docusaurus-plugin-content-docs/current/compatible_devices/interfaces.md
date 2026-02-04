@@ -39,6 +39,8 @@ Four different models for virtual energy meters are available:
 Inverter, Grid Connection, Storage, and Load. Depending on the device, only
 some of these meters are available.
 
+Modbus/TCP is also used to control [battery storage systems](/compatible_devices/batteries.md).
+
 With Modbus/TCP, information must be provided about which
 registers need to be read and how the values need to be interpreted. There are
 two options for this:

@@ -20,6 +20,8 @@ To access the data, we depend on the [interfaces](/compatible_devices/interfaces
 Depending on the device and manufacturer, the appropriate [interface](/compatible_devices/interfaces.md) must be configured in the web interface under [Energy Meters](/webinterface/energy_management/energy_meters.md)
 on the [WARP Charger](/warp_charger/introduction.md) or [WARP Energy Manager](/warp_energy_manager/introduction.md).
 
+Additionally, it is possible to control the charging and discharging behavior of battery storage: [Battery Storage](/compatible_devices/batteries.md)
+
 :::note
 
 The list of compatible devices can be found here: [List of Compatible Devices](/compatible_devices/devices.mdx)
@@ -57,14 +59,14 @@ A hybrid inverter is a combination of a photovoltaic inverter and a battery inve
 These inverters often provide not only data on PV generation but also data on the current battery power (charging/discharging).
 There are also pure battery inverters that can be accessed.
 
-In the future, control of the storage will also be possible for many models.
+Additionally, battery storage can be controlled via Modbus/TCP to control charging and discharging. See: [Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc)
 
 ### Load
 
 To capture where the generated power flows, there is the measurement location "Load". Some inverters also have a readable load output.
 
-## Applications
-### PV Excess Charging
+## Features
+### PV Excess Charging (PVE)
 
 For [PV excess charging](/tutorials/pv_excess_charging.md), the
 WARP Charger or WARP Energy Manager must have access to an
@@ -87,7 +89,7 @@ take it into account.
 *PV excess charging controls the sum of active power so that excess power
 is charged into a vehicle instead of being fed back into the power grid.*
 
-### Dynamic Load Management
+### Dynamic Load Management (DLM)
 
 For [dynamic load management](/tutorials/chargemanagement.md), the
 WARP Charger or WARP Energy Manager must have access to an
@@ -108,6 +110,13 @@ Whether ***"Import"***, ***"Import minus Export"***, ***"Import plus Export"*** 
 
 *Dynamic load management controls charging processes so that the maximum configured phase current is not exceeded on any phase (L1, L2, L3).*
 
-### Battery Control
+### Battery Control (BC)
 
-For controlling battery storage, there is a dedicated page: [Battery Storage](compatible_devices/batteries.md)
+Certain battery storage systems can be controlled by battery control. Depending on the current state of charge (SoC), the current dynamic electricity price, the PV forecast, and other conditions,
+the storage can leave its normal operation (excess charges storage, storage compensates loads), charge from the grid, block discharging, or feed into the grid.
+
+To control battery storage, it is necessary that the storage can be controlled via Modbus/TCP.
+There are two pages for this:
+
+ * [Web Interface - Battery Control (Configuration)](/webinterface/energy_management/battery_control.md)
+ * [Technical Description of Battery Storage](compatible_devices/batteries.md)
