@@ -92,3 +92,8 @@ Um aktiv aus dem Netz zu laden wird dieser Modus verwendet. Der Speicher entläd
  * Setzen des "EMS Modus" auf "Force Charge" und setzen der "Maximalen Entladeleistung" auf 0W .
  * Setzen des "Netzbezugs" auf xW. Hierdurch wird der Speicher mit xW - Hauslast geladen.
 
+## Herstellerspezifische Implementierung
+
+Die Implementierung der Speichermodi ist je nach Hersteller und Gerät verschieden. Im [ESP32-Firmware Git](https://github.com/Tinkerforge/esp32-firmware/tree/master/software/src/modules/batteries_modbus_tcp)
+sind für jeden Hersteller Python-Dateien vorhanden in denen die jeweiligen Registersets definiert sind, die zur Steuerung verwendet werden.
+
