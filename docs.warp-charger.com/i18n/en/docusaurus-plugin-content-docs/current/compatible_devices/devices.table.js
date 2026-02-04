@@ -25,7 +25,7 @@ export const devices = [
     load: "-",  // should be available
     dlm: "x",
     pve: "x",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "APsystems",
@@ -77,7 +77,7 @@ export const devices = [
     load: "x",
     dlm: "x",
     pve: "x",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "E3DC",
@@ -312,7 +312,7 @@ export const devices = [
     load: "-", // should be available
     dlm: "x",
     pve: "x",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "Hoymiles",
@@ -535,7 +535,7 @@ export const devices = [
     load: "-",
     dlm: "x",
     pve: "x",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "SMA",
@@ -548,7 +548,7 @@ export const devices = [
     load: "-",
     dlm: "x",
     pve: "x",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "SMA",
@@ -574,7 +574,7 @@ export const devices = [
     load: "-",
     dlm: "x",
     pve: "x",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "SMA",
@@ -717,7 +717,7 @@ export const devices = [
     load: "x",
     dlm: "-",
     pve: "x",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "Tasmota",
@@ -782,7 +782,7 @@ export const devices = [
     load: "x",
     dlm: "-",
     pve: "x",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "Victron Energy",
@@ -867,7 +867,7 @@ export function manufacturer_to_bubbles(manufacturer, device = undefined) {
         <tr>
           <td>Interface</td>
           <td>Measurement Location</td>
-          <td>Features</td>
+          <td>Feature</td>
         </tr>
     </thead>
     <tbody>
@@ -885,7 +885,7 @@ export function manufacturer_to_bubbles(manufacturer, device = undefined) {
                 <div class="features">
                     <div>{text_to_bubble2(data.pve,    "PVE", false)}</div>
                     <div>{text_to_bubble2(data.dlm,    "DLM", false)}</div>
-                    <div>{text_to_bubble2(data.bat,    "BAT", false)}</div>
+                    <div>{text_to_bubble2(data.bat,    "BC", false)}</div>
                 </div>
             </td>
         </tr>
@@ -939,14 +939,14 @@ export const columns = [
     ),
   },
   {
-    header: "Application",
+    header: "Feature",
     accessorKey: "dlm",
     className: "sortable-data-table left",
     cell: ({ cell, row: { original } }) => (
         <div style={{display: 'flex'}}>
             <div>{text_to_bubble2(original.pve,    "PVE"  )}</div>
             <div>{text_to_bubble2(original.dlm,    "DLM"  )}</div>
-            <div>{text_to_bubble2(original.bat,    "BAT"  )}</div>
+            <div>{text_to_bubble2(original.bat,    "BC"  )}</div>
         </div>
     ),
   },
