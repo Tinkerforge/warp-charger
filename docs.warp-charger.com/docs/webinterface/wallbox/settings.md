@@ -52,6 +52,23 @@ wird analog zum Zeitlimit eingerichtet.
 Hiermit wird konfiguriert, welche Funktion der Taster an der Front des WARP3 Chargers haben soll. Im halböffentlichen Raum kann es
 beispielsweise sinnvoll sein, den Ladestop per Taster zu verbieten.
 
+Wird die Tastereinstellung auf "Lademodus anfordern" gestellt, so kann mit dem Taster der Lademodus der Wallbox umgestellt werden.
+Die Farben und Blinkcodes variieren zwischen den Wallbox-Versionen und den konfigurierten Modi.
+
+
+:::note
+
+Für einen WARP3 Charger mit konfigurierten Eco Modus ohne einen konfigurierten PV Modus gibt das "?" folgenden beschreibenden Text dazu:
+
+Beim ersten Taster-Druck wird der aktuelle Lademodus angezeigt. Weiteres Drücken innerhalb von 10 Sekunden wechselt den Lademodus für den nächsten oder laufenden Lade­vorgang.
+ * Rot: Aus
+ * Grün: Eco
+ * Gelb: Eco + Min
+ * Cyan: Schnell
+
+:::
+
+
 ## Abschalteingang
 
 Am Abschalteingang kann zum Beispiel ein Rundsteuerempfänger angeschlossen werden. Hier kann eingestellt werden, wie auf Änderungen
