@@ -161,13 +161,16 @@ def print_accessories2_label(header, stand, stand_wiring, stand_lock, supply_cab
         raise Exception('Custom type 2 cable placeholder A missing in EZPL file')
 
     if custom_type2_cable == 'no':
+        custom_type2_cable_qr_code = '0'
         custom_type2_cable = ''
     else:
         custom_type2_cable, order_id = custom_type2_cable.split(':')
 
         if custom_type2_cable == 'customer':
+            custom_type2_cable_qr_code = '1'
             custom_type2_cable = 'Kunde'
         else:
+            custom_type2_cable_qr_code = re.sub(r'^([mt]).*_(\d+)$', r'\1\2', custom_type2_cable).upper()
             custom_type2_cable = re.sub(r'0$', ' m', custom_type2_cable).replace('_', ' ').capitalize()
 
         custom_type2_cable = 'Typ-2-Kabel: {0}, {1}'.format(custom_type2_cable, order_id)
@@ -177,7 +180,7 @@ def print_accessories2_label(header, stand, stand_wiring, stand_lock, supply_cab
     if template.find(CUSTOM_TYPE2_CABLE_PLACEHOLDER_B) < 0:
         raise Exception('Custom type 2 cable placeholder B missing in EZPL file')
 
-    template = template.replace(CUSTOM_TYPE2_CABLE_PLACEHOLDER_B, 'CT2:{0};'.format(int(custom_type2_cable != '0')).encode('ascii'))
+    template = template.replace(CUSTOM_TYPE2_CABLE_PLACEHOLDER_B, 'CT2:{0};'.format(custom_type2_cable_qr_code).encode('ascii'))
 
     # patch comment 1
     if template.find(COMMENT_1_PLACEHOLDER) < 0:
