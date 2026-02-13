@@ -2,7 +2,11 @@ from api_doc_common import *
 
 solar_forecast = Module("solar_forecast", T({'de': "PV-Ertragsprogrnose", 'en': "PV Yield Forecast"}), "", T({'de': "Über das `solar_forecast`-Modul kann eine PV-Ertragsprognose konfiguriert und ausgelesen werden.", 'en': "The `solar_forecast` module allows configuration and reading of a PV yield forecast."}), Version.WARP2 | Version.WARP3 | Version.WEMX, [
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Die Konfiguration der PV-Ertragsprognose.", 'en': "The PV yield forecast configuration."}), members={
-        "enable": Elem.BOOL(T({'de': "Gibt an, ob die PV-Ertragsprognose verwendet werden soll.", 'en': "Indicates whether the PV yield forecast should be used."})),
+        "enable": Elem.BOOL(T({'de': "Gibt an, ob die PV-Ertragsprognose verwendet werden soll. Wenn die Quelle auf Prognosedienst gesetzt ist, werden die Prognosen von einem externen Server abgerufen. In diesem Fall wird ein Internetzugang benötigt. Bei Push-Modus werden die Prognosedaten von einem externen System über die API bereitgestellt.", 'en': "Indicates whether the PV yield forecast should be used. When the source is set to forecast service, forecasts are retrieved from an external server. In this case, internet access is required. In push mode, forecast data is provided by an external system via the API."})),
+        "source": Elem.INT(T({'de': "Quelle der PV-Ertragsprognose.", 'en': "Source of the PV yield forecast."}), constants=[
+            Const(0, T({'de': "Prognosedienst", 'en': "Forecast service"})),
+            Const(1, U("Push")),
+        ]),
         "api_url": Elem.STRING(T({'de': "Endpoint-URL des Servers für dynamische Strompreise.", 'en': "Endpoint URL of the server for dynamic electricity prices."})),
         "cert_id": Elem.INT(T({'de': "ID des CA-Zertifikats, das zur Prüfung des Zertifikats des Prognose-Servers genutzt wird. Siehe {{{ref:certs/state}}}.", 'en': "ID of the CA certificate used to verify the certificate of the forecast server. See {{{ref:certs/state}}}."})),
     })),
@@ -42,4 +46,13 @@ solar_forecast = Module("solar_forecast", T({'de': "PV-Ertragsprogrnose", 'en': 
         ]),
         "forecast": Elem.ARRAY(T({'de': "Array von PV-Ertragsprognose-Werten für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest, wie weit die Elemente zueinander zeitlich versetzt sind.", 'en': "Array of PV yield forecast values for up to two days. The first element of the array is for the time `first_date` and the resolution determines how far apart the elements are in time."}), members=49 * [Elem.INT("")], unit=Units.Wh),
     })),
+
+    Func("planes/X/forecast_update", FuncType.COMMAND, Elem.OBJECT(T({'de': "Aktualisiert die PV-Ertragsprognose einer PV-Fläche über die API. Funktioniert nur, wenn `enable` aktiviert, die `source` auf Push (1) gesetzt und die jeweilige PV-Fläche aktiviert ist.", 'en': "Updates the PV yield forecast of a PV plane via the API. Only works when `enable` is activated, the `source` is set to Push (1), and the respective PV plane is enabled."}), members={
+        "first_date":  Elem.INT(T({'de': "Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, zu welchem Zeitpunkt die erste PV-Ertragsprognose im `forecast`-Array gilt.", 'en': "A Unix timestamp in <strong>minutes</strong> indicating the time for which the first PV yield forecast in the `forecast` array is valid."})),
+        "resolution":  Elem.INT(T({'de': "Zeitliche Auflösung der PV-Ertragsprognose im `forecast`-Array.", 'en': "Time resolution of the PV yield forecast in the `forecast` array."}), constants=[
+            Const(0, T({'de': "15 Minuten", 'en': "15 minutes"})),
+            Const(1, T({'de': "60 Minuten", 'en': "60 minutes"})),
+        ]),
+        "forecast": Elem.ARRAY(T({'de': "Array von PV-Ertragsprognose-Werten für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest, wie weit die Elemente zueinander zeitlich versetzt sind.", 'en': "Array of PV yield forecast values for up to two days. The first element of the array is for the time `first_date` and the resolution determines how far apart the elements are in time."}), members=49 * [Elem.INT("")], unit=Units.Wh),
+    }), command_is_action=True),
 ])
