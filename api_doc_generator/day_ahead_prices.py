@@ -2,7 +2,11 @@ from api_doc_common import *
 
 day_ahead_prices = Module("day_ahead_prices", T({'de': "Dynamische Strompreise", 'en': "Dynamic Electricity Prices"}), "", T({'de': "Über das `day_ahead_prices`-Modul können dynamische Strompreise konfiguriert und ausgelesen werden.", 'en': "The `day_ahead_prices` module allows configuration and reading of dynamic electricity prices."}), Version.WARP2 | Version.WARP3 | Version.WEMX, [
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Die Konfiguration der dynamischen Strompreise.", 'en': "The dynamic electricity prices configuration."}), members={
-        "enable": Elem.BOOL(T({'de': "Gibt an, ob dynamische Strompreise verwendet werden sollen. Wenn aktiviert, werden die Preise einmal pro Tag für die nächsten 24 Stunden von einem externen Server abgerufen. Um dynamische Strompreise nutzen zu können wird ein Internetzugang benötigt.", 'en': "Indicates whether dynamic electricity prices should be used. When enabled, prices are retrieved once per day for the next 24 hours from an external server. Internet access is required to use dynamic electricity prices."})),
+        "enable": Elem.BOOL(T({'de': "Gibt an, ob dynamische Strompreise verwendet werden sollen. Wenn die Quelle auf Strombörse gesetzt ist, werden die Preise einmal pro Tag für die nächsten 24 Stunden von einem externen Server abgerufen. In diesem Fall wird ein Internetzugang benötigt. Bei Push-Modus werden die Preise von einem externen System über die API bereitgestellt.", 'en': "Indicates whether dynamic electricity prices should be used. When the source is set to spot market, prices are retrieved once per day for the next 24 hours from an external server. In this case, internet access is required. In push mode, prices are provided by an external system via the API."})),
+        "source": Elem.INT(T({'de': "Quelle der dynamischen Strompreise.", 'en': "Source of the dynamic electricity prices."}), constants=[
+            Const(0, T({'de': "Strombörse", 'en': "Spot market"})),
+            Const(1, U("Push")),
+        ]),
         "api_url":  Elem.STRING(T({'de': "Endpoint-URL des Servers für dynamische Strompreise.", 'en': "Endpoint URL of the dynamic electricity prices server."})),
         "region":  Elem.INT(T({'de': "Gebiet der dynamischen Strompreise", 'en': "Region of the dynamic electricity prices"}), constants=[
             Const(0, U("DE")),
@@ -35,4 +39,13 @@ day_ahead_prices = Module("day_ahead_prices", T({'de': "Dynamische Strompreise",
         ]),
         "prices": Elem.ARRAY(T({'de': "Array von dynamischen Strompreisen für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest, wie weit die Elemente zueinander zeitlich versetzt sind.", 'en': "Array of dynamic electricity prices for up to two days. The first element of the array is for the time `first_date` and the resolution determines how far apart the elements are in time."}), members=25*4*2 * [Elem.INT("")], unit=Units.thousands_cent_per_kWh),
     })),
+
+    Func("prices_update", FuncType.COMMAND, Elem.OBJECT(T({'de': "Aktualisiert die dynamischen Strompreise über die API. Funktioniert nur, wenn `enable` aktiviert und die `source` auf Push (1) gesetzt ist.", 'en': "Updates the dynamic electricity prices via the API. Only works when `enable` is activated and the `source` is set to Push (1)."}), members={
+        "first_date":  Elem.INT(T({'de': "Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, zu welchem Zeitpunkt der erste Preis im `prices`-Array gilt.", 'en': "A Unix timestamp in <strong>minutes</strong> indicating the time for which the first price in the `prices` array is valid."})),
+        "resolution":  Elem.INT(T({'de': "Zeitliche Auflösung der dynamischen Strompreise im `prices`-Array.", 'en': "Time resolution of the dynamic electricity prices in the `prices` array."}), constants=[
+            Const(0, T({'de': "15 Minuten", 'en': "15 minutes"})),
+            Const(1, T({'de': "60 Minuten", 'en': "60 minutes"})),
+        ]),
+        "prices": Elem.ARRAY(T({'de': "Array von dynamischen Strompreisen für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest, wie weit die Elemente zueinander zeitlich versetzt sind.", 'en': "Array of dynamic electricity prices for up to two days. The first element of the array is for the time `first_date` and the resolution determines how far apart the elements are in time."}), members=25*4*2 * [Elem.INT("")], unit=Units.thousands_cent_per_kWh),
+    }), command_is_action=True),
 ])
