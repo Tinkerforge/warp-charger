@@ -10,9 +10,9 @@ heating = Module("heating", T({'de': "Heizung", 'en': "Heating"}), "", T({'de': 
             Const(0, T({'de': "Aktiv wenn geschlossen", 'en': "Active when closed"})),
             Const(1, T({'de': "Aktiv wenn geöffnet", 'en': "Active when open"})),
         ]),
-        "min_hold_time": Elem.INT(T({'de': "Mindesthaltezeitfür SG-Ready-Ausgang 1 und SG-Ready-Ausgang 2.", 'en': "Minimum hold time for SG-Ready output 1 and SG-Ready output 2."})),
+        "min_hold_time": Elem.INT(T({'de': "Mindesthaltezeit für SG-Ready-Ausgang 1 und SG-Ready-Ausgang 2.", 'en': "Minimum hold time for SG-Ready output 1 and SG-Ready output 2."}), unit=Units.min_),
         "meter_slot_grid_power": Elem.INT(T({'de': "Gibt an, welcher Stromzähler für die Regelung als Hausanschlusszähler betrachtet wird.", 'en': "Specifies which electricity meter is considered the grid connection meter for control."})),
-        "control_period":  Elem.INT("", constants=[
+        "control_period":  Elem.INT(T({'de': "Regelzeitraum, der für die zeitbasierte Steuerung betrachtet wird.", 'en': "Control period considered for the time-based control."}), constants=[
             Const(0, T({'de': "24 Stunden", 'en': "24 hours"})),
             Const(1, T({'de': "12 Stunden", 'en': "12 hours"})),
             Const(2, T({'de': "8 Stunden", 'en': "8 hours"})),
@@ -32,8 +32,8 @@ heating = Module("heating", T({'de': "Heizung", 'en': "Heating"}), "", T({'de': 
         "p14enwg_input": Elem.INT(T({'de': "Gibt an, welcher Eingang des Energiemanagers für die Abschaltung per §14a EnWG genutzt werden soll.", 'en': "Specifies which input of the energy manager should be used for shutdown via §14a EnWG."}), constants=[
             Const(0, T({'de': "Eingang 1", 'en': "Input 1"})),
             Const(1, T({'de': "Eingang 2", 'en': "Input 2"})),
-            Const(1, T({'de': "Eingang 3", 'en': "Input 3"})),
-            Const(1, T({'de': "Eingang 4", 'en': "Input 4"})),
+            Const(2, T({'de': "Eingang 3", 'en': "Input 3"})),
+            Const(3, T({'de': "Eingang 4", 'en': "Input 4"})),
         ]),
         "p14enwg_type": Elem.INT(T({'de': "Konfiguration für den Eingang.", 'en': "Configuration for the input."}), constants=[
             Const(0, T({'de': "Aktiv wenn geschlossen", 'en': "Active when closed"})),
