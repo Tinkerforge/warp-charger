@@ -22,6 +22,7 @@ day_ahead_prices = Module("day_ahead_prices", T({'de': "Dynamische Strompreise",
         "grid_costs_and_taxes":  Elem.INT(T({'de': "Netzentgelte und Steuern (brutto falls MwSt-Satz angegeben ist).", 'en': "Grid fees and taxes (gross if VAT rate is specified)."}), unit=Units.thousands_cent_per_kWh),
         "supplier_markup":  Elem.INT(T({'de': "Stromanbieter-Preisaufschlag (brutto falls MwSt-Satz angegeben ist).", 'en': "Electricity supplier price markup (gross if VAT rate is specified)."}), unit=Units.thousands_cent_per_kWh),
         "supplier_base_fee":  Elem.INT(T({'de': "Stromanbieter-Grundgebühr", 'en': "Electricity supplier base fee"}), unit=Units.ct_per_month),
+        "enable_calendar":  Elem.BOOL(T({'de': "Gibt an, ob der Preiskalender aktiviert werden soll. Der Preiskalender erlaubt es, wöchentlich wiederkehrende Preisaufschläge oder -abschläge in 15-Minuten-Intervallen zu hinterlegen. Diese werden auf die Börsenstrompreise aufaddiert oder, wenn die Quelle auf Push gesetzt ist und keine Strompreise vorliegen, als eigenständige Preise verwendet.", 'en': "Indicates whether the price calendar should be enabled. The price calendar allows weekly recurring price surcharges or discounts to be configured in 15-minute intervals. These are added to the spot market prices or, if the source is set to Push and no electricity prices are available, used as standalone prices."})),
     })),
 
     Func("state", FuncType.STATE, Elem.OBJECT(T({'de': "Der Zustand der dynamischen Strompreise.", 'en': "The state of the dynamic electricity prices."}), members={
@@ -48,4 +49,8 @@ day_ahead_prices = Module("day_ahead_prices", T({'de': "Dynamische Strompreise",
         ]),
         "prices": Elem.ARRAY(T({'de': "Array von dynamischen Strompreisen für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest, wie weit die Elemente zueinander zeitlich versetzt sind.", 'en': "Array of dynamic electricity prices for up to two days. The first element of the array is for the time `first_date` and the resolution determines how far apart the elements are in time."}), members=25*4*2 * [Elem.INT("")], unit=Units.thousands_cent_per_kWh),
     }), command_is_action=True),
+
+    Func("calendar", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Der Preiskalender. Enthält wöchentlich wiederkehrende Preisaufschläge oder -abschläge in 15-Minuten-Intervallen. Das Array enthält 672 Einträge (7 Tage × 96 Viertelstunden). Die Tage beginnen bei Montag (Index 0–95) und enden bei Sonntag (Index 576–671).", 'en': "The price calendar. Contains weekly recurring price surcharges or discounts in 15-minute intervals. The array contains 672 entries (7 days × 96 quarter-hours). Days start on Monday (index 0–95) and end on Sunday (index 576–671)."}), members={
+        "prices": Elem.ARRAY(T({'de': "Array von 672 Preisaufschlägen oder -abschlägen. Jeder Eintrag entspricht einem 15-Minuten-Intervall einer Woche, beginnend bei Montag 00:00.", 'en': "Array of 672 price surcharges or discounts. Each entry corresponds to a 15-minute interval of a week, starting on Monday 00:00."}), members=672 * [Elem.INT("")], unit=Units.thousands_cent_per_kWh),
+    })),
 ])
