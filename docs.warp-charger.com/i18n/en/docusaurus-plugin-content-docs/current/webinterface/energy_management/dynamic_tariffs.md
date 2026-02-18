@@ -15,7 +15,9 @@ By configuring these according to the respective provider, the dynamic electrici
 
 ![image](/img/webinterface/energy_management/wem2-dynamic_tarrif1.png)
 
-Required settings are the region and the resolution used by the electricity provider.
+The source can be set to either **Automatic via spot market** or **Push via API**. With the automatic option, day-ahead prices are retrieved from [ENTSO-E](https://www.entsoe.eu/about/). In push mode, price data is provided via the API endpoint [day_ahead_prices/prices_update](/docs/interfaces/mqtt_http/api_reference/day_ahead_prices).
+
+When using the automatic source, the region and resolution must be configured.
 
 Optionally, electricity provider-specific additional costs can be specified. The dynamic exchange electricity prices are only part of the electricity costs. Additional fixed taxes, grid fees, and surcharges apply.
 
@@ -29,9 +31,38 @@ There are three sensible options for the optional settings:
 
 For regulation, only the dynamic net exchange prices are always used, regardless of the additional costs.
 
+## Price Calendar
+
+The price calendar allows defining fixed prices or price offsets per weekday and quarter-hour. This is particularly useful for implementing **Module 3 according to § 14a EnWG** (time-variable grid fees).
+
+The price calendar can be used in two modes:
+
+* **In combination with the dynamic tariff**: The calendar prices are added as offsets to the day-ahead spot market prices.
+* **Without the dynamic tariff (standalone)**: If the dynamic tariff is disabled, the calendar prices are used directly as electricity prices. This allows defining a fixed price schedule per weekday, e.g. for tariffs with fixed peak and off-peak rates.
+
+### Configuration
+
+To enable the price calendar, activate the "Price calendar" switch. A calendar view will appear showing a weekly overview (Monday to Sunday) in quarter-hour resolution (96 time slots per day).
+
+The **Edit calendar** button opens a dialog where prices can be entered:
+
+1. **Select cells**: One or more time slots can be selected by clicking and dragging.
+2. **Enter price**: Enter the desired price in ct/kWh in the input field.
+3. **Apply**: Click "Apply" to apply the entered price to all selected cells.
+4. **Save**: Click "Save" to save the calendar.
+
+The cells are color-coded to visualize the prices.
+
+### Example: Module 3 according to § 14a EnWG
+
+Module 3 provides for time-variable grid fees. In practice, this means that reduced grid fees apply during off-peak hours (e.g. at night) and increased grid fees during peak hours (e.g. in the evening).
+
+To represent this, the grid fee differences are entered in the calendar. For example, if the grid fee is 3 ct/kWh lower during off-peak hours and 2 ct/kWh higher during peak hours compared to the standard rate, -3 and +2 are entered in the corresponding time slots. These offsets are then automatically added to the day-ahead prices.
+
 ## Status
 
 After the dynamic electricity prices have been configured and activated, there is an overview of the electricity prices further down on the page.
 
 ![image](/img/webinterface/energy_management/wem2-dynamic_tarrif2.png)
 
+The price chart shows the electricity price trend for today and tomorrow. If both the spot market price and the price calendar are enabled, the two components (spot market price and calendar price) are displayed separately and stacked in the chart.

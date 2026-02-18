@@ -32,6 +32,7 @@ curl http://$HOST/solar_forecast/config
 ```jsx
 {
     "enable": true,
+    "source": 0,
     "api_url": "https://api.forecast.solar/",
     "cert_id": -1
 }
@@ -43,6 +44,7 @@ curl http://$HOST/solar_forecast/config
 ```bash
 curl http://$HOST/solar_forecast/config -d '{
     "enable": true,
+    "source": 0,
     "api_url": "https://api.forecast.solar/",
     "cert_id": -1
 }'
@@ -64,6 +66,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/config
 ```jsx
 {
     "enable": true,
+    "source": 0,
     "api_url": "https://api.forecast.solar/",
     "cert_id": -1
 }
@@ -78,6 +81,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/config
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/config_update -m '{
     "enable": true,
+    "source": 0,
     "api_url": "https://api.forecast.solar/",
     "cert_id": -1
 }'
@@ -102,7 +106,16 @@ mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable`<br/>bool</th>
     <td>
-        Indicates whether the PV yield forecast should be used.
+        Indicates whether the PV yield forecast should be used. When the source is set to forecast service, forecasts are retrieved from an external server. In this case, internet access is required. In push mode, forecast data is provided by an external system via the API.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`source`<br/>int</th>
+    <td>
+        Source of the PV yield forecast.
+        - **0** - Forecast service
+        - **1** - Push
     </td>
 </tr>
 
@@ -152,6 +165,9 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/state
 
 ```jsx
 {
+    "wh_today": 34500,
+    "wh_today_remaining": 12300,
+    "wh_tomorrow": 41200,
     "rate_limit": 12,
     "rate_remaining": 7,
     "next_api_call": 28899847
@@ -202,7 +218,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`rate_remaining`<br/>int</th>
     <td>
-        Indicates how many API calls have been made in the current time window.
+        Indicates how many API calls remain in the current time window.
     </td>
 </tr>
 
@@ -528,6 +544,99 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast
 </tr>
     </tbody>
 </table>
+
+<br/><br/><br/>
+## `solar_forecast/planes/X/forecast_update` {#solar_forecast_planes_X_forecast_update_warp2}
+
+
+Updates the PV yield forecast of a PV plane via the API. Only works when the `source` is set to Push (1). If the respective PV plane is not yet enabled, it will be automatically enabled.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp2-AbCd
+```
+#### Write
+```bash
+curl http://$HOST/solar_forecast/planes/X/forecast_update -d '{
+    "first_date": 28899240,
+    "resolution": 1,
+    "forecast": [
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 62, 270, 365, 405, 389, 326, 224,
+        131, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 166, 781, 1097, 1197, 1093, 864, 549,
+        288, 0, 0, 0, 0, 0, 0, 0
+    ]
+}'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp2/AbCd
+```
+#### Write
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast_update -m '{
+    "first_date": 28899240,
+    "resolution": 1,
+    "forecast": [
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 62, 270, 365, 405, 389, 326, 224,
+        131, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 166, 781, 1097, 1197, 1093, 864, 549,
+        288, 0, 0, 0, 0, 0, 0, 0
+    ]
+}'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`first_date`<br/>int</th>
+    <td>
+        A Unix timestamp in <strong>minutes</strong> indicating the time for which the first PV yield forecast in the `forecast` array is valid.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
+    <td>
+        Time resolution of the PV yield forecast in the `forecast` array.
+        - **0** - 15 minutes
+        - **1** - 60 minutes
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`forecast`<br/>int[49] (<abbr title="Watt-hour">Wh</abbr>)</th>
+    <td>
+        Array of PV yield forecast values for up to two days. The first element of the array is for the time `first_date` and the resolution determines how far apart the elements are in time.
+    </td>
+</tr>
+    </tbody>
+</table>
 </TabItem>
 <TabItem value="warp3">
 ## `solar_forecast/config` {#solar_forecast_config_warp3}
@@ -548,6 +657,7 @@ curl http://$HOST/solar_forecast/config
 ```jsx
 {
     "enable": true,
+    "source": 0,
     "api_url": "https://api.forecast.solar/",
     "cert_id": -1
 }
@@ -559,6 +669,7 @@ curl http://$HOST/solar_forecast/config
 ```bash
 curl http://$HOST/solar_forecast/config -d '{
     "enable": true,
+    "source": 0,
     "api_url": "https://api.forecast.solar/",
     "cert_id": -1
 }'
@@ -580,6 +691,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/config
 ```jsx
 {
     "enable": true,
+    "source": 0,
     "api_url": "https://api.forecast.solar/",
     "cert_id": -1
 }
@@ -594,6 +706,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/config
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/config_update -m '{
     "enable": true,
+    "source": 0,
     "api_url": "https://api.forecast.solar/",
     "cert_id": -1
 }'
@@ -618,7 +731,16 @@ mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable`<br/>bool</th>
     <td>
-        Indicates whether the PV yield forecast should be used.
+        Indicates whether the PV yield forecast should be used. When the source is set to forecast service, forecasts are retrieved from an external server. In this case, internet access is required. In push mode, forecast data is provided by an external system via the API.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`source`<br/>int</th>
+    <td>
+        Source of the PV yield forecast.
+        - **0** - Forecast service
+        - **1** - Push
     </td>
 </tr>
 
@@ -668,6 +790,9 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/state
 
 ```jsx
 {
+    "wh_today": 34500,
+    "wh_today_remaining": 12300,
+    "wh_tomorrow": 41200,
     "rate_limit": 12,
     "rate_remaining": 7,
     "next_api_call": 28899847
@@ -718,7 +843,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`rate_remaining`<br/>int</th>
     <td>
-        Indicates how many API calls have been made in the current time window.
+        Indicates how many API calls remain in the current time window.
     </td>
 </tr>
 
@@ -1044,6 +1169,99 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast
 </tr>
     </tbody>
 </table>
+
+<br/><br/><br/>
+## `solar_forecast/planes/X/forecast_update` {#solar_forecast_planes_X_forecast_update_warp3}
+
+
+Updates the PV yield forecast of a PV plane via the API. Only works when the `source` is set to Push (1). If the respective PV plane is not yet enabled, it will be automatically enabled.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp3-AbCd
+```
+#### Write
+```bash
+curl http://$HOST/solar_forecast/planes/X/forecast_update -d '{
+    "first_date": 28899240,
+    "resolution": 1,
+    "forecast": [
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 62, 270, 365, 405, 389, 326, 224,
+        131, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 166, 781, 1097, 1197, 1093, 864, 549,
+        288, 0, 0, 0, 0, 0, 0, 0
+    ]
+}'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp3/AbCd
+```
+#### Write
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast_update -m '{
+    "first_date": 28899240,
+    "resolution": 1,
+    "forecast": [
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 62, 270, 365, 405, 389, 326, 224,
+        131, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 166, 781, 1097, 1197, 1093, 864, 549,
+        288, 0, 0, 0, 0, 0, 0, 0
+    ]
+}'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`first_date`<br/>int</th>
+    <td>
+        A Unix timestamp in <strong>minutes</strong> indicating the time for which the first PV yield forecast in the `forecast` array is valid.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
+    <td>
+        Time resolution of the PV yield forecast in the `forecast` array.
+        - **0** - 15 minutes
+        - **1** - 60 minutes
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`forecast`<br/>int[49] (<abbr title="Watt-hour">Wh</abbr>)</th>
+    <td>
+        Array of PV yield forecast values for up to two days. The first element of the array is for the time `first_date` and the resolution determines how far apart the elements are in time.
+    </td>
+</tr>
+    </tbody>
+</table>
 </TabItem>
 <TabItem value="wem">
 ## `solar_forecast/config` {#solar_forecast_config_wem}
@@ -1064,6 +1282,7 @@ curl http://$HOST/solar_forecast/config
 ```jsx
 {
     "enable": true,
+    "source": 0,
     "api_url": "https://api.forecast.solar/",
     "cert_id": -1
 }
@@ -1075,6 +1294,7 @@ curl http://$HOST/solar_forecast/config
 ```bash
 curl http://$HOST/solar_forecast/config -d '{
     "enable": true,
+    "source": 0,
     "api_url": "https://api.forecast.solar/",
     "cert_id": -1
 }'
@@ -1096,6 +1316,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/config
 ```jsx
 {
     "enable": true,
+    "source": 0,
     "api_url": "https://api.forecast.solar/",
     "cert_id": -1
 }
@@ -1110,6 +1331,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/config
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/config_update -m '{
     "enable": true,
+    "source": 0,
     "api_url": "https://api.forecast.solar/",
     "cert_id": -1
 }'
@@ -1134,7 +1356,16 @@ mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable`<br/>bool</th>
     <td>
-        Indicates whether the PV yield forecast should be used.
+        Indicates whether the PV yield forecast should be used. When the source is set to forecast service, forecasts are retrieved from an external server. In this case, internet access is required. In push mode, forecast data is provided by an external system via the API.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`source`<br/>int</th>
+    <td>
+        Source of the PV yield forecast.
+        - **0** - Forecast service
+        - **1** - Push
     </td>
 </tr>
 
@@ -1184,6 +1415,9 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/state
 
 ```jsx
 {
+    "wh_today": 34500,
+    "wh_today_remaining": 12300,
+    "wh_tomorrow": 41200,
     "rate_limit": 12,
     "rate_remaining": 7,
     "next_api_call": 28899847
@@ -1234,7 +1468,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`rate_remaining`<br/>int</th>
     <td>
-        Indicates how many API calls have been made in the current time window.
+        Indicates how many API calls remain in the current time window.
     </td>
 </tr>
 
@@ -1560,6 +1794,99 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast
 </tr>
     </tbody>
 </table>
+
+<br/><br/><br/>
+## `solar_forecast/planes/X/forecast_update` {#solar_forecast_planes_X_forecast_update_wem}
+
+
+Updates the PV yield forecast of a PV plane via the API. Only works when the `source` is set to Push (1). If the respective PV plane is not yet enabled, it will be automatically enabled.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. wem-AbCd
+```
+#### Write
+```bash
+curl http://$HOST/solar_forecast/planes/X/forecast_update -d '{
+    "first_date": 28899240,
+    "resolution": 1,
+    "forecast": [
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 62, 270, 365, 405, 389, 326, 224,
+        131, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 166, 781, 1097, 1197, 1093, 864, 549,
+        288, 0, 0, 0, 0, 0, 0, 0
+    ]
+}'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. wem/AbCd
+```
+#### Write
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast_update -m '{
+    "first_date": 28899240,
+    "resolution": 1,
+    "forecast": [
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 62, 270, 365, 405, 389, 326, 224,
+        131, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 166, 781, 1097, 1197, 1093, 864, 549,
+        288, 0, 0, 0, 0, 0, 0, 0
+    ]
+}'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`first_date`<br/>int</th>
+    <td>
+        A Unix timestamp in <strong>minutes</strong> indicating the time for which the first PV yield forecast in the `forecast` array is valid.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
+    <td>
+        Time resolution of the PV yield forecast in the `forecast` array.
+        - **0** - 15 minutes
+        - **1** - 60 minutes
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`forecast`<br/>int[49] (<abbr title="Watt-hour">Wh</abbr>)</th>
+    <td>
+        Array of PV yield forecast values for up to two days. The first element of the array is for the time `first_date` and the resolution determines how far apart the elements are in time.
+    </td>
+</tr>
+    </tbody>
+</table>
 </TabItem>
 <TabItem value="wem2">
 ## `solar_forecast/config` {#solar_forecast_config_wem2}
@@ -1580,6 +1907,7 @@ curl http://$HOST/solar_forecast/config
 ```jsx
 {
     "enable": true,
+    "source": 0,
     "api_url": "https://api.forecast.solar/",
     "cert_id": -1
 }
@@ -1591,6 +1919,7 @@ curl http://$HOST/solar_forecast/config
 ```bash
 curl http://$HOST/solar_forecast/config -d '{
     "enable": true,
+    "source": 0,
     "api_url": "https://api.forecast.solar/",
     "cert_id": -1
 }'
@@ -1612,6 +1941,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/config
 ```jsx
 {
     "enable": true,
+    "source": 0,
     "api_url": "https://api.forecast.solar/",
     "cert_id": -1
 }
@@ -1626,6 +1956,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/config
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/config_update -m '{
     "enable": true,
+    "source": 0,
     "api_url": "https://api.forecast.solar/",
     "cert_id": -1
 }'
@@ -1650,7 +1981,16 @@ mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable`<br/>bool</th>
     <td>
-        Indicates whether the PV yield forecast should be used.
+        Indicates whether the PV yield forecast should be used. When the source is set to forecast service, forecasts are retrieved from an external server. In this case, internet access is required. In push mode, forecast data is provided by an external system via the API.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`source`<br/>int</th>
+    <td>
+        Source of the PV yield forecast.
+        - **0** - Forecast service
+        - **1** - Push
     </td>
 </tr>
 
@@ -1700,6 +2040,9 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/state
 
 ```jsx
 {
+    "wh_today": 34500,
+    "wh_today_remaining": 12300,
+    "wh_tomorrow": 41200,
     "rate_limit": 12,
     "rate_remaining": 7,
     "next_api_call": 28899847
@@ -1750,7 +2093,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`rate_remaining`<br/>int</th>
     <td>
-        Indicates how many API calls have been made in the current time window.
+        Indicates how many API calls remain in the current time window.
     </td>
 </tr>
 
@@ -2076,6 +2419,99 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast
 </tr>
     </tbody>
 </table>
+
+<br/><br/><br/>
+## `solar_forecast/planes/X/forecast_update` {#solar_forecast_planes_X_forecast_update_wem2}
+
+
+Updates the PV yield forecast of a PV plane via the API. Only works when the `source` is set to Push (1). If the respective PV plane is not yet enabled, it will be automatically enabled.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. wem2-AbCd
+```
+#### Write
+```bash
+curl http://$HOST/solar_forecast/planes/X/forecast_update -d '{
+    "first_date": 28899240,
+    "resolution": 1,
+    "forecast": [
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 62, 270, 365, 405, 389, 326, 224,
+        131, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 166, 781, 1097, 1197, 1093, 864, 549,
+        288, 0, 0, 0, 0, 0, 0, 0
+    ]
+}'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. wem2/AbCd
+```
+#### Write
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast_update -m '{
+    "first_date": 28899240,
+    "resolution": 1,
+    "forecast": [
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 62, 270, 365, 405, 389, 326, 224,
+        131, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 166, 781, 1097, 1197, 1093, 864, 549,
+        288, 0, 0, 0, 0, 0, 0, 0
+    ]
+}'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`first_date`<br/>int</th>
+    <td>
+        A Unix timestamp in <strong>minutes</strong> indicating the time for which the first PV yield forecast in the `forecast` array is valid.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
+    <td>
+        Time resolution of the PV yield forecast in the `forecast` array.
+        - **0** - 15 minutes
+        - **1** - 60 minutes
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`forecast`<br/>int[49] (<abbr title="Watt-hour">Wh</abbr>)</th>
+    <td>
+        Array of PV yield forecast values for up to two days. The first element of the array is for the time `first_date` and the resolution determines how far apart the elements are in time.
+    </td>
+</tr>
+    </tbody>
+</table>
 </TabItem>
 <TabItem value="any">
 ## `solar_forecast/config` {#solar_forecast_config_any}
@@ -2096,6 +2532,7 @@ curl http://$HOST/solar_forecast/config
 ```jsx
 {
     "enable": true,
+    "source": 0,
     "api_url": "https://api.forecast.solar/",
     "cert_id": -1
 }
@@ -2107,6 +2544,7 @@ curl http://$HOST/solar_forecast/config
 ```bash
 curl http://$HOST/solar_forecast/config -d '{
     "enable": true,
+    "source": 0,
     "api_url": "https://api.forecast.solar/",
     "cert_id": -1
 }'
@@ -2128,6 +2566,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/config
 ```jsx
 {
     "enable": true,
+    "source": 0,
     "api_url": "https://api.forecast.solar/",
     "cert_id": -1
 }
@@ -2142,6 +2581,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/config
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/config_update -m '{
     "enable": true,
+    "source": 0,
     "api_url": "https://api.forecast.solar/",
     "cert_id": -1
 }'
@@ -2166,7 +2606,19 @@ mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`enable`<br/>bool</th>
     <td>
-        Indicates whether the PV yield forecast should be used.
+        Indicates whether the PV yield forecast should be used. When the source is set to forecast service, forecasts are retrieved from an external server. In this case, internet access is required. In push mode, forecast data is provided by an external system via the API.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`source`<br/>int</th>
+    <td>
+        Source of the PV yield forecast.
+        
+        
+        
+        - **0** - Forecast service
+        - **1** - Push
     </td>
 </tr>
 
@@ -2216,6 +2668,9 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/state
 
 ```jsx
 {
+    "wh_today": 34500,
+    "wh_today_remaining": 12300,
+    "wh_tomorrow": 41200,
     "rate_limit": 12,
     "rate_remaining": 7,
     "next_api_call": 28899847
@@ -2266,7 +2721,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/state
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`rate_remaining`<br/>int</th>
     <td>
-        Indicates how many API calls have been made in the current time window.
+        Indicates how many API calls remain in the current time window.
     </td>
 </tr>
 
@@ -2595,6 +3050,102 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast
 </tr>
     </tbody>
 </table>
+
+<br/><br/><br/>
+## `solar_forecast/planes/X/forecast_update` {#solar_forecast_planes_X_forecast_update_any}
+
+
+Updates the PV yield forecast of a PV plane via the API. Only works when the `source` is set to Push (1). If the respective PV plane is not yet enabled, it will be automatically enabled.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp-AbCd
+```
+#### Write
+```bash
+curl http://$HOST/solar_forecast/planes/X/forecast_update -d '{
+    "first_date": 28899240,
+    "resolution": 1,
+    "forecast": [
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 62, 270, 365, 405, 389, 326, 224,
+        131, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 166, 781, 1097, 1197, 1093, 864, 549,
+        288, 0, 0, 0, 0, 0, 0, 0
+    ]
+}'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp/AbCd
+```
+#### Write
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast_update -m '{
+    "first_date": 28899240,
+    "resolution": 1,
+    "forecast": [
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 62, 270, 365, 405, 389, 326, 224,
+        131, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 166, 781, 1097, 1197, 1093, 864, 549,
+        288, 0, 0, 0, 0, 0, 0, 0
+    ]
+}'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`first_date`<br/>int</th>
+    <td>
+        A Unix timestamp in <strong>minutes</strong> indicating the time for which the first PV yield forecast in the `forecast` array is valid.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
+    <td>
+        Time resolution of the PV yield forecast in the `forecast` array.
+        
+        
+        
+        - **0** - 15 minutes
+        - **1** - 60 minutes
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`forecast`<br/>int[49] (<abbr title="Watt-hour">Wh</abbr>)</th>
+    <td>
+        Array of PV yield forecast values for up to two days. The first element of the array is for the time `first_date` and the resolution determines how far apart the elements are in time.
+    </td>
+</tr>
+    </tbody>
+</table>
 </TabItem>
 </Tabs>
 
@@ -2622,6 +3173,11 @@ export const toc = [
 },{
     "value": "solar_forecast/planes/X/forecast",
     "id": "solar_forecast_planes_X_forecast",
+    "level": 2,
+    "hardwareType": ["warp2","warp3","wem","wem2"]
+},{
+    "value": "solar_forecast/planes/X/forecast_update",
+    "id": "solar_forecast_planes_X_forecast_update",
     "level": 2,
     "hardwareType": ["warp2","warp3","wem","wem2"]
 },

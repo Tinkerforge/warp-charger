@@ -50,6 +50,8 @@ operation can correspond to the set control period. In this case, the heat pump 
 In this section, the graph shows when a switch-on recommendation (green) is given for the current electricity price curve
 and when the heater is blocked (red).
 If time blocks are not marked, then the heat pump is in normal operation.
+The heating plan is optimized to respect the configured **minimum holding time**.
+Instead of selecting scattered individual time slots, contiguous blocks are chosen.
 The graph does not take into account the activation of enhanced operation mode in case of
 PV excess, but only the time-based control.
 
