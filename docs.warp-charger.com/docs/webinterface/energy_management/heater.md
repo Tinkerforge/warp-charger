@@ -50,6 +50,8 @@ Betrieb der eingestellten Regelzeit entsprechen. In diesem Fall befindet sich di
 In diesem Abschnitt wird im Graph dargestellt, wann für den aktuellen Strompreisverlauf
 eine Einschaltempfehlung (grün) gegeben und wann die Heizung blockiert wird (rot).
 Werden Zeitblöcke nicht markiert, dann befindet sich die Wärmepumpe hier im Normalbetrieb.
+Der Heizplan wird so optimiert, dass die eingestellte **Mindesthaltezeit** eingehalten wird.
+Es werden also keine einzelnen verstreuten Zeitfenster gewählt, sondern zusammenhängende Blöcke.
 Im Graph wird nicht das Einschalten des erweiterten Betriebs für den Fall eines
 PV-Überschuss berücksichtigt, sondern nur die zeitbasierte Steuerung.
 

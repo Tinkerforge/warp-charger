@@ -183,7 +183,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/heating/config_update -m '{
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`min_hold_time`<br/>int</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`min_hold_time`<br/>int (<abbr title="Minute">min</abbr>)</th>
     <td>
         Minimum hold time for SG-Ready output 1 and SG-Ready output 2.
     </td>
@@ -199,7 +199,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/heating/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`control_period`<br/>int</th>
     <td>
-        
+        Control period considered for the time-based control.
         - **0** - 24 hours
         - **1** - 12 hours
         - **2** - 8 hours
@@ -284,8 +284,8 @@ mosquitto_pub -h $BROKER -t $PREFIX/heating/config_update -m '{
         Specifies which input of the energy manager should be used for shutdown via §14a EnWG.
         - **0** - Input 1
         - **1** - Input 2
-        - **1** - Input 3
-        - **1** - Input 4
+        - **2** - Input 3
+        - **3** - Input 4
     </td>
 </tr>
 
@@ -375,6 +375,38 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/heating/state
     <th scope="row" style={{whiteSpace: "nowrap"}}>`next_update`<br/>int</th>
     <td>
         A Unix timestamp in <strong>minutes</strong> indicating when the heating control will perform the next update.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `heating/plan` {#heating_plan_wem2}
+
+
+The current heating plan. Contains for each time slot of the dynamic electricity prices whether it was selected as cheap (extended operation) or expensive (blocking operation). The plan is optimized to respect the configured minimum holding time.
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`cheap`<br/>bool[..]</th>
+    <td>
+        Array of boolean values. Each entry corresponds to a time slot of the dynamic electricity prices. `true` means the time slot was selected for extended operation.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`expensive`<br/>bool[..]</th>
+    <td>
+        Array of boolean values. Each entry corresponds to a time slot of the dynamic electricity prices. `true` means the time slot was selected for blocking operation.
     </td>
 </tr>
     </tbody>
@@ -547,7 +579,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/heating/config_update -m '{
 </tr>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`min_hold_time`<br/>int</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`min_hold_time`<br/>int (<abbr title="Minute">min</abbr>)</th>
     <td>
         Minimum hold time for SG-Ready output 1 and SG-Ready output 2.
     </td>
@@ -563,7 +595,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/heating/config_update -m '{
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`control_period`<br/>int</th>
     <td>
-        
+        Control period considered for the time-based control.
         
         
         
@@ -654,8 +686,8 @@ mosquitto_pub -h $BROKER -t $PREFIX/heating/config_update -m '{
         
         - **0** - Input 1
         - **1** - Input 2
-        - **1** - Input 3
-        - **1** - Input 4
+        - **2** - Input 3
+        - **3** - Input 4
     </td>
 </tr>
 
@@ -752,6 +784,38 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/heating/state
 </tr>
     </tbody>
 </table>
+
+<br/><br/><br/>
+## `heating/plan` {#heating_plan_any}
+
+
+The current heating plan. Contains for each time slot of the dynamic electricity prices whether it was selected as cheap (extended operation) or expensive (blocking operation). The plan is optimized to respect the configured minimum holding time.
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`cheap`<br/>bool[..]</th>
+    <td>
+        Array of boolean values. Each entry corresponds to a time slot of the dynamic electricity prices. `true` means the time slot was selected for extended operation.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`expensive`<br/>bool[..]</th>
+    <td>
+        Array of boolean values. Each entry corresponds to a time slot of the dynamic electricity prices. `true` means the time slot was selected for blocking operation.
+    </td>
+</tr>
+    </tbody>
+</table>
 </TabItem>
 </Tabs>
 
@@ -764,6 +828,11 @@ export const toc = [
 },{
     "value": "heating/state",
     "id": "heating_state",
+    "level": 2,
+    "hardwareType": ["wem2"]
+},{
+    "value": "heating/plan",
+    "id": "heating_plan",
     "level": 2,
     "hardwareType": ["wem2"]
 },

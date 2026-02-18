@@ -6,9 +6,11 @@ sidebar_position: 8
 
 :::note
 
-Wenn eine PV-Anlage vorhanden ist, kann eine PV-Ertragsprognose von [forecast.solar](https://forecast.solar/) verwendet werden um die [Heizungssteuerung](/docs/webinterface/energy_management/heater.md) (Energy Manager) und den [Ladeplan des Eco-Modus](/docs/webinterface/energy_management/eco_mode.md) zu verbessern.
+Wenn eine PV-Anlage vorhanden ist, kann eine PV-Ertragsprognose verwendet werden um die [Heizungssteuerung](/docs/webinterface/energy_management/heater.md) (Energy Manager) und den [Ladeplan des Eco-Modus](/docs/webinterface/energy_management/eco_mode.md) zu verbessern.
 
 ![image](/img/webinterface/energy_management/wem2-solar_forecast1.png)
+
+Als Quelle kann zwischen **Automatisch über Prognosedienst** und **Push über API** gewählt werden. Bei der automatischen Variante wird die Prognose von [forecast.solar](https://forecast.solar/) bezogen. Beim Push-Modus werden die Prognosedaten über den API-Endpunkt [solar_forecast/planes/X/forecast_update](/docs/interfaces/mqtt_http/api_reference/solar_forecast) bereitgestellt.
 
 Es können bis zu sechs PV-Flächen mit unterschiedlicher Position und Ausrichtung hinzugefügt werden.
 
