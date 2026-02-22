@@ -48,8 +48,8 @@ meter = Module("meter", T({'de': "Veraltete Stromzähler-API", 'en': "Legacy Ele
             "bricklet": Elem.INT(T({'de': "Kommunikationsfehler zwischen ESP Brick und RS485 Bricklet.", 'en': "Communication errors between ESP Brick and RS485 Bricklet."}), version=Version.WARP1),
             "bricklet_reset": Elem.INT(T({'de': "Unerwartete Resets des RS485 Bricklets.", 'en': "Unexpected resets of the RS485 Bricklet."}), version=Version.WARP1),
 
-            "local_timeout": Elem.INT("Local Timeout", version=Version.WARP2 | Version.WARP3 | Version.WEMX),
-            "global_timeout": Elem.INT("Global Timeout", version=Version.WARP2 | Version.WARP3 | Version.WEMX),
+            "local_timeout": Elem.INT(U("Local Timeout"), version=Version.WARP2 | Version.WARP3 | Version.WEMX),
+            "global_timeout": Elem.INT(U("Global Timeout"), version=Version.WARP2 | Version.WARP3 | Version.WEMX),
             "illegal_function": Elem.INT(U("Illegal Function"), version=Version.WARP2 | Version.WARP3 | Version.WEMX),
             "illegal_data_access": Elem.INT(U("Illegal Data Access"), version=Version.WARP2 | Version.WARP3 | Version.WEMX),
             "illegal_data_value": Elem.INT(U("Illegal Data Value"), version=Version.WARP2 | Version.WARP3 | Version.WEMX),
