@@ -66,7 +66,7 @@ def print_warp2_label(sku, version, serial_number, build_date, instances, copies
         raise Exception('Invalid copies: {0}'.format(copies))
 
     # parse SKU
-    m = re.match(r'^WARP(2|3)-C(B|S|P)-(11|22)KW-(50|75|CC)(-PC)?$', sku)
+    m = re.match(r'^WARP(2|3|4)-C(B|S|P)-(11|22)KW-(50|75|CC)(-PC)?$', sku)
 
     if m == None:
         raise Exception('Invalid SKU: {0}'.format(sku))
@@ -81,6 +81,8 @@ def print_warp2_label(sku, version, serial_number, build_date, instances, copies
         description = b'WARP2 Charger '
     elif sku_gen == '3':
         description = b'WARP3 Charger '
+    elif sku_gen == '4':
+        description = b'WARP4 Charger '
     else:
         assert False, sku_gen
 
