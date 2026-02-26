@@ -59,8 +59,10 @@ PV-Überschuss berücksichtigt, sondern nur die zeitbasierte Steuerung.
 
 ## §14a EnWG
 
-Soll der SG-Ready Ausgang für den blockierenden Betrieb genutzt werden um auf Grund von
-**S14a EnWG** die Heizung zu sperren, so kann in diesem Abschnitt der entsprechende
-Eingang des WARP Energy Managers gewählt werden.
+:::note
 
-![image](/img/webinterface/energy_management/wem2-heating5.jpg)
+Die §14a-EnWG-Steuerung wird zentral auf einer eigenen Seite konfiguriert: [§14a EnWG](/docs/webinterface/energy_management/p14a_enwg.md). Dort kann die Heizung als Zielgerät für das §14a-Leistungslimit aktiviert werden.
+
+:::
+
+Wird die Heizung in der [§14a-EnWG-Konfiguration](/docs/webinterface/energy_management/p14a_enwg.md) als Zielgerät aktiviert, so wird bei aktivem Steuersignal der SG-Ready-Ausgang für den blockierenden Betrieb geschaltet, um die Heizung zu sperren.
