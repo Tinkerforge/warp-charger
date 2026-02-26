@@ -27,6 +27,7 @@ from power_manager import power_manager
 from day_ahead_prices import day_ahead_prices
 from front_panel import front_panel
 from heating import heating
+from p14a_enwg import p14a_enwg
 from solar_forecast import solar_forecast
 
 mods = [
@@ -59,5 +60,6 @@ mods = [
     day_ahead_prices,
     front_panel,
     heating,
+    p14a_enwg,
     solar_forecast,
 ]
