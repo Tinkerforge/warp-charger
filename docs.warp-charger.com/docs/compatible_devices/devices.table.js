@@ -82,7 +82,7 @@ export const devices = [
   {
     manufacturer: "E3DC",
     device: "S10, S20 Hauskraftwerke",
-    connection: "SunSpec",
+    connection: "Modbus/TCP",
     link: "/docs/compatible_devices/devices#e3dc",
     grid: "x",
     pv: "x",
