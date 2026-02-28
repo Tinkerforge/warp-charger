@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-p14a_enwg = Module("p14a_enwg", T({'de': "§14a EnWG", 'en': "§14a EnWG"}), "", T({'de': "Über das `p14a_enwg`-Modul können die Einstellungen für die Steuerung gemäß §14a des Energiewirtschaftsgesetzes (EnWG) konfiguriert werden. §14a EnWG ermöglicht es Netzbetreibern, den Strombezug steuerbarer Verbrauchseinrichtungen (Wallboxen, Wärmepumpen, Batteriespeicher, Klimaanlagen) temporär zu reduzieren, um eine lokale Netzüberlastung zu vermeiden. Die Geräte werden dabei nie vollständig abgeschaltet. Eine Mindestleistung von 4200 W bleibt stets verfügbar.", 'en': "The `p14a_enwg` module allows configuration of settings for control according to §14a of the German Energy Industry Act (EnWG). §14a EnWG allows grid operators to temporarily reduce the power consumption of controllable consumer devices (wallboxes, heat pumps, battery storage, air conditioning) to prevent local grid overload. The devices are never fully shut off. A minimum of 4200 W always remains available."}), Version.WARP2 | Version.WARP3 | Version.WEM2, [
+p14a_enwg = Module("p14a_enwg", T({'de': "§14a EnWG", 'en': "§14a EnWG"}), "", T({'de': "Über das `p14a_enwg`-Modul können die Einstellungen für die Steuerung gemäß §14a des Energiewirtschaftsgesetzes (EnWG) konfiguriert werden. §14a EnWG ermöglicht es Netzbetreibern, den Strombezug steuerbarer Verbrauchseinrichtungen (Wallboxen, Wärmepumpen, Batteriespeicher, Klimaanlagen) temporär zu reduzieren, um eine lokale Netzüberlastung zu vermeiden. Die Geräte werden dabei nie vollständig abgeschaltet. Eine Mindestleistung von 4200 W bleibt stets verfügbar.", 'en': "The `p14a_enwg` module allows configuration of settings for control according to §14a of the German Energy Industry Act (EnWG). §14a EnWG allows grid operators to temporarily reduce the power consumption of controllable consumer devices (wallboxes, heat pumps, battery storage, air conditioning) to prevent local grid overload. The devices are never fully shut off. A minimum of 4200 W always remains available."}), Version.WARP2 | Version.WARP3 | Version.WEMX, [
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Die Konfiguration der §14a-EnWG-Steuerung.", 'en': "The §14a EnWG control configuration."}), members={
         "enable": Elem.BOOL(T({'de': "Gibt an, ob die §14a-EnWG-Steuerung aktiviert werden soll.", 'en': "Specifies whether §14a EnWG control should be enabled."})),
         "source": Elem.UNION(T({'de': "Signalquelle für die §14a-EnWG-Steuerung.", 'en': "Signal source for §14a EnWG control."}), members={
@@ -10,12 +10,12 @@ p14a_enwg = Module("p14a_enwg", T({'de': "§14a EnWG", 'en': "§14a EnWG"}), "",
                     Const(False, T({'de': "Aktiv wenn geöffnet", 'en': "Active when open"})),
                 ]),
                 "limit_w": Elem.INT(T({'de': "Leistungslimit in Watt, das bei Auslösung über den Eingang angewendet wird.", 'en': "Power limit in watts applied when triggered via the input."}), unit=Units.W),
-                "input_index": Elem.INT(T({'de': "Gibt an, welcher der vier Eingänge des Energy Managers für die §14a-Steuerung verwendet wird.", 'en': "Specifies which of the four Energy Manager inputs is used for §14a control."}), constants=[
-                    Const(0, T({'de': "Eingang 1", 'en': "Input 1"})),
-                    Const(1, T({'de': "Eingang 2", 'en': "Input 2"})),
-                    Const(2, T({'de': "Eingang 3", 'en': "Input 3"})),
-                    Const(3, T({'de': "Eingang 4", 'en': "Input 4"})),
-                ], version=Version.WEM2),
+                "input_index": Elem.INT(T({'de': "Gibt an, welcher Eingang des Energy Managers für die §14a-Steuerung verwendet wird.", 'en': "Specifies which Energy Manager input is used for §14a control."}), constants=[
+                    Const(0, T({'de': "Eingang 1", 'en': "Input 1"}), version=Version.WEMX),
+                    Const(1, T({'de': "Eingang 2", 'en': "Input 2"}), version=Version.WEMX),
+                    Const(2, T({'de': "Eingang 3", 'en': "Input 3"}), version=Version.WEM2),
+                    Const(3, T({'de': "Eingang 4", 'en': "Input 4"}), version=Version.WEM2),
+                ], version=Version.WEMX),
             }),
             1: Elem.NULL(T({'de': "EEBUS", 'en': "EEBUS"})),
             2: Elem.NULL(T({'de': "API", 'en': "API"})),
