@@ -14,12 +14,12 @@ wifi = Module("wifi", T({'de': "WLAN-Konfiguration", 'en': "Wi-Fi Configuration"
                 Const(2, T({'de': "Fallback inaktiv", 'en': "Fallback inactive"})),
                 Const(3, T({'de': "Fallback aktiv", 'en': "Fallback active"})),
             ]),
-            "ap_bssid": Elem.STRING(T({'de': "BSSID des WLAN-Access-Points.", 'en': "BSSID of the Wi-Fi access point."})),
+            "ap_bssid": Elem.STRING(T({'de': "BSSID des WLAN-Access-Points.", 'en': "BSSID of the Wi-Fi access point."}), censored_in_debug_report=True),
             "ap_sta_count": Elem.INT(T({'de': "Anzahl der aktuell zum WLAN-Access-Point verbundenen Geräte.", 'en': "Number of devices currently connected to the Wi-Fi access point."})),
             "sta_ip": Elem.STRING(T({'de': "Aktuelle IP des Geräts im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.", 'en': "Current IP of the device in the configured network. 0.0.0.0 if no connection exists."})),
             "sta_subnet": Elem.STRING(T({'de': "Aktuelle Subnetzmaske des Geräts im konfigurierten Netz. 0.0.0.0 falls keine Verbindung besteht.", 'en': "Current subnet mask of the device in the configured network. 0.0.0.0 if no connection exists."})),
             "sta_rssi": Elem.INT(T({'de': "Die aktuelle Empfangsqualität. 0 falls keine Verbindung besteht, sonst negativ. Werte näher 0 entsprechen einem besseren Empfang.", 'en': "The current reception quality. 0 if no connection exists, otherwise negative. Values closer to 0 indicate better reception."})),
-            "sta_bssid": Elem.STRING(T({'de': "Die BSSID der Gegenstelle, zu der das Gerät verbunden ist.", 'en': "The BSSID of the remote station to which the device is connected."})),
+            "sta_bssid": Elem.STRING(T({'de': "Die BSSID der Gegenstelle, zu der das Gerät verbunden ist.", 'en': "The BSSID of the remote station to which the device is connected."}), censored_in_debug_report=True),
             "connection_start": Elem.INT(T({'de': "Zeit in Millisekunden, zu der die letzte Verbindung aufgebaut wurde.", 'en': "Time in milliseconds when the last connection was established."}), unit=Units.ms),
             "connection_end": Elem.INT(T({'de': "Zeit in Millisekunden, zu der die letzte Verbindung getrennt wurde.", 'en': "Time in milliseconds when the last connection was disconnected."}), unit=Units.ms)
         })
@@ -32,8 +32,8 @@ wifi = Module("wifi", T({'de': "WLAN-Konfiguration", 'en': "Wi-Fi Configuration"
                 Const(True, T({'de': "Wenn eine WLAN-Verbindung aufgebaut werden soll.", 'en': "If a Wi-Fi connection should be established."})),
                 Const(False, T({'de': "Wenn nicht.", 'en': "If not."}))
             ]),
-            "ssid": Elem.STRING(T({'de': "SSID, zu der sich verbunden werden soll.", 'en': "SSID to which the device should connect."})),
-            "bssid": Elem.ARRAY(T({'de': "BSSID, zu der sich verbunden werden soll. Dieser Eintrag ist optional und kann leer übergeben werden, wird aber für das bssid_lock benötigt.", 'en': "BSSID to which the device should connect. This entry is optional and can be left empty, but is required for bssid_lock."}), members=[
+            "ssid": Elem.STRING(T({'de': "SSID, zu der sich verbunden werden soll.", 'en': "SSID to which the device should connect."}), censored_in_debug_report=True),
+            "bssid": Elem.ARRAY(T({'de': "BSSID, zu der sich verbunden werden soll. Dieser Eintrag ist optional und kann leer übergeben werden, wird aber für das bssid_lock benötigt.", 'en': "BSSID to which the device should connect. This entry is optional and can be left empty, but is required for bssid_lock."}), censored_in_debug_report=True, members=[
                 * 6 * [Elem.INT("")]
             ]),
             "bssid_lock": Elem.BOOL(T({'de': "Legt fest, ob sich nur zum WLAN mit der gesetzten BSSID verbunden werden soll. Deaktiviert lassen, falls Repeater o.Ä. verwendet werden sollen.", 'en': "Specifies whether to connect only to the Wi-Fi network with the specified BSSID. Leave disabled if repeaters or similar should be used."}), constants=[

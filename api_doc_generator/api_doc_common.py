@@ -253,54 +253,55 @@ class Elem:
     var_length_array_type: Optional[EType]
     var_length_array_unit: Optional[Unit]
     censored: bool
+    censored_in_debug_report: bool
     version: Version
     type_name_override: Optional[str]
     union_tab_id: Optional[str]
     hidden_union_get_tag: Optional[Callable[[str, dict], int]]
 
     @staticmethod
-    def OBJECT(desc: 'T', *, members: dict[str, 'Elem'], censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.OBJECT, _ensure_T(desc), None, members, None, False, None, None, censored, version, None, None, None)
+    def OBJECT(desc: 'T', *, members: dict[str, 'Elem'], censored: bool = False, censored_in_debug_report: bool = False, version: Version = Version.ANY):
+        return Elem(EType.OBJECT, _ensure_T(desc), None, members, None, False, None, None, censored, censored_in_debug_report, version, None, None, None)
 
     @staticmethod
-    def ARRAY(desc: 'T', *, unit: Optional[Unit] = None, members: Optional[list['Elem']] = None, member_type: Optional[EType] = None, member_unit: Optional[Unit] = None, censored: bool = False, version: Version = Version.ANY, is_var_length_array: bool = False):
+    def ARRAY(desc: 'T', *, unit: Optional[Unit] = None, members: Optional[list['Elem']] = None, member_type: Optional[EType] = None, member_unit: Optional[Unit] = None, censored: bool = False, censored_in_debug_report: bool = False, version: Version = Version.ANY, is_var_length_array: bool = False):
         if members is None and member_type is None:
             raise Exception("Array without members and member_type is not supported!")
         if members is not None and member_type is not None and any(x.type_ != member_type for x in members):
             raise Exception("Type mismatch between members and member_type!")
-        return Elem(EType.ARRAY, _ensure_T(desc), unit, members, None, is_var_length_array or (members is None), member_type if member_type is not None else members[0].type_, member_unit, censored, version, None, None, None)
+        return Elem(EType.ARRAY, _ensure_T(desc), unit, members, None, is_var_length_array or (members is None), member_type if member_type is not None else members[0].type_, member_unit, censored, censored_in_debug_report, version, None, None, None)
 
     @staticmethod
-    def STRING(desc: 'T', *, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.STRING, _ensure_T(desc), None, None, constants, False, None, None, censored, version, None, None, None)
+    def STRING(desc: 'T', *, constants: Optional[list[Const]] = None, censored: bool = False, censored_in_debug_report: bool = False, version: Version = Version.ANY):
+        return Elem(EType.STRING, _ensure_T(desc), None, None, constants, False, None, None, censored, censored_in_debug_report, version, None, None, None)
 
     @staticmethod
-    def INT(desc: 'T', *, type_name_override: Optional[str] = None, unit: Optional[Unit] = None, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.INT, _ensure_T(desc), unit, None, constants, False, None, None, censored, version, type_name_override, None, None)
+    def INT(desc: 'T', *, type_name_override: Optional[str] = None, unit: Optional[Unit] = None, constants: Optional[list[Const]] = None, censored: bool = False, censored_in_debug_report: bool = False, version: Version = Version.ANY):
+        return Elem(EType.INT, _ensure_T(desc), unit, None, constants, False, None, None, censored, censored_in_debug_report, version, type_name_override, None, None)
 
     @staticmethod
-    def FLOAT(desc: 'T', *, unit: Optional[Unit] = None, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.FLOAT, _ensure_T(desc), unit, None, constants, False, None, None, censored, version, None, None, None)
+    def FLOAT(desc: 'T', *, unit: Optional[Unit] = None, constants: Optional[list[Const]] = None, censored: bool = False, censored_in_debug_report: bool = False, version: Version = Version.ANY):
+        return Elem(EType.FLOAT, _ensure_T(desc), unit, None, constants, False, None, None, censored, censored_in_debug_report, version, None, None, None)
 
     @staticmethod
-    def BOOL(desc: 'T', *, constants: Optional[list[Const]] = None, censored: bool = False, version: Version = Version.ANY):
-        return Elem(EType.BOOL, _ensure_T(desc), None, None, constants, False, None, None, censored, version, None, None, None)
+    def BOOL(desc: 'T', *, constants: Optional[list[Const]] = None, censored: bool = False, censored_in_debug_report: bool = False, version: Version = Version.ANY):
+        return Elem(EType.BOOL, _ensure_T(desc), None, None, constants, False, None, None, censored, censored_in_debug_report, version, None, None, None)
 
     @staticmethod
     def NULL(desc: 'T', *, version: Version = Version.ANY):
-        return Elem(EType.NULL, _ensure_T(desc), None, None, None, False, None, None, False, version, None, None, None)
+        return Elem(EType.NULL, _ensure_T(desc), None, None, None, False, None, None, False, False, version, None, None, None)
 
     @staticmethod
     def OPAQUE(desc: 'T'):
-        return Elem(EType.OPAQUE, _ensure_T(desc), None, None, None, False, None, None, False, Version.ANY, None, None, None)
+        return Elem(EType.OPAQUE, _ensure_T(desc), None, None, None, False, None, None, False, False, Version.ANY, None, None, None)
 
     @staticmethod
-    def UNION(desc: 'T', *, members: dict[int, 'Elem'], censored: bool = False, version: Version = Version.ANY, tab_id = None):
-        return Elem(EType.UNION, _ensure_T(desc), None, members, None, False, None, None, censored, version, None, tab_id, None)
+    def UNION(desc: 'T', *, members: dict[int, 'Elem'], censored: bool = False, censored_in_debug_report: bool = False, version: Version = Version.ANY, tab_id = None):
+        return Elem(EType.UNION, _ensure_T(desc), None, members, None, False, None, None, censored, censored_in_debug_report, version, None, tab_id, None)
 
     @staticmethod
-    def HIDDEN_UNION(desc: 'T', *, members: dict[int, 'Elem'], get_tag_fn: Optional[Callable[[str, dict], int]], censored: bool = False, version: Version = Version.ANY, tab_id = None):
-        return Elem(EType.HIDDEN_UNION, _ensure_T(desc), None, members, None, False, None, None, censored, version, None, tab_id, get_tag_fn)
+    def HIDDEN_UNION(desc: 'T', *, members: dict[int, 'Elem'], get_tag_fn: Optional[Callable[[str, dict], int]], censored: bool = False, censored_in_debug_report: bool = False, version: Version = Version.ANY, tab_id = None):
+        return Elem(EType.HIDDEN_UNION, _ensure_T(desc), None, members, None, False, None, None, censored, censored_in_debug_report, version, None, tab_id, get_tag_fn)
 
     def get_type(self, version=Version.ANY) -> str:
         if self.type_ in (EType.OBJECT,

@@ -24,15 +24,15 @@ solar_forecast = Module("solar_forecast", T({'de': "PV-Ertragsprognose", 'en': "
             "last_sync": Elem.INT(T({'de': "Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die PV-Ertragsprognose das letzte Mal aktualisiert wurde.", 'en': "A Unix timestamp in <strong>minutes</strong> indicating when the PV yield forecast was last updated."})),
             "last_check": Elem.INT(T({'de': "Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die PV-Ertragsprognose das letzte Mal abgefragt wurde.", 'en': "A Unix timestamp in <strong>minutes</strong> indicating when the PV yield forecast was last queried."})),
             "next_check": Elem.INT(T({'de': "Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die PV-Ertragsprognose das nächste Mal abgefragt wird.", 'en': "A Unix timestamp in <strong>minutes</strong> indicating when the PV yield forecast will be queried next."})),
-            "place": Elem.STRING(T({'de': "Ort der konfigurierten PV-Fläche.", 'en': "Location of the configured PV plane."})),
+            "place": Elem.STRING(T({'de': "Ort der konfigurierten PV-Fläche.", 'en': "Location of the configured PV plane."}), censored_in_debug_report=True),
         })
     ),
 
     Func("planes/X/config", FuncType.CONFIGURATION, Elem.OBJECT("", members={
         "enable": Elem.BOOL(T({'de': "Aktiviert die PV-Fläche.", 'en': "Enables the PV plane."})),
         "name": Elem.STRING(T({'de': "Anzeigename der PV-Fläche.", 'en': "Display name of the PV plane."})),
-        "lat": Elem.INT(T({'de': "Breitengrad (z.B. 51.8847°)", 'en': "Latitude (e.g., 51.8847°)"}), unit=Units.tenthousands_degree),
-        "long": Elem.INT(T({'de': "Längengrad (z.B. 8.6225°)", 'en': "Longitude (e.g., 8.6225°)"}), unit=Units.tenthousands_degree),
+        "lat": Elem.INT(T({'de': "Breitengrad (z.B. 51.8847°)", 'en': "Latitude (e.g., 51.8847°)"}), unit=Units.tenthousands_degree, censored_in_debug_report=True),
+        "long": Elem.INT(T({'de': "Längengrad (z.B. 8.6225°)", 'en': "Longitude (e.g., 8.6225°)"}), unit=Units.tenthousands_degree, censored_in_debug_report=True),
         "dec": Elem.INT(T({'de': "Neigung (0° horizontal bis 90° vertikal)", 'en': "Inclination (0° horizontal to 90° vertical)"}), unit=Units.degree),
         "az": Elem.INT(T({'de': "Azimut (-180° = Norden, -90° = Osten, 0° = Süden, 90° = Westen, 180° = Norden)", 'en': "Azimuth (-180° = North, -90° = East, 0° = South, 90° = West, 180° = North)"}), unit=Units.degree),
         "wp": Elem.INT(T({'de': "Peak-Leistung der PV-Fläche.", 'en': "Peak power of the PV plane."}), unit=Units.Wp),

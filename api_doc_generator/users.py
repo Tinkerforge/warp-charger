@@ -5,8 +5,8 @@ def user(version):
         "id": Elem.INT(T({'de': "ID des Benutzers (1-255)", 'en': "ID of the user (1-255)"})),
         "roles": Elem.INT(T({'de': "Berechtigungen des Benutzers. Wird noch nicht verwendet.", 'en': "Permissions of the user. Not yet used."})),
         "current": Elem.INT(T({'de': "Diesem Benutzer erlaubter Ladestrom 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 um diesem Nutzer das Laden zu verbieten", 'en': "Charging current allowed for this user 6000 (=6 Ampere) to 32000 (=32 Ampere) or 0 to prohibit charging for this user"}), unit=Units.mA),
-        "display_name": Elem.STRING(T({'de': "Anzeigename des Benutzers. Wird auch im Ladetracker verwendet.", 'en': "Display name of the user. Also used in the charge tracker."})),
-        "username": Elem.STRING(T({'de': "Nutzername zum Anmelden im Webinterface und der HTTP-API.", 'en': "Username for logging into the web interface and HTTP API."})),
+        "display_name": Elem.STRING(T({'de': "Anzeigename des Benutzers. Wird auch im Ladetracker verwendet.", 'en': "Display name of the user. Also used in the charge tracker."}), censored_in_debug_report=True),
+        "username": Elem.STRING(T({'de': "Nutzername zum Anmelden im Webinterface und der HTTP-API.", 'en': "Username for logging into the web interface and HTTP API."}), censored_in_debug_report=True),
         "digest_hash": Elem.STRING(T({'de': "HTTP-Digest-Hash. Wird als leerer String zurückgegeben, falls die Anmeldung für diesen Nutzer deaktiviert ist. Wird als null zurückgegeben wenn die Anmeldung für diesen Nutzer aktiviert ist.", 'en': "HTTP Digest hash. Returned as empty string if login is disabled for this user. Returned as null if login is enabled for this user."}), censored=True)
     })
     ]
@@ -29,8 +29,8 @@ users = Module("users", T({'de': "Benutzerverwaltung", 'en': "User Management"})
         "id": Elem.INT(T({'de': "ID des anzulegenden Nutzers. Muss dem aktuellen Wert von next_user_id aus {{{ref:users/config}}} entsprechen.", 'en': "ID of the user to be created. Must match the current value of next_user_id from {{{ref:users/config}}}."})),
         "roles": Elem.INT(T({'de': "Berechtigungen des Benutzers. Wird noch nicht verwendet.", 'en': "Permissions of the user. Not yet used."})),
         "current": Elem.INT(T({'de': "Diesem Benutzer erlaubter Ladestrom 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 um diesem Nutzer das Laden zu verbieten", 'en': "Charging current allowed for this user 6000 (=6 Ampere) to 32000 (=32 Ampere) or 0 to prohibit charging for this user"}), unit=Units.mA),
-        "display_name": Elem.STRING(T({'de': "Anzeigename des Benutzers. Wird auch im Ladetracker verwendet.", 'en': "Display name of the user. Also used in the charge tracker."})),
-        "username": Elem.STRING(T({'de': "Nutzername zum Anmelden im Webinterface und der HTTP-API.", 'en': "Username for logging into the web interface and HTTP API."})),
+        "display_name": Elem.STRING(T({'de': "Anzeigename des Benutzers. Wird auch im Ladetracker verwendet.", 'en': "Display name of the user. Also used in the charge tracker."}), censored_in_debug_report=True),
+        "username": Elem.STRING(T({'de': "Nutzername zum Anmelden im Webinterface und der HTTP-API.", 'en': "Username for logging into the web interface and HTTP API."}), censored_in_debug_report=True),
         "digest_hash": Elem.STRING(T({'de': "HTTP-Digest-Hash des anzulegenden Nutzers. Ein leerer String verbietet das Anmelden im Webinterface.", 'en': "HTTP Digest hash of the user to be created. An empty string prohibits login to the web interface."}), censored=True)
     }), command_is_action=True),
 
@@ -42,8 +42,8 @@ users = Module("users", T({'de': "Benutzerverwaltung", 'en': "User Management"})
         "id": Elem.INT(T({'de': "ID des zu modifizierenden Nutzers.", 'en': "ID of the user to be modified."})),
         "roles": Elem.INT(T({'de': "Berechtigungen des Benutzers. Wird noch nicht verwendet.", 'en': "Permissions of the user. Not yet used."})),
         "current": Elem.INT(T({'de': "Diesem Benutzer erlaubter Ladestrom 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 um diesem Nutzer das Laden zu verbieten", 'en': "Charging current allowed for this user 6000 (=6 Ampere) to 32000 (=32 Ampere) or 0 to prohibit charging for this user"}), unit=Units.mA),
-        "display_name": Elem.STRING(T({'de': "Anzeigename des Benutzers. Wird auch im Ladetracker verwendet.", 'en': "Display name of the user. Also used in the charge tracker."})),
-        "username": Elem.STRING(T({'de': "Nutzername zum Anmelden im Webinterface und der HTTP-API.", 'en': "Username for logging into the web interface and HTTP API."})),
+        "display_name": Elem.STRING(T({'de': "Anzeigename des Benutzers. Wird auch im Ladetracker verwendet.", 'en': "Display name of the user. Also used in the charge tracker."}), censored_in_debug_report=True),
+        "username": Elem.STRING(T({'de': "Nutzername zum Anmelden im Webinterface und der HTTP-API.", 'en': "Username for logging into the web interface and HTTP API."}), censored_in_debug_report=True),
         "digest_hash": Elem.STRING(T({'de': "HTTP-Digest-Hash des Nutzers. Ein leerer String verbietet das Anmelden im Webinterface.", 'en': "HTTP Digest hash of the user. An empty string prohibits login to the web interface."}))
     }), command_is_action=True),
 
