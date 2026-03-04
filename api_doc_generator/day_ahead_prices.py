@@ -51,6 +51,6 @@ day_ahead_prices = Module("day_ahead_prices", T({'de': "Dynamische Strompreise",
     }), command_is_action=True),
 
     Func("calendar", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Der Preiskalender. Enthält wöchentlich wiederkehrende Preisaufschläge oder -abschläge in 15-Minuten-Intervallen. Das Array enthält 672 Einträge (7 Tage × 96 Viertelstunden). Die Tage beginnen bei Montag (Index 0–95) und enden bei Sonntag (Index 576–671).", 'en': "The price calendar. Contains weekly recurring price surcharges or discounts in 15-minute intervals. The array contains 672 entries (7 days × 96 quarter-hours). Days start on Monday (index 0–95) and end on Sunday (index 576–671)."}), members={
-        "prices": Elem.ARRAY(T({'de': "Array von 672 Preisaufschlägen oder -abschlägen. Jeder Eintrag entspricht einem 15-Minuten-Intervall einer Woche, beginnend bei Montag 00:00.", 'en': "Array of 672 price surcharges or discounts. Each entry corresponds to a 15-minute interval of a week, starting on Monday 00:00."}), members=672 * [Elem.INT("")], unit=Units.thousands_cent_per_kWh),
+        "prices": Elem.ARRAY(T({'de': "Array von 672 Preisaufschlägen oder -abschlägen. Jeder Eintrag entspricht einem 15-Minuten-Intervall einer Woche, beginnend bei Montag 00:00.", 'en': "Array of 672 price surcharges or discounts. Each entry corresponds to a 15-minute interval of a week, starting on Monday 00:00."}), members=672 * [Elem.INT("")], unit=Units.hundredth_cent_per_kWh),
     })),
 ])
