@@ -25,14 +25,20 @@ Der WARP3 Charger besitzt folgende technische Spezifikation:
 | Eigenschaft | Wert |
 |-|-|
 | Fahrzeugladestecker | Typ 2 |
-| Ladekabellänge | 5,0 m und 7,5 m (*) |
+| Ladekabellänge | 5,0 m und 7,5 m oder Sonderlänge(*) |
 | Zuleitungsquerschnitt | 2,5 mm² bis 10 mm² |
+| Zuleitungsdurchmesser | 11 mm bis 21 mm (M32 Kabelverschraubung) |
 | Zuleitungseinführung | Von der Unterseite und Rückseite möglich |
+| LAN- / Steuerleitungsdurchmesser | 4 mm bis 8 mm (M16 Kabelverschraubung) |
+| LAN- / Steuerleitungseinführung | Von der Unterseite und Rückseite möglich |
 | Abmessungen Wallbox | 280 × 215 × 95 mm (B/H/T, Bounding Box) |
 | Anbringung | [Siehe Bohrschablone](https://www.warp-charger.com/documents/WARP3_Bohrschablone.pdf) |
 | Gewicht | Je nach Kabellänge, ca. 8 kg (*) |
 | Schutzart | IP54 (spritzwassergeschützt, für den Außenbereich geeignet) |
+| Schlagfestigkeit | Gehäuse IK09 (7 Joule nach EN 60079-0) |
 | Lieferumfang | Wallbox, Betriebsanleitung inkl. Installationsanleitung, Bohrschablone, Prüfprotokoll, 3x NFC‐Karten |
+
+(*) Je nach Variante der Wallbox (Basic / Smart / Pro, 5 m / 7,5 m, 11 kW / 22 kW).
 
 ### Software Eigenschaften
 
@@ -50,4 +56,3 @@ Der WARP3 Charger besitzt folgende technische Spezifikation:
 | Schnittstellen | HTTP, MQTT, Modbus/TCP, OCPP, SunSpec |
 | Modbus-Register | WARP Charger Tabelle und Simulation von Bender CC613 und Keba C-Series |
 
-(*) Je nach Variante der Wallbox (Basic / Smart / Pro, 5 m / 7,5 m, 11 kW / 22 kW).
