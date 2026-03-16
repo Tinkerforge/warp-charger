@@ -548,7 +548,7 @@ export const devices = [
     load: "-",
     dlm: "x",
     pve: "x",
-    bat: "x"
+    bat: "-"
   },
   {
     manufacturer: "SMA",
