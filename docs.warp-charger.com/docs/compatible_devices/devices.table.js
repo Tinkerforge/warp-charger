@@ -187,27 +187,14 @@ export const devices = [
   {
     manufacturer: "Fronius",
     device: "GEN24- und GEN24 Plus-Serie Hybrid-Wechselrichter",
-    connection: "SunSpec",
+    connection: "SunSpec, Modbus/TCP",
     link: "/docs/compatible_devices/devices#fronius",
     grid: "x",
     pv: "x",
-    battery: "-",
+    battery: "x",
     load: "-",
     dlm: "x",
     pve: "x",
-    bat: "-"
-  },
-  {
-    manufacturer: "Fronius",
-    device: "GEN24- und GEN24 Plus-Serie Hybrid-Wechselrichter (Speicher)",
-    connection: "Modbus/TCP",
-    link: "/docs/compatible_devices/devices#fronius",
-    grid: "-",
-    pv: "-",
-    battery: "x",
-    load: "-",
-    dlm: "-",
-    pve: "-",
     bat: "-"
   },
   {
@@ -527,7 +514,7 @@ export const devices = [
   {
     manufacturer: "SMA",
     device: "Sunny Boy Storage 3.7 / 4.0 / 5.0 / 6.0",
-    connection: "SunSpec",
+    connection: "SunSpec, Modbus/TCP",
     link: "/docs/compatible_devices/devices#sma",
     grid: "x",
     pv: "x",
@@ -540,7 +527,7 @@ export const devices = [
   {
     manufacturer: "SMA",
     device: "Sunny Boy Smart Energy 3.6 / 4.0 / 5.0 / 6.0",
-    connection: "SunSpec",
+    connection: "SunSpec, Modbus/TCP",
     link: "/docs/compatible_devices/devices#sma",
     grid: "x",
     pv: "x",
@@ -566,7 +553,7 @@ export const devices = [
   {
     manufacturer: "SMA",
     device: "Sunny Tripower Smart Energy 5.0 / 6.0 / 8.0 / 10.0",
-    connection: "SunSpec",
+    connection: "SunSpec, Modbus/TCP",
     link: "/docs/compatible_devices/devices#sma",
     grid: "x",
     pv: "x",
