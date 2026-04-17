@@ -11,14 +11,14 @@ sidebar_position: 2
     Speicher können von einem [WARP Charger 1,2,3](/docs/warp_charger/introduction) (ab Firmware 2.9.0) oder [WARP Energy Manager 2](/docs/warp_energy_manager/introduction) (ab Firmware 1.4.0) über das Netzwerk gesteuert werden.
     
     Generell werden Speicher unterstützt, die mittels [Modbus/TCP](/docs/compatible_devices/interfaces#modbustcp) Befehlen gesteuert werden können.
-    Es können eigene (benutzerdefinierte) Registertabellen angelegt werden, mit dem ein Speicher gesteuert werden kann. 
+    Es können eigene (benutzerdefinierte) Registertabellen angelegt werden, mit denen ein Speicher gesteuert werden kann. 
 
-    Wir arbeiten daran für möglichst viele Geräte Voreinstellungen zu bieten.
-    Die aktuell unterstützen Speicher bzw. Hybrid Wechselrichter sind in der [Liste der kompatiblen Geräte](/docs/compatible_devices/devices) zu finden.
+    Wir arbeiten daran, für möglichst viele Geräte Voreinstellungen zu bieten.
+    Die aktuell unterstützen Speicher und Hybrid-Wechselrichter sind in der [Liste der kompatiblen Geräte](/docs/compatible_devices/devices) zu finden.
     Sie unterstützen das Feature [Batteriesteuerung (BS)](/docs/compatible_devices/introduction#batteriesteuerung-bs).
 
     Die Batteriesteuerung übernimmt nicht die vollständige Kontrolle über den Speicher und regelt z.B. nicht seine Leistung.
-    Die Batteriesteuerung setzt nur Parameter des Speichers (z.B. den "maximalen Ladestrom") um diesen zu steuern. Die eigentliche Regelung verbleibt beim Speicher bzw. dem angeschlossenen Hybridwechselrichter.
+    Die Batteriesteuerung setzt nur Parameter des Speichers (z.B. den "maximalen Ladestrom"), um diesen zu steuern. Die eigentliche Regelung verbleibt beim Speicher oder dem angeschlossenen Hybrid-Wechselrichter.
 
 :::
 
@@ -28,7 +28,7 @@ sidebar_position: 2
 
 ## Anlegen eines Batteriespeichers
 
-Nach dem aktivieren der Batteriesteuerung kann ein Speicher angelegt werden. Dazu ist das "+" Symbol zu klicken und als Klasse "Modbus/TCP" gewählt werden. Anschließend ist der Anzeigename, Host, Port sowie die dazugehörige
+Nach dem Aktivieren der Batteriesteuerung kann ein Speicher angelegt werden. Dazu ist das "+" Symbol zu klicken und als Klasse "Modbus/TCP" gewählt werden. Anschließend ist der Anzeigename, Host, Port sowie die dazugehörige
 Registertabelle zu wählen. Danach sind weitere gerätespezifische Parameter einzustellen. Dies kann zum Beispiel die Ladeleistung oder ein Soll-Netzbezug sein. Am Ende muss der Speicher hinzugefügt werden und alle Einstellung mittels
 Klick auf "Speichern" und anschließendem Neustart übernommen werden.
 
@@ -51,8 +51,8 @@ Es können jeweils bis zu 32 Lade- und Entladeregeln angelegt werden. Der Aufbau
 ![image](/img/webinterface/energy_management/batterycontrol-rule-discharge.jpeg)
 
 
-Für jede Regel kann eine **Beschreibung** (Freitext) angelegt werden, sowie Bedingungen die auf die Parameter **Zeit**, dem **Ladestand (SoC)** der Batterie, der aktuelle (dynamische) **Strompreis**, die **PV-Ertragsprognose**,
-Bedingungen zum oben definierten **Strompreisplan** oder ob bei einer Wallbox eine **Schnellladung** aktiv ist Bezug nehmen. Für die Parameter können Vergleiche definiert werden, so dass zum Beispiel ein Strompreis **kleiner** 12 Cent als
+Für jede Regel kann eine **Beschreibung** (Freitext) angelegt werden, sowie Bedingungen, die auf die Parameter **Zeit**, dem **Ladestand (SoC)** der Batterie, der aktuelle (dynamische) **Strompreis**, die **PV-Ertragsprognose**,
+Bedingungen zum oben definierten **Strompreisplan** oder ob bei einer Wallbox eine **Schnellladung** aktiv ist, Bezug nehmen. Für die Parameter können Vergleiche definiert werden, so dass zum Beispiel ein Strompreis **kleiner** 12 Cent als
 Bedingung oder ein Ladestand **größer** als 50% definiert werden kann. Es müssen nicht alle Parameter als Bedingung der Regel genutzt werden. Parameter können ignoriert werden.
 
 Sind **ALLE** Bedingungen einer Regel erfüllt (**UND**), so ist die Regel aktiv und es wird die definierte **Aktion** durchgeführt:
@@ -60,7 +60,7 @@ Sind **ALLE** Bedingungen einer Regel erfüllt (**UND**), so ist die Regel aktiv
 Aktionen für Laderegeln sind:
 
  * **Erzwingen**: Der Speicher lädt. Ist die Ladeleistung nicht durch PV o.ä. gedeckt, so wird auch Strom aus dem Netz bezogen.
- * **Blockieren**: Dem Speicher wird verboten zu laden. Ist ein PV-Überschuss vorhanden, so fliest dieser nicht mehr in den Speicher.
+ * **Blockieren**: Dem Speicher wird verboten zu laden. Ist ein PV-Überschuss vorhanden, so fließt dieser nicht mehr in den Speicher.
 
 Aktionen für Entladeregeln sind:
 
@@ -76,11 +76,11 @@ Eine aktive Regel wird mit einem blauen Strich auf der linken Seite gekennzeichn
 
 ## Beispiele zu Speicherregeln
 
-Die Konfiguration der Regeln ist immer kunden- und anwendungsspezifisch. Nachfolgend geben wir einige Beispiele. Die jeweiligen Parameterwerte sind aber immer Abhängig von der jeweiligen Größe der PV-Anlage, des Speichers und den Verbräuchen.
+Die Konfiguration der Regeln ist immer kunden- und anwendungsspezifisch. Nachfolgend geben wir einige Beispiele. Die jeweiligen Parameterwerte sind aber immer abhängig von der jeweiligen Größe der PV-Anlage, des Speichers und den Verbräuchen.
 
 ### Bei günstigen Strompreisen aus dem Netz laden
 
-Bei der Nutzung dynamischer Strompreise kann es Sinn machen, den Speicher zu günstigen Zeiten zu laden um in Zeiten teurer Strompreise keinen Netzbezug zu haben. Um diese Funktion zu nutzen
+Bei der Nutzung dynamischer Strompreise kann es Sinn ergeben, den Speicher zu günstigen Zeiten zu laden um in Zeiten teurer Strompreise keinen Netzbezug zu haben. Um diese Funktion zu nutzen
 muss als erstes der **Zeitplan für dy­na­mi­schen Strom­preis** konfiguriert werden. Als Beispiel kann als **Günstige Stunden** die Anzahl der Stunden gewählt werden, die benötigt wird um den Speicher voll zu laden.
 Für die **Teuren Stunden** kann die Anzahl der Stunden gewählt werden, die der Speicher normalerweise ausreicht um den gesamten Bedarf zu decken.
 
