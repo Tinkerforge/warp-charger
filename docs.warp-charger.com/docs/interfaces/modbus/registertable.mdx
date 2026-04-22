@@ -24,7 +24,7 @@ ausgelesen werden. Eine Steuerung der Wallbox ist über die *Holding
 Registers* und *Coils* möglich.
 
 ### Input Registers (Funktionscodes: Lesen: 4)
-{/*LAST_COMMIT_ID=91cd96436f9c9f2a4888298024c34d1ec6dbc1c8*/}
+{/*LAST_COMMIT_ID=cd963d65044735b69847de1745600fc205942159*/}
 {/*
   Don't edit this table.
   Update https://github.com/Tinkerforge/esp32-firmware/blob/master/software/web/src/modules/modbus_tcp/translation_de.tsx
@@ -191,7 +191,7 @@ Registers* und *Coils* möglich.
                 <li>6: Eltako DSZ15DZMOD</li>
                 <li>7: YTL DEM4A</li>
                 <li>8: Lovato DMED341MID7ER</li>
-                <li>9: Eltako DSZ16DZE</li>
+                <li>9: Eltako DSZ16D[ZE]</li>
                 <li>10: Iskra WM3M4C</li>
             </ul>
         </td>
@@ -284,6 +284,16 @@ Registers* und *Coils* möglich.
                 <li>"0005": NFC Forum Typ 5</li>
             </ul>
         </td>
+    </tr>
+    <tr>
+        <td>4020 bis 4025</td>
+        <td>ID des letzten NFC-Tags (binär; mit Timeout)</td>
+        <td>uint8 (10x)</td>
+        <td>nfc</td>
+        <td>Die ID des zuletzt erkannten NFC-Tags im Binärformat oder 0, falls in der letzten Minute kein NFC-Tag gesehen wurde.
+            Kann zur Kompatibilität mit Systemen, die nur Zahltypen lesen können, beispielsweise Loxone genutzt werden.
+            Aktuell verbreitete NFC-Tags benutzen IDs mit einer Länge von 4, 7 oder (bei Tag Typ 5) 8 Byte.
+            Die Register 4020 bis einschließlich 4023 können also als uint64 interpretiert werden.</td>
     </tr>
 </tbody>
 </table>

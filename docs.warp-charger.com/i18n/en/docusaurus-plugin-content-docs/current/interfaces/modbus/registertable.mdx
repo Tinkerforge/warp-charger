@@ -21,7 +21,7 @@ Which features the charger offers can be read via *Discrete Inputs*.
 Control of the charger is possible via the *Holding Registers* and *Coils*.
 
 ### Input Registers (Function codes: Read: 4)
-{/*LAST_COMMIT_ID=91cd96436f9c9f2a4888298024c34d1ec6dbc1c8*/}
+{/*LAST_COMMIT_ID=cd963d65044735b69847de1745600fc205942159*/}
 {/*
   Don't edit this table.
   Update https://github.com/Tinkerforge/esp32-firmware/blob/master/software/web/src/modules/modbus_tcp/translation_de.tsx
@@ -187,7 +187,7 @@ Control of the charger is possible via the *Holding Registers* and *Coils*.
                 <li>6: Eltako DSZ15DZMOD</li>
                 <li>7: YTL DEM4A</li>
                 <li>8: Lovato DMED341MID7ER</li>
-                <li>9: Eltako DSZ16DZE</li>
+                <li>9: Eltako DSZ16D[ZE]</li>
                 <li>10: Iskra WM3M4C</li>
             </ul>
         </td>
@@ -280,6 +280,16 @@ Control of the charger is possible via the *Holding Registers* and *Coils*.
                 <li>"0005": NFC Forum Type 5</li>
             </ul>
         </td>
+    </tr>
+    <tr>
+        <td>4020 to 4025</td>
+        <td>ID of the last NFC tag (binary; with timeout)</td>
+        <td>uint8 (10x)</td>
+        <td>nfc</td>
+        <td>ID of the last seen NFC tag in binary or 0 if no tag was seen for one minute.
+            Can be used to be compatible with systems that are only able to read integer types, for example Loxone.
+            Currently used NFC tags use IDs of length 4, 7 or (Tag type 5) 8 bytes.
+            Thus the registers 4020 up to and including 4023 can be interpreted as uint64.</td>
     </tr>
 </tbody>
 </table>
