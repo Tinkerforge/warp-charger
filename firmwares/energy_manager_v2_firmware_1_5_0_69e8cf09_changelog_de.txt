@@ -1,0 +1,47 @@
+2026-04-22: 1.5.0 (27eee312)
+- Unterstützung von EEBUS hinzugefügt
+- Außentemperatur-Modul hinzugefügt
+- Heizung: Temperaturkurve hinzugefügt
+- Heizung: Heizplan verbessert, indem eine optimale Lösung unter Berücksichtigung der minimalen Haltezeit berechnet wird
+- Hinzugefügt, dass die meisten Konfigurationen ohne Neustart geändert werden können
+- Unterstützung von HTTPS für Webinterface und HTTP-API hinzugefügt
+- §14a-Unterstützung in separater Unterseite gesammelt
+- Unterstützung von TLS 1.3 hinzugefügt
+- Statusinformationen zu vielen Unterseiten hinzugefügt
+- Status-Widget hinzugefügt
+- Dark mode zum Webinterface hinzugefügt
+- Unterstützung für weitere Modbus-TCP-Zähler hinzugefügt: Growatt-TL-X(H)- und Solis-Hybridwechselrichter, Eltako DSZ16D, DSZ16DE, DSZ16DZ und DSZ16DZE Stromzähler
+- Unterstützung für weitere Modbus-TCP-Batteriespeicher hinzugefügt: Growatt-TL-X(H)- und Solis-Hybridwechselrichter, SAX Power Home (unterstützt nicht "Laden/Entladen erzwingen")
+- Modbus TCP: Hinzugefügt, dass SolarEdge PV-Leistung berechnet wird, falls das SunSpec MPPT-Modell fehlt
+- Modbus TCP: Virtueller Zähler "Batterie" des Fronius Verto Plus hinzugefügt
+- Fehlende Unterstützung der Modbus-TCP-Batteriesteuerung für bestimmte SMA-Wechselrichter dokumentiert: Sunny Boy Smart Energy, Sunny Tripower Storage und Sunny Island
+- Crashes, die durch (neu-)verbinden von WireGuard verursacht wurden, behoben
+- Behoben, dass PDF-Generierung des Ladeprotokolls Einträge übersprungen hat, wenn ein Datumsfilter benutzt wurde
+- Lastmanager: Behandlung von Fahrzeugen, die eine gewisse Zeit brauchen um (erneut) Strom anzufordern, verbessert
+- Batteriesteuerung: Behoben, dass falsche Regel als aktiv angezeigt wurde
+- Batteriesteuerung: Behoben, dass Regeln mit Schnelllade-Bedingung nicht nach Neustart ausgeführt worden
+- Batteriesteuerung: Sichergestellt, dass Modus "normal" angefordert wird, wenn keine Regeln konfiguriert sind
+- Batteriesteuerung: Probleme mit Zeitfenster-Regeln behoben
+- Batteriesteuerung: Blockiert/Normal-Modus mit SMA-Speichern repariert
+- Dynamischer Strompreis: DE/AT/LU-Regionen auf 15-Minuten-Preise migriert
+- Dynamischer Strompreis: API zum setzen eigener Strompreise hinzugefügt
+- Dynamischer Strompreis: Zaunpfahlproblem bei der Berechnung teurer Abschnitte repariert
+- Dynamischer Strompreis: Kalenderpreise (z.B. für §14a EnWG Modul 3) hinzugefügt
+- Angezeigte Ladeleistung von Wallboxen ohne Zähler repariert
+- Behoben, dass im Ereignislog die falsche Automatisierungsregel ausgegeben wurde
+- Modbus TCP: Temperaturwert der zweiten SolarEdge-Batterie repariert
+- Modbus TCP: Netzimport-Energiewert von GoodWe Wechselrichtern repariert
+- Modbus TCP: Vorzeichen des Leistungswerts eines virtuellen Zählers vom Typ "Stromzähler" von GoodWe Wechselrichtern repariert
+- Modbus TCP: Detektion der zweiten Batterie von GoodWe Wechselrichtern repariert
+- SunSpec: MPPT-Leistungssumme des Fronius Verto Plus repariert
+- SunSpec: Nicht zueinander passende Vorzeichen der Wechsel- und Gleichstromleistung repariert
+- SunSpec: Versionsdetektion von KOSTAL Smart Energy Metern mit Firmware 2.6.0 repariert
+- SunSpec: Robustheit des Scans verbessert
+- Sichergestellt, dass Netzwerkschnittstellen nicht aus Versehen deaktiviert werden können
+- Behoben, dass die nicht zurücksetzbaren Energiewerte des Iskra WM3M4C als zurücksetzbar markiert waren
+- Robustheit der WebSocket-Verbindung verbessert
+- Verboten, dass Zähler mit dem falschen Messort für das PV-Überschussladen oder dynamische Lastmanagement gewählt werden können
+- Robustheit der Fernzugriffsverbindung verbessert
+- Logo auf kleinen Bildschirmen zentriert
+- Zeitzonendatenbank aktualisiert
+- Gerätesuche-Dialoge vereinheitlicht

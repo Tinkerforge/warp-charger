@@ -1,0 +1,43 @@
+2026-04-22: 2.6.0 (27eee312)
+- Add EEBUS support
+- Add configuration changes without reboot for most modules
+- Add HTTPS support to web interface and HTTP API
+- Centralize §14a support in separate sub-page
+- Add TLS 1.3 support
+- Add status information to many sub-pages
+- Add status widget to web interface
+- Add dark mode to web interface
+- Add Modbus TCP meter support: Solis hybrid inverter, Growatt  TL-X(H) hybrid inverter, Eltako DSZ16D, DSZ16DE, DSZ16DZ and DSZ16DZE energy meters
+- Add Modbus TCP battery control support: Solis hybrid inverter, Growatt TL-X(H) hybrid inverter, SAX Power Home (does not support force charge/discharge)
+- Modbus TCP: Calculate SolarEdge PV power in case SunSpec MPPT model is missing
+- Modbus TCP: Add battery virtual meter for Fronius Verto Plus
+- Document missing Modbus TCP battery control support for SMA inverter series: Sunny Boy Smart Energy, Sunny Tripower Storage and Sunny Island
+- Fix crashes caused by WireGuard (re)connects
+- Fix charge log PDF generation skipping entries when using date filter
+- Charge Manager: Improve handling of vehicles that take some time to (re)start charging
+- Battery control: Fix wrong rules being shown as active
+- Battery control: Fix rule with fast charge condition not being activated at start-up
+- Battery control: Set mode "normal" if there are no rules configured
+- Battery control: Fix time condition issues
+- Battery control: Fix SMA block/normal mode
+- Day ahead prices: Migrate to 15 minute resolution for DE/AT/LU regions
+- Day ahead prices: Add API to push custom prices
+- Day ahead prices: Fix off-by-one error in expensive slot calculation
+- Day ahead prices: Add calendar prices (for §14a EnWG Modul 3 and similar)
+- Fix logged automation rule index
+- Modbus TCP: Fix temperature value of second SolarEdge battery
+- Modbus TCP: Fix grid import energy value for GoodWe inverters
+- Modbus TCP: Fix sign of power value for GoodWe inverters' "meter" virtual meter
+- Modbus TCP: Fix detection of second battery for GoodWe inverters
+- SunSpec: Fix Fronius Verto Plus MPPT power sum
+- SunSpec: Fix inverter AC/DC power sign mismatch
+- SunSpec: Fix version detection of KOSTAL Smart Energy Meters with firmware 2.6.0
+- SunSpec: Improve scan robustness
+- Warn more when disabling network interfaces to prevent lock-out
+- Fix Iskra WM3M4C's non-resettable energy values being marked as resettable
+- Improve WebSocket robustness
+- Disallow selecting meters with wrong location for PV excess charging / dynamic load management
+- Improve remote access robustness
+- Center header logo on small screens
+- Update timezone database
+- Unify device scan dialogs
