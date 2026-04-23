@@ -45,6 +45,18 @@ so wird der blockierende Betrieb aufgehoben und die Wärmepumpe in den erweitert
 Maximal kann die Summe der konfigurierten Stunden für den erweiterten und dem blockierenden
 Betrieb der eingestellten Regelzeit entsprechen. In diesem Fall befindet sich die Wärmepumpe nie im Normalbetrieb.
 
+## Temperatur-Heizkurve
+
+![image](/img/webinterface/energy_management/wem2-heating-curve.png)
+
+Die Temperatur-Heizkurve ermöglicht es, die Anzahl der Stunden für den erweiterten und blockierenden Betrieb automatisch anhand der Tagesmitteltemperatur anzupassen. Dazu werden zwei Temperaturpunkte verwendet: 20 °C (warm) und -10 °C (kalt). Die Stundenanzahl wird zwischen diesen beiden Endpunkten basierend auf der aktuellen Tagesmitteltemperatur linear interpoliert.
+
+Beispiel: Wenn der erweiterte Betrieb für 2 Stunden bei 20 °C und 8 Stunden bei -10 °C konfiguriert ist und die aktuelle Tagesmitteltemperatur 5 °C beträgt, wird der erweiterte Betrieb für 5 Stunden aktiviert.
+
+Für die Nutzung der Heizkurve muss das [Außentemperatur](/docs/webinterface/energy_management/temperatures)-Modul aktiviert sein.
+
+Zusätzlich gibt es die Option **Luft-Wärmepumpe**: Liegt die Tagesmitteltemperatur unter 5 °C, wird der erweiterte Betrieb auf den Zeitraum 09:00–18:00 Uhr begrenzt. Dies wird für Luft-Wärmepumpen empfohlen, die bei niedrigen Außentemperaturen ineffizient arbeiten. So wird verhindert, dass der preisbasierte Plan den erweiterten Betrieb in den kältesten Stunden (Nacht/früher Morgen) aktiviert.
+
 ## Status
 
 In diesem Abschnitt wird im Graph dargestellt, wann für den aktuellen Strompreisverlauf
