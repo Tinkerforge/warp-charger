@@ -29,6 +29,7 @@ from front_panel import front_panel
 from heating import heating
 from p14a_enwg import p14a_enwg
 from solar_forecast import solar_forecast
+from temperatures import temperatures
 
 mods = [
     evse,
@@ -62,4 +63,5 @@ mods = [
     heating,
     p14a_enwg,
     solar_forecast,
+    temperatures,
 ]
