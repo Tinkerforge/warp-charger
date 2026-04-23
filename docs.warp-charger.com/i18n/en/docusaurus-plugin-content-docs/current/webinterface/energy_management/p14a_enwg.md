@@ -14,7 +14,7 @@ The §14a EnWG control is available on the WARP Charger and the WARP Energy Mana
 
 :::
 
-![image](/img/webinterface/energy_management/p14a_enwg.jpg)
+![image](/img/webinterface/energy_management/p14a_enwg.png)
 
 ## Configuration
 
@@ -93,6 +93,6 @@ Additionally, a warning banner is displayed on the **Status page** when the powe
 
 ## Further information
 
-- [Controllable Consumption Device According to §14a EnWG (Tutorial)](/docs/tutorials/verbrauchseinrichtung.md) — Overview of the various implementation options
-- [Heating](/docs/webinterface/energy_management/heater.md) — SG-Ready control configuration
+- [Controllable Consumption Device According to §14a EnWG (Tutorial)](/tutorials/verbrauchseinrichtung.md) — Overview of the various implementation options
+- [Heating](/webinterface/energy_management/heater.md) — SG-Ready control configuration
 - [EEBus interface](/docs/interfaces/eebus) — Details on the EEBus connection

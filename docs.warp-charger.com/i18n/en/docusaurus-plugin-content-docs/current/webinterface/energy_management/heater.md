@@ -61,8 +61,8 @@ PV excess, but only the time-based control.
 
 :::note
 
-The §14a EnWG control is configured centrally on a dedicated page: [§14a EnWG](/docs/webinterface/energy_management/p14a_enwg.md). The heating system can be enabled as a target device for the §14a power limit there.
+The §14a EnWG control is configured centrally on a dedicated page: [§14a EnWG](/webinterface/energy_management/p14a_enwg.md). The heating system can be enabled as a target device for the §14a power limit there.
 
 :::
 
-When heating is enabled as a target device in the [§14a EnWG configuration](/docs/webinterface/energy_management/p14a_enwg.md), the SG-Ready output for blocking operation mode is activated when a control signal is received, blocking the heater.
+When heating is enabled as a target device in the [§14a EnWG configuration](/webinterface/energy_management/p14a_enwg.md), the SG-Ready output for blocking operation mode is activated when a control signal is received, blocking the heater.
