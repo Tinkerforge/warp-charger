@@ -71,10 +71,4 @@ PV-Überschuss berücksichtigt, sondern nur die zeitbasierte Steuerung.
 
 ## §14a EnWG
 
-:::note
-
 Die §14a-EnWG-Steuerung wird zentral auf einer eigenen Seite konfiguriert: [§14a EnWG](/docs/webinterface/energy_management/p14a_enwg.md). Dort kann die Heizung als Zielgerät für das §14a-Leistungslimit aktiviert werden.
-
-:::
-
-Wird die Heizung in der [§14a-EnWG-Konfiguration](/docs/webinterface/energy_management/p14a_enwg.md) als Zielgerät aktiviert, so wird bei aktivem Steuersignal der SG-Ready-Ausgang für den blockierenden Betrieb geschaltet, um die Heizung zu sperren.
