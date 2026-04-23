@@ -7,7 +7,7 @@ sidebar_position: 9
 
 :::note
 
-Outside Temperature is only available for the [WARP Energy Manager 2.0](/warp_energy_manager/introduction).
+Outside Temperature is only available for the [WARP Energy Manager 2.0](/warp_energy_manager/introduction.md).
 
 :::
 
@@ -15,7 +15,7 @@ Outside Temperature is only available for the [WARP Energy Manager 2.0](/warp_en
 
 The outside temperature module downloads temperature forecasts (minimum, maximum, and daily average) for the configured GPS coordinates. The data is fetched from a weather service every 6 hours and provides forecasts for today and tomorrow.
 
-The daily average temperature is used by the heating module's [temperature heating curve](/webinterface/energy_management/heater#temperature-heating-curve) to automatically adjust extended and blocking operation hours based on outdoor conditions.
+The daily average temperature is used by the heating module's [temperature heating curve](/webinterface/energy_management/heater.md#temperature-heating-curve) to automatically adjust extended and blocking operation hours based on outdoor conditions.
 
 ## Configuration
 

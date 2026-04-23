@@ -53,7 +53,7 @@ The temperature heating curve allows the number of hours for extended and blocki
 
 Example: If extended operation is configured for 2 hours at 20 °C and 8 hours at -10 °C, and the current daily average temperature is 5 °C, then extended operation would run for 5 hours.
 
-The [Outside Temperature](/webinterface/energy_management/temperatures) module must be enabled to use the heating curve.
+The [Outside Temperature](/webinterface/energy_management/temperatures.md) module must be enabled to use the heating curve.
 
 Additionally, there is an **Air heat pump** option: If the daily average temperature is below 5 °C, extended operation is limited to 09:00–18:00. This is recommended for air-source heat pumps that operate inefficiently at low outdoor temperatures. It prevents the price-based plan from activating extended operation during the coldest hours (night/early morning).
 
