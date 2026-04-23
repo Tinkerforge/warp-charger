@@ -28,7 +28,7 @@ Die Signalquelle bestimmt, woher das Steuersignal des Netzbetreibers empfangen w
 
 - **Abschalteingang der Wallbox** (nur WARP Charger): Das Signal wird über den potentialfreien Abschalteingang innerhalb der Wallbox empfangen. Ein Rundsteuerempfänger oder eine Steuerbox des Netzbetreibers wird hierzu direkt an den Abschalteingang angeschlossen.
 - **Eingang des WARP Energy Managers** (nur Energy Manager): Das Signal wird über einen der vier Eingänge des WARP Energy Managers empfangen. Der Rundsteuerempfänger oder die Steuerbox wird an einen Eingang des Energy Managers angeschlossen.
-- **EEBUS**: Das Steuersignal wird über die [EEBus-Schnittstelle](/docs/interfaces/eebus) empfangen. EEBus kann als Schnittstelle zur Steuerung von Verbrauchseinrichtungen durch Netzbetreiber genutzt werden.
+- **EEBUS**: Das Steuersignal wird über die [EEBUS-Schnittstelle](/docs/interfaces/eebus) empfangen. EEBUS kann als Schnittstelle zur Steuerung von Verbrauchseinrichtungen durch Netzbetreiber genutzt werden.
 - **API**: Das Steuersignal wird per HTTP/MQTT-API empfangen. Details zur API finden sich in der API-Dokumentation unter `p14a_enwg/control_update`.
 
 ### Eingang (nur bei Signalquelle "Eingang des Energy Managers")
@@ -86,4 +86,4 @@ Gibt die maximale Leistungsaufnahme der Heizungsanlage in Watt an.
 
 - [Steuerbare Verbrauchseinrichtung nach §14a EnWG (Tutorial)](/docs/tutorials/verbrauchseinrichtung.md) — Übersicht über die verschiedenen Möglichkeiten zur Umsetzung
 - [Heizung](/docs/webinterface/energy_management/heater.md) — Konfiguration der SG-Ready-Steuerung
-- [EEBus-Schnittstelle](/docs/interfaces/eebus) — Details zur EEBus-Anbindung
+- [EEBUS-Schnittstelle](/docs/interfaces/eebus) — Details zur EEBUS-Anbindung

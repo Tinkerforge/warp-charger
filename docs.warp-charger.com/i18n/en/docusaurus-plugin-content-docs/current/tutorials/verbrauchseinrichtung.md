@@ -45,12 +45,12 @@ separate control line to the charger is not required.
 In the §14a EnWG module, select **Energy Manager input** as the signal
 source and configure the corresponding input (1-4).
 
-### EEBus
+### EEBUS
 
-[EEBus](/docs/interfaces/eebus) is the designated interface for grid
+[EEBUS](/docs/interfaces/eebus) is the designated interface for grid
 operator control of consumer devices. In the §14a EnWG module, select
-**EEBus** as the signal source. The control signal is then received via
-the EEBus interface.
+**EEBUS** as the signal source. The control signal is then received via
+the EEBUS interface.
 
 ### API (HTTP/MQTT)
 
@@ -69,4 +69,4 @@ EnWG module but control the charger directly.
 
 - [§14a EnWG module (configuration)](/webinterface/energy_management/p14a_enwg.md) — Documentation of all settings
 - [Heating](/webinterface/energy_management/heater.md) — SG-Ready control configuration
-- [EEBus interface](/docs/interfaces/eebus) — Details on the EEBus connection
+- [EEBUS interface](/docs/interfaces/eebus) — Details on the EEBUS connection

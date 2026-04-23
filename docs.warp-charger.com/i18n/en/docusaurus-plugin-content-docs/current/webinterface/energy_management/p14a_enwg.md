@@ -28,7 +28,7 @@ The signal source determines where the grid operator's control signal is receive
 
 - **Charger shutdown input** (WARP Charger only): The signal is received via the potential-free shutdown input inside the wallbox. A ripple control receiver or control box from the grid operator is connected directly to the shutdown input.
 - **Energy Manager input** (Energy Manager only): The signal is received via one of the four inputs of the WARP Energy Manager. The ripple control receiver or control box is connected to an input of the Energy Manager. The wallboxes are then controlled via the network.
-- **EEBUS**: The control signal is received via the [EEBus interface](/docs/interfaces/eebus). EEBus is the designated interface for grid operator control of consumer devices.
+- **EEBUS**: The control signal is received via the [EEBUS interface](/docs/interfaces/eebus). EEBUS is the designated interface for grid operator control of consumer devices.
 - **API**: The control signal is received via the HTTP/MQTT API. Details can be found in the API documentation under `p14a_enwg/control_update`.
 
 ### Input (only with signal source "Energy Manager input")
@@ -95,4 +95,4 @@ Additionally, a warning banner is displayed on the **Status page** when the powe
 
 - [Controllable Consumption Device According to §14a EnWG (Tutorial)](/tutorials/verbrauchseinrichtung.md) — Overview of the various implementation options
 - [Heating](/webinterface/energy_management/heater.md) — SG-Ready control configuration
-- [EEBus interface](/docs/interfaces/eebus) — Details on the EEBus connection
+- [EEBUS interface](/docs/interfaces/eebus) — Details on the EEBUS connection

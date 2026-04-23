@@ -47,12 +47,12 @@ Im §14a-EnWG-Modul wird als Signalquelle **Eingang des Energy Managers**
 ausgewählt und der entsprechende Eingang (1-4) konfiguriert.
 
 
-### EEBus
+### EEBUS
 
-[EEBus](/docs/interfaces/eebus) ist die vorgesehene Schnittstelle
+[EEBUS](/docs/interfaces/eebus) ist die vorgesehene Schnittstelle
 zur Steuerung von Verbrauchseinrichtungen seitens der Netzbetreiber.
-Im §14a-EnWG-Modul wird als Signalquelle **EEBus** ausgewählt.
-Das Steuersignal wird dann über die EEBus-Schnittstelle empfangen.
+Im §14a-EnWG-Modul wird als Signalquelle **EEBUS** ausgewählt.
+Das Steuersignal wird dann über die EEBUS-Schnittstelle empfangen.
 
 ### API (HTTP/MQTT)
 
@@ -72,4 +72,4 @@ die Wallbox direkt.
 
 - [§14a-EnWG-Modul (Konfiguration)](/docs/webinterface/energy_management/p14a_enwg.md) — Dokumentation aller Einstellungen
 - [Heizung](/docs/webinterface/energy_management/heater.md) — Konfiguration der SG-Ready-Steuerung
-- [EEBus-Schnittstelle](/docs/interfaces/eebus) — Details zur EEBus-Anbindung
+- [EEBUS-Schnittstelle](/docs/interfaces/eebus) — Details zur EEBUS-Anbindung

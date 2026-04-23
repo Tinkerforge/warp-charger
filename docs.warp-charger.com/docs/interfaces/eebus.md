@@ -2,18 +2,64 @@
 sidebar_position: 4
 ---
 
-# EEBus
+# EEBUS
 
-:::note
+EEBUS ist ein Kommunikationsstandard, der unter anderem von Energienetzbetreibern genutzt wird, um steuerbare Verbrauchseinrichtungen (z.B. Wallboxen, Wärmepumpen) gemäß [§14a EnWG](/docs/webinterface/energy_management/p14a_enwg.md) zu steuern. Die EEBUS-Schnittstelle ist auf WARP Chargern und WARP Energy Managern verfügbar.
 
-Coming soon! - Diese Schnittstelle befindet sich zur Zeit in der Entwicklung. Die Unterstützung von EEBus wird mittels Softwareupdate zur Verfügung gestellt.
+## Funktionsweise
 
-:::
+EEBUS nutzt das SHIP-Protokoll (Smart Home IP) zur Geräteerkennung und Verbindungsherstellung im lokalen Netzwerk. Die Kommunikation erfolgt verschlüsselt über TLS/WebSocket. Die Geräte identifizieren sich gegenseitig über einen SKI (Subject Key Identifier).
 
-EEBus ist ein Kommunikationsstandard der unter anderem zukünftig von Energienetzebereibern genutzt werden solli, um die Last für das Stromnetz reduzieren zu können. EEBus soll daher genutzt werden
-um die Verbrauchseinrichtungen (z.B. Wallboxen), die unter den [§14a EnWG](/docs/tutorials/verbrauchseinrichtung) fallen zu steuern. EEBus ist standardisiert, allerdings stellen sich noch viele Detailfragen hinsichtlich
-der genauen Implentierung seitens der Netzbetreiber. Wir entwickeln daher zur Zeit die EEBus Schnittstelle, warten aber noch auf Informationen und Testmöglichkeit seitens der Netzbetreiber.
+## Verügbare Use Cases
 
-EEBus definiert verschiedene Use Cases. Für die Steuerung vom Netzbetreiber wird der LPC (Limitation of Power Consumption) Use Case benötigt. Dieser wird zur Zeit von uns implementiert.
+EEBUS definiert verschiedene Use Cases für unterschiedliche Anwendungsbereiche.
 
-Für die Steuerung von HEMS werden andere Use Cases seitens EEBus definiert. Leider scheinen die HEMS Hersteller nicht wirklich mitzuteilen, welche UseCases sie unterstützen. Für den Bereich E-Mobility definiert EEBus zum Beispiel die Use-Cases: Coordinated EV Charging, Overload Protection by EV Charging Current Curtailment, Optimization of Self-Consumption during EV Charging, EV Charging Electricity Measurement, EV Charging Summary, EV Commissioning and Configuration, EVSE Commissioning and Configuration. In einem zweiten Schritt werden wir Anfangen Use Cases aus dem E-Mobility Bereich zu implementieren.
+### Netzbetreibersteuerung
+
+- **LPC** (Limitation of Power Consumption): Ermöglicht dem Netzbetreiber, die Leistungsaufnahme zu begrenzen. Wird von Steuerboxen zur Netzsteuerung gemäß §14a EnWG verwendet. Verfügbar auf WARP Charger und Energy Manager.
+
+### E-Mobility (nur WARP Charger)
+
+- **EVCC** (EV Commissioning and Configuration): Informationen über das angeschlossene Elektrofahrzeug (Kommunikationsstandard, Leistungsgrenzen, asymmetrisches Laden).
+- **EVSECC** (EVSE Commissioning and Configuration): Betriebszustand der Ladestation und eventuelle Fehlerzustände.
+- **EVCEM** (EV Charging Electricity Measurement): Messwerte des Ladevorgangs (Strom, Leistung, geladene Energie pro Phase).
+- **MPC** (Monitoring of Power Consumption): Überwachung der Leistungsaufnahme der Wallbox mit Messwerten für Leistung, Strom, Spannung und Frequenz.
+
+### Energiemanagement (nur Energy Manager)
+
+- **MGCP** (Monitoring of Grid Connection Point): Überwachung des Netzanschlusspunkts mit Messwerten für Leistung, Energie, Strom, Spannung und Frequenz.
+
+
+## Konfiguration
+
+Die EEBUS-Schnittstelle wird über die Seite **EEBUS** im Webinterface konfiguriert.
+
+![image](/img/interfaces/eebus/eebus.png)
+
+### SKI (Subject Key Identifier)
+
+Der SKI ist ein eindeutiger kryptographischer Bezeichner für das Gerät. Wenn das Gerät mit z.B. einer Steuerbox kommunizieren soll, wird der SKI bei der Einrichtung der Steuerbox benötigt.
+
+### Details
+
+Im aufklappbaren Bereich **Details** werden die aktuellen Werte der aktiven Use Cases angezeigt. Die angezeigten Werte spiegeln die jeweils neuesten EEBUS-Kommunikationsdaten wider.
+
+### EEBUS aktiviert
+
+Aktiviert oder deaktiviert die EEBUS-Kommunikation. EEBUS ist standardmäßig deaktiviert.
+
+### Geräte hinzufügen (Pairing)
+
+EEBUS-Geräte müssen sich gegenseitig vertrauen, bevor sie kommunizieren können. Verbindungen von unbekannten Geräten werden abgelehnt.
+
+Über den "+"-Button können neue Geräte hinzugefügt werden.
+
+![image](/img/interfaces/eebus/eebus_add.png)
+
+Falls ein Gerät nicht automatisch erkannt wird, ist es möglich die SKI und Adresse/Port/WSS-Pfad manuell anzugeben. Einem hinzugefügten Gerät wird standardmäßig vertraut.
+
+
+## Weitere Informationen
+
+- [§14a EnWG](/docs/webinterface/energy_management/p14a_enwg.md) — Zentrale §14a-EnWG-Steuerung
+- [Steuerbare Verbrauchseinrichtung (Tutorial)](/docs/tutorials/verbrauchseinrichtung.md) — Übersicht über die verschiedenen Möglichkeiten zur Umsetzung
