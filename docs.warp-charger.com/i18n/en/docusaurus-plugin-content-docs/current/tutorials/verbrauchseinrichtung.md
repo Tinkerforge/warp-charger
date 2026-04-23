@@ -4,56 +4,69 @@ sidebar_position: 6
 
 # Controllable Consumption Device According to §14a EnWG
 
-Chargers are classified as controllable
-consumption devices according to §14a EnWG, as their connection power exceeds 4.2 kW.
+Chargers are classified as controllable consumption devices according to
+§14a EnWG, as their connection power exceeds 4.2 kW.
 
-WARP3 Chargers can be controlled by the grid operator in various ways.
-Which option can be used depends on the requirements
-of the local grid operator.
+WARP Chargers and WARP Energy Managers include a dedicated
+[§14a EnWG module](/webinterface/energy_management/p14a_enwg.md)
+that centrally configures grid operator control.
+Depending on the selected signal source, when a control signal is
+received the calculated power limit is automatically applied to the
+configured consumers (wallboxes and/or heating).
 
-### Interfaces (EEBus, OCPP, Modbus TCP, HTTP, MQTT)
+Which signal source can be used depends on the requirements of the
+local grid operator and the device being used.
 
-In general, the charging power of the charger can be controlled via all implemented
-interfaces. Grid operators currently use
-OCPP or Modbus TCP for control, if at all.
+## Signal sources
 
-In the future, [EEBus](/interfaces/eebus.md) is intended to serve as the interface
-for controlling consumption devices by grid operators.
+### Charger shutdown input (WARP Charger only)
 
-### Ripple Control Receiver/Control Box Directly at WARP Charger
-
-A potential-free contact (voltage-free switching contact) can be connected at the
-shutdown input inside the charger. For this, a
-control line from the ripple control receiver or the grid operator's control box
-must be routed into the charger and connected to the charge controller.
-For details on the connection at the terminal block, see
+A potential-free contact (voltage-free switching contact) can be connected
+at the shutdown input inside the charger. For this, a control line from
+the ripple control receiver or the grid operator's control box must be
+routed into the charger and connected to the charge controller. For
+details on the connection at the terminal block, see
 [Assembly and Installation](/warp_charger/assembly_and_installation.md#evse-klemmblock--abschalteingang).
 
-In the charger's standard configuration, charging is limited to 4200 W when
-the shutdown input is closed. This behavior can be adjusted in the
-web interface under `Wallbox` -> `Settings`.
+In the §14a EnWG module, select **Charger shutdown input** as the signal
+source. The power limit is then automatically applied as soon as the
+grid operator switches the input.
 
-![image](/img/tutorials/verbrauchseinrichtung/14enwg_input.png)
+![image](/img/webinterface/energy_management/p14a_enwg.png)
 
-### Ripple Control Receiver/Control Box via WARP Energy Manager
+### Energy Manager input (Energy Manager only)
 
 Instead of routing a control line into the charger, there is also the
-option to connect the inputs of the WARP Energy Manager to the
-ripple control receiver or control box. The WARP Energy
-Manager then controls the power of the charger(es) via the network
-(LAN/WLAN). A separate control line is not required. The WARP Energy
-Manager must be configured as the load manager of the respective charger(es)
-for this purpose. Subsequently, the following rule must be created in `Energy Manager` ->
-`Automation`:
+option to connect one of the four inputs of the WARP Energy Manager to
+the ripple control receiver or control box. The WARP Energy Manager then
+controls the power of the charger(s) via the network (LAN/WLAN). A
+separate control line to the charger is not required.
 
-![image](/img/tutorials/verbrauchseinrichtung/14enwg_wem_add_rule.png)
+In the §14a EnWG module, select **Energy Manager input** as the signal
+source and configure the corresponding input (1-4).
 
-Instead of 6 A, 18 A must be selected for single-phase operation.
+### EEBus
 
-In the automation list, the added automation rule then appears
-as follows:
+[EEBus](/docs/interfaces/eebus) is the designated interface for grid
+operator control of consumer devices. In the §14a EnWG module, select
+**EEBus** as the signal source. The control signal is then received via
+the EEBus interface.
 
-![image](/img/tutorials/verbrauchseinrichtung/14enwg_wem_rule_added.png)
+### API (HTTP/MQTT)
 
-Similarly, another rule must be created that removes the maximum total current limitation when the input is open.
-For this, "Limit maximum total current" must be selected again as the action, but this time with the option "Reset maximum total current (...A)" as the mode.
+The control signal can also be received via the HTTP or MQTT API. In
+the §14a EnWG module, select **API** as the signal source. Details can
+be found in the API documentation under `p14a_enwg/control_update`.
+
+### Other interfaces (OCPP, Modbus TCP)
+
+In general, the charging power of the charger can also be controlled via
+all other implemented interfaces. Grid operators currently use OCPP or
+Modbus TCP for control, if at all. These interfaces do not use the §14a
+EnWG module but control the charger directly.
+
+## Further information
+
+- [§14a EnWG module (configuration)](/webinterface/energy_management/p14a_enwg.md) — Documentation of all settings
+- [Heating](/webinterface/energy_management/heater.md) — SG-Ready control configuration
+- [EEBus interface](/docs/interfaces/eebus) — Details on the EEBus connection
