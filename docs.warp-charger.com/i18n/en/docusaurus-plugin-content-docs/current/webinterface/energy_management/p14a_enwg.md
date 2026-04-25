@@ -4,6 +4,11 @@ sidebar_position: 11
 
 # §14a EnWG
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 §14a of the German Energy Industry Act (Energiewirtschaftsgesetz, EnWG) allows grid operators to temporarily reduce the power consumption of controllable consumer devices (wallboxes, heat pumps, battery storage, air conditioning) to prevent local grid overload. The devices are never fully shut off. A minimum of 4200 W always remains available.
 
 This page configures the central §14a EnWG control. Depending on the selected signal source, when a control signal is received the calculated power limit is automatically applied to the configured consumers (wallboxes and/or heating).

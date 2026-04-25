@@ -4,6 +4,11 @@ sidebar_position: 10
 
 # Eco Mode
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 With Eco Mode it is possible to optimize charging processes economically and ecologically.
 The planning takes into account dynamic electricity prices, PV yield forecasts, and the
 desired departure time as well as maximum parking duration of the electric vehicle.

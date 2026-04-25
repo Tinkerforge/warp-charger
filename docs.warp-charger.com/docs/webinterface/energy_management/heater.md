@@ -4,6 +4,11 @@ sidebar_position: 4
 
 # Heizung
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wem2']} />
+
+
 Der WARP Energy Manager 2.0 kann eine Wärmepumpe mittels der SG-Ready-Schnittstelle ansteuern. Auf dieser Seite kann dies konfiguriert werden. Im
 Normalbetrieb der Wärmepumpe wird diese nicht gesteuert. Mittels SG-Ready kann die Wärmepumpe aber auch
 in einen blockierenden Betrieb versetzt werden. Das heißt die Wärmepumpe läuft dann nicht. Alternativ kann die

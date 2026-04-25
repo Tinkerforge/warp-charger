@@ -4,6 +4,11 @@ sidebar_position: 1
 
 # Settings
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4']} />
+
+
 Various settings of the charge controller can be modified on this page:
 
 ![image](/img/webinterface/wallbox/warp-settings.jpeg)

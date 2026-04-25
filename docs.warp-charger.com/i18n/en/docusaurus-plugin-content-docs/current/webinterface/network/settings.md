@@ -4,6 +4,11 @@ sidebar_position: 1
 
 # Settings
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 ![image](/img/webinterface/network/settings.png)
 
 This page allows configuring the *hostname* of the [WARP Charger](/warp_charger/introduction.md) or [WARP Energy Manager](/warp_energy_manager/introduction.md) for all

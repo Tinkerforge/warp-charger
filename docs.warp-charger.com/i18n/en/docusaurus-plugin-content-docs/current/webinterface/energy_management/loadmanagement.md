@@ -4,6 +4,11 @@ sidebar_position: 6
 
 # Charge Management
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 :::note
 
 The configuration of charge management is also described in the tutorial [Charge Management](/tutorials/chargemanagement.md).

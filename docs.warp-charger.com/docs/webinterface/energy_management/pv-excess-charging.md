@@ -4,6 +4,11 @@ sidebar_position: 5
 
 # PV-Überschussladen
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 :::note
 
 Die Konfiguration eines PV-Überschussladens ist auch im Tutorial [Photovoltaik-Überschussladen](/docs/tutorials/pv_excess_charging) beschrieben.

@@ -4,6 +4,11 @@ sidebar_position: 3
 
 # Remote Access
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 ## Introduction
 With remote access, you can always access a [WARP Charger](/warp_charger/introduction.md) or [WARP Energy Manager](/warp_energy_manager/introduction.md) from anywhere via [my.warp-charger.com](https://my.warp-charger.com).
 The apps (iOS and Android) use remote access, so it must also be configured for app usage.

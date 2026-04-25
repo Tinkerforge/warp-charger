@@ -4,12 +4,10 @@ sidebar_position: 5
 
 # Credentials
 
-:::note
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
-This option is only available for the WARP Energy Manager, as it does not
-have its own user management system.
+<DeviceCompatibility supported={['wem1', 'wem2']} />
 
-:::
 
 ![image](/img/webinterface/system/wem2-system_login_details.jpeg)
 

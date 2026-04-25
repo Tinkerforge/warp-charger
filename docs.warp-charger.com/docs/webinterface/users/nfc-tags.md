@@ -4,12 +4,9 @@ sidebar_position: 1
 
 # NFC-Tags
 
-:::note
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
-Diese Konfiguration ist nur für [WARP Charger](/docs/warp_charger/introduction) verfügbar.
-
-:::
-
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4']} />
 ![image](/img/webinterface/users/warp-users-nfc1.jpeg)
 
 Der [WARP3 Charger](/docs/warp_charger/introduction) unterstützt eine Ladefreigabe per NFC. Wenn diese aktiviert ist, muss zum Starten und/oder Stoppen eines

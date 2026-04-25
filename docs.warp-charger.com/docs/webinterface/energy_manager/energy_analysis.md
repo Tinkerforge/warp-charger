@@ -4,12 +4,9 @@ sidebar_position: 2
 
 # Energiebilanz
 
-:::note
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
-Diese Einstellung ist nur für den [WARP Energy Manager 2.0](/docs/warp_energy_manager/introduction) verfügbar.
-
-:::
-
+<DeviceCompatibility supported={['wem1', 'wem2']} />
 Der [WARP Energy Manager 2.0](/docs/warp_energy_manager/introduction) zeichnet
 die Daten zu den konfigurierten Stromzählern intern auf. Die aufgezeichneten Werte können
 auf dieser Seite betrachtet werden.

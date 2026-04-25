@@ -4,6 +4,11 @@ sidebar_position: 11
 
 # §14a EnWG
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 §14a des Energiewirtschaftsgesetzes (EnWG) ermöglicht es Netzbetreibern, den Strombezug steuerbarer Verbrauchseinrichtungen (Wallboxen, Wärmepumpen, Batteriespeicher, Klimaanlagen) temporär zu reduzieren, um eine Überlastung des lokalen Stromnetzes zu vermeiden. Die Geräte werden dabei nie vollständig abgeschaltet. Eine Mindestleistung von 4200 W bleibt stets verfügbar.
 
 Auf dieser Seite wird die zentrale §14a-EnWG-Steuerung konfiguriert. Abhängig von der gewählten Signalquelle wird bei Empfang eines Steuersignals das berechnete Leistungslimit automatisch auf die konfigurierten Verbraucher (Wallboxen und/oder Heizung) angewendet.

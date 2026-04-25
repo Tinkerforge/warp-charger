@@ -4,6 +4,11 @@ sidebar_position: 3
 
 # Automation
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wem1', 'wem2']} />
+
+
 :::note
 
 Automation rules exist for both WARP Chargers and the WARP Energy Manager. The configurable conditions and actions differ between different devices.

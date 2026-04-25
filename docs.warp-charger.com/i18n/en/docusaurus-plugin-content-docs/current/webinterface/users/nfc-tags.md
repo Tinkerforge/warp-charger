@@ -4,12 +4,9 @@ sidebar_position: 1
 
 # NFC Tags
 
-:::note
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
-This configuration is only available for [WARP Charger](/warp_charger/introduction.md).
-
-:::
-
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4']} />
 ![image](/img/webinterface/users/warp-users-nfc1.jpeg)
 
 The [WARP3 Charger](/warp_charger/introduction.md) supports charge authorization via NFC. When this is enabled, an NFC tag assigned to a user must be held to the right side of the charger to start and/or stop a

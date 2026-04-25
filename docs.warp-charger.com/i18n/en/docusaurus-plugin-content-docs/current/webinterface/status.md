@@ -4,6 +4,11 @@ sidebar_position: 1
 
 # Status
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 The status page differs between a [WARP3 Charger](/warp_charger/introduction.md) and
 a [WARP Energy Manager 2.0](/warp_energy_manager/introduction.md). It provides general information about the
 device's state. In part, it also offers

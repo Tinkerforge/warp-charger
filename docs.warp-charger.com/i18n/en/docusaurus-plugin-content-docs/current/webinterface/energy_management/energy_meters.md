@@ -4,12 +4,9 @@ sidebar_position: 1
 
 # Energy Meters
 
-:::note
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
-Energy meters can be configured for WARP Chargers and the WARP Energy Manager.
-
-:::
-
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
 ![image](/img/webinterface/energy_management/wem2-energy_meters.jpeg)
 
 On this page, communication with energy meters can be configured. Since the WARP3 Charger Pro has a built-in energy meter,

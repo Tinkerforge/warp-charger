@@ -4,6 +4,11 @@ sidebar_position: 5
 
 # PV Excess Charging
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 :::note
 
 The configuration of PV excess charging is also described in the tutorial [Photovoltaic Excess Charging](/tutorials/pv_excess_charging.md).

@@ -4,6 +4,11 @@ sidebar_position: 1
 
 # Einstellungen
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4']} />
+
+
 Auf dieser Seite können verschiedene Einstellungen
 des Ladecontrollers verändert werden:
 

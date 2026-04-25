@@ -4,6 +4,11 @@ sidebar_position: 7
 
 # Firmware-Aktualisierung
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 Generell empfehlen wir, nach der Installation sowie bei neuen Firmware-Veröffentlichungen
 ein Update der WARP Charger-Firmware oder der WARP Energy Manager-Firmware
 durchzuführen, um die neusten Funktionen und ggf. Bugfixes zu erhalten.

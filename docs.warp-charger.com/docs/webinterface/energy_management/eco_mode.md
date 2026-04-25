@@ -4,6 +4,11 @@ sidebar_position: 10
 
 # Eco-Modus
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 Mit dem Eco-Modus ist es möglich Ladevorgänge ökonomisch und ökologisch zu optimieren.
 In die Planung fließen dynamische Strompreise, PV-Ertragsprognose und die
 gewünsche Abfahrtszeit sowie maximale Standzeit des Elektrofahrzeugs ein.

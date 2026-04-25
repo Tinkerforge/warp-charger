@@ -4,7 +4,9 @@ sidebar_position: 8
 
 # PV Yield Forecast
 
-:::note
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
 
 If a PV system is available, a PV yield forecast can be used to improve the [heater control](/webinterface/energy_management/heater.md) (Energy Manager) and the [charging schedule of Eco Mode](/webinterface/energy_management/eco_mode.md).
 

@@ -4,12 +4,9 @@ sidebar_position: 9
 
 # Outside Temperature
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
-:::note
-
-Outside Temperature is only available for the [WARP Energy Manager 2.0](/warp_energy_manager/introduction.md).
-
-:::
+<DeviceCompatibility supported={['wem2']} />
 
 ![image](/img/webinterface/energy_management/wem2-temperatures.png)
 

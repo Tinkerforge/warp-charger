@@ -4,6 +4,11 @@ sidebar_position: 3
 
 # Automatisierung
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wem1', 'wem2']} />
+
+
 :::note
 
 Automatisierungsregeln gibt es sowohl bei den WARP Chargern als auch beim WARP Energy Manager. Die konfigurierbaren Bedingungen und Aktionen unterscheiden sich zwischen unterschiedlichen Geräten.

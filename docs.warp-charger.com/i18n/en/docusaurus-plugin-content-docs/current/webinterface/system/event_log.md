@@ -4,6 +4,11 @@ sidebar_position: 6
 
 # Event Log
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 ![image](/img/webinterface/system/warp-system_event_log.jpeg)
 
 The event log records relevant information from system startup, as well as Wi-Fi and MQTT connection failures and control information.

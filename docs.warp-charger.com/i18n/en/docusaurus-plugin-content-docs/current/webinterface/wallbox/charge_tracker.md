@@ -4,6 +4,11 @@ sidebar_position: 3
 
 # Charge Tracker
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4']} />
+
+
 ![image](/img/webinterface/wallbox/warp-charge_tracker.jpeg)
 
 The WARP3 Charger records all charging processes performed.

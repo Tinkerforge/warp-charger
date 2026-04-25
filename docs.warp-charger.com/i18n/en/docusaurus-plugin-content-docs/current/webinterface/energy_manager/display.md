@@ -5,12 +5,9 @@ sidebar_position: 1
 
 # Display
 
-:::note
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
-This setting is only available for the [WARP Energy Manager 2.0](/warp_energy_manager/introduction.md).
-
-:::
-
+<DeviceCompatibility supported={['wem2']} />
 ![image](/img/webinterface/energy_manager/wem2-display.jpeg)
 
 The content of six tiles can be configured on the display

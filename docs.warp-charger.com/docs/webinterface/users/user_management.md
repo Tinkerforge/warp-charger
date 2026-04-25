@@ -4,13 +4,9 @@ sidebar_position: 2
 
 # Benutzerverwaltung
 
-:::note
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
-Diese Konfiguration ist nur für [WARP Charger](/docs/warp_charger/introduction) verfügbar.
-
-:::
-
-
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4']} />
 ![image](/img/webinterface/users/warp-users-user_management1.jpeg)
 
 

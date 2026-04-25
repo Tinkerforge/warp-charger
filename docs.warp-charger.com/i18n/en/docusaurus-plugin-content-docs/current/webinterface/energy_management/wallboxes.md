@@ -4,6 +4,11 @@ sidebar_position: 3
 
 # Chargers
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 
 :::note
 

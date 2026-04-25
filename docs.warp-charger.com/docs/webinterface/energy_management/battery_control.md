@@ -4,6 +4,11 @@ sidebar_position: 2
 
 # Batteriesteuerung
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 :::note
 
     Die Steuerung von Batteriespeichern befindet sich zur Zeit noch in der Entwicklung!

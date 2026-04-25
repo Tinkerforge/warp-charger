@@ -4,6 +4,11 @@ sidebar_position: 2
 
 # Ladestatus
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4']} />
+
+
 ![image](/img/webinterface/wallbox/warp-charge_status.jpeg)
 
 Die Unterseite Ladestatus gibt Auskunft über den Zustand des

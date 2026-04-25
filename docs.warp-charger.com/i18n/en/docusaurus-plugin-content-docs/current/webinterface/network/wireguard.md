@@ -5,6 +5,11 @@ sidebar_position: 5
 
 # WireGuard
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 With WireGuard, the [WARP Charger](/warp_charger/introduction.md) or [WARP Energy Manager](/warp_energy_manager/introduction.md) can be integrated into a virtual private network (VPN) using an encrypted connection. WireGuard
 is directly supported by various routers. The VPN can be used, for example, to access the device remotely.
 

@@ -4,6 +4,11 @@ sidebar_position: 7
 
 # Dynamischer Strompreis
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 Wenn ein dynamischer Stromtarif (z.B. über Tibber oder Awattar) vorhanden ist, können die dynamischen Strompreise verwendet werden um die [Heizungssteuerung](/webinterface/energy_management/heater.md) ([WARP Energy Manager](/docs/warp_energy_manager/introduction)) und den [Ladeplan des Eco-Modus](/webinterface/energy_management/eco_mode.md) ([WARP Charger](/docs/warp_charger/introduction)) zu verbessern.
 
 :::note

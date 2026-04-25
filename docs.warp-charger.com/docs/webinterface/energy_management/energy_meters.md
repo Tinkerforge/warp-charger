@@ -4,12 +4,9 @@ sidebar_position: 1
 
 # Stromzähler
 
-:::note
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
-Stromzähler können bei WARP Chargern und beim WARP Energy Manager konfiguriert werden.
-
-:::
-
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
 ![image](/img/webinterface/energy_management/wem2-energy_meters.jpeg)
 
 Auf dieser Seite kann die Kommunikation mit Stromzählern konfiguriert werden. Da der WARP3 Charger Pro über einen eingebauten Stromzähler verfügt, ist

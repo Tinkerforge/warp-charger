@@ -4,6 +4,11 @@ sidebar_position: 2
 
 # Battery Control
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 :::note
 
     Battery storage control is currently still in development!

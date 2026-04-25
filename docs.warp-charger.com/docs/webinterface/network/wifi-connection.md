@@ -4,6 +4,11 @@ sidebar_position: 2
 
 # WLAN-Verbindung
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 :::note
 
 Es gibt ein Tutorial, welches auch das Einbinden von einem [WARP Charger](/docs/warp_charger/introduction) oder [WARP Energy Manager](/docs/warp_energy_manager/introduction) in ein Netzwerk behandelt: [Erste Schritte](/docs/tutorials/first_steps)

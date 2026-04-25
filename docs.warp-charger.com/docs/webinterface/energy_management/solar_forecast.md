@@ -4,7 +4,9 @@ sidebar_position: 8
 
 # PV-Ertragsprognose
 
-:::note
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
 
 Wenn eine PV-Anlage vorhanden ist, kann eine PV-Ertragsprognose verwendet werden um die [Heizungssteuerung](/docs/webinterface/energy_management/heater.md) (Energy Manager) und den [Ladeplan des Eco-Modus](/docs/webinterface/energy_management/eco_mode.md) zu verbessern.
 

@@ -4,12 +4,9 @@ sidebar_position: 2
 
 # Energy Balance
 
-:::note
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
-This setting is only available for the [WARP Energy Manager 2.0](/warp_energy_manager/introduction.md).
-
-:::
-
+<DeviceCompatibility supported={['wem1', 'wem2']} />
 The [WARP Energy Manager 2.0](/warp_energy_manager/introduction.md) records
 the data of the configured energy meters internally. The recorded values can be
 viewed on this page.

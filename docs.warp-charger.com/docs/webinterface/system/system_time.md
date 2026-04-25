@@ -4,6 +4,11 @@ sidebar_position: 4
 
 # Systemzeit
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 ![image](/img/webinterface/system/warp-system_time.jpeg)
 
 Um für die Aufzeichnung der Energiebilanz und das Ereignis-Log die aktuelle Uhrzeit zur Verfügung zu haben, kann der [WARP Charger](/docs/warp_charger/introduction) oder [WARP Energy Manager](/docs/warp_energy_manager/introduction) diese per NTP

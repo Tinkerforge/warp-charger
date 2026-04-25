@@ -4,6 +4,11 @@ sidebar_position: 6
 
 # Ereignis-Log
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 ![image](/img/webinterface/system/warp-system_event_log.jpeg)
 
 Das Ereignis-Log zeichnet relevante Informationen des Systemstarts, sowie WLAN- und MQTT Verbindungsabbrüche und Regelungsinformationen auf.

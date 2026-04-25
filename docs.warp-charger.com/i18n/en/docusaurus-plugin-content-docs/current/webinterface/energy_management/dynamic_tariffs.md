@@ -4,6 +4,11 @@ sidebar_position: 7
 
 # Dynamic Tariff
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 If a dynamic electricity tariff (e.g. via Tibber or Awattar) is available, the dynamic electricity prices can be used to improve the [heating control](/webinterface/energy_management/heater.md) ([WARP Energy Manager](/warp_energy_manager/introduction.md)) and the [charging schedule of Eco Mode](/webinterface/energy_management/eco_mode.md) ([WARP Charger](/warp_charger/introduction.md)).
 
 :::note

@@ -4,6 +4,11 @@ sidebar_position: 4
 
 # Heating
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wem2']} />
+
+
 The WARP Energy Manager 2.0 can control a heat pump using the SG-Ready interface. This can be configured on this page. In
 normal operation of the heat pump, it is not controlled. However, using SG-Ready, the heat pump can also be
 put into blocking operation. This means the heat pump does not run. Alternatively, the

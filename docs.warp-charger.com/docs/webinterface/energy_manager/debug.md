@@ -4,6 +4,11 @@ sidebar_position: 5
 
 # Debug
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wem1', 'wem2']} />
+
+
 ![image](/img/webinterface/energy_manager/wem2-debug.jpeg)
 
 Auf der Debug-Seite kann ein Energiemanager-Protokoll erstellt werden. Dies ist hilfreich, um etwaige Probleme

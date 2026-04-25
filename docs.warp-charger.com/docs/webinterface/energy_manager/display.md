@@ -5,12 +5,9 @@ sidebar_position: 1
 
 # Display
 
-:::note
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
-Diese Einstellung ist nur für den [WARP Energy Manager 2.0](/docs/warp_energy_manager/introduction) verfügbar.
-
-:::
-
+<DeviceCompatibility supported={['wem2']} />
 ![image](/img/webinterface/energy_manager/wem2-display.jpeg)
 
 Auf dem Display des WARP Energy Manager 2.0 kann der Inhalt von sechs Kacheln

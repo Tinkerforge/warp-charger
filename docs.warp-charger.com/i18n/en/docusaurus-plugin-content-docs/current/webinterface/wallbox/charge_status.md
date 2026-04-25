@@ -4,6 +4,11 @@ sidebar_position: 2
 
 # Charge Status
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4']} />
+
+
 ![image](/img/webinterface/wallbox/warp-charge_status.jpeg)
 
 The charge status subpage provides information about the state of the

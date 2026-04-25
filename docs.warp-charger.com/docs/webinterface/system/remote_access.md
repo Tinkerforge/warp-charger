@@ -4,6 +4,11 @@ sidebar_position: 3
 
 # Fernzugriff
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 ## Einführung
 Mit dem Fernzugriff kann immer und von überall über [my.warp-charger.com](https://my.warp-charger.com) auf einen [WARP Charger](/docs/warp_charger/introduction) oder [WARP Energy Manager](/docs/warp_energy_manager/introduction) zugegriffen werden.
 Die Apps (iOS und Android) nutzen den Fernzugriff, so dass dieser auch für die App Nutzung konfiguriert werden muss.

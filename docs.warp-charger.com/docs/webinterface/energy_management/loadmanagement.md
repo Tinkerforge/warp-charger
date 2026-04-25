@@ -4,6 +4,11 @@ sidebar_position: 6
 
 # Lastmanagement
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
+
 :::note
 
 Die Konfiguration eines Lastmanagement ist auch im Tutorial [Lastmanagement](/docs/tutorials/chargemanagement) beschrieben.
