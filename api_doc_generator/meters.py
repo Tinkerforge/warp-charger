@@ -374,7 +374,193 @@ meters = Module("meters", T({'de': "Stromzähler", 'en': "Electricity Meters"}),
                     ]),
                 }),
                 31: Elem.OBJECT(T({'de': "Carlo Gavazzi EM530 Stromzähler", 'en': "Carlo Gavazzi EM530 electricity meter"}), members={"device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 1.", 'en': "Device address. Typically 1."}))}),
-                32: Elem.OBJECT(T({'de': "Carlo Gavazzi EM540 Stromzähler", 'en': "Carlo Gavazzi EM540 electricity meter"}), members={"device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 1.", 'en': "Device address. Typically 1."}))})
+                32: Elem.OBJECT(T({'de': "Carlo Gavazzi EM540 Stromzähler", 'en': "Carlo Gavazzi EM540 electricity meter"}), members={"device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 1.", 'en': "Device address. Typically 1."}))}),
+
+                33: Elem.OBJECT(T({'de': "SolarEdge Wechselrichter", 'en': "SolarEdge inverter"}), members={
+                    "virtual_meter": Elem.INT(T({'de': "Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", 'en': "Virtual meter. Indicates which part of the register table is read."}), constants=[
+                        Const(0, T({'de': "Kein virtueller Zähler ausgewählt", 'en': "No virtual meter selected"})),
+                        Const(3, T({'de': "Speicher", 'en': "Storage"})),
+                        Const(5, U("PV"))
+                    ]),
+                    "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 1.", 'en': "Device address. Typically 1."})),
+                }),
+                34: Elem.OBJECT(T({'de': "Eastron SDM630 TCP Stromzähler", 'en': "Eastron SDM630 TCP electricity meter"}), members={
+                    "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 1.", 'en': "Device address. Typically 1."})),
+                }),
+                35: Elem.OBJECT(T({'de': "Tinkerforge WARP Charger", 'en': "Tinkerforge WARP Charger"}), members={}),
+                36: Elem.OBJECT(T({'de': "SAX Power Home (Basismodus)", 'en': "SAX Power Home (basic mode)"}), members={
+                    "virtual_meter": Elem.INT(T({'de': "Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", 'en': "Virtual meter. Indicates which part of the register table is read."}), constants=[
+                        Const(0, T({'de': "Kein virtueller Zähler ausgewählt", 'en': "No virtual meter selected"})),
+                        Const(2, T({'de': "Netzanschluss", 'en': "Grid connection"})),
+                        Const(3, T({'de': "Speicher", 'en': "Storage"}))
+                    ]),
+                    "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 64.", 'en': "Device address. Typically 64."})),
+                }),
+                37: Elem.OBJECT(T({'de': "SAX Power Home (erweiterter Modus)", 'en': "SAX Power Home (extended mode)"}), members={
+                    "virtual_meter": Elem.INT(T({'de': "Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", 'en': "Virtual meter. Indicates which part of the register table is read."}), constants=[
+                        Const(0, T({'de': "Kein virtueller Zähler ausgewählt", 'en': "No virtual meter selected"})),
+                        Const(2, T({'de': "Netzanschluss", 'en': "Grid connection"})),
+                        Const(3, T({'de': "Speicher", 'en': "Storage"}))
+                    ]),
+                    "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 40.", 'en': "Device address. Typically 40."})),
+                }),
+                38: Elem.OBJECT(T({'de': "E3DC Hauskraftwerk", 'en': "E3DC Hauskraftwerk"}), members={
+                    "virtual_meter": Elem.INT(T({'de': "Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", 'en': "Virtual meter. Indicates which part of the register table is read."}), constants=[
+                        Const(0, T({'de': "Kein virtueller Zähler ausgewählt", 'en': "No virtual meter selected"})),
+                        Const(2, T({'de': "Netzanschluss", 'en': "Grid connection"})),
+                        Const(3, T({'de': "Speicher", 'en': "Storage"})),
+                        Const(4, T({'de': "Last", 'en': "Load"})),
+                        Const(5, U("PV")),
+                        Const(6, T({'de': "Zusätzliche Erzeugung", 'en': "Additional generation"}))
+                    ]),
+                    "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 1.", 'en': "Device address. Typically 1."})),
+                }),
+                39: Elem.OBJECT(T({'de': "Huawei SUN2000 Hybrid-Wechselrichter", 'en': "Huawei SUN2000 hybrid inverter"}), members={
+                    "virtual_meter": Elem.INT(T({'de': "Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", 'en': "Virtual meter. Indicates which part of the register table is read."}), constants=[
+                        Const(0, T({'de': "Kein virtueller Zähler ausgewählt", 'en': "No virtual meter selected"})),
+                        Const(1, T({'de': "Wechselrichter", 'en': "Inverter"})),
+                        Const(2, T({'de': "Netzanschluss", 'en': "Grid connection"})),
+                        Const(3, T({'de': "Speicher", 'en': "Storage"})),
+                        Const(4, U("PV"))
+                    ]),
+                    "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 1.", 'en': "Device address. Typically 1."})),
+                }),
+                40: Elem.OBJECT(T({'de': "Huawei SUN2000 Smart Dongle", 'en': "Huawei SUN2000 Smart Dongle"}), members={
+                    "virtual_meter": Elem.INT(T({'de': "Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", 'en': "Virtual meter. Indicates which part of the register table is read."}), constants=[
+                        Const(0, T({'de': "Kein virtueller Zähler ausgewählt", 'en': "No virtual meter selected"})),
+                        Const(2, T({'de': "Netzanschluss", 'en': "Grid connection"})),
+                        Const(3, T({'de': "Speicher", 'en': "Storage"})),
+                        Const(4, U("PV"))
+                    ]),
+                    "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 1.", 'en': "Device address. Typically 1."})),
+                }),
+                41: Elem.OBJECT(T({'de': "Huawei EMMA Energiemanager", 'en': "Huawei EMMA energy manager"}), members={
+                    "virtual_meter": Elem.INT(T({'de': "Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", 'en': "Virtual meter. Indicates which part of the register table is read."}), constants=[
+                        Const(0, T({'de': "Kein virtueller Zähler ausgewählt", 'en': "No virtual meter selected"})),
+                        Const(1, T({'de': "Wechselrichter", 'en': "Inverter"})),
+                        Const(2, T({'de': "Netzanschluss (interner Sensor)", 'en': "Grid connection (internal sensor)"})),
+                        Const(3, T({'de': "Netzanschluss (externer Sensor)", 'en': "Grid connection (external sensor)"})),
+                        Const(4, T({'de': "Speicher", 'en': "Storage"})),
+                        Const(5, T({'de': "Last", 'en': "Load"})),
+                        Const(6, U("PV"))
+                    ]),
+                    "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 0.", 'en': "Device address. Typically 0."})),
+                }),
+                42: Elem.OBJECT(T({'de': "Carlo Gavazzi EM580 Stromzähler", 'en': "Carlo Gavazzi EM580 electricity meter"}), members={
+                    "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 1.", 'en': "Device address. Typically 1."})),
+                }),
+                43: Elem.OBJECT(T({'de': "Solax String-Wechselrichter", 'en': "Solax string inverter"}), members={
+                    "virtual_meter": Elem.INT(T({'de': "Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", 'en': "Virtual meter. Indicates which part of the register table is read."}), constants=[
+                        Const(0, T({'de': "Kein virtueller Zähler ausgewählt", 'en': "No virtual meter selected"})),
+                        Const(1, T({'de': "Wechselrichter", 'en': "Inverter"})),
+                        Const(2, T({'de': "Netzanschluss", 'en': "Grid connection"})),
+                        Const(3, U("PV"))
+                    ]),
+                    "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 1.", 'en': "Device address. Typically 1."})),
+                }),
+                44: Elem.OBJECT(T({'de': "Fox ESS H3 Smart Hybrid-Wechselrichter", 'en': "Fox ESS H3 Smart hybrid inverter"}), members={
+                    "virtual_meter": Elem.INT(T({'de': "Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", 'en': "Virtual meter. Indicates which part of the register table is read."}), constants=[
+                        Const(0, T({'de': "Kein virtueller Zähler ausgewählt", 'en': "No virtual meter selected"})),
+                        Const(1, T({'de': "Wechselrichter", 'en': "Inverter"})),
+                        Const(2, T({'de': "Netzanschluss", 'en': "Grid connection"})),
+                        Const(3, T({'de': "Speicher 1", 'en': "Storage 1"})),
+                        Const(4, T({'de': "Last", 'en': "Load"})),
+                        Const(5, U("PV")),
+                        Const(6, T({'de': "Speicher 2", 'en': "Storage 2"})),
+                        Const(7, T({'de': "Speicher 1 und 2", 'en': "Storage 1 and 2"}))
+                    ]),
+                    "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 247.", 'en': "Device address. Typically 247."})),
+                }),
+                45: Elem.OBJECT(T({'de': "Fox ESS H3 Pro Hybrid-Wechselrichter", 'en': "Fox ESS H3 Pro hybrid inverter"}), members={
+                    "virtual_meter": Elem.INT(T({'de': "Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", 'en': "Virtual meter. Indicates which part of the register table is read."}), constants=[
+                        Const(0, T({'de': "Kein virtueller Zähler ausgewählt", 'en': "No virtual meter selected"})),
+                        Const(1, T({'de': "Wechselrichter", 'en': "Inverter"})),
+                        Const(2, T({'de': "Netzanschluss", 'en': "Grid connection"})),
+                        Const(3, T({'de': "Speicher 1", 'en': "Storage 1"})),
+                        Const(4, T({'de': "Last", 'en': "Load"})),
+                        Const(5, U("PV")),
+                        Const(6, T({'de': "Speicher 2", 'en': "Storage 2"})),
+                        Const(7, T({'de': "Speicher 1 und 2", 'en': "Storage 1 and 2"}))
+                    ]),
+                    "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 247.", 'en': "Device address. Typically 247."})),
+                }),
+                46: Elem.OBJECT(T({'de': "SMA Hybrid-Wechselrichter", 'en': "SMA hybrid inverter"}), members={
+                    "virtual_meter": Elem.INT(T({'de': "Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", 'en': "Virtual meter. Indicates which part of the register table is read."}), constants=[
+                        Const(0, T({'de': "Kein virtueller Zähler ausgewählt", 'en': "No virtual meter selected"})),
+                        Const(3, T({'de': "Speicher", 'en': "Storage"}))
+                    ]),
+                    "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 3.", 'en': "Device address. Typically 3."})),
+                }),
+                47: Elem.OBJECT(T({'de': "VARTA Element Speicher", 'en': "VARTA Element storage"}), members={
+                    "virtual_meter": Elem.INT(T({'de': "Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", 'en': "Virtual meter. Indicates which part of the register table is read."}), constants=[
+                        Const(0, T({'de': "Kein virtueller Zähler ausgewählt", 'en': "No virtual meter selected"})),
+                        Const(2, T({'de': "Netzanschluss", 'en': "Grid connection"})),
+                        Const(3, T({'de': "Speicher", 'en': "Storage"}))
+                    ]),
+                    "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 255.", 'en': "Device address. Typically 255."})),
+                }),
+                48: Elem.OBJECT(T({'de': "VARTA Flex Speicher", 'en': "VARTA Flex storage"}), members={
+                    "virtual_meter": Elem.INT(T({'de': "Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", 'en': "Virtual meter. Indicates which part of the register table is read."}), constants=[
+                        Const(0, T({'de': "Kein virtueller Zähler ausgewählt", 'en': "No virtual meter selected"})),
+                        Const(2, T({'de': "Netzanschluss", 'en': "Grid connection"})),
+                        Const(3, T({'de': "Speicher", 'en': "Storage"}))
+                    ]),
+                    "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 255.", 'en': "Device address. Typically 255."})),
+                }),
+                49: Elem.OBJECT(T({'de': "Chisage ESS Hybrid-Wechselrichter", 'en': "Chisage ESS hybrid inverter"}), members={
+                    "virtual_meter": Elem.INT(T({'de': "Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", 'en': "Virtual meter. Indicates which part of the register table is read."}), constants=[
+                        Const(0, T({'de': "Kein virtueller Zähler ausgewählt", 'en': "No virtual meter selected"})),
+                        Const(1, T({'de': "Wechselrichter", 'en': "Inverter"})),
+                        Const(2, T({'de': "Netzanschluss", 'en': "Grid connection"})),
+                        Const(3, T({'de': "Speicher", 'en': "Storage"})),
+                        Const(4, T({'de': "Last", 'en': "Load"})),
+                        Const(5, U("PV"))
+                    ]),
+                    "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 1.", 'en': "Device address. Typically 1."})),
+                }),
+                50: Elem.OBJECT(T({'de': "Janitza UMG Stromzähler", 'en': "Janitza UMG electricity meter"}), members={
+                    "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 1.", 'en': "Device address. Typically 1."})),
+                }),
+                51: Elem.OBJECT(T({'de': "Huawei SmartLogger 3000", 'en': "Huawei SmartLogger 3000"}), members={
+                    "virtual_meter": Elem.INT(T({'de': "Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", 'en': "Virtual meter. Indicates which part of the register table is read."}), constants=[
+                        Const(0, T({'de': "Kein virtueller Zähler ausgewählt", 'en': "No virtual meter selected"})),
+                        Const(2, T({'de': "Netzanschluss", 'en': "Grid connection"})),
+                        Const(5, U("PV"))
+                    ]),
+                    "device_address": Elem.INT(T({'de': "Geräteadresse.", 'en': "Device address."})),
+                }),
+                52: Elem.OBJECT(T({'de': "Solis Hybrid-Wechselrichter", 'en': "Solis hybrid inverter"}), members={
+                    "virtual_meter": Elem.INT(T({'de': "Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", 'en': "Virtual meter. Indicates which part of the register table is read."}), constants=[
+                        Const(0, T({'de': "Kein virtueller Zähler ausgewählt", 'en': "No virtual meter selected"})),
+                        Const(1, T({'de': "Wechselrichter", 'en': "Inverter"})),
+                        Const(2, T({'de': "Netzanschluss", 'en': "Grid connection"})),
+                        Const(3, T({'de': "Speicher", 'en': "Storage"})),
+                        Const(4, T({'de': "Last", 'en': "Load"})),
+                        Const(5, U("PV"))
+                    ]),
+                    "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 1.", 'en': "Device address. Typically 1."})),
+                }),
+                53: Elem.OBJECT(T({'de': "Growatt Hybrid-Wechselrichter", 'en': "Growatt hybrid inverter"}), members={
+                    "virtual_meter": Elem.INT(T({'de': "Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", 'en': "Virtual meter. Indicates which part of the register table is read."}), constants=[
+                        Const(0, T({'de': "Kein virtueller Zähler ausgewählt", 'en': "No virtual meter selected"})),
+                        Const(1, T({'de': "Wechselrichter", 'en': "Inverter"})),
+                        Const(2, T({'de': "Netzanschluss", 'en': "Grid connection"})),
+                        Const(3, T({'de': "Speicher", 'en': "Storage"})),
+                        Const(4, T({'de': "Last", 'en': "Load"})),
+                        Const(5, U("PV"))
+                    ]),
+                    "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 1.", 'en': "Device address. Typically 1."})),
+                }),
+                54: Elem.OBJECT(T({'de': "Eltako DSZ16DZE Stromzähler", 'en': "Eltako DSZ16DZE electricity meter"}), members={
+                    "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 1.", 'en': "Device address. Typically 1."})),
+                }),
+                55: Elem.OBJECT(T({'de': "Fronius Verto Plus Hybrid-Wechselrichter", 'en': "Fronius Verto Plus hybrid inverter"}), members={
+                    "virtual_meter": Elem.INT(T({'de': "Virtueller Zähler. Gibt an welcher Teil der Registertabelle gelesen wird.", 'en': "Virtual meter. Indicates which part of the register table is read."}), constants=[
+                        Const(0, T({'de': "Kein virtueller Zähler ausgewählt", 'en': "No virtual meter selected"})),
+                        Const(3, T({'de': "Speicher", 'en': "Storage"}))
+                    ]),
+                    "device_address": Elem.INT(T({'de': "Geräteadresse. Typischerweise 1.", 'en': "Device address. Typically 1."})),
+                })
             })
         }),
         7: Elem.OBJECT(T({'de': "SMA Speedwire-Stromzähler.", 'en': "SMA Speedwire electricity meter."}), members={

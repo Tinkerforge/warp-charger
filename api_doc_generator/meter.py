@@ -18,6 +18,9 @@ meter = Module("meter", T({'de': "Veraltete Stromzähler-API", 'en': "Legacy Ele
                 Const(5, U("Eastron SDM630MCT"), Version.WARP2 | Version.WARP3 | Version.WEMX),
                 Const(6, U("Eltako DSZ15DZMOD"), Version.WARP2 | Version.WARP3 | Version.WEMX),
                 Const(7, U("YTL DEM4A"), Version.WARP2 | Version.WARP3 | Version.WEMX),
+                Const(8, U("Lovato DMED341MID7ER"), Version.WARP2 | Version.WARP3 | Version.WEMX),
+                Const(9, U("Eltako DSZ16D[ZE]"), Version.WARP3 | Version.WEMX),
+                Const(10, U("Iskra WM3M4C"), Version.WARP2 | Version.WARP3 | Version.WEMX),
             ])
         })
     ),
