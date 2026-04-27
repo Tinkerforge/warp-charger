@@ -214,10 +214,17 @@ Um die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introducti
 ## Eltako
 
 ### DSZ15DZMOD Stromzähler
-{manufacturer_to_bubbles("Eltako")}
+{manufacturer_to_bubbles("Eltako", "DSZ15DZMOD")}
 
 Der Eltako Stromzähler DSZ15DZMOD mit RS485 (Modbus/RTU) Schnittstelle kann am WARP Energy Manager angeschlossen und von diesem ausgelesen werden.
 Ein Stromzähler kann immer genau nur einem Messort zugeordnet werden. Der Messort ist abhängig vom Montageort des Stromzählers. Es kann nur ein Stromzähler dieses Typs angelegt werden, da die RS485 (Modbus/RTU) Schnittstelle
+des WARP Energy Managers nur einen Stromzähler unterstützt. Um die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) nutzen zu können, muss der Stromzähler am Netzanschluss verbaut sein.
+
+### DSZ16D Stromzähler
+{manufacturer_to_bubbles("Eltako", "DSZ16D")}
+
+Der Eltako Stromzähler DSZ16D mit RS485 (Modbus/RTU) Schnittstelle kann sowohl per [Modbus/RTU Wandler](/compatible_devices/interfaces.md#modbusrtu-wandler)
+als auch direkt angeschlossen am WARP Energy Manager ausgelesen werden. Ein Stromzähler kann immer genau nur einem Messort zugeordnet werden. Der Messort ist abhängig vom Montageort des Stromzählers. Es kann nur ein Stromzähler dieses Typs angelegt werden, da die RS485 (Modbus/RTU) Schnittstelle
 des WARP Energy Managers nur einen Stromzähler unterstützt. Um die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) nutzen zu können, muss der Stromzähler am Netzanschluss verbaut sein.
 
 ## Fox ESS
@@ -282,8 +289,20 @@ Fronius Hybrid-Wechselrichter der Verto Plus-Serie sprechen SunSpec und können 
 Als Port sollte 502 konfiguriert werden. Als SunSpec Model Type kann "float" gewählt werden. Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler (Fronius Smart Meter) am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt.
 
-Leider scheint es so, als wenn Fronius aktuell keine SunSpec Modelle zum Auslesen des Speichers unterstützen (Stand Mai 2025).
+**Speicher** \
+Die SunSpec Implementierung von Fronius ist leider unzureichend um einen angeschlossenen Speicher auslesen zu können. Aus diesem Grund haben wir zum Auslesen des Speichers eine eigenes Template für Modbus/TCP angelegt. Dieses ist für den Stromzähler "Speicher" zu wählen.
 
+## Growatt
+
+### Growatt-TL-X(H) Hybrid-Wechselrichter
+{manufacturer_to_bubbles("Growatt")}
+
+Ein Auslesen ist mittels Modbus/TCP nach Modbus/RTU Wandlern (z.B. EW11) über die Modbus/RTU Schnittstelle des Wechselrichters möglich.
+Siehe [Modbus/RTU Wandler](/compatible_devices/interfaces.md#modbusrtu-wandler).
+
+Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) unterstützt. Dynamisches Lastmanagement (dLM) wird nicht unterstützt, da keine Phasenströme gemessen werden .
+Ein Batteriespeicher angeschlossen am Wechselrichter kann über die [Batteriesteuerung (BS)](/docs/compatible_devices/introduction#batteriesteuerung-bs) gesteuert werden.
 
 ## Goodwe
 
@@ -444,6 +463,8 @@ Die SAX Power Batterien Power Home und Power Home Plus können mittels Modbus/TC
 Die Einstellung "Basic Mode" ist getestet. Der "Extended Mode" konnte bisher von uns noch nicht getestet werden.
 Nur wenn ein Stromzähler am Netzanschluss montiert wurde, wird das Feature [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) unterstützt. Ein [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) ist über diesen Zähler leider nicht möglich, da keine Phasenströme übermittelt werden.
 
+Die [Batteriesteuerung (BS)](/docs/compatible_devices/introduction#batteriesteuerung-bs) ist möglich, der Speicher kann allerdings nicht gezwungen werden zu Laden oder zu Entladen. 
+
 
 ## Shelly
 
@@ -532,6 +553,15 @@ Laut SMA wird als Unit ID die für das "SMA Modbus-Profil" + 123 verwendet. Dies
 Zum Auslesen der Wechselrichterleistung ist mindestens Firmwareversion 4.00.02.R erforderlich.
 Es steht nur der Messwert für die Erzeugung (PV) bereit.
 
+### Sunny Tripower CORE1
+{manufacturer_to_bubbles("SMA", "Sunny Tripower CORE1")}
+
+Sunny Tripower CORE1 Wechselrichter sprechen SunSpec und können direkt ausgelesen werden. Dazu muss als Modbus Profil auf dem Wechselrichter das "SunSpec Modbus-Profil" aktiviert werden.
+Laut SMA wird als Unit ID die für das "SMA Modbus-Profil" + 123 verwendet. Diese ist standardmäßig auf 3 gestellt, so dass die Unit ID für SunSpec 126 ist.
+
+Zum Auslesen der Wechselrichterleistung ist mindestens Firmwareversion 3.14.##.R erforderlich.
+Es steht nur der Messwert für die Erzeugung (PV) bereit.
+
 ### Sunny Tripower Smart Energy 5.0 / 6.0 / 8.0 / 10.0
 {manufacturer_to_bubbles("SMA", "Sunny Tripower Smart Energy 5.0 / 6.0 / 8.0 / 10.0")}
 
@@ -542,19 +572,15 @@ Zum Auslesen der Wechselrichterleistung ist mindestens Firmwareversion 3.01.09.R
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt. 
 
-
 **Speicher** \
 Die SunSpec Implementierung von SMA ist leider unzureichend um einen angeschlossenen Speicher auslesen zu können. Aus diesem Grund haben wir zum Auslesen des Speichers eine eigenes Template für Modbus/TCP angelegt. Dieses ist für den Stromzähler "Speicher" zu wählen. Ein Batteriespeicher angeschlossen am Wechselrichter kann über die
 [Batteriesteuerung (BS)](/docs/compatible_devices/introduction#batteriesteuerung-bs) gesteuert werden.
 
-### Sunny Tripower CORE1
-{manufacturer_to_bubbles("SMA", "Sunny Tripower CORE1")}
+### Sunny Tripower Storage
+{manufacturer_to_bubbles("SMA", "Sunny Tripower Storage")}
 
-Sunny Tripower CORE1 Wechselrichter sprechen SunSpec und können direkt ausgelesen werden. Dazu muss als Modbus Profil auf dem Wechselrichter das "SunSpec Modbus-Profil" aktiviert werden.
+Sunny Tripower Storage Wechselrichter sprechen SunSpec und können direkt ausgelesen werden. Dazu muss als Modbus Profil auf dem Wechselrichter das "SunSpec Modbus-Profil" aktiviert werden.
 Laut SMA wird als Unit ID die für das "SMA Modbus-Profil" + 123 verwendet. Diese ist standardmäßig auf 3 gestellt, so dass die Unit ID für SunSpec 126 ist.
-
-Zum Auslesen der Wechselrichterleistung ist mindestens Firmwareversion 3.14.##.R erforderlich.
-Es steht nur der Messwert für die Erzeugung (PV) bereit.
 
 ### Sunny Highpower PEAK3
 {manufacturer_to_bubbles("SMA", "Sunny Highpower PEAK3")}
@@ -605,15 +631,14 @@ Ist die Schnittstelle nicht unter Port 1502 und auch nicht unter Port 502 freige
 Unseres Wissens kann diese Schnittstelle nicht selbst aktiviert werden, sondern muss vom SolarEdge Support oder dem Installateur aktiviert werden.
 In der App für Installateure "SetApp" (zur Inbetriebnahme) kann die Schnittstelle unter Anlagekommunikation -> Modbus TCP aktiviert werden.
 
-Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
+Der Stromzähler "Netz" ist über SunSpec verfügbar und nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt.
 Über SunSpec steht zwar auch das Speicherkapazitäts-Modell 713 zur Verfügung, allerdings liefert dieses nicht die Leistung der Batterie. Daher haben wir ein Modbus/TCP
 Profil erstellt um auch die Leistung und den SoC erfassen zu können (siehe nächsten Eintrag).
 
-### SolarEdge Home Wechselrichter (Speicher)
-{manufacturer_to_bubbles("SolarEdge", "SolarEdge Home Wechselrichter (Speicher)")}
-SolarEdge stellt leider keine Leistungsdaten und den SoC per SunSpec zur Verfügung. Daher haben wir ein eigenes Modbus/TCP Profil für SunSpec angelegt.
-Dieses dient nur dazu den Messort "Speicher" erfassen zu können. Alle anderen Messorte (PV, Netz etc.) erfolgen mittels SunSpec (siehe oben).
+**PV, Speicher** \
+SolarEdge stellt leider keine Leistungsdaten zur PV und Speicher per SunSpec zur Verfügung. Daher haben wir ein eigenes Modbus/TCP Profil angelegt.
+Dieses dient nur dazu die Messorte "PV" und "Speicher" erfassen zu können.
 
 ## Solarmax
 {manufacturer_to_bubbles("Solarmax")}
@@ -637,6 +662,20 @@ Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compat
 Solax String-Wechselrichter können über das WLAN Dongle mittels Modbus/TCP ausgelesen werden. Eine Einrichtungsanleitung inkl. der unterstützen Wechselrichter gibt es in der [Solax Power Academy](https://kb.solaxpower.com/de/solution/detail/ff8080818eae9899018ec71a12ca1ea6).
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
 Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt.
+
+
+## Solis
+
+### Hybrid-Wechselrichter
+{manufacturer_to_bubbles("Solis")}
+
+Ein Auslesen ist mittels Modbus/TCP nach Modbus/RTU Wandlern (z.B. EW11) über die Modbus/RTU Schnittstelle des Wechselrichters möglich.
+Siehe [Modbus/RTU Wandler](/compatible_devices/interfaces.md#modbusrtu-wandler).
+
+Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt.
+Ein Batteriespeicher angeschlossen am Wechselrichter kann über die [Batteriesteuerung (BS)](/docs/compatible_devices/introduction#batteriesteuerung-bs) gesteuert werden.
+
 
 ## Sungrow
 

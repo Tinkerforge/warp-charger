@@ -158,6 +158,19 @@ export const devices = [
     bat: "-"
   },
   {
+    manufacturer: "Eltako",
+    device: "DSZ16D",
+    connection: "Modbus/TCP, WARP Energy Manager",
+    link: "/docs/compatible_devices/devices#eltako",
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "x",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
+  },
+  {
     manufacturer: "Fox ESS",
     device: "Hybrid Serie H3/AC3, H3 Smart, H3 Pro",
     connection: "Modbus/RTU",
@@ -239,15 +252,28 @@ export const devices = [
   {
     manufacturer: "Fronius",
     device: "Verto Plus-Serie Hybrid-Wechselrichter",
-    connection: "SunSpec",
+    connection: "SunSpec, Modbus/TCP",
     link: "/docs/compatible_devices/devices#fronius",
     grid: "x",
     pv: "x",
-    battery: "-",
+    battery: "x",
     load: "-",
     dlm: "x",
     pve: "x",
     bat: "-"
+  },
+  {
+    manufacturer: "Growatt",
+    device: "Growatt-TL-X(H) Hybrid-Wechselrichter",
+    connection: "Modbus/TCP",
+    link: "/docs/compatible_devices/devices#growatt",
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "x",
+    dlm: "-",
+    pve: "x",
+    bat: "x"
   },
   {
     manufacturer: "Goodwe",
@@ -470,7 +496,7 @@ export const devices = [
     load: "-",
     dlm: "-",
     pve: "x",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "Shelly",
@@ -552,6 +578,19 @@ export const devices = [
   },
   {
     manufacturer: "SMA",
+    device: "Sunny Tripower CORE1",
+    connection: "SunSpec",
+    link: "/docs/compatible_devices/devices#sma",
+    grid: "-",
+    pv: "x",
+    battery: "-",
+    load: "-",
+    dlm: "-",
+    pve: "-",
+    bat: "-"
+  },
+  {
+    manufacturer: "SMA",
     device: "Sunny Tripower Smart Energy 5.0 / 6.0 / 8.0 / 10.0",
     connection: "SunSpec, Modbus/TCP",
     link: "/docs/compatible_devices/devices#sma",
@@ -563,14 +602,14 @@ export const devices = [
     pve: "x",
     bat: "x"
   },
-  {
+    {
     manufacturer: "SMA",
-    device: "Sunny Tripower CORE1",
+    device: "Sunny Tripower Storage",
     connection: "SunSpec",
     link: "/docs/compatible_devices/devices#sma",
     grid: "-",
-    pv: "x",
-    battery: "-",
+    pv: "-",
+    battery: "x",
     load: "-",
     dlm: "-",
     pve: "-",
@@ -618,27 +657,14 @@ export const devices = [
   {
     manufacturer: "SolarEdge",
     device: "SolarEdge Home Wechselrichter",
-    connection: "SunSpec",
+    connection: "SunSpec, Modbus/TCP",
     link: "/docs/compatible_devices/devices#solaredge",
     grid: "x",
     pv: "x",
-    battery: "-",
+    battery: "x",
     load: "-",
     dlm: "x",
     pve: "x",
-    bat: "-"
-  },
-  {
-    manufacturer: "SolarEdge",
-    device: "SolarEdge Home Wechselrichter (Speicher)",
-    connection: "Modbus/TCP",
-    link: "/docs/compatible_devices/devices#solaredge",
-    grid: "-",
-    pv: "-",
-    battery: "x",
-    load: "-",
-    dlm: "-",
-    pve: "-",
     bat: "-"
   },
   {
@@ -679,6 +705,19 @@ export const devices = [
     dlm: "x",
     pve: "x",
     bat: "-"
+  },
+  {
+    manufacturer: "Solis",
+    device: "Hybrid-Wechselrichter",
+    connection: "Modbus/TCP",
+    link: "/docs/compatible_devices/devices#solis",
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "x",
+    dlm: "x",
+    pve: "x",
+    bat: "x"
   },
   {
     manufacturer: "Sungrow",
