@@ -56,11 +56,14 @@ Our iOS app is available in the Apple App Store: [WARP Charger iOS App](https://
 Our Android app is available in the Android Play Store: [WARP Charger Android App](https://play.google.com/store/apps/details?id=com.tinkerforge.warp)
 
 ## Recovery Page
-The recovery page of the charger/Energy Manager can also be accessed via remote access. A device with a keyboard is required for this.
-With the key combination Ctrl + Shift + Alt + R, the recovery page can be loaded while a connection exists. If this does not work,
-focus may need to be removed from the web interface by clicking the footer once with the mouse.
+The recovery page of the charger/Energy Manager can also be accessed via remote access. To do this, first establish a connection to the affected device and then append "/recovery" to the URL.
 
 ## Technical Details
 
 ### Ports
-Remote access uses an HTTPS connection (port 443/TCP) and a UDP connection on ports 51820-51825.
+Remote access uses an HTTPS connection (port 443/TCP) and a UDP connection (WireGuard) on ports 51820-51825.
+
+## Troubleshooting
+| Error | Possible Solution |
+| :---: | :---: |
+| The connection is established, but the page remains white | Reduce the MTU in the expert settings |

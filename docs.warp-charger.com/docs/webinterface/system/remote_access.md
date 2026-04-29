@@ -56,11 +56,15 @@ Unsere iOS App ist im Apple App Store verfügbar: [WARP Charger iOS App](https:/
 Unsere Android App ist im Android Playstore verfügbar: [WARP Charger Android App](https://play.google.com/store/apps/details?id=com.tinkerforge.warp)
 
 ## Recovery Seite
-Die Recovery Seite der Wallbox/des Energy Managers kann auch über den Fernzugriff aufgerufen werden. Dazu ist ein Gerät mit Tastatur erforderlich.
-Mit der Tastenkombination Strg + Shift + Alt + R kann die Recovery Seite geladen werden während eine Verbindung besteht. Sollte das nicht funktionieren
-muss eventuell der Fokus vom Webinterface genommen werden, indem der Footer einmal mit der Maus angeklickt wird.
+Die Recovery Seite der Wallbox/des Energy Managers kann auch über den Fernzugriff aufgerufen werden. Dazu muss erst eine Verbindung zum betroffenen Gerät hergestellt werden und anschließend "/recovery" an die URL angehangen werden.
 
 ## Technische Details
 
 ### Ports
-Der Fernzugriff nutzt eine HTTPS Verbindung (Port 443/TCP) und eine UDP Verbindung auf den Ports 51820-51825.
+Der Fernzugriff nutzt eine HTTPS Verbindung (Port 443/TCP) und eine UDP Verbindung (WireGuard) auf den Ports 51820-51825.
+
+## Bekannte Fehler und mögliche Lösungen
+| Fehler | Mögliche Lösung |
+| :---: | :---: |
+| Die Verbindung wird Aufgebaut, aber die Seite bleibt weiß | Die MTU in den Experten-Einstellungen reduzieren |
+
