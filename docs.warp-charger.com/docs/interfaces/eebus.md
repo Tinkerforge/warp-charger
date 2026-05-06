@@ -8,9 +8,9 @@ EEBUS ist ein Kommunikationsstandard, der unter anderem von Energienetzbetreiber
 
 ## Funktionsweise
 
-EEBUS nutzt das SHIP-Protokoll (Smart Home IP) zur Geräteerkennung und Verbindungsherstellung im lokalen Netzwerk. Die Kommunikation erfolgt verschlüsselt über TLS/WebSocket. Die Geräte identifizieren sich gegenseitig über einen SKI (Subject Key Identifier).
+EEBUS nutzt mDNS zur Geräteerkennung  und das SHIP-Protokoll (Smart Home IP) zur Verbindungsherstellung im lokalen Netzwerk. Die Kommunikation erfolgt verschlüsselt über TLS/WebSocket. Die Geräte identifizieren sich gegenseitig über einen SKI (Subject Key Identifier).
 
-## Verügbare Use Cases
+## Verfügbare Use Cases
 
 EEBUS definiert verschiedene Use Cases für unterschiedliche Anwendungsbereiche.
 
@@ -58,6 +58,11 @@ EEBUS-Geräte müssen sich gegenseitig vertrauen, bevor sie kommunizieren könne
 
 Falls ein Gerät nicht automatisch erkannt wird, ist es möglich die SKI und Adresse/Port/WSS-Pfad manuell anzugeben. Einem hinzugefügten Gerät wird standardmäßig vertraut.
 
+:::warning
+
+In der aktuellen Version verbinden sich WARP Charger und WARP Energy Manager nicht selbständig mit anderen EEBUS Geräten. Die Verbindung muss von der Gegenseite ausgehen. Das kann meistens auf dem EEBUS Gerät durch hinzufügen initiiert werden.
+
+:::
 
 ## Weitere Informationen
 
