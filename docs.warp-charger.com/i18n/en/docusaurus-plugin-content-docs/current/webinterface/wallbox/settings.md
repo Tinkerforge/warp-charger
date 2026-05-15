@@ -55,6 +55,23 @@ is configured analogously to the time limit.
 This configures the function of the button on the front of the WARP3 Charger. In semi-public spaces,
 for example, it may be useful to prohibit stopping charging via button.
 
+If the button setting is set to "Request charge mode", the button can be used to switch the charge mode of the charger.
+The colors and blink codes vary between charger versions and configured modes.
+
+
+:::note
+
+For a WARP3 Charger with configured Eco mode without a configured PV mode, the "?" provides the following descriptive text:
+
+On the first button press, the current charge mode is displayed. Further presses within 10 seconds switch the charge mode for the next or current charging process.
+ * Red: Off
+ * Green: Eco
+ * Yellow: Eco + Min
+ * Cyan: Fast
+
+:::
+
+
 ## Shutdown Input
 
 For example, a ripple control receiver can be connected to the shutdown input. Here you can set how to react to changes

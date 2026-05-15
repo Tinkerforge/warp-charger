@@ -9,9 +9,9 @@ import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 <DeviceCompatibility supported={['wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
 
 
-§14a of the German Energy Industry Act (Energiewirtschaftsgesetz, EnWG) allows grid operators to temporarily reduce the power consumption of controllable consumer devices (wallboxes, heat pumps, battery storage, air conditioning) to prevent local grid overload. The devices are never fully shut off. A minimum of 4200 W always remains available.
+§14a of the German Energy Industry Act (Energiewirtschaftsgesetz, EnWG) allows grid operators to temporarily reduce the power consumption of controllable consumer devices (chargers, heat pumps, battery storage, air conditioning) to prevent local grid overload. The devices are never fully shut off. A minimum of 4200 W always remains available.
 
-This page configures the central §14a EnWG control. Depending on the selected signal source, when a control signal is received the calculated power limit is automatically applied to the configured consumers (wallboxes and/or heating).
+This page configures the central §14a EnWG control. Depending on the selected signal source, when a control signal is received the calculated power limit is automatically applied to the configured consumers (chargers and/or heating).
 
 :::note
 
@@ -31,8 +31,8 @@ Enables or disables the §14a EnWG control. When disabled, no power limits are a
 
 The signal source determines where the grid operator's control signal is received from. The following options are available:
 
-- **Charger shutdown input** (WARP Charger only): The signal is received via the potential-free shutdown input inside the wallbox. A ripple control receiver or control box from the grid operator is connected directly to the shutdown input.
-- **Energy Manager input** (Energy Manager only): The signal is received via one of the four inputs of the WARP Energy Manager. The ripple control receiver or control box is connected to an input of the Energy Manager. The wallboxes are then controlled via the network.
+- **Charger shutdown input** (WARP Charger only): The signal is received via the potential-free shutdown input inside the charger. A ripple control receiver or control box from the grid operator is connected directly to the shutdown input.
+- **Energy Manager input** (Energy Manager only): The signal is received via one of the four inputs of the WARP Energy Manager. The ripple control receiver or control box is connected to an input of the Energy Manager. The chargers are then controlled via the network.
 - **EEBUS**: The control signal is received via the [EEBUS interface](/docs/interfaces/eebus). EEBUS is the designated interface for grid operator control of consumer devices.
 - **API**: The control signal is received via the HTTP/MQTT API. Details can be found in the API documentation under `p14a_enwg/control_update`.
 
@@ -69,8 +69,8 @@ Determines at which input state the power limit becomes active:
 
 This section configures which consumers the power limit should be applied to:
 
-- **This charger** (WARP Charger only): Applies the power limit to the local wallbox.
-- **Managed chargers**: Applies the power limit to all wallboxes managed via load management.
+- **This charger** (WARP Charger only): Applies the power limit to the local charger.
+- **Managed chargers**: Applies the power limit to all chargers managed via load management.
 - **Heating** (Energy Manager only): Applies the power limit to the connected heating system (heat pump via SG-Ready). When heating is enabled as a target device, the **Heating max. power** can additionally be configured.
 
 ### Heating max. power (Energy Manager only)

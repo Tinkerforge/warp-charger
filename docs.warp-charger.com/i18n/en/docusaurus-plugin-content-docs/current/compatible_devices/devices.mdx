@@ -213,10 +213,17 @@ To use the PV excess charging (PVE) and dynamic load management (DLM) applicatio
 ## Eltako
 
 ### DSZ15DZMOD Energy Meter
-{manufacturer_to_bubbles("Eltako")}
+{manufacturer_to_bubbles("Eltako", "DSZ15DZMOD")}
 
 The Eltako energy meter DSZ15DZMOD with RS485 (Modbus/RTU) interface can be directly connected to the WARP Energy Manager and read by it.
 An energy meter can always be assigned to exactly one measurement location. The measurement location depends on the installation location of the energy meter. Only one energy meter of this type can be configured, as the RS485 (Modbus/RTU) interface
+of the WARP Energy Manager only supports one energy meter. To use the PV excess charging (PVE) and dynamic load management (DLM) applications, the energy meter must be installed at the grid connection.
+
+### DSZ16D Energy Meter
+{manufacturer_to_bubbles("Eltako", "DSZ16D")}
+
+The Eltako energy meter DSZ16D with RS485 (Modbus/RTU) interface can be read both via a [Modbus/RTU converter](/compatible_devices/interfaces.md#modbusrtu-converter)
+and when directly connected to the WARP Energy Manager. An energy meter can always be assigned to exactly one measurement location. The measurement location depends on the installation location of the energy meter. Only one energy meter of this type can be configured, as the RS485 (Modbus/RTU) interface
 of the WARP Energy Manager only supports one energy meter. To use the PV excess charging (PVE) and dynamic load management (DLM) applications, the energy meter must be installed at the grid connection.
 
 ## Fox ESS
@@ -284,6 +291,18 @@ Only in this case are the PV excess charging (PVE) and dynamic load management (
 
 Unfortunately, it seems that Fronius currently does not support SunSpec models for reading the storage (as of May 2025).
 
+
+## Growatt
+
+### Growatt TL-X(H) Hybrid Inverter
+{manufacturer_to_bubbles("Growatt")}
+
+Reading is possible via Modbus/TCP to Modbus/RTU converters (e.g., EW11) over the Modbus/RTU interface of the inverter.
+See [Modbus/RTU Converter](/compatible_devices/interfaces.md#modbusrtu-converter).
+
+The "Grid" energy meter is only usable if an external hardware energy meter has been installed at the grid connection and can be read by the inverter.
+Only in this case is the PV excess charging (PVE) application supported. Dynamic load management (DLM) is not supported, as no phase currents are measured.
+A battery storage system connected to the inverter can be controlled via [Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc).
 
 ## Goodwe
 
@@ -443,6 +462,8 @@ The SAX Power batteries Power Home and Power Home Plus can be read via Modbus/TC
 The "Basic Mode" setting has been tested. The "Extended Mode" could not yet be tested by us.
 Only if an energy meter has been installed at the grid connection is the PV excess charging (PVE) application supported. Dynamic load management (DLM) is unfortunately not possible via this meter, as no phase currents are transmitted.
 
+[Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc) is possible, however the storage cannot be forced to charge or discharge.
+
 
 ## Shelly
 
@@ -481,6 +502,11 @@ There are various models either as direct energy meters with different measuring
 An energy meter can always be assigned to exactly one measurement location. The measurement location depends on the installation location of the energy meter. Multiple energy meters of this type can be configured.
 Only if the energy meter was installed at the grid connection are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
 
+For example, the Senstron PAC2200 is a good choice. It is available in different versions. Versions with Modbus/TCP must be selected. For example:
+ * Version for current transformer measurements (5A): 7KM2200-2EA30-1EA1
+ * Version for direct measurement up to 65A: 7KM2200-2EA40-1JA1
+
+
 ## SMA
 
 ### Sunny Boy 3.0 / 3.6 / 4.0 / 5.0 / 6.0
@@ -510,7 +536,9 @@ According to SMA, the Unit ID for the "SMA Modbus profile" + 123 is used. This i
 To read the inverter power, firmware version 3.01.09.R or higher is required.
 The "Grid" energy meter is only usable if an external hardware energy meter has been installed at the grid connection and can be read by the inverter.
 Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
-Battery storage systems connected to the inverter can be controlled via [Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc).
+
+**Storage** \
+The SunSpec implementation by SMA is unfortunately insufficient to read a connected storage. For this reason, we have created a custom Modbus/TCP template for reading the storage. This should be selected for the "Storage" energy meter.
 
 ### Sunny Tripower 3.0 / 4.0 / 5.0 / 6.0 / 8.0 / 10.0
 {manufacturer_to_bubbles("SMA", "Sunny Tripower 3.0 / 4.0 / 5.0 / 6.0 / 8.0 / 10.0")}
@@ -540,6 +568,12 @@ According to SMA, the Unit ID for the "SMA Modbus profile" + 123 is used. This i
 
 To read the inverter power, firmware version 3.14.##.R or higher is required.
 Only the measurement value for generation (PV) is available.
+
+### Sunny Tripower Storage
+{manufacturer_to_bubbles("SMA", "Sunny Tripower Storage")}
+
+Sunny Tripower Storage inverters speak SunSpec and can be read directly. For this, the "SunSpec Modbus profile" must be activated as the Modbus profile on the inverter.
+According to SMA, the Unit ID for the "SMA Modbus profile" + 123 is used. This is set to 3 by default, so the Unit ID for SunSpec is 126.
 
 ### Sunny Highpower PEAK3
 {manufacturer_to_bubbles("SMA", "Sunny Highpower PEAK3")}
@@ -622,6 +656,19 @@ Only in this case are the PV excess charging (PVE) and dynamic load management (
 Solax string inverters can be read via the WLAN dongle using Modbus/TCP. A setup guide including the supported inverters is available in the [Solax Power Academy](https://kb.solaxpower.com/de/solution/detail/ff8080818eae9899018ec71a12ca1ea6).
 The "Grid" energy meter is only usable if an external hardware energy meter has been installed at the grid connection and can be read by the inverter.
 Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+
+## Solis
+
+### Hybrid Inverter
+{manufacturer_to_bubbles("Solis")}
+
+Reading is possible via Modbus/TCP to Modbus/RTU converters (e.g., EW11) over the Modbus/RTU interface of the inverter.
+See [Modbus/RTU Converter](/compatible_devices/interfaces.md#modbusrtu-converter).
+
+The "Grid" energy meter is only usable if an external hardware energy meter has been installed at the grid connection and can be read by the inverter.
+Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+A battery storage system connected to the inverter can be controlled via [Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc).
+
 
 ## Sungrow
 

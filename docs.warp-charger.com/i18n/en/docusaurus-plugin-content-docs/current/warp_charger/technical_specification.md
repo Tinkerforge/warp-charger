@@ -25,14 +25,20 @@ The WARP3 Charger has the following technical specification:
 | Property | Value |
 |-|-|
 | Vehicle Charging Plug | Type 2 |
-| Charging Cable Length | 5.0 m and 7.5 m (*) |
+| Charging Cable Length | 5.0 m and 7.5 m or custom length(*) |
 | Supply Line Cross-Section | 2.5 mm² to 10 mm² |
+| Supply Line Diameter | 11 mm to 21 mm (M32 cable gland) |
 | Supply Line Entry | From bottom and rear possible |
-| Wallbox Dimensions | 280 × 215 × 95 mm (W/H/D, Bounding Box) |
+| LAN / Control Cable Diameter | 4 mm to 8 mm (M16 cable gland) |
+| LAN / Control Cable Entry | From bottom and rear possible |
+| Charger Dimensions | 280 × 215 × 95 mm (W/H/D, Bounding Box) |
 | Mounting | [See Drilling Template](https://www.warp-charger.com/documents/WARP3_Bohrschablone.pdf) |
 | Weight | Depending on cable length, approx. 8 kg (*) |
 | Protection Class | IP54 (splash-proof, suitable for outdoor use) |
-| Scope of Delivery | Wallbox, operating manual incl. installation instructions, drilling template, test protocol, 3x NFC‐cards |
+| Impact Resistance | Housing IK09 (7 Joule according to EN 60079-0) |
+| Scope of Delivery | Charger, operating manual incl. installation instructions, drilling template, test protocol, 3x NFC‐cards |
+
+(*) Depending on charger variant (Basic / Smart / Pro, 5 m / 7.5 m, 11 kW / 22 kW).
 
 ### Software Properties
 
@@ -49,5 +55,3 @@ The WARP3 Charger has the following technical specification:
 | Users | Max. 32 configurable |
 | Interfaces | HTTP, MQTT, Modbus/TCP, OCPP, SunSpec |
 | Modbus Registers | WARP Charger table and simulation of Bender CC613 and Keba C-Series |
-
-(*) Depending on charger variant (Basic / Smart / Pro, 5 m / 7.5 m, 11 kW / 22 kW).

@@ -82,7 +82,7 @@ export const devices = [
   {
     manufacturer: "E3DC",
     device: "S10, S20 Hauskraftwerke",
-    connection: "SunSpec",
+    connection: "Modbus/TCP",
     link: "/docs/compatible_devices/devices#e3dc",
     grid: "x",
     pv: "x",
@@ -158,6 +158,19 @@ export const devices = [
     bat: "-"
   },
   {
+    manufacturer: "Eltako",
+    device: "DSZ16D",
+    connection: "Modbus/TCP, WARP Energy Manager",
+    link: "/docs/compatible_devices/devices#eltako",
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "x",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
+  },
+  {
     manufacturer: "Fox ESS",
     device: "Hybrid Series H3/AC3, H3 Smart, H3 Pro",
     connection: "Modbus/RTU",
@@ -187,11 +200,11 @@ export const devices = [
   {
     manufacturer: "Fronius",
     device: "GEN24 and GEN24 Plus Series Hybrid Inverter",
-    connection: "SunSpec",
+    connection: "SunSpec, Modbus/TCP",
     link: "/docs/compatible_devices/devices#fronius",
     grid: "x",
     pv: "x",
-    battery: "-",
+    battery: "x",
     load: "-",
     dlm: "x",
     pve: "x",
@@ -252,11 +265,11 @@ export const devices = [
   {
     manufacturer: "Fronius",
     device: "Verto Plus Series Hybrid Inverter",
-    connection: "SunSpec",
+    connection: "SunSpec, Modbus/TCP",
     link: "/docs/compatible_devices/devices#fronius",
     grid: "x",
     pv: "x",
-    battery: "-",
+    battery: "x",
     load: "-",
     dlm: "x",
     pve: "x",
@@ -300,6 +313,19 @@ export const devices = [
     dlm: "?",
     pve: "?",
     bat: "-"
+  },
+  {
+    manufacturer: "Growatt",
+    device: "Growatt TL-X(H) Hybrid Inverter",
+    connection: "Modbus/TCP",
+    link: "/docs/compatible_devices/devices#growatt",
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "x",
+    dlm: "-",
+    pve: "x",
+    bat: "x"
   },
   {
     manufacturer: "Hailei", //is alpha ess
@@ -483,7 +509,7 @@ export const devices = [
     load: "-",
     dlm: "-",
     pve: "x",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "Shelly",
@@ -527,7 +553,7 @@ export const devices = [
   {
     manufacturer: "SMA",
     device: "Sunny Boy Storage 3.7 / 4.0 / 5.0 / 6.0",
-    connection: "SunSpec",
+    connection: "SunSpec, Modbus/TCP",
     link: "/docs/compatible_devices/devices#sma",
     grid: "x",
     pv: "x",
@@ -540,7 +566,7 @@ export const devices = [
   {
     manufacturer: "SMA",
     device: "Sunny Boy Smart Energy 3.6 / 4.0 / 5.0 / 6.0",
-    connection: "SunSpec",
+    connection: "SunSpec, Modbus/TCP",
     link: "/docs/compatible_devices/devices#sma",
     grid: "x",
     pv: "x",
@@ -548,7 +574,7 @@ export const devices = [
     load: "-",
     dlm: "x",
     pve: "x",
-    bat: "x"
+    bat: "-"
   },
   {
     manufacturer: "SMA",
@@ -566,7 +592,7 @@ export const devices = [
   {
     manufacturer: "SMA",
     device: "Sunny Tripower Smart Energy 5.0 / 6.0 / 8.0 / 10.0",
-    connection: "SunSpec",
+    connection: "SunSpec, Modbus/TCP",
     link: "/docs/compatible_devices/devices#sma",
     grid: "x",
     pv: "x",
@@ -584,6 +610,19 @@ export const devices = [
     grid: "-",
     pv: "x",
     battery: "-",
+    load: "-",
+    dlm: "-",
+    pve: "-",
+    bat: "-"
+  },
+  {
+    manufacturer: "SMA",
+    device: "Sunny Tripower Storage",
+    connection: "SunSpec",
+    link: "/docs/compatible_devices/devices#sma",
+    grid: "-",
+    pv: "-",
+    battery: "x",
     load: "-",
     dlm: "-",
     pve: "-",
@@ -631,11 +670,11 @@ export const devices = [
   {
     manufacturer: "SolarEdge",
     device: "SolarEdge Home Inverter",
-    connection: "SunSpec",
+    connection: "SunSpec, Modbus/TCP",
     link: "/docs/compatible_devices/devices#solaredge",
     grid: "x",
     pv: "x",
-    battery: "-",
+    battery: "x",
     load: "-",
     dlm: "x",
     pve: "x",
@@ -692,6 +731,19 @@ export const devices = [
     dlm: "x",
     pve: "x",
     bat: "-"
+  },
+  {
+    manufacturer: "Solis",
+    device: "Hybrid Inverter",
+    connection: "Modbus/TCP",
+    link: "/docs/compatible_devices/devices#solis",
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "x",
+    dlm: "x",
+    pve: "x",
+    bat: "x"
   },
   {
     manufacturer: "Sungrow",

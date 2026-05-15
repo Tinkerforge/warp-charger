@@ -4,11 +4,11 @@ sidebar_position: 4
 
 # EEBUS
 
-EEBUS is a communication standard used by energy grid operators, among others, to control controllable consumer devices (e.g. wallboxes, heat pumps) in accordance with [§14a EnWG](/webinterface/energy_management/p14a_enwg.md). The EEBUS interface is available on WARP Chargers and WARP Energy Managers.
+EEBUS is a communication standard used by energy grid operators, among others, to control controllable consumer devices (e.g. chargers, heat pumps) in accordance with [§14a EnWG](/webinterface/energy_management/p14a_enwg.md). The EEBUS interface is available on WARP Chargers and WARP Energy Managers.
 
 ## How it works
 
-EEBUS uses the SHIP protocol (Smart Home IP) for device discovery and connection establishment in the local network. Communication is encrypted via TLS/WebSocket. Devices identify each other using an SKI (Subject Key Identifier).
+EEBUS uses mDNS for device discovery and the SHIP protocol (Smart Home IP) for connection establishment in the local network. Communication is encrypted via TLS/WebSocket. Devices identify each other using an SKI (Subject Key Identifier).
 
 ## Available use cases
 
@@ -23,7 +23,7 @@ EEBUS defines various use cases for different applications.
 - **EVCC** (EV Commissioning and Configuration): Information about the connected electric vehicle (communication standard, power limits, asymmetric charging).
 - **EVSECC** (EVSE Commissioning and Configuration): Operating state of the charging station and any error conditions.
 - **EVCEM** (EV Charging Electricity Measurement): Measurements of the charging process (current, power, charged energy per phase).
-- **MPC** (Monitoring of Power Consumption): Monitoring of the wallbox power consumption with measurements for power, current, voltage, and frequency.
+- **MPC** (Monitoring of Power Consumption): Monitoring of the charger power consumption with measurements for power, current, voltage, and frequency.
 
 ### Energy management (Energy Manager only)
 
@@ -56,6 +56,11 @@ EEBUS devices must mutually trust each other before they can communicate. Connec
 
 If a device is not automatically detected, it is possible to set the SKI and address/port/wss path manually. A device that was added is trusted by default.
 
+:::warning
+
+In the current version, WARP Chargers and WARP Energy Managers do not automatically connect to other EEBUS devices. The connection must be initiated by the other side. This can usually be done by adding the device on the EEBUS device.
+
+:::
 
 ## Further information
 
