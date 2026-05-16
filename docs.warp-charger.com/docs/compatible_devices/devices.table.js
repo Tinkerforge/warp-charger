@@ -41,7 +41,7 @@ export const devices = [
     bat: "-"
   },
   {
-    manufacturer: "Carlo Galvazzi",
+    manufacturer: "Carlo Gavazzi",
     device: "Smart Meter: EM24, EM100, EM111, EM112, ET100, ET111, ET112, EM210, EM270, EM280, EM300, EM330, EM340, ET300, ET330, ET340, EM510, ET511, EM530, EM540, EM580",
     connection: "Modbus/TCP",
     link: "/docs/compatible_devices/devices#carlo-galvazzi",
