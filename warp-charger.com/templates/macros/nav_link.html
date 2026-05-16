@@ -1,0 +1,13 @@
+{# Render a single navigation link, handling external URLs, anchor links, and internal pages. #}
+{% macro dropdown_nav_link(lang, slug, label, preview, extra_class="dropdown-link") %}
+{% if slug.startswith('http') %}
+<a href="{{ slug }}" target="_blank" rel="noopener" class="{{ extra_class }} flex items-center gap-1"
+   {% if preview %}data-preview-img="{{ preview.img }}" data-preview-title="{{ preview.title }}" data-preview-desc="{{ preview.desc }}" data-preview-link="{{ slug }}"{% endif %}>{{ label }} <span class="material-symbols-outlined text-[14px]!">open_in_new</span></a>
+{% elif slug.startswith('/') or slug.startswith('#') %}
+<a href="/{{ lang }}{{ slug }}" class="{{ extra_class }}"
+   {% if preview %}data-preview-img="{{ preview.img }}" data-preview-title="{{ preview.title }}" data-preview-desc="{{ preview.desc }}" data-preview-link="/{{ lang }}{{ slug }}"{% endif %}>{{ label }}</a>
+{% else %}
+<a href="/{{ lang }}/{{ slug }}" class="{{ extra_class }}"
+   {% if preview %}data-preview-img="{{ preview.img }}" data-preview-title="{{ preview.title }}" data-preview-desc="{{ preview.desc }}" data-preview-link="/{{ lang }}/{{ slug }}"{% endif %}>{{ label }}</a>
+{% endif %}
+{% endmacro %}

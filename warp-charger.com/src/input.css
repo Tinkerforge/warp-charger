@@ -1,0 +1,564 @@
+/* Local Fonts */
+
+@font-face {
+    font-family: "Satoshi Variable";
+    src: url("../fonts/Satoshi-Variable.woff2") format("woff2");
+    font-weight: 300 900;
+    font-display: optional;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Satoshi Variable";
+    src: url("../fonts/Satoshi-VariableItalic.woff2") format("woff2");
+    font-weight: 300 900;
+    font-display: optional;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Instrument Serif";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../fonts/instrument-serif-regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Instrument Serif";
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../fonts/instrument-serif-italic.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Material Symbols Outlined";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../fonts/material-symbols-outlined-400.ttf") format("truetype");
+}
+
+.material-symbols-outlined {
+    font-family: "Material Symbols Outlined";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+}
+
+@import "tailwindcss";
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Collapse spacing between adjacent sections with the same background */
+section.bg-background + section.bg-background,
+section.bg-gradient-light-white-background + section.bg-gradient-light-white-background,
+section.bg-gradient-light-white-background + section.bg-background {
+    padding-top: 0;
+}
+
+/* Sections without an explicit bg class (default white) */
+section:not([class*="bg-"]) + section:not([class*="bg-"]) {
+    padding-top: 0;
+}
+
+@theme {
+    --font-satoshi: "Satoshi Variable", sans-serif;
+
+    /* Colors */
+
+    /* Neutrals */
+    --color-background: #f3f3f3;
+    --color-black: #1b1b1b;
+    --color-grey: #6c757d;
+    --color-medium-grey: #959ba1;
+    --color-light-grey: #ced4da;
+    --color-very-light-grey: #eaeaea;
+
+    /* Brand */
+    --color-primary: #2563eb;
+
+    --color-dark-primary: #051533;
+
+    /* Semantics */
+    --color-console-green: #ddffdf;
+
+    /* Gradients */
+
+    --background-image-gradient-blue: linear-gradient(
+        to bottom,
+        #021273 0%,
+        #1856c8 50%,
+        #008eff 100%
+    );
+
+    --background-image-gradient-overlay-blue: linear-gradient(
+        to bottom,
+        #0525b3 0%,
+        #2e8ef3 50%,
+        #01cdff 100%
+    );
+
+    --background-image-gradient-ridged: linear-gradient(
+        to right,
+        #1b1b1b 0%,
+        #575757 25%,
+        #1b1b1b 50%,
+        #575757 75%,
+        #1b1b1b 100%
+    );
+
+    --background-image-gradient-dark-soft: linear-gradient(
+        to right,
+        #1b1b1b 0%,
+        #575757 50%,
+        #1b1b1b 100%
+    );
+
+    --background-image-gradient-grey-dark: linear-gradient(to bottom, #4a4a4a 0%, #1b1b1b 100%);
+
+    --background-image-gradient-radial-dark: radial-gradient(circle, #1b1b25 0%, #05050a 100%);
+
+    --background-image-gradient-white-blue: linear-gradient(to bottom, #ffffff 0%, #b0bae9 100%);
+
+    --background-image-gradient-deep-blue: linear-gradient(to bottom, #364578 0%, #0d121f 100%);
+
+    --background-image-gradient-light-blue: linear-gradient(to bottom, #8aaee9 0%, #233153 100%);
+
+    --background-image-gradient-light-white-image: linear-gradient(
+        to top,
+        #f3f3f3 0%,
+        #f9f9f900 50%,
+        #ffffff00 100%
+    );
+
+    --background-image-gradient-light-white-background: linear-gradient(
+        to top,
+        #f3f3f3 0%,
+        #ffffff 40%
+    );
+
+    --background-image-gradient-metallic: linear-gradient(
+        to right,
+        #6c6f6c 0%,
+        #ffffff 25%,
+        #ffffff 75%,
+        #6c6f6c 100%
+    );
+
+    --background-image-gradient-dark-green: linear-gradient(
+        to right,
+        #161c15 0%,
+        #1f2c1e 25%,
+        #1f2c1e 50%,
+        #161c15 100%
+    );
+
+    --background-image-gradient-metallic-light: linear-gradient(
+        to right,
+        #ffffff80 0%,
+        #ffffff 15%,
+        #ffffff 85%,
+        #ffffff80 100%
+    );
+
+    --background-image-gradient-light-blue-alt: linear-gradient(
+        to top,
+        #2137b8 0%,
+        #487ddf 50%,
+        #58b5ff 100%
+    );
+
+    /* Font Families */
+    --font-satoshi: "Satoshi Variable", sans-serif;
+    --font-instrument: "Instrument Serif", serif;
+
+    /* Spacing */
+
+    --width-main: 75rem;
+    --width-wide: 95rem;
+
+    --spacing-text-gap-sm: 0.9375rem; /* 15px */
+    --spacing-text-gap-md: 1.25rem; /* 20px */
+
+    --spacing-section: clamp(4rem, 6vw + 2rem, 9.375rem);
+
+    /* Effects */
+
+    --shadow-normal: 0px 0px 29.43px 6.3px rgba(0, 0, 0, 0.5);
+}
+
+/* Typography */
+
+@utility text-display-1 {
+    font-family: var(--font-satoshi);
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: -0.0625em;
+    line-height: 1.1;
+
+    @variant md {
+        font-size: 4rem;
+    }
+    @variant lg {
+        font-size: 4rem;
+    }
+}
+
+@utility text-display-2 {
+    font-family: var(--font-instrument);
+    font-size: 1.97rem;
+    font-weight: 400;
+    letter-spacing: -0.024em;
+    line-height: 1.1;
+
+    @variant md {
+        font-size: 2.625rem;
+    }
+    @variant lg {
+        font-size: 2.625rem;
+    }
+}
+
+@utility text-h2 {
+    font-family: var(--font-satoshi);
+    font-size: 1.97rem;
+    font-weight: 700;
+    line-height: 1.07;
+    letter-spacing: -0.048em;
+
+    @variant lg {
+        font-size: 2.625rem;
+    }
+}
+
+@utility text-h3 {
+    font-family: var(--font-satoshi);
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: -0.0625em;
+    line-height: 1.2;
+
+    @variant lg {
+        font-size: 2rem;
+    }
+}
+
+@utility text-h4 {
+    font-family: var(--font-satoshi);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: -0.05em;
+    line-height: 1.3;
+
+    @variant lg {
+        font-size: 1.25rem;
+    }
+}
+
+@utility text-body {
+    font-family: var(--font-satoshi);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.625;
+
+    @variant lg {
+        font-size: 1rem;
+    }
+}
+
+@utility text-btn {
+    font-family: var(--font-satoshi);
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1;
+
+    @variant md {
+        font-size: 1rem;
+    }
+    @variant lg {
+        font-size: 1rem;
+    }
+}
+
+@utility text-eyebrow {
+    font-family: var(--font-satoshi);
+    font-size: 0.656rem;
+    font-weight: 900;
+    line-height: 1.4;
+    letter-spacing: 0.143em;
+    text-transform: uppercase;
+
+    @variant lg {
+        font-size: 0.875rem;
+    }
+}
+
+@utility text-nav {
+    font-family: var(--font-satoshi);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.625;
+
+    @variant lg {
+        font-size: 1rem;
+    }
+}
+
+/* Custom Effects */
+
+@utility liquid-glass {
+    @apply border border-white/20 backdrop-blur-md;
+}
+
+@utility glow-layer-normal {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: -3;
+    box-shadow:
+        0 -50px 170px -60px #2563eb,
+        0 -50px 170px -60px #87adff;
+}
+
+@utility glow-layer-overlay-3 {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: -2;
+    mix-blend-mode: overlay;
+    box-shadow: 0 -50px 50px -60px #ffffff;
+}
+
+@utility glow-layer-overlay-4 {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: -1;
+    mix-blend-mode: overlay;
+    box-shadow: 0 -50px 50px -60px #9ee6ff;
+}
+
+/* Components */
+
+/* Theme text */
+.text-section-body {
+    @apply text-body text-grey;
+}
+
+.text-section-body-dark {
+    @apply text-body text-white/70;
+}
+
+.text-section-heading {
+    @apply text-h2 text-black;
+}
+
+.text-section-heading-dark {
+    @apply text-h2 text-white;
+}
+
+/* Feature cards */
+.feature-card {
+    @apply rounded-2xl border border-black/10 bg-white p-6;
+}
+
+.feature-card-dark {
+    @apply rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm;
+}
+
+.feature-card-title {
+    @apply text-h4 text-black;
+}
+
+.feature-card-title-dark {
+    @apply text-h4 text-white;
+}
+
+.feature-card-icon {
+    @apply text-primary text-[22px]!;
+}
+
+.feature-card-icon-dark {
+    @apply text-blue-400 text-[22px]!;
+}
+
+/* Buttons */
+.btn-primary {
+    @apply z-10 cursor-pointer rounded-lg bg-gradient-grey-dark px-4 py-2 text-btn text-white shadow-md transition-all hover:opacity-90 active:scale-95 md:rounded-[10px] md:px-6 md:py-3 lg:rounded-[10px] lg:px-6 lg:py-3;
+}
+
+.btn-secondary {
+    @apply z-10 cursor-pointer rounded-[5px] border-2 border-white bg-white px-4 py-2 text-btn text-black transition-all hover:bg-gray-100 active:scale-95 md:px-6 md:py-3 lg:px-6 lg:py-3;
+}
+
+.btn-tertiary {
+    @apply relative isolate cursor-pointer overflow-hidden rounded-[5px] border-2 border-white bg-transparent px-4 py-2 text-btn text-white active:scale-95 md:px-6 md:py-3 lg:px-6 lg:py-3;
+    transition: color 0.25s ease;
+}
+
+.btn-tertiary::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: white;
+    z-index: -1;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.25s ease;
+}
+
+.btn-tertiary:hover::before {
+    transform: scaleY(1);
+}
+
+.btn-tertiary:hover {
+    color: black;
+}
+
+.btn-alt-color {
+    @apply z-10 cursor-pointer rounded-lg bg-gradient-light-blue-alt px-4 py-2 text-btn text-white shadow-md transition-all hover:opacity-90 active:scale-95 md:rounded-[10px] md:px-6 md:py-3 lg:rounded-[10px] lg:px-6 lg:py-3;
+}
+
+/* Navigation */
+.nav-item {
+    @apply cursor-pointer text-nav transition-colors hover:text-white/60;
+}
+
+.dropdown-link {
+    @apply text-lg font-medium text-black transition-colors hover:text-grey;
+}
+
+.dropdown-card-title {
+    @apply text-base leading-6.5 font-medium text-black;
+}
+
+.dropdown-card-desc {
+    @apply line-clamp-2 text-base leading-6.5 font-medium text-grey;
+}
+
+.dropdown-cta {
+    @apply flex items-center gap-1.25 text-base leading-6.5 font-medium whitespace-nowrap text-black transition-colors hover:text-grey;
+}
+
+/* Scrollbar */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* Icon row */
+.feature-box {
+    @apply flex flex-col items-center justify-center gap-1 rounded-2xl py-4 lg:gap-4 lg:py-10;
+}
+
+.feature-icon-circle {
+    @apply flex h-18 w-18 shrink-0 items-center justify-center rounded-full bg-gradient-deep-blue lg:h-27 lg:w-27;
+}
+
+.feature-icon {
+    @apply h-10.5 w-10.5 text-white transition-colors lg:h-15 lg:w-15;
+}
+
+.feature-text {
+    @apply text-center text-h4 text-dark-primary;
+}
+
+/* Product cards */
+.card-wrapper {
+    @apply relative z-0 aspect-auto w-75 shrink-0 rounded-[18px] liquid-glass bg-[rgba(255,255,255,0.1)] p-2.5 shadow-2xl md:aspect-square md:w-125;
+}
+
+.card-inner {
+    @apply relative z-10 flex h-100 flex-col justify-between overflow-hidden rounded-[9px] bg-gradient-light-white-background md:h-full;
+}
+
+.card-content {
+    @apply flex flex-col gap-2 p-8 text-left;
+}
+
+.card-title {
+    @apply text-h3 tracking-[-2px] text-dark-primary;
+}
+
+.card-price-row {
+    @apply flex items-baseline gap-1;
+}
+
+.card-price {
+    @apply text-h4 text-dark-primary;
+}
+
+.card-desc {
+    @apply text-body text-grey;
+}
+
+.card-img-wrap {
+    @apply relative flex-1 overflow-hidden;
+}
+
+.card-img {
+    @apply h-full w-full object-contain object-bottom;
+}
+
+/* Glass image frame */
+.glass-frame {
+    --_gf-pad: clamp(4px, 0.5vw, 10px);
+    --_gf-radius: clamp(10px, 1.4vw, 22px);
+    @apply liquid-glass bg-white/10 shadow-normal;
+    padding: var(--_gf-pad);
+    border-radius: var(--_gf-radius);
+}
+
+.glass-frame-inner {
+    @apply overflow-hidden;
+    border-radius: calc(var(--_gf-radius) - var(--_gf-pad));
+}
+
+/* Firmware cards */
+.firmware-card:has(details[open]) {
+    grid-column: 1 / -1;
+}
+
+.firmware-card li a {
+    color: var(--color-primary);
+    text-decoration-line: underline;
+    transition: color 0.15s;
+}
+
+.firmware-card li a:hover {
+    opacity: 0.8;
+}
+
+.firmware-card li strong {
+    color: var(--color-black);
+}
+
+/* Animations */
+
+@keyframes console-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Logo grid */
+
+.logo-card[data-detail]:hover,
+.logo-card.active {
+    box-shadow: 0 0 12px 3px rgba(59, 130, 246, 0.4), 0 0 24px 6px rgba(59, 130, 246, 0.15);
+    border-color: transparent;
+}

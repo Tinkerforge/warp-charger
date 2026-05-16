@@ -1,0 +1,61 @@
+{% extends "page_base.html" %}
+{% from "macros/two_col_section.html" import two_col_section %}
+{% from "macros/page_hero.html" import page_hero %}
+{% from "macros/section_header.html" import section_header %}
+{% from "macros/feature_card_grid.html" import feature_card_grid %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block content %}
+{# Hero / Intro #}
+{% call page_hero(badge_icon="receipt_long", badge_text=t.badge, headline=t.subtitle) %}{% endcall %}
+
+{# Charge Log Section #}
+{% call two_col_section(
+    badge_icon="menu_book",
+    badge_text=t.chargelog.badge,
+    headline=t.chargelog.headline,
+    image="ladetracker.jpg",
+    image_side="right",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.chargelog.intro }}</p>
+    <p class="text-section-body font-medium">{{ t.chargelog.recorded_heading }}</p>
+    <ul class="list-none flex flex-col gap-3 text-section-body">
+        {% for item in t.chargelog.recorded_items %}
+        <li class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-primary text-[20px]! mt-0.5 shrink-0">check_circle</span>
+            <span>{{ item }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+    <p class="text-section-body">{{ t.chargelog.cost_info }}</p>
+    <p class="text-section-body">{{ t.chargelog.export_info }}</p>
+    <a href="{{ t.chargelog.example_link_url }}" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]!">download</span>
+        {{ t.chargelog.example_link_text }}
+    </a>
+{% endcall %}
+
+{# Billing Section + Feature Cards #}
+{% call two_col_section(
+    badge_icon="account_balance",
+    badge_text=t.billing.badge,
+    headline=t.billing.headline,
+    image="ladelogbuch.jpg",
+    image_side="left",
+    bg="bg-background",
+    pb="pb-0"
+) %}
+    <p class="text-section-body">{{ t.billing.intro }}</p>
+    <p class="text-body text-black font-medium">{{ t.billing.highlight }}</p>
+{% endcall %}
+
+{# Feature Cards #}
+<section class="w-full bg-background">
+<div class="mx-auto max-w-7xl px-5 md:px-10 pt-8 pb-section">
+    {{ feature_card_grid(items=t.billing.features, columns=3) }}
+</div>
+</section>
+{% endblock %}

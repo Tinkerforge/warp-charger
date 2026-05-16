@@ -1,0 +1,9 @@
+{% extends "page_base.html" %}
+{% block title %}{{ t.title }}{% endblock %}
+{% block content %}
+<section class="flex min-h-[60vh] w-full flex-col items-center justify-center px-4 py-32">
+    <h1 class="text-h1 text-black">{{ t.headline }}</h1>
+    <p class="mt-4 text-section-body">{{ t.description }}</p>
+    <a href="/{{ lang }}/" class="btn-primary mt-8">{{ t.back_home }}</a>
+</section>
+{% endblock %}

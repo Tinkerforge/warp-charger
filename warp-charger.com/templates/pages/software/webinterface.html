@@ -1,0 +1,38 @@
+{% extends "page_base.html" %}
+{% from "macros/two_col_section.html" import two_col_section %}
+{% from "macros/page_hero.html" import page_hero %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block content %}
+{# Hero #}
+{% call page_hero(badge_icon="web", badge_text=t.hero.badge, headline=t.hero.headline) %}
+    <p class="text-section-body max-w-2xl mt-6">{{ t.hero.text }}</p>
+{% endcall %}
+
+{# Zugriff per LAN oder Access Point #}
+{% call two_col_section(
+    badge_icon="lan",
+    badge_text=t.access.badge,
+    headline=t.access.headline,
+    image="todo.webp",
+    image_side="right",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.access.text }}</p>
+{% endcall %}
+
+{# Funktioniert auch ohne Internet #}
+{% call two_col_section(
+    badge_icon="wifi_off",
+    badge_text=t.offline.badge,
+    headline=t.offline.headline,
+    image="todo.webp",
+    image_side="left",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.offline.text }}</p>
+    <p class="text-section-body">{{ t.offline.text2 }}</p>
+{% endcall %}
+{% endblock %}

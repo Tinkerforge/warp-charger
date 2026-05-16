@@ -1,0 +1,118 @@
+        <!-- Footer -->
+        <footer id="footer" class="w-full bg-black">
+            <div class="mx-auto max-w-7xl px-4 py-section md:px-8">
+                <div class="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-20">
+                    <!-- Left: Contact / Feedback Form -->
+                    <div class="rounded-2xl bg-[#151515] p-6 md:p-8">
+                        <form id="contact-form" class="flex flex-col gap-5" novalidate
+                            data-i18n-submitting="{{ footer.submitting }}"
+                            data-i18n-submit="{{ footer.submit }}"
+                            data-i18n-success="{{ footer.success }}"
+                            data-i18n-error="{{ footer.error }}"
+                            data-i18n-newsletter-success="{{ footer.newsletter_success }}"
+                            data-i18n-newsletter-error="{{ footer.newsletter_submit_error }}">
+                            <div class="flex flex-col gap-4">
+                                <span class="bg-gradient-light-blue-alt bg-clip-text text-eyebrow text-transparent">{{ footer.feedback_label }}</span>
+                                <p class="text-xl leading-relaxed text-white/60">
+                                    {{ footer.feedback_headline }}
+                                    <span class="text-white">{{ footer.feedback_highlight }}</span>
+                                </p>
+                            </div>
+                            <div class="flex flex-col gap-4">
+                                <div class="flex flex-col gap-1">
+                                    <div id="wrap-name" data-border="border-white/60" class="rounded-xl border border-white/60 px-4 py-3 transition-colors">
+                                        <label for="footer-name" class="mb-1 block text-eyebrow text-white/60">{{ footer.name_label }}</label>
+                                        <input type="text" id="footer-name" name="name" placeholder="{{ footer.name_placeholder }}" class="w-full bg-transparent text-nav text-white placeholder:text-white/30 focus:outline-none" />
+                                    </div>
+                                    <p id="error-name" class="hidden pl-1 text-xs text-red-400">{{ footer.name_error }}</p>
+                                </div>
+                                <div class="flex flex-col gap-1">
+                                    <div id="wrap-email" data-border="border-white/25" class="rounded-xl border border-white/25 px-4 py-3 transition-colors">
+                                        <label for="footer-email" class="mb-1 block text-eyebrow text-white/60">{{ footer.email_label }}</label>
+                                        <input type="email" id="footer-email" name="email" placeholder="{{ footer.email_placeholder }}" class="w-full bg-transparent text-nav text-white placeholder:text-white/30 focus:outline-none" />
+                                    </div>
+                                    <p id="error-email" class="hidden pl-1 text-xs text-red-400">{{ footer.email_error }}</p>
+                                </div>
+                                <div class="flex flex-col gap-1">
+                                    <div id="wrap-message" data-border="border-white/25" class="rounded-xl border border-white/25 px-4 py-3 transition-colors">
+                                        <label for="footer-message" class="mb-1 block text-eyebrow text-white/60">{{ footer.message_label }}</label>
+                                        <textarea id="footer-message" name="message" placeholder="{{ footer.message_placeholder }}" rows="4" class="w-full resize-none bg-transparent text-base text-white placeholder:text-white/30 focus:outline-none"></textarea>
+                                    </div>
+                                    <p id="error-message" class="hidden pl-1 text-xs text-red-400">{{ footer.message_error }}</p>
+                                </div>
+                            </div>
+                            <button id="contact-submit" type="submit" class="btn-alt-color">{{ footer.submit }}</button>
+                        </form>
+                    </div>
+
+                    <!-- Right: Nav Links + Contact + Newsletter -->
+                    <div class="flex flex-col gap-10">
+                        <div class="flex items-start justify-between gap-6">
+                            <div class="flex flex-col gap-5">
+                                <span class="bg-gradient-light-blue-alt bg-clip-text text-eyebrow text-transparent">{{ footer.info_label }}</span>
+                                <nav class="flex flex-col gap-1.5">
+                                    <a href="/{{ lang }}/{{ nav_links.about[0][0] }}" class="text-nav font-medium text-white transition-colors hover:text-white/70">{{ footer.about_link }}</a>
+                                    <a href="/{{ lang }}/{{ nav_links.products[0][0] }}" class="text-nav font-medium text-white transition-colors hover:text-white/70">{{ footer.products_link }}</a>
+                                    <a href="/{{ lang }}/{{ nav_links.software[0][0] }}" class="text-nav font-medium text-white transition-colors hover:text-white/70">{{ footer.software_link }}</a>
+                                    <a href="/{{ lang }}/{{ nav_links.solutions_energy[0][0] }}" class="text-nav font-medium text-white transition-colors hover:text-white/70">{{ footer.solutions_link }}</a>
+                                    <a href="https://docs.warp-charger.com/{{ lang }}/docs/home/" class="text-nav font-medium text-white transition-colors hover:text-white/70">{{ footer.documentation_link }}</a>
+                                    <a href="/{{ lang }}/software/downloads" class="text-nav font-medium text-white transition-colors hover:text-white/70">{{ footer.downloads_link }}</a>
+                                    <a href="https://shop.warp-charger.com" class="text-nav font-medium text-white transition-colors hover:text-white/70">{{ footer.shop_link }}</a>
+                                </nav>
+                            </div>
+                            <div class="flex flex-col gap-10">
+                                <div class="shrink-0">
+                                    <img src="{{ url_for('static', filename='images/warp-logo-subtext.svg') }}" loading="lazy" alt="WARP Logo" class="h-12 w-auto object-contain" />
+                                </div>
+                                <div class="shrink-0">
+                                    <img src="{{ url_for('static', filename='images/tinkerforge-logo.svg') }}" loading="lazy" alt="Tinkerforge Logo" class="h-12 w-auto object-contain" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <span class="bg-gradient-light-blue-alt bg-clip-text text-eyebrow text-transparent">{{ footer.contact_label }}</span>
+                            <address class="flex flex-col gap-1.5 not-italic">
+                                <a href="tel:+4952078973000" class="text-nav font-medium text-white transition-colors hover:text-white/70">+49 5207 897300-0</a>
+                                <a href="mailto:info@tinkerforge.com" class="text-nav font-medium text-white transition-colors hover:text-white/70">info@tinkerforge.com</a>
+                            </address>
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <span class="bg-gradient-light-blue-alt bg-clip-text text-eyebrow text-transparent">{{ footer.newsletter_label }}</span>
+                            <form id="newsletter-form" novalidate>
+                                <div class="flex flex-col gap-1">
+                                    <div id="wrap-newsletter" data-border="border-white/13" class="flex items-center overflow-hidden rounded-xl border border-white/13 transition-colors">
+                                        <input type="email" id="newsletter-email" name="newsletter" placeholder="{{ footer.newsletter_placeholder }}" class="flex-1 bg-transparent px-5 py-4 text-body text-white/60 placeholder:text-white/60 focus:outline-none" />
+                                        <button id="newsletter-submit" type="submit" class="flex items-center gap-4 py-4 pr-5 text-white transition-colors hover:text-[#1e55c3] disabled:cursor-not-allowed disabled:opacity-50" aria-label="{{ footer.newsletter_label }}">
+                                            <div class="h-6 w-px bg-white/13"></div>
+                                            <svg viewBox="0 0 5 9" fill="none" class="size-3" aria-hidden="true">
+                                                <path d="M0.5 0.5L4.5 4.5L0.5 8.5" stroke="#1E55C3" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <p id="error-newsletter" class="hidden pl-1 text-xs text-red-400">{{ footer.newsletter_error }}</p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Bar -->
+                <div class="mt-12 flex items-center justify-between border-t border-white/10 pt-6">
+                    <div class="flex items-center gap-4">
+                        <a href="https://github.com/Tinkerforge" aria-label="GitHub" class="text-white transition-colors hover:text-white/70">
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="size-5"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                        </a>
+                        <a href="https://x.com/tinkerforge" aria-label="X (Twitter)" class="text-white transition-colors hover:text-white/70">
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="size-5"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        <a href="https://www.youtube.com/@tinkerforge42" aria-label="YouTube" class="text-white transition-colors hover:text-white/70">
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="size-5"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </a>
+                        <a href="https://de.linkedin.com/company/tinkerforge-gmbh" aria-label="LinkedIn" class="text-white transition-colors hover:text-white/70">
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="size-5"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        </a>
+                    </div>
+                    <p class="text-xs text-white/60">Copyright &copy; 2026 Tinkerforge GmbH</p>
+                </div>
+            </div>
+        </footer>

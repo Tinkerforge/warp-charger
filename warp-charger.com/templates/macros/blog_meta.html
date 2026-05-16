@@ -1,0 +1,7 @@
+{% macro blog_meta(tag, date) %}
+<div class="flex flex-wrap items-center gap-6">
+    <span class="bg-gradient-blue bg-clip-text text-eyebrow whitespace-nowrap text-transparent">{{ tag }}</span>
+    <svg class="size-1.5 shrink-0" fill="none" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" fill="#A1A1A1" r="3" /></svg>
+    <span class="text-eyebrow whitespace-nowrap text-[#a1a1a1]">{{ date | timeago }}</span>
+</div>
+{% endmacro %}

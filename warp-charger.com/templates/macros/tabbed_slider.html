@@ -1,0 +1,39 @@
+{#
+  Tabbed slider: tabbed navigation above a full-width image
+  with dark gradient overlay and text content.
+
+  Parameters:
+    t: translation dict with keys:
+      tab1, tab2, tab3 : tab labels
+      badge, headline, body, show_more
+    slides: list of dicts: [{image, badge, headline, body}]
+             First slide's data comes from t directly (default state).
+    default_image: default image filename (relative to static/images/)
+#}
+
+{% macro tabbed_slider(t, default_image="img-placeholder-1.webp") %}
+<section class="w-full px-4 py-16 pt-16 md:px-8 md:pt-32 lg:pt-32"
+    data-slider-tabs='{{ t.tabs | tojson }}'
+    data-slider-show-more="{{ t.show_more }}"
+    data-slider-show-less="{{ t.show_less }}"
+    data-slider-image-base="{{ url_for('static', filename='images/') }}">
+    <div class="mx-auto flex max-w-5xl flex-col items-center gap-5">
+        <nav role="tablist" aria-label="Slider tabs" class="flex gap-3 rounded-[20px] bg-black/30 p-1.5">
+            <button type="button" class="cursor-pointer rounded-[15px] bg-white/30 px-4 py-1 text-btn text-white transition-all duration-200 md:px-8 lg:px-8" role="tab" aria-selected="true">{{ t.tab1 }}</button>
+            <button type="button" class="cursor-pointer rounded-[15px] px-4 py-1 text-btn text-white transition-all duration-200 hover:bg-white/10 md:px-8 lg:px-8" role="tab" aria-selected="false">{{ t.tab2 }}</button>
+            <button type="button" class="cursor-pointer rounded-[15px] px-4 py-1 text-btn text-white transition-all duration-200 hover:bg-white/10 md:px-8 lg:px-8" role="tab" aria-selected="false">{{ t.tab3 }}</button>
+        </nav>
+        <article class="relative min-h-105 w-full overflow-hidden rounded-[20px]">
+            <img id="slider-image-bg" src="{{ url_for('static', filename='images/' ~ default_image) }}" loading="lazy" alt="" class="absolute inset-0 h-full w-full rounded-[20px] object-cover" />
+            <img id="slider-image" src="{{ url_for('static', filename='images/' ~ default_image) }}" loading="lazy" alt="{{ t.headline }}" class="absolute inset-0 h-full w-full rounded-[20px] object-cover transition-opacity duration-300" />
+            <div aria-hidden="true" class="pointer-events-none absolute inset-0 rounded-[20px] bg-linear-to-t from-black via-black/40 to-transparent"></div>
+            <div id="slider-text-content" class="relative z-10 flex h-full min-h-105 flex-col items-start justify-end gap-3 p-8 text-left md:min-h-140 md:p-16">
+                <p id="slider-badge" class="text-eyebrow text-white uppercase">{{ t.badge }}</p>
+                <h2 id="slider-headline" class="max-w-3xl text-h2 text-white">{{ t.headline }}</h2>
+                <p id="slider-body" class="max-w-3xl text-body text-white/80">{{ t.body }}</p>
+                <button id="slider-mehr-btn" type="button" class="hidden cursor-pointer self-start text-body font-medium text-white/80 underline transition-colors hover:text-white focus:outline-none">{{ t.show_more }}</button>
+            </div>
+        </article>
+    </div>
+</section>
+{% endmacro %}

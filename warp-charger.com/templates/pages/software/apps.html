@@ -1,0 +1,64 @@
+{% extends "page_base.html" %}
+{% from "macros/two_col_section.html" import two_col_section %}
+{% from "macros/page_hero.html" import page_hero %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block content %}
+{# Hero #}
+{% call page_hero(badge_icon="smartphone", badge_text=t.hero.badge, headline=t.hero.headline) %}
+    <p class="text-section-body max-w-2xl mt-6">{{ t.hero.text }}</p>
+    <div class="flex justify-center gap-3 mt-6">
+        <a href="{{ t.hero.appstore_url }}" target="_blank" rel="noopener" class="rounded-xl shadow-[0_0_20px_6px_rgba(37,99,235,0.2)] transition-all hover:shadow-[0_0_30px_12px_rgba(37,99,235,0.5)] hover:scale-[1.02] active:scale-[0.98]">
+            <img src="{{ url_for('static', filename='images/badge-appstore.png') }}" alt="{{ t.hero.appstore_label }}" class="h-14 rounded-xl" />
+        </a>
+        <a href="{{ t.hero.playstore_url }}" target="_blank" rel="noopener" class="rounded-xl shadow-[0_0_20px_6px_rgba(37,99,235,0.2)] transition-all hover:shadow-[0_0_30px_12px_rgba(37,99,235,0.5)] hover:scale-[1.02] active:scale-[0.98]">
+            <img src="{{ url_for('static', filename='images/badge-googleplay.png') }}" alt="{{ t.hero.playstore_label }}" class="h-14 rounded-xl" />
+        </a>
+    </div>
+{% endcall %}
+
+{# Fernzugriff #}
+{% call two_col_section(
+    badge_icon="public",
+    badge_text=t.remote.badge,
+    headline=t.remote.headline,
+    image="todo.webp",
+    image_side="right",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.remote.text }}</p>
+    <p class="text-section-body">{{ t.remote.text2 }}</p>
+    <a href="{{ t.remote.link_url }}" target="_blank" rel="noopener"
+       class="btn-primary inline-flex items-center gap-2 mt-2">
+        <span class="material-symbols-outlined text-[20px]!">person_add</span>
+        {{ t.remote.link_label }}
+    </a>
+{% endcall %}
+
+{# Datenschutz #}
+{% call two_col_section(
+    badge_icon="lock",
+    badge_text=t.privacy.badge,
+    headline=t.privacy.headline,
+    image="remote_access_login.webp",
+    image_side="left",
+    dark=true
+) %}
+    <p class="text-section-body-dark">{{ t.privacy.text }}</p>
+    <p class="text-section-body-dark">{{ t.privacy.text2 }}</p>
+{% endcall %}
+
+{# Lokal nutzbar #}
+{% call two_col_section(
+    badge_icon="wifi",
+    badge_text=t.local.badge,
+    headline=t.local.headline,
+    image="remote_access_local.webp",
+    image_side="right"
+) %}
+    <p class="text-section-body">{{ t.local.text }}</p>
+    <p class="text-section-body italic">{{ t.local.hint }}</p>
+{% endcall %}
+{% endblock %}

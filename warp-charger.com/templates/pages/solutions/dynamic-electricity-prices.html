@@ -1,0 +1,73 @@
+{% extends "page_base.html" %}
+{% from "macros/two_col_section.html" import two_col_section %}
+{% from "macros/page_hero.html" import page_hero %}
+{% from "macros/section_header.html" import section_header %}
+{% from "macros/feature_card_grid.html" import feature_card_grid %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block content %}
+{# Hero #}
+{% call page_hero(badge_icon="currency_exchange", badge_text=t.badge, headline=t.subtitle) %}{% endcall %}
+
+{# Intro: Save costs #}
+{% call two_col_section(
+    badge_icon="savings",
+    badge_text=t.intro.badge,
+    headline=t.intro.headline,
+    image="todo.webp",
+    image_side="right",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.intro.text }}</p>
+    <p class="text-section-body">{{ t.intro.text2 }}</p>
+    <p class="text-body text-black font-medium">{{ t.intro.highlight }}</p>
+{% endcall %}
+
+{# Eco Mode #}
+{% call two_col_section(
+    badge_icon="eco",
+    badge_text=t.eco.badge,
+    headline=t.eco.headline,
+    image="todo.webp",
+    image_side="left",
+    dark=true
+) %}
+    <p class="text-section-body-dark">{{ t.eco.text }}</p>
+    <p class="text-section-body-dark">{{ t.eco.text2 }}</p>
+{% endcall %}
+
+{# SG-Ready: Heat Pump Control #}
+{% call two_col_section(
+    badge_icon="heat_pump",
+    badge_text=t.sgready.badge,
+    headline=t.sgready.headline,
+    image="todo.webp",
+    image_side="right",
+    bg="bg-gradient-light-white-background"
+) %}
+    <p class="text-section-body">{{ t.sgready.text }}</p>
+    <p class="text-section-body">{{ t.sgready.text2 }}</p>
+    <p class="text-section-body">{{ t.sgready.text3 }}</p>
+{% endcall %}
+
+{# Battery Storage #}
+{% call two_col_section(
+    badge_icon="battery_charging_full",
+    badge_text=t.battery.badge,
+    headline=t.battery.headline,
+    image="todo.webp",
+    image_side="left"
+) %}
+    <p class="text-section-body">{{ t.battery.text }}</p>
+{% endcall %}
+
+{# Pricing / Configuration #}
+<section class="w-full py-section bg-gradient-light-white-background">
+    <div class="mx-auto max-w-7xl px-5 md:px-10">
+        {{ section_header(icon="tune", badge=t.pricing.badge, headline=t.pricing.headline, description=t.pricing.text) }}
+        {{ feature_card_grid(items=t.pricing.features, columns=3) }}
+    </div>
+</section>
+{% endblock %}

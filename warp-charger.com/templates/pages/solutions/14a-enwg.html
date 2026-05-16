@@ -1,0 +1,60 @@
+{% extends "page_base.html" %}
+{% from "macros/two_col_section.html" import two_col_section %}
+{% from "macros/page_hero.html" import page_hero %}
+{% from "macros/section_header.html" import section_header %}
+{% from "macros/feature_card_grid.html" import feature_card_grid %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block content %}
+{# Hero #}
+{% call page_hero(badge_icon="gavel", badge_text=t.badge, headline=t.subtitle) %}{% endcall %}
+
+{# Intro: What is §14a? #}
+{% call two_col_section(
+    badge_icon="info",
+    badge_text=t.intro.badge,
+    headline=t.intro.headline,
+    image="todo.webp",
+    image_side="right",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.intro.text }}</p>
+    <p class="text-section-body">{{ t.intro.text2 }}</p>
+    <p class="text-section-body">{{ t.intro.text3 }}</p>
+{% endcall %}
+
+{# Modules #}
+<section class="relative w-full overflow-hidden bg-gradient-radial-dark py-section">
+    <div class="relative z-10 mx-auto max-w-7xl px-5 md:px-10">
+        {{ section_header(icon="category", badge=t.modules.badge, headline=t.modules.headline, description=t.modules.text, dark=true) }}
+        {{ feature_card_grid(items=t.modules.list, columns=3, dark=true) }}
+    </div>
+</section>
+
+{# Signal Sources #}
+<section class="w-full py-section bg-gradient-light-white-background">
+    <div class="mx-auto max-w-7xl px-5 md:px-10">
+        {{ section_header(icon="cell_tower", badge=t.signals.badge, headline=t.signals.headline, description=t.signals.text) }}
+        {{ feature_card_grid(items=t.signals.list, columns=2) }}
+    </div>
+</section>
+
+{# Preparation #}
+{% call two_col_section(
+    badge_icon="cable",
+    badge_text=t.preparation.badge,
+    headline=t.preparation.headline,
+    image="todo.webp",
+    image_side="left"
+) %}
+    <p class="text-section-body">{{ t.preparation.text }}</p>
+    <p class="text-section-body">{{ t.preparation.text2 }}</p>
+    <p class="text-body text-black font-medium">{{ t.preparation.highlight }}</p>
+    <a href="{{ t.doc_link.url }}" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]!">menu_book</span>
+        {{ t.doc_link.text }}
+    </a>
+{% endcall %}
+{% endblock %}

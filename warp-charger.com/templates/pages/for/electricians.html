@@ -1,0 +1,99 @@
+{% extends "page_base.html" %}
+{% from "macros/two_col_section.html" import two_col_section %}
+{% from "macros/page_hero.html" import page_hero %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block content %}
+{# Hero #}
+{% call page_hero(badge_icon="electric_bolt", badge_text=t.hero.badge, headline=t.hero.headline) %}{% endcall %}
+
+{# Einfach zu installieren #}
+{% call two_col_section(
+    badge_icon="build",
+    badge_text=t.installation.badge,
+    headline=t.installation.headline,
+    image="todo.webp",
+    image_side="right",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.installation.text }}</p>
+{% endcall %}
+
+{# Kompatibilität #}
+{% call two_col_section(
+    badge_icon="sync_alt",
+    badge_text=t.compatibility.badge,
+    headline=t.compatibility.headline,
+    image="word-cloud.webp",
+    image_side="left",
+    dark=true,
+    no_frame=true
+) %}
+    <p class="text-section-body-dark">{{ t.compatibility.text }}</p>
+    <a href="{{ t.compatibility.cta_url }}" class="btn-primary inline-flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]!">devices</span>
+        {{ t.compatibility.cta_text }}
+    </a>
+{% endcall %}
+
+{# Individuell konfigurierbar #}
+{% call two_col_section(
+    badge_icon="tune",
+    badge_text=t.customization.badge,
+    headline=t.customization.headline,
+    image="todo.webp",
+    image_side="right",
+    bg="bg-gradient-light-white-background"
+) %}
+    <p class="text-section-body">{{ t.customization.text }}</p>
+{% endcall %}
+
+{# Durchdachte Ladesäule #}
+{% call two_col_section(
+    badge_icon="ev_station",
+    badge_text=t.charging_station.badge,
+    headline=t.charging_station.headline,
+    image="todo.webp",
+    image_side="left",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.charging_station.text }}</p>
+    <ul class="list-none flex flex-col gap-4 text-section-body">
+        {% for point in t.charging_station.points %}
+        <li class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-primary text-[20px]! mt-0.5 shrink-0">check_circle</span>
+            <div>
+                <span class="font-medium text-black">{{ point.title }}</span>
+                <p class="mt-1">{{ point.text }}</p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+{% endcall %}
+
+{# Modularer Aufbau #}
+{% call two_col_section(
+    badge_icon="view_module",
+    badge_text=t.modular.badge,
+    headline=t.modular.headline,
+    image="todo.webp",
+    image_side="right",
+    dark=true
+) %}
+    <p class="text-section-body-dark">{{ t.modular.text }}</p>
+{% endcall %}
+
+{# Direkter Kontakt & Support #}
+{% call two_col_section(
+    badge_icon="support_agent",
+    badge_text=t.support.badge,
+    headline=t.support.headline,
+    image="todo.webp",
+    image_side="left",
+    bg="bg-gradient-light-white-background"
+) %}
+    <p class="text-section-body">{{ t.support.text }}</p>
+{% endcall %}
+{% endblock %}

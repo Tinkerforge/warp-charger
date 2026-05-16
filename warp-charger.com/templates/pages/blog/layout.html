@@ -1,0 +1,37 @@
+{% extends "page_base.html" %}
+{% from "macros/blog_meta.html" import blog_meta %}
+
+{% block content %}
+<section class="w-full bg-background">
+    <div class="mx-auto max-w-7xl px-4 pt-32 pb-section md:px-8">
+        <div class="flex gap-10">
+            <!-- Archive sidebar (desktop only) -->
+            <aside class="hidden lg:block w-56 shrink-0">
+                <nav class="sticky top-28">
+                    <h2 class="text-eyebrow font-semibold text-black mb-4">{{ t.archive }}</h2>
+                    {% set current_year = [None] %}
+                    {% for p in posts %}
+                    {% set year = p.meta.date.year %}
+                    {% if year != current_year[0] %}
+                    {% if current_year[0] != None %}</ul>{% endif %}
+                    {% if current_year.append(year) %}{% endif %}
+                    {% if current_year.pop(0) or true %}{% endif %}
+                    <h3 class="text-body font-semibold text-black mt-4 mb-2">{{ year }}</h3>
+                    <ul class="flex flex-col gap-1.5">
+                    {% endif %}
+                    <li>
+                        <a href="/{{ lang }}/blog/{{ p.meta.slug }}" class="text-sm transition-colors line-clamp-1 {{ 'text-primary font-medium' if active_slug and p.meta.slug == active_slug else 'text-grey hover:text-black' }}">{{ p.meta.title }}</a>
+                    </li>
+                    {% endfor %}
+                    {% if posts %}</ul>{% endif %}
+                </nav>
+            </aside>
+
+            <!-- Main content -->
+            <div class="flex w-full min-w-0 flex-col gap-5 max-w-4xl">
+                {% block blog_content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

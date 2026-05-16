@@ -1,0 +1,61 @@
+{% extends "page_base.html" %}
+{% from "macros/two_col_section.html" import two_col_section %}
+{% from "macros/page_hero.html" import page_hero %}
+{% from "macros/section_header.html" import section_header %}
+{% from "macros/feature_card_grid.html" import feature_card_grid %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block content %}
+{# Hero #}
+{% call page_hero(badge_icon="electrical_services", badge_text=t.badge, headline=t.subtitle) %}{% endcall %}
+
+{# Static Load Management #}
+{% call two_col_section(
+    badge_icon="balance",
+    badge_text=t.static.badge,
+    headline=t.static.headline,
+    image="todo.webp",
+    image_side="right",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.static.text }}</p>
+    <p class="text-section-body">{{ t.static.text2 }}</p>
+    <p class="text-body text-black font-medium">{{ t.static.highlight }}</p>
+{% endcall %}
+
+{# Dynamic Load Management #}
+{% call two_col_section(
+    badge_icon="dynamic_form",
+    badge_text=t.dynamic.badge,
+    headline=t.dynamic.headline,
+    image="todo.webp",
+    image_side="left",
+    dark=true
+) %}
+    <p class="text-section-body-dark">{{ t.dynamic.text }}</p>
+    <p class="text-section-body-dark">{{ t.dynamic.text2 }}</p>
+    <p class="text-section-body-dark">{{ t.dynamic.text3 }}</p>
+    <a href="{{ t.dynamic.cta_url }}" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]!">devices</span>
+        {{ t.dynamic.cta_text }}
+    </a>
+{% endcall %}
+
+{# Smart Features #}
+<section class="w-full py-section bg-gradient-light-white-background">
+    <div class="mx-auto max-w-7xl px-5 md:px-10">
+        {{ section_header(icon="psychology", badge=t.smart.badge, headline=t.smart.headline, description=t.smart.text) }}
+        {{ feature_card_grid(items=t.smart.features, columns=2) }}
+    </div>
+</section>
+
+{# Configuration Steps #}
+<section class="w-full py-section">
+    <div class="mx-auto max-w-7xl px-5 md:px-10">
+        {{ section_header(icon="settings", badge=t.config.badge, headline=t.config.headline, description=t.config.text) }}
+        {{ feature_card_grid(items=t.config.steps, columns=4, numbered=true) }}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,134 @@
+{% extends "page_base.html" %}
+{% from "macros/page_hero.html" import page_hero %}
+{% from "macros/section_header.html" import section_header %}
+{% from "macros/feature_card_grid.html" import feature_card_grid %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block content %}
+{# Hero #}
+{% call page_hero(badge_icon=t.badge_icon, badge_text=t.badge, headline=t.headline) %}
+    <p class="text-section-body max-w-2xl mt-6">{{ t.intro }}</p>
+{% endcall %}
+
+{# About Section #}
+<section class="w-full py-section bg-background">
+    <div class="mx-auto max-w-7xl px-5 md:px-10">
+        {{ section_header(icon=t.about.badge_icon, badge=t.about.badge, headline=t.about.headline) }}
+        <div class="flex flex-col lg:flex-row gap-8 mb-16">
+            <p class="text-section-body flex-1">{{ t.about.text }}</p>
+            <p class="text-section-body flex-1">{{ t.about.text2 }}</p>
+        </div>
+
+        {# Values Grid #}
+        {{ feature_card_grid(items=t.pillars, columns=3) }}
+    </div>
+</section>
+
+{# Team Section #}
+
+{# Made in Germany / Suppliers Section #}
+<section class="w-full py-section bg-background">
+    <div class="mx-auto max-w-7xl px-5 md:px-10">
+        {{ section_header(icon=t.suppliers.badge_icon, badge=t.suppliers.badge, headline=t.suppliers.headline, description=t.suppliers.description) }}
+
+        {# Map #}
+        <div class="mx-auto w-full max-w-[1144px] overflow-hidden rounded-2xl mb-8">
+            <img src="{{ url_for('static', filename='images/germany-background.webp') }}" alt="{{ t.suppliers.badge }}" class="w-full h-auto object-cover" loading="lazy" />
+        </div>
+
+        {# Supplier Bento Grid #}
+        <div class="flex flex-col gap-2.5 sm:gap-5">
+            {# Row 1: Tinkerforge + Bruns (large cards) #}
+            <div class="flex flex-col items-stretch gap-2.5 sm:gap-5 md:flex-row">
+                {% for supplier in t.suppliers.entries[:2] %}
+                <article class="relative h-80 w-full min-w-full overflow-hidden rounded-xl md:min-w-0 md:flex-1">
+                    <img src="{{ url_for('static', filename='images/' ~ supplier.image) }}" alt="{{ supplier.name }}" loading="lazy" class="absolute inset-0 h-full w-full rounded-xl object-cover" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 text-left">
+                        <h3 class="text-h3 text-white mb-1">{{ supplier.name }}</h3>
+                        <p class="text-body text-white/80">{{ supplier.text }}</p>
+                    </div>
+                    <div aria-hidden="true" class="pointer-events-none absolute inset-0 rounded-xl border border-white/20"></div>
+                </article>
+                {% endfor %}
+            </div>
+            {# Row 2: Rose, Phoenix Testlab, Conta-Clip, Benvac (smaller cards) #}
+            <div class="flex flex-col items-stretch gap-2.5 sm:gap-5 md:flex-row">
+                {% for supplier in t.suppliers.entries[2:] %}
+                <article class="relative h-64 w-full min-w-full overflow-hidden rounded-xl md:min-w-0 md:flex-1">
+                    <img src="{{ url_for('static', filename='images/' ~ supplier.image) }}" alt="{{ supplier.name }}" loading="lazy" class="absolute inset-0 h-full w-full rounded-xl object-cover" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-5 text-left">
+                        <h3 class="text-h4 text-white mb-1">{{ supplier.name }}</h3>
+                        <p class="text-body text-white/80 text-sm">{{ supplier.text }}</p>
+                    </div>
+                    <div aria-hidden="true" class="pointer-events-none absolute inset-0 rounded-xl border border-white/20"></div>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{# Team Section #}
+<section class="relative w-full overflow-hidden bg-gradient-radial-dark">
+    <div class="relative z-10 mx-auto flex max-w-3xl flex-col items-center gap-5 px-4 pt-section pb-24 text-center md:px-8 md:pb-32">
+        <div class="flex items-center justify-center gap-2.5">
+            <div class="flex h-7.5 w-7.5 items-center justify-center rounded-full bg-gradient-light-blue p-px">
+                <div class="flex h-full w-full items-center justify-center rounded-full bg-gradient-deep-blue">
+                    <span class="material-symbols-outlined bg-gradient-white-blue bg-clip-text text-[18px]! text-transparent">{{ t.team.badge_icon }}</span>
+                </div>
+            </div>
+            <span class="-mr-2 bg-gradient-white-blue bg-clip-text pr-2 text-h3 text-transparent">{{ t.team.badge }}</span>
+        </div>
+        <h2 class="max-w-2xl text-h2 text-white">{{ t.team.headline }}</h2>
+        <p class="max-w-xl text-body text-white/80">{{ t.team.intro }}</p>
+    </div>
+    <div class="relative w-full">
+        <div class="relative mx-auto max-w-6xl translate-y-1/3 px-4 md:translate-y-[15%] md:px-8 lg:translate-y-[8%]">
+            <img src="{{ url_for('static', filename='images/glow-effect.webp') }}" alt="" aria-hidden="true" class="pointer-events-none absolute top-0 left-1/2 z-0 w-full -translate-x-1/2 -translate-y-1/2 rotate-90 object-contain" loading="lazy" />
+            <div class="glass-frame relative z-10 mx-auto">
+                <div class="glass-frame-inner relative w-full pb-[42%] bg-neutral-900 flex items-center justify-center">
+                    <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 text-white/40">
+                        <span class="material-symbols-outlined text-[48px]!">photo_camera</span>
+                        <span class="text-body">{{ t.team.photo_placeholder }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# Contact Section #}
+<section id="contact" class="w-full py-section scroll-mt-24">
+    <div class="mx-auto max-w-7xl px-5 md:px-10">
+        {{ section_header(icon=t.contact.badge_icon, badge=t.contact.badge, headline=t.contact.headline) }}
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="rounded-2xl border border-black/10 bg-white p-6">
+                <div class="flex items-center gap-3 mb-3">
+                    <span class="material-symbols-outlined text-primary text-[22px]!">location_on</span>
+                    <h3 class="text-h4 text-black">{{ t.contact.company }}</h3>
+                </div>
+                <p class="text-section-body">{{ t.contact.address }}</p>
+            </div>
+            <div class="rounded-2xl border border-black/10 bg-white p-6">
+                <div class="flex items-center gap-3 mb-3">
+                    <span class="material-symbols-outlined text-primary text-[22px]!">phone</span>
+                    <h3 class="text-h4 text-black">Telefon</h3>
+                </div>
+                <a href="{{ t.contact.phone_link }}" class="text-body text-primary hover:underline">{{ t.contact.phone }}</a>
+            </div>
+            <div class="rounded-2xl border border-black/10 bg-white p-6">
+                <div class="flex items-center gap-3 mb-3">
+                    <span class="material-symbols-outlined text-primary text-[22px]!">mail</span>
+                    <h3 class="text-h4 text-black">E-Mail</h3>
+                </div>
+                <a href="{{ t.contact.email_link }}" class="text-body text-primary hover:underline">{{ t.contact.email }}</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

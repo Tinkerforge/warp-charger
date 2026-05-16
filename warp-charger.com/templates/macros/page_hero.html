@@ -1,0 +1,30 @@
+{#
+  Page hero: centered badge, headline, optional body text via caller().
+
+  Parameters:
+    badge_icon : Material Symbols icon name
+    badge_text : Badge label text
+    headline   : Page heading (rendered as h1)
+    bg         : Background class (default: "bg-gradient-light-white-background")
+
+  Usage:
+    Import: from "macros/page_hero.html" import page_hero
+    Call with caller block for optional subtext below the headline.
+#}
+
+{% macro page_hero(badge_icon, badge_text, headline, bg="bg-gradient-light-white-background") %}
+<section class="relative w-full overflow-hidden pt-32 pb-section {{ bg }}">
+    <div class="relative z-10 mx-auto flex max-w-7xl flex-col items-center px-4 text-center md:px-8">
+        <div class="flex items-center justify-center gap-2.5 mb-6">
+            <div class="flex h-7.5 w-7.5 items-center justify-center rounded-full bg-gradient-overlay-blue p-px">
+                <div class="flex h-full w-full items-center justify-center rounded-full bg-gradient-blue">
+                    <span class="material-symbols-outlined text-[18px]! text-white">{{ badge_icon }}</span>
+                </div>
+            </div>
+            <span class="-mr-2 bg-gradient-blue bg-clip-text pr-2 text-h3 text-transparent">{{ badge_text }}</span>
+        </div>
+        <h1 class="text-display-1 text-black">{{ headline }}</h1>
+        {{ caller() }}
+    </div>
+</section>
+{% endmacro %}

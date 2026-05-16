@@ -1,0 +1,42 @@
+{#
+  Bento grid: mosaic card layout with mixed content cards.
+
+  Parameters:
+    t: translation dict with keys:
+      badge, headline
+    The caller() block provides the grid rows content.
+
+  Usage:
+    {% call bento_grid(t) %}
+      <div class="flex flex-col items-stretch gap-2.5 sm:gap-[20px] md:flex-row">
+        ... row 1 cards ...
+      </div>
+      <div class="flex flex-col items-stretch gap-2.5 sm:gap-[20px] md:flex-row">
+        ... row 2 cards ...
+      </div>
+    {% endcall %}
+#}
+
+{% macro bento_grid(t) %}
+<section class="w-full pt-section">
+    <div class="flex flex-col items-center justify-center gap-[20px]">
+        <div class="flex flex-col items-center gap-text-gap-md px-1 text-center">
+            <div class="flex flex-col gap-text-gap-sm">
+                <div class="flex items-center justify-center gap-2.5">
+                    <div class="flex h-7.5 w-7.5 items-center justify-center rounded-full bg-gradient-overlay-blue p-px">
+                        <div class="flex h-full w-full items-center justify-center rounded-full bg-gradient-blue">
+                            <span class="material-symbols-outlined text-[18px]! text-white">hub</span>
+                        </div>
+                    </div>
+                    <span class="-mr-2 bg-gradient-blue bg-clip-text pr-2 text-h3 text-transparent">{{ t.badge }}</span>
+                </div>
+                <h2 class="text-h2 text-black">{{ t.headline }}</h2>
+            </div>
+        </div>
+
+        <div class="flex w-full max-w-300 flex-col items-stretch gap-2.5 px-2.5 sm:gap-[20px] sm:px-[20px]">
+            {{ caller() }}
+        </div>
+    </div>
+</section>
+{% endmacro %}

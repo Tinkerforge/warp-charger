@@ -1,0 +1,305 @@
+{% from "macros/nav_link.html" import dropdown_nav_link %}
+        <!-- Navigation -->
+        <header class="fixed top-6 z-50 flex w-full justify-center px-6">
+            <nav
+                class="relative flex w-full max-w-6xl items-center justify-between rounded-[10px] liquid-glass px-2 py-2 shadow-xl"
+            >
+                <div
+                    class="pointer-events-none absolute inset-0 z-0 rounded-[9px] bg-black/30"
+                ></div>
+
+                <div class="relative z-10 ml-1 flex items-center">
+                    <a href="/{{ lang }}/">
+                        <img
+                            src="{{ url_for('static', filename='images/warp-logo.svg') }}"
+                            loading="lazy"
+                            alt="WARP Charger Logo"
+                            class="h-5 w-auto drop-shadow-sm transition-all lg:h-8"
+                        />
+                    </a>
+                </div>
+
+                <div class="z-10 flex flex-row items-center gap-4 text-white lg:gap-8">
+                    <ul
+                        class="relative z-10 hidden gap-8 [text-shadow:0_1px_4px_rgba(0,0,0,0.4)] lg:flex"
+                    >
+                        <!-- Produkte: hover dropdown trigger -->
+                        <li class="nav-item group relative">
+                            {{ nav.products }}
+
+                            <!-- Produkte Dropdown -->
+                            <div
+                                class="pointer-events-none invisible absolute top-full left-0 z-50 translate-y-1 pt-3 opacity-0 transition-all duration-200 text-shadow-none group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
+                            >
+                                <div
+                                    class="flex min-h-104 items-stretch overflow-hidden rounded-[10px] bg-white text-black shadow-[0px_7.875px_19.687px_0px_rgba(0,0,0,0.35)]"
+                                >
+                                    <!-- Column 1: Product links -->
+                                    <div class="flex w-71 shrink-0 flex-col gap-4 p-7.5">
+                                        <span class="text-eyebrow text-grey">{{ nav.products_label }}</span>
+                                        {% for slug, label in nav_links.products %}
+                                        {{ dropdown_nav_link(lang, slug, label, {"img": url_for('static', filename='images/' ~ nav.products_previews[loop.index0].image), "title": nav.products_previews[loop.index0].title, "desc": nav.products_previews[loop.index0].desc}) }}
+                                        {% endfor %}
+                                        <div class="h-px w-full bg-light-grey"></div>
+                                    </div>
+
+                                    <!-- Column 2: Preview card -->
+                                    <div
+                                        class="flex w-71 shrink-0 flex-col justify-between bg-background p-5"
+                                        data-preview-card
+                                    >
+                                        <div class="flex flex-col gap-4.25">
+                                            <div
+                                                class="pointer-events-none relative h-44.5 w-full overflow-hidden rounded-2xl"
+                                            >
+                                                <img
+                                                    src="{{ url_for('static', filename='images/' ~ nav.products_previews[0].image) }}"
+                                                    alt=""
+                                                    class="h-full w-full object-cover transition-opacity duration-200"
+                                                    data-preview-img-target
+                                                />
+                                                <div
+                                                    class="absolute inset-0 rounded-2xl border-2 border-white/50 shadow-[0px_7.875px_19.687px_0px_rgba(0,0,0,0.35)]"
+                                                ></div>
+                                            </div>
+                                            <p class="dropdown-card-title" data-preview-title-target>{{ nav.products_previews[0].title }}</p>
+                                            <p class="dropdown-card-desc" data-preview-desc-target>{{ nav.products_previews[0].desc }}</p>
+                                        </div>
+                                        <div class="flex flex-col gap-2">
+                                            <a href="/{{ lang }}/{{ nav_links.products[0][0] }}" class="dropdown-cta" data-preview-cta>
+                                                {{ nav.configure }}
+                                                <span class="material-symbols-outlined text-[16px]!">chevron_right</span>
+                                            </a>
+                                            <a href="#footer" class="dropdown-cta">
+                                                {{ nav.contact_support }}
+                                                <span class="material-symbols-outlined text-[16px]!">chevron_right</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- Software: hover dropdown trigger -->
+                        <li class="nav-item group relative">
+                            {{ nav.software }}
+
+                            <div
+                                class="pointer-events-none invisible absolute top-full left-0 z-50 translate-y-1 pt-3 opacity-0 transition-all duration-200 text-shadow-none group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
+                            >
+                                <div
+                                    class="flex min-h-104 items-stretch overflow-hidden rounded-[10px] bg-white text-black shadow-[0px_7.875px_19.687px_0px_rgba(0,0,0,0.35)]"
+                                >
+                                    <div class="flex w-65.75 shrink-0 flex-col gap-4 p-7.5">
+                                        <span class="text-eyebrow text-grey">{{ nav.software_label }}</span>
+                                        {% for slug, label in nav_links.software %}
+                                        {{ dropdown_nav_link(lang, slug, label, {"img": url_for('static', filename='images/' ~ nav.software_previews[loop.index0].image), "title": nav.software_previews[loop.index0].title, "desc": nav.software_previews[loop.index0].desc}) }}
+                                        {% endfor %}
+                                        <div class="h-px w-full bg-light-grey"></div>
+                                        <span class="text-eyebrow text-grey">{{ nav.home_automation }}</span>
+                                        {% for slug, label in nav_links.software_automation %}
+                                        {{ dropdown_nav_link(lang, slug, label, {"img": url_for('static', filename='images/' ~ nav.software_automation_previews[loop.index0].image), "title": nav.software_automation_previews[loop.index0].title, "desc": nav.software_automation_previews[loop.index0].desc}) }}
+                                        {% endfor %}
+                                        <div class="h-px w-full bg-light-grey"></div>
+                                    </div>
+                                    <div
+                                        class="flex w-71 shrink-0 flex-col justify-between overflow-hidden bg-background p-5"
+                                        data-preview-card
+                                    >
+                                        <div class="flex flex-col gap-4.25">
+                                            <div
+                                                class="pointer-events-none relative h-44.5 w-full overflow-hidden rounded-2xl"
+                                            >
+                                                <img
+                                                    src="{{ url_for('static', filename='images/' ~ nav.software_previews[0].image) }}"
+                                                    alt=""
+                                                    class="h-full w-full object-cover transition-opacity duration-200"
+                                                    data-preview-img-target
+                                                />
+                                                <div
+                                                    class="absolute inset-0 rounded-2xl border-2 border-white/50 shadow-[0px_7.875px_19.687px_0px_rgba(0,0,0,0.35)]"
+                                                ></div>
+                                            </div>
+                                            <p class="dropdown-card-title" data-preview-title-target>{{ nav.software_previews[0].title }}</p>
+                                            <p class="dropdown-card-desc" data-preview-desc-target>{{ nav.software_previews[0].desc }}</p>
+                                        </div>
+                                        <div class="flex flex-col gap-2">
+                                            <a href="/{{ lang }}/{{ nav_links.software[0][0] }}" class="dropdown-cta" data-preview-cta>
+                                                {{ nav.discover_features }}
+                                                <span class="material-symbols-outlined text-[16px]!">chevron_right</span>
+                                            </a>
+                                            <a href="#footer" class="dropdown-cta">
+                                                {{ nav.contact_support }}
+                                                <span class="material-symbols-outlined text-[16px]!">chevron_right</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- Lösungen: hover dropdown trigger -->
+                        <li class="nav-item group relative">
+                            {{ nav.solutions }}
+
+                            <div
+                                class="pointer-events-none invisible absolute top-full left-1/2 z-50 -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition-all duration-200 text-shadow-none group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
+                            >
+                                <div
+                                    class="flex min-h-104 items-stretch overflow-hidden rounded-[10px] bg-white text-black shadow-[0px_7.875px_19.687px_0px_rgba(0,0,0,0.35)]"
+                                >
+                                    <div class="flex w-72 shrink-0 flex-col gap-4 p-7.5">
+                                        <span class="text-eyebrow text-grey">{{ nav.energy_management }}</span>
+                                        {% for slug, label in nav_links.solutions_energy %}
+                                        {{ dropdown_nav_link(lang, slug, label, {"img": url_for('static', filename='images/' ~ nav.solutions_previews[loop.index0].image), "title": nav.solutions_previews[loop.index0].title, "desc": nav.solutions_previews[loop.index0].desc}) }}
+                                        {% endfor %}
+                                        <div class="h-px w-full bg-light-grey"></div>
+                                        <span class="text-eyebrow text-grey">{{ nav.compliance }}</span>
+                                        {% for slug, label in nav_links.solutions_compliance %}
+                                        {{ dropdown_nav_link(lang, slug, label, {"img": url_for('static', filename='images/' ~ nav.solutions_previews[loop.index0 + 5].image), "title": nav.solutions_previews[loop.index0 + 5].title, "desc": nav.solutions_previews[loop.index0 + 5].desc}) }}
+                                        {% endfor %}
+                                    </div>
+                                    <div class="flex w-65.75 shrink-0 flex-col gap-4 p-7.5">
+                                        <span class="text-eyebrow text-grey">{{ nav.warp_for }}</span>
+                                        {% for slug, label in nav_links.warp_for %}
+                                        {{ dropdown_nav_link(lang, slug, label, {"img": url_for('static', filename='images/' ~ nav.solutions_previews[loop.index0 + 8].image), "title": nav.solutions_previews[loop.index0 + 8].title, "desc": nav.solutions_previews[loop.index0 + 8].desc}) }}
+                                        {% endfor %}
+                                    </div>
+                                    <div
+                                        class="flex w-71 shrink-0 flex-col justify-between bg-background p-5"
+                                        data-preview-card
+                                    >
+                                        <div class="flex flex-col gap-4.25">
+                                            <div
+                                                class="pointer-events-none relative h-44.5 w-full overflow-hidden rounded-2xl"
+                                            >
+                                                <img
+                                                    src="{{ url_for('static', filename='images/' ~ nav.solutions_previews[0].image) }}"
+                                                    alt=""
+                                                    class="h-full w-full object-cover transition-opacity duration-200"
+                                                    data-preview-img-target
+                                                />
+                                                <div
+                                                    class="absolute inset-0 rounded-2xl border-2 border-white/50 shadow-[0px_7.875px_19.687px_0px_rgba(0,0,0,0.35)]"
+                                                ></div>
+                                            </div>
+                                            <p class="dropdown-card-title" data-preview-title-target>{{ nav.solutions_previews[0].title }}</p>
+                                            <p class="dropdown-card-desc" data-preview-desc-target>{{ nav.solutions_previews[0].desc }}</p>
+                                        </div>
+                                        <div class="flex flex-col gap-2">
+                                            <a href="/{{ lang }}/{{ nav_links.solutions_energy[0][0] }}" class="dropdown-cta" data-preview-cta>
+                                                {{ nav.discover_features }}
+                                                <span class="material-symbols-outlined text-[16px]!">chevron_right</span>
+                                            </a>
+                                            <a href="#footer" class="dropdown-cta">
+                                                {{ nav.contact_support }}
+                                                <span class="material-symbols-outlined text-[16px]!">chevron_right</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- Über uns: hover dropdown trigger -->
+                        <li class="nav-item group relative">
+                            {{ nav.about }}
+
+                            <div
+                                class="pointer-events-none invisible absolute top-full right-0 z-50 translate-y-1 pt-3 opacity-0 transition-all duration-200 text-shadow-none group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
+                            >
+                                <div
+                                    class="flex min-h-104 items-stretch overflow-hidden rounded-[10px] bg-white text-black shadow-[0px_7.875px_19.687px_0px_rgba(0,0,0,0.35)]"
+                                >
+                                    <div class="flex w-60.75 shrink-0 flex-col gap-3 p-7.5">
+                                        <span class="text-eyebrow text-grey">{{ nav.about_label }}</span>
+                                        {% for slug, label in nav_links.about %}
+                                        {{ dropdown_nav_link(lang, slug, label, {"img": url_for('static', filename='images/' ~ nav.about_previews[loop.index0].image), "title": nav.about_previews[loop.index0].title, "desc": nav.about_previews[loop.index0].desc}) }}
+                                        {% endfor %}
+                                        <div class="h-px w-full bg-light-grey"></div>
+                                    </div>
+                                    <div
+                                        class="flex w-71 shrink-0 flex-col justify-between bg-background p-5"
+                                        data-preview-card
+                                    >
+                                        <div class="flex flex-col gap-4.25">
+                                            <div
+                                                class="pointer-events-none relative h-44.5 w-full overflow-hidden rounded-2xl"
+                                            >
+                                                <img
+                                                    src="{{ url_for('static', filename='images/' ~ nav.about_previews[0].image) }}"
+                                                    alt=""
+                                                    class="h-full w-full object-cover transition-opacity duration-200"
+                                                    data-preview-img-target
+                                                />
+                                                <div
+                                                    class="absolute inset-0 rounded-2xl border-2 border-white/50 shadow-[0px_7.875px_19.687px_0px_rgba(0,0,0,0.35)]"
+                                                ></div>
+                                            </div>
+                                            <p class="dropdown-card-title" data-preview-title-target>{{ nav.about_previews[0].title }}</p>
+                                            <p class="dropdown-card-desc" data-preview-desc-target>{{ nav.about_previews[0].desc }}</p>
+                                        </div>
+                                        <a href="#footer" class="dropdown-cta">
+                                            {{ nav.contact_request }}
+                                            <span class="material-symbols-outlined text-[16px]!">chevron_right</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a
+                                href="https://docs.warp-charger.com/{{ lang }}/docs/home/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="flex cursor-pointer items-center gap-1"
+                            >
+                                {{ nav.documentation }}
+                                <span class="material-symbols-outlined text-[18px]!">open_in_new</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="z-10 hidden flex-row items-center gap-2 text-black lg:flex">
+                        <!-- Language Switcher (Desktop) - styled like nav items -->
+                        <div class="group relative text-white [text-shadow:0_1px_4px_rgba(0,0,0,0.4)]">
+                            <span class="nav-item flex cursor-pointer items-center gap-0.5">
+                                {{ lang | upper }}
+                                <span class="material-symbols-outlined text-[16px]!">expand_more</span>
+                            </span>
+                            <div class="pointer-events-none invisible absolute top-full right-0 z-50 translate-y-1 pt-3 opacity-0 transition-all duration-200 text-shadow-none group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                                <div class="flex flex-col gap-4 overflow-hidden rounded-[10px] bg-white p-7.5 shadow-[0px_7.875px_19.687px_0px_rgba(0,0,0,0.35)]">
+                                    <a href="{{ lang_urls.de }}"
+                                       class="dropdown-link flex items-center gap-2{% if lang == 'de' %} !text-primary{% endif %}">
+                                        Deutsch
+                                        {% if lang == 'de' %}<span class="material-symbols-outlined text-[16px]! text-primary">check</span>{% endif %}
+                                    </a>
+                                    <a href="{{ lang_urls.en }}"
+                                       class="dropdown-link flex items-center gap-2{% if lang == 'en' %} !text-primary{% endif %}">
+                                        English
+                                        {% if lang == 'en' %}<span class="material-symbols-outlined text-[16px]! text-primary">check</span>{% endif %}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="/{{ lang }}/software/downloads" class="btn-tertiary">{{ nav.downloads }}</a>
+                        <a href="https://shop.warp-charger.com" class="btn-secondary">{{ nav.shop }}</a>
+                    </div>
+
+                    <div class="z-10 flex flex-row items-center gap-4 lg:hidden">
+                        <button class="flex items-center justify-center transition-colors hover:text-cyan-400">
+                            <span class="material-symbols-outlined text-[24px]! [text-shadow:0_1px_4px_rgba(0,0,0,0.4)]">download</span>
+                        </button>
+                        <button class="flex items-center justify-center transition-colors hover:text-cyan-400">
+                            <span class="material-symbols-outlined text-[24px]! [text-shadow:0_1px_4px_rgba(0,0,0,0.4)]">shopping_bag</span>
+                        </button>
+                        <button
+                            id="mobile-menu-btn"
+                            class="ml-1 flex items-center justify-center transition-colors hover:text-white/60"
+                            aria-label="{{ nav.open_menu }}"
+                            aria-expanded="false"
+                            aria-controls="mobile-menu"
+                        >
+                            <span class="material-symbols-outlined text-[28px]! [text-shadow:0_1px_4px_rgba(0,0,0,0.4)]">menu</span>
+                        </button>
+                    </div>
+                </div>
+            </nav>
+        </header>

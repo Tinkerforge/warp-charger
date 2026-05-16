@@ -1,0 +1,28 @@
+{#
+  Feature card grid: responsive grid of bordered cards with icon/number + title + description.
+
+  Parameters:
+    items:     List of dicts with keys: icon (optional), title, desc (or text)
+    columns:   Number of columns on desktop (2, 3, or 4; default 3)
+    numbered:  If true, shows loop index instead of icon (default false)
+    dark:      If true, uses dark theme card styles (default false)
+#}
+
+{% macro feature_card_grid(items, columns=3, numbered=false, dark=false) %}
+{% set cols_class = {2: "md:grid-cols-2", 3: "md:grid-cols-2 lg:grid-cols-3", 4: "md:grid-cols-2 lg:grid-cols-4"} %}
+<div class="grid grid-cols-1 {{ cols_class[columns] | default('md:grid-cols-3') }} gap-6">
+    {% for item in items %}
+    <div class="{{ 'feature-card-dark' if dark else 'feature-card' }}">
+        <div class="flex items-center gap-3 mb-2">
+            {% if numbered %}
+            <span class="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-blue text-white text-sm font-bold shrink-0">{{ loop.index }}</span>
+            {% elif item.icon %}
+            <span class="material-symbols-outlined {{ 'feature-card-icon-dark' if dark else 'feature-card-icon' }}">{{ item.icon }}</span>
+            {% endif %}
+            <h3 class="{{ 'feature-card-title-dark' if dark else 'feature-card-title' }}">{{ item.title }}</h3>
+        </div>
+        <p class="{{ 'text-section-body-dark' if dark else 'text-section-body' }}">{{ item.desc or item.text }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endmacro %}

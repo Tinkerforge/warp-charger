@@ -1,0 +1,138 @@
+{#
+  Two-column section with image and text content.
+
+  Parameters:
+    badge_icon    : Material Symbols icon name for the badge
+    badge_text    : Badge label text
+    headline      : Section heading
+    image         : Image filename (relative to static/images/)
+    image_alt     : Alt text for the image (defaults to headline)
+    image_side    : "right" (default) or "left"
+    bg            : Optional background class (e.g. "bg-gradient-light-white-background")
+    dark          : If true, renders as dark section (default false)
+    heading_tag   : "h1" or "h2" (default "h2")
+    overflow_image: If true (dark only), image overflows section bounds on desktop
+
+  Usage:
+    {% from "macros/two_col_section.html" import two_col_section %}
+
+    {% call two_col_section(
+        badge_icon="menu_book",
+        badge_text="Ladelogbuch",
+        headline="Ladelogbuch mit WARP4",
+        image="ladetracker.jpg",
+        image_side="right"
+    ) %}
+        <p class="text-body text-grey">Your custom content here...</p>
+    {% endcall %}
+#}
+
+{% macro two_col_section(
+    badge_icon,
+    badge_text,
+    headline,
+    image,
+    image_alt="",
+    image_side="right",
+    bg="",
+    dark=false,
+    heading_tag="h2",
+    overflow_image=false,
+    pb="",
+    no_frame=false
+) %}
+{% set alt = image_alt or headline %}
+{% set flex_dir = "lg:flex-row" if image_side == "right" else "lg:flex-row-reverse" %}
+
+{% if dark and overflow_image %}
+{# Dark variant with overflow image #}
+<section class="relative w-full overflow-hidden bg-gradient-radial-dark pt-section pb-4 md:pb-8 lg:pb-24">
+    <div class="relative z-10 mx-auto flex max-w-7xl flex-col items-center gap-20 px-4 md:px-8 {{ flex_dir }} lg:items-stretch lg:gap-24{% if image_side == 'right' %} lg:pr-0 lg:pl-64{% else %} lg:pl-0 lg:pr-64{% endif %}">
+        <div class="z-20 flex shrink-0 flex-col items-start gap-8 text-left lg:w-105">
+            <div class="flex items-center justify-start gap-2.5">
+                <div class="flex h-7.5 w-7.5 items-center justify-center rounded-full bg-gradient-light-blue p-px">
+                    <div class="flex h-full w-full items-center justify-center rounded-full bg-gradient-deep-blue">
+                        <span class="material-symbols-outlined bg-gradient-white-blue bg-clip-text text-[18px]! text-transparent">{{ badge_icon }}</span>
+                    </div>
+                </div>
+                <span class="-mr-2 bg-gradient-white-blue bg-clip-text pr-2 text-h3 text-transparent">{{ badge_text }}</span>
+            </div>
+            <{{ heading_tag }} class="text-h2 text-white">{{ headline }}</{{ heading_tag }}>
+            {{ caller() }}
+        </div>
+        <div class="relative flex w-full flex-1 items-center lg:w-auto lg:items-stretch">
+            <img src="{{ url_for('static', filename='images/glow-effect.webp') }}" alt="" class="pointer-events-none absolute top-5 left-1/2 z-0 w-full -translate-x-1/2 -translate-y-1/2 rotate-90 object-contain lg:top-1/2 lg:left-0 lg:-translate-y-1/2 lg:w-[150%] lg:min-w-150 lg:rotate-0" loading="lazy" />
+            <div class="glass-frame relative z-10 block w-full lg:absolute lg:-top-1.5 lg:-bottom-1.5 lg:left-0 lg:w-auto">
+                <img src="{{ url_for('static', filename='images/' ~ image) }}" loading="lazy" alt="{{ alt }}" class="glass-frame-inner block h-auto w-full object-cover shadow-[0_0_27px_4.5px_rgba(0,0,0,0.25)] lg:h-full lg:w-auto lg:max-w-none lg:object-left" />
+            </div>
+        </div>
+    </div>
+</section>
+
+{% elif dark %}
+{# Dark hero variant #}
+<section class="relative w-full overflow-hidden bg-gradient-radial-dark pt-32 pb-section">
+    <div class="relative z-10 mx-auto flex max-w-7xl flex-col items-center gap-12 px-4 md:px-8 {{ flex_dir }} lg:items-center lg:gap-20{% if image_side == 'right' %} lg:pr-0{% else %} lg:pl-0{% endif %}">
+        <div class="z-20 flex shrink-0 flex-col items-start gap-6 text-left lg:w-105">
+            <div class="flex items-center justify-start gap-2.5">
+                <div class="flex h-7.5 w-7.5 items-center justify-center rounded-full bg-gradient-light-blue p-px">
+                    <div class="flex h-full w-full items-center justify-center rounded-full bg-gradient-deep-blue">
+                        <span class="material-symbols-outlined bg-gradient-white-blue bg-clip-text text-[18px]! text-transparent">{{ badge_icon }}</span>
+                    </div>
+                </div>
+                <span class="-mr-2 bg-gradient-white-blue bg-clip-text pr-2 text-h3 text-transparent">{{ badge_text }}</span>
+            </div>
+            <{{ heading_tag }} class="text-section-heading-dark">{{ headline }}</{{ heading_tag }}>
+            {{ caller() }}
+        </div>
+        <div class="relative flex w-full flex-1 items-center lg:w-auto lg:items-stretch {% if image_side == 'right' %}lg:justify-end{% else %}lg:justify-start{% endif %}">
+            <img src="{{ url_for('static', filename='images/glow-effect.webp') }}" alt="" class="pointer-events-none absolute top-5 left-1/2 z-0 w-full -translate-x-1/2 -translate-y-1/2 rotate-90 object-contain lg:top-1/2 lg:-translate-y-1/2 lg:w-[150%] lg:min-w-150 lg:rotate-0 {% if image_side == 'right' %}lg:left-0 lg:-translate-x-[25%]{% else %}lg:left-auto lg:right-0 lg:translate-x-[25%]{% endif %}" loading="lazy" />
+            <div class="glass-frame relative z-10 block w-full lg:max-w-xl">
+                <img src="{{ url_for('static', filename='images/' ~ image) }}" loading="lazy" alt="{{ alt }}" class="glass-frame-inner block h-auto w-full object-cover shadow-[0_0_27px_4.5px_rgba(0,0,0,0.25)]" />
+            </div>
+        </div>
+    </div>
+</section>
+
+{% else %}
+{# Light content variant #}
+<section class="w-full {{ pb if pb else 'py-section' }}{{ ' pt-section' if pb }} {{ bg }}">
+    <div class="mx-auto flex max-w-7xl flex-col items-center gap-6 px-5 md:px-10 {{ flex_dir }} lg:items-center lg:gap-20">
+        <div class="flex flex-1 flex-col items-start gap-6 text-left">
+            <div class="flex items-center justify-start gap-2.5">
+                <div class="flex h-7.5 w-7.5 items-center justify-center rounded-full bg-gradient-overlay-blue p-px">
+                    <div class="flex h-full w-full items-center justify-center rounded-full bg-gradient-blue">
+                        <span class="material-symbols-outlined text-[18px]! text-white">{{ badge_icon }}</span>
+                    </div>
+                </div>
+                <span class="-mr-2 bg-gradient-blue bg-clip-text pr-2 text-h3 text-transparent">{{ badge_text }}</span>
+            </div>
+            <{{ heading_tag }} class="text-section-heading">{{ headline }}</{{ heading_tag }}>
+
+            {# Image shown between heading and content on mobile #}
+            <div class="flex w-full items-center justify-center lg:hidden">
+                {% if no_frame %}
+                <img src="{{ url_for('static', filename='images/' ~ image) }}" loading="lazy" alt="{{ alt }}" class="block h-auto w-full max-w-lg object-contain" />
+                {% else %}
+                <div class="glass-frame w-full max-w-lg">
+                    <img src="{{ url_for('static', filename='images/' ~ image) }}" loading="lazy" alt="{{ alt }}" class="glass-frame-inner block h-auto w-full object-cover shadow-[0_0_27px_4.5px_rgba(0,0,0,0.10)]" />
+                </div>
+                {% endif %}
+            </div>
+
+            {{ caller() }}
+        </div>
+        {# Image Column: desktop only #}
+        <div class="hidden lg:flex flex-1 items-center justify-center">
+            {% if no_frame %}
+            <img src="{{ url_for('static', filename='images/' ~ image) }}" loading="lazy" alt="{{ alt }}" class="block h-auto w-full max-w-lg object-contain" />
+            {% else %}
+            <div class="glass-frame w-full max-w-lg">
+                <img src="{{ url_for('static', filename='images/' ~ image) }}" loading="lazy" alt="{{ alt }}" class="glass-frame-inner block h-auto w-full object-cover shadow-[0_0_27px_4.5px_rgba(0,0,0,0.10)]" />
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endmacro %}

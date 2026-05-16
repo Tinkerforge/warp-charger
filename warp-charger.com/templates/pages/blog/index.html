@@ -1,0 +1,33 @@
+{% extends "pages/blog/layout.html" %}
+{% from "macros/blog_meta.html" import blog_meta %}
+
+{% block title %}{{ t.meta.meta_title }}{% endblock %}
+
+{% block blog_content %}
+{% for post in posts %}
+{% if loop.index <= 3 %}
+<!-- Full post -->
+<a href="/{{ lang }}/blog/{{ post.meta.slug }}" class="group w-full">
+    <article class="flex flex-col gap-3 rounded-xl bg-white px-6 py-6 shadow-sm transition-shadow group-hover:shadow-md text-left">
+        {{ blog_meta(post.meta.tag, post.meta.date) }}
+        <h3 class="text-h3 font-semibold text-black group-hover:text-primary transition-colors">{{ post.meta.title }}</h3>
+        <div class="text-section-body text-justify [&>p]:mb-3 [&>p:last-child]:mb-0">
+            {{ post.html | safe }}
+        </div>
+    </article>
+</a>
+{% else %}
+<!-- Preview card -->
+<a href="/{{ lang }}/blog/{{ post.meta.slug }}" class="group w-full">
+    <article class="flex items-center justify-between gap-4 rounded-xl bg-white px-6 py-5 shadow-sm transition-shadow group-hover:shadow-md">
+        <div class="flex min-w-0 flex-1 flex-col gap-2">
+            {{ blog_meta(post.meta.tag, post.meta.date) }}
+            <h3 class="text-h3 font-semibold text-black group-hover:text-primary transition-colors">{{ post.meta.title }}</h3>
+            <p class="line-clamp-2 text-section-body">{{ post.body | excerpt }}</p>
+        </div>
+        <span class="material-symbols-outlined shrink-0 text-[28px]! text-medium-grey transition-transform group-hover:translate-x-1">chevron_right</span>
+    </article>
+</a>
+{% endif %}
+{% endfor %}
+{% endblock %}
