@@ -12,21 +12,22 @@
 #   git clone --depth=1 --filter=blob:none --sparse \
 #       git@github.com:Tinkerforge/warp-charger.git warp-charger
 #   cd warp-charger
-#   git sparse-checkout set warp-charger.com firmwares
+#   git sparse-checkout set warp-charger.com firmwares documents
 
 set -e
 
-SERVICE_USER="www"
-REPO_DIR="/home/$SERVICE_USER/warp-charger"
-SITE_DIR="$REPO_DIR/warp-charger.com"
-
-# Determine branch based on hostname
+# Determine branch and user based on hostname
 HOSTNAME=$(hostname)
 if [ "$HOSTNAME" = "stagingwww" ]; then
     BRANCH="stagingwww.warp-charger.com"
+    SERVICE_USER="stagingwww"
 else
     BRANCH="master"
+    SERVICE_USER="www"
 fi
+
+REPO_DIR="/home/$SERVICE_USER/warp-charger"
+SITE_DIR="$REPO_DIR/warp-charger.com"
 
 NEEDS_RESTART=0
 
