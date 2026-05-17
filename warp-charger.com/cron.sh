@@ -12,7 +12,7 @@
 #   git clone --depth=1 --filter=blob:none --sparse \
 #       git@github.com:Tinkerforge/warp-charger.git warp-charger
 #   cd warp-charger
-#   git sparse-checkout set warp-charger.com firmwares documents
+#   git sparse-checkout set warp-charger.com firmwares documents docs.warp-charger.com
 
 set -e
 
