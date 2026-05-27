@@ -268,7 +268,7 @@ im Webinterface der Wallbox konfiguriert werden.
 
 Zusätzlich verfügen die Wallbox-Varianten Smart und Pro über ein
 NFC-Modul, mit dem eine Ladefreigabe z.B. per Chipkarte möglich ist.
-Eine genaue Beschreibung findet sich im Abschnitt [NFC-Tags](/webinterface/users/nfc-tags.md).
+Eine genaue Beschreibung findet sich im Abschnitt [Benutzerverwaltung](/webinterface/users/user_management.md).
 
 ## EVSE Klemmblock / Abschalteingang
 

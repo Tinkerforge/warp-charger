@@ -10,7 +10,6 @@ The WARP3 Charger records all charging processes performed. The following inform
 charging process:
 
 * Start date and time of the charging process, if date and time are known.
-See section .
 * User who started the charging process, if known.
 * Meter reading at start and end of the charging process (WARP3 Charger Pro only).
 From this, the charged energy in kWh is calculated.
@@ -28,11 +27,21 @@ No internet access or cloud service etc. is required and the
 data is not transmitted to third parties.
 
 
-## Configuration of Charge Authorization, Users, and NFC
+## Configuration of Charge Authorization, Users, and NFC Tags
+
+:::info
+To use the same users/NFC tags on multiple chargers,
+they only need to be configured on the charge manager.
+Configure the charge management first and enable the central management,
+see [Charge Management](/tutorials/chargemanagement.md)
+
+The user management's charge release does not need to be activated.
+
+Charges are assigned to users and tracked in the charge manager's charge log.
+:::
 
 For charging processes to be assigned to a user,
 
-* charge authorization must be enabled,
 * at least one user must be created and charge authorization of the
 user management must be enabled and
 * an NFC tag must be assigned to the user.
@@ -45,37 +54,38 @@ Further information is available in the web interface documentation: [User Manag
 
 ![image](/img/tutorials/charge_tracking/user_configuration.png)
 
-In the screenshot, in addition to the default users, we have added a "Doku Nutzer"
+In the screenshot, charge authorization was enabled. With charge authorization enabled,
+a charge must first be authorized via NFC before the charger
+starts charging.
+
+Furthermore, in addition to the default users, we have added a "Doku-Nutzer"
 who is limited to 16A charging current.
 To do this, simply click on the "+" at the bottom right and enter a
 username, a display name, and the maximum charging current for this user.
 
-Additionally, charge authorization was enabled. With charge authorization enabled,
-a charge must first be authorized via NFC before the charger
-starts charging.
+![image](/img/tutorials/charge_tracking/user_configuration_2.png)
 
-An NFC card can be assigned to the user under `Users` -> `NFC Tags`.
+Here, NFC tags can be assigned to the user.
 The WARP Charger supports the NFC card types
-NFC-Forum-Type1, NFC-Forum-Type2, NFC-Forum-Type3, and Mifare Classic.
+Mifare Classic and NFC-Forum-Type-1 through -5.
 
 Any NFC tags of the supported types can be learned
 (e.g. the access card from the gym).
 
+To add an NFC tag, click on the "+" at the bottom right again.
+
 ![image](/img/tutorials/charge_tracking/nfc_configuration.png)
 
-To add an NFC tag, click on the "+" at the bottom right again.
 In the add-tag window, the most recently detected NFC tags are displayed.
 This means you can simply hold the tag in front of the charger once before configuration
 to then select it here.
 
-In the example, we assign an NFC-Forum-Type2 tag to the "Doku Nutzer".
+In the example, we assign an NFC-Forum-Type2 tag to the "Doku-Nutzer".
 
 ![image](/img/tutorials/charge_tracking/nfc_configuration_done.png)
 
 After adding, you must save, and then the
 charger knows a new user who is also used by the charge log.
-
-Further information is available in the web interface documentation: [NFC Tags](/webinterface/users/nfc-tags.md)
 
 ## Charge Log Export as PDF or CSV
 

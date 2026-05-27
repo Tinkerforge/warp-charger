@@ -32,7 +32,6 @@ in the web interface:
    * [Modbus/TCP](/webinterface/interfaces/modbus_tcp.md)
    * [OCPP](/webinterface/interfaces/ocpp.md)
  * Users
-   * [NFC Tags](/webinterface/users/nfc-tags.md)
    * [User Management](/webinterface/users/user_management.md)
  * System
    * [Settings](/webinterface/system/settings.md)

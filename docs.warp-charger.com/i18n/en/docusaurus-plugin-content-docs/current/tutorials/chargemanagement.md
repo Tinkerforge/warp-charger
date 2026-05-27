@@ -81,6 +81,12 @@ supply line to the chargers.
 
 ![image](/img/tutorials/chargemanagement/load_management_wallbox_added.png)
 
+:::info
+Here the central management can be activated:
+Charges of controlled chargers are then tracked in the charge manager's charge tracker
+and users/NFC tags are validated by the charge manager.
+:::
+
 Further information is available in the web interface documentation: [Charge Management](/webinterface/energy_management/loadmanagement.md)
 
 ## Step 3: Dynamic Load Management Configuration

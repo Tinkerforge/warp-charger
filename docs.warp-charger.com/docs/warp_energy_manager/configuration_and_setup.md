@@ -29,11 +29,12 @@ sidebar_position: 3
    * [WireGuard](/docs/webinterface/network/wireguard.md)
  * Schnittstellen
    * [MQTT](/docs/interfaces/mqtt_http/introduction.md)
+ * Benutzer
+   * [Benutzerverwaltung](/docs/webinterface/users/user_management.md)
  * System
    * [Einstellungen](/docs/webinterface/system/settings.md)
    * [TLS-Zertifikate](/docs/webinterface/system/tls-certificates.md)
    * [Fernzugriff](/docs/webinterface/system/remote_access.md)
    * [Systemzeit](/docs/webinterface/system/system_time.md)
-   * [Zugangsdaten](/docs/webinterface/system/login_details)
    * [Ereignis-Log](/docs/webinterface/system/event_log)
    * [Firmware-Aktualisierung](/docs/webinterface/system/firmware_update)

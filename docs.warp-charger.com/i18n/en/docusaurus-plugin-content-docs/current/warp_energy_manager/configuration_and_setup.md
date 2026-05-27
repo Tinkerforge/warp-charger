@@ -29,11 +29,12 @@ sidebar_position: 3
    * [WireGuard](/webinterface/network/wireguard.md)
  * Interfaces
    * [MQTT](/interfaces/mqtt_http/introduction.md)
+ * Users
+   * [User Management](/webinterface/users/user_management.md)
  * System
    * [Settings](/webinterface/system/settings.md)
    * [TLS Certificates](/webinterface/system/tls-certificates.md)
    * [Remote Access](/webinterface/system/remote_access.md)
    * [System Time](/webinterface/system/system_time.md)
-   * [Credentials](/webinterface/system/login_details.md)
    * [Event Log](/webinterface/system/event_log.md)
    * [Firmware Update](/webinterface/system/firmware_update.md)

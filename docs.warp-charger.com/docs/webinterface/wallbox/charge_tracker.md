@@ -6,12 +6,15 @@ sidebar_position: 3
 
 import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
-<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4']} />
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
 
 
 ![image](/img/webinterface/wallbox/warp-charge_tracker.jpeg)
 
 Der WARP3 Charger zeichnet alle durchgeführten Ladevorgänge auf.
+
+Ein WARP Charger oder WARP Energy Manager, der als Lastmanager mit zentraler Verwaltung auftritt, zeichnet alle Ladevorgänge kontrollierter Wallboxen auf.
+
 Pro Ladevorgang werden die folgenden Informationen gespeichert:
  * Startdatum und Zeit des Ladevorgangs, falls Datum und Zeit bekannt sind.
  * Benutzer, der den Ladevorgang gestartet hat, falls bekannt.
@@ -23,8 +26,8 @@ Die Kosten werden nicht pro Ladevorgang aufgezeichnet, sondern anhand des konfig
 Das heißt insbesondere, dass, wenn der Strompreis geändert wird, auch die angezeiten Kosten älterer Ladevorgänge geändert werden.
 
 Damit Ladevorgänge einem Benutzer zugeordnet werden können, muss
- * mindestens ein Benutzer angelegt sein und die Ladefreigabe der Benutzerverwaltung aktiviert sein.
- * dem Benutzer ein [NFC-Tag](/docs/webinterface/users/nfc-tags) zugeordnet sein
+ * mindestens ein Benutzer angelegt sein und entweder die Ladefreigabe der Benutzerverwaltung oder die zentrale Verwaltung des Lastmanagers aktiviert sein.
+ * dem Benutzer ein NFC-Tag zugeordnet sein
  
 Im Werkszustand sind drei Benutzer mit je einem NFC-Tag eingerichtet. Es muss dann nur die Ladefreigabe unter [Benutzerverwaltung](/docs/webinterface/users/user_management) aktiviert werden.
 Diese Informationen werden nur auf dem WARP3 Charger gespeichert. Aufgezeichnete Ladevorgänge können im Webinterface auf der Ladetracker-Unterseite entweder als ***PDF***, oder als ein ***CSV***-Dokument, kompatibel zu üblichen
@@ -35,8 +38,8 @@ Faltung im Fenster eines Briefumschlags sichtbar ist.
 Werden die Ladevorgänge als CSV heruntergeladen, kann zwischen zwei Formaten gewählt werden:
  * Excel-kompatibel Erzeugt eine CSV-Datei, die ohne Importkonfiguration von Excel geladen werden kann. Der Feldtrenner ist ein Semikolon, in der ersten Zeile wird dies (für andere Sprachversionen) mit sep=; ¨ markiert. Die Datei wird Windows-1252 kodiert, deshalb sind möglicherweise nicht alle Benutzernamen
 darstellbar.
- * RFC4180 Erzeugt eine CSV-Datei die nach RFC4180 formatiert ist. Der Feldtrenner ist ein Komma, die Datei wird UTF-8 kodiert.
+ * RFC 4180 Erzeugt eine CSV-Datei die nach RFC 4180 formatiert ist. Der Feldtrenner ist ein Komma, die Datei wird UTF-8 kodiert.
 
-Der WARP3 Charger kann bis zu 7680 Ladevorgänge aufzeichnen.
+Der WARP3 Charger bzw. WARP Energy Manager kann bis zu 32768 Ladevorgänge aufzeichnen.
 
 ![image](/img/webinterface/wallbox/warp-charge_tracker2.jpeg)

@@ -260,7 +260,7 @@ can be configured in the charger web interface.
 
 Additionally, the Smart and Pro charger variants have an NFC module
 that allows charging authorization e.g. via chip card. A detailed
-description can be found in the section [NFC Tags](/webinterface/users/nfc-tags.md).
+description can be found in the section [user management](/webinterface/users/user_management.md).
 
 ## EVSE Terminal Block / Shutdown Input
 

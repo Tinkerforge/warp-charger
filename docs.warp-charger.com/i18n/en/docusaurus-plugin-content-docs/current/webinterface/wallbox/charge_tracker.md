@@ -6,12 +6,15 @@ sidebar_position: 3
 
 import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
-<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4']} />
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
 
 
 ![image](/img/webinterface/wallbox/warp-charge_tracker.jpeg)
 
 The WARP3 Charger records all charging processes performed.
+
+A WARP charger or WARP energy manager, that is the charge manager of multiple chargers with central management enabled, will track all charges of controlled chargers.
+
 The following information is stored per charging process:
  * Start date and time of the charging process, if date and time are known.
  * User who started the charging process, if known.
@@ -23,8 +26,8 @@ The costs are not recorded per charging process, but calculated based on the con
 This means in particular that when the electricity price is changed, the displayed costs of older charging processes are also changed.
 
 For charging processes to be assigned to a user:
- * at least one user must be created and charge authorization in user management must be enabled.
- * an [NFC tag](/webinterface/users/nfc-tags.md) must be assigned to the user
+ * at least one user must be created and either the charge authorization in user management or the central management in charge manager must be enabled.
+ * an NFC tag must be assigned to the user
  
 In the factory state, three users with one NFC tag each are configured. Then only charge authorization under [User Management](/webinterface/users/user_management.md) needs to be enabled.
 This information is only stored on the WARP3 Charger. Recorded charging processes can be downloaded from the web interface on the charge tracker page either as a ***PDF*** or as a ***CSV*** document compatible with common
@@ -34,8 +37,8 @@ folding.
 
 If the charging processes are downloaded as CSV, you can choose between two formats:
  * Excel-compatible Creates a CSV file that can be loaded by Excel without import configuration. The field separator is a semicolon, in the first line this is marked (for other language versions) with sep=;. The file is Windows-1252 encoded, so possibly not all usernames can be displayed.
- * RFC4180 Creates a CSV file formatted according to RFC4180. The field separator is a comma, the file is UTF-8 encoded.
+ * RFC 4180 Creates a CSV file formatted according to RFC 4180. The field separator is a comma, the file is UTF-8 encoded.
 
-The WARP3 Charger can record up to 7680 charging processes.
+The WARP3 Charger or WARP Energy Manager can record up to 32768 charging processes.
 
 ![image](/img/webinterface/wallbox/warp-charge_tracker2.jpeg)

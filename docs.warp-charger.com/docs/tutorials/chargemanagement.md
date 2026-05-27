@@ -81,6 +81,12 @@ Zuleitung der Wallboxen.
 
 ![image](/img/tutorials/chargemanagement/load_management_wallbox_added.png)
 
+:::info
+Hier kann außerdem die zentrale Verwaltung aktiviert werden:
+Ladevorgänge von kontrollierten Wallboxen werden dann im Ladelogbuch des
+Lastmanagers aufgezeichnet und Benutzer/NFC-Tags vom Lastmanager geprüft.
+:::
+
 Weitere Informationen hierzu gibt es in der Webinterface-Dokumentation: [Lastmanagement](/webinterface/energy_management/loadmanagement.md)
 
 ## Schritt 3: Konfiguration dynamisches Lastmanagement
