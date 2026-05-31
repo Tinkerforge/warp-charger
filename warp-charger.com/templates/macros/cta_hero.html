@@ -1,0 +1,42 @@
+{#
+  CTA hero: centered call-to-action section on dark background
+  with an optional overflow screenshot below.
+
+  Parameters:
+    t: translation dict with keys:
+      headline, description, cta
+    logo        : logo image filename (relative to static/images/)
+    logo_alt    : alt text for logo
+    screenshot  : screenshot image filename (optional, shows overflow frame)
+    cta_url     : URL for the CTA button (default: "#")
+#}
+
+{% macro cta_hero(t, logo="", logo_alt="", screenshot="", cta_url="#") %}
+<section class="relative w-full overflow-hidden bg-linear-to-t from-[#1b1b25] to-[#05050a]">
+    <div class="relative z-10 mx-auto flex max-w-3xl flex-col items-center gap-5 px-4 pt-section pb-0 text-center md:px-8">
+        {% if logo %}
+        <div class="relative inline-flex shrink-0 rounded-[10px] bg-gradient-deep-blue">
+            <div class="relative flex flex-col items-start overflow-clip rounded-[inherit] p-2">
+                <img src="{{ url_for('static', filename='images/' ~ logo) }}" alt="{{ logo_alt }}" class="h-5 w-auto transition-all lg:h-8" loading="lazy" />
+            </div>
+            <div aria-hidden="true" class="pointer-events-none absolute inset-0 rounded-[10px] border border-[#8aaee9]"></div>
+        </div>
+        {% endif %}
+        <h2 class="max-w-2xl text-h2 text-white">{{ t.headline }}</h2>
+        <p class="max-w-xl text-body text-white/80">{{ t.description }}</p>
+        <a href="{{ cta_url }}" type="button" class="btn-primary">{{ t.cta }}</a>
+    </div>
+    {% if screenshot %}
+    <div class="relative w-full">
+        <div class="relative mx-auto max-w-6xl translate-y-1/3 px-4 md:translate-y-[15%] md:px-8 lg:translate-y-[8%]">
+            <img src="{{ url_for('static', filename='images/glow-effect.webp') }}" alt="" aria-hidden="true" class="pointer-events-none absolute top-0 left-1/2 z-0 w-full -translate-x-1/2 -translate-y-1/2 rotate-90 object-contain" loading="lazy" />
+            <div class="glass-frame relative z-10 mx-auto">
+                <div class="glass-frame-inner relative w-full pb-[56%]">
+                    <img src="{{ url_for('static', filename='images/' ~ screenshot) }}" alt="{{ t.headline }}" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</section>
+{% endmacro %}

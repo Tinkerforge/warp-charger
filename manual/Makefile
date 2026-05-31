@@ -1,6 +1,17 @@
 clean:
 	latexmk -c
 
+warp4-web:
+	pdflatex manual_warp4.tex
+	pdflatex manual_warp4.tex
+	@# This breaks hyperref links!
+	@#ps2pdf14 -dPDFSETTINGS=/prepress manual_warp2.pdf manual_warp2_web.pdf
+	cp manual_warp4.pdf ../documents/WARP4_Betriebsanleitung.pdf
+
+warp4-print:
+	pdflatex "\def\forprint{1} \input{manual_warp4.tex}"
+	pdflatex "\def\forprint{1} \input{manual_warp4.tex}"
+	ps2pdf14 -dPDFSETTINGS=/prepress -dSubsetFonts=false -dCompressFonts=true manual_warp4.pdf manual_warp4_print.pdf
 
 warp3-web:
 	pdflatex manual_warp3.tex

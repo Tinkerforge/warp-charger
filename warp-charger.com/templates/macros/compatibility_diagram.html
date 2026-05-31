@@ -1,0 +1,85 @@
+{#
+  Compatibility section with animated energy flow diagram.
+
+  Replaces the simple icon row by rendering a section header (badge,
+  headline, description) followed by the SVG energy flow diagram.
+
+  The diagram itself is rendered client-side by src/ts/diagram.ts which
+  reads its configuration and asset paths from data-* attributes on the
+  [data-diagram-canvas] element.
+
+  Parameters:
+    t: translation dict with keys:
+       badge, headline, description, diagram_aria, diagram_labels (map)
+#}
+
+{% from "macros/badge.html" import badge %}
+
+{% macro compatibility_diagram(t) %}
+<section class="flex w-full flex-col gap-8 py-20">
+    <div class="flex flex-col items-center gap-text-gap-md px-1 text-center">
+        <div class="flex flex-col gap-text-gap-sm">
+            {{ badge("crossword", t.badge) }}
+            <h2 class="text-h2 text-black">{{ t.headline }}</h2>
+        </div>
+        <p class="max-w-184 text-body text-grey">{#-
+            -#}{{ t.description_pre }}<a
+                href="{{ t.description_link_url }}"
+                class="bg-gradient-blue bg-clip-text font-medium text-transparent underline-offset-4 decoration-primary hover:underline"
+            >{{ t.description_link }}</a>{#-
+            -#}{{ t.description_post }}</p>
+    </div>
+
+    <div
+        data-diagram-root
+        class="relative w-full"
+    >
+        {# Base grid as an absolute inset-0 child overlay (not the root's own
+           CSS background) so it paints reliably on iOS Safari; see
+           energy_diagram.html for the full rationale. #}
+        <div
+            data-diagram-grid
+            class="pointer-events-none absolute inset-0"
+            style="z-index: 0; background: url('{{ url_for('static', filename='images/energy-diagram/background-grid-flat.svg') }}') center / cover no-repeat;"
+            aria-hidden="true"
+        ></div>
+        <div
+            data-diagram-highlight
+            class="pointer-events-none absolute inset-0"
+            style="z-index: 0;"
+            aria-hidden="true"
+        ></div>
+
+        <div class="relative mx-auto w-full max-w-2xl" style="z-index: 1">
+            <div
+                data-diagram-weather
+                class="pointer-events-none absolute grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center md:h-20 md:w-20"
+                data-weather="cloud"
+                aria-hidden="true"
+                style="
+                    z-index: -1;
+                    /* Upper-left of the Solar node (col 1, row 0).
+                       Solar icon center sits at col-1 (50%) row-0 (16.67%);
+                       the weather glyph is offset up-left by the same amount
+                       as on the warp4 product-page diagram so it eclipses
+                       behind the solar icon. */
+                    left: 42%;
+                    top: 8%;
+                "
+            >
+                <span class="weather-glyph material-symbols-outlined icon-40 text-amber-400 md:icon-60" data-glyph="sun">wb_sunny</span>
+                <span class="weather-glyph material-symbols-outlined icon-40 text-slate-400 md:icon-60" data-glyph="cloud">rainy</span>
+                <span class="weather-glyph material-symbols-outlined icon-40 text-slate-500 md:icon-60" data-glyph="moon">bedtime</span>
+            </div>
+            <div
+                data-diagram-canvas
+                class="w-full"
+                data-config-url="{{ url_for('static', filename='data/diagram-config.json') }}"
+                data-asset-base="{{ url_for('static', filename='images/energy-diagram/') }}"
+                data-aria-label="{{ t.diagram_aria }}"
+                data-labels='{{ t.diagram_labels | tojson }}'
+            ></div>
+        </div>
+    </div>
+</section>
+{% endmacro %}

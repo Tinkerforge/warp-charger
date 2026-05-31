@@ -1,0 +1,42 @@
+{#
+    Product FAQ accordion.
+
+    Parameters:
+        t : translation dict with:
+            eyebrow      : top eyebrow ("FAQs")
+            heading      : section h2 ("Noch weitere Fragen?")
+            section_icon : material symbol (default "help")
+            group_name   : name="..." for the <details> group (default "faq")
+        items : list of dicts:
+            question    : question text
+            answer_html : Markup() string with the answer body
+#}
+
+{% from "macros/badge.html" import badge %}
+
+{% macro product_faq(t, items) %}
+{%- set group = t.group_name or "faq" -%}
+<section id="faq" class="w-full bg-background py-section">
+    <div class="mx-auto flex max-w-3xl flex-col gap-text-gap-md px-4 md:px-8">
+        <header class="mb-12 flex flex-col items-center gap-text-gap-sm text-center md:mb-16">
+            {{ badge(t.section_icon or "help", t.eyebrow) }}
+            <h2 class="text-h2 text-black">{{ t.heading }}</h2>
+        </header>
+
+        <div class="mt-4 flex flex-col gap-2.5">
+            {% for item in items %}
+            <details
+                name="{{ group }}"
+                class="group rounded-[5px] border border-light-grey bg-white px-5 py-2.5 transition-all duration-200 open:py-4 open:shadow-sm hover:-translate-y-0.5 hover:border-medium-grey hover:bg-black/3 hover:shadow-sm"
+            >
+                <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-satoshi text-base font-medium text-black">
+                    <span>{{ item.question }}</span>
+                    <span class="material-symbols-outlined icon-24 text-grey transition-transform duration-200 group-open:rotate-180">expand_more</span>
+                </summary>
+                <div class="mt-4 text-body text-grey">{{ item.answer_html|safe }}</div>
+            </details>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endmacro %}

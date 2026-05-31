@@ -1,0 +1,104 @@
+{% extends "page_base.html" %}
+{% from "macros/two_col_section.html" import two_col_section %}
+{% from "macros/page_hero.html" import page_hero %}
+{% from "macros/section_header.html" import section_header %}
+{% from "macros/feature_card_grid.html" import feature_card_grid %}
+{% from "macros/centered_section.html" import centered_section %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block content %}
+{# Hero #}
+{% call page_hero(badge_icon="devices", badge_text=t.badge, headline=t.subtitle) %}{% endcall %}
+
+{# Intro: No Vendor Lock-In #}
+{% call two_col_section(
+    badge_icon="lock_open",
+    badge_text=t.intro.badge,
+    headline=t.intro.headline,
+    image="meter-configuration.webp",
+    image_side="right",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.intro.text }}</p>
+    <p class="text-section-body">{{ t.intro.text2 }}</p>
+    <a href="{{ t.intro.cta_url }}" target="_blank" rel="noopener" class="btn-icon">
+        <span class="material-symbols-outlined icon-18">checklist</span>
+        {{ t.intro.cta_text }}
+    </a>
+{% endcall %}
+
+{# Compatible Devices #}
+<section id="devices" class="relative w-full overflow-hidden bg-gradient-radial-dark py-section scroll-mt-24">
+    <div class="relative z-10 container-main">
+        {{ section_header("solar_power", t.devices.badge, t.devices.headline, description=t.devices.text, dark=true) }}
+        {# Logo Grid (interactive) #}
+        {# manufacturers passed from app.py via sync_compatible_devices.py #}
+        <div id="logo-grid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 items-center justify-items-center">
+            {% for m in manufacturers %}
+            <button
+                class="logo-card flex h-16 w-full items-center justify-center rounded-xl border border-white/20 bg-gray-200 p-3 transition-all duration-200 cursor-pointer"
+                title="{{ m.name }}"
+                data-detail="{{ loop.index0 }}"
+            >
+                <img src="{{ url_for('static', filename='images/logos/' ~ m.file ~ '.webp') }}" alt="{{ m.name }}" class="max-h-full max-w-full object-contain pointer-events-none">
+            </button>
+            {# Detail panel inline in grid so it pushes icons below #}
+            <div id="detail-{{ loop.index0 }}" class="manufacturer-detail hidden col-span-full w-full rounded-2xl border border-white/15 bg-white/10 p-6 shadow-lg backdrop-blur-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-h4 text-white">{{ m.name }}</h3>
+                    <button class="detail-close flex h-8 w-8 items-center justify-center rounded-full hover:bg-white/10 transition-colors" aria-label="Close">
+                        <span class="material-symbols-outlined icon-20 text-white/60">close</span>
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div>
+                        <p class="text-sm font-medium text-white mb-1">{{ t.devices.label_interfaces }}</p>
+                        <div class="flex flex-wrap gap-1.5">
+                            {% for iface in m.interfaces %}
+                            <span class="inline-block rounded-full bg-blue-500/20 px-2.5 py-0.5 text-xs font-medium text-blue-300">{{ iface }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-white mb-1">{{ t.devices.label_measurement }}</p>
+                        <div class="flex flex-wrap gap-1.5">
+                            {% for role in m.roles %}
+                            <span class="inline-block rounded-full bg-green-500/20 px-2.5 py-0.5 text-xs font-medium text-green-300">{{ role }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-white mb-1">{{ t.devices.label_models }}</p>
+                        <p class="text-body-sm text-white/60">{{ m.models }}</p>
+                    </div>
+                    <div class="flex items-end">
+                        <a href="{{ m.docs_url }}" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-1.5 text-sm">
+                            <span class="material-symbols-outlined icon-16">description</span>
+                             {{ t.devices.label_docs }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</section>
+
+{# Supported Interfaces #}
+{% call centered_section("hub", t.interfaces.badge, t.interfaces.headline, description=t.interfaces.text) %}
+    {{ feature_card_grid(items=t.interfaces.list, columns=3) }}
+{% endcall %}
+
+{# Measurement Points #}
+{% call centered_section("speed", t.measurement.badge, t.measurement.headline, description=t.measurement.text, bg="") %}
+    {{ feature_card_grid(items=t.measurement.locations, columns=4) }}
+{% endcall %}
+
+{# Battery Control #}
+{% call centered_section("battery_charging_full", t.battery_control.badge, t.battery_control.headline, description=t.battery_control.text) %}
+    {{ feature_card_grid(items=t.battery_control.modes, columns=3, numbered=true) }}
+{% endcall %}
+{% endblock %}

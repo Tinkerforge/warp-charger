@@ -1,0 +1,70 @@
+{% extends "page_base.html" %}
+{% from "macros/two_col_section.html" import two_col_section %}
+{% from "macros/page_hero.html" import page_hero %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block content %}
+{# Hero #}
+{% call page_hero(badge_icon="architecture", badge_text=t.hero.badge, headline=t.hero.headline) %}{% endcall %}
+
+{# Designer-Wallbox #}
+{% call two_col_section(
+    badge_icon="palette",
+    badge_text=t.design.badge,
+    headline=t.design.headline,
+    image="design.webp",
+    image_side="right",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.design.text }}</p>
+{% endcall %}
+
+{# DB703 / Edelstahl #}
+{% call two_col_section(
+    badge_icon="texture",
+    badge_text=t.materials.badge,
+    headline=t.materials.headline,
+    image="metal-background.webp",
+    image_side="left",
+    dark=true
+) %}
+    <p class="text-section-body-dark">{{ t.materials.text }}</p>
+{% endcall %}
+
+{# Kundenspezifische Lösungen #}
+{% call two_col_section(
+    badge_icon="edit",
+    badge_text=t.custom.badge,
+    headline=t.custom.headline,
+    image="custom-logo.webp",
+    image_side="right",
+    bg="bg-gradient-light-white-background"
+) %}
+    <p class="text-section-body">{{ t.custom.text }}</p>
+{% endcall %}
+
+{# Qualitativ und langlebig #}
+{% call two_col_section(
+    badge_icon="verified",
+    badge_text=t.quality.badge,
+    headline=t.quality.headline,
+    image="quality.webp",
+    image_side="left",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.quality.text }}</p>
+{% endcall %}
+
+{# Kompakt und unauffällig #}
+{% call two_col_section(
+    badge_icon="straighten",
+    badge_text=t.compact.badge,
+    headline=t.compact.headline,
+    image="charger-measured.webp",
+    image_side="right"
+) %}
+    <p class="text-section-body">{{ t.compact.text }}</p>
+{% endcall %}
+{% endblock %}

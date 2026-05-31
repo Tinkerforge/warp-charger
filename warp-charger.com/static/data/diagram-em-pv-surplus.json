@@ -1,0 +1,59 @@
+{
+    "grid": {
+        "width": "3",
+        "height": "3"
+    },
+    "graph": {
+        "nodes": [
+            { "id": "n01", "position": "(0,0)", "label_key": "solar",    "icon": "solar-panel.svg",    "highlighted": "false" },
+            { "id": "n02", "position": "(1,0)", "label_key": "meter",    "icon": "electricity-meter.svg",   "highlighted": "false" },
+            { "id": "n03", "position": "(1,1)", "label_key": "em",       "icon": "energy-manager.svg", "highlighted": "true"  },
+            { "id": "n04", "position": "(1,2)", "label_key": "heatpump", "icon": "heat-pump.svg",    "highlighted": "false" }
+        ],
+        "edges": [
+            { "id": "e01", "source": "n01", "target": "n02", "status": "active", "speed": 0.5, "dotted": "false" },
+            { "id": "e02", "source": "n02", "target": "n03", "status": "active", "speed": 0.5, "dotted": "false" },
+            { "id": "e03", "source": "n03", "target": "n04", "status": "active", "speed": 0.5, "dotted": "false" }
+        ]
+    },
+    "animation": {
+        "stepIntervalMs": 4500,
+        "defaultEdgeColors": {
+            "e01": "green",
+            "e02": "green",
+            "e03": "green"
+        },
+        "steps": [
+            {
+                "activeEdges": {
+                    "e01": { "speed": 0.4, "label": "1 kW" }
+                },
+                "edgeLabels": { "e02": "0 kW", "e03": "0 kW" },
+                "dimmedNodes": ["n04"],
+                "nodeLabels": { "n04": "hp_blocked" },
+                "weather": "sun-dim",
+                "descriptionKey": "step1"
+            },
+            {
+                "activeEdges": {
+                    "e01": { "speed": 0.65, "label": "3 kW" },
+                    "e02": { "speed": 0.5,  "label": "1.5 kW" },
+                    "e03": { "speed": 0.5,  "label": "1.5 kW" }
+                },
+                "nodeLabels": { "n04": "hp_normal" },
+                "weather": "sun",
+                "descriptionKey": "step2"
+            },
+            {
+                "activeEdges": {
+                    "e01": { "speed": 0.95, "label": "9 kW" },
+                    "e02": { "speed": 0.75, "label": "3 kW" },
+                    "e03": { "speed": 0.75, "label": "3 kW" }
+                },
+                "nodeLabels": { "n04": "hp_boost" },
+                "weather": "sun-bright",
+                "descriptionKey": "step3"
+            }
+        ]
+    }
+}

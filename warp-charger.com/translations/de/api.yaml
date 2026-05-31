@@ -1,0 +1,106 @@
+# API & Schnittstellen (DE)
+title: "API & Schnittstellen"
+description: "WARP Charger und WARP Energy Manager mit offenen Schnittstellen: HTTP, MQTT, Modbus/TCP, OCPP und EEBUS."
+
+hero:
+  badge: "API & Schnittstellen"
+  headline: "Offen und integrierbar"
+  text: "WARP Charger und WARP Energy Manager bieten umfangreiche Schnittstellen zur Integration in jedes System. Ob Heimautomatisierung, Energiemanagement oder Cloud-Backend, die offene Architektur ermöglicht die nahtlose Einbindung."
+
+compatible:
+  badge: "Kompatibilität"
+  headline: "Kompatibel mit über 100 Geräten"
+  text: "WARP liest Daten von Wechselrichtern, Smart-Metern und Batteriespeichern zahlreicher Hersteller aus. Unterstützt werden unter anderem SunSpec, Modbus/TCP, SMA Speedwire und HTTP."
+  docs_url: "/de/loesungen/maximale-kompatibilitaet#devices"
+  docs_label: "Kompatible Geräte"
+
+ocpp:
+  badge: "OCPP"
+  headline: "Cloud-Anbindung per OCPP"
+  text: 'Der WARP Charger unterstützt OCPP 1.6J mit Core Profile und Smart Charging Profile. OCPP wird häufig eingesetzt, wenn der Arbeitgeber oder der Vermieter einen <a href="/de/loesungen/dienstwagenabrechnung" class="prose-link">Abrechnungsdienst</a> nutzt, der die Wallbox über ein Cloud-Backend verwaltet.'
+  docs_url: "https://docs.warp-charger.com/de/docs/interfaces/ocpp"
+  docs_label: "OCPP-Dokumentation"
+
+eebus:
+  badge: "EEBUS"
+  headline: "EEBUS für §14a EnWG"
+  text: 'EEBUS ist der Kommunikationsstandard für die Steuerung durch Energienetzbetreiber gemäß <a href="/de/loesungen/14a-enwg" class="prose-link">§14a EnWG</a>.'
+  text2: "Unterstützte Use Cases umfassen die Netzbetreibersteuerung (LPC), E-Mobility-Informationen (EVCC, EVSECC, EVCEM, MPC) sowie die Überwachung des Netzanschlusspunkts (MGCP)."
+  docs_url: "https://docs.warp-charger.com/de/docs/interfaces/eebus"
+  docs_label: "EEBUS-Dokumentation"
+
+http_mqtt:
+  badge: "HTTP & MQTT"
+  headline: "Vollständige HTTP- und MQTT-API"
+  text: "Jede Einstellung und jeder Statuswert ist über die API lesbar und schreibbar. Die HTTP-API funktioniert sofort ohne Konfiguration, sie wird auch vom Webinterface selbst genutzt. MQTT ermöglicht Echtzeit-Updates per Publish/Subscribe. Zusätzlich werden WebSockets unterstützt."
+  http_heading: "HTTP-Beispiele"
+  http_code: |
+    # Ladezustand abfragen
+    curl http://warp4-AbCd/evse/state
+
+    # Ladestrom auf 16A setzen
+    curl http://warp4-AbCd/evse/external_current \
+      -d '{"current": 16000}'
+
+    # Ladevorgang starten
+    curl http://warp4-AbCd/evse/start_charging -d 'null'
+
+    # Ladevorgang stoppen
+    curl http://warp4-AbCd/evse/stop_charging -d 'null'
+  mqtt_heading: "MQTT-Beispiele"
+  mqtt_code: |
+    # Ladezustand abonnieren
+    mosquitto_sub -v -h $BROKER \
+      -t warp/AbCd/evse/state
+
+    # Ladestrom auf 16A setzen
+    mosquitto_pub -h $BROKER \
+      -t warp/AbCd/evse/external_current_update \
+      -m '{"current": 16000}'
+
+    # Ladevorgang starten
+    mosquitto_pub -h $BROKER \
+      -t warp/AbCd/evse/start_charging -m 'null'
+
+    # Ladevorgang stoppen
+    mosquitto_pub -h $BROKER \
+      -t warp/AbCd/evse/stop_charging -m 'null'
+  docs_url: "https://docs.warp-charger.com/de/docs/interfaces/mqtt_http/introduction"
+  docs_label: "API-Dokumentation"
+
+modbus:
+  badge: "Modbus/TCP"
+  headline: "Modbus/TCP mit Device-Emulation"
+  text: "Der WARP Charger unterstützt Modbus/TCP als Server mit eigener Registertabelle. Besonderheit: Der WARP Charger kann die Registertabellen von Bender CC613 und Keba C-Series emulieren. So lässt er sich direkt in bestehende Systeme einbinden, die bereits diese Geräte unterstützen."
+  input_code: |
+    Input Registers (Funktionscode 4, nur lesen)
+    ─────────────────────────────────────────────
+    Addr  Typ      Name
+    ────  ───────  ──────────────────────────────
+    0     uint32   Version der Registertabelle
+    1000  uint32   IEC-61851-Zustand (0-4)
+    1002  uint32   Ladestatus (0: Nicht verbunden,
+                    1: Warte, 2: Bereit, 3: Lädt)
+    1010  uint32   Erlaubter Ladestrom (mA)
+    2002  float32  Leistung (W)
+    2004  float32  Energie absolut (kWh)
+    2008  float32  Energie des Ladevorgangs (kWh)
+    3100  uint32   Verbundene Phasen (1 oder 3)
+  holding_code: |
+    Holding Registers (Funktionscode 3/16, lesen/schreiben)
+    ───────────────────────────────────────────────────────
+    Addr  Typ      Name
+    ────  ───────  ──────────────────────────────
+    1002  uint32   Erlaubter Ladestrom (mA)
+                    0 oder 6000-32000
+    2000  uint32   Relative Energie zurücksetzen
+                    Passwort: 0x3E12E5E7
+    3100  uint32   Phasenumschaltung auslösen
+                    1 = einphasig, 3 = dreiphasig
+
+    Coils (Funktionscode 1/5/15)
+    ────────────────────────────
+    1000  bool     Ladefreigabe (0/1)
+    1001  bool     Manuelle Ladefreigabe (0/1)
+  docs_url: "https://docs.warp-charger.com/de/docs/interfaces/modbus/introduction"
+  docs_label: "Modbus-Dokumentation"

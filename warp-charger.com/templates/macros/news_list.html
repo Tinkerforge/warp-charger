@@ -1,0 +1,52 @@
+{#
+  News list: two-column layout with header/CTA on the left
+  and a list of news article cards on the right.
+
+  Parameters:
+    t    : translation dict with keys:
+            badge, headline, description, all_news
+    posts: list of post objects with meta.tag, meta.date, meta.slug, body, html
+    lang : current language code
+#}
+
+{% from "macros/blog_meta.html" import blog_meta %}
+
+{% macro news_list(t, posts, lang) %}
+<section id="news" class="w-full text-left">
+        <div class="container-wide py-section">
+        <div class="flex flex-col items-start gap-12 lg:flex-row lg:gap-18.75">
+            <div class="flex w-full shrink-0 flex-col items-start gap-7.5 lg:w-91">
+                <div class="flex w-full flex-col items-start gap-text-gap-sm">
+                    <div class="flex items-center gap-2.5">
+                        <div class="badge-circle shrink-0">
+                            <div class="badge-circle-inner">
+                                <span class="material-symbols-outlined icon-18 text-white">newspaper</span>
+                            </div>
+                        </div>
+                        <span class="badge-label leading-normal whitespace-nowrap">{{ t.badge }}</span>
+                    </div>
+                    <h2 class="text-h2 text-black">{{ t.headline }}</h2>
+                </div>
+                <p class="text-body leading-6.5 text-grey">{{ t.description }}</p>
+                <a href="/{{ lang }}/blog" class="btn-primary">{{ t.all_news }}</a>
+            </div>
+
+            <div class="flex w-full flex-1 flex-col gap-4.75">
+                {% for post in posts %}
+                <a href="/{{ lang }}/blog/{{ post.meta.slug }}" class="group w-full">
+                    <article class="w-full overflow-hidden rounded-xl bg-very-light-grey transition-shadow hover:shadow-md">
+                        <div class="flex items-center justify-between gap-4 px-4.75 py-4">
+                            <div class="flex min-w-0 flex-1 flex-col gap-2">
+                                {{ blog_meta(post.meta.tag, post.meta.date) }}
+                                <p class="line-clamp-2 text-body font-medium text-black">{{ post.body | excerpt }}</p>
+                            </div>
+                            <span class="material-symbols-outlined shrink-0 icon-28 text-[#021273] transition-transform group-hover:translate-x-1">chevron_right</span>
+                        </div>
+                    </article>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endmacro %}

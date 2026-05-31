@@ -1,0 +1,22 @@
+{#
+  Section header: centered badge pill + headline + optional description.
+
+  Parameters:
+    icon:        Material Symbols icon name
+    badge:       Badge label text
+    headline:    Section heading (h2)
+    description: Optional paragraph below headline
+    dark:        If true, uses dark theme gradients (default false)
+#}
+
+{% from "macros/badge.html" import badge as _badge %}
+
+{% macro section_header(icon, badge, headline, description="", dark=false) %}
+<div class="flex flex-col items-center text-center mb-12">
+    {{ _badge(icon, badge, dark=dark, wrap_class="flex items-center justify-center gap-2.5 mb-4") }}
+    <h2 class="{{ 'text-section-heading-dark' if dark else 'text-section-heading' }}">{{ headline }}</h2>
+    {% if description %}
+    <p class="{{ 'text-section-body-dark' if dark else 'text-section-body' }} mt-4 max-w-2xl">{{ description }}</p>
+    {% endif %}
+</div>
+{% endmacro %}

@@ -1,0 +1,74 @@
+{#
+    Product comparison: row of pricing-cards (Basic / Smart / Pro).
+
+    Parameters:
+        t : translation dict with:
+            eyebrow       : top eyebrow ("Deine Wahl")
+            heading       : section h2
+            section_icon  : material symbol name for the badge (default "tune")
+        variants : list of dicts:
+            title           : "Basic" / "Smart" / "Pro"
+            price_prefix    : "ab." (optional)
+            price           : "699€"
+            price_suffix    : "inkl. MwSt" (optional)
+            cta_label       : "Konfigurieren"
+            cta_url         : link target ("#" or real URL)
+            feature_heading : optional text shown above the feature list
+            features        : list of strings (each becomes a feature row with check icon)
+#}
+
+{% from "macros/badge.html" import badge %}
+
+{% macro product_comparison(t, variants) %}
+<section id="pricing" class="w-full bg-background py-section">
+    <div class="container-wide w-full">
+        <header class="mb-12 flex flex-col items-center gap-text-gap-sm text-center md:mb-16">
+            {{ badge(t.section_icon or "tune", t.eyebrow) }}
+            <h2 class="text-h2 text-black">{{ t.heading }}</h2>
+        </header>
+
+        <div class="flex flex-col items-center gap-5 md:flex-row md:items-stretch md:justify-center">
+            {% for variant in variants %}
+            <article class="pricing-card{% if variants|length == 1 %} pricing-card-wide{% endif %}">
+                <div class="pricing-card-head">
+                    <h3 class="pricing-card-title">{{ variant.title }}</h3>
+                    {% if variant.price_options %}
+                    <div class="grid grid-cols-2 gap-x-6 gap-y-1">
+                        {% for opt in variant.price_options %}
+                        <div class="flex flex-col">
+                            <span class="text-sm text-black/70">{{ opt.label }}</span>
+                            <div class="pricing-card-price-row">
+                                {% if opt.price_prefix %}<span class="pricing-card-price-prefix">{{ opt.price_prefix }}</span>{% endif %}
+                                <span class="pricing-card-price">{{ opt.price }}</span>
+                            </div>
+                            {% if opt.price_suffix %}<span class="pricing-card-price-suffix">{{ opt.price_suffix }}</span>{% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="pricing-card-price-row">
+                        {% if variant.price_prefix %}<span class="pricing-card-price-prefix">{{ variant.price_prefix }}</span>{% endif %}
+                        <span class="pricing-card-price">{{ variant.price }}</span>
+                        {% if variant.price_suffix %}<span class="pricing-card-price-suffix">{{ variant.price_suffix }}</span>{% endif %}
+                    </div>
+                    {% endif %}
+                    <a href="{{ variant.cta_url }}" class="btn-primary inline-flex self-start">{{ variant.cta_label }}</a>
+                </div>
+                <div class="pricing-card-divider" aria-hidden="true"></div>
+                {% if variant.feature_heading %}
+                <p class="pricing-card-feature-heading">{{ variant.feature_heading }}</p>
+                {% endif %}
+                <ul class="pricing-card-features">
+                    {% for feature in variant.features %}
+                    <li class="pricing-card-feature">
+                        <span class="material-symbols-outlined icon-20 text-primary" aria-hidden="true">verified</span>
+                        <span class="pricing-card-feature-label">{{ feature }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endmacro %}

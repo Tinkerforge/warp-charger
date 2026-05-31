@@ -1,0 +1,62 @@
+{% extends "pages/blog/layout.html" %}
+{% from "macros/blog_meta.html" import blog_meta %}
+
+{% block title %}{{ post.meta.title }}{% endblock %}
+
+{% block blog_content %}
+{# Compute previous (older) and next (newer) posts.
+   `posts` is sorted newest-first, so newer = lower index, older = higher index. #}
+{% set ns = namespace(idx=-1) %}
+{% for p in posts %}
+    {% if p.meta.slug == post.meta.slug %}{% set ns.idx = loop.index0 %}{% endif %}
+{% endfor %}
+{% set newer_post = posts[ns.idx - 1] if ns.idx > 0 else None %}
+{% set older_post = posts[ns.idx + 1] if ns.idx >= 0 and ns.idx + 1 < posts|length else None %}
+
+<!-- Post card -->
+<article class="flex flex-col gap-3 rounded-xl border border-black/5 bg-white px-6 py-6 text-left">
+    {{ blog_meta(post.meta.tag, post.meta.date) }}
+    <h1 class="text-h3 font-semibold text-black">{{ post.meta.title }}</h1>
+    <div class="text-section-body text-justify
+                [&>p]:mb-3 [&>p:last-child]:mb-0
+                [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-black [&_h1]:mt-8 [&_h1]:mb-3 [&_h1:first-child]:mt-0
+                [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-black [&_h2]:mt-8 [&_h2]:mb-3 [&_h2:first-child]:mt-0
+                [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-black [&_h3]:mt-6 [&_h3]:mb-2
+                [&_h4]:text-base [&_h4]:font-semibold [&_h4]:text-black [&_h4]:mt-4 [&_h4]:mb-2
+                [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-3 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-3
+                [&_li]:mb-1
+                [&_a]:text-primary [&_a]:underline [&_a:hover]:no-underline
+                [&_strong]:font-semibold
+                [&_code]:rounded [&_code]:bg-very-light-grey [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-sm">
+        {{ post.html | safe }}
+    </div>
+</article>
+
+{% if older_post or newer_post %}
+<!-- Prev / Next navigation -->
+<nav class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3" aria-label="Post navigation">
+    {% if older_post %}
+    <a href="/{{ lang }}/blog/{{ older_post.meta.slug }}"
+       class="group flex flex-col gap-1 rounded-xl border border-black/5 bg-white px-5 py-4 transition-all hover:border-primary/40 hover:shadow-md">
+        <span class="inline-flex items-center gap-1 text-eyebrow text-grey">
+            <span class="material-symbols-outlined icon-16 transition-transform group-hover:-translate-x-0.5">arrow_back</span>
+            {{ t.prev_post }}
+        </span>
+        <span class="text-body font-medium text-black group-hover:text-primary transition-colors line-clamp-2">{{ older_post.meta.title }}</span>
+    </a>
+    {% else %}
+    <span></span>
+    {% endif %}
+    {% if newer_post %}
+    <a href="/{{ lang }}/blog/{{ newer_post.meta.slug }}"
+       class="group flex flex-col gap-1 rounded-xl border border-black/5 bg-white px-5 py-4 text-right transition-all hover:border-primary/40 hover:shadow-md">
+        <span class="inline-flex items-center justify-end gap-1 text-eyebrow text-grey">
+            {{ t.next_post }}
+            <span class="material-symbols-outlined icon-16 transition-transform group-hover:translate-x-0.5">arrow_forward</span>
+        </span>
+        <span class="text-body font-medium text-black group-hover:text-primary transition-colors line-clamp-2">{{ newer_post.meta.title }}</span>
+    </a>
+    {% endif %}
+</nav>
+{% endif %}
+{% endblock %}

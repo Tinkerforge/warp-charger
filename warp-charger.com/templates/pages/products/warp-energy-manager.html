@@ -1,0 +1,59 @@
+{% extends "page_base.html" %}
+
+{% from "macros/product_hero_tabs.html" import
+    product_hero_tabs_open,
+    product_hero_tabs_funktionen_open, product_hero_tabs_funktionen_close,
+    product_hero_tabs_details_open, product_hero_tabs_details_close %}
+{% from "macros/two_col_section.html" import two_col_section %}
+{% from "macros/feature_pill_switcher.html" import feature_pill_switcher %}
+{% from "macros/energy_scenario_switcher.html" import energy_scenario_switcher %}
+{% from "macros/product_comparison.html" import product_comparison %}
+{% from "macros/product_faq.html" import product_faq %}
+{% from "macros/tech_specs_table.html" import tech_specs_table %}
+{% from "macros/downloads_aside.html" import downloads_aside %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block main_class %}flex flex-col items-stretch text-left w-full{% endblock %}
+
+{% block content %}
+{{ product_hero_tabs_open(t.hero) }}
+    {{ product_hero_tabs_funktionen_open() }}
+
+        {# Feature pill switcher (first element under Funktionen) #}
+        {{ feature_pill_switcher(t.feature_switcher, t.feature_switcher.pills, image_alt=t.feature_switcher.image_alt) }}
+
+        {# Intro #}
+        {% call two_col_section(
+            badge_icon="memory",
+            badge_text=t.intro.badge,
+            headline=t.intro.headline,
+            image="energy-manager-closeup.webp",
+            image_alt=t.hero.image_alt,
+            image_side="right",
+            bg="bg-background"
+        ) %}
+            <p class="text-section-body">{{ t.intro.body_html|safe }}</p>
+            <p class="text-section-body">{{ t.intro.body2_html|safe }}</p>
+        {% endcall %}
+
+        {# Energy scenarios (reuses WARP4-style switcher with 4 panels) #}
+        {{ energy_scenario_switcher(t.scenarios, t.scenarios["items"], load_management_t=load_management_t) }}
+
+        {# Pricing #}
+        {{ product_comparison(t.comparison, t.comparison.variants) }}
+
+        {# FAQ #}
+        {{ product_faq(t.faq, t.faq["items"]) }}
+
+    {{ product_hero_tabs_funktionen_close() }}
+
+    {{ product_hero_tabs_details_open() }}
+        <div class="flex flex-col gap-12 lg:flex-row lg:items-start lg:gap-12">
+            {{ tech_specs_table(t.tech_specs.heading, t.tech_specs.groups, t.tech_specs.footnote) }}
+            {{ downloads_aside(t.downloads, downloads_sections) }}
+        </div>
+    {{ product_hero_tabs_details_close() }}
+</div>
+{% endblock %}

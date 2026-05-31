@@ -1,0 +1,1159 @@
+\documentclass[a4paper,10pt]{article}
+\ifdefined\forprint
+    \usepackage[width=21.6cm,height=30.3cm,center]{crop}
+\fi
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2cm,headheight=26pt,includeheadfoot]{geometry}
+
+\usepackage[ngerman]{babel}
+\usepackage[german=quotes]{csquotes}
+
+\usepackage{nameref}
+\usepackage{microtype}
+\usepackage{float}
+\usepackage{siunitx}
+\sisetup{
+    locale = DE,
+    binary-units,
+    detect-all,
+    per-mode = symbol %enables m/s instead of ms^-1
+}
+\AtBeginDocument{\DeclareSIUnit{\kWh}{kWh}}
+
+\usepackage{hhline}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{calc}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{textcomp}
+\usepackage{afterpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setlength{\headheight}{48pt}
+\renewcommand{\headrulewidth}{0pt}
+
+\usepackage{xcolor,colortbl}
+\usepackage{makecell}
+
+\usepackage[symbol*]{footmisc}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\renewcommand{\thempfootnote}{\fnsymbol{mpfootnote}}
+\newcommand\todo[1]{\textcolor{red}{\huge TODO: #1}}
+\usepackage{color}
+\usepackage{enumitem}
+
+\usepackage{pdfpages}
+
+\usepackage{phonenumbers}
+
+% Word-Stealth-Modus, kann aber kein Omega
+%\usepackage[scaled]{helvet}
+
+\usepackage[inline,nomargin]{fixme}
+\fxsetup{
+    author=,
+    layout=inline,
+    theme=color
+}
+
+\definecolor{fxnote}{rgb}{0.8000,0.0000,0.0000}
+\colorlet{fxnotebg}{yellow}
+
+\definecolor{boxgray}{rgb}{0.33,0.33,0.33}
+\definecolor{covergray}{rgb}{0.333,0.333,0.325}
+\usepackage{tcolorbox}
+\title{}
+\author{}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\newcommand{\hint}[1]{\begin{tcolorbox}[colback=boxgray,colframe=black,coltext=
+white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tcolorbox}}
+
+\newcommand{\gfx}[1]{\includegraphics[width=\linewidth]{#1}}
+
+\newcommand*{\fullref}[1]{Abschnitt \hyperref[{#1}]{\ref*{#1}~\nameref*{#1}}}
+
+\fancyhf{}
+\fancyhead{\colorbox{boxgray}{
+    \makebox[\dimexpr\linewidth-2\fboxsep - 2.17mm][l]{
+        \includegraphics[height=1cm]{./img_warp3/resized/logo}\hfill\color{white}\Huge\raisebox{.5ex}{\thepage}
+        }
+    }
+}
+
+\usepackage{hyperref}
+\usepackage{qrcode}
+
+\appto\UrlNoBreaks{\do\.\do\:\do\/\do\_}
+
+\newcommand\rurl[2]{%
+  \href{#1}{\nolinkurl{#2}}%
+}
+
+
+\newcommand{\tdesc}[1]{\multicolumn{3}{l}{\footnotesize #1}}
+
+\usepackage{hyphenat}
+
+\hyphenation{Web-inter-face}
+\hyphenation{auf-ge-zeich-net}
+
+\begin{document}
+\pagestyle{empty}
+\begin{titlepage}
+    \vspace*{-3.08cm}
+    \makebox[\dimexpr\linewidth-2\fboxsep][c]{\includegraphics[width=0.6\textwidth]{./img_warp3/resized/logo}}
+    \vfill
+    \begin{center}
+		\color{white}
+        \Huge
+        WARP4 Charger Betriebsanleitung\\\vspace{1cm}
+        \large
+        Version 1.0\\\vspace{0.25cm}
+        \today
+    \end{center}
+    \vfill \gfx{./img_warp4/warp4_front.png}
+	\pagecolor{covergray}
+\end{titlepage}
+\newpage
+\pagecolor{white}
+\null
+\newpage
+\pagestyle{fancy}
+\begin{multicols*}{2}
+    \tableofcontents
+    \newpage
+    \section{Vorwort}
+	Vielen Dank, dass du dich für einen WARP4 Charger von Tinkerforge entschieden hast!
+
+    Mit dem WARP4 Charger
+    erhältst du die vierte Generation der hochwertigen und langlebigen Wallbox,
+    mit der du dein Elektrofahrzeug laden kannst.
+    Die Wallbox ist \enquote{Made in Germany}, das heißt von uns in
+	Deutschland entwickelt und gefertigt. Sie ist modular aufgebaut, sodass
+    einzelne Komponenten einfach ausgetauscht werden können. Bei der Auswahl der
+	Bauteile legen wir großen Wert auf eine hohe Qualität. Sowohl die Hardware als
+    auch die Software sind Open Source. Die nachfolgende Betriebsanleitung gibt dir
+    alle notwendigen Informationen zu Sicherheit, Montage, Installation, Betrieb
+    und Wartung deiner Wallbox. 
+	\par
+	Der WARP4 Charger wird in zwei Varianten
+	angeboten: WARP4 Charger Smart und Pro. Die Versionen unterscheiden sich darin, dass in
+	der Pro Version ein MID Stromzähler verbaut ist und in der Smart Version
+	nicht.
+
+    \section{Sicherheitshinweise}
+    Die Wallbox ist so konstruiert, dass ein sicherer Betrieb gewährleistet ist,
+    wenn sie korrekt installiert wurde, in einem einwandfreien technischen Zustand
+    ist und diese Betriebsanleitung befolgt wird. \hint{Die Wallbox darf nur von einer ausgewiesenen Elektrofachkraft installiert
+        werden.}
+
+    \subsection{Bestimmungsgemäße Verwendung}
+    Mit dem WARP4 Charger können Elektrofahrzeuge gemäß DIN EN 61851-1 und
+	ISO15118 geladen werden. Für andere Anwendungen ist die Wallbox nicht geeignet. Eine Verwendung
+    an Orten, an denen explosionsfähige oder brennbare Substanzen lagern, ist nicht
+    zulässig. Jegliche Modifikation des Ladesystems sowie der Betrieb mit
+    Verlängerungskabeln, Mehrfach-Steckdosen oder Ähnlichem ist nicht zulässig. Der
+    Ladestecker ist vor Beschädigungen, Feuchtigkeit und Verschmutzungen zu
+    schützen und darf nicht genutzt werden, wenn kein sicherer Betrieb
+    gewährleistet werden kann. \hint{Mit einem beschädigten, verschmutzten oder feuchten Ladestecker darf kein Ladevorgang durchgeführt
+        werden.}
+
+    \subsection{Gerätestörung / Technischer Defekt}
+    Sollte es Anzeichen für einen technischen Defekt geben, ist sofort die
+    Stromversorgung der Wallbox durch Abschalten der Wallbox-Sicherung im Verteilerkasten zu trennen.
+    In diesem Fall ist die Sicherung mit dem Hinweis zu versehen, dass sie nicht wieder eingeschaltet weden darf.
+    Anschließend ist eine Elektrofachkraft zu informieren.
+
+    \subsection{Schutzeinrichtungen der Wallbox}\label{dcerrorhint}
+    Der AC-Fehlerstromschutz wird über den hausseitig verbauten
+    Typ-A AC-Fehlerstromschutzschalter (RCCB) oder einem eigens dafür installierten
+    Typ-A \SI{30}{\milli\ampere}-AC-Fehlerstromschutzschalter gewährleistet. Die Wallbox ist
+    mit einer integrierten DC-Fehlerstromüberwachung ausgestattet.
+    Ein DC-Fehlerstrom $\geq \SI{6}{\milli\ampere}$ wird von der Wallbox erkannt und die Verbindung zum Fahrzeug sofort
+    unterbrochen (Schütze schalten ab). Die Wallbox befindet sich dann in einem
+    Fehlerzustand und kann nur durch Aus- und Einschalten der
+    Stromversorgung oder über das Webinterface zurückgesetzt werden.
+    \hint{Tritt ein DC-Fehlerstrom auf, ist unbedingt dessen Ursache zu
+    ermitteln! Ein DC-Fehlerstrom kann den vorgeschalteten Fehlerstromschutzschalter
+    \enquote{erblinden} lassen, so dass dann auch AC-Fehlerströme
+    nicht mehr korrekt erkannt werden!}
+26-05-27 Tinkerforge - Edelstahl - 2
+    Darüber hinaus bietet die Wallbox weitere Schutzeinrichtungen: Dazu zählt eine
+    permanente Erdungsüberwachung (PE). Ist die Erdung unterbrochen, so geht die
+    Wallbox in einen Fehlerzustand. Außerdem prüft die Wallbox bei jedem
+    Schaltvorgang, ob die verbauten Schütze korrekt schalten. Sollte ein
+    Schütz nicht mehr korrekt schalten, geht die Wallbox ebenfalls in einen Fehlerzustand.
+    Fehler können wie im \fullref{fehlerbehebung} beschrieben diagnostiziert werden.
+
+    \newpage
+    \section{Montage und Installation}
+    \subsection{Montage}
+    \subsubsection{Lieferumfang}
+    Im Lieferumfang der Wallbox befinden sich:
+    \begin{itemize}
+        \item vormontierte Wallbox inkl. Deckel
+        \item DIN-A4-Umschlag mit:
+        \begin{itemize}
+            \item dieser Betriebsanleitung
+            \item Testprotokoll der Wallbox
+            \item Bohrschablone
+        \end{itemize}
+    \end{itemize}
+    Bei den Varianten Smart und Pro zusätzlich:
+    \begin{itemize}
+        \item drei NFC-Karten
+    \end{itemize}
+
+
+    \subsubsection{Montageort}
+    Nach Möglichkeit sollte die Wallbox vor Witterungseinflüssen geschützt
+    installiert werden. Direkte Sonneneinstrahlung ist zu vermeiden, um ein
+    unnötiges Aufheizen der Wallbox zu verhindern. Auf eine ausreichende Belüftung
+    ist zu achten. Die Staubschutzkappe des Typ-2-Steckers sollte nicht aufgesteckt
+    werden, wenn sich diese durch Regen o.ä. mit Wasser füllen könnte. In diesem Fall
+    droht eine Korrosion der Kontakte.
+
+    \subsubsection{Wandmontage}\label{wandmontage}26-05-27 Tinkerforge - Edelstahl - 2
+    Zur Montage der Wallbox muss der Deckel entfernt werden. Dazu müssen die
+    vier Kreuzschlitzschrauben (rot) gelöst werden.
+    Nach dem Lösen der Schrauben kann dieser von der Wallbox heruntergenommen
+    werden.
+
+    \gfx{./img_warp3/resized/warp_screw_points_ready}
+
+
+    \hint{Der Taster im Deckel ist über ein Anschlusskabel verbunden und muss
+        durch Drücken des Rasthebels (blau) vom Kabel gelöst werden.}
+
+    \gfx{./img_warp3/resized/warp3_frontLEDcable_arrow.jpg}
+
+    Zusätzlich muss der Erdungsstecker (grün) von der Front\-blende abgesteckt werden.
+    Erst danach kann der Deckel vollständig zur Seite gelegt werden.
+
+    Nach dem Entfernen des Deckels kann das Gehäuse an der Wand montiert werden. Zum
+    Bohren der Befestigungslöcher kann die mitgelieferte Bohrschablone genutzt
+    werden. Bei der Montage ist auf einen ausreichend stabilen Untergrund zu
+    achten.
+
+    Wir empfehlen zur Montage den Einsatz von $\SI{5}{\milli\meter}$- oder
+    $\SI{6}{\milli\meter}$-Schrauben. Die Schraubenlänge ist abhängig vom
+    Untergrund. Der Schraubenkopfdurchmesser darf nicht mehr als
+    $\SI{11}{\milli\meter}$ betragen, da ansonsten die Schraube nicht durch die
+    entsprechende Öffnung im Gehäuse passt. Bei einer Montage auf einer Steinwand
+    können beispielsweise 5$\times\SI{80}{\milli\meter}$-Holzschrauben
+    mit 8$\times\SI{50}{\milli\meter}$-Dübeln verwendet werden.
+
+    \subsubsection{Anforderungen an die Elektroinstallation}
+    Die Wahl des Leitungsquerschnitts und der Lei\-tungs\-ab\-sicher\-ung der
+    Wallbox-Zuleitung muss in Übereinstimmung mit den nationalen Vorschriften
+    erfolgen. Üblicherweise erfolgt der Anschluss der Wallbox dreiphasig.
+    Dafür sollte ein dreiphasiger Leitungsschutzschalter mit C-Charakteristik
+    verwendet werden. Bei einem einphasigen Betrieb der Wallbox ist
+    dementsprechend ein einphasiger Leitungsschutzschalter einzusetzen.
+    Die Wallbox verfügt über eine interne DC-Fehlerstromerkennung, welche
+    bei einem DC-Fehlerstrom $\geq \SI{6}{\milli\ampere}$ den Ladevorgang
+    unterbricht. Daher ist nur ein vorgeschalteter Typ-A \SI{30}{\milli\ampere}-AC-Fehlerstromschutzschalter (RCCB)
+    notwendig.
+    Die Wallbox darf nur in einem TN~/~TT-Netz angeschlossen werden.
+
+	\subsection{Interner Aufbau}
+	Der Aufbau der Wallbox unterscheidet sich zwischen der WARP4 Charger Smart 
+	und dem WARP4 Charger Pro nur durch den Stromzähler. Kabeleinführungen, die
+	Ladeelektronik, der Anschluss der Zuleitung am Klemmblock und der
+	LAN-Anschluss sind bei den Versionen identisch ausgeführt.
+
+	\subsubsection{WARP4 Charger Smart}
+    \gfx{./img_warp4/warp4_smart_open}
+	Der WARP4 Charger Smart ist nicht mit einem Stromzähler ausgestattet und
+	verfügt dementsprechend auch nicht über das Sichtfenster für den Stromzähler
+	auf der linken Gehäuseseite. An der Position des Stromzählers ist bei dieser
+	Version der DC-Fehlerstrom-Schutz positioniert.
+
+	\subsubsection{WARP4 Charger Pro}
+    \gfx{./img_warp4/warp4_pro_open}
+	Der WARP4 Charger Pro ist mit einem ISKRA WM3M4 Stromzähler ausgestattet.
+	Dieser ist liegend montiert und über ein Sichtfenster auf der linken
+	Gehäuseseite von außen sichtbar.
+
+	\newpage
+
+    \subsection{Elektrischer Anschluss}
+    \hint{Die in diesem Abschnitt beschriebenen Arbeiten dürfen nur von einer ausgewiesenen
+        Elektrofachkraft durchgeführt werden.}
+
+    Nachdem die Wallbox montiert wurde, kann sie nun angeschlossen werden. Dazu
+    muss der Deckel (siehe \fullref{wandmontage}) entfernt werden.
+
+    \subsubsection{Anschluss der Zuleitung}
+    \gfx{./img_warp3/resized/warp_cable_cut_ready}
+
+    Die Zuleitung sollte für alle Varianten wie auf dem Foto oben abgebildet
+    angefertigt werden. Wir empfehlen, das Kabel dafür auf einer Länge von
+	mindestens \SI{130}{\milli\meter} abzumanteln. Für die Klemmen wird eine
+    Abisolierlänge von 10 bis \SI{12}{\milli\meter} vorgegeben.
+
+    Die Zuleitung wird am internen Klemmenblock
+    angeschlossen. Um bei starren Leitern maximalen Bewegungsspielraum zu bieten,
+    werden die Adern in einer kleinen Schlaufe über den Klemmenblock geführt
+	und an den freien Federklemmplätzen angeschlossen. Die Adern werden anhand der Reihenfolge und
+    Klemmenbeschriftungen in die Klemmen gesteckt.
+
+    \gfx{./img_warp4/warp4_pro_connected_power}
+
+    Als Letztes muss die Kabelverschraubung festgezogen werden. Die Verschraubung
+    hat einen Klemmbereich von \SI{11}{\milli\meter} bis \SI{22}{\milli\meter} und soll laut Hersteller mit
+    \SI{10}{\newton{}\meter} angezogen werden.
+
+    Der korrekte Sitz der Adern und die Phasenzugehörigkeit sind nach der
+    Installation zu prüfen! Alle Verschraubungen innerhalb der Wallbox sind nachzuziehen.
+    Als Nächstes muss der maximale Ladestrom eingestellt werden, siehe
+	\fullref{ladestrom_schalter}.
+
+    \subsubsection{Kabeleinführung von der Rückseite}
+    Die Kabeleinführung des WARP4 Chargers von der Unterseite
+    (Auslieferungszustand) kann umgebaut werden, so dass eine Kabeleinführung von der
+    Rückseite erfolgt. Dazu müssen die Kabeleinführung (M32) für die Zuleitung und die
+    Kabeleinführung für das Netzwerkkabel vom Wallbox-Gehäuse abgeschraubt
+    werden. Die Bohrungen in der Rückseite der Wallbox sind im
+    Auslieferungszustand von innen mit Blindstopfen verschlossen.
+    Diese müssen entfernt und in die nun offenen Bohrungen an der Unterseite
+    eingeschraubt werden. Die Kabeleinführungen werden anschließend von
+    der Rückseite in das Wallbox-Gehäuse eingeschraubt.
+
+    \gfx{./img_warp4/warp4_back}
+
+    \vspace{-0.01cm}
+
+    \subsubsection{Variante mit werkseitig angeschlossener Zuleitung}
+    Wird die Wallbox mit einer ab Werk vorinstallierten Zuleitung bestellt, so
+    muss diese außerhalb der Wallbox verbunden werden. Die Farben sind nach DIN belegt und wie
+    folgt zugeordnet: L1~braun, L2~schwarz, L3~grau, N~blau, PE~gelb/grün.
+
+    Der korrekte Sitz der Adern und die Phasenzugehörigkeit sind nach der
+    Installation zu prüfen!
+    Danach muss der maximale Ladestrom eingestellt werden, siehe
+	\fullref{ladestrom_schalter}.
+
+    \subsubsection{Einphasiger Betrieb}
+    Alle Wallboxen können auch einphasig angeschlossen und betrieben werden.
+    Dazu ist unbedingt die Phase L1 anzuschließen, da diese ebenfalls zur
+    Stromversorgung der Wallbox genutzt wird. L2 und L3 werden von der Wallbox
+    nur durchgeschaltet und können dementsprechend unangeschlossen bleiben.
+    \hint{Ein WARP4 Charger Smart oder Pro sollte im Webinterface auf den
+    einphasigen Betrieb konfiguriert werden.}
+
+    \subsubsection{Einstellen des Ladestroms}\label{ladestrom_schalter}
+    Der maximal erlaubte Ladestrom muss abhängig von der hausseitigen
+    Leitungsabsicherung eingestellt werden. Der Ladestrom darf nicht höher gewählt
+    werden, als es die Zuleitung bzw. Leitungsabsicherung zulässt.
+
+    Zum Einstellen des Ladestroms muss der Deckel (siehe \fullref{wandmontage})
+    geöffnet werden. Über vier DIP-Schalter rechts auf dem Ladecontroller (EVSE) wird der
+    maximale Ladestrom wie folgt eingestellt (maximal zulässiger Ladestrom in grau):
+
+    \gfx{./img_warp4/warp4_dip_switch}
+
+    Die verschiedenen Schalterstellungen sind im nachfolgenden Foto dokumentiert.
+    Im Werkszustand sind die Schalter so eingestellt, dass die Wallbox inaktiv
+	ist (\enquote{ungültig}).
+	Als Beispiel ist in der zweiten Zeile Schalter 1 auf \enquote{ON} und die Schalter 2, 3 und 4 auf \enquote{OFF} gestellt.
+    Damit wird bei einem dreiphasigen
+    Betrieb eine maximale Ladeleistung von ca. \SI{4}{\kilo\watt} (3$\times\SI{6}{\ampere}$) vorgegeben.
+    Wird die Wallbox nur einphasig angeschlossen, können vom Fahrzeug maximal
+    \SI{1,4}{\kilo\watt} (1$\times\SI{6}{\ampere}$) über die Wallbox bezogen werden.
+
+    \gfx{./img_warp3/resized/warp3_switches}
+
+    \hint{Die Schalterstellung und der damit verbundene maximale Ladestrom dürfen nach der
+          Installation nur von einer ausgewiesenen Elektrofachkraft unter
+          Berücksichtigung der genannten Bedingungen geändert werden!}
+
+    \subsubsection{LAN- / RJ45-Kabel anfertigen}\label{ethernet} \fxnote{Alle / benutzungen entweder mit oder ohne Leerzeichen}
+
+    Um den WARP4 Charger mittels LAN anzubinden, muss ein LAN- / RJ45-Kabel
+    angefertigt werden. Das RJ45-Kabel kann mittels einer
+    M25-Kabeldurchführung in die Wallbox geführt werden. Auf dem Ladecontroller
+	(rechts in der Wallbox) befindet sich eine RJ45-Buchse, an der das
+	eingeführte Kabel eingesteckt werden kann. Wir empfehlen, das Kabel
+	in einem Bogen links über den Klemmblock zu führen.
+	Es können auch größere, zum Beispiel werkzeuglose oder RJ45-Stecker
+	mit einem LSA-Anschluss, genutzt werden.
+
+	Die M25 Kabeleinführung verfügt über einen Dichtstopfen mit Bohrungen für
+	zwei Leitungen. Es kann auch ein Patchkabel durch die M25-Verschraubung
+	eingeführt werden. Dafür muss dann allerdings der Dichtstopfen geschlitzt
+	werden.
+
+    \gfx{./img_warp4/warp4_pro_connected_lan} % Ethernetkabel
+
+    \subsection{Steuerbare Verbrauchseinrichtung nach \S14a EnWG}\label{s14enwg}
+    Wallboxen gehören nach \S14a EnWG zu sogenannten Steuerbaren
+    Verbrauchseinrichtungen, da deren Anschlussleistung mehr als \SI{4,2}{\kilo\watt} beträgt.
+
+    WARP4 Charger können auf verschiedenen Arten vom Netzbetreiber gesteuert werden.
+    Welche Möglichkeit genutzt werden kann, hängt von den Vorgaben des örtlichen Netzbetreibers ab.
+
+    \paragraph*{EEBUS}
+	Für EEBUS ist nur eine Netzwerkverbindung zur Steuerbox des Netzbetreibers
+	notwendig. Im Webinterface der Wallbox unter unter \texttt{Energiemanagement}
+	$\rightarrow$ \texttt{§14a EnWG}  kann das Verhalten der Wallbox auf
+	das Steuersignal koniguriert werden.
+
+    \paragraph*{Rundsteuerempfänger/Steuerbox}
+    Am Abschalteingang innerhalb der Wallbox kann ein potentialfreier Kontakt (spannungsfreier Schaltkontakt)
+    angeschlossen werden. Dazu muss eine Steuerleitung vom Rundsteuerempfänger
+    oder der Steuerbox des Netzbetreibers in die Wallbox gelegt und am
+	Ladecontroller angeschlossen werden (siehe \fullref{abschalteingang}).
+
+	In der Standardkonfiguration der Wallbox wird auf \SI{4200}{\watt}
+	limitiert, wenn der Abschalteingang geschlossen ist. Dieses Verhalten kann
+	im Webinterface unter \texttt{Energiemanagement} $\rightarrow$ \texttt{§14a
+	EnWG} angepasst werden.
+
+    \paragraph*{Rundsteuerempfänger/Steuerbox (mittels WARP Energy Manager)}
+    Anstatt eine Steuerleitung in die Wallbox zu legen, besteht auch die
+    Möglichkeit, die Eingänge des WARP Energy Managers mit dem Rundsteuerempfänger oder der
+    Steuerbox zu verbinden. Der WARP Energy Manager steuert dann die
+    Leistung der Wallbox(en) über das Netzwerk (LAN/WLAN). Eine gesonderte
+    Steuerleitung entfällt.
+    Der WARP Energy Manager muss hierfür als Lastmanager der betreffenden Wallbox(en) konfiguriert werden.
+    Anschließend muss im Webinterface unter \texttt{Energiemanagement} $\rightarrow$ \texttt{§14a
+	EnWG} das Verhalten konfiguriert werden.
+
+    \paragraph*{Schnittstellen (OCPP, Modbus TCP, HTTP, MQTT)}
+    Generell kann die Ladeleistung der Wallbox über alle anderen Schnittstellen
+	kontrolliert werden. Netzbetreiber setzen zur Steuerung typischerweise OCPP oder Modbus TCP ein.
+
+    \subsection{Prüfungen}\label{tests}
+    Im Werk wurde jede Wallbox einzeln nach IEC~60364-6 sowie den entsprechenden gültigen
+    nationalen Vorschriften geprüft, das jeweilige Messprotokoll liegt bei.
+    Vor der ersten Inbetriebnahme ist dennoch eine Prüfung der Gesamtinstallation
+    nach denselben Vorschriften notwendig.
+
+    Bei der Messung des Isolationswiderstands wird für L1 ein niedrigerer Wert
+    gemessen (ca. \SI{1}{\mega\ohm}), da der verbaute Ladecontroller über einen Optokoppler mit
+    \SI{1}{\mega\ohm} Vorwiderstand zwischen L1 und
+    PE verfügt (Erdungsüberwachung). Wird während der Messung ein EVSE-Adapter verwendet,
+    kann es aufgrund der genannten Überwachungsschaltung in Wechselwirkung mit dem EVSE-Adapter zu Fehlmessungen
+    auf L2, L3 und N (gemessen gegen PE) kommen. Ist dies der Fall, so muss die Isolationsmessung
+    ohne EVSE-Adapter direkt am Typ-2-Stecker durchgeführt werden.
+
+    Die interne DC-Fehlerstromerkennung wird von der Wallbox automatisch getestet.
+
+    Nachdem die Wallbox installiert
+    und die korrekte elektrische Installation überprüft wurde, kann die Wallbox in
+    Betrieb genommen werden.
+    Im ersten Schritt wird die Stromversorgung zur Wallbox eingeschaltet. Die
+    LED blinkt anschließend sehr schnell magenta. Die Wallbox führt
+    in den ersten drei Sekunden eine Kalibrierung der
+    DC-Fehlerstromerkennung durch. Nach Abschluss dieser Kalibrierung
+    leuchtet die LED dauerhaft. Die Wallbox ist nun betriebsbereit. Sollte die LED jetzt
+    nicht permanent blau leuchten, wurde ein Fehler erkannt (siehe \fullref{fehlerbehebung}).
+
+    Als Nächstes kann ein Elektrofahrzeug zum Laden mit der Wallbox verbunden
+    werden. Dazu wird die Schutzkappe vom Ladestecker entfernt und der Stecker
+	wird in die Ladebuchse des Elektrofahrzeugs gesteckt. Nach wenigen Sekunden sollte hörbar
+    ein Schütz in der Wallbox schalten und das Fahrzeug den Beginn
+    des Ladevorgangs anzeigen. Während des Ladevorgangs \enquote{atmet} die LED blau.
+    Ist der Ladevorgang beendet, so leuchtet sie permanent. Nach ca.
+    15 Minuten Inaktivität wird die LED abgeschaltet.
+
+    \vspace{-0.1cm}
+    \subsection{Bedienelemente}\label{lockswitch}
+	Die im Fronttaster verbaute RGB-LED kann je nach Betriebszustand
+	verschiedene Farben annehmen.
+	Das Verhalten bei einem Tastendruck kann im Webinterface der Wallbox konfiguriert werden.
+
+    Zusätzlich verfügt die Wallbox über ein NFC-Modul, verbaut an der rechten
+	Gehäuseseite, mit dem eine Ladefreigabe z.B. per Chipkarte möglich ist.
+
+	Der WARP4 Charger Pro verfügt an der linken Gehäuseseite über ein Fenster
+	über das das Display des verbauten Stromzählers sichtbar ist.
+
+    \vspace{-0.1cm}
+	\subsection{EVSE Klemmblock / Abschalteingang}\label{abschalteingang}
+	Rechts in der Wallbox befindet sich der Ladecontroller. Neben dem DIP-Schalter,
+	an dem der maximale Ladestrom eingestellt wird, befindet sich ein
+	Klemmblock. An diesem ist die CP-Leitung des Typ-2-Ladekabels angeschlossen.
+
+	Zusätzlich befindet sich hier der Abschalteingang (\enquote{EN}).
+	Dieser Eingang muss mit PE kurzgeschlossen werden, um aktiv zu sein. PE ist
+	mehrfach auf dem Klemmblock vorhanden. Die Interpretation des
+	Abschalteingangs kann unter \texttt{Wallbox} $\rightarrow$ \texttt{Einstellungen} unter dem Punkt \enquote{Abschalteingang} definiert werden.
+
+	Die Belegung des Klemmblocks ist beschriftet.
+
+    \gfx{./img_warp4/evse_connection_block}
+
+	Zwischen DIP-Schalter und Klemmblock befindet sich ein kleiner Jumper. Mit diesem wird
+	konfiguriert ob ein 16A Ladekabel (11kW) oder ein 32A Ladekabel (22kW)
+	verbaut wurde. Über die dritte mögliche Position des Jumpers kann auch der
+	PP Eingang auf dem Klemmblock gewählt werden. Dann muss ein normkonformer
+	Widerstand zwischen PP und PE gesetzt werden um den Maximalstrom des
+	Ladekabels zu konfigurieren. Die korrekte Position des Jumpers ist ebenfalls
+	auf der Leiterkarte beschriftet.
+
+    \newpage
+    \section{Erste Schritte}\label{setup}
+
+    Um Einstellungen durchführen zu können, muss zuerst eine Verbindung
+    zur Wallbox hergestellt werden, damit diese über das Webinterface mittels
+	Webbrowser konfiguriert werden kann.
+
+    \subsection{Schritt 1: Verbindung zur Wallbox herstellen}
+
+    \paragraph{Option 1: WLAN}
+    Im Werkszustand öffnet die Wallbox einen WLAN-Access-Point. Über diesen kann
+    die Konfiguration der Wallbox vorgenommen werden, indem auf das
+    Webinterface der Wallbox zugegriffen wird.
+
+    Die Zugangsdaten des Access-Points sind individuell und befinden sich auf dem WLAN-Zugangsdaten-Aufkleber
+    auf der Rückseite dieser Anleitung. Es kann entweder der QR-Code des Aufklebers,
+    der das WLAN automatisch konfiguriert, oder die SSID und Passphrase verwendet werden.
+    Die meisten Kamera-Apps von Smartphones unterstützen das Auslesen des
+    QR-Codes und das automatische Verbinden mit dem WLAN. Viele Smartphones
+    erkennen, dass über den Access-Point der Wallbox kein Zugriff auf das
+    Internet möglich ist. \textbf{Deshalb muss gegebenenfalls die mobile
+	Datenverbindung (z.B. LTE) deaktiviert werden, oder eine Nachfrage, ob die
+	Verbindung zum Access-Point der Wallbox getrennt werden soll, verneint
+	werden.}
+
+    \begin{minipage}{0.35\textwidth}
+        Wenn die Verbindung mit dem Access-Point der Wallbox hergestellt ist, kann das Webinterface
+        unter \url{http://10.0.0.1} über einen beliebigen Browser erreicht werden.
+        Alternativ kann dazu der nebenstehende QR-Code gescannt werden.
+    \end{minipage}\hfill
+    \begin{minipage}{0.12\textwidth}
+        \begin{flushright}
+            \qrcode{http://10.0.0.1}
+        \end{flushright}
+    \end{minipage}
+
+    \paragraph{Option 2: LAN}
+    Wenn ein LAN-Kabel eingesteckt wird verbindet sich die
+    Wallbox automatisch mit einem
+    kabelgebundenen Netzwerk, (IP-Address-Bezug
+    per DHCP). Die Wallbox kann dann entweder über die zugewiesene IP
+    Adresse (\url{http://[IP-der-Wallbox]}, z.B. \url{http://192.168.0.42})
+    oder den Hostnamen der Wallbox (\url{http://[hostname]}, z.B.
+    \url{http://warp3-ABC}) erreicht werden.
+
+    Der Hostname der Wallbox ist identisch zur SSID des WLAN-Access-Points. Der Hostnamen findet sich
+    auf dem WLAN-Zugangsdaten-Aufkleber auf der Rückseite dieser Anleitung.
+
+    Kann die per DHCP an die Wallbox vergebene IP nicht ermittelt werden, so kann der
+    zuvor genannte Zugriff auf das Webinterface über den WLAN-Access-Point genutzt
+    werden, um die IP.Adresse der LAN.Schnittstelle zu ermitteln.
+
+    \paragraph{Konfiguration mittels Webinterface}
+    Ist die Wallbox per WLAN (Accesspoint) oder LAN mittels Browser erreichbar,
+    kann die weitere Konfiguration durchgeführt werden.
+    Das Webinterface ist im \fullref{webinterface} vollständig beschrieben.
+
+    \subsection{Schritt 2: Integration in das eigene Netzwerk}
+    In den allermeisten Fällen soll die Wallbox in das eigene Netzwerk
+    integriert werden. LAN ist direkt mit DHCP konfiguriert. Somit ist
+	darüber eine Integration einfach. Soll LAN mit einer statischen IP
+	verwendet werden, oder die Wallbox mit dem eigenen WLAN verbunden werden
+	müssen die Netzwerkeinstellungen der Wallbox angepasst werden, 
+	siehe \fullref{network}.
+
+
+    \subsection{Schritt 3: Firmwareupdate}
+	Sofern möglich sollte nach dem Einbinden der Wallbox in ein Netzwerk mit
+	Internetzugriff ein Firmwareupdate durchgeführt werden. Wie dieses
+	durchgeführt werden kann ist unter
+	\fullref{firmware-update} beschrieben.
+
+
+    \subsection{Schritt 4: Weitere Optionen}
+    Weitere Einstellungen hängen vom Verwendungszweck der Wallbox ab. 
+
+	Es kann eine Ladefreigabe mittels NFC-Tags konfiguriert werden. Der Aufbau
+	eines Lastmanagements oder die Konfiguration für ein PV-Überschussladen ist
+	ebenfalls möglich. Ebenso die Unterstützung für dynamische Strompreise, dass
+	damit verbundene Laden im Eco-Modus oder eine Batteriesteuerung.
+ 
+ 	Da sich Firmware laufend weiterentwickelt, verweisen wir
+	hier auf unsere Online-Dokumentation. Diese ist auf
+	der folgenden Webseite zu finden.
+
+	\vspace{0.5em}
+	\begin{tcolorbox}[colback=white, colframe=black, width=0.5\textwidth, arc=2pt]
+		\begin{center}
+		{\large WARP Online-Dokumentation}\\
+		auf\\
+        \href{https://docs.warp-charger.com}{\texttt{docs.warp-charger.com}}
+		\end{center}
+		\vspace{1em}
+		\begin{center}
+            \qrcode{https://docs.warp-charger.com/}
+		\end{center}
+    \end{tcolorbox}
+
+
+
+    \newpage
+
+    \section{Webinterface}\label{webinterface}
+
+	\hint{Wir stellen hier nur wesentlichen Elemente für die Ersteinrichtung
+	vor. Alle weiteren Elemente sind online unter \href{https://docs.warp-charger.com}{\texttt{docs.warp-charger.com}}
+	zu finden.}
+
+    Über das Webinterface können alle Einstellungen zum Laden vorgenommen und
+	dieses überwacht werden. Beim Zugriff auf das Webinterface der Wallbox wird die \texttt{Status}seite angezeigt.
+    Links befindet sich die Menüleiste, über die zu anderen Unterseiten gewechselt werden kann.
+
+    Auf mobilen Endgeräten wird die Menüleiste unter einem Menü-Symbol oben rechts
+    im grauen Balken neben dem WARP Logo versteckt.
+
+    \gfx{./img_warp3/resized/web_status}
+
+
+	\subsection{Status-Symbol}
+	Oben rechts auf allen Seiten des Webinterfaces wird ein \textbf{Status}
+	Symbol angezeigt. Dieses kann die folgenden Zustände annehmen:
+	\begin{description}
+	\item[\color{green}grün] Alle konfigurierten Funktionen sind fehlerfrei
+	\item[\color{yellow}gelb] Es gibt mindestens eine Warnung
+	\item[\color{red}rot] Es gibt mindestens einen Fehler. Eine Funktion ist korrekt am
+	arbeiten.
+	\end{description}
+
+	Ein Klick auf das Symbol öffnet eine Detailansicht. Diese gibt weitere
+	Informationen dazu was die Ursache für Warnungen oder Fehler ist.
+	\par
+	\hint{Über das geöffnete Status-Symbol können auch die IP-Adressen von den LAN und
+	WLAN Schnittstellen ermittelt werden.}
+
+    \subsection{Status (Startseite)}
+
+    Die Startseite des Webinterfaces zeigt kompakt den aktuellen Zustand der
+    Wallbox sowie Ladezeit und -strom an und erlaubt es, den Ladevorgang zu steuern.
+    Ladevorgänge können hier manuell gestartet oder gestoppt werden.
+    Außerdem werden der aktuell laufende Ladevorgang, die letzten drei
+    Ladevorgänge sowie der Status weiterer Funktionen angezeigt.
+    In der Variante Pro mit verbautem Stromzähler zusätzlich der Ladeverlauf
+    über die letzten 48 Stunden und die aktuelle Leistungsaufnahme gezeigt.
+
+    Bestimmte Einträge (z.B. Lastmanagement) werden auf der Statusseite nur anzeigt, wenn die entsprechende
+    Funktionalität konfiguriert ist. Die wichtigsten Elemente auf der Seite sind:
+
+    Der \textbf{Ladestatus} zeigt, ob aktuell ein
+    Fahrzeug mit der Wallbox verbunden ist und ob dieses geladen wird.
+
+    Die \textbf{Ladesteuerung} ermöglicht es, manuell einen Ladevorgang zu
+    starten oder zu stoppen. Wenn die manuelle Ladefreigabe aktiviert ist, wird die
+    Wallbox niemals einen Ladevorgang automatisch starten.
+    Ist die manuelle Ladefreigabe deaktiviert,
+    startet der Ladevorgang automatisch, sobald ein Fahrzeug
+    angeschlossen wird und keine weiteren Freigabemechanismen (z.B. NFC) den
+    direkten Start verhindern.
+
+    Der \textbf{Konfigurierte Ladestrom} bietet eine einfache Möglichkeit, den
+	Ladestrom einzustellen, mit dem ein Fahrzeug maximal geladen wird.
+	Minimal können \SI{6}{\ampere} eingestellt werden. Der maximale Wert, der eingestellt werden kann, hängt vom Anschluss sowie der Konfiguration der Wallbox ab.
+
+    Der \textbf{Erlaubte Ladestrom} gibt an, welcher Ladestrom derzeit einem Fahrzeug erlaubt
+    wird. Der Ladestrom ist das Minimum aller begrenzenden Faktoren wie
+    beispielsweise dem Anschluss der Wallbox, eventuellen Grenzen pro konfiguriertem Benutzer,
+    dem Lastmanagement und auch dem oben gesetzten konfigurierten Ladestrom.
+
+    Der \textbf{Lademodus} legt fest, welchen Lademodus das PV-Überschussladen verwenden soll. 
+
+
+	\subsection{Netzwerk}\label{network}
+    Die Wallbox kann per WLAN oder LAN in ein Netzwerk eingebunden werden.
+    In diesem Unterabschnitt können alle dazugehörigen Einstellungen vorgenommen werden.
+
+    \subsubsection{Einstellungen}
+    Hier kann der Hostname des WARP4 Chargers in allen verbundenen Netzwerken konfiguriert werden. Außerdem kann mDNS aktiviert oder deaktiviert werden.
+    Über mDNS können andere Geräte im Netzwerk den WARP4 Charger finden. Damit
+    wird zum Beispiel das Einrichten eines Lastmanagementverbunds vereinfacht.
+    Zusätzlich kann der Port, auf dem das Webinterface erreichbar ist, geändert werden (Standard ist
+    Port 80).
+
+    \gfx{./img_warp3/resized/web_network}
+
+
+    \subsubsection{WLAN-Verbindung}
+    Eine Möglichkeit, um die Wallbox in ein Netzwerk zu integrieren, ist mittels WLAN.
+    Durch Drücken des \enquote{Netzwerksuche}-Buttons öffnet sich ein Menü, in dem das gewünschte WLAN ausgewählt werden kann.
+    Es werden dann automatisch Netzwerkname (SSID) und BSSID eingetragen, sowie die Verbindung beim Neustart aktiviert.
+    Gegebenenfalls muss jetzt noch die Passphrase des gewählten Netzes eintragen
+	werden.
+
+    \gfx{./img_warp3/resized/web_wifi_sta}
+
+    Die Konfiguration kann jetzt mit dem Speichern-Button abgespeichert werden.
+    Das Webinterface startet dann neu und verbindet sich mit dem konfigurierten WLAN. Die Statusseite zeigt
+    an, ob die Verbindung erfolgreich war. Der Access-Point bleibt weiterhin
+    geöffnet, sodass Konfigurationsfehler behoben werden können.
+    Da der Access-Point den gleichen Kanal wie ein eventuell verbundenes Netz verwendet,
+    kann es sein, dass die Verbindung zum Access-Point neu aufgebaut werden muss.
+
+    Bei einer erfolgreichen Verbindung sollte die Wallbox jetzt im konfigurierten Netzwerk unter\\
+    \url{http://[konfigurierter_hostname]},\\ z.B. \url{http://warp3-ABC} erreichbar sein.
+
+    \subsubsection{WLAN-Access-Point}
+    \gfx{./img_warp3/resized/web_wifi_ap}
+
+    Der Access-Point kann in einem von zwei Modi betrieben werden: Entweder kann er immer aktiv sein
+    oder nur dann, wenn die Verbindung zu einem anderen WLAN bzw. zu einem LAN nicht konfiguriert oder fehlgeschlagen ist.
+    Außerdem kann der Access-Point komplett deaktiviert werden.
+    \hint{Wir empfehlen, den Access-Point nie komplett zu deaktivieren, da sonst bei einer
+        fehlgeschlagenen Verbindung zu einem anderen Netzwerk das Webinterface nicht mehr erreicht
+        werden kann. Die Wallbox kann dann nur über den Wiederherstellungsmodus
+        (Abschnitt \ref{recovery}) oder ein Zurücksetzen auf Werkszustand, siehe Abschnitt \ref{reset}, erreicht werden.}
+
+    Der Modus des Access-Points, Netzwerkname, Passphrase usw. können hier festgelegt werden.
+
+    \subsubsection{LAN-Verbindung}
+    \gfx{./img_warp3/resized/web_ethernet}
+    Alternativ zur WLAN-Verbindung kann die Wallbox auch per LAN kabelgebunden
+    ins Netzwerk integriert werden. In den meisten Fällen wird eine
+    LAN-Verbindung automatisch hergestellt, falls ein Kabel eingesteckt ist
+    (IP-Adresse wird per DHCP bezogen). Es ist aber auch möglich,
+    eine statische IP-Konfiguration einzutragen, oder, falls gewünscht, die LAN-Verbindung
+    komplett zu deaktivieren.
+
+    Bei einer erfolgreichen Verbindung sollte die Wallbox jetzt im LAN unter
+    \url{http://[konfigurierter_hostname]}, z.B. \url{http://warp3-ABC} erreichbar sein.
+
+    \hint{Die LAN- und WLAN-Verbindung sollten nicht gleichzeitig zum selben Netzwerk bzw. IP-Bereich verbunden sein,
+    da es sonst zu Verbindungsproblemen kommen kann.}
+
+    \subsection{System}
+    Im System-Unterabschnitt können das Ereignis-Log eingesehen und
+	Firmware-Aktualisierungen eingespielt werden.
+
+    \subsubsection{Ereignis-Log}
+
+    Das Ereignis-Log zeichnet relevante Informationen des Systemstarts sowie WLAN- und MQTT-Ver\-bin\-dungs\-abbrüche und Ladefehler auf.
+    Falls Probleme mit der Wallbox auftreten, können diese mit dem Log diagnostiziert werden.
+    Um ein Problem mit der Wallbox an uns zu melden, können das Ereignis-Log
+    sowie ein Debug-Report abgerufen werden, die uns helfen, das Problem zu verstehen und zu beheben.
+
+    \gfx{./img_warp3/resized/web_event_log}
+
+    \subsubsection{Firmware-Aktualisierung}\label{firmware-update}  
+    \gfx{./img_warp3/resized/web_firmware_update}
+
+    Hier kann die Firmware der Wallbox aktualisiert werden. Wir entwickeln die Funktionalität
+    der Wallbox laufend weiter. Daher kann ggf. auch eine neue
+    Version dieser Betriebsanleitung bereitgestellt werden.
+	\par
+	Wenn die Wallbox über eine Internetverbindung verfügt, kann einfach per
+	Knopfdruck nach einer neuen Firmware gesucht werden und diese ebenfalls per
+	Knopfdruck installiert werden.
+	\par
+	Sollte dies nicht möglich sein stehen die Firmwares unter
+    \rurl{https://warp-charger.com}{warp-charger.com} zum Download bereit.
+	Die jeweilige Firmware-Datei kann dann manuell im Webinterface hochgeladen
+	werden.
+
+	\newpage
+	\section{Fernzugriff und Apps}
+	Das Webinterface ist im Normalfall nur über das lokale Netzwerk oder den Accesspoint zu
+	erreichen. Über die Fernzugriffs-Funktion kann auch einfach von außerhalb des eigenen Netzwerks auf das Webinterface des WARP Chargers zugegriffen werden.
+	Hierbei wird eine direkte VPN Verbindung zu der Wallbox geöffnet.
+
+    Zur Verwendung des Fernzugriffs, bzw. der Apps muss zunächst ein Account auf \rurl{https://my.warp-charger.com}{my.warp-charger.com} erstellt werden. Die Account-Daten müssen dann auf dem Webinterface des WARP Chargers unter \texttt{System} $\rightarrow$ \texttt{Fernzugriff} eingetragen werden.
+	\vspace{0.5em}
+	\begin{tcolorbox}[colback=white, colframe=black, width=0.5\textwidth, arc=2pt]
+		\begin{center}
+		{\large Fernzugriff}\\
+        \href{https://my.warp-charger.com}{\texttt{my.warp-charger.com}}
+		\end{center}
+		\vspace{1em}
+		\begin{center}
+            \qrcode{https://my.warp-charger.com/}
+		\end{center}
+    \end{tcolorbox}
+
+	    \hint{Fernzugriffsverbindungen sind Ende-zu-Ende verschlüsselt. Der Server überträgt die verschlüsselten Daten zwischen Wallbox und Browser, bzw. App und hat weder Einsicht in die übertragenen Daten, noch Zugriff auf die Wallbox.}
+
+	Der Fernzugriff kann anschließend auf zwei Arten genutzt werden:
+
+	\subsection{Fernzugriff per Browser}
+	Über \rurl{https://my.warp-charger.com}{my.warp-charger.com} kann von jedem
+	Browser auf das Webinterface der Wallbox zugegriffen werden. Es müssen nur
+	die vorher gewählten Zugangsdaten eingegeben werden.
+
+	\subsection{Android und iOS Apps}
+
+\includegraphics[width=.5\linewidth]{./img_warp4/badge-googleplay.png}
+\includegraphics[width=.5\linewidth]{./img_warp4/badge-appstore.png}
+
+	Nachdem der Fernzugriff eingerichtet wurde kann dieser auch über unsere
+	Apps, verfügbar für Android und iOS, genutzt werden. Die Apps sind in den
+	jeweiligen App-Stores unter \glqq WARP\grqq verfügbar. Herausgeber ist
+	Tinkerforge.
+
+	
+
+
+
+	\newpage
+    \section{Fehlerbehebung}\label{fehlerbehebung}
+    \subsection{Fehlersuche}
+    Fehlerzustände werden von der Wallbox durch die LED im Fronttaster rot
+    dargestellt. Bei den Varianten WARP4 Charger Smart und WARP4 Charger Pro
+    gibt das Webinterface bzw. die \texttt{Ladestatus}-Unterseite
+    weitere Informationen.
+
+    \subsubsection*{LED ist aus}
+    Für diesen Fehlerzustand gibt es verschiedene mögliche Ursachen:
+    \begin{itemize}
+        \item Die LED geht nach etwa 15 Minuten Inaktivität aus. Das Drücken des Tasters
+              oder das Anschließen eines Elektrofahrzeugs weckt die Wallbox wieder
+              und die LED sollte wieder dauerhaft blau leuchten.
+        \item Die Wallbox ist nicht mit Strom versorgt. Mögliche Ursachen: Stromausfall,
+              Sicherung oder Fehlerstrom\-schutzschalter haben ausgelöst.
+        \item Der interne Ladecontroller ist ohne Strom. Die Wallbox verfügt
+		intern über eine Feinsicherung, gegebenenfalls ist diese defekt.
+        \item Das innere Anschlusskabel zum Deckel wurde nicht korrekt aufgesteckt (zum Beispiel am Taster \SI{180}{\degree} verdreht).
+    \end{itemize}
+
+    \subsubsection*{LED blinkt sehr schnell magenta}\label{fast_blink}
+    Nach dem Einschalten der Stromversorgung kalibriert die Wallbox die
+    DC-Fehlerstromerkennung. Nach drei Sekunden sollte die Kalibrierung
+    abgeschlossen sein und die LED sollte dauerhaft blau leuchten
+    (betriebsbereit).
+
+    \subsubsection*{LED blinkt zweimal rot im Intervall \\ Webinterface zeigt Schalterfehler}
+    Die Wallbox wurde nicht korrekt installiert. Die Schalter-Einstellung des Ladecontrollers ist
+    noch auf dem Werkszustand. Siehe \fullref{ladestrom_schalter}.
+
+    \begin{minipage}{\linewidth} %use minipage to control footnote placement
+        \subsubsection*{LED blinkt dreimal rot im Intervall \\ Webinterface zeigt DC-Fehler}
+		Ein DC-Fehlerstrom wurde erkannt. Der Fehler kann entweder über die Webseite der Wallbox oder über
+        ein kurzzeitiges Trennen der Stromversorgung der Wallbox zurückgesetzt
+        werden. Achtung: den Hinweis in \fullref{dcerrorhint} beachten!
+    \end{minipage}
+
+    \subsubsection*{LED blinkt viermal rot im Intervall \\ Webinterface zeigt Schützfehler bzw. PE Fehler}
+    Für diesen Blinkcode gibt es zwei verschiedene Fehlerzustände mit
+	verschiedenen möglichen Ursachen:
+
+	Schützfehler:
+	    \begin{itemize}
+        \item Eines der Schütze schaltet nicht korrekt ein
+        \item Eines der Schütze schaltet nicht korrekt ab, \enquote{Schütz klebt}
+    \end{itemize}
+	Das Webinterface der Wallbox gibt weitere Informationen, um welches Schütz es
+	sich handelt.
+
+	PE-Fehler:
+    \begin{itemize}
+        \item Phase L1 ohne Spannung (ggf. L1/N vertauscht)
+        \item Erdungsfehler der Wallbox (ggf. PE nicht korrekt angeschlossen)
+    \end{itemize}
+
+    \subsubsection*{LED blinkt fünfmal rot im Intervall \\ Webinterface zeigt Kommunikationsfehler}
+    Es besteht ein Kommunikationsfehler mit dem Elektrofahrzeug. Bei erstmaligem
+    Auftreten das Ladekabel vom Fahrzeug trennen, 10 Sekunden warten und das
+    Ladekabel erneut mit dem Fahrzeug verbinden (erneuter Ladevorgang).
+
+    Sollte das Problem bestehen bleiben, so kann es verschiedene Gründe dafür
+    geben:
+    \begin{itemize}
+        \item Es liegt ein Fehler beim Ladekabel vor (Kurzschluss, verschmutze / feuchte
+              Kontakte o.ä.). Die Wallbox ist dann sofort außer Betrieb zu nehmen und
+              in Stand zu setzen.
+        \item Es liegt ein technischer Defekt beim Fahrzeug vor.
+        \item Es liegt ein technischer Defekt bei der Wallbox vor
+			(Ladecontroller defekt o.ä.).
+        \item Das Fahrzeug fordert den IEC 61851-1 Status \enquote{D – Laden mit Belüftung}
+              an. Dieser Modus wird von der Wallbox nicht unterstützt.
+        \item Das Fahrzeug übermittelt den IEC 61851-1 Status E oder F. In beiden Fällen
+              handelt es sich um einen Fehler, den das Fahrzeug erkannt hat.
+    \end{itemize}
+
+    \subsubsection*{Die Wallbox ist nicht über LAN / WLAN erreichbar, aber die
+	LED leuchtet blau}
+    In diesem Fall ist zu prüfen, ob die Wallbox gegebenenfalls in den Access-Point-Fallback
+    gegangen ist. Wie im Werkszustand eröffnet die Wallbox dann ein eigenes
+    WLAN. Wenn die Zugangsdaten nicht geändert wurden, entsprechen sie den Werkseinstellungen und sind dem
+    Aufkleber auf der Rückseite der Anleitung zu entnehmen.
+
+
+    \subsection{Wiederherstellungsmodus}\label{recovery}
+    Falls die Wallbox weder ihren Access-Point öffnet noch über ein konfiguriertes Netzwerk auf das Webinterface zugegriffen werden kann,
+    kannst wie folgt der Wiederherstellungsmodus gestartet werden:
+    \begin{enumerate}
+     \item Wallbox stromlos machen
+     \item Taster im Deckel gedrückt halten
+     \item Stromversorgung der Wallbox wieder herstellen (ggf. mit einer zweiten Person).
+     \item Taster ungefähr 20 Sekunden lang (mindestens 10, aber maximal 30) gedrückt halten.
+    \end{enumerate}
+    Die Wallbox startet dann im Wiederherstellungsmodus. Zunächst werden die Netzwerkeinstellungen gelöscht sowie die Anmeldung deaktiviert.
+    Anschließend sollte es wieder möglich sein, über den Access-Point auf die Wallbox zuzugreifen.
+
+    Durch erneutes Trennen und Verbinden der Stromversorgung innerhalb der ersten Minute im Wiederherstellungsmodus kann ein Zurücksetzen auf Werkszustand ausgelöst werden.
+
+    \subsection{Zurücksetzen auf Werkszustand}\label{reset}
+    Falls das Webinterface nicht korrekt funktioniert oder die Konfiguration defekt ist,
+    können auf der Unterseite \texttt{Firmware-Aktualisierung} alle Einstellungen auf den Werkszustand zurückgesetzt werden.
+    \hint{Durch das Zurücksetzen auf Werkszustand gehen \textit{alle} Konfigurationen, angelegten Benutzer, angelernten NFC-Tags und aufgezeichneten Ladevorgänge verloren.}
+    Nach dem Zurücksetzen startet das Webinterface wieder und öffnet
+    den Access-Point mit der SSID und Passphrase, die auf dem Aufkleber vermerkt
+    sind. Die Wallbox kann jetzt wieder nach \fullref{setup} konfiguriert werden.
+
+    Damit aufgezeichnete Ladevorgänge nicht verloren gehen, kann alternativ nur die Konfiguration zurückgesetzt werden.
+    Angelegte Benutzer (aber nicht der Benutzerverlauf des Ladetrackers) und NFC-Tags werden dennoch gelöscht.
+
+    Falls eine Netzwerkverbindung aufgebaut werden kann, aber das Webinterface
+	selbst nicht mehr funktioniert, kann versucht werden, die Recovery-Seite zu öffnen.
+    Falls eine Verbindung über den Access-Point der Wallbox besteht, kann
+	die Recovery-Seite unter \url{http://10.0.0.1/recovery} aufgerufen werden. Bei einer bestehenden Verbindung zu einem Netzwerk kann die Seite über \url{http://[konfigurierter_hostname]/recovery}, also z.B. \url{http://warp3-ABC/recovery} erreicht werden.
+    Auf der Recovery-Seite kann die Wallbox neugestartet oder auf den Werkszustand zurückgesetzt (Factory Reset) werden und es können Firmware-Updates einspielt, Debug-Reports
+    heruntergeladen und die HTTP-API verwendet werden.
+
+    \subsection{Probleme bei Ladevorgängen lösen}
+    Treten Ladeabbrüche auf, so kann dies verschiedene Ursachen haben. Mögliche
+    Ursachen können eine fehlerhafte Installation der Wallbox oder ein
+    technischer Defekt der Wallbox oder des Fahrzeugs sein.
+    Folgende Punkte sollten überprüft werden:
+
+    \paragraph*{Sitz des Typ-2-Steckers} Ein nicht vollständig eingesteckter Typ-2-Stecker kann dazu führen,
+        dass ein Fahrzeug nicht oder nur in einem Notlademodus mit minimaler Leistung lädt. Ein Indiz hierfür kann sein, dass
+        das Fahrzeug den Typ-2-Stecker nicht korrekt verriegelt.
+    \paragraph{Inspektion aller Komponenten} Es sollten alle Komponenten
+        auf Beschädigungen und Nässe kontrolliert werden.
+    \paragraph{Webinterface der Wallbox} Steht nur bei den Varianten Smart und
+        Pro zur Verfügung. Die \texttt{Status}seite gibt den Ladestatus, den erlaubten Ladestrom und den Grund für eventuelle Limitierungen aus
+        Sicht der Wallbox an. Detailliertere Informationen gibt die
+        Unterseite \texttt{Ladestatus}. Hier kann außerdem ein Ladeprotokoll
+        erzeugt werden, welches alle Werte des Ladevorgangs aufzeichnet.
+    \paragraph{Messung durch eine Elektrofachkraft} Elektrische Probleme können von
+        einer Elektrofachkraft diagnostiziert werden. Sie kann prüfen, ob alle Leiter
+        korrekt angeschlossen sind.
+
+    \subsection{Lastmanagementfehler}
+    Bei der Verwendung des Lastmanagements können zwei Arten von Fehlern auftreten: Wallbox-Fehler, die nur eine spezifische Wallbox betreffen, und Management-Fehler,
+    bei deren Auftreten das Laden an \textit{allen} gesteuerten Wallboxen gestoppt wird.
+
+    Wallbox-Fehler müssen an der entsprechenden Wallbox behoben werden. Hier
+	hilft \fullref{fehlerbehebung}. Im Folgenden wird die Diagnose von Management-Fehlern erläutert:
+
+    \paragraph{Kommunikationsfehler / Wallbox nicht erreichbar}
+    Eine Wallbox kann nicht zuverlässig erreicht werden. Eventuell liegt ein
+	Verbindungsproblem vor. In diesem Fall die Netzwerkverbindung bzw. das
+	Netzwerkkabel und die IP-Konfiguration der Wallbox prüfen.
+
+    \paragraph{Firmware inkompatibel}
+    Das Lastmanagement benötigt kompatible Firmwares auf allen beteiligten Wallboxen. Die jeweils aktuellen Firmwares sollten zueinander kompatibel sein,
+    selbst wenn WARP(1), WARP2, WARP3 und WARP4 Charger in einem Lastmanagementverbund verwendet werden.
+
+    \paragraph{Fremdsteuerung deaktiviert}
+    Bei einer der zu steuernden Wallboxen ist die Fremdsteuerung deaktiviert. Damit ist keine Steuerung durch den Lastmanager möglich. Die Fremdsteuerung kann auf der \texttt{Wallboxen}-Unterseite aktiviert werden.
+
+    \paragraph{Ladecontroller nicht erreichbar}
+    Der Ladecontroller einer Wallbox kann nicht erreicht werden, die Wallbox
+	selbst aber schon. In diesem Fall sollte das Ereignis-Log der betroffenen
+	Wallbox geprüft werden.
+
+    \paragraph{Ladecontroller reagiert nicht}
+    Der Ladecontroller einer Wallbox reagiert nicht auf Stromzuweisungen. In diesem Fall sollte das Ereignis-Log der betroffenen Wallbox geprüft werden.
+
+    \subsection{Sicherungswechsel}
+    Die Wallbox ist intern über eine 5$\times\SI{20}{\milli\meter}$
+	Feinsicherung (träge (T), \SI{2}{\ampere}) abgesichert.
+    Tinkerforge verbaut Sicherungen vom Typ \enquote{ESKA 522.520}.
+	Die Sicherung befindet sich rechts in der Wallbox auf dem Ladecontroller
+	(EVSE) in einem grünen Sicherungsgehäuse.
+
+    \vfill
+    \null
+    \subsection{Ersatzteile}
+	\small{
+    \begin{tabular}{ll}
+        \toprule
+        \textbf{Artikelnummer}                                                                                                      & \textbf{Bauteil}                     \\
+        \cmidrule(lr{0.5em}){1-2} 
+		WARP-CON-2P-63A						& Schaltschütz 2 Pol, Hilfskontakt,\\
+											& Hutschiene,\SI{63}{\ampere} (2x)\\
+        \cmidrule(lr{0.5em}){1-2}
+        WARP4-METER-3PH-MID					& Stromzähler Iskra WM3M4 V2 MID\\
+        \cmidrule(lr{0.5em}){1-2}
+        WARP-T2-5M-16A						& Typ-2-Stecker mit                    \\
+                                                                                                                                    & \SI{5}{\meter} Kabel, \SI{11}{\kilo\watt}/\SI{16}{\ampere} \\
+        \cmidrule(lr{0.5em}){1-2}
+        WARP-T2-5M-32A			 			& Typ-2-Stecker mit                    \\
+                                                                                                                                    & \SI{5}{\meter} Kabel, \SI{22}{\kilo\watt}/\SI{32}{\ampere} \\
+        \cmidrule(lr{0.5em}){1-2}
+        WARP-T2-75M-16A						& Typ-2-Stecker mit                    \\
+                                                                                                                                    & \SI{7,5}{\meter} Kabel, \SI{11}{\kilo\watt}/\SI{16}{\ampere} \\
+        \cmidrule(lr{0.5em}){1-2}
+        WARP-T2-75M-32A						& Typ-2-Stecker mit                    \\
+                                                                                                                                    & \SI{7,5}{\meter} Kabel \SI{22}{\kilo\watt}/\SI{32}{\ampere} \\
+        \cmidrule(lr{0.5em}){1-2}
+        WARP-FUSE-2A              			& Feinsicherung für WARP3 und WARP4                     \\
+                                                                                                                                    & 5x\SI{20}{\milli\meter}, träge \SI{2}{\ampere}        \\
+        \cmidrule(lr{0.5em}){1-2}
+        WARP-NFC-STICKER					& NFC-Aufkleber                        \\
+        \cmidrule(lr{0.5em}){1-2}
+        WARP-3-4-DC-PROTECT		  	        & DC-Fehlerstromschutzmodul (6mA)\\
+											& für WARP3 und WARP4                    \\
+        \cmidrule(lr{0.5em}){1-2}
+        WARP4-CASE-CS-SC 					& WARP4 Smart Gehäuse\\
+											& mit Edelstahlfrontblende                        \\
+        \cmidrule(lr{0.5em}){1-2}
+
+        WARP4-CASE-CS-PC 					& WARP4 Smart Gehäuse\\
+											& mit Edelstahlfrontblende DB703                        \\
+        \cmidrule(lr{0.5em}){1-2}
+
+        WARP4-CASE-CP-SS 					& WARP4 Pro Gehäuse\\
+											& mit Edelstahlfrontblende                        \\
+        \cmidrule(lr{0.5em}){1-2}
+
+        WARP4-CASE-CP-PC 					& WARP4 Pro Gehäuse\\
+											& mit Edelstahlfrontblende DB703                        \\
+        \cmidrule(lr{0.5em}){1-2}
+
+        WARP4-CABLE-HARNESS					& WARP4 Kabelsatz           \\
+        							        & Smart und Pro           \\
+        \cmidrule(lr{0.5em}){1-2}
+        WARP-WM3M4-CABLE					& WARP Zählerkabel für Iskra WM3M4\\
+        \cmidrule(lr{0.5em}){1-2}
+        WARP4-CS-DIN-RAIL					& WARP4 Smart Hutschienenset\\
+        \cmidrule(lr{0.5em}){1-2}
+        WARP4-CP-DIN-RAIL					& WARP4 Pro Hutschienenset\\
+        \cmidrule(lr{0.5em}){1-2}
+        WARP-NFC-CARD						& WARP NFC-Karten (3 Stück)            \\
+        \cmidrule(lr{0.5em}){1-2}
+        WARP4-PB-LED						& WARP4 Taster/LED Baugruppe inkl.\\
+											& Fronttaster mit RGB LED, \\
+											& Anschlusskabel, Befestigungsmaterial			\\
+        \cmidrule(lr{0.5em}){1-2}
+        WARP4-ESP32-ETH						& WARP ESP32 Ethernet Brick 2.3                 \\
+        \cmidrule(lr{0.5em}){1-2}
+        WARP4-EVSE							& WARP EVSE Bricklet 4.4                 \\
+        \cmidrule(lr{0.5em}){1-2}
+        WARP4-PLC							& WARP PLC 1.1                 \\
+        \cmidrule(lr{0.5em}){1-2}
+        WARP4-PCB-MECH						& WARP4 PCB Mechaniksatz              \\
+        \cmidrule(lr{0.5em}){1-2}
+        286  				                & NFC Bricklet                         \\
+        \cmidrule(lr{0.5em}){1-2}
+        6150								& Bricklet-Kabel                       \\
+                                            & \SI{15}{\centi\meter} (7p-7p)        \\
+											& Für NFC Bricklet Anschluss\\
+        \cmidrule(lr{0.5em}){1-2}
+        6193								& Bricklet-Kabel                       \\
+                                            & \SI{30}{\centi\meter} (7p-7p)        \\
+											& Für DC Protection Anschluss\\
+        \bottomrule
+    \end{tabular}
+	}
+
+    \newpage
+    \section{Technische Daten}
+    %use minipage here to control footnote placement
+    \begin{minipage}{\linewidth}
+
+        \begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{Fehlerstromerkennung}}]
+            \setlength{\itemsep}{3pt}
+            \item[Ladestandard] DIN EN 61851‐1 / ISO15118
+            \item[Ladeleistung] Einstellbar von \SI{1,4}{\kilo\watt}
+                  bis \SI{11}{\kilo\watt} / \SI{22}{\kilo\watt}~\footnote[7]{\label{fn:1} je nach Variante}
+            \item[Fahrzeugladestecker] Typ 2
+            \item[Nennspannung] \SI{230}{\volt} / \SI{400}{\volt} / 1/3
+                  AC
+            \item[Nennfrequenz] \SI{50}{\hertz}
+            \item[Nennstrom] \SI{16}{\ampere} / \SI{32}{\ampere}
+                  \footref{fn:1}
+            \item[Ladekabellänge] \SI{5}{\meter} / \SI{7,5}{\meter} / kundenspezifisch~\footref{fn:1}
+            \item[Zuleitungsquerschnitt] \SI{2,5}{\square\milli\meter} bis
+                  \SI{10}{\square\milli\meter}
+            \item[Zuleitungseinführung] Von der Unterseite und Rückseite möglich
+            \item[Betriebstemperatur] \SI{-25}{\celsius}
+                  bis \SI{+50}{\celsius} (Durchschnitt in \SI{24}{\hour}: $< \SI{35}{\celsius}$)
+            \item[Fehlerstromerkennung] DC \SI{6}{\milli\ampere} (integriert)
+            \item[Abmessungen] 280 × 215 × \SI{95}{\milli\meter} (B/H/T)
+            \item[Gewicht] Je nach Kabellänge, ca. \SI{8}{\kilo\gram}~\footref{fn:1}
+            \item[Schutzart] IP54
+                  (spritzwassergeschützt, für
+                  den Außenbereich geeignet)
+            \item[Phasenumschaltung] Intern zwischen ein- und dreiphasig
+            \item[Zugangsverriegelung]
+                  NFC (RFID)\\Autocharge\\Webinterface/Android, iOS App\\API
+            \item[Lastmanagement] Max. 64 WARP, WARP2, WARP3 und/oder WARP4 Charger
+            \item[NFC-Tags] 3 im Lieferumfang\\max. 32 anlernbar
+            \item[Benutzer] Max. 32 konfigurierbar
+            \item[Schnittstellen] HTTP, MQTT, Modbus TCP, EEBUS, OCPP, SunSpec
+            \item[\S14a EnWG steuerbar] Mittels internen Abschalteingang, EEBUS oder über Schnittstellen oder WARP Energy Manager
+            \item[Lieferumfang] Wallbox, Betriebsanleitung inkl. Installationsanleitung, Bohrschablone, Prüfprotokoll, 3 NFC-Karten
+            \item[Standby, WLAN an] Smart $\leq\SI{3}{\watt}$; Pro $\leq\SI{5}{\watt}$
+            \item[Strommessung] Integrierter MID-geeichter Strom\-zähler nach EU-Messgeräterichtlinie 2014/32/EU~\footref{fn:1}
+        \end{description}
+    \end{minipage}
+
+    \section{Konformitätserklärung}
+    Die EU-Konformitätserklärung zur Wallbox ist in einem gesonderten Dokument verfügbar.
+
+    \section{Entsorgung}
+    \begin{minipage}{0.43\textwidth}
+        Wallbox und Verpackung sind bei Gebrauchsende ordnungsgemäß zu
+        entsorgen. Altgeräte dürfen nicht über den Hausmüll entsorgt werden.
+    \end{minipage}\hfill
+    \begin{minipage}{0.045\textwidth}
+        \includegraphics[width=\linewidth]{./img_warp3/resized/weee.pdf}
+    \end{minipage}
+
+
+    \section{Kontakt}
+    Tinkerforge GmbH\\ Helleforthstraße 22-28\\ 33758 Schloß Holte-Stukenbrock
+    \begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{Website}}]
+        \item[E-Mail] \href{mailto:info@tinkerforge.com}{\texttt{info@tinkerforge.com}}
+        \item[Website] \href{https://warp-charger.com}{\texttt{warp-charger.com}}
+        \item[Telefon] \phonenumber{+49 5207 897300-0}
+        \item[Shop] \href{https://shop.warp-charger.com}{\texttt{shop.warp-charger.com}}
+    \end{description}
+
+    \section{Dokumentversionen}
+    \begin{tabular}{lll}
+        \toprule
+        Datum      & Version\hspace{-0.2pt} & Kommentar        \\
+        \midrule
+        01.06.2026 & 1.0     & Initialversion                  \\
+        \bottomrule
+    \end{tabular}
+
+
+\end{multicols*}
+
+\appendix
+   \newpage
+
+	\pagecolor{covergray}\afterpage{\nopagecolor}
+
+   \begin{multicols*}{2}
+    \pagestyle{empty}
+    \null
+    \vfill
+	\color{white}
+    WLAN-Zugangsdaten
+    \begin{tcolorbox}[width=4.2cm,height=2.7cm, boxrule=0.25mm]
+
+    \end{tcolorbox}
+    Dieser Aufkleber befindet sich\\ auch im Inneren der Wallbox.
+    \columnbreak
+
+    \null
+    \vfill
+    Typenschild
+    \begin{tcolorbox}[width=7.8cm,height=4.1cm, boxrule=0.25mm]
+
+    \end{tcolorbox}
+    Dieser Aufkleber befindet sich auch auf der Unterseite\\ der Wallbox.
+\end{multicols*}
+\end{document}

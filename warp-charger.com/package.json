@@ -1,0 +1,22 @@
+{
+  "name": "warp-charger-website",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build:css": "npx @tailwindcss/cli -i ./src/input.css -o ./static/css/output.min.css --minify",
+    "watch:css": "npx @tailwindcss/cli -i ./src/input.css -o ./static/css/output.min.css --watch --minify",
+    "build:js": "esbuild src/ts/index.ts --bundle --outfile=static/js/output.min.js --format=iife --minify",
+    "watch:js": "esbuild src/ts/index.ts --bundle --outfile=static/js/output.min.js --format=iife --watch",
+    "build": "npm run build:css && npm run build:js",
+    "watch": "npm run watch:css & npm run watch:js",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.2.2",
+    "tailwindcss": "^4.2.2"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.0",
+    "typescript": "^6.0.3"
+  }
+}

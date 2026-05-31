@@ -1,0 +1,86 @@
+{% extends "page_base.html" %}
+{% from "macros/two_col_section.html" import two_col_section %}
+{% from "macros/page_hero.html" import page_hero %}
+{% from "macros/feature_card_grid.html" import feature_card_grid %}
+{% from "macros/centered_section.html" import centered_section %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block content %}
+{# Hero #}
+{% call page_hero(badge_icon="solar_power", badge_text=t.badge, headline=t.subtitle) %}{% endcall %}
+
+{# Intro: Use your own electricity #}
+{% call two_col_section(
+    badge_icon="bolt",
+    badge_text=t.intro.badge,
+    headline=t.intro.headline,
+    image="power-history.webp",
+    image_side="right",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.intro.text }}</p>
+    <p class="text-section-body">{{ t.intro.text2 }}</p>
+    <p class="text-body text-black font-medium">{{ t.intro.highlight|safe }}</p>
+{% endcall %}
+
+{# Compatibility: Open platform #}
+{% call two_col_section(
+    badge_icon="hub",
+    badge_text=t.compatibility.badge,
+    headline=t.compatibility.headline,
+    image="edit-meter.webp",
+    image_side="left",
+    dark=true
+) %}
+    <p class="text-section-body-dark">{{ t.compatibility.text }}</p>
+    <p class="text-section-body-dark">{{ t.compatibility.text2 }}</p>
+    <p class="text-section-body-dark">{{ t.compatibility.text3 }}</p>
+    <a href="{{ t.compatibility.cta_url }}" target="_blank" rel="noopener" class="btn-icon">
+        <span class="material-symbols-outlined icon-18">devices</span>
+        {{ t.compatibility.cta_text }}
+    </a>
+{% endcall %}
+
+{# Charging Modes #}
+{% call two_col_section(
+    badge_icon="tune",
+    badge_text=t.modes.badge,
+    headline=t.modes.headline,
+    image="charging-mode.webp",
+    image_side="right",
+    bg="bg-gradient-light-white-background"
+) %}
+    <p class="text-section-body">{{ t.modes.text }}</p>
+    <ul class="list-none flex flex-col gap-4 mt-4">
+        {% for mode in t.modes.list %}
+        <li class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-primary icon-22 mt-0.5 shrink-0">{{ mode.icon }}</span>
+            <div>
+                <span class="font-medium text-black">{{ mode.title }}</span>
+                <p class="text-section-body mt-0.5">{{ mode.desc|safe }}</p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+{% endcall %}
+
+{# Phase Switching #}
+{% call two_col_section(
+    badge_icon="sync_alt",
+    badge_text=t.phase_switching.badge,
+    headline=t.phase_switching.headline,
+    image="phase-switching.webp",
+    image_side="left",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.phase_switching.text }}</p>
+    <p class="text-section-body">{{ t.phase_switching.text2 }}</p>
+{% endcall %}
+
+{# Settings #}
+{% call centered_section("settings", t.settings.badge, t.settings.headline) %}
+    {{ feature_card_grid(items=t.settings.list, columns=3) }}
+{% endcall %}
+{% endblock %}

@@ -1,0 +1,78 @@
+title: "Lastmanagement"
+description: "Lastmanagement mit bis zu 64 WARP Chargern, statisch und dynamisch, ohne zusätzliche Hardware."
+
+badge: "Lastmanagement"
+subtitle: "Bis zu 64 WARP Charger intelligent regeln, ohne Zusatzhardware"
+
+static:
+  badge: "Statisch"
+  headline: "Statisches Lastmanagement"
+  text: "Teilen sich mehrere Wallboxen eine gemeinsame Zuleitung, ist oftmals der Maximalstrom begrenzt. Das statische Lastmanagement verteilt einen festen Gesamtstrom auf bis zu 64 WARP Charger."
+  text2: "Eine Wallbox wird als Lastmanager konfiguriert und steuert die weiteren Wallboxen über das Netzwerk im Verbund. Der verfügbare Strom wird gleichmäßig zwischen allen ladenden Wallboxen aufgeteilt. Wird ein weiteres Fahrzeug angeschlossen, wird automatisch umverteilt."
+  highlight: "Keine Zusatzhardware erforderlich: Die WARP Charger übernehmen das Lastmanagement eigenständig!"
+  diagram_aria: "Diagramm: Statisches Lastmanagement verteilt den verfügbaren Strom auf bis zu drei Fahrzeuge."
+  diagram_labels:
+    grid: "Stromnetz"
+    meter: "Stromzähler"
+    wallbox: "WARP Charger"
+    ev1: "Fahrzeug 1"
+    ev2: "Fahrzeug 2"
+    ev3: "Fahrzeug 3"
+  descriptions:
+    step1: "Das Lastmanagement darf im Beispiel maximal 11 kW verteilen. Nur ein Fahrzeug lädt: Die vollen 11 kW gehen an das erste E-Auto."
+    step2: "Zweites E-Auto kommt dazu: Der Strom wird gleichmäßig aufgeteilt, je 5,5 kW pro Fahrzeug."
+    step3: "Drei E-Autos parallel: Jedes erhält 3,6 kW; die Summe bleibt unter dem Maximum von 11 kW. Wäre der Anteil pro Fahrzeug zu klein zum Starten, würde das Lastmanagement die E-Autos im Round-Robin abwechselnd laden."
+
+dynamic:
+  badge: "Dynamisch"
+  headline: "Dynamisches Lastmanagement"
+  text: "In vielen Fällen teilen sich Wallboxen den Stromanschluss mit anderen Verbrauchern. Wenn diese ein- und ausgeschaltet werden, ändert sich der verfügbare Strom ständig."
+  text2: "Das dynamische Lastmanagement überwacht den Phasenstrom am Netzanschluss mittels eines Stromzählers und regelt die Leistung der Wallboxen entsprechend. Dadurch wird sichergestellt, dass der maximale Phasenstrom nie überschritten wird und keine Sicherung auslöst."
+  text3: "Als offene Plattform werden diverse Hersteller und Stromzähler unterstützt."
+  cta_text: "Kompatible Geräte"
+  cta_url: "/de/loesungen/maximale-kompatibilitaet#devices"
+  diagram_aria: "Diagramm: Dynamisches Lastmanagement passt die Ladeleistung an den übrigen Stromverbrauch im Haus an."
+  diagram_labels:
+    grid: "Stromnetz"
+    meter: "Stromzähler"
+    wallbox: "WARP Charger"
+    heatpump: "Andere Verbraucher"
+    ev1: "Fahrzeug 1"
+    ev2: "Fahrzeug 2"
+    ev3: "Fahrzeug 3"
+  descriptions:
+    step1: "Das Lastmanagement darf im Beispiel maximal 24 kW Netzstrom verteilen. Andere Verbraucher beziehen 2 kW: Das erste E-Auto lädt mit voller Leistung (11 kW)."
+    step2: "Andere Verbraucher steigen auf 10 kW: Ein zweites E-Auto kommt dazu, beide laden mit je 7 kW, zusammen genau die freien 14 kW."
+    step3: "Andere Verbraucher beziehen die vollen 24 kW: Alle E-Autos pausieren, bis wieder Leistung verfügbar ist."
+
+smart:
+  badge: "Intelligent"
+  headline: "Nicht einfach nur Ströme begrenzen"
+  text: "Elektrofahrzeuge lassen sich nicht beliebig regeln: Mindestladeströme, Mindestladezeiten und Pausen müssen eingehalten werden. Das Lastmanagement der WARP Charger berücksichtigt diese Eigenheiten und verhindert Fehlerzustände."
+  features:
+    - icon: "balance"
+      title: "Faire Verteilung"
+      desc: "Steht nicht genug Strom für alle Fahrzeuge zur Verfügung, wird reihum geladen: maximale Anzahl gleichzeitiger Ladevorgänge bei fairem Wechsel."
+    - icon: "swap_horiz"
+      title: "Phasenrotation"
+      desc: "Phasenbelegung und -rotation der Wallboxen werden beachtet, um mehr Fahrzeuge parallel zu laden und Limits besser auszureizen."
+    - icon: "speed"
+      title: "Realer Strombezug"
+      desc: "WARP Charger Pro messen den tatsächlichen Phasenstrom. Ungenutzter Strom wird automatisch anderen Wallboxen zugewiesen."
+    - icon: "trending_down"
+      title: "Minimale Schaltvorgänge"
+      desc: "Der Lastmanager versucht Schaltvorgänge zu minimieren und sorgt für einen stabilen Ladebetrieb."
+
+config:
+  badge: "Konfiguration"
+  headline: "Einfache Einrichtung"
+  text: "Das Lastmanagement wird direkt im Webinterface der WARP Charger konfiguriert:"
+  steps:
+    - title: "Fremdsteuerung aktivieren"
+      desc: "Auf allen gesteuerten Wallboxen den Fremdsteuerungsmodus aktivieren."
+    - title: "Lastmanager konfigurieren"
+      desc: 'Eine Wallbox oder den <a href="/de/produkte/warp-energy-manager" class="prose-link">WARP Energy Manager</a> als Lastmanager festlegen und Wallboxen hinzufügen.'
+    - title: "Gesamtstrom festlegen"
+      desc: "Den maximalen Gesamtstrom der gemeinsamen Zuleitung konfigurieren."
+    - title: "Optional: Dynamisch aktivieren"
+      desc: "Stromzähler am Hausanschluss konfigurieren und dynamisches Lastmanagement einschalten."

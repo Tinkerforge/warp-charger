@@ -1,0 +1,43 @@
+{% extends "page_base.html" %}
+{% from "macros/two_col_section.html" import two_col_section %}
+{% from "macros/page_hero.html" import page_hero %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block content %}
+{# Hero #}
+{% call page_hero(badge_icon="web", badge_text=t.hero.badge, headline=t.hero.headline) %}
+    <p class="text-section-body max-w-2xl mt-6">{{ t.hero.text }}</p>
+    <p class="text-section-body max-w-2xl mt-6 text-grey">
+        <span class="block">{{ t.hero.hint_pre }}</span>
+        <a href="{{ t.hero.hint_link_url }}" class="my-1 inline-block text-h4 font-medium bg-gradient-blue bg-clip-text text-transparent decoration-primary underline underline-offset-4 hover:no-underline">{{ t.hero.hint_link }}</a>
+        <span class="block">{{ t.hero.hint_post }}</span>
+    </p>
+{% endcall %}
+
+{# Zugriff per LAN oder Access Point #}
+{% call two_col_section(
+    badge_icon="lan",
+    badge_text=t.access.badge,
+    headline=t.access.headline,
+    image="webinterface-home.webp",
+    image_side="right",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.access.text }}</p>
+{% endcall %}
+
+{# Funktioniert auch ohne Internet #}
+{% call two_col_section(
+    badge_icon="wifi_off",
+    badge_text=t.offline.badge,
+    headline=t.offline.headline,
+    image="cloud-reality.webp",
+    image_side="left",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.offline.text|safe }}</p>
+    <p class="text-section-body">{{ t.offline.text2|safe }}</p>
+{% endcall %}
+{% endblock %}

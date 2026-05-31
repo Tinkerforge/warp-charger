@@ -1,0 +1,1088 @@
+/* Local Fonts */
+
+@font-face {
+    font-family: "Satoshi Variable";
+    src: url("../fonts/Satoshi-Variable.woff2") format("woff2");
+    font-weight: 300 900;
+    font-display: optional;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Satoshi Variable";
+    src: url("../fonts/Satoshi-VariableItalic.woff2") format("woff2");
+    font-weight: 300 900;
+    font-display: optional;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Instrument Serif";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../fonts/instrument-serif-regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Instrument Serif";
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../fonts/instrument-serif-italic.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Material Symbols Outlined";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../fonts/material-symbols-outlined-400.ttf") format("truetype");
+}
+
+.material-symbols-outlined {
+    font-family: "Material Symbols Outlined";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+}
+
+@import "tailwindcss";
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Collapse spacing between adjacent sections with the same background */
+section.bg-background + section.bg-background,
+section.bg-gradient-light-white-background + section.bg-gradient-light-white-background,
+section.bg-gradient-light-white-background + section.bg-background,
+section.bg-gradient-light-white-background + section:not([class*="bg-"]) {
+    padding-top: 0;
+}
+/* When a white-to-grey gradient section is followed by a grey-bottomed section
+   (solid grey via bg-background OR a no-bg section that shows the body's grey),
+   the gradient already fades into the grey. Keep one full section padding at
+   the seam (the next section's top padding is zeroed by the rule above), so
+   the gap matches a single section's spacing rather than the doubled
+   pb-section + pt-section gap. Excludes page heroes, they need their own
+   breathing room. */
+section.bg-gradient-light-white-background:not(.page-hero):has(+ section.bg-background),
+section.bg-gradient-light-white-background:not(.page-hero):has(+ section:not([class*="bg-"])) {
+    padding-bottom: var(--spacing-section);
+}
+
+/* Sections without an explicit bg class (default white) */
+section:not([class*="bg-"]) + section:not([class*="bg-"]) {
+    padding-top: 0;
+}
+
+@theme {
+    --font-satoshi: "Satoshi Variable", sans-serif;
+
+    /* Colors */
+
+    /* Neutrals */
+    --color-background: #f3f3f3;
+    --color-black: #1b1b1b;
+    --color-grey: #6c757d;
+    --color-medium-grey: #959ba1;
+    --color-light-grey: #ced4da;
+    --color-very-light-grey: #eaeaea;
+
+    /* Energy diagram */
+    --color-track: rgba(94, 94, 94, 0.8);
+
+    /* Brand */
+    --color-primary: #2563eb;
+
+    --color-dark-primary: #051533;
+
+    /* Semantics */
+    --color-console-green: #ddffdf;
+
+    /* Gradients */
+
+    --background-image-gradient-blue: linear-gradient(
+        to bottom,
+        #021273 0%,
+        #1856c8 50%,
+        #008eff 100%
+    );
+
+    --background-image-gradient-overlay-blue: linear-gradient(
+        to bottom,
+        #0525b3 0%,
+        #2e8ef3 50%,
+        #01cdff 100%
+    );
+
+    --background-image-gradient-ridged: linear-gradient(
+        to right,
+        #1b1b1b 0%,
+        #575757 25%,
+        #1b1b1b 50%,
+        #575757 75%,
+        #1b1b1b 100%
+    );
+
+    --background-image-gradient-dark-soft: linear-gradient(
+        to right,
+        #1b1b1b 0%,
+        #575757 50%,
+        #1b1b1b 100%
+    );
+
+    --background-image-gradient-grey-dark: linear-gradient(to bottom, #4a4a4a 0%, #1b1b1b 100%);
+
+    --background-image-gradient-radial-dark: radial-gradient(circle, #1b1b25 0%, #05050a 100%);
+
+    --background-image-gradient-white-blue: linear-gradient(to bottom, #ffffff 0%, #b0bae9 100%);
+
+    --background-image-gradient-deep-blue: linear-gradient(to bottom, #364578 0%, #0d121f 100%);
+
+    --background-image-gradient-light-blue: linear-gradient(to bottom, #8aaee9 0%, #233153 100%);
+
+    --background-image-gradient-dark-to-light-blue: linear-gradient(to bottom, #487ddf 0%, #8aaee9 100%);
+
+    --background-image-gradient-light-white-image: linear-gradient(
+        to top,
+        #f3f3f3 0%,
+        #f9f9f900 50%,
+        #ffffff00 100%
+    );
+
+    --background-image-gradient-light-white-background: linear-gradient(
+        to top,
+        #f3f3f3 0%,
+        #ffffff 40%
+    );
+
+    --background-image-gradient-metallic: linear-gradient(
+        to right,
+        #6c6f6c 0%,
+        #ffffff 25%,
+        #ffffff 75%,
+        #6c6f6c 100%
+    );
+
+    --background-image-gradient-dark-green: linear-gradient(
+        to right,
+        #161c15 0%,
+        #1f2c1e 25%,
+        #1f2c1e 50%,
+        #161c15 100%
+    );
+
+    --background-image-gradient-metallic-light: linear-gradient(
+        to right,
+        #ffffff80 0%,
+        #ffffff 15%,
+        #ffffff 85%,
+        #ffffff80 100%
+    );
+
+    --background-image-gradient-light-blue-alt: linear-gradient(
+        to top,
+        #2137b8 0%,
+        #487ddf 50%,
+        #58b5ff 100%
+    );
+
+    /* Font Families */
+    --font-satoshi: "Satoshi Variable", sans-serif;
+    --font-instrument: "Instrument Serif", serif;
+
+    /* Spacing */
+
+    --width-main: 75rem;
+    --width-wide: 95rem;
+
+    --spacing-text-gap-sm: 0.9375rem; /* 15px */
+    --spacing-text-gap-md: 1.25rem; /* 20px */
+
+    --spacing-section: clamp(4rem, 6vw + 2rem, 9.375rem);
+
+    /* Effects */
+
+    --shadow-normal: 0px 0px 29.43px 6.3px rgba(0, 0, 0, 0.5);
+}
+
+/* Typography */
+
+@utility text-display-1 {
+    font-family: var(--font-satoshi);
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: -0.0625em;
+    line-height: 1.1;
+
+    @variant md {
+        font-size: 4rem;
+    }
+    @variant lg {
+        font-size: 4rem;
+    }
+}
+
+@utility text-display-2 {
+    font-family: var(--font-instrument);
+    font-size: 1.97rem;
+    font-weight: 400;
+    letter-spacing: -0.024em;
+    line-height: 1.1;
+
+    @variant md {
+        font-size: 2.625rem;
+    }
+    @variant lg {
+        font-size: 2.625rem;
+    }
+}
+
+@utility text-h2 {
+    font-family: var(--font-satoshi);
+    font-size: 1.97rem;
+    font-weight: 700;
+    line-height: 1.07;
+    letter-spacing: -0.048em;
+
+    @variant lg {
+        font-size: 2.625rem;
+    }
+}
+
+@utility text-h3 {
+    font-family: var(--font-satoshi);
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: -0.0625em;
+    line-height: 1.2;
+
+    @variant lg {
+        font-size: 2rem;
+    }
+}
+
+@utility text-h4 {
+    font-family: var(--font-satoshi);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: -0.05em;
+    line-height: 1.3;
+
+    @variant lg {
+        font-size: 1.25rem;
+    }
+}
+
+@utility text-body {
+    font-family: var(--font-satoshi);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.625;
+
+    @variant lg {
+        font-size: 1rem;
+    }
+}
+
+@utility text-btn {
+    font-family: var(--font-satoshi);
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1;
+
+    @variant md {
+        font-size: 1rem;
+    }
+    @variant lg {
+        font-size: 1rem;
+    }
+}
+
+@utility text-eyebrow {
+    font-family: var(--font-satoshi);
+    font-size: 0.656rem;
+    font-weight: 900;
+    line-height: 1.4;
+    letter-spacing: 0.143em;
+    text-transform: uppercase;
+
+    @variant lg {
+        font-size: 0.875rem;
+    }
+}
+
+@utility text-nav {
+    font-family: var(--font-satoshi);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.625;
+
+    @variant lg {
+        font-size: 1rem;
+    }
+}
+
+/* Custom Effects */
+
+@utility liquid-glass {
+    @apply border border-white/20 backdrop-blur-md;
+}
+
+@utility glow-layer-normal {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: -3;
+    box-shadow:
+        0 -50px 170px -60px #2563eb,
+        0 -50px 170px -60px #87adff;
+}
+
+@utility glow-layer-overlay-3 {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: -2;
+    mix-blend-mode: overlay;
+    box-shadow: 0 -50px 50px -60px #ffffff;
+}
+
+@utility glow-layer-overlay-4 {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: -1;
+    mix-blend-mode: overlay;
+    box-shadow: 0 -50px 50px -60px #9ee6ff;
+}
+
+/* Components */
+
+/* Theme text */
+.text-section-body {
+    @apply text-body text-grey;
+}
+
+.text-section-body-dark {
+    @apply text-body text-white/70;
+}
+
+.text-section-heading {
+    @apply text-h2 text-black;
+}
+
+.text-section-heading-dark {
+    @apply text-h2 text-white;
+}
+
+/* Feature cards */
+.feature-card {
+    @apply rounded-2xl border border-black/10 bg-white p-6;
+}
+
+.feature-card-dark {
+    @apply rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm;
+}
+
+.feature-card-title {
+    @apply text-h4 text-black;
+}
+
+.feature-card-title-dark {
+    @apply text-h4 text-white;
+}
+
+.feature-card-icon {
+    @apply text-primary text-[22px]!;
+}
+
+.feature-card-icon-dark {
+    @apply text-blue-400 text-[22px]!;
+}
+
+/* Buttons */
+.btn-primary {
+    @apply z-10 cursor-pointer rounded-lg bg-gradient-grey-dark px-4 py-2 text-btn text-white shadow-md transition-all hover:opacity-90 active:scale-95 md:rounded-[10px] md:px-6 md:py-3 lg:rounded-[10px] lg:px-6 lg:py-3;
+}
+
+/* btn-primary with a leading icon + label. Combine with mt-* utilities as needed. */
+.btn-icon {
+    @apply z-10 cursor-pointer rounded-lg bg-gradient-grey-dark px-4 py-2 text-btn text-white shadow-md transition-all hover:opacity-90 active:scale-95 md:rounded-[10px] md:px-6 md:py-3 lg:rounded-[10px] lg:px-6 lg:py-3 inline-flex items-center gap-2;
+}
+
+/* Inline prose link inside body copy (e.g. cross-links between solution pages). */
+.prose-link {
+    @apply text-primary underline hover:no-underline;
+}
+
+/* Standard page-container shells. Two flavours match the established design:
+   - container-main: padded with px-5 md:px-10 (used by most sections / pages)
+   - container-wide: padded with px-4 md:px-8 (used by hero, footer, news)
+   Both centre at max-w-7xl. Combine with extra utilities (flex, py-section,
+   relative z-10, w-full) as needed at the call site. */
+.container-main {
+    @apply mx-auto max-w-7xl px-5 md:px-10;
+}
+.container-wide {
+    @apply mx-auto max-w-7xl px-4 md:px-8;
+}
+
+/* Material Symbols icon sizes. Use alongside `.material-symbols-outlined`
+   in place of the arbitrary `text-[Npx]!` classes. Declared as @utility so
+   responsive variants (`md:icon-48`) work. The !important is needed because
+   the material-symbols base rule sets its own font-size. */
+@utility icon-14 { font-size: 14px !important; }
+@utility icon-16 { font-size: 16px !important; }
+@utility icon-18 { font-size: 18px !important; }
+@utility icon-20 { font-size: 20px !important; }
+@utility icon-22 { font-size: 22px !important; }
+@utility icon-24 { font-size: 24px !important; }
+@utility icon-28 { font-size: 28px !important; }
+@utility icon-32 { font-size: 32px !important; }
+@utility icon-40 { font-size: 40px !important; }
+@utility icon-48 { font-size: 48px !important; }
+@utility icon-60 { font-size: 60px !important; }
+
+/* Section badge: gradient pill with circle icon + label, used in section headers,
+   hero badges, two_col_section and most macros. Light variant for white/light
+   backgrounds, dark variant for dark/glass sections. */
+.badge-circle {
+    @apply flex h-7.5 w-7.5 items-center justify-center rounded-full bg-gradient-overlay-blue p-px;
+}
+.badge-circle-inner {
+    @apply flex h-full w-full items-center justify-center rounded-full bg-gradient-blue;
+}
+.badge-circle-dark {
+    @apply flex h-7.5 w-7.5 items-center justify-center rounded-full bg-gradient-light-blue p-px;
+}
+.badge-circle-inner-dark {
+    @apply flex h-full w-full items-center justify-center rounded-full bg-gradient-deep-blue;
+}
+.badge-label {
+    @apply -mr-2 bg-gradient-blue bg-clip-text pr-2 text-h3 text-transparent;
+}
+.badge-label-dark {
+    @apply -mr-2 bg-gradient-white-blue bg-clip-text pr-2 text-h3 text-transparent;
+}
+
+.btn-secondary {
+    @apply z-10 cursor-pointer rounded-[5px] border-2 border-white bg-white px-4 py-2 text-btn text-black transition-all hover:bg-gray-100 active:scale-95 md:px-6 md:py-3 lg:px-6 lg:py-3;
+}
+
+.btn-tertiary {
+    @apply relative isolate cursor-pointer overflow-hidden rounded-[5px] border-2 border-white bg-transparent px-4 py-2 text-btn text-white active:scale-95 md:px-6 md:py-3 lg:px-6 lg:py-3;
+    transition: color 0.25s ease;
+}
+
+.btn-tertiary::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    background: white;
+    z-index: -1;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.25s ease;
+}
+
+.btn-tertiary:hover::before {
+    transform: scaleY(1);
+}
+
+.btn-tertiary:hover {
+    color: black;
+}
+
+.btn-alt-color {
+    @apply z-10 cursor-pointer rounded-lg bg-gradient-light-blue-alt px-4 py-2 text-btn text-white shadow-md transition-all hover:opacity-90 active:scale-95 md:rounded-[10px] md:px-6 md:py-3 lg:rounded-[10px] lg:px-6 lg:py-3;
+}
+
+/* Navigation */
+.nav-item {
+    @apply cursor-pointer text-nav transition-colors hover:text-white/60;
+}
+
+/*
+ * Tap-to-open support for the desktop navigation on touch devices.
+ * `desktop-menu-tap.ts` toggles `data-open="true"` on the trigger
+ * element; we mirror the visual effects of `group-hover:` here so the
+ * dropdown stays open without a mouse hover.
+ */
+header li.nav-item[data-open="true"] > div,
+header [data-tap-dropdown][data-open="true"] > div {
+    pointer-events: auto;
+    visibility: visible;
+    opacity: 1;
+}
+
+.dropdown-link {
+    @apply text-lg font-medium text-black transition-colors hover:text-grey;
+}
+
+.dropdown-card-title {
+    @apply text-base leading-6.5 font-medium text-black;
+}
+
+.dropdown-card-desc {
+    @apply text-base leading-6.5 font-medium text-grey;
+}
+
+.dropdown-cta {
+    @apply flex items-center gap-1.25 text-base leading-6.5 font-medium whitespace-nowrap text-black transition-colors hover:text-grey;
+}
+
+/* Scrollbar */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* Icon row */
+.feature-box {
+    @apply flex flex-col items-center justify-center gap-1 rounded-2xl py-4 lg:gap-4 lg:py-10;
+}
+
+.feature-icon-circle {
+    @apply flex h-18 w-18 shrink-0 items-center justify-center rounded-full bg-gradient-deep-blue lg:h-27 lg:w-27;
+}
+
+.feature-icon {
+    @apply h-10.5 w-10.5 text-white transition-colors lg:h-15 lg:w-15;
+}
+
+.feature-text {
+    @apply text-center text-h4 text-dark-primary;
+}
+
+/* Product cards */
+.card-wrapper {
+    @apply relative z-0 aspect-auto w-75 shrink-0 rounded-[18px] liquid-glass bg-[rgba(255,255,255,0.1)] p-2.5 shadow-2xl md:aspect-square md:w-125;
+}
+
+.card-inner {
+    @apply relative z-10 flex h-100 flex-col justify-between overflow-hidden rounded-[9px] bg-gradient-light-white-background md:h-full;
+}
+
+.card-content {
+    @apply flex flex-col gap-2 p-8 text-left;
+}
+
+.card-title {
+    @apply text-h3 tracking-[-2px] text-dark-primary;
+}
+
+.card-price-row {
+    @apply flex items-baseline gap-1;
+}
+
+.card-price {
+    @apply text-h4 text-dark-primary;
+}
+
+.card-desc {
+    @apply text-body text-grey;
+}
+
+.card-img-wrap {
+    @apply relative flex-1 overflow-hidden;
+}
+
+.card-img {
+    @apply h-full w-full object-contain object-bottom;
+}
+
+/* Glass image frame */
+.glass-frame {
+    --_gf-pad: clamp(4px, 0.5vw, 10px);
+    --_gf-radius: clamp(10px, 1.4vw, 22px);
+    @apply liquid-glass bg-white/10 shadow-normal;
+    padding: var(--_gf-pad);
+    border-radius: var(--_gf-radius);
+}
+
+.glass-frame-inner {
+    @apply overflow-hidden;
+    border-radius: calc(var(--_gf-radius) - var(--_gf-pad));
+}
+
+/* Firmware cards */
+.firmware-card:has(details[open]) {
+    grid-column: 1 / -1;
+}
+
+/* Firmware version rows: lock styling when open (no hover effect overrides) */
+.firmware-card details.firmware-version[open] {
+    background-color: #ffffff;
+    border-color: color-mix(in srgb, var(--color-primary) 30%, transparent);
+}
+
+.firmware-card li a {
+    color: var(--color-primary);
+    text-decoration-line: underline;
+    transition: color 0.15s;
+}
+
+.firmware-card li a:hover {
+    opacity: 0.8;
+}
+
+.firmware-card li strong {
+    color: var(--color-black);
+}
+
+/* Animations */
+
+@keyframes console-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Logo grid */
+
+.logo-card[data-detail]:hover,
+.logo-card.active {
+    box-shadow: 0 0 12px 3px rgba(59, 130, 246, 0.4), 0 0 24px 6px rgba(59, 130, 246, 0.15);
+    border-color: transparent;
+}
+
+/* Energy Flow Diagram (compatibility section) */
+
+:root {
+    --mg-vfx-scale: 0.65;
+    --mg-vfx-blur: 2px;
+    --mg-vfx-glow-near-spread: 20px;
+    --mg-vfx-glow-near-color: rgba(5, 180, 255, 0.9);
+    --mg-vfx-glow-far-spread: 40px;
+    --mg-vfx-glow-far-color: #5384ff;
+}
+
+.mg-label {
+    display: none;
+}
+
+/* Visible per-step sublabel rendered below each node icon (e.g. SG-Ready
+   mode on the heat pump). Empty by default; applyStep fills it in. */
+.mg-node-sublabel {
+    pointer-events: none;
+    user-select: none;
+}
+
+.mg-node-dimmed .mg-node-sublabel {
+    opacity: 0.35;
+}
+
+/* Smooth fades when steps activate/deactivate edges and dim/un-dim nodes. */
+#mg-edge-layer > g,
+#mg-node-layer > g {
+    transition: opacity 0.6s ease;
+}
+
+/* Renewable energy: override the mover glow colors via CSS custom properties.
+   They cascade into the mover's inline filter() expression. */
+#mg-edge-layer > g.mg-flow-green {
+    --mg-vfx-glow-near-color: rgba(34, 197, 94, 0.95);
+    --mg-vfx-glow-far-color: #22c55e;
+}
+
+/* The energy-unit SVG has a hardcoded blue fill (#05B4FF) on its outer path.
+   CSS `fill` overrides presentation attributes, so recolor for green flow. */
+#mg-edge-layer > g.mg-flow-green .energy-unit-mover path[fill="#05B4FF"] {
+    fill: #22c55e;
+}
+
+/* Weather indicator: three stacked glyphs, the active one fades in. */
+[data-diagram-weather] .weather-glyph {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+[data-diagram-weather][data-weather="sun-dim"] .weather-glyph[data-glyph="sun"],
+[data-diagram-weather][data-weather="sun"] .weather-glyph[data-glyph="sun"],
+[data-diagram-weather][data-weather="sun-bright"] .weather-glyph[data-glyph="sun"],
+[data-diagram-weather][data-weather="cloud"] .weather-glyph[data-glyph="cloud"],
+[data-diagram-weather][data-weather="moon"] .weather-glyph[data-glyph="moon"] {
+    opacity: 1;
+}
+
+[data-diagram-weather] .weather-glyph[data-glyph="sun"] {
+    filter:
+        drop-shadow(0 0 6px rgba(251, 191, 36, 0.9))
+        drop-shadow(0 0 14px rgba(251, 191, 36, 0.7))
+        drop-shadow(0 0 28px rgba(253, 224, 71, 0.55));
+    animation: weather-sun-pulse 3.5s ease-in-out infinite;
+}
+
+/* Dim sun for low-yield steps: no glow, no pulse. */
+[data-diagram-weather][data-weather="sun-dim"] .weather-glyph[data-glyph="sun"] {
+    filter: none;
+    animation: none;
+}
+
+/* Electricity-price indicator: € icon + a label whose color tracks how
+   cheap/expensive the current tariff step is. Layout mirrors the weather
+   overlay (absolute, positioned via inline styles on the macro). */
+[data-diagram-price] {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-weight: 600;
+    line-height: 1;
+    transition: color 0.6s ease;
+    color: #64748b;
+}
+
+[data-diagram-price] .material-symbols-outlined {
+    font-size: 28px;
+}
+
+@media (min-width: 768px) {
+    [data-diagram-price] .material-symbols-outlined {
+        font-size: 38px;
+    }
+}
+
+[data-diagram-price][data-price="cheap"] {
+    color: #16a34a;
+    filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.55));
+}
+
+[data-diagram-price][data-price="normal"] {
+    color: #f59e0b;
+}
+
+[data-diagram-price][data-price="expensive"] {
+    color: #dc2626;
+    filter: drop-shadow(0 0 8px rgba(220, 38, 38, 0.45));
+}
+
+[data-diagram-price-label] {
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+    [data-diagram-price-label] {
+        font-size: 1rem;
+    }
+}
+
+/* Outdoor-temperature indicator: thermometer icon + label whose color tracks
+   how cold/mild/warm the current step is. Layout mirrors the price overlay. */
+[data-diagram-temperature] {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-weight: 600;
+    line-height: 1;
+    transition: color 0.6s ease;
+    color: #64748b;
+}
+
+[data-diagram-temperature][data-temperature="cold"] {
+    color: #2563eb;
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+}
+
+[data-diagram-temperature][data-temperature="mild"] {
+    color: #64748b;
+}
+
+[data-diagram-temperature][data-temperature="warm"] {
+    color: #dc2626;
+    filter: drop-shadow(0 0 8px rgba(220, 38, 38, 0.45));
+}
+
+[data-diagram-temperature-label] {
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+    [data-diagram-temperature-label] {
+        font-size: 1rem;
+    }
+}
+
+@keyframes weather-sun-pulse {
+    0%, 100% {
+        filter:
+            drop-shadow(0 0 6px rgba(251, 191, 36, 0.9))
+            drop-shadow(0 0 14px rgba(251, 191, 36, 0.7))
+            drop-shadow(0 0 28px rgba(253, 224, 71, 0.55));
+    }
+    50% {
+        filter:
+            drop-shadow(0 0 8px rgba(251, 191, 36, 1))
+            drop-shadow(0 0 22px rgba(251, 191, 36, 0.85))
+            drop-shadow(0 0 40px rgba(253, 224, 71, 0.7));
+    }
+}
+
+/* Brighter sun for the high-yield step (Solar covers EV + Battery charging). */
+[data-diagram-weather][data-weather="sun-bright"] .weather-glyph[data-glyph="sun"] {
+    color: #fbbf24;
+    animation: weather-sun-pulse-bright 2.4s ease-in-out infinite;
+}
+
+@keyframes weather-sun-pulse-bright {
+    0%, 100% {
+        filter:
+            drop-shadow(0 0 10px rgba(251, 191, 36, 1))
+            drop-shadow(0 0 24px rgba(251, 191, 36, 0.9))
+            drop-shadow(0 0 48px rgba(253, 224, 71, 0.75))
+            drop-shadow(0 0 80px rgba(253, 224, 71, 0.4));
+    }
+    50% {
+        filter:
+            drop-shadow(0 0 14px rgba(251, 191, 36, 1))
+            drop-shadow(0 0 36px rgba(251, 191, 36, 1))
+            drop-shadow(0 0 72px rgba(253, 224, 71, 0.85))
+            drop-shadow(0 0 110px rgba(253, 224, 71, 0.55));
+    }
+}
+
+.mg-track {
+    stroke: var(--color-track);
+}
+
+.mg-track-ghost {
+    stroke-opacity: 0.15;
+}
+
+.mg-node-outer {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 2%;
+    border-radius: 10%;
+    background: rgba(0, 0, 0, 0.2);
+    border: 6px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 112px 224px -54px rgba(0, 0, 0, 0.25);
+}
+
+.mg-node-inner {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: 8%;
+    background: linear-gradient(to top, #f3f3f3 0%, #ffffff 40%);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Node icons render as native SVG <image> elements positioned over the
+   foreignObject card. Monochrome icons get their black tint via an SVG
+   <filter> (feFlood + feComposite, set as `filter="url(#mg-icon-black)"`
+   on the <image>); colorful icons render as-is. We avoid CSS `filter`
+   and `mask-image` here because iOS Safari has long-standing paint bugs
+   with those properties when used inside or near <foreignObject>. */
+.mg-node-svg-icon {
+    pointer-events: none;
+}
+
+.mg-node-outer--highlighted {
+    background-image: var(--background-image-gradient-dark-to-light-blue);
+    background-color: transparent;
+    border: none;
+}
+
+.mg-node-inner--highlighted {
+    background-color: #ffffff;
+}
+
+/* Dimmed nodes (referenced via `dimmedNodes` in the animation step). We
+   intentionally do NOT use `opacity` on the whole node here so the white
+   inner card stays fully opaque, otherwise flow lines and the weather
+   glyph (which now sits behind the canvas) would bleed through. Instead
+   we desaturate / fade the icon itself and tone down the outer chrome. */
+.mg-node-dimmed .mg-node-outer {
+    background: rgba(0, 0, 0, 0.08);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 56px 112px -54px rgba(0, 0, 0, 0.12);
+}
+.mg-node-dimmed .mg-node-svg-icon {
+    opacity: 0.45;
+}
+.mg-node-dimmed .mg-node-svg-icon--colorful {
+    filter: grayscale(1);
+}
+.mg-node-dimmed text {
+    opacity: 0.4;
+}
+
+/* Product Page: Hero Tabs (folder style pills under hero) */
+
+.tab-pill {
+    @apply relative z-0 cursor-pointer rounded-tl-[10px] rounded-tr-[10px] bg-light-grey px-6 py-1 font-satoshi text-xl font-medium tracking-[-0.2px] text-grey shadow-[0_-2px_8px_-2px_rgba(0,0,0,0.12)] transition-colors hover:text-black;
+}
+
+.tab-pill-active {
+    @apply z-10 bg-background text-black;
+}
+
+/* Product Page: Feature Pills (showcase card) */
+
+.feature-pill-wrap {
+    @apply grid w-full grid-rows-[auto_0fr] overflow-clip rounded-[20px] bg-black/30 transition-[grid-template-rows,background-color] duration-300 ease-out hover:bg-black/40;
+}
+
+.feature-pill-wrap.is-active {
+    @apply grid-rows-[auto_1fr] bg-black/40;
+}
+
+.feature-pill {
+    @apply flex cursor-pointer items-center gap-2.5 py-1.25 pr-4 pl-1.25 font-satoshi text-base font-bold text-white;
+}
+
+.feature-pill-label {
+    @apply leading-none text-white;
+}
+
+.feature-pill-icon {
+    @apply flex size-6 shrink-0 items-center justify-center text-white;
+}
+
+.feature-pill-toggle {
+    @apply transition-transform duration-300 ease-out;
+}
+
+.feature-pill-wrap.is-active .feature-pill-toggle {
+    @apply rotate-45;
+}
+
+.feature-pill-content {
+    @apply min-h-0 overflow-hidden px-4 pb-0 text-left opacity-0 transition-[padding-bottom,opacity] duration-300 ease-out;
+}
+
+.feature-pill-wrap.is-active .feature-pill-content {
+    @apply pb-2.5 opacity-100;
+}
+
+/* Color swatches inside the Oberflächen pill */
+.swatch {
+    @apply relative size-5 shrink-0 cursor-pointer rounded-full ring-1 ring-white/20 transition-transform;
+}
+
+.swatch.is-selected {
+    @apply ring-2 ring-primary/50 ring-offset-2 ring-offset-black/40;
+}
+
+.swatch-edelstahl {
+    background:
+        radial-gradient(circle at 30% 30%, #f3f3f3 0%, #c4c4c4 35%, #8a8a8a 70%, #5c5c5c 100%),
+        linear-gradient(135deg, #ffffff 0%, #a0a0a0 50%, #5c5c5c 100%);
+    background-blend-mode: overlay;
+}
+
+.swatch-anthrazit {
+    background: radial-gradient(circle at 30% 30%, #6a6a6a 0%, #3a3a3a 50%, #1a1a1a 100%);
+}
+
+/* Product Page: Scenario buttons (energy card) */
+
+.scenario-btn {
+    @apply my-1.5 flex w-full cursor-pointer flex-col gap-2 rounded-[10px] p-2.5 text-left transition-colors hover:bg-black/5;
+}
+
+.scenario-btn-row {
+    @apply flex items-center gap-3;
+}
+
+.scenario-btn-label {
+    @apply font-satoshi text-base font-bold tracking-[-0.2px] text-grey transition-colors;
+}
+
+.scenario-btn-desc {
+    @apply hidden pl-12 font-satoshi text-base leading-relaxed text-grey;
+}
+
+.scenario-btn:hover .scenario-btn-label {
+    @apply text-black;
+}
+
+.scenario-btn-active .scenario-btn-label {
+    @apply text-black;
+}
+
+.scenario-btn-active .scenario-btn-desc {
+    @apply block;
+}
+
+.scenario-icon-badge {
+    @apply flex size-9 shrink-0 items-center justify-center rounded-full bg-gradient-light-blue p-px;
+}
+
+.scenario-icon-badge-inner {
+    @apply flex h-full w-full items-center justify-center rounded-full bg-gradient-deep-blue;
+}
+
+/* Product Page: Pricing / Comparison Cards */
+
+.pricing-card {
+    @apply flex w-full max-w-md flex-1 flex-col rounded-[10px] bg-white;
+}
+
+.pricing-card-wide {
+    @apply md:max-w-xl;
+}
+
+.pricing-card-head {
+    @apply flex flex-col gap-4 p-7;
+}
+
+.pricing-card-title {
+    @apply text-h2 text-black;
+}
+
+.pricing-card-price-row {
+    @apply flex items-baseline gap-2;
+}
+
+.pricing-card-price-prefix {
+    @apply text-base text-black;
+}
+
+.pricing-card-price {
+    @apply text-h3 font-medium tracking-[-2px] text-black;
+}
+
+.pricing-card-price-suffix {
+    @apply text-base text-medium-grey;
+}
+
+.pricing-card-divider {
+    @apply h-px w-full bg-very-light-grey;
+}
+
+.pricing-card-features {
+    @apply flex flex-col;
+}
+
+.pricing-card-feature {
+    @apply flex items-center gap-2.5 px-7 py-4;
+}
+
+.pricing-card-feature-label {
+    @apply font-satoshi text-base font-medium text-black;
+}
+
+.pricing-card-feature-heading {
+    @apply px-7 pt-4 font-satoshi text-base font-bold text-black;
+}

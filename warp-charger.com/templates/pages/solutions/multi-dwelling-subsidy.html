@@ -1,0 +1,37 @@
+{% extends "page_base.html" %}
+{% from "macros/page_hero.html" import page_hero %}
+{% from "macros/two_col_section.html" import two_col_section %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block content %}
+{# Hero / Intro #}
+{% call page_hero(badge_icon="euro_symbol", badge_text=t.badge, headline=t.subtitle) %}{% endcall %}
+
+{# Die Förderung #}
+{% call two_col_section(
+    badge_icon="euro_symbol",
+    badge_text=t.subsidy.badge,
+    headline=t.subsidy.headline,
+    image="multi-dwelling-subsidy.webp",
+    image_side="right",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.subsidy.body_html|safe }}</p>
+    <p class="text-section-body">{{ t.subsidy.conditions_html|safe }}</p>
+{% endcall %}
+
+{# WARP4 Charger #}
+{% call two_col_section(
+    badge_icon="ev_station",
+    badge_text=t.warp4.badge,
+    headline=t.warp4.headline,
+    image="pro-db730-square.webp",
+    image_side="left",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.warp4.body_html|safe }}</p>
+    <p class="text-section-body">{{ t.warp4.ladesaeule_html|safe }}</p>
+{% endcall %}
+{% endblock %}

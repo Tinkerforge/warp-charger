@@ -1,0 +1,56 @@
+title: "PV-Überschussladen"
+description: "PV-Überschussladen mit dem WARP Charger: ohne zusätzliche Hardware den eigenen Solarstrom ins E-Auto laden."
+
+badge: "PV-Überschussladen"
+subtitle: "Eigenen Solarstrom laden, ohne zusätzliche Hardware"
+
+intro:
+  badge: "Eigenverbrauch maximieren"
+  headline: "Den eigenen Strom nutzen"
+  text: "Jeder der eine eigene Photovoltaik-Anlage besitzt, möchte möglichst viel vom produzierten Strom selbst nutzen. Der WARP Charger ermöglicht ein reines PV-Überschussladen, bei dem nur überschüssige Energie ins Fahrzeug geladen wird, ohne zusätzliche Hardware. Er kann einfach auf bestehende Geräte zugreifen."
+  text2: "Für das PV-Überschussladen wird ein Stromzähler am Netzanschluss benötigt, damit ein Überschuss ermittelt werden kann. Typischerweise wird auf einen Netzbezug von 0 W geregelt: Die gesamte PV-Leistung wird in das Fahrzeug geladen, ohne Strom aus dem Netz zu beziehen."
+  highlight: 'WARP Charger Smart und Pro beherrschen PV-Überschussladen eigenständig, ein <a href="/de/produkte/warp-energy-manager" class="prose-link">WARP Energy Manager</a> ist dafür nicht notwendig!'
+
+compatibility:
+  badge: "Offene Plattform"
+  headline: "Direkte Kommunikation mit dem Wechselrichter"
+  text: "Unser Ziel ist es, dass der WARP Charger einfach mit einer bestehenden PV-Anlage kombiniert werden kann. Um große Umbauten und den Kauf zusätzlicher Geräte zu vermeiden, ist der WARP Charger kompatibel zu einer Vielzahl von Wechselrichtern und Stromzählern."
+  text2: "Unterstützt der Wechselrichter SunSpec, muss nur der Hostname oder die IP eingegeben werden. Das Gerät wird automatisch erkannt. Für Geräte ohne SunSpec-Unterstützung haben wir herstellerspezifische Schnittstellen implementiert."
+  text3: "Nachdem ein Stromzähler konfiguriert wurde, kann direkt mit dem PV-Überschussladen begonnen werden. Es ist keine weitere externe Hardware notwendig."
+  cta_text: "Kompatible Geräte"
+  cta_url: "/de/loesungen/maximale-kompatibilitaet#devices"
+
+modes:
+  badge: "Lademodi"
+  headline: "Überschussladen nach eigenen Wünschen"
+  text: "Auf der Startseite der Webapp kann zwischen verschiedenen Lademodi gewählt werden:"
+  list:
+    - title: "PV"
+      icon: "solar_power"
+      desc: "Es wird ausschließlich Strom geladen, der über die eigene PV-Anlage erzeugt wurde."
+    - title: "Min+PV"
+      icon: "add_circle"
+      desc: "PV-Überschuss wird geladen, aber ein festgelegter Mindeststrom wird immer aus dem Netz bezogen."
+    - title: "Eco+PV"
+      icon: "eco"
+      desc: 'Das Fahrzeug wird bis zu einer konfigurierbaren Abfahrtzeit geladen. Die Wallbox kombiniert dabei selbstständig PV-Ladung und <a href="/de/loesungen/dynamische-strompreise" class="prose-link">dynamische Strompreise</a>.'
+    - title: "Schnell"
+      icon: "bolt"
+      desc: "Es wird mit dem maximal zur Verfügung stehenden Strom geladen, unabhängig von der aktuellen PV-Erzeugung."
+
+phase_switching:
+  badge: "Phasenumschaltung"
+  headline: "Laden ab 1,4 kW dank automatischer Phasenumschaltung"
+  text: "Der IEC-61851-Standard schreibt einen minimalen Ladestrom von 6 A vor. Bei drei Phasen entspricht das bereits ca. 4,2 kW. Bei kleinen PV-Anlagen oder bewölktem Himmel oft zu viel für reines Überschussladen."
+  text2: "Mit der automatischen Phasenumschaltung kann der WARP Charger selbstständig zwischen 3-phasigem und 1-phasigem Laden umschalten. So ist eine Ladung bereits ab 1,4 kW möglich, ein großer Vorteil für das PV-Überschussladen!"
+
+settings:
+  badge: "Konfiguration"
+  headline: "Feingranulare Einstellungen"
+  list:
+    - title: "Regelverhalten"
+      desc: "Legt fest, auf welchen Netzbezug geregelt werden soll, damit z.B. ein Batteriespeicher höher oder niedriger priorisiert wird."
+    - title: "Wolkenfilter"
+      desc: "Stellt die Trägheit der Regelung ein. Bei wechselnd bewölktem Wetter werden kurze Schwankungen der PV-Leistung geglättet."
+    - title: "Batteriespeicher"
+      desc: "Kann ein Speicher ausgelesen werden, wird er direkt in die Regelung einbezogen. Die Priorität zwischen Wallbox und Speicher ist konfigurierbar."

@@ -1,0 +1,440 @@
+{#
+    Energy scenario switcher: scenario tabs on the left, diagram region on the right.
+
+    The right column renders one panel per scenario, only the active panel is
+    visible. Most scenarios use a dashed placeholder panel; a scenario whose
+    YAML item has `panel: "load_management"` instead embeds the animated
+    load-management diagram with its own static/dynamic pill switcher (using
+    the same data-code-tabs handler used for HTTP/MQTT code examples).
+
+    Parameters:
+        t : translation dict with:
+            eyebrow   : top eyebrow ("Intelligentes Energiemanagement")
+            heading   : right-side h2 ("Eine Wallbox für jede Tageszeit.")
+            tagline   : left-column eyebrow ("Intelligentes Energiemanagement")
+            subhead   : left-column h3 ("Lädt dann, wenn es Sinn ergibt.")
+            placeholder_eyebrow : eyebrow inside the placeholder ("Energiediagramm")
+            section_icon : material icon for the section badge (default "auto_awesome")
+        scenarios : list of dicts:
+            id    : unique slug
+            icon  : material symbols name
+            label : button label
+            desc  : button description (also shown in placeholder)
+            panel : optional panel kind ("load_management" -> diagram + switcher)
+            panel_tabs : optional dict with labels for the panel switcher
+        load_management_t : optional dict from translations/<lang>/charge-management.yaml
+                            (used to render the load_management panel)
+#}
+
+{% from "macros/energy_diagram.html" import energy_diagram %}
+{% from "macros/badge.html" import badge %}
+
+{% macro energy_scenario_switcher(t, scenarios, load_management_t=None) %}
+<section class="w-full overflow-x-clip bg-background pt-section pb-12 md:pb-section">
+    <div class="container-wide w-full">
+        <header class="mb-12 flex flex-col items-start gap-text-gap-sm md:mb-16">
+            {{ badge(t.section_icon or "auto_awesome", t.eyebrow, wrap_class="flex items-center gap-2.5") }}
+            <h2 class="text-h2 text-black">{{ t.heading }}</h2>
+        </header>
+
+        <div
+            data-scenario-switcher
+            class="flex flex-col gap-6 bg-white pt-5 lg:flex-row lg:items-stretch lg:justify-between lg:gap-8 lg:rounded-[10px] lg:p-5"
+        >
+            <div class="flex flex-col justify-between gap-8 px-5 lg:h-150 lg:max-w-99 lg:gap-8 lg:px-0">
+                <div class="flex flex-col gap-2.5">
+                    <p class="text-eyebrow text-grey">{{ t.tagline }}</p>
+                    {% if t.subhead %}
+                    <p class="text-h3 text-black">{{ t.subhead }}</p>
+                    {% endif %}
+                    {% if t.description_html %}
+                    <p class="text-body text-grey">{{ t.description_html | safe }}</p>
+                    {% endif %}
+                </div>
+
+                <ul class="flex flex-col divide-y divide-light-grey" role="tablist" aria-label="{{ t.aria_label or 'Lade-Szenarien' }}">
+                    {% for scenario in scenarios %}
+                    <li>
+                        <button
+                            type="button"
+                            role="tab"
+                            aria-selected="{{ 'true' if loop.first else 'false' }}"
+                            aria-controls="scenario-panel-{{ scenario.id }}"
+                            data-scenario="{{ scenario.id }}"
+                            data-scenario-label="{{ scenario.label }}"
+                            data-scenario-desc="{{ scenario.desc }}"
+                            class="scenario-btn{% if loop.first %} scenario-btn-active{% endif %}"
+                        >
+                            <div class="scenario-btn-row">
+                                <div class="scenario-icon-badge">
+                                    <div class="scenario-icon-badge-inner">
+                                        <span class="material-symbols-outlined bg-gradient-white-blue bg-clip-text icon-20 text-transparent">{{ scenario.icon }}</span>
+                                    </div>
+                                </div>
+                                <span class="scenario-btn-label">{{ scenario.label }}</span>
+                            </div>
+                            <p class="scenario-btn-desc">{{ scenario.desc }}</p>
+                        </button>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="relative -mx-4 w-screen md:mx-0 md:w-full lg:size-150 lg:max-w-150 lg:shrink-0">
+                {% for scenario in scenarios %}
+                <div
+                    id="scenario-panel-{{ scenario.id }}"
+                    role="region"
+                    aria-live="polite"
+                    data-scenario-panel="{{ scenario.id }}"
+                    class="{% if not loop.first %}hidden {% endif %}relative w-full overflow-visible bg-background lg:rounded-[10px] lg:aspect-square
+                    {% if (scenario.panel == 'load_management' and load_management_t) or scenario.panel == 'pv_surplus' or scenario.panel == 'eco_mode' or scenario.panel == 'battery_control' or scenario.panel == 'em_pv_surplus' or scenario.panel == 'em_dynamic_prices' or scenario.panel == 'heat_curve' or scenario.panel == 'em_wallbox' or scenario.panel == 'em_battery_control' %}
+                            lg:bg-very-light-grey
+                        {% else %}
+                            lg:border lg:border-dashed lg:border-light-grey lg:bg-very-light-grey
+                        {% endif %}
+                        lg:size-150 lg:max-w-150 lg:shrink-0"
+                >
+                    {% if scenario.panel == "load_management" and load_management_t %}
+                        {# Static/dynamic switcher + diagram (mirrors HTTP/MQTT pattern, light theme) #}
+                        <div class="flex flex-col items-stretch gap-4 pt-5 lg:absolute lg:inset-0 lg:p-5" data-code-tabs>
+                            <nav class="relative z-10 flex gap-1 self-center rounded-[20px] bg-light-grey/60 p-1.5">
+                                <button
+                                    type="button"
+                                    data-tab-btn
+                                    data-active="true"
+                                    class="cursor-pointer rounded-[15px] px-4 py-1 text-btn text-black transition-all duration-200 bg-white shadow-sm data-[active=false]:bg-transparent data-[active=false]:text-grey data-[active=false]:shadow-none hover:data-[active=false]:bg-white/60"
+                                >{{ scenario.panel_tabs.static if scenario.panel_tabs else 'Statisch' }}</button>
+                                <button
+                                    type="button"
+                                    data-tab-btn
+                                    data-active="false"
+                                    class="cursor-pointer rounded-[15px] px-4 py-1 text-btn text-black transition-all duration-200 bg-transparent text-grey data-[active=true]:bg-white data-[active=true]:text-black data-[active=true]:shadow-sm hover:bg-white/60"
+                                >{{ scenario.panel_tabs.dynamic if scenario.panel_tabs else 'Dynamisch' }}</button>
+                            </nav>
+
+                            <div class="relative lg:flex-1 lg:min-h-0">
+                                <div data-tab-panel class="flex items-center justify-center lg:absolute lg:inset-0">
+                                    {{ energy_diagram({
+                                        "diagram_aria": load_management_t.static.diagram_aria,
+                                        "diagram_labels": load_management_t.static.diagram_labels,
+                                        "descriptions": load_management_t.static.descriptions,
+                                        "diagram_config_url": url_for('static', filename='data/diagram-static-load.json')
+                                    }) }}
+                                </div>
+                                <div data-tab-panel class="hidden flex items-center justify-center lg:absolute lg:inset-0">
+                                    {{ energy_diagram({
+                                        "diagram_aria": load_management_t.dynamic.diagram_aria,
+                                        "diagram_labels": load_management_t.dynamic.diagram_labels,
+                                        "descriptions": load_management_t.dynamic.descriptions,
+                                        "diagram_config_url": url_for('static', filename='data/diagram-dynamic-load.json')
+                                    }) }}
+                                </div>
+                            </div>
+                        </div>
+                    {% elif scenario.panel == "pv_surplus" %}
+                        {# Same flex-col + invisible nav placeholder structure as load/battery so the diagram lays out identically #}
+                        <div class="flex flex-col items-stretch gap-4 pt-5 lg:absolute lg:inset-0 lg:p-5">
+                            <nav class="invisible relative z-10 flex gap-1 self-center rounded-[20px] bg-light-grey/60 p-1.5" aria-hidden="true">
+                                <span class="rounded-[15px] px-4 py-1 text-btn">&nbsp;</span>
+                            </nav>
+                            <div class="relative lg:flex-1 lg:min-h-0">
+                                <div class="flex items-center justify-center lg:absolute lg:inset-0">
+                                {{ energy_diagram({
+                                    "diagram_aria": t.pv_surplus_diagram.diagram_aria,
+                                    "diagram_labels": t.pv_surplus_diagram.diagram_labels,
+                                    "descriptions": t.pv_surplus_diagram.descriptions,
+                                    "diagram_config_url": url_for('static', filename='data/diagram-pv-surplus.json')
+                                }, weather="cloud") }}
+                                </div>
+                            </div>
+                        </div>
+                    {% elif scenario.panel == "eco_mode" %}
+                        <div class="flex flex-col items-stretch gap-4 pt-5 lg:absolute lg:inset-0 lg:p-5">
+                            <nav class="invisible relative z-10 flex gap-1 self-center rounded-[20px] bg-light-grey/60 p-1.5" aria-hidden="true">
+                                <span class="rounded-[15px] px-4 py-1 text-btn">&nbsp;</span>
+                            </nav>
+                            <div class="relative lg:flex-1 lg:min-h-0">
+                                <div class="flex items-center justify-center lg:absolute lg:inset-0">
+                                {{ energy_diagram({
+                                    "diagram_aria": t.eco_mode_diagram.diagram_aria,
+                                    "diagram_labels": t.eco_mode_diagram.diagram_labels,
+                                    "descriptions": t.eco_mode_diagram.descriptions,
+                                    "diagram_config_url": url_for('static', filename='data/diagram-eco-mode.json')
+                                }, weather="sun-dim", price="normal", price_label="20 ct") }}
+                                </div>
+                            </div>
+                        </div>
+                    {% elif scenario.panel == "battery_control" %}
+                        {# Priority / Block switcher + diagram (mirrors load-management pattern, light theme) #}
+                        <div class="flex flex-col items-stretch gap-4 pt-5 lg:absolute lg:inset-0 lg:p-5" data-code-tabs>
+                            <nav class="relative z-10 flex gap-1 self-center rounded-[20px] bg-light-grey/60 p-1.5">
+                                <button
+                                    type="button"
+                                    data-tab-btn
+                                    data-active="true"
+                                    class="cursor-pointer rounded-[15px] px-4 py-1 text-btn text-black transition-all duration-200 bg-white shadow-sm data-[active=false]:bg-transparent data-[active=false]:text-grey data-[active=false]:shadow-none hover:data-[active=false]:bg-white/60"
+                                >{{ scenario.panel_tabs.priority if scenario.panel_tabs else 'Priorität' }}</button>
+                                <button
+                                    type="button"
+                                    data-tab-btn
+                                    data-active="false"
+                                    class="cursor-pointer rounded-[15px] px-4 py-1 text-btn text-black transition-all duration-200 bg-transparent text-grey data-[active=true]:bg-white data-[active=true]:text-black data-[active=true]:shadow-sm hover:bg-white/60"
+                                >{{ scenario.panel_tabs.block if scenario.panel_tabs else 'Sperren' }}</button>
+                            </nav>
+
+                            <div class="relative lg:flex-1 lg:min-h-0">
+                                <div data-tab-panel class="flex items-center justify-center lg:absolute lg:inset-0">
+                                    {{ energy_diagram({
+                                        "diagram_aria": t.battery_control_diagram.priority.diagram_aria,
+                                        "diagram_labels": t.battery_control_diagram.diagram_labels,
+                                        "descriptions": t.battery_control_diagram.priority.descriptions,
+                                        "diagram_config_url": url_for('static', filename='data/diagram-battery-priority.json')
+                                    }, weather="sun-bright", price="expensive", price_label="45 ct") }}
+                                </div>
+                                <div data-tab-panel class="hidden flex items-center justify-center lg:absolute lg:inset-0">
+                                    {{ energy_diagram({
+                                        "diagram_aria": t.battery_control_diagram.block.diagram_aria,
+                                        "diagram_labels": t.battery_control_diagram.diagram_labels,
+                                        "descriptions": t.battery_control_diagram.block.descriptions,
+                                        "diagram_config_url": url_for('static', filename='data/diagram-battery-block.json')
+                                    }) }}
+                                </div>
+                            </div>
+                        </div>
+                    {% elif scenario.panel == "em_pv_surplus" %}
+                        <div class="flex flex-col items-stretch gap-4 pt-5 lg:absolute lg:inset-0 lg:p-5">
+                            <nav class="invisible relative z-10 flex gap-1 self-center rounded-[20px] bg-light-grey/60 p-1.5" aria-hidden="true">
+                                <span class="rounded-[15px] px-4 py-1 text-btn">&nbsp;</span>
+                            </nav>
+                            <div class="relative lg:flex-1 lg:min-h-0">
+                                <div class="flex items-center justify-center lg:absolute lg:inset-0">
+                                {{ energy_diagram({
+                                    "diagram_aria": t.em_pv_surplus_diagram.diagram_aria,
+                                    "diagram_labels": t.em_pv_surplus_diagram.diagram_labels,
+                                    "descriptions": t.em_pv_surplus_diagram.descriptions,
+                                    "diagram_config_url": url_for('static', filename='data/diagram-em-pv-surplus.json')
+                                }, weather="sun") }}
+                                </div>
+                            </div>
+                        </div>
+                    {% elif scenario.panel == "em_dynamic_prices" %}
+                        <div class="flex flex-col items-stretch gap-4 pt-5 lg:absolute lg:inset-0 lg:p-5">
+                            <nav class="invisible relative z-10 flex gap-1 self-center rounded-[20px] bg-light-grey/60 p-1.5" aria-hidden="true">
+                                <span class="rounded-[15px] px-4 py-1 text-btn">&nbsp;</span>
+                            </nav>
+                            <div class="relative lg:flex-1 lg:min-h-0">
+                                <div class="flex items-center justify-center lg:absolute lg:inset-0">
+                                {{ energy_diagram({
+                                    "diagram_aria": t.em_dynamic_prices_diagram.diagram_aria,
+                                    "diagram_labels": t.em_dynamic_prices_diagram.diagram_labels,
+                                    "descriptions": t.em_dynamic_prices_diagram.descriptions,
+                                    "diagram_config_url": url_for('static', filename='data/diagram-em-dynamic-prices.json')
+                                }, weather="sun-bright", price="expensive", price_label="45 ct") }}
+                                </div>
+                            </div>
+                        </div>
+                    {% elif scenario.panel == "heat_curve" %}
+                        {# Stacked 24-hour day timelines: each row is a temperature scenario,
+                           filled cells = hours the heat pump runs that day. Demonstrates how
+                           the EM scales runtime + heating power with outdoor temperature. #}
+                        {% set heat_curve_rows = [
+                            {"key": "row1", "active": [11, 12, 17, 18],                                                          "bar_class": "bg-amber-400",  "dot_class": "bg-amber-400"},
+                            {"key": "row2", "active": [5, 6, 7, 8, 17, 18, 19, 20],                                              "bar_class": "bg-orange-500", "dot_class": "bg-orange-500"},
+                            {"key": "row3", "active": [0, 1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19],           "bar_class": "bg-red-600",    "dot_class": "bg-red-600"}
+                        ] %}
+                        <div
+                            role="img"
+                            aria-label="{{ t.heat_curve_diagram.diagram_aria }}"
+                            class="flex flex-col gap-5 px-5 pt-5 pb-6 lg:absolute lg:inset-0 lg:gap-6 lg:p-7"
+                        >
+                            <div class="flex flex-col gap-1.5">
+                                <p class="text-eyebrow text-grey">{{ t.heat_curve_diagram.heading or "Heizkurve" }}</p>
+                                <p class="text-h3 text-black">{{ t.heat_curve_diagram.subhead or "Tägliche Laufzeit der Wärmepumpe" }}</p>
+                            </div>
+
+                            <div class="flex flex-col gap-4 lg:gap-5">
+                                {% for row in heat_curve_rows %}
+                                {% set row_t = t.heat_curve_diagram[row.key] %}
+                                <div class="flex flex-col gap-1.5">
+                                    <div class="flex items-baseline justify-between gap-3">
+                                        <div class="flex items-center gap-2">
+                                            <span class="inline-block h-2.5 w-2.5 rounded-full {{ row.dot_class }}"></span>
+                                            <span class="text-body font-semibold text-black">{{ row_t.label }}</span>
+                                            <span class="text-body text-grey">{{ row_t.temp }}</span>
+                                        </div>
+                                        <div class="flex items-baseline gap-2">
+                                            <span class="text-body font-semibold text-black">{{ row_t.runtime }}</span>
+                                            <span class="text-small text-grey">·</span>
+                                            <span class="text-small text-grey">{{ row_t.power }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-[repeat(24,minmax(0,1fr))] gap-px overflow-hidden rounded-[6px] bg-light-grey/60 ring-1 ring-light-grey">
+                                        {% for h in range(24) %}
+                                        <div
+                                            class="h-7 lg:h-9 {{ row.bar_class if h in row.active else 'bg-white' }}"
+                                            aria-hidden="true"
+                                        ></div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="mt-1 flex items-center justify-between text-small text-grey">
+                                <span>0 {{ t.heat_curve_diagram.hours_unit or "h" }}</span>
+                                <span>6</span>
+                                <span>12</span>
+                                <span>18</span>
+                                <span>24</span>
+                            </div>
+
+                            {% if t.heat_curve_diagram.caption %}
+                            <p class="text-small text-grey">{{ t.heat_curve_diagram.caption }}</p>
+                            {% endif %}
+                        </div>
+                    {% elif scenario.panel == "em_wallbox" %}
+                        <div class="flex flex-col items-stretch gap-4 pt-5 lg:absolute lg:inset-0 lg:p-5">
+                            <nav class="invisible relative z-10 flex gap-1 self-center rounded-[20px] bg-light-grey/60 p-1.5" aria-hidden="true">
+                                <span class="rounded-[15px] px-4 py-1 text-btn">&nbsp;</span>
+                            </nav>
+                            <div class="relative lg:flex-1 lg:min-h-0">
+                                <div class="flex items-center justify-center lg:absolute lg:inset-0">
+                                {{ energy_diagram({
+                                    "diagram_aria": t.em_wallbox_diagram.diagram_aria,
+                                    "diagram_labels": t.em_wallbox_diagram.diagram_labels,
+                                    "descriptions": t.em_wallbox_diagram.descriptions,
+                                    "diagram_config_url": url_for('static', filename='data/diagram-em-wallbox.json')
+                                }, weather="sun-dim") }}
+                                </div>
+                            </div>
+                        </div>
+                    {% elif scenario.panel == "em_battery_control" %}
+                        {# Priorität / Sperren switcher + diagram, EM-centric layout. #}
+                        <div class="flex flex-col items-stretch gap-4 pt-5 lg:absolute lg:inset-0 lg:p-5" data-code-tabs>
+                            <nav class="relative z-10 flex gap-1 self-center rounded-[20px] bg-light-grey/60 p-1.5">
+                                <button
+                                    type="button"
+                                    data-tab-btn
+                                    data-active="true"
+                                    class="cursor-pointer rounded-[15px] px-4 py-1 text-btn text-black transition-all duration-200 bg-white shadow-sm data-[active=false]:bg-transparent data-[active=false]:text-grey data-[active=false]:shadow-none hover:data-[active=false]:bg-white/60"
+                                >{{ scenario.panel_tabs.priority if scenario.panel_tabs else 'Priorität' }}</button>
+                                <button
+                                    type="button"
+                                    data-tab-btn
+                                    data-active="false"
+                                    class="cursor-pointer rounded-[15px] px-4 py-1 text-btn text-black transition-all duration-200 bg-transparent text-grey data-[active=true]:bg-white data-[active=true]:text-black data-[active=true]:shadow-sm hover:bg-white/60"
+                                >{{ scenario.panel_tabs.block if scenario.panel_tabs else 'Sperren' }}</button>
+                            </nav>
+
+                            <div class="relative lg:flex-1 lg:min-h-0">
+                                <div data-tab-panel class="flex items-center justify-center lg:absolute lg:inset-0">
+                                    {{ energy_diagram({
+                                        "diagram_aria": t.em_battery_control_diagram.priority.diagram_aria,
+                                        "diagram_labels": t.em_battery_control_diagram.diagram_labels,
+                                        "descriptions": t.em_battery_control_diagram.priority.descriptions,
+                                        "diagram_config_url": url_for('static', filename='data/diagram-em-battery-priority.json')
+                                    }, weather="sun-bright") }}
+                                </div>
+                                <div data-tab-panel class="hidden flex items-center justify-center lg:absolute lg:inset-0">
+                                    {{ energy_diagram({
+                                        "diagram_aria": t.em_battery_control_diagram.block.diagram_aria,
+                                        "diagram_labels": t.em_battery_control_diagram.diagram_labels,
+                                        "descriptions": t.em_battery_control_diagram.block.descriptions,
+                                        "diagram_config_url": url_for('static', filename='data/diagram-em-battery-block.json')
+                                    }, weather="cloud", price="cheap", price_label="8 ct") }}
+                                </div>
+                            </div>
+                        </div>
+                    {% elif scenario.panel == "bidirectional" %}
+                        <div class="flex flex-col items-stretch gap-4 pt-5 lg:absolute lg:inset-0 lg:p-5">
+                            <nav class="invisible relative z-10 flex gap-1 self-center rounded-[20px] bg-light-grey/60 p-1.5" aria-hidden="true">
+                                <span class="rounded-[15px] px-4 py-1 text-btn">&nbsp;</span>
+                            </nav>
+                            <div class="relative lg:flex-1 lg:min-h-0">
+                                <div class="flex items-center justify-center lg:absolute lg:inset-0">
+                                {{ energy_diagram({
+                                    "diagram_aria": t.bidirectional_diagram.diagram_aria,
+                                    "diagram_labels": t.bidirectional_diagram.diagram_labels,
+                                    "diagram_config_url": url_for('static', filename='data/diagram-bidirectional.json')
+                                }, dim=true) }}
+                                </div>
+                            </div>
+                        </div>
+                        {# "Coming soon" overlay, centered over the entire square panel #}
+                        <div class="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
+                            <span class="rounded-full bg-black/30 px-8 py-3 text-h3 text-white shadow-lg backdrop-blur-sm">
+                                {{ t.bidirectional_diagram.coming_soon_label or "Coming soon" }}
+                            </span>
+                        </div>
+                    {% else %}
+                        <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 px-6 text-center">
+                            <span class="material-symbols-outlined icon-48 text-light-grey">polyline</span>
+                            <p class="text-eyebrow text-grey">{{ t.placeholder_eyebrow or "Energiediagramm" }}</p>
+                            <p class="text-h3 text-black">{{ scenario.label }}</p>
+                            <p class="max-w-xs text-body text-grey">{{ scenario.desc }}</p>
+                        </div>
+                    {% endif %}
+
+                    {# Info button + popover with live step description.
+                       Only shown for scenarios that have an animated diagram. #}
+                    {% if (scenario.panel == 'load_management' and load_management_t) or scenario.panel == 'pv_surplus' or scenario.panel == 'eco_mode' or scenario.panel == 'battery_control' or scenario.panel == 'em_pv_surplus' or scenario.panel == 'em_dynamic_prices' or scenario.panel == 'em_wallbox' or scenario.panel == 'em_battery_control' %}
+                    <button
+                        type="button"
+                        data-info-btn
+                        aria-label="{{ t.info_aria or 'Diagramm erklären' }}"
+                        aria-expanded="false"
+                        class="absolute left-7 top-5 z-30 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-white shadow-md ring-1 ring-light-grey transition-colors hover:bg-light-grey lg:left-3 lg:top-3"
+                    >
+                        <span class="material-symbols-outlined icon-20 text-grey">info</span>
+                    </button>
+
+                    <div
+                        data-info-popover
+                        role="dialog"
+                        aria-modal="false"
+                        class="hidden absolute left-0 right-0 bottom-[calc(100%-0.25rem)] z-30 rounded-[10px] bg-white p-4 shadow-xl ring-1 ring-light-grey lg:left-auto lg:right-[calc(100%+12px)] lg:top-0 lg:bottom-auto lg:w-[280px]"
+                    >
+                        <div class="flex items-start justify-between gap-3">
+                            <p
+                                data-diagram-step-eyebrow
+                                data-template="{{ t.info_step_eyebrow or 'Schritt {n}' }}"
+                                class="text-eyebrow text-grey"
+                            >{{ (t.info_step_eyebrow or 'Schritt {n}').replace('{n}', '1') }}</p>
+                            <button
+                                type="button"
+                                data-info-close
+                                aria-label="{{ t.info_close_aria or 'Schließen' }}"
+                                class="-mr-1 -mt-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full text-grey hover:bg-light-grey"
+                            >
+                                <span class="material-symbols-outlined icon-18">close</span>
+                            </button>
+                        </div>
+
+                        <p data-diagram-description class="mt-2 text-body text-black min-h-[3.5em]" aria-live="polite"></p>
+
+                        <div
+                            data-diagram-step-dots
+                            data-aria-template="{{ t.info_step_aria or 'Schritt {n} anzeigen' }}"
+                            class="mt-3 flex items-center justify-center gap-2"
+                        ></div>
+
+                        <div class="mt-4 hidden flex-col gap-1.5 border-t border-light-grey pt-3 sm:flex">
+                            <div class="flex items-center gap-2">
+                                <span class="inline-block h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+                                <span class="text-small text-grey">{{ t.info_legend_green or "Solar / Hausspeicher" }}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="inline-block h-2.5 w-2.5 rounded-full bg-blue-500"></span>
+                                <span class="text-small text-grey">{{ t.info_legend_blue or "Netzbezug" }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endmacro %}

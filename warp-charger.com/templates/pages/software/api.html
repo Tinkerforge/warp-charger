@@ -1,0 +1,99 @@
+{% extends "page_base.html" %}
+{% from "macros/two_col_section.html" import two_col_section %}
+{% from "macros/code_tabs_section.html" import code_tabs_section %}
+{% from "macros/page_hero.html" import page_hero %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block content %}
+{# Hero #}
+{% call page_hero(badge_icon="api", badge_text=t.hero.badge, headline=t.hero.headline) %}
+    <p class="text-section-body max-w-2xl mt-6">{{ t.hero.text }}</p>
+{% endcall %}
+
+{# Kompatible Geräte #}
+{% call two_col_section(
+    badge_icon="devices",
+    badge_text=t.compatible.badge,
+    headline=t.compatible.headline,
+    image="word-cloud-light.webp",
+    image_side="left",
+    no_frame=true,
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.compatible.text }}</p>
+    <a href="{{ t.compatible.docs_url }}"
+       class="btn-icon mt-2">
+        <span class="material-symbols-outlined icon-20">devices</span>
+        {{ t.compatible.docs_label }}
+    </a>
+{% endcall %}
+
+{# OCPP #}
+{% call two_col_section(
+    badge_icon="cloud",
+    badge_text=t.ocpp.badge,
+    headline=t.ocpp.headline,
+    image="ocpp-web.webp",
+    image_side="right",
+    dark=true
+) %}
+    <p class="text-section-body-dark">{{ t.ocpp.text|safe }}</p>
+    <a href="{{ t.ocpp.docs_url }}" target="_blank" rel="noopener"
+       class="btn-icon mt-2">
+        <span class="material-symbols-outlined icon-20">open_in_new</span>
+        {{ t.ocpp.docs_label }}
+    </a>
+{% endcall %}
+
+{# EEBUS #}
+{% call two_col_section(
+    badge_icon="electrical_services",
+    badge_text=t.eebus.badge,
+    headline=t.eebus.headline,
+    image="p14a-enwg-webui.webp",
+    image_side="left"
+) %}
+    <p class="text-section-body">{{ t.eebus.text|safe }}</p>
+    <p class="text-section-body">{{ t.eebus.text2 }}</p>
+    <a href="{{ t.eebus.docs_url }}" target="_blank" rel="noopener"
+       class="btn-icon mt-2">
+        <span class="material-symbols-outlined icon-20">open_in_new</span>
+        {{ t.eebus.docs_label }}
+    </a>
+{% endcall %}
+
+{# HTTP & MQTT (code replaces image) #}
+{% call code_tabs_section(
+    id="api",
+    badge_icon="code",
+    badge_text=t.http_mqtt.badge,
+    headline=t.http_mqtt.headline,
+    tabs=[{"label": "HTTP", "code": t.http_mqtt.http_code}, {"label": "MQTT", "code": t.http_mqtt.mqtt_code}],
+    bg="bg-gradient-light-white-background"
+) %}
+    <p class="text-section-body">{{ t.http_mqtt.text }}</p>
+    <a href="{{ t.http_mqtt.docs_url }}" target="_blank" rel="noopener"
+       class="btn-icon">
+        <span class="material-symbols-outlined icon-20">open_in_new</span>
+        {{ t.http_mqtt.docs_label }}
+    </a>
+{% endcall %}
+
+{# Modbus/TCP (code replaces image) #}
+{% call code_tabs_section(
+    id="modbus",
+    badge_icon="settings_ethernet",
+    badge_text=t.modbus.badge,
+    headline=t.modbus.headline,
+    tabs=[{"label": "Input", "code": t.modbus.input_code}, {"label": "Holding/Coils", "code": t.modbus.holding_code}]
+) %}
+    <p class="text-section-body">{{ t.modbus.text }}</p>
+    <a href="{{ t.modbus.docs_url }}" target="_blank" rel="noopener"
+       class="btn-icon mt-2">
+        <span class="material-symbols-outlined icon-20">open_in_new</span>
+        {{ t.modbus.docs_label }}
+    </a>
+{% endcall %}
+{% endblock %}

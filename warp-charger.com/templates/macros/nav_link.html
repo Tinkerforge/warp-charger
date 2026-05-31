@@ -1,0 +1,16 @@
+{# Render a single navigation link, handling external URLs, anchor links, and internal pages. #}
+{% macro dropdown_nav_link(lang, slug, label, preview, extra_class="dropdown-link") %}
+{% if slug.startswith('http') %}
+{% set _preview_link = (preview.cta_link if preview and preview.cta_link else slug) %}
+<a href="{{ slug }}" target="_blank" rel="noopener" class="{{ extra_class }} flex items-center gap-1"
+   {% if preview %}data-preview-img="{{ preview.img }}" data-preview-title="{{ preview.title }}" data-preview-desc="{{ preview.desc }}" data-preview-link="{{ _preview_link }}" data-preview-external="true"{% endif %}>{{ label }} <span class="material-symbols-outlined icon-14">open_in_new</span></a>
+{% elif slug.startswith('/') or slug.startswith('#') %}
+{% set _preview_link = (preview.cta_link if preview and preview.cta_link else '/' ~ lang ~ slug) %}
+<a href="/{{ lang }}{{ slug }}" class="{{ extra_class }}"
+   {% if preview %}data-preview-img="{{ preview.img }}" data-preview-title="{{ preview.title }}" data-preview-desc="{{ preview.desc }}" data-preview-link="{{ _preview_link }}"{% endif %}>{{ label }}</a>
+{% else %}
+{% set _preview_link = (preview.cta_link if preview and preview.cta_link else '/' ~ lang ~ '/' ~ slug) %}
+<a href="/{{ lang }}/{{ slug }}" class="{{ extra_class }}"
+   {% if preview %}data-preview-img="{{ preview.img }}" data-preview-title="{{ preview.title }}" data-preview-desc="{{ preview.desc }}" data-preview-link="{{ _preview_link }}"{% endif %}>{{ label }}</a>
+{% endif %}
+{% endmacro %}

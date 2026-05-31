@@ -1,0 +1,54 @@
+{% extends "page_base.html" %}
+
+{% from "macros/product_hero_tabs.html" import
+    product_hero_tabs_open,
+    product_hero_tabs_funktionen_open, product_hero_tabs_funktionen_close,
+    product_hero_tabs_details_open, product_hero_tabs_details_close %}
+{% from "macros/feature_pill_switcher.html" import feature_pill_switcher %}
+{% from "macros/energy_scenario_switcher.html" import energy_scenario_switcher %}
+{% from "macros/two_col_section.html" import two_col_section %}
+{% from "macros/product_comparison.html" import product_comparison %}
+{% from "macros/product_faq.html" import product_faq %}
+{% from "macros/tech_specs_table.html" import tech_specs_table %}
+{% from "macros/downloads_aside.html" import downloads_aside %}
+{% from "macros/sticky_buy_cta.html" import sticky_buy_cta %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block main_class %}flex flex-col items-stretch text-left w-full{% endblock %}
+
+{% block content %}
+{{ product_hero_tabs_open(t.hero) }}
+    {{ product_hero_tabs_funktionen_open() }}
+        {{ feature_pill_switcher(t.feature_switcher, t.feature_switcher.pills, image_alt=t.feature_switcher.image_alt) }}
+        {% call two_col_section(
+            badge_icon=t.intro.badge_icon,
+            badge_text=t.intro.badge_text,
+            headline=t.intro.headline,
+            video="background.mp4",
+            image_alt=t.intro.headline,
+            image_side="right",
+            dark=true
+        ) %}
+            <p class="text-section-body-dark">{{ t.intro.body1 }}</p>
+            <p class="text-section-body-dark">{{ t.intro.body2 }}</p>
+            <p class="text-section-body-dark">{{ t.intro.body3 }}</p>
+        {% endcall %}
+        {{ energy_scenario_switcher(t.scenarios, t.scenarios["items"], load_management_t=load_management_t) }}
+        {{ product_comparison(t.comparison, t.comparison.variants) }}
+        {{ product_faq(t.faq, t.faq["items"]) }}
+    {{ product_hero_tabs_funktionen_close() }}
+
+    {{ product_hero_tabs_details_open() }}
+        <div class="flex flex-col gap-12 lg:flex-row lg:items-start lg:gap-12">
+            {{ tech_specs_table(t.tech_specs.heading, t.tech_specs.groups, t.tech_specs.footnote) }}
+            {{ downloads_aside(t.downloads, t.downloads.sections) }}
+        </div>
+    {{ product_hero_tabs_details_close() }}
+</div>
+
+{# Disabled for now (distracting):
+{{ sticky_buy_cta(t.sticky_cta.name, t.sticky_cta.price, t.sticky_cta.cta_label, t.sticky_cta.cta_url) }}
+#}
+{% endblock %}

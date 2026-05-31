@@ -1,0 +1,83 @@
+{% extends "page_base.html" %}
+{% from "macros/page_hero.html" import page_hero %}
+{% from "macros/two_col_section.html" import two_col_section %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block content %}
+{# Hero #}
+{% call page_hero(badge_icon="home", badge_text=t.badge, headline=t.subtitle) %}{% endcall %}
+
+{# Wallbox mit Vollausstattung #}
+{% call two_col_section(
+    badge_icon="auto_awesome",
+    badge_text=t.fullsuite.badge,
+    headline=t.fullsuite.headline,
+    image="at-home.webp",
+    image_side="right",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.fullsuite.body_html|safe }}</p>
+    <p class="text-section-body">{{ t.fullsuite.updates_html|safe }}</p>
+{% endcall %}
+
+{# Offenes System (dark) #}
+{% call two_col_section(
+    badge_icon="hub",
+    badge_text=t.open.badge,
+    headline=t.open.headline,
+    image="word-cloud.webp",
+    image_side="left",
+    dark=true
+) %}
+    <p class="text-section-body-dark">{{ t.open.body_html|safe }}</p>
+    <p class="text-section-body-dark">{{ t.open.hems_html|safe }}</p>
+    <a href="{{ t.open.link_url }}" class="btn-icon">
+        <span class="material-symbols-outlined icon-18">devices</span>
+        {{ t.open.link_label }}
+    </a>
+{% endcall %}
+
+{# Klein und stylisch #}
+{% call two_col_section(
+    badge_icon="straighten",
+    badge_text=t.compact.badge,
+    headline=t.compact.headline,
+    image="charger-measured.webp",
+    image_side="right",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.compact.body_html|safe }}</p>
+    <p class="text-section-body">{{ t.compact.durability_html|safe }}</p>
+{% endcall %}
+
+{# Modular #}
+{% call two_col_section(
+    badge_icon="extension",
+    badge_text=t.modular.badge,
+    headline=t.modular.headline,
+    image="warp4-pro-open-from-top.webp",
+    image_side="left",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.modular.body_html|safe }}</p>
+{% endcall %}
+
+{# Apps für Android und iOS #}
+{% call two_col_section(
+    badge_icon="smartphone",
+    badge_text=t.apps.badge,
+    headline=t.apps.headline,
+    image="remote-access-local.webp",
+    image_side="right",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.apps.body_html|safe }}</p>
+    <p class="text-section-body">{{ t.apps.remote_html|safe }}</p>
+    <a href="{{ t.apps.link_url }}" class="btn-icon">
+        <span class="material-symbols-outlined icon-18">smartphone</span>
+        {{ t.apps.link_label }}
+    </a>
+{% endcall %}
+{% endblock %}

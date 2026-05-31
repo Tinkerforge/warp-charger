@@ -1,0 +1,35 @@
+{#
+  Badge pill: small circular icon + label. Two variants (light = white icon
+  on blue gradient circle; dark = gradient-text icon on deep blue circle).
+
+  Parameters:
+    icon: Material Symbols glyph name (e.g. "tune", "help")
+    label: pill label text
+    dark: render the dark variant (default false)
+    wrap_class: classes for the outer flex wrapper (controls alignment +
+                spacing). Default centers the pill horizontally.
+
+  For sites with unusual circle/label modifiers (e.g. news_list with
+  shrink-0 / whitespace-nowrap), inline the badge-circle* / badge-label*
+  utilities directly instead of using this macro.
+#}
+
+{% macro badge(icon, label, dark=false, wrap_class="flex items-center justify-center gap-2.5") %}
+<div class="{{ wrap_class }}">
+    {% if dark %}
+    <div class="badge-circle-dark">
+        <div class="badge-circle-inner-dark">
+            <span class="material-symbols-outlined bg-gradient-white-blue bg-clip-text icon-18 text-transparent">{{ icon }}</span>
+        </div>
+    </div>
+    <span class="badge-label-dark">{{ label }}</span>
+    {% else %}
+    <div class="badge-circle">
+        <div class="badge-circle-inner">
+            <span class="material-symbols-outlined icon-18 text-white">{{ icon }}</span>
+        </div>
+    </div>
+    <span class="badge-label">{{ label }}</span>
+    {% endif %}
+</div>
+{% endmacro %}

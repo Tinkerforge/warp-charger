@@ -1,0 +1,57 @@
+{% extends "page_base.html" %}
+{% from "macros/blog_meta.html" import blog_meta %}
+
+{% block content %}
+<section class="w-full bg-background">
+    <div class="container-wide pt-32 pb-section">
+        <div class="flex gap-10">
+            <!-- Archive sidebar (desktop only) -->
+            <aside class="hidden lg:block w-60 shrink-0">
+                <nav class="sticky top-28">
+                    <h2 class="text-eyebrow font-semibold text-black mb-4">{{ t.archive }}</h2>
+                    {% include "partials/blog_archive.html" %}
+                </nav>
+            </aside>
+
+            <!-- Main content -->
+            <div class="flex w-full min-w-0 flex-col gap-5 max-w-4xl">
+                {% block blog_content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mobile archive: floating button + slide-in drawer (lg:hidden) -->
+<div class="lg:hidden">
+    <button id="blog-archive-toggle" type="button"
+            class="fixed bottom-5 right-5 z-40 inline-flex items-center gap-2 rounded-full bg-gradient-grey-dark px-4 py-3 text-white shadow-lg transition-all hover:opacity-90 active:scale-95"
+            aria-label="{{ t.archive }}" aria-controls="blog-archive-drawer" aria-expanded="false">
+        <span class="material-symbols-outlined icon-20">menu_book</span>
+        <span class="text-btn">{{ t.archive }}</span>
+    </button>
+
+    <!-- Backdrop -->
+    <div id="blog-archive-backdrop"
+         class="fixed inset-0 z-50 bg-black/60 opacity-0 pointer-events-none transition-opacity duration-200"
+         aria-hidden="true"></div>
+
+    <!-- Drawer -->
+    <aside id="blog-archive-drawer"
+           class="fixed top-0 right-0 z-50 h-dvh w-80 max-w-[85vw] bg-black shadow-2xl translate-x-full transition-transform duration-300 ease-out flex flex-col"
+           role="dialog" aria-modal="true" aria-labelledby="blog-archive-drawer-title" aria-hidden="true">
+        <div class="flex items-center justify-between gap-2 border-b border-white/10 px-5 py-4">
+            <h2 id="blog-archive-drawer-title" class="text-eyebrow font-semibold text-white">{{ t.archive }}</h2>
+            <button id="blog-archive-close" type="button"
+                    class="inline-flex h-9 w-9 items-center justify-center rounded-full text-white/70 hover:bg-white/10 hover:text-white transition-colors"
+                    aria-label="Close">
+                <span class="material-symbols-outlined icon-22">close</span>
+            </button>
+        </div>
+        <nav class="flex-1 overflow-y-auto px-4 py-4">
+            {% with archive_theme = 'dark' %}
+                {% include "partials/blog_archive.html" %}
+            {% endwith %}
+        </nav>
+    </aside>
+</div>
+{% endblock %}

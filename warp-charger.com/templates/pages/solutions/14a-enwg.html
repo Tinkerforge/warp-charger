@@ -1,0 +1,54 @@
+{% extends "page_base.html" %}
+{% from "macros/two_col_section.html" import two_col_section %}
+{% from "macros/page_hero.html" import page_hero %}
+{% from "macros/centered_section.html" import centered_section %}
+{% from "macros/feature_card_grid.html" import feature_card_grid %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block content %}
+{# Hero #}
+{% call page_hero(badge_icon="gavel", badge_text=t.badge, headline=t.subtitle) %}{% endcall %}
+
+{# Intro: What is §14a? #}
+{% call two_col_section(
+    badge_icon="info",
+    badge_text=t.intro.badge,
+    headline=t.intro.headline,
+    image="p14a-enwg-webui.webp",
+    image_side="right",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.intro.text }}</p>
+    <p class="text-section-body">{{ t.intro.text2 }}</p>
+    <p class="text-section-body">{{ t.intro.text3 }}</p>
+{% endcall %}
+
+{# Modules #}
+{% call centered_section("category", t.modules.badge, t.modules.headline, description=t.modules.text, dark=true) %}
+    {{ feature_card_grid(items=t.modules.list, columns=3, dark=true) }}
+{% endcall %}
+
+{# Signal Sources #}
+{% call centered_section("cell_tower", t.signals.badge, t.signals.headline, description=t.signals.text) %}
+    {{ feature_card_grid(items=t.signals.list, columns=2) }}
+{% endcall %}
+
+{# Preparation #}
+{% call two_col_section(
+    badge_icon="cable",
+    badge_text=t.preparation.badge,
+    headline=t.preparation.headline,
+    image="rollout.webp",
+    image_side="left"
+) %}
+    <p class="text-section-body">{{ t.preparation.text }}</p>
+    <p class="text-section-body">{{ t.preparation.text2 }}</p>
+    <p class="text-body text-black font-medium">{{ t.preparation.highlight }}</p>
+    <a href="{{ t.doc_link.url }}" target="_blank" rel="noopener" class="btn-icon">
+        <span class="material-symbols-outlined icon-18">menu_book</span>
+        {{ t.doc_link.text }}
+    </a>
+{% endcall %}
+{% endblock %}

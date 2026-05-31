@@ -1,0 +1,6 @@
+{% macro blog_meta(tag, date) %}
+<div class="flex flex-wrap items-center gap-3">
+    <span class="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-0.5 text-eyebrow text-primary">{{ tag }}</span>
+    <span class="text-eyebrow whitespace-nowrap text-grey">{{ date | timeago }}</span>
+</div>
+{% endmacro %}

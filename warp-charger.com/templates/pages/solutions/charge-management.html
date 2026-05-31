@@ -1,0 +1,103 @@
+{% extends "page_base.html" %}
+{% from "macros/two_col_section.html" import two_col_section %}
+{% from "macros/page_hero.html" import page_hero %}
+{% from "macros/section_header.html" import section_header %}
+{% from "macros/feature_card_grid.html" import feature_card_grid %}
+{% from "macros/centered_section.html" import centered_section %}
+{% from "macros/energy_diagram.html" import energy_diagram %}
+{% from "macros/badge.html" import badge %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block content %}
+{# Hero #}
+{% call page_hero(badge_icon="electrical_services", badge_text=t.badge, headline=t.subtitle) %}{% endcall %}
+
+{# Static Load Management: custom 2-col layout to embed the animated diagram
+   in the media slot. Mirrors the light variant of the two_col_section macro.
+   pb-16 on mobile (where the diagram is inline above the text and there is
+   no natural whitespace between sections), pb-0 on desktop (where the
+   centered flex layout already provides visual separation via the diagram
+   column). The next section's pt-section is zeroed by the adjacent-same-bg
+   CSS rule, so this section's pb defines the total inter-section gap. #}
+<section class="w-full pt-section pb-16 lg:pb-0 bg-background">
+    <div class="container-main flex flex-col items-center gap-6 lg:flex-row lg:items-center lg:gap-20">
+        <div class="flex flex-1 flex-col items-start gap-6 text-left">
+            {{ badge("balance", t.static.badge, wrap_class="flex items-center justify-start gap-2.5") }}
+            <h2 class="text-section-heading">{{ t.static.headline }}</h2>
+
+            {# Diagram shown between heading and content on mobile #}
+            <div class="flex w-full items-center justify-center lg:hidden">
+                {{ energy_diagram({
+                    "diagram_aria": t.static.diagram_aria,
+                    "diagram_labels": t.static.diagram_labels,
+                    "diagram_config_url": url_for('static', filename='data/diagram-static-load.json')
+                }) }}
+            </div>
+
+            <p class="text-section-body">{{ t.static.text }}</p>
+            <p class="text-section-body">{{ t.static.text2 }}</p>
+            <p class="text-body text-black font-medium">{{ t.static.highlight }}</p>
+        </div>
+        {# Diagram column: desktop only #}
+        <div class="hidden lg:flex flex-1 items-center justify-center">
+            {{ energy_diagram({
+                "diagram_aria": t.static.diagram_aria,
+                "diagram_labels": t.static.diagram_labels,
+                "diagram_config_url": url_for('static', filename='data/diagram-static-load.json')
+            }) }}
+        </div>
+    </div>
+</section>
+
+{# Dynamic Load Management: mirrors static. #}
+{% set dynamic_diagram_t = {
+    "diagram_aria": t.dynamic.diagram_aria,
+    "diagram_labels": t.dynamic.diagram_labels,
+    "diagram_config_url": url_for('static', filename='data/diagram-dynamic-load.json')
+} %}
+<section class="w-full py-section bg-background">
+    <div class="container-main flex flex-col items-center gap-6 lg:flex-row lg:items-center lg:gap-20">
+        <div class="flex flex-1 flex-col items-start gap-6 text-left">
+            {{ badge("dynamic_form", t.dynamic.badge, wrap_class="flex items-center justify-start gap-2.5") }}
+            <h2 class="text-section-heading">{{ t.dynamic.headline }}</h2>
+
+            {# Diagram shown between heading and content on mobile #}
+            <div class="flex w-full items-center justify-center lg:hidden">
+                {{ energy_diagram(dynamic_diagram_t) }}
+            </div>
+
+            <p class="text-section-body">{{ t.dynamic.text }}</p>
+            <p class="text-section-body">{{ t.dynamic.text2 }}</p>
+            <p class="text-section-body">{{ t.dynamic.text3 }}</p>
+            <a href="{{ t.dynamic.cta_url }}" target="_blank" rel="noopener" class="btn-icon">
+                <span class="material-symbols-outlined icon-18">devices</span>
+                {{ t.dynamic.cta_text }}
+            </a>
+        </div>
+        {# Diagram column: desktop only #}
+        <div class="hidden lg:flex flex-1 items-center justify-center">
+            {{ energy_diagram(dynamic_diagram_t) }}
+        </div>
+    </div>
+</section>
+
+{# Smart Features #}
+<section class="relative w-full overflow-hidden bg-gradient-radial-dark py-section">
+    <div
+        class="pointer-events-none absolute inset-0 z-0"
+        style="background: radial-gradient(ellipse 50% 40% at 50% 18%, rgba(56, 130, 246, 0.15), rgba(56, 130, 246, 0) 70%);"
+        aria-hidden="true"
+    ></div>
+    <div class="relative z-10 container-main">
+        {{ section_header(icon="psychology", badge=t.smart.badge, headline=t.smart.headline, description=t.smart.text, dark=true) }}
+        {{ feature_card_grid(items=t.smart.features, columns=2, dark=true) }}
+    </div>
+</section>
+
+{# Configuration Steps #}
+{% call centered_section("settings", t.config.badge, t.config.headline, description=t.config.text, bg="") %}
+    {{ feature_card_grid(items=t.config.steps, columns=4, numbered=true) }}
+{% endcall %}
+{% endblock %}

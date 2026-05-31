@@ -1,0 +1,78 @@
+title: "Charge Management"
+description: "Charge management with up to 64 WARP Chargers, static and dynamic, without additional hardware."
+
+badge: "Charge Management"
+subtitle: "Intelligently regulate up to 64 WARP Chargers, no additional hardware"
+
+static:
+  badge: "Static"
+  headline: "Static Charge Management"
+  text: "When multiple chargers share a common supply line, the maximum current is often limited. Static charge management distributes a fixed total current across up to 64 WARP Chargers."
+  text2: "One charger is configured as the load manager and controls the other chargers over the network. The available current is evenly distributed among all charging chargers. When another vehicle is connected, the system automatically redistributes."
+  highlight: "No additional hardware required. The WARP Chargers handle charge management on their own!"
+  diagram_aria: "Diagram: Static charge management distributes the available current across up to three vehicles."
+  diagram_labels:
+    grid: "Grid"
+    meter: "Meter"
+    wallbox: "WARP Charger"
+    ev1: "Vehicle 1"
+    ev2: "Vehicle 2"
+    ev3: "Vehicle 3"
+  descriptions:
+    step1: "In this example, charge management is allowed to distribute a maximum of 11 kW. Only one EV charges: The full 11 kW go to the first vehicle."
+    step2: "Second EV plugs in: The current is split evenly, 5.5 kW each."
+    step3: "Three EVs in parallel: Each gets 3.6 kW; the total stays under the 11 kW limit. If the per-EV share were too small to start a charge, charge management would switch to round-robin and charge the EVs in turn."
+
+dynamic:
+  badge: "Dynamic"
+  headline: "Dynamic Charge Management"
+  text: "In many cases, chargers share the grid connection with other consumers. When these are switched on and off, the available current changes constantly."
+  text2: "Dynamic charge management monitors the phase current at the grid connection via an energy meter and adjusts charger power accordingly. This ensures the maximum phase current is never exceeded and no fuse trips."
+  text3: "As an open platform, a wide range of manufacturers and energy meters are supported."
+  cta_text: "Compatible devices"
+  cta_url: "/en/solutions/maximum-compatibility#devices"
+  diagram_aria: "Diagram: Dynamic charge management adjusts charging power based on the rest of the household's consumption."
+  diagram_labels:
+    grid: "Grid"
+    meter: "Meter"
+    wallbox: "WARP Charger"
+    heatpump: "Other consumers"
+    ev1: "Vehicle 1"
+    ev2: "Vehicle 2"
+    ev3: "Vehicle 3"
+  descriptions:
+    step1: "In this example, charge management is allowed to distribute a maximum of 24 kW of grid power. Other consumers pull 2 kW: The first EV charges at full power (11 kW)."
+    step2: "Other consumers rise to 10 kW: A second EV plugs in; both charge at 7 kW each, exactly the remaining 14 kW."
+    step3: "Other consumers pull the full 24 kW: All EVs pause until power becomes available again."
+
+smart:
+  badge: "Intelligent"
+  headline: "More than just limiting currents"
+  text: "Electric vehicles cannot be controlled arbitrarily: minimum charging currents, minimum charging times and pauses must be respected. The WARP Charger's charge management accounts for these characteristics and prevents vehicle error states."
+  features:
+    - icon: "balance"
+      title: "Fair distribution"
+      desc: "If there's not enough current for all vehicles, charging is rotated: maximum simultaneous sessions with fair switching."
+    - icon: "swap_horiz"
+      title: "Phase rotation"
+      desc: "Phase allocation and rotation of chargers are considered to charge more vehicles in parallel and better utilize limits."
+    - icon: "speed"
+      title: "Real current draw"
+      desc: "WARP Charger Pro measures actual phase current. Unused current is automatically assigned to other chargers."
+    - icon: "trending_down"
+      title: "Minimal switching"
+      desc: "The load manager minimizes switching operations and ensures stable charging operation."
+
+config:
+  badge: "Configuration"
+  headline: "Easy setup"
+  text: "Charge management is configured directly in the WARP Charger web interface:"
+  steps:
+    - title: "Enable external control"
+      desc: "Activate external control mode on all managed chargers."
+    - title: "Configure load manager"
+      desc: 'Designate one charger or the <a href="/en/products/warp-energy-manager" class="prose-link">WARP Energy Manager</a> as load manager and add chargers.'
+    - title: "Set total current"
+      desc: "Configure the maximum total current of the shared supply line."
+    - title: "Optional: Enable dynamic"
+      desc: "Configure an energy meter at the grid connection and activate dynamic charge management."

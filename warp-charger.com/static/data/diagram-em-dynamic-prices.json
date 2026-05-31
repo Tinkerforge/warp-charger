@@ -1,0 +1,67 @@
+{
+    "grid": {
+        "width": "3",
+        "height": "3"
+    },
+    "graph": {
+        "nodes": [
+            { "id": "n01", "position": "(0,0)", "label_key": "solar",    "icon": "solar-panel.svg",    "highlighted": "false" },
+            { "id": "n02", "position": "(1,0)", "label_key": "meter",    "icon": "electricity-meter.svg",   "highlighted": "false" },
+            { "id": "n03", "position": "(0,1)", "label_key": "grid",     "icon": "grid.svg",      "highlighted": "false" },
+            { "id": "n04", "position": "(1,1)", "label_key": "em",       "icon": "energy-manager.svg", "highlighted": "true"  },
+            { "id": "n05", "position": "(1,2)", "label_key": "heatpump", "icon": "heat-pump.svg",    "highlighted": "false" }
+        ],
+        "edges": [
+            { "id": "e01", "source": "n01", "target": "n02", "status": "active", "speed": 0.5, "dotted": "false" },
+            { "id": "e02", "source": "n03", "target": "n02", "status": "active", "speed": 0.5, "dotted": "false" },
+            { "id": "e03", "source": "n02", "target": "n04", "status": "active", "speed": 0.5, "dotted": "false" },
+            { "id": "e04", "source": "n04", "target": "n05", "status": "active", "speed": 0.5, "dotted": "false" }
+        ]
+    },
+    "animation": {
+        "stepIntervalMs": 4500,
+        "defaultEdgeColors": {
+            "e01": "green",
+            "e02": "blue",
+            "e03": "green",
+            "e04": "green"
+        },
+        "steps": [
+            {
+                "activeEdges": {
+                    "e01": { "speed": 0.95, "color": "green", "label": "9 kW" },
+                    "e03": { "speed": 0.75, "color": "green", "label": "3 kW" },
+                    "e04": { "speed": 0.75, "color": "green", "label": "3 kW" }
+                },
+                "edgeLabels": { "e02": "0 kW" },
+                "dimmedNodes": ["n03"],
+                "weather": "sun-bright",
+                "price": "expensive",
+                "priceLabel": "45 ct",
+                "descriptionKey": "step1"
+            },
+            {
+                "activeEdges": {},
+                "edgeLabels": { "e01": "0 kW", "e02": "0 kW", "e03": "0 kW", "e04": "0 kW" },
+                "dimmedNodes": ["n01", "n03", "n05"],
+                "weather": "cloud",
+                "price": "expensive",
+                "priceLabel": "45 ct",
+                "descriptionKey": "step2"
+            },
+            {
+                "activeEdges": {
+                    "e02": { "speed": 0.75, "color": "blue", "label": "3 kW" },
+                    "e03": { "speed": 0.75, "color": "blue", "label": "3 kW" },
+                    "e04": { "speed": 0.75, "color": "blue", "label": "3 kW" }
+                },
+                "edgeLabels": { "e01": "0 kW" },
+                "dimmedNodes": ["n01"],
+                "weather": "cloud",
+                "price": "cheap",
+                "priceLabel": "8 ct",
+                "descriptionKey": "step3"
+            }
+        ]
+    }
+}

@@ -1,0 +1,54 @@
+{#
+  Centered section: full-width section wrapper with standard max-width
+  container, embedded centered section_header (badge + headline + optional
+  description), and a {{ caller() }} block for body content (typically a
+  feature_card_grid or a custom grid).
+
+  Wraps the repeated triplet:
+    <section class="...py-section..."><div class="...max-w-7xl px-5 md:px-10">
+      {{ section_header(...) }}
+      ... body ...
+    </div></section>
+
+  Parameters:
+    icon         : Material Symbols icon for the badge
+    badge        : Badge label text
+    headline     : Section heading (h2)
+    description  : Optional paragraph below headline
+    dark         : Dark theme variant (default false)
+    bg           : Optional background class override.
+                   - Light default: "bg-gradient-light-white-background"
+                   - Dark default: "bg-gradient-radial-dark"
+                   Pass e.g. "bg-background" for the alternate light bg, or
+                   "" (empty string) to render with no bg class at all.
+    id           : Optional section id (for #anchor links)
+
+  Usage:
+    {% from "macros/centered_section.html" import centered_section %}
+    {% call centered_section("category", t.modules.badge, t.modules.headline,
+                             description=t.modules.text, dark=true) %}
+        {{ feature_card_grid(items=t.modules.list, columns=3, dark=true) }}
+    {% endcall %}
+#}
+
+{% from "macros/section_header.html" import section_header %}
+
+{% macro centered_section(icon, badge, headline, description="", dark=false, bg=None, id="") %}
+{% if dark %}
+{% set bg_class = 'bg-gradient-radial-dark' if bg is none else bg %}
+<section{% if id %} id="{{ id }}"{% endif %} class="relative w-full overflow-hidden {{ bg_class }} py-section">
+    <div class="relative z-10 container-main">
+        {{ section_header(icon, badge, headline, description=description, dark=true) }}
+        {{ caller() }}
+    </div>
+</section>
+{% else %}
+{% set bg_class = 'bg-gradient-light-white-background' if bg is none else bg %}
+<section{% if id %} id="{{ id }}"{% endif %} class="w-full py-section {{ bg_class }}">
+    <div class="container-main">
+        {{ section_header(icon, badge, headline, description=description) }}
+        {{ caller() }}
+    </div>
+</section>
+{% endif %}
+{% endmacro %}

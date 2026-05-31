@@ -1,0 +1,133 @@
+{#
+    Product hero + tab strip ("Funktionen" / "Details").
+
+    Usage (open/close pair):
+
+        {% from "macros/product_hero_tabs.html" import
+            product_hero_tabs_open,
+            product_hero_tabs_funktionen_open, product_hero_tabs_funktionen_close,
+            product_hero_tabs_details_open, product_hero_tabs_details_close %}
+
+        {{ product_hero_tabs_open(t.hero) }}
+        {{ product_hero_tabs_funktionen_open() }}
+            ... macros for feature switcher, scenarios, comparison, faq ...
+        {{ product_hero_tabs_funktionen_close() }}
+        {{ product_hero_tabs_details_open() }}
+            ... macros for tech_specs_table + downloads_aside ...
+        {{ product_hero_tabs_details_close() }}
+
+    Hero translation dict expects:
+        eyebrow         : brand line ("WARP4 Charger")
+        headline        : main one-liner
+        price_prefix    : "ab"
+        price           : "842€"
+        vat             : optional small label after price (e.g. "inkl. MwSt")
+        cta             : "Konfigurieren"
+        cta_url         : optional href; if absent, a <button> is rendered
+        tab_features    : label for the first tab (default "Funktionen")
+        tab_details     : label for the second tab (default "Details")
+        image           : optional desktop background image (relative to static/images/)
+        image_mobile    : optional mobile inline image (relative to static/images/); falls back to image
+        image_alt       : alt text (default "")
+        bg_class        : optional override for the desktop hero background
+                          (default "md:bg-gradient-light-white-background")
+#}
+
+{% macro product_hero_tabs_open(t) -%}
+{# tailwind-scan: md:bg-[#d8d8d8] hyphens-none hyphens-manual md:hyphens-manual #}
+{% set _hero_bg = t.bg_class or 'md:bg-gradient-light-white-background' %}
+{% set _hero_hyphens = t.hyphens_class or 'hyphens-manual' %}
+<div data-product-tabs class="relative w-full">
+    <section
+        class="relative mx-auto flex min-h-140 w-full max-w-384 items-start justify-end overflow-hidden bg-[#d8d8d8] px-6 pt-28 pb-24 md:min-h-175 {{ _hero_bg }} md:px-12 md:pt-50 md:pb-16 lg:min-h-175 lg:px-25 lg:pb-16 2xl:rounded-b-[20px]"
+    >
+        {% if t.image %}
+        <img
+            src="{{ url_for('static', filename='images/' ~ t.image) }}"
+            alt="{{ t.image_alt or '' }}"
+            aria-hidden="true"
+            class="pointer-events-none absolute inset-0 hidden h-full w-full object-cover object-top md:block"
+        />
+        {% endif %}
+
+        <div class="relative z-10 flex flex-col items-center gap-10 text-center md:items-end md:text-right">
+            <div class="flex flex-col items-center gap-1.25 md:items-end">
+                <p class="bg-gradient-blue bg-clip-text text-display-2 leading-[1.3] text-transparent">
+                    {{ t.eyebrow }}
+                </p>
+                {% if t.image_mobile or t.image %}
+                <img
+                    src="{{ url_for('static', filename='images/' ~ (t.image_mobile or t.image)) }}"
+                    alt="{{ t.image_alt or '' }}"
+                    aria-hidden="true"
+                    class="pointer-events-none -mx-6 block h-auto w-[calc(100%+3rem)] max-w-none md:hidden"
+                />
+                {% endif %}
+                <h1 class="bg-gradient-ridged bg-clip-text text-display-1 leading-[1.3] text-transparent {{ _hero_hyphens }} md:max-w-1/2">
+                    {{ t.headline }}
+                </h1>
+            </div>
+
+            <div class="flex flex-row items-center gap-5">
+                <p class="font-satoshi text-xl font-medium text-grey">
+                    {{ t.price_prefix }}
+                    <span class="ml-1 text-3xl font-black tracking-[-2px] text-black md:text-4xl">{{ t.price }}</span>
+                    {% if t.vat %}<span class="ml-1 text-body text-medium-grey">{{ t.vat }}</span>{% endif %}
+                </p>
+                {% if t.cta_url %}
+                <a href="{{ t.cta_url }}" class="btn-primary inline-flex items-center justify-center">{{ t.cta }}</a>
+                {% else %}
+                <button type="button" class="btn-primary">{{ t.cta }}</button>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <div
+        role="tablist"
+        aria-label="{{ t.tablist_label or 'Produkt-Ansicht' }}"
+        class="absolute right-0 bottom-0 left-0 isolate container-wide flex w-full"
+    >
+        <button
+            type="button"
+            role="tab"
+            id="tab-funktionen"
+            aria-controls="panel-funktionen"
+            aria-selected="true"
+            data-tab="funktionen"
+            class="tab-pill tab-pill-active"
+        >
+            {{ t.tab_features or "Funktionen" }}
+        </button>
+        <button
+            type="button"
+            role="tab"
+            id="tab-details"
+            aria-controls="panel-details"
+            aria-selected="false"
+            data-tab="details"
+            class="tab-pill -ml-3"
+        >
+            {{ t.tab_details or "Details" }}
+        </button>
+    </div>
+</div>
+{%- endmacro %}
+
+{% macro product_hero_tabs_funktionen_open() -%}
+<div id="panel-funktionen" role="tabpanel" aria-labelledby="tab-funktionen" class="contents">
+{%- endmacro %}
+
+{% macro product_hero_tabs_funktionen_close() -%}
+</div>
+{%- endmacro %}
+
+{% macro product_hero_tabs_details_open() -%}
+<div id="panel-details" role="tabpanel" aria-labelledby="tab-details" class="relative hidden w-full bg-background py-section">
+    <div class="container-wide w-full">
+{%- endmacro %}
+
+{% macro product_hero_tabs_details_close() -%}
+    </div>
+</div>
+{%- endmacro %}

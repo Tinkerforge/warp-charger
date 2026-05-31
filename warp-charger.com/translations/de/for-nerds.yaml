@@ -1,0 +1,71 @@
+# WARP für Nerds (DE)
+title: "WARP für Nerds"
+description: "WARP Charger: Open Source Hardware und Software mit offenen Schnittstellen."
+
+hero:
+  badge: "WARP für Nerds"
+  headline: "Volle Kontrolle. Kein Vendor Lock-in."
+
+opensource:
+  badge: "Open Source"
+  headline: "Open Source Hardware und Software"
+  text: "Die gesamte WARP Firmware, die Schaltpläne und das PCB-Layout sind Open Source und auf GitHub veröffentlicht. Eigene Anpassungen, Bugfixes und Feature-Requests sind willkommen. WARP4 Charger OSHWA UID DE000125."
+  github_label: "GitHub Repository"
+  github_url: "https://github.com/Tinkerforge/esp32-firmware"
+
+interfaces:
+  badge: "Schnittstellen"
+  headline: "Offene Schnittstellen"
+  text: "Der WARP Charger unterstützt HTTP/REST, MQTT, Modbus/TCP und OCPP 1.6J. Alle Daten und Einstellungen sind über die API erreichbar, lesend und schreibend."
+  docs_label: "API-Dokumentation"
+  http_heading: "HTTP-Beispiele"
+  http_code: |
+    # Ladezustand abfragen
+    curl http://warp4-AbCd/evse/state
+
+    # Ladestrom auf 16A setzen
+    curl http://warp4-AbCd/evse/external_current \
+      -d '{"current": 16000}'
+
+    # Ladevorgang starten
+    curl http://warp4-AbCd/evse/start_charging -d 'null'
+
+    # Ladevorgang stoppen
+    curl http://warp4-AbCd/evse/stop_charging -d 'null'
+  mqtt_heading: "MQTT-Beispiele"
+  mqtt_code: |
+    # Ladezustand abonnieren
+    mosquitto_sub -v -h $BROKER \
+      -t warp/AbCd/evse/state
+
+    # Ladestrom auf 16A setzen
+    mosquitto_pub -h $BROKER \
+      -t warp/AbCd/evse/external_current_update \
+      -m '{"current": 16000}'
+
+    # Ladevorgang starten
+    mosquitto_pub -h $BROKER \
+      -t warp/AbCd/evse/start_charging -m 'null'
+
+    # Ladevorgang stoppen
+    mosquitto_pub -h $BROKER \
+      -t warp/AbCd/evse/stop_charging -m 'null'
+
+hems:
+  badge: "Integration"
+  headline: "Integration ins eigene HEMS"
+  text: "Der WARP Charger lässt sich problemlos in eigene Home Energy Management Systeme integrieren. Über die dokumentierte API können Ladeleistung, SoC-Daten und Energieflüsse in Echtzeit ausgelesen und gesteuert werden."
+  evcc_label: "EVCC"
+  home_assistant_label: "Home Assistant"
+  integrations_heading: "Unterstützte Protokolle:"
+  integrations:
+    - protocol: "HTTP/REST"
+      desc: "Vollständige API für alle Einstellungen und Statusdaten"
+    - protocol: "MQTT"
+      desc: "Publish/Subscribe für Echtzeit-Updates"
+    - protocol: "Modbus/TCP"
+      desc: "Industriestandard für Energiemanagement-Systeme"
+    - protocol: "SunSpec"
+      desc: "Kompatibel mit SunSpec-fähigen Wechselrichtern"
+    - protocol: "OCPP 1.6J"
+      desc: "Backend-Anbindung für Betreiber"

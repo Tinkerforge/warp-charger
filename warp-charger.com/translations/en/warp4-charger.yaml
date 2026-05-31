@@ -1,0 +1,261 @@
+title: "WARP4 Charger | Open Source Charging Solution from €842"
+description: "The WARP4 Charger: an open-source charging solution made in Germany. Configure your model starting at €842."
+
+hero:
+  eyebrow: "WARP4 Charger"
+  headline: "The fully-equipped charger"
+  price_prefix: "from"
+  price: "€842"
+  vat: "incl. VAT"
+  cta: "Configure"
+  cta_url: "https://shop.warp-charger.com/en/warp4-charger.html"
+  image: "charger-hero.webp"
+  image_mobile: "charger-hero-mobile.webp"
+  image_alt: ""
+  hyphens_class: "hyphens-none md:hyphens-manual"
+  tab_features: "Features"
+  tab_details: "Details"
+  tablist_label: "Product view"
+
+intro:
+  badge_icon: "help"
+  badge_text: "What is the WARP4 Charger?"
+  headline: "The fully-equipped charger."
+  body1: "The WARP4 Charger is the high-quality open-source charger with up to 22 kW charging power, made in Germany. It is built for longevity, has a modular design and is already prepared for bidirectional charging."
+  body2: "Thanks to its compatibility with over 100 devices from other manufacturers (including electricity meters, PV inverters and battery storage), it integrates easily into existing systems."
+  body3: "As a fully-equipped charger, the WARP4 Charger offers integrated PV excess charging, eco mode for intelligently combining solar forecast data, dynamic electricity prices and PV excess, static or dynamic charge management over the network, and numerous open interfaces."
+
+feature_switcher:
+  aria_label: "Product features"
+  image_alt: "WARP4 Charger"
+  pills:
+    - id: "surfaces"
+      label: "Stainless steel surfaces"
+      body_html: >
+        Choose between brushed stainless steel or stainless steel powder-coated in DB703. Both
+        finishes are UV-resistant and approved for outdoor use.
+      images:
+        edelstahl: "charger-1.webp"
+        anthrazit: "charger-1-black.webp"
+      swatches:
+        - { key: "edelstahl", label: "Stainless steel", class: "swatch-edelstahl" }
+        - { key: "anthrazit", label: "Anthracite",      class: "swatch-anthrazit" }
+    - id: "future-charging"
+      label: "ISO15118"
+      body_html: "Enables Autocharge, i.e. vehicle identification via the charging cable. The SoC can be read out. Pro version: hardware-side prepared for bidirectional charging (V2H/V2G)."
+      image: "charger-3.webp"
+    - id: "data-sovereignty"
+      label: "Data sovereignty"
+      body_html: "All features run locally on the charger. No cloud requirement, no telemetry."
+      image: "webinterface-home-dark.webp"
+    - id: "smart"
+      label: "Fully equipped"
+      body_html: >
+        PV excess charging, dynamic tariff, eco mode, solar forecast and charge management
+        integrated. Compatible with over 100 devices from other manufacturers.
+      image: "fully-featured.webp"
+    - id: "made-in-germany"
+      label: "Made in Germany"
+      body_html: "Designed and manufactured by Tinkerforge in Schloß Holte-Stukenbrock, includes a 3-year warranty."
+      image: "germany-background.webp"
+
+scenarios:
+  eyebrow: "Maximum self-consumption"
+  heading: "The right behavior for every situation."
+  tagline: "Intelligent energy management"
+  description_html: "All features run directly on the WARP4, with no additional hardware or external energy-management system. Over <a class=\"text-primary underline hover:opacity-80\" href=\"/en/solutions/maximum-compatibility#devices\">100 compatible devices</a> are directly supported."
+  placeholder_eyebrow: "Energy diagram"
+  section_icon: "auto_awesome"
+  aria_label: "Charging scenarios"
+  info_aria: "Explain diagram"
+  info_close_aria: "Close"
+  info_step_eyebrow: "Step {n}"
+  info_step_aria: "Show step {n}"
+  info_legend_green: "Solar / home battery"
+  info_legend_blue: "Grid import"
+  pv_surplus_diagram:
+    diagram_aria: "Diagram: PV excess charging. The heat pump receives a constant 2 kW; excess solar power (0 / 1.4 / 11 kW) is routed through the WARP Charger into the vehicle."
+    diagram_labels:
+      solar: "Solar"
+      meter: "Meter"
+      heatpump: "Heat pump"
+      wallbox: "WARP Charger"
+      ev: "Vehicle"
+    descriptions:
+      step1: "Low sun: The 2 kW barely cover other consumers, so the EV has to wait."
+      step2: "Midday sun: Other consumers run and 1.4 kW of excess charge the EV on a single phase."
+      step3: "Full sun: Switched to three-phase, 11 kW flow into the EV and 2 kW into other consumers."
+  eco_mode_diagram:
+    diagram_aria: "Diagram: Eco mode. The charger charges either from PV excess or from the grid when electricity prices are low."
+    diagram_labels:
+      solar: "Solar"
+      meter: "Meter"
+      heatpump: "Heat pump"
+      grid: "Grid"
+      wallbox: "WARP Charger"
+      ev: "Vehicle"
+    descriptions:
+      step1: "Full sun, expensive grid: PV powers other consumers and the EV, with no grid draw."
+      step2: "No sun, expensive grid: Only other consumers run on 2 kW from the grid, the EV waits."
+      step3: "No sun, cheap grid, poor solar forecast: The EV now charges at full power from the grid."
+  battery_control_diagram:
+    diagram_labels:
+      solar: "Solar"
+      meter: "Meter"
+      heatpump: "Heat pump"
+      grid: "Grid"
+      wallbox: "WARP Charger"
+      battery: "Home battery"
+      ev: "Vehicle"
+    priority:
+      diagram_aria: "Diagram: Battery priority. PV excess is used to charge the home battery first, then the vehicle."
+      descriptions:
+        step1: "PV excess charges the home battery first, so the EV waits. The priority is freely configurable (EV first also possible)."
+        step2: "Battery full: excess solar now flows into the EV."
+    block:
+      diagram_aria: "Diagram: Block home battery. The full home battery stays untouched; energy to charge the EV is drawn directly from the grid."
+      descriptions:
+        step1: "Home battery blocked: instead of discharging the full battery, the EV charges straight from the grid. Later, when electricity prices are high, the house can be powered from the battery."
+  bidirectional_diagram:
+    diagram_aria: "Diagram: Bidirectional charging. Energy flows from the EV through the WARP Charger back into the grid."
+    coming_soon_label: "Coming soon"
+    diagram_labels:
+      grid: "Grid"
+      wallbox: "WARP Charger"
+      ev: "Vehicle"
+  items:
+    - { id: "pv-surplus",      icon: "wb_sunny",              label: "PV Excess",        desc: "Charge excess solar power into the EV", panel: "pv_surplus" }
+    - { id: "eco-mode",        icon: "eco",                   label: "Eco Mode",         desc: "Decides whether to use cheap grid prices or PV excess", panel: "eco_mode" }
+    - { id: "battery-control", icon: "battery_charging_full", label: "Battery Control",  desc: "Use or block the home battery on demand", panel: "battery_control", panel_tabs: { priority: "Priority", block: "Block" } }
+    - { id: "load-management", icon: "balance",               label: "Charge Management",  desc: "Distributes the available power dynamically", panel: "load_management", panel_tabs: { static: "Static", dynamic: "Dynamic" } }
+    - { id: "bidirectional",   icon: "swap_vert",             label: "Bidirectional charging", desc: "WARP4 Pro is ready for V2G/V2X", panel: "bidirectional" }
+
+comparison:
+  eyebrow: "Your choice"
+  heading: "The right model for every use case."
+  section_icon: "tune"
+  variants:
+    - title: "Smart"
+      price_prefix: "from"
+      price: "842€"
+      price_suffix: "incl. VAT"
+      cta_label: "Configure"
+      cta_url: "https://shop.warp-charger.com/en/warp4-charger.html"
+      feature_heading: "Features:"
+      features:
+        - "Eligible for subsidies"
+        - "LAN/WLAN, web interface"
+        - "NFC release, Autocharge"
+        - "Remote access & apps"
+        - "Phase switching (1ph/3ph)"
+        - "PV excess charging & solar forecast data"
+        - "Dynamic tariff"
+        - "Static or dynamic charge management"
+        - "Charging log without energy capture"
+        - "ISO15118"
+        - "Compatible with over 100 devices"
+        - "HTTP, MQTT, Modbus/TCP, OCPP, EEBUS"
+    - title: "Pro"
+      price_prefix: "from"
+      price: "1042€"
+      price_suffix: "incl. VAT"
+      cta_label: "Configure"
+      cta_url: "https://shop.warp-charger.com/en/warp4-charger.html"
+      feature_heading: "Everything from Smart, plus:"
+      features:
+        - "Charging power measurement"
+        - "MID-certified electricity meter"
+        - "Charging log with energy capture"
+        - "Improved charge management"
+        - "Reading the EV's state of charge (SoC)"
+        - "Prepared for bidirectional charging"
+
+faq:
+  eyebrow: "FAQs"
+  heading: "Any more questions?"
+  section_icon: "help"
+  group_name: "warp4-faq"
+  items:
+    - question: "Who is allowed to install the WARP4 Charger?"
+      answer_html: "Installation must be carried out by a qualified electrician. They also handle the required registration with the grid operator."
+    - question: "Do I need a Type B RCD?"
+      answer_html: "No. The WARP4 has an integrated DC residual current detection (RDC-DD). A Type A RCD in the building's installation is sufficient."
+    - question: "Does WARP4 also work without internet access/cloud?"
+      answer_html: "All WARP4 features run locally on the charger. Operation and configuration happen via the built-in web interface on your home network, entirely without any cloud requirement. Only functions such as the solar forecast, the use of dynamic electricity prices and the use of the apps require an internet connection."
+    - question: "How do I integrate the charger into my smart home?"
+      answer_html: "The WARP4 supports open standards such as MQTT, Modbus TCP and an HTTP API. This allows seamless integration with Home Assistant, ioBroker, openHAB and other smart-home systems."
+    - question: "How do I connect the charger to my existing PV system?"
+      answer_html: "We support over 100 devices from other manufacturers and can access data from electricity meters, PV inverters and battery storage systems directly. Installing additional hardware, such as a dedicated meter for the charger, is therefore usually not needed since existing hardware can be used by the charger. See the <a href=\"/en/solutions/maximum-compatibility\" class=\"prose-link\">full compatibility list</a> on our solutions page."
+    - question: "Which devices are supported?"
+      answer_html: "The WARP4 communicates with numerous smart meters, PV inverters, electricity storage systems and heat pumps from various manufacturers. A complete compatibility list is available in the documentation."
+    - question: "Which variant is suitable for billing?"
+      answer_html: "For billing scenarios such as company EVs or in the workplace, we recommend the WARP4 Pro with MID-certified meter and charging log with energy capture. WARP4 is currently not suitable for applications that require a calibration-law-compliant (eichrechtskonform) solution."
+    - question: "Is the charger eligible under the 'Charging in Multi-Dwelling Buildings' subsidy?"
+      answer_html: "Yes, WARP4 is listed among the eligible chargers under our company name 'Tinkerforge GmbH'."
+    - question: "Does WARP4 comply with §14a EnWG?"
+      answer_html: "Yes. The WARP4 supports grid-compliant control as per §14a EnWG including an EEBUS interface for communication with the grid operator's control box standard."
+
+tech_specs:
+  heading: "Technical Specifications"
+  footnote: "* depending on variant/equipment"
+  groups:
+    - title: "Electrical performance data"
+      rows:
+        - { label: "Charging standard",     value: "DIN EN 61851-1 / ISO15118" }
+        - { label: "Charging power",        value: "1.4 kW to 11 kW / 22 kW *" }
+        - { label: "Rated voltage",         value: "230 V / 400 V / 1/3 AC" }
+        - { label: "Rated frequency",       value: "50 Hz" }
+        - { label: "Rated current",         value: "16 A / 32 A *" }
+        - { label: "Phase switching",       value: "Internally between single- and three-phase" }
+        - { label: "Residual current detection", value: "DC 6 mA (integrated)" }
+        - { label: "Current measurement (Pro only)",   value: "Integrated MID-certified meter per EU Measuring Instruments Directive 2014/32/EU *" }
+    - title: "Connection & cabling"
+      rows:
+        - { label: "Vehicle charging plug",   value: "Type 2" }
+        - { label: "Charging cable length",   value: "5.0 m / 7.5 m *" }
+        - { label: "Supply cable cross-section", value: "2.5 mm² to 10 mm²" }
+        - { label: "Supply cable entry",      value: "Possible from the bottom or back" }
+    - title: "Mechanics & enclosure"
+      rows:
+        - { label: "Dimensions",          value: "280 × 215 × 95 mm (W/H/D)" }
+        - { label: "Weight",              value: "approx. 8 kg (depending on cable length) *" }
+        - { label: "Protection rating",   value: "IP54 (splash-proof, suitable for outdoor use)" }
+        - { label: "Operating temperature", value: "-25 °C to +50 °C (24-h average: <35 °C)" }
+    - title: "Communication & interfaces"
+      rows:
+        - { label: "Interfaces",          value: "HTTP, MQTT, EEBUS, Modbus/TCP, OCPP, SunSpec" }
+        - { label: "§14a EnWG controllable", value: "Via internal shut-off input, via interfaces or WARP Energy Manager" }
+    - title: "Access & user management"
+      rows:
+        - { label: "Access locking",     value: "NFC (RFID), web interface, Autocharge, API" }
+        - { label: "NFC tags",           value: "3 NFC cards included, up to 32 can be enrolled" }
+        - { label: "Users",              value: "Up to 32 configurable" }
+    - title: "Charge Management & energy"
+      rows:
+        - { label: "Charge Management",    value: "Static/dynamic integrated, up to 64 WARP chargers" }
+        - { label: "Standby (WLAN on)",  value: "Smart ≤ 3 W; Pro ≤ 5 W *" }
+    - title: "Scope of delivery"
+      rows:
+        - { label: "Scope of delivery",  value: "Charger, operating manual incl. installation manual, test report, 3× NFC card" }
+
+downloads:
+  heading: "Downloads"
+  sections:
+    - icon: "memory"
+      title: "Firmware"
+      coming_soon: "Coming Soon"
+      items: []
+    - icon: "description"
+      title: "Documentation"
+      items:
+        - { label: "Operating manual incl. installation manual", href: "/documents/WARP4_Betriebsanleitung.pdf" }
+        - { label: "Declaration of conformity",                   href: "/documents/WARP4_Konformitaet.pdf" }
+        - { label: "Warranty conditions",                         href: "/documents/WARP4_Garantiebedingungen.pdf" }
+        - { label: "Drilling template",                           href: "/documents/WARP4_Bohrschablone.pdf" }
+        - { label: "Example charge log",                          href: "/documents/beispiel_ladelog.pdf" }
+
+sticky_cta:
+  name: "WARP4 Charger"
+  price: "from €842"
+  cta_label: "Configure"
+  cta_url: "https://shop.warp-charger.com/en/warp4-charger.html"

@@ -1,0 +1,71 @@
+# WARP for Nerds (EN)
+title: "WARP for Nerds"
+description: "WARP Charger: open source hardware and software with open interfaces."
+
+hero:
+  badge: "WARP for Nerds"
+  headline: "Full control. No vendor lock-in."
+
+opensource:
+  badge: "Open Source"
+  headline: "Open source hardware and software"
+  text: "The entire WARP firmware, schematics and PCB layout are open source and published on GitHub. Custom modifications, bug fixes and feature requests are welcome. WARP4 Charger OSHWA UID DE000125."
+  github_label: "GitHub Repository"
+  github_url: "https://github.com/Tinkerforge/esp32-firmware"
+
+interfaces:
+  badge: "Interfaces"
+  headline: "Open interfaces"
+  text: "The WARP Charger supports HTTP/REST, MQTT, Modbus/TCP and OCPP 1.6J. All data and settings are accessible via the API, both read and write."
+  docs_label: "API documentation"
+  http_heading: "HTTP examples"
+  http_code: |
+    # Query charging status
+    curl http://warp4-AbCd/evse/state
+
+    # Set charging current to 16A
+    curl http://warp4-AbCd/evse/external_current \
+      -d '{"current": 16000}'
+
+    # Start charging
+    curl http://warp4-AbCd/evse/start_charging -d 'null'
+
+    # Stop charging
+    curl http://warp4-AbCd/evse/stop_charging -d 'null'
+  mqtt_heading: "MQTT examples"
+  mqtt_code: |
+    # Subscribe to charging status
+    mosquitto_sub -v -h $BROKER \
+      -t warp/AbCd/evse/state
+
+    # Set charging current to 16A
+    mosquitto_pub -h $BROKER \
+      -t warp/AbCd/evse/external_current_update \
+      -m '{"current": 16000}'
+
+    # Start charging
+    mosquitto_pub -h $BROKER \
+      -t warp/AbCd/evse/start_charging -m 'null'
+
+    # Stop charging
+    mosquitto_pub -h $BROKER \
+      -t warp/AbCd/evse/stop_charging -m 'null'
+
+hems:
+  badge: "Integration"
+  headline: "Integration into your own HEMS"
+  text: "The WARP Charger integrates seamlessly into custom Home Energy Management Systems. Via the documented API, charging power, SoC data and energy flows can be read and controlled in real time."
+  evcc_label: "EVCC"
+  home_assistant_label: "Home Assistant"
+  integrations_heading: "Supported protocols:"
+  integrations:
+    - protocol: "HTTP/REST"
+      desc: "Complete API for all settings and status data"
+    - protocol: "MQTT"
+      desc: "Publish/subscribe for real-time updates"
+    - protocol: "Modbus/TCP"
+      desc: "Industry standard for energy management systems"
+    - protocol: "SunSpec"
+      desc: "Compatible with SunSpec-enabled inverters"
+    - protocol: "OCPP 1.6J"
+      desc: "Backend connectivity for operators"

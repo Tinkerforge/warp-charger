@@ -1,0 +1,102 @@
+{
+    "grid": {
+        "width": "3",
+        "height": "3"
+    },
+    "graph": {
+        "nodes": [
+            { "id": "n01", "position": "(0,0)", "label_key": "solar",    "icon": "solar-panel.svg",           "highlighted": "false" },
+            { "id": "n02", "position": "(1,0)", "label_key": "meter",    "icon": "electricity-meter.svg",          "highlighted": "false" },
+            { "id": "n04", "position": "(1,1)", "label_key": "em",       "icon": "energy-manager.svg",        "highlighted": "true"  },
+            { "id": "n05", "position": "(2,1)", "label_key": "battery",  "icon": "battery-stage-0.svg", "highlighted": "false", "colorful": true },
+            { "id": "n06", "position": "(0,2)", "label_key": "wallbox1", "icon": "warp4-tilted.svg",          "highlighted": "false" },
+            { "id": "n07", "position": "(1,2)", "label_key": "heatpump", "icon": "heat-pump.svg",           "highlighted": "false" },
+            { "id": "n08", "position": "(2,2)", "label_key": "wallbox2", "icon": "warp4-tilted.svg",          "highlighted": "false" }
+        ],
+        "edges": [
+            { "id": "e01", "source": "n01", "target": "n02", "status": "active", "speed": 0.5, "dotted": "false" },
+            { "id": "e03", "source": "n02", "target": "n04", "status": "active", "speed": 0.5, "dotted": "false" },
+            { "id": "e04", "source": "n04", "target": "n05", "status": "active", "speed": 0.5, "dotted": "false" },
+            { "id": "e05", "source": "n05", "target": "n04", "status": "active", "speed": 0.5, "dotted": "false" },
+            { "id": "e06", "source": "n04", "target": "n06", "status": "active", "speed": 0.5, "dotted": "false" },
+            { "id": "e07", "source": "n04", "target": "n07", "status": "active", "speed": 0.5, "dotted": "false" },
+            { "id": "e08", "source": "n04", "target": "n08", "status": "active", "speed": 0.5, "dotted": "false" }
+        ]
+    },
+    "animation": {
+        "stepIntervalMs": 4500,
+        "defaultEdgeColors": {
+            "e01": "green",
+            "e03": "green",
+            "e04": "green",
+            "e05": "green",
+            "e06": "green",
+            "e07": "green",
+            "e08": "green"
+        },
+        "steps": [
+            {
+                "activeEdges": {
+                    "e01": { "speed": 0.4, "color": "green", "label": "1 kW" },
+                    "e03": { "speed": 0.4, "color": "green", "label": "1 kW" },
+                    "e07": { "speed": 0.4, "color": "green", "label": "1 kW" }
+                },
+                "edgeLabels": { "e04": "", "e05": "", "e06": "0 kW", "e08": "0 kW" },
+                "dimmedNodes": ["n05", "n06", "n08"],
+                "nodeIcons": { "n05": "battery-stage-0.svg" },
+                "weather": "sun-dim",
+                "descriptionKey": "step1"
+            },
+            {
+                "activeEdges": {
+                    "e01": { "speed": 0.85, "color": "green", "label": "12 kW" },
+                    "e03": { "speed": 0.85, "color": "green", "label": "12 kW" },
+                    "e06": { "speed": 0.85, "color": "green", "label": "11 kW" },
+                    "e07": { "speed": 0.4,  "color": "green", "label": "1 kW"  }
+                },
+                "edgeLabels": { "e04": "", "e05": "", "e08": "0 kW" },
+                "dimmedNodes": ["n05", "n08"],
+                "nodeIcons": { "n05": "battery-stage-0.svg" },
+                "weather": "sun",
+                "descriptionKey": "step2"
+            },
+            {
+                "activeEdges": {
+                    "e01": { "speed": 0.9,  "color": "green", "label": "13 kW" },
+                    "e03": { "speed": 0.9,  "color": "green", "label": "13 kW" },
+                    "e06": { "speed": 0.65, "color": "green", "label": "6 kW"  },
+                    "e07": { "speed": 0.4,  "color": "green", "label": "1 kW"  },
+                    "e08": { "speed": 0.65, "color": "green", "label": "6 kW"  }
+                },
+                "edgeLabels": { "e04": "", "e05": "" },
+                "dimmedNodes": ["n05"],
+                "nodeIcons": { "n05": "battery-stage-0.svg" },
+                "weather": "sun-bright",
+                "descriptionKey": "step3"
+            },
+            {
+                "activeEdges": {
+                    "e01": { "speed": 0.98, "color": "green", "label": "17 kW" },
+                    "e03": { "speed": 0.98, "color": "green", "label": "17 kW" },
+                    "e04": { "speed": 0.6,  "color": "green", "label": "4 kW"  },
+                    "e06": { "speed": 0.65, "color": "green", "label": "6 kW"  },
+                    "e07": { "speed": 0.4,  "color": "green", "label": "1 kW"  },
+                    "e08": { "speed": 0.65, "color": "green", "label": "6 kW"  }
+                },
+                "edgeLabels": { "e05": "" },
+                "dimmedNodes": [],
+                "nodeIcons": { "n05": "battery-stage-1.svg" },
+                "nodeIconSequence": {
+                    "n05": [
+                        "battery-stage-2.svg",
+                        "battery-stage-3.svg",
+                        "battery-stage-4.svg",
+                        "battery-stage-5.svg"
+                    ]
+                },
+                "weather": "sun-bright",
+                "descriptionKey": "step4"
+            }
+        ]
+    }
+}

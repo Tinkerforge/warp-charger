@@ -1,0 +1,100 @@
+{#
+    Feature pill switcher: image on the left, expanding pills on the right.
+    Clicking a pill opens its description and swaps the showcase image.
+
+    Parameters:
+        t      : translation dict (unused at top level, kept for parity)
+        pills  : list of dicts:
+            id              : unique slug (used for aria-controls IDs)
+            label           : pill label
+            body_html       : Markup() string with the body content
+            image           : single image filename (relative to static/images/), OR
+            images          : dict mapping a variant key -> filename
+                              e.g. {"edelstahl": "charger-1.webp", "anthrazit": "wallbox-1-black.jpg"}
+            swatches        : optional list of dicts (only used by the first pill that has
+                              variant images): [{"key": "edelstahl", "label": "Edelstahl",
+                              "class": "swatch-edelstahl"}, ...]
+        default_image   : optional explicit fallback image (else first pill's image is used)
+        default_variant : optional variant key for the default swatch
+        image_alt       : alt text for the showcase image
+
+    The macro emits a [data-feature-pill-switcher] root so the TS handler can scope itself.
+#}
+
+{% macro feature_pill_switcher(t, pills, default_image=None, default_variant="edelstahl", image_alt="") %}
+{%- set first_image = default_image -%}
+{%- if not first_image -%}
+    {%- set p = pills[0] -%}
+    {%- if p.images -%}
+        {%- set first_image = p.images.get(default_variant) or (p.images.values()|list)[0] -%}
+    {%- else -%}
+        {%- set first_image = p.image -%}
+    {%- endif -%}
+{%- endif -%}
+<section class="relative w-full bg-background pt-12 pb-16 md:pt-16 md:pb-24">
+    <div class="container-wide w-full">
+        <div
+            data-feature-pill-switcher
+            data-variant="{{ default_variant }}"
+            class="flex flex-col items-stretch gap-4 md:flex-row md:items-center md:gap-8 lg:gap-12"
+        >
+            <div class="relative h-80 w-full overflow-hidden rounded-[20px] bg-very-light-grey md:h-125 md:flex-1">
+                <img
+                    data-showcase-image
+                    src="{{ url_for('static', filename='images/' ~ first_image) }}"
+                    alt="{{ image_alt }}"
+                    loading="lazy"
+                    class="absolute inset-0 h-full w-full object-cover transition-opacity duration-200"
+                />
+            </div>
+
+            <ul class="flex shrink-0 flex-col gap-3 md:w-64 md:gap-3.5 lg:w-72" aria-label="{{ t.aria_label or 'Produkt-Eigenschaften' }}">
+                {% for pill in pills %}
+                <li>
+                    <div
+                        class="feature-pill-wrap{% if loop.first %} is-active{% endif %}"
+                        {% if pill.images %}
+                            {% for key, path in pill.images.items() %}
+                            data-pill-image-{{ key }}="{{ url_for('static', filename='images/' ~ path) }}"
+                            {% endfor %}
+                        {% elif pill.image %}
+                            data-pill-image="{{ url_for('static', filename='images/' ~ pill.image) }}"
+                        {% endif %}
+                    >
+                        <button
+                            type="button"
+                            class="feature-pill"
+                            aria-expanded="{{ 'true' if loop.first else 'false' }}"
+                            aria-controls="pill-content-{{ pill.id }}"
+                            data-pill="{{ pill.id }}"
+                        >
+                            <span class="feature-pill-icon">
+                                <span class="feature-pill-toggle material-symbols-outlined icon-20">add</span>
+                            </span>
+                            <span class="feature-pill-label">{{ pill.label }}</span>
+                        </button>
+                        <div id="pill-content-{{ pill.id }}" class="feature-pill-content">
+                            <div class="text-body text-white/80">{{ pill.body_html|safe }}</div>
+                            {% if pill.swatches %}
+                            <div class="mt-3 flex gap-3">
+                                {% for swatch in pill.swatches %}
+                                <button
+                                    type="button"
+                                    aria-label="{{ swatch.label }}"
+                                    aria-pressed="{{ 'true' if swatch.key == default_variant else 'false' }}"
+                                    data-swatch
+                                    data-material="{{ swatch.key }}"
+                                    class="swatch {{ swatch.class }}{% if swatch.key == default_variant %} is-selected{% endif %}"
+                                ></button>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+{% endmacro %}

@@ -1,0 +1,51 @@
+{# Year-grouped archive list, used both in the desktop sidebar and the mobile drawer.
+   Expects: posts (newest-first), active_slug, lang.
+   Optional: archive_theme = 'light' (default) | 'dark'. #}
+{% set _theme = archive_theme | default('light') %}
+{% if _theme == 'dark' %}
+    {% set _summary_text = 'text-white' %}
+    {% set _summary_hover = 'hover:bg-white/10' %}
+    {% set _icon_color = 'text-white/60' %}
+    {% set _count_color = 'text-white/60' %}
+    {% set _rail = 'border-white/15' %}
+    {% set _link_inactive = 'text-white/70 hover:bg-white/10 hover:text-white' %}
+    {% set _link_active = 'bg-primary/20 text-white font-medium' %}
+{% else %}
+    {% set _summary_text = 'text-black' %}
+    {% set _summary_hover = 'hover:bg-black/5' %}
+    {% set _icon_color = 'text-grey' %}
+    {% set _count_color = 'text-grey' %}
+    {% set _rail = 'border-black/10' %}
+    {% set _link_inactive = 'text-grey hover:bg-black/5 hover:text-black' %}
+    {% set _link_active = 'bg-blue-50 text-primary font-medium' %}
+{% endif %}
+{% set years = posts | groupby(attribute='meta.date.year') | list | reverse | list %}
+{% set current_year = years[0].grouper if years else None %}
+<div class="flex flex-col gap-1">
+    {% for year_group in years %}
+    {% set year = year_group.grouper %}
+    {% set year_posts = year_group.list %}
+    {% set year_has_active = active_slug and year_posts | selectattr('meta.slug', 'equalto', active_slug) | list | length > 0 %}
+    <details class="blog-archive-year group/y" {% if year == current_year or year_has_active %}open{% endif %}>
+        <summary class="flex cursor-pointer items-center justify-between gap-2 rounded-md px-2 py-1.5 text-body font-semibold {{ _summary_text }} {{ _summary_hover }} transition-colors list-none [&::-webkit-details-marker]:hidden">
+            <span class="flex items-center gap-1.5">
+                <span class="material-symbols-outlined icon-16 {{ _icon_color }} transition-transform duration-200 group-open/y:rotate-90">chevron_right</span>
+                {{ year }}
+            </span>
+            <span class="text-eyebrow {{ _count_color }}">{{ year_posts | length }}</span>
+        </summary>
+        <ul class="mt-1 mb-2 flex flex-col gap-0.5 pl-4 border-l {{ _rail }} ml-3">
+            {% for p in year_posts %}
+            {% set is_active = active_slug and p.meta.slug == active_slug %}
+            <li class="relative">
+                {% if is_active %}<span class="absolute -left-[17px] top-0 bottom-0 w-0.5 bg-primary rounded-full"></span>{% endif %}
+                <a href="/{{ lang }}/blog/{{ p.meta.slug }}"
+                   class="block rounded-md px-2 py-1 text-sm leading-snug line-clamp-2 transition-colors {{ _link_active if is_active else _link_inactive }}">
+                    {{ p.meta.title }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </details>
+    {% endfor %}
+</div>

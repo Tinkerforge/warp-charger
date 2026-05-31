@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="{{ lang }}">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{% block title %}{{ meta.meta_title }}{% endblock %}</title>
+        <meta name="description" content="{% block description %}{{ meta.meta_description }}{% endblock %}" />
+
+        <link rel="alternate" hreflang="{{ lang }}" href="{{ request.url }}" />
+        <link rel="alternate" hreflang="{{ other_lang }}" href="{{ alternate_url }}" />
+
+        <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}" />
+
+        <link href="{{ url_for('static', filename='css/output.min.css') }}" rel="stylesheet" />
+    </head>
+
+    <body class="relative min-h-screen overflow-x-hidden bg-background">
+        {% include "partials/header.html" %}
+        {% include "partials/mobile_menu.html" %}
+
+        <!-- Main Content -->
+        <main class="{% block main_class %}flex flex-col items-center text-center{% endblock %}">
+            {% block content %}{% endblock %}
+        </main>
+
+        {% include "partials/footer.html" %}
+
+        <!-- Scripts -->
+        <script src="{{ url_for('static', filename='js/output.min.js') }}"></script>
+    </body>
+</html>

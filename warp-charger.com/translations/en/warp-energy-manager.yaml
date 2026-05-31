@@ -1,0 +1,258 @@
+title: "WARP Energy Manager 2.0 | Open Source Energy Manager from 399€"
+description: "The WARP Energy Manager 2.0: open-source energy manager for heat pumps, chargers and home batteries. PV excess, dynamic prices, charge management. Made in Germany."
+
+hero:
+  eyebrow: "WARP Energy Manager 2.0"
+  headline: "The control centre for your energy management."
+  price_prefix: ""
+  price: "399€"
+  vat: "incl. VAT"
+  cta: "Buy now"
+  cta_url: "https://shop.warp-charger.com/en/warp-energy-manager-v2.html"
+  image: "energy-manager-hero.webp"
+  image_mobile: "energy-manager-hero-mobile.webp"
+  image_alt: "WARP Energy Manager 2.0 DIN-rail module with colour display"
+  bg_class: "md:bg-[#d8d8d8]"
+  tab_features: "Features"
+  tab_details: "Details"
+  tablist_label: "Product view"
+
+feature_switcher:
+  aria_label: "Product features"
+  image_alt: "WARP Energy Manager 2.0"
+  pills:
+    - id: "energy-balance"
+      label: "Local data recording"
+      body_html: "Local energy analysis in the web interface: Current generation, consumption and distribution at a glance, plus daily and monthly trends."
+      image: "energy-analysis.webp"
+    - id: "heat-pumps"
+      label: "Heat pumps"
+      body_html: "Control heat pumps with an SG-Ready interface: extended operation, normal operation or blocking, based on PV excess, electricity price and the home battery's state of charge."
+      image: "energy-manager-heating-plan.webp"
+    - id: "wallboxes"
+      label: "Chargers"
+      body_html: "Static and dynamic charge management for up to 64 WARP Chargers."
+      image: "energy-manager-charger.webp"
+    - id: "compatibility"
+      label: "Compatibility"
+      body_html: "Over 100 supported inverters, batteries and meters connected via Modbus/TCP, SunSpec, HTTP or MQTT."
+      image: "max-comp-logos.webp"
+    - id: "data-sovereignty"
+      label: "Data sovereignty"
+      body_html: "All features run locally on the Energy Manager. No cloud requirement, no telemetry."
+      image: "webinterface-wem-home-dark.webp"
+
+intro:
+  badge: "What is the Energy Manager 2.0?"
+  headline: "Local control for PV, heat pump, chargers and home battery"
+  body_html: >
+    The WARP Energy Manager 2.0 is the intelligent control centre for home energy
+    management. Depending on the current <strong>dynamic electricity price</strong>,
+    the <strong>PV excess</strong> or a power limit under <strong>§14a EnWG</strong>,
+    it controls heat pumps (SG-Ready), up to 64
+    <a href="/en/products/warp4-charger" class="prose-link"><strong>WARP4 Chargers</strong></a>,
+    a home battery and other loads.
+  body2_html: >
+    All control and data logging runs <strong>locally</strong> on the Energy Manager, not in the cloud.
+    Hardware and software are fully open source and developed and built in Germany.
+
+scenarios:
+  eyebrow: "Intelligent energy management"
+  heading: "Controls chargers and heat pumps"
+  tagline: "Intelligent energy management"
+  description_html: "The Energy Manager combines PV excess, forecast data, dynamic electricity prices and charge management. Over <a class=\"text-primary underline hover:opacity-80\" href=\"/en/solutions/maximum-compatibility#devices\">100 compatible devices</a> are supported."
+  placeholder_eyebrow: "Energy diagram"
+  section_icon: "auto_awesome"
+  aria_label: "Charging scenarios"
+  info_aria: "Explain diagram"
+  info_close_aria: "Close"
+  info_step_eyebrow: "Step {n}"
+  info_step_aria: "Show step {n}"
+  info_legend_green: "Solar / home battery"
+  info_legend_blue: "Grid import"
+  em_pv_surplus_diagram:
+    diagram_aria: "Diagram: PV excess for the heat pump. The Energy Manager routes excess solar power directly to the heat pump."
+    diagram_labels:
+      solar: "Solar"
+      meter: "Meter"
+      em: "Energy Manager"
+      heatpump: "Heat pump"
+      hp_blocked: "Blocked mode"
+      hp_normal: "Normal mode"
+      hp_boost: "Boost mode"
+    descriptions:
+      step1: "Low sun: the PV array delivers only 1 kW, the heat pump waits for more excess."
+      step2: "Enough sun: 3 kW solar yield, 1.5 kW excess flows into the heat pump."
+      step3: "Full sun: 9 kW solar yield, the heat pump runs at 3 kW from the excess."
+  em_dynamic_prices_diagram:
+    diagram_aria: "Diagram: Dynamic tariff. The Energy Manager switches the heat pump based on price and PV yield."
+    diagram_labels:
+      solar: "Solar"
+      meter: "Meter"
+      grid: "Grid"
+      em: "Energy Manager"
+      heatpump: "Heat pump"
+    descriptions:
+      step1: "Full sun, expensive grid: PV powers the heat pump at 3 kW, no grid import needed."
+      step2: "No sun, expensive grid: the heat pump is blocked, no consumption at peak prices."
+      step3: "No sun, cheap grid: the heat pump runs at 3 kW from the grid and pre-heats the buffer tank."
+  heat_curve_diagram:
+    diagram_aria: "Diagram: Heat curve. Three daily timelines show the heat pump's runtime at +10 °C, 0 °C and −10 °C."
+    heading: "Heat Curve"
+    subhead: "Daily heat-pump runtime"
+    hours_unit: "h"
+    caption: "As outside temperature drops, the Energy Manager automatically extends runtime and heat output of the heat pump along the heating curve."
+    row1:
+      label: "Mild"
+      temp: "+10 °C"
+      runtime: "4 h/day"
+      power: "2 kWh"
+    row2:
+      label: "Frosty"
+      temp: "0 °C"
+      runtime: "8 h/day"
+      power: "5 kWh"
+    row3:
+      label: "Very cold"
+      temp: "−10 °C"
+      runtime: "18 h/day"
+      power: "10 kWh"
+  em_wallbox_diagram:
+    diagram_aria: "Diagram: Charge management. As PV yield grows, the Energy Manager activates the heat pump, then the first charger, then the second charger, and finally the home battery."
+    diagram_labels:
+      solar: "Solar"
+      meter: "Meter"
+      em: "Energy Manager"
+      battery: "Home battery"
+      wallbox1: "Charger 1"
+      wallbox2: "Charger 2"
+      heatpump: "Heat pump"
+    descriptions:
+      step1: "Low sun, 1 kW PV: the Energy Manager supplies the heat pump first. Chargers and home battery wait."
+      step2: "More sun, 12 kW PV: the heat pump keeps running and the first car charges at full power on charger 1."
+      step3: "Bright sun, 13 kW PV: a second car joins, the Energy Manager splits the solar power so both chargers run at 6 kW each."
+      step4: "PV excess, 17 kW PV: heat pump and both cars keep running, the remaining 4 kW go into the home battery."
+  em_battery_control_diagram:
+    diagram_labels:
+      solar: "Solar"
+      meter: "Meter"
+      grid: "Grid"
+      em: "Energy Manager"
+      battery: "Home battery"
+      heatpump: "Heat pump"
+    priority:
+      diagram_aria: "Diagram: Battery priority. With PV excess the home battery is charged first, then the Energy Manager powers the heat pump."
+      descriptions:
+        step1: "PV excess first flows into the home battery, the heat pump waits. Priority is freely configurable (heat pump first also possible)."
+        step2: "Battery full: excess solar now powers the heat pump."
+    block:
+      diagram_aria: "Diagram: Block home battery. The full home battery stays untouched; energy for the heat pump is drawn directly from the grid."
+      descriptions:
+        step1: "Home battery blocked: instead of discharging the full battery, the heat pump runs straight from the grid. Later, when electricity prices are higher, the house can be powered from the battery."
+  items:
+    - { id: "pv-surplus",       icon: "wb_sunny",              label: "PV Excess",           desc: "Self-generated solar straight into the heat pump", panel: "em_pv_surplus" }
+    - { id: "dynamic-prices",   icon: "euro",                  label: "Dynamic Tariff",      desc: "Heats preferentially when grid is cheap or PV excess is available", panel: "em_dynamic_prices" }
+    - { id: "battery-control",  icon: "battery_charging_full", label: "Battery Control",     desc: "Use or block the home battery on demand", panel: "em_battery_control", panel_tabs: { priority: "Priority", block: "Block" } }
+    - { id: "heat-curve",       icon: "device_thermostat",     label: "Heat curve",          desc: "Adjusts daily heat-pump runtime to outside temperature", panel: "heat_curve" }
+    - { id: "wallbox",          icon: "ev_station",            label: "Chargers",            desc: "Coordinate up to 64 additional WARP chargers", panel: "em_wallbox" }
+
+comparison:
+  eyebrow: "Your Energy Manager"
+  heading: "One module, all functions."
+  section_icon: "memory"
+  variants:
+    - title: "WARP Energy Manager 2.0"
+      price_prefix: ""
+      price: "399€"
+      price_suffix: "incl. VAT"
+      cta_label: "Buy now"
+      cta_url: "https://shop.warp-charger.com/en/warp-energy-manager-v2.html"
+      feature_heading: "Functions, interfaces, quality:"
+      features:
+        - "Heat pump control (SG-Ready)"
+        - "Manages up to 64 WARP Chargers"
+        - "Central user management"
+        - "Home battery control"
+        - "PV excess usage with solar forecast"
+        - "Dynamic tariff, supplier-independent"
+        - "Local energy monitoring, no cloud"
+        - "Static and dynamic charge management"
+        - "HTTP, MQTT, Modbus RTU/TCP, EEBUS"
+        - "2 relay outputs, 4 configurable inputs"
+        - "Remote access via Android and iOS app"
+        - "DIN-rail module (4 TE), 320×240 colour display"
+        - "Open source hardware and software"
+        - "Made in Germany, 3-year warranty"
+
+faq:
+  eyebrow: "FAQs"
+  heading: "More questions?"
+  section_icon: "help"
+  group_name: "wem-faq"
+  items:
+    - question: "Does the WARP Energy Manager also work without internet access/cloud?"
+      answer_html: "All control and analysis runs locally on the Energy Manager. Functions such as the solar forecast, the use of dynamic electricity prices and the use of the apps require an internet connection."
+    - question: "Do I have to use every function?"
+      answer_html: "No. You can enable individual building blocks, for example dynamic tariff with a heat pump only, and extend later."
+    - question: "Which heat pumps are supported?"
+      answer_html: "All heat pumps with an SG-Ready interface. The Energy Manager can request extended operation, keep normal operation, or block the heat pump."
+    - question: "How many WARP Chargers can I connect?"
+      answer_html: "Up to 64 <a href=\"/en/products/warp4-charger\" class=\"prose-link\">WARP4 Chargers</a> in a group, with no additional charge management hardware. Static and dynamic modes are both supported."
+    - question: "Which inverters and meters are supported?"
+      answer_html: "Over 100 devices from common manufacturers. See the <a href=\"/en/solutions/maximum-compatibility\" class=\"prose-link\">full compatibility list</a> on our solutions page."
+    - question: "Can the WARP Energy Manager also control my home battery?"
+      answer_html: "Reading data from many battery systems works today. Active control (charge / discharge) is currently being built up, first devices are already supported. See the <a href=\"/en/solutions/maximum-compatibility\" class=\"prose-link\">full compatibility list</a> on our solutions page."
+    - question: "Where do I install the Energy Manager?"
+      answer_html: "In the distribution unit on a DIN rail (4 TE wide). Connectors for network, relays, inputs and Modbus RTU (RS485) sit directly on the module."
+    - question: "How is my consumption data recorded?"
+      answer_html: "The WARP Energy Manager records consumption data exclusively locally on the device. No data is transmitted to a cloud or similar service."
+    - question: "Is the hardware open source?"
+      answer_html: "Yes. Both the hardware design files and the firmware are fully open source. Custom extensions and integrations are explicitly encouraged."
+
+tech_specs:
+  heading: "Technical specifications"
+  footnote: "* function available via future software update"
+  groups:
+    - title: "Control"
+      rows:
+        - { label: "Heat pump",      value: "SG-Ready interface (extended / normal / blocked operation)" }
+        - { label: "Chargers",      value: "Up to 64 WARP Chargers in a group" }
+        - { label: "Home battery",   value: "Readout today; active control via update *" }
+        - { label: "Charge Management", value: "Static and dynamic" }
+    - title: "Interfaces"
+      rows:
+        - { label: "Data protocols", value: "HTTP, MQTT, Modbus RTU/TCP, EEBUS" }
+        - { label: "Relay outputs",  value: "2× to switch additional loads" }
+        - { label: "Inputs",         value: "4× configurable, including §14a EnWG" }
+        - { label: "Remote Access",  value: "Android and iOS app, plus web interface" }
+    - title: "Hardware"
+      rows:
+        - { label: "Form factor",   value: "DIN-rail module, 4 TE" }
+        - { label: "Display",       value: "320 × 240 colour display" }
+        - { label: "Storage",       value: "Swappable industrial SD card" }
+        - { label: "Components",    value: "Individually replaceable, long-term availability" }
+    - title: "Energy monitoring"
+      rows:
+        - { label: "Meter channels", value: "Up to 7 meters / inverters / batteries" }
+        - { label: "Recording",      value: "Locally on the SD card, daily and monthly views" }
+    - title: "Scope of delivery"
+      rows:
+        - { label: "In the box", value: "WARP Energy Manager 2.0, operating manual" }
+
+downloads:
+  heading: "Downloads"
+  sections:
+    - icon: "memory"
+      title: "Firmware"
+      items:
+        - { label: "WARP Energy Manager firmware", href: "/en/software/downloads#firmware" }
+    - icon: "description"
+      title: "Documentation"
+      items:
+        - { label: "Operating manual", href: "/documents/WARP_Energy_Manager2_Betriebsanleitung.pdf" }
+
+sticky_cta:
+  name: "WARP Energy Manager 2.0"
+  price: "399€"
+  cta_label: "Buy now"
+  cta_url: "https://shop.warp-charger.com/en/warp-energy-manager-v2.html"

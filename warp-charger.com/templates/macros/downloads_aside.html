@@ -1,0 +1,63 @@
+{#
+    Downloads aside: sidebar with Firmware / Documentation sections.
+
+    Parameters:
+        t : translation dict with:
+            heading : aside heading ("Downloads")
+        sections : list of dicts:
+            icon  : material symbol name (e.g. "memory", "description")
+            title : section title (e.g. "Firmware", "Dokumentation")
+            items : list of dicts: {label, href}
+#}
+
+{% macro downloads_aside(t, sections) %}
+<aside class="w-full rounded-[10px] bg-white p-6 lg:w-80 lg:shrink-0" aria-label="{{ t.heading }}">
+    <h3 class="mb-6 text-h3 text-black">{{ t.heading }}</h3>
+
+    {% if t.coming_soon %}
+    <p class="font-satoshi text-sm font-bold text-grey">{{ t.coming_soon }}</p>
+    {% else %}
+    <div class="flex flex-col gap-6">
+        {% for section in sections %}
+        <div>
+            <div class="mb-5 flex items-center gap-3">
+                <div class="scenario-icon-badge">
+                    <div class="scenario-icon-badge-inner">
+                        <span class="material-symbols-outlined bg-gradient-white-blue bg-clip-text icon-20 text-transparent">{{ section.icon }}</span>
+                    </div>
+                </div>
+                <p class="font-satoshi text-xl font-semibold text-dark-primary">{{ section.title }}</p>
+            </div>
+            {% set section_items = section["items"] %}
+            <div class="h-px w-full bg-light-grey" aria-hidden="true"></div>
+            {% if section.coming_soon %}
+                <p class="my-1 py-3 font-satoshi text-sm font-bold text-grey">{{ section.coming_soon }}</p>
+            {% elif section_items|length == 1 %}
+                {% for item in section_items %}
+                <a href="{{ item.href }}" class="-mx-2 my-1 flex items-center justify-between gap-5 rounded-[5px] px-2 py-3 transition-colors hover:bg-black/5">
+                    <p class="font-satoshi text-sm font-bold text-black">{{ item.label }}</p>
+                    <span class="flex size-6 shrink-0 items-center justify-center rounded-[5px] bg-light-grey" aria-hidden="true">
+                        <span class="material-symbols-outlined icon-18 text-black">download</span>
+                    </span>
+                </a>
+                {% endfor %}
+            {% else %}
+                <ul class="flex flex-col divide-y divide-light-grey">
+                    {% for item in section_items %}
+                    <li>
+                        <a href="{{ item.href }}" class="-mx-2 my-1 flex items-center justify-between gap-5 rounded-[5px] px-2 py-3 transition-colors hover:bg-black/5">
+                            <p class="font-satoshi text-sm font-bold text-black">{{ item.label }}</p>
+                            <span class="flex size-6 shrink-0 items-center justify-center rounded-[5px] bg-light-grey" aria-hidden="true">
+                                <span class="material-symbols-outlined icon-18 text-black">download</span>
+                            </span>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</aside>
+{% endmacro %}

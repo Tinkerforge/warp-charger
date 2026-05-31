@@ -1,0 +1,80 @@
+{#
+  Two-column section where the image column is replaced by tabbed code blocks.
+  Follows the same layout pattern as two_col_section (light variant).
+
+  Parameters:
+    id          : Unique ID prefix for tab elements (e.g. "api", "nerds")
+    badge_icon  : Material Symbols icon name for the badge
+    badge_text  : Badge label text
+    headline    : Section heading
+    tabs        : List of dicts: [{label, code}, ...]: tab button labels and code content
+    image_side  : "right" (default) or "left": which side the code block appears on
+    bg          : Optional background class
+
+  The caller() block is rendered as body content below the code tabs (mobile) / beside them (desktop).
+
+  Usage:
+    {% from "macros/code_tabs_section.html" import code_tabs_section %}
+
+    {% call code_tabs_section(
+        id="api",
+        badge_icon="code",
+        badge_text="HTTP & MQTT",
+        headline="Einfache REST-API",
+        tabs=[{"label": "HTTP", "code": t.http_code}, {"label": "MQTT", "code": t.mqtt_code}]
+    ) %}
+        <p class="text-body text-grey">Description text...</p>
+    {% endcall %}
+#}
+
+{% from "macros/badge.html" import badge %}
+
+{% macro code_tabs_section(
+    id,
+    badge_icon,
+    badge_text,
+    headline,
+    tabs,
+    image_side="right",
+    bg=""
+) %}
+{% set flex_dir = "lg:flex-row" if image_side == "right" else "lg:flex-row-reverse" %}
+
+<section class="w-full py-section {{ bg }}">
+    <div class="container-main flex flex-col items-center gap-6 {{ flex_dir }} lg:items-start lg:gap-20">
+        <div class="flex flex-1 flex-col items-start gap-6 text-left">
+            {{ badge(badge_icon, badge_text, wrap_class="flex items-center justify-start gap-2.5") }}
+            <h2 class="text-section-heading">{{ headline }}</h2>
+
+            {# Code tabs: mobile only (between heading and text) #}
+            <div class="w-full min-w-0 lg:hidden" data-code-tabs>
+                <nav class="flex gap-1 rounded-[20px] bg-black/30 p-1.5 mb-3 w-fit">
+                    {% for tab in tabs %}
+                    <button data-tab-btn class="cursor-pointer rounded-[15px] px-4 py-1 text-btn text-white transition-all duration-200 {{ 'bg-white/30' if loop.first else 'bg-transparent hover:bg-white/10' }}">{{ tab.label }}</button>
+                    {% endfor %}
+                </nav>
+                {% for tab in tabs %}
+                <div data-tab-panel class="{{ 'hidden ' if not loop.first }}rounded-xl bg-[#1e1e2e] p-5 overflow-x-auto max-w-[calc(100vw-2.5rem)] text-left">
+                    <pre class="text-sm leading-relaxed text-[#cdd6f4] font-mono whitespace-pre">{{ tab.code|highlight_shell }}</pre>
+                </div>
+                {% endfor %}
+            </div>
+
+            {{ caller() }}
+        </div>
+        {# Code tabs: desktop (replaces image column) #}
+        <div class="hidden lg:flex flex-1 flex-col items-start min-w-0" data-code-tabs>
+            <nav class="flex gap-1 rounded-[20px] bg-black/30 p-1.5 mb-3">
+                {% for tab in tabs %}
+                <button data-tab-btn class="cursor-pointer rounded-[15px] px-4 py-1 text-btn text-white transition-all duration-200 {{ 'bg-white/30' if loop.first else 'bg-transparent hover:bg-white/10' }}">{{ tab.label }}</button>
+                {% endfor %}
+            </nav>
+            {% for tab in tabs %}
+            <div data-tab-panel class="{{ 'hidden ' if not loop.first }}w-full rounded-xl bg-[#1e1e2e] p-5 overflow-x-auto text-left">
+                <pre class="text-sm leading-relaxed text-[#cdd6f4] font-mono whitespace-pre">{{ tab.code|highlight_shell }}</pre>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endmacro %}

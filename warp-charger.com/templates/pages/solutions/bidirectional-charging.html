@@ -1,0 +1,67 @@
+{% extends "page_base.html" %}
+{% from "macros/page_hero.html" import page_hero %}
+{% from "macros/two_col_section.html" import two_col_section %}
+{% from "macros/energy_diagram.html" import energy_diagram %}
+{% from "macros/badge.html" import badge %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block content %}
+{# Hero #}
+{% call page_hero(badge_icon="sync_alt", badge_text=t.badge, headline=t.subtitle) %}{% endcall %}
+
+{# Was ist bidirektionales Laden? Custom 2-col layout to embed the animated
+   diagram in the media slot (mirrors charge-management.html pattern). #}
+{% set intro_diagram_t = {
+    "diagram_aria": t.intro.diagram_aria,
+    "diagram_labels": t.intro.diagram_labels,
+    "diagram_config_url": url_for('static', filename='data/diagram-bidirectional-intro.json')
+} %}
+<section class="w-full py-section bg-background">
+    <div class="container-main flex flex-col items-center gap-6 lg:flex-row lg:items-center lg:gap-20">
+        <div class="flex flex-1 flex-col items-start gap-6 text-left">
+            {{ badge("sync_alt", t.intro.badge, wrap_class="flex items-center justify-start gap-2.5") }}
+            <h2 class="text-section-heading">{{ t.intro.headline }}</h2>
+
+            {# Diagram shown between heading and content on mobile #}
+            <div class="flex w-full items-center justify-center lg:hidden">
+                {{ energy_diagram(intro_diagram_t) }}
+            </div>
+
+            <p class="text-section-body">{{ t.intro.body_html|safe }}</p>
+            <p class="text-section-body">{{ t.intro.variants_html|safe }}</p>
+        </div>
+        {# Diagram column: desktop only #}
+        <div class="hidden lg:flex flex-1 items-center justify-center">
+            {{ energy_diagram(intro_diagram_t) }}
+        </div>
+    </div>
+</section>
+
+{# Aktueller Stand #}
+{% call two_col_section(
+    badge_icon="help",
+    badge_text=t.status.badge,
+    headline=t.status.headline,
+    image="iso15118.webp",
+    image_side="left",
+    dark=true
+) %}
+    <p class="text-section-body-dark">{{ t.status.body_html|safe }}</p>
+    <p class="text-section-body-dark">{{ t.status.open_questions_html|safe }}</p>
+{% endcall %}
+
+{# Bidirektionales Laden und WARP Charger #}
+{% call two_col_section(
+    badge_icon="ev_station",
+    badge_text=t.warp.badge,
+    headline=t.warp.headline,
+    image="warp4-pro-open-from-top.webp",
+    image_side="right",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.warp.body_html|safe }}</p>
+    <p class="text-body text-black font-medium">{{ t.warp.highlight_html|safe }}</p>
+{% endcall %}
+{% endblock %}

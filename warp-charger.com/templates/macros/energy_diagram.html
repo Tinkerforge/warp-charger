@@ -1,0 +1,108 @@
+{#
+  Unified energy-flow diagram. Renders the standard background grid +
+  highlight overlay + [data-diagram-canvas] driven by src/ts/diagram.ts.
+  Replaces the previously separate per-scenario macros (load_management,
+  bidirectional, pv_surplus, eco_mode, battery_control).
+
+  Parameters:
+    t: dict with keys
+       - diagram_aria
+       - diagram_labels (map)
+       - diagram_config_url (URL to the JSON config)
+       - descriptions (optional, map keyed by step descriptionKey)
+    weather: optional, one of "sun", "sun-dim", "sun-bright", "cloud", "moon".
+             When set, renders the weather glyph overlay (top-left of canvas).
+    price: optional, one of "cheap", "normal", "expensive".
+           When set, renders the price label overlay (middle-left of canvas).
+    price_label: text shown inside the price overlay (e.g. "20 ct").
+    temperature: optional, one of "cold", "mild", "warm".
+           When set, renders the outdoor-temperature overlay (top-left of canvas,
+           replaces the weather overlay slot when used together with weather).
+    temperature_label: text shown inside the temperature overlay (e.g. "+10 °C").
+    dim: when true, applies opacity-60 + grayscale to the canvas wrapper
+         (used by the "coming soon" bidirectional scenario).
+#}
+
+{% macro energy_diagram(t, weather=None, price=None, price_label=None, temperature=None, temperature_label=None, dim=false) %}
+<div
+    data-diagram-root
+    class="relative mx-auto w-full max-w-[560px]"
+>
+    {# Base grid as an absolute inset-0 child overlay rather than a CSS
+       background on [data-diagram-root] itself: iOS Safari fails to paint
+       the root element's own background-image in the nested product-page
+       layout (only child overlays paint), so the grey grid was invisible on
+       iPad while rendering fine on the index page. Mirroring the highlight
+       overlay's structure makes it paint reliably. We also use the "-flat"
+       grid variant (soft-light blend removed): iOS Safari drops the
+       mix-blend-mode inside the SVG in this context, which made the grid
+       vanish on the product pages. #}
+    <div
+        data-diagram-grid
+        class="pointer-events-none absolute inset-0"
+        style="z-index: 0; background: url('{{ url_for('static', filename='images/energy-diagram/background-grid-flat.svg') }}') center / cover no-repeat;"
+        aria-hidden="true"
+    ></div>
+    {# Empty (display:none) overlay kept only so src/ts/diagram.ts can wire up
+       the animation stepper (attachSpotlight is guarded on this element). The
+       highlighted-grid overlay was permanently hidden in 2ae0964d, so we no
+       longer load background-grid-highlighted.svg here. #}
+    <div
+        data-diagram-highlight
+        class="pointer-events-none absolute inset-0"
+        style="z-index: 0;"
+        aria-hidden="true"
+    ></div>
+
+    <div class="relative mx-auto w-full{% if dim %} opacity-60 grayscale{% endif %}" style="z-index: 1">
+        {% if weather %}
+        <div
+            data-diagram-weather
+            class="pointer-events-none absolute grid h-12 w-12 -translate-x-1/2 -translate-y-1/2 place-items-center md:h-16 md:w-16"
+            data-weather="{{ weather }}"
+            aria-hidden="true"
+            style="z-index: -1; left: 9%; top: 8%;"
+        >
+            <span class="weather-glyph material-symbols-outlined icon-32 text-amber-400 md:icon-48" data-glyph="sun">wb_sunny</span>
+            <span class="weather-glyph material-symbols-outlined icon-32 text-slate-400 md:icon-48" data-glyph="cloud">rainy</span>
+            <span class="weather-glyph material-symbols-outlined icon-32 text-slate-500 md:icon-48" data-glyph="moon">bedtime</span>
+        </div>
+        {% endif %}
+
+        {% if price %}
+        <div
+            data-diagram-price
+            class="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2"
+            data-price="{{ price }}"
+            aria-hidden="true"
+            style="z-index: 2; left: 16.67%; top: 55%;"
+        >
+            <span data-diagram-price-label>{{ price_label }}</span>
+        </div>
+        {% endif %}
+
+        {% if temperature %}
+        <div
+            data-diagram-temperature
+            class="pointer-events-none absolute flex -translate-x-1/2 -translate-y-1/2 items-center gap-1"
+            data-temperature="{{ temperature }}"
+            aria-hidden="true"
+            style="z-index: 2; left: 9%; top: 8%;"
+        >
+            <span class="material-symbols-outlined icon-32 md:icon-48">device_thermostat</span>
+            <span data-diagram-temperature-label>{{ temperature_label }}</span>
+        </div>
+        {% endif %}
+
+        <div
+            data-diagram-canvas
+            class="w-full"
+            data-config-url="{{ t.diagram_config_url }}"
+            data-asset-base="{{ url_for('static', filename='images/energy-diagram/') }}"
+            data-aria-label="{{ t.diagram_aria }}"
+            data-labels='{{ t.diagram_labels | tojson }}'
+            data-descriptions='{{ (t.descriptions or {}) | tojson }}'
+        ></div>
+    </div>
+</div>
+{% endmacro %}

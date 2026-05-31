@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+{% for page in pages %}
+{% for lang, url in page.urls.items() %}
+    <url>
+        <loc>{{ url }}</loc>
+        {% for alt_lang, alt_url in page.urls.items() %}
+        <xhtml:link rel="alternate" hreflang="{{ alt_lang }}" href="{{ alt_url }}" />
+        {% endfor %}
+    </url>
+{% endfor %}
+{% endfor %}
+</urlset>

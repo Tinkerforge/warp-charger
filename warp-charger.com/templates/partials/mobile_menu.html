@@ -1,0 +1,161 @@
+{% from "macros/nav_link.html" import dropdown_nav_link %}
+        <!-- Mobile Menu Backdrop -->
+        <div
+            id="mobile-menu-overlay"
+            class="invisible fixed inset-0 z-40 bg-black/60 opacity-0 transition-opacity duration-300"
+            aria-hidden="true"
+        ></div>
+
+        <!-- Mobile Menu Panel -->
+        <aside
+            id="mobile-menu"
+            class="fixed top-0 right-0 z-50 flex h-dvh w-80 max-w-[85vw] translate-x-full flex-col overflow-hidden bg-black transition-transform duration-300 ease-in-out"
+            aria-label="{{ nav.products }}"
+        >
+            <div class="flex shrink-0 items-center justify-between border-b border-white/10 px-5 py-4">
+                <img
+                    src="{{ url_for('static', filename='images/warp-logo.svg') }}"
+                    loading="lazy"
+                    alt="WARP Charger Logo"
+                    class="h-6 w-auto"
+                />
+                <button
+                    id="mobile-menu-close"
+                    class="flex items-center justify-center text-white transition-colors hover:text-white/60"
+                    aria-label="{{ nav.close_menu }}"
+                >
+                    <span class="material-symbols-outlined icon-24">close</span>
+                </button>
+            </div>
+
+            <nav class="flex flex-1 flex-col divide-y divide-white/10 overflow-y-auto">
+                <!-- Produkte -->
+                <div>
+                    <button
+                        class="mobile-accordion-btn flex w-full items-center justify-between px-5 py-4 text-left text-base font-medium text-white"
+                        data-target="accordion-produkte"
+                        aria-expanded="false"
+                    >
+                        {{ nav.products }}
+                        <span class="material-symbols-outlined expand-icon icon-20 transition-transform duration-200">expand_more</span>
+                    </button>
+                    <div id="accordion-produkte" class="overflow-hidden" style="max-height: 0; transition: max-height 0.3s ease-in-out">
+                        <div class="flex flex-col gap-2 px-5 pb-5">
+                            <span class="mt-1 text-eyebrow text-grey">{{ nav.products_label }}</span>
+                            {% for slug, label in nav_links.products %}
+                            {{ dropdown_nav_link(lang, slug, label, none, "text-base text-white/80 transition-colors hover:text-white") }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Software -->
+                <div>
+                    <button
+                        class="mobile-accordion-btn flex w-full items-center justify-between px-5 py-4 text-left text-base font-medium text-white"
+                        data-target="accordion-software"
+                        aria-expanded="false"
+                    >
+                        {{ nav.software }}
+                        <span class="material-symbols-outlined expand-icon icon-20 transition-transform duration-200">expand_more</span>
+                    </button>
+                    <div id="accordion-software" class="overflow-hidden" style="max-height: 0; transition: max-height 0.3s ease-in-out">
+                        <div class="flex flex-col gap-2 px-5 pb-5">
+                            <span class="mt-1 text-eyebrow text-grey">{{ nav.software_label }}</span>
+                            {% for slug, label in nav_links.software %}
+                            {{ dropdown_nav_link(lang, slug, label, none, "text-base text-white/80 transition-colors hover:text-white") }}
+                            {% endfor %}
+                            <span class="mt-2 text-eyebrow text-grey">{{ nav.downloads_label }}</span>
+                            {% for slug, label in nav_links.software_downloads %}
+                            {{ dropdown_nav_link(lang, slug, label, none, "text-base text-white/80 transition-colors hover:text-white") }}
+                            {% endfor %}
+                            <span class="mt-2 text-eyebrow text-grey">{{ nav.home_automation }}</span>
+                            {% for slug, label in nav_links.software_automation %}
+                            {{ dropdown_nav_link(lang, slug, label, none, "text-base text-white/80 transition-colors hover:text-white") }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lösungen -->
+                <div>
+                    <button
+                        class="mobile-accordion-btn flex w-full items-center justify-between px-5 py-4 text-left text-base font-medium text-white"
+                        data-target="accordion-loesungen"
+                        aria-expanded="false"
+                    >
+                        {{ nav.solutions }}
+                        <span class="material-symbols-outlined expand-icon icon-20 transition-transform duration-200">expand_more</span>
+                    </button>
+                    <div id="accordion-loesungen" class="overflow-hidden" style="max-height: 0; transition: max-height 0.3s ease-in-out">
+                        <div class="flex flex-col gap-2 px-5 pb-5">
+                            <span class="mt-1 text-eyebrow text-grey">{{ nav.energy_management }}</span>
+                            {% for slug, label in nav_links.solutions_energy %}
+                            {{ dropdown_nav_link(lang, slug, label, none, "text-base text-white/80 transition-colors hover:text-white") }}
+                            {% endfor %}
+                            <span class="mt-2 text-eyebrow text-grey">{{ nav.compliance }}</span>
+                            {% for slug, label in nav_links.solutions_compliance %}
+                            {{ dropdown_nav_link(lang, slug, label, none, "text-base text-white/80 transition-colors hover:text-white") }}
+                            {% endfor %}
+                            <span class="mt-2 text-eyebrow text-grey">{{ nav.warp_for }}</span>
+                            {% for slug, label in nav_links.warp_for %}
+                            {{ dropdown_nav_link(lang, slug, label, none, "text-base text-white/80 transition-colors hover:text-white") }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Über uns -->
+                <div>
+                    <button
+                        class="mobile-accordion-btn flex w-full items-center justify-between px-5 py-4 text-left text-base font-medium text-white"
+                        data-target="accordion-ueber-uns"
+                        aria-expanded="false"
+                    >
+                        {{ nav.about }}
+                        <span class="material-symbols-outlined expand-icon icon-20 transition-transform duration-200">expand_more</span>
+                    </button>
+                    <div id="accordion-ueber-uns" class="overflow-hidden" style="max-height: 0; transition: max-height 0.3s ease-in-out">
+                        <div class="flex flex-col gap-2 px-5 pb-5">
+                            <span class="mt-1 text-eyebrow text-grey">{{ nav.about_label }}</span>
+                            {% for slug, label in nav_links.about %}
+                            {{ dropdown_nav_link(lang, slug, label, none, "text-base text-white/80 transition-colors hover:text-white") }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dokumentation (external) - now in bottom button bar -->
+
+                <!-- Language Switcher (Mobile) -->
+                <div>
+                    <button
+                        class="mobile-accordion-btn flex w-full items-center justify-between px-5 py-4 text-left text-base font-medium text-white"
+                        data-target="accordion-language"
+                        aria-expanded="false"
+                    >
+                        {{ lang | upper }}
+                        <span class="material-symbols-outlined expand-icon icon-20 transition-transform duration-200">expand_more</span>
+                    </button>
+                    <div id="accordion-language" class="overflow-hidden" style="max-height: 0; transition: max-height 0.3s ease-in-out">
+                        <div class="flex flex-col gap-2 px-5 pb-5">
+                            <a href="{{ lang_urls.de }}"
+                               class="flex items-center gap-2 text-base {% if lang == 'de' %}text-white{% else %}text-white/50{% endif %} transition-colors hover:text-white">
+                                Deutsch
+                                {% if lang == 'de' %}<span class="material-symbols-outlined icon-14">check</span>{% endif %}
+                            </a>
+                            <a href="{{ lang_urls.en }}"
+                               class="flex items-center gap-2 text-base {% if lang == 'en' %}text-white{% else %}text-white/50{% endif %} transition-colors hover:text-white">
+                                English
+                                {% if lang == 'en' %}<span class="material-symbols-outlined icon-14">check</span>{% endif %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="flex shrink-0 flex-col gap-3 border-t border-white/10 p-5">
+                <a href="https://docs.warp-charger.com/{{ lang }}/docs/home/" class="btn-tertiary w-full justify-center">{{ nav.documentation }}</a>
+                <a href="https://shop.warp-charger.com" class="btn-secondary w-full justify-center">{{ nav.shop }}</a>
+            </div>
+        </aside>

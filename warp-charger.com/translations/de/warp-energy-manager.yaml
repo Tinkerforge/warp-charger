@@ -1,0 +1,260 @@
+title: "WARP Energy Manager 2.0 | Open Source Energiemanager ab 399€"
+description: "Der WARP Energy Manager 2.0: Open Source Energiemanager für Wärmepumpe, Wallboxen und Stromspeicher. PV-Überschuss, dynamische Strompreise, Lastmanagement. Made in Germany."
+
+hero:
+  eyebrow: "WARP Energy Manager 2.0"
+  headline: "Die Schalt­zentrale für Ihr Energie­management."
+  price_prefix: ""
+  price: "399€"
+  vat: "inkl. MwSt"
+  cta: "Zum Shop"
+  cta_url: "https://shop.warp-charger.com/de/warp-energy-manager-v2.html"
+  image: "energy-manager-hero.webp"
+  image_mobile: "energy-manager-hero-mobile.webp"
+  image_alt: "WARP Energy Manager 2.0 Hutschienenmodul mit Farbdisplay"
+  bg_class: "md:bg-[#d8d8d8]"
+  tab_features: "Funktionen"
+  tab_details: "Details"
+  tablist_label: "Produkt-Ansicht"
+
+feature_switcher:
+  aria_label: "Produkt-Eigenschaften"
+  image_alt: "WARP Energy Manager 2.0"
+  pills:
+    - id: "energiebilanz"
+      label: "Lokale Datenaufzeichnung"
+      body_html: "Lokale Energiebilanz im Webinterface: Aktuelle Erzeugung, Verbrauch und Verteilung auf einen Blick, dazu Tages- und Monatsverläufe."
+      image: "energy-analysis.webp"
+    - id: "waermepumpen"
+      label: "Wärmepumpen"
+      body_html: "Steuerung von Wärmepumpen mit SG-Ready-Schnittstelle: erweiterter Betrieb, Normalbetrieb oder Sperrung, je nach PV-Überschuss, Strompreis und Ladestand des Hausspeichers."
+      image: "energy-manager-heating-plan.webp"
+    - id: "wallboxen"
+      label: "Wallboxen"
+      body_html: "Statisches und dynamisches Lastmanagement für bis zu 64 WARP Charger."
+      image: "energy-manager-charger.webp"
+    - id: "kompatibilitaet"
+      label: "Kompatibilität"
+      body_html: "Über 100 unterstützte Wechselrichter, Speicher und Zähler angebunden per Modbus/TCP, SunSpec, HTTP oder MQTT."
+      image: "max-comp-logos.webp"
+    - id: "datenhoheit"
+      label: "Lokal, keine Cloud"
+      body_html: "Alle Funktionen laufen lokal auf dem Energy Manager. Keine Cloud-Pflicht, keine Telemetrie."
+      image: "webinterface-wem-home-dark.webp"
+
+intro:
+  badge: "Was ist der Energy Manager 2.0?"
+  headline: "Lokale Steuerung für PV, Wärmepumpe, Wallboxen und Hausspeicher"
+  body_html: >
+    Der WARP Energy Manager 2.0 ist die intelligente Schaltzentrale für das
+    Energiemanagement zu Hause. Abhängig vom aktuellen <strong>dynamischen
+    Strompreis</strong>, dem <strong>PV-Überschuss</strong> oder einer
+    Leistungsbegrenzung nach <strong>§14a EnWG</strong> steuert er
+    Wärmepumpe (SG-Ready), bis zu 64
+    <a href="/de/produkte/warp4-charger" class="prose-link"><strong>WARP4 Charger</strong></a>
+    Wallboxen, einen Hausspeicher und weitere Verbraucher.
+  body2_html: >
+    Die gesamte Steuerung und Datenaufzeichnung läuft <strong>lokal</strong> auf dem Energy Manager,
+    nicht in der Cloud. Hardware und Software sind vollständig Open Source und
+    werden in Deutschland entwickelt und gefertigt.
+
+scenarios:
+  eyebrow: "Intelligentes Energiemanagement"
+  heading: "Steuert Wallboxen und Wärmepumpen"
+  tagline: "Intelligentes Energiemanagement"
+  description_html: "Der Energy Manager kombiniert PV-Überschuss, Prognosedaten, dynamische Strompreise und Lastmanagement. Über <a class=\"text-primary underline hover:opacity-80\" href=\"/de/loesungen/maximale-kompatibilitaet#devices\">100 kompatible Geräte</a> werden unterstützt."
+  placeholder_eyebrow: "Energiediagramm"
+  section_icon: "auto_awesome"
+  aria_label: "Lade-Szenarien"
+  info_aria: "Diagramm erklären"
+  info_close_aria: "Schließen"
+  info_step_eyebrow: "Schritt {n}"
+  info_step_aria: "Schritt {n} anzeigen"
+  info_legend_green: "Solar / Hausspeicher"
+  info_legend_blue: "Netzbezug"
+  em_pv_surplus_diagram:
+    diagram_aria: "Diagramm: PV-Überschuss für die Wärmepumpe. Der Energy Manager leitet überschüssigen Solarstrom direkt in die Wärmepumpe."
+    diagram_labels:
+      solar: "Solar"
+      meter: "Stromzähler"
+      em: "Energy Manager"
+      heatpump: "Wärmepumpe"
+      hp_blocked: "Blockierender Betrieb"
+      hp_normal: "Normalbetrieb"
+      hp_boost: "Erweiterter Betrieb"
+    descriptions:
+      step1: "Wenig Sonne: Die PV-Anlage liefert nur 1 kW, die Wärmepumpe wartet auf mehr Überschuss."
+      step2: "Genug Sonne: 3 kW Solarertrag, davon 1,5 kW Überschuss fließen in die Wärmepumpe."
+      step3: "Volle Sonne: 9 kW Solarertrag, die Wärmepumpe heizt mit 3 kW aus dem Überschuss."
+  em_dynamic_prices_diagram:
+    diagram_aria: "Diagramm: Dynamische Strompreise. Der Energy Manager schaltet die Wärmepumpe je nach Strompreis und PV-Ertrag."
+    diagram_labels:
+      solar: "Solar"
+      meter: "Stromzähler"
+      grid: "Stromnetz"
+      em: "Energy Manager"
+      heatpump: "Wärmepumpe"
+    descriptions:
+      step1: "Volle Sonne, teurer Strom: Eigener PV-Strom heizt mit 3 kW, kein Netzbezug nötig."
+      step2: "Keine Sonne, teurer Strom: Die Wärmepumpe wird gesperrt, kein Verbrauch zum Spitzenpreis."
+      step3: "Keine Sonne, günstiger Strom: Die Wärmepumpe heizt mit 3 kW aus dem Netz und füllt den Pufferspeicher."
+  heat_curve_diagram:
+    diagram_aria: "Diagramm: Heizkurve. Drei Tagesverläufe zeigen die Laufzeit der Wärmepumpe bei +10 °C, 0 °C und −10 °C."
+    heading: "Heizkurve"
+    subhead: "Tägliche Laufzeit der Wärmepumpe"
+    hours_unit: "Uhr"
+    caption: "Mit fallender Außentemperatur passt der Energy Manager Laufzeit und Heizleistung der Wärmepumpe automatisch nach der Heizkurve an."
+    row1:
+      label: "Mild"
+      temp: "+10 °C"
+      runtime: "4 h/Tag"
+      power: "2 kWh"
+    row2:
+      label: "Frostig"
+      temp: "0 °C"
+      runtime: "8 h/Tag"
+      power: "5 kWh"
+    row3:
+      label: "Sehr kalt"
+      temp: "−10 °C"
+      runtime: "18 h/Tag"
+      power: "10 kWh"
+  em_wallbox_diagram:
+    diagram_aria: "Diagramm: Lastmanagement. Mit zunehmendem PV-Ertrag schaltet der Energy Manager nacheinander Wärmepumpe, erste Wallbox, zweite Wallbox und Hausspeicher zu."
+    diagram_labels:
+      solar: "Solar"
+      meter: "Stromzähler"
+      em: "Energy Manager"
+      battery: "Hausspeicher"
+      wallbox1: "Wallbox 1"
+      wallbox2: "Wallbox 2"
+      heatpump: "Wärmepumpe"
+    descriptions:
+      step1: "Wenig Sonne, 1 kW PV: Der Energy Manager versorgt zuerst die Wärmepumpe. Wallboxen und Hausspeicher warten."
+      step2: "Mehr Sonne, 12 kW PV: Wärmepumpe läuft weiter, das erste Auto lädt mit voller Leistung an Wallbox 1."
+      step3: "Volle Sonne, 13 kW PV: Ein zweites Auto kommt dazu, der Energy Manager teilt den Solarstrom auf, beide Wallboxen laden mit jeweils 6 kW."
+      step4: "Sonnen-Überschuss, 17 kW PV: Wärmepumpe und beide Autos laufen weiter, die übrigen 4 kW gehen in den Hausspeicher."
+  em_battery_control_diagram:
+    diagram_labels:
+      solar: "Solar"
+      meter: "Stromzähler"
+      grid: "Stromnetz"
+      em: "Energy Manager"
+      battery: "Hausspeicher"
+      heatpump: "Wärmepumpe"
+    priority:
+      diagram_aria: "Diagramm: Batterie-Priorität. Bei PV-Überschuss wird zuerst der Hausspeicher geladen, anschließend versorgt der Energy Manager die Wärmepumpe."
+      descriptions:
+        step1: "PV-Überschuss fließt zuerst in den Hausspeicher, die Wärmepumpe wartet. Die Priorität ist frei konfigurierbar (Wärmepumpe zuerst auch möglich)."
+        step2: "Speicher ist voll: Der überschüssige Solarstrom heizt jetzt die Wärmepumpe."
+    block:
+      diagram_aria: "Diagramm: Hausspeicher sperren. Der volle Hausspeicher bleibt unangetastet; die Energie für die Wärmepumpe kommt direkt aus dem Stromnetz."
+      descriptions:
+        step1: "Hausspeicher gesperrt: Statt den vollen Speicher zu entladen, läuft die Wärmepumpe direkt aus dem Netz. So kann das Haus später, wenn die Strompreise höher sind, aus dem Speicher versorgt werden."
+  items:
+    - { id: "pv-ueberschuss",   icon: "wb_sunny",              label: "PV-Überschuss",       desc: "Eigener Solarstrom direkt in die Wärmepumpe", panel: "em_pv_surplus" }
+    - { id: "dyn-strompreise",  icon: "euro",                  label: "Dynamische Strompreise", desc: "Heizt vorrangig dann, wenn Strom günstig oder Sonne im Überschuss ist", panel: "em_dynamic_prices" }
+    - { id: "batteriesteuerung", icon: "battery_charging_full", label: "Batteriesteuerung",   desc: "Hausspeicher gezielt nutzen oder sperren", panel: "em_battery_control", panel_tabs: { priority: "Priorität", block: "Sperren" } }
+    - { id: "heizkurve",        icon: "device_thermostat",     label: "Heizkurve",           desc: "Passt die tägliche Laufzeit der Wärmepumpe an die Außentemperatur an", panel: "heat_curve" }
+    - { id: "wallbox",          icon: "ev_station",            label: "Wallbox",             desc: "Bis zu 64 WARP Charger zusätzlich koordinieren", panel: "em_wallbox" }
+
+comparison:
+  eyebrow: "Ihr Energy Manager"
+  heading: "Ein Modul, alle Funktionen."
+  section_icon: "memory"
+  variants:
+    - title: "WARP Energy Manager 2.0"
+      price_prefix: ""
+      price: "399€"
+      price_suffix: "inkl. MwSt"
+      cta_label: "Zum Shop"
+      cta_url: "https://shop.warp-charger.com/de/warp-energy-manager-v2.html"
+      feature_heading: "Funktionen, Schnittstellen, Qualität:"
+      features:
+        - "Steuerung von Wärmepumpen (SG-Ready)"
+        - "Management von bis zu 64 WARP Charger Wallboxen"
+        - "Zentrale Nutzerverwaltung"
+        - "Hausspeicher-Steuerung"
+        - "PV-Überschussnutzung mit Ertragsprognose"
+        - "Dynamische Strompreise ohne Anbieterbindung"
+        - "Lokales Energiemonitoring ohne Cloud"
+        - "Statisches und dynamisches Lastmanagement"
+        - "HTTP, MQTT, Modbus RTU/TCP, EEBUS"
+        - "2 Relais-Ausgänge, 4 konfigurierbare Eingänge"
+        - "Fernzugriff via Android- und iOS-App"
+        - "Hutschienenmodul (4 TE), 320×240 Farbdisplay"
+        - "Open Source Hardware und Software"
+        - "Made in Germany, 3 Jahre Garantie"
+
+faq:
+  eyebrow: "FAQs"
+  heading: "Noch weitere Fragen?"
+  section_icon: "help"
+  group_name: "wem-faq"
+  items:
+    - question: "Funktioniert der WARP Energy Manager auch ohne Internetzugang/Cloud?"
+      answer_html: "Die gesamte Steuerung und Auswertung läuft lokal auf dem Energy Manager. Funktionen wie PV-Ertragsprognose, die Nutzung dynamischer Strompreise oder die Nutzung der Apps setzen eine Internetverbindung voraus."
+    - question: "Muss ich alle Funktionen nutzen?"
+      answer_html: "Nein. Sie können einzelne Bausteine aktivieren, zum Beispiel nur dynamische Strompreise mit Wärmepumpe, und später erweitern."
+    - question: "Welche Wärmepumpen werden unterstützt?"
+      answer_html: "Alle Wärmepumpen mit SG-Ready Schnittstelle. Der Energy Manager kann den erweiterten Betrieb anfordern, den Normalbetrieb beibehalten oder die Wärmepumpe sperren."
+    - question: "Wie viele WARP Charger kann ich anbinden?"
+      answer_html: "Bis zu 64 <a href=\"/de/produkte/warp4-charger\" class=\"prose-link\">WARP4 Charger</a> in einem Verbund, ohne zusätzliche Lastmanagement-Hardware. Statisch und dynamisch möglich."
+    - question: "Welche Wechselrichter und Stromzähler werden unterstützt?"
+      answer_html: "Über 100 Geräte der gängigen Hersteller. Die <a href=\"/de/loesungen/maximale-kompatibilitaet\" class=\"prose-link\">vollständige Kompatibilitätsliste</a> finden Sie auf unserer Lösungen-Seite."
+    - question: "Kann der WARP Energy Manager auch meinen Heimspeicher steuern?"
+      answer_html: "Das Auslesen vieler Speichersysteme funktioniert bereits heute. Die aktive Steuerung (Laden und Entladen) befindet sich gerade im Aufbau. Erste Geräte werden bereits unterstützt. Die <a href=\"/de/loesungen/maximale-kompatibilitaet\" class=\"prose-link\">vollständige Kompatibilitätsliste</a> finden Sie auf unserer Lösungen-Seite."
+    - question: "Wo wird der Energy Manager montiert?"
+      answer_html: "In der Verteilung auf der Hutschiene (4 TE). Anschlüsse für Netzwerk, Relais, Eingänge und Modbus RTU (RS485) erfolgen direkt am Modul."
+    - question: "Wie werden meine Verbrauchsdaten aufgezeichnet?"
+      answer_html: "Der WARP Energy Manager zeichnet die Verbrauchsdaten ausschließlich lokal auf dem Gerät auf. Es findet keine Übertragung in eine Cloud o.ä. statt."
+    - question: "Ist die Hardware Open Source?"
+      answer_html: "Ja. Sowohl die Hardware-Designdateien als auch die Firmware sind vollständig Open Source. Eigene Erweiterungen und Integrationen sind ausdrücklich erwünscht."
+
+tech_specs:
+  heading: "Technische Spezifikationen"
+  footnote: "* Funktion über Software-Update zukünftig verfügbar"
+  groups:
+    - title: "Steuerung"
+      rows:
+        - { label: "Wärmepumpe",        value: "SG-Ready Schnittstelle (erweiterter / normaler / sperrender Betrieb)" }
+        - { label: "Wallboxen",         value: "Bis zu 64 WARP Charger im Verbund" }
+        - { label: "Stromspeicher",     value: "Auslesen; aktive Steuerung" }
+        - { label: "Lastmanagement",    value: "Statisch und dynamisch" }
+    - title: "Schnittstellen"
+      rows:
+        - { label: "Datenprotokolle",   value: "HTTP, MQTT, Modbus RTU/TCP, EEBUS" }
+        - { label: "Relais-Ausgänge",   value: "2× zum Schalten weiterer Verbraucher" }
+        - { label: "Eingänge",          value: "4× konfigurierbar, u.a. §14a EnWG" }
+        - { label: "Fernzugriff",       value: "Über App (Android/iOS) und Webinterface" }
+    - title: "Hardware"
+      rows:
+        - { label: "Bauform",        value: "Hutschienenmodul, 4 TE" }
+        - { label: "Display",        value: "320 × 240 Farbdisplay" }
+        - { label: "Datenspeicher",  value: "Wechselbare Industrial SD-Karte" }
+        - { label: "Komponenten",    value: "Einzeln austauschbar, lange Lieferbarkeit" }
+    - title: "Energiemonitoring"
+      rows:
+        - { label: "Zählerkanäle",  value: "Bis zu 7 Stromzähler/Wechselrichter/Speicher" }
+        - { label: "Aufzeichnung",  value: "Lokal auf SD-Karte, Tages- und Monatsansicht" }
+    - title: "Lieferumfang"
+      rows:
+        - { label: "Lieferumfang", value: "WARP Energy Manager 2.0, Bedienungsanleitung" }
+
+downloads:
+  heading: "Downloads"
+  sections:
+    - icon: "memory"
+      title: "Firmware"
+      items:
+        - { label: "WARP Energy Manager Firmware", href: "/de/software/downloads#firmware" }
+    - icon: "description"
+      title: "Dokumentation"
+      items:
+        - { label: "Bedienungsanleitung", href: "/documents/WARP_Energy_Manager2_Betriebsanleitung.pdf" }
+
+sticky_cta:
+  name: "WARP Energy Manager 2.0"
+  price: "399€"
+  cta_label: "Zum Shop"
+  cta_url: "https://shop.warp-charger.com/de/warp-energy-manager-v2.html"

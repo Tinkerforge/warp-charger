@@ -1,0 +1,88 @@
+{
+    "grid": {
+        "width": "3",
+        "height": "3"
+    },
+    "graph": {
+        "nodes": [
+            { "id": "n01", "position": "(0,0)", "label_key": "solar",    "icon": "solar-panel.svg",         "highlighted": "false" },
+            { "id": "n02", "position": "(1,0)", "label_key": "meter",    "icon": "electricity-meter.svg",        "highlighted": "false" },
+            { "id": "n03", "position": "(2,0)", "label_key": "heatpump", "icon": "heat-pump.svg",         "highlighted": "false" },
+            { "id": "n05", "position": "(1,1)", "label_key": "wallbox",  "icon": "warp4-tilted.svg",        "highlighted": "true"  },
+            { "id": "n06", "position": "(2,1)", "label_key": "battery",  "icon": "battery-stage-0.svg", "highlighted": "false", "colorful": true },
+            { "id": "n07", "position": "(1,2)", "label_key": "ev",       "icon": "ev-outside-stage-0.svg",  "highlighted": "false", "colorful": true }
+        ],
+        "edges": [
+            { "id": "e01", "source": "n01", "target": "n02", "status": "active", "speed": 0.5, "dotted": "false" },
+            { "id": "e02", "source": "n02", "target": "n03", "status": "active", "speed": 0.5, "dotted": "false" },
+            { "id": "e03", "source": "n02", "target": "n05", "status": "active", "speed": 0.5, "dotted": "false" },
+            { "id": "e04", "source": "n05", "target": "n07", "status": "active", "speed": 0.5, "dotted": "false" },
+            { "id": "e07", "source": "n02", "target": "n06", "status": "active", "speed": 0.5, "dotted": "false" },
+            { "id": "e08", "source": "n06", "target": "n02", "status": "active", "speed": 0.5, "dotted": "false" }
+        ]
+    },
+    "animation": {
+        "stepIntervalMs": 5000,
+        "defaultEdgeColors": {
+            "e01": "green",
+            "e02": "green",
+            "e03": "green",
+            "e04": "green",
+            "e07": "green",
+            "e08": "green"
+        },
+        "steps": [
+            {
+                "activeEdges": {
+                    "e01": { "speed": 0.98, "color": "green", "label": "13 kW" },
+                    "e02": { "speed": 0.5,  "color": "green", "label": "2 kW" },
+                    "e07": { "speed": 0.95, "color": "green", "label": "11 kW" }
+                },
+                "edgeLabels": { "e03": "0 kW", "e04": "0 kW", "e08": "" },
+                "dimmedNodes": [],
+                "nodeIcons": {
+                    "n07": "ev-outside-stage-0.svg"
+                },
+                "nodeIconSequence": {
+                    "n06": [
+                        "battery-stage-1.svg",
+                        "battery-stage-2.svg",
+                        "battery-stage-3.svg",
+                        "battery-stage-4.svg",
+                        "battery-stage-5.svg"
+                    ]
+                },
+                "weather": "sun-bright",
+                "price": "normal",
+                "priceLabel": "",
+                "descriptionKey": "step1"
+            },
+            {
+                "activeEdges": {
+                    "e01": { "speed": 0.98, "color": "green", "label": "13 kW" },
+                    "e02": { "speed": 0.5,  "color": "green", "label": "2 kW" },
+                    "e03": { "speed": 0.95, "color": "green", "label": "11 kW" },
+                    "e04": { "speed": 0.95, "color": "green", "label": "11 kW" }
+                },
+                "edgeLabels": { "e07": "", "e08": "" },
+                "dimmedNodes": [],
+                "nodeIcons": {
+                    "n06": "battery-stage-5.svg"
+                },
+                "nodeIconSequence": {
+                    "n07": [
+                        "ev-outside-stage-1.svg",
+                        "ev-outside-stage-2.svg",
+                        "ev-outside-stage-3.svg",
+                        "ev-outside-stage-4.svg",
+                        "ev-outside-stage-5.svg"
+                    ]
+                },
+                "weather": "sun-bright",
+                "price": "normal",
+                "priceLabel": "",
+                "descriptionKey": "step2"
+            }
+        ]
+    }
+}

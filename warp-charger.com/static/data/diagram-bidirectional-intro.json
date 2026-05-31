@@ -1,0 +1,32 @@
+{
+    "grid": {
+        "width": "3",
+        "height": "3"
+    },
+    "graph": {
+        "nodes": [
+            { "id": "n01", "position": "(1,0)", "label_key": "grid",    "icon": "grid.svg",    "highlighted": "false" },
+            { "id": "n02", "position": "(1,1)", "label_key": "wallbox", "icon": "warp4-tilted.svg", "highlighted": "true"  },
+            { "id": "n03", "position": "(1,2)", "label_key": "ev",      "icon": "ev.svg",         "highlighted": "false" }
+        ],
+        "edges": [
+            { "id": "e01", "source": "n03", "target": "n02", "status": "active", "speed": 0.5, "dotted": "false" },
+            { "id": "e02", "source": "n02", "target": "n01", "status": "active", "speed": 0.5, "dotted": "false" }
+        ]
+    },
+    "animation": {
+        "stepIntervalMs": 4500,
+        "defaultEdgeColors": {
+            "e01": "blue",
+            "e02": "blue"
+        },
+        "steps": [
+            {
+                "activeEdges": {
+                    "e01": { "speed": 0.5 },
+                    "e02": { "speed": 0.5 }
+                }
+            }
+        ]
+    }
+}

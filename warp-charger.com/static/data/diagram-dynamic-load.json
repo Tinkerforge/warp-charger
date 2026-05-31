@@ -1,0 +1,75 @@
+{
+    "grid": {
+        "width": "3",
+        "height": "3"
+    },
+    "graph": {
+        "nodes": [
+            { "id": "n01", "position": "(0,0)", "label_key": "grid",     "icon": "grid.svg",     "highlighted": "false" },
+            { "id": "n07", "position": "(1,0)", "label_key": "meter",    "icon": "electricity-meter.svg",  "highlighted": "false" },
+            { "id": "n02", "position": "(1,1)", "label_key": "wallbox",  "icon": "warp4-tilted.svg",  "highlighted": "true"  },
+            { "id": "n06", "position": "(2,0)", "label_key": "heatpump", "icon": "heat-pump.svg",   "highlighted": "false" },
+            { "id": "n03", "position": "(0,2)", "label_key": "ev1",      "icon": "ev.svg",          "highlighted": "false" },
+            { "id": "n04", "position": "(1,2)", "label_key": "ev2",      "icon": "ev.svg",          "highlighted": "false" },
+            { "id": "n05", "position": "(2,2)", "label_key": "ev3",      "icon": "ev.svg",          "highlighted": "false" }
+        ],
+        "edges": [
+            { "id": "e01", "source": "n01", "target": "n07", "status": "active", "speed": 0.85, "dotted": "false" },
+            { "id": "e06", "source": "n07", "target": "n02", "status": "active", "speed": 0.85, "dotted": "false" },
+            { "id": "e05", "source": "n07", "target": "n06", "status": "active", "speed": 0.7,  "dotted": "false" },
+            { "id": "e02", "source": "n02", "target": "n03", "status": "active", "speed": 0.7,  "dotted": "false" },
+            { "id": "e03", "source": "n02", "target": "n04", "status": "active", "speed": 0.7,  "dotted": "false" },
+            { "id": "e04", "source": "n02", "target": "n05", "status": "active", "speed": 0.7,  "dotted": "false" }
+        ]
+    },
+    "animation": {
+        "stepIntervalMs": 5000,
+        "defaultEdgeColors": {
+            "e01": "blue",
+            "e02": "blue",
+            "e03": "blue",
+            "e04": "blue",
+            "e05": "blue",
+            "e06": "blue"
+        },
+        "steps": [
+            {
+                "activeEdges": {
+                    "e01": { "speed": 0.80, "label": "13 kW" },
+                    "e06": { "speed": 0.78, "label": "11 kW" },
+                    "e02": { "speed": 0.78, "label": "11 kW" },
+                    "e05": { "speed": 0.45, "label": "2 kW" }
+                },
+                "edgeLabels": { "e03": "0 kW", "e04": "0 kW" },
+                "dimmedNodes": ["n04", "n05"],
+                "descriptionKey": "step1"
+            },
+            {
+                "activeEdges": {
+                    "e01": { "speed": 0.95, "label": "24 kW" },
+                    "e06": { "speed": 0.85, "label": "14 kW" },
+                    "e02": { "speed": 0.65, "label": "7 kW" },
+                    "e03": { "speed": 0.65, "label": "7 kW" },
+                    "e05": { "speed": 0.75, "label": "10 kW" }
+                },
+                "edgeLabels": { "e04": "0 kW" },
+                "dimmedNodes": ["n05"],
+                "descriptionKey": "step2"
+            },
+            {
+                "activeEdges": {
+                    "e01": { "speed": 0.95, "label": "24 kW" },
+                    "e05": { "speed": 0.95, "label": "24 kW" }
+                },
+                "edgeLabels": {
+                    "e06": "0 kW",
+                    "e02": "0 kW",
+                    "e03": "0 kW",
+                    "e04": "0 kW"
+                },
+                "dimmedNodes": ["n03", "n04", "n05"],
+                "descriptionKey": "step3"
+            }
+        ]
+    }
+}

@@ -1,0 +1,36 @@
+{#
+  Icon row: centered header with badge, headline, description,
+  followed by a horizontal row of circular icon features.
+
+  Parameters:
+    t: translation dict with keys:
+      badge, headline, description
+    icons: list of dicts: [{svg_id, label}]
+           svg_id references an icon in static/images/icons.svg
+#}
+
+{% from "macros/badge.html" import badge %}
+
+{% macro icon_row(t, icons) %}
+<section class="flex w-full flex-col gap-8 py-20">
+    <div class="flex flex-col items-center gap-text-gap-md px-1 text-center">
+        <div class="flex flex-col gap-text-gap-sm">
+            {{ badge("crossword", t.badge) }}
+            <h2 class="text-h2 text-black">{{ t.headline }}</h2>
+        </div>
+        <p class="max-w-184 text-body text-grey">{{ t.description }}</p>
+    </div>
+    <div class="mx-auto flex w-full flex-row items-center justify-center gap-10 px-2 md:max-w-2xl md:gap-16 md:px-10 lg:max-w-5xl lg:gap-25 lg:px-20">
+        {% for icon in icons %}
+        <div class="feature-box">
+            <div class="flex h-18 w-18 shrink-0 items-center justify-center rounded-full bg-gradient-light-blue p-0.5 lg:h-27 lg:w-27">
+                <div class="badge-circle-inner-dark">
+                    <svg class="feature-icon"><use href="{{ url_for('static', filename='images/icons.svg') }}#{{ icon.svg_id }}"></use></svg>
+                </div>
+            </div>
+            <p class="feature-text">{{ icon.label }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endmacro %}

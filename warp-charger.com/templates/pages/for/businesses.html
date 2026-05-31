@@ -1,0 +1,69 @@
+{% extends "page_base.html" %}
+{% from "macros/page_hero.html" import page_hero %}
+{% from "macros/two_col_section.html" import two_col_section %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block content %}
+{# Hero #}
+{% call page_hero(badge_icon="business", badge_text=t.badge, headline=t.subtitle) %}{% endcall %}
+
+{# Lastmanagement #}
+{% call two_col_section(
+    badge_icon="balance",
+    badge_text=t.load_management.badge,
+    headline=t.load_management.headline,
+    image="for-business.webp",
+    image_side="right",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.load_management.body_html|safe }}</p>
+    <a href="{{ t.load_management.link_url }}" class="btn-icon">
+        <span class="material-symbols-outlined icon-18">balance</span>
+        {{ t.load_management.link_label }}
+    </a>
+{% endcall %}
+
+{# Zentrale Nutzerverwaltung (dark) #}
+{% call two_col_section(
+    badge_icon="group",
+    badge_text=t.users.badge,
+    headline=t.users.headline,
+    image="central-user-management-screenshot.webp",
+    image_side="left",
+    dark=true
+) %}
+    <p class="text-section-body-dark">{{ t.users.body_html|safe }}</p>
+    <p class="text-section-body-dark">{{ t.users.log_html|safe }}</p>
+{% endcall %}
+
+{# Haltbar und qualitativ #}
+{% call two_col_section(
+    badge_icon="verified",
+    badge_text=t.quality.badge,
+    headline=t.quality.headline,
+    image="warp4-pro-open-from-top.webp",
+    image_side="right",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.quality.body_html|safe }}</p>
+    <p class="text-section-body">{{ t.quality.repair_html|safe }}</p>
+{% endcall %}
+
+{# Made in Germany #}
+{% call two_col_section(
+    badge_icon="public",
+    badge_text=t.made_in_germany.badge,
+    headline=t.made_in_germany.headline,
+    image="germany-background.webp",
+    image_side="left",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.made_in_germany.body_html|safe }}</p>
+    <a href="{{ t.made_in_germany.link_url }}" class="btn-icon">
+        <span class="material-symbols-outlined icon-18">public</span>
+        {{ t.made_in_germany.link_label }}
+    </a>
+{% endcall %}
+{% endblock %}

@@ -1,0 +1,106 @@
+# API & Interfaces (EN)
+title: "API & Interfaces"
+description: "WARP Charger and WARP Energy Manager with open interfaces: HTTP, MQTT, Modbus/TCP, OCPP and EEBUS."
+
+hero:
+  badge: "API & Interfaces"
+  headline: "Open and integrable"
+  text: "WARP Charger and WARP Energy Manager offer extensive interfaces for integration into any system. Whether home automation, energy management or cloud backend, the open architecture enables seamless integration."
+
+compatible:
+  badge: "Compatibility"
+  headline: "Compatible with 100+ devices"
+  text: "WARP reads data from inverters, smart meters and battery storage from numerous manufacturers. Supported protocols include SunSpec, Modbus/TCP, SMA Speedwire and HTTP."
+  docs_url: "/en/solutions/maximum-compatibility#devices"
+  docs_label: "Compatible Devices"
+
+ocpp:
+  badge: "OCPP"
+  headline: "Cloud connectivity via OCPP"
+  text: 'The WARP Charger supports OCPP 1.6J with Core Profile and Smart Charging Profile. OCPP is commonly used when your employer or landlord uses a <a href="/en/solutions/company-car-billing" class="prose-link">billing service</a> that manages the charger via a cloud backend.'
+  docs_url: "https://docs.warp-charger.com/en/docs/interfaces/ocpp"
+  docs_label: "OCPP documentation"
+
+eebus:
+  badge: "EEBUS"
+  headline: "EEBUS for §14a EnWG"
+  text: 'EEBUS is the communication standard for control by energy grid operators in accordance with <a href="/en/solutions/14a-enwg" class="prose-link">§14a EnWG</a>.'
+  text2: "Supported use cases include grid operator control (LPC), e-mobility information (EVCC, EVSECC, EVCEM, MPC) and monitoring of the grid connection point (MGCP)."
+  docs_url: "https://docs.warp-charger.com/en/docs/interfaces/eebus"
+  docs_label: "EEBUS documentation"
+
+http_mqtt:
+  badge: "HTTP & MQTT"
+  headline: "Complete HTTP and MQTT API"
+  text: "Every setting and status value is readable and writable via the API. The HTTP API works immediately without configuration, as it is also used by the web interface itself. MQTT enables real-time updates via publish/subscribe. WebSockets are supported as well."
+  http_heading: "HTTP examples"
+  http_code: |
+    # Query charging status
+    curl http://warp4-AbCd/evse/state
+
+    # Set charging current to 16A
+    curl http://warp4-AbCd/evse/external_current \
+      -d '{"current": 16000}'
+
+    # Start charging
+    curl http://warp4-AbCd/evse/start_charging -d 'null'
+
+    # Stop charging
+    curl http://warp4-AbCd/evse/stop_charging -d 'null'
+  mqtt_heading: "MQTT examples"
+  mqtt_code: |
+    # Subscribe to charging status
+    mosquitto_sub -v -h $BROKER \
+      -t warp/AbCd/evse/state
+
+    # Set charging current to 16A
+    mosquitto_pub -h $BROKER \
+      -t warp/AbCd/evse/external_current_update \
+      -m '{"current": 16000}'
+
+    # Start charging
+    mosquitto_pub -h $BROKER \
+      -t warp/AbCd/evse/start_charging -m 'null'
+
+    # Stop charging
+    mosquitto_pub -h $BROKER \
+      -t warp/AbCd/evse/stop_charging -m 'null'
+  docs_url: "https://docs.warp-charger.com/en/docs/interfaces/mqtt_http/introduction"
+  docs_label: "API documentation"
+
+modbus:
+  badge: "Modbus/TCP"
+  headline: "Modbus/TCP with device emulation"
+  text: "The WARP Charger supports Modbus/TCP as a server with its own register table. Special feature: The WARP Charger can emulate the register tables of Bender CC613 and Keba C-Series. This allows direct integration into existing systems that already support those devices."
+  input_code: |
+    Input Registers (Function code 4, read-only)
+    ─────────────────────────────────────────────
+    Addr  Type     Name
+    ────  ───────  ──────────────────────────────
+    0     uint32   Register table version
+    1000  uint32   IEC 61851 state (0-4)
+    1002  uint32   Charge status (0: Disconnected,
+                    1: Waiting, 2: Ready, 3: Charging)
+    1010  uint32   Allowed charge current (mA)
+    2002  float32  Power (W)
+    2004  float32  Energy absolute (kWh)
+    2008  float32  Charge session energy (kWh)
+    3100  uint32   Connected phases (1 or 3)
+  holding_code: |
+    Holding Registers (Function code 3/16, read/write)
+    ──────────────────────────────────────────────────
+    Addr  Type     Name
+    ────  ───────  ──────────────────────────────
+    1002  uint32   Allowed charge current (mA)
+                    0 or 6000-32000
+    2000  uint32   Reset relative energy
+                    Password: 0x3E12E5E7
+    3100  uint32   Trigger phase switch
+                    1 = single-phase, 3 = three-phase
+
+    Coils (Function code 1/5/15)
+    ────────────────────────────
+    1000  bool     Charge enable (0/1)
+    1001  bool     Manual charge enable (0/1)
+  docs_url: "https://docs.warp-charger.com/en/docs/interfaces/modbus/introduction"
+  docs_label: "Modbus documentation"

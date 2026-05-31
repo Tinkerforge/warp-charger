@@ -1,0 +1,39 @@
+{#
+    Tech specs table: grouped rows (section title + dt/dd pairs).
+
+    Parameters:
+        heading  : section heading ("Technische Spezifikationen")
+        groups   : list of dicts:
+            title : section title (rendered as h3 in the first cell)
+            rows  : list of dicts: {label, value}
+        footnote : optional string rendered below the table
+#}
+
+{% macro tech_specs_table(heading, groups, footnote=None) %}
+<div class="flex w-full flex-col gap-12 lg:flex-1">
+    <h2 class="text-h2 text-black">{{ heading }}</h2>
+
+    <div class="border-t border-light-grey">
+        {% for group in groups %}
+        {%- set is_last_group = loop.last -%}
+        <div class="grid grid-cols-1 md:grid-cols-[260px_1fr_1fr]">
+            <h3
+                class="border-b border-light-grey px-1.25 py-5 font-satoshi text-base font-bold text-dark-primary md:self-start md:border-b-0"
+                style="grid-row: span {{ group.rows|length }};"
+            >
+                {{ group.title }}
+            </h3>
+            {% for row in group.rows %}
+            {%- set border_cls = "" if (is_last_group and loop.last) else "border-b border-light-grey " -%}
+            <dt class="{{ border_cls }}px-1.25 py-5 font-satoshi text-sm text-dark-primary">{{ row.label }}</dt>
+            <dd class="{{ border_cls }}px-1.25 py-5 font-satoshi text-sm text-dark-primary">{{ row.value }}</dd>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if footnote %}
+    <p class="text-sm text-grey">{{ footnote }}</p>
+    {% endif %}
+</div>
+{% endmacro %}

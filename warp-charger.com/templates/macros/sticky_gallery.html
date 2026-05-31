@@ -1,0 +1,85 @@
+{#
+  Sticky gallery: scroll-linked image gallery with a sticky product card.
+  Mobile: horizontal image slider with dots + product card below.
+  Desktop: vertical stacked images left, sticky product card right.
+
+  Parameters:
+    t: translation dict with keys:
+      badge, title, price, vat, description, show_more, buy_now
+    images: list of dicts: [{src, alt}] (relative to static/images/)
+#}
+
+{% macro sticky_gallery(t, images) %}
+<section class="w-full">
+    <!-- Mobile / Tablet -->
+    <div class="lg:hidden">
+        <div class="mx-auto flex w-full max-w-lg flex-col gap-4 px-4 py-8 md:max-w-none">
+            <div class="relative w-full overflow-hidden rounded-[15px] shadow-md">
+                <div id="showcase-slider-track" class="scrollbar-hide flex snap-x snap-mandatory overflow-x-auto scroll-smooth">
+                    {% for img in images %}
+                    <div class="aspect-4/3 w-full shrink-0 snap-start">
+                        <img src="{{ url_for('static', filename='images/' ~ img.src) }}" loading="lazy" alt="{{ img.alt }}" class="h-full w-full object-cover" draggable="false" />
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="pointer-events-none absolute right-0 bottom-3 left-0 flex justify-center gap-1.5">
+                    {% for img in images %}
+                    <button type="button" data-showcase-dot="{{ loop.index0 }}" aria-label="Image {{ loop.index }}" class="showcase-dot pointer-events-auto size-2 {{ 'scale-125 bg-white' if loop.first else 'bg-white/45' }} rounded-full transition-all duration-200 focus:outline-none"></button>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="w-full overflow-hidden rounded-[15px] bg-[linear-gradient(180deg,#ffffff_19.77%,#f5f5f5_84.88%)] shadow-[0px_4.43px_11.07px_0px_rgba(0,0,0,0.15)] ring-[0.75px] ring-[#e4e4e7]">
+                <div class="flex flex-col gap-[22.5px] px-[22.5px] py-6 text-left">
+                    <div class="flex flex-col gap-[10.5px]">
+                        <span class="bg-gradient-blue bg-clip-text text-[10.5px] leading-[1.4] font-black tracking-[1.5px] text-transparent uppercase">{{ t.badge }}</span>
+                        <p class="text-[24px] leading-normal font-medium tracking-[-1.5px] text-black">{{ t.title }}</p>
+                        <div class="flex items-baseline gap-[3.75px]">
+                            <span class="text-[15px] tracking-[-0.15px] text-black">{{ t.price }}</span>
+                            <span class="text-[12px] leading-[19.5px] text-medium-grey">{{ t.vat }}</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-start gap-0">
+                        <p class="text-[12px] leading-[19.5px] font-medium text-black">{{ t.description }}</p>
+                        <a href="{{ t.show_more_url }}" class="cursor-pointer text-[12px] leading-[19.5px] font-medium text-medium-grey underline decoration-solid transition-colors hover:text-grey focus:outline-none">{{ t.show_more }}</a>
+                    </div>
+                    <a href="{{ t.buy_now_url }}" class="block w-full overflow-hidden rounded-[5px] bg-[linear-gradient(180deg,#4a4a4a_0%,#1b1b1b_100%)] shadow-[0px_3px_3px_0px_rgba(0,0,0,0.25)] transition-all hover:opacity-90 focus:outline-none active:scale-[0.98]">
+                        <span class="flex items-center justify-center px-text-gap-sm py-[7.5px] text-[12px] leading-normal font-bold whitespace-nowrap text-white">{{ t.buy_now }}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Desktop -->
+    <div class="hidden lg:block">
+        <div class="mx-auto flex max-w-7xl flex-row items-start px-8">
+            <div class="flex flex-1 flex-col gap-40 py-32">
+                {% for img in images %}
+                <article class="relative h-125 w-full overflow-hidden rounded-2xl shadow-lg">
+                    <img src="{{ url_for('static', filename='images/' ~ img.src) }}" loading="lazy" alt="{{ img.alt }}" class="h-full w-full object-cover" />
+                </article>
+                {% endfor %}
+            </div>
+            <div class="sticky top-24 w-105 shrink-0 self-start py-32 pl-12">
+                <article class="relative overflow-hidden rounded-2xl bg-[linear-gradient(180deg,#ffffff_19.77%,#f5f5f5_84.88%)] shadow-[0px_5.9px_14.8px_0px_rgba(0,0,0,0.15)] ring-1 ring-[#e4e4e7]">
+                    <div class="flex flex-col gap-6 p-8 text-left">
+                        <p class="bg-gradient-blue bg-clip-text text-eyebrow text-transparent">{{ t.badge }}</p>
+                        <header>
+                            <h3 class="card-title">{{ t.title }}</h3>
+                            <div class="card-price-row mt-3">
+                                <span class="card-price">{{ t.price }}</span>
+                                <span class="text-body text-medium-grey">{{ t.vat }}</span>
+                            </div>
+                        </header>
+                        <div>
+                            <p class="text-body text-black">{{ t.description }}</p>
+                            <a href="{{ t.show_more_url }}" class="mt-1 inline-block cursor-pointer text-body text-medium-grey underline transition-colors hover:text-grey focus:outline-none">{{ t.show_more }}</a>
+                        </div>
+                        <a href="{{ t.buy_now_url }}" class="btn-primary inline-flex w-full items-center justify-center">{{ t.buy_now }}</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+{% endmacro %}

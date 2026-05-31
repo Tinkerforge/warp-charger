@@ -1,0 +1,64 @@
+{#
+  Card carousel: horizontal scrolling product cards on dark background.
+
+  Parameters:
+    t: translation dict with keys:
+      badge, headline, description
+    cards: list of dicts: [{badge, title, url, desc, image, image_alt}]
+           badge is optional (only first card has one on homepage)
+           Each card is a link to its product detail page (url).
+#}
+
+{% macro card_carousel(t, cards, section_id="products") %}
+{% from "macros/badge.html" import badge %}
+<section id="{{ section_id }}" class="relative w-full overflow-x-clip bg-gradient-radial-dark py-section">
+    <div class="mx-auto flex max-w-7xl flex-col">
+        <div class="pointer-events-auto relative z-10 -mr-[calc(50vw-50%)] -ml-[calc(50vw-50%)] px-4 md:pr-[calc(max(2rem,50vw-40rem))] md:pl-[calc(50vw-250px)]">
+            <header class="flex flex-col gap-text-gap-sm text-center md:text-left">
+                {{ badge("electrical_services", t.badge, dark=true, wrap_class="flex items-center justify-center gap-2.5 md:justify-start") }}
+                <div class="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+                    <div class="flex w-full flex-col items-center gap-text-gap-md md:items-start">
+                        <h2 class="text-h2 text-white">{{ t.headline }}</h2>
+                        <p class="mx-auto max-w-md text-body text-white/80 md:mx-0">{{ t.description }}</p>
+                    </div>
+                    <div class="hidden shrink-0 gap-2 md:flex">
+                        <button id="scroll-products-left" class="flex h-12 w-12 items-center justify-center rounded-full bg-gray-300 transition-colors hover:bg-white active:scale-95" aria-label="Scroll left">
+                            <span class="material-symbols-outlined icon-24 text-grey">chevron_left</span>
+                        </button>
+                        <button id="scroll-products-right" class="flex h-12 w-12 items-center justify-center rounded-full bg-gray-300 transition-colors hover:bg-white active:scale-95" aria-label="Scroll right">
+                            <span class="material-symbols-outlined icon-24 text-grey">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+        </div>
+
+        <div class="mt-10 -mr-[calc(50vw-50%)] -ml-[calc(50vw-50%)]">
+            <div id="products-container" class="-mt-62.5 -mb-25 flex snap-x snap-mandatory scroll-pl-0 gap-6 overflow-x-auto pt-62.5 pr-10 pb-25 pl-[calc(50vw-150px)] [-ms-overflow-style:none] [scrollbar-width:none] md:pl-[calc(50vw-250px)] [&::-webkit-scrollbar]:hidden">
+                {% for card in cards %}
+                <a href="{{ card.url }}" class="product-card group card-wrapper snap-center block no-underline hover:no-underline">
+                    <div class="glow-layer-normal opacity-0 transition-opacity duration-500 group-[.is-active]:opacity-100"></div>
+                    <div class="glow-layer-overlay-3 opacity-0 transition-opacity duration-500 group-[.is-active]:opacity-100"></div>
+                    <div class="glow-layer-overlay-4 opacity-0 transition-opacity duration-500 group-[.is-active]:opacity-100"></div>
+                    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 rounded-[inherit] bg-[radial-gradient(ellipse_at_top,rgba(135,173,255,0.45)_0%,rgba(135,173,255,0.05)_80%)]"></div>
+                    <div class="card-inner">
+                        <div class="card-content">
+                            {% if card.badge %}
+                            <p class="bg-gradient-blue bg-clip-text text-eyebrow text-transparent">{{ card.badge }}</p>
+                            {% endif %}
+                            <h3 class="card-title">{{ card.title }}</h3>
+                            <p class="card-desc">{{ card.desc }}</p>
+                        </div>
+                        <div class="card-img-wrap">
+                            <img src="{{ url_for('static', filename='images/' ~ card.image) }}" loading="lazy" alt="{{ card.image_alt | default(card.title) }}" class="card-img" />
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+
+                <div class="w-[calc(50vw-190px)] shrink-0 md:w-[80vw]"></div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endmacro %}

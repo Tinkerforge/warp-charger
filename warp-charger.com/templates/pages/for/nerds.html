@@ -1,0 +1,70 @@
+{% extends "page_base.html" %}
+{% from "macros/two_col_section.html" import two_col_section %}
+{% from "macros/code_tabs_section.html" import code_tabs_section %}
+{% from "macros/page_hero.html" import page_hero %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block content %}
+{# Hero #}
+{% call page_hero(badge_icon="terminal", badge_text=t.hero.badge, headline=t.hero.headline) %}{% endcall %}
+
+{# Interfaces with code example (code replaces image) #}
+{% call code_tabs_section(
+    id="nerds",
+    badge_icon="api",
+    badge_text=t.interfaces.badge,
+    headline=t.interfaces.headline,
+    tabs=[{"label": "HTTP", "code": t.interfaces.http_code}, {"label": "MQTT", "code": t.interfaces.mqtt_code}],
+    image_side="left",
+    bg="bg-background"
+) %}
+    <p class="text-section-body">{{ t.interfaces.text }}</p>
+    <a href="https://docs.warp-charger.com/{{ lang }}/docs/interfaces/mqtt_http/examples" target="_blank" rel="noopener"
+       class="btn-icon mt-2">
+        <span class="material-symbols-outlined icon-20">open_in_new</span>
+        {{ t.interfaces.docs_label }}
+    </a>
+{% endcall %}
+
+{# Open Source #}
+{% call two_col_section(
+    badge_icon="code",
+    badge_text=t.opensource.badge,
+    headline=t.opensource.headline,
+    image="evse-layout.webp",
+    image_side="right",
+    dark=true
+) %}
+    <p class="text-section-body-dark">{{ t.opensource.text }}</p>
+    <a href="{{ t.opensource.github_url }}" target="_blank" rel="noopener"
+       class="btn-icon mt-2">
+        <span class="material-symbols-outlined icon-20">open_in_new</span>
+        {{ t.opensource.github_label }}
+    </a>
+{% endcall %}
+
+{# HEMS Integration #}
+{% call two_col_section(
+    badge_icon="hub",
+    badge_text=t.hems.badge,
+    headline=t.hems.headline,
+    image="evcc.webp",
+    image_side="left"
+) %}
+    <p class="text-section-body">{{ t.hems.text }}</p>
+    <div class="flex flex-wrap gap-3 mt-2">
+        <a href="https://docs.warp-charger.com/{{ lang }}/docs/smart_home/evcc/" target="_blank" rel="noopener"
+           class="btn-icon">
+            <span class="material-symbols-outlined icon-20">open_in_new</span>
+            {{ t.hems.evcc_label }}
+        </a>
+        <a href="https://docs.warp-charger.com/{{ lang }}/docs/smart_home/home_assistant/" target="_blank" rel="noopener"
+           class="btn-icon">
+            <span class="material-symbols-outlined icon-20">open_in_new</span>
+            {{ t.hems.home_assistant_label }}
+        </a>
+    </div>
+{% endcall %}
+{% endblock %}
