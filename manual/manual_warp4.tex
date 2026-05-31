@@ -166,7 +166,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \subsection{Gerätestörung / Technischer Defekt}
     Sollte es Anzeichen für einen technischen Defekt geben, ist sofort die
     Stromversorgung der Wallbox durch Abschalten der Wallbox-Sicherung im Verteilerkasten zu trennen.
-    In diesem Fall ist die Sicherung mit dem Hinweis zu versehen, dass sie nicht wieder eingeschaltet weden darf.
+    In diesem Fall ist die Sicherung mit dem Hinweis zu versehen, dass sie nicht wieder eingeschaltet werden darf.
     Anschließend ist eine Elektrofachkraft zu informieren.
 
     \subsection{Schutzeinrichtungen der Wallbox}\label{dcerrorhint}
@@ -182,7 +182,6 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     ermitteln! Ein DC-Fehlerstrom kann den vorgeschalteten Fehlerstromschutzschalter
     \enquote{erblinden} lassen, so dass dann auch AC-Fehlerströme
     nicht mehr korrekt erkannt werden!}
-26-05-27 Tinkerforge - Edelstahl - 2
     Darüber hinaus bietet die Wallbox weitere Schutzeinrichtungen: Dazu zählt eine
     permanente Erdungsüberwachung (PE). Ist die Erdung unterbrochen, so geht die
     Wallbox in einen Fehlerzustand. Außerdem prüft die Wallbox bei jedem
@@ -203,9 +202,6 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
             \item Testprotokoll der Wallbox
             \item Bohrschablone
         \end{itemize}
-    \end{itemize}
-    Bei den Varianten Smart und Pro zusätzlich:
-    \begin{itemize}
         \item drei NFC-Karten
     \end{itemize}
 
@@ -218,7 +214,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     werden, wenn sich diese durch Regen o.ä. mit Wasser füllen könnte. In diesem Fall
     droht eine Korrosion der Kontakte.
 
-    \subsubsection{Wandmontage}\label{wandmontage}26-05-27 Tinkerforge - Edelstahl - 2
+    \subsubsection{Wandmontage}\label{wandmontage}
     Zur Montage der Wallbox muss der Deckel entfernt werden. Dazu müssen die
     vier Kreuzschlitzschrauben (rot) gelöst werden.
     Nach dem Lösen der Schrauben kann dieser von der Wallbox heruntergenommen
@@ -276,7 +272,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
 	\subsubsection{WARP4 Charger Pro}
     \gfx{./img_warp4/warp4_pro_open}
-	Der WARP4 Charger Pro ist mit einem ISKRA WM3M4 Stromzähler ausgestattet.
+	Der WARP4 Charger Pro ist mit einem Iskra WM3M4 Stromzähler ausgestattet.
 	Dieser ist liegend montiert und über ein Sichtfenster auf der linken
 	Gehäuseseite von außen sichtbar.
 
@@ -373,9 +369,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
           Installation nur von einer ausgewiesenen Elektrofachkraft unter
           Berücksichtigung der genannten Bedingungen geändert werden!}
 
-    \subsubsection{LAN- / RJ45-Kabel anfertigen}\label{ethernet} \fxnote{Alle / benutzungen entweder mit oder ohne Leerzeichen}
+    \subsubsection{LAN-/RJ45-Kabel anfertigen}\label{ethernet}
 
-    Um den WARP4 Charger mittels LAN anzubinden, muss ein LAN- / RJ45-Kabel
+    Um den WARP4 Charger mittels LAN anzubinden, muss ein LAN-/RJ45-Kabel
     angefertigt werden. Das RJ45-Kabel kann mittels einer
     M25-Kabeldurchführung in die Wallbox geführt werden. Auf dem Ladecontroller
 	(rechts in der Wallbox) befindet sich eine RJ45-Buchse, an der das
@@ -400,9 +396,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     \paragraph*{EEBUS}
 	Für EEBUS ist nur eine Netzwerkverbindung zur Steuerbox des Netzbetreibers
-	notwendig. Im Webinterface der Wallbox unter unter \texttt{Energiemanagement}
+	notwendig. Im Webinterface der Wallbox unter \texttt{Energiemanagement}
 	$\rightarrow$ \texttt{§14a EnWG}  kann das Verhalten der Wallbox auf
-	das Steuersignal koniguriert werden.
+	das Steuersignal konfiguriert werden.
 
     \paragraph*{Rundsteuerempfänger/Steuerbox}
     Am Abschalteingang innerhalb der Wallbox kann ein potentialfreier Kontakt (spannungsfreier Schaltkontakt)
@@ -541,14 +537,14 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     per DHCP). Die Wallbox kann dann entweder über die zugewiesene IP
     Adresse (\url{http://[IP-der-Wallbox]}, z.B. \url{http://192.168.0.42})
     oder den Hostnamen der Wallbox (\url{http://[hostname]}, z.B.
-    \url{http://warp3-ABC}) erreicht werden.
+    \url{http://warp4-ABC}) erreicht werden.
 
     Der Hostname der Wallbox ist identisch zur SSID des WLAN-Access-Points. Der Hostnamen findet sich
     auf dem WLAN-Zugangsdaten-Aufkleber auf der Rückseite dieser Anleitung.
 
     Kann die per DHCP an die Wallbox vergebene IP nicht ermittelt werden, so kann der
     zuvor genannte Zugriff auf das Webinterface über den WLAN-Access-Point genutzt
-    werden, um die IP.Adresse der LAN.Schnittstelle zu ermitteln.
+    werden, um die IP-Adresse der LAN-Schnittstelle zu ermitteln.
 
     \paragraph{Konfiguration mittels Webinterface}
     Ist die Wallbox per WLAN (Accesspoint) oder LAN mittels Browser erreichbar,
@@ -622,8 +618,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\begin{description}
 	\item[\color{green}grün] Alle konfigurierten Funktionen sind fehlerfrei
 	\item[\color{yellow}gelb] Es gibt mindestens eine Warnung
-	\item[\color{red}rot] Es gibt mindestens einen Fehler. Eine Funktion ist korrekt am
-	arbeiten.
+	\item[\color{red}rot] Es gibt mindestens einen Fehler. Eine Funktion arbeitet nicht
+	korrekt.
 	\end{description}
 
 	Ein Klick auf das Symbol öffnet eine Detailansicht. Diese gibt weitere
@@ -639,7 +635,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Ladevorgänge können hier manuell gestartet oder gestoppt werden.
     Außerdem werden der aktuell laufende Ladevorgang, die letzten drei
     Ladevorgänge sowie der Status weiterer Funktionen angezeigt.
-    In der Variante Pro mit verbautem Stromzähler zusätzlich der Ladeverlauf
+    In der Variante Pro mit verbautem Stromzähler wird zusätzlich der Ladeverlauf
     über die letzten 48 Stunden und die aktuelle Leistungsaufnahme gezeigt.
 
     Bestimmte Einträge (z.B. Lastmanagement) werden auf der Statusseite nur anzeigt, wenn die entsprechende
@@ -699,7 +695,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     kann es sein, dass die Verbindung zum Access-Point neu aufgebaut werden muss.
 
     Bei einer erfolgreichen Verbindung sollte die Wallbox jetzt im konfigurierten Netzwerk unter\\
-    \url{http://[konfigurierter_hostname]},\\ z.B. \url{http://warp3-ABC} erreichbar sein.
+    \url{http://[konfigurierter_hostname]},\\ z.B. \url{http://warp4-ABC} erreichbar sein.
 
     \subsubsection{WLAN-Access-Point}
     \gfx{./img_warp3/resized/web_wifi_ap}
@@ -724,7 +720,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     komplett zu deaktivieren.
 
     Bei einer erfolgreichen Verbindung sollte die Wallbox jetzt im LAN unter
-    \url{http://[konfigurierter_hostname]}, z.B. \url{http://warp3-ABC} erreichbar sein.
+    \url{http://[konfigurierter_hostname]}, z.B. \url{http://warp4-ABC} erreichbar sein.
 
     \hint{Die LAN- und WLAN-Verbindung sollten nicht gleichzeitig zum selben Netzwerk bzw. IP-Bereich verbunden sein,
     da es sonst zu Verbindungsproblemen kommen kann.}
@@ -804,9 +800,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \section{Fehlerbehebung}\label{fehlerbehebung}
     \subsection{Fehlersuche}
     Fehlerzustände werden von der Wallbox durch die LED im Fronttaster rot
-    dargestellt. Bei den Varianten WARP4 Charger Smart und WARP4 Charger Pro
-    gibt das Webinterface bzw. die \texttt{Ladestatus}-Unterseite
-    weitere Informationen.
+    dargestellt. Das Webinterface bzw. die \texttt{Ladestatus}-Unterseite
+    gibt weitere Informationen.
 
     \subsubsection*{LED ist aus}
     Für diesen Fehlerzustand gibt es verschiedene mögliche Ursachen:
@@ -886,7 +881,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     \subsection{Wiederherstellungsmodus}\label{recovery}
     Falls die Wallbox weder ihren Access-Point öffnet noch über ein konfiguriertes Netzwerk auf das Webinterface zugegriffen werden kann,
-    kannst wie folgt der Wiederherstellungsmodus gestartet werden:
+    kann wie folgt der Wiederherstellungsmodus gestartet werden:
     \begin{enumerate}
      \item Wallbox stromlos machen
      \item Taster im Deckel gedrückt halten
@@ -912,7 +907,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Falls eine Netzwerkverbindung aufgebaut werden kann, aber das Webinterface
 	selbst nicht mehr funktioniert, kann versucht werden, die Recovery-Seite zu öffnen.
     Falls eine Verbindung über den Access-Point der Wallbox besteht, kann
-	die Recovery-Seite unter \url{http://10.0.0.1/recovery} aufgerufen werden. Bei einer bestehenden Verbindung zu einem Netzwerk kann die Seite über \url{http://[konfigurierter_hostname]/recovery}, also z.B. \url{http://warp3-ABC/recovery} erreicht werden.
+	die Recovery-Seite unter \url{http://10.0.0.1/recovery} aufgerufen werden. Bei einer bestehenden Verbindung zu einem Netzwerk kann die Seite über \url{http://[konfigurierter_hostname]/recovery}, also z.B. \url{http://warp4-ABC/recovery} erreicht werden.
     Auf der Recovery-Seite kann die Wallbox neugestartet oder auf den Werkszustand zurückgesetzt (Factory Reset) werden und es können Firmware-Updates einspielt, Debug-Reports
     heruntergeladen und die HTTP-API verwendet werden.
 
@@ -927,8 +922,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
         das Fahrzeug den Typ-2-Stecker nicht korrekt verriegelt.
     \paragraph{Inspektion aller Komponenten} Es sollten alle Komponenten
         auf Beschädigungen und Nässe kontrolliert werden.
-    \paragraph{Webinterface der Wallbox} Steht nur bei den Varianten Smart und
-        Pro zur Verfügung. Die \texttt{Status}seite gibt den Ladestatus, den erlaubten Ladestrom und den Grund für eventuelle Limitierungen aus
+    \paragraph{Webinterface der Wallbox} Die \texttt{Status}seite gibt den Ladestatus, den erlaubten Ladestrom und den Grund für eventuelle Limitierungen aus
         Sicht der Wallbox an. Detailliertere Informationen gibt die
         Unterseite \texttt{Ladestatus}. Hier kann außerdem ein Ladeprotokoll
         erzeugt werden, welches alle Werte des Ladevorgangs aufzeichnet.
