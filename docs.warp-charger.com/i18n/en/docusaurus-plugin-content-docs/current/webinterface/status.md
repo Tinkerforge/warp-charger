@@ -45,11 +45,11 @@ chargers.
 If users are configured, the **last charging processes** are displayed. These contain
 information about the user who charged, the charging duration, and for WARP Charger Pro chargers, the amount of energy charged.
 
-The status page also displays information about load management if enabled.
+The status page also displays information about charge management if enabled.
 Additionally, information about the interfaces is provided, including IP addresses, WiFi connection strength, etc.
 
 ### More Examples
-Examples with eco charging mode and activated charging schedule in load management with multiple chargers.
+Examples with eco charging mode and activated charging schedule in charge management with multiple chargers.
 ![image](/img/webinterface/status/warp3-status2.jpeg)
 ![image](/img/webinterface/status/warp3-status3.jpeg)
 
@@ -69,7 +69,7 @@ current **power** from energy meters is displayed. If the energy meters have bee
 configured, an overview of the power progression related to
 PV generation, grid consumption or feed-in, home battery, and consumption can be viewed here.
 
-This WARP Energy Manager has been configured as a load manager for chargers.
+This WARP Energy Manager has been configured as a charge manager for chargers.
 Therefore, the **charging mode** for the chargers can be set.
 Which charging modes are offered depends on whether the Energy Manager has been configured for
 PV excess charging and whether eco mode has been enabled.
@@ -79,4 +79,4 @@ The **controlled chargers** and their status managed by the Energy Manager are d
 The status of the **SG-Ready** interface (heating) and information about the current
 electricity price (**Current Market Price** and **Average Price**) are also displayed.
 
-The data for **PV Yield Forecast** is partially visible in this screenshot.
+The data for **Solar Forecast** is partially visible in this screenshot.

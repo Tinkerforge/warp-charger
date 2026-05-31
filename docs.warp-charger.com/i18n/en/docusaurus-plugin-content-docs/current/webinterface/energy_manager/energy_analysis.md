@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Energy Balance
+# Energy Analysis
 
 import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
@@ -19,11 +19,11 @@ At the top right, you can switch from a **daily view** to a **monthly view**.
 ![image](/img/webinterface/energy_manager/wem2-energy-analysis.jpeg)
 
 In the daily view, the power values of the configured energy meters are displayed for the selected
-day. If dynamic electricity prices are configured, they are also shown.
+day. If dynamic tariffs are configured, they are also shown.
 The screenshot was recorded around 17:00, so the electricity prices for the day are shown,
 but not the future meter values.
 
-Below the graph, an energy balance of the meter values for the selected day is displayed.
+Below the graph, an energy analysis of the meter values for the selected day is displayed.
 
 ### Monthly View
 
@@ -32,6 +32,6 @@ Below the graph, an energy balance of the meter values for the selected day is d
 In the monthly view, the daily summaries are displayed, as well as the minimum/mean and maximum
 of the electricity price, if configured. The screenshot was recorded on 02/26,
 so for 02/26 the values for the day so far are displayed. The remaining days of the month are
-in the future, so the dynamic electricity prices are not yet determined and no energy meter readings are available.
+in the future, so the dynamic tariffs are not yet determined and no energy meter readings are available.
 
-Below the graph, an energy balance of the meter values for the selected month is displayed.
+Below the graph, an energy analysis of the meter values for the selected month is displayed.

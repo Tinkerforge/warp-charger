@@ -50,7 +50,7 @@ a billing PDF should be generated from it, this is done on the
 charger and in your browser without a cloud.
 
 In cases where we technically depend on data from a cloud
-(e.g.: [PV Forecast](/webinterface/energy_management/solar_forecast.md), [Dynamic Electricity Prices](/webinterface/energy_management/dynamic_tariffs.md), [Remote Access](/webinterface/system/remote_access.md)), we still try to implement as many
+(e.g.: [Solar Forecast](/webinterface/energy_management/solar_forecast.md), [Dynamic Tariffs](/webinterface/energy_management/dynamic_tariffs.md), [Remote Access](/webinterface/system/remote_access.md)), we still try to implement as many
 functions on the respective device as possible and not in the cloud.
 This means we try to avoid storing data in the cloud whenever possible, but rather
 store it locally on the devices.
@@ -62,9 +62,9 @@ Data exchange is encrypted between the two participants. We have no access to yo
 ### Compatibility with Third-Party Devices
 
 Our goal is that our products also work with devices from other manufacturers.
-This makes it possible to access data from PV inverters, electricity meters
+This makes it possible to access data from PV inverters, energy meters
 or battery storage systems from other manufacturers and use them for example for PV excess charging
-or dynamic load management.
+or dynamic charge management.
 
 The list of compatible devices can be found here: [List of Compatible Devices](/compatible_devices/introduction.md)
 
@@ -78,9 +78,9 @@ This means that instead of feeding excess energy from the PV system
 into the power grid, it is charged into the electric vehicle.
 To do this, the charger only needs to be electrically connected and brought
 into the network via LAN or WLAN. Additionally, an
-electricity meter must be available at the house connection, which can be
+energy meter must be available at the house connection, which can be
 read by the charger. PV excess charging is then performed using the power measurement values from this
-electricity meter. An overview of
+energy meter. An overview of
 currently supported devices that can measure power at the house connection
 can be found in the article
 [compatible devices](/compatible_devices/introduction.md).
@@ -91,11 +91,11 @@ Similar to PV excess charging, a [WARP Energy Manager 2.0](/warp_energy_manager/
 can be used to set a [heat pump with SG-Ready interface](/webinterface/energy_management/heater.md) to extended
 operation mode. This way, the PV excess can also be used for heating.
 
-### Dynamic Electricity Prices
+### Dynamic Tariffs
 
 [WARP3 Charger Smart and Pro](/warp_charger/introduction.md) and the [WARP Energy Manager 2.0](/warp_energy_manager/introduction.md)
 can directly retrieve electricity generation prices from the power exchange. Additional costs such as grid fees and taxes can be
-individually configured. This way we support any provider of dynamic electricity prices without depending on an individual implementation
+individually configured. This way we support any provider of dynamic tariffs without depending on an individual implementation
 of the provider's interfaces.
 
 ### §14a - Controllable Consumption Devices
@@ -105,28 +105,28 @@ various options for meeting the legal requirements. See [Tutorial - Controllable
 
 ### Charge Management
 
-#### Operating Multiple Chargers on One Line - Static Load Management
+#### Operating Multiple Chargers on One Line - Static Charge Management
 
 If multiple WARP Chargers share a supply line, the
 charging currents of the connected chargers may need to be limited.
 WARP3 Charger Smart and WARP3 Charger Pro have integrated
 [charge management](/tutorials/chargemanagement.md).
 The chargers only need to be within a
-network (LAN, WLAN). A separate electricity meter is not necessary for
-*static* load management.
+network (LAN, WLAN). A separate energy meter is not necessary for
+*static* charge management.
 
-#### Insufficiently Dimensioned Grid Connection - Dynamic Load Management
+#### Insufficiently Dimensioned Grid Connection - Dynamic Charge Management
 
 If the grid connection is not sufficiently dimensioned to operate one or
-more chargers, [dynamic load management](/tutorials/chargemanagement.md) helps.
+more chargers, [dynamic charge management](/tutorials/chargemanagement.md) helps.
 Especially with larger properties, the grid connection is often mathematically maxed out
 if it is assumed that all consumers are switched on.
 In practice, however, this almost never happens, so chargers
 can still be operated. The chargers must then be controlled depending on
 the current phase currents at the grid connection to ensure
 that none of the three phases is overloaded.
-If a suitable electricity meter is available at the grid connection that can
-measure the phase currents, dynamic load management can be handled directly
+If a suitable energy meter is available at the grid connection that can
+measure the phase currents, dynamic charge management can be handled directly
 by a WARP Charger. An overview of
 currently supported devices that can measure power at the house connection
 can be found in the article

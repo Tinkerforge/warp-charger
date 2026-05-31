@@ -33,7 +33,7 @@ Enhanced operation mode is activated,
 - always when the threshold for **PV excess** is exceeded (PV excess utilization).
 - or in a time-based control:
  - **for the cheapest X hours** within the **control period**
- - but only when the **PV yield forecast** for the considered period is below the set threshold.
+ - but only when the **solar forecast** for the considered period is below the set threshold.
 
 ![image](/img/webinterface/energy_management/wem2-heating2.jpg)
 
@@ -54,13 +54,13 @@ operation can correspond to the set control period. In this case, the heat pump 
 
 ![image](/img/webinterface/energy_management/wem2-heating-curve.png)
 
-The temperature heating curve allows the number of hours for extended and blocking operation to be automatically adjusted based on the daily average outdoor temperature. Two temperature endpoints are used: 20 °C (warm) and -10 °C (cold). The number of hours is linearly interpolated between these two endpoints based on the current daily average temperature.
+The temperature heating curve allows the number of hours for extended and blocking operation to be automatically adjusted based on the daily average outside temperature. Two temperature endpoints are used: 20 °C (warm) and -10 °C (cold). The number of hours is linearly interpolated between these two endpoints based on the current daily average temperature.
 
 Example: If extended operation is configured for 2 hours at 20 °C and 8 hours at -10 °C, and the current daily average temperature is 5 °C, then extended operation would run for 5 hours.
 
 The [Outside Temperature](/webinterface/energy_management/temperatures.md) module must be enabled to use the heating curve.
 
-Additionally, there is an **Air heat pump** option: If the daily average temperature is below 5 °C, extended operation is limited to 09:00–18:00. This is recommended for air-source heat pumps that operate inefficiently at low outdoor temperatures. It prevents the price-based plan from activating extended operation during the coldest hours (night/early morning).
+Additionally, there is an **Air heat pump** option: If the daily average temperature is below 5 °C, extended operation is limited to 09:00–18:00. This is recommended for air-source heat pumps that operate inefficiently at low outside temperatures. It prevents the price-based plan from activating extended operation during the coldest hours (night/early morning).
 
 ## Status
 

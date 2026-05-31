@@ -66,7 +66,7 @@ The conductor cross-section should always be determined by the electrician on si
 
 ### Can multiple chargers be operated on one house connection? Can it be ensured that a specified maximum power consumption is not exceeded?
 
-Yes. WARP Chargers can share a house connection via the built-in load management without overloading it. The load management ensures that a specified power consumption is not exceeded and distributes the available charging current across multiple WARP Chargers. For WARP Chargers to be controlled via load management, they must be operated on the same network.
+Yes. WARP Chargers can share a house connection via the built-in charge management without overloading it. The charge management ensures that a specified power consumption is not exceeded and distributes the available charging current across multiple WARP Chargers. For WARP Chargers to be controlled via charge management, they must be operated on the same network.
 
 ### Can I deactivate a WARP Charger from the outside? How do I connect a ripple control receiver (keyword §14a EnWG)?
 
@@ -77,9 +77,9 @@ There are various options to control the charging function of a WARP Charger:
 * It is also possible to connect a ripple control receiver or similar switch directly to the charger. For this purpose, there is a configurable shutdown input in the charger. A hole may need to be drilled in the charger housing to implement the switch.
 * More information on this topic is also available on the info page about [§14a EnWG](https://warp-charger.com/%c2%a714a-enwg/).
 
-### Can an already existing/different electricity meter be used?
+### Can an already existing/different energy meter be used?
 
-The WARP3 Charger is delivered with a DSZ15DZMOD-3x80A from Eltako. Additionally, electricity meters of type SDM630 or SDM72 V2 from Eastron are also supported. Other electricity meters are not supported.
+The WARP3 Charger is delivered with a DSZ15DZMOD-3x80A from Eltako. Additionally, energy meters of type SDM630 or SDM72 V2 from Eastron are also supported. Other energy meters are not supported.
 
 ## Charge Management
 
@@ -121,15 +121,15 @@ We try to equip even older WARP Chargers with the latest features as far as poss
 
 ### Upgrade from WARP Charger Smart to WARP Charger Pro
 
-The difference between the two versions consists of the additionally installed MID-certified electricity meter. For WARP3, this can be retrofitted. To do this, only the terminal block needs to be moved to the left and the electricity meter needs to be installed additionally. This is connected to the EVSE with a data connection cable. Additionally, a connection cable between terminals and electricity meter is necessary. All three components are available in the shop:
+The difference between the two versions consists of the additionally installed MID-certified energy meter. For WARP3, this can be retrofitted. To do this, only the terminal block needs to be moved to the left and the energy meter needs to be installed additionally. This is connected to the EVSE with a data connection cable. Additionally, a connection cable between terminals and energy meter is necessary. All three components are available in the shop:
 
-* [Electricity meter DSZ15DZMOD-3x80A](https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/electricity-meter-dsz15dzmod-3x80a.html)
+* [Energy meter DSZ15DZMOD-3x80A](https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/electricity-meter-dsz15dzmod-3x80a.html)
 * [Connection cable for DSZ15DZMOD-3x80A](https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/anschlusskabel-fuer-dsz15.html)
 * [WARP3 cable harness](https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts/warp3-cable-harness.html)
 
 ### Upgrade WARP2 to WARP3
 
-Due to the modular design of the chargers, a hardware upgrade is also possible in principle. The conversion is relatively extensive, as all the technology of the charger must be replaced. Only the charging cable and the housing, the electricity meter, and the installed NFC Bricklet can be reused. All parts are also available individually in our shop:
+Due to the modular design of the chargers, a hardware upgrade is also possible in principle. The conversion is relatively extensive, as all the technology of the charger must be replaced. Only the charging cable and the housing, the energy meter, and the installed NFC Bricklet can be reused. All parts are also available individually in our shop:
 
 * [WARP3 spare parts](https://www.tinkerforge.com/de/shop/warp/warp3-spare-parts.html)
 

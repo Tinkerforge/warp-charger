@@ -12,7 +12,7 @@ data from PV inverters about current generation,
 as well as data on battery storage power or power consumption data from loads. The read data
 can be used by a WARP Charger or WARP Energy Manager
 to control chargers (PV excess charging), for PV excess utilization of a heat pump, or for
-dynamic load management.
+dynamic charge management.
 
 The WARP Energy Manager additionally records the collected data locally on its SD card. Via the web interface, the recorded data can be analyzed in the [Energy Analysis](/webinterface/energy_manager/energy_analysis.md).
 
@@ -89,16 +89,16 @@ take it into account.
 *PV excess charging controls the sum of active power so that excess power
 is charged into a vehicle instead of being fed back into the power grid.*
 
-### Dynamic Load Management (DLM)
+### Dynamic Charge Management (DCM)
 
-For [dynamic load management](/tutorials/chargemanagement.md), the
+For [dynamic charge management](/tutorials/chargemanagement.md), the
 WARP Charger or WARP Energy Manager must have access to an
 energy meter at the **Grid Connection (Grid)**, as only there can the current
 phase currents be determined.
 
 :::note
 
-For dynamic load management, an energy meter must be configured that contains at least the following values:
+For dynamic charge management, an energy meter must be configured that contains at least the following values:
  * ***Current (Import minus Export); L1 [A]*** or ***Current (Import plus Export); L1 [A]*** or ***Current (Import); L1 [A]***
  * ***Current (Import minus Export); L2 [A]*** or ***Current (Import plus Export); L2 [A]*** or ***Current (Import); L2 [A]***
  * ***Current (Import minus Export); L3 [A]*** or ***Current (Import plus Export); L3 [A]*** or ***Current (Import); L3 [A]***
@@ -108,11 +108,11 @@ Whether ***"Import"***, ***"Import minus Export"***, ***"Import plus Export"*** 
 
 :::
 
-*Dynamic load management controls charging processes so that the maximum configured phase current is not exceeded on any phase (L1, L2, L3).*
+*Dynamic charge management controls charging processes so that the maximum configured phase current is not exceeded on any phase (L1, L2, L3).*
 
 ### Battery Control (BC)
 
-Certain battery storage systems can be controlled by battery control. Depending on the current state of charge (SoC), the current dynamic electricity price, the PV forecast, and other conditions,
+Certain battery storage systems can be controlled by battery control. Depending on the current state of charge (SoC), the current dynamic tariff, the solar forecast, and other conditions,
 the storage can leave its normal operation (excess charges storage, storage compensates loads), charge from the grid, block discharging, or feed into the grid.
 
 To control battery storage, it is necessary that the storage can be controlled via Modbus/TCP.

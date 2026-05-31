@@ -12,11 +12,11 @@ The WARP Energy Manager has the following technical specification:
 |-|-|
 | PV Excess Charging | max. 64 WARP Charger |
 | Charge Management | Static / dynamic integrated, max. 64 WARP Charger |
-| Heating Control | 1x SG-Ready (PV utilization, dynamic electricity prices)|
+| Heating Control | 1x SG-Ready (PV utilization, dynamic tariffs)|
 | Inputs | 4x input for potential-free contact |
 | Outputs | 2x relay output (potential-free, max. 230VAC/3A) |
-| RS485 | 1x Modbus RTU interface for supported electricity meters |
-| Features | Dynamic electricity prices, PV forecast, remote access, iOS and Android app |
+| RS485 | 1x Modbus RTU interface for supported energy meters |
+| Features | Dynamic tariffs, solar forecast, remote access, iOS and Android app |
 | Network | LAN, WiFi |
 | Display | 320 x 240 pixel full-color TFT |
 | Dimensions | 70 × 90 × 63 mm (W/H/D) |

@@ -97,7 +97,7 @@ WARP Energy Manager 2.0 can be configured for all connected
 networks. Additionally, mDNS can be enabled or
 disabled. Via mDNS, other devices on the network can
 find the device. This simplifies, for example, the setup of a
-load management cluster. Additionally, the port on which
+charge management cluster. Additionally, the port on which
 the web interface is accessible can be changed (default is port 80).
 
 Further information is available in the web interface documentation: [Settings](/webinterface/network/settings.md)
@@ -191,5 +191,5 @@ and has the latest firmware, configuration can begin.
 
 The configuration depends on the individual circumstances.
 A WARP Charger is configured from the factory so that charging processes begin directly
-after connecting a vehicle. NFC user authorization, load management,
+after connecting a vehicle. NFC user authorization, charge management,
 setting up other devices (energy meters), or PV excess charging can now be configured.

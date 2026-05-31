@@ -92,7 +92,7 @@ If charging interruptions occur, this can have various causes. Possible causes c
 
  * **Type 2 plug seating:** A Type 2 plug that is not fully inserted can cause a vehicle not to charge or only to charge in an emergency charging mode with minimal power. An indication of this can be that the vehicle does not correctly lock the Type 2 plug.
  * **Inspection of all components:** All components should be checked for damage and moisture.
- * **Wallbox web interface:** Only available for Smart and Pro variants. The status page indicates the charging status, the allowed charging current and the reason for any limitations from the charger's perspective. More detailed information is provided on the Charging Status page. A charging log can also be generated here,
+ * **Charger web interface:** Only available for Smart and Pro variants. The status page indicates the charging status, the allowed charging current and the reason for any limitations from the charger's perspective. More detailed information is provided on the Charging Status page. A charging log can also be generated here,
 which records all values of the charging process.
  * **Measurement by a qualified electrician:** Electrical problems can be diagnosed by a qualified electrician. They can check whether all conductors are correctly connected.
 

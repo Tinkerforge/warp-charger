@@ -75,7 +75,7 @@ On the first button press, the current charge mode is displayed. Further presses
 ## Shutdown Input
 
 For example, a ripple control receiver can be connected to the shutdown input. Here you can set how to react to changes
-at the shutdown input. In the default wallbox configuration, the limit is set to 4200 W when the shutdown input is closed, see
+at the shutdown input. In the default charger configuration, the limit is set to 4200 W when the shutdown input is closed, see
 [Controllable Consumption Device according to §14a EnWG](/tutorials/verbrauchseinrichtung.md).
 
 
@@ -91,8 +91,8 @@ power is available. This is implemented by briefly disconnecting the control pil
 
 :::note
 
-This function only affects load management, as unused phases can be detected and released for other chargers
-(phase-optimized load management).
+This function only affects charge management, as unused phases can be detected and released for other chargers
+(phase-optimized charge management).
 
 :::
 

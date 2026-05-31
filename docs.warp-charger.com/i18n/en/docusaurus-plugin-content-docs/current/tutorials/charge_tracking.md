@@ -90,7 +90,7 @@ charger knows a new user who is also used by the charge log.
 ## Charge Log Export as PDF or CSV
 
 Recorded charging processes can be downloaded in the web interface under
-`Wallbox` -> `Charge Tracker` either as a PDF or as a CSV document
+`Charger` -> `Charge Tracker` either as a PDF or as a CSV document
 compatible with common spreadsheet programs. Additionally, the generated document can be pre-filtered, for example,
 to get only charging processes of a specific user in a
 specified time period.

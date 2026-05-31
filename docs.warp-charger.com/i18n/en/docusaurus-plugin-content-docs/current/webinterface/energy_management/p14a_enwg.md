@@ -70,7 +70,7 @@ Determines at which input state the power limit becomes active:
 This section configures which consumers the power limit should be applied to:
 
 - **This charger** (WARP Charger only): Applies the power limit to the local charger.
-- **Managed chargers**: Applies the power limit to all chargers managed via load management.
+- **Managed chargers**: Applies the power limit to all chargers managed via charge management.
 - **Heating** (Energy Manager only): Applies the power limit to the connected heating system (heat pump via SG-Ready). When heating is enabled as a target device, the **Heating max. power** can additionally be configured.
 
 ### Heating max. power (Energy Manager only)

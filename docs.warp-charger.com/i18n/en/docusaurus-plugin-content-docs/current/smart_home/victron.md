@@ -30,7 +30,7 @@ Alternatively, it is also possible to integrate Victron devices into [WARP Charg
 In this case, the WARP Charger or WARP Energy Manager queries the data from the Victron
 devices. Control remains with the WARP device. All functions are thus retained. For example,
 automatic phase switching for [PV excess charging](/tutorials/pv_excess_charging.md)
-or [dynamic load management](/tutorials/chargemanagement.md) is possible.
+or [dynamic charge management](/tutorials/chargemanagement.md) is possible.
 
 See also:
  * [Compatible Devices Introduction](/compatible_devices/introduction.md)

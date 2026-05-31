@@ -9,13 +9,13 @@ import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 <DeviceCompatibility supported={['wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
 
 
-If a dynamic electricity tariff (e.g. via Tibber or Awattar) is available, the dynamic electricity prices can be used to improve the [heating control](/webinterface/energy_management/heater.md) ([WARP Energy Manager](/warp_energy_manager/introduction.md)) and the [charging schedule of Eco Mode](/webinterface/energy_management/eco_mode.md) ([WARP Charger](/warp_charger/introduction.md)).
+If a dynamic electricity tariff (e.g. via Tibber or Awattar) is available, the dynamic tariffs can be used to improve the [heating control](/webinterface/energy_management/heater.md) ([WARP Energy Manager](/warp_energy_manager/introduction.md)) and the [charging schedule of Eco Mode](/webinterface/energy_management/eco_mode.md) ([WARP Charger](/warp_charger/introduction.md)).
 
 :::note
 
 Instead of implementing a different interface for each electricity provider, the system retrieves the general electricity exchange data (day-ahead prices) from the European Network of Transmission System Operators for Electricity (ENTSO-E).
-The respective dynamic electricity price (from Tibber, Awattar, etc.) is composed of these electricity costs, as well as provider-specific additional costs (grid fees, taxes, price surcharges, VAT).
-By configuring these according to the respective provider, the dynamic electricity price of the provider is calculated.
+The respective dynamic tariff (from Tibber, Awattar, etc.) is composed of these electricity costs, as well as provider-specific additional costs (grid fees, taxes, price surcharges, VAT).
+By configuring these according to the respective provider, the dynamic tariff of the provider is calculated.
 :::
 
 ![image](/img/webinterface/energy_management/wem2-dynamic_tarrif1.png)
@@ -66,7 +66,7 @@ To represent this, the grid fee differences are entered in the calendar. For exa
 
 ## Status
 
-After the dynamic electricity prices have been configured and activated, there is an overview of the electricity prices further down on the page.
+After the dynamic tariffs have been configured and activated, there is an overview of the electricity prices further down on the page.
 
 ![image](/img/webinterface/energy_management/wem2-dynamic_tarrif2.png)
 

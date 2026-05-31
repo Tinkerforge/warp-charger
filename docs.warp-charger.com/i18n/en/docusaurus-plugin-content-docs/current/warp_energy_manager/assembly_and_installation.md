@@ -76,16 +76,16 @@ by a glass fuse (slow-blow (T), 2A).
 
 ### Modbus (RS485)
 
-A compatible RS485 Modbus-RTU electricity meter can be
-connected to this connection. Compatible electricity meters are marked
+A compatible RS485 Modbus-RTU energy meter can be
+connected to this connection. Compatible energy meters are marked
 in the list under connection with "WARP Energy Manager". The
 list of all compatible devices can be found on the
-[Compatible Electricity Meters](https://docs.warp-charger.com/docs/compatible_meters/#bekannte-kompatible-ger%C3%A4te)
+[Compatible Energy Meters](https://docs.warp-charger.com/docs/compatible_meters/#bekannte-kompatible-ger%C3%A4te)
 page.
 
 The connector assignment is **12V, A, B, GND**. The **12V** connection must
 not be used. **A (+), B (-), GND** must be connected to the
-respective electricity meter accordingly. Depending on the meter, GND is not
+respective energy meter accordingly. Depending on the meter, GND is not
 connected.
 
 

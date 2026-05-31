@@ -13,13 +13,13 @@ sidebar_position: 3
    * [Automation](/webinterface/energy_manager/automation.md)
    * [SD Card](/webinterface/energy_manager/sd-card.md)
  * Energy Management
-   * [Electricity Meters](/webinterface/energy_management/energy_meters.md)
+   * [Energy Meters](/webinterface/energy_management/energy_meters.md)
    * [Chargers](/webinterface/energy_management/wallboxes.md)
    * [Heating](/webinterface/energy_management/heater.md)
    * [PV Excess Charging](/webinterface/energy_management/pv-excess-charging.md)
    * [Charge Management](/webinterface/energy_management/loadmanagement.md)
    * [Dynamic Tariff](/webinterface/energy_management/dynamic_tariffs.md)
-   * [PV Yield Forecast](/webinterface/energy_management/solar_forecast.md)
+   * [Solar Forecast](/webinterface/energy_management/solar_forecast.md)
    * [Eco Mode](/webinterface/energy_management/eco_mode.md)
  * Network
    * [Settings](/webinterface/network/settings.md)

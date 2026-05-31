@@ -10,7 +10,7 @@ import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
 
 With Eco Mode it is possible to optimize charging processes economically and ecologically.
-The planning takes into account dynamic electricity prices, PV yield forecasts, and the
+The planning takes into account dynamic tariffs, solar forecasts, and the
 desired departure time as well as maximum parking duration of the electric vehicle.
 
 Based on the planning, an optimized charging schedule is created. For Eco Mode,
@@ -28,7 +28,7 @@ The following can be configured:
 * The maximum parking duration,
 * a price lower limit (`Always charge when price below`),
 * a price upper limit (`Never charge when price above`) and
-* a lower limit for the PV yield forecast (`Only if PV yield forecast below`).
+* a lower limit for the solar forecast (`Only if solar forecast below`).
 
 The maximum parking duration specifies for how many hours after connecting a vehicle a charging schedule is created. Example: It is 08:00, the charging schedule is configured as `Use the cheapest 4 hours until Today at 20:00` and the maximum parking duration is set to 8 hours. In this case, the charging schedule would ensure that the cheapest 4 hours are used before the maximum parking duration expires (e.g. until 16:00 if the car is plugged in at 08:00, but until 18:00 if the car is plugged in at 10:00). With this configuration, for example, the working hours of employees can be taken into account.
 
@@ -36,9 +36,9 @@ The price lower limit specifies a price in cents below which charging is always 
 
 The price upper limit specifies a price in cents above which charging is never enabled, regardless of the charging schedule. It is compared with the net exchange electricity price (without any configured additional costs).
 
-The lower limit for the PV yield forecast specifies a threshold in kilowatt-hours above which charging is only enabled with PV excess (the charging schedule is ignored). Example: `Only if PV yield forecast below` is configured to 75 kWh/day and the PV yield forecast for today is 80 kWh/day. In this case, the charging schedule would not be executed and charging would only occur when PV excess is available. Therefore, no electricity is purchased, even if it would be very cheap, when it is known that sufficient PV excess will be available.
+The lower limit for the solar forecast specifies a threshold in kilowatt-hours above which charging is only enabled with PV excess (the charging schedule is ignored). Example: `Only if solar forecast below` is configured to 75 kWh/day and the solar forecast for today is 80 kWh/day. In this case, the charging schedule would not be executed and charging would only occur when PV excess is available. Therefore, no electricity is purchased, even if it would be very cheap, when it is known that sufficient PV excess will be available.
 
-To use charge scheduling, [Dynamic Tariff](/webinterface/energy_management/dynamic_tariffs.md) must be enabled. If the PV yield forecast should be included, [PV Yield Forecast](/webinterface/energy_management/solar_forecast.md) must additionally be enabled.
+To use charge scheduling, [Dynamic Tariff](/webinterface/energy_management/dynamic_tariffs.md) must be enabled. If the solar forecast should be included, [Solar Forecast](/webinterface/energy_management/solar_forecast.md) must additionally be enabled.
 
 ## Configurable Charging Schedule (Status Page)
 
@@ -54,7 +54,7 @@ In the charging schedule, the departure can be configured to
 
 and a departure time as well as charging duration can be specified.
 
-When Eco Mode is enabled on a load manager, the charging schedule is automatically applied to all managed WARP Chargers. The individual charging schedules are also displayed on the status page:
+When Eco Mode is enabled on a charge manager, the charging schedule is automatically applied to all managed WARP Chargers. The individual charging schedules are also displayed on the status page:
 
 ![image](/img/webinterface/energy_management/warp-eco_mode3.png)
 
@@ -72,7 +72,7 @@ If in this example the electric vehicle is plugged in at 15:00, Eco Mode calcula
 
 ### Example Configuration 2: In a company with multiple chargers, each employee should be able to charge during the cheapest 3 hours per day.
 
-In this case, the following configuration of the load manager would be useful:
+In this case, the following configuration of the charge manager would be useful:
 
 * Departure `Daily` until `23:59` with charging duration `3 hours`.
 * Parking duration (in the Eco Mode configuration) `8 hours`.

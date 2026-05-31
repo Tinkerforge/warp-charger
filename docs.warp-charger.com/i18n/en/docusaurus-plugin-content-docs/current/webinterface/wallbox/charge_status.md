@@ -44,7 +44,7 @@ The following limits can be part of the calculation:
 
  * **User/NFC**: Blocks until a user releases the charging process with an NFC tag, if user authorization is enabled. Afterwards, the charging current limit assigned to this user is entered.
 
- * **Load management**: Controlled by the load manager or PV excess charging, if enabled.
+ * **Charge management**: Controlled by the charge manager or PV excess charging, if enabled.
 
 ![image](/img/webinterface/wallbox/warp-charge_status2.jpeg)
 
@@ -81,7 +81,7 @@ Under the heading Hardware Configuration, information about the installed hardwa
 In case of charging aborts, a charge log can help determine the cause of an error. A
 charge log can be recorded as follows:
  1. Start charge log in the browser (***Start***), keep browser window open.
- 2. Connect vehicle to wallbox and start charging process.
+ 2. Connect vehicle to charger and start charging process.
  3. After the error occurs, click ***Stop+Download***. A text file should be downloaded.
  4. Send the text file with a problem description to info@tinkerforge.com.
 

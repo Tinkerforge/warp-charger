@@ -43,9 +43,9 @@ described under [Creating a Battery Storage Entry](/compatible_devices/batteries
 
 ## Settings
 
-### Schedule for Dynamic Electricity Price
+### Schedule for Dynamic Tariff
 
-If a [dynamic electricity price](/webinterface/energy_management/dynamic_tariffs.md) is configured, the "cheap hours" and "expensive hours" can be configured here. This is possible in 15-minute steps (=0.25h).
+If a [dynamic tariff](/webinterface/energy_management/dynamic_tariffs.md) is configured, the "cheap hours" and "expensive hours" can be configured here. This is possible in 15-minute steps (=0.25h).
 These properties can then be used in the rules to, for example, control charging from the grid or block discharging. A graph then shows the hours for the current electricity price curve.
 
 ### Rules
@@ -56,7 +56,7 @@ Up to 32 charge and discharge rules can be created. The structure is identical f
 ![image](/img/webinterface/energy_management/batterycontrol-rule-discharge.jpeg)
 
 
-For each rule, a **description** (free text) can be created, as well as conditions that refer to the parameters **time**, the battery's **state of charge (SoC)**, the current (dynamic) **electricity price**, the **PV yield forecast**,
+For each rule, a **description** (free text) can be created, as well as conditions that refer to the parameters **time**, the battery's **state of charge (SoC)**, the current (dynamic) **electricity price**, the **solar forecast**,
 conditions for the above-defined **electricity price plan**, or whether **fast charging** is active at a charger. Comparisons can be defined for the parameters, so that, for example, an electricity price **less than** 12 cents as a
 condition or a state of charge **greater than** 50% can be defined. Not all parameters need to be used as conditions for the rule. Parameters can be ignored.
 
@@ -85,8 +85,8 @@ The configuration of rules is always customer and application-specific. Below we
 
 ### Charge from Grid at Cheap Electricity Prices
 
-When using dynamic electricity prices, it can make sense to charge the storage at cheap times to avoid grid consumption during expensive electricity price periods. To use this function,
-the **schedule for dynamic electricity price** must first be configured. As an example, the number of hours needed to fully charge the storage can be selected as **cheap hours**.
+When using dynamic tariffs, it can make sense to charge the storage at cheap times to avoid grid consumption during expensive electricity price periods. To use this function,
+the **schedule for dynamic tariff** must first be configured. As an example, the number of hours needed to fully charge the storage can be selected as **cheap hours**.
 For **expensive hours**, the number of hours that the storage normally lasts to cover the entire demand can be selected.
 
 The following conditions could be defined as charge rules for the **force charging** action:
@@ -139,7 +139,7 @@ The rule can be further optimized with additional parameters:
 <tr><td>1b.</td><td>-</td><td>&lt; 80%</td><td>-</td><td>-</td><td>Not expensive</td><td>-</td></tr>
 </table>
 
-In this case (**1b**), the storage would always discharge down to 80% state of charge, but below that only during the expensive hours. Further optimizations would be possible, for example, by also using the PV forecast as a parameter.
+In this case (**1b**), the storage would always discharge down to 80% state of charge, but below that only during the expensive hours. Further optimizations would be possible, for example, by also using the solar forecast as a parameter.
 
 
 If the battery storage capacity should not be used to charge a vehicle, the following rule with the **block discharging** action can be used to prevent this:
@@ -164,7 +164,7 @@ If you want to actively discharge the storage to, for example, feed into the pow
 <tr><td>1.</td><td>-</td><td>-</td><td>&gt; 15ct</td><td>-</td><td>Expensive</td><td>-</td></tr>
 </table>
 
-The storage would discharge during the "expensive hours" (schedule for dynamic electricity price) as soon as the electricity price exceeds 15 cents.
+The storage would discharge during the "expensive hours" (schedule for dynamic tariff) as soon as the electricity price exceeds 15 cents.
 
 ## Example Configuration
 

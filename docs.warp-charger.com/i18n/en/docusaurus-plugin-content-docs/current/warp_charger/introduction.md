@@ -27,11 +27,11 @@ The WARP3 Charger offers the following features, depending on the variant:
  * Adjustable charging power from 1.4kW up to 11kW or 22kW (depending on model)
  * Integrated phase switching (1-phase / 3-phase charging)
  * Integrated CP disconnect and intelligent vehicle wake-up
- * PV excess charging including Eco mode (dynamic electricity prices + PV excess)
- * Integrated load management (static, dynamic) for up to 64 WARP Chargeres
- * Access to electricity meters at grid connection, photovoltaic inverters, battery storage
+ * PV excess charging including Eco mode (dynamic tariffs + PV excess)
+ * Integrated charge management (static, dynamic) for up to 64 WARP Chargeres
+ * Access to energy meters at grid connection, photovoltaic inverters, battery storage
  * Photovoltaic forecast
- * Dynamic electricity prices independent of electricity provider
+ * Dynamic tariffs independent of electricity provider
  * Support for §14a EnwG - "Controllable Consumption Device"
 
 ## Variants
@@ -70,30 +70,30 @@ and OCPP are available. The WARP3 Charger Smart offers the ability to authorize 
 learned and managed via the website. Charging processes can be recorded locally on the charger. The charger enables you to create a
 charging logbook of charging processes with timestamp, duration and the NFC card used as a PDF or CSV file.
 
-Multiple WARP3 Chargers can share a power connection. The built-in load management can dynamically limit the total current of all chargers.
-The integrated energy management enables direct connection of the charger to photovoltaic inverters or electricity meters and enables photovoltaic-controlled
+Multiple WARP3 Chargers can share a power connection. The built-in charge management can dynamically limit the total current of all chargers.
+The integrated energy management enables direct connection of the charger to photovoltaic inverters or energy meters and enables photovoltaic-controlled
 excess charging. For this purpose, the charger can switch between single-phase and three-phase charging (phase switching). This means an electric vehicle can be charged with an excess
 of 1.4 kW (single-phase charging with 6 A charging current). Custom ideas can be implemented using automation rules. The rules are based on a condition
 and an associated action. For example, you can define charging times or switch between different charging modes
 depending on the recognized NFC card or a received MQTT message.
 
-In addition to pure PV excess charging, the charger can also use dynamic electricity prices. For this, the charger can retrieve current electricity generation costs from the electricity exchange.
-You can configure additional cost components specifically for your electricity provider. With a PV yield forecast, the charger can determine the expected PV yields. Up to six
+In addition to pure PV excess charging, the charger can also use dynamic tariffs. For this, the charger can retrieve current electricity generation costs from the electricity exchange.
+You can configure additional cost components specifically for your electricity provider. With a solar forecast, the charger can determine the expected PV yields. Up to six
 roof surfaces with different orientations can be configured for this purpose.
 
-In Eco+PV mode, the charger can use the dynamic electricity price data and PV yield forecast to decide whether cheap electricity should be used at night
+In Eco+PV mode, the charger can use the dynamic tariff data and solar forecast to decide whether cheap electricity should be used at night
 to charge the vehicle, or whether it should wait for PV excess. You simply need to configure the desired departure time and the hours the vehicle should be charged.
 
 ### WARP3 Charger Pro
 
 ![image](/img/warp_charger/warp3_pro_open.jpg)
 
-The WARP3 Charger Pro offers all the functions of the Smart variant. Additionally, it is equipped with a MID-certified electricity meter (EU Measuring Instruments Directive 2014/32/EU) that measures how much energy
-(kWh) has been charged. When the charging logbook is activated, the charged energy is recorded for each charging process and thus enables, for example, billing of charging processes for company cars. The electricity meter mounted on the DIN rail in the
+The WARP3 Charger Pro offers all the functions of the Smart variant. Additionally, it is equipped with a MID-certified energy meter (EU Measuring Instruments Directive 2014/32/EU) that measures how much energy
+(kWh) has been charged. When the charging logbook is activated, the charged energy is recorded for each charging process and thus enables, for example, billing of charging processes for company cars. The energy meter mounted on the DIN rail in the
 WARP3 Charger Pro is manufactured by Eltako and is a MID-certified German brand product.
 
-WARP3 Charger Pro chargers have an additional advantage compared to WARP3 Charger Smart chargers when used in shared dynamic load management:
-Since the load manager can determine the phase currents to the vehicles using the internal electricity meters of the chargeres, more efficient dynamic load management can be realized.
+WARP3 Charger Pro chargers have an additional advantage compared to WARP3 Charger Smart chargers when used in shared dynamic charge management:
+Since the charge manager can determine the phase currents to the vehicles using the internal energy meters of the chargeres, more efficient dynamic charge management can be realized.
 
 ### Optional Equipment
 
@@ -110,5 +110,5 @@ the following cables and CEE plugs:
 
 ### Individual Engraving/Custom Logo
 
-Wallboxes can also be ordered with an individual engraving. In this case, the WARP logo that is
+Chargers can also be ordered with an individual engraving. In this case, the WARP logo that is
 engraved on the front panel by default is replaced with the desired logo.

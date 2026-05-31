@@ -62,7 +62,7 @@ Some values are added as disabled entities.
 ![Disabled Entities](/img/smart_home/homeassistant/ha_disabled_entities.png)
 
 These must be manually enabled when the respective function is activated in the WARP Charger or WARP Energy Manager.
-There you can find, for example, the energy meter values for the Energy Manager and the PV yield forecasts.
+There you can find, for example, the energy meter values for the Energy Manager and the solar forecasts.
 
 :::note
 The localization of the entities depends on the language of the web interface of the WARP Charger/WARP Energy Manager.

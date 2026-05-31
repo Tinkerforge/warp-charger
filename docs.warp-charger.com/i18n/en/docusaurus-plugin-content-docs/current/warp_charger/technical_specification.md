@@ -17,7 +17,7 @@ The WARP3 Charger has the following technical specification:
 | Nominal Current | 16 A / 32 A (depending on variant 11 kW/22 kW) |
 | Operating Temperature | ‐25 °C to +50 °C (Average over 24 h: < 35 °C) |
 | Fault Current Detection | DC 6 mA (integrated) |
-| Current Measurement | Integrated MID‐certified electricity meter according to EU Measuring Instruments Directive 2014/32/EU (Pro only) |
+| Current Measurement | Integrated MID‐certified energy meter according to EU Measuring Instruments Directive 2014/32/EU (Pro only) |
 | §14a EnWG Controllable | Via internal shutdown input, via interfaces, or [WARP Energy Manager](/warp_energy_manager/introduction.md) |
 
 ### Mechanical Properties
@@ -49,7 +49,7 @@ The WARP3 Charger has the following technical specification:
 | CP Disconnect | Automatic simulation of cable plugging and unplugging to wake up cars |
 | Access Control | NFC (RFID), web interface, API |
 | Charge Management | Static / dynamic integrated, max. 64 WARP Charger |
-| Charging Modes | PV excess charging, Eco mode with dynamic electricity prices and PV forecast, fast charging |
+| Charging Modes | PV excess charging, Eco mode with dynamic tariffs and solar forecast, fast charging |
 | NFC‐Tags | 3 NFC cards included in delivery, max. 32 can be learned |
 | NFC Types | NFC Forum Type1, Type2, Type3 and Mifare Classic supported (custom cards can also be learned) |
 | Users | Max. 32 configurable |
