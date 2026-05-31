@@ -43,7 +43,7 @@ If a WARP Charger or WARP Energy Manager is configured as a charge manager, the 
 ### Maximum Total Current
 
 This is the maximum current of the supply line to the charge-managed chargers. The
-charge manager ensures that this current is not exceeded on any phase by never distributing more than this current to the chargers (static charge management).
+charge manager ensures that this current is not exceeded on any phase by never distributing more than this current to the chargers (static load management).
 
 If all chargers have adequately dimensioned separate supply lines, this current can be set high enough that all chargers can safely receive their maximum current. All other components, such as the grid connection,
 must then be able to deliver the configured maximum total current. The individual maximum current of each charger remains unaffected.
@@ -51,7 +51,7 @@ must then be able to deliver the configured maximum total current. The individua
 
 :::note
 
-This is static charge management, which assumes that the set current is available on each phase at all times.
+This is static load management, which assumes that the set current is available on each phase at all times.
 Other consumers besides WARP Chargers that cannot be controlled by the charge manager are not taken into account!
 
 :::
@@ -60,7 +60,7 @@ Other consumers besides WARP Chargers that cannot be controlled by the charge ma
 At the end of the page, the *Controlled Chargers* managed by the charge manager are configured and displayed.
 Additional chargers can be added by clicking *+*. For this, the display name and IP address or hostname of the
 charger must be entered and confirmed by clicking *add*. Automatically detected chargers that are not yet
-controlled by the charge manager are displayed as a list. For each charger, the phase rotation can additionally be set. This information is relevant for dynamic charge management.
+controlled by the charge manager are displayed as a list. For each charger, the phase rotation can additionally be set. This information is relevant for dynamic load management.
 
 
 :::note

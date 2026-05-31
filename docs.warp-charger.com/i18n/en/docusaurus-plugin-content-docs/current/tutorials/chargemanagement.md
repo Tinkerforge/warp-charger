@@ -14,7 +14,7 @@ for example to avoid overloading the mains connection. This total current can be
 web interface and the API.
 
 If a meter is present at the mains connection and can be read by the charge manager
-(see [compatible devices](/compatible_devices/introduction.md)), dynamic charge management can be used,
+(see [compatible devices](/compatible_devices/introduction.md)), dynamic load management can be used,
 which ensures that the mains connection is never overloaded by the WARP Chargers, even when other consumers
 are switched on or off. Additionally, PV excess charging can then be used.
 
@@ -89,16 +89,16 @@ and users/NFC tags are validated by the charge manager.
 
 Further information is available in the web interface documentation: [Charge Management](/webinterface/energy_management/loadmanagement.md)
 
-## Step 3: Dynamic Charge Management Configuration
+## Step 3: Dynamic Load Management Configuration
 
-To use dynamic charge management, an energy meter must first be added
+To use dynamic load management, an energy meter must first be added
 that can measure the phase currents at the mains connection.
 This can also be used for PV excess charging if desired,
-but dynamic charge management can also be used without a PV system.
+but dynamic load management can also be used without a PV system.
 The section [Energy Meter Configuration](/tutorials/pv_excess_charging.md#add_meter) describes
 how to add a meter.
 
-After a meter has been added, dynamic charge management can be activated and configured
+After a meter has been added, dynamic load management can be activated and configured
 on the `Energy Management` -> `Charge Management` page.
 
 ![image](/img/tutorials/chargemanagement/load_management_dynamic.png)
@@ -107,11 +107,11 @@ First, the just configured energy meter must be selected.
 
 Then the **Maximum Current at Grid Connection** must be configured.
 This is typically the rated value of the circuit breaker.
-Dynamic charge management ensures that this value is not exceeded.
+Dynamic load management ensures that this value is not exceeded.
 
 Finally, the expected **Power Consumption of the Largest Consumer** must be configured.
 This could be, for example, an instantaneous water heater or a heat pump, but at minimum
-16 amperes from a Schuko socket. This value represents the largest expected sudden jump in power consumption at the meter that the dynamic charge management must be able to compensate for in the short term (in under 30 seconds).
+16 amperes from a Schuko socket. This value represents the largest expected sudden jump in power consumption at the meter that the dynamic load management must be able to compensate for in the short term (in under 30 seconds).
 
 :::info
 
@@ -172,7 +172,7 @@ controller has set the available current at least once.
 :::info
 
 The default available current cannot be configured if PV excess
-charging or dynamic charge management are being used.
+charging or dynamic load management are being used.
 
 :::
 

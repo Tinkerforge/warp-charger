@@ -78,7 +78,7 @@ This value is used for control. Additional values can be configured but are not 
 :::
 :::note
 
-For dynamic charge management, an energy meter must be configured that contains at least the following values:
+For dynamic load management, an energy meter must be configured that contains at least the following values:
  * ***"Current (Import minus Export); L1 [A]*** or ***"Current (Import plus Export); L1 [A]*** or ***"Current (Import); L1 [A]***
  * ***"Current (Import minus Export); L2 [A]*** or ***"Current (Import plus Export); L2 [A]*** or ***"Current (Import); L2 [A]***
  * ***"Current (Import minus Export); L3 [A]*** or ***"Current (Import plus Export); L3 [A]*** or ***"Current (Import); L3 [A]***
@@ -234,7 +234,7 @@ This value is used for control. Additional values can be configured but are not 
 :::
 :::note
 
-For dynamic charge management, an energy meter must be configured that contains at least the following values:
+For dynamic load management, an energy meter must be configured that contains at least the following values:
  * ***Current (Import minus Export); L1 [A]*** or ***Current (Import plus Export); L1 [A]*** or ***Current (Import); L1 [A]***
  * ***Current (Import minus Export); L2 [A]*** or ***Current (Import plus Export); L2 [A]*** or ***Current (Import); L2 [A]***
  * ***Current (Import minus Export); L3 [A]*** or ***Current (Import plus Export); L3 [A]*** or ***Current (Import); L3 [A]***

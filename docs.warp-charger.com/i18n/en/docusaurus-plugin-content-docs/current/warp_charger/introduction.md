@@ -92,8 +92,8 @@ The WARP3 Charger Pro offers all the functions of the Smart variant. Additionall
 (kWh) has been charged. When the charging logbook is activated, the charged energy is recorded for each charging process and thus enables, for example, billing of charging processes for company cars. The energy meter mounted on the DIN rail in the
 WARP3 Charger Pro is manufactured by Eltako and is a MID-certified German brand product.
 
-WARP3 Charger Pro chargers have an additional advantage compared to WARP3 Charger Smart chargers when used in shared dynamic charge management:
-Since the charge manager can determine the phase currents to the vehicles using the internal energy meters of the chargeres, more efficient dynamic charge management can be realized.
+WARP3 Charger Pro chargers have an additional advantage compared to WARP3 Charger Smart chargers when used in shared dynamic load management:
+Since the charge manager can determine the phase currents to the vehicles using the internal energy meters of the chargeres, more efficient dynamic load management can be realized.
 
 ### Optional Equipment
 

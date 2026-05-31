@@ -25,7 +25,7 @@ The list of compatible devices is continuously being expanded. It can be found u
 
 
 For [photovoltaic excess charging](/tutorials/pv_excess_charging.md), it is necessary to create an energy meter
-that measures the power excess (typically at the mains connection). If [dynamic charge management](/tutorials/chargemanagement.md) is to be implemented, an energy meter at the grid connection is also necessary. This must be able to measure the phase currents in addition to the total power.
+that measures the power excess (typically at the mains connection). If [dynamic load management](/tutorials/chargemanagement.md) is to be implemented, an energy meter at the grid connection is also necessary. This must be able to measure the phase currents in addition to the total power.
 
 SunSpec (via Modbus TCP) devices can be automatically detected after specifying the host. Depending on the capabilities of the SunSpec device, various measurement values are retrieved. Modbus TCP devices that do not support SunSpec can also be read. We offer predefined
 register tables for certain devices. Modbus TCP devices not supported by us can be read via a custom register table.

@@ -64,7 +64,7 @@ Data exchange is encrypted between the two participants. We have no access to yo
 Our goal is that our products also work with devices from other manufacturers.
 This makes it possible to access data from PV inverters, energy meters
 or battery storage systems from other manufacturers and use them for example for PV excess charging
-or dynamic charge management.
+or dynamic load management.
 
 The list of compatible devices can be found here: [List of Compatible Devices](/compatible_devices/introduction.md)
 
@@ -105,7 +105,7 @@ various options for meeting the legal requirements. See [Tutorial - Controllable
 
 ### Charge Management
 
-#### Operating Multiple Chargers on One Line - Static Charge Management
+#### Operating Multiple Chargers on One Line - Static Load Management
 
 If multiple WARP Chargers share a supply line, the
 charging currents of the connected chargers may need to be limited.
@@ -115,10 +115,10 @@ The chargers only need to be within a
 network (LAN, WLAN). A separate energy meter is not necessary for
 *static* charge management.
 
-#### Insufficiently Dimensioned Grid Connection - Dynamic Charge Management
+#### Insufficiently Dimensioned Grid Connection - Dynamic Load Management
 
 If the grid connection is not sufficiently dimensioned to operate one or
-more chargers, [dynamic charge management](/tutorials/chargemanagement.md) helps.
+more chargers, [dynamic load management](/tutorials/chargemanagement.md) helps.
 Especially with larger properties, the grid connection is often mathematically maxed out
 if it is assumed that all consumers are switched on.
 In practice, however, this almost never happens, so chargers
@@ -126,7 +126,7 @@ can still be operated. The chargers must then be controlled depending on
 the current phase currents at the grid connection to ensure
 that none of the three phases is overloaded.
 If a suitable energy meter is available at the grid connection that can
-measure the phase currents, dynamic charge management can be handled directly
+measure the phase currents, dynamic load management can be handled directly
 by a WARP Charger. An overview of
 currently supported devices that can measure power at the house connection
 can be found in the article
