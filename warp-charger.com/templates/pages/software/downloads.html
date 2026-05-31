@@ -145,7 +145,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {% for product in t.documents.products %}
-            <div class="rounded-2xl border border-black/10 bg-white p-5 flex flex-col">
+            <div class="rounded-2xl border border-black/10 bg-white p-5 flex flex-col"{% if product.id %} id="documents-{{ product.id }}"{% endif %} style="scroll-margin-top: 6rem;">
                 <h3 class="text-h4 text-black mb-4">{{ product.name }}</h3>
                 <ul class="flex flex-col gap-2">
                     {% for file in product.files %}
