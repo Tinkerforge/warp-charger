@@ -9,6 +9,7 @@ Tinkerforge.
 
 Hier findest du die Dokumentation zur Installation und Konfiguration von
 * [WARP3 Charger](/warp_charger/introduction.md),
+* [WARP4 Charger](/warp4_charger/introduction.md),
 * [WARP Energy Manager](/warp_energy_manager/introduction.md) und
 * [WARP Ladesäule](/warp_ladesäule/introduction.md).
 
@@ -36,7 +37,7 @@ Egal ob neue Ideen, Bugreports oder Beta-Tester wir freuen uns über die intensi
 
 #### Offene Schnittstellen
 
-[WARP Energy Manager 2.0](/docs/warp_energy_manager/introduction), [WARP3 Charger Smart und WARP3 Charger Pro](/docs/warp_charger/introduction) können
+WARP Energy Manager und WARP Charger können
 in andere Systeme mittels den offenen Schnittstellen eingebunden werden:
 * [MQTT/HTTP API](/interfaces/mqtt_http/introduction.md)
 * [Modbus-Schnittstelle](/interfaces/modbus/introduction.md)
@@ -72,7 +73,7 @@ Die Liste der kompatiblen Geräte lässt sich hier finden: [Liste kompatibler Ge
 
 #### Photovoltaik-Überschussladen
 
-[WARP3 Charger Smart und Pro](/warp_charger/introduction.md)
+WARP Charger
 können direkt und ohne zusätzliche Hardware ein [PV-Überschussladen](/tutorials/pv_excess_charging.md)
 durchführen. Das heißt anstatt das überschüssige Energie der PV-Anlage
 in das Stromnetz eingespeist wird, wird diese in das Elektrofahrzeug
@@ -87,13 +88,13 @@ messen können, lassen sich im Artikel
 
 #### Heizung mit dem Photovoltaik-Überschuss betreiben
 
-Analog zum PV-Überschussladen kann ein [WARP Energy Manager 2.0](/warp_energy_manager/introduction.md)
+Analog zum PV-Überschussladen kann ein WARP Energy Manager
 genutzt werden um eine [Wärmepumpe mit SG-Ready Schnittstelle](/webinterface/energy_management/heater.md) in den erweiterten
 Betrieb zu versetzen. Somit kann der PV-Überschuss auch für die Heizung genutzt werden.
 
 ### Dynamische Strompreise
 
-[WARP3 Charger Smart und Pro](/warp_charger/introduction.md) und der [WARP Energy Manager 2.0](/warp_energy_manager/introduction.md)
+WARP Charger und der WARP Energy Manager
 können direkt die Strom-Erzeugerpreise bei der Strombörse abrufen. Zusätzliche Kosten, wie zum Beispiel Netzentgelte und Steuern können
 individuell konfiguriert werden. Somit unterstützen wir jeden Anbieter dynamischer Strompreise ohne auf eine individuelle Implementierung
 der Schnittstellen des Anbieters angewiesen zu sein.

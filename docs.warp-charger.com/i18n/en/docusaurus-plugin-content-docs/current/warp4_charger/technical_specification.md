@@ -4,21 +4,21 @@ sidebar_position: 4
 
 # Technical Specification
 
-The WARP3 Charger has the following technical specification:
+The WARP4 Charger has the following technical specification:
 
 ### Electrical Properties
 
 | Property | Value |
 |-|-|
-| Charging Standard | DIN EN 61851‐1 |
+| Charging Standard | DIN EN 61851‐1 / ISO 15118 |
 | Nominal Voltage | 230 V 1-phase AC / 400 V 3-phase AC |
 | Nominal Frequency | 50 Hz |
-| Power Consumption | Basic / Smart ≤ 3 W; Pro ≤ 5 W (Standby, WiFi active) |
+| Power Consumption | Smart ≤ 3 W; Pro ≤ 5 W (Standby, WiFi active) |
 | Nominal Current | 16 A / 32 A (depending on variant 11 kW/22 kW) |
 | Operating Temperature | ‐25 °C to +50 °C (Average over 24 h: < 35 °C) |
 | Fault Current Detection | DC 6 mA (integrated) |
-| Current Measurement | Integrated MID‐certified energy meter according to EU Measuring Instruments Directive 2014/32/EU (Pro only) |
-| §14a EnWG Controllable | Via internal shutdown input, via interfaces, or [WARP Energy Manager](/warp_energy_manager/introduction.md) |
+| Current Measurement | Integrated MID‐certified energy meter (Iskra WM3M4) according to EU Measuring Instruments Directive 2014/32/EU (Pro only) |
+| §14a EnWG Controllable | Via internal shutdown input, EEBUS, via interfaces, or [WARP Energy Manager](/warp_energy_manager/introduction.md) |
 
 ### Mechanical Properties
 
@@ -29,16 +29,16 @@ The WARP3 Charger has the following technical specification:
 | Supply Line Cross-Section | 2.5 mm² to 10 mm² |
 | Supply Line Diameter | 11 mm to 21 mm (M32 cable gland) |
 | Supply Line Entry | From bottom and rear possible |
-| LAN / Control Cable Diameter | 4 mm to 8 mm (M16 cable gland) |
+| LAN / Control Cable | M25 cable gland |
 | LAN / Control Cable Entry | From bottom and rear possible |
 | Charger Dimensions | 280 × 215 × 95 mm (W/H/D, Bounding Box) |
-| Mounting | [See Drilling Template](https://www.warp-charger.com/documents/WARP3_Bohrschablone.pdf) |
+| Mounting | [See Drilling Template](https://www.warp-charger.com/documents/WARP4_Bohrschablone.pdf) |
 | Weight | Depending on cable length, approx. 8 kg (*) |
 | Protection Class | IP54 (splash-proof, suitable for outdoor use) |
 | Impact Resistance | Housing IK09 (7 Joule according to EN 60079-0) |
 | Scope of Delivery | Charger, operating manual incl. installation instructions, drilling template, test protocol, 3x NFC‐cards |
 
-(*) Depending on charger variant (Basic / Smart / Pro, 5 m / 7.5 m, 11 kW / 22 kW).
+(*) Depending on charger variant (Smart / Pro, 5 m / 7.5 m, 11 kW / 22 kW).
 
 ### Software Properties
 
@@ -47,11 +47,11 @@ The WARP3 Charger has the following technical specification:
 | Charging Current | Configurable in 1 mA steps |
 | Phase Switching | Internal between single-phase and three-phase |
 | CP Disconnect | Automatic simulation of cable plugging and unplugging to wake up cars |
-| Access Control | NFC (RFID), web interface, API |
-| Charge Management | Static / dynamic integrated, max. 64 WARP Charger |
+| Access Control | NFC (RFID), Autocharge, web interface, Android/iOS app, API |
+| Charge Management | Static / dynamic integrated, max. 64 WARP, WARP2, WARP3 and/or WARP4 Charger |
 | Charging Modes | PV excess charging, Eco mode with dynamic tariffs and solar forecast, fast charging |
 | NFC‐Tags | 3 NFC cards included in delivery, max. 32 can be learned |
 | NFC Types | NFC Forum Type1, Type2, Type3, Type4, Type5 and Mifare Classic supported (custom cards can also be learned) |
 | Users | Max. 32 configurable |
-| Interfaces | HTTP, MQTT, Modbus/TCP, OCPP, SunSpec |
+| Interfaces | HTTP, MQTT, Modbus/TCP, EEBUS, OCPP, SunSpec |
 | Modbus Registers | WARP Charger table and simulation of Bender CC613 and Keba C-Series |

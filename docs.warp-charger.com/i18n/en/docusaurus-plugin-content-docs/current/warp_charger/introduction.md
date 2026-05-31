@@ -6,7 +6,8 @@ sidebar_position: 1
 
 :::note
 
-This description refers to the WARP3 Charger. For information about older
+This description refers to the WARP3 Charger. The current model is the
+[WARP4 Charger](/warp4_charger/introduction.md). For information about older
 models, specifically the WARP2 Charger or WARP1 Charger, please refer to the
 respective operating manuals at https://warp-charger.com/downloads.
 

@@ -9,6 +9,7 @@ Tinkerforge.
 
 Here you will find the documentation for installation and configuration of:
 * [WARP3 Charger](/warp_charger/introduction.md),
+* [WARP4 Charger](/warp4_charger/introduction.md),
 * [WARP Energy Manager](/warp_energy_manager/introduction.md) and
 * [WARP Charger Stand](/warp_ladesäule/introduction.md).
 
@@ -36,7 +37,7 @@ Whether new ideas, bug reports or beta testers: We appreciate the intensive coll
 
 #### Open Interfaces
 
-[WARP Energy Manager 2.0](/warp_energy_manager/introduction.md), [WARP3 Charger Smart and WARP3 Charger Pro](/warp_charger/introduction.md) can
+WARP Energy Manager and WARP Charger can
 be integrated into other systems using open interfaces:
 * [MQTT/HTTP API](/interfaces/mqtt_http/introduction.md)
 * [Modbus Interface](/interfaces/modbus/introduction.md)
@@ -72,7 +73,7 @@ The list of compatible devices can be found here: [List of Compatible Devices](/
 
 #### Photovoltaic Excess Charging
 
-[WARP3 Charger Smart and Pro](/warp_charger/introduction.md)
+WARP Charger
 can perform [PV excess charging](/tutorials/pv_excess_charging.md) directly and without additional hardware.
 This means that instead of feeding excess energy from the PV system
 into the power grid, it is charged into the electric vehicle.
@@ -87,13 +88,13 @@ can be found in the article
 
 #### Operating Heating with Photovoltaic Excess
 
-Similar to PV excess charging, a [WARP Energy Manager 2.0](/warp_energy_manager/introduction.md)
+Similar to PV excess charging, a WARP Energy Manager
 can be used to set a [heat pump with SG-Ready interface](/webinterface/energy_management/heater.md) to extended
 operation mode. This way, the PV excess can also be used for heating.
 
 ### Dynamic Tariffs
 
-[WARP3 Charger Smart and Pro](/warp_charger/introduction.md) and the [WARP Energy Manager 2.0](/warp_energy_manager/introduction.md)
+WARP Charger and the WARP Energy Manager
 can directly retrieve electricity generation prices from the power exchange. Additional costs such as grid fees and taxes can be
 individually configured. This way we support any provider of dynamic tariffs without depending on an individual implementation
 of the provider's interfaces.
