@@ -62,7 +62,7 @@ fi
 # Rebuild docs.warp-charger.com when its inputs changed
 if echo "$CHANGED" | grep -qE '^docs\.warp-charger\.com/'; then
     cd "$DOCS_DIR"
-    run_as_user "/usr/local/bin/npm ci"
-    run_as_user "/usr/local/bin/npm run build"
+    run_as_user "/usr/bin/npm ci"
+    run_as_user "/usr/bin/npm run build"
     run_as_user "/usr/bin/rsync -a --delete build/ build_release/"
 fi
