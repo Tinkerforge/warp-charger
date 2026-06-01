@@ -1,0 +1,43 @@
+{#
+  Image switcher: tabbed navigation above a single image area.
+  Unlike tabbed_slider, this has NO text overlay; it simply cross-fades
+  between full-bleed images when a tab is selected.
+
+  Multiple instances per page are supported (no global IDs).
+
+  Parameters:
+    images        : list of dicts: [{src, alt, label}]
+                    - src   : filename relative to static/images/
+                    - alt   : alt text
+                    - label : tab label (optional; defaults to 1-based index)
+    aspect        : CSS aspect-ratio for the image area (default "4/3")
+    wrapper_class : classes for the outer <section> (controls spacing/bg)
+
+  Usage:
+    Import: from "macros/image_switcher.html" import image_switcher
+#}
+
+{% macro image_switcher(images, aspect="4/3", wrapper_class="w-full py-section bg-background") %}
+<section class="{{ wrapper_class }}">
+    <div class="container-main">
+        <div class="mx-auto flex max-w-5xl flex-col items-center gap-5" data-image-switcher>
+            <nav role="tablist" aria-label="Image switcher tabs" class="flex gap-3 rounded-[20px] bg-black/30 p-1.5">
+                {% for image in images %}
+                <button type="button" data-switcher-tab
+                    class="cursor-pointer rounded-[15px] px-4 py-1 text-btn text-white transition-all duration-200 md:px-8 lg:px-8 {% if loop.first %}bg-white/30{% else %}hover:bg-white/10{% endif %}"
+                    role="tab" aria-selected="{{ 'true' if loop.first else 'false' }}">{{ image.label or loop.index }}</button>
+                {% endfor %}
+            </nav>
+            <div class="relative w-full overflow-hidden rounded-[20px]" style="aspect-ratio: {{ aspect }};">
+                {% for image in images %}
+                <img data-switcher-image
+                    src="{{ url_for('static', filename='images/' ~ image.src) }}"
+                    alt="{{ image.alt }}" loading="lazy"
+                    class="absolute inset-0 h-full w-full rounded-[20px] object-cover transition-opacity duration-300{% if not loop.first %} opacity-0{% endif %}" />
+                {% endfor %}
+                <div aria-hidden="true" class="pointer-events-none absolute inset-0 rounded-[20px] border border-black/10"></div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endmacro %}

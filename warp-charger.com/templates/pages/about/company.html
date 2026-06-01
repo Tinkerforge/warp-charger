@@ -3,6 +3,7 @@
 {% from "macros/section_header.html" import section_header %}
 {% from "macros/feature_card_grid.html" import feature_card_grid %}
 {% from "macros/badge.html" import badge %}
+{% from "macros/image_switcher.html" import image_switcher %}
 
 {% block title %}{{ t.title }}{% endblock %}
 {% block description %}{{ t.description }}{% endblock %}
@@ -32,7 +33,17 @@
 {# Made in Germany / Suppliers Section #}
 <section id="made-in-germany" class="w-full py-section bg-background scroll-mt-24">
     <div class="container-main">
-        {{ section_header(icon=t.suppliers.badge_icon, badge=t.suppliers.badge, headline=t.suppliers.headline, description=t.suppliers.description) }}
+        {{ section_header(icon=t.suppliers.badge_icon, badge=t.suppliers.badge, headline=t.suppliers.headline) }}
+
+        {# Aerial views of the company location #}
+        {{ image_switcher(images=[
+            {"src": "company-droneshot-1.webp", "alt": t.suppliers.headline},
+            {"src": "company-droneshot-2.webp", "alt": t.suppliers.headline},
+            {"src": "company-droneshot-3.webp", "alt": t.suppliers.headline},
+            {"src": "company-droneshot-4.webp", "alt": t.suppliers.headline},
+        ], aspect="3/2", wrapper_class="w-full") }}
+
+        <p class="text-section-body mx-auto mt-8 mb-12 max-w-2xl text-center">{{ t.suppliers.description }}</p>
 
         {# Map #}
         <div class="mx-auto w-full max-w-[1144px] overflow-hidden rounded-2xl mb-8">
