@@ -7,6 +7,13 @@
             title : section title (rendered as h3 in the first cell)
             rows  : list of dicts: {label, value}
         footnote : optional string rendered below the table
+
+    Layout:
+        - Desktop (md+): 3-column grid [title | label | value], title as a
+          top-aligned left column shared by the group's rows.
+        - Mobile: title becomes a section header; each row stacks as a small
+          caption label above a prominent value, with a single divider after
+          each label/value pair.
 #}
 
 {% macro tech_specs_table(heading, groups, footnote=None) %}
@@ -16,18 +23,19 @@
     <div class="border-t border-light-grey">
         {% for group in groups %}
         {%- set is_last_group = loop.last -%}
-        <div class="grid grid-cols-1 md:grid-cols-[260px_1fr_1fr]">
-            <h3
-                class="border-b border-light-grey px-1.25 py-5 font-satoshi text-base font-bold text-dark-primary md:self-start md:border-b-0"
-                style="grid-row: span {{ group.rows|length }};"
-            >
+        <div class="md:grid md:grid-cols-[260px_1fr]">
+            <h3 class="px-1.25 {{ 'pt-5' if loop.first else 'pt-9' }} pb-2 font-satoshi text-base font-bold text-dark-primary md:self-start md:py-5">
                 {{ group.title }}
             </h3>
-            {% for row in group.rows %}
-            {%- set border_cls = "" if (is_last_group and loop.last) else "border-b border-light-grey " -%}
-            <dt class="{{ border_cls }}px-1.25 py-5 font-satoshi text-sm text-dark-primary">{{ row.label }}</dt>
-            <dd class="{{ border_cls }}px-1.25 py-5 font-satoshi text-sm text-dark-primary">{{ row.value }}</dd>
-            {% endfor %}
+            <dl>
+                {% for row in group.rows %}
+                {%- set border_cls = "" if (is_last_group and loop.last) else "border-b border-light-grey " -%}
+                <div class="{{ border_cls }}grid grid-cols-1 gap-y-1 px-1.25 py-4 md:grid-cols-2 md:gap-y-0 md:py-5">
+                    <dt class="font-satoshi text-xs uppercase tracking-wide text-grey md:text-sm md:normal-case md:tracking-normal md:text-dark-primary">{{ row.label }}</dt>
+                    <dd class="font-satoshi text-sm text-dark-primary">{{ row.value }}</dd>
+                </div>
+                {% endfor %}
+            </dl>
         </div>
         {% endfor %}
     </div>
