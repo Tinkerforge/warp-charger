@@ -22,13 +22,13 @@
 {% call bento_grid(t.philosophy) %}
     <!-- Row 1 -->
     <div class="flex flex-col items-stretch gap-2.5 sm:gap-[20px] md:flex-row">
-        <article class="relative h-71.25 w-full min-w-full overflow-hidden rounded-xl sm:h-93.75 sm:min-w-70 md:flex-2 lg:flex-1">
-            <img alt="{{ t.philosophy.made_in_germany }}" loading="lazy" class="absolute inset-0 h-full w-full rounded-xl object-cover" src="{{ url_for('static', filename='images/germany-background.webp') }}" />
+        <a href="{{ '/de/ueber-uns/unternehmen#made-in-germany' if lang == 'de' else '/en/about/company#made-in-germany' }}" class="group relative block h-71.25 w-full min-w-full overflow-hidden rounded-xl sm:h-93.75 sm:min-w-70 md:flex-2 lg:flex-1">
+            <img alt="{{ t.philosophy.made_in_germany }}" loading="lazy" class="absolute inset-0 h-full w-full rounded-xl object-cover transition-transform duration-300 group-hover:scale-105" src="{{ url_for('static', filename='images/germany-background.webp') }}" />
             <div class="relative h-full w-full overflow-clip rounded-[inherit]">
                 <h3 class="absolute top-7 right-7 text-right text-h3 text-black">{{ t.philosophy.made_in_germany }}</h3>
             </div>
             <div aria-hidden="true" class="pointer-events-none absolute inset-0 rounded-xl border border-[rgba(255,255,255,0.8)]"></div>
-        </article>
+        </a>
         <article class="relative h-71.25 w-full min-w-full overflow-hidden rounded-xl sm:h-93.75 sm:min-w-70 md:flex-1">
             <img alt="Open Source" loading="lazy" class="absolute inset-0 h-full w-full rounded-xl object-cover" src="{{ url_for('static', filename='images/crypto-background.webp') }}" />
             <div class="absolute right-[6%] left-[6%] flex h-full flex-col items-center justify-center gap-4">
