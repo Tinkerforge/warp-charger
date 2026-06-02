@@ -11,8 +11,8 @@ Der WARP4 Charger besitzt folgende technische Spezifikation:
 | Eigenschaft | Wert |
 |-|-|
 | Ladestandard | DIN EN 61851‐1 / ISO 15118-2 / (ISO15118-20 über Softwareupdate) |
-| Ladeleistung | 1,4 kw bis 11 kW / 22 kW* |
-| Nennspannung | 230 V / 400 V  / 1/3 AC |
+| Ladeleistung | 1,4 kW bis 11 kW / 22 kW* |
+| Nennspannung | 230 V / 400 V / 1/3 AC |
 | Nennfrequenz | 50 Hz |
 | Nennstrom | 16 A / 32 A (abhängig von Variante 11 kW/22 kW) |
 | Phasenumschaltung | Intern zwischen ein- und dreiphasig |
@@ -25,7 +25,7 @@ Der WARP4 Charger besitzt folgende technische Spezifikation:
 | Eigenschaft | Wert |
 |-|-|
 | Fahrzeugladestecker | Typ 2 |
-| Ladekabellänge | 5,0 m und 7,5 m oder Sonderlänge(*) |
+| Ladekabellänge | 5,0 m, 7,5 m oder Sonderlänge(*) |
 | Zuleitungsquerschnitt | 2,5 mm² bis 10 mm² |
 | Zuleitungseinführung | M32 - Von der Unterseite und Rückseite möglich |
 | Zuleitungsdurchmesser | 11 mm bis 21 mm |
