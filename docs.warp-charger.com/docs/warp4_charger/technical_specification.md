@@ -70,7 +70,7 @@ Der WARP4 Charger besitzt folgende technische Spezifikation:
 | PV-Überschussladen | Beachtet Messwerte vom Netzanschluss und Batteriespeicher. Automatische Phasenumschaltung. |
 | Batteriesteuerung | Ermöglicht die Steuerung das Lade- und Entladeverhaltens von Batteriespeichern. Bis zu 64 Regeln definierbar. |
 | Automatisierungsregeln | Bis zu 14 Regeln definierbar um eigene Automatisierungen ohne Programmieren umzusetzen. |
-| Ladelogbuch | Der Ladetracker zeichnet bis zu 7680 Ladevorgänge lokal auf der Wallbox auf. Nur Pro Version: Inkl. geladene Energie. |
+| Ladelogbuch | Der Ladetracker zeichnet bis zu 32768 Ladevorgänge lokal auf der Wallbox auf. Nur Pro Version: Inkl. geladene Energie. |
 
 
 ### Features
