@@ -4,8 +4,6 @@ sidebar_position: 4
 
 # Technische Spezifikation
 
-Der WARP4 Charger besitzt folgende technische Spezifikation:
-
 ### Elektrische Leistungsdaten
 
 | Eigenschaft | Wert |
@@ -63,7 +61,8 @@ Der WARP4 Charger besitzt folgende technische Spezifikation:
 | Eigenschaft | Wert |
 |-|-|
 | Stromzähler | Zugriff auf Messwerte von Stromzählern, Wechselrichtern, Batteriespeichern über das Netzwerk. Mehr als 100 Fremd-Geräte unterstützt. |
-| Lastmanagement | Statisch / dynamisch integriert, max. 64 WARP, WARP2, WARP3 und/oder WARP4 Charger |
+| Lastmanagement | Statisch/dynamisch integriert, kann als Lastmanager für max. 64 WARP, WARP2, WARP3 und/oder WARP4 Charger konfiguriert werden. |
+| Zentrale Verwaltung | Kann optional die Benutzerverwaltung und das Ladelogbuch zentral übernehmen. |
 | Dynamische Strompreise | Unterstützung aller Tarife. Strompreise von Strombörse ENTSO-E. Aufschläge definierbar. Preiskalender konfigurierbar mit Aufschlägen pro Wochentag und Uhrzeit. |
 | Eco-Modus | Automatische kostenoptimierte Ladung bis zu definierbarer Abfahrtszeit. Nutzung von PV-Prognosedaten, PV-Überschussladen und dyn. Strompreise.|
 | PV-Prognose | Mittels api.forecast.solar. Bis zu 6 PV-Flächen definierbar. |
