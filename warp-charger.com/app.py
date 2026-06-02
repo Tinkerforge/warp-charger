@@ -3,11 +3,15 @@
 import copy
 import json
 import re
+import os
+import base64
+import urllib.request
+import urllib.error
 import markdown
 from pathlib import Path
 from datetime import date
 from markupsafe import Markup
-from flask import Flask, render_template, abort, redirect, request, url_for, send_from_directory
+from flask import Flask, render_template, abort, redirect, request, url_for, send_from_directory, jsonify
 from flask_flatpages import FlatPages
 from translations import get_translation, SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE
 from firmwares import get_all_firmwares
@@ -359,6 +363,32 @@ def render_page(lang, page_slug, translation=None, **extra_ctx):
     return render_template(template, **ctx)
 
 
+# --- Newsletter (rapidmail) ---
+
+RAPIDMAIL_API_BASE = "https://apiv3.emailsys.net"
+RAPIDMAIL_RECIPIENTLIST_ID = 2099
+NEWSLETTER_EMAIL_RE = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
+
+
+def get_rapidmail_credentials():
+    """Return (user, password) from rapidmail_secrets.py or env vars, or (None, None)."""
+    user = ""
+    password = ""
+    try:
+        import rapidmail_secrets
+
+        user = getattr(rapidmail_secrets, "RAPIDMAIL_API_USER", "") or ""
+        password = getattr(rapidmail_secrets, "RAPIDMAIL_API_PASSWORD", "") or ""
+    except ImportError:
+        pass
+    # Environment variables take precedence over the (optional) secrets file.
+    user = os.environ.get("RAPIDMAIL_API_USER", user)
+    password = os.environ.get("RAPIDMAIL_API_PASSWORD", password)
+    if not user or not password:
+        return None, None
+    return user, password
+
+
 # --- Routes ---
 
 @app.route("/")
@@ -382,6 +412,61 @@ def index(lang):
     ctx["t"] = get_translation(lang, "index")
     ctx["posts"] = posts
     return render_template("index.html", **ctx)
+
+
+@app.route("/<lang>/newsletter", methods=["POST"])
+def newsletter_signup(lang):
+    """Subscribe an email to the rapidmail recipient list via double opt-in."""
+    if lang not in SUPPORTED_LANGUAGES:
+        abort(404)
+
+    email = (request.form.get("email") or request.values.get("email") or "").strip()
+    if not email and request.is_json:
+        email = ((request.get_json(silent=True) or {}).get("email") or "").strip()
+
+    if not NEWSLETTER_EMAIL_RE.match(email):
+        return jsonify({"ok": False, "error": "invalid_email"}), 400
+
+    user, password = get_rapidmail_credentials()
+    if not user or not password:
+        app.logger.warning("Newsletter signup attempted but rapidmail credentials are not configured.")
+        return jsonify({"ok": False, "error": "not_configured"}), 503
+
+    payload = json.dumps({
+        "recipientlist_id": RAPIDMAIL_RECIPIENTLIST_ID,
+        "email": email,
+        "status": "new",
+    }).encode("utf-8")
+
+    auth = base64.b64encode(f"{user}:{password}".encode("utf-8")).decode("ascii")
+    url = f"{RAPIDMAIL_API_BASE}/recipients?send_activationmail=yes"
+    req = urllib.request.Request(
+        url,
+        data=payload,
+        method="POST",
+        headers={
+            "Authorization": f"Basic {auth}",
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+    )
+
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            # 201 Created on success.
+            return jsonify({"ok": True}), 200
+    except urllib.error.HTTPError as exc:
+        body = exc.read().decode("utf-8", "replace") if exc.fp else ""
+        # 400/409/422 commonly mean the address already exists or was already
+        # submitted, treat these as success for the visitor's point of view.
+        if exc.code in (400, 409, 422):
+            app.logger.info("Newsletter signup for %s returned HTTP %s: %s", email, exc.code, body)
+            return jsonify({"ok": True}), 200
+        app.logger.error("rapidmail signup failed (HTTP %s): %s", exc.code, body)
+        return jsonify({"ok": False, "error": "upstream"}), 502
+    except urllib.error.URLError as exc:
+        app.logger.error("rapidmail signup connection error: %s", exc)
+        return jsonify({"ok": False, "error": "upstream"}), 502
 
 
 @app.route("/<lang>/blog", strict_slashes=False)

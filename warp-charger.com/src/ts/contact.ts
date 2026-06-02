@@ -1,11 +1,20 @@
 interface NewsletterData {
     email: string;
+    action: string;
 }
 
-// Backend Placeholder
+// Backend: rapidmail signup (double opt-in) via the Flask endpoint.
 
-async function sendNewsletterSignup(_data: NewsletterData): Promise<void> {
-    throw new Error("Backend not yet implemented");
+async function sendNewsletterSignup(data: NewsletterData): Promise<void> {
+    const body = new URLSearchParams({ email: data.email });
+    const res = await fetch(data.action, {
+        method: "POST",
+        headers: { "X-Requested-With": "XMLHttpRequest" },
+        body,
+    });
+    if (!res.ok) {
+        throw new Error(`Newsletter signup failed: ${res.status}`);
+    }
 }
 
 // Validation
@@ -24,6 +33,7 @@ if (newsletterForm && newsletterButton) {
 
     const nlSuccess = newsletterForm.dataset.i18nNewsletterSuccess ?? "Thank you!";
     const nlError = newsletterForm.dataset.i18nNewsletterError ?? "Something went wrong.";
+    const nlAction = newsletterForm.dataset.newsletterAction ?? "";
 
     input.addEventListener("input", () => {
         wrap.classList.remove("border-red-500");
@@ -47,7 +57,7 @@ if (newsletterForm && newsletterButton) {
         document.getElementById("newsletter-submit-error")?.remove();
 
         try {
-            await sendNewsletterSignup({ email });
+            await sendNewsletterSignup({ email, action: nlAction });
             const banner = document.createElement("p");
             banner.className = "text-green-400 text-sm";
             banner.textContent = nlSuccess;
