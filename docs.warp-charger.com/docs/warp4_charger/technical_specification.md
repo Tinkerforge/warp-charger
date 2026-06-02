@@ -6,52 +6,77 @@ sidebar_position: 4
 
 Der WARP4 Charger besitzt folgende technische Spezifikation:
 
-### Elektrische Eigenschaften
+### Elektrische Leistungsdaten
 
 | Eigenschaft | Wert |
 |-|-|
-| Ladestandard | DIN EN 61851‐1 / ISO 15118 |
-| Nennspannung | 230 V 1-phasig AC / 400 V 3-phasig AC |
+| Ladestandard | DIN EN 61851‐1 / ISO 15118-2 / (ISO15118-20 über Softwareupdate) |
+| Ladeleistung | 1,4 kw bis 11 kW / 22 kW* |
+| Nennspannung | 230 V / 400 V  / 1/3 AC |
 | Nennfrequenz | 50 Hz |
-| Stromverbrauch | Smart ≤ 3 W; Pro ≤ 5 W (Standby, WLAN aktiv) |
 | Nennstrom | 16 A / 32 A (abhängig von Variante 11 kW/22 kW) |
-| Betriebstemperatur | ‐25 °C bis +50 °C (Durchschnitt in 24 h: < 35 °C) |
+| Phasenumschaltung | Intern zwischen ein- und dreiphasig |
 | Fehlerstromerkennung | DC 6 mA (integriert) |
-| Strommessung | Integrierter MID‐geeichter Stromzähler (Iskra WM3M4) nach EU‐Messgeräterichtlinie 2014/32/EU (nur Pro) |
-| §14a EnWG steuerbar | Mittels internen Abschalteingang, EEBUS, über Schnittstellen oder [WARP Energy Manager](/docs/warp_energy_manager/introduction.md) |
+| Strommessung (nur Pro)| Integrierter MID‐geeichter Stromzähler (Iskra WM3M4) nach EU‐Messgeräterichtlinie 2014/32/EU |
+| Standby (WLAN an) | Smart ≤ 3 W; Pro ≤ 5 W |
 
-### Mechanische Eigenschaften
+### Anschluss & Verkabelung
 
 | Eigenschaft | Wert |
 |-|-|
 | Fahrzeugladestecker | Typ 2 |
 | Ladekabellänge | 5,0 m und 7,5 m oder Sonderlänge(*) |
 | Zuleitungsquerschnitt | 2,5 mm² bis 10 mm² |
-| Zuleitungsdurchmesser | 11 mm bis 21 mm (M32 Kabelverschraubung) |
-| Zuleitungseinführung | Von der Unterseite und Rückseite möglich |
-| LAN- / Steuerleitung | M25 Kabelverschraubung |
-| LAN- / Steuerleitungseinführung | Von der Unterseite und Rückseite möglich |
-| Abmessungen Wallbox | 280 × 215 × 95 mm (B/H/T, Bounding Box) |
-| Anbringung | [Siehe Bohrschablone](https://www.warp-charger.com/documents/WARP4_Bohrschablone.pdf) |
-| Gewicht | Je nach Kabellänge, ca. 8 kg (*) |
-| Schutzart | IP54 (spritzwassergeschützt, für den Außenbereich geeignet) |
-| Schlagfestigkeit | Gehäuse IK09 (7 Joule nach EN 60079-0) |
-| Lieferumfang | Wallbox, Betriebsanleitung inkl. Installationsanleitung, Bohrschablone, Prüfprotokoll, 3x NFC‐Karten |
+| Zuleitungseinführung | M32 - Von der Unterseite und Rückseite möglich |
+| Zuleitungsdurchmesser | 11 mm bis 21 mm |
+| Datenleitungseinführung | M25 - Von der Unterseite und Rückseite möglich. M25 Dichteinsatz mit 2x 9mm Bohrungen |
 
-(*) Je nach Variante der Wallbox (Smart / Pro, 5 m / 7,5 m, 11 kW / 22 kW).
-
-### Software Eigenschaften
+### Mechanik & Gehäuse
 
 | Eigenschaft | Wert |
 |-|-|
-| Ladestrom | Konfigurierbar in 1 mA Schritten |
-| Phasenumschaltung | Intern zwischen einphasig und dreiphasig |
-| CP-Trennung | Automatische Simulation von an- und abstecken des Kabels zum Aufwecken von Autos |
-| Zugangsverriegelung | NFC (RFID), Autocharge, Webinterface, Android-/iOS-App, API |
-| Lastmanagement | Statisch / dynamisch integriert, max. 64 WARP, WARP2, WARP3 und/oder WARP4 Charger |
-| Lademodi | PV-Überschussladen, Eco-Modus mit dynamischen Strompreisen und PV-Prognose, Schnellladen |
+| Abmessungen | 280 × 215 × 95 mm (B/H/T, Bounding Box) |
+| Gewicht | Je nach Kabellänge, ca. 8 kg (*) |
+| Schutzart | IP54 (spritzwassergeschützt, für den Außenbereich geeignet) |
+| Schlagfestigkeit | Gehäuse IK09 (7 Joule nach EN 60079-0) |
+| Betriebstemperatur | ‐25 °C bis +50 °C (Durchschnitt in 24 h: < 35 °C) |
+
+
+### Kommunikation & Schnittstellen
+
+| Eigenschaft | Wert |
+|-|-|
+| Schnittstellen | HTTP, MQTT, EEBUS, Modbus/TCP, OCPP, SunSpec |
+| §14a EnWG steuerbar | Mittels internen Abschalteingang, EEBUS, über Schnittstellen oder [WARP Energy Manager](/docs/warp_energy_manager/introduction.md) |
+
+### Zugang & Benutzerverwaltung
+
+| Eigenschaft | Wert |
+|-|-|
+| Zugangsverriegelung | NFC (RFID), Webinterface, Autocharge, Android-/iOS-App, API |
 | NFC‐Tags | 3 NFC Karten im Lieferumfang, max. 32 anlernbar |
-| NFC Typen | NFC Forum Typ1, Typ2, Typ3, Typ4, Typ5 und Mifare Classic unterstützt (auch eigene Karten anlernbar) |
 | Benutzer | Max. 32 konfigurierbar |
-| Schnittstellen | HTTP, MQTT, Modbus/TCP, EEBUS, OCPP, SunSpec |
-| Modbus-Register | WARP Charger Tabelle und Simulation von Bender CC613 und Keba C-Series |
+
+
+### Features
+
+| Eigenschaft | Wert |
+|-|-|
+| Stromzähler | Zugriff auf Messwerte von Stromzählern, Wechselrichtern, Batteriespeichern über das Netzwerk. Mehr als 100 Fremd-Geräte unterstützt. |
+| Lastmanagement | Statisch / dynamisch integriert, max. 64 WARP, WARP2, WARP3 und/oder WARP4 Charger |
+| Dynamische Strompreise | Unterstützung aller Tarife. Strompreise von Strombörse ENTSO-E. Aufschläge definierbar. Preiskalender konfigurierbar mit Aufschlägen pro Wochentag und Uhrzeit. |
+| Eco-Modus | Automatische kostenoptimierte Ladung bis zu definierbarer Abfahrtszeit. Nutzung von PV-Prognosedaten, PV-Überschussladen und dyn. Strompreise.|
+| PV-Prognose | Mittels api.forecast.solar. Bis zu 6 PV-Flächen definierbar. |
+| PV-Überschussladen | Beachtet Messwerte vom Netzanschluss und Batteriespeicher. Automatische Phasenumschaltung. |
+| Batteriesteuerung | Ermöglicht die Steuerung das Lade- und Entladeverhaltens von Batteriespeichern. Bis zu 64 Regeln definierbar. |
+| Automatisierungsregeln | Bis zu 14 Regeln definierbar um eigene Automatisierungen ohne Programmieren umzusetzen. |
+| Ladelogbuch | Der Ladetracker zeichnet bis zu 7680 Ladevorgänge lokal auf der Wallbox auf. Nur Pro Version: Inkl. geladene Energie. |
+
+
+### Features
+
+| Eigenschaft | Wert |
+|-|-|
+| Lieferumfang | Wallbox, Betriebsanleitung inkl. Installationsanleitung, Bohrschablone, Prüfprotokoll, 3x NFC‐Karten |
+
+(*) abhängig von Variante/Ausstattung
