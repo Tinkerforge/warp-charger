@@ -28,13 +28,15 @@
                     role="tab" aria-selected="{{ 'true' if loop.first else 'false' }}">{{ image.label or loop.index }}</button>
                 {% endfor %}
             </nav>
-            <div class="relative w-full overflow-hidden rounded-[20px]" style="aspect-ratio: {{ aspect }};">
-                {% for image in images %}
-                <img data-switcher-image
-                    src="{{ url_for('static', filename='images/' ~ image.src) }}"
-                    alt="{{ image.alt }}" loading="lazy"
-                    class="absolute inset-0 h-full w-full rounded-[20px] object-cover transition-opacity duration-300{% if not loop.first %} opacity-0{% endif %}" />
-                {% endfor %}
+            <div class="relative w-full overflow-hidden rounded-[20px]" style="aspect-ratio: {{ aspect }};" data-switcher-viewport>
+                <div data-switcher-track class="flex h-full w-full">
+                    {% for image in images %}
+                    <img data-switcher-image
+                        src="{{ url_for('static', filename='images/' ~ image.src) }}"
+                        alt="{{ image.alt }}" loading="lazy"
+                        class="h-full w-full flex-shrink-0 rounded-[20px] object-cover" />
+                    {% endfor %}
+                </div>
                 <div aria-hidden="true" class="pointer-events-none absolute inset-0 rounded-[20px] border border-black/10"></div>
             </div>
         </div>
