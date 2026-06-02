@@ -168,6 +168,21 @@ class MicroGraphRenderer {
     }
 
     /**
+     * Resolve the description text for a given step index (mod stepCount).
+     * Used by the info-popover swipe UI to preview neighbouring steps while
+     * the finger is dragging.
+     */
+    descriptionForStep(idx: number): string {
+        const steps = this.animation?.steps;
+        if (!steps || !steps.length) return "";
+        const n = steps.length;
+        const step = steps[((idx % n) + n) % n];
+        return step.descriptionKey
+            ? (this.opts.descriptions?.[step.descriptionKey] ?? "")
+            : "";
+    }
+
+    /**
      * Jump to a specific step (mod stepCount). Applies the step and updates
      * the UI surfaces tied to step state (eyebrow label, dot indicators).
      */
@@ -957,60 +972,184 @@ function initOne(canvas: HTMLElement): void {
             }
 
             // Touch swipe on the info popover lets the user advance/rewind
-            // steps without aiming for the small dots. Horizontal swipes
-            // over a small threshold trigger prev/next; vertical-dominant
-            // gestures are ignored so page scrolling still works when the
-            // popover is open.
+            // steps without aiming for the small dots. To make the gesture
+            // visible, the description text sits on a 3-slide track
+            // (prev / current / next) that follows the finger and snaps to a
+            // neighbour on release, mirroring the image switcher carousel.
+            //
+            // A single popover can be shared by several renderers (e.g. the
+            // load-management panel has static/dynamic sub-tab diagrams). Each
+            // registers itself; the track + listeners are built only once and
+            // resolve the currently in-view renderer at gesture time. Building
+            // per renderer would otherwise wrap the description repeatedly,
+            // nesting tracks and blowing up the popover height.
             const popoverEl = panelEl?.querySelector<HTMLElement>("[data-info-popover]");
-            if (popoverEl) {
-                const SWIPE_THRESHOLD = 40; // px
-                let startX = 0;
-                let startY = 0;
-                let tracking = false;
-                popoverEl.addEventListener(
-                    "touchstart",
-                    (e) => {
-                        if (controller && !controller.isInView) return;
-                        if (e.touches.length !== 1) {
-                            tracking = false;
+            if (popoverEl && descriptionEl && descriptionEl.parentElement) {
+                interface SwipeSource {
+                    renderer: MicroGraphRenderer;
+                    controller: ReturnType<typeof attachSpotlight> | null;
+                }
+                const pop = popoverEl as HTMLElement & {
+                    _swipeSources?: SwipeSource[];
+                    _swipeInit?: boolean;
+                };
+                const sources: SwipeSource[] = (pop._swipeSources ??= []);
+                sources.push({ renderer, controller });
+
+                const activeSource = (): SwipeSource =>
+                    sources.find((s) => !s.controller || s.controller.isInView) ??
+                    sources[0];
+
+                if (!pop._swipeInit) {
+                    pop._swipeInit = true;
+
+                    const prefersReducedMotion = window.matchMedia(
+                        "(prefers-reduced-motion: reduce)",
+                    ).matches;
+
+                    const TRANSITION = "transform 250ms ease";
+                    const slideClass = descriptionEl.className;
+
+                    // Build the viewport/track around the existing description
+                    // <p>, which becomes the centre slide (renderer target).
+                    const viewport = document.createElement("div");
+                    viewport.className = "relative overflow-hidden";
+                    const track = document.createElement("div");
+                    track.className = "flex w-full";
+                    track.style.transition = TRANSITION;
+
+                    const makeSlide = (): HTMLParagraphElement => {
+                        const p = document.createElement("p");
+                        p.className = slideClass;
+                        p.setAttribute("aria-hidden", "true");
+                        p.style.flex = "0 0 100%";
+                        p.style.width = "100%";
+                        return p;
+                    };
+                    const prevSlide = makeSlide();
+                    const nextSlide = makeSlide();
+
+                    descriptionEl.parentElement!.insertBefore(viewport, descriptionEl);
+                    descriptionEl.style.flex = "0 0 100%";
+                    descriptionEl.style.width = "100%";
+                    track.append(prevSlide, descriptionEl, nextSlide);
+                    viewport.appendChild(track);
+
+                    // Centre slide visible => shift the track left one slide.
+                    const center = (animate: boolean): void => {
+                        track.style.transition = animate ? TRANSITION : "none";
+                        track.style.transform = "translateX(-100%)";
+                    };
+                    center(false);
+
+                    const fillNeighbours = (): void => {
+                        const r = activeSource().renderer;
+                        const total = r.stepCount;
+                        if (!total) return;
+                        const cur = r.currentStepIdx;
+                        prevSlide.textContent = r.descriptionForStep(cur - 1);
+                        nextSlide.textContent = r.descriptionForStep(cur + 1);
+                    };
+
+                    const SWIPE_THRESHOLD = 40; // px
+                    let startX = 0;
+                    let startY = 0;
+                    let dx = 0;
+                    let tracking = false;
+                    let locked = false; // horizontal gesture confirmed
+
+                    const commit = (delta: number): void => {
+                        const src = activeSource();
+                        const r = src.renderer;
+                        if (!r.stepCount) {
+                            center(true);
                             return;
                         }
-                        startX = e.touches[0].clientX;
-                        startY = e.touches[0].clientY;
-                        tracking = true;
-                    },
-                    { passive: true },
-                );
-                popoverEl.addEventListener(
-                    "touchend",
-                    (e) => {
+                        src.controller?.pauseAutoAdvance();
+                        const finish = (): void => {
+                            r.gotoStep(r.currentStepIdx + delta);
+                            center(false);
+                            fillNeighbours();
+                        };
+                        if (prefersReducedMotion) {
+                            finish();
+                            return;
+                        }
+                        // Slide fully to the chosen neighbour, then snap back
+                        // once the centre slide shows that step's text.
+                        track.style.transition = TRANSITION;
+                        track.style.transform = `translateX(${delta > 0 ? "-200%" : "0%"})`;
+                        const onEnd = (): void => {
+                            track.removeEventListener("transitionend", onEnd);
+                            finish();
+                        };
+                        track.addEventListener("transitionend", onEnd);
+                    };
+
+                    popoverEl.addEventListener(
+                        "touchstart",
+                        (e) => {
+                            if (e.touches.length !== 1) {
+                                tracking = false;
+                                return;
+                            }
+                            startX = e.touches[0].clientX;
+                            startY = e.touches[0].clientY;
+                            dx = 0;
+                            tracking = true;
+                            locked = false;
+                            fillNeighbours();
+                            track.style.transition = "none";
+                        },
+                        { passive: true },
+                    );
+
+                    popoverEl.addEventListener(
+                        "touchmove",
+                        (e) => {
+                            if (!tracking) return;
+                            const t = e.touches[0];
+                            const mx = t.clientX - startX;
+                            const my = t.clientY - startY;
+                            if (!locked) {
+                                if (Math.abs(mx) < 8 && Math.abs(my) < 8) return;
+                                if (Math.abs(mx) <= Math.abs(my)) {
+                                    // Vertical scroll: let the page handle it.
+                                    tracking = false;
+                                    center(true);
+                                    return;
+                                }
+                                locked = true;
+                            }
+                            dx = mx;
+                            track.style.transform = `translateX(calc(-100% + ${dx}px))`;
+                        },
+                        { passive: true },
+                    );
+
+                    const end = (): void => {
                         if (!tracking) return;
                         tracking = false;
-                        if (controller && !controller.isInView) return;
-                        const t = e.changedTouches[0];
-                        if (!t) return;
-                        const dx = t.clientX - startX;
-                        const dy = t.clientY - startY;
-                        if (Math.abs(dx) < SWIPE_THRESHOLD) return;
-                        if (Math.abs(dy) > Math.abs(dx)) return;
-                        const total = renderer.stepCount;
-                        if (!total) return;
-                        controller?.pauseAutoAdvance();
-                        // Swipe left (dx < 0) advances to the next step;
-                        // swipe right rewinds. Wraps modulo stepCount.
-                        const delta = dx < 0 ? 1 : -1;
-                        const next = (renderer.currentStepIdx + delta + total) % total;
-                        renderer.gotoStep(next);
-                    },
-                    { passive: true },
-                );
-                popoverEl.addEventListener(
-                    "touchcancel",
-                    () => {
-                        tracking = false;
-                    },
-                    { passive: true },
-                );
+                        if (dx <= -SWIPE_THRESHOLD) {
+                            commit(1); // swipe left -> next
+                        } else if (dx >= SWIPE_THRESHOLD) {
+                            commit(-1); // swipe right -> previous
+                        } else {
+                            center(true); // snap back
+                        }
+                    };
+
+                    popoverEl.addEventListener("touchend", end, { passive: true });
+                    popoverEl.addEventListener(
+                        "touchcancel",
+                        () => {
+                            if (!tracking) return;
+                            tracking = false;
+                            center(true);
+                        },
+                        { passive: true },
+                    );
+                }
             }
         })
         .catch((err) => {
