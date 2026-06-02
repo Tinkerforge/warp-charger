@@ -22,26 +22,33 @@ document.addEventListener("DOMContentLoaded", () => {
         ring.classList.add("is-pulsing");
     };
 
-    rings.forEach((ring) => {
-        let stopped = false;
-        let timer = 0;
+    // Once the user opens any info popover, suppress the attention pulse on
+    // every info button for the rest of the page visit (in-memory, resets on
+    // reload). Otherwise switching scenario tabs would reveal a fresh,
+    // never-clicked button that starts pulsing again.
+    let globallyStopped = false;
+    const timers: number[] = [];
+    const stopAll = (): void => {
+        if (globallyStopped) return;
+        globallyStopped = true;
+        timers.forEach((id) => window.clearTimeout(id));
+        rings.forEach((ring) => ring.classList.remove("is-pulsing"));
+    };
 
+    document.querySelectorAll<HTMLElement>("[data-info-btn]").forEach((btn) => {
+        btn.addEventListener("click", stopAll);
+    });
+
+    rings.forEach((ring) => {
         const schedule = (): void => {
-            timer = window.setTimeout(() => {
-                if (stopped) return;
+            const id = window.setTimeout(() => {
+                if (globallyStopped) return;
                 // Skip while the tab is hidden to avoid a burst on refocus.
                 if (!document.hidden) pulseOnce(ring);
                 schedule();
             }, randomDelay());
+            timers.push(id);
         };
-
-        // Stop pulsing for good once the user has opened the popover once.
-        const button = ring.closest<HTMLElement>("[data-info-btn]");
-        button?.addEventListener("click", () => {
-            stopped = true;
-            window.clearTimeout(timer);
-            ring.classList.remove("is-pulsing");
-        });
 
         ring.addEventListener("animationend", () =>
             ring.classList.remove("is-pulsing"),
