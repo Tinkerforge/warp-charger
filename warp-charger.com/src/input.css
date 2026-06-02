@@ -1086,3 +1086,35 @@ header [data-tap-dropdown][data-open="true"] > div {
 .pricing-card-feature-heading {
     @apply px-7 pt-4 font-satoshi text-base font-bold text-black;
 }
+
+/* Info button attention pulse. A one-shot "ping" replayed at random
+   intervals from JS (see info-pulse.ts) so it fires occasionally rather
+   than continuously. */
+.info-pulse-ring {
+    opacity: 0;
+}
+
+.info-pulse-ring.is-pulsing {
+    animation: info-ping 0.9s ease-out;
+}
+
+@keyframes info-ping {
+    0% {
+        transform: scale(1);
+        opacity: 0.55;
+    }
+    80% {
+        transform: scale(2.1);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(2.1);
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .info-pulse-ring.is-pulsing {
+        animation: none;
+    }
+}

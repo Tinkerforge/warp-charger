@@ -384,9 +384,10 @@
                         data-info-btn
                         aria-label="{{ t.info_aria or 'Diagramm erklären' }}"
                         aria-expanded="false"
-                        class="absolute left-7 top-5 z-30 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-white shadow-md ring-1 ring-light-grey transition-colors hover:bg-light-grey lg:left-3 lg:top-3"
+                        class="group absolute left-7 top-5 z-30 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-primary text-white shadow-md ring-1 ring-white/20 transition-all hover:opacity-90 active:scale-95 lg:left-3 lg:top-3"
                     >
-                        <span class="material-symbols-outlined icon-20 text-grey">info</span>
+                        <span aria-hidden="true" data-info-pulse class="info-pulse-ring pointer-events-none absolute inset-0 rounded-full bg-primary"></span>
+                        <span class="material-symbols-outlined icon-20 relative">info</span>
                     </button>
 
                     <div

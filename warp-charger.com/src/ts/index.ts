@@ -7,6 +7,7 @@ import "./diagram";
 import "./firmware-details";
 import "./header-preview";
 import "./image-switcher";
+import "./info-pulse";
 import "./desktop-menu-tap";
 import "./logo-grid";
 import "./mobile-menu";
