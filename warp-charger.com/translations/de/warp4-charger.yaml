@@ -213,6 +213,7 @@ tech_specs:
         - { label: "Phasenumschaltung",   value: "Intern zwischen ein- und dreiphasig" }
         - { label: "Fehlerstromerkennung", value: "DC 6 mA (integriert)" }
         - { label: "Strommessung (nur Pro)",        value: "Integrierter MID-geeichter Stromzähler nach EU-Messgeräterichtlinie 2014/32/EU *" }
+        - { label: "Standby (WLAN an)", value: "Smart ≤ 3 W; Pro ≤ 5 W *" }
     - title: "Anschluss & Verkabelung"
       rows:
         - { label: "Fahrzeugladestecker",  value: "Typ 2" }
@@ -237,10 +238,17 @@ tech_specs:
         - { label: "Zugangsverriegelung", value: "NFC (RFID), Webinterface, Autocharge, API" }
         - { label: "NFC-Tags",            value: "3 NFC-Karten im Lieferumfang, max. 32 anlernbar" }
         - { label: "Benutzer",            value: "Max. 32 konfigurierbar" }
-    - title: "Lastmanagement & Energie"
+    - title: "Features"
       rows:
+        - { label: "Stromzähler",    value: "Zugriff auf Messwerte von Stromzählern, Wechselrichtern, Batteriespeichern über das Netzwerk. Mehr als 100 Fremd-Geräte unterstützt." }
         - { label: "Lastmanagement",    value: "Statisch/dynamisch integriert, max. 64 WARP Charger" }
-        - { label: "Standby (WLAN an)", value: "Smart ≤ 3 W; Pro ≤ 5 W *" }
+        - { label: "Dynamische Strompreise",    value: "Unterstützung aller Tarife. Strompreise von Strombörse ENTSO-E. Aufschläge definierbar. Preiskalender konfigurierbar mit Aufschlägen pro Wochentag und Uhrzeit." }
+        - { label: "Eco-Modus",    value: "Automatische kostenoptimierte Ladung bis zu definierbarer Abfahrtszeit. Nutzung von PV-Prognosedaten, PV-Überschussladen und dyn. Strompreise." }
+        - { label: "PV-Prognose",    value: "Mittels api.forecast.solar. Bis zu 6 PV-Flächen definierbar." }
+        - { label: "PV-Überschussladen",    value: "Beachtet Messwerte vom Netzanschluss und Batteriespeicher. Automatische Phasenumschaltung." }
+        - { label: "Batteriesteuerung",    value: "Ermöglicht die Steuerung das Lade- und Entladeverhaltens von Batteriespeichern. Bis zu 64 Regeln definierbar." }
+        - { label: "Automatisierungsregeln",    value: "Bis zu 14 Regeln definierbar um eigene Automatisierungen ohne Programmieren umzusetzen." }
+        - { label: "Ladelogbuch",    value: "Der Ladetracker zeichnet bis zu 7680 Ladevorgänge lokal auf der Wallbox auf. Nur Pro Version: Inkl. geladene Energie." }
     - title: "Lieferumfang"
       rows:
         - { label: "Lieferumfang", value: "Wallbox, Bedienungsanleitung inkl. Installationsanleitung, Prüfprotokoll, 3 NFC Karten" }
