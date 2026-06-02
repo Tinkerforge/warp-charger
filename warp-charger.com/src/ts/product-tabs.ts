@@ -18,7 +18,7 @@ function initProductTabs(root: Element): void {
         details: document.getElementById("panel-details"),
     };
 
-    function activate(name: string): void {
+    function activate(name: string, updateHash: boolean): void {
         tabs.forEach((tab) => {
             const isActive = tab.dataset.tab === name;
             tab.setAttribute("aria-selected", String(isActive));
@@ -28,14 +28,52 @@ function initProductTabs(root: Element): void {
             if (!panel) continue;
             panel.classList.toggle("hidden", key !== name);
         }
+        // Reflect the active tab in the URL so it can be shared/bookmarked.
+        // replaceState keeps the address bar in sync without spamming history
+        // or triggering the browser's native anchor scroll.
+        if (updateHash) {
+            history.replaceState(null, "", `#${name}`);
+        }
     }
 
     tabs.forEach((tab) => {
         tab.addEventListener("click", () => {
             const name = tab.dataset.tab;
-            if (name) activate(name);
+            if (name) activate(name, true);
         });
     });
+
+    // Open the tab requested by the URL hash. Supports "#details"/"#funktionen"
+    // as well as deep links to any element inside the details panel.
+    function applyFromHash(scroll: boolean): void {
+        const raw = decodeURIComponent(location.hash.replace(/^#/, ""));
+        if (!raw) return;
+
+        let name: string | null = null;
+        if (raw === "details" || raw === "funktionen") {
+            name = raw;
+        } else {
+            const target = document.getElementById(raw);
+            if (target && panels.details?.contains(target)) name = "details";
+            else if (target && panels.funktionen?.contains(target)) name = "funktionen";
+        }
+        if (!name) return;
+
+        activate(name, false);
+
+        if (scroll) {
+            // Scroll to the tab strip (not the panel top) so the freshly
+            // activated tab stays visible above its content.
+            const tablist = root.querySelector<HTMLElement>('[role="tablist"]');
+            // Wait a frame so the now-visible panel has a layout to scroll to.
+            requestAnimationFrame(() => {
+                tablist?.scrollIntoView({ block: "start" });
+            });
+        }
+    }
+
+    applyFromHash(true);
+    window.addEventListener("hashchange", () => applyFromHash(false));
 }
 
 document
