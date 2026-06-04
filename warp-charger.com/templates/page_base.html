@@ -6,8 +6,29 @@
         <title>{% block title %}{{ meta.meta_title }}{% endblock %}</title>
         <meta name="description" content="{% block description %}{{ meta.meta_description }}{% endblock %}" />
 
+        {# Open Graph / Twitter social share tags. Pages can override the share
+           image by setting {% block og_image %}<file>.jpg{% endblock %} where the
+           file lives in static/images/og/. #}
+        {% set og_base = url_for('static', filename='images/og/', _external=True) %}
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="WARP Charger" />
+        <meta property="og:locale" content="{{ 'de_DE' if lang == 'de' else 'en_US' }}" />
+        <meta property="og:locale:alternate" content="{{ 'en_US' if lang == 'de' else 'de_DE' }}" />
+        <meta property="og:title" content="{{ self.title() }}" />
+        <meta property="og:description" content="{{ self.description() }}" />
+        <meta property="og:url" content="{{ request.url }}" />
+        <meta property="og:image" content="{{ og_base }}{% block og_image %}default.jpg{% endblock %}" />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="{{ self.title() }}" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="{{ self.title() }}" />
+        <meta name="twitter:description" content="{{ self.description() }}" />
+        <meta name="twitter:image" content="{{ og_base }}{{ self.og_image() }}" />
+
         <link rel="alternate" hreflang="{{ lang }}" href="{{ request.url }}" />
-        <link rel="alternate" hreflang="{{ other_lang }}" href="{{ alternate_url }}" />
+        <link rel="alternate" hreflang="{{ other_lang }}" href="{{ request.host_url.rstrip('/') }}{{ alternate_url }}" />
 
         <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}" />
 

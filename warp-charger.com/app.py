@@ -13,10 +13,17 @@ from datetime import date
 from markupsafe import Markup
 from flask import Flask, render_template, abort, redirect, request, url_for, send_from_directory, jsonify
 from flask_flatpages import FlatPages
+from werkzeug.middleware.proxy_fix import ProxyFix
 from translations import get_translation, SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE
 from firmwares import get_all_firmwares
 
 app = Flask(__name__, static_folder="static")
+
+# Behind nginx (gunicorn on a unix socket) honor the X-Forwarded-Proto / -Host
+# headers so url_for(_external=True), request.url (hreflang) and request.host_url
+# (sitemap + Open Graph tags) build correct https:// URLs instead of http://.
+# Requires nginx to set: proxy_set_header X-Forwarded-Proto $scheme;
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 
 def render_markdown(text, flatpages=None):
