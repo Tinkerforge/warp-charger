@@ -4,11 +4,11 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
-# Install dependencies if needed
-if [ ! -d node_modules ]; then
-    echo "Installing dependencies..."
-    npm install
-fi
+# Install/update dependencies. Run unconditionally (not just when node_modules
+# is missing) so newly added packages are picked up on deploy. npm install is
+# idempotent and near-instant when everything is already up to date.
+echo "Installing dependencies..."
+npm install
 
 echo "Syncing compatible devices..."
 .venv/bin/python scripts/sync_compatible_devices.py
