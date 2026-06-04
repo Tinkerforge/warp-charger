@@ -161,6 +161,11 @@
                                         {% for slug, label in nav_links.warp_for %}
                                         {{ dropdown_nav_link(lang, slug, label, {"img": url_for('static', filename='images/' ~ nav.solutions_previews[loop.index0 + 8].image), "title": nav.solutions_previews[loop.index0 + 8].title, "desc": nav.solutions_previews[loop.index0 + 8].desc}) }}
                                         {% endfor %}
+                                        <div class="h-px w-full bg-light-grey"></div>
+                                        <span class="text-eyebrow text-grey">{{ nav.service }}</span>
+                                        {% for slug, label in nav_links.solutions_service %}
+                                        {{ dropdown_nav_link(lang, slug, label, {"img": url_for('static', filename='images/' ~ nav.solutions_previews[loop.index0 + 13].image), "title": nav.solutions_previews[loop.index0 + 13].title, "desc": nav.solutions_previews[loop.index0 + 13].desc}) }}
+                                        {% endfor %}
                                     </div>
                                     <div
                                         class="flex w-71 shrink-0 flex-col justify-between bg-background p-5"

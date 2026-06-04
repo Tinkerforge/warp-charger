@@ -63,6 +63,7 @@ PAGES = {
         "warp-fuer/nerds": "pages/for/nerds.html",
         "warp-fuer/zu-hause": "pages/for/home.html",
         "warp-fuer/firmen": "pages/for/businesses.html",
+        "elektriker-finden": "pages/for/find-electrician.html",
         "ueber-uns/unternehmen": "pages/about/company.html",
         "ueber-uns/kontakt": "pages/about/contact.html",
     },
@@ -87,6 +88,7 @@ PAGES = {
         "warp-for/nerds": "pages/for/nerds.html",
         "warp-for/home": "pages/for/home.html",
         "warp-for/businesses": "pages/for/businesses.html",
+        "find-electrician": "pages/for/find-electrician.html",
         "about/company": "pages/about/company.html",
         "about/contact": "pages/about/contact.html",
     },
@@ -153,6 +155,9 @@ NAV_LINKS = {
             ("warp-fuer/zu-hause", "zu Hause"),
             ("warp-fuer/firmen", "Firmen"),
         ],
+        "solutions_service": [
+            ("elektriker-finden", "Elektriker finden"),
+        ],
         "about": [
             ("ueber-uns/unternehmen", "Unternehmen"),
             ("https://www.tinkerunity.org/", "Community"),
@@ -197,6 +202,9 @@ NAV_LINKS = {
             ("warp-for/nerds", "Nerds"),
             ("warp-for/home", "Home"),
             ("warp-for/businesses", "Businesses"),
+        ],
+        "solutions_service": [
+            ("find-electrician", "Find an Electrician"),
         ],
         "about": [
             ("about/company", "Company"),
@@ -361,6 +369,40 @@ def render_page(lang, page_slug, translation=None, **extra_ctx):
         ctx["t"] = get_translation(lang, translation)
     ctx.update(extra_ctx)
     return render_template(template, **ctx)
+
+
+# --- Electrician finder data (find-an-electrician page) ---
+
+DATA_DIR = Path(__file__).parent / "data"
+_data_cache = {}
+_data_mtimes = {}
+
+
+def _load_json_cached(path):
+    """Load a JSON file, reloading only when its mtime changes (re-read on change)."""
+    key = str(path)
+    try:
+        mtime = path.stat().st_mtime
+    except OSError:
+        return _data_cache.get(key)
+    if key not in _data_cache or _data_mtimes.get(key) != mtime:
+        try:
+            _data_cache[key] = json.loads(path.read_text(encoding="utf-8"))
+            _data_mtimes[key] = mtime
+        except (OSError, json.JSONDecodeError):
+            app.logger.warning("Could not read data file %s", path)
+            return _data_cache.get(key)
+    return _data_cache[key]
+
+
+def get_electricians():
+    """Return the geocoded electrician directory (list of dicts)."""
+    return _load_json_cached(DATA_DIR / "electricians.geocoded.json") or []
+
+
+def get_postal_data():
+    """Return the DACH postal-code -> coordinates lookup ({cc: {plz: {...}}})."""
+    return _load_json_cached(DATA_DIR / "postal_dach.json") or {}
 
 
 # --- Newsletter (rapidmail) ---
@@ -633,6 +675,37 @@ def for_businesses():
     return render_page(lang, slug, translation="for-businesses")
 
 
+@app.route("/de/elektriker-finden")
+@app.route("/en/find-electrician")
+def find_electrician():
+    """Customer-facing 'find an electrician' locator (map + zip search)."""
+    lang = request.path.split("/")[1]
+    slug = "elektriker-finden" if lang == "de" else "find-electrician"
+    return render_page(lang, slug, translation="find-electrician",
+                       electricians=get_electricians())
+
+
+@app.route("/<lang>/api/plz")
+def api_plz(lang):
+    """Resolve a DACH postal code to coordinates for the electrician finder.
+
+    Query params: ``country`` (DE/AT/CH, optional) and ``code`` (the postal
+    code). When the country is omitted or unknown, all countries are searched
+    (4-digit AT/CH codes can overlap, so the frontend should pass country)."""
+    if lang not in SUPPORTED_LANGUAGES:
+        abort(404)
+    country = (request.args.get("country") or "").strip().upper()
+    code = (request.args.get("code") or "").strip()
+    postal = get_postal_data()
+    candidates = [country] if country in postal else list(postal.keys())
+    for cc in candidates:
+        hit = postal.get(cc, {}).get(code)
+        if hit:
+            return jsonify({"ok": True, "country": cc, "code": code,
+                            "lat": hit["lat"], "lon": hit["lon"], "place": hit["place"]})
+    return jsonify({"ok": False, "error": "not_found"}), 404
+
+
 @app.route("/de/ueber-uns/unternehmen")
 @app.route("/en/about/company")
 def company():
@@ -847,6 +920,7 @@ if __name__ == "__main__":
     # Auto-start Tailwind CSS watcher if npx is available
     css_process = None
     ts_process = None
+    finder_process = None
     if shutil.which("npx"):
         try:
             css_process = subprocess.Popen(
@@ -870,6 +944,17 @@ if __name__ == "__main__":
         except Exception as e:
             print(" * Could not start TypeScript watcher: %s" % e)
 
+        try:
+            finder_process = subprocess.Popen(
+                ["npx", "esbuild", "src/ts/electrician-finder.ts", "--bundle",
+                 "--outfile=static/js/finder.min.js", "--format=iife", "--watch"],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.PIPE,
+            )
+            print(" * Electrician-finder watcher started (PID %d)" % finder_process.pid)
+        except Exception as e:
+            print(" * Could not start electrician-finder watcher: %s" % e)
+
     try:
         app.run(debug=True, host="0.0.0.0", port=port)
     finally:
@@ -879,3 +964,6 @@ if __name__ == "__main__":
         if ts_process:
             ts_process.terminate()
             ts_process.wait()
+        if finder_process:
+            finder_process.terminate()
+            finder_process.wait()

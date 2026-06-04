@@ -12,6 +12,7 @@
         <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}" />
 
         <link href="{{ url_for('static', filename='css/output.min.css') }}" rel="stylesheet" />
+        {% block extra_head %}{% endblock %}
     </head>
 
     <body class="relative min-h-screen overflow-x-hidden bg-background">
@@ -27,5 +28,6 @@
 
         <!-- Scripts -->
         <script src="{{ url_for('static', filename='js/output.min.js') }}"></script>
+        {% block extra_scripts %}{% endblock %}
     </body>
 </html>

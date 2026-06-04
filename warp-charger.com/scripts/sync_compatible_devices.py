@@ -8,8 +8,10 @@ import json
 import re
 from pathlib import Path
 
-DOCS_TABLE = Path(__file__).parent.parent / "docs.warp-charger.com" / "docs" / "compatible_devices" / "devices.table.js"
-OUTPUT = Path(__file__).parent / "data" / "compatible_devices.json"
+# This script lives in scripts/; ROOT is the warp-charger.com project root.
+ROOT = Path(__file__).resolve().parent.parent
+DOCS_TABLE = ROOT.parent / "docs.warp-charger.com" / "docs" / "compatible_devices" / "devices.table.js"
+OUTPUT = ROOT / "data" / "compatible_devices.json"
 
 # Logo file mapping: manufacturer name -> logo filename (without extension)
 LOGO_MAP = {

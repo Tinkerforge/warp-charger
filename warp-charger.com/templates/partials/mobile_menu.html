@@ -101,6 +101,10 @@
                             {% for slug, label in nav_links.warp_for %}
                             {{ dropdown_nav_link(lang, slug, label, none, "text-base text-white/80 transition-colors hover:text-white") }}
                             {% endfor %}
+                            <span class="mt-2 text-eyebrow text-grey">{{ nav.service }}</span>
+                            {% for slug, label in nav_links.solutions_service %}
+                            {{ dropdown_nav_link(lang, slug, label, none, "text-base text-white/80 transition-colors hover:text-white") }}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>

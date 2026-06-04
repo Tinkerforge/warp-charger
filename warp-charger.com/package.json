@@ -7,12 +7,16 @@
     "watch:css": "npx @tailwindcss/cli -i ./src/input.css -o ./static/css/output.min.css --watch --minify",
     "build:js": "esbuild src/ts/index.ts --bundle --outfile=static/js/output.min.js --format=iife --minify",
     "watch:js": "esbuild src/ts/index.ts --bundle --outfile=static/js/output.min.js --format=iife --watch",
-    "build": "npm run build:css && npm run build:js",
-    "watch": "npm run watch:css & npm run watch:js",
+    "build:finder": "esbuild src/ts/electrician-finder.ts --bundle --outfile=static/js/finder.min.js --format=iife --minify",
+    "watch:finder": "esbuild src/ts/electrician-finder.ts --bundle --outfile=static/js/finder.min.js --format=iife --watch",
+    "build": "npm run build:css && npm run build:js && npm run build:finder",
+    "watch": "npm run watch:css & npm run watch:js & npm run watch:finder",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.2.2",
+    "maplibre-gl": "^5.24.0",
+    "pmtiles": "^4.4.1",
     "tailwindcss": "^4.2.2"
   },
   "devDependencies": {

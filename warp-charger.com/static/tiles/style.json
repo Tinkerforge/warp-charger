@@ -1,0 +1,171 @@
+{
+  "version": 8,
+  "name": "WARP Finder Basemap (label-free)",
+  "metadata": {
+    "comment": "Hand-authored, label-free light basemap for the electrician finder. Source layers follow the Protomaps v4 schema (https://docs.protomaps.com/basemaps/layers). No place/POI labels are rendered; the only glyphs needed are digits for cluster counts (Noto Sans Regular, range 0-255)."
+  },
+  "glyphs": "/static/tiles/fonts/{fontstack}/{range}.pbf",
+  "sources": {
+    "protomaps": {
+      "type": "vector",
+      "url": "pmtiles:///static/tiles/basemap.pmtiles",
+      "attribution": "© OpenStreetMap contributors · Protomaps"
+    },
+    "dach-mask": {
+      "type": "geojson",
+      "data": "/static/tiles/dach-mask.json"
+    },
+    "dach": {
+      "type": "geojson",
+      "data": "/static/tiles/dach.json"
+    }
+  },
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": { "background-color": "#e9eef2" }
+    },
+    {
+      "id": "earth",
+      "type": "fill",
+      "source": "protomaps",
+      "source-layer": "earth",
+      "paint": { "fill-color": "#fbfaf8" }
+    },
+    {
+      "id": "landcover",
+      "type": "fill",
+      "source": "protomaps",
+      "source-layer": "landcover",
+      "paint": {
+        "fill-color": [
+          "match", ["get", "kind"],
+          "forest", "#e6eedd",
+          "wood", "#e6eedd",
+          "grassland", "#edf3e5",
+          "scrub", "#edf3e5",
+          "farmland", "#f3f1e6",
+          "glacier", "#f3f8fb",
+          "urban_area", "#f0eeea",
+          "#eef0ec"
+        ],
+        "fill-opacity": 0.5
+      }
+    },
+    {
+      "id": "landuse_green",
+      "type": "fill",
+      "source": "protomaps",
+      "source-layer": "landuse",
+      "filter": ["match", ["get", "kind"],
+        ["park", "forest", "wood", "garden", "grass", "meadow", "nature_reserve", "national_park", "recreation_ground", "golf_course", "cemetery", "pitch", "playground"],
+        true, false],
+      "paint": { "fill-color": "#e2ecdb", "fill-opacity": 0.7 }
+    },
+    {
+      "id": "water",
+      "type": "fill",
+      "source": "protomaps",
+      "source-layer": "water",
+      "filter": ["==", ["geometry-type"], "Polygon"],
+      "paint": { "fill-color": "#a9cfe8" }
+    },
+    {
+      "id": "water_line",
+      "type": "line",
+      "source": "protomaps",
+      "source-layer": "water",
+      "filter": ["==", ["geometry-type"], "LineString"],
+      "paint": {
+        "line-color": "#a9cfe8",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 8, 0.5, 14, 1.5]
+      }
+    },
+    {
+      "id": "roads_rail",
+      "type": "line",
+      "source": "protomaps",
+      "source-layer": "roads",
+      "filter": ["==", ["get", "kind"], "rail"],
+      "paint": {
+        "line-color": "#dcdadd",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 9, 0.4, 16, 1.6]
+      }
+    },
+    {
+      "id": "roads_minor",
+      "type": "line",
+      "source": "protomaps",
+      "source-layer": "roads",
+      "minzoom": 11,
+      "filter": ["match", ["get", "kind"], ["minor_road", "path"], true, false],
+      "paint": {
+        "line-color": "#ecebe7",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 11, 0.4, 16, 3]
+      }
+    },
+    {
+      "id": "roads_major",
+      "type": "line",
+      "source": "protomaps",
+      "source-layer": "roads",
+      "filter": ["==", ["get", "kind"], "major_road"],
+      "paint": {
+        "line-color": "#e3ded4",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 7, 0.4, 11, 1.4, 16, 6]
+      }
+    },
+    {
+      "id": "roads_highway",
+      "type": "line",
+      "source": "protomaps",
+      "source-layer": "roads",
+      "filter": ["==", ["get", "kind"], "highway"],
+      "paint": {
+        "line-color": "#f4d8a5",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 5, 0.5, 8, 1.4, 11, 3, 16, 10]
+      }
+    },
+    {
+      "id": "boundaries_region",
+      "type": "line",
+      "source": "protomaps",
+      "source-layer": "boundaries",
+      "minzoom": 4,
+      "filter": ["==", ["get", "kind"], "region"],
+      "paint": {
+        "line-color": "#c7c2cc",
+        "line-width": 0.6,
+        "line-dasharray": [3, 2]
+      }
+    },
+    {
+      "id": "boundaries_country",
+      "type": "line",
+      "source": "protomaps",
+      "source-layer": "boundaries",
+      "filter": ["==", ["get", "kind"], "country"],
+      "paint": {
+        "line-color": "#9b9aa6",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 3, 0.6, 8, 1.4],
+        "line-dasharray": [2, 1.5]
+      }
+    },
+    {
+      "id": "dach-mask",
+      "type": "fill",
+      "source": "dach-mask",
+      "paint": { "fill-color": "#e9eef2", "fill-opacity": 0.85 }
+    },
+    {
+      "id": "dach-border",
+      "type": "line",
+      "source": "dach",
+      "paint": {
+        "line-color": "#8a8f99",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 4, 0.8, 8, 1.6, 12, 2.4]
+      }
+    }
+  ]
+}

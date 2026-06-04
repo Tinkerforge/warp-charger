@@ -1,0 +1,147 @@
+{% extends "page_base.html" %}
+{% from "macros/page_hero.html" import page_hero %}
+
+{% block title %}{{ t.title }}{% endblock %}
+{% block description %}{{ t.description }}{% endblock %}
+
+{% block extra_head %}
+{# Page-scoped map styles (bundled next to finder.min.js by esbuild). #}
+<link rel="stylesheet" href="{{ url_for('static', filename='js/finder.min.css') }}" />
+{% endblock %}
+
+{% block content %}
+{# Hero #}
+{% call page_hero(badge_icon="pin_drop", badge_text=t.hero.badge, headline=t.hero.headline) %}
+<p class="mt-6 max-w-2xl text-section-body">{{ t.hero.subtext }}</p>
+{% endcall %}
+
+{# Finder #}
+<section class="w-full bg-background pb-section">
+    <div class="container-main flex flex-col gap-5 text-left">
+
+        {# Search panel #}
+        <form id="ef-search" novalidate
+            class="flex flex-col gap-3 rounded-2xl border border-black/10 bg-white p-4 shadow-sm sm:flex-row sm:flex-wrap sm:items-end"
+            data-plz-endpoint="/{{ lang }}/api/plz"
+            data-i18n-notfound="{{ t.search.not_found }}"
+            data-i18n-nearmeerror="{{ t.search.near_me_error }}"
+            data-i18n-near="{{ t.results.near }}"
+            data-i18n-yourlocation="{{ t.results.your_location }}"
+            data-i18n-all="{{ t.results.all_heading }}"
+            data-i18n-distance="{{ t.results.distance_suffix }}"
+            data-i18n-countone="{{ t.results.count_one }}"
+            data-i18n-countother="{{ t.results.count_other }}">
+
+            <div class="flex flex-col gap-1">
+                <label for="ef-country" class="text-xs font-semibold text-grey">{{ t.search.country_label }}</label>
+                <select id="ef-country"
+                    class="rounded-xl border border-black/15 bg-white px-3 py-2.5 text-body text-black focus:border-primary focus:outline-none">
+                    <option value="DE">{{ t.search.country_de }}</option>
+                    <option value="AT">{{ t.search.country_at }}</option>
+                    <option value="CH">{{ t.search.country_ch }}</option>
+                </select>
+            </div>
+
+            <div class="flex flex-1 flex-col gap-1 sm:min-w-[10rem]">
+                <label for="ef-plz" class="text-xs font-semibold text-grey">{{ t.search.plz_label }}</label>
+                <input id="ef-plz" type="text" inputmode="numeric" autocomplete="postal-code"
+                    placeholder="{{ t.search.plz_placeholder }}"
+                    class="w-full rounded-xl border border-black/15 bg-white px-3 py-2.5 text-body text-black focus:border-primary focus:outline-none" />
+            </div>
+
+            <button type="submit" class="btn-primary justify-center">{{ t.search.button }}</button>
+
+            <button type="button" id="ef-nearme"
+                class="inline-flex items-center justify-center gap-1.5 rounded-lg border-2 border-black/10 px-4 py-2.5 text-btn text-black transition-colors hover:bg-black/5 md:rounded-[10px] md:px-6 md:py-3">
+                <span class="material-symbols-outlined icon-18">my_location</span>{{ t.search.near_me }}
+            </button>
+
+            <button type="button" id="ef-reset"
+                class="hidden items-center justify-center gap-1.5 px-2 py-2.5 text-btn text-grey underline transition-colors hover:text-black">
+                {{ t.search.reset }}
+            </button>
+        </form>
+        <p id="ef-search-error" class="hidden -mt-2 pl-1 text-sm text-red-500" role="alert"></p>
+
+        {# Map + list #}
+        <div class="grid gap-5 lg:grid-cols-[22rem_1fr]">
+
+            {# Result list #}
+            <div class="order-2 flex flex-col gap-3 lg:order-1">
+                <div class="flex items-baseline justify-between gap-3">
+                    <h2 id="ef-results-heading" class="text-h4 text-black">{{ t.results.all_heading }}</h2>
+                    <span id="ef-results-count" class="shrink-0 text-sm text-grey">{{ electricians|length }} {{ t.results.count_other }}</span>
+                </div>
+
+                {% if electricians %}
+                <ul id="ef-list" class="flex max-h-[28rem] flex-col gap-3 overflow-y-auto pr-1 lg:max-h-[40rem] lg:pr-2">
+                    {% for e in electricians %}
+                    <li class="ef-card cursor-pointer rounded-xl border border-black/10 bg-white p-4 transition-colors hover:border-primary/40 hover:bg-primary/5"
+                        data-id="{{ e.id }}" data-lat="{{ e.lat }}" data-lon="{{ e.lon }}"
+                        data-name="{{ e.name }}" data-city="{{ e.city }}" tabindex="0">
+                        <div class="flex items-start justify-between gap-3">
+                            <h3 class="text-h4 text-black">{{ e.name }}</h3>
+                            <span class="ef-distance hidden shrink-0 rounded-full bg-primary/10 px-2 py-0.5 text-xs font-semibold whitespace-nowrap text-primary"></span>
+                        </div>
+                        {% set _addr = [e.street, (e.postal_code ~ ' ' ~ e.city)|trim] | select | join(', ') %}
+                        {% if _addr %}
+                        <p class="mt-1 text-sm text-grey">{{ _addr }}</p>
+                        {% endif %}
+                        <div class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+                            {% if e.phone %}
+                            <a href="tel:{{ e.phone|replace(' ', '') }}" class="inline-flex items-center gap-1 text-primary hover:underline">
+                                <span class="material-symbols-outlined icon-16">call</span>{{ t.card.phone }}
+                            </a>
+                            {% endif %}
+                            {% if e.email %}
+                            <a href="mailto:{{ e.email }}" class="inline-flex items-center gap-1 text-primary hover:underline">
+                                <span class="material-symbols-outlined icon-16">mail</span>{{ t.card.email }}
+                            </a>
+                            {% endif %}
+                            {% if e.website %}
+                            <a href="{{ e.website }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-primary hover:underline">
+                                <span class="material-symbols-outlined icon-16">language</span>{{ t.card.website }}
+                            </a>
+                            {% endif %}
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-section-body">{{ t.results.empty }}</p>
+                {% endif %}
+            </div>
+
+            {# Map #}
+            <div class="order-1 lg:order-2">
+                <div id="ef-map"
+                    class="relative h-[60vh] min-h-[24rem] w-full overflow-hidden rounded-2xl border border-black/10 bg-[#eaf0f6] lg:h-[40rem]"
+                    data-style="{{ url_for('static', filename='tiles/style.json') }}"
+                    data-center-lng="10.2" data-center-lat="50.6" data-zoom="4.3"
+                    data-attribution="© OpenStreetMap · Protomaps · GeoNames">
+                    <div id="ef-map-fallback"
+                        class="absolute inset-0 z-10 hidden items-center justify-center p-6 text-center text-sm text-grey">
+                        {{ t.map.unavailable }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# CTA: are you an electrician? #}
+<section class="w-full bg-gradient-light-white-background py-section">
+    <div class="container-main flex flex-col items-center gap-5 text-center">
+        <h2 class="text-section-heading">{{ t.cta.heading }}</h2>
+        <p class="max-w-xl text-section-body">{{ t.cta.text }}</p>
+        <a href="{{ t.cta.button_url }}" class="btn-icon">
+            <span class="material-symbols-outlined icon-18">mail</span>{{ t.cta.button }}
+        </a>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+{# Page-scoped bundle: MapLibre GL + pmtiles + finder logic (loads only here). #}
+<script src="{{ url_for('static', filename='js/finder.min.js') }}" defer></script>
+{% endblock %}
