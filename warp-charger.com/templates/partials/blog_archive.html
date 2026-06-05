@@ -21,7 +21,7 @@
 {% endif %}
 {% set years = posts | groupby(attribute='meta.date.year') | list | reverse | list %}
 {% set current_year = years[0].grouper if years else None %}
-<div class="flex flex-col gap-1">
+<div class="flex flex-col gap-1 text-left">
     {% for year_group in years %}
     {% set year = year_group.grouper %}
     {% set year_posts = year_group.list %}

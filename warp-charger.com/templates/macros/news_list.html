@@ -5,11 +5,13 @@
   Parameters:
     t    : translation dict with keys:
             badge, headline, description, all_news
-    posts: list of post objects with meta.tag, meta.date, meta.slug, body, html
+    posts: list of post objects with meta.tag, meta.date, meta.slug,
+           meta.title and optional meta.image
     lang : current language code
 #}
 
 {% from "macros/blog_meta.html" import blog_meta %}
+{% from "macros/blog_cover.html" import blog_cover %}
 
 {% macro news_list(t, posts, lang) %}
 <section id="news" class="w-full text-left">
@@ -33,16 +35,17 @@
 
             <div class="flex w-full flex-1 flex-col gap-4.75">
                 {% for post in posts %}
-                <a href="/{{ lang }}/blog/{{ post.meta.slug }}" class="group w-full">
-                    <article class="w-full overflow-hidden rounded-xl bg-very-light-grey transition-shadow hover:shadow-md">
-                        <div class="flex items-center justify-between gap-4 px-4.75 py-4">
-                            <div class="flex min-w-0 flex-1 flex-col gap-2">
-                                {{ blog_meta(post.meta.tag, post.meta.date) }}
-                                <p class="line-clamp-2 text-body font-medium text-black">{{ post.body | excerpt }}</p>
-                            </div>
-                            <span class="material-symbols-outlined shrink-0 icon-28 text-[#021273] transition-transform group-hover:translate-x-1">chevron_right</span>
+                <a href="/{{ lang }}/blog/{{ post.meta.slug }}"
+                   class="group relative block h-44 w-full overflow-hidden rounded-xl bg-very-light-grey shadow-sm transition-shadow hover:shadow-md">
+                    {{ blog_cover(post, eager=loop.first) }}
+                    <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/55 to-transparent"></div>
+                    <div class="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-4.75 [text-shadow:0_1px_4px_rgba(0,0,0,0.6)]">
+                        <div class="flex min-w-0 flex-1 flex-col gap-2">
+                            {{ blog_meta(post.meta.tag, post.meta.date, dark=True) }}
+                            <h3 class="line-clamp-2 text-body font-bold text-white">{{ post.meta.title }}</h3>
                         </div>
-                    </article>
+                        <span class="material-symbols-outlined shrink-0 icon-28 text-white transition-transform group-hover:translate-x-1">chevron_right</span>
+                    </div>
                 </a>
                 {% endfor %}
             </div>

@@ -1,0 +1,30 @@
+{#
+  Blog cover image.
+
+  Renders the post's preview image (static/images/blog/<meta.image>) filling its
+  parent. The parent MUST provide positioning context, a height and
+  `overflow-hidden` (e.g. `relative h-44 overflow-hidden rounded-xl`).
+
+  When the post has no `image` in its frontmatter, a branded deep-blue gradient
+  with the white WARP logo is shown instead, so cards never look broken.
+
+  Parameters:
+    post       : post object (uses meta.image and meta.title)
+    hover_zoom : add a subtle zoom on `.group` hover (default: True)
+    eager      : load the image eagerly instead of lazily (default: False)
+#}
+
+{% macro blog_cover(post, hover_zoom=True, eager=False) %}
+{% if post.meta.image %}
+<img src="{{ url_for('static', filename='images/blog/' ~ post.meta.image) }}"
+     alt="{{ post.meta.title }}"
+     loading="{{ 'eager' if eager else 'lazy' }}"
+     class="h-full w-full object-cover transition-transform duration-500 ease-out{% if hover_zoom %} group-hover:scale-105{% endif %}" />
+{% else %}
+<div class="flex h-full w-full items-center justify-center bg-gradient-deep-blue transition-transform duration-500 ease-out{% if hover_zoom %} group-hover:scale-105{% endif %}">
+    <img src="{{ url_for('static', filename='images/warp-logo.svg') }}"
+         alt="{{ post.meta.title }}"
+         class="w-2/5 max-w-40 opacity-90" />
+</div>
+{% endif %}
+{% endmacro %}

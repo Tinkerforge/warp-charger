@@ -16,6 +16,7 @@ from flask_flatpages import FlatPages
 from werkzeug.middleware.proxy_fix import ProxyFix
 from translations import get_translation, SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE
 from firmwares import get_all_firmwares
+from markdown_youtube import YouTubeEmbedExtension
 
 app = Flask(__name__, static_folder="static")
 
@@ -34,7 +35,8 @@ def render_markdown(text, flatpages=None):
     (``markdown.markdown(text, extensions)``), which raises a TypeError
     with Markdown 3.x where ``extensions`` must be a keyword argument.
     """
-    extensions = flatpages.config("markdown_extensions") if flatpages else []
+    extensions = list(flatpages.config("markdown_extensions")) if flatpages else []
+    extensions.append(YouTubeEmbedExtension())
     return markdown.markdown(text, extensions=extensions)
 
 
@@ -255,6 +257,7 @@ def make_template_context(lang, section_name=None, page_slug=None):
     nav_t = get_translation(lang, "nav")
     meta_t = get_translation(lang, "meta")
     footer_t = get_translation(lang, "footer")
+    announcement_t = get_translation(lang, "announcement")
 
     lang_urls = get_alternate_urls(lang, page_slug)
     other_lang = "en" if lang == "de" else "de"
@@ -265,6 +268,7 @@ def make_template_context(lang, section_name=None, page_slug=None):
         "nav": nav_t,
         "meta": meta_t,
         "footer": footer_t,
+        "announcement": announcement_t,
         "nav_links": NAV_LINKS[lang],
         "lang_urls": lang_urls,
         "alternate_url": lang_urls[other_lang],
@@ -545,6 +549,23 @@ def blog_post(lang, slug):
     if post is None:
         abort(404)
     ctx = make_template_context(lang)
+
+    # Language switcher / hreflang: point to the equivalent post in the other
+    # language instead of the start page. The de/en markdown files for one
+    # article share the same filename stem (after the language prefix), so use
+    # that as the cross-language key; the frontmatter `slug` may differ between
+    # languages, so resolve it from the counterpart file. If no counterpart
+    # exists, fall back to the blog page in the other language.
+    other_lang = "en" if lang == "de" else "de"
+    stem = post.path.split("/", 1)[1]
+    counterpart = next((p for p in flatpages if p.path == f"{other_lang}/{stem}"), None)
+    if counterpart is not None:
+        other_url = f"/{other_lang}/blog/{counterpart.meta.get('slug')}"
+    else:
+        other_url = f"/{other_lang}/blog"
+    ctx["lang_urls"] = {lang: f"/{lang}/blog/{slug}", other_lang: other_url}
+    ctx["alternate_url"] = other_url
+
     ctx["t"] = get_translation(lang, "blog")
     ctx["post"] = post
     ctx["posts"] = get_posts(lang=lang)

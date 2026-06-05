@@ -1,5 +1,5 @@
-title: "Firmwareupdate"
-slug: firmwareupdate
+title: "Firmware-Update: Zentrale Nutzerverwaltung"
+slug: firmware-central-user-management
 date: 2026-06-03
 tag: Firmware
 

@@ -1118,3 +1118,12 @@ header [data-tap-dropdown][data-open="true"] > div {
         animation: none;
     }
 }
+
+/* Trade-fair announcement pill (partials/announcement.html). On mobile, lift it
+   above a full-width sticky bottom "Buy" CTA (product pages) so they don't
+   overlap. Desktop is unaffected: the pill is bottom-left, the CTA bottom-right. */
+@media (max-width: 767px) {
+    body:has([data-sticky-cta]) #exhibition-announcement {
+        bottom: 8.5rem;
+    }
+}

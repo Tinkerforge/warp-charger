@@ -1,5 +1,6 @@
 {% extends "pages/blog/layout.html" %}
 {% from "macros/blog_meta.html" import blog_meta %}
+{% from "macros/blog_cover.html" import blog_cover %}
 
 {% block title %}{{ post.meta.title }}{% endblock %}
 
@@ -15,6 +16,11 @@
 
 <!-- Post card -->
 <article class="flex flex-col gap-3 rounded-xl border border-black/5 bg-white px-6 py-6 text-left">
+    {% if post.meta.image %}
+    <div class="-mx-6 -mt-6 mb-2 h-56 overflow-hidden rounded-t-xl sm:h-72">
+        {{ blog_cover(post, hover_zoom=False, eager=True) }}
+    </div>
+    {% endif %}
     {{ blog_meta(post.meta.tag, post.meta.date) }}
     <h1 class="text-h3 font-semibold text-black">{{ post.meta.title }}</h1>
     <div class="text-section-body text-justify

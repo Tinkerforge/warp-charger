@@ -1,6 +1,19 @@
-{% macro blog_meta(tag, date) %}
+{#
+  Blog meta row: tag pill + relative date.
+
+  Parameters:
+    tag  : tag/category label
+    date : post date (rendered via the `timeago` filter)
+    dark : style for placement on a dark image overlay (default: False)
+#}
+{% macro blog_meta(tag, date, dark=False) %}
 <div class="flex flex-wrap items-center gap-3">
+    {% if dark %}
+    <span class="inline-flex items-center rounded-full bg-white/15 px-2.5 py-0.5 text-eyebrow text-white backdrop-blur-sm">{{ tag }}</span>
+    <span class="text-eyebrow whitespace-nowrap text-white/70">{{ date | timeago }}</span>
+    {% else %}
     <span class="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-0.5 text-eyebrow text-primary">{{ tag }}</span>
     <span class="text-eyebrow whitespace-nowrap text-grey">{{ date | timeago }}</span>
+    {% endif %}
 </div>
 {% endmacro %}

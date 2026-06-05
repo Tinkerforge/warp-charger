@@ -1,0 +1,92 @@
+{#
+    Site-wide announcement pill (currently Power2Drive Europe 2026).
+
+    Temporary: Remove after fair with `enabled: false` in
+    translations/{de,en}/announcement.yaml and change with next
+    side-wide announcement when needed.
+
+    NOTE: Change local storage KEY for new announcement
+
+    Content comes from the `announcement` context (see make_template_context
+    in app.py). The pill is dismissible (remembered via localStorage).
+#}
+{% if announcement.enabled %}
+<aside
+    id="exhibition-announcement"
+    role="region"
+    aria-label="{{ announcement.title }}"
+    class="fixed bottom-6 left-6 z-30 w-[19rem] max-w-[calc(100vw-3rem)]"
+>
+    <div class="relative flex items-center gap-3 rounded-[14px] liquid-glass bg-black/50 py-3 pr-3 pl-4 shadow-[0px_7px_19px_0px_rgba(0,0,0,0.35)]">
+        <span class="material-symbols-outlined icon-24 shrink-0 text-white/80">storefront</span>
+
+        <div class="flex min-w-0 flex-col">
+            <span class="text-eyebrow text-white/60">{{ announcement.eyebrow }}</span>
+            <span class="font-satoshi text-sm leading-tight font-bold text-white">{{ announcement.title }}</span>
+            <span class="font-satoshi text-xs leading-snug text-white/70">{{ announcement.dates }}</span>
+            <span class="flex items-center gap-1 font-satoshi text-xs leading-snug text-white/70">
+                <span class="material-symbols-outlined icon-14 shrink-0">location_on</span>
+                {{ announcement.location }}
+            </span>
+
+            {% if announcement.url %}
+            <a
+                href="{{ announcement.url }}"
+                data-announcement-cta
+                {% if announcement.url.startswith('http') %}target="_blank" rel="noopener"{% endif %}
+                class="mt-2 inline-flex w-fit items-center gap-1 rounded-[8px] bg-white px-3 py-1.5 text-sm font-bold text-black transition-colors hover:bg-white/90"
+            >
+                {{ announcement.cta }}
+                <span class="material-symbols-outlined icon-16">chevron_right</span>
+            </a>
+            {% else %}
+            <span
+                aria-disabled="true"
+                class="mt-2 inline-flex w-fit cursor-default items-center gap-1 rounded-[8px] bg-white/60 px-3 py-1.5 text-sm font-bold text-black/70"
+            >
+                {{ announcement.cta }}
+                <span class="material-symbols-outlined icon-16">chevron_right</span>
+            </span>
+            {% endif %}
+        </div>
+
+        <button
+            type="button"
+            data-announcement-close
+            aria-label="{{ announcement.close_label }}"
+            class="absolute top-2 right-2 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-white/60 transition-colors hover:text-white"
+        >
+            <span class="material-symbols-outlined icon-18">close</span>
+        </button>
+    </div>
+</aside>
+<script>
+    // Self-contained so the whole feature can be deleted with this partial.
+    // Runs at parse time (right after the element) -> hides before paint if
+    // already dismissed, so dismissed visitors never see a flash.
+    (function () {
+        var el = document.getElementById("exhibition-announcement");
+        if (!el) return;
+        var KEY = "announcement-power2drive-2026";
+        try {
+            if (localStorage.getItem(KEY) === "1") {
+                el.style.display = "none";
+                return;
+            }
+        } catch (e) {}
+        // Persist first, then hide, so the dismissal is remembered even when the
+        // CTA navigates this tab away immediately after the click.
+        function dismiss() {
+            try {
+                localStorage.setItem(KEY, "1");
+            } catch (e) {}
+            el.style.display = "none";
+        }
+        var closeBtn = el.querySelector("[data-announcement-close]");
+        if (closeBtn) closeBtn.addEventListener("click", dismiss);
+        // Clicking through the CTA counts as dismissing the pill too.
+        var cta = el.querySelector("[data-announcement-cta]");
+        if (cta) cta.addEventListener("click", dismiss);
+    })();
+</script>
+{% endif %}
