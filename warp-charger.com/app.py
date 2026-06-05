@@ -68,6 +68,9 @@ def add_static_cache_bust(endpoint, values):
 # paths.
 _inline_asset_cache = {}
 
+# Matches asset-relative CSS refs like url(../fonts/x.woff2)
+_REL_URL_RE = re.compile(r"""url\((['"]?)\.\./([^)'"]+)\1\)""")
+
 
 @app.template_global()
 def inline_asset(filename):
@@ -75,8 +78,14 @@ def inline_asset(filename):
     if content is None:
         with open(os.path.join(app.static_folder, filename), "r", encoding="utf-8") as f:
             content = f.read()
-        for prefix in ("url(../", "url('../", 'url("../'):
-            content = content.replace(prefix, prefix.replace("../", "/static/"))
+
+        # Rewrite asset-relative url(../x) refs to absolute /static/x and add the
+        # same ?v=<mtime> cache-bust url_for() applies everywhere else.
+        def _abs_versioned(match):
+            quote, path = match.group(1), match.group(2)
+            return f"url({quote}{url_for('static', filename=path)}{quote})"
+
+        content = _REL_URL_RE.sub(_abs_versioned, content)
         _inline_asset_cache[filename] = content
     return Markup(content)
 

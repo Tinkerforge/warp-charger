@@ -9,6 +9,7 @@ cd "$SCRIPT_DIR"
 # idempotent and near-instant when everything is already up to date.
 echo "Installing dependencies..."
 npm install
+.venv/bin/python -m pip install -r requirements.txt
 
 echo "Syncing compatible devices..."
 .venv/bin/python scripts/sync_compatible_devices.py
@@ -18,6 +19,9 @@ echo "Done: data/compatible_devices.json"
 echo "Geocoding electrician directory..."
 .venv/bin/python scripts/geocode_electricians.py
 echo "Done: data/electricians.geocoded.json"
+
+echo "Subsetting Material Symbols icon font..."
+.venv/bin/python scripts/subset_icons.py
 
 echo "Compiling TypeScript..."
 npx esbuild src/ts/index.ts --bundle --outfile=static/js/output.min.js --format=iife --minify

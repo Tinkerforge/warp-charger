@@ -32,6 +32,12 @@
 
         <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}" />
 
+        {# Preload the primary text font.
+           - crossorigin is required even same-origin: fonts are always fetched in CORS mode.
+           - url_for() applies the same ?v=<mtime> cache-bust the inlined CSS now uses for its url()
+        #}
+        <link rel="preload" href="{{ url_for('static', filename='fonts/Satoshi-Variable.woff2') }}" as="font" type="font/woff2" crossorigin />
+
         {# Inline the global CSS to remove a render-blocking request from the
            critical path (it is small after compression). Font url(../fonts/...)
            refs are rewritten to absolute /static/ paths in inline_asset(). #}
