@@ -20,7 +20,7 @@ The WARP Energy Manager can also be configured as a charge manager for up to 64 
 
 :::
 
-![image](/img/webinterface/energy_management/wem2-wallboxes.jpeg)
+![image](/img/webinterface/energy_management/chargers.png)
 
 On this page, the controlled chargers are configured. The settings made here
 affect the [charge management](/tutorials/chargemanagement.md) between the chargers.
@@ -56,6 +56,24 @@ Other consumers besides WARP Chargers that cannot be controlled by the charge ma
 
 :::
 
+### Central Management
+
+Additionally to the static and/or dynamic load mangement and PV excess charging, the central management can be enabled here.
+
+When active, Charges are only started after a user authenticates themself (for example via NFC tag or the charge manager's status page).
+To configure Users and NFC tags, go to the charge manager's [User management](/docs/webinterface/users/user_management).
+
+Additionally configured charger's charges are tracked in the charge manager's [Charge Tracker](/docs/webinterface/energy_management/charge_tracker).
+There, charge logs containing the collected charges of all chargers can be downloaded or sent periodically via mail.
+
+:::note
+
+The central management's release of charges has no relationship to a possibly configured (local) charge release of a configured charger's [User management](/docs/webinterface/users/user_management).
+It is possible to enable both the central management, as well as the (local) charge release. Users and NFC tags must then be configured on both the charge manager and the controlled charger. **We recommend to use only one of the central management or the (local) charge release**
+
+:::
+
+### Controlled Chargers
 
 At the end of the page, the *Controlled Chargers* managed by the charge manager are configured and displayed.
 Additional chargers can be added by clicking *+*. For this, the display name and IP address or hostname of the

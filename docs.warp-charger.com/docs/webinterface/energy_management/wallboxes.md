@@ -21,7 +21,7 @@ konfiguriert werden.
 
 :::
 
-![image](/img/webinterface/energy_management/wem2-wallboxes.jpeg)
+![image](/img/webinterface/energy_management/chargers.png)
 
 Auf dieser Seite werden die kontrollierten Wallboxen konfiguriert. Die hier vorgenommenen Einstellungen
 beeinflussen das [Lastmanagement](/docs/tutorials/chargemanagement) zwischen den Wallboxen.
@@ -57,6 +57,24 @@ Andere Verbraucher als WARP Charger, welche vom Lastmanager nicht gesteuert werd
 
 :::
 
+### Zentrale Verwaltung
+
+Zusätzlich zum statischen und/oder dynamischen Lastmanagement und dem PV-Überschussladen kann die zentrale Verwaltung verwendet werden.
+
+Wenn diese aktiv ist, dann werden Ladevorgänge an kontrollierten Wallboxen dann nur gestartet, wenn sich Benutzer authentifizieren (z.B. über ein NFC-Tag, oder über die Status-Seite des Lastmanagers).
+Benutzer und NFC-Tags müssen in der [Benutzerverwaltung](/docs/webinterface/users/user_management) des Lastmanagers konfiguriert werden.
+
+Außerdem werden Ladevorgänge der kontrollierten Wallboxen im [Ladetracker](/docs/webinterface/energy_management/charge_tracker) des Lastmanagers aufgezeichnet.
+Im Ladetracker können dann Ladelogs heruntergeladen, bzw. periodisch per Mail verschickt werden, die die gesammelten Ladevorgänge aller Wallboxen umfassen.
+
+:::note
+
+Die Freigabe der Ladevorgänge über die zentrale Verwaltung ist nicht an eine eventuell konfigurierte Ladefreigabe in der [Benutzerverwaltung](/docs/webinterface/users/user_management) einer kontrollierten Wallbox gekoppelt.
+Es ist prinzipiell möglich, sowohl die (lokale) Ladefreigabe, als auch die zentrale Verwaltung zu aktivieren, Benutzer und NFC-Tags müssen dann aber sowohl dem Lastmanager, als auch der kontrollierten Wallbox bekannt sein. **Wir empfehlen nur entweder die zentrale Verwaltung oder die (lokale) Ladefreigabe zu verwenden**
+
+:::
+
+### Kontrollierte Wallboxen
 
 Am Ende der Seite werden die vom Lastmanager *Kontrollierten Wallboxen* konfiguriert und dargestellt.
 Weitere Wallboxen können mittels Klick auf *+* hinzugefügt werden. Dazu muss der Anzeigename und die IP-Adresse oder der Hostname der
