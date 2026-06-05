@@ -24,6 +24,10 @@ interface Electrician {
     id: string;
     name: string;
     city: string;
+    postalCode: string;
+    phone: string;
+    email: string;
+    website: string;
     lat: number;
     lon: number;
     el: HTMLElement;
@@ -62,6 +66,12 @@ const ESCAPE: Record<string, string> = {
 
 function escapeHtml(s: string): string {
     return s.replace(/[&<>"']/g, (c) => ESCAPE[c] ?? c);
+}
+
+// Strip protocol and a trailing slash for a tidy website label (the full URL
+// is still used for the href).
+function prettyHost(url: string): string {
+    return url.replace(/^https?:\/\//i, "").replace(/\/+$/, "");
 }
 
 // A minimal background-only style used when the real style.json cannot be
@@ -120,6 +130,9 @@ function init(): void {
     const tCountOne = ds.i18nCountone ?? "installer";
     const tCountOther = ds.i18nCountother ?? "installers";
     const tYourLocation = ds.i18nYourlocation ?? "your location";
+    const tPhone = ds.i18nPhone ?? "Phone";
+    const tEmail = ds.i18nEmail ?? "E-Mail";
+    const tWebsite = ds.i18nWebsite ?? "Website";
 
     const styleUrl = mapEl.dataset.style ?? "";
     const centerLng = Number(mapEl.dataset.centerLng ?? "10.2");
@@ -138,6 +151,10 @@ function init(): void {
             id: el.dataset.id ?? "",
             name: el.dataset.name ?? "",
             city: el.dataset.city ?? "",
+            postalCode: el.dataset.postalCode ?? "",
+            phone: el.dataset.phone ?? "",
+            email: el.dataset.email ?? "",
+            website: el.dataset.website ?? "",
             lat: Number(el.dataset.lat),
             lon: Number(el.dataset.lon),
             el,
@@ -174,9 +191,37 @@ function init(): void {
     function showPopup(e: Electrician): void {
         if (!map) return;
         popup?.remove();
-        popup = new maplibregl.Popup({ offset: 14, closeButton: false })
+
+        const rows: string[] = [];
+        if (e.phone) {
+            const tel = e.phone.replace(/\s+/g, "");
+            rows.push(
+                `<span class="ef-popup-label">${escapeHtml(tPhone)}:</span>` +
+                    `<a href="tel:${escapeHtml(tel)}">${escapeHtml(e.phone)}</a>`,
+            );
+        }
+        if (e.email) {
+            rows.push(
+                `<span class="ef-popup-label">${escapeHtml(tEmail)}:</span>` +
+                    `<a href="mailto:${escapeHtml(e.email)}">${escapeHtml(e.email)}</a>`,
+            );
+        }
+        if (e.website) {
+            rows.push(
+                `<span class="ef-popup-label">${escapeHtml(tWebsite)}:</span>` +
+                    `<a href="${escapeHtml(e.website)}" target="_blank" rel="noopener noreferrer">` +
+                    `${escapeHtml(prettyHost(e.website))}</a>`,
+            );
+        }
+
+        const contact = rows.length ? `<div class="ef-popup-contact">${rows.join("")}</div>` : "";
+        const location = [e.postalCode, e.city].filter(Boolean).join(" ");
+        const html =
+            `<strong>${escapeHtml(e.name)}</strong><br>${escapeHtml(location)}${contact}`;
+
+        popup = new maplibregl.Popup({ offset: 14, closeButton: false, maxWidth: "320px" })
             .setLngLat(lngLat(e.lon, e.lat))
-            .setHTML(`<strong>${escapeHtml(e.name)}</strong><br>${escapeHtml(e.city)}`)
+            .setHTML(html)
             .addTo(map);
     }
 
