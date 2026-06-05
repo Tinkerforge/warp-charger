@@ -1,5 +1,19 @@
 {% extends "page_base.html" %}
 
+{% block extra_head %}
+{# LCP optimization: the hero <video> poster is the Largest Contentful Paint
+   image, but <video poster> can't take fetchpriority and the browser's preload
+   scanner deprioritizes poster images. Preload the matching poster per
+   breakpoint (Tailwind md = 768px: mobile video shows <768px, desktop >=768px)
+   so it is discoverable in the initial HTML and fetched at high priority.
+   Using url_for keeps the URL (incl. the ?v= cache-bust) identical to the
+   poster attribute, so the preloaded image is reused rather than refetched. #}
+<link rel="preload" as="image" fetchpriority="high" media="(max-width: 767.98px)"
+      href="{{ url_for('static', filename='images/warp4-hero-mobile-poster.webp') }}" />
+<link rel="preload" as="image" fetchpriority="high" media="(min-width: 768px)"
+      href="{{ url_for('static', filename='images/warp4-hero-desktop-poster.webp') }}" />
+{% endblock %}
+
 {% block content %}
 {# Hero #}
 {% from "macros/hero_banner.html" import hero_banner %}
