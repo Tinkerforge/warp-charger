@@ -52,6 +52,29 @@ def add_static_cache_bust(endpoint, values):
     values["v"] = version
 
 
+# Inlining for small render-blocking assets (the global CSS). Returns the file
+# contents so a template can drop them into a <style> tag, removing the separate
+# render-blocking request from the critical path.
+#
+# The built CSS lives at /static/css/ and references fonts with paths relative
+# to itself (url(../fonts/...)). Once inlined into an HTML document those would
+# resolve against the page URL and break, so rewrite them to absolute /static/
+# paths.
+_inline_asset_cache = {}
+
+
+@app.template_global()
+def inline_asset(filename):
+    content = _inline_asset_cache.get(filename)
+    if content is None:
+        with open(os.path.join(app.static_folder, filename), "r", encoding="utf-8") as f:
+            content = f.read()
+        for prefix in ("url(../", "url('../", 'url("../'):
+            content = content.replace(prefix, prefix.replace("../", "/static/"))
+        _inline_asset_cache[filename] = content
+    return Markup(content)
+
+
 def render_markdown(text, flatpages=None):
     """Render Markdown to HTML.
 

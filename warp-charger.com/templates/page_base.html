@@ -32,7 +32,10 @@
 
         <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}" />
 
-        <link href="{{ url_for('static', filename='css/output.min.css') }}" rel="stylesheet" />
+        {# Inline the global CSS to remove a render-blocking request from the
+           critical path (it is small after compression). Font url(../fonts/...)
+           refs are rewritten to absolute /static/ paths in inline_asset(). #}
+        <style>{{ inline_asset('css/output.min.css') }}</style>
         {% block extra_head %}{% endblock %}
     </head>
 
