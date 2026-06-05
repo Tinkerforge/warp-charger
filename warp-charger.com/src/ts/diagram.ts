@@ -1158,8 +1158,29 @@ function initOne(canvas: HTMLElement): void {
 }
 
 function init(): void {
-    const canvases = document.querySelectorAll<HTMLElement>("[data-diagram-canvas]");
-    canvases.forEach(initOne);
+    const canvases = Array.from(
+        document.querySelectorAll<HTMLElement>("[data-diagram-canvas]"),
+    );
+    if (!canvases.length) return;
+
+    // Defer each diagram's setup until it nears the viewport. Every diagram
+    // fetches a JSON config and several SVG assets; doing that eagerly on load
+    // puts HTML -> JS -> config.json -> svg on the request chain.
+    if (!("IntersectionObserver" in window)) {
+        canvases.forEach(initOne);
+        return;
+    }
+    const observer = new IntersectionObserver(
+        (entries, obs) => {
+            for (const entry of entries) {
+                if (!entry.isIntersecting) continue;
+                obs.unobserve(entry.target);
+                initOne(entry.target as HTMLElement);
+            }
+        },
+        { rootMargin: "200px 0px" },
+    );
+    canvases.forEach((canvas) => observer.observe(canvas));
 }
 
 if (document.readyState === "loading") {
