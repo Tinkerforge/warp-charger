@@ -27,6 +27,31 @@ app = Flask(__name__, static_folder="static")
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 
+# Cache-busting for static assets: append "?v=<mtime>" to every
+# url_for('static', ...) URL. This lets nginx serve /static/ with a long,
+# immutable cache lifetime without breaking deploys. When a file changes its
+# mtime changes, the URL changes, and browsers fetch the new version instead of
+# a stale cached copy.
+_static_versions = {}
+
+
+@app.url_defaults
+def add_static_cache_bust(endpoint, values):
+    if endpoint != "static":
+        return
+    filename = values.get("filename")
+    if not filename:
+        return
+    version = _static_versions.get(filename)
+    if version is None:
+        try:
+            version = int(os.stat(os.path.join(app.static_folder, filename)).st_mtime)
+        except OSError:
+            return
+        _static_versions[filename] = version
+    values["v"] = version
+
+
 def render_markdown(text, flatpages=None):
     """Render Markdown to HTML.
 
