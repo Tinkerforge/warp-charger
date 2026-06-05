@@ -40,7 +40,7 @@
                     </div>
                     <div class="flex flex-col items-start gap-0">
                         <p class="text-[12px] leading-[19.5px] font-medium text-black">{{ t.description }}</p>
-                        <a href="{{ t.show_more_url }}" class="cursor-pointer text-[12px] leading-[19.5px] font-medium text-medium-grey underline decoration-solid transition-colors hover:text-grey focus:outline-none">{{ t.show_more }}</a>
+                        <a href="{{ t.show_more_url }}" aria-label="{{ t.show_more_aria | default(t.show_more, true) }}" class="cursor-pointer text-[12px] leading-[19.5px] font-medium text-medium-grey underline decoration-solid transition-colors hover:text-grey focus:outline-none">{{ t.show_more }}</a>
                     </div>
                     <a href="{{ t.buy_now_url }}" class="block w-full overflow-hidden rounded-[5px] bg-[linear-gradient(180deg,#4a4a4a_0%,#1b1b1b_100%)] shadow-[0px_3px_3px_0px_rgba(0,0,0,0.25)] transition-all hover:opacity-90 focus:outline-none active:scale-[0.98]">
                         <span class="flex items-center justify-center px-text-gap-sm py-[7.5px] text-[12px] leading-normal font-bold whitespace-nowrap text-white">{{ t.buy_now }}</span>
@@ -73,7 +73,7 @@
                         </header>
                         <div>
                             <p class="text-body text-black">{{ t.description }}</p>
-                            <a href="{{ t.show_more_url }}" class="mt-1 inline-block cursor-pointer text-body text-medium-grey underline transition-colors hover:text-grey focus:outline-none">{{ t.show_more }}</a>
+                            <a href="{{ t.show_more_url }}" aria-label="{{ t.show_more_aria | default(t.show_more, true) }}" class="mt-1 inline-block cursor-pointer text-body text-medium-grey underline transition-colors hover:text-grey focus:outline-none">{{ t.show_more }}</a>
                         </div>
                         <a href="{{ t.buy_now_url }}" class="btn-primary inline-flex w-full items-center justify-center">{{ t.buy_now }}</a>
                     </div>
