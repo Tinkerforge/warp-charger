@@ -44,10 +44,16 @@ def add_static_cache_bust(endpoint, values):
         return
     version = _static_versions.get(filename)
     if version is None:
-        try:
-            version = int(os.stat(os.path.join(app.static_folder, filename)).st_mtime)
-        except OSError:
+        path = os.path.join(app.static_folder, filename)
+        # Only version real files. Some url_for('static', ...) calls pass a
+        # directory that is used purely as a URL prefix which JS/CSS later
+        # append a filename to (e.g. the energy-diagram asset base or the OG
+        # image base). Appending ?v= there would push the appended filename
+        # into the query string and 404, so skip directories (and missing
+        # paths).
+        if not os.path.isfile(path):
             return
+        version = int(os.stat(path).st_mtime)
         _static_versions[filename] = version
     values["v"] = version
 
