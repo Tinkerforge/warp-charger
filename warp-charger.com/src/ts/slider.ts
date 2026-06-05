@@ -248,53 +248,116 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Tab switching
     let transitionTimeout: ReturnType<typeof setTimeout>;
+    let currentIndex = 0;
+
+    function activateTab(index: number): void {
+        index = Math.max(0, Math.min(tabs.length - 1, index));
+
+        tabs.forEach((t, i) => {
+            if (i === index) {
+                t.setAttribute("aria-selected", "true");
+                t.classList.add("bg-white/30");
+                t.classList.remove("hover:bg-white/10");
+            } else {
+                t.setAttribute("aria-selected", "false");
+                t.classList.remove("bg-white/30");
+                t.classList.add("hover:bg-white/10");
+            }
+        });
+
+        const data = tabData[index];
+        const imageSrc = imageBase + data.image;
+
+        if (sliderImageBg) {
+            clearTimeout(transitionTimeout);
+            sliderImageBg.src = imageSrc;
+            sliderImage!.style.transition = "";
+            sliderImage!.style.opacity = "0";
+
+            transitionTimeout = setTimeout(() => {
+                sliderImage!.style.transition = "none";
+                sliderImage!.src = imageSrc;
+                sliderImage!.alt = data.headline;
+                sliderImage!.style.opacity = "1";
+                void sliderImage!.offsetWidth;
+                sliderImage!.style.transition = "";
+            }, 300);
+        }
+
+        sliderHeadline!.textContent = data.headline;
+        sliderBody!.textContent = data.body;
+
+        if (sliderBadge) {
+            if (data.badge) {
+                sliderBadge.textContent = data.badge;
+                sliderBadge.style.display = "block";
+            } else {
+                sliderBadge.style.display = "none";
+            }
+        }
+
+        collapseBodyImmediate();
+        currentIndex = index;
+    }
 
     tabs.forEach((tab, index) => {
-        tab.addEventListener("click", () => {
-            tabs.forEach((t, i) => {
-                if (i === index) {
-                    t.setAttribute("aria-selected", "true");
-                    t.classList.add("bg-white/30");
-                    t.classList.remove("hover:bg-white/10");
-                } else {
-                    t.setAttribute("aria-selected", "false");
-                    t.classList.remove("bg-white/30");
-                    t.classList.add("hover:bg-white/10");
-                }
-            });
-
-            const data = tabData[index];
-            const imageSrc = imageBase + data.image;
-
-            if (sliderImageBg) {
-                clearTimeout(transitionTimeout);
-                sliderImageBg.src = imageSrc;
-                sliderImage!.style.transition = "";
-                sliderImage!.style.opacity = "0";
-
-                transitionTimeout = setTimeout(() => {
-                    sliderImage!.style.transition = "none";
-                    sliderImage!.src = imageSrc;
-                    sliderImage!.alt = data.headline;
-                    sliderImage!.style.opacity = "1";
-                    void sliderImage!.offsetWidth;
-                    sliderImage!.style.transition = "";
-                }, 300);
-            }
-
-            sliderHeadline!.textContent = data.headline;
-            sliderBody!.textContent = data.body;
-
-            if (sliderBadge) {
-                if (data.badge) {
-                    sliderBadge.textContent = data.badge;
-                    sliderBadge.style.display = "block";
-                } else {
-                    sliderBadge.style.display = "none";
-                }
-            }
-
-            collapseBodyImmediate();
-        });
+        tab.addEventListener("click", () => activateTab(index));
     });
+
+    // Swipe between tabs on touch devices. Uses the same direction-locked
+    // gesture detection as the company-page image switcher (so vertical page
+    // scrolling still works), but keeps the existing cross-fade transition
+    // instead of dragging the content with the finger.
+    if (sliderArticle) {
+        const swipeTarget = sliderArticle;
+        let startX = 0;
+        let startY = 0;
+        let dragging = false;
+        let locked = false;
+
+        swipeTarget.addEventListener(
+            "touchstart",
+            (event: TouchEvent) => {
+                if (event.touches.length !== 1) return;
+                startX = event.touches[0].clientX;
+                startY = event.touches[0].clientY;
+                dragging = true;
+                locked = false;
+            },
+            { passive: true },
+        );
+
+        swipeTarget.addEventListener(
+            "touchmove",
+            (event: TouchEvent) => {
+                if (!dragging || locked) return;
+                const dx = event.touches[0].clientX - startX;
+                const dy = event.touches[0].clientY - startY;
+                // Ignore tiny moves until a clear direction emerges.
+                if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+                if (Math.abs(dx) <= Math.abs(dy)) {
+                    dragging = false; // vertical scroll, let the page handle it
+                    return;
+                }
+                locked = true; // horizontal swipe
+            },
+            { passive: true },
+        );
+
+        const endSwipe = (event: TouchEvent): void => {
+            if (!dragging) return;
+            dragging = false;
+            if (!locked) return;
+            const dx = (event.changedTouches[0]?.clientX ?? startX) - startX;
+            const threshold = Math.min(80, swipeTarget.clientWidth * 0.2);
+            if (dx <= -threshold) {
+                activateTab(currentIndex + 1); // swipe left → next
+            } else if (dx >= threshold) {
+                activateTab(currentIndex - 1); // swipe right → previous
+            }
+        };
+
+        swipeTarget.addEventListener("touchend", endSwipe, { passive: true });
+        swipeTarget.addEventListener("touchcancel", endSwipe, { passive: true });
+    }
 });
