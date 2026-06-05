@@ -668,6 +668,19 @@ export const devices = [
     bat: "-"
   },
   {
+    manufacturer: "SolarEdge",
+    device: "SolarEdge Nexis Wechselrichter",
+    connection: "SunSpec, Modbus/TCP",
+    link: "/docs/compatible_devices/devices#solaredge",
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "-",
+    dlm: "x",
+    pve: "x",
+    bat: "-"
+  },
+  {
     manufacturer: "Solarmax",
     device: "Max.Storage",
     connection: "Modbus/TCP",

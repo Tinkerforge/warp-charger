@@ -614,7 +614,7 @@ Der Kontozugang muss dazu Adminrechte besitzen!
 ### SolarEdge Synergie PV-Wechselrichter
 {manufacturer_to_bubbles("SolarEdge", "SolarEdge Synergie PV-Wechselrichter")}
 
-SolarEdge Synergie PV-Wechselrichter verfügen über eine SunSpec Schnittstelle. Der Port scheint für SolarEdge nicht **502** zu sein, sondern **1502**.
+SolarEdge Synergie PV-Wechselrichter verfügen über eine SunSpec Schnittstelle. Der Standard-Port für SolarEdge ist nicht **502**, sondern **1502**.
 Ist die Schnittstelle nicht unter Port 1502 und auch nicht unter Port 502 freigegeben, muss die SunSpec Schnittstelle vermutlich erst aktiviert werden.
 Unseres Wissens kann diese Schnittstelle nicht selbst aktiviert werden, sondern muss vom SolarEdge Support oder dem Installateur aktiviert werden.
 In der App für Installateure "SetApp" (zur Inbetriebnahme) kann die Schnittstelle unter Anlagekommunikation -> Modbus TCP aktiviert werden.
@@ -626,7 +626,7 @@ Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compat
 ### SolarEdge Home Wechselrichter
 {manufacturer_to_bubbles("SolarEdge", "SolarEdge Home Wechselrichter")}
 
-SolarEdge Home Wechselrichter verfügen über eine SunSpec Schnittstelle. Der Port scheint für SolarEdge nicht **502** zu sein, sondern **1502**.
+SolarEdge Home Wechselrichter verfügen über eine SunSpec Schnittstelle. Der Standard-Port für SolarEdge ist nicht **502**, sondern **1502**.
 Ist die Schnittstelle nicht unter Port 1502 und auch nicht unter Port 502 freigegeben, muss die SunSpec Schnittstelle vermutlich erst aktiviert werden.
 Unseres Wissens kann diese Schnittstelle nicht selbst aktiviert werden, sondern muss vom SolarEdge Support oder dem Installateur aktiviert werden.
 In der App für Installateure "SetApp" (zur Inbetriebnahme) kann die Schnittstelle unter Anlagekommunikation -> Modbus TCP aktiviert werden.
@@ -639,6 +639,25 @@ Profil erstellt um auch die Leistung und den SoC erfassen zu können (siehe näc
 **PV, Speicher** \
 SolarEdge stellt leider keine Leistungsdaten zur PV und Speicher per SunSpec zur Verfügung. Daher haben wir ein eigenes Modbus/TCP Profil angelegt.
 Dieses dient nur dazu die Messorte "PV" und "Speicher" erfassen zu können.
+
+
+### SolarEdge Nexis Wechselrichter
+{manufacturer_to_bubbles("SolarEdge", "SolarEdge Home Wechselrichter")}
+
+SolarEdge Nexis Wechselrichter verfügen über eine SunSpec Schnittstelle. Der Standard-Port für SolarEdge ist nicht **502**, sondern **1502**.
+Ist die Schnittstelle nicht unter Port 1502 und auch nicht unter Port 502 freigegeben, muss die SunSpec Schnittstelle vermutlich erst aktiviert werden.
+Unseres Wissens kann diese Schnittstelle nicht selbst aktiviert werden, sondern muss vom SolarEdge Support oder dem Installateur aktiviert werden.
+In der App für Installateure "SetApp" (zur Inbetriebnahme) kann die Schnittstelle unter Anlagekommunikation -> Modbus TCP aktiviert werden.
+
+Der Stromzähler "Netz" ist über SunSpec verfügbar und nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann.
+Nur in diesem Fall werden die Features [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) und [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) unterstützt.
+Über SunSpec steht zwar auch das Speicherkapazitäts-Modell 713 zur Verfügung, allerdings liefert dieses nicht die Leistung der Batterie. Daher haben wir ein Modbus/TCP
+Profil erstellt um auch die Leistung und den SoC erfassen zu können (siehe nächsten Eintrag).
+
+**PV, Speicher** \
+SolarEdge stellt leider keine Leistungsdaten zur PV und Speicher per SunSpec zur Verfügung. Daher haben wir ein eigenes Modbus/TCP Profil angelegt.
+Dieses dient nur dazu die Messorte "PV" und "Speicher" erfassen zu können.
+
 
 ## Solarmax
 {manufacturer_to_bubbles("Solarmax")}
