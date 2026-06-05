@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         },
-        { threshold: 0.15 },
+        { threshold: 0.05 },
     );
 
     const sections = document.querySelectorAll("section:not(:first-of-type)");
