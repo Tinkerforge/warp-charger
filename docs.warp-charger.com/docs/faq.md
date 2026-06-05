@@ -52,7 +52,7 @@ Wir bieten einen Upgrade-Satz für die Ladeelektronik an: [WARP3 zu WARP4 Upgrad
 
 
 ### Upgrade von WARP4 Smart auf WARP4 Pro
-WARP4 Pro verfügt über ein Sichtfenster im Gehäuse um von außen das Display des Stromzählers sehen zu können. Ist diese Eigenschaft gewünscht, so muss auch das Gehäuse getauscht werden. Folgende Komponenten sind dann notwendig:
+WARP4 Pro verfügt über ein Sichtfenster im Gehäuse um von außen das Display des Stromzählers sehen zu können. Folgende Komponenten sind notwendig:
 
 * [Iskra Stromzähler WM3M4 V2 MID RS485](https://shop.warp-charger.com/de/spare-parts/warp4-spare-parts/meter-iskra-wm3m4-v2-mid.html)
 * [WARP4 Gehäuse (Pro Variante)](https://shop.warp-charger.com/de/spare-parts/warp4-spare-parts/warp4-enclosure.html)
@@ -61,11 +61,6 @@ WARP4 Pro verfügt über ein Sichtfenster im Gehäuse um von außen das Display 
 * [WARP4 Pro Hutschienensatz](https://shop.warp-charger.com/de/spare-parts/warp4-spare-parts/warp4-pro-din-rail-set.html)
 * [Kabelsatz für WARP4 Smart und Pro](https://shop.warp-charger.com/de/spare-parts/warp4-spare-parts/warp4-smart-pro-cable-set.html)
 
-Ist das Sichtfenster nicht notwendig, so kann auch einfach der Stromzähler auf die Hutschiene der Smart Wallbox gesetzt werden. In diesem Fall sind dann folgende Komponenten notwendig:
-
-* [Iskra Stromzähler WM3M4 V2 MID RS485](https://shop.warp-charger.com/de/spare-parts/warp4-spare-parts/meter-iskra-wm3m4-v2-mid.html)
-* [RS485 Datenkabel für MID Stromzähler Iskra WM3M4 V2](https://shop.warp-charger.com/de/spare-parts/warp4-spare-parts/warp-meter-cable-for-iskra-wm3m4.html)
-* [Kabelsatz für WARP4 Smart und Pro](https://shop.warp-charger.com/de/spare-parts/warp4-spare-parts/warp4-smart-pro-cable-set.html)
 
 ### Upgrade von WARP3 Smart auf WARP3 Pro
 
