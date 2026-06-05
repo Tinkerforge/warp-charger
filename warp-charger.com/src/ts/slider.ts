@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const sliderHeadline = document.getElementById("slider-headline") as HTMLElement | null;
     const sliderBody = document.getElementById("slider-body") as HTMLElement | null;
     const sliderTextContent = document.getElementById("slider-text-content") as HTMLElement | null;
-    const sliderMehrBtn = document.getElementById("slider-mehr-btn") as HTMLElement | null;
+    const sliderShowMoreBtn = document.getElementById("slider-show-more-btn") as HTMLElement | null;
     const sliderArticle = sliderTextContent?.closest<HTMLElement>("article") ?? null;
 
     if (!sliderImage || !sliderHeadline || !sliderBody) return;
@@ -116,10 +116,10 @@ document.addEventListener("DOMContentLoaded", () => {
         sliderBody!.style.maxHeight = "";
     }
 
-    function checkMehrAnzeigen(): void {
-        if (!sliderMehrBtn || !sliderBody) return;
+    function checkShowMore(): void {
+        if (!sliderShowMoreBtn || !sliderBody) return;
         if (!isMobile()) {
-            sliderMehrBtn.classList.add("hidden");
+            sliderShowMoreBtn.classList.add("hidden");
             sliderBody.style.display = "";
             (sliderBody as any).style.webkitLineClamp = "";
             (sliderBody as any).style.webkitBoxOrient = "";
@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
         applyClamp();
-        sliderMehrBtn.classList.toggle(
+        sliderShowMoreBtn.classList.toggle(
             "hidden",
             sliderBody.scrollHeight <= sliderBody.clientHeight + 1,
         );
@@ -169,8 +169,8 @@ document.addEventListener("DOMContentLoaded", () => {
         isAnimating = false;
         bodyExpanded = false;
         resetBodyStyles();
-        if (sliderMehrBtn) sliderMehrBtn.textContent = showMoreText;
-        checkMehrAnzeigen();
+        if (sliderShowMoreBtn) sliderShowMoreBtn.textContent = showMoreText;
+        checkShowMore();
     }
 
     function expandBody(): void {
@@ -193,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const targetHeight = Math.min(naturalHeight, available);
         const needsScroll = naturalHeight > available;
 
-        if (sliderMehrBtn) sliderMehrBtn.textContent = showLessText;
+        if (sliderShowMoreBtn) sliderShowMoreBtn.textContent = showLessText;
 
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
@@ -220,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
         sliderBody.style.overflowY = "";
         sliderBody.style.overflow = "hidden";
 
-        if (sliderMehrBtn) sliderMehrBtn.textContent = showMoreText;
+        if (sliderShowMoreBtn) sliderShowMoreBtn.textContent = showMoreText;
 
         sliderBody.style.transition = "max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1)";
         sliderBody.style.maxHeight = savedClampedHeight + "px";
@@ -230,21 +230,53 @@ document.addEventListener("DOMContentLoaded", () => {
             () => {
                 sliderBody!.style.transition = "";
                 if (sliderArticle) sliderArticle.style.height = "";
-                checkMehrAnzeigen();
+                checkShowMore();
                 isAnimating = false;
             },
             { once: true },
         );
     }
 
-    if (sliderMehrBtn) {
-        sliderMehrBtn.addEventListener("click", () => {
+    if (sliderShowMoreBtn) {
+        sliderShowMoreBtn.addEventListener("click", () => {
             bodyExpanded ? collapseBody() : expandBody();
         });
     }
 
-    checkMehrAnzeigen();
-    window.addEventListener("resize", collapseBodyImmediate, { passive: true });
+    // The body is pre-clamped in the markup (line-clamp-4 md:line-clamp-none),
+    // so its initial visual state is already correct. Measure button overflow
+    // in the next frame and read-only (no style write before the read), which
+    // avoids a forced synchronous layout on page load without causing a flash
+    // of unclamped text. checkShowMore() (which writes the clamp inline
+    // before measuring) is still used after interaction/resize, where the
+    // inline styles have been cleared.
+    function updateShowMoreBtnFromLayout(): void {
+        if (!sliderShowMoreBtn || !sliderBody) return;
+        if (!isMobile()) {
+            sliderShowMoreBtn.classList.add("hidden");
+            return;
+        }
+        sliderShowMoreBtn.classList.toggle(
+            "hidden",
+            sliderBody.scrollHeight <= sliderBody.clientHeight + 1,
+        );
+    }
+    requestAnimationFrame(updateShowMoreBtnFromLayout);
+
+    // Coalesce resize events into a single rAF callback to avoid layout
+    // thrashing (on mobile the URL bar showing/hiding fires resize rapidly).
+    let resizeRaf = 0;
+    window.addEventListener(
+        "resize",
+        () => {
+            if (resizeRaf) return;
+            resizeRaf = requestAnimationFrame(() => {
+                resizeRaf = 0;
+                collapseBodyImmediate();
+            });
+        },
+        { passive: true },
+    );
 
     // Tab switching
     let transitionTimeout: ReturnType<typeof setTimeout>;
