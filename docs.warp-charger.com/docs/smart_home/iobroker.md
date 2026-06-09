@@ -35,6 +35,13 @@ Anschließend muss der MQTT Adapter als Client oder als Server konfiguriert werd
 
 ![MQTT Adapter Configuration](/img/smart_home/iobroker/configure_mqtt.png)
 
+## Verbinden des WARP-Geräts
+
+Der WARP Charger/WARP Energy Manager wird wie in [WARP Adapter](docs/interfaces/mqtt_http/introduction) beschrieben konfiguriert. 
+Als Broker-Hostname wird dabei die Adresse des ioBrokers eingetragen.
+Der Discovery-Modus kann deaktiviert werden da dieser nicht von ioBroker unterstützt wird. 
+
+## Integration in ioBroker
 ### Auslesen von Werten
 
 Die MQTT-Nachrichten von WARP Geräten sind JSON-Objekte.
