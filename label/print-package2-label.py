@@ -91,7 +91,12 @@ EAN13_NUMBERS = {
 
 DESCRIPTION_PLACEHOLDER = b'WARP2 Charger Smart, 11 kW, 5 m, pulverbeschichtet'
 
-SKU_PLACEHOLDER = b'WARP2-CS-11KW-50-PC'
+FULL_SKU_PLACEHOLDER = b'Typ: WARP2-CS-11KW-50-PC'
+
+BASE_SKU_PLACEHOLDER = b'WARP2-CS-11KW-50-PC'
+
+DATA_MATRIX_FORMAT = 'XRB97,190,5,1R,{}\r'
+DATA_MATRIX_PLACEHOLDER = DATA_MATRIX_FORMAT.format(19).encode('ascii')
 
 VERSION_PLACEHOLDER = b'2.17'
 
@@ -127,7 +132,7 @@ def get_next_serial_number(kind):
     return '{0}{1:09}'.format(kind, serial_number)
 
 
-def print_package2_label(sku, version, serial_number, build_date, instances, copies, stdout, force_build_date):
+def print_package2_label(full_sku, version, serial_number, build_date, instances, copies, stdout, force_build_date):
     # check instances
     if instances < 1 or instances > 25:
         raise Exception('Invalid instances: {0}'.format(instances))
@@ -137,19 +142,24 @@ def print_package2_label(sku, version, serial_number, build_date, instances, cop
         raise Exception('Invalid copies: {0}'.format(copies))
 
     # parse SKU
-    if sku == 'WARP-EM':
+    base_sku = full_sku
+
+    if base_sku.startswith('TF-'):
+        base_sku = base_sku[3:]
+
+    if base_sku == 'WARP-EM':
         description = b'WARP Energy Manager'
         version_major = 1
         serial_number_kind = 7
-    elif sku == 'WARP-EM2':
+    elif base_sku == 'WARP-EM2':
         description = b'WARP Energy Manager 2.0'
         version_major = 2
         serial_number_kind = 7
     else:
-        m = re.match(r'^(?:TF-)?WARP(2|3)-C(B|S|P)-(11|22)KW-(50|75|CC)(-PC)?$', sku)
+        m = re.match(r'^(?:TF-)?WARP(2|3)-C(B|S|P)-(11|22)KW-(50|75|CC)(-PC)?$', full_sku)
 
         if m == None:
-            raise Exception('Invalid SKU: {0}'.format(sku))
+            raise Exception('Invalid SKU: {0}'.format(full_sku))
 
         sku_gen = m.group(1)
         sku_model = m.group(2)
@@ -230,11 +240,6 @@ def print_package2_label(sku, version, serial_number, build_date, instances, cop
     if template.find(EAN13_PLACEHOLDER) < 0:
         raise Exception('EAN13 placeholder missing in EZPL file')
 
-    base_sku = sku
-
-    if base_sku.startswith('TF-'):
-        base_sku = base_sku[3:]
-
     template = template.replace(EAN13_PLACEHOLDER, EAN13_NUMBERS[base_sku])
 
     # patch description
@@ -244,10 +249,20 @@ def print_package2_label(sku, version, serial_number, build_date, instances, cop
     template = template.replace(DESCRIPTION_PLACEHOLDER, description)
 
     # patch SKU
-    if template.find(SKU_PLACEHOLDER) < 0:
-        raise Exception('SKU placeholder missing in EZPL file')
+    if template.find(FULL_SKU_PLACEHOLDER) < 0:
+        raise Exception('Full SKU placeholder missing in EZPL file')
 
-    template = template.replace(SKU_PLACEHOLDER, sku.encode('ascii'))
+    template = template.replace(FULL_SKU_PLACEHOLDER, ('Typ: ' + full_sku).encode('ascii'))
+
+    if template.find(BASE_SKU_PLACEHOLDER) < 0:
+        raise Exception('Base SKU placeholder missing in EZPL file')
+
+    template = template.replace(BASE_SKU_PLACEHOLDER, base_sku.encode('ascii'))
+
+    if template.find(DATA_MATRIX_PLACEHOLDER) < 0:
+        raise Exception('Data Matrix placeholder missing in EZPL file')
+
+    template = template.replace(DATA_MATRIX_PLACEHOLDER, DATA_MATRIX_FORMAT.format(len(base_sku)).encode('ascii'))
 
     # patch version
     if template.find(VERSION_PLACEHOLDER) < 0:
