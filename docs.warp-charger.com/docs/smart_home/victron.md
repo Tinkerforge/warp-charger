@@ -34,6 +34,10 @@ Geräten ab. Die Steuerung bleib bei dem WARP Gerät. Alle Funktionen bleiben so
 eine automatische Phasenumschaltung beim [PV-Überschussladen](/docs/tutorials/pv_excess_charging)
 oder auch ein [dynamisches Lastmanagement](/docs/tutorials/chargemanagement) möglich.
 
+Wir nutzen hierbei die Modbus/TCP Schnittstellen von Victron. Diese sind standardisiert und somit unabhängig von
+der eingesetzten Hardware. Als Beispiel können wir direkt auf die Messwerte vom Netzanschluss zugreifen, sobald 
+irgendein Stromzähler verbaut wurde, der vom Victron System ausgewertet wird.
+
 Siehe dazu:
  * [Einführung kompatible Geräte](/docs/compatible_devices/introduction)
  * [Kompatible Victron Geräte](/docs/compatible_devices/devices#victron-energy)
