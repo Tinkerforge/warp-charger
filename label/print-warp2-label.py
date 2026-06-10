@@ -184,7 +184,7 @@ def print_warp2_label(sku, version, serial_number, build_date, custom_type2, ins
         assert False, sku_type2_power
 
     # check version
-    if re.match(r'^{0}\.(0|[1-9][0-9]*)$'.format(sku_product[:-1]), version) == None:
+    if re.match(r'^{0}\.(0|[1-9][0-9]*)$'.format(sku_product[-1:]), version) == None:
         raise Exception('Invalid version: {0}'.format(version))
 
     # check serial number
