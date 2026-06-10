@@ -46,6 +46,8 @@ Mit Modul 3 lohnt es sich den Stromverbrauch von Geräten wie Wallboxen oder Wä
 Dies ist für [WARP Charger Wallboxen](/docs/warp_charger/introduction)
 automatisch mit dem [Eco-Modus](/docs/webinterface/energy_management/eco_mode) und für Wärmepumpen mit dem 
 [WARP Energy Manager 2.0](/docs/warp_energy_manager/introduction) und dessen [Heizungsmodul](/docs/webinterface/energy_management/heater) möglich.
+Dazu müssen nur die zeitvariablen Netzentgelte in dem [Preiskalender des dynamischen Strompreises](/docs/webinterface/energy_management/dynamic_tariffs#preiskalender) konfiguriert werden.
+Das System verbindet diese ganz automatisch mit den Erzeugerpreisen (Börsenstrompreis) und steuert dann zu den günstigen Preisen entsprechend die Fahrzeugladung und die Wärmepumpe.
 
 Technisch ist für das Modul 3 ein intelligentes Messsystem notwendig (iMSys = Smart Meter + Smart Meter Gateway).
 Über eine daran angeschlossene Steuerbox wird die Steuerbare Verbrauchseinrichtung gesteuert. Diese Steuerbox gibt es in zwei Ausführungen.
