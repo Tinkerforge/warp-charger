@@ -37,7 +37,7 @@ Anschließend muss der MQTT Adapter als Client oder als Server konfiguriert werd
 
 ## Verbinden des WARP-Geräts
 
-Der WARP Charger/WARP Energy Manager wird wie in [WARP Adapter](docs/interfaces/mqtt_http/introduction) beschrieben konfiguriert. 
+Der WARP Charger/WARP Energy Manager wird wie in [WARP Adapter](/docs/interfaces/mqtt_http/introduction) beschrieben konfiguriert. 
 Als Broker-Hostname wird dabei die Adresse des ioBrokers eingetragen.
 Der Discovery-Modus kann deaktiviert werden da dieser nicht von ioBroker unterstützt wird. 
 
@@ -75,23 +75,29 @@ Das folgende Skript zeigt eine Hilfsfunktion `warpWrite` mit 3 Anwendungsbeispie
 // ================================================================
 
 const MQTT_ADAPTER = 'mqtt.0';     // Instanz des MQTT-Adapters
-const WARP_PREFIX  = 'wem2/2gTM'; // Topic-Präfix (siehe WARP MQTT-Konfiguration)
+const WARP_PREFIX  = 'warp3/1abc'; // Topic-Präfix (siehe WARP MQTT-Konfiguration)
 
 /**
  * Schreibt einen Wert auf ein WARP MQTT-Topic.
- * Das WARP Gerät erwartet Schreibzugriffe auf dem Topic mit Suffix "_update".
+ * Das WARP Gerät erwartet Schreibzugriffe auf dem Topic mit Suffix "_update". 
+ * Aktionen werden ohne Suffix gesendet.
  *
- * @param {string} subTopic  - Topic ohne Präfix, z.B. "charge_manager/charge_modes"
- * @param {*}      value     - Zu schreibender Wert (wird als JSON serialisiert)
+ * @param {string} subTopic     - Topic ohne Präfix, z.B. "charge_manager/charge_modes"
+ * @param {*}      value        - Zu schreibender Wert (wird als JSON serialisiert)
+ * @param {bool}   appendUpdate - Ob ein _update suffix angehängt wird
+ * @param {bool}   retainMsg    - Die message soll retained werden. Nur bei Schreibzugriffen
  */
-function warpWrite(subTopic, value) {
-    const topic   = WARP_PREFIX + '/' + subTopic + '_update';
+function warpWrite(subTopic, value, appendUpdate = true, retainMsg = true) {
+    let topic = WARP_PREFIX + '/' + subTopic;
+    if(appendUpdate) {
+        topic   = topic + '_update';
+    } 
     const payload = JSON.stringify(value);
 
     sendTo(MQTT_ADAPTER, 'sendMessage2Client', {
         topic:   topic,
         message: payload,
-        retain:  false
+        retain:  retainMsg
     });
 
     log('[WARP] ' + topic + ' ← ' + payload);
@@ -116,11 +122,11 @@ on({ id: '0_userdata.0.warp.lademodus', change: 'ne' }, function (obj) {
 
 
 // ----------------------------------------------------------------
-// Beispiel 3: Zeitgesteuert – Lademodus täglich um 22:00 Uhr setzen
+// Beispiel 3:  Sende ein Befehl den Ladevorgang zu starten. 
+//              Befehle müssen ohne Suffix gesendet werden. Der Inhalt ist null, "", false, 0, [] oder {}. 
+//              Befehle werden nicht retained. 
 // ----------------------------------------------------------------
-schedule('0 22 * * *', function () {
-    warpWrite('charge_manager/charge_modes', [2]);
-});
+warpWrite('evse/start_charging', "", false, false);
 ```
 
 :::note
