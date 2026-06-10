@@ -45,6 +45,8 @@ With Module 3, it is worthwhile to shift the electricity consumption of devices 
 This is possible automatically for [WARP Chargers](/warp_charger/introduction.md)
 with the [Eco Mode](/webinterface/energy_management/eco_mode.md) and for heat pumps with the
 [WARP Energy Manager 2.0](/warp_energy_manager/introduction.md) and its [heating module](/webinterface/energy_management/heater.md).
+For this, only the time-variable grid fees need to be configured in the [price calendar of the dynamic electricity price](/webinterface/energy_management/dynamic_tariffs.md#price-calendar).
+The system automatically combines these with the generation prices (spot market price) and then controls the vehicle charging and the heat pump accordingly at the favorable prices.
 
 Technically, Module 3 requires an intelligent metering system (iMSys = Smart Meter + Smart Meter Gateway).
 The controllable consumption device is controlled via a control box connected to it. This control box comes in two versions.

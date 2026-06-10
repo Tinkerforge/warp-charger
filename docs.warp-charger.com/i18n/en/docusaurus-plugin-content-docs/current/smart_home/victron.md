@@ -32,6 +32,10 @@ devices. Control remains with the WARP device. All functions are thus retained. 
 automatic phase switching for [PV excess charging](/tutorials/pv_excess_charging.md)
 or [dynamic load management](/tutorials/chargemanagement.md) is possible.
 
+For this, we use Victron's Modbus/TCP interfaces. These are standardized and therefore independent of
+the hardware used. For example, we can directly access the measured values from the grid connection as soon as
+any energy meter is installed that is evaluated by the Victron system.
+
 See also:
  * [Compatible Devices Introduction](/compatible_devices/introduction.md)
  * [Compatible Victron Devices](/compatible_devices/devices.mdx#victron-energy)

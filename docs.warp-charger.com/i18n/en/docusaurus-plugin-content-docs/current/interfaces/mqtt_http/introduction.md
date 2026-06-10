@@ -23,6 +23,9 @@ For the charger to communicate via MQTT, the connection to the MQTT broker must 
 - **Broker username and password** Some brokers support authentication with username and password.
 - **Topic prefix** This prefix is prepended to all topics used by the charger. The default is `warp/AbCd`, `warp2/AbCd`, `warp3/AbCd` or `wem/AbCd` where `AbCd` is a unique identifier per charger, but other prefixes such as garage_left are possible. If multiple chargers communicate with the same broker, unique prefixes must be chosen per box.
 - **Client ID** The charger registers with the broker using this ID.
+- **Discovery mode** If a home automation system is connected to the broker, data points can be added automatically with this. A list of the data points can be found [here](/smart_home/home_assistant.md#mqtt-sensor-values-in-home-assistant-via-autodiscovery).
+  - **Discovery topic prefix** The home automation system searches for data points under this topic.
+  - **Remove unavailable entities** If a data point is no longer provided, e.g. a meter was removed, an attempt is made to remove these data points from the home automation system.
 
 After the configuration is set and the "MQTT enabled" switch is set, the configuration can be saved. The ESP then restarts and connects to the broker. The status page shows whether the connection could be established.
 
