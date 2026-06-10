@@ -152,8 +152,8 @@ def print_warp2_label(sku, version, serial_number, build_date, custom_type2, ins
     elif sku_type2_length == 'CC':
         if sku_product == 'WARP2':
             assert False, (sku_product, sku_type2_length)
-
-        assert sku_type2_power == 'CC', sku_type2_power
+        elif sku_product == 'WARP4':
+            assert sku_type2_power == 'CC', sku_type2_power
 
         if custom_type2_length != None:
             description += f', {int(custom_type2_length) if int(custom_type2_length) == custom_type2_length else custom_type2_length} m'.replace('.', ',').encode('ascii')
