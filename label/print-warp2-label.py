@@ -103,6 +103,7 @@ def print_warp2_label(sku, version, serial_number, build_date, custom_type2, ins
         custom_type2_power = None
         custom_type2_length = None
     else:
+        custom_type2, order_id = custom_type2.split(':')
         custom_type2_cable, custom_type2_power, custom_type2_length = custom_type2.split('_')
         custom_type2_length = round(int(custom_type2_length) / 10, 1)
 
