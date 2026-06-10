@@ -18,10 +18,10 @@ STAND_PLACEHOLDER_B = b'S:1;'
 
 STAND_DISPLAY_NAME = {
     '0': 'Nein',
-    '1': 'Einfach',
-    '2': 'Doppelt',
-    '1-PC': 'Einfach, pulverbeschichtet',
-    '2-PC': 'Doppelt, pulverbeschichtet',
+    '1': 'Einfach, Edelstahl',
+    '2': 'Doppelt, Edelstahl',
+    '1-PC': 'Einfach, Pulverlack',
+    '2-PC': 'Doppelt, Pulverlack',
 }
 
 STAND_WIRING_PLACEHOLDER_A = b'Verkabelung: Was?'
