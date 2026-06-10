@@ -85,6 +85,69 @@ EAN13_NUMBERS = {
     'WARP3-CP-22KW-75-PC': b'4251640705824',
     'WARP3-CP-22KW-CC-PC': b'4251640706081',
 
+    'WARP4-CS-SS-1150-W': b'4251640707385',
+    'WARP4-CS-SS-1150-C': b'4251640707378',
+    'WARP4-CS-SS-1175-W': b'4251640707361',
+    'WARP4-CS-SS-1175-C': b'4251640707354',
+    'WARP4-CS-SS-2250-W': b'4251640707347',
+    'WARP4-CS-SS-2250-C': b'4251640707330',
+    'WARP4-CS-SS-2275-W': b'4251640707323',
+    'WARP4-CS-SS-2275-C': b'4251640707316',
+    'WARP4-CS-SS-CC-W':   b'4251640707309',
+    'WARP4-CS-SS-CC-C':   b'4251640707293',
+    'WARP4-CS-PC-1150-W': b'4251640707286',
+    'WARP4-CS-PC-1150-C': b'4251640707279',
+    'WARP4-CS-PC-1175-W': b'4251640707262',
+    'WARP4-CS-PC-1175-C': b'4251640707255',
+    'WARP4-CS-PC-2250-W': b'4251640707248',
+    'WARP4-CS-PC-2250-C': b'4251640707231',
+    'WARP4-CS-PC-2275-W': b'4251640707224',
+    'WARP4-CS-PC-2275-C': b'4251640707217',
+    'WARP4-CS-PC-CC-W':   b'4251640707200',
+    'WARP4-CS-PC-CC-C':   b'4251640707194',
+
+    'WARP4-CP-SS-1150-W': b'4251640707187',
+    'WARP4-CP-SS-1150-C': b'4251640707170',
+    'WARP4-CP-SS-1175-W': b'4251640707163',
+    'WARP4-CP-SS-1175-C': b'4251640707156',
+    'WARP4-CP-SS-2250-W': b'4251640707149',
+    'WARP4-CP-SS-2250-C': b'4251640707132',
+    'WARP4-CP-SS-2275-W': b'4251640707125',
+    'WARP4-CP-SS-2275-C': b'4251640707118',
+    'WARP4-CP-SS-CC-W':   b'4251640707101',
+    'WARP4-CP-SS-CC-C':   b'4251640707095',
+    'WARP4-CP-PC-1150-W': b'4251640707088',
+    'WARP4-CP-PC-1150-C': b'4251640707071',
+    'WARP4-CP-PC-1175-W': b'4251640707064',
+    'WARP4-CP-PC-1175-C': b'4251640707057',
+    'WARP4-CP-PC-2250-W': b'4251640707040',
+    'WARP4-CP-PC-2250-C': b'4251640707033',
+    'WARP4-CP-PC-2275-W': b'4251640707026',
+    'WARP4-CP-PC-2275-C': b'4251640707019',
+    'WARP4-CP-PC-CC-W':   b'4251640707002',
+    'WARP4-CP-PC-CC-C':   b'4251640706999',
+
+    'WARP4-CE-SS-1150-W': b'4251640706982',
+    'WARP4-CE-SS-1150-C': b'4251640706975',
+    'WARP4-CE-SS-1175-W': b'4251640706968',
+    'WARP4-CE-SS-1175-C': b'4251640706951',
+    'WARP4-CE-SS-2250-W': b'4251640706944',
+    'WARP4-CE-SS-2250-C': b'4251640706937',
+    'WARP4-CE-SS-2275-W': b'4251640706920',
+    'WARP4-CE-SS-2275-C': b'4251640706913',
+    'WARP4-CE-SS-CC-W':   b'4251640706906',
+    'WARP4-CE-SS-CC-C':   b'4251640706890',
+    'WARP4-CE-PC-1150-W': b'4251640706883',
+    'WARP4-CE-PC-1150-C': b'4251640706876',
+    'WARP4-CE-PC-1175-W': b'4251640706869',
+    'WARP4-CE-PC-1175-C': b'4251640706852',
+    'WARP4-CE-PC-2250-W': b'4251640706845',
+    'WARP4-CE-PC-2250-C': b'4251640706838',
+    'WARP4-CE-PC-2275-W': b'4251640706821',
+    'WARP4-CE-PC-2275-C': b'4251640706814',
+    'WARP4-CE-PC-CC-W':   b'4251640706807',
+    'WARP4-CE-PC-CC-C':   b'4251640706791',
+
     'WARP-EM': b'4251640705381',
     'WARP-EM2': b'4251640706098',
 }
@@ -156,33 +219,55 @@ def print_package2_label(full_sku, version, serial_number, build_date, instances
         version_major = 2
         serial_number_kind = 7
     else:
-        m = re.match(r'^(?:TF-)?WARP(2|3)-C(B|S|P)-(11|22)KW-(50|75|CC)(-PC)?$', full_sku)
+        if base_sku.startswith('WARP4-'):
+            # WARP4-XX-XX-XXXX-X
+            #       CS SS 1150 W
+            #       CP PC 1175 C
+            #       CE    2250
+            #             2275
+            #             CC
+            m = re.match(r'^(?:TF-)?WARP(4)-C(S|P|E)-(SS|PC)-(11|22|C)(50|75|C)-(W|C)$', full_sku)
 
-        if m == None:
-            raise Exception('Invalid SKU: {0}'.format(full_sku))
+            if m == None:
+                raise Exception('Invalid SKU: {0}'.format(full_sku))
 
-        sku_gen = m.group(1)
-        sku_model = m.group(2)
-        sku_power = m.group(3)
-        sku_cable = m.group(4)
-        sku_material = m.group(5)
+            sku_gen = m.group(1)
+            sku_model = m.group(2)
+            sku_material = m.group(3)
+            sku_power = m.group(4)
+            sku_cable = m.group(5)
+        else:
+            m = re.match(r'^(?:TF-)?WARP(2|3)-C(B|S|P)-(11|22)KW-(50|75|CC)(?:-(PC))?$', full_sku)
+
+            if m == None:
+                raise Exception('Invalid SKU: {0}'.format(full_sku))
+
+            sku_gen = m.group(1)
+            sku_model = m.group(2)
+            sku_power = m.group(3)
+            sku_cable = m.group(4)
+            sku_material = m.group(5)
 
         version_major = int(sku_gen)
         serial_number_kind = 5
 
         if sku_gen == '2':
-            description = b'WARP2 Charger '
+            description = b'WARP2 Charger'
         elif sku_gen == '3':
-            description = b'WARP3 Charger '
+            description = b'WARP3 Charger'
+        elif sku_gen == '4':
+            description = b'WARP4 Charger'
         else:
             assert False, sku_gen
 
         if sku_model == 'B':
-            description += b'Basic'
+            description += b' Basic'
         elif sku_model == 'S':
-            description += b'Smart'
+            description += b' Smart'
         elif sku_model == 'P':
-            description += b'Pro'
+            description += b' Pro'
+        elif sku_model == 'E':
+            description += b' Eichrecht'
         else:
             assert False, sku_model
 
@@ -190,6 +275,8 @@ def print_package2_label(full_sku, version, serial_number, build_date, instances
             description += b', 11 kW'
         elif sku_power == '22':
             description += b', 22 kW'
+        elif sku_power == 'C':
+            assert sku_cable == 'C', sku_cable
         else:
             assert False, sku_power
 
@@ -200,13 +287,17 @@ def print_package2_label(full_sku, version, serial_number, build_date, instances
         elif sku_cable == 'CC':
             if sku_gen == '2':
                 assert False, (sku_gen, sku_cable)
+        elif sku_cable == 'C':
+            assert sku_power == 'C', sku_power
         else:
             assert False, sku_cable
 
         if sku_material == None:
             pass
-        elif sku_material == '-PC':
-            description += b', pulverbeschichtet'
+        elif sku_material == 'SS':
+            description += b', Edelstahl'
+        elif sku_material == 'PC':
+            description += b', Pulverlack'
         else:
             assert False, sku_material
 

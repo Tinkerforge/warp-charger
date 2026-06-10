@@ -24,7 +24,7 @@ SERIAL_NUMBER_PLACEHOLDER = b'5000000001'
 
 BUILD_DATE_PLACEHOLDER = b'2021-01'
 
-CURRENT_PLACEHOLDER = b'16 A'
+CURRENT_PLACEHOLDER = b', 16 A'
 
 COPIES_FORMAT = '^C{0}\r'
 
@@ -56,7 +56,7 @@ def get_next_serial_number():
     return '5{0:09}'.format(serial_number)
 
 
-def print_warp2_label(sku, version, serial_number, build_date, instances, copies, stdout, force_build_date, accessories):
+def print_warp2_label(sku, version, serial_number, build_date, custom_type2, instances, copies, stdout, force_build_date, accessories):
     # check instances
     if instances < 1 or instances > 25:
         raise Exception('Invalid instances: {0}'.format(instances))
@@ -66,68 +66,124 @@ def print_warp2_label(sku, version, serial_number, build_date, instances, copies
         raise Exception('Invalid copies: {0}'.format(copies))
 
     # parse SKU
-    m = re.match(r'^WARP(2|3|4)-C(B|S|P)-(11|22)KW-(50|75|CC)(-PC)?$', sku)
+    m = re.match(r'^(WARP4)-(C(?:S|P|E))-(SS|PC)-((?:11|22)?(?:50|75)?|CC)-(W|C)$', sku)
 
-    if m == None:
-        raise Exception('Invalid SKU: {0}'.format(sku))
+    if m != None:
+        sku_product = m.group(1)
+        sku_model = m.group(2)
+        sku_material = m.group(3)
 
-    sku_gen = m.group(1)
-    sku_model = m.group(2)
-    sku_power = m.group(3)
-    sku_cable = m.group(4)
-    sku_material = m.group(5)
+        if m.group(4).startswith('11'):
+            sku_type2_power = '11'
+        elif m.group(4).startswith('22'):
+            sku_type2_power = '22'
+        elif m.group(4) == 'CC':
+            sku_type2_power = 'CC'
 
-    if sku_gen == '2':
-        description = b'WARP2 Charger '
-    elif sku_gen == '3':
-        description = b'WARP3 Charger '
-    elif sku_gen == '4':
-        description = b'WARP4 Charger '
+        if m.group(4).endswith('50'):
+            sku_type2_length = '50'
+        elif m.group(4).endswith('75'):
+            sku_type2_length = '75'
+        elif m.group(4) == 'CC':
+            sku_type2_length = 'CC'
     else:
-        assert False, sku_gen
+        m = re.match(r'^(WARP(?:2|3))-(C(?:B|S|P))-(11|22)KW-(50|75|CC)(?:-(PC))?$', sku)
 
-    if sku_model == 'B':
-        description += b'Basic'
-    elif sku_model == 'S':
-        description += b'Smart'
-    elif sku_model == 'P':
-        description += b'Pro'
+        if m == None:
+            raise Exception('Invalid SKU: {0}'.format(sku))
+
+        sku_product = m.group(1)
+        sku_model = m.group(2)
+        sku_material = m.group(5) if m.group(5) != None else 'SS'
+        sku_type2_power = m.group(3)
+        sku_type2_length = m.group(4)
+
+    if custom_type2 == 'no':
+        custom_type2_cable = 'no'
+        custom_type2_power = None
+        custom_type2_length = None
+    else:
+        custom_type2_cable, custom_type2_power, custom_type2_length = custom_type2.split('_')
+        custom_type2_length = round(int(custom_type2_length) / 10, 1)
+
+    if sku_product == 'WARP2':
+        description = b'WARP2 Charger'
+    elif sku_product == 'WARP3':
+        description = b'WARP3 Charger'
+    elif sku_product == 'WARP4':
+        description = b'WARP4 Charger'
+    else:
+        assert False, sku_product
+
+    if sku_model == 'CB':
+        description += b' Basic'
+    elif sku_model == 'CS':
+        description += b' Smart'
+    elif sku_model == 'CP':
+        description += b' Pro'
+    elif sku_model == 'CE':
+        description += b' Eichrecht'
     else:
         assert False, sku_model
 
-    if sku_power == '11':
+    if sku_type2_power == '11':
         description += b', 11 kW'
-    elif sku_power == '22':
+    elif sku_type2_power == '22':
         description += b', 22 kW'
-    else:
-        assert False, sku_power
+    elif sku_type2_power == 'CC':
+        assert sku_type2_length == 'CC', sku_type2_length
 
-    if sku_cable == '50':
-        description += b', 5 m'
-    elif sku_cable == '75':
-        description += b', 7,5 m'
-    elif sku_cable == 'CC':
-        if sku_gen == '2':
-            assert False, (sku_gen, sku_cable)
+        if custom_type2_power == None:
+            pass
+        elif custom_type2_power == 'h':
+            description += b', 11 kW'
+        elif custom_type2_power == 'f':
+            description += b', 22 kW'
+        else:
+            assert False, custom_type2_power
     else:
-        assert False, sku_cable
+        assert False, sku_type2_power
+
+    if sku_type2_length == '50':
+        description += b', 5 m'
+    elif sku_type2_length == '75':
+        description += b', 7,5 m'
+    elif sku_type2_length == 'CC':
+        if sku_product == 'WARP2':
+            assert False, (sku_product, sku_type2_length)
+
+        assert sku_type2_power == 'CC', sku_type2_power
+
+        if custom_type2_length != None:
+            description += f', {int(custom_type2_length) if int(custom_type2_length) == custom_type2_length else custom_type2_length} m'.replace('.', ',').encode('ascii')
+    else:
+        assert False, sku_type2_power
 
     if sku_material == None:
         pass
-    elif sku_material == '-PC':
-        description += b', pulverbeschichtet'
+    elif sku_material == 'SS':
+        description += b', Edelstahl'
+    elif sku_material == 'PC':
+        description += b', Pulverlack'
     else:
         assert False, sku_material
 
-    if sku_power == '11':
+    if sku_type2_power == '11':
         current = b'16 A'
-    elif sku_power == '22':
+    elif sku_type2_power == '22':
         current = b'32 A'
+    elif sku_type2_power == 'CC':
+        if custom_type2_power == None:
+            current = b''
+        elif custom_type2_power == 'h':
+            current = b', 16 A'
+        elif custom_type2_power == 'f':
+            current = b', 32 A'
     else:
-        assert False, sku_power
+        assert False, sku_type2_power
 
     # check version
-    if re.match(r'^{0}\.(0|[1-9][0-9]*)$'.format(sku_gen), version) == None:
+    if re.match(r'^{0}\.(0|[1-9][0-9]*)$'.format(sku_product[:-1]), version) == None:
         raise Exception('Invalid version: {0}'.format(version))
 
     # check serial number
@@ -230,7 +286,7 @@ def print_warp2_label(sku, version, serial_number, build_date, instances, copies
     else:
         with socket.create_connection((tfutil.get_tf_printer_host('warp-docket'), 9100)) as s:
             s.send(data)
-            time.sleep(1)
+            time.sleep(2)
 
 
 def main():
@@ -240,6 +296,7 @@ def main():
     parser.add_argument('version')
     parser.add_argument('serial_number')
     parser.add_argument('build_date')
+    parser.add_argument('custom_type2')
     parser.add_argument('-i', '--instances', type=int, default=1)
     parser.add_argument('-c', '--copies', type=int, default=1)
     parser.add_argument('-s', '--stdout', action='store_true')
@@ -251,7 +308,7 @@ def main():
     assert args.instances > 0
     assert args.copies > 0
 
-    print_warp2_label(args.sku, args.version, args.serial_number, args.build_date, args.instances, args.copies, args.stdout, args.force_build_date, args.accessories)
+    print_warp2_label(args.sku, args.version, args.serial_number, args.build_date, args.custom_type2, args.instances, args.copies, args.stdout, args.force_build_date, args.accessories)
 
 
 if __name__ == '__main__':

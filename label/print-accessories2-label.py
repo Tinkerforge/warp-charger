@@ -42,11 +42,11 @@ SUPPLY_CABLE_PLACEHOLDER_B = b'E:123.4;'
 CEE_PLACEHOLDER_A = b'CEE-Stecker: Jawohl'
 CEE_PLACEHOLDER_B = b'C:1;'
 
-CUSTOM_FRONT_PANEL_PLACEHOLDER_A = b'Frontplatte: SO/12345'
-CUSTOM_FRONT_PANEL_PLACEHOLDER_B = b'CFP:1;'
+CUSTOM_ENGRAVING_PLACEHOLDER_A = b'Frontplatte: SO/12345'
+CUSTOM_ENGRAVING_PLACEHOLDER_B = b'CFP:1;'
 
-CUSTOM_TYPE2_CABLE_PLACEHOLDER_A = b'Typ-2-Kabel: SO/54321'
-CUSTOM_TYPE2_CABLE_PLACEHOLDER_B = b'CT2:1;'
+CUSTOM_TYPE2_PLACEHOLDER_A = b'Typ-2: SO/54321'
+CUSTOM_TYPE2_PLACEHOLDER_B = b'CT2:1;'
 
 COMMENT_1_PLACEHOLDER = b'Hier steht ein mehrzeiliger'
 COMMENT_2_PLACEHOLDER = b'Kommentar f\xC3\xBCr sonstige Hinweise.'
@@ -54,7 +54,7 @@ COMMENT_2_PLACEHOLDER = b'Kommentar f\xC3\xBCr sonstige Hinweise.'
 COPIES_FORMAT = '^C{0}\r'
 
 
-def print_accessories2_label(header, stand, stand_wiring, stand_lock, supply_cable, cee, custom_front_panel, custom_type2_cable, comment_1, comment_2, copies, stdout):
+def print_accessories2_label(header, stand, stand_wiring, stand_lock, supply_cable, cee, custom_engraving, custom_type2, comment_1, comment_2, copies, stdout):
     # check copies
     if copies < 1 or copies > 5:
         raise Exception('Invalid copies: {0}'.format(copies))
@@ -145,42 +145,44 @@ def print_accessories2_label(header, stand, stand_wiring, stand_lock, supply_cab
 
     template = template.replace(CEE_PLACEHOLDER_B, 'C:{0};'.format(int(cee)).encode('ascii'))
 
-    # patch custom front panel
-    if template.find(CUSTOM_FRONT_PANEL_PLACEHOLDER_A) < 0:
-        raise Exception('Custom front panel placeholder A missing in EZPL file')
+    # patch custom engraving
+    if template.find(CUSTOM_ENGRAVING_PLACEHOLDER_A) < 0:
+        raise Exception('Custom engraving placeholder A missing in EZPL file')
 
-    template = template.replace(CUSTOM_FRONT_PANEL_PLACEHOLDER_A, 'Front: {0}'.format(custom_front_panel[:28]).encode('latin1', errors='replace') if custom_front_panel != '0' else b'')
+    template = template.replace(CUSTOM_ENGRAVING_PLACEHOLDER_A, 'Gravur: {0}'.format(custom_engraving[:28]).encode('latin1', errors='replace') if custom_engraving != '0' else b'')
 
-    if template.find(CUSTOM_FRONT_PANEL_PLACEHOLDER_B) < 0:
-        raise Exception('Custom front panel placeholder B missing in EZPL file')
+    if template.find(CUSTOM_ENGRAVING_PLACEHOLDER_B) < 0:
+        raise Exception('Custom engraving placeholder B missing in EZPL file')
 
-    template = template.replace(CUSTOM_FRONT_PANEL_PLACEHOLDER_B, 'CFP:{0};'.format(int(custom_front_panel != '0')).encode('ascii'))
+    template = template.replace(CUSTOM_ENGRAVING_PLACEHOLDER_B, 'CE:{0};'.format(int(custom_engraving != '0')).encode('ascii'))
 
-    # patch custom type2 cable
-    if template.find(CUSTOM_TYPE2_CABLE_PLACEHOLDER_A) < 0:
-        raise Exception('Custom type 2 cable placeholder A missing in EZPL file')
+    # patch custom type2
+    if template.find(CUSTOM_TYPE2_PLACEHOLDER_A) < 0:
+        raise Exception('Custom type2 placeholder A missing in EZPL file')
 
-    if custom_type2_cable == 'no':
-        custom_type2_cable_qr_code = '0'
-        custom_type2_cable = ''
+    if custom_type2 == 'no':
+        custom_type2_qr_code = '0'
+        custom_type2 = ''
     else:
-        custom_type2_cable, order_id = custom_type2_cable.split(':')
+        custom_type2, order_id = custom_type2.split(':')
 
-        if custom_type2_cable == 'customer':
-            custom_type2_cable_qr_code = '1'
-            custom_type2_cable = 'Kunde'
+        if custom_type2 == 'customer':
+            custom_type2_qr_code = '1'
+            custom_type2 = 'Kunde'
         else:
-            custom_type2_cable_qr_code = re.sub(r'^([mt]).*_(\d+)$', r'\1\2', custom_type2_cable).upper()
-            custom_type2_cable = re.sub(r'0$', ' m', custom_type2_cable).replace('_', ' ').capitalize()
+            custom_type2_qr_code = re.sub(r'^([mtc]).*_(h|f)_(\d+)$', r'\1\2\3', custom_type2).upper()
+            cable, power, length = custom_type2.split('_')
+            length = round(int(length) / 10, 1)
+            custom_type2 = f"{cable.replace('customer', 'kunde').capitalize()}, {power.replace('h', '11kW').replace('f', '22kW')}, {int(length) if int(length) == length else length} m"
 
-        custom_type2_cable = 'Typ-2-Kabel: {0}, {1}'.format(custom_type2_cable, order_id)
+        custom_type2 = 'Typ-2: {0}, {1}'.format(custom_type2, order_id)
 
-    template = template.replace(CUSTOM_TYPE2_CABLE_PLACEHOLDER_A, custom_type2_cable.encode('ascii'))
+    template = template.replace(CUSTOM_TYPE2_PLACEHOLDER_A, custom_type2.encode('ascii'))
 
-    if template.find(CUSTOM_TYPE2_CABLE_PLACEHOLDER_B) < 0:
-        raise Exception('Custom type 2 cable placeholder B missing in EZPL file')
+    if template.find(CUSTOM_TYPE2_PLACEHOLDER_B) < 0:
+        raise Exception('Custom type2 placeholder B missing in EZPL file')
 
-    template = template.replace(CUSTOM_TYPE2_CABLE_PLACEHOLDER_B, 'CT2:{0};'.format(custom_type2_cable_qr_code).encode('ascii'))
+    template = template.replace(CUSTOM_TYPE2_PLACEHOLDER_B, 'CT2:{0};'.format(custom_type2_qr_code).encode('ascii'))
 
     # patch comment 1
     if template.find(COMMENT_1_PLACEHOLDER) < 0:
@@ -221,8 +223,8 @@ def main():
     parser.add_argument('stand_lock', type=int, choices=[0, 1])
     parser.add_argument('supply_cable', type=float)
     parser.add_argument('cee', type=int, choices=[1, 0])
-    parser.add_argument('custom_front_panel')
-    parser.add_argument('custom_type2_cable')
+    parser.add_argument('custom_engraving')
+    parser.add_argument('custom_type2')
     parser.add_argument('comment_1')
     parser.add_argument('comment_2')
     parser.add_argument('-c', '--copies', type=int, default=1)
@@ -232,7 +234,7 @@ def main():
 
     assert args.copies > 0
 
-    print_accessories2_label(args.header, args.stand, args.stand_wiring, args.stand_lock, args.supply_cable, bool(args.cee), args.custom_front_panel, args.custom_type2_cable, args.comment_1, args.comment_2, args.copies, args.stdout)
+    print_accessories2_label(args.header, args.stand, args.stand_wiring, args.stand_lock, args.supply_cable, bool(args.cee), args.custom_engraving, args.custom_type2, args.comment_1, args.comment_2, args.copies, args.stdout)
 
 
 if __name__ == '__main__':
