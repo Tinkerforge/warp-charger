@@ -249,7 +249,7 @@ def print_package2_label(full_sku, version, serial_number, build_date, custom_ty
             elif m.group(4) == 'CC':
                 sku_type2_length = 'CC'
         else:
-            m = re.match(r'^(?:TF-)?WARP(2|3)-C(B|S|P)-(11|22)KW-(50|75|CC)(?:-(PC))?$', full_sku)
+            m = re.match(r'^(?:TF-)?(WARP(?:2|3))-C(B|S|P)-(11|22)KW-(50|75|CC)(?:-(PC))?$', full_sku)
 
             if m == None:
                 raise Exception('Invalid SKU: {0}'.format(full_sku))
