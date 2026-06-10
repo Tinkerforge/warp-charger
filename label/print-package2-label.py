@@ -195,7 +195,7 @@ def get_next_serial_number(kind):
     return '{0}{1:09}'.format(kind, serial_number)
 
 
-def print_package2_label(full_sku, version, serial_number, build_date, instances, copies, stdout, force_build_date):
+def print_package2_label(full_sku, version, serial_number, build_date, custom_type2, instances, copies, stdout, force_build_date):
     # check instances
     if instances < 1 or instances > 25:
         raise Exception('Invalid instances: {0}'.format(instances))
@@ -226,39 +226,60 @@ def print_package2_label(full_sku, version, serial_number, build_date, instances
             #       CE    2250
             #             2275
             #             CC
-            m = re.match(r'^(?:TF-)?WARP(4)-C(S|P|E)-(SS|PC)-(11|22|C)(50|75|C)-(W|C)$', full_sku)
+            m = re.match(r'^(?:TF-)?(WARP4)-C(S|P|E)-(SS|PC)-((?:11|22)?(?:50|75)?|CC)-(W|C)$', full_sku)
 
             if m == None:
                 raise Exception('Invalid SKU: {0}'.format(full_sku))
 
-            sku_gen = m.group(1)
+            sku_product = m.group(1)
             sku_model = m.group(2)
             sku_material = m.group(3)
-            sku_power = m.group(4)
-            sku_cable = m.group(5)
+
+            if m.group(4).startswith('11'):
+                sku_type2_power = '11'
+            elif m.group(4).startswith('22'):
+                sku_type2_power = '22'
+            elif m.group(4) == 'CC':
+                sku_type2_power = 'CC'
+
+            if m.group(4).endswith('50'):
+                sku_type2_length = '50'
+            elif m.group(4).endswith('75'):
+                sku_type2_length = '75'
+            elif m.group(4) == 'CC':
+                sku_type2_length = 'CC'
         else:
             m = re.match(r'^(?:TF-)?WARP(2|3)-C(B|S|P)-(11|22)KW-(50|75|CC)(?:-(PC))?$', full_sku)
 
             if m == None:
                 raise Exception('Invalid SKU: {0}'.format(full_sku))
 
-            sku_gen = m.group(1)
+            sku_product = m.group(1)
             sku_model = m.group(2)
-            sku_power = m.group(3)
-            sku_cable = m.group(4)
-            sku_material = m.group(5)
+            sku_material = m.group(5) if m.group(5) != None else 'SS'
+            sku_type2_power = m.group(3)
+            sku_type2_length = m.group(4)
 
-        version_major = int(sku_gen)
+        version_major = int(sku_product[-1:])
         serial_number_kind = 5
 
-        if sku_gen == '2':
+        if custom_type2 == 'no':
+            custom_type2_cable = 'no'
+            custom_type2_power = None
+            custom_type2_length = None
+        else:
+            custom_type2, order_id = custom_type2.split(':')
+            custom_type2_cable, custom_type2_power, custom_type2_length = custom_type2.split('_')
+            custom_type2_length = round(int(custom_type2_length) / 10, 1)
+
+        if sku_product == 'WARP2':
             description = b'WARP2 Charger'
-        elif sku_gen == '3':
+        elif sku_product == 'WARP3':
             description = b'WARP3 Charger'
-        elif sku_gen == '4':
+        elif sku_product == 'WARP4':
             description = b'WARP4 Charger'
         else:
-            assert False, sku_gen
+            assert False, sku_product
 
         if sku_model == 'B':
             description += b' Basic'
@@ -271,26 +292,38 @@ def print_package2_label(full_sku, version, serial_number, build_date, instances
         else:
             assert False, sku_model
 
-        if sku_power == '11':
+        if sku_type2_power == '11':
             description += b', 11 kW'
-        elif sku_power == '22':
+        elif sku_type2_power == '22':
             description += b', 22 kW'
-        elif sku_power == 'C':
-            assert sku_cable == 'C', sku_cable
-        else:
-            assert False, sku_power
+        elif sku_type2_power == 'CC':
+            assert sku_type2_length == 'CC', sku_type2_length
 
-        if sku_cable == '50':
-            description += b', 5 m'
-        elif sku_cable == '75':
-            description += b', 7,5 m'
-        elif sku_cable == 'CC':
-            if sku_gen == '2':
-                assert False, (sku_gen, sku_cable)
-        elif sku_cable == 'C':
-            assert sku_power == 'C', sku_power
+            if custom_type2_power == None:
+                pass
+            elif custom_type2_power == 'h':
+                description += b', 11 kW'
+            elif custom_type2_power == 'f':
+                description += b', 22 kW'
+            else:
+                assert False, custom_type2_power
         else:
-            assert False, sku_cable
+            assert False, sku_type2_power
+
+        if sku_type2_length == '50':
+            description += b', 5 m'
+        elif sku_type2_length == '75':
+            description += b', 7,5 m'
+        elif sku_type2_length == 'CC':
+            if sku_product == 'WARP2':
+                assert False, (sku_product, sku_type2_length)
+            elif sku_product == 'WARP4':
+                assert sku_type2_power == 'CC', sku_type2_power
+
+            if custom_type2_length != None:
+                description += f', {int(custom_type2_length) if int(custom_type2_length) == custom_type2_length else custom_type2_length} m'.replace('.', ',').encode('ascii')
+        else:
+            assert False, sku_type2_length
 
         if sku_material == None:
             pass
@@ -406,6 +439,7 @@ def main():
     parser.add_argument('version')
     parser.add_argument('serial_number')
     parser.add_argument('build_date')
+    parser.add_argument('custom_type2')
     parser.add_argument('-i', '--instances', type=int, default=1)
     parser.add_argument('-c', '--copies', type=int, default=1)
     parser.add_argument('-s', '--stdout', action='store_true')
@@ -416,7 +450,7 @@ def main():
     assert args.instances > 0
     assert args.copies > 0
 
-    print_package2_label(args.sku, args.version, args.serial_number, args.build_date, args.instances, args.copies, args.stdout, args.force_build_date)
+    print_package2_label(args.sku, args.version, args.serial_number, args.build_date, args.custom_type2, args.instances, args.copies, args.stdout, args.force_build_date)
 
 
 if __name__ == '__main__':
