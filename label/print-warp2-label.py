@@ -170,9 +170,9 @@ def print_warp2_label(sku, version, serial_number, build_date, custom_type2, ins
         assert False, sku_material
 
     if sku_type2_power == '11':
-        current = b'16 A'
+        current = b', 16 A'
     elif sku_type2_power == '22':
-        current = b'32 A'
+        current = b', 32 A'
     elif sku_type2_power == 'CC':
         if custom_type2_power == None:
             current = b''
