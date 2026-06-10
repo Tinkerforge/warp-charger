@@ -145,9 +145,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     und Wartung deiner Wallbox. 
 	\par
 	Der WARP4 Charger wird in zwei Varianten
-	angeboten: WARP4 Charger Smart und Pro. Die Versionen unterscheiden sich darin, dass in
-	der Pro Version ein MID Stromzähler verbaut ist und in der Smart Version
-	nicht.
+	angeboten: WARP4 Charger Smart und Pro: Der WARP4 Charger Pro verfügt über einen MID-geeichten Stromzähler, der WARP4 Charger Smart nicht.
 
     \section{Sicherheitshinweise}
     Die Wallbox ist so konstruiert, dass ein sicherer Betrieb gewährleistet ist,
@@ -157,7 +155,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     \subsection{Bestimmungsgemäße Verwendung}
     Mit dem WARP4 Charger können Elektrofahrzeuge gemäß DIN EN 61851-1 und
-	ISO15118 geladen werden. Für andere Anwendungen ist die Wallbox nicht geeignet. Eine Verwendung
+	ISO 15118 geladen werden. Für andere Anwendungen ist die Wallbox nicht geeignet. Eine Verwendung
     an Orten, an denen explosionsfähige oder brennbare Substanzen lagern, ist nicht
     zulässig. Jegliche Modifikation des Ladesystems sowie der Betrieb mit
     Verlängerungskabeln, Mehrfach-Steckdosen oder Ähnlichem ist nicht zulässig. Der
@@ -214,13 +212,13 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     installiert werden. Direkte Sonneneinstrahlung ist zu vermeiden, um ein
     unnötiges Aufheizen der Wallbox zu verhindern. Auf eine ausreichende Belüftung
     ist zu achten. Die Staubschutzkappe des Typ-2-Steckers sollte nicht aufgesteckt
-    werden, wenn sich diese durch Regen o.ä. mit Wasser füllen könnte. In diesem Fall
+    werden, wenn sich diese durch Regen o.Ä. mit Wasser füllen könnte. In diesem Fall
     droht eine Korrosion der Kontakte.
 
     \subsubsection{Wandmontage}\label{wandmontage}
     Zur Montage der Wallbox muss der Deckel entfernt werden. Dazu müssen die
     vier Kreuzschlitzschrauben (rot) gelöst werden.
-    Nach dem Lösen der Schrauben kann dieser von der Wallbox heruntergenommen
+    Nach dem Lösen der Schrauben kann der Deckel von der Wallbox heruntergenommen
     werden.
 
     \gfx{./img_warp3/resized/warp_screw_points_ready}
@@ -424,9 +422,9 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Anschließend muss im Webinterface unter \texttt{Energiemanagement} $\rightarrow$ \texttt{§14a
 	EnWG} das Verhalten konfiguriert werden.
 
-    \paragraph*{Schnittstellen (OCPP, Modbus TCP, HTTP, MQTT)}
+    \paragraph*{Schnittstellen (OCPP, Modbus/TCP, HTTP, MQTT)}
     Generell kann die Ladeleistung der Wallbox über alle anderen Schnittstellen
-	kontrolliert werden. Netzbetreiber setzen zur Steuerung typischerweise OCPP oder Modbus TCP ein.
+	kontrolliert werden. Netzbetreiber setzen zur Steuerung typischerweise OCPP oder Modbus/TCP ein.
 
     \subsection{Prüfungen}\label{tests}
     Im Werk wurde jede Wallbox einzeln nach IEC~60364-6 sowie den entsprechenden gültigen
@@ -556,8 +554,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     \subsection{Schritt 2: Integration in das eigene Netzwerk}
     In den allermeisten Fällen soll die Wallbox in das eigene Netzwerk
-    integriert werden. LAN ist direkt mit DHCP konfiguriert. Somit ist
-	darüber eine Integration einfach. Soll LAN mit einer statischen IP
+    integriert werden. Eine Verbindung per LAN mit DHCP ist ohne konfiguration möglich.
+    Soll LAN mit einer statischen IP
 	verwendet werden, oder die Wallbox mit dem eigenen WLAN verbunden werden
 	müssen die Netzwerkeinstellungen der Wallbox angepasst werden, 
 	siehe \fullref{network}.
@@ -579,11 +577,10 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	damit verbundene Laden im Eco-Modus oder eine Batteriesteuerung.
  
  	Da sich Firmware laufend weiterentwickelt, verweisen wir
-	hier auf unsere Online-Dokumentation. Diese ist auf
+	auf die stetig aktualisierte Online-Dokumentation. Diese ist auf
 	der folgenden Webseite zu finden.
 
-	\vspace{0.5em}
-	\begin{tcolorbox}[colback=white, colframe=black, width=0.5\textwidth, arc=2pt]
+	\begin{tcolorbox}[colback=white, colframe=black, width=0.489\textwidth, arc=2pt]
 		\begin{center}
 		{\large WARP Online-Dokumentation}\\
 		auf\\
@@ -601,6 +598,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     \section{Webinterface}\label{webinterface}
 
+    \gfx{./img_warp4/web_status}
+
 	\hint{Wir stellen hier nur wesentlichen Elemente für die Ersteinrichtung
 	vor. Alle weiteren Elemente sind online unter \href{https://docs.warp-charger.com}{\texttt{docs.warp-charger.com}}
 	zu finden.}
@@ -612,13 +611,10 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Auf mobilen Endgeräten wird die Menüleiste unter einem Menü-Symbol oben rechts
     im grauen Balken neben dem WARP Logo versteckt.
 
-    \gfx{./img_warp3/resized/web_status}
-
-
 	\subsection{Status-Symbol}
 	Oben rechts auf allen Seiten des Webinterfaces wird ein \textbf{Status}
 	Symbol angezeigt. Dieses kann die folgenden Zustände annehmen:
-	\begin{description}
+	\begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{grün}}]
 	\item[\color{mygreen}grün] Alle konfigurierten Funktionen sind fehlerfrei
 	\item[\color{myyellow}gelb] Es gibt mindestens eine Warnung
 	\item[\color{myred}rot] Es gibt mindestens einen Fehler. Eine Funktion arbeitet nicht
@@ -626,7 +622,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	\end{description}
 
 	Ein Klick auf das Symbol öffnet eine Detailansicht. Diese gibt weitere
-	Informationen dazu was die Ursache für Warnungen oder Fehler ist.
+	Informationen dazu, was die Ursache für Warnungen oder Fehler ist.
 	\par
 	\hint{Über das geöffnete Status-Symbol können auch die IP-Adressen von den LAN und
 	WLAN Schnittstellen ermittelt werden.}
@@ -700,6 +696,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Bei einer erfolgreichen Verbindung sollte die Wallbox jetzt im konfigurierten Netzwerk unter\\
     \url{http://[konfigurierter_hostname]},\\ z.B. \url{http://warp4-ABC} erreichbar sein.
 
+    \vfill
+
     \subsubsection{WLAN-Access-Point}
     \gfx{./img_warp3/resized/web_wifi_ap}
 
@@ -757,7 +755,10 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Die jeweilige Firmware-Datei kann dann manuell im Webinterface hochgeladen
 	werden.
 
-	\newpage
+	\vfill
+	\null
+	\columnbreak
+
 	\section{Fernzugriff und Apps}
 	Das Webinterface ist im Normalfall nur über das lokale Netzwerk oder den Accesspoint zu
 	erreichen. Über die Fernzugriffs-Funktion kann auch einfach von außerhalb des eigenen Netzwerks auf das Webinterface des WARP Chargers zugegriffen werden.
@@ -1059,7 +1060,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
         \begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{Fehlerstromerkennung}}]
             \setlength{\itemsep}{3pt}
-            \item[Ladestandard] DIN EN 61851‐1 / ISO15118
+            \item[Ladestandard] DIN EN 61851‐1 / ISO 15118
             \item[Ladeleistung] Einstellbar von \SI{1,4}{\kilo\watt}
                   bis \SI{11}{\kilo\watt} / \SI{22}{\kilo\watt}~\footnote[7]{\label{fn:1} je nach Variante}
             \item[Fahrzeugladestecker] Typ 2
@@ -1086,7 +1087,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
             \item[Lastmanagement] Max. 64 WARP, WARP2, WARP3 und/oder WARP4 Charger
             \item[NFC-Tags] 3 im Lieferumfang\\max. 32 anlernbar
             \item[Benutzer] Max. 32 konfigurierbar
-            \item[Schnittstellen] HTTP, MQTT, Modbus TCP, EEBUS, OCPP, SunSpec
+            \item[Schnittstellen] HTTP, MQTT, Modbus/TCP, EEBUS, OCPP, SunSpec
             \item[\S14a EnWG steuerbar] Mittels internen Abschalteingang, EEBUS oder über Schnittstellen oder WARP Energy Manager
             \item[Lieferumfang] Wallbox, Betriebsanleitung inkl. Installationsanleitung, Bohrschablone, Prüfprotokoll, 3 NFC-Karten
             \item[Standby, WLAN an] Smart $\leq\SI{3}{\watt}$; Pro $\leq\SI{5}{\watt}$
