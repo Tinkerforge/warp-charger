@@ -56,7 +56,7 @@ The Discovery messages are sent every 15 minutes. It can therefore take up to fi
 
 ### MQTT Sensor Values in Home Assistant via Autodiscovery
 
-Autodiscovery automatically adds various sensors and controls. Which ones are added depends on whether the device is a WARP Charger or WARP Energy Manager and which functions are activated (e.g. PV yield forecast).
+Autodiscovery automatically adds various sensors and controls. Which ones are added depends on whether the device is a WARP Charger or WARP Energy Manager and which functions are activated (e.g. solar forecast).
 
 Autodiscovery can optionally remove discovered elements again should they no longer be available.
 
@@ -80,9 +80,9 @@ The following entities are provided via autodiscovery:
 | Limited according to §14a EnWG | Sensor | Indicates whether a limitation according to §14a EnWG is active | §14a EnWG activated in the configuration |
 | Active charge mode | Select | Select charge mode (Fast, Off, PV, Min + PV), controllable | PV excess charging or dynamic load management activated |
 | Current charge mode | Sensor | Shows the currently active charge mode | PV excess charging or dynamic load management activated |
-| PV yield forecast tomorrow | Sensor | Forecasted PV yield for tomorrow in kWh | PV yield forecast activated |
-| PV yield forecast today | Sensor | Forecasted PV yield for today in kWh | PV yield forecast activated |
-| PV yield forecast from now | Sensor | Remaining forecasted PV yield for today in kWh | PV yield forecast activated |
+| Solar forecast tomorrow | Sensor | Forecasted PV yield for tomorrow in kWh | Solar forecast activated |
+| Solar forecast today | Sensor | Forecasted PV yield for today in kWh | Solar forecast activated |
+| Solar forecast from now | Sensor | Remaining forecasted PV yield for today in kWh | Solar forecast activated |
 | Spot market price | Sensor | Current spot market electricity price in ct/kWh | Dynamic electricity prices activated |
 
 Additionally, for each configured meter slot (meter 0 to N), the following measured values are provided, provided the respective measured value is supported by the meter:

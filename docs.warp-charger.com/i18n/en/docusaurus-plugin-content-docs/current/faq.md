@@ -13,7 +13,7 @@ Installation must be carried out by a qualified electrician. The electrician als
 No. The WARP4 has integrated DC fault current detection (RDC-DD). A Type A RCD in the building installation is sufficient.
 
 ### Does the WARP4 also work without internet access / without the cloud?
-All functions of the WARP4 run locally on the charger. Operation and configuration are done via the integrated web interface in your own home network, entirely without forced cloud usage. Only functions such as PV yield forecasting, the use of dynamic electricity prices, or the use of the apps require an internet connection.
+All functions of the WARP4 run locally on the charger. Operation and configuration are done via the integrated web interface in your own home network, entirely without forced cloud usage. Only functions such as the solar forecast, the use of dynamic electricity prices, or the use of the apps require an internet connection.
 
 ### How do I integrate the charger into my smart home?
 The WARP4 supports open standards such as MQTT, Modbus TCP, and the HTTP API. This allows it to be seamlessly integrated into Home Assistant, ioBroker, openHAB, and other smart home systems.
@@ -28,10 +28,10 @@ The WARP4 communicates with numerous smart meters, PV inverters, electricity sto
 Only the Pro version has an energy meter. We assume that this is necessary for bidirectional charging in order to react to problems with the power grid (anti-islanding protection). The SoC of a vehicle can be read out via ISO15118-2, but unfortunately not during an ongoing charging process. During charging, the Pro can calculate the state of charge using the energy meter.
 
 ### Which variant is suitable for billing?
-For billing, e.g. for company cars or at the workplace, we recommend the WARP4 Pro with a MID-certified meter and a charge log with energy recording. For applications that require a calibration-law-compliant solution, the WARP4 is currently not suitable.
+For billing, e.g. for company cars or at the workplace, we recommend the WARP4 Pro with a MID-certified meter and a charge log with energy recording. For applications that require an Eichrecht-compliant solution, the WARP4 is currently not suitable.
 
-### What is the difference between MID-certified and calibration-law-compliant?
-The energy meter of the Pro version is MID-certified. This refers to the measurement accuracy of the energy meter. The term "calibration-law-compliant charger" refers not only to the energy meter but to the entire charger. For example, the energy meter must sign every charging process. The data is uploaded and made available in the transparency software. In theory, this allows a user to check whether billing was done correctly. In addition, the charger must be protected against tampering. As a result, many parts inside the charger are sealed and cannot simply be replaced by an electrician. After the calibration period of 8 years has expired, the charger may no longer be used for billing purposes. The energy meter can only be replaced by the manufacturer.
+### What is the difference between MID-certified and Eichrecht-compliant?
+The energy meter of the Pro version is MID-certified. This refers to the measurement accuracy of the energy meter. The term "Eichrecht-compliant charger" refers not only to the energy meter but to the entire charger. For example, the energy meter must sign every charging process. The data is uploaded and made available in the transparency software. In theory, this allows a user to check whether billing was done correctly. In addition, the charger must be protected against tampering. As a result, many parts inside the charger are sealed and cannot simply be replaced by an electrician. After the calibration period of 8 years has expired, the charger may no longer be used for billing purposes. The energy meter can only be replaced by the manufacturer.
 
 ### Is the charger eligible under the "Funding for Charging in Multi-Family Buildings" program?
 Yes, the WARP4 is on the list of eligible chargers under our company name "Tinkerforge GmbH".
@@ -48,33 +48,33 @@ The charging electronics of WARP3 and WARP4 are mechanically compatible and can 
 Next, the WARP4 charging electronics are placed on the DIN rail and all cables are reconnected. The only difference is that on the WARP3 the maximum current of the charging cable was set via a resistor (PP resistor).
 On the WARP4 this is also possible, but in addition the charging cable can simply be set using a jumper (16A or 32A).
 
-We offer an upgrade kit for the charging electronics: [WARP3 to WARP4 upgrade kit](https://shop.warp-charger.com/de/spare-parts/warp4-spare-parts/warp3-to-warp4-upgrade-set.html).
+We offer an upgrade kit for the charging electronics: [WARP3 to WARP4 upgrade kit](https://shop.warp-charger.com/en/spare-parts/warp4-spare-parts/warp3-to-warp4-upgrade-set.html).
 
 
 ### Upgrade from WARP4 Smart to WARP4 Pro
 The WARP4 Pro has a viewing window in the housing so that the display of the energy meter can be seen from the outside. The following components are required:
 
-* [Iskra energy meter WM3M4 V2 MID RS485](https://shop.warp-charger.com/de/spare-parts/warp4-spare-parts/meter-iskra-wm3m4-v2-mid.html)
-* [WARP4 housing (Pro variant)](https://shop.warp-charger.com/de/spare-parts/warp4-spare-parts/warp4-enclosure.html)
-* [NFC sticker](https://shop.warp-charger.com/de/catalog/product/view/id/929/s/warp-nfc-sticker/category/64/)
-* [RS485 data cable for MID energy meter Iskra WM3M4 V2](https://shop.warp-charger.com/de/spare-parts/warp4-spare-parts/warp-meter-cable-for-iskra-wm3m4.html)
-* [WARP4 Pro DIN rail set](https://shop.warp-charger.com/de/spare-parts/warp4-spare-parts/warp4-pro-din-rail-set.html)
-* [Cable set for WARP4 Smart and Pro](https://shop.warp-charger.com/de/spare-parts/warp4-spare-parts/warp4-smart-pro-cable-set.html)
+* [Iskra energy meter WM3M4 V2 MID RS485](https://shop.warp-charger.com/en/spare-parts/warp4-spare-parts/meter-iskra-wm3m4-v2-mid.html)
+* [WARP4 housing (Pro variant)](https://shop.warp-charger.com/en/spare-parts/warp4-spare-parts/warp4-enclosure.html)
+* [NFC sticker](https://shop.warp-charger.com/en/catalog/product/view/id/929/s/warp-nfc-sticker/category/64/)
+* [RS485 data cable for MID energy meter Iskra WM3M4 V2](https://shop.warp-charger.com/en/spare-parts/warp4-spare-parts/warp-meter-cable-for-iskra-wm3m4.html)
+* [WARP4 Pro DIN rail set](https://shop.warp-charger.com/en/spare-parts/warp4-spare-parts/warp4-pro-din-rail-set.html)
+* [Cable set for WARP4 Smart and Pro](https://shop.warp-charger.com/en/spare-parts/warp4-spare-parts/warp4-smart-pro-cable-set.html)
 
 
 ### Upgrade from WARP3 Smart to WARP3 Pro
 
 The difference between the two versions consists of the additionally installed MID-certified energy meter. For the WARP3, this can be retrofitted. To do this, only the terminal block needs to be moved to the left and the energy meter needs to be installed additionally. This is connected to the EVSE with a data connection cable. Additionally, a connection cable between terminals and energy meter is necessary. All three components are available in the shop:
 
-* [Energy meter DSZ15DZMOD-3x80A](https://shop.warp-charger.com/de/spare-parts/warp3-spare-parts/electricity-meter-dsz15dzmod-3x80a.html)
-* [Connection cable for DSZ15DZMOD-3x80A](https://shop.warp-charger.com/de/catalog/product/view/id/1036/s/anschlusskabel-fuer-dsz15/category/63/)
-* [WARP3 cable harness](https://shop.warp-charger.com/de/spare-parts/warp3-spare-parts/warp3-cable-harness.html)
+* [Energy meter DSZ15DZMOD-3x80A](https://shop.warp-charger.com/en/spare-parts/warp3-spare-parts/electricity-meter-dsz15dzmod-3x80a.html)
+* [Connection cable for DSZ15DZMOD-3x80A](https://shop.warp-charger.com/en/catalog/product/view/id/1036/s/anschlusskabel-fuer-dsz15/category/63/)
+* [WARP3 cable harness](https://shop.warp-charger.com/en/spare-parts/warp3-spare-parts/warp3-cable-harness.html)
 
 ### Upgrade from WARP2 to WARP3
 
 Due to the modular design of the chargers, a hardware upgrade is also possible in principle. The conversion is relatively extensive, as the entire technology of the charger must be replaced. Only the charging cable and the housing, the energy meter, and the installed NFC Bricklet can be reused. All parts are also available individually in our shop:
 
-* [WARP3 spare parts](https://shop.warp-charger.com/de/spare-parts/warp3-spare-parts.html)
+* [WARP3 spare parts](https://shop.warp-charger.com/en/spare-parts/warp3-spare-parts.html)
 
 There is also more information on this topic on Tinkerunity: [Link](https://www.tinkerunity.org/topic/12097-warp2-zu-warp3-aufr%C3%BCsten/?do=findComment&comment=55013)
 
