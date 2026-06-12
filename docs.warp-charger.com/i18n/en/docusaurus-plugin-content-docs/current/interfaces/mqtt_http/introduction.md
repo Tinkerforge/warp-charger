@@ -8,12 +8,6 @@ WARP Charger Smart Pro can report their current state and be controlled via MQTT
 
 ## MQTT
 
-:::warning
-
-If the charger is used with ioBroker, a different MQTT broker than the one available as an ioBroker addon should be used. The ioBroker MQTT broker does not conform to the MQTT specification in several respects, which leads to various problems.
-
-:::
-
 ### Configuration
 
 For the charger to communicate via MQTT, the connection to the MQTT broker must first be configured in the web interface. The following settings can be configured:

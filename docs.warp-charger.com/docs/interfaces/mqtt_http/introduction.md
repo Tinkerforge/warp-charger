@@ -8,12 +8,6 @@ WARP Charger Smart Pro können über MQTT und HTTP ihren aktuellen Zustand melde
 
 ## MQTT
 
-:::warning
-
-Falls die Wallbox mit ioBroker verwendet wird, sollte ein anderer MQTT-Broker, als der, der als ioBroker-Addon verfügbar ist, verwendet werden. Der MQTT-Broker von ioBroker verhält sich in mehreren Belangen nicht konform zur MQTT-Spezifikation, was zu verschiedenen Problemen führt.
-
-:::
-
 ### Konfiguration
 
 Damit die Wallbox über MQTT kommuniziert, muss zunächst im Webinterface die Verbindung zum MQTT-Broker konfiguriert werden. Folgende Einstellungen können vorgenommen werden:
