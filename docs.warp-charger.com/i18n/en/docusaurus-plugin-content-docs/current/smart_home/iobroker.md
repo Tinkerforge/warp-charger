@@ -30,10 +30,15 @@ First, the MQTT broker/client is installed under "Adapters".
 Afterwards, the MQTT adapter must be configured as a client or as a server.
 
 - If an MQTT broker is already present in the network, MQTT is configured as a "Client/Subscriber" and the address of the broker is entered in the connection settings. The remaining settings can be left at their default values.
-- If no MQTT broker is present in the network yet, the adapter is configured as a "Server/Broker". Authentication is optional but recommended. The remaining settings can be left at their default values.
+- If no MQTT broker is present in the network yet, the adapter is configured as a "Server/Broker". Authentication is optional but recommended.
 
 
 ![MQTT Adapter Configuration](/img/smart_home/iobroker/configure_mqtt.png)
+
+MQTT should be configured as shown. 
+It is important that the two marked options are deactivated, as they can slow down the connection and lead to faulty MQTT behavior.
+
+![MQTT Adapter Configuration](/img/smart_home/iobroker/mqtt_settings.png)
 
 ## Connecting the WARP Device
 
