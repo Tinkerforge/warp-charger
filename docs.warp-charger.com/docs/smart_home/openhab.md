@@ -7,44 +7,42 @@ sidebar_position: 7
 ## Einführung
 
 Dein [WARP Charger](/docs/warp_charger/introduction) oder [WARP Energy Manager](/docs/warp_energy_manager/introduction) ist mit [OpenHAB](https://www.openhab.org) kompatibel.
-OpenHAB ist eine Open-Source Softwarelösung zur Heimautomation welche Komponenten verschiedenster Anbieter hersteller- und protokollneutral in einer Plattform verbindet.
+OpenHAB ist eine Open-Source-Softwarelösung zur Heimautomation, welche Komponenten verschiedenster Anbieter hersteller- und protokollneutral in einer Plattform verbindet.
 
 Zur Anbindung der WARP Geräte kann MQTT genutzt werden. 
-Da OpenHAB den selben Discovery Mechanismus wie [Home Assistant](/docs/smart_home/home_assistant) unterstützt ist die Integration sehr gut möglich.
+Da OpenHAB den gleichen Discovery-Mechanismus wie [Home Assistant](/docs/smart_home/home_assistant) unterstützt, ist eine nahtlose Integration möglich.
 
 ## Einbindung via MQTT
 
 ### Konfiguration OpenHAB
-Wir gehen davon aus das du OpenHAB bereits installiert hast. Weiterhin brauchst du einen MQTT-Broker weil OpenHAB keinen Broker selber integriert. Wir empfehlen [Mosquitto](https://mosquitto.org).
+Wir gehen davon aus, dass du OpenHAB bereits installiert hast. Weiterhin brauchst du einen MQTT-Broker, da OpenHAB keinen Broker integriert. Wir empfehlen [Mosquitto](https://mosquitto.org).
 
 Nach dem initialen Setup müssen die nötigen Bindings installiert werden. 
-Wir brauchen die MQTT Binding und die Home Assistant Binding.
+Wir benötigen das MQTT Binding und das Home Assistant Binding.
 
 ![MQTT Bindings](/img/smart_home/openhab/binding_install.png)
 
-Nach der Installation konfigurieren wir die Bindings. 
-
-Zuerst den MQTT broker: 
+Nach der Installation muss nur MQTT konfiguriert werden. 
 
 Dazu gehen wir auf *Settings &rarr; Things &rarr; "+" &rarr; MQTT Binding &rarr; MQTT Broker*.
-Dort wird dann die Adresse des Brokers eingetragen. 
-Wenn auf dem Broker ein Benutzername oder Passwort gesetzt ist, oder MQTTS (MQTT über TLS) verwendet werden soll, kann das in den erweiterten Einstellungen gesetzt werden. 
-Wichtig ist auch das in den erweiterten Einstellungen die Discovery aktiviert ist. 
+Dort wird die Adresse des Brokers eingetragen. 
+Wenn auf dem Broker ein Benutzername oder Passwort gesetzt ist, oder MQTTS (MQTT über TLS) verwendet werden soll, kann das in den erweiterten Einstellungen konfiguriert werden. 
+Wichtig ist auch, dass in den erweiterten Einstellungen die Discovery aktiviert ist. 
 
 ### Konfiguration WARP Charger/WARP Energy Manager
 
-Der WARP Charger/WARP Energy Manager wird wie in [WARP Adapter](/docs/interfaces/mqtt_http/introduction) beschrieben konfiguriert. 
-Als Broker-Hostname wird dabei die Adresse des eingerichteten MQTT Brokers eingetragen. 
-Der Discovery Modus wird auf Home Assistant gesetzt und das Topic Präfix auf "homeassistant".
+Der WARP Charger/WARP Energy Manager wird wie in [MQTT/HTTP API](/docs/interfaces/mqtt_http/introduction) beschrieben konfiguriert. 
+Als Broker-Hostname wird die Adresse des eingerichteten MQTT-Brokers eingetragen. 
+Der Discovery-Modus wird auf "Home Assistant" gesetzt und das Topic-Präfix auf "homeassistant".
 
 ## Integration in OpenHAB
 
-Nach dem beide Seite konfiguriert sind sollte das WARP Gerät in *Settings &rarr; Things &rarr; Inbox* auftauchen. Das kann bis zu einer Viertelstunde dauern.
-Um eine schnelle discovery zu erzwingen kann man auch zuerst das WARP Gerät neu starten und, sollte das nicht geholfen haben, den OpenHAB Server. 
+Nachdem beide Seiten konfiguriert sind, sollte das WARP Gerät in *Settings &rarr; Things &rarr; Inbox* auftauchen. Das kann bis zu einer Viertelstunde dauern.
+Um eine schnelle Discovery zu erzwingen, kann man zuerst das WARP Gerät neu starten und, sollte das nicht geholfen haben, den OpenHAB Server. 
 
-Die entdecken Geräte werden aus der Inbox als Thing hinzugefügt.
+Die entdeckten Geräte werden aus der Inbox als Thing hinzugefügt.
 
-Zuletzt fügen wir noch die Geräte zum Model hinzu *Settings &rarr; Model*. 
-*Create Equipment from Thing* und wählen das WARP Gerät aus.
+Zuletzt fügen wir die Geräte zum Model hinzu: *Settings &rarr; Model*. 
+Wähle *Create Equipment from Thing* und wähle das WARP Gerät aus.
 
-Die Beschreibung der Datenpunkte und unter welchen Umständen diese vorhanden sind findet man in der [Home Assistant Dokumentation](/docs/smart_home/home_assistant#mqtt-sensorwerte-in-home-assistant-via-autodiscovery) 
+Die Beschreibung der Datenpunkte und unter welchen Umständen diese vorhanden sind, findet man in der [Home Assistant Dokumentation](/docs/smart_home/home_assistant#mqtt-sensorwerte-in-home-assistant-via-autodiscovery). 
