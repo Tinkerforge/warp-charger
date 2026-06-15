@@ -35,7 +35,7 @@ Zur Montage des WARP Energy Managers muss dieser auf die Hutschiene
 gesetzt werden. Das Gehäuse muss so installiert werden, dass der LAN
 Anschluss bzw. die Hutschienen-Verriegelung nach unten zeigt.
 
-![image](/img/wem_shared_with_manual/wem_mounting.jpg)
+![image](/img/wem1/wem_mounting.jpg)
 
 Zuerst wird die obere Halterung auf die Hutschiene aufgesetzt und
 anschließend die Untere. Der Energiemanager sollte sich selbstständig
@@ -60,7 +60,7 @@ ausgewiesenen Elektrofachkraft durchgeführt werden!
 
 :::
 
-![image](/img/wem2_shared_with_manual/wem2_connections_both.jpg)
+![image](/img/wem2/wem2_connections_both.jpg)
 
 ### Stromversorgung
 

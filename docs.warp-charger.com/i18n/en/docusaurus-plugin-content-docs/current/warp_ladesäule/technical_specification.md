@@ -36,8 +36,8 @@ The stands have the following technical specification:
 
 ### Dimensions of Stand with One WARP Charger
 
-[![image](/img/warp_ladesäule/stand_1.jpg)](/img/stand_shared_with_manual/stand_1.jpg)
+[![image](/img/warp_ladesäule/stand_1.jpg)](/img/stand/stand_1.jpg)
 
 ### Dimensions of Stand with Two WARP Chargers
 
-[![image](/img/warp_ladesäule/stand_2.jpg)](/img/stand_shared_with_manual/stand_2.jpg)
+[![image](/img/warp_ladesäule/stand_2.jpg)](/img/stand/stand_2.jpg)

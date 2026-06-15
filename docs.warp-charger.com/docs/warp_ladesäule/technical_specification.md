@@ -36,8 +36,8 @@ Die Säulen besitzt folgende technische Spezifikation:
 
 ### Maße der Ladesäule mit einem WARP Charger
 
-[![image](/img/warp_ladesäule/stand_1.jpg)](/img/stand_shared_with_manual/stand_1.jpg)
+[![image](/img/warp_ladesäule/stand_1.jpg)](/img/stand/stand_1.jpg)
 
 ### Maße der Ladesäule mit zwei WARP Charger
 
-[![image](/img/warp_ladesäule/stand_2.jpg)](/img/stand_shared_with_manual/stand_2.jpg)
+[![image](/img/warp_ladesäule/stand_2.jpg)](/img/stand/stand_2.jpg)

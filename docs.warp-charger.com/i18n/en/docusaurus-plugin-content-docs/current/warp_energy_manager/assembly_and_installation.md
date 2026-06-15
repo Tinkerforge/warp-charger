@@ -34,7 +34,7 @@ To mount the WARP Energy Manager, it must be placed on the DIN rail.
 The housing must be installed so that the LAN connection
 or DIN rail lock points downward.
 
-![image](/img/wem_shared_with_manual/wem_mounting.jpg)
+![image](/img/wem1/wem_mounting.jpg)
 
 First, the upper bracket is placed on the DIN rail and
 then the lower one. The energy manager should lock
@@ -58,7 +58,7 @@ qualified electrician!
 
 :::
 
-![image](/img/wem2_shared_with_manual/wem2_connections_both.jpg)
+![image](/img/wem2/wem2_connections_both.jpg)
 
 ### Power Supply
 
