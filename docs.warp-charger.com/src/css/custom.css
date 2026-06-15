@@ -4,7 +4,22 @@
  * work well for content-centric websites.
  */
 
-/* You can override the default Infima variables here. */
+/* Fonts: Satoshi Variable as used by warp-charger.com */
+@font-face {
+  font-family: "Satoshi Variable";
+  src: url("/fonts/Satoshi-Variable.woff2") format("woff2");
+  font-weight: 300 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Satoshi Variable";
+  src: url("/fonts/Satoshi-VariableItalic.woff2") format("woff2");
+  font-weight: 300 900;
+  font-display: swap;
+  font-style: italic;
+}
 
 .navbar__logo img {
   height: 25px;
@@ -19,6 +34,11 @@
 }
 
 :root {
+  --ifm-font-family-base: "Satoshi Variable", system-ui, -apple-system,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --ifm-heading-font-family: var(--ifm-font-family-base);
+  --ifm-heading-font-weight: 700;
+
   --ifm-background-color: #fcfcfc;
   --ifm-color-primary: #00aaea;
   --ifm-code-font-size: 95%;
@@ -29,6 +49,18 @@
 [data-theme='dark'] {
   --ifm-color-primary: #00aaea;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* Headings: Use same defaults as warp-charger.com */
+.markdown h1,
+.markdown h2,
+.markdown h3 {
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+.markdown h1 {
+  letter-spacing: -0.045em;
+  font-weight: 800;
 }
 
 /* Let API reference tables fill the available horizontal space.
