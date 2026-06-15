@@ -8,11 +8,9 @@ Welcome to the documentation pages of the WARP product line from
 Tinkerforge.
 
 Here you will find the documentation for installation and configuration of:
-* [WARP3 Charger](/warp_charger/introduction.md),
-* [WARP4 Charger](/warp4_charger/introduction.md),
-* [WARP Energy Manager](/warp_energy_manager/introduction.md) and
+* [WARP4 Charger](/warp4/introduction.md) ([WARP3](/warp3/introduction.md), [WARP2](/warp2/introduction.md), [WARP1](/warp1/introduction.md)),
+* [WARP Energy Manager 2.0](/wem2/introduction.md) ([WEM1](/wem1/introduction.md)) and
 * [WARP Charger Stand](/warp_ladesäule/introduction.md).
-
 
 This documentation is constantly maintained and expanded. If you have ideas for
 additional documentation or examples, please let us know. We also gladly

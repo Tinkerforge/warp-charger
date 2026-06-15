@@ -4,14 +4,18 @@ sidebar_position: 2
 
 # Setting Up the Charge Log
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4']} />
+
 ## How It Works
 
-The WARP3 Charger records all charging processes performed. The following information is stored per
+The WARP Charger records all charging processes performed. The following information is stored per
 charging process:
 
 * Start date and time of the charging process, if date and time are known.
 * User who started the charging process, if known.
-* Meter reading at start and end of the charging process (WARP3 Charger Pro only).
+* Meter reading at start and end of the charging process (WARP Charger Pro only).
 From this, the charged energy in kWh is calculated.
 * Duration of the charging process.
 
@@ -22,7 +26,7 @@ electricity price. This means in particular that when the
 electricity price is changed, the displayed costs of older
 charging processes are also changed.
 
-This information is stored locally on the WARP3 Charger.
+This information is stored locally on the WARP Charger.
 No internet access or cloud service etc. is required and the
 data is not transmitted to third parties.
 

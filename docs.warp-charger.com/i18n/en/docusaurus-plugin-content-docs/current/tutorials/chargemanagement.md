@@ -4,6 +4,10 @@ sidebar_position: 4
 
 # Charge Management
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
 With charge management, it is possible to distribute an available
 total charging current among up to 64 WARP Chargers. In this case,
 a WARP Charger or a WARP Energy Manager is configured as the charge manager, which controls the other up to
@@ -214,7 +218,7 @@ to be able to request more current, the margin would therefore have to be more t
 The minimum charging current is the current that must be available for a charger
 in order for it to charge. This current must be at least 6 A.
 Certain vehicles, however, only charge efficiently at higher currents. With
-a WARP3 Charger Pro, the power factor can be determined.
+a WARP Charger Pro, the power factor can be determined.
 
 We recommend the automatic setting of the minimum charging current, which
 depends on the selected vehicle model.

@@ -79,11 +79,11 @@ das Fundament geschraubt werden.
 
 Der elektrische Anschluss der Wallboxen erfolgt für jede Wallbox
 separat. Die Hinweise der Elektroinstallation der WARP3 Charger aus
-deren [Montage und Installationsanleitung](/warp_charger/assembly_and_installation.md#montageort) sind zu beachten.
+deren [Montage und Installationsanleitung](/warp3/assembly_and_installation.md#montageort) sind zu beachten.
 
 ### Anforderungen an die Elektroinstallation
 
-Die Anforderungen an die [Elektroinstallation](/warp_charger/assembly_and_installation.md#anforderungen-an-die-elektroinstallation) der gewählten WARP3 Charger
+Die Anforderungen an die [Elektroinstallation](/warp3/assembly_and_installation.md#anforderungen-an-die-elektroinstallation) der gewählten WARP3 Charger
 Wallboxen sind zu beachten.
 
 ### Elektrische Installation
@@ -105,7 +105,7 @@ im Verteilergehäuse.
 
 ![image](/img/warp_ladesäule/warp-charger-stand-grey-back-opened-detail2.jpg)
 
-Anschließend sind die in der [Betriebsanleitung des WARP3 Chargers geforderten Prüfungen](/warp_charger/assembly_and_installation.md#prüfungen) für die Wallboxen durchzuführen.
+Anschließend sind die in der [Betriebsanleitung des WARP3 Chargers geforderten Prüfungen](/warp3/assembly_and_installation.md#prüfungen) für die Wallboxen durchzuführen.
 
 ### Erdung
 

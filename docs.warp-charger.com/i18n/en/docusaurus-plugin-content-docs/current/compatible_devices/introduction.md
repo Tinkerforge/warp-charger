@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Introduction
 
-The [WARP Charger](/warp_charger/introduction.md) or [WARP Energy Manager](/warp_energy_manager/introduction.md) can directly access data from
+The [WARP Charger](@current-charger/introduction) or [WARP Energy Manager](@current-wem/introduction) can directly access data from
 other third-party devices.
 
 This includes data from energy meters (for example at the grid connection),
@@ -18,7 +18,7 @@ The WARP Energy Manager additionally records the collected data locally on its S
 
 To access the data, we depend on the [interfaces](/compatible_devices/interfaces.md) provided by the respective device manufacturer.
 Depending on the device and manufacturer, the appropriate [interface](/compatible_devices/interfaces.md) must be configured in the web interface under [Energy Meters](/webinterface/energy_management/energy_meters.md)
-on the [WARP Charger](/warp_charger/introduction.md) or [WARP Energy Manager](/warp_energy_manager/introduction.md).
+on the [WARP Charger](@current-charger/introduction) or [WARP Energy Manager](@current-wem/introduction).
 
 Additionally, it is possible to control the charging and discharging behavior of battery storage: [Battery Storage](/compatible_devices/batteries.md)
 

@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Introduction
 
-With the WARP Charger Stand, we offer a high-quality mounting option for our [WARP Charger](/warp_charger/introduction.md) chargers. One WARP Charger can be mounted on the front of the stand.
+With the WARP Charger Stand, we offer a high-quality mounting option for our [WARP Charger](@current-charger/introduction) chargers. One WARP Charger can be mounted on the front of the stand.
 Depending on the version, a second WARP Charger can also be mounted on the back. A subsequent upgrade from one to two chargers is conceivable, as only the rear part of the stand needs to be replaced.
 
 Using the included mounting aid, the foundation for the stand including cable entry can be prepared. After curing, the stand can simply be screwed onto the mounting aid. The mounting aid guides a conduit or

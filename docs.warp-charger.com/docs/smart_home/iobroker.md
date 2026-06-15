@@ -6,7 +6,7 @@ sidebar_position: 4
 
 ## Einführung
 
-Dein [WARP Charger](/docs/warp_charger/introduction) oder [WARP Energy Manager](/docs/warp_energy_manager/introduction) ist mit [ioBroker](https://www.iobroker.net) kompatibel.
+Dein [WARP Charger](@current-charger/introduction) oder [WARP Energy Manager](@current-wem/introduction) ist mit [ioBroker](https://www.iobroker.net) kompatibel.
 ioBroker ist eine freie Softwarelösung zum Zusammenführen von Komponenten zur Gebäudeautomatisierung in einer Plattform.
 
 Die Anbindung von Geräten an ioBroker erfolgt über eine Vielzahl von (Software-)Adaptern.

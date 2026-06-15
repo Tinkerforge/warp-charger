@@ -15,7 +15,7 @@ The configuration of PV excess charging is also described in the tutorial [Photo
 
 :::
 
-The goal of photovoltaic excess charging is to charge an electric vehicle with the unused power from a photovoltaic system, rather than feeding it into the grid. The focus here is on maximizing self-consumption of solar power. This function can be performed by a [WARP Charger](/warp_charger/introduction.md) or [WARP Energy Manager](/warp_energy_manager/introduction.md).
+The goal of photovoltaic excess charging is to charge an electric vehicle with the unused power from a photovoltaic system, rather than feeding it into the grid. The focus here is on maximizing self-consumption of solar power. This function can be performed by a [WARP Charger](@current-charger/introduction) or [WARP Energy Manager](@current-wem/introduction).
 
 ![image](/img/webinterface/energy_management/warp-pv_excess_charging.jpeg)
 

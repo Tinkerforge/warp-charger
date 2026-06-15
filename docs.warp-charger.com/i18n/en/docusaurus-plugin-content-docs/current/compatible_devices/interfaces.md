@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Interfaces
 
-With the exception of energy meters compatible with the [WARP Energy Manager](/warp_energy_manager/introduction.md),
+With the exception of energy meters compatible with the [WARP Energy Manager](@current-wem/introduction),
 which can be [directly connected](/compatible_devices/interfaces.md#power-meters-connected-to-warp-energy-manager) to it,
 all other interfaces are accessed via the network (LAN, WLAN).
 

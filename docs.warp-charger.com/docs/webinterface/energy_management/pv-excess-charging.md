@@ -16,7 +16,7 @@ Die Konfiguration eines PV-Überschussladens ist auch im Tutorial [Photovoltaik-
 :::
 
 Beim Photovoltaik-Überschussladen ist das Ziel, die nicht selbst genutzte Leistung einer Photovoltaikanlage in ein Elektrofahrzeug zu laden, anstatt sie in das Stromnetz
-einzuspeisen. Die Maximierung der Eigenstromnutzung steht hier im Vordergrund. Diese Funktion kann von einem [WARP Charger](/docs/warp_charger/introduction) oder [WARP Energy Manager](/docs/warp_energy_manager/introduction) ausgeführt werden.
+einzuspeisen. Die Maximierung der Eigenstromnutzung steht hier im Vordergrund. Diese Funktion kann von einem [WARP Charger](@current-charger/introduction) oder [WARP Energy Manager](@current-wem/introduction) ausgeführt werden.
 
 ![image](/img/webinterface/energy_management/warp-pv_excess_charging.jpeg)
 

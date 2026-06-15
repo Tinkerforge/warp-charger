@@ -26,8 +26,8 @@ an:
 
 ## Einbinden von Victron Geräten in WARP Geräte
 
-Alternativ ist es auch möglich Victron Geräte in [WARP Chargern](/docs/warp_charger/introduction) oder dem
-[WARP Energy Manager](/docs/warp_energy_manager/introduction) einzubinden.
+Alternativ ist es auch möglich Victron Geräte in [WARP Chargern](@current-charger/introduction) oder dem
+[WARP Energy Manager](@current-wem/introduction) einzubinden.
 
 Hierbei fragt der WARP Charger oder WARP Energy Manager die Daten bei den Victron
 Geräten ab. Die Steuerung bleib bei dem WARP Gerät. Alle Funktionen bleiben somit erhalten. So ist zum Beispiel

@@ -1,7 +1,12 @@
 ---
 sidebar_position: 5
+sidebar_class_name: sidebar-item-hidden
 ---
 # Lastmanagement-Details
+
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
 
 :::danger
 

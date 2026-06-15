@@ -4,6 +4,10 @@ sidebar_position: 4
 
 # Lastmanagement
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
 Mit dem Lastmanagement ist es möglich, einen verfügbaren
 Gesamt-Ladestrom zwischen bis zu 64 WARP Chargern aufzuteilen. Hierbei
 wird ein WARP Charger oder ein WARP Energy Manager als Lastmanager konfiguriert, der die weiteren bis zu
@@ -222,7 +226,7 @@ müsste der Spielraum also mehr als 0,5 betragen.
 Der minimale Ladestrom ist der Strom, der für eine Wallbox zur Verfügung
 stehen muss, damit diese lädt. Dieser Strom muss mindestens 6 betragen.
 Bestimmte Fahrzeuge laden aber erst bei höheren Strömen effizient. Mit
-einem WARP3 Charger Pro kann der Leistungsfaktor ermittelt werden.
+einem WARP Charger Pro kann der Leistungsfaktor ermittelt werden.
 
 Wir empfehlen die automatische Einstellung des minimalen Ladestroms, die
 sich nach der Wahl des Fahrzeugmodells richtet.

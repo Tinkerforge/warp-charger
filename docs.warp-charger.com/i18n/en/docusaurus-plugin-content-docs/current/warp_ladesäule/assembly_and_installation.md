@@ -77,11 +77,11 @@ washers and nuts.
 
 The electrical connection of the chargeres is made separately
 for each charger. The electrical installation notes for the WARP3 Charger from
-the [Assembly and Installation Manual](/warp_charger/assembly_and_installation.md#installation-location) must be observed.
+the [Assembly and Installation Manual](/warp3/assembly_and_installation.md#installation-location) must be observed.
 
 ### Requirements for Electrical Installation
 
-The requirements for [electrical installation](/warp_charger/assembly_and_installation.md#requirements-for-electrical-installation) of the selected WARP3 Charger
+The requirements for [electrical installation](/warp3/assembly_and_installation.md#requirements-for-electrical-installation) of the selected WARP3 Charger
 chargers must be observed.
 
 ### Electrical Installation
@@ -102,7 +102,7 @@ in the distribution box.
 
 ![image](/img/warp_ladesäule/warp-charger-stand-grey-back-opened-detail2.jpg)
 
-Subsequently, the [tests required in the WARP3 Charger operating manual](/warp_charger/assembly_and_installation.md#testing) must be performed for the chargeres.
+Subsequently, the [tests required in the WARP3 Charger operating manual](/warp3/assembly_and_installation.md#testing) must be performed for the chargeres.
 
 ### Grounding
 

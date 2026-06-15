@@ -5,11 +5,14 @@ sidebar_position: 1
 
 # Erste Schritte
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
 :::note
 
-Die Erstinbetriebnahme für [WARP3 Charger](/warp_charger/introduction.md) und [WARP Energy Manager](/warp_energy_manager/introduction.md)
-ist im wesentlichen identisch. Beide Geräte können per WLAN oder LAN
-in ein Netzwerk eingebunden werden.
+Die Erstinbetriebnahme für WARP Charger und WARP Energy Manager ist im wesentlichen
+identisch. Beide Geräte können per WLAN oder LAN in ein Netzwerk eingebunden werden.
 
 :::
 
@@ -94,8 +97,8 @@ Im Menüpunkt Netzwerk finden sich alle Einstellungsmöglichkeiten:
 ![image](/img/tutorials/first_steps/network_config_with_menu.png)
 
 
-Unter [Einstellungen](/webinterface/network/settings.md) kann der Hostname des WARP3 Chargers /
-WARP Energy Manager 2.0 in allen verbundenen
+Unter [Einstellungen](/webinterface/network/settings.md) kann der Hostname des WARP Chargers /
+WARP Energy Manager in allen verbundenen
 Netzwerken konfiguriert werden. Außerdem kann mDNS aktiviert oder
 deaktiviert werden. Über mDNS können andere Geräte im Netzwerk das Gerät
 finden. Damit wird zum Beispiel das Einrichten eines

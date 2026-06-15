@@ -9,8 +9,8 @@ import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 <DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
 
 
-Die Statusseite unterscheidet sich zwischen einem [WARP3 Charger](/docs/warp_charger/introduction) und
-einem [WARP Energy Manager 2.0](/docs/warp_energy_manager/introduction). Sie stellt generelle Informationen zu dem
+Die Statusseite unterscheidet sich zwischen einem [WARP Charger](@current-charger/introduction) und
+einem [WARP Energy Manager](@current-wem/introduction). Sie stellt generelle Informationen zu dem
 Zustand des Geräts bereit. Zum Teil bietet sie auch
 Einstellungsmöglichkeiten, so zum Beispiel das Umschalten des Lademodus
 von Wallboxen.

@@ -1,6 +1,15 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import currentDeviceLinks from './src/remark/currentDeviceLinks';
+
+// The current device generations. Generic "WARP Charger" / "WARP Energy Manager"
+// documentation links point at the stable alias URLs /docs/warp_charger/* and
+// /docs/warp_energy_manager/*, which are redirected here. When a new generation
+// ships (e.g. warp5 / wem3), updating these two constants repoints every generic
+// link and the legacy URLs to the new generation.
+const CURRENT_CHARGER = 'warp4';
+const CURRENT_WEM = 'wem2';
 
 const config: Config = {
   title: 'WARP Dokumentation',
@@ -43,6 +52,9 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           routeBasePath: 'docs',
+          beforeDefaultRemarkPlugins: [
+            [currentDeviceLinks, {charger: CURRENT_CHARGER, wem: CURRENT_WEM}],
+          ],
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
@@ -52,6 +64,35 @@ const config: Config = {
           customCss: './src/css/custom.css',
         },
       } satisfies Preset.Options,
+    ],
+  ],
+
+  plugins: [
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        // Redirect the stable "current generation" aliases and the legacy paths
+        // to their target. The locale prefix (/de, /en) is preserved.
+        //   /docs/warp_charger/*        -> current charger generation
+        //   /docs/warp_energy_manager/* -> current WEM generation
+        //   /docs/warp4_charger/*       -> warp4 (version-specific legacy folder)
+        createRedirects(existingPath: string) {
+          const redirects: string[] = [];
+          const match = (dir: string) =>
+            existingPath.match(new RegExp(`^(.*/docs/)${dir}/(.+)$`));
+
+          let m = match(CURRENT_CHARGER);
+          if (m) redirects.push(`${m[1]}warp_charger/${m[2]}`);
+
+          m = match(CURRENT_WEM);
+          if (m) redirects.push(`${m[1]}warp_energy_manager/${m[2]}`);
+
+          m = match('warp4');
+          if (m) redirects.push(`${m[1]}warp4_charger/${m[2]}`);
+
+          return redirects.length > 0 ? redirects : undefined;
+        },
+      },
     ],
   ],
 

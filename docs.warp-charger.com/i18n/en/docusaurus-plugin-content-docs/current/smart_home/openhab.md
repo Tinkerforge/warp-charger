@@ -6,7 +6,7 @@ sidebar_position: 7
 
 ## Introduction
 
-Your [WARP Charger](/warp_charger/introduction.md) or [WARP Energy Manager](/warp_energy_manager/introduction.md) is compatible with [OpenHAB](https://www.openhab.org).
+Your [WARP Charger](@current-charger/introduction) or [WARP Energy Manager](@current-wem/introduction) is compatible with [OpenHAB](https://www.openhab.org).
 OpenHAB is an open-source software solution for home automation that connects components from various manufacturers in a vendor- and protocol-neutral way on a single platform.
 
 [MQTT](/docs/interfaces/mqtt_http/introduction) can be used to connect WARP devices. 

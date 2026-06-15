@@ -4,6 +4,10 @@ sidebar_position: 6
 
 # Steuerbare Verbrauchseinrichtung nach §14a EnWG
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
 Wallboxen gehören nach §14a EnWG zu sogenannten Steuerbaren
 Verbrauchseinrichtungen, da deren Anschlussleistung mehr als 4,2 kW
 beträgt.
@@ -43,9 +47,9 @@ Es gibt einen Standardtarif mit "normalen" Netzentgelten, einen Hochtarif mit de
 Die Uhrzeiten zu denen die Tarife gelten werden vom jeweiligen Netzbetreiber festgelegt und sind verschieden.
 
 Mit Modul 3 lohnt es sich den Stromverbrauch von Geräten wie Wallboxen oder Wärmepumpen in Niedrigtarif-Zeiten zu legen.
-Dies ist für [WARP Charger Wallboxen](/docs/warp_charger/introduction)
+Dies ist für [WARP Charger Wallboxen](@current-charger/introduction)
 automatisch mit dem [Eco-Modus](/docs/webinterface/energy_management/eco_mode) und für Wärmepumpen mit dem 
-[WARP Energy Manager 2.0](/docs/warp_energy_manager/introduction) und dessen [Heizungsmodul](/docs/webinterface/energy_management/heater) möglich.
+[WARP Energy Manager 2.0](/docs/wem2/introduction) und dessen [Heizungsmodul](/docs/webinterface/energy_management/heater) möglich.
 Dazu müssen nur die zeitvariablen Netzentgelte in dem [Preiskalender des dynamischen Strompreises](/docs/webinterface/energy_management/dynamic_tariffs#preiskalender) konfiguriert werden.
 Das System verbindet diese ganz automatisch mit den Erzeugerpreisen (Börsenstrompreis) und steuert dann zu den günstigen Preisen entsprechend die Fahrzeugladung und die Wärmepumpe.
 
@@ -73,7 +77,7 @@ Kontakt (spannungsfreier Schaltkontakt) angeschlossen werden. Dazu muss
 eine Steuerleitung vom Rundsteuerempfänger oder der Steuerbox des
 Netzbetreibers in die Wallbox gelegt und am Ladecontroller angeschlossen
 werden. Für Details zum Anschluss am Klemmbock siehe
-[Montage und Installation](/docs/warp_charger/assembly_and_installation.md#evse-klemmblock--abschalteingang).
+[Montage und Installation](/docs/warp3/assembly_and_installation.md#evse-klemmblock--abschalteingang).
 
 Im §14a-EnWG-Modul wird als Signalquelle **Abschalteingang der Wallbox**
 ausgewählt. Das Leistungslimit wird dann automatisch angewendet,

@@ -4,6 +4,10 @@ sidebar_position: 6
 
 # Controllable Consumption Device According to §14a EnWG
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
 Chargers are classified as controllable consumption devices according to
 §14a EnWG, as their connection power exceeds 4.2 kW.
 
@@ -42,9 +46,9 @@ There is a standard tariff with "normal" grid fees, a high tariff with significa
 The times at which the tariffs apply are set by the respective grid operator and vary.
 
 With Module 3, it is worthwhile to shift the electricity consumption of devices such as chargers or heat pumps to low-tariff times.
-This is possible automatically for [WARP Chargers](/warp_charger/introduction.md)
+This is possible automatically for [WARP Chargers](@current-charger/introduction)
 with the [Eco Mode](/webinterface/energy_management/eco_mode.md) and for heat pumps with the
-[WARP Energy Manager 2.0](/warp_energy_manager/introduction.md) and its [heating module](/webinterface/energy_management/heater.md).
+[WARP Energy Manager 2.0](/wem2/introduction.md) and its [heating module](/webinterface/energy_management/heater.md).
 For this, only the time-variable grid fees need to be configured in the [price calendar of the dynamic electricity price](/webinterface/energy_management/dynamic_tariffs.md#price-calendar).
 The system automatically combines these with the generation prices (spot market price) and then controls the vehicle charging and the heat pump accordingly at the favorable prices.
 
@@ -72,7 +76,7 @@ at the shutdown input inside the charger. For this, a control line from
 the ripple control receiver or the grid operator's control box must be
 routed into the charger and connected to the charge controller. For
 details on the connection at the terminal block, see
-[Assembly and Installation](/warp_charger/assembly_and_installation.md#evse-klemmblock--abschalteingang).
+[Assembly and Installation](/warp3/assembly_and_installation.md#evse-klemmblock--abschalteingang).
 
 In the §14a EnWG module, select **Charger shutdown input** as the signal
 source. The power limit is then automatically applied as soon as the

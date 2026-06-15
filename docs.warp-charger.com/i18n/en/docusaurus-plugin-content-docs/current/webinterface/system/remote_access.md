@@ -10,7 +10,7 @@ import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
 
 ## Introduction
-With remote access, you can always access a [WARP Charger](/warp_charger/introduction.md) or [WARP Energy Manager](/warp_energy_manager/introduction.md) from anywhere via [my.warp-charger.com](https://my.warp-charger.com).
+With remote access, you can always access a [WARP Charger](@current-charger/introduction) or [WARP Energy Manager](@current-wem/introduction) from anywhere via [my.warp-charger.com](https://my.warp-charger.com).
 The apps (iOS and Android) use remote access, so it must also be configured for app usage.
 
 ## How it Works and Privacy

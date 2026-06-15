@@ -15,7 +15,7 @@ Die Konfiguration eines Lastmanagement ist auch im Tutorial [Lastmanagement](/do
 
 :::
 
-Mit dem Lastmanagement ist es möglich, einen verfügbaren Gesamt-Ladestrom zwischen bis zu 64 WARP Chargern aufzuteilen. Hierbei wird ein [WARP Charger](/docs/warp_charger/introduction) oder [WARP Energy Manager](/docs/warp_energy_manager/introduction) als
+Mit dem Lastmanagement ist es möglich, einen verfügbaren Gesamt-Ladestrom zwischen bis zu 64 WARP Chargern aufzuteilen. Hierbei wird ein [WARP Charger](@current-charger/introduction) oder [WARP Energy Manager](@current-wem/introduction) als
 Lastmanager konfiguriert, der die weiteren bis zu 63 Wallboxen (WARP Energy Manager: 64 Wallboxen) im Verbund steuert und ihnen Ladeströme zuweist.
 
 ![image](/img/webinterface/energy_management/warp-loadmanagement.jpeg)

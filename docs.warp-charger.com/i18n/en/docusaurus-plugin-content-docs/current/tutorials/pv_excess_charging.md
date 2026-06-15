@@ -4,6 +4,10 @@ sidebar_position: 3
 
 # PV Excess Charging
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
 With photovoltaic excess charging, the goal is to charge the
 unused power from a photovoltaic system into an electric vehicle
 instead of feeding it into the power grid. Maximizing
@@ -20,7 +24,7 @@ which should be regulated to a consumption of 0 W. This means all
 PV power should be charged into the vehicle without drawing from the grid
 ("PV excess").
 
-WARP3 Charger Smart and Pro are equipped with two separate contactors
+WARP Charger Smart and Pro are equipped with two separate contactors
 and can thus internally switch between single-phase and
 three-phase charging. Switching to single-phase
 charging offers the advantage that even small power surpluses can be charged into a
@@ -94,7 +98,7 @@ The following settings can be made:
 
 **Switching mode**: Defines the behavior of phase switching.
 
-**Default charging mode**: The charging mode used when the WARP3 Charger restarts.
+**Default charging mode**: The charging mode used when the WARP Charger restarts.
 
 **Energy meter**: The energy meter used to measure PV excess. This
 energy meter must be created beforehand according to the section above.

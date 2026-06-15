@@ -11,7 +11,7 @@ import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
 :::note
 
-Es gibt ein Tutorial, welches auch das Einbinden von einem [WARP Charger](/docs/warp_charger/introduction) oder [WARP Energy Manager](/docs/warp_energy_manager/introduction) in ein Netzwerk behandelt: [Erste Schritte](/docs/tutorials/first_steps)
+Es gibt ein Tutorial, welches auch das Einbinden von einem [WARP Charger](@current-charger/introduction) oder [WARP Energy Manager](@current-wem/introduction) in ein Netzwerk behandelt: [Erste Schritte](/docs/tutorials/first_steps)
 
 :::
 

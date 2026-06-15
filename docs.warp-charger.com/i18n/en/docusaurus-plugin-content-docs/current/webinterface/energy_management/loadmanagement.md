@@ -15,7 +15,7 @@ The configuration of charge management is also described in the tutorial [Charge
 
 :::
 
-With charge management, it is possible to distribute an available total charging current among up to 64 WARP Chargers. A [WARP Charger](/warp_charger/introduction.md) or [WARP Energy Manager](/warp_energy_manager/introduction.md) is configured as
+With charge management, it is possible to distribute an available total charging current among up to 64 WARP Chargers. A [WARP Charger](@current-charger/introduction) or [WARP Energy Manager](@current-wem/introduction) is configured as
 a charge manager, which controls the other up to 63 chargers (WARP Energy Manager: 64 chargers) in the cluster and assigns them charging currents.
 
 ![image](/img/webinterface/energy_management/warp-loadmanagement.jpeg)

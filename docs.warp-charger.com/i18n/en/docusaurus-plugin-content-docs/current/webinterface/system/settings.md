@@ -11,7 +11,7 @@ import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
 ![image](/img/webinterface/system/settings.png)
 
-This page allows configuring the system language. Alternatively, the [WARP Charger](/warp_charger/introduction.md) or [WARP Energy Manager](/warp_energy_manager/introduction.md) can
+This page allows configuring the system language. Alternatively, the [WARP Charger](@current-charger/introduction) or [WARP Energy Manager](@current-wem/introduction) can
 determine the system language based on the browser language.
 
 The **Color scheme** setting allows customizing the appearance of the web interface. A light and a dark color scheme are available, as well as the option to follow the browser's color scheme.

@@ -62,3 +62,11 @@ table {
   --docsearch-highlight-color: #00aaea !important;
 }
 
+
+/* Docs flagged with `sidebar_class_name: sidebar-item-hidden` stay part of the
+   sidebar (so the menu and device context persist on their page) but their
+   menu entry is hidden. They remain reachable via direct links. */
+.theme-doc-sidebar-item-link.sidebar-item-hidden,
+.theme-doc-sidebar-item-category.sidebar-item-hidden {
+  display: none;
+}

@@ -24,8 +24,8 @@ For custom integrations, the following interfaces are otherwise available:
 
 ## Integrating Victron Devices into WARP Devices
 
-Alternatively, it is also possible to integrate Victron devices into [WARP Chargers](/warp_charger/introduction.md) or the
-[WARP Energy Manager](/warp_energy_manager/introduction.md).
+Alternatively, it is also possible to integrate Victron devices into [WARP Chargers](@current-charger/introduction) or the
+[WARP Energy Manager](@current-wem/introduction).
 
 In this case, the WARP Charger or WARP Energy Manager queries the data from the Victron
 devices. Control remains with the WARP device. All functions are thus retained. For example,

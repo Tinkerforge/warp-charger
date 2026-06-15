@@ -4,6 +4,10 @@ sidebar_position: 3
 
 # PV-Überschussladen
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
+
 Beim Photovoltaik-Überschussladen ist das Ziel, die nicht selbst
 genutzte Leistung einer Photovoltaikanlage in ein Elektrofahrzeug zu
 laden, anstatt sie in das Stromnetz einzuspeisen. Die Maximierung der
@@ -20,7 +24,7 @@ der auf einen Bezug von 0 W geregelt werden soll. Das heißt, die gesamte
 PV-Leistung soll in das Fahrzeug geladen werden, ohne dass ein Netzbezug
 stattfindet ("PV-Überschuss").
 
-WARP3 Charger Smart und Pro sind mit zwei getrennten Schützen
+WARP Charger Smart und Pro sind mit zwei getrennten Schützen
 ausgestattet und können somit intern zwischen einem einphasigen und
 dreiphasigen Ladevorgang umschalten. Das Umschalten auf eine einphasige
 Ladung bietet den Vorteil, dass auch geringe Leistungsüberschüsse in ein
@@ -97,7 +101,7 @@ Folgende Einstellungen können vorgenommen werden:
 
 **Umschaltungsmodus**: Definiert das Verhalten der Phasenumschaltung.
 
-**Standardlademodus**: Der Lademodus, der bei einem Neustart des WARP3 Chargers verwendet
+**Standardlademodus**: Der Lademodus, der bei einem Neustart des WARP Chargers verwendet
 wird.
 
 **Stromzähler**: Der Stromzähler, mit dem der PV-Überschuss gemessen wird. Dieser

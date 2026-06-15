@@ -6,7 +6,7 @@ sidebar_position: 4
 
 ## Introduction
 
-Your [WARP Charger](/warp_charger/introduction.md) or [WARP Energy Manager](/warp_energy_manager/introduction.md) is compatible with [ioBroker](https://www.iobroker.net).
+Your [WARP Charger](@current-charger/introduction) or [WARP Energy Manager](@current-wem/introduction) is compatible with [ioBroker](https://www.iobroker.net).
 ioBroker is a free software solution for bringing together building automation components in a single platform.
 
 Devices are connected to ioBroker via a wide variety of (software) adapters.

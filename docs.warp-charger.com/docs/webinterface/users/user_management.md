@@ -22,7 +22,7 @@ zugeordnet werden. In der Werkseinstellung sind drei Nutzer angelegt, denen
 jeweils eine der mitgelieferten NFC-Karten zugeordnet wurde. Diese können umbenannt oder gelöscht werden.
 
 Ein neuer Nutzer kann mittels Klicken auf den +-Button hinzugefügt werden. Anschließend öffnet sich
-ein Modalfenster, in dem der eigentliche Benutzername, der Anzeigename (für die Anzeige im Ladetracker) und 
+ein Modalfenster, in dem der eigentliche Benutzername, der Anzeigename (für die Anzeige im Ladetracker) und
 der dem Nutzer erlaube maximale Ladestrom eingestellt werden können. Zusätzlich kann dem Nutzer ein Passwort
 fur die HTTP-Anmeldung (siehe folgenden Abschnitt) gegeben werden.
 
@@ -59,7 +59,7 @@ siehe Abschnitt [Wallboxen](/docs/webinterface/energy_management/wallboxes.md).
 Wenn *Anmeldung aktiviert* ausgewählt ist, muss zum Zugriff auf das Webinterface und zur Verwendung der
 HTTP-API eine Anmeldung als einer der konfigurierten Benutzer durchgeführt werden. Eine HTTP-Anmeldung ist
 nur möglich, wenn dem Benutzer ein Passwort konfiguriert wurde. Die Funktion ist nur aktivierbar, wenn mindestens
-ein Nutzer mit konfiguriertem Passwort existiert. Entsprechend können Benutzer erstellt werden, die nur für das 
+ein Nutzer mit konfiguriertem Passwort existiert. Entsprechend können Benutzer erstellt werden, die nur für das
 Ladetracking per NFC-Tag verwendet werden, aber keinen Zugriff auf das Webinterface haben sollen, indem diesen
 kein Passwort gegeben wird.
 

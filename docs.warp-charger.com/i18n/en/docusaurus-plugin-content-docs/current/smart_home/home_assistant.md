@@ -6,7 +6,7 @@ sidebar_position: 2
 
 ## Introduction
 
-Your [WARP Charger](/warp_charger/introduction.md) or [WARP Energy Manager](/warp_energy_manager/introduction.md) is compatible with [Home Assistant](https://www.home-assistant.io).
+Your [WARP Charger](@current-charger/introduction) or [WARP Energy Manager](@current-wem/introduction) is compatible with [Home Assistant](https://www.home-assistant.io).
 Home Assistant is an open-source home automation solution with broad device support.
 
 For connecting WARP devices, Modbus and MQTT can be used. In this guide, we will use MQTT.

@@ -7,7 +7,7 @@ sidebar_position: 2
 import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
 <DeviceCompatibility supported={['wem1', 'wem2']} />
-Der [WARP Energy Manager 2.0](/docs/warp_energy_manager/introduction) zeichnet
+Der [WARP Energy Manager 2.0](/docs/wem2/introduction) zeichnet
 die Daten zu den konfigurierten Stromzählern intern auf. Die aufgezeichneten Werte können
 auf dieser Seite betrachtet werden.
 

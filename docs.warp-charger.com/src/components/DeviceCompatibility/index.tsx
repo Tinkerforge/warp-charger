@@ -3,14 +3,13 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Admonition from '@theme/Admonition';
 import styles from './styles.module.css';
 
-// TODO: Uncomment WARP4 when it is released.
 const ALL_DEVICES = [
   { id: 'wc1', label: 'WARP1 Charger' },
   { id: 'wc2', label: 'WARP2 Charger' },
   { id: 'wc3', label: 'WARP3 Charger' },
-  //{ id: 'wc4', label: 'WARP4 Charger' },
-  { id: 'wem1', label: 'WARP Energy Manager 1' },
-  { id: 'wem2', label: 'WARP Energy Manager 2' },
+  { id: 'wc4', label: 'WARP4 Charger' },
+  { id: 'wem1', label: 'WARP Energy Manager 1.0' },
+  { id: 'wem2', label: 'WARP Energy Manager 2.0' },
 ] as const;
 
 export type DeviceId = (typeof ALL_DEVICES)[number]['id'];

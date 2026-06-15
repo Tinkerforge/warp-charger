@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Einführung
 
-[WARP Charger](/docs/warp_charger/introduction) oder [WARP Energy Manager](/docs/warp_energy_manager/introduction) können direkt auf die Daten von
+[WARP Charger](@current-charger/introduction) oder [WARP Energy Manager](@current-wem/introduction) können direkt auf die Daten von
 anderen Fremdgeräten zugreifen.
 
 Dazu zählen die Daten von Stromzählern (zum Beispiel am Netzanschluss),
@@ -19,7 +19,7 @@ die aufgezeichneten Daten analysiert werden.
 
 Um auf die Daten zugreifen zu können, sind wir auf die von dem jeweiligen Geräte-Hersteller bereitgestellte [Schnittstellen](/compatible_devices/interfaces.md) angewiesen.
 Abhängig vom Gerät und Hersteller muss dazu die passende [Schnittstelle](/compatible_devices/interfaces.md) im Webinterface unter [Stromzähler](/webinterface/energy_management/energy_meters.md)
-auf dem [WARP Charger](/docs/warp_charger/introduction) oder [WARP Energy Manager](/docs/warp_energy_manager/introduction) konfiguriert werden.
+auf dem [WARP Charger](@current-charger/introduction) oder [WARP Energy Manager](@current-wem/introduction) konfiguriert werden.
 
 Zusätzlich ist es möglich das Lade- und Entladeverhalten von Stromspeichern zu steuern: [Batteriespeicher](/docs/compatible_devices/batteries)
 

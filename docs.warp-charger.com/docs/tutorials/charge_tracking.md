@@ -4,15 +4,19 @@ sidebar_position: 2
 
 # Einrichten des Ladelogbuchs
 
+import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
+
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4']} />
+
 ## Funktionsweise
 
-Der WARP3 Charger zeichnet alle durchgeführten Ladevorgänge auf. Pro
+Der WARP Charger zeichnet alle durchgeführten Ladevorgänge auf. Pro
 Ladevorgang werden die folgenden Informationen gespeichert:
 
 * Startdatum und Zeit des Ladevorgangs, falls Datum und Zeit bekannt
 sind.
 * Benutzer, der den Ladevorgang gestartet hat, falls bekannt.
-* Zählerstand beim Start und Ende des Ladevorgangs (nur WARP3 Charger Pro).
+* Zählerstand beim Start und Ende des Ladevorgangs (nur WARP Charger Pro).
 Hieraus wird die geladene Energie in  kWh berechnet.
 * Dauer des Ladevorgangs.
 
@@ -23,7 +27,7 @@ Strompreises berechnet. Das heißt insbesondere, dass, wenn der
 Strompreis geändert wird, auch die angezeiten Kosten älterer
 Ladevorgänge geändert werden.
 
-Diese Informationen werden lokal auf dem WARP3 Charger gespeichert.
+Diese Informationen werden lokal auf dem WARP Charger gespeichert.
 Es wird kein Internetzugang oder eine Cloud o.ä. benötigt und die
 Daten werden nicht an dritte übertragen.
 

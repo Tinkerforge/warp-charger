@@ -11,7 +11,7 @@ import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
 ![image](/img/webinterface/network/settings.png)
 
-Auf dieser Seite kann der *Hostname* des [WARP Charger](/docs/warp_charger/introduction) oder [WARP Energy Manager](/docs/warp_energy_manager/introduction) in allen
+Auf dieser Seite kann der *Hostname* des [WARP Charger](@current-charger/introduction) oder [WARP Energy Manager](@current-wem/introduction) in allen
 verbundenen Netzwerken konfiguriert werden. Außerdem kann *mDNS* aktiviert oder deaktiviert werden. Über mDNS können andere Geräte im Netzwerk den WARP3 Charger/WARP Energy Manager
 finden. Damit wird zum Beispiel das Einrichten eines Lastmanagementverbunds vereinfacht.
 
