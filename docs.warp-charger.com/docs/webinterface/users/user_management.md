@@ -54,6 +54,27 @@ ist es ausreichend die Benutzer und NFC-Tags auf dem Lastmanager zu konfiguriere
 siehe Abschnitt [Wallboxen](/docs/webinterface/energy_management/wallboxes.md).
 :::
 
+## Fahrzeuge
+
+:::note
+
+Diese Funktion gibt es nur bei dem WARP4 Charger.
+
+:::
+
+Beim Anlegen bzw. Bearbeiten eines Benutzers können diesem Fahrzeuge zugeordnet werden.
+Dadurch werden per Autocharge freigegebene Ladevorgänge des Fahrzeugs diesem Benutzer im
+Ladelogbuch zugeschrieben und dessen individuelle Ladestromgrenze wird angewendet.
+
+Über den +-Button im Abschnitt *Fahrzeuge* werden alle angelegten Fahrzeug-Profile
+zur Auswahl angeboten. Pro Fahrzeug-Profil ist eine Benutzerzuordnung möglich.
+
+![image](/img/webinterface/users/warp-users-user_management4.png)
+
+Die eigentlichen Fahrzeug-Profile (Name, MAC-Adresse, Batteriekapazität, Ladeeffizienz)
+werden nicht hier, sondern auf der Seite [Fahrzeuge](/docs/webinterface/users/vehicles)
+angelegt.
+
 ## Anmeldung
 
 Wenn *Anmeldung aktiviert* ausgewählt ist, muss zum Zugriff auf das Webinterface und zur Verwendung der

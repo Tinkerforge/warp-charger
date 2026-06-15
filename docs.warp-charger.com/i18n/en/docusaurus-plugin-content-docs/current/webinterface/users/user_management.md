@@ -54,6 +54,26 @@ it is sufficient to configure the users and tags for the charge manager and enab
 see [Chargers](/webinterface/energy_management/wallboxes.md).
 :::
 
+## Vehicles
+
+:::note
+
+This function is only available on the WARP4 Charger.
+
+:::
+
+Vehicles can be assigned to a user when creating or editing them. As a result, charging
+sessions authorized via Autocharge are attributed to that user in the charge log, and the
+user's individual charging current limit is applied.
+
+The + button in the *Vehicles* section offers all configured vehicle profiles for
+selection. Each vehicle profile can be assigned to one user.
+
+![image](/img/webinterface/users/warp-users-user_management4.png)
+
+The actual vehicle profiles (name, MAC address, battery capacity, charging efficiency)
+are not created here, but on the [Vehicles](/webinterface/users/vehicles.md) page.
+
 ## Login
 
 When *Login enabled* is selected, access to the web interface and use of the
