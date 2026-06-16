@@ -50,9 +50,17 @@ Die Statusseite stellt, sofern aktiviert, auch Informationen zum Lastmanagement 
 Zusätzlich werden Informationen zu den Schnittstellen gegeben. Darunter IP-Adressen, die Stärke der WLAN-Verbindung etc.
 
 ### Weitere Beispiele
-Beispiele mit Eco-Lademodus und aktiviertem Ladeplan in einem Lastmanagement mit mehreren Wallboxen.
-![image](/img/webinterface/status/warp3-status2.jpeg)
+Beispiel mit Eco-Lademodus und aktiviertem Ladeplan in einem Lastmanagement mit mehreren Wallboxen.
 ![image](/img/webinterface/status/warp3-status3.jpeg)
+Über den Abschnitt **Lademodus** und die entsprechenden Buttons kann der
+Lademodus dauerhaft für alle kontrollierten Wallboxen gesetzt werden.
+Welche Lademodi angeboten werden, hängt davon ab ob der WARP Charger für ein
+PV-Überschussladen konfiguriert wurde und ob der Eco-Modus aktiviert wurde.
+
+Unter **Kontrollierte Wallboxen** werden die vom WARP Charger gesteuerten Wallboxen
+und deren Zustand dargestellt. Der Lademodus jeder Wallbox kann auch individuell an der
+Wallbox (Fronttaster) oder über die Drop-Down-Box eingestellt werden. Diese Einstellung
+gilt dann aber nur temporär für den aktuellen Ladevorgang.
 
 ## Status (WARP Energy Manager)
 
@@ -70,14 +78,14 @@ aktuellen **Leistungen** von Stromzählern dargestellt. Wurden die Stromzähler
 konfiguriert, so kann hier ein Überblick über den Leistungsverlauf bezogen auf
 die PV-Erzeugung, dem Netzbezug oder Netzeinspeisung, dem Hausakku und dem Verbrauch.
 
-Dieser WARP Energy Manager wurde als Lastmanager für Wallboxen konfiguriert.
-Daher kann der **Lademodus** für die Wallboxen eingestellt werden.
-Welche Lademodi angeboten werden, hängt davon ab ob der Energy Manager für ein
-PV-Überschussladen konfiguriert wurde und ob der Eco-Modus aktiviert wurde.
-
-Dargestellt werden die vom Energy Manager **kontrollierten Wallboxen** und deren Zustand.
-
 Der Zustand der **SG-Ready** Schnittstelle (Heizung) und Informationen zum aktuellen
 Strompreis (**Aktueller Börsenpreis** und **Durchschnittspreis**) werden ebenfalls dargestellt.
 
-Ansatzweise sind die Daten zur **PV-Ertragsprognose** in diesem Screenshot sichtbar.
+Dieser WARP Energy Manager wurde als Lastmanager für Wallboxen konfiguriert.
+Über den Abschnitt **Lademodus** und die entsprechenden Buttons kann der
+Lademodus dauerhaft für alle kontrollierten Wallboxen gesetzt werden.
+Welche Lademodi angeboten werden, hängt davon ab ob der Energy Manager für ein
+PV-Überschussladen konfiguriert wurde und ob der Eco-Modus aktiviert wurde.
+
+Zusätzlich ist ein **Eco-Ladeplan** aktiv, bei dem eine tägliche Abfahrtszeit von 08:00 Uhr
+mit einer Ladedauer von 7 Stunden konfiguriert wurde.
