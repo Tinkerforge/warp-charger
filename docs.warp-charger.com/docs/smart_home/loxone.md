@@ -51,10 +51,13 @@ Dieser wird mit der IP-Adresse und dem Port konfiguriert.
 Anschließend muss ein Modbus-Gerät hinzugefügt werden. 
 Um das zu vereinfachen, empfehlen wir die WARP-Vorlagen zu verwenden:
 
-- [Loxone Modbus Vorlage Deutsch](/img/smart_home/loxone/MB_Warp3_Complete_DE.xml)
-- [Loxone Modbus Vorlage Englisch](/img/smart_home/loxone/MB_Warp3_Complete_EN.xml)
+- [Loxone WARP Vorlage Deutsch](/img/smart_home/loxone/MB_Warp3_Complete_DE.xml)
+- [Loxone WARP Vorlage Englisch](/img/smart_home/loxone/MB_Warp3_Complete_EN.xml)
 
 Diese werden über den Modbus-Server importiert. 
+
+![Modbus import](/img/smart_home/loxone/import_template.png)
+
 Anschließend kann der WARP Charger direkt aus einem Template angelegt werden.
 
 Nachdem das Gerät angelegt wurde, sollte die Konfiguration auf dem Miniserver gespeichert werden. 
@@ -71,5 +74,5 @@ Diese Daten müssen mithilfe von Bausteinen zuerst verarbeitet werden, bevor sie
 
 :::note
 Einige Registereinträge sind nicht im Template enthalten. 
-So sind beispielsweise die LED-Parameter nicht enthalten. Um die LED zu steuern, müssen 160 Bit in 10 Register geschrieben werden, der Miniserver kann jedoch maximal 64 Bit in einem Befehl schreiben.
+So sind beispielsweise die LED-Parameter nicht enthalten. Um die LED zu steuern, müssen 160 Bit in 10 Register in einem Befehl geschrieben werden, der Miniserver kann jedoch maximal 64 Bit in einem Befehl schreiben.
 :::
