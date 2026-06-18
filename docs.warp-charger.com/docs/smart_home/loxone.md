@@ -9,7 +9,7 @@ sidebar_position: 6
 Dein [WARP Charger](@current-charger/introduction) ist mit dem Miniserver von [Loxone](https://www.loxone.com/dede/produkte/gebaeude-und-hausautomation-miniserver/) kompatibel.
 Loxone ist ein Unternehmen, das Produkte zur Gebäudeautomation entwickelt und vertreibt. 
 
-Der WARP Charger kann an den Loxone Miniserver über [Modbus/TCP](/docs/interfaces/modbus/introduction), [MQTT](/docs/interfaces/mqtt_http/introduction) oder [EEBUS](/docs/interfaces/eebus) angebunden werden.
+Der WARP Charger kann an den Loxone Miniserver über [Modbus/TCP](/docs/interfaces/modbus/introduction) oder [MQTT](/docs/interfaces/mqtt_http/introduction) angebunden werden.
 Beide Geräte benötigen dafür lediglich eine Netzwerkanbindung.
 
 :::note
@@ -18,13 +18,13 @@ Der Miniserver bringt jedoch keinen eigenen MQTT-Broker mit, daher muss zuerst e
 Die Einrichtung von MQTT-Datenpunkten muss vollständig manuell erfolgen und wird daher nur fortgeschrittenen Benutzern empfohlen.  
 :::
 
-{/*
+
 :::note
 Der Loxone Miniserver unterstützt auch EEBUS. 
 Damit wäre es möglich den Stromzähler des WARP Chargers auszulesen.
-Leider konnten wir bei tests
+Leider ist eine Verbindung mit dem Loxone Miniserver über EEBUS sehr instabil und kommt of nicht zustande, daher kann dies aktuell nicht empfohlen werden.
 :::
-*/}
+
 ## Einbindung via Modbus/TCP
 ### Konfiguration des WARP Chargers
 
