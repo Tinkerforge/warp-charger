@@ -30,6 +30,27 @@
 
 {% from "macros/badge.html" import badge %}
 
+{#
+  Renders either a click-to-play <video> (native controls + fullscreen, loads
+  only on play) or a static <img>, sharing the same Tailwind classes so the
+  glass-frame layout is identical for both.
+#}
+{% macro _light_media(video, video_poster, image, alt, classes) %}
+{% if video %}
+<video
+    src="{{ url_for('static', filename='videos/' ~ video) }}"
+    {% if video_poster %}poster="{{ url_for('static', filename='images/' ~ video_poster) }}"{% endif %}
+    controls
+    preload="none"
+    playsinline
+    aria-label="{{ alt }}"
+    class="{{ classes }}"
+></video>
+{% else %}
+<img src="{{ url_for('static', filename='images/' ~ image) }}" loading="lazy" alt="{{ alt }}" class="{{ classes }}" />
+{% endif %}
+{% endmacro %}
+
 {% macro two_col_section(
     badge_icon,
     badge_text,
@@ -44,7 +65,8 @@
     image_aspect="",
     pb="",
     no_frame=false,
-    video=""
+    video="",
+    video_poster=""
 ) %}
 {% set alt = image_alt or headline %}
 {% set flex_dir = "lg:flex-row" if image_side == "right" else "lg:flex-row-reverse" %}
@@ -100,10 +122,10 @@
             {# Image shown between heading and content on mobile #}
             <div class="flex w-full items-center justify-center lg:hidden">
                 {% if no_frame %}
-                <img src="{{ url_for('static', filename='images/' ~ image) }}" loading="lazy" alt="{{ alt }}" class="block h-auto w-full max-w-lg object-contain" />
+                {{ _light_media(video, video_poster, image, alt, "block h-auto w-full max-w-lg object-contain") }}
                 {% else %}
                 <div class="glass-frame w-full max-w-lg">
-                    <img src="{{ url_for('static', filename='images/' ~ image) }}" loading="lazy" alt="{{ alt }}" class="glass-frame-inner block h-auto w-full object-cover shadow-[0_0_27px_4.5px_rgba(0,0,0,0.10)]" />
+                    {{ _light_media(video, video_poster, image, alt, "glass-frame-inner block h-auto w-full object-cover shadow-[0_0_27px_4.5px_rgba(0,0,0,0.10)]") }}
                 </div>
                 {% endif %}
             </div>
@@ -113,10 +135,10 @@
         {# Image Column: desktop only #}
         <div class="hidden lg:flex flex-1 items-center justify-center">
             {% if no_frame %}
-            <img src="{{ url_for('static', filename='images/' ~ image) }}" loading="lazy" alt="{{ alt }}" class="block h-auto w-full max-w-lg object-contain" />
+            {{ _light_media(video, video_poster, image, alt, "block h-auto w-full max-w-lg object-contain") }}
             {% else %}
             <div class="glass-frame w-full max-w-lg">
-                <img src="{{ url_for('static', filename='images/' ~ image) }}" loading="lazy" alt="{{ alt }}" class="glass-frame-inner block h-auto w-full object-cover shadow-[0_0_27px_4.5px_rgba(0,0,0,0.10)]" />
+                {{ _light_media(video, video_poster, image, alt, "glass-frame-inner block h-auto w-full object-cover shadow-[0_0_27px_4.5px_rgba(0,0,0,0.10)]") }}
             </div>
             {% endif %}
         </div>
