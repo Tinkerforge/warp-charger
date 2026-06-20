@@ -4,6 +4,17 @@ sidebar_position: 2
 
 # Assembly and Installation
 
+The following video gives an overview of installing the WARP4 Charger.
+
+<video
+  controls
+  preload="none"
+  poster="/en/img/warp4/warp4-installation-poster.webp"
+  playsInline
+  style={{width: '100%', height: 'auto', borderRadius: '8px'}}>
+  <source src="/en/videos/warp4-installation.mp4" type="video/mp4" />
+</video>
+
 ## Assembly
 
 ### Scope of Delivery

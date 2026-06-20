@@ -4,6 +4,17 @@ sidebar_position: 2
 
 # Montage und Installation
 
+Das folgende Video zeigt die Installation der WARP4 Wallbox im Überblick.
+
+<video
+  controls
+  preload="none"
+  poster="/de/img/warp4/warp4-installation-poster.webp"
+  playsInline
+  style={{width: '100%', height: 'auto', borderRadius: '8px'}}>
+  <source src="/de/videos/warp4-installation.mp4" type="video/mp4" />
+</video>
+
 ## Montage
 
 ### Lieferumfang
