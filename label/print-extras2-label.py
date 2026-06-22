@@ -11,7 +11,7 @@ import tinkerforge_util as tfutil  # sudo apt install python3-tinkerforge-util
 QR_CODE_COMMAND = b'W649,209,5,2,M,8,6,57,0\r'
 QR_CODE_PADDING = b';;\r'
 
-HEADER_PLACEHOLDER = b'WARP2 Extras'
+HEADER_PLACEHOLDER = 'WARP2 Extras für Bestellung SO/98765'.encode('utf-8')
 
 STAND_PLACEHOLDER_A = b'Lades\xc3\xa4ule: Bitte'
 STAND_PLACEHOLDER_B = b'S:1;'
@@ -54,7 +54,7 @@ COMMENT_2_PLACEHOLDER = b'Kommentar f\xC3\xBCr sonstige Hinweise.'
 COPIES_FORMAT = '^C{0}\r'
 
 
-def print_accessories2_label(header, stand, stand_wiring, stand_lock, supply_cable, cee, custom_engraving, custom_type2, comment_1, comment_2, copies, stdout):
+def print_extras2_label(header, stand, stand_wiring, stand_lock, supply_cable, cee, custom_engraving, custom_type2, comment_1, comment_2, copies, stdout):
     # check copies
     if copies < 1 or copies > 5:
         raise Exception('Invalid copies: {0}'.format(copies))
@@ -64,7 +64,7 @@ def print_accessories2_label(header, stand, stand_wiring, stand_lock, supply_cab
         raise Exception('Invalid supply cable: {0}'.format(supply_cable))
 
     # read EZPL file
-    with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'accessories2.prn'), 'rb') as f:
+    with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'extras2.prn'), 'rb') as f:
         template = f.read()
 
     if template.find(b'^H13\r') < 0:
@@ -164,8 +164,6 @@ def print_accessories2_label(header, stand, stand_wiring, stand_lock, supply_cab
         custom_type2_qr_code = '0'
         custom_type2 = ''
     else:
-        custom_type2, order_id = custom_type2.split(':')
-
         if custom_type2 == 'customer':
             custom_type2_qr_code = '1'
             custom_type2 = 'Kunde'
@@ -173,9 +171,9 @@ def print_accessories2_label(header, stand, stand_wiring, stand_lock, supply_cab
             custom_type2_qr_code = re.sub(r'^([mtc]).*_(h|f)_(\d+)$', r'\1\2\3', custom_type2).upper()
             cable, power, length = custom_type2.split('_')
             length = round(int(length) / 10, 1)
-            custom_type2 = f"{cable.replace('customer', 'kunde').capitalize()}, {power.replace('h', '11kW').replace('f', '22kW')}, {int(length) if int(length) == length else length} m"
+            custom_type2 = f"{cable.replace('customer', 'kunde').capitalize()}, {power.replace('h', '11kW').replace('f', '22kW')}, {str(int(length) if int(length) == length else length).replace('.', ',')} m"
 
-        custom_type2 = 'Typ-2: {0}, {1}'.format(custom_type2, order_id)
+        custom_type2 = f'Typ-2: {custom_type2}'
 
     template = template.replace(CUSTOM_TYPE2_PLACEHOLDER_A, custom_type2.encode('ascii'))
 
@@ -234,7 +232,7 @@ def main():
 
     assert args.copies > 0
 
-    print_accessories2_label(args.header, args.stand, args.stand_wiring, args.stand_lock, args.supply_cable, bool(args.cee), args.custom_engraving, args.custom_type2, args.comment_1, args.comment_2, args.copies, args.stdout)
+    print_extras2_label(args.header, args.stand, args.stand_wiring, args.stand_lock, args.supply_cable, bool(args.cee), args.custom_engraving, args.custom_type2, args.comment_1, args.comment_2, args.copies, args.stdout)
 
 
 if __name__ == '__main__':

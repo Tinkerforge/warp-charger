@@ -28,7 +28,7 @@ CURRENT_PLACEHOLDER = b', 16 A'
 
 COPIES_FORMAT = '^C{0}\r'
 
-ACCESSORIES_FORMAT = ';A:{0};'
+EXTRAS_FORMAT = ';A:{0};'
 
 
 def get_next_serial_number():
@@ -56,7 +56,7 @@ def get_next_serial_number():
     return '5{0:09}'.format(serial_number)
 
 
-def print_warp2_label(sku, version, serial_number, build_date, custom_type2, instances, copies, stdout, force_build_date, accessories):
+def print_warp2_label(sku, version, serial_number, build_date, custom_type2, instances, copies, stdout, force_build_date, extras):
     # check instances
     if instances < 1 or instances > 25:
         raise Exception('Invalid instances: {0}'.format(instances))
@@ -103,7 +103,6 @@ def print_warp2_label(sku, version, serial_number, build_date, custom_type2, ins
         custom_type2_power = None
         custom_type2_length = None
     else:
-        custom_type2, order_id = custom_type2.split(':')
         custom_type2_cable, custom_type2_power, custom_type2_length = custom_type2.split('_')
         custom_type2_length = round(int(custom_type2_length) / 10, 1)
 
@@ -258,13 +257,13 @@ def print_warp2_label(sku, version, serial_number, build_date, custom_type2, ins
 
     template = template.replace(copies_command, COPIES_FORMAT.format(copies).encode('ascii'))
 
-    # patch accessories
-    accessories_placeholder = ACCESSORIES_FORMAT.format('0').encode('ascii')
+    # patch extras
+    extras_placeholder = EXTRAS_FORMAT.format('0').encode('ascii')
 
-    if template.find(accessories_placeholder) < 0:
-        raise Exception('Accessories placeholder missing in EZPL file')
+    if template.find(extras_placeholder) < 0:
+        raise Exception('Extras placeholder missing in EZPL file')
 
-    template = template.replace(accessories_placeholder, ACCESSORIES_FORMAT.format('1' if accessories else '0').encode('ascii'))
+    template = template.replace(extras_placeholder, EXTRAS_FORMAT.format('1' if extras else '0').encode('ascii'))
 
     # patch serial number
     if template.find(SERIAL_NUMBER_PLACEHOLDER) < 0:
@@ -302,14 +301,14 @@ def main():
     parser.add_argument('-c', '--copies', type=int, default=1)
     parser.add_argument('-s', '--stdout', action='store_true')
     parser.add_argument('--force-build-date', action='store_true')
-    parser.add_argument('--accessories', action='store_true')
+    parser.add_argument('--extras', action='store_true')
 
     args = parser.parse_args()
 
     assert args.instances > 0
     assert args.copies > 0
 
-    print_warp2_label(args.sku, args.version, args.serial_number, args.build_date, args.custom_type2, args.instances, args.copies, args.stdout, args.force_build_date, args.accessories)
+    print_warp2_label(args.sku, args.version, args.serial_number, args.build_date, args.custom_type2, args.instances, args.copies, args.stdout, args.force_build_date, args.extras)
 
 
 if __name__ == '__main__':
