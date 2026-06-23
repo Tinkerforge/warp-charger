@@ -42,7 +42,7 @@ COPIES_FORMAT = '^C{0}\r'
 
 
 def get_next_serial_number():
-    with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'staging-password.txt'), 'r') as f:
+    with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'staging_password.txt'), 'r') as f:
         staging_password = f.read().strip()
 
     if sys.version_info < (3, 5, 3):
