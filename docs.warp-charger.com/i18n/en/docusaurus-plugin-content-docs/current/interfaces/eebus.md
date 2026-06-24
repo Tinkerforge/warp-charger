@@ -16,18 +16,18 @@ EEBUS defines various use cases for different applications.
 
 ### Grid operator control
 
-- **LPC** (Limitation of Power Consumption): Allows the grid operator to limit power consumption. Used by control boxes for grid control according to §14a EnWG. Available on WARP Charger and Energy Manager.
+- **LPC** (Limitation of Power Consumption, Actor: Controllable System): Allows the grid operator to limit power consumption. Used by control boxes for grid control according to §14a EnWG. Available on WARP Charger and Energy Manager.
 
 ### E-Mobility (WARP Charger only)
 
-- **EVCC** (EV Commissioning and Configuration): Information about the connected electric vehicle (communication standard, power limits, asymmetric charging).
-- **EVSECC** (EVSE Commissioning and Configuration): Operating state of the charging station and any error conditions.
-- **EVCEM** (EV Charging Electricity Measurement): Measurements of the charging process (current, power, charged energy per phase).
-- **MPC** (Monitoring of Power Consumption): Monitoring of the charger power consumption with measurements for power, current, voltage, and frequency.
+- **EVCC** (EV Commissioning and Configuration, Actor: EV): Information about the connected electric vehicle (communication standard, power limits, asymmetric charging).
+- **EVSECC** (EVSE Commissioning and Configurationn, Actor: EVSE): Operating state of the charging station and any error conditions.
+- **EVCEM** (EV Charging Electricity Measurement, Actor: EV): Measurements of the charging process (current, power, charged energy per phase).
+- **MPC** (Monitoring of Power Consumption, Actor: Monitored Unit): Monitoring of the charger power consumption with measurements for power, current, voltage, and frequency.
 
 ### Energy management (Energy Manager only)
 
-- **MGCP** (Monitoring of Grid Connection Point): Monitoring of the grid connection point with measurements for power, energy, current, voltage, and frequency.
+- **MGCP** (Monitoring of Grid Connection Point, Actor: Grid Connection Point): Monitoring of the grid connection point with measurements for power, energy, current, voltage, and frequency.
 
 
 ## Configuration
@@ -56,11 +56,6 @@ EEBUS devices must mutually trust each other before they can communicate. Connec
 
 If a device is not automatically detected, it is possible to set the SKI and address/port/wss path manually. A device that was added is trusted by default.
 
-:::warning
-
-In the current version, WARP Chargers and WARP Energy Managers do not automatically connect to other EEBUS devices. The connection must be initiated by the other side. This can usually be done by adding the device on the EEBUS device.
-
-:::
 
 ## Further information
 

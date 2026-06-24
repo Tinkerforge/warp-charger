@@ -16,18 +16,18 @@ EEBUS definiert verschiedene Use Cases für unterschiedliche Anwendungsbereiche.
 
 ### Netzbetreibersteuerung
 
-- **LPC** (Limitation of Power Consumption): Ermöglicht dem Netzbetreiber, die Leistungsaufnahme zu begrenzen. Wird von Steuerboxen zur Netzsteuerung gemäß §14a EnWG verwendet. Verfügbar auf WARP Charger und Energy Manager.
+- **LPC** (Limitation of Power Consumption, Actor: Controllable System): Ermöglicht dem Netzbetreiber, die Leistungsaufnahme zu begrenzen. Wird von Steuerboxen zur Netzsteuerung gemäß §14a EnWG verwendet. Verfügbar auf WARP Charger und Energy Manager.
 
 ### E-Mobility (nur WARP Charger)
 
-- **EVCC** (EV Commissioning and Configuration): Informationen über das angeschlossene Elektrofahrzeug (Kommunikationsstandard, Leistungsgrenzen, asymmetrisches Laden).
-- **EVSECC** (EVSE Commissioning and Configuration): Betriebszustand der Ladestation und eventuelle Fehlerzustände.
-- **EVCEM** (EV Charging Electricity Measurement): Messwerte des Ladevorgangs (Strom, Leistung, geladene Energie pro Phase).
-- **MPC** (Monitoring of Power Consumption): Überwachung der Leistungsaufnahme der Wallbox mit Messwerten für Leistung, Strom, Spannung und Frequenz.
+- **EVCC** (EV Commissioning and Configuration, Actor: EV): Informationen über das angeschlossene Elektrofahrzeug (Kommunikationsstandard, Leistungsgrenzen, asymmetrisches Laden).
+- **EVSECC** (EVSE Commissioning and Configuration, Actor: EVSE): Betriebszustand der Ladestation und eventuelle Fehlerzustände.
+- **EVCEM** (EV Charging Electricity Measurement, Actor: EV): Messwerte des Ladevorgangs (Strom, Leistung, geladene Energie pro Phase).
+- **MPC** (Monitoring of Power Consumption, Actor: Monitored Unit): Überwachung der Leistungsaufnahme der Wallbox mit Messwerten für Leistung, Strom, Spannung und Frequenz.
 
 ### Energiemanagement (nur Energy Manager)
 
-- **MGCP** (Monitoring of Grid Connection Point): Überwachung des Netzanschlusspunkts mit Messwerten für Leistung, Energie, Strom, Spannung und Frequenz.
+- **MGCP** (Monitoring of Grid Connection Point, Actor: Grid Connection Point): Überwachung des Netzanschlusspunkts mit Messwerten für Leistung, Energie, Strom, Spannung und Frequenz.
 
 
 ## Konfiguration
@@ -57,12 +57,6 @@ EEBUS-Geräte müssen sich gegenseitig vertrauen, bevor sie kommunizieren könne
 ![image](/img/interfaces/eebus/eebus_add.png)
 
 Falls ein Gerät nicht automatisch erkannt wird, ist es möglich die SKI und Adresse/Port/WSS-Pfad manuell anzugeben. Einem hinzugefügten Gerät wird standardmäßig vertraut.
-
-:::warning
-
-In der aktuellen Version verbinden sich WARP Charger und WARP Energy Manager nicht selbständig mit anderen EEBUS Geräten. Die Verbindung muss von der Gegenseite ausgehen. Das kann meistens auf dem EEBUS Gerät durch hinzufügen initiiert werden.
-
-:::
 
 ## Weitere Informationen
 
