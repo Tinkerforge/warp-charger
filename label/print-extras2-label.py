@@ -149,7 +149,7 @@ def print_extras2_label(header, stand, stand_wiring, stand_lock, supply_cable, c
     if template.find(CUSTOM_ENGRAVING_PLACEHOLDER_A) < 0:
         raise Exception('Custom engraving placeholder A missing in EZPL file')
 
-    template = template.replace(CUSTOM_ENGRAVING_PLACEHOLDER_A, 'Gravur: {0}'.format(custom_engraving[:28]).encode('latin1', errors='replace') if custom_engraving != '0' else b'')
+    template = template.replace(CUSTOM_ENGRAVING_PLACEHOLDER_A, 'Gravur: {0}'.format(custom_engraving[:32]).encode('latin1', errors='replace') if custom_engraving != '0' else b'')
 
     if template.find(CUSTOM_ENGRAVING_PLACEHOLDER_B) < 0:
         raise Exception('Custom engraving placeholder B missing in EZPL file')
