@@ -229,6 +229,16 @@ def main():
                 if last_semver != None and semver >= last_semver:
                     print_error(f'{semver} is not smaller than {last_semver} in {name}')
 
+                if last_semver == None:
+                    link_path = prefix + '_latest_ota.bin'
+                    semver_path = str(semver).replace('.', '_').replace('-', '_').replace('+', '_')
+                    dest_path = prefix + '_' + semver_path + '_ota.bin'
+
+                    if not os.path.exists(link_path):
+                        print_error(f'{link_path} is missing')
+                    elif os.readlink(link_path) != dest_path:
+                        print_error(f'{link_path} links to the wrong file')
+
                 last_semver = semver
 
                 for suffix in ['.elf', '_changelog_en.txt', '_changelog_de.txt', '_esptool.bin', '_esptool.bin.sha256', '_ota.bin', '_ota.bin.sha256']:
