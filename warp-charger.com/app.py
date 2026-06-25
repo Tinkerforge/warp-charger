@@ -812,7 +812,17 @@ def warp4_charger():
     """WARP4 Charger product page."""
     lang = request.path.split("/")[1]
     slug = "produkte/warp4-charger" if lang == "de" else "products/warp4-charger"
+    # Build the download sections, linking the latest auto-discovered firmware directly.
+    t = get_translation(lang, "warp4-charger")
+    sections = copy.deepcopy(t.get("downloads", {}).get("sections", []))
+    warp4 = next((f for f in get_all_firmwares(lang) if f["id"] == "warp4"), None)
+    if warp4 and warp4.get("versions"):
+        latest_url = warp4["versions"][0]["url"]
+        for section in sections:
+            if section.get("icon") == "memory" and section.get("items"):
+                section["items"][0]["href"] = latest_url
     return render_page(lang, slug, translation="warp4-charger",
+                       downloads_sections=sections,
                        load_management_t=get_translation(lang, "charge-management"))
 
 

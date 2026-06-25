@@ -12,11 +12,30 @@ from pathlib import Path
 
 FIRMWARES_DIR = Path(__file__).parent.parent / "firmwares"
 
+# Firmware index/binary formats:
+#   v2: index file "<env>_firmware_v2.txt", binary "<env>_firmware_<ver>_merged.bin"
+#   v3: index file "<env>_firmware_v3.txt", binary "<env>_firmware_<ver>_ota.bin"
+FORMATS = {
+    "v2": {"index_suffix": "_firmware_v2.txt", "binary_suffix": "_merged.bin"},
+    "v3": {"index_suffix": "_firmware_v3.txt", "binary_suffix": "_ota.bin"},
+}
+
 # Firmware types in display order
 FIRMWARE_TYPES = [
     {
+        "type": "warp4",
+        "env_name": "warp4",
+        "format": "v3",
+        "display_name": {
+            "de": "WARP4 Charger",
+            "en": "WARP4 Charger",
+        },
+        "id": "warp4",
+    },
+    {
         "type": "warp3",
         "env_name": "warp3",
+        "format": "v2",
         "display_name": {
             "de": "WARP3 Charger",
             "en": "WARP3 Charger",
@@ -84,7 +103,8 @@ def _parse_changelog_line(line):
 def _load_firmware_versions(fw_type_info, lang):
     """Load all firmware versions for a given type and language."""
     env_name = fw_type_info["env_name"]
-    index_path = FIRMWARES_DIR / f"{env_name}_firmware_v2.txt"
+    fmt = FORMATS[fw_type_info.get("format", "v2")]
+    index_path = FIRMWARES_DIR / f"{env_name}{fmt['index_suffix']}"
 
     if not index_path.exists():
         return []
@@ -103,7 +123,7 @@ def _load_firmware_versions(fw_type_info, lang):
         index_version = index_line.replace(".", "_").replace("-", "_").replace("+", "_")
 
         # Build firmware filename
-        firmware_filename = f"{env_name}_firmware_{index_version}_merged.bin"
+        firmware_filename = f"{env_name}_firmware_{index_version}{fmt['binary_suffix']}"
 
         # Read changelog file
         changelog_path = FIRMWARES_DIR / f"{env_name}_firmware_{index_version}_changelog_{lang}.txt"
@@ -159,7 +179,8 @@ def get_all_firmwares(lang):
 
     for fw_type_info in FIRMWARE_TYPES:
         env_name = fw_type_info["env_name"]
-        index_path = FIRMWARES_DIR / f"{env_name}_firmware_v2.txt"
+        fmt = FORMATS[fw_type_info.get("format", "v2")]
+        index_path = FIRMWARES_DIR / f"{env_name}{fmt['index_suffix']}"
         cache_key = (fw_type_info["type"], lang)
 
         # Check cache
