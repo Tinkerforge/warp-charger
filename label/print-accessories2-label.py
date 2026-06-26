@@ -116,8 +116,7 @@ def print_accessories2_label(header, items, copies, stdout):
         sys.stdout.buffer.write(template)
         sys.stdout.buffer.flush()
     else:
-        #with socket.create_connection((tfutil.get_tf_printer_host('warp-docket'), 9100)) as s:
-        with socket.create_connection(('10.2.95.4', 9100)) as s:
+        with socket.create_connection((tfutil.get_tf_printer_host('warp-docket'), 9100)) as s:
             s.send(template)
             time.sleep(1)
 
