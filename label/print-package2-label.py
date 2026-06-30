@@ -438,7 +438,7 @@ def main():
     parser.add_argument('version')
     parser.add_argument('serial_number')
     parser.add_argument('build_date')
-    parser.add_argument('custom_type2')
+    parser.add_argument('-t', '--custom-type2', default='no')
     parser.add_argument('-i', '--instances', type=int, default=1)
     parser.add_argument('-c', '--copies', type=int, default=1)
     parser.add_argument('-s', '--stdout', action='store_true')
