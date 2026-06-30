@@ -158,8 +158,9 @@ FULL_SKU_PLACEHOLDER = b'Typ: WARP2-CS-11KW-50-PC'
 
 BASE_SKU_PLACEHOLDER = b'WARP2-CS-11KW-50-PC'
 
-DATA_MATRIX_FORMAT = 'XRB97,190,5,1R,{}\r'
-DATA_MATRIX_PLACEHOLDER = DATA_MATRIX_FORMAT.format(19).encode('ascii')
+DATA_MATRIX_FORMAT_RECTANGLE = 'XRB97,190,5,1R,{}\r'
+DATA_MATRIX_FORMAT_SQUARE = 'XRB97,190,5,2,{}\r'
+DATA_MATRIX_PLACEHOLDER = DATA_MATRIX_FORMAT_RECTANGLE.format(19).encode('ascii')
 
 VERSION_PLACEHOLDER = b'2.17'
 
@@ -385,7 +386,12 @@ def print_package2_label(full_sku, version, serial_number, build_date, custom_ty
     if template.find(DATA_MATRIX_PLACEHOLDER) < 0:
         raise Exception('Data Matrix placeholder missing in EZPL file')
 
-    template = template.replace(DATA_MATRIX_PLACEHOLDER, DATA_MATRIX_FORMAT.format(len(base_sku)).encode('ascii'))
+    if len(base_sku) < 9:
+        data_matrix_format = DATA_MATRIX_FORMAT_SQUARE
+    else:
+        data_matrix_format = DATA_MATRIX_FORMAT_RECTANGLE
+
+    template = template.replace(DATA_MATRIX_PLACEHOLDER, data_matrix_format.format(len(base_sku)).encode('ascii'))
 
     # patch version
     if template.find(VERSION_PLACEHOLDER) < 0:
