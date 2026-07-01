@@ -389,6 +389,106 @@ mosquitto_pub -h $BROKER -t $PREFIX/ocpp/reset -m 'null'
 
 
 </TabItem>
+<TabItem value="warp4">
+## `ocpp/config` {#ocpp_config_warp4}
+
+
+Konfiguration der OCPP-Verbindung
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Beschreibung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable`<br/>bool</th>
+    <td>
+        Gibt an, ob eine Verbindung zum konfigurierten OCPP-Server aufgebaut werden soll. Damit nicht nur das Auslesen des Zustands, sondern zusätzlich eine Steuerung möglich ist, muss außerdem [`evse/ocpp_enabled`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_ocpp_enabled) true sein.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`url`<br/>string</th>
+    <td>
+        Endpoint-URL des OCPP-Servers. Muss mit dem Schema ws:// (unverschlüsselt!) oder wss:// (TLS-verschlüsselt) beginnen und darf <strong>nicht</strong> auf / enden.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`identity`<br/>string</th>
+    <td>
+        Identität der Wallbox. Wird an die Endpoint-URL angehangen und als Benutzername für die Autorisierung verwendet
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_auth`<br/>bool</th>
+    <td>
+        Gibt an, dass eine Autorisierung per HTTP-Basic-Auth durchgeführt werden soll.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`pass`<br/>string</th>
+    <td>
+        HTTP-Basic-Auth Passwort. Wenn das Passwort exakt 40 Zeichen lang ist und nur aus Hex-Zeichen (0-9, A-F, a-f) besteht, wird es als hexadezimale Repräsentation eines 20 Byte langen Authorization-Keys betrachtet.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`cert_id`<br/>int</th>
+    <td>
+        ID des TLS-Zertifikats, dass zum Aufbau einer TLS-verschlüsselten Verbindung verwendet werden soll.
+        - **-1** - Verwende eingebettetes Zertifikatsbundle
+        - **>= 0** - Verwende Zertifikat mit dieser ID
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `ocpp/reset` {#ocpp_reset_warp4}
+
+
+Setzt den OCPP-Zustand zurück. <strong>Nicht gesendete Transaktionsdaten gehen verloren!</strong>
+**Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp4-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/ocpp/reset -d 'null'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp4/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/ocpp/reset -m 'null'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+</TabItem>
 <TabItem value="wem">
 Auf dieser Hardware nicht unterstützt!
 </TabItem>
@@ -593,11 +693,11 @@ export const toc = [
     "value": "ocpp/config",
     "id": "ocpp_config",
     "level": 2,
-    "hardwareType": ["warp2","warp3"]
+    "hardwareType": ["warp2","warp3","warp4"]
 },{
     "value": "ocpp/reset",
     "id": "ocpp_reset",
     "level": 2,
-    "hardwareType": ["warp2","warp3"]
+    "hardwareType": ["warp2","warp3","warp4"]
 },
 ];

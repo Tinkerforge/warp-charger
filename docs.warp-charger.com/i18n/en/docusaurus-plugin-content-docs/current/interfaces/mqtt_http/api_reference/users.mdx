@@ -1561,6 +1561,523 @@ For charge tracking, the display names of deleted users are stored separately in
     </TabItem>
 </Tabs>
 </TabItem>
+<TabItem value="warp4">
+## `users/config` {#users_config_warp4}
+
+
+The user configuration. Can be updated with [`users/add`](/interfaces/mqtt_http/api_reference/users.mdx#users_add), [`users/modify`](/interfaces/mqtt_http/api_reference/users.mdx#users_modify), [`users/remove`](/interfaces/mqtt_http/api_reference/users.mdx#users_remove) and [`users/http_auth_update`](/interfaces/mqtt_http/api_reference/users.mdx#users_http_auth_update).
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+#### Read
+```bash
+curl http://$HOST/users/config
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+#### Read
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/users/config
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "users": [
+{
+  "next_user_id": 5,
+  "http_auth_enabled": true,
+  // highlight-start
+  // Not returned
+  "http_auth_username": null,
+  // Not returned
+  "digest_hash": null,
+  // highlight-end
+  "users": [
+    // Example data
+    {
+      "id": 1,
+      "roles": 15,
+      "current": 32000,
+      "display_name": "Anonymous User",
+      "username": "anonymous",
+      "digest_hash": ""
+    }
+  ]
+}
+  ],
+  // Nutzer 2 und 4 wurden gelöscht.
+  "next_user_id": 5,
+  "http_auth_enabled": true
+}
+```
+
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`users`<br/>object[33]</th>
+    <td>
+        The users
+        - **[0..32]** - A user
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
+            <td>
+                ID of the user (1-255)
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`roles`<br/>int</th>
+            <td>
+                Permissions of the user. Not yet used.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+            <td>
+                Charging current allowed for this user 6000 (=6 Ampere) to 32000 (=32 Ampere) or 0 to prohibit charging for this user
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+            <td>
+                Display name of the user. Also used in the charge tracker.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`username`<br/>string</th>
+            <td>
+                Username for logging into the web interface and HTTP API.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`digest_hash`<br/>string</th>
+            <td>
+                HTTP Digest hash. Returned as empty string if login is disabled for this user. Returned as null if login is enabled for this user.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`next_user_id`<br/>int</th>
+    <td>
+        ID of the next user to be created.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`http_auth_enabled`<br/>bool</th>
+    <td>
+        Indicates whether credentials are required to use the web interface and HTTP API.
+        - **true** - If credentials should be required.
+        - **false** - If not.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `users/add` {#users_add_warp4}
+
+
+Adds a new user.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+#### Write
+```bash
+curl http://$HOST/users/add -d '{
+    "id": 5,
+    "roles": 65535,
+    "current": 32000,
+    "display_name": "Neuer Benutzer",
+    "username": "testuser",
+    "digest_hash": "926011006c2686471698e86690b7e500"
+  }'
+```
+
+`id` muss der `next_user_id` aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
+`digest_hash = MD5("testuser:esp32-lib:testpass")`
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+#### Write
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/add -m '{
+    "id": 5,
+    "roles": 65535,
+    "current": 32000,
+    "display_name": "Neuer Benutzer",
+    "username": "testuser",
+    "digest_hash": "926011006c2686471698e86690b7e500"
+  }'
+```
+
+`id` muss der `next_user_id` aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
+`digest_hash = MD5("testuser:esp32-lib:testpass")`
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
+    <td>
+        ID of the user to be created. Must match the current value of next_user_id from [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config).
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`roles`<br/>int</th>
+    <td>
+        Permissions of the user. Not yet used.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+    <td>
+        Charging current allowed for this user 6000 (=6 Ampere) to 32000 (=32 Ampere) or 0 to prohibit charging for this user
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        Display name of the user. Also used in the charge tracker.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`username`<br/>string</th>
+    <td>
+        Username for logging into the web interface and HTTP API.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`digest_hash`<br/>string</th>
+    <td>
+        HTTP Digest hash of the user to be created. An empty string prohibits login to the web interface.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `users/remove` {#users_remove_warp4}
+
+
+Deletes a user.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+#### Write
+```bash
+curl http://$HOST/users/remove -d '{ "id": 4 }'
+```
+
+or abbreviated:
+
+```bash
+curl http://$HOST/users/remove -d '4'
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+#### Write
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/remove -m '{ "id": 4 }'
+```
+
+or abbreviated:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/remove -m '4'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
+    <td>
+        ID of the user to be deleted
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `users/modify` {#users_modify_warp4}
+
+
+Modifies a user.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+#### Write
+```bash
+curl http://$HOST/users/modify -d '{
+    "id": 5,
+    "roles": null,
+    "current": null,
+    "display_name": "Neuer Benutzer (ohne Login)",
+    "username": null,
+    "digest_hash": ""
+  }'
+```
+
+Ändert beispielsweise nur den Anzeigenamen vom Benutzer mit der ID 5 und löscht dessen Passwort.
+Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-API verwenden.
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+#### Write
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/modify -m '{
+    "id": 5,
+    "roles": null,
+    "current": null,
+    "display_name": "Neuer Benutzer (ohne Login)",
+    "username": null,
+    "digest_hash": ""
+  }'
+```
+
+Ändert beispielsweise nur den Anzeigenamen vom Benutzer mit der ID 5 und löscht dessen Passwort.
+Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-API verwenden.
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
+    <td>
+        ID of the user to be modified.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`roles`<br/>int</th>
+    <td>
+        Permissions of the user. Not yet used.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+    <td>
+        Charging current allowed for this user 6000 (=6 Ampere) to 32000 (=32 Ampere) or 0 to prohibit charging for this user
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        Display name of the user. Also used in the charge tracker.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`username`<br/>string</th>
+    <td>
+        Username for logging into the web interface and HTTP API.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`digest_hash`<br/>string</th>
+    <td>
+        HTTP Digest hash of the user. An empty string prohibits login to the web interface.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `users/http_auth_update` {#users_http_auth_update_warp4}
+
+
+Writes http_auth_enabled from [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config).
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+#### Write
+```bash
+curl http://$HOST/users/http_auth_update -d '{ "enabled": false }'
+```
+
+or abbreviated:
+
+```bash
+curl http://$HOST/users/http_auth_update -d 'false'
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+#### Write
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/http_auth_update -m '{ "enabled": false }'
+```
+
+or abbreviated:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/http_auth_update -m 'false'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled`<br/>bool</th>
+    <td>
+        Specifies whether credentials are required to use the web interface and HTTP API.
+        - **true** - If credentials should be required.
+        - **false** - If not.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `users/all_usernames` {#users_all_usernames_warp4}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
+
+For charge tracking, the display names of deleted users are stored separately in flash. This function returns all display names that may appear in tracked charging sessions in a binary format.
+
+
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Only supported by the HTTP API"></Admonition>
+    </TabItem>
+</Tabs>
+</TabItem>
 <TabItem value="wem">
 Not supported on this hardware!
 </TabItem>
@@ -1700,7 +2217,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/users/config
             </tbody>
         </table>
         
-        <strong>(Only WARP 2 and WARP 3)</strong> 
+        <strong>(Only WARP 2 and WARP 3 and WARP 4)</strong> 
         
         - **[0..32]** - A user
         <table>
@@ -2156,31 +2673,31 @@ export const toc = [
     "value": "users/config",
     "id": "users_config",
     "level": 2,
-    "hardwareType": ["warp1","warp2","warp3"]
+    "hardwareType": ["warp1","warp2","warp3","warp4"]
 },{
     "value": "users/add",
     "id": "users_add",
     "level": 2,
-    "hardwareType": ["warp1","warp2","warp3"]
+    "hardwareType": ["warp1","warp2","warp3","warp4"]
 },{
     "value": "users/remove",
     "id": "users_remove",
     "level": 2,
-    "hardwareType": ["warp1","warp2","warp3"]
+    "hardwareType": ["warp1","warp2","warp3","warp4"]
 },{
     "value": "users/modify",
     "id": "users_modify",
     "level": 2,
-    "hardwareType": ["warp1","warp2","warp3"]
+    "hardwareType": ["warp1","warp2","warp3","warp4"]
 },{
     "value": "users/http_auth_update",
     "id": "users_http_auth_update",
     "level": 2,
-    "hardwareType": ["warp1","warp2","warp3"]
+    "hardwareType": ["warp1","warp2","warp3","warp4"]
 },{
     "value": "users/all_usernames",
     "id": "users_all_usernames",
     "level": 2,
-    "hardwareType": ["warp1","warp2","warp3"]
+    "hardwareType": ["warp1","warp2","warp3","warp4"]
 },
 ];

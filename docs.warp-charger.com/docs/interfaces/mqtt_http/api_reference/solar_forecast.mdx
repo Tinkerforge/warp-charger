@@ -1263,6 +1263,631 @@ mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast_update -m '
     </tbody>
 </table>
 </TabItem>
+<TabItem value="warp4">
+## `solar_forecast/config` {#solar_forecast_config_warp4}
+
+
+Die Konfiguration der PV-Ertragsprognose.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp4-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/solar_forecast/config
+```
+```jsx
+{
+    "enable": true,
+    "source": 0,
+    "api_url": "https://api.forecast.solar/",
+    "cert_id": -1
+}
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/solar_forecast/config -d '{
+    "enable": true,
+    "source": 0,
+    "api_url": "https://api.forecast.solar/",
+    "cert_id": -1
+}'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp4/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/config
+```
+```jsx
+{
+    "enable": true,
+    "source": 0,
+    "api_url": "https://api.forecast.solar/",
+    "cert_id": -1
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/solar_forecast/config<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/config_update -m '{
+    "enable": true,
+    "source": 0,
+    "api_url": "https://api.forecast.solar/",
+    "cert_id": -1
+}'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Beschreibung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable`<br/>bool</th>
+    <td>
+        Gibt an, ob die PV-Ertragsprognose verwendet werden soll. Wenn die Quelle auf Prognosedienst gesetzt ist, werden die Prognosen von einem externen Server abgerufen. In diesem Fall wird ein Internetzugang benötigt. Bei Push-Modus werden die Prognosedaten von einem externen System über die API bereitgestellt.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`source`<br/>int</th>
+    <td>
+        Quelle der PV-Ertragsprognose.
+        - **0** - Prognosedienst
+        - **1** - Push
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`api_url`<br/>string</th>
+    <td>
+        Endpoint-URL des Servers für dynamische Strompreise.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`cert_id`<br/>int</th>
+    <td>
+        ID des CA-Zertifikats, das zur Prüfung des Zertifikats des Prognose-Servers genutzt wird. Siehe [`certs/state`](/interfaces/mqtt_http/api_reference/certs.mdx#certs_state).
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `solar_forecast/state` {#solar_forecast_state_warp4}
+
+
+Der Zustand der PV-Ertragsprognose.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp4-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/solar_forecast/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp4/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+    "wh_today": 34500,
+    "wh_today_remaining": 12300,
+    "wh_tomorrow": 41200,
+    "rate_limit": 12,
+    "rate_remaining": 7,
+    "next_api_call": 28899847
+}
+```
+
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Beschreibung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wh_today`<br/>int</th>
+    <td>
+        Gesamttagesvorhersage für heute über alle PV-Flächen in Wh. -1 falls keine Vorhersagedaten für heute verfügbar sind.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wh_today_remaining`<br/>int</th>
+    <td>
+        Verbleibende Energie der Tagesvorhersage von jetzt bis Mitternacht über alle PV-Flächen in Wh. -1 falls keine Vorhersagedaten für heute verfügbar sind.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wh_tomorrow`<br/>int</th>
+    <td>
+        Gesamttagesvorhersage für morgen über alle PV-Flächen in Wh. -1 falls keine Vorhersagedaten für morgen verfügbar sind.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`rate_limit`<br/>int</th>
+    <td>
+        Gibt an, wie viele API-Aufrufe alle zwei Stunden getätigt werden dürfen.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`rate_remaining`<br/>int</th>
+    <td>
+        Gibt an, wie viele API-Aufrufe im aktuellen Zeitfenster verbleiben.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`next_api_call`<br/>int</th>
+    <td>
+        Gibt an, wann der nächste API-Aufruf getätigt wird.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `solar_forecast/planes/X/state` {#solar_forecast_planes_X_state_warp4}
+
+
+Status der PV-Flächen
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp4-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/solar_forecast/planes/X/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp4/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+    "last_sync": 28899727,
+    "last_check": 28899727,
+    "next_check": 28899847,
+    "place": "Helleforthstraße 22, 33758 Schloß Holte-Stukenbrock, Germany"
+}
+```
+
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Beschreibung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`last_sync`<br/>int</th>
+    <td>
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die PV-Ertragsprognose das letzte Mal aktualisiert wurde.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`last_check`<br/>int</th>
+    <td>
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die PV-Ertragsprognose das letzte Mal abgefragt wurde.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`next_check`<br/>int</th>
+    <td>
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, wann die PV-Ertragsprognose das nächste Mal abgefragt wird.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`place`<br/>string</th>
+    <td>
+        Ort der konfigurierten PV-Fläche.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `solar_forecast/planes/X/config` {#solar_forecast_planes_X_config_warp4}
+
+
+
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp4-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/solar_forecast/planes/X/config
+```
+```jsx
+{
+    "enable": true,
+    "name": "Haus OS",
+    "lat": 518847,
+    "long": 86225,
+    "dec": 25,
+    "az": -43,
+    "wp": 4725
+}
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/solar_forecast/planes/X/config -d '{
+    "enable": true,
+    "name": "Haus OS",
+    "lat": 518847,
+    "long": 86225,
+    "dec": 25,
+    "az": -43,
+    "wp": 4725
+}'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp4/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/config
+```
+```jsx
+{
+    "enable": true,
+    "name": "Haus OS",
+    "lat": 518847,
+    "long": 86225,
+    "dec": 25,
+    "az": -43,
+    "wp": 4725
+}
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/solar_forecast/planes/X/config<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/planes/X/config_update -m '{
+    "enable": true,
+    "name": "Haus OS",
+    "lat": 518847,
+    "long": 86225,
+    "dec": 25,
+    "az": -43,
+    "wp": 4725
+}'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Beschreibung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable`<br/>bool</th>
+    <td>
+        Aktiviert die PV-Fläche.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
+    <td>
+        Anzeigename der PV-Fläche.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`lat`<br/>int (<abbr title="Zehntausendstel Grad">°/10000</abbr>)</th>
+    <td>
+        Breitengrad (z.B. 51.8847°)
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`long`<br/>int (<abbr title="Zehntausendstel Grad">°/10000</abbr>)</th>
+    <td>
+        Längengrad (z.B. 8.6225°)
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`dec`<br/>int (<abbr title="Grad">°</abbr>)</th>
+    <td>
+        Neigung (0° horizontal bis 90° vertikal)
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`az`<br/>int (<abbr title="Grad">°</abbr>)</th>
+    <td>
+        Azimut (-180° = Norden, -90° = Osten, 0° = Süden, 90° = Westen, 180° = Norden)
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`wp`<br/>int (<abbr title="Watt Peak">Wp</abbr>)</th>
+    <td>
+        Peak-Leistung der PV-Fläche.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `solar_forecast/planes/X/forecast` {#solar_forecast_planes_X_forecast_warp4}
+
+
+
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp4-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/solar_forecast/planes/X/forecast
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp4/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+    "first_date": 28899240,
+    "resolution": 1,
+    "forecast": [
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 62, 270, 365, 405, 389, 326, 224,
+        131, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 166, 781, 1097, 1197, 1093, 864, 549,
+        288, 0, 0, 0, 0, 0, 0, 0
+    ]
+}
+```
+
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Beschreibung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`first_date`<br/>int</th>
+    <td>
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, zu welchem Zeitpunkt die erste PV-Ertragsprognose im `forecast`-Array gilt.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
+    <td>
+        Zeitliche Auflösung der PV-Ertragsprognose im `forecast`-Array.
+        - **0** - 15 Minuten
+        - **1** - 60 Minuten
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`forecast`<br/>int[49] (<abbr title="Wattstunde">Wh</abbr>)</th>
+    <td>
+        Array von PV-Ertragsprognose-Werten für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest, wie weit die Elemente zueinander zeitlich versetzt sind.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `solar_forecast/planes/X/forecast_update` {#solar_forecast_planes_X_forecast_update_warp4}
+
+
+Aktualisiert die PV-Ertragsprognose einer PV-Fläche über die API. Funktioniert nur wenn die `source` auf Push (1) gesetzt ist. Falls die jeweilige PV-Fläche noch nicht aktiviert ist, wird sie automatisch aktiviert.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp4-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/solar_forecast/planes/X/forecast_update -d '{
+    "first_date": 28899240,
+    "resolution": 1,
+    "forecast": [
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 62, 270, 365, 405, 389, 326, 224,
+        131, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 166, 781, 1097, 1197, 1093, 864, 549,
+        288, 0, 0, 0, 0, 0, 0, 0
+    ]
+}'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp4/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/solar_forecast/planes/X/forecast_update -m '{
+    "first_date": 28899240,
+    "resolution": 1,
+    "forecast": [
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 62, 270, 365, 405, 389, 326, 224,
+        131, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 166, 781, 1097, 1197, 1093, 864, 549,
+        288, 0, 0, 0, 0, 0, 0, 0
+    ]
+}'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Beschreibung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`first_date`<br/>int</th>
+    <td>
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der angibt, zu welchem Zeitpunkt die erste PV-Ertragsprognose im `forecast`-Array gilt.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`resolution`<br/>int</th>
+    <td>
+        Zeitliche Auflösung der PV-Ertragsprognose im `forecast`-Array.
+        - **0** - 15 Minuten
+        - **1** - 60 Minuten
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`forecast`<br/>int[49] (<abbr title="Wattstunde">Wh</abbr>)</th>
+    <td>
+        Array von PV-Ertragsprognose-Werten für maximal zwei Tage. Das erste Element des Arrays ist für den Zeitpunkt `first_date` und die Auflösung legt fest, wie weit die Elemente zueinander zeitlich versetzt sind.
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
 <TabItem value="wem">
 ## `solar_forecast/config` {#solar_forecast_config_wem}
 
@@ -3154,31 +3779,31 @@ export const toc = [
     "value": "solar_forecast/config",
     "id": "solar_forecast_config",
     "level": 2,
-    "hardwareType": ["warp2","warp3","wem","wem2"]
+    "hardwareType": ["warp2","warp3","warp4","wem","wem2"]
 },{
     "value": "solar_forecast/state",
     "id": "solar_forecast_state",
     "level": 2,
-    "hardwareType": ["warp2","warp3","wem","wem2"]
+    "hardwareType": ["warp2","warp3","warp4","wem","wem2"]
 },{
     "value": "solar_forecast/planes/X/state",
     "id": "solar_forecast_planes_X_state",
     "level": 2,
-    "hardwareType": ["warp2","warp3","wem","wem2"]
+    "hardwareType": ["warp2","warp3","warp4","wem","wem2"]
 },{
     "value": "solar_forecast/planes/X/config",
     "id": "solar_forecast_planes_X_config",
     "level": 2,
-    "hardwareType": ["warp2","warp3","wem","wem2"]
+    "hardwareType": ["warp2","warp3","warp4","wem","wem2"]
 },{
     "value": "solar_forecast/planes/X/forecast",
     "id": "solar_forecast_planes_X_forecast",
     "level": 2,
-    "hardwareType": ["warp2","warp3","wem","wem2"]
+    "hardwareType": ["warp2","warp3","warp4","wem","wem2"]
 },{
     "value": "solar_forecast/planes/X/forecast_update",
     "id": "solar_forecast_planes_X_forecast_update",
     "level": 2,
-    "hardwareType": ["warp2","warp3","wem","wem2"]
+    "hardwareType": ["warp2","warp3","warp4","wem","wem2"]
 },
 ];

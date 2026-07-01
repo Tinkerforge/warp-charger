@@ -20,7 +20,7 @@ type Props = WrapperProps<typeof DesktopType>;
 let interval: NodeJS.Timeout = null;
 let scrollHandled = "foobar";
 
-const hardwareTypes = ['warp1', 'warp2', 'warp3', 'wem', 'wem2', 'any'];
+const hardwareTypes = ['warp1', 'warp2', 'warp3', 'warp4', 'wem', 'wem2', 'any'];
 
 export default function DocItemTOCDesktop(props: Props): ReactNode {
     const { toc, frontMatter, metadata } = useDoc();
@@ -127,6 +127,7 @@ export default function DocItemTOCDesktop(props: Props): ReactNode {
             <TabItem value="warp1" label="WARP1 Charger"> </TabItem>
             <TabItem value="warp2" label="WARP2 Charger"> </TabItem>
             <TabItem value="warp3" label="WARP3 Charger"> </TabItem>
+            <TabItem value="warp4" label="WARP4 Charger"> </TabItem>
             <TabItem value="wem" label="WARP Energy Manager"> </TabItem>
             <TabItem value="wem2" label="WARP Energy Manager 2.0"> </TabItem>
             <TabItem value="any" label="Alle Typen"> </TabItem>
@@ -143,6 +144,9 @@ export default function DocItemTOCDesktop(props: Props): ReactNode {
             </TabItem>
             <TabItem value="warp3" label="WARP3 Charger">
                 <TOC toc={filterToC(toc, "warp3")} {...tocprops} />
+            </TabItem>
+            <TabItem value="warp4" label="WARP4 Charger">
+                <TOC toc={filterToC(toc, "warp4")} {...tocprops} />
             </TabItem>
             <TabItem value="wem" label="WARP Energy Manager">
                 <TOC toc={filterToC(toc, "wem")} {...tocprops} />

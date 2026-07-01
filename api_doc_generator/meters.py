@@ -98,7 +98,7 @@ meters = Module("meters", T({'de': "Stromzähler", 'en': "Electricity Meters"}),
                 Const(255, T({'de': "Typ-Override nicht aktiv. Stromzählertyp wird automatisch detektiert.", 'en': "Type override not active. Electricity meter type is automatically detected."}))
             ])
         }),
-        2: Elem.OBJECT(T({'de': "Interner Stromzähler (an EVSE-2.0-Bricklet)", 'en': "Internal electricity meter (on EVSE 2.0 Bricklet)"}), version=Version.WARP2 | Version.WARP3, members={
+        2: Elem.OBJECT(T({'de': "Interner Stromzähler (an EVSE-2.0-Bricklet)", 'en': "Internal electricity meter (on EVSE 2.0 Bricklet)"}), version=Version.WARP2 | Version.WARP3 | Version.WARP4, members={
             "display_name": Elem.STRING(T({'de': "Anzeigename des Stromzählers", 'en': "Display name of the electricity meter"})),
             "location": Elem.INT(T({'de': "Messort", 'en': "Measurement location"}), constants=LOCATION_CONSTANTS),
         }),
@@ -638,7 +638,7 @@ meters = Module("meters", T({'de': "Stromzähler", 'en': "Electricity Meters"}),
         "offset": Elem.INT(T({'de': "Das Alter des zuletzt gemessenen Wertes.", 'en': "The age of the last measured value."}), unit=Units.ms),
         "samples": Elem.ARRAY(T({'de': "Die gemessenen Werte aller Stromzähler.", 'en': "The measured values of all electricity meters."}), members=
               (2 * [Elem.ARRAY(T({'de': "Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.", 'en': "The measured values of the respective electricity meter. Null if a meter is not configured."}), unit=Units.W, member_type=EType.INT, version=Version.WARP1)])
-            + (5 * [Elem.ARRAY(T({'de': "Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.", 'en': "The measured values of the respective electricity meter. Null if a meter is not configured."}), unit=Units.W, member_type=EType.INT, version=Version.WARP2 | Version.WARP3)])
+            + (5 * [Elem.ARRAY(T({'de': "Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.", 'en': "The measured values of the respective electricity meter. Null if a meter is not configured."}), unit=Units.W, member_type=EType.INT, version=Version.WARP2 | Version.WARP3 | Version.WARP4)])
             + (7 * [Elem.ARRAY(T({'de': "Die gemessenen Werte des jeweiligen Stromzählers. Null falls ein Zähler nicht konfiguriert ist.", 'en': "The measured values of the respective electricity meter. Null if a meter is not configured."}), unit=Units.W, member_type=EType.INT, version=Version.WEMX)])
         )
     })),
@@ -648,7 +648,7 @@ meters = Module("meters", T({'de': "Stromzähler", 'en': "Electricity Meters"}),
         "samples_per_second": Elem.FLOAT(T({'de': "Die Anzahl der gemessenen Werte pro Sekunde.", 'en': "The number of measured values per second."}), unit=Units.Hz),
         "samples": Elem.ARRAY(T({'de': "Die gemessenen Werte aller Stromzähler.", 'en': "The measured values of all electricity meters."}), members=
              (2 * [Elem.ARRAY(T({'de': "Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.", 'en': "The measured values. Depending on the length of the array and the samples_per_second value, it can be determined how far back in time the measurement values reach."}), unit=Units.W, member_type=EType.INT, version=Version.WARP1)]
-            + 5 * [Elem.ARRAY(T({'de': "Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.", 'en': "The measured values. Depending on the length of the array and the samples_per_second value, it can be determined how far back in time the measurement values reach."}), unit=Units.W, member_type=EType.INT, version=Version.WARP2 | Version.WARP3)]
+            + 5 * [Elem.ARRAY(T({'de': "Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.", 'en': "The measured values. Depending on the length of the array and the samples_per_second value, it can be determined how far back in time the measurement values reach."}), unit=Units.W, member_type=EType.INT, version=Version.WARP2 | Version.WARP3 | Version.WARP4)]
             + 7 * [Elem.ARRAY(T({'de': "Die gemessenen Werte. Abhängig von der Länge des Arrays und dem samples_per_second-Wert kann ermittelt werden, wie weit in die Vergangenheit die Messwerte reichen.", 'en': "The measured values. Depending on the length of the array and the samples_per_second value, it can be determined how far back in time the measurement values reach."}), unit=Units.W, member_type=EType.INT, version=Version.WEMX)])
         )
     }))

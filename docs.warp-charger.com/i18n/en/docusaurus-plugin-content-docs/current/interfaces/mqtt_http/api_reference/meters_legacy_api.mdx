@@ -451,6 +451,153 @@ mosquitto_pub -h $BROKER -t $PREFIX/meters_legacy_api/config_update -m '0'
     </tbody>
 </table>
 </TabItem>
+<TabItem value="warp4">
+## `meters_legacy_api/state` {#meters_legacy_api_state_warp4}
+
+
+The state of the emulated legacy electricity meter API
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+#### Read
+```bash
+curl http://$HOST/meters_legacy_api/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+#### Read
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters_legacy_api/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{"writable":false}
+```
+
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`writable`<br/>bool</th>
+    <td>
+        Indicates whether the legacy electricity meter API can be written to. This is only the case if the meter entered under [`meters_legacy_api/config`](/interfaces/mqtt_http/api_reference/meters_legacy_api.mdx#meters_legacy_api_config) as `linked_meter_slot` is a meter configured as an API meter in its [`meters/X/config`](/interfaces/mqtt_http/api_reference/meters.mdx#meters_X_config).
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `meters_legacy_api/config` {#meters_legacy_api_config_warp4}
+
+
+The configuration of the emulated legacy electricity meter API
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+
+#### Read
+```bash
+curl http://$HOST/meters_legacy_api/config
+```
+```jsx
+{"linked_meter_slot":0}
+```
+
+
+
+#### Write
+```bash
+curl http://$HOST/meters_legacy_api/config -d '{"linked_meter_slot":0}'
+```
+
+or abbreviated:
+
+```bash
+curl http://$HOST/meters_legacy_api/config -d '0'
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+
+#### Read
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meters_legacy_api/config
+```
+```jsx
+{"linked_meter_slot":0}
+```
+
+
+
+#### Write
+            With MQTT on <code>$PREFIX/meters_legacy_api/config<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters_legacy_api/config_update -m '{"linked_meter_slot":0}'
+```
+
+or abbreviated:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meters_legacy_api/config_update -m '0'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`linked_meter_slot`<br/>int</th>
+    <td>
+        Meter to which the emulated legacy electricity meter API should be mapped
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
 <TabItem value="wem">
 ## `meters_legacy_api/state` {#meters_legacy_api_state_wem}
 

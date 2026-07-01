@@ -1606,6 +1606,538 @@ Für das Ladetracking werden die Anzeigenamen gelöschter Benutzer separat im Fl
     </TabItem>
 </Tabs>
 </TabItem>
+<TabItem value="warp4">
+## `users/config` {#users_config_warp4}
+
+
+Die Benutzerkonfiguration. Kann mit [`users/add`](/interfaces/mqtt_http/api_reference/users.mdx#users_add), [`users/modify`](/interfaces/mqtt_http/api_reference/users.mdx#users_modify), [`users/remove`](/interfaces/mqtt_http/api_reference/users.mdx#users_remove) und [`users/http_auth_update`](/interfaces/mqtt_http/api_reference/users.mdx#users_http_auth_update) aktualisiert werden.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp4-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/users/config
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp4/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/users/config
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "users": [
+    {
+      "id": 0,
+      "roles": 4294967295,
+      "current": 32000,
+      // highlight-start
+      // Wird vom Webinterface durch "Unbekannter Benutzer" ersetzt.
+      "display_name": "Anonymous",
+      // highlight-end
+      "username": "anonymous",
+      "digest_hash": ""
+    },
+    {
+      "id": 1,
+      "roles": 65535,
+      "current": 32000,
+      "display_name": "Root",
+      "username": "root",
+      // highlight-start
+      // null - Ein Passwort ist gesetzt, wird aber nicht zurückgegeben
+      // -> Nutzer kann sich im Webinterface einloggen und die HTTP-API verwenden.
+      "digest_hash": null
+      // highlight-end
+    },
+    {
+      "id": 3,
+      "roles": 65535,
+      "current": 32000,
+      "display_name": "Benutzer 2",
+      "username": "user2",
+      // highlight-start
+      // "" - kein Passwort gesetzt
+      // -> Nutzer kann für die NFC-Freigabe und den Ladetracker verwendet werden
+      //    kann sich aber nicht im Webinterface einloggen oder die HTTP-API verwenden.
+      "digest_hash": ""
+      // highlight-end
+    }
+  ],
+  // Nutzer 2 und 4 wurden gelöscht.
+  "next_user_id": 5,
+  "http_auth_enabled": true
+}
+```
+
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Beschreibung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`users`<br/>object[33]</th>
+    <td>
+        Die Benutzer
+        - **[0..32]** - Ein Benutzer
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Beschreibung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
+            <td>
+                ID des Benutzers (1-255)
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`roles`<br/>int</th>
+            <td>
+                Berechtigungen des Benutzers. Wird noch nicht verwendet.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+            <td>
+                Diesem Benutzer erlaubter Ladestrom 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 um diesem Nutzer das Laden zu verbieten
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+            <td>
+                Anzeigename des Benutzers. Wird auch im Ladetracker verwendet.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`username`<br/>string</th>
+            <td>
+                Nutzername zum Anmelden im Webinterface und der HTTP-API.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`digest_hash`<br/>string</th>
+            <td>
+                HTTP-Digest-Hash. Wird als leerer String zurückgegeben, falls die Anmeldung für diesen Nutzer deaktiviert ist. Wird als null zurückgegeben wenn die Anmeldung für diesen Nutzer aktiviert ist.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`next_user_id`<br/>int</th>
+    <td>
+        ID des nächsten anzulegenden Nutzers.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`http_auth_enabled`<br/>bool</th>
+    <td>
+        Gibt an ob zur Verwendung von Webinterface und HTTP-API Zugangsdaten nötig sein sollen.
+        - **true** - Falls Zugangsdaten verlangt werden sollen.
+        - **false** - Wenn nicht.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `users/add` {#users_add_warp4}
+
+
+Fügt einen neuen Benutzer hinzu.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp4-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/users/add -d '{
+    "id": 5,
+    "roles": 65535,
+    "current": 32000,
+    "display_name": "Neuer Benutzer",
+    "username": "testuser",
+    "digest_hash": "926011006c2686471698e86690b7e500"
+  }'
+```
+
+`id` muss der `next_user_id` aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
+`digest_hash = MD5("testuser:esp32-lib:testpass")`
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp4/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/add -m '{
+    "id": 5,
+    "roles": 65535,
+    "current": 32000,
+    "display_name": "Neuer Benutzer",
+    "username": "testuser",
+    "digest_hash": "926011006c2686471698e86690b7e500"
+  }'
+```
+
+`id` muss der `next_user_id` aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config) entsprechen, damit der Nutzer angelegt wird.
+`digest_hash = MD5("testuser:esp32-lib:testpass")`
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Beschreibung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
+    <td>
+        ID des anzulegenden Nutzers. Muss dem aktuellen Wert von next_user_id aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config) entsprechen.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`roles`<br/>int</th>
+    <td>
+        Berechtigungen des Benutzers. Wird noch nicht verwendet.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+    <td>
+        Diesem Benutzer erlaubter Ladestrom 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 um diesem Nutzer das Laden zu verbieten
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        Anzeigename des Benutzers. Wird auch im Ladetracker verwendet.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`username`<br/>string</th>
+    <td>
+        Nutzername zum Anmelden im Webinterface und der HTTP-API.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`digest_hash`<br/>string</th>
+    <td>
+        HTTP-Digest-Hash des anzulegenden Nutzers. Ein leerer String verbietet das Anmelden im Webinterface.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `users/remove` {#users_remove_warp4}
+
+
+Löscht einen Benutzer.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp4-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/users/remove -d '{ "id": 4 }'
+```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/users/remove -d '4'
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp4/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/remove -m '{ "id": 4 }'
+```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/remove -m '4'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Beschreibung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
+    <td>
+        ID des zu löschenden Nutzers
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `users/modify` {#users_modify_warp4}
+
+
+Modifiziert einen Benutzer.
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp4-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/users/modify -d '{
+    "id": 5,
+    "roles": null,
+    "current": null,
+    "display_name": "Neuer Benutzer (ohne Login)",
+    "username": null,
+    "digest_hash": ""
+  }'
+```
+
+Ändert beispielsweise nur den Anzeigenamen vom Benutzer mit der ID 5 und löscht dessen Passwort.
+Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-API verwenden.
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp4/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/modify -m '{
+    "id": 5,
+    "roles": null,
+    "current": null,
+    "display_name": "Neuer Benutzer (ohne Login)",
+    "username": null,
+    "digest_hash": ""
+  }'
+```
+
+Ändert beispielsweise nur den Anzeigenamen vom Benutzer mit der ID 5 und löscht dessen Passwort.
+Dieser Nutzer kann sich dann nicht mehr im Webinterface einloggen oder die HTTP-API verwenden.
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Beschreibung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`id`<br/>int</th>
+    <td>
+        ID des zu modifizierenden Nutzers.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`roles`<br/>int</th>
+    <td>
+        Berechtigungen des Benutzers. Wird noch nicht verwendet.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+    <td>
+        Diesem Benutzer erlaubter Ladestrom 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 um diesem Nutzer das Laden zu verbieten
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        Anzeigename des Benutzers. Wird auch im Ladetracker verwendet.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`username`<br/>string</th>
+    <td>
+        Nutzername zum Anmelden im Webinterface und der HTTP-API.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`digest_hash`<br/>string</th>
+    <td>
+        HTTP-Digest-Hash des Nutzers. Ein leerer String verbietet das Anmelden im Webinterface.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `users/http_auth_update` {#users_http_auth_update_warp4}
+
+
+Schreibt http_auth_enabled aus [`users/config`](/interfaces/mqtt_http/api_reference/users.mdx#users_config).
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp4-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/users/http_auth_update -d '{ "enabled": false }'
+```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/users/http_auth_update -d 'false'
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp4/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/http_auth_update -m '{ "enabled": false }'
+```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/users/http_auth_update -m 'false'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Beschreibung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enabled`<br/>bool</th>
+    <td>
+        Legt fest ob zur Verwendung von Webinterface und HTTP-API Zugangsdaten nötig sein sollen.
+        - **true** - Falls Zugangsdaten verlangt werden sollen.
+        - **false** - Wenn nicht.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `users/all_usernames` {#users_all_usernames_warp4}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
+
+Für das Ladetracking werden die Anzeigenamen gelöschter Benutzer separat im Flash gespeichert. Diese Funktion gibt alle Anzeigenamen, die möglicherweise in den getrackten Ladevorgängen vorkommen in einem Binärformat aus.
+
+
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
+</TabItem>
 <TabItem value="wem">
 Auf dieser Hardware nicht unterstützt!
 </TabItem>
@@ -1760,7 +2292,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/users/config
             </tbody>
         </table>
         
-        <strong>(Nur WARP 2 und WARP 3)</strong> 
+        <strong>(Nur WARP 2 und WARP 3 und WARP 4)</strong> 
         
         - **[0..32]** - Ein Benutzer
         <table>
@@ -2216,31 +2748,31 @@ export const toc = [
     "value": "users/config",
     "id": "users_config",
     "level": 2,
-    "hardwareType": ["warp1","warp2","warp3"]
+    "hardwareType": ["warp1","warp2","warp3","warp4"]
 },{
     "value": "users/add",
     "id": "users_add",
     "level": 2,
-    "hardwareType": ["warp1","warp2","warp3"]
+    "hardwareType": ["warp1","warp2","warp3","warp4"]
 },{
     "value": "users/remove",
     "id": "users_remove",
     "level": 2,
-    "hardwareType": ["warp1","warp2","warp3"]
+    "hardwareType": ["warp1","warp2","warp3","warp4"]
 },{
     "value": "users/modify",
     "id": "users_modify",
     "level": 2,
-    "hardwareType": ["warp1","warp2","warp3"]
+    "hardwareType": ["warp1","warp2","warp3","warp4"]
 },{
     "value": "users/http_auth_update",
     "id": "users_http_auth_update",
     "level": 2,
-    "hardwareType": ["warp1","warp2","warp3"]
+    "hardwareType": ["warp1","warp2","warp3","warp4"]
 },{
     "value": "users/all_usernames",
     "id": "users_all_usernames",
     "level": 2,
-    "hardwareType": ["warp1","warp2","warp3"]
+    "hardwareType": ["warp1","warp2","warp3","warp4"]
 },
 ];

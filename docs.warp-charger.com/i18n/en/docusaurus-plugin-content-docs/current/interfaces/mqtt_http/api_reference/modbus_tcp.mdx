@@ -325,6 +325,111 @@ mosquitto_pub -h $BROKER -t $PREFIX/modbus_tcp/config_update -m '{ "enable": tru
     </tbody>
 </table>
 </TabItem>
+<TabItem value="warp4">
+## `modbus_tcp/config` {#modbus_tcp_config_warp4}
+
+
+Modbus/TCP server configuration
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+
+#### Read
+```bash
+curl http://$HOST/modbus_tcp/config
+```
+```jsx
+{ "enable": true, "port": 502, "table": 0 }
+```
+
+
+
+#### Write
+```bash
+curl http://$HOST/modbus_tcp/config -d '{ "enable": true, "port": 502, "table": 0 }'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+
+#### Read
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/modbus_tcp/config
+```
+```jsx
+{ "enable": true, "port": 502, "table": 0 }
+```
+
+
+
+#### Write
+            With MQTT on <code>$PREFIX/modbus_tcp/config<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/modbus_tcp/config_update -m '{ "enable": true, "port": 502, "table": 0 }'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable`<br/>bool</th>
+    <td>
+        Indicates whether the Modbus/TCP server is active. For control functionality in addition to state readout, [`evse/modbus_tcp_enabled`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_modbus_tcp_enabled) must also be true.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`port`<br/>int</th>
+    <td>
+        Port on which the Modbus/TCP server listens for incoming connections. Typically 502.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`table`<br/>int</th>
+    <td>
+        Register table used by the Modbus/TCP server.
+        - **0** - WARP Charger register table
+        - **1** - Register table compatible with Bender CC612/613
+        - **2** - Register table compatible with Keba C-Series
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`send_illegal_data_address`<br/>bool</th>
+    <td>
+        Indicates whether the Modbus/TCP server sends IllegalDataAddress errors when unknown registers are read
+        - **true** - The server responds with an IllegalDataAddress error when an unknown register is read.
+        - **false** - The server responds with value 0 when an unknown register is read.
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
 <TabItem value="wem">
 Not supported on this hardware!
 </TabItem>
@@ -449,6 +554,6 @@ export const toc = [
     "value": "modbus_tcp/config",
     "id": "modbus_tcp_config",
     "level": 2,
-    "hardwareType": ["warp1","warp2","warp3"]
+    "hardwareType": ["warp1","warp2","warp3","warp4"]
 },
 ];

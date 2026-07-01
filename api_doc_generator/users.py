@@ -15,7 +15,7 @@ users = Module("users", T({'de': "Benutzerverwaltung", 'en': "User Management"})
     Func("config", FuncType.STATE, Elem.OBJECT(T({'de': "Die Benutzerkonfiguration. Kann mit {{{ref:users/add}}}, {{{ref:users/modify}}}, {{{ref:users/remove}}} und {{{ref:users/http_auth_update}}} aktualisiert werden.", 'en': "The user configuration. Can be updated with {{{ref:users/add}}}, {{{ref:users/modify}}}, {{{ref:users/remove}}} and {{{ref:users/http_auth_update}}}."}), members={
             "users": Elem.ARRAY(T({'de': "Die Benutzer", 'en': "The users"}), members=
                   17 * user(Version.WARP1)
-                + 33 * user(Version.WARP2 | Version.WARP3)
+                + 33 * user(Version.WARP2 | Version.WARP3 | Version.WARP4)
             ),
             "next_user_id": Elem.INT(T({'de': "ID des nächsten anzulegenden Nutzers.", 'en': "ID of the next user to be created."})),
             "http_auth_enabled": Elem.BOOL(T({'de': "Gibt an ob zur Verwendung von Webinterface und HTTP-API Zugangsdaten nötig sein sollen.", 'en': "Indicates whether credentials are required to use the web interface and HTTP API."}), constants=[

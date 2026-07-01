@@ -417,6 +417,106 @@ mosquitto_pub -h $BROKER -t $PREFIX/ocpp/reset -m 'null'
 
 
 </TabItem>
+<TabItem value="warp4">
+## `ocpp/config` {#ocpp_config_warp4}
+
+
+OCPP connection configuration
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable`<br/>bool</th>
+    <td>
+        Indicates whether a connection to the configured OCPP server should be established. For control functionality in addition to state readout, [`evse/ocpp_enabled`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_ocpp_enabled) must also be true.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`url`<br/>string</th>
+    <td>
+        Endpoint URL of the OCPP server. Must start with the scheme ws:// (unencrypted!) or wss:// (TLS-encrypted) and must <strong>not</strong> end with /.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`identity`<br/>string</th>
+    <td>
+        Identity of the charger. Appended to the endpoint URL and used as username for authorization
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_auth`<br/>bool</th>
+    <td>
+        Indicates that authorization via HTTP Basic Auth should be performed.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`pass`<br/>string</th>
+    <td>
+        HTTP Basic Auth password. If the password is exactly 40 characters long and consists only of hex characters (0-9, A-F, a-f), it is treated as a hexadecimal representation of a 20-byte authorization key.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`cert_id`<br/>int</th>
+    <td>
+        ID of the TLS certificate to be used for establishing a TLS-encrypted connection.
+        - **-1** - Use embedded certificate bundle
+        - **>= 0** - Use certificate with this ID
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `ocpp/reset` {#ocpp_reset_warp4}
+
+
+Resets the OCPP state. <strong>Unsent transaction data will be lost!</strong>
+**Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+#### Write
+```bash
+curl http://$HOST/ocpp/reset -d 'null'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+#### Write
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/ocpp/reset -m 'null'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+</TabItem>
 <TabItem value="wem">
 Not supported on this hardware!
 </TabItem>
@@ -625,11 +725,11 @@ export const toc = [
     "value": "ocpp/config",
     "id": "ocpp_config",
     "level": 2,
-    "hardwareType": ["warp2","warp3"]
+    "hardwareType": ["warp2","warp3","warp4"]
 },{
     "value": "ocpp/reset",
     "id": "ocpp_reset",
     "level": 2,
-    "hardwareType": ["warp2","warp3"]
+    "hardwareType": ["warp2","warp3","warp4"]
 },
 ];

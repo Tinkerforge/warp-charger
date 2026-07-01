@@ -1168,6 +1168,274 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
     </tbody>
 </table>
 </TabItem>
+<TabItem value="warp4">
+## `charge_manager/available_current` {#charge_manager_available_current_warp4}
+
+
+The currently available current. This current is distributed among the configured chargers.
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+
+#### Read
+```bash
+curl http://$HOST/charge_manager/available_current
+```
+```jsx
+{ "current": 16000 }
+```
+
+
+
+#### Write
+```bash
+curl http://$HOST/charge_manager/available_current -d '{ "current": 16000 }'
+```
+
+or abbreviated:
+
+```bash
+curl http://$HOST/charge_manager/available_current -d '16000'
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+
+#### Read
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_manager/available_current
+```
+```jsx
+{ "current": 16000 }
+```
+
+
+
+#### Write
+            With MQTT on <code>$PREFIX/charge_manager/available_current<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '{ "current": 16000 }'
+```
+
+or abbreviated:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/available_current_update -m '16000'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+    <td>
+        The available current. Only currents that are less than the configured maximum current maximum_available_current from [`charge_manager/config`](/interfaces/mqtt_http/api_reference/charge_manager.mdx#charge_manager_config) are accepted.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `charge_manager/state` {#charge_manager_state_warp4}
+
+
+The state of the charge manager and all configured chargers. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
+
+
+
+<br/><br/><br/>
+## `charge_manager/low_level_state` {#charge_manager_low_level_state_warp4}
+
+
+The low-level state of the charge manager and all configured chargers. Used by the web interface for display. <strong>Changes to this object are not considered an API breaking change!</strong>
+
+
+
+<br/><br/><br/>
+## `charge_manager/low_level_config` {#charge_manager_low_level_config_warp4}
+
+
+The low-level configuration of the charge manager. Used for fine-tuning the distribution algorithm. <strong>Changes to this object are not considered an API breaking change!</strong>
+
+
+
+<br/><br/><br/>
+## `charge_manager/config` {#charge_manager_config_warp4}
+
+
+The charge manager configuration.
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_charge_manager`<br/>bool</th>
+    <td>
+        Specifies whether the charge manager should be enabled.
+        - **true** - If the charge manager is enabled.
+        - **false** - If the charge manager is not enabled.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable_watchdog`<br/>bool</th>
+    <td>
+        Specifies whether the watchdog should be enabled. The watchdog sets the available current to the default setting (default_available_current) if no message is received on [`charge_manager/available_current`](/interfaces/mqtt_http/api_reference/charge_manager.mdx#charge_manager_available_current) for 30 seconds. This increases robustness against failure of external control, e.g. with PV excess charging.
+        - **true** - If the watchdog is enabled.
+        - **false** - If the watchdog is not enabled.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`verbose`<br/>bool</th>
+    <td>
+        Specifies whether each current distribution should be recorded in the event log.
+        - **true** - If current distributions should be logged.
+        - **false** - If current distributions should not be logged.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`default_available_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+    <td>
+        Current that should be available after restart of the charge manager. When triggered, the watchdog resets the available current to this current.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`maximum_available_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+    <td>
+        Maximum that may be set as available current via the API and web interface. Should be configured to the maximum permitted current of the charger group connection, which is limited e.g. by the grid connection, fusing or supply line.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`minimum_current_auto`<br/>bool</th>
+    <td>
+        Specifies whether the minimum charge current is set based on the selected vehicle type (minimum_current_vehicle_type).
+        - **true** - Minimum charge current is set based on the selected vehicle type. minimum_current and minimum_current_1p are ignored or overwritten.
+        - **false** - minimum_current and minimum_current_1p determine the minimum charge current.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`minimum_current_vehicle_type`<br/>int</th>
+    <td>
+        Vehicle type for which the minimum charge current is selected.
+        - **0** - No specific vehicle type selected.
+        - **1** - Renault Twingo Z.E., Renault ZOE R110 or R135
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`minimum_current`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+    <td>
+        Smallest amount of current to be allocated to a charger in three-phase operation for it to start a charging session. This can influence how many chargers charge simultaneously.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`minimum_current_1p`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+    <td>
+        Smallest amount of current to be allocated to a charger in single-phase operation for it to start a charging session. This can influence how many chargers charge simultaneously.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`requested_current_threshold`<br/>int (<abbr title="Second">s</abbr>)</th>
+    <td>
+        Chargers with an electricity meter that measures phase currents are limited to the largest phase current plus the configured margin requested_current_threshold seconds after charge start. This allows the available current to be distributed more efficiently across multiple chargers.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`requested_current_margin`<br/>int (<abbr title="Milliampere">mA</abbr>)</th>
+    <td>
+        Margin added to the largest measured phase current.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`chargers`<br/>object[64]</th>
+    <td>
+        Chargers to be controlled by the charge manager.
+        - **[0..63]** - A charger to be controlled
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`host`<br/>string</th>
+            <td>
+                IP address of the charger to be controlled
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
+            <td>
+                Display name of the charger to be controlled
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`rot`<br/>int</th>
+            <td>
+                Phase rotation of the charger to be controlled
+                - **0** - Unknown
+                - **1** - L123
+                - **2** - L132
+                - **3** - L231
+                - **4** - L213
+                - **5** - L321
+                - **6** - L312
+            </td>
+        </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
 <TabItem value="wem">
 ## `charge_manager/available_current` {#charge_manager_available_current_wem}
 
@@ -2225,7 +2493,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
             </tbody>
         </table>
         
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> 
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> 
         
         - **[0..63]** - A charger to be controlled
         <table>

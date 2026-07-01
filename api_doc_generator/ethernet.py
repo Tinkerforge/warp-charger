@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-ethernet = Module("ethernet", T({'de': "LAN-Verbindung", 'en': "LAN Connection"}), T({'de': "Benötigt das Feature <a href=\"#features_ethernet\"><code>\"ethernet\"</code></a>.", 'en': "Requires the feature <a href=\"#features_ethernet\"><code>\"ethernet\"</code></a>."}), T({'de': "Mit dem `ethernet`-Modul und passender Hardware kann eine Verbindung zu einem LAN hergestellt werden.", 'en': "The `ethernet` module and appropriate hardware allow connection to a LAN."}), Version.WARP2 | Version.WARP3 | Version.WEMX, [
+ethernet = Module("ethernet", T({'de': "LAN-Verbindung", 'en': "LAN Connection"}), T({'de': "Benötigt das Feature <a href=\"#features_ethernet\"><code>\"ethernet\"</code></a>.", 'en': "Requires the feature <a href=\"#features_ethernet\"><code>\"ethernet\"</code></a>."}), T({'de': "Mit dem `ethernet`-Modul und passender Hardware kann eine Verbindung zu einem LAN hergestellt werden.", 'en': "The `ethernet` module and appropriate hardware allow connection to a LAN."}), Version.WARP2 | Version.WARP3 | Version.WARP4 | Version.WEMX, [
     Func("state", FuncType.STATE, Elem.OBJECT(T({'de': "Der Zustand der LAN/Ethernet-Verbindung.", 'en': "The state of the LAN/Ethernet connection."}), members={
             "connection_state": Elem.INT(T({'de': "Verbindungszustand.", 'en': "Connection state."}), constants=[
                 Const(0, T({'de': "Nicht konfiguriert", 'en': "Not configured"})),

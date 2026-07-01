@@ -1614,42 +1614,42 @@ Error counters for communication with the electricity meter.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`local_timeout`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Local Timeout
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Local Timeout
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`global_timeout`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Global Timeout
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Global Timeout
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_function`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Illegal Function
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Illegal Function
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_data_access`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Access
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Access
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_data_value`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Value
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Value
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`slave_device_failure`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Slave Device Failure
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Slave Device Failure
     </td>
 </tr>
     </tbody>
@@ -2807,42 +2807,42 @@ Error counters for communication with the electricity meter.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`local_timeout`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Local Timeout
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Local Timeout
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`global_timeout`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Global Timeout
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Global Timeout
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_function`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Illegal Function
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Illegal Function
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_data_access`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Access
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Access
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_data_value`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Value
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Value
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`slave_device_failure`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Slave Device Failure
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Slave Device Failure
     </td>
 </tr>
     </tbody>
@@ -3685,6 +3685,1199 @@ Es liegen 80 Werte vor, ~ 2 Werte pro Sekunde wurden erhoben, das Offset des let
     </TabItem>
 </Tabs>
 </TabItem>
+<TabItem value="warp4">
+## `meter/state` {#meter_state_warp4}
+
+
+The state of the electricity meter.
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+
+#### Read
+```bash
+curl http://$HOST/meter/state
+```
+```jsx
+{ "state": 2, "type": 3 }
+```
+
+
+
+#### Write
+```bash
+curl http://$HOST/meter/state -d '{ "state": 2, "type": 3 }'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+
+#### Read
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/state
+```
+```jsx
+{ "state": 2, "type": 3 }
+```
+
+
+
+#### Write
+            With MQTT on <code>$PREFIX/meter/state<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/state_update -m '{ "state": 2, "type": 3 }'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`state`<br/>int</th>
+    <td>
+        State of the electricity meter
+        - **0** - No electricity meter connected
+        - **1** - Electricity meter unreliable, possibly only single-phase connected.
+        - **2** - Electricity meter connected
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`type`<br/>int</th>
+    <td>
+        Type of the installed electricity meter. Not every meter is supported by every device!
+        - **0** - No electricity meter available
+        - **2** - Eastron SDM630
+        - **3** - Eastron SDM72V2
+        - **9** - Eltako DSZ16D[ZE]
+        - **4** - Eastron SDM72CTM
+        - **5** - Eastron SDM630MCT
+        - **6** - Eltako DSZ15DZMOD
+        - **7** - YTL DEM4A
+        - **8** - Lovato DMED341MID7ER
+        - **10** - Iskra WM3M4C
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `meter/values` {#meter_values_warp4}
+
+
+The measurement values of the electricity meter. Requires the feature <a href="#features_meter"><code>"meter"</code></a>
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+
+#### Read
+```bash
+curl http://$HOST/meter/values
+```
+```jsx
+{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }
+```
+
+
+
+#### Write
+```bash
+curl http://$HOST/meter/values -d '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+
+#### Read
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/values
+```
+```jsx
+{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }
+```
+
+
+
+#### Write
+            With MQTT on <code>$PREFIX/meter/values<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/values_update -m '{ "power": 6740.49707, "energy_rel": 4636.320801, "energy_abs": 4636.320801 }'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`power`<br/>float (<abbr title="Watt">W</abbr>)</th>
+    <td>
+        The current charging power.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_rel`<br/>float (<abbr title="Kilowatt-hour">kWh</abbr>)</th>
+    <td>
+        The charged energy since the last reset.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_abs`<br/>float (<abbr title="Kilowatt-hour">kWh</abbr>)</th>
+    <td>
+        The charged energy since the manufacture of the electricity meter.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `meter/phases` {#meter_phases_warp4}
+
+
+Connected and active phases. Requires the feature <a href="#features_meter_phases"><code>"meter_phases"</code></a>.
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+
+#### Read
+```bash
+curl http://$HOST/meter/phases
+```
+```jsx
+{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}
+```
+
+
+
+#### Write
+```bash
+curl http://$HOST/meter/phases -d '{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+
+#### Read
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/phases
+```
+```jsx
+{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}
+```
+
+
+
+#### Write
+            With MQTT on <code>$PREFIX/meter/phases<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/phases_update -m '{
+  "phases_connected": [true, false, false],
+  "phases_active": [true, false, false]
+}'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases_active`<br/>bool[3]</th>
+    <td>
+        The currently active phases
+        - **[0]** - Phase L1 active
+        - **[1]** - Phase L2 active
+        - **[2]** - Phase L3 active
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`phases_connected`<br/>bool[3]</th>
+    <td>
+        The connected phases
+        - **[0]** - Phase L1 connected
+        - **[1]** - Phase L2 connected
+        - **[2]** - Phase L3 connected
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `meter/error_counters` {#meter_error_counters_warp4}
+
+
+Error counters for communication with the electricity meter.
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`local_timeout`<br/>int</th>
+    <td>
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Local Timeout
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`global_timeout`<br/>int</th>
+    <td>
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Global Timeout
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_function`<br/>int</th>
+    <td>
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Illegal Function
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_data_access`<br/>int</th>
+    <td>
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Access
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_data_value`<br/>int</th>
+    <td>
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Value
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`slave_device_failure`<br/>int</th>
+    <td>
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Slave Device Failure
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `meter/all_values` {#meter_all_values_warp4}
+
+
+All measurement values measured by the built-in electricity meter. Requires the feature <a href="#features_meter_all_values"><code>"meter_all_values"</code></a>. Consecutive values marked with .. refer to the three phases L1, L2 and L3.
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+
+#### Read
+```bash
+curl http://$HOST/meter/all_values
+```
+```jsx
+[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]
+```
+
+
+
+#### Write
+```bash
+curl http://$HOST/meter/all_values -d '[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+
+#### Read
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/all_values
+```
+```jsx
+[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]
+```
+
+
+
+#### Write
+            With MQTT on <code>$PREFIX/meter/all_values<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/all_values_update -m '[
+    // Index 0
+    215.6799927, 228.3399963, 218.5399933,
+    31.42000008, 0, 0.01,
+    6758, 0, -2,
+    6758, 0, 2.424242258,
+    // Index 12
+    0, 0, 1.370018482,
+    1, 0, -0.825000048,
+    0, 0, 2.540998697,
+    220.8533325, 10.47666645, 31.43000031,
+    // Index 24
+    6757, 6760.424316, 1.370018482,
+    0, 2.540998697, null,
+    943.289978, 0, null,
+    null, null, null,
+    // Index 36
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, 31.41500282, null,
+    // Index 48
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 60
+    null, null, null,
+    null, null, 943.289978,
+    null, null, null,
+    null, null, null,
+    // Index 72
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    null, null, null,
+    // Index 84
+    null
+  ]'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Index</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..2]`<br/>float (<abbr title="Volt">V</abbr>)</th>
+    <td>
+        Voltage to neutral
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[3..5]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
+    <td>
+        Current
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[6..8]`<br/>float (<abbr title="Watt">W</abbr>)</th>
+    <td>
+        Active power
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[9..11]`<br/>float (<abbr title="Volt-ampere">VA</abbr>)</th>
+    <td>
+        Apparent power
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[12..14]`<br/>float (<abbr title="Volt-ampere reactive">var</abbr>)</th>
+    <td>
+        Reactive power
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[15..17]`<br/>float</th>
+    <td>
+        Power factor; The sign of the power factor indicates the direction of current flow.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[18..20]`<br/>float (<abbr title="Degree">°</abbr>)</th>
+    <td>
+        Relative phase shift
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[21]`<br/>float (<abbr title="Volt">V</abbr>)</th>
+    <td>
+        Average voltage to neutral
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[22]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
+    <td>
+        Average current
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[23]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
+    <td>
+        Sum of phase currents
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[24]`<br/>float (<abbr title="Watt">W</abbr>)</th>
+    <td>
+        Total active power
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[25]`<br/>float (<abbr title="Volt-ampere">VA</abbr>)</th>
+    <td>
+        Total apparent power
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[26]`<br/>float (<abbr title="Volt-ampere reactive">var</abbr>)</th>
+    <td>
+        Total reactive power
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[27]`<br/>float</th>
+    <td>
+        Total power factor
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[28]`<br/>float (<abbr title="Degree">°</abbr>)</th>
+    <td>
+        Total phase shift
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[29]`<br/>float (<abbr title="Hertz">Hz</abbr>)</th>
+    <td>
+        Supply voltage frequency
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[30]`<br/>float (<abbr title="Kilowatt-hour">kWh</abbr>)</th>
+    <td>
+        Active energy (import; consumed by vehicle)
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[31]`<br/>float (<abbr title="Kilowatt-hour">kWh</abbr>)</th>
+    <td>
+        Active energy (export; supplied by vehicle)
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[32]`<br/>float (<abbr title="Kilovolt-ampere reactive hour">kvarh</abbr>)</th>
+    <td>
+        Reactive energy (import; consumed by vehicle)
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[33]`<br/>float (<abbr title="Kilovolt-ampere reactive hour">kvarh</abbr>)</th>
+    <td>
+        Reactive energy (export; supplied by vehicle)
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[34]`<br/>float (<abbr title="Kilovolt-ampere-hour">kVAh</abbr>)</th>
+    <td>
+        Total apparent energy
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[35]`<br/>float (<abbr title="Ampere-hour">Ah</abbr>)</th>
+    <td>
+        Transported electric charge
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[36]`<br/>float (<abbr title="Watt">W</abbr>)</th>
+    <td>
+        Consumed active power; Equals import-export difference
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[37]`<br/>float (<abbr title="Watt">W</abbr>)</th>
+    <td>
+        Max. consumed active power; Highest measured value
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[38]`<br/>float (<abbr title="Volt-ampere">VA</abbr>)</th>
+    <td>
+        Consumed apparent power; Equals import-export difference
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[39]`<br/>float (<abbr title="Volt-ampere">VA</abbr>)</th>
+    <td>
+        Max. consumed apparent power; Highest measured value
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[40]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
+    <td>
+        Consumed neutral current
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[41]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
+    <td>
+        Max. consumed neutral current; Highest measured value
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[42]`<br/>float (<abbr title="Volt">V</abbr>)</th>
+    <td>
+        Voltage L1 to L2
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[43]`<br/>float (<abbr title="Volt">V</abbr>)</th>
+    <td>
+        Voltage L2 to L3
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[44]`<br/>float (<abbr title="Volt">V</abbr>)</th>
+    <td>
+        Voltage L3 to L1
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[45]`<br/>float (<abbr title="Volt">V</abbr>)</th>
+    <td>
+        Average voltage between phases
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[46]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
+    <td>
+        Neutral current
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[47..49]`<br/>float (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        Total Harmonic Distortion (THD) of voltage
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[50..52]`<br/>float (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        Total Harmonic Distortion (THD) of current
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[53]`<br/>float (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        Average voltage THD
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[54]`<br/>float (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        Average current THD
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[55..57]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
+    <td>
+        Consumed current
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[58..60]`<br/>float (<abbr title="Ampere">A</abbr>)</th>
+    <td>
+        Max. consumed current; Highest measured value
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[61]`<br/>float (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        Voltage THD L1 to L2
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[62]`<br/>float (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        Voltage THD L2 to L3
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[63]`<br/>float (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        Voltage THD L3 to L1
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[64]`<br/>float (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        Average voltage THD between phases
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[65]`<br/>float (<abbr title="Kilowatt-hour">kWh</abbr>)</th>
+    <td>
+        Sum of total active energies; Import-export sum of all phases
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[66]`<br/>float (<abbr title="Kilovolt-ampere reactive hour">kvarh</abbr>)</th>
+    <td>
+        Sum of total reactive energies; Import-export sum of all phases
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[67..69]`<br/>float (<abbr title="Kilowatt-hour">kWh</abbr>)</th>
+    <td>
+        Active energy (import; consumed by vehicle)
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[70..72]`<br/>float (<abbr title="Kilowatt-hour">kWh</abbr>)</th>
+    <td>
+        Active energy (export; supplied by vehicle)
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[73..75]`<br/>float (<abbr title="Kilowatt-hour">kWh</abbr>)</th>
+    <td>
+        Total active energy; Import-export sum
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[76..78]`<br/>float (<abbr title="Kilovolt-ampere reactive hour">kvarh</abbr>)</th>
+    <td>
+        Reactive energy (import; consumed by vehicle)
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[79..81]`<br/>float (<abbr title="Kilovolt-ampere reactive hour">kvarh</abbr>)</th>
+    <td>
+        Reactive energy (export; supplied by vehicle)
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[82..84]`<br/>float (<abbr title="Kilovolt-ampere reactive hour">kvarh</abbr>)</th>
+    <td>
+        Total reactive energy; Import-export sum
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `meter/reset` {#meter_reset_warp4}
+
+
+Resets the energy meter.
+**Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+#### Write
+```bash
+curl http://$HOST/meter/reset -d 'null'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+#### Write
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/meter/reset -m 'null'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+
+<br/><br/><br/>
+## `meter/last_reset` {#meter_last_reset_warp4}
+
+
+The time of the last meter reset (see [`meter/reset`](/interfaces/mqtt_http/api_reference/meter.mdx#meter_reset)) as Unix timestamp. 0 if no reset was performed, or if no network time synchronization was available at the time of the reset.
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+#### Read
+```bash
+curl http://$HOST/meter/last_reset
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+#### Read
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/last_reset
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "last_reset": 1714728252 }
+```
+Zuletzt zurückgesetzt 2024-05-03T11:24:12+02:00
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`last_reset`<br/>int (<abbr title="Second">s</abbr>)</th>
+    <td>
+        Unix timestamp of the time of the last meter reset.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `meter/history` {#meter_history_warp4}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
+
+A 48-hour history of charging power in watts. Missing values are indicated by null. The history is filled from back to front, so null values only occur consecutively at the beginning of the array if the ESP was restarted within the last 48 hours. Up to 720 values are output, which corresponds to one measurement value every 4 minutes. These measurement values are the respective average of these 4 minutes.
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+```bash
+curl http://$HOST/meter/history
+```
+```jsx
+{
+  "offset": 60927,
+  "samples": [
+      null, null, null, null, null, null, null, null,
+      // 600 weitere null-Werte entfernt
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0,    0,    0,    0,    0,
+         0,    0,    0,    0, 1736, 6656, 6655, 6666,
+      6680, 6716, 6714, 6625, 6640, 6641, 6595, 6612,
+      6592, 6593, 6589, 6592, 6600, 6625, 6626, 6637,
+      6665, 6636, 6632, 6656, 6616, 6611, 6646, 6670,
+      6691, 6715, 6787, 6754, 6761, 6797, 6771, 6685,
+      6705, 6778, 6703, 6675, 6681, 6721, 6739, 6816,
+      6872, 6858, 6821, 6836, 6784, 6871, 6943, 6930,
+      6968, 6955, 6837, 6800, 6846, 6919, 6881, 6736,
+      6671, 6655, 6674, 6743, 6878, 5733, 4462, 3712,
+      3098, 2693, 2337, 2098, 1683, 1575, 1575,   84,
+         0,    0,    0,    0,    0,    0,    0,    0
+  ]
+}
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Only supported by the HTTP API**
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisecond">ms</abbr>)</th>
+    <td>
+        The age of the last measured value.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..]</th>
+    <td>
+        The measured values.
+    </td>
+</tr>
+    </tbody>
+</table>
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Only supported by the HTTP API"></Admonition>
+    </TabItem>
+</Tabs>
+
+<br/><br/><br/>
+## `meter/live` {#meter_live_warp4}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
+
+The last charging power measurement values. Based on these values, the average values for [`meter/history`](/interfaces/mqtt_http/api_reference/meter.mdx#meter_history) are generated.
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+```bash
+curl http://$HOST/meter/live
+```
+```jsx
+{
+  "offset": 370,
+  "samples_per_second": 1.99565,
+  "samples": [
+    2626, 2626, 2626, 2626, 2626, 2626, 2626, 2673,
+    2673, 2673, 2673, 2673, 2673, 2673, 2673, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677, 2677,
+    2677, 2677, 2677, 2677, 2677, 2677, 2677,  988,
+     988,  988,  988,  988,  988,  988,  988,    3,
+       3,    3,    3,    3,    3,    3,    3,    1,
+       1,    1,    1,    1,    1,    1,    1,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    3,
+       3,    3,    3,    3,    3,    3,    3,    4
+   ]
+}
+```
+Es liegen 80 Werte vor, ~ 2 Werte pro Sekunde wurden erhoben, das Offset des letzten Werts sind 370 ms
+-> Die Messwerte reichen im Moment 40,370 Sekunden in die Vergangenheit.
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Only supported by the HTTP API**
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`offset`<br/>int (<abbr title="Millisecond">ms</abbr>)</th>
+    <td>
+        The age of the last measured value.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples_per_second`<br/>float (<abbr title="Hertz">Hz</abbr>)</th>
+    <td>
+        The number of measured values per second.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`samples`<br/>int[..]</th>
+    <td>
+        The measured values. Depending on the length of the array and the samples_per_second value, it can be determined how far back in time the measurement values reach.
+    </td>
+</tr>
+    </tbody>
+</table>
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Only supported by the HTTP API"></Admonition>
+    </TabItem>
+</Tabs>
+</TabItem>
 <TabItem value="wem">
 ## `meter/state` {#meter_state_wem}
 
@@ -4036,42 +5229,42 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/error_counters
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`local_timeout`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Local Timeout
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Local Timeout
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`global_timeout`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Global Timeout
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Global Timeout
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_function`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Illegal Function
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Illegal Function
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_data_access`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Access
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Access
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_data_value`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Value
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Value
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`slave_device_failure`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Slave Device Failure
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Slave Device Failure
     </td>
 </tr>
     </tbody>
@@ -5229,42 +6422,42 @@ Error counters for communication with the electricity meter.
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`local_timeout`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Local Timeout
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Local Timeout
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`global_timeout`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Global Timeout
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Global Timeout
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_function`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Illegal Function
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Illegal Function
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_data_access`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Access
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Access
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_data_value`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Value
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Value
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`slave_device_failure`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Slave Device Failure
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Slave Device Failure
     </td>
 </tr>
     </tbody>
@@ -6205,11 +7398,11 @@ mosquitto_pub -h $BROKER -t $PREFIX/meter/state_update -m '{ "state": 2, "type":
         
         - **1** - Eastron SDM72
         
-        <strong>(Only WARP 3 and Energy Manager and Energy Manager 2.0)</strong> 
+        <strong>(Only WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> 
         
         - **9** - Eltako DSZ16D[ZE]
         
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> 
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> 
         
         - **4** - Eastron SDM72CTM
         - **5** - Eastron SDM630MCT
@@ -6494,42 +7687,42 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/meter/error_counters
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`local_timeout`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Local Timeout
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Local Timeout
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`global_timeout`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Global Timeout
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Global Timeout
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_function`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Illegal Function
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Illegal Function
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_data_access`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Access
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Access
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`illegal_data_value`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Value
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Illegal Data Value
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`slave_device_failure`<br/>int</th>
     <td>
-        <strong>(Only WARP 2 and WARP 3 and Energy Manager and Energy Manager 2.0)</strong> Slave Device Failure
+        <strong>(Only WARP 2 and WARP 3 and WARP 4 and Energy Manager and Energy Manager 2.0)</strong> Slave Device Failure
     </td>
 </tr>
     </tbody>

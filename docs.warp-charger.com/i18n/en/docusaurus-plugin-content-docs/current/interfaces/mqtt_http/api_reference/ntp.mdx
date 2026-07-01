@@ -586,6 +586,198 @@ mosquitto_pub -h $BROKER -t $PREFIX/ntp/config_update -m '{
     </tbody>
 </table>
 </TabItem>
+<TabItem value="warp4">
+## `ntp/state` {#ntp_state_warp4}
+
+
+The state of network time synchronization.
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+#### Read
+```bash
+curl http://$HOST/ntp/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+#### Read
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ntp/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "synced": true, "time": 28578987 }
+```
+
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`synced`<br/>bool</th>
+    <td>
+        Indicates whether the device was able to synchronize its time via NTP.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`time`<br/>int</th>
+    <td>
+        A Unix timestamp in <strong>minutes</strong> indicating the device's current time, or 0 if no time synchronization exists
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `ntp/config` {#ntp_config_warp4}
+
+
+The configuration of network time synchronization.
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+
+#### Read
+```bash
+curl http://$HOST/ntp/config
+```
+```jsx
+{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}
+```
+
+
+
+#### Write
+```bash
+curl http://$HOST/ntp/config -d '{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+
+#### Read
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/ntp/config
+```
+```jsx
+{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}
+```
+
+
+
+#### Write
+            With MQTT on <code>$PREFIX/ntp/config<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/ntp/config_update -m '{
+  "enable": true,
+  "use_dhcp": true,
+  "timezone": "Europe/Berlin",
+  "server": "time.cloudflare.com",
+  "server2": "ptbtime3.ptb.de"
+}'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`enable`<br/>bool</th>
+    <td>
+        Specifies whether the device should synchronize its time via NTP. The obtained time is used to determine the start times of tracked charging sessions and in the event log.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`use_dhcp`<br/>bool</th>
+    <td>
+        Specifies whether the device should receive NTP servers via DHCP. Only works if DHCP is used for IP address assignment.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`timezone`<br/>string</th>
+    <td>
+        The timezone in which the device is located. e.g. "Europe/Berlin"
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`server`<br/>string</th>
+    <td>
+        IP address or hostname of the time server to use
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`server2`<br/>string</th>
+    <td>
+        IP address or hostname of the alternative time server to use
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
 <TabItem value="wem">
 ## `ntp/state` {#ntp_state_wem}
 

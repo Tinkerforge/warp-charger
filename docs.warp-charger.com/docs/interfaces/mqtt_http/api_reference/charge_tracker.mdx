@@ -1528,6 +1528,512 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_tracker/config_update -m '3381'
     </tbody>
 </table>
 </TabItem>
+<TabItem value="warp4">
+## `charge_tracker/state` {#charge_tracker_state_warp4}
+
+
+Zustand des Ladetrackers
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp4-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/charge_tracker/state
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp4/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_tracker/state
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{ "tracked_charges": 206, "first_charge_timestamp": 28090609 }
+```
+28090609 * 60 = 1685436540 = 2023-05-30T08:49:00+00:00
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Beschreibung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`tracked_charges`<br/>int</th>
+    <td>
+        Anzahl der insgesamt aufgezeichneten Ladevorgänge.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`first_charge_timestamp`<br/>int (<abbr title="Minute">min</abbr>)</th>
+    <td>
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der den Startzeitpunkt des <strong>ersten</strong> Ladevorgangs angibt. 0 falls zum Startzeitpunkt keine Zeitsynchronisierung verfügbar war.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `charge_tracker/last_charges` {#charge_tracker_last_charges_warp4}
+
+
+Die letzten (bis zu) 30 aufgezeichneten Ladevorgänge
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp4-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/charge_tracker/last_charges
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp4/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_tracker/last_charges
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  {
+    "timestamp_minutes": 28568514,
+    "charge_duration": 27479,
+    "user_id": 0,
+    "energy_charged": 39.83935547
+  },
+  {
+    "timestamp_minutes": 28572916,
+    "charge_duration": 37806,
+    "user_id": 0,
+    "energy_charged": 33.81298828
+  },
+  {
+    "timestamp_minutes": 28574252,
+    "charge_duration": 27915,
+    "user_id": 0,
+    "energy_charged": 34.23388672
+  }
+]
+```
+
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Index</th>
+            <th scope="col">Beschreibung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..29]`<br/>object</th>
+    <td>
+        Ein getrackter Ladevorgang
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Beschreibung</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`timestamp_minutes`<br/>int (<abbr title="Minute">min</abbr>)</th>
+            <td>
+                Ein Unix-Timestamp in <strong>Minuten</strong>, der den Startzeitpunkt des Ladevorgangs angibt. 0 falls zum Startzeitpunkt keine Zeitsynchronisierung verfügbar war.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`charge_duration`<br/>int (<abbr title="Sekunde">s</abbr>)</th>
+            <td>
+                Dauer des Ladevorgangs.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`user_id`<br/>int</th>
+            <td>
+                ID des Benutzers der den Ladevorgang gestartet hat. 0 falls eine Freigabe ohne Nutzerzuordnung erfolgt ist.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_charged`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
+            <td>
+                Geladene Energie. null falls zum Start- oder Endzeitpunkt kein Zähler verfügbar war.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `charge_tracker/current_charge` {#charge_tracker_current_charge_warp4}
+
+
+Information zum aktuell laufenden Ladevorgang. Falls kein Ladevorgang läuft, hat die user_id den Wert -1
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp4-AbCd
+```
+#### Lesen
+```bash
+curl http://$HOST/charge_tracker/current_charge
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp4/AbCd
+```
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_tracker/current_charge
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+{
+  "user_id": 0,
+  "meter_start": 886.1900024,
+  "evse_uptime_start": 786598059,
+  "timestamp_minutes": 28577341,
+  "authorization_type": 0,
+  "authorization_info": null
+}
+```
+
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Beschreibung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`user_id`<br/>int</th>
+    <td>
+        ID des Benutzers der den Ladevorgang gestartet hat. 0 falls eine Freigabe ohne Nutzerzuordnung erfolgt ist. -1 falls gerade kein Ladevorgang läuft.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`meter_start`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
+    <td>
+        Zählerstand bei Start des Ladevorgangs. null falls zum Startzeitpunkt kein Zähler verfügbar war.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`evse_uptime_start`<br/>int (<abbr title="Sekunde">s</abbr>)</th>
+    <td>
+        Uptime des Ladecontrollers beim Start des Ladevorgangs. Um zu berechnen, wie lange der Ladevogang bereits läuft kann die aktuelle Uptime aus [`evse/low_level_state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_low_level_state) verwendet werden.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`timestamp_minutes`<br/>int (<abbr title="Minute">min</abbr>)</th>
+    <td>
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der den Startzeitpunkt des Ladevorgangs angibt. 0 falls zum Startzeitpunkt keine Zeitsynchronisierung verfügbar war.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`authorization_type`<br/>int</th>
+    <td>
+        Gibt an wie der Ladevorgang freigeschaltet wurde.
+        - **0** - Benutzerfreigabe deaktiviert, Ladevorgang wurde bei Anstecken des Fahrzeugs freigegeben. authorization_info ist null.
+        - **1** - Typ der Freischaltung ging verloren, da der ESP während des Ladevorgangs neugestartet wurde. authorization_info ist null.
+        - **2** - Ladevorgang wurde durch NFC-Tag freigegeben. NFC-Tag wurde physisch an den WARP Charger gehalten. authorization_info enthält tag_id und tag_type.
+        - **3** - Ladevorgang wurde durch NFC-Tag freigegeben. NFC-Tag wurde per [`nfc/inject_tag`](/interfaces/mqtt_http/api_reference/nfc.mdx#nfc_inject_tag) vorgetäuscht. authorization_info enthält tag_id und tag_type.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`authorization_info`<br/>None</th>
+    <td>
+        Weiterführende Informationen zur Benutzerfreigabe. Format hängt vom authorization_type ab.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `charge_tracker/remove_all_charges` {#charge_tracker_remove_all_charges_warp4}
+
+
+Löscht alle aufgezeichneten Ladevorgänge und die Nutzernamenhistorie. <strong>Kann nicht rückgängig gemacht werden!</strong> Danach wird automatisch ein Neustart ausgeführt.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp4-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/charge_tracker/remove_all_charges -d '{ "do_i_know_what_i_am_doing": false }'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp4/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_tracker/remove_all_charges -m '{ "do_i_know_what_i_am_doing": false }'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Beschreibung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`do_i_know_what_i_am_doing`<br/>bool</th>
+    <td>
+        Gibt an ob der Löschvorgang ausgeführt werden soll
+        - **true** - Alle aufgezeichneten Ladevorgänge und die Nutzernamenhistorie löschen
+        - **false** - Keine Aktion durchführen
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `charge_tracker/charge_log` {#charge_tracker_charge_log_warp4}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
+
+Gibt alle aufgezeichneten Ladevorgänge in folgendem Binärformat aus. Einträge entsprechen jeweils einem Ladevorgang, sind 16 Byte lang und werden nacheinander ausgegeben. Die folgenden Indizes sind Byte-Offsets relativ zum Start eines aufgezeichneten Ladevorgangs. Alle Werte sind im Little-Endian-Format.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp4-AbCd
+```
+```bash
+curl http://$HOST/charge_tracker/charge_log
+```
+
+```
+offset      timestamp | kwh_start | id | duration | kwh_end
+0x00000000: c2eb b301 | 3bf8 8c45 | 00 | 57 6b00  | f236 8e45
+0x00000010: f4fc b301 | 2738 8e45 | 00 | ae 9300  | a846 8f45
+0x00000020: 2c02 b401 | df46 8f45 | 00 | 0b 6d00  | be58 9045
+```
+Dieses Beispiel enthält die selben Ladevorgänge wie das [`charge_tracker/last_charges`](/interfaces/mqtt_http/api_reference/charge_tracker.mdx#charge_tracker_last_charges)-Beispiel
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+            **Wird nur von der HTTP-API unterstützt**
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Index</th>
+            <th scope="col">Beschreibung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..3]`<br/>int (<abbr title="Minute">min</abbr>)</th>
+    <td>
+        Ein Unix-Timestamp in <strong>Minuten</strong>, der den Startzeitpunkt des Ladevorgangs angibt. 0 falls zum Startzeitpunkt keine Zeitsynchronisierung verfügbar war.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[4..7]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
+    <td>
+        Zählerstand bei Start des Ladevorgangs. NaN falls zum Startzeitpunkt kein Zähler verfügbar war.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[8]`<br/>int</th>
+    <td>
+        ID des Benutzers der den Ladevorgang gestartet hat. 0 falls eine Freigabe ohne Nutzerzuordnung erfolgt ist.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[9..11]`<br/>int (<abbr title="Sekunde">s</abbr>)</th>
+    <td>
+        Dauer des Ladevorgangs.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[12..15]`<br/>float (<abbr title="Kilowattstunde">kWh</abbr>)</th>
+    <td>
+        Zählerstand bei Ende des Ladevorgangs. NaN falls zum Endzeitpunkt kein Zähler verfügbar war.
+    </td>
+</tr>
+    </tbody>
+</table>
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Wird nur von der HTTP-API unterstützt"></Admonition>
+    </TabItem>
+</Tabs>
+
+<br/><br/><br/>
+## `charge_tracker/config` {#charge_tracker_config_warp4}
+
+
+Die Ladetracker-Konfiguration.
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp4-AbCd
+```
+
+#### Lesen
+```bash
+curl http://$HOST/charge_tracker/config
+```
+```jsx
+{ "electricity_price": 3381 }
+```
+
+
+
+#### Schreiben
+```bash
+curl http://$HOST/charge_tracker/config -d '{ "electricity_price": 3381 }'
+```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_tracker/config -d '3381'
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp4/AbCd
+```
+
+#### Lesen
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_tracker/config
+```
+```jsx
+{ "electricity_price": 3381 }
+```
+
+
+
+#### Schreiben
+            Mit MQTT auf <code>$PREFIX/charge_tracker/config<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_tracker/config_update -m '{ "electricity_price": 3381 }'
+```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_tracker/config_update -m '3381'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Beschreibung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`electricity_price`<br/>int (<abbr title="Hundertstel Cent pro Kilowattstunde">ct/kWh/100</abbr>)</th>
+    <td>
+        Strompreis der im Webinterface und Ladelog verwendet wird um Ladekosten zu berechnen
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
 <TabItem value="wem">
 Auf dieser Hardware nicht unterstützt!
 </TabItem>
@@ -2053,31 +2559,31 @@ export const toc = [
     "value": "charge_tracker/state",
     "id": "charge_tracker_state",
     "level": 2,
-    "hardwareType": ["warp1","warp2","warp3"]
+    "hardwareType": ["warp1","warp2","warp3","warp4"]
 },{
     "value": "charge_tracker/last_charges",
     "id": "charge_tracker_last_charges",
     "level": 2,
-    "hardwareType": ["warp1","warp2","warp3"]
+    "hardwareType": ["warp1","warp2","warp3","warp4"]
 },{
     "value": "charge_tracker/current_charge",
     "id": "charge_tracker_current_charge",
     "level": 2,
-    "hardwareType": ["warp1","warp2","warp3"]
+    "hardwareType": ["warp1","warp2","warp3","warp4"]
 },{
     "value": "charge_tracker/remove_all_charges",
     "id": "charge_tracker_remove_all_charges",
     "level": 2,
-    "hardwareType": ["warp1","warp2","warp3"]
+    "hardwareType": ["warp1","warp2","warp3","warp4"]
 },{
     "value": "charge_tracker/charge_log",
     "id": "charge_tracker_charge_log",
     "level": 2,
-    "hardwareType": ["warp1","warp2","warp3"]
+    "hardwareType": ["warp1","warp2","warp3","warp4"]
 },{
     "value": "charge_tracker/config",
     "id": "charge_tracker_config",
     "level": 2,
-    "hardwareType": ["warp1","warp2","warp3"]
+    "hardwareType": ["warp1","warp2","warp3","warp4"]
 },
 ];

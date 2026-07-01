@@ -424,6 +424,144 @@ Resets all settings and deletes all recorded charging sessions. <strong>Cannot b
     </tbody>
 </table>
 </TabItem>
+<TabItem value="warp4">
+## `reboot` {#reboot_warp4}
+
+
+Restarts the ESP to apply configuration changes, for example.
+**Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**
+<Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+#### Write
+```bash
+curl http://$HOST/reboot -d 'null'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+#### Write
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/reboot -m 'null'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+
+<br/><br/><br/>
+## `debug_report` {#debug_report_warp4}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
+
+Generates a debug report. This consists of all states and configurations, as well as the last received commands and configuration updates. Passwords are censored, just like in configuration queries.
+
+
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Only supported by the HTTP API"></Admonition>
+    </TabItem>
+</Tabs>
+
+<br/><br/><br/>
+## `force_reboot` {#force_reboot_warp4}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
+
+Forces an immediate restart of the ESP. Useful if [reboot](/interfaces/mqtt_http/api_reference/misc.mdx#reboot) hangs for any reason.
+
+
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Only supported by the HTTP API"></Admonition>
+    </TabItem>
+</Tabs>
+
+<br/><br/><br/>
+## `flash_firmware` {#flash_firmware_warp4}
+<Tabs groupId="apiType" queryString className="hidden-tabs">
+    <TabItem value="http" label="HTTP (curl)">
+
+
+Accepts a firmware update as POST which is then flashed.
+
+
+    </TabItem>
+    <TabItem value="mqtt" label="MQTT (mosquitto)">
+        <Admonition type="warning" title="Only supported by the HTTP API"></Admonition>
+    </TabItem>
+</Tabs>
+
+<br/><br/><br/>
+## `config_reset` {#config_reset_warp4}
+
+
+Resets all settings but keeps recorded charging sessions and username history. <strong>Cannot be undone!</strong> A restart will be performed automatically afterwards.
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`do_i_know_what_i_am_doing`<br/>bool</th>
+    <td>
+        Indicates whether the deletion process should be executed
+        - **true** - Delete all settings
+        - **false** - Perform no action
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `factory_reset` {#factory_reset_warp4}
+
+
+Resets all settings and deletes all recorded charging sessions. <strong>Cannot be undone!</strong> A restart will be performed automatically afterwards.
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`do_i_know_what_i_am_doing`<br/>bool</th>
+    <td>
+        Indicates whether the deletion process should be executed
+        - **true** - Delete all settings, recorded charging sessions, and username history
+        - **false** - Perform no action
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
 <TabItem value="wem">
 ## `reboot` {#reboot_wem}
 

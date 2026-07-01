@@ -1,6 +1,6 @@
 from api_doc_common import *
 
-ocpp = Module("ocpp", T({'de': "OCPP-Verbindung", 'en': "OCPP Connection"}), "", "", Version.WARP2 | Version.WARP3, [
+ocpp = Module("ocpp", T({'de': "OCPP-Verbindung", 'en': "OCPP Connection"}), "", "", Version.WARP2 | Version.WARP3 | Version.WARP4, [
     Func("config", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Konfiguration der OCPP-Verbindung", 'en': "OCPP connection configuration"}), members={
         "enable": Elem.BOOL(T({'de': "Gibt an, ob eine Verbindung zum konfigurierten OCPP-Server aufgebaut werden soll. Damit nicht nur das Auslesen des Zustands, sondern zusätzlich eine Steuerung möglich ist, muss außerdem {{{ref:evse/ocpp_enabled}}} true sein.", 'en': "Indicates whether a connection to the configured OCPP server should be established. For control functionality in addition to state readout, {{{ref:evse/ocpp_enabled}}} must also be true."})),
         "url": Elem.STRING(T({'de': "Endpoint-URL des OCPP-Servers. Muss mit dem Schema ws:// (unverschlüsselt!) oder wss:// (TLS-verschlüsselt) beginnen und darf <strong>nicht</strong> auf / enden.", 'en': "Endpoint URL of the OCPP server. Must start with the scheme ws:// (unencrypted!) or wss:// (TLS-encrypted) and must <strong>not</strong> end with /."})),

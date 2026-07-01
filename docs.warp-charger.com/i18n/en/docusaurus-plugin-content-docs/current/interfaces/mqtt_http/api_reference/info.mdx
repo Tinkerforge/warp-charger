@@ -1191,6 +1191,320 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/last_boots
     </tbody>
 </table>
 </TabItem>
+<TabItem value="warp4">
+## `info/version` {#info_version_warp4}
+
+
+Version of the currently running firmware.
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`firmware`<br/>string</th>
+    <td>
+        The firmware version currently running. See [Semantic Versioning](https://semver.org/) format.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`config`<br/>string</th>
+    <td>
+        The version of the configuration currently in use.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`config_type`<br/>string</th>
+    <td>
+        Type of configuration stored on this device.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `info/modules` {#info_modules_warp4}
+
+
+Initialization state of firmware modules.
+
+
+
+<br/><br/><br/>
+## `info/features` {#info_features_warp4}
+
+
+Supported hardware features. See <a class="scrollto" href="#features_section">Features</a> for details.
+
+
+
+<br/><br/><br/>
+## `info/name` {#info_name_warp4}
+
+
+Name and type of the device
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`name`<br/>string</th>
+    <td>
+        The name of the device. Consists of the type and UID of the device.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`type`<br/>string</th>
+    <td>
+        Type of the device.
+        - **warp** - A WARP Charger
+        - **warp2** - A WARP2 Charger
+        - **warp3** - A WARP3 Charger
+        - **wem** - A WARP Energy Manager
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_type`<br/>string</th>
+    <td>
+        User-readable type of the device. Indicates the hardware version, variant (Smart, Pro), maximum charging power, and any upgrades, e.g., "WARP2 Charger Pro 11kW +NFC"
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`uid`<br/>string</th>
+    <td>
+        UID of the device or the installed ESP (Ethernet) Brick.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `info/display_name` {#info_display_name_warp4}
+
+
+User-readable name of the device.
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+
+#### Read
+```bash
+curl http://$HOST/info/display_name
+```
+```jsx
+{ "display_name": "Wallbox Garage links" }
+```
+
+
+
+#### Write
+```bash
+curl http://$HOST/info/display_name -d '{ "display_name": "Wallbox Garage links" }'
+```
+
+or abbreviated:
+
+```bash
+curl http://$HOST/info/display_name -d '"Wallbox Garage links"'
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+
+#### Read
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/display_name
+```
+```jsx
+{ "display_name": "Wallbox Garage links" }
+```
+
+
+
+#### Write
+            With MQTT on <code>$PREFIX/info/display_name<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/info/display_name_update -m '{ "display_name": "Wallbox Garage links" }'
+```
+
+or abbreviated:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/info/display_name_update -m '"Wallbox Garage links"'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`display_name`<br/>string</th>
+    <td>
+        The display name.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `info/last_boots` {#info_last_boots_warp4}
+
+
+Debug information about the last firmware executions
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+#### Read
+```bash
+curl http://$HOST/info/last_boots
+```
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+#### Read
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/info/last_boots
+```
+        </TabItem>
+    </Tabs>
+
+```jsx
+[
+  {
+    "reset_reason": 3,
+    "boot_count": 1,
+    "timestamp_min": 28568911,
+    "uptime": 1648057,
+    "uptime_overflows": 0
+  },
+  // An entry is only recorded after 5 minutes of uptime.
+  // Between boot 1 and 4, the device was restarted twice within 5 minutes (e.g. due to configuration changes)
+  {
+    "reset_reason": 3,
+    "boot_count": 4,
+    "timestamp_min": 28568946,
+    "uptime": 28301027,
+    "uptime_overflows": 0
+  }
+]
+```
+
+
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Index</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..9]`<br/>object</th>
+    <td>
+        Debug information about a firmware execution
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`reset_reason`<br/>int</th>
+            <td>
+                Reason for the restart. See [Espressif documentation](https://docs.espressif.com/projects/esp-idf/en/v4.4.3/esp32/api-reference/system/system.html?highlight=esp_reset_reason#_CPPv418esp_reset_reason_t).
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`boot_count`<br/>int</th>
+            <td>
+                Counter indicating which restart since the device was disconnected from power is being performed. An entry in last_boots is only written five minutes after device startup to preserve flash memory. If a restart occurs within the first five minutes, an entry may be lost, which can be noticed by this counter.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`uptime`<br/>int (<abbr title="Millisecond">ms</abbr>)</th>
+            <td>
+                Runtime of the firmware execution (32-bit).
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`uptime_overflows`<br/>int</th>
+            <td>
+                Number of uptime overflows.
+            </td>
+        </tr>
+        
+        <tr>
+            <th scope="row" style={{whiteSpace: "nowrap"}}>`timestamp_min`<br/>int</th>
+            <td>
+                Unix timestamp in minutes of the firmware execution.
+            </td>
+        </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
 <TabItem value="wem">
 ## `info/version` {#info_version_wem}
 

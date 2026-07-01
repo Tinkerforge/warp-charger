@@ -31,7 +31,7 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
                 - **1** - Contactor L2+L3 auxiliary contact: (indicates if contactor is switched) 1 = closed; 0 = open
                 - **2** - Contactor error: (see contactor_error) 1 = error; 0 = no error
                 - **3** - Contactor coil connection: 1 = One or both contactors should be switched (see phase switching state) 0 = No contactor should be switched
-                - **4** - Phase switching state (indicates which contactors are switched when the coil connection bit is 1). 1 = Both contactors are switched; three-phase. 0 = Only the L1+N contactor is switched; single-phase """}), version=Version.WARP3)
+                - **4** - Phase switching state (indicates which contactors are switched when the coil connection bit is 1). 1 = Both contactors are switched; three-phase. 0 = Only the L1+N contactor is switched; single-phase """}), version=Version.WARP3 | Version.WARP4)
             ]),
             "contactor_error": Elem.INT(T({'de': "Fehlercode der Schützüberwachung. Ein Wert ungleich 0 zeigt einen Fehler an.", 'en': "Error code of the contactor monitoring. A value other than 0 indicates an error."}), constants=[
                 Const(0, T({'de': "Kein Fehler", 'en': "No error"})),
@@ -42,19 +42,19 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
                 Const(5, T({'de': "Schütz sollte <strong>nicht</strong> durchschalten.<br/>Kein Strom vor Schütz, Strom nach Schütz.<br/>Verkabelung prüfen.", 'en': "Contactor should <strong>not</strong> be closed.<br/>No current before contactor, current after contactor.<br/>Check wiring."}), version=Version.WARP1 | Version.WARP2),
                 Const(6, T({'de': "Schütz sollte <strong>nicht</strong> durchschalten.<br/>Strom vor Schütz, Strom nach Schütz.<br/>Schütz defekt?", 'en': "Contactor should <strong>not</strong> be closed.<br/>Current before contactor, current after contactor.<br/>Contactor defective?"}), version=Version.WARP1 | Version.WARP2),
 
-                Const(1, T({'de': "Schütz L2+L3 nicht durchgeschaltet.<br/>Beide Schütze sollten durchgeschaltet sein.", 'en': "Contactor L2+L3 not closed.<br/>Both contactors should be closed."}), version=Version.WARP3),
-                Const(2, T({'de': "Schütz L1+N nicht durchgeschaltet.<br/>Beide Schütze sollten durchgeschaltet sein.", 'en': "Contactor L1+N not closed.<br/>Both contactors should be closed."}), version=Version.WARP3),
-                Const(3, T({'de': "Beide Schütze nicht durchgeschaltet.<br/>Beide Schütze sollten durchgeschaltet sein.", 'en': "Both contactors not closed.<br/>Both contactors should be closed."}), version=Version.WARP3),
-                Const(4, T({'de': "Schütz L2+L3 durchgeschaltet.<br/>Nur Schütz L1+N sollte durchgeschaltet sein.", 'en': "Contactor L2+L3 closed.<br/>Only contactor L1+N should be closed."}), version=Version.WARP3),
-                Const(5, T({'de': "Schütz L2+L3 durchgeschaltet, Schütz L1+N nicht durchgeschaltet.<br/>Nur Schütz L1+N sollte durchgeschaltet sein.", 'en': "Contactor L2+L3 closed, contactor L1+N not closed.<br/>Only contactor L1+N should be closed."}), version=Version.WARP3),
-                Const(6, T({'de': "Beide Schütze durchgeschaltet.<br/>Nur Schütz L1+N sollte durchgeschaltet sein.", 'en': "Both contactors closed.<br/>Only contactor L1+N should be closed."}), version=Version.WARP3),
-                Const(7, T({'de': "Beide Schütze durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.", 'en': "Both contactors closed.<br/>No contactor should be closed."}), version=Version.WARP3),
-                Const(8, T({'de': "Schütz L1+N durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.", 'en': "Contactor L1+N closed.<br/>No contactor should be closed."}), version=Version.WARP3),
-                Const(9, T({'de': "Schütz L2+L3 durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.", 'en': "Contactor L2+L3 closed.<br/>No contactor should be closed."}), version=Version.WARP3),
-                Const(10, T({'de': "Beide Schütze durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.", 'en': "Both contactors closed.<br/>No contactor should be closed."}), version=Version.WARP3),
-                Const(11, T({'de': "Schütz L1+N durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.", 'en': "Contactor L1+N closed.<br/>No contactor should be closed."}), version=Version.WARP3),
-                Const(12, T({'de': "Schütz L2+L3 durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.", 'en': "Contactor L2+L3 closed.<br/>No contactor should be closed."}), version=Version.WARP3),
-                Const(13, T({'de': "Reserviert.", 'en': "Reserved."}), version=Version.WARP3),
+                Const(1, T({'de': "Schütz L2+L3 nicht durchgeschaltet.<br/>Beide Schütze sollten durchgeschaltet sein.", 'en': "Contactor L2+L3 not closed.<br/>Both contactors should be closed."}), version=Version.WARP3 | Version.WARP4),
+                Const(2, T({'de': "Schütz L1+N nicht durchgeschaltet.<br/>Beide Schütze sollten durchgeschaltet sein.", 'en': "Contactor L1+N not closed.<br/>Both contactors should be closed."}), version=Version.WARP3 | Version.WARP4),
+                Const(3, T({'de': "Beide Schütze nicht durchgeschaltet.<br/>Beide Schütze sollten durchgeschaltet sein.", 'en': "Both contactors not closed.<br/>Both contactors should be closed."}), version=Version.WARP3 | Version.WARP4),
+                Const(4, T({'de': "Schütz L2+L3 durchgeschaltet.<br/>Nur Schütz L1+N sollte durchgeschaltet sein.", 'en': "Contactor L2+L3 closed.<br/>Only contactor L1+N should be closed."}), version=Version.WARP3 | Version.WARP4),
+                Const(5, T({'de': "Schütz L2+L3 durchgeschaltet, Schütz L1+N nicht durchgeschaltet.<br/>Nur Schütz L1+N sollte durchgeschaltet sein.", 'en': "Contactor L2+L3 closed, contactor L1+N not closed.<br/>Only contactor L1+N should be closed."}), version=Version.WARP3 | Version.WARP4),
+                Const(6, T({'de': "Beide Schütze durchgeschaltet.<br/>Nur Schütz L1+N sollte durchgeschaltet sein.", 'en': "Both contactors closed.<br/>Only contactor L1+N should be closed."}), version=Version.WARP3 | Version.WARP4),
+                Const(7, T({'de': "Beide Schütze durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.", 'en': "Both contactors closed.<br/>No contactor should be closed."}), version=Version.WARP3 | Version.WARP4),
+                Const(8, T({'de': "Schütz L1+N durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.", 'en': "Contactor L1+N closed.<br/>No contactor should be closed."}), version=Version.WARP3 | Version.WARP4),
+                Const(9, T({'de': "Schütz L2+L3 durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.", 'en': "Contactor L2+L3 closed.<br/>No contactor should be closed."}), version=Version.WARP3 | Version.WARP4),
+                Const(10, T({'de': "Beide Schütze durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.", 'en': "Both contactors closed.<br/>No contactor should be closed."}), version=Version.WARP3 | Version.WARP4),
+                Const(11, T({'de': "Schütz L1+N durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.", 'en': "Contactor L1+N closed.<br/>No contactor should be closed."}), version=Version.WARP3 | Version.WARP4),
+                Const(12, T({'de': "Schütz L2+L3 durchgeschaltet.<br/>Kein Schütz sollte durchgeschaltet sein.", 'en': "Contactor L2+L3 closed.<br/>No contactor should be closed."}), version=Version.WARP3 | Version.WARP4),
+                Const(13, T({'de': "Reserviert.", 'en': "Reserved."}), version=Version.WARP3 | Version.WARP4),
             ]),
             "allowed_charging_current": Elem.INT(T({'de': "Maximal erlaubter Ladestrom, der dem Fahrzeug zur Verfügung gestellt wird. Dieser Strom ist das Minimum der Stromgrenzen aller Ladeslots.", 'en': "Maximum allowed charging current provided to the vehicle. This current is the minimum of the current limits of all charge slots."}), unit=Units.mA),
             "error_state": Elem.INT(T({'de': 'Der aktuelle Fehlerzustand. [Siehe Handbuch für Details](https://warp-charger.com/downloads/#documents)', 'en': 'The current error state. [See manual for details](https://warp-charger.com/downloads/#documents)'}), constants=[
@@ -80,7 +80,7 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
                 Const(4, T({'de': "Kalibrierungsfehler", 'en': "Calibration error"})),
                 Const(5, T({'de': "AC-Fehler", 'en': "AC error"})),
                 Const(6, T({'de': "AC- und DC-Fehler", 'en': "AC and DC error"})),
-            ], version=Version.WARP2 | Version.WARP3)
+            ], version=Version.WARP2 | Version.WARP3 | Version.WARP4)
         })
     ),
 
@@ -104,18 +104,18 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
                 Const(14, U("EVSE 1.4"), Version.WARP1),
                 Const(15, U("EVSE 1.5"), Version.WARP1),
                 Const(20, U("EVSE 2.0"), Version.WARP2),
-                Const(30, U("EVSE 3.0"), Version.WARP3)
+                Const(30, U("EVSE 3.0"), Version.WARP3 | Version.WARP4)
             ]),
             "energy_meter_type": Elem.INT(T({'de': "Typ des verbauten Stromzählers. Nicht jeder Stromzähler wird von jeder Wallbox unterstützt!", 'en': "Type of the installed energy meter. Not every energy meter is supported by every charger!"}), constants=[
                 Const(0, T({'de': "Kein Stromzähler verfügbar", 'en': "No energy meter available"})),
                 Const(1, U("Eastron SDM72"), Version.WARP1),
-                Const(2, U("Eastron SDM630"), Version.WARP2 | Version.WARP3),
-                Const(3, U("Eastron SDM72V2"), Version.WARP2 | Version.WARP3),
-                Const(4, U("Eastron SDM72CTM"), Version.WARP2 | Version.WARP3),
-                Const(5, U("Eastron SDM630MCT"), Version.WARP2 | Version.WARP3),
-                Const(6, U("Eltako DSZ15DZMOD"), Version.WARP2 | Version.WARP3),
-                Const(7, U("YTL DEM4A"), Version.WARP2 | Version.WARP3)
-            ], version=Version.WARP2 | Version.WARP3)
+                Const(2, U("Eastron SDM630"), Version.WARP2 | Version.WARP3 | Version.WARP4),
+                Const(3, U("Eastron SDM72V2"), Version.WARP2 | Version.WARP3 | Version.WARP4),
+                Const(4, U("Eastron SDM72CTM"), Version.WARP2 | Version.WARP3 | Version.WARP4),
+                Const(5, U("Eastron SDM630MCT"), Version.WARP2 | Version.WARP3 | Version.WARP4),
+                Const(6, U("Eltako DSZ15DZMOD"), Version.WARP2 | Version.WARP3 | Version.WARP4),
+                Const(7, U("YTL DEM4A"), Version.WARP2 | Version.WARP3 | Version.WARP4)
+            ], version=Version.WARP2 | Version.WARP3 | Version.WARP4)
         })
     ),
 
@@ -152,12 +152,12 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
                 Const(1003, T({'de': "Aufforderndes Blinken (z.B: NFC-Tag wird zum Laden benötigt)", 'en': "Prompting blink (e.g.: NFC tag required for charging)"}), version=Version.WARP1 | Version.WARP2),
                 Const("2001..2010", T({'de': "Fehler-Blinken 1 bis 10.", 'en': "Error blink 1 to 10."}), version=Version.WARP1 | Version.WARP2),
 
-                Const("1..254", T({'de': "Per PWM gedimmtes Leuchten; Standardfarbe Blau", 'en': "PWM dimmed light; default color blue"}), version=Version.WARP3),
-                Const(255, T({'de': "An; Standardfarbe Blau", 'en': "On; default color blue"}), version=Version.WARP3),
-                Const(1001, T({'de': "Bestätigendes Blinken (z.B: NFC-Tag wurde erkannt); Standardfarbe Grün", 'en': "Confirming blink (e.g.: NFC tag recognized); default color green"}), version=Version.WARP3),
-                Const(1002, T({'de': "Ablehnendes Blinken (z.B: NFC-Tag ist unbekannt); Standardfarbe Rot", 'en': "Rejecting blink (e.g.: NFC tag unknown); default color red"}), version=Version.WARP3),
-                Const(1003, T({'de': "Aufforderndes Blinken (z.B: NFC-Tag wird zum Laden benötigt); Standardfarbe Orange", 'en': "Prompting blink (e.g.: NFC tag required for charging); default color orange"}), version=Version.WARP3),
-                Const("2001..2010", T({'de': "Fehler-Blinken 1 bis 10.; Standardfarbe Rot", 'en': "Error blink 1 to 10.; default color red"}), version=Version.WARP3),
+                Const("1..254", T({'de': "Per PWM gedimmtes Leuchten; Standardfarbe Blau", 'en': "PWM dimmed light; default color blue"}), version=Version.WARP3 | Version.WARP4),
+                Const(255, T({'de': "An; Standardfarbe Blau", 'en': "On; default color blue"}), version=Version.WARP3 | Version.WARP4),
+                Const(1001, T({'de': "Bestätigendes Blinken (z.B: NFC-Tag wurde erkannt); Standardfarbe Grün", 'en': "Confirming blink (e.g.: NFC tag recognized); default color green"}), version=Version.WARP3 | Version.WARP4),
+                Const(1002, T({'de': "Ablehnendes Blinken (z.B: NFC-Tag ist unbekannt); Standardfarbe Rot", 'en': "Rejecting blink (e.g.: NFC tag unknown); default color red"}), version=Version.WARP3 | Version.WARP4),
+                Const(1003, T({'de': "Aufforderndes Blinken (z.B: NFC-Tag wird zum Laden benötigt); Standardfarbe Orange", 'en': "Prompting blink (e.g.: NFC tag required for charging); default color orange"}), version=Version.WARP3 | Version.WARP4),
+                Const("2001..2010", T({'de': "Fehler-Blinken 1 bis 10.; Standardfarbe Rot", 'en': "Error blink 1 to 10.; default color red"}), version=Version.WARP3 | Version.WARP4),
             ]),
             "duration": Elem.INT(T({'de': "Dauer für die der gesetzte Zustand erhalten bleibt.", 'en': "Duration for which the set state is maintained."}), unit=Units.ms),
             "color_h": Elem.INT(T({'de': 'Farbwert der LED im [HSV-Farbraum](https://de.wikipedia.org/wiki/HSV-Farbraum). Erlaubt sind Werte von 0 bis 359', 'en': 'Hue value of the LED in [HSV color space](https://en.wikipedia.org/wiki/HSL_and_HSV). Allowed values are from 0 to 359'}), unit=Units.degree),
@@ -180,26 +180,26 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
                 Elem.INT(U("CP/PE"), version=Version.WARP1),
                 Elem.INT(U("PP/PE"), version=Version.WARP1),
 
-                Elem.INT(T({'de': "CP/PE vor Widerstand (PWM High)", 'en': "CP/PE before resistor (PWM High)"}), version=Version.WARP2 | Version.WARP3),
-                Elem.INT(T({'de': "CP/PE nach Widerstand (PWM High)", 'en': "CP/PE after resistor (PWM High)"}), version=Version.WARP2 | Version.WARP3),
-                Elem.INT(T({'de': "CP/PE vor Widerstand (PWM Low)", 'en': "CP/PE before resistor (PWM Low)"}), version=Version.WARP2 | Version.WARP3),
-                Elem.INT(T({'de': "CP/PE nach Widerstand (PWM Low)", 'en': "CP/PE after resistor (PWM Low)"}), version=Version.WARP2 | Version.WARP3),
-                Elem.INT(U("PP/PE"), version=Version.WARP2 | Version.WARP3),
-                Elem.INT(U("+12V Rail"), version=Version.WARP2 | Version.WARP3),
-                Elem.INT(U("-12V Rail"), version=Version.WARP2 | Version.WARP3),
+                Elem.INT(T({'de': "CP/PE vor Widerstand (PWM High)", 'en': "CP/PE before resistor (PWM High)"}), version=Version.WARP2 | Version.WARP3 | Version.WARP4),
+                Elem.INT(T({'de': "CP/PE nach Widerstand (PWM High)", 'en': "CP/PE after resistor (PWM High)"}), version=Version.WARP2 | Version.WARP3 | Version.WARP4),
+                Elem.INT(T({'de': "CP/PE vor Widerstand (PWM Low)", 'en': "CP/PE before resistor (PWM Low)"}), version=Version.WARP2 | Version.WARP3 | Version.WARP4),
+                Elem.INT(T({'de': "CP/PE nach Widerstand (PWM Low)", 'en': "CP/PE after resistor (PWM Low)"}), version=Version.WARP2 | Version.WARP3 | Version.WARP4),
+                Elem.INT(U("PP/PE"), version=Version.WARP2 | Version.WARP3 | Version.WARP4),
+                Elem.INT(U("+12V Rail"), version=Version.WARP2 | Version.WARP3 | Version.WARP4),
+                Elem.INT(U("-12V Rail"), version=Version.WARP2 | Version.WARP3 | Version.WARP4),
             ]),
             "voltages": Elem.ARRAY(T({'de': "Aus den ADC-Werten berechnete Spannungen", 'en': "Voltages calculated from ADC values"}), unit=Units.mV, members=[
                 Elem.INT(U("CP/PE"), version=Version.WARP1),
                 Elem.INT(U("PP/PE"), version=Version.WARP1),
                 Elem.INT(T({'de': "Maximalspannung CP/PE", 'en': "Maximum voltage CP/PE"}), version=Version.WARP1),
 
-                Elem.INT(T({'de': "CP/PE vor Widerstand (PWM High)", 'en': "CP/PE before resistor (PWM High)"}), version=Version.WARP2 | Version.WARP3),
-                Elem.INT(T({'de': "CP/PE nach Widerstand (PWM High)", 'en': "CP/PE after resistor (PWM High)"}), version=Version.WARP2 | Version.WARP3),
-                Elem.INT(T({'de': "CP/PE vor Widerstand (PWM Low)", 'en': "CP/PE before resistor (PWM Low)"}), version=Version.WARP2 | Version.WARP3),
-                Elem.INT(T({'de': "CP/PE nach Widerstand (PWM Low)", 'en': "CP/PE after resistor (PWM Low)"}), version=Version.WARP2 | Version.WARP3),
-                Elem.INT(U("PP/PE"), version=Version.WARP2 | Version.WARP3),
-                Elem.INT(U("+12V Rail"), version=Version.WARP2 | Version.WARP3),
-                Elem.INT(U("-12V Rail"), version=Version.WARP2 | Version.WARP3),
+                Elem.INT(T({'de': "CP/PE vor Widerstand (PWM High)", 'en': "CP/PE before resistor (PWM High)"}), version=Version.WARP2 | Version.WARP3 | Version.WARP4),
+                Elem.INT(T({'de': "CP/PE nach Widerstand (PWM High)", 'en': "CP/PE after resistor (PWM High)"}), version=Version.WARP2 | Version.WARP3 | Version.WARP4),
+                Elem.INT(T({'de': "CP/PE vor Widerstand (PWM Low)", 'en': "CP/PE before resistor (PWM Low)"}), version=Version.WARP2 | Version.WARP3 | Version.WARP4),
+                Elem.INT(T({'de': "CP/PE nach Widerstand (PWM Low)", 'en': "CP/PE after resistor (PWM Low)"}), version=Version.WARP2 | Version.WARP3 | Version.WARP4),
+                Elem.INT(U("PP/PE"), version=Version.WARP2 | Version.WARP3 | Version.WARP4),
+                Elem.INT(U("+12V Rail"), version=Version.WARP2 | Version.WARP3 | Version.WARP4),
+                Elem.INT(U("-12V Rail"), version=Version.WARP2 | Version.WARP3 | Version.WARP4),
             ]),
             "resistances": Elem.ARRAY(T({'de': "Aus den Spannungen berechnete Widerstände", 'en': "Resistances calculated from voltages"}), unit=Units.ohm, members=[
                 Elem.INT(U("CP/PE")),
@@ -237,49 +237,49 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
                 Elem.BOOL(T({'de': "Nicht belegt", 'en': "Not assigned"}), version=Version.WARP2),
                 Elem.BOOL(T({'de': "Nicht belegt", 'en': "Not assigned"}), version=Version.WARP2),
 
-                Elem.BOOL(U("DC X30"), version=Version.WARP3),
-                Elem.BOOL(U("DC X6"), version=Version.WARP3),
-                Elem.BOOL(T({'de': "DC-Fehler", 'en': "DC fault"}), version=Version.WARP3),
-                Elem.BOOL(T({'de': "DC-Fehlerstromschutz-Test", 'en': "DC residual current protection test"}), version=Version.WARP3),
-                Elem.BOOL(T({'de': "EVSE-Status-LED", 'en': "EVSE status LED"}), version=Version.WARP3),
-                Elem.BOOL(T({'de': "Taster", 'en': "Button"}), version=Version.WARP3),
-                Elem.BOOL(T({'de': "LED rot", 'en': "LED red"}), version=Version.WARP3),
-                Elem.BOOL(T({'de': "LED blau", 'en': "LED blue"}), version=Version.WARP3),
-                Elem.BOOL(T({'de': "LED grün", 'en': "LED green"}), version=Version.WARP3),
-                Elem.BOOL(U("CP-PWM"), version=Version.WARP3),
-                Elem.BOOL(T({'de': "Schütz 1", 'en': "Contactor 1"}), version=Version.WARP3),
-                Elem.BOOL(T({'de': "Schütz 0", 'en': "Contactor 0"}), version=Version.WARP3),
-                Elem.BOOL(T({'de': "Schütz 1 Feedback", 'en': "Contactor 1 feedback"}), version=Version.WARP3),
-                Elem.BOOL(T({'de': "Schütz 0 Feedback", 'en': "Contactor 0 feedback"}), version=Version.WARP3),
-                Elem.BOOL(T({'de': "PE-Prüfung", 'en': "PE check"}), version=Version.WARP3),
-                Elem.BOOL(T({'de': "Stromkonfiguration 1", 'en': "Current configuration 1"}), version=Version.WARP3),
-                Elem.BOOL(T({'de': "CP-Trennung", 'en': "CP disconnect"}), version=Version.WARP3),
-                Elem.BOOL(T({'de': "Stromkonfiguration 0", 'en': "Current configuration 0"}), version=Version.WARP3),
-                Elem.BOOL(T({'de': "Abschalteingang", 'en': "Shutdown input"}), version=Version.WARP3),
-                Elem.BOOL(T({'de': "Versionsdetektion", 'en': "Version detection"}), version=Version.WARP3),
-                Elem.BOOL(T({'de': "Nicht belegt", 'en': "Not assigned"}), version=Version.WARP3),
-                Elem.BOOL(T({'de': "Nicht belegt", 'en': "Not assigned"}), version=Version.WARP3),
-                Elem.BOOL(T({'de': "Nicht belegt", 'en': "Not assigned"}), version=Version.WARP3),
-                Elem.BOOL(T({'de': "Nicht belegt", 'en': "Not assigned"}), version=Version.WARP3),
+                Elem.BOOL(U("DC X30"), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(U("DC X6"), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(T({'de': "DC-Fehler", 'en': "DC fault"}), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(T({'de': "DC-Fehlerstromschutz-Test", 'en': "DC residual current protection test"}), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(T({'de': "EVSE-Status-LED", 'en': "EVSE status LED"}), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(T({'de': "Taster", 'en': "Button"}), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(T({'de': "LED rot", 'en': "LED red"}), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(T({'de': "LED blau", 'en': "LED blue"}), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(T({'de': "LED grün", 'en': "LED green"}), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(U("CP-PWM"), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(T({'de': "Schütz 1", 'en': "Contactor 1"}), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(T({'de': "Schütz 0", 'en': "Contactor 0"}), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(T({'de': "Schütz 1 Feedback", 'en': "Contactor 1 feedback"}), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(T({'de': "Schütz 0 Feedback", 'en': "Contactor 0 feedback"}), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(T({'de': "PE-Prüfung", 'en': "PE check"}), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(T({'de': "Stromkonfiguration 1", 'en': "Current configuration 1"}), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(T({'de': "CP-Trennung", 'en': "CP disconnect"}), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(T({'de': "Stromkonfiguration 0", 'en': "Current configuration 0"}), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(T({'de': "Abschalteingang", 'en': "Shutdown input"}), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(T({'de': "Versionsdetektion", 'en': "Version detection"}), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(T({'de': "Nicht belegt", 'en': "Not assigned"}), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(T({'de': "Nicht belegt", 'en': "Not assigned"}), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(T({'de': "Nicht belegt", 'en': "Not assigned"}), version=Version.WARP3 | Version.WARP4),
+                Elem.BOOL(T({'de': "Nicht belegt", 'en': "Not assigned"}), version=Version.WARP3 | Version.WARP4),
             ]),
             "charging_time": Elem.INT(T({'de': "Ungefähre Zeit des Ladevorgangs. Nur für Lastmanagementzwecke zu verwenden!", 'en': "Approximate duration of the charging process. Only to be used for load management purposes!"}), unit=Units.ms),
             "time_since_state_change": Elem.INT(T({'de': "Zeit seit dem letzten IEC-61851-Zustandswechsel. Falls der Zustand 2 (= B: Lädt) ist, entspricht dieser Wert der Ladezeit.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", 'en': "Time since the last IEC 61851 state change. If the state is 2 (= B: Charging), this value corresponds to the charging time.<br/><br/> Warning: This time is measured directly via the processor clock. The accuracy is therefore only sufficient for time measurements in the range of minutes to a few hours. The time measurement overflows after approximately 50 days and starts again at 0."}), unit=Units.ms),
             "uptime": Elem.INT(T({'de': "Zeit seit Starten des Ladecontrollers.<br/><br/> Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", 'en': "Time since the charge controller started.<br/><br/> Warning: This time is measured directly via the processor clock. The accuracy is therefore only sufficient for time measurements in the range of minutes to a few hours. The time measurement overflows after approximately 50 days and starts again at 0."}), unit=Units.ms),
-            "time_since_dc_fault_check": Elem.INT(T({'de': "Zeit seit dem letzten Test des DC-Fehlerstrom-Schutzmoduls. Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", 'en': "Time since the last test of the DC residual current protection module. Warning: This time is measured directly via the processor clock. The accuracy is therefore only sufficient for time measurements in the range of minutes to a few hours. The time measurement overflows after approximately 50 days and starts again at 0."}), unit=Units.ms, version=Version.WARP2 | Version.WARP3),
-            "dc_fault_sensor_type": Elem.INT(T({'de': "Typ des DC-Fehlerstrom-Sensors", 'en': "Type of DC residual current sensor"}), version=Version.WARP2 | Version.WARP3, constants=[
+            "time_since_dc_fault_check": Elem.INT(T({'de': "Zeit seit dem letzten Test des DC-Fehlerstrom-Schutzmoduls. Achtung: Diese Zeit wird direkt über den Takt des Prozessors gemessen. Die Genauigkeit ist damit nur ausreichend für Zeitmessungen im Bereich Minuten bis wenige Stunden. Die Zeitmessung läuft nach ungefähr 50 Tagen über und beginnt wieder bei 0.", 'en': "Time since the last test of the DC residual current protection module. Warning: This time is measured directly via the processor clock. The accuracy is therefore only sufficient for time measurements in the range of minutes to a few hours. The time measurement overflows after approximately 50 days and starts again at 0."}), unit=Units.ms, version=Version.WARP2 | Version.WARP3 | Version.WARP4),
+            "dc_fault_sensor_type": Elem.INT(T({'de': "Typ des DC-Fehlerstrom-Sensors", 'en': "Type of DC residual current sensor"}), version=Version.WARP2 | Version.WARP3 | Version.WARP4, constants=[
                 Const(0, U("X904")),
                 Const(1, U("X804"))
             ]),
-            "dc_fault_pins": Elem.INT(T({'de': "Zustand der Pins des DC-Schutzmodul beim letzten Fehler, falls ein Fehler aufgetreten ist. Kalibrierungsfehlercode, falls ein Kalibrierungsfehler aufgetreten ist.", 'en': "State of the DC protection module pins at the last error, if an error occurred. Calibration error code, if a calibration error occurred."}), version=Version.WARP2 | Version.WARP3),
-            "phases_current": Elem.INT(T({'de': "Aktueller Zustand der Phasenumschaltung", 'en': "Current state of phase switching"}), version=Version.WARP3, constants=[
+            "dc_fault_pins": Elem.INT(T({'de': "Zustand der Pins des DC-Schutzmodul beim letzten Fehler, falls ein Fehler aufgetreten ist. Kalibrierungsfehlercode, falls ein Kalibrierungsfehler aufgetreten ist.", 'en': "State of the DC protection module pins at the last error, if an error occurred. Calibration error code, if a calibration error occurred."}), version=Version.WARP2 | Version.WARP3 | Version.WARP4),
+            "phases_current": Elem.INT(T({'de': "Aktueller Zustand der Phasenumschaltung", 'en': "Current state of phase switching"}), version=Version.WARP3 | Version.WARP4, constants=[
                 Const(1, T({'de': "einphasig", 'en': "single-phase"})),
                 Const(3, T({'de': "dreiphasig", 'en': "three-phase"}))
             ]),
-            "phases_requested": Elem.INT(T({'de': "Angeforderter Zustand der Phasenumschaltung", 'en': "Requested state of phase switching"}), version=Version.WARP3, constants=[
+            "phases_requested": Elem.INT(T({'de': "Angeforderter Zustand der Phasenumschaltung", 'en': "Requested state of phase switching"}), version=Version.WARP3 | Version.WARP4, constants=[
                 Const(1, T({'de': "einphasig", 'en': "single-phase"})),
                 Const(3, T({'de': "dreiphasig", 'en': "three-phase"}))
             ]),
-            "phases_state": Elem.INT(T({'de': "Zustand der Phasenumschaltung", 'en': "State of phase switching"}), version=Version.WARP3, constants=[
+            "phases_state": Elem.INT(T({'de': "Zustand der Phasenumschaltung", 'en': "State of phase switching"}), version=Version.WARP3 | Version.WARP4, constants=[
                 Const(0, T({'de': "Derzeit wird keine Umschaltung durchgeführt", 'en': "Currently no switching is being performed"})),
                 Const(1, T({'de': "Stoppe Ladevorgang, warte auf Abschaltung durch Fahrzeug", 'en': "Stop charging process, waiting for shutdown by vehicle"})),
                 Const(2, T({'de': "Ladevorgang angehalten. Schalte Schütz ab", 'en': "Charging process stopped. Switch off contactor"})),
@@ -289,11 +289,11 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
                 Const(6, T({'de': "Control Pilot verbunden. Starte Ladevorgang, warte auf Stromanforderung durch Fahrzeug", 'en': "Control pilot connected. Start charging process, waiting for current request by vehicle"})),
                 Const(7, T({'de': "Fahrzeug fordert Strom an. Schalte Schütz.", 'en': "Vehicle requests current. Switch contactor."})),
             ]),
-            "phases_info": Elem.INT(T({'de': "Weitere Informationen zur Phasenumschaltung", 'en': "Additional information about phase switching"}), version=Version.WARP3, constants=[
+            "phases_info": Elem.INT(T({'de': "Weitere Informationen zur Phasenumschaltung", 'en': "Additional information about phase switching"}), version=Version.WARP3 | Version.WARP4, constants=[
                 Const(0, T({'de': "Umschaltungszustand normal", 'en': "Switching state normal"})),
                 Const(1, T({'de': "Ladecontroller hat automatische Umschaltung von drei- auf einphasig durchgeführt. Siehe {{{ref:evse/phase_auto_switch}}}", 'en': "Charge controller performed automatic switching from three-phase to single-phase. See {{{ref:evse/phase_auto_switch}}}"}))
             ]),
-            "temperature": Elem.INT(T({'de': "Temperatur des Ladecontrollers", 'en': "Temperature of the charge controller"}), version=Version.WARP3, unit=Units.hundredth_degree_celsius)
+            "temperature": Elem.INT(T({'de': "Temperatur des Ladecontrollers", 'en': "Temperature of the charge controller"}), version=Version.WARP3 | Version.WARP4, unit=Units.hundredth_degree_celsius)
         })
     ),
 
@@ -369,7 +369,7 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
         })
     ),
 
-    Func("gpio_configuration", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Die Konfiguration der konfigurierbaren Ein- und Ausgänge.", 'en': "The configuration of the configurable inputs and outputs."}), version=Version.WARP2 | Version.WARP3, members={
+    Func("gpio_configuration", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Die Konfiguration der konfigurierbaren Ein- und Ausgänge.", 'en': "The configuration of the configurable inputs and outputs."}), version=Version.WARP2 | Version.WARP3 | Version.WARP4, members={
             "shutdown_input": Elem.INT(T({'de': "Die Konfiguration des Abschalteingangs.", 'en': "The configuration of the shutdown input."}), constants=[
                 Const(0, T({'de': "Nicht konfiguriert", 'en': "Not configured"})),
                 Const(1, T({'de': "Abschalten wenn geöffnet", 'en': "Shutdown when open"})),
@@ -411,7 +411,7 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
                 Const(3, T({'de': "Ladestart/stop wenn gedrückt", 'en': "Start/stop charging when pressed"})),
             ]),
         },
-        version=Version.WARP2 | Version.WARP3)
+        version=Version.WARP2 | Version.WARP3 | Version.WARP4)
     ),
 
     Func("led_configuration", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Die Konfiguration der LED des Tasters in der Frontblende.", 'en': "The configuration of the LED in the front panel button."}), members={
@@ -433,12 +433,12 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
         version=Version.WARP1)
     ),
 
-    Func("ev_wakeup", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus einem Energiesparmodus zu wecken, indem ein Abziehen und Anstecken des Ladekabels vorgetäuscht wird. (Control-Pilot-Trennung/CP-Trennung) Benötigt das Feature <a href=\"#features_cp_disconnect\"><code>\"cp_disconnect\"</code></a>", 'en': "Indicates whether the EVSE automatically attempts to wake the vehicle's charging electronics from power saving mode by simulating unplugging and plugging in the charging cable. (Control Pilot disconnect/CP disconnect) Requires the feature <a href=\"#features_cp_disconnect\"><code>\"cp_disconnect\"</code></a>"}), version=Version.WARP2 | Version.WARP3, members={
+    Func("ev_wakeup", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Gibt an, ob das EVSE automatisch versucht die Ladeelektronik des Fahrzeugs aus einem Energiesparmodus zu wecken, indem ein Abziehen und Anstecken des Ladekabels vorgetäuscht wird. (Control-Pilot-Trennung/CP-Trennung) Benötigt das Feature <a href=\"#features_cp_disconnect\"><code>\"cp_disconnect\"</code></a>", 'en': "Indicates whether the EVSE automatically attempts to wake the vehicle's charging electronics from power saving mode by simulating unplugging and plugging in the charging cable. (Control Pilot disconnect/CP disconnect) Requires the feature <a href=\"#features_cp_disconnect\"><code>\"cp_disconnect\"</code></a>"}), version=Version.WARP2 | Version.WARP3 | Version.WARP4, members={
             "enabled": Elem.BOOL(T({'de': "true wenn die Ladeelektronik des Fahrzeugs geweckt werden soll", 'en': "true if the vehicle's charging electronics should be woken up"}))
         })
     ),
 
-    Func("control_pilot_disconnect", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe {{{ref:evse/management_enabled}}}.  Benötigt das Feature <a href=\"#features_cp_disconnect\"><code>\"cp_disconnect\"</code></a>", 'en': "Indicates whether unplugging and plugging in the charging cable is simulated. (Control Pilot disconnect/CP disconnect) <strong>Updates are ignored if load management is enabled.</strong> See {{{ref:evse/management_enabled}}}.  Requires the feature <a href=\"#features_cp_disconnect\"><code>\"cp_disconnect\"</code></a>"}), version=Version.WARP2 | Version.WARP3, members={
+    Func("control_pilot_disconnect", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Gibt an, ob ein Abziehen und Anstecken des Ladekabels vorgetäuscht ist. (Control-Pilot-Trennung/CP-Trennung) <strong>Aktualisierungen werden ignoriert, falls das Lastmanagement aktiviert ist.</strong> Siehe {{{ref:evse/management_enabled}}}.  Benötigt das Feature <a href=\"#features_cp_disconnect\"><code>\"cp_disconnect\"</code></a>", 'en': "Indicates whether unplugging and plugging in the charging cable is simulated. (Control Pilot disconnect/CP disconnect) <strong>Updates are ignored if load management is enabled.</strong> See {{{ref:evse/management_enabled}}}.  Requires the feature <a href=\"#features_cp_disconnect\"><code>\"cp_disconnect\"</code></a>"}), version=Version.WARP2 | Version.WARP3 | Version.WARP4, members={
             "disconnect": Elem.BOOL(T({'de': "true falls CP getrennt ist, sonst false", 'en': "true if CP is disconnected, otherwise false"}))
         })
     ),
@@ -448,12 +448,12 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
         })
     ),
 
-    Func("phase_auto_switch", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Konfiguriert, ob ein WARP3 Charger Pro automatisch von drei- auf einphasiges Laden wechseln soll, wenn ein Fahrzeug angeschlossen ist, dass nur auf L1 Strom bezieht.", 'en': "Configures whether a WARP3 Charger Pro should automatically switch from three-phase to single-phase charging when a vehicle is connected that only draws current on L1."}), version=Version.WARP3, members={
+    Func("phase_auto_switch", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Konfiguriert, ob ein WARP3 Charger Pro automatisch von drei- auf einphasiges Laden wechseln soll, wenn ein Fahrzeug angeschlossen ist, dass nur auf L1 Strom bezieht.", 'en': "Configures whether a WARP3 Charger Pro should automatically switch from three-phase to single-phase charging when a vehicle is connected that only draws current on L1."}), version=Version.WARP3 | Version.WARP4, members={
             "enabled": Elem.BOOL(T({'de': "true falls die automatische Umschaltung aktiviert ist, sonst false", 'en': "true if automatic switching is enabled, otherwise false"}))
         })
     ),
 
-    Func("phases_connected", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Konfiguriert, ob die Wallbox fest ein- oder dreiphasig angeschlossen ist. Damit wird z.B. die 4200 W-Limitierung nach §14 EnWG berechnet", 'en': "Configures whether the charger is permanently connected single-phase or three-phase. This is used to calculate the 4200 W limitation according to §14 EnWG"}), version=Version.WARP2 | Version.WARP3, members={
+    Func("phases_connected", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Konfiguriert, ob die Wallbox fest ein- oder dreiphasig angeschlossen ist. Damit wird z.B. die 4200 W-Limitierung nach §14 EnWG berechnet", 'en': "Configures whether the charger is permanently connected single-phase or three-phase. This is used to calculate the 4200 W limitation according to §14 EnWG"}), version=Version.WARP2 | Version.WARP3 | Version.WARP4, members={
             "phases": Elem.INT(T({'de': "Maximale Anzahl der angeschlossenen Phasen. Eine Wallbox hinter einem Phasenumschaltungsschütz (z.B mit dem WARP Energy Manager) ist dreiphasig angeschlossen.", 'en': "Maximum number of connected phases. A charger behind a phase switching contactor (e.g. with the WARP Energy Manager) is connected three-phase."}), constants=[
                 Const(1, T({'de': "Wallbox ist fest einphasig angeschlossen", 'en': "Charger is permanently connected single-phase"})),
                 Const(3, T({'de': "Wallbox ist fest dreiphasig, oder hinter einem Phasenumschaltungsschütz angeschlossen", 'en': "Charger is permanently connected three-phase, or behind a phase switching contactor"}))
@@ -462,12 +462,12 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
     ),
 
 
-    Func("reset_dc_fault_current_state", FuncType.COMMAND, Elem.OBJECT(T({'de': "Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong>", 'en': "Resets the DC residual current protection module. <strong>Before resetting, the cause of the fault must be fixed!</strong>"}), version=Version.WARP2 | Version.WARP3, members={
+    Func("reset_dc_fault_current_state", FuncType.COMMAND, Elem.OBJECT(T({'de': "Setzt das DC-Fehlerstrom-Schutzmodul zurück. <strong>Vor dem Zurücksetzen muss der Grund des Fehlers unbedingt behoben werden!</strong>", 'en': "Resets the DC residual current protection module. <strong>Before resetting, the cause of the fault must be fixed!</strong>"}), version=Version.WARP2 | Version.WARP3 | Version.WARP4, members={
             "password": Elem.INT(T({'de': "Passwort, das zum Zurücksetzen benötigt wird. Das Passwort lautet 0xDC42FA23.", 'en': "Password required for reset. The password is 0xDC42FA23."}))
         })
     ),
 
-    Func("trigger_dc_fault_test", FuncType.COMMAND, Elem.NULL(T({'de': "Startet einen Test des DC-Fehlerstrom-Schutzmoduls.", 'en': "Starts a test of the DC residual current protection module."}), version=Version.WARP2 | Version.WARP3)),
+    Func("trigger_dc_fault_test", FuncType.COMMAND, Elem.NULL(T({'de': "Startet einen Test des DC-Fehlerstrom-Schutzmoduls.", 'en': "Starts a test of the DC residual current protection module."}), version=Version.WARP2 | Version.WARP3 | Version.WARP4)),
 
     Func("gp_output", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Der aktuelle Wert des konfigurierbaren Ausgangs.", 'en': "The current value of the configurable output."}), version=Version.WARP2, members={
             "gp_output": Elem.INT(T({'de': "Der aktuelle Wert des konfigurierbaren Ausgangs.", 'en': "The current value of the configurable output."}), constants=[

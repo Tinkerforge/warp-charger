@@ -67,7 +67,7 @@ automation = Module("automation", T({'de': "Automatisierung", 'en': "Automation"
                             "retain": Elem.BOOL(T({'de': "Gibt an, ob auf retained-Pakete reagiert werden soll", 'en': "Indicates whether to react to retained packets"})),
                             "use_prefix": Elem.BOOL(T({'de': "Gibt an, ob der konfigurierte Global-Topic-Prefix (siehe {{{ref:mqtt/config}}}) vor dem konfigurierten Topic vorangestellt werden soll.", 'en': "Indicates whether the configured global topic prefix (see {{{ref:mqtt/config}}}) should be prepended to the configured topic."}))
                         }),
-                        4: Elem.NULL(T({'de': "Drücken des Fronttasters", 'en': "Pressing the front button"}), version=Version.WARP2 | Version.WARP3),
+                        4: Elem.NULL(T({'de': "Drücken des Fronttasters", 'en': "Pressing the front button"}), version=Version.WARP2 | Version.WARP3 | Version.WARP4),
                         5: Elem.OBJECT(T({'de': "Erkennen eines NFC-Tags", 'en': "Detection of an NFC tag"}), version=Version.WARPX, members={
                             "tag_type": Elem.INT(T({'de': "Typ des Tags", 'en': "Type of tag"}), constants=[
                                 Const(0, U("Mifare Classic")),
@@ -79,7 +79,7 @@ automation = Module("automation", T({'de': "Automatisierung", 'en': "Automation"
                             "tag_id": Elem.STRING(T({'de': "ID des Tags. Je nach Tag-Typ bis zu 10 Hex-Bytes, separiert durch ':'. z.B. 01:23:AB:3D", 'en': "ID of the tag. Up to 10 hex bytes depending on tag type, separated by ':'. e.g. 01:23:AB:3D"})),
                         }),
                         6: Elem.NULL(T({'de': "Erreichen des Ladezeit- oder Energie-Limits", 'en': "Reaching the charging time or energy limit"}), version=Version.WARPX),
-                        7: Elem.OBJECT(T({'de': "Schalten des Abschalteingangs", 'en': "Switching of the shutdown input"}), version=Version.WARP2 | Version.WARP3, members={
+                        7: Elem.OBJECT(T({'de': "Schalten des Abschalteingangs", 'en': "Switching of the shutdown input"}), version=Version.WARP2 | Version.WARP3 | Version.WARP4, members={
                             "closed": Elem.BOOL(T({'de': "Gibt an, ob bei geöffnetem oder geschlossenem Eingang reagiert werden soll", 'en': "Indicates whether to react when the input is open or closed"}), constants=[
                                 Const(True, T({'de': "Reagieren bei geöffnetem Eingang", 'en': "React when input is open"})),
                                 Const(False, T({'de': "Reagieren bei geschlossenem Eingang", 'en': "React when input is closed"})),
@@ -223,13 +223,13 @@ automation = Module("automation", T({'de': "Automatisierung", 'en': "Automation"
                             ])
                         }),
                         #10: Elem.OBJECT("Lösche die aufgezeichneten Ladevorgänge", version=Version.WARPX, members={}),
-                        11: Elem.OBJECT(T({'de': "Starte eine Phasenumschaltung", 'en': "Start a phase switching"}), version=Version.WARP3 | Version.WEM, members={
+                        11: Elem.OBJECT(T({'de': "Starte eine Phasenumschaltung", 'en': "Start a phase switching"}), version=Version.WARP3 | Version.WARP4 | Version.WEM, members={
                             "phases_wanted": Elem.INT(T({'de': "Gibt an, auf ein- oder dreiphasig umgeschalted werden soll", 'en': "Indicates whether to switch to single-phase or three-phase"}), constants=[
                                 Const(1, T({'de': "Wechsele auf einphasig", 'en': "Switch to single-phase"})),
                                 Const(3, T({'de': "Wechsele auf dreiphasig", 'en': "Switch to three-phase"})),
                             ])
                         }),
-                        12: Elem.OBJECT(T({'de': "Wechsle den Lademodus", 'en': "Change the charging mode"}), version=Version.WARP3 | Version.WEM, members={
+                        12: Elem.OBJECT(T({'de': "Wechsle den Lademodus", 'en': "Change the charging mode"}), version=Version.WARP3 | Version.WARP4 | Version.WEM, members={
                             "mode": Elem.INT(T({'de': "Gewünschter Lademodus. Siehe {{{ref:power_manager/charge_mode}}}", 'en': "Desired charging mode. See {{{ref:power_manager/charge_mode}}}"}), constants=[
                                 Const(0, T({'de': "Schnell", 'en': "Fast"})),
                                 Const(1, T({'de': "Aus", 'en': "Off"})),
@@ -243,7 +243,7 @@ automation = Module("automation", T({'de': "Automatisierung", 'en': "Automation"
                                 Const(False, T({'de': "Geöffnet", 'en': "Open"})),
                             ])
                         }),
-                        14: Elem.OBJECT(T({'de': "Limitiere den ???TODO???-Strom", 'en': "Limit the ???TODO??? current"}), version=Version.WARP3 | Version.WEM, members={
+                        14: Elem.OBJECT(T({'de': "Limitiere den ???TODO???-Strom", 'en': "Limit the ???TODO??? current"}), version=Version.WARP3 | Version.WARP4 | Version.WEM, members={
                             "current": Elem.INT(T({'de': "Stromlimit, dass gesetzt werden soll", 'en': "Current limit to be set"}), constants=[
                                 Const(-1, T({'de': "Stromlimit aufheben", 'en': "Remove current limit"}))
                             ])

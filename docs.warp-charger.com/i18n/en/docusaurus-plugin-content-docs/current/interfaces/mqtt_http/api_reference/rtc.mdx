@@ -755,6 +755,254 @@ mosquitto_pub -h $BROKER -t $PREFIX/rtc/config_update -m 'false'
     </tbody>
 </table>
 </TabItem>
+<TabItem value="warp4">
+## `rtc/time` {#rtc_time_warp4}
+
+
+The current time on the Real-Time Clock.
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+
+#### Read
+```bash
+curl http://$HOST/rtc/time
+```
+```jsx
+{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}
+```
+
+
+
+#### Write
+```bash
+curl http://$HOST/rtc/time -d '{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}'
+```
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+
+#### Read
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/rtc/time
+```
+```jsx
+{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}
+```
+
+
+
+#### Write
+            With MQTT on <code>$PREFIX/rtc/time<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/rtc/time_update -m '{
+  "year": 2024,
+  "month": 5,
+  "day": 3,
+  "hour": 12,
+  "minute": 38,
+  "second": 43,
+  "weekday": 5
+}'
+```
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`year`<br/>int</th>
+    <td>
+        The year. 2000 to 2099
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`month`<br/>int</th>
+    <td>
+        The month. 1 to 12
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`day`<br/>int</th>
+    <td>
+        The day. 1 to 31
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`hour`<br/>int</th>
+    <td>
+        The hour. 0 to 23
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`minute`<br/>int</th>
+    <td>
+        The minute. 0 to 59
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`second`<br/>int</th>
+    <td>
+        The second. 0 to 59
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`weekday`<br/>int</th>
+    <td>
+        The weekday. 0 (Monday) to 6 (Sunday).
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
+## `rtc/config` {#rtc_config_warp4}
+
+
+The Real-Time Clock configuration.
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+
+#### Read
+```bash
+curl http://$HOST/rtc/config
+```
+```jsx
+{ "auto_sync": false }
+```
+
+
+
+#### Write
+```bash
+curl http://$HOST/rtc/config -d '{ "auto_sync": false }'
+```
+
+or abbreviated:
+
+```bash
+curl http://$HOST/rtc/config -d 'false'
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+
+#### Read
+```bash
+mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/rtc/config
+```
+```jsx
+{ "auto_sync": false }
+```
+
+
+
+#### Write
+            With MQTT on <code>$PREFIX/rtc/config<strong>_update</strong></code>
+
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/rtc/config_update -m '{ "auto_sync": false }'
+```
+
+or abbreviated:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/rtc/config_update -m 'false'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`auto_sync`<br/>bool</th>
+    <td>
+        Specifies whether the time on the RTC should be automatically set when loading the web interface, if no network time synchronization is available.
+        - **true** - The RTC time is automatically set to the system time of the device that accessed the web interface.
+        - **false** - The RTC time is only set manually.
+    </td>
+</tr>
+    </tbody>
+</table>
+</TabItem>
 <TabItem value="wem">
 ## `rtc/time` {#rtc_time_wem}
 

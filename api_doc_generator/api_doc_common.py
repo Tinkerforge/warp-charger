@@ -182,7 +182,8 @@ class Version(IntFlag):
     WARP1 = 1
     WARP2 = 2
     WARP3 = 4
-    WARPX = WARP1 | WARP2 | WARP3
+    WARP4 = 32
+    WARPX = WARP1 | WARP2 | WARP3 | WARP4
     WEM = 8
     WEM2 = 16
     WEMX = WEM | WEM2
@@ -224,6 +225,7 @@ class Version(IntFlag):
             Version.WARP1: "WARP 1",
             Version.WARP2: "WARP 2",
             Version.WARP3: "WARP 3",
+            Version.WARP4: "WARP 4",
             Version.WEM: "Energy Manager",
             Version.WEM2: "Energy Manager 2.0",
         }[x] for x in Version if x in self]) + suffix

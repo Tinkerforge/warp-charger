@@ -79,7 +79,7 @@ nfc = Module("nfc", T({'de': "NFC-Ladefreigabe", 'en': "NFC Charge Authorization
             "deadtime_post_start": Elem.INT(T({'de': "Erlaubt das Stoppen eines Ladevorgangs mit einem NFC-Tag erst nach dieser Zeit, um Fehlbedienung zu vermeiden.", 'en': "Allows stopping a charging session with an NFC tag only after this time to avoid accidental operation."}), unit=Units.s),
             "authorized_tags": Elem.ARRAY(T({'de': "Eine Liste authorisierter Tags.", 'en': "A list of authorized tags."}), members=
                   16 * tag(Version.WARP1)
-                + 32 * tag(Version.WARP2 | Version.WARP3)
+                + 32 * tag(Version.WARP2 | Version.WARP3 | Version.WARP4)
             ),
         })
     ),
