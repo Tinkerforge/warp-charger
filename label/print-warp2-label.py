@@ -11,7 +11,7 @@ import ssl
 import time
 import tinkerforge_util as tfutil  # sudo apt install python3-tinkerforge-util
 
-QR_CODE_COMMAND = b'W649,209,5,2,M,8,6,57,0\r'
+QR_CODE_COMMAND = b'W851,411,5,2,M,8,6,71,2\r'
 QR_CODE_PADDING = b';;\r'
 
 DESCRIPTION_PLACEHOLDER = b'WARP2 Charger Smart, 11 kW, 5 m, pulverbeschichtet'
@@ -29,6 +29,8 @@ CURRENT_PLACEHOLDER = b', 16 A'
 COPIES_FORMAT = '^C{0}\r'
 
 EXTRAS_FORMAT = ';A:{0};'
+
+ORDER_ID_PLACEHOLDER = b'SO/B3254769'
 
 
 def get_next_serial_number():
@@ -56,7 +58,7 @@ def get_next_serial_number():
     return '5{0:09}'.format(serial_number)
 
 
-def print_warp2_label(sku, version, serial_number, build_date, custom_type2, instances, copies, stdout, force_build_date, extras):
+def print_warp2_label(sku, version, serial_number, build_date, custom_type2, order_id, instances, copies, stdout, force_build_date, extras):
     # check instances
     if instances < 1 or instances > 25:
         raise Exception('Invalid instances: {0}'.format(instances))
@@ -201,6 +203,10 @@ def print_warp2_label(sku, version, serial_number, build_date, custom_type2, ins
     if not force_build_date and (parsed_build_date.year < now.year or (parsed_build_date.year == now.year and parsed_build_date.month < now.month)):
         raise Exception('Invalid build date: {0}'.format(build_date))
 
+    # check order ID
+    if re.match(r'^(SO/(B\d{7}|\d{5})|)$', order_id) == None:
+        raise Exception('Invalid order ID: {0}'.format(order_id))
+
     # read EZPL file
     with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'warp2.prn'), 'rb') as f:
         template = f.read()
@@ -212,7 +218,7 @@ def print_warp2_label(sku, version, serial_number, build_date, custom_type2, ins
     if template.find(QR_CODE_COMMAND) < 0:
         raise Exception('QR code command missing in EZPL file')
 
-    offset = len(SKU_PLACEHOLDER) - len(sku) + len(VERSION_PLACEHOLDER) - len(version)
+    offset = len(SKU_PLACEHOLDER) - len(sku) + len(VERSION_PLACEHOLDER) - len(version) + len(ORDER_ID_PLACEHOLDER) - len(order_id)
 
     if offset < 0:
         raise Exception('QR code data too long')
@@ -248,6 +254,12 @@ def print_warp2_label(sku, version, serial_number, build_date, custom_type2, ins
         raise Exception('Current placeholder missing in EZPL file')
 
     template = template.replace(CURRENT_PLACEHOLDER, current)
+
+    # patch order ID
+    if template.find(ORDER_ID_PLACEHOLDER) < 0:
+        raise Exception('Order ID placeholder missing in EZPL file')
+
+    template = template.replace(ORDER_ID_PLACEHOLDER, order_id.encode('ascii'))
 
     # patch copies
     copies_command = COPIES_FORMAT.format(1).encode('ascii')
@@ -297,6 +309,7 @@ def main():
     parser.add_argument('serial_number')
     parser.add_argument('build_date')
     parser.add_argument('custom_type2')
+    parser.add_argument('-o', '--order-id', default='')
     parser.add_argument('-i', '--instances', type=int, default=1)
     parser.add_argument('-c', '--copies', type=int, default=1)
     parser.add_argument('-s', '--stdout', action='store_true')
@@ -308,7 +321,7 @@ def main():
     assert args.instances > 0
     assert args.copies > 0
 
-    print_warp2_label(args.sku, args.version, args.serial_number, args.build_date, args.custom_type2, args.instances, args.copies, args.stdout, args.force_build_date, args.extras)
+    print_warp2_label(args.sku, args.version, args.serial_number, args.build_date, args.custom_type2, args.order_id, args.instances, args.copies, args.stdout, args.force_build_date, args.extras)
 
 
 if __name__ == '__main__':
