@@ -425,8 +425,34 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	EnWG} das Verhalten konfiguriert werden.
 
     \paragraph*{Schnittstellen (OCPP, Modbus/TCP, HTTP, MQTT)}
-    Generell kann die Ladeleistung der Wallbox über alle anderen Schnittstellen
+     Generell kann die Ladeleistung der Wallbox über alle anderen Schnittstellen
 	kontrolliert werden. Netzbetreiber setzen zur Steuerung typischerweise OCPP oder Modbus/TCP ein.
+
+    \subsection{Netzstützung nach OVE-Richtlinie R\,37 (Österreich)}\label{ove_r37}
+    In Österreich müssen Ladeeinrichtungen die Netzstützungsfunktionen nach
+    OVE-Richtlinie R\,37 unterstützen. Der WARP4 Charger erfüllen diese
+    Anforderungen. Die Konfiguration ist durch ein Elektriker-Passwort vor
+    unbefugter Änderung geschützt und darf nur von einer Elektrofachkraft
+    vorgenommen werden.
+
+    \paragraph*{Aktivierung}
+    Im Webinterface unter \texttt{System} $\rightarrow$ \texttt{Land} die
+    Einstellung \texttt{Österreich} auswählen und speichern. Anschließend
+    erscheint der Menüpunkt \texttt{OVE R 37}.
+
+    \paragraph*{Konfiguration}
+    Unter \texttt{OVE R 37} die Funktion aktivieren und speichern. Dazu ist das
+    Elektriker-Passwort \texttt{Ele4223W} erforderlich. Die Einstellparameter
+    sind im Auslieferungszustand bereits auf die von der Richtlinie geforderten
+    Standardwerte eingestellt:
+    \begin{itemize}
+        \item Unterspannungs-Auslöseschwelle: 0,80\,pu (\SI{184}{\volt} bei \SI{230}{\volt} Nennspannung)
+        \item Unterspannungs-Beobachtungszeit: \SI{3000}{\milli\second}
+        \item Wiederzuschalt-Wartezeit: \SI{60}{\second}
+        \item Ladestart-Verzögerung: \SI{0}{\second}
+    \end{itemize}
+
+    %\gfx{./img_warp4/web_ove_r37}
 
     \subsection{Prüfungen}\label{tests}
     Im Werk wurde jede Wallbox einzeln nach IEC~60364-6 sowie den entsprechenden gültigen
