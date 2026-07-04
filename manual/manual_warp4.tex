@@ -14,8 +14,8 @@
 \usepackage{siunitx}
 \sisetup{
     locale = DE,
-    binary-units,
-    detect-all,
+    mode = match,
+    propagate-math-font = true,
     per-mode = symbol %enables m/s instead of ms^-1
 }
 \AtBeginDocument{\DeclareSIUnit{\kWh}{kWh}}
@@ -212,7 +212,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     installiert werden. Direkte Sonneneinstrahlung ist zu vermeiden, um ein
     unnötiges Aufheizen der Wallbox zu verhindern. Auf eine ausreichende Belüftung
     ist zu achten. Die Staubschutzkappe des Typ-2-Steckers sollte nicht aufgesteckt
-    werden, wenn sich diese durch Regen o.Ä. mit Wasser füllen könnte. In diesem Fall
+    werden, wenn sich diese durch Regen o.\,Ä. mit Wasser füllen könnte. In diesem Fall
     droht eine Korrosion der Kontakte.
 
     \subsubsection{Wandmontage}\label{wandmontage}
@@ -306,7 +306,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     Als Letztes muss die Kabelverschraubung festgezogen werden. Die Verschraubung
     hat einen Klemmbereich von \SI{11}{\milli\meter} bis \SI{22}{\milli\meter} und soll laut Hersteller mit
-    \SI{10}{\newton{}\meter} angezogen werden.
+    \SI{10}{\newton\meter} angezogen werden.
 
     Der korrekte Sitz der Adern und die Phasenzugehörigkeit sind nach der
     Installation zu prüfen! Alle Verschraubungen innerhalb der Wallbox sind nachzuziehen.
@@ -428,7 +428,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
      Generell kann die Ladeleistung der Wallbox über alle anderen Schnittstellen
 	kontrolliert werden. Netzbetreiber setzen zur Steuerung typischerweise OCPP oder Modbus/TCP ein.
 
-    \subsection{Netzstützung nach OVE-Richtlinie R\,37 (Österreich)}\label{ove_r37}
+    \subsection{Netzstützung nach OVE-Richtlinie \texorpdfstring{R\,37}{R 37} (Österreich)}\label{ove_r37}
     In Österreich müssen Ladeeinrichtungen die Netzstützungsfunktionen nach
     OVE-Richtlinie R\,37 unterstützen. Der WARP4 Charger erfüllt diese
     Anforderungen. Die Konfiguration ist durch ein Elektriker-Passwort vor
@@ -495,7 +495,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 	Das Verhalten bei einem Tastendruck kann im Webinterface der Wallbox konfiguriert werden.
 
     Zusätzlich verfügt die Wallbox über ein NFC-Modul, verbaut an der rechten
-	Gehäuseseite, mit dem eine Ladefreigabe z.B. per Chipkarte möglich ist.
+	Gehäuseseite, mit dem eine Ladefreigabe z.\,B. per Chipkarte möglich ist.
 
 	Der WARP4 Charger Pro verfügt an der linken Gehäuseseite über ein Fenster
 	über das das Display des verbauten Stromzählers sichtbar ist.
@@ -516,7 +516,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \gfx{./img_warp4/evse_connection_block}
 
 	Zwischen DIP-Schalter und Klemmblock befindet sich ein kleiner Jumper. Mit diesem wird
-	konfiguriert ob ein 16A Ladekabel (11kW) oder ein 32A Ladekabel (22kW)
+	konfiguriert ob ein \SI{16}{\ampere} Ladekabel (\SI{11}{\kilo\watt}) oder ein \SI{32}{\ampere} Ladekabel (\SI{22}{\kilo\watt})
 	verbaut wurde. Über die dritte mögliche Position des Jumpers kann auch der
 	PP Eingang auf dem Klemmblock gewählt werden. Dann muss ein normkonformer
 	Widerstand zwischen PP und PE gesetzt werden um den Maximalstrom des
@@ -544,7 +544,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     QR-Codes und das automatische Verbinden mit dem WLAN. Viele Smartphones
     erkennen, dass über den Access-Point der Wallbox kein Zugriff auf das
     Internet möglich ist. \textbf{Deshalb muss gegebenenfalls die mobile
-	Datenverbindung (z.B. LTE) deaktiviert werden, oder eine Nachfrage, ob die
+	Datenverbindung (z.\,B. LTE) deaktiviert werden, oder eine Nachfrage, ob die
 	Verbindung zum Access-Point der Wallbox getrennt werden soll, verneint
 	werden.}
 
@@ -560,12 +560,11 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \end{minipage}
 
     \paragraph*{Option 2: LAN}
-    Wenn ein LAN-Kabel eingesteckt wird verbindet sich die
+    Wenn ein LAN-Kabel eingesteckt wird, verbindet sich die
     Wallbox automatisch mit einem
-    kabelgebundenen Netzwerk, (IP-Address-Bezug
-    per DHCP). Die Wallbox kann dann entweder über die zugewiesene IP
-    Adresse (\url{http://[IP-der-Wallbox]}, z.B. \url{http://192.168.0.42})
-    oder den Hostnamen der Wallbox (\url{http://[hostname]}, z.B.
+    kabelgebundenen Netzwerk (IP-Adressbezug
+    per DHCP). Die Wallbox kann dann entweder über die zugewiesene IP-Adresse (\url{http://[IP-der-Wallbox]}, z.\,B. \url{http://192.168.0.42})
+    oder den Hostnamen der Wallbox (\url{http://[hostname]}, z.\,B.
     \url{http://warp4-ABC}) erreicht werden.
 
     Der Hostname der Wallbox ist identisch zur SSID des WLAN-Access-Points. Der Hostnamen findet sich
@@ -665,7 +664,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     In der Variante Pro mit verbautem Stromzähler wird zusätzlich der Ladeverlauf
     über die letzten 48 Stunden und die aktuelle Leistungsaufnahme gezeigt.
 
-    Bestimmte Einträge (z.B. Lastmanagement) werden auf der Statusseite nur anzeigt, wenn die entsprechende
+    Bestimmte Einträge (z.\,B. Lastmanagement) werden auf der Statusseite nur angezeigt, wenn die entsprechende
     Funktionalität konfiguriert ist. Die wichtigsten Elemente auf der Seite sind:
 
     Der \textbf{Ladestatus} zeigt, ob aktuell ein
@@ -676,7 +675,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Wallbox niemals einen Ladevorgang automatisch starten.
     Ist die manuelle Ladefreigabe deaktiviert,
     startet der Ladevorgang automatisch, sobald ein Fahrzeug
-    angeschlossen wird und keine weiteren Freigabemechanismen (z.B. NFC) den
+    angeschlossen wird und keine weiteren Freigabemechanismen (z.\,B. NFC) den
     direkten Start verhindern.
 
     Der \textbf{Konfigurierte Ladestrom} bietet eine einfache Möglichkeit, den
@@ -709,7 +708,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Eine Möglichkeit, um die Wallbox in ein Netzwerk zu integrieren, ist mittels WLAN.
     Durch Drücken des \enquote{Netzwerksuche}-Buttons öffnet sich ein Menü, in dem das gewünschte WLAN ausgewählt werden kann.
     Es werden dann automatisch Netzwerkname (SSID) und BSSID eingetragen, sowie die Verbindung beim Neustart aktiviert.
-    Gegebenenfalls muss jetzt noch die Passphrase des gewählten Netzes eintragen
+    Gegebenenfalls muss jetzt noch die Passphrase des gewählten Netzes eingetragen
 	werden.
 
     \gfx{./img_warp3/resized/web_wifi_sta}
@@ -722,7 +721,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     kann es sein, dass die Verbindung zum Access-Point neu aufgebaut werden muss.
 
     Bei einer erfolgreichen Verbindung sollte die Wallbox jetzt im konfigurierten Netzwerk unter\\
-    \url{http://[konfigurierter_hostname]},\\ z.B. \url{http://warp4-ABC} erreichbar sein.
+    \url{http://[konfigurierter_hostname]},\\ z.\,B. \url{http://warp4-ABC} erreichbar sein.
 
     \vfill
 
@@ -749,7 +748,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     komplett zu deaktivieren.
 
     Bei einer erfolgreichen Verbindung sollte die Wallbox jetzt im LAN unter
-    \url{http://[konfigurierter_hostname]}, z.B. \url{http://warp4-ABC} erreichbar sein.
+    \url{http://[konfigurierter_hostname]}, z.\,B. \url{http://warp4-ABC} erreichbar sein.
 
     \hint{Die LAN- und WLAN-Verbindung sollten nicht gleichzeitig zum selben Netzwerk bzw. IP-Bereich verbunden sein,
     da es sonst zu Verbindungsproblemen kommen kann.}
@@ -892,11 +891,11 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     geben:
     \begin{itemize}
         \item Es liegt ein Fehler beim Ladekabel vor (Kurzschluss, verschmutzte / feuchte
-              Kontakte o.ä.). Die Wallbox ist dann sofort außer Betrieb zu nehmen und
+              Kontakte o.\,ä.). Die Wallbox ist dann sofort außer Betrieb zu nehmen und
               in Stand zu setzen.
         \item Es liegt ein technischer Defekt beim Fahrzeug vor.
         \item Es liegt ein technischer Defekt bei der Wallbox vor
-			(Ladecontroller defekt o.ä.).
+			(Ladecontroller defekt o.\,ä.).
         \item Das Fahrzeug fordert den IEC 61851-1 Status \enquote{D – Laden mit Belüftung}
               an. Dieser Modus wird von der Wallbox nicht unterstützt.
         \item Das Fahrzeug übermittelt den IEC 61851-1 Status E oder F. In beiden Fällen
@@ -939,8 +938,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Falls eine Netzwerkverbindung aufgebaut werden kann, aber das Webinterface
 	selbst nicht mehr funktioniert, kann versucht werden, die Recovery-Seite zu öffnen.
     Falls eine Verbindung über den Access-Point der Wallbox besteht, kann
-	die Recovery-Seite unter \url{http://10.0.0.1/recovery} aufgerufen werden. Bei einer bestehenden Verbindung zu einem Netzwerk kann die Seite über \url{http://[konfigurierter_hostname]/recovery}, also z.B. \url{http://warp4-ABC/recovery} erreicht werden.
-    Auf der Recovery-Seite kann die Wallbox neugestartet oder auf den Werkszustand zurückgesetzt (Factory Reset) werden und es können Firmware-Updates einspielt, Debug-Reports
+	die Recovery-Seite unter \url{http://10.0.0.1/recovery} aufgerufen werden. Bei einer bestehenden Verbindung zu einem Netzwerk kann die Seite über \url{http://[konfigurierter_hostname]/recovery}, also z.\,B. \url{http://warp4-ABC/recovery} erreicht werden.
+    Auf der Recovery-Seite kann die Wallbox neu gestartet oder auf den Werkszustand zurückgesetzt (Factory Reset) werden und es können Firmware-Updates eingespielt, Debug-Reports
     heruntergeladen und die HTTP-API verwendet werden.
 
     \subsection{Probleme bei Ladevorgängen lösen}
