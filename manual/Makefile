@@ -1,3 +1,20 @@
+# The recipe below converts everything to CMYK using the "ISO Coated v2 300%
+# (ECI)" profile supplied by wirmachendruck.de
+ICC_PROFILE = color/ISOcoated_v2_300_eci.icc
+PDFX_DEF    = pdfx_warp.ps
+
+define to_cmyk_print
+	gs -dBATCH -dNOPAUSE -dNOOUTERSAVE \
+	  --permit-file-read=$(PDFX_DEF) --permit-file-read=$(ICC_PROFILE) \
+	  -sDEVICE=pdfwrite -dCompatibilityLevel=1.6 \
+	  -dPDFSETTINGS=/prepress \
+	  -sColorConversionStrategy=CMYK -sProcessColorModel=DeviceCMYK \
+	  -dSubsetFonts=false -dCompressFonts=true \
+	  -sOutputICCProfile=$(ICC_PROFILE) \
+	  -sOutputFile=$(2) \
+	  $(PDFX_DEF) $(1)
+endef
+
 clean:
 	latexmk -c
 
@@ -11,7 +28,7 @@ warp4-web:
 warp4-print:
 	pdflatex "\def\forprint{1} \input{manual_warp4.tex}"
 	pdflatex "\def\forprint{1} \input{manual_warp4.tex}"
-	ps2pdf14 -dPDFSETTINGS=/prepress -dSubsetFonts=false -dCompressFonts=true manual_warp4.pdf manual_warp4_print.pdf
+	$(call to_cmyk_print,manual_warp4.pdf,manual_warp4_print.pdf)
 
 warp3-web:
 	pdflatex manual_warp3.tex
@@ -23,7 +40,7 @@ warp3-web:
 warp3-print:
 	pdflatex "\def\forprint{1} \input{manual_warp3.tex}"
 	pdflatex "\def\forprint{1} \input{manual_warp3.tex}"
-	ps2pdf14 -dPDFSETTINGS=/prepress -dSubsetFonts=false -dCompressFonts=true manual_warp3.pdf manual_warp3_print.pdf
+	$(call to_cmyk_print,manual_warp3.pdf,manual_warp3_print.pdf)
 
 
 warp2-web:
@@ -36,7 +53,7 @@ warp2-web:
 warp2-print:
 	pdflatex "\def\forprint{1} \input{manual_warp2.tex}"
 	pdflatex "\def\forprint{1} \input{manual_warp2.tex}"
-	ps2pdf14 -dPDFSETTINGS=/prepress -dSubsetFonts=false -dCompressFonts=true manual_warp2.pdf manual_warp2_print.pdf
+	$(call to_cmyk_print,manual_warp2.pdf,manual_warp2_print.pdf)
 
 warp-web:
 	pdflatex manual.tex
