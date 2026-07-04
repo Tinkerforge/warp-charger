@@ -145,7 +145,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     und Wartung deiner Wallbox.
 	\par
 	Der WARP4 Charger wird in zwei Varianten
-	angeboten: WARP4 Charger Smart und Pro: Der WARP4 Charger Pro verfügt über einen MID-geeichten Stromzähler, der WARP4 Charger Smart nicht.
+	angeboten: WARP4 Charger Smart und Pro. Der WARP4 Charger Pro verfügt über einen MID-geeichten Stromzähler, der WARP4 Charger Smart nicht.
 
     \section{Sicherheitshinweise}
     Die Wallbox ist so konstruiert, dass ein sicherer Betrieb gewährleistet ist,
@@ -400,7 +400,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \paragraph*{EEBUS}
 	Für EEBUS ist nur eine Netzwerkverbindung zur Steuerbox des Netzbetreibers
 	notwendig. Im Webinterface der Wallbox unter \texttt{Energiemanagement}
-	$\rightarrow$ \texttt{§14a EnWG}  kann das Verhalten der Wallbox auf
+	$\rightarrow$ \texttt{§14a EnWG} kann das Verhalten der Wallbox auf
 	das Steuersignal konfiguriert werden.
 
     \paragraph*{Rundsteuerempfänger/Steuerbox}
@@ -532,7 +532,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     \subsection{Schritt 1: Verbindung zur Wallbox herstellen}
 
-    \paragraph{Option 1: WLAN}
+    \paragraph*{Option 1: WLAN}
     Im Werkszustand öffnet die Wallbox einen WLAN-Access-Point. Über diesen kann
     die Konfiguration der Wallbox vorgenommen werden, indem auf das
     Webinterface der Wallbox zugegriffen wird.
@@ -559,7 +559,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
         \end{flushright}
     \end{minipage}
 
-    \paragraph{Option 2: LAN}
+    \paragraph*{Option 2: LAN}
     Wenn ein LAN-Kabel eingesteckt wird verbindet sich die
     Wallbox automatisch mit einem
     kabelgebundenen Netzwerk, (IP-Address-Bezug
@@ -575,7 +575,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     zuvor genannte Zugriff auf das Webinterface über den WLAN-Access-Point genutzt
     werden, um die IP-Adresse der LAN-Schnittstelle zu ermitteln.
 
-    \paragraph{Konfiguration mittels Webinterface}
+    \paragraph*{Konfiguration mittels Webinterface}
     Ist die Wallbox per WLAN (Accesspoint) oder LAN mittels Browser erreichbar,
     kann die weitere Konfiguration durchgeführt werden.
     Das Webinterface ist im \fullref{webinterface} vollständig beschrieben.
@@ -952,13 +952,13 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     \paragraph*{Sitz des Typ-2-Steckers} Ein nicht vollständig eingesteckter Typ-2-Stecker kann dazu führen,
         dass ein Fahrzeug nicht oder nur in einem Notlademodus mit minimaler Leistung lädt. Ein Indiz hierfür kann sein, dass
         das Fahrzeug den Typ-2-Stecker nicht korrekt verriegelt.
-    \paragraph{Inspektion aller Komponenten} Es sollten alle Komponenten
+    \paragraph*{Inspektion aller Komponenten} Es sollten alle Komponenten
         auf Beschädigungen und Nässe kontrolliert werden.
-    \paragraph{Webinterface der Wallbox} Die \texttt{Status}seite gibt den Ladestatus, den erlaubten Ladestrom und den Grund für eventuelle Limitierungen aus
+    \paragraph*{Webinterface der Wallbox} Die \texttt{Status}seite gibt den Ladestatus, den erlaubten Ladestrom und den Grund für eventuelle Limitierungen aus
         Sicht der Wallbox an. Detailliertere Informationen gibt die
         Unterseite \texttt{Ladestatus}. Hier kann außerdem ein Ladeprotokoll
         erzeugt werden, welches alle Werte des Ladevorgangs aufzeichnet.
-    \paragraph{Messung durch eine Elektrofachkraft} Elektrische Probleme können von
+    \paragraph*{Messung durch eine Elektrofachkraft} Elektrische Probleme können von
         einer Elektrofachkraft diagnostiziert werden. Sie kann prüfen, ob alle Leiter
         korrekt angeschlossen sind.
 
@@ -969,24 +969,24 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     Wallbox-Fehler müssen an der entsprechenden Wallbox behoben werden. Hier
 	hilft \fullref{fehlerbehebung}. Im Folgenden wird die Diagnose von Management-Fehlern erläutert:
 
-    \paragraph{Kommunikationsfehler / Wallbox nicht erreichbar}
+    \paragraph*{Kommunikationsfehler / Wallbox nicht erreichbar}
     Eine Wallbox kann nicht zuverlässig erreicht werden. Eventuell liegt ein
 	Verbindungsproblem vor. In diesem Fall die Netzwerkverbindung bzw. das
 	Netzwerkkabel und die IP-Konfiguration der Wallbox prüfen.
 
-    \paragraph{Firmware inkompatibel}
+    \paragraph*{Firmware inkompatibel}
     Das Lastmanagement benötigt kompatible Firmwares auf allen beteiligten Wallboxen. Die jeweils aktuellen Firmwares sollten zueinander kompatibel sein,
     selbst wenn WARP(1), WARP2, WARP3 und WARP4 Charger in einem Lastmanagementverbund verwendet werden.
 
-    \paragraph{Fremdsteuerung deaktiviert}
+    \paragraph*{Fremdsteuerung deaktiviert}
     Bei einer der zu steuernden Wallboxen ist die Fremdsteuerung deaktiviert. Damit ist keine Steuerung durch den Lastmanager möglich. Die Fremdsteuerung kann auf der \texttt{Wallboxen}-Unterseite aktiviert werden.
 
-    \paragraph{Ladecontroller nicht erreichbar}
+    \paragraph*{Ladecontroller nicht erreichbar}
     Der Ladecontroller einer Wallbox kann nicht erreicht werden, die Wallbox
 	selbst aber schon. In diesem Fall sollte das Ereignis-Log der betroffenen
 	Wallbox geprüft werden.
 
-    \paragraph{Ladecontroller reagiert nicht}
+    \paragraph*{Ladecontroller reagiert nicht}
     Der Ladecontroller einer Wallbox reagiert nicht auf Stromzuweisungen. In diesem Fall sollte das Ereignis-Log der betroffenen Wallbox geprüft werden.
 
     \subsection{Sicherungswechsel}
