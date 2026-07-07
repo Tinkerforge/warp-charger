@@ -31,13 +31,13 @@ die API, z.B. für eine externe NFC-Freigabe.
 
 ## Boost-Modus
 
-Die Ladeelektronik mancher Fahrzeuge interpretiert einen vom WARP3 Charger vorgeschriebenen Ladestrom zu niedrig.
+Die Ladeelektronik mancher Fahrzeuge interpretiert einen vom WARP Charger vorgeschriebenen Ladestrom zu niedrig.
 Der Boost-Modus versucht, diesen Effekt auszugleichen, indem ein leicht höherer Ladestrom kommuniziert wird.
 
 
 ## Zähleruberwachung
 
-Im WARP3 Charger Pro ist ein Stromzähler verbaut. Wenn diese Option aktiviert ist, wird ein Ladevorgang unterbrochen
+Im WARP Charger Pro ist ein Stromzähler verbaut. Wenn diese Option aktiviert ist, wird ein Ladevorgang unterbrochen
 bzw. nicht freigegeben, falls der Stromzähler bzw. die Kommunikation mit diesem gestört zu sein scheint. Wenn die
 Zählerüberwachung aktiviert ist, wird somit sichergestellt, dass die geladene Energie zu jedem aufgezeichneten Ladevorgang erfasst wird.
 
@@ -49,12 +49,12 @@ nächsten oder laufenden Ladevorgang auf der Statusseite überschrieben werden.
 
 ## Energielimit
 
-Setzt beim WARP3 Charger Pro ein generelles Energielimit für Ladevorgänge. Diese Funktion
+Setzt beim WARP Charger Pro ein generelles Energielimit für Ladevorgänge. Diese Funktion
 wird analog zum Zeitlimit eingerichtet.
 
 ## Tastereinstellung
 
-Hiermit wird konfiguriert, welche Funktion der Taster an der Front des WARP3 Chargers haben soll. Im halböffentlichen Raum kann es
+Hiermit wird konfiguriert, welche Funktion der Taster an der Front des WARP Chargers haben soll. Im halböffentlichen Raum kann es
 beispielsweise sinnvoll sein, den Ladestop per Taster zu verbieten.
 
 Wird die Tastereinstellung auf "Lademodus anfordern" gestellt, so kann mit dem Taster der Lademodus der Wallbox umgestellt werden.
@@ -63,7 +63,7 @@ Die Farben und Blinkcodes variieren zwischen den Wallbox-Versionen und den konfi
 
 :::note
 
-Für einen WARP3 Charger mit konfigurierten Eco Modus ohne einen konfigurierten PV Modus gibt das "?" folgenden beschreibenden Text dazu:
+Für einen WARP3/WARP4 Charger mit konfigurierten Eco Modus ohne einen konfigurierten PV Modus gibt das "?" folgenden beschreibenden Text dazu:
 
 Beim ersten Taster-Druck wird der aktuelle Lademodus angezeigt. Weiteres Drücken innerhalb von 10 Sekunden wechselt den Lademodus für den nächsten oder laufenden Lade­vorgang.
  * Rot: Aus
@@ -98,7 +98,7 @@ Diese Funktion beeinflusst nur das Lastmanagement, da nicht genutzte Phasen erka
 
 :::
 
-Diese Option steht nur für den WARP3 Charger Pro zur Verfügung. Ist
+Diese Option steht nur für den WARP3/WARP4 Charger Pro zur Verfügung. Ist
 die Option aktiviert, wird bei einem laufenden Ladevorgang mit dem internen Stromzähler ermittelt, ob das
 Fahrzeug nur einphasig lädt. Ist dies der Fall, schaltet die Wallbox automatisch auf einphasiges Laden um.
 
