@@ -229,16 +229,29 @@ des WARP Energy Managers nur einen Stromzähler unterstützt. Um die Features [P
 
 ## Fox ESS
 
-### Hybrid Serie H3/AC3, H3 Smart, H3 Pro
-{manufacturer_to_bubbles("Fox ESS")}
+### Hybrid Serie H3/AC3
+{manufacturer_to_bubbles("Fox ESS", "Hybrid Serie H3/AC3")}
 
-Fox ESS Wechselrichter scheinen nicht mittels Modbus/TCP über den Fox ESS LAN oder WLAN Dongle ausgelesen werden zu können. Sie sind aber mittels RS485 (Modbus/RTU) auszulesen.
+Die älteren Fox ESS Wechselrichter scheinen nicht mittels Modbus/TCP über den Fox ESS LAN oder WLAN Dongle ausgelesen werden zu können. Sie sind aber mittels RS485 (Modbus/RTU) auszulesen.
 Wird ein RS485 nach LAN oder WLAN Wandler installiert (siehe [Modbus/RTU Wandler](/compatible_devices/interfaces.md#modbusrtu-wandler)), so können diese Wechselrichter ebenfalls ausgelesen werden.
 Am Wechselrichter muss die Geräte-ID von 000 (Modbus/RTU deaktiviert) auf 247 eingestellt werden. Die Einstellung dazu findet sich unter Settings -> Communication -> RS485 -> Device ID.
 Das Wechselrichterpasswort ist standardmäßig auf 0000 gesetzt.
 
 Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann. Nur in diesem Fall wird das Feature [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) unterstützt.
 Ein [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) scheint mit den Zählerdaten nicht möglich zu sein, da keine Phasenströme geliefert werden. Soll dennoch ein dynamisches Lastmanagement realisiert werden, muss ein zusätzlicher Stromzähler, der Phasenströme bereitstellt, installiert werden.
+
+### Hybrid Serie H3 Smart, H3 Pro
+{manufacturer_to_bubbles("Fox ESS", "Hybrid Serie H3 Smart, H3 Pro")}
+
+Die mordernen Fox ESS Hybrid wechselrichter scheinen über ihren LAN Anschluss direkt Modbus/TCP bereitzustellen. Ein Wandler ist dann nicht mehr notwendig.
+
+Am Wechselrichter muss die Geräte-ID auf 247 eingestellt werden.
+
+Der Stromzähler "Netz" ist nur nutzbar wenn ein externer Hardware-Stromzähler am Netzanschluss installiert wurde und vom Wechselrichter ausgelesen werden kann. Nur in diesem Fall wird das Feature [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen) unterstützt.
+Ein [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) scheint mit den Zählerdaten nicht möglich zu sein, da keine Phasenströme geliefert werden. Soll dennoch ein dynamisches Lastmanagement realisiert werden, muss ein zusätzlicher Stromzähler, der Phasenströme bereitstellt, installiert werden.
+
+
+
 
 ## Fronius
 

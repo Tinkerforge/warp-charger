@@ -172,8 +172,22 @@ export const devices = [
   },
   {
     manufacturer: "Fox ESS",
-    device: "Hybrid Serie H3/AC3, H3 Smart, H3 Pro",
+    device: "Hybrid Serie H3/AC3",
     connection: "Modbus/RTU",
+    note: "hybrid-Wechselrichter",
+    link: "/docs/compatible_devices/devices#fox-ess",
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "x",
+    dlm: "-", //meter no currents available
+    pve: "x",
+    bat: "-"
+  },
+  {
+    manufacturer: "Fox ESS",
+    device: "Hybrid Serie H3 Smart, H3 Pro",
+    connection: "Modbus/TCP",
     note: "hybrid-Wechselrichter",
     link: "/docs/compatible_devices/devices#fox-ess",
     grid: "x",
