@@ -71,6 +71,10 @@ const config: Config = {
     [
       '@docusaurus/plugin-client-redirects',
       {
+        // Redirect the locale root (/de/, /en/) to the documentation home page.
+        // `from`/`to` are relative to the locale baseUrl, so this emits a static
+        // redirect at /de/ -> /de/docs/home and /en/ -> /en/docs/home.
+        redirects: [{from: '/', to: '/docs/home'}],
         // Redirect the stable "current generation" aliases and the legacy paths
         // to their target. The locale prefix (/de, /en) is preserved.
         //   /docs/warp_charger/*        -> current charger generation
