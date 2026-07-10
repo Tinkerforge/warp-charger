@@ -38,6 +38,30 @@ An NFC bricklet was found. Authorization via NFC is possible.
 
 An RTC bricklet or the RTC chip of a WARP3 or an Energy Manager was found. The system time is retained across restarts even without network time synchronization.
 
+## `iso15118` ISO 15118
+
+The charger supports communication with the vehicle according to ISO 15118.
+
+## `front_panel` Front Panel Display
+
+A front panel display (WARP Energy Manager 2.0) can be controlled.
+
+## `rgb_led` RGB LED
+
+The charger has an RGB status LED (WARP3 or newer).
+
+## `evse_gp_output` General Purpose Output
+
+The charge controller has a switchable general purpose output.
+
+## `energy_manager` Energy Manager
+
+An Energy Manager is available.
+
+## `firmware_update` Firmware Update
+
+The running firmware is signed and an update URL is configured, so that new firmware versions can be searched for.
+
 ## `meter` (deprecated API) Energy Meter
 
 An energy meter and hardware for reading it via RS485 is available. This feature is only set when an energy meter has been successfully read via Modbus at least once.

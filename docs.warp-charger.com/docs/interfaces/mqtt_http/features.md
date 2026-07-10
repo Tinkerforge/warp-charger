@@ -38,6 +38,30 @@ Ein NFC-Bricklet wurde gefunden. Freischaltung per NFC ist möglich.
 
 Ein RTC-Bricklet oder der RTC-Chip einer WARP3 oder eines Energy Managers wurde gefunden. Die Systemzeit wird auch ohne Netzwerk-Zeitsynchronisierung über Neustarts hinweg erhalten.
 
+## `iso15118` ISO 15118
+
+Die Wallbox unterstützt die Kommunikation mit dem Fahrzeug nach ISO 15118.
+
+## `front_panel` Frontpanel-Display
+
+Ein Frontpanel-Display (WARP Energy Manager 2.0) kann angesteuert werden.
+
+## `rgb_led` RGB-LED
+
+Die Wallbox verfügt über eine RGB-Status-LED (WARP3 oder neuer).
+
+## `evse_gp_output` General-Purpose-Ausgang
+
+Der Ladecontroller verfügt über einen schaltbaren General-Purpose-Ausgang.
+
+## `energy_manager` Energy Manager
+
+Es ist ein Energy Manager verfügbar.
+
+## `firmware_update` Firmware-Update
+
+Die laufende Firmware ist signiert und eine Update-URL ist konfiguriert, sodass nach neuen Firmware-Versionen gesucht werden kann.
+
 ## `meter` (veraltete API) Stromzähler
 
 Ein Stromzähler und Hardware zum Auslesen desselben über RS485 ist verfügbar. Dieses Feature wird erst gesetzt, wenn ein Stromzähler mindestens einmal erfolgreich über Modbus ausgelesen wurde.
