@@ -35,7 +35,7 @@ With
 ```bash
 mosquitto_sub -v -t "warp/AbCd/#"
 ```
-all messages from the charger can be displayed. (Replace the prefix `warp/AbCd` with the configured one) For example, the following message could be received on [`warp/AbCd/evse/state`](api_reference/evse#evse_state):
+all messages from the charger can be displayed. (Replace the prefix `warp/AbCd` with the configured one) For example, the following message could be received on [`warp/AbCd/evse/state`](api_reference/evse.mdx#evse_state):
 ```jsx
 {
   "iec61851_state": 1,
@@ -48,9 +48,9 @@ all messages from the charger can be displayed. (Replace the prefix `warp/AbCd` 
   "dc_fault_current_state": 0
 }
 ```
-The messages of the topic [`evse/state`](api_reference/evse#evse_state) provide an overview of the charge controller's state. For example, the allowed charging current is currently 32000, i.e. 32 amperes.
+The messages of the topic [`evse/state`](api_reference/evse.mdx#evse_state) provide an overview of the charge controller's state. For example, the allowed charging current is currently 32000, i.e. 32 amperes.
 
-By sending the message `{"current":8000}` to the topic [`evse/global_current_update`](api_reference/evse#evse_global_current_update), the charging current can be limited to 8 amperes, for example like this:
+By sending the message `{"current":8000}` to the topic [`evse/global_current_update`](api_reference/evse.mdx#evse_global_current_update), the charging current can be limited to 8 amperes, for example like this:
 ```bash
 mosquitto_pub -t "warp/AbCd/evse/global_current_update" -m "{\"current\": 8000}"
 ```
@@ -58,7 +58,7 @@ mosquitto_pub -t "warp/AbCd/evse/global_current_update" -m "{\"current\": 8000}"
 
 :::info
 
-For simplification, [`evse/global_current_update`](api_reference/evse#evse_global_current) is used here. The current set with this API is stored in the flash memory of the charge controller and should therefore **not be set frequently** to preserve the flash memory. Frequent changes to the charging current (e.g. for external control, PV excess charging, etc.) should instead be made via the API [`evse/external_current_update`](api_reference/evse#evse_external_current), which can be activated on the Charger -> Settings page with the "External control" option.
+For simplification, [`evse/global_current_update`](api_reference/evse.mdx#evse_global_current) is used here. The current set with this API is stored in the flash memory of the charge controller and should therefore **not be set frequently** to preserve the flash memory. Frequent changes to the charging current (e.g. for external control, PV excess charging, etc.) should instead be made via the API [`evse/external_current_update`](api_reference/evse.mdx#evse_external_current), which can be activated on the Charger -> Settings page with the "External control" option.
 
 :::
 
@@ -90,7 +90,7 @@ The HTTP API can be used without prior configuration. Optionally, access credent
 
 ### Basics
 
-The HTTP API is structurally identical to the MQTT API: If the MQTT API uses the topic [`warp/AbCd/evse/state`](api_reference/evse#evse_state), for example, the same API can be accessed via the URL `http://warp-AbCd/evse/state`. However, the HTTP API has some advanced features that are not available via MQTT. Additionally, [WebSockets](https://en.wikipedia.org/wiki/WebSocket) can be used at, for example, `ws://warp-AbCd/ws`. Via a WebSocket connection, the charger (analogous to MQTT) automatically transmits updated values.
+The HTTP API is structurally identical to the MQTT API: If the MQTT API uses the topic [`warp/AbCd/evse/state`](api_reference/evse.mdx#evse_state), for example, the same API can be accessed via the URL `http://warp-AbCd/evse/state`. However, the HTTP API has some advanced features that are not available via MQTT. Additionally, [WebSockets](https://en.wikipedia.org/wiki/WebSocket) can be used at, for example, `ws://warp-AbCd/ws`. Via a WebSocket connection, the charger (analogous to MQTT) automatically transmits updated values.
 
 To receive all messages sent by the charger analogous to the MQTT example, a WebSocket connection can be used. For this and for the further examples, [websocat](https://github.com/vi/websocat) and [curl](https://curl.se/) are used and it is assumed that the charger is reachable under the hostname warp-AbCd.
 
@@ -143,7 +143,7 @@ curl -X PUT -d "{\"current\":8000}" warp-AbCd/evse/global_current_update
 
 :::info
 
-For simplification, [`evse/global_current_update`](api_reference/evse#evse_global_current) is used here. The current set with this API is stored in the flash memory of the charge controller and should therefore **not be set frequently** to preserve the flash memory. Frequent changes to the charging current (e.g. for external control, PV excess charging, etc.) should instead be made via the API [`evse/external_current_update`](api_reference/evse#evse_external_current), which can be activated on the Charger -> Settings page with the "External control" option.
+For simplification, [`evse/global_current_update`](api_reference/evse.mdx#evse_global_current) is used here. The current set with this API is stored in the flash memory of the charge controller and should therefore **not be set frequently** to preserve the flash memory. Frequent changes to the charging current (e.g. for external control, PV excess charging, etc.) should instead be made via the API [`evse/external_current_update`](api_reference/evse.mdx#evse_external_current), which can be activated on the Charger -> Settings page with the "External control" option.
 
 :::
 
@@ -174,12 +174,12 @@ or
 [1, "Hello World"]
 ```
 
-A more concrete example: The API [`meters/1/config`](api_reference/meters#meters_X_config) configures the energy meter in slot 1. A charger in its default state has only one energy meter configured on slot 0 (the possibly internally integrated meter). Therefore, `meters/1/config` has the default value
+A more concrete example: The API [`meters/1/config`](api_reference/meters.mdx#meters_X_config) configures the energy meter in slot 1. A charger in its default state has only one energy meter configured on slot 0 (the possibly internally integrated meter). Therefore, `meters/1/config` has the default value
 ```jsx
 [0, null]
 ```
 i.e. tag 0 with no additional data (expressed by `null`)
-According to the [documentation of this API](api_reference/meters#meters_X_config), tag 0 means that no energy meter is configured.
+According to the [documentation of this API](api_reference/meters.mdx#meters_X_config), tag 0 means that no energy meter is configured.
 
 If instead a meter should be configured that receives its values via the SMA Speedwire protocol (tag 7), the display name of the meter is additionally required. The following configuration must therefore be set:
 ```jsx

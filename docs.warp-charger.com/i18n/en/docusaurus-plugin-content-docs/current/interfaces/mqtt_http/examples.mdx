@@ -13,9 +13,9 @@ import Admonition from '@theme/Admonition';
 
 The charging process can be controlled using the following APIs:
 
-- [`evse/start_charging`](api_reference/evse#evse_start_charging) starts a charging process. A charging process starts automatically unless manual charging authorization (under Wallbox -> Settings or [`evse/auto_start_charging`](api_reference/evse#evse_auto_start_charging)) is enabled.
-- [`evse/stop_charging`](api_reference/evse#evse_stop_charging) stops a charging process. A stopped charging process can be reactivated with [`evse/start_charging`](api_reference/evse#evse_start_charging).
-- [`evse/external_current`](api_reference/evse#evse_external_current) sets a charging current limit. For this, external control (under Wallbox -> Settings or [`evse/external_enabled`](api_reference/evse#evse_external_enabled)) must be enabled.
+- [`evse/start_charging`](api_reference/evse.mdx#evse_start_charging) starts a charging process. A charging process starts automatically unless manual charging authorization (under Wallbox -> Settings or [`evse/auto_start_charging`](api_reference/evse.mdx#evse_auto_start_charging)) is enabled.
+- [`evse/stop_charging`](api_reference/evse.mdx#evse_stop_charging) stops a charging process. A stopped charging process can be reactivated with [`evse/start_charging`](api_reference/evse.mdx#evse_start_charging).
+- [`evse/external_current`](api_reference/evse.mdx#evse_external_current) sets a charging current limit. For this, external control (under Wallbox -> Settings or [`evse/external_enabled`](api_reference/evse.mdx#evse_external_enabled)) must be enabled.
 
 :::tip
 
@@ -79,9 +79,9 @@ A charging process can also be stopped or blocked for other reasons, for example
 
 :::tip
 
-A charging current limit can also be set via [`evse/global_current`](api_reference/evse#evse_global_current).
+A charging current limit can also be set via [`evse/global_current`](api_reference/evse.mdx#evse_global_current).
 However, this limit is stored in the flash memory of the charge controller.
-When frequently setting the charging current limit, [`evse/external_current`](api_reference/evse#evse_external_current) should be used (to protect the flash memory of the charge controller).
+When frequently setting the charging current limit, [`evse/external_current`](api_reference/evse.mdx#evse_external_current) should be used (to protect the flash memory of the charge controller).
 
 :::
 
@@ -147,9 +147,9 @@ Via the API, a WARP Charger can be made to believe that an NFC tag was detected.
 
 The following APIs can be used to simulate a tag:
 
-- [`nfc/inject_tag_start`](api_reference/nfc#nfc_inject_tag_start) Simulates an NFC tag. The tag can start a charging process if it is known and assigned to a user. If a charging process is already running, this tag is ignored.
-- [`nfc/inject_tag_stop`](api_reference/nfc#nfc_inject_tag_stop) Simulates an NFC tag. The tag can stop a charging process if it is known and assigned to a user. If no charging process is running, this tag is ignored.
-- [`nfc/inject_tag`](api_reference/nfc#nfc_inject_tag) Simulates an NFC tag that can both start and stop a charging process if it is known and assigned to a user.
+- [`nfc/inject_tag_start`](api_reference/nfc.mdx#nfc_inject_tag_start) Simulates an NFC tag. The tag can start a charging process if it is known and assigned to a user. If a charging process is already running, this tag is ignored.
+- [`nfc/inject_tag_stop`](api_reference/nfc.mdx#nfc_inject_tag_stop) Simulates an NFC tag. The tag can stop a charging process if it is known and assigned to a user. If no charging process is running, this tag is ignored.
+- [`nfc/inject_tag`](api_reference/nfc.mdx#nfc_inject_tag) Simulates an NFC tag that can both start and stop a charging process if it is known and assigned to a user.
 
 All three APIs must be passed the type and ID of the tag.
 

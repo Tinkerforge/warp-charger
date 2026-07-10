@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Features
 
-WARP Charger and Energy Manager report the respectively supported features on the topic [`info/features`](api_reference/info#info_features). Using the features, it is possible for an application to use the API in such a way that it is compatible with all versions and variants of the WARP Charger. Feature requirements are noted on API topics in the reference. The following features can be offered:
+WARP Charger and Energy Manager report the respectively supported features on the topic [`info/features`](api_reference/info.mdx#info_features). Using the features, it is possible for an application to use the API in such a way that it is compatible with all versions and variants of the WARP Charger. Feature requirements are noted on API topics in the reference. The following features can be offered:
 
 ## `evse` Charge Controller
 
@@ -16,7 +16,7 @@ The charge controller can interrupt the Control Pilot signal.
 
 ## `phase_switch` Phase Switch
 
-Hardware and configuration allow manual phase switching with the API [`power_manager/external_control_update`](api_reference/power_manager#power_manager_external_control_update).
+Hardware and configuration allow manual phase switching with the API [`power_manager/external_control_update`](api_reference/power_manager.mdx#power_manager_external_control).
 
 ## `button_configuration` Button Configuration
 
