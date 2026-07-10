@@ -114,7 +114,7 @@ kurze, "vorgetäuschte" DC-Ladung aus: Fahrzeug und Wallbox handeln nur so lange
 DC-Parameter aus, bis das Fahrzeug seinen SoC meldet. Danach wird die Sitzung
 beendet, **bevor** überhaupt DC-Leistung fließt. Die eigentliche Ladung läuft
 anschließend ganz normal per AC (IEC 61851). Während dieser AC-Ladung kann der
-[WARP4 Charger Pro](/docs/warp4_charger/introduction) den SoC über seinen
+[WARP4 Charger Pro](@current-charger/introduction) den SoC über seinen
 eingebauten Stromzähler anhand der ins Fahrzeug geflossenen Energie selbst
 weiterrechnen.
 

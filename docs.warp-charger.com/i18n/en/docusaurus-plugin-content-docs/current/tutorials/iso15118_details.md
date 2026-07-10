@@ -107,7 +107,7 @@ session. Since the WARP charger does not charge via DC, it reads the SoC via a s
 "faked" DC charging session: vehicle and charger only negotiate DC parameters long enough
 for the vehicle to report its SoC. The session is then ended **before** any DC power flows
 at all. The actual charging afterwards runs completely normally via AC (IEC 61851). During
-this AC charging, the [WARP4 Charger Pro](/warp4_charger/introduction.md) can keep
+this AC charging, the [WARP4 Charger Pro](@current-charger/introduction) can keep
 calculating the SoC itself via its built-in energy meter, based on the energy that has
 flowed into the vehicle.
 
