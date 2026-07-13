@@ -19,7 +19,6 @@ For the charger to communicate via MQTT, the connection to the MQTT broker must 
 - **Client ID** The charger registers with the broker using this ID.
 - **Discovery mode** If a home automation system is connected to the broker, data points can be added automatically with this. A list of the data points can be found [here](/smart_home/home_assistant.md#mqtt-sensor-values-in-home-assistant-via-autodiscovery).
   - **Discovery topic prefix** The home automation system searches for data points under this topic.
-  - **Remove unavailable entities** If a data point is no longer provided, e.g. a meter was removed, an attempt is made to remove these data points from the home automation system.
 
 After the configuration is set and the "MQTT enabled" switch is set, the configuration can be saved. The ESP then restarts and connects to the broker. The status page shows whether the connection could be established.
 

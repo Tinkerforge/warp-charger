@@ -58,7 +58,7 @@ Die Discovery-Nachrichten werden alle 15 Minuten ausgesendet. Es kann also bis z
 
 Die Autodiscovery fügt verschiedene Sensoren und Steuerelemente automatisch hinzu. Welche hinzugefügt werden, hängt davon ab, ob es sich bei dem Gerät um einen WARP Charger oder WARP Energy Manager handelt und welche Funktionen aktiviert sind (z.B. PV-Ertragsprognose).
 
-Die Autodiscovery kann optional entdeckte Elemente wieder entfernen, sollten diese nicht mehr verfügbar sein.
+Die Autodiscovery entfernt automatisch hinzugefügte Elemente, sollten diese nicht mehr verfügbar sein.
 
 #### Automatisch hinzugefügte Entities
 Die folgenden Entities werden via Autodiscovery bereitgestellt:

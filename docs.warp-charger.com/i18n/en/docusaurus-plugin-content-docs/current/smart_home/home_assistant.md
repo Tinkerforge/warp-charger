@@ -58,7 +58,7 @@ The Discovery messages are sent every 15 minutes. It can therefore take up to fi
 
 Autodiscovery automatically adds various sensors and controls. Which ones are added depends on whether the device is a WARP Charger or WARP Energy Manager and which functions are activated (e.g. solar forecast).
 
-Autodiscovery can optionally remove discovered elements again should they no longer be available.
+Autodiscovery will remove discovered elements again should they no longer be available.
 
 #### Automatically Added Entities
 The following entities are provided via autodiscovery:

@@ -19,7 +19,6 @@ Damit die Wallbox über MQTT kommuniziert, muss zunächst im Webinterface die Ve
 - **Client-ID** Mit dieser ID registriert sich die Wallbox beim Broker.
 - **Discovery-Modus** Wenn eine Hausautomatisierung mit dem Broker verbunden ist. können hiermit automatisch Datenpunkte hinzugefügt werden. Eine Liste der Datenpunkte ist [hier](/docs/smart_home/home_assistant#mqtt-sensorwerte-in-home-assistant-via-autodiscovery) zu finden.
   - **Discovery-Topic-Präfix** Unter diesem Topic sucht die Hausautomatisierung nach Datenpunkten.
-  - **Nicht verfügbare Entities entfernen** Wenn ein Datenpunkt nicht mehr bereitgestellt wurde, z.B. ein Zähler wurde entfernt, dann wird versucht diese Datenpunkte aus der Hausautomatisierung zu entfernen.
 
 Nachdem die Konfiguration gesetzt und der "MQTT aktiviert"-Schalter gesetzt ist, kann die Konfiguration gespeichert werden. Der ESP startet dann neu und verbindet sich zum Broker. Auf der Status-Seite wird angezeigt, ob die Verbindung aufgebaut werden konnte.
 
