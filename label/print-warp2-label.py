@@ -11,7 +11,7 @@ import ssl
 import time
 import tinkerforge_util as tfutil  # sudo apt install python3-tinkerforge-util
 
-QR_CODE_COMMAND = b'W851,411,5,2,M,8,6,71,2\r'
+QR_CODE_COMMAND = b'W851,411,5,2,M,8,6,75,2\r'
 QR_CODE_PADDING = b';;\r'
 
 DESCRIPTION_PLACEHOLDER = b'WARP2 Charger Smart, 11 kW, 5 m, pulverbeschichtet'
@@ -29,6 +29,8 @@ CURRENT_PLACEHOLDER = b', 16 A'
 COPIES_FORMAT = '^C{0}\r'
 
 EXTRAS_FORMAT = ';A:{0};'
+
+SHIPPING_FORMAT = ';Z:{0};'
 
 ORDER_ID_PLACEHOLDER = b'SO/B3254769'
 
@@ -58,7 +60,7 @@ def get_next_serial_number():
     return '5{0:09}'.format(serial_number)
 
 
-def print_warp2_label(sku, version, serial_number, build_date, custom_type2, order_id, instances, copies, stdout, force_build_date, extras):
+def print_warp2_label(sku, version, serial_number, build_date, custom_type2, order_id, instances, copies, stdout, force_build_date, extras, shipping):
     # check instances
     if instances < 1 or instances > 25:
         raise Exception('Invalid instances: {0}'.format(instances))
@@ -277,6 +279,14 @@ def print_warp2_label(sku, version, serial_number, build_date, custom_type2, ord
 
     template = template.replace(extras_placeholder, EXTRAS_FORMAT.format('1' if extras else '0').encode('ascii'))
 
+    # patch shipping
+    shipping_placeholder = SHIPPING_FORMAT.format('0').encode('ascii')
+
+    if template.find(shipping_placeholder) < 0:
+        raise Exception('Shipping placeholder missing in EZPL file')
+
+    template = template.replace(shipping_placeholder, SHIPPING_FORMAT.format('1' if shipping else '0').encode('ascii'))
+
     # patch serial number
     if template.find(SERIAL_NUMBER_PLACEHOLDER) < 0:
         raise Exception('Serial number placeholder missing in EZPL file')
@@ -315,13 +325,14 @@ def main():
     parser.add_argument('-s', '--stdout', action='store_true')
     parser.add_argument('--force-build-date', action='store_true')
     parser.add_argument('--extras', action='store_true')
+    parser.add_argument('--shipping', action='store_true')
 
     args = parser.parse_args()
 
     assert args.instances > 0
     assert args.copies > 0
 
-    print_warp2_label(args.sku, args.version, args.serial_number, args.build_date, args.custom_type2, args.order_id, args.instances, args.copies, args.stdout, args.force_build_date, args.extras)
+    print_warp2_label(args.sku, args.version, args.serial_number, args.build_date, args.custom_type2, args.order_id, args.instances, args.copies, args.stdout, args.force_build_date, args.extras, args.shipping)
 
 
 if __name__ == '__main__':
