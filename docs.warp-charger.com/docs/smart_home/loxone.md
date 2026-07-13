@@ -51,8 +51,8 @@ Dieser wird mit der IP-Adresse und dem Port konfiguriert.
 Anschließend muss ein Modbus-Gerät hinzugefügt werden. 
 Um das zu vereinfachen, empfehlen wir die WARP-Vorlagen zu verwenden:
 
-- <a href="/img/smart_home/loxone/MB_Warp3_Complete_DE.xml" download>Loxone WARP Vorlage Deutsch</a>
-- <a href="/img/smart_home/loxone/MB_Warp3_Complete_EN.xml" download>Loxone WARP Vorlage Englisch</a>
+- <a href="/de/img/smart_home/loxone/MB_Warp3_Complete_DE.xml" download>Loxone WARP Vorlage Deutsch</a>
+- <a href="/de/img/smart_home/loxone/MB_Warp3_Complete_EN.xml" download>Loxone WARP Vorlage Englisch</a>
 
 Diese werden über den Modbus-Server importiert. 
 

@@ -50,8 +50,8 @@ This is configured with the IP address and port.
 Next, a Modbus device must be added. 
 To simplify this, we recommend using the WARP templates:
 
-- [Loxone WARP Template German](/img/smart_home/loxone/MB_Warp3_Complete_DE.xml)
-- [Loxone WARP Template English](/img/smart_home/loxone/MB_Warp3_Complete_EN.xml)
+- [Loxone WARP Template German](/en/img/smart_home/loxone/MB_Warp3_Complete_DE.xml)
+- [Loxone WARP Template English](/en/img/smart_home/loxone/MB_Warp3_Complete_EN.xml)
 
 These are imported via the Modbus server. 
 
