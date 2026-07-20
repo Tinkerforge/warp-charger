@@ -929,6 +929,24 @@ def redirect_old_urls():
     if target:
         return redirect(target, code=301)
 
+
+# --- Optional short-link redirects (e.g. campaign/marketing links) ---
+# These are not pushed to the git to not spoiler upcoming campaigns.
+try:
+    import link_redirects as _link_redirects
+except ImportError:
+    _link_redirects = None
+
+
+@app.before_request
+def handle_link_redirects():
+    if _link_redirects is None:
+        return None
+    target = _link_redirects.handle(request)
+    if target:
+        # 302: Short links are temporary
+        return redirect(target, code=302)
+
 @app.route("/<lang>/<path:page_path>")
 def page(lang, page_path):
     """Render a sub-page, with cross-language redirect support."""
