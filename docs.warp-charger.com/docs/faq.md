@@ -50,6 +50,8 @@ Bei WARP4 ist dies ebenfalls möglich, aber zusätzlich kann das Ladekabel auch 
 
 Wir bieten einen Upgrade-Satz für die Ladeelektronik an: [WARP3 zu WARP4 Upgradesatz](https://shop.warp-charger.com/de/spare-parts/warp4-spare-parts/warp3-to-warp4-upgrade-set.html).
 
+Eine Schritt-für-Schritt-Anleitung für den Umbau gibt es im Tutorial [Upgrade von WARP3 auf WARP4](/docs/tutorials/warp3_to_warp4_upgrade).
+
 
 ### Upgrade von WARP4 Smart auf WARP4 Pro
 WARP4 Pro verfügt über ein Sichtfenster im Gehäuse um von außen das Display des Stromzählers sehen zu können. Folgende Komponenten sind notwendig:

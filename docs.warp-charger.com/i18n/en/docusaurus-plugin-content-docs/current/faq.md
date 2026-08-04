@@ -50,6 +50,8 @@ On the WARP4 this is also possible, but in addition the charging cable can simpl
 
 We offer an upgrade kit for the charging electronics: [WARP3 to WARP4 upgrade kit](https://shop.warp-charger.com/en/spare-parts/warp4-spare-parts/warp3-to-warp4-upgrade-set.html).
 
+A step-by-step guide for the conversion is available in the tutorial [Upgrade from WARP3 to WARP4](/docs/tutorials/warp3_to_warp4_upgrade).
+
 
 ### Upgrade from WARP4 Smart to WARP4 Pro
 The WARP4 Pro has a viewing window in the housing so that the display of the energy meter can be seen from the outside. The following components are required:
