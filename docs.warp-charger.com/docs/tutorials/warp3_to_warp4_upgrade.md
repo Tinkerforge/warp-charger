@@ -148,6 +148,8 @@ Beim Aufsetzen des Deckels werden das Kabel des Fronttasters und der
 Erdungsstecker an der Frontblende wieder angesteckt. Danach wird der Deckel
 mit den vier Kreuzschlitzschrauben verschraubt.
 
+![image](/img/tutorials/warp3_to_warp4_upgrade/step9_closed.jpg)
+
 ## Schritt 10: Wallbox wieder mit Strom versorgen
 
 Die Stromversorgung der Wallbox wird wieder eingeschaltet. Die LED blinkt

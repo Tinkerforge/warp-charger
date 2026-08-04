@@ -143,6 +143,8 @@ When putting the lid back on, reconnect the cable of the front button and the
 grounding connector to the front panel. Then fasten the lid with the four
 Phillips screws.
 
+![image](/img/tutorials/warp3_to_warp4_upgrade/step9_closed.jpg)
+
 ## Step 10: Reconnect the charger to the power supply
 
 The power supply of the charger is switched on again. The LED then blinks
