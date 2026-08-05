@@ -18,6 +18,16 @@ endef
 clean:
 	latexmk -c
 
+warp3-to-warp4-handout-web:
+	pdflatex handout_warp3_to_warp4.tex
+	pdflatex handout_warp3_to_warp4.tex
+	cp handout_warp3_to_warp4.pdf ../documents/WARP3_zu_WARP4_Upgradesatz_Kurzanleitung.pdf
+
+warp3-to-warp4-handout-print:
+	pdflatex "\def\forprint{1} \input{handout_warp3_to_warp4.tex}"
+	pdflatex "\def\forprint{1} \input{handout_warp3_to_warp4.tex}"
+	$(call to_cmyk_print,handout_warp3_to_warp4.pdf,handout_warp3_to_warp4_print.pdf)
+
 warp4-web:
 	pdflatex manual_warp4.tex
 	pdflatex manual_warp4.tex

@@ -1,0 +1,135 @@
+\documentclass[a4paper,10pt]{article}
+\ifdefined\forprint
+    \usepackage[width=21.6cm,height=30.3cm,center]{crop}
+\fi
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2cm]{geometry}
+
+\usepackage[ngerman]{babel}
+\usepackage[german=quotes]{csquotes}
+
+\usepackage{microtype}
+\usepackage{multicol}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{calc}
+
+\usepackage{xcolor}
+\definecolor{boxgray}{rgb}{0.33,0.33,0.33}
+\usepackage{tcolorbox}
+
+\usepackage{phonenumbers}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\newcommand{\hint}[1]{\begin{tcolorbox}[colback=boxgray,colframe=black,coltext=
+white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tcolorbox}}
+
+\newcommand{\warning}[1]{\begin{tcolorbox}[colback=boxgray,colframe=black,coltext=
+white,title=Achtung,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tcolorbox}}
+
+\usepackage{hyperref}
+\usepackage{qrcode}
+
+\appto\UrlNoBreaks{\do\.\do\:\do\/\do\_}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\colorbox{boxgray}{
+	\makebox[\dimexpr\linewidth-2\fboxsep - 2.17mm][l]{
+		\includegraphics[height=1cm]{./img_warp3/resized/logo}
+	}
+}
+
+\vspace{0.5em}
+{\LARGE\bfseries WARP3 zu WARP4 Upgradesatz}\\[0.2em]
+{\large Kurzanleitung}
+
+Vielen Dank für den Kauf des WARP3 zu WARP4 Upgradesatzes! Mit diesem
+Upgradesatz wird die Ladeelektronik eines WARP3 Chargers gegen die eines WARP4
+Chargers getauscht. Danach stehen viele Funktionen des WARP4 Chargers zur
+Verfügung, insbesondere die ISO-15118-Kommunikation mit dem Fahrzeug (z.\,B.
+für SoC-Anzeige und Autocharge).
+
+\begin{multicols*}{2}
+
+	\subsection*{Lieferumfang}
+	\begin{itemize}[nosep]
+		\item Vormontierter Platinenstapel, bestehend aus WARP ESP32 Ethernet
+		      Brick 2.3, EVSE Bricklet 4.4, WARP PLC 1.1 und WARP4 PCB
+		      Mechaniksatz
+		\item Zwei WARP4-Aufkleber mit den neuen WLAN-Zugangsdaten
+		\item Dieses Informationsblatt
+	\end{itemize}
+
+	\subsection*{Sicherheitshinweise}
+	\warning{Vor dem Öffnen muss die Wallbox stromlos geschaltet und die
+		Spannungsfreiheit geprüft werden. Der Umbau sollte von einer ausgewiesenen
+		Elektrofachkraft durchgeführt werden.}
+
+	\subsection*{Der Umbau in Kürze}
+	Die Ladeelektronik von WARP3 und WARP4 ist mechanisch kompatibel. Alle
+	Anschlüsse sind identisch geblieben, sodass alle vorhandenen Kabel
+	weiterverwendet werden können.
+
+	\begin{enumerate}[nosep,leftmargin=*]
+		\item Upgradesatz konfigurieren: DIP-Schalter (maximaler Ladestrom der
+		      Zuleitung) und Jumper (16\,A- oder 32\,A-Typ-2-Ladekabel) passend
+		      zur Wallbox einstellen
+		\item Wallbox stromlos machen
+		\item Wallbox öffnen
+		\item Kabel von der alten Ladeelektronik entfernen (Ethernet, Modbus, CP,
+		      Fronttaster)
+		\item Alten Platinenstapel von der Hutschiene lösen, dabei Stromkabel,
+		      Contactor-Check- und NFC-Bricklet-Kabel abstecken
+		\item Neuen Platinenstapel einsetzen, dabei Stromkabel, Contactor-Check-
+		      und NFC-Bricklet-Kabel wieder verbinden
+		\item Restliche Kabel wieder anschließen
+		\item WARP3-Aufkleber an der Wallbox mit dem WARP4-Aufkleber überkleben
+		\item Wallbox verschließen
+		\item Wallbox wieder mit Strom versorgen
+	\end{enumerate}
+
+	Die Inbetriebnahme kann danach wie im Tutorial \enquote{Erste Schritte} der
+	Online-Dokumentation vorgenommen werden.
+
+	\hint{Die neue Ladeelektronik spannt einen eigenen WLAN-Access-Point mit neuen
+		Zugangsdaten auf. Der zweite mitgelieferte Aufkleber kann über den Aufkleber
+		in der Original-Betriebsanleitung geklebt oder an einer anderen, gut
+		wiederauffindbaren Stelle aufbewahrt werden.}
+
+	\subsection*{Ausführliche Anleitung}
+	Eine ausführliche Schritt-für-Schritt-Anleitung mit Fotos ist in der
+	Online-Dokumentation unter \enquote{Tutorials} zu finden:
+
+	\begin{tcolorbox}[colback=white, colframe=black, arc=2pt]
+		\begin{center}
+			{\large Upgrade von WARP3 auf WARP4}\\
+			auf \href{https://docs.warp-charger.com}{\texttt{docs.warp-charger.com}}\\
+			unter \enquote{Tutorials}
+		\end{center}
+		\vspace{1em}
+		\begin{center}
+			\qrcode{https://docs.warp-charger.com/de/docs/tutorials/warp3_to_warp4_upgrade}
+		\end{center}
+		\vspace{0.5em}
+		\begin{center}
+			\footnotesize
+			\href{https://docs.warp-charger.com/de/docs/tutorials/warp3_to_warp4_upgrade}{\nolinkurl{docs.warp-charger.com/de/docs/tutorials/}\\\nolinkurl{warp3_to_warp4_upgrade}}
+		\end{center}
+	\end{tcolorbox}
+
+	\subsection*{Kontakt}
+	Tinkerforge GmbH\\ Helleforthstraße 22-28\\ 33758 Schloß Holte-Stukenbrock
+	\begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{Website}},nosep]
+		\item[E-Mail] \href{mailto:info@tinkerforge.com}{\texttt{info@tinkerforge.com}}
+		\item[Website] \href{https://warp-charger.com}{\texttt{warp-charger.com}}
+		\item[Telefon] \phonenumber{+49 5207 897300-0}
+		\item[Shop] \href{https://shop.warp-charger.com}{\texttt{shop.warp-charger.com}}
+	\end{description}
+
+\end{multicols*}
+
+\end{document}
