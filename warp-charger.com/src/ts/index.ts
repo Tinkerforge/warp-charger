@@ -10,6 +10,7 @@ import "./image-switcher";
 import "./info-pulse";
 import "./desktop-menu-tap";
 import "./logo-grid";
+import "./media-tabs";
 import "./mobile-menu";
 import "./news";
 import "./products";

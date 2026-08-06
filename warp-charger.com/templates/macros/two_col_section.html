@@ -13,6 +13,10 @@
     heading_tag   : "h1" or "h2" (default "h2")
     overflow_image: If true (dark only), image overflows section bounds on desktop
     image_aspect  : Optional "W/H" aspect ratio (e.g. "1097/702"). Required for dark+overflow_image to keep the glass frame width matched to the image's rendered width.
+    media_tabs    : If true (light only), requires both image and video: renders
+                    pill tabs above the glass frame to switch between them.
+    image_label   : Tab label for the image (only with media_tabs)
+    video_label   : Tab label for the video (only with media_tabs)
 
   Usage:
     {% from "macros/two_col_section.html" import two_col_section %}
@@ -51,6 +55,35 @@
 {% endif %}
 {% endmacro %}
 
+{#
+  Tabbed media: pill tabs (styled like image_switcher) above the glass frame,
+  switching between the static image and a click-to-play video. Handled by
+  src/ts/media-tabs.ts via [data-media-tabs].
+#}
+{% macro _light_media_tabs(video, video_poster, image, alt, image_label, video_label) %}
+<div data-media-tabs class="flex w-full max-w-lg flex-col items-center gap-5">
+    <nav role="tablist" aria-label="{{ alt }}" class="flex gap-3 rounded-[20px] bg-black/30 p-1.5">
+        <button type="button" data-media-tab role="tab" aria-selected="true"
+            class="inline-flex cursor-pointer items-center justify-center rounded-[15px] px-4 pt-0.5 pb-1.5 text-btn text-white transition-all duration-200 md:px-8 bg-white/30">{{ image_label }}</button>
+        <button type="button" data-media-tab role="tab" aria-selected="false"
+            class="inline-flex cursor-pointer items-center justify-center rounded-[15px] px-4 pt-0.5 pb-1.5 text-btn text-white transition-all duration-200 md:px-8 hover:bg-white/10">{{ video_label }}</button>
+    </nav>
+    <div class="glass-frame w-full">
+        <img data-media-panel src="{{ url_for('static', filename='images/' ~ image) }}" loading="lazy" alt="{{ alt }}"
+            class="glass-frame-inner block h-auto w-full object-cover shadow-[0_0_27px_4.5px_rgba(0,0,0,0.10)]" />
+        <video data-media-panel hidden
+            src="{{ url_for('static', filename='videos/' ~ video) }}"
+            {% if video_poster %}poster="{{ url_for('static', filename='images/' ~ video_poster) }}"{% endif %}
+            controls
+            preload="none"
+            playsinline
+            aria-label="{{ alt }}"
+            class="glass-frame-inner block h-auto w-full object-cover shadow-[0_0_27px_4.5px_rgba(0,0,0,0.10)]"
+        ></video>
+    </div>
+</div>
+{% endmacro %}
+
 {% macro two_col_section(
     badge_icon,
     badge_text,
@@ -66,7 +99,10 @@
     pb="",
     no_frame=false,
     video="",
-    video_poster=""
+    video_poster="",
+    media_tabs=false,
+    image_label="",
+    video_label=""
 ) %}
 {% set alt = image_alt or headline %}
 {% set flex_dir = "lg:flex-row" if image_side == "right" else "lg:flex-row-reverse" %}
@@ -121,7 +157,9 @@
 
             {# Image shown between heading and content on mobile #}
             <div class="flex w-full items-center justify-center lg:hidden">
-                {% if no_frame %}
+                {% if media_tabs %}
+                {{ _light_media_tabs(video, video_poster, image, alt, image_label, video_label) }}
+                {% elif no_frame %}
                 {{ _light_media(video, video_poster, image, alt, "block h-auto w-full max-w-lg object-contain") }}
                 {% else %}
                 <div class="glass-frame w-full max-w-lg">
@@ -134,7 +172,9 @@
         </div>
         {# Image Column: desktop only #}
         <div class="hidden lg:flex flex-1 items-center justify-center">
-            {% if no_frame %}
+            {% if media_tabs %}
+            {{ _light_media_tabs(video, video_poster, image, alt, image_label, video_label) }}
+            {% elif no_frame %}
             {{ _light_media(video, video_poster, image, alt, "block h-auto w-full max-w-lg object-contain") }}
             {% else %}
             <div class="glass-frame w-full max-w-lg">

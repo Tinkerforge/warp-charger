@@ -24,7 +24,7 @@
             <nav role="tablist" aria-label="Image switcher tabs" class="flex gap-3 rounded-[20px] bg-black/30 p-1.5">
                 {% for image in images %}
                 <button type="button" data-switcher-tab
-                    class="cursor-pointer rounded-[15px] px-4 py-1 text-btn text-white transition-all duration-200 md:px-8 lg:px-8 {% if loop.first %}bg-white/30{% else %}hover:bg-white/10{% endif %}"
+                    class="inline-flex cursor-pointer items-center justify-center rounded-[15px] px-4 py-1 text-btn text-white transition-all duration-200 md:px-8 lg:px-8 {% if loop.first %}bg-white/30{% else %}hover:bg-white/10{% endif %}"
                     role="tab" aria-selected="{{ 'true' if loop.first else 'false' }}">{{ image.label or loop.index }}</button>
                 {% endfor %}
             </nav>
