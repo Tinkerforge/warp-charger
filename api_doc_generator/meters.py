@@ -10,6 +10,7 @@ LOCATION_CONSTANTS = [
     Const(5, T({'de': "Speicher", 'en': "Storage"})),
     Const(6, T({'de': "Last", 'en': "Load"})),
     Const(7, U("PV")),
+    Const(8, T({'de': "Fahrzeug", 'en': "Vehicle"})),
 ]
 
 def meters_x_get_tag_fn(api: str, info: list):
@@ -578,6 +579,10 @@ meters = Module("meters", T({'de': "Stromzähler", 'en': "Electricity Meters"}),
                         Const(2, T({'de': "Netzanschluss", 'en': "Grid connection"})),
                         Const(3, T({'de': "Speicher", 'en': "Storage"}))
                     ]),
+        }),
+        9: Elem.OBJECT(T({'de': "Fahrzeug (ISO 15118)", 'en': "Vehicle (ISO 15118)"}), version=Version.WARP4, members={
+            "display_name": Elem.STRING(T({'de': "Anzeigename des Fahrzeug-Stromzählers", 'en': "Display name of the vehicle electricity meter"})),
+            "location": Elem.INT(T({'de': "Messort", 'en': "Measurement location"}), constants=LOCATION_CONSTANTS),
         })
     })),
 
@@ -603,7 +608,16 @@ meters = Module("meters", T({'de': "Stromzähler", 'en': "Electricity Meters"}),
                 ]),
             }) for x in [2, 3]},
             4: Elem.NULL(T({'de': "Zustand des API-Stromzählers. Im Moment leer.", 'en': "State of the API electricity meter. Currently empty."})),
-            5: Elem.NULL(T({'de': "Zustand des SunSpec-Stromzählers. Im Moment leer.", 'en': "State of the SunSpec electricity meter. Currently empty."}))
+            5: Elem.NULL(T({'de': "Zustand des SunSpec-Stromzählers. Im Moment leer.", 'en': "State of the SunSpec electricity meter. Currently empty."})),
+            9: Elem.OBJECT(T({'de': "Zustand des Fahrzeug-Stromzählers (ISO 15118)", 'en': "State of the vehicle electricity meter (ISO 15118)"}), version=Version.WARP4, members={
+                "source": Elem.INT(T({'de': "Quelle der Fahrzeug-Daten.", 'en': "Source of the vehicle data."}), constants=[
+                    Const(0, T({'de': "Keine Daten vorhanden", 'en': "No data available"})),
+                    Const(1, U("API")),
+                    Const(2, U("DIN 70121")),
+                    Const(3, U("ISO 15118-2")),
+                    Const(4, U("ISO 15118-20")),
+                ])
+            })
         })
     ),
 
@@ -624,6 +638,7 @@ meters = Module("meters", T({'de': "Stromzähler", 'en': "Electricity Meters"}),
             }) for x in [2, 3]},
             4: Elem.NULL(T({'de': "Fehlerzähler des API-Stromzählers. Im Moment leer.", 'en': "Error counters of the API electricity meter. Currently empty."})),
             5: Elem.NULL(T({'de': "Fehlerzähler des SunSpec-Stromzählers. Im Moment leer.", 'en': "Error counters of the SunSpec electricity meter. Currently empty."})),
+            9: Elem.NULL(T({'de': "Fehlerzähler des Fahrzeug-Stromzählers (ISO 15118). Im Moment leer.", 'en': "Error counters of the vehicle electricity meter (ISO 15118). Currently empty."}), version=Version.WARP4),
         })
     ),
 
