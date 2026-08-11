@@ -1,3 +1,4 @@
+from ev import ev
 from evse import evse
 from meter import meter
 from nfc import nfc
@@ -39,6 +40,7 @@ mods = [
     users,
     charge_tracker,
     nfc,
+    ev,
     network,
     wifi,
     ethernet,
