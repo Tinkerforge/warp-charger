@@ -36,3 +36,9 @@ Für das dynamische Lastmanagement sind dann folgende Einstellungen notwendig:
 * **Strombedarf des größten Eizelverbrauchers**: Zu erwartende Stromverbrauch des größten Verbrauchers. Dieser kann beispielsweise ein Durchlauferhitzer oder eine Wärmepumpe sein, mindestens aber 16 Ampere aus einer Schuko-Dose. Der Wert gibt den größten zu erwartenden
 plötzlichen Sprung des Strombezugs am Zähler an, den das dynamische Lastmanagement kurzfristig (in unter 30 Sekunden) kompensieren können muss.
 * **Zusätzliche Sicherheitsmarge**: Zusätzliche prozentuale Sicherheitsmarge, die vom dynamischen Lastmanagement einkalkuliert wird.
+
+## Anforderungen an die Stromzählerdaten
+
+Damit das dynamische Lastmanagement korrekt funktionieren kann, muss die Wallbox laufend neue Daten von dem ausgewählten Stromzähler empfangen. Der Zähler sollte mindestens alle zwei Sekunden, besser noch jede Sekunde, aktuelle Werte liefern.
+Wenn der Zähler ca. eine Minuten lang keine Werte liefert, werden alle aktiven Ladungen beendet.
+

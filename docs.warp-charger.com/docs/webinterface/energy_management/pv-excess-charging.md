@@ -33,3 +33,9 @@ Dazu müssen folgende Einstellungen vorgenommen werden:
  * **Stromzähler**: Der Stromzähler, der dem Batteriespeicher zugeordnet ist
  * **Speicherpriorität**: Hier kann konfiguriert werden ob Wallboxen oder der Speicher höher priorisiert werden.
  * **Bezugs- und Einspeisetoleranz**: Der Regelwert auf dem geregelt wird.
+
+## Anforderungen an den Stromzähler
+
+Damit das PV-Überschussladen korrekt funktionieren kann, muss die Wallbox laufend neue Daten von dem ausgewählten Stromzähler erhalten. Der Zähler sollte mindestens alle zwei Sekunden, besser noch jede Sekunde, aktuelle Werte liefern. 
+Wenn der Zähler ca. zwei Minuten lang keine Werte liefert, wird die Ladeleistung auf das Minimum reduziert. Nach weiteren vier Minuten werden aktive PV-Ladungen beendet.
+
