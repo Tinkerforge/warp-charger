@@ -914,8 +914,9 @@ OLD_URL_MAP = {
     "/warp-energy-manager": "/de/produkte/warp-energy-manager",
     "/warp-energy-manager-2-0": "/de/produkte/warp-energy-manager",
     "/warp-ladesaeule": "/de/produkte/warp-ladesaeule",
-    # Old firmware link redirect
+    # Old firmware link redirects
     "/documentation/api.html": "https://docs.warp-charger.com/de/docs/interfaces/mqtt_http/introduction/",
+    "/api.html": "https://docs.warp-charger.com/de/docs/interfaces/mqtt_http/introduction/",
 }
 
 
