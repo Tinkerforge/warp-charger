@@ -9,8 +9,8 @@ import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 <DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
 ![image](/img/webinterface/energy_management/wem2-energy_meters.jpeg)
 
-Auf dieser Seite kann die Kommunikation mit Stromzählern konfiguriert werden. Da der WARP3 Charger Pro über einen eingebauten Stromzähler verfügt, ist
-dieser bei allen WARP3 Chargern Pro vorkonfiguriert. Beim WARP3 Charger Smart kann dieser Zähler entfernt werden.
+Auf dieser Seite kann die Kommunikation mit Stromzählern konfiguriert werden. Da der WARP Charger Pro über einen eingebauten Stromzähler verfügt, ist
+dieser bei allen WARP Chargern Pro vorkonfiguriert. Beim WARP Charger Smart kann dieser Zähler entfernt werden.
 
 Im Graph wird die gemessene Leistung aller konfigurierten Stromzähler angezeigt, entweder als Verlauf über
 die letzten 48h oder als Live-Ansicht. Die Ansicht jedes Zählers kann aufgeklappt werden, um weitere Statistiken
