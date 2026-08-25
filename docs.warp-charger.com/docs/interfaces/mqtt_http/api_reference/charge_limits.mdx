@@ -1345,7 +1345,8 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/state
   "start_timestamp_ms": 786598059,
   "start_energy_kwh": 886.1900024,
   "target_timestamp_ms": 797398059,
-  "target_energy_kwh": 901.1900024
+  "target_energy_kwh": 901.1900024,
+  "target_soc_pct": 80
 }
 ```
 
@@ -1389,6 +1390,13 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/state
         Zielzählerwert des aktuellen Ladevorgangs. null falls kein Ladevorgang läuft, oder kein Stromzähler zur Verfügung steht. Gleich dem Startzählerwert, falls kein Energiewert gesetzt ist.
     </td>
 </tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`target_soc_pct`<br/>int (<abbr title="Prozent">%</abbr>)</th>
+    <td>
+        <strong>(Nur WARP 4)</strong> Ziel-Ladezustand (SoC) des Fahrzeugs für den aktuellen Ladevorgang. 0 falls kein SoC-Limit gesetzt ist.
+    </td>
+</tr>
     </tbody>
 </table>
 
@@ -1409,14 +1417,14 @@ Konfiguration der Zeit- und Energielimits für Ladevorgänge.
 curl http://$HOST/charge_limits/default_limits
 ```
 ```jsx
-{ "duration": 8, "energy_wh": 50000 }
+{ "duration": 8, "energy_wh": 50000, "soc_pct": 80 }
 ```
 
 
 
 #### Schreiben
 ```bash
-curl http://$HOST/charge_limits/default_limits -d '{ "duration": 8, "energy_wh": 50000 }'
+curl http://$HOST/charge_limits/default_limits -d '{ "duration": 8, "energy_wh": 50000, "soc_pct": 80 }'
 ```
 
 
@@ -1433,7 +1441,7 @@ curl http://$HOST/charge_limits/default_limits -d '{ "duration": 8, "energy_wh":
 mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/default_limits
 ```
 ```jsx
-{ "duration": 8, "energy_wh": 50000 }
+{ "duration": 8, "energy_wh": 50000, "soc_pct": 80 }
 ```
 
 
@@ -1443,7 +1451,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/default_limits
 
 
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/default_limits_update -m '{ "duration": 8, "energy_wh": 50000 }'
+mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/default_limits_update -m '{ "duration": 8, "energy_wh": 50000, "soc_pct": 80 }'
 ```
 
 
@@ -1484,6 +1492,13 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/default_limits_update -m '{ "d
     <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_wh`<br/>int (<abbr title="Wattstunde">Wh</abbr>)</th>
     <td>
         Energielimit eines Ladevorgangs. Nach Ablaufen des Energielimits wird der Ladevorgang gestoppt.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`soc_pct`<br/>int (<abbr title="Prozent">%</abbr>)</th>
+    <td>
+        <strong>(Nur WARP 4)</strong> SoC-Limit eines Ladevorgangs. Sobald der Ladezustand (SoC) des Fahrzeugs das Limit erreicht, wird der Ladevorgang gestoppt. 0 deaktiviert das SoC-Limit. Benötigt einen Fahrzeug-Stromzähler, der den Ladezustand misst.
     </td>
 </tr>
     </tbody>
@@ -1518,7 +1533,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/active_limits
     </Tabs>
 
 ```jsx
-{ "duration": 12, "energy_wh": 50000 }
+{ "duration": 12, "energy_wh": 50000, "soc_pct": 80 }
 ```
 
 
@@ -1556,6 +1571,13 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/active_limits
     <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_wh`<br/>int (<abbr title="Wattstunde">Wh</abbr>)</th>
     <td>
         Energielimit eines Ladevorgangs. Nach Ablaufen des Energielimits wird der Ladevorgang gestoppt.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`soc_pct`<br/>int (<abbr title="Prozent">%</abbr>)</th>
+    <td>
+        <strong>(Nur WARP 4)</strong> SoC-Limit eines Ladevorgangs. Sobald der Ladezustand (SoC) des Fahrzeugs das Limit erreicht, wird der Ladevorgang gestoppt. 0 falls kein SoC-Limit gesetzt ist. Kann über [`charge_limits/override_soc`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_soc) aktualisiert werden.
     </td>
 </tr>
     </tbody>
@@ -1709,6 +1731,74 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_energy -m '25000'
 </table>
 
 <br/><br/><br/>
+## `charge_limits/override_soc` {#charge_limits_override_soc_warp4}
+
+
+Überschreibt das SoC-Limit für den aktuellen oder nächsten Ladevorgang. Im Gegensatz zu Zeit- und Energielimit ist das SoC-Limit ein absoluter Wert ("lade bis 80 %"), kein relativer (wie "lade eine Stunde" bzw. "lade 10 kWh").
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp4-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/charge_limits/override_soc -d '{ "soc_pct": 80 }'
+```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_limits/override_soc -d '80'
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp4/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_soc -m '{ "soc_pct": 80 }'
+```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_soc -m '80'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Beschreibung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`soc_pct`<br/>int (<abbr title="Prozent">%</abbr>)</th>
+    <td>
+        SoC-Limit eines Ladevorgangs. Sobald der Ladezustand (SoC) des Fahrzeugs das Limit erreicht, wird der Ladevorgang gestoppt. 0 deaktiviert das SoC-Limit. Benötigt einen Fahrzeug-Stromzähler, der den Ladezustand misst.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
 ## `charge_limits/restart` {#charge_limits_restart_warp4}
 
 
@@ -1829,6 +1919,13 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/state
         Zielzählerwert des aktuellen Ladevorgangs. null falls kein Ladevorgang läuft, oder kein Stromzähler zur Verfügung steht. Gleich dem Startzählerwert, falls kein Energiewert gesetzt ist.
     </td>
 </tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`target_soc_pct`<br/>int (<abbr title="Prozent">%</abbr>)</th>
+    <td>
+        <strong>(Nur WARP 4)</strong> Ziel-Ladezustand (SoC) des Fahrzeugs für den aktuellen Ladevorgang. 0 falls kein SoC-Limit gesetzt ist.
+    </td>
+</tr>
     </tbody>
 </table>
 
@@ -1929,6 +2026,13 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/default_limits_update -m '{ "d
         Energielimit eines Ladevorgangs. Nach Ablaufen des Energielimits wird der Ladevorgang gestoppt.
     </td>
 </tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`soc_pct`<br/>int (<abbr title="Prozent">%</abbr>)</th>
+    <td>
+        <strong>(Nur WARP 4)</strong> SoC-Limit eines Ladevorgangs. Sobald der Ladezustand (SoC) des Fahrzeugs das Limit erreicht, wird der Ladevorgang gestoppt. 0 deaktiviert das SoC-Limit. Benötigt einen Fahrzeug-Stromzähler, der den Ladezustand misst.
+    </td>
+</tr>
     </tbody>
 </table>
 
@@ -2002,6 +2106,13 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/active_limits
     <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_wh`<br/>int (<abbr title="Wattstunde">Wh</abbr>)</th>
     <td>
         Energielimit eines Ladevorgangs. Nach Ablaufen des Energielimits wird der Ladevorgang gestoppt.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`soc_pct`<br/>int (<abbr title="Prozent">%</abbr>)</th>
+    <td>
+        <strong>(Nur WARP 4)</strong> SoC-Limit eines Ladevorgangs. Sobald der Ladezustand (SoC) des Fahrzeugs das Limit erreicht, wird der Ladevorgang gestoppt. 0 falls kein SoC-Limit gesetzt ist. Kann über [`charge_limits/override_soc`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_soc) aktualisiert werden.
     </td>
 </tr>
     </tbody>
@@ -2158,6 +2269,74 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_energy -m '25000'
 </table>
 
 <br/><br/><br/>
+## `charge_limits/override_soc` {#charge_limits_override_soc_any}
+
+<strong>(Nur WARP 4)</strong> 
+Überschreibt das SoC-Limit für den aktuellen oder nächsten Ladevorgang. Im Gegensatz zu Zeit- und Energielimit ist das SoC-Limit ein absoluter Wert ("lade bis 80 %"), kein relativer (wie "lade eine Stunde" bzw. "lade 10 kWh").
+:::info[Beispiel]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST z.B. warp4-AbCd
+```
+#### Schreiben
+```bash
+curl http://$HOST/charge_limits/override_soc -d '{ "soc_pct": 80 }'
+```
+
+oder abgekürzt:
+
+```bash
+curl http://$HOST/charge_limits/override_soc -d '80'
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER z.B. my_mosquitto.localdomain
+# $PREFIX z.B. warp4/AbCd
+```
+#### Schreiben
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_soc -m '{ "soc_pct": 80 }'
+```
+
+oder abgekürzt:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_soc -m '80'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Beschreibung</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`soc_pct`<br/>int (<abbr title="Prozent">%</abbr>)</th>
+    <td>
+        SoC-Limit eines Ladevorgangs. Sobald der Ladezustand (SoC) des Fahrzeugs das Limit erreicht, wird der Ladevorgang gestoppt. 0 deaktiviert das SoC-Limit. Benötigt einen Fahrzeug-Stromzähler, der den Ladezustand misst.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
 ## `charge_limits/restart` {#charge_limits_restart_any}
 
 
@@ -2223,6 +2402,11 @@ export const toc = [
     "id": "charge_limits_override_energy",
     "level": 2,
     "hardwareType": ["warp1","warp2","warp3","warp4"]
+},{
+    "value": "charge_limits/override_soc",
+    "id": "charge_limits_override_soc",
+    "level": 2,
+    "hardwareType": ["warp4"]
 },{
     "value": "charge_limits/restart",
     "id": "charge_limits_restart",

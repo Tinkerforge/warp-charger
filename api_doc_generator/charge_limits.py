@@ -21,18 +21,21 @@ charge_limits = Module("charge_limits", T({'de': "Ladezeit- und -energielimits",
             "target_timestamp_ms": Elem.INT(T({'de': "Zielzeitstempel des aktuellen Ladevorgangs. 0 falls kein Ladevorgang läuft. Gleich dem Startzeitstempel, falls kein Zeitlimit gesetzt ist.", 'en': "Target timestamp of the current charging session. 0 if no charging session is running. Equal to the start timestamp if no time limit is set."}), unit=Units.ms),
             "start_energy_kwh": Elem.FLOAT(T({'de': "Startzählerwert des aktuellen Ladevorgangs. null falls kein Ladevorgang läuft, oder kein Stromzähler zur Verfügung steht.", 'en': "Start meter value of the current charging session. null if no charging session is running or no electricity meter is available."}), unit=Units.kWh),
             "target_energy_kwh": Elem.FLOAT(T({'de': "Zielzählerwert des aktuellen Ladevorgangs. null falls kein Ladevorgang läuft, oder kein Stromzähler zur Verfügung steht. Gleich dem Startzählerwert, falls kein Energiewert gesetzt ist.", 'en': "Target meter value of the current charging session. null if no charging session is running or no electricity meter is available. Equal to the start meter value if no energy value is set."}), unit=Units.kWh),
+            "target_soc_pct": Elem.INT(T({'de': "Ziel-Ladezustand (SoC) des Fahrzeugs für den aktuellen Ladevorgang. 0 falls kein SoC-Limit gesetzt ist.", 'en': "Target state of charge (SoC) of the vehicle for the current charging session. 0 if no SoC limit is set."}), unit=Units.percent, version=Version.WARP4),
         })
     ),
 
     Func("default_limits", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Konfiguration der Zeit- und Energielimits für Ladevorgänge.", 'en': "Configuration of time and energy limits for charging sessions."}), members={
             "duration": Elem.INT(T({'de': "Zeitlimit eines Ladevorgangs. Nach Ablaufen des Zeitlimits wird der Ladevorgang gestoppt.", 'en': "Time limit of a charging session. The charging session is stopped after the time limit expires."}), constants=DURATION_CONSTANTS),
             "energy_wh": Elem.INT(T({'de': "Energielimit eines Ladevorgangs. Nach Ablaufen des Energielimits wird der Ladevorgang gestoppt.", 'en': "Energy limit of a charging session. The charging session is stopped after the energy limit expires."}), unit=Units.Wh),
+            "soc_pct": Elem.INT(T({'de': "SoC-Limit eines Ladevorgangs. Sobald der Ladezustand (SoC) des Fahrzeugs das Limit erreicht, wird der Ladevorgang gestoppt. 0 deaktiviert das SoC-Limit. Benötigt einen Fahrzeug-Stromzähler, der den Ladezustand misst.", 'en': "SoC limit of a charging session. The charging session is stopped as soon as the vehicle's state of charge (SoC) reaches the limit. 0 disables the SoC limit. Requires a vehicle electricity meter that measures the state of charge."}), unit=Units.percent, version=Version.WARP4),
         })
     ),
 
     Func("active_limits", FuncType.STATE, Elem.OBJECT(T({'de': "Aktive Zeit- und Energielimits für den aktuellen oder nächsten Ladevorgang. Können über {{{ref:charge_limits/override_duration}}} und {{{ref:charge_limits/override_energy}}} aktualisiert werden.", 'en': "Active time and energy limits for the current or next charging session. Can be updated via {{{ref:charge_limits/override_duration}}} and {{{ref:charge_limits/override_energy}}}."}), members={
             "duration": Elem.INT(T({'de': "Zeitlimit eines Ladevorgangs. Nach Ablaufen des Zeitlimits wird der Ladevorgang gestoppt.", 'en': "Time limit of a charging session. The charging session is stopped after the time limit expires."}), constants=DURATION_CONSTANTS),
             "energy_wh": Elem.INT(T({'de': "Energielimit eines Ladevorgangs. Nach Ablaufen des Energielimits wird der Ladevorgang gestoppt.", 'en': "Energy limit of a charging session. The charging session is stopped after the energy limit expires."}), unit=Units.Wh),
+            "soc_pct": Elem.INT(T({'de': "SoC-Limit eines Ladevorgangs. Sobald der Ladezustand (SoC) des Fahrzeugs das Limit erreicht, wird der Ladevorgang gestoppt. 0 falls kein SoC-Limit gesetzt ist. Kann über {{{ref:charge_limits/override_soc}}} aktualisiert werden.", 'en': "SoC limit of a charging session. The charging session is stopped as soon as the vehicle's state of charge (SoC) reaches the limit. 0 if no SoC limit is set. Can be updated via {{{ref:charge_limits/override_soc}}}."}), unit=Units.percent, version=Version.WARP4),
         })
     ),
 
@@ -43,6 +46,11 @@ charge_limits = Module("charge_limits", T({'de': "Ladezeit- und -energielimits",
 
     Func("override_energy", FuncType.COMMAND, Elem.OBJECT(T({'de': "Überschreibt das Energielimit für den aktuellen oder nächsten Ladevorgang.", 'en': "Overrides the energy limit for the current or next charging session."}), members={
             "energy_wh": Elem.INT(T({'de': "Energielimit eines Ladevorgangs. Nach Ablaufen des Energielimits wird der Ladevorgang gestoppt.", 'en': "Energy limit of a charging session. The charging session is stopped after the energy limit expires."}), unit=Units.Wh),
+        })
+    ),
+
+    Func("override_soc", FuncType.COMMAND, Elem.OBJECT(T({'de': "Überschreibt das SoC-Limit für den aktuellen oder nächsten Ladevorgang. Im Gegensatz zu Zeit- und Energielimit ist das SoC-Limit ein absoluter Wert (\"lade bis 80 %\"), kein relativer (wie \"lade eine Stunde\" bzw. \"lade 10 kWh\").", 'en': "Overrides the SoC limit for the current or next charging session. In contrast to the time and energy limits, the SoC limit is an absolute value (\"charge to 80 %\"), not a relative one (such as \"charge for one hour\" or \"charge 10 kWh\")."}), version=Version.WARP4, members={
+            "soc_pct": Elem.INT(T({'de': "SoC-Limit eines Ladevorgangs. Sobald der Ladezustand (SoC) des Fahrzeugs das Limit erreicht, wird der Ladevorgang gestoppt. 0 deaktiviert das SoC-Limit. Benötigt einen Fahrzeug-Stromzähler, der den Ladezustand misst.", 'en': "SoC limit of a charging session. The charging session is stopped as soon as the vehicle's state of charge (SoC) reaches the limit. 0 disables the SoC limit. Requires a vehicle electricity meter that measures the state of charge."}), unit=Units.percent),
         })
     ),
 

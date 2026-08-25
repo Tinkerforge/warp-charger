@@ -1345,7 +1345,8 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/state
   "start_timestamp_ms": 786598059,
   "start_energy_kwh": 886.1900024,
   "target_timestamp_ms": 797398059,
-  "target_energy_kwh": 901.1900024
+  "target_energy_kwh": 901.1900024,
+  "target_soc_pct": 80
 }
 ```
 
@@ -1389,6 +1390,13 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/state
         Target meter value of the current charging session. null if no charging session is running or no electricity meter is available. Equal to the start meter value if no energy value is set.
     </td>
 </tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`target_soc_pct`<br/>int (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        <strong>(Only WARP 4)</strong> Target state of charge (SoC) of the vehicle for the current charging session. 0 if no SoC limit is set.
+    </td>
+</tr>
     </tbody>
 </table>
 
@@ -1409,14 +1417,14 @@ Configuration of time and energy limits for charging sessions.
 curl http://$HOST/charge_limits/default_limits
 ```
 ```jsx
-{ "duration": 8, "energy_wh": 50000 }
+{ "duration": 8, "energy_wh": 50000, "soc_pct": 80 }
 ```
 
 
 
 #### Write
 ```bash
-curl http://$HOST/charge_limits/default_limits -d '{ "duration": 8, "energy_wh": 50000 }'
+curl http://$HOST/charge_limits/default_limits -d '{ "duration": 8, "energy_wh": 50000, "soc_pct": 80 }'
 ```
 
 
@@ -1433,7 +1441,7 @@ curl http://$HOST/charge_limits/default_limits -d '{ "duration": 8, "energy_wh":
 mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/default_limits
 ```
 ```jsx
-{ "duration": 8, "energy_wh": 50000 }
+{ "duration": 8, "energy_wh": 50000, "soc_pct": 80 }
 ```
 
 
@@ -1443,7 +1451,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/default_limits
 
 
 ```bash
-mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/default_limits_update -m '{ "duration": 8, "energy_wh": 50000 }'
+mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/default_limits_update -m '{ "duration": 8, "energy_wh": 50000, "soc_pct": 80 }'
 ```
 
 
@@ -1484,6 +1492,13 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/default_limits_update -m '{ "d
     <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_wh`<br/>int (<abbr title="Watt-hour">Wh</abbr>)</th>
     <td>
         Energy limit of a charging session. The charging session is stopped after the energy limit expires.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`soc_pct`<br/>int (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        <strong>(Only WARP 4)</strong> SoC limit of a charging session. The charging session is stopped as soon as the vehicle's state of charge (SoC) reaches the limit. 0 disables the SoC limit. Requires a vehicle electricity meter that measures the state of charge.
     </td>
 </tr>
     </tbody>
@@ -1518,7 +1533,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/active_limits
     </Tabs>
 
 ```jsx
-{ "duration": 12, "energy_wh": 50000 }
+{ "duration": 12, "energy_wh": 50000, "soc_pct": 80 }
 ```
 
 
@@ -1556,6 +1571,13 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/active_limits
     <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_wh`<br/>int (<abbr title="Watt-hour">Wh</abbr>)</th>
     <td>
         Energy limit of a charging session. The charging session is stopped after the energy limit expires.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`soc_pct`<br/>int (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        <strong>(Only WARP 4)</strong> SoC limit of a charging session. The charging session is stopped as soon as the vehicle's state of charge (SoC) reaches the limit. 0 if no SoC limit is set. Can be updated via [`charge_limits/override_soc`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_soc).
     </td>
 </tr>
     </tbody>
@@ -1709,6 +1731,74 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_energy -m '25000'
 </table>
 
 <br/><br/><br/>
+## `charge_limits/override_soc` {#charge_limits_override_soc_warp4}
+
+
+Overrides the SoC limit for the current or next charging session. In contrast to the time and energy limits, the SoC limit is an absolute value ("charge to 80 %"), not a relative one (such as "charge for one hour" or "charge 10 kWh").
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+#### Write
+```bash
+curl http://$HOST/charge_limits/override_soc -d '{ "soc_pct": 80 }'
+```
+
+or abbreviated:
+
+```bash
+curl http://$HOST/charge_limits/override_soc -d '80'
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+#### Write
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_soc -m '{ "soc_pct": 80 }'
+```
+
+or abbreviated:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_soc -m '80'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`soc_pct`<br/>int (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        SoC limit of a charging session. The charging session is stopped as soon as the vehicle's state of charge (SoC) reaches the limit. 0 disables the SoC limit. Requires a vehicle electricity meter that measures the state of charge.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
 ## `charge_limits/restart` {#charge_limits_restart_warp4}
 
 
@@ -1829,6 +1919,13 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/state
         Target meter value of the current charging session. null if no charging session is running or no electricity meter is available. Equal to the start meter value if no energy value is set.
     </td>
 </tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`target_soc_pct`<br/>int (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        <strong>(Only WARP 4)</strong> Target state of charge (SoC) of the vehicle for the current charging session. 0 if no SoC limit is set.
+    </td>
+</tr>
     </tbody>
 </table>
 
@@ -1929,6 +2026,13 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/default_limits_update -m '{ "d
         Energy limit of a charging session. The charging session is stopped after the energy limit expires.
     </td>
 </tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`soc_pct`<br/>int (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        <strong>(Only WARP 4)</strong> SoC limit of a charging session. The charging session is stopped as soon as the vehicle's state of charge (SoC) reaches the limit. 0 disables the SoC limit. Requires a vehicle electricity meter that measures the state of charge.
+    </td>
+</tr>
     </tbody>
 </table>
 
@@ -2002,6 +2106,13 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/charge_limits/active_limits
     <th scope="row" style={{whiteSpace: "nowrap"}}>`energy_wh`<br/>int (<abbr title="Watt-hour">Wh</abbr>)</th>
     <td>
         Energy limit of a charging session. The charging session is stopped after the energy limit expires.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`soc_pct`<br/>int (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        <strong>(Only WARP 4)</strong> SoC limit of a charging session. The charging session is stopped as soon as the vehicle's state of charge (SoC) reaches the limit. 0 if no SoC limit is set. Can be updated via [`charge_limits/override_soc`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_soc).
     </td>
 </tr>
     </tbody>
@@ -2158,6 +2269,74 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_energy -m '25000'
 </table>
 
 <br/><br/><br/>
+## `charge_limits/override_soc` {#charge_limits_override_soc_any}
+
+<strong>(Only WARP 4)</strong> 
+Overrides the SoC limit for the current or next charging session. In contrast to the time and energy limits, the SoC limit is an absolute value ("charge to 80 %"), not a relative one (such as "charge for one hour" or "charge 10 kWh").
+:::info[Example]
+    <Tabs groupId="apiType" queryString className="hidden-tabs">
+        <TabItem value="http" label="HTTP (curl)">
+```bash
+# $HOST e.g. warp4-AbCd
+```
+#### Write
+```bash
+curl http://$HOST/charge_limits/override_soc -d '{ "soc_pct": 80 }'
+```
+
+or abbreviated:
+
+```bash
+curl http://$HOST/charge_limits/override_soc -d '80'
+```
+
+
+
+
+        </TabItem>
+        <TabItem value="mqtt" label="MQTT (mosquitto)">
+```bash
+# $BROKER e.g. my_mosquitto.localdomain
+# $PREFIX e.g. warp4/AbCd
+```
+#### Write
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_soc -m '{ "soc_pct": 80 }'
+```
+
+or abbreviated:
+
+```bash
+mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/override_soc -m '80'
+```
+
+
+
+
+        </TabItem>
+    </Tabs>
+:::
+
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`soc_pct`<br/>int (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        SoC limit of a charging session. The charging session is stopped as soon as the vehicle's state of charge (SoC) reaches the limit. 0 disables the SoC limit. Requires a vehicle electricity meter that measures the state of charge.
+    </td>
+</tr>
+    </tbody>
+</table>
+
+<br/><br/><br/>
 ## `charge_limits/restart` {#charge_limits_restart_any}
 
 
@@ -2223,6 +2402,11 @@ export const toc = [
     "id": "charge_limits_override_energy",
     "level": 2,
     "hardwareType": ["warp1","warp2","warp3","warp4"]
+},{
+    "value": "charge_limits/override_soc",
+    "id": "charge_limits_override_soc",
+    "level": 2,
+    "hardwareType": ["warp4"]
 },{
     "value": "charge_limits/restart",
     "id": "charge_limits_restart",
