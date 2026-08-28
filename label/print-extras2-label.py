@@ -8,7 +8,7 @@ import re
 import time
 import tinkerforge_util as tfutil  # sudo apt install python3-tinkerforge-util
 
-QR_CODE_COMMAND = b'W649,209,5,2,M,8,6,57,0\r'
+QR_CODE_COMMAND = b'W652,230,5,2,M,8,6,57,0\r'
 QR_CODE_PADDING = b';;\r'
 
 HEADER_PLACEHOLDER = 'WARP2 Extras für Bestellung SO/98765'.encode('utf-8')
