@@ -8,9 +8,9 @@ import time
 import tinkerforge_util as tfutil  # sudo apt install python3-tinkerforge-util
 
 ORDER_ID_PLACEHOLDER = b'SO/B1234567'
-CUSTOMER_NAME_1_PLACEHOLDER = b'Max Mustermann'
-CUSTOMER_NAME_2_PLACEHOLDER = b'Weiterer Name 1'
-CUSTOMER_NAME_3_PLACEHOLDER = b'Weiterer Name 2'
+CUSTOMER_NAME_1_PLACEHOLDER = b'Max Mustermann 1'
+CUSTOMER_NAME_2_PLACEHOLDER = b'Max Mustermann 2'
+CUSTOMER_NAME_3_PLACEHOLDER = b'Max Mustermann 3'
 
 COPIES_FORMAT = '^C{0}\r'
 
