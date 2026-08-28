@@ -207,7 +207,7 @@ def print_extras2_label(header, stand, stand_wiring, stand_lock, supply_cable, c
         sys.stdout.buffer.write(template)
         sys.stdout.buffer.flush()
     else:
-        with socket.create_connection((tfutil.get_tf_printer_host('warp-docket'), 9100)) as s:
+        with socket.create_connection((tfutil.get_tf_printer_host('warp-docket-paper'), 9100)) as s:
             s.send(template)
             time.sleep(1)
 

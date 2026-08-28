@@ -158,8 +158,8 @@ FULL_SKU_PLACEHOLDER = b'Typ: WARP2-CS-11KW-50-PC'
 
 BASE_SKU_PLACEHOLDER = b'WARP2-CS-11KW-50-PC'
 
-DATA_MATRIX_FORMAT_RECTANGLE = 'XRB97,190,5,1R,{}\r'
-DATA_MATRIX_FORMAT_SQUARE = 'XRB92,190,4,1,{}\r'
+DATA_MATRIX_FORMAT_RECTANGLE = 'XRB110,196,6,1R,{}\r'
+DATA_MATRIX_FORMAT_SQUARE = 'XRB116,196,5,1,{}\r'
 DATA_MATRIX_PLACEHOLDER = DATA_MATRIX_FORMAT_RECTANGLE.format(19).encode('ascii')
 
 VERSION_PLACEHOLDER = b'2.17'
@@ -432,7 +432,7 @@ def print_package2_label(full_sku, version, serial_number, build_date, custom_ty
         sys.stdout.buffer.write(data)
         sys.stdout.buffer.flush()
     else:
-        with socket.create_connection((tfutil.get_tf_printer_host('warp-docket'), 9100)) as s:
+        with socket.create_connection((tfutil.get_tf_printer_host('warp-docket-paper'), 9100)) as s:
             s.send(data)
             time.sleep(1)
 

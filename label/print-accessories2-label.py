@@ -11,7 +11,7 @@ HEADER_PLACEHOLDER = 'WARP2 Zubehör für Bestellung SO/98765'.encode('utf-8')
 ITEM_FORMAT = 'Artikel {}'
 ITEM_MAX_COUNT = 6
 
-DATA_MATRIX_FORMAT = 'XRB851,409,5,2,{}\r'
+DATA_MATRIX_FORMAT = 'XRB852,441,5,2,{}\r'
 DATA_MATRIX_PLACEHOLDER = DATA_MATRIX_FORMAT.format(17).encode('ascii')
 
 SKU_FORMAT = '{}\r'
@@ -116,7 +116,7 @@ def print_accessories2_label(header, items, copies, stdout):
         sys.stdout.buffer.write(template)
         sys.stdout.buffer.flush()
     else:
-        with socket.create_connection((tfutil.get_tf_printer_host('warp-docket'), 9100)) as s:
+        with socket.create_connection((tfutil.get_tf_printer_host('warp-docket-paper'), 9100)) as s:
             s.send(template)
             time.sleep(1)
 

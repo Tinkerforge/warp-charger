@@ -7,7 +7,7 @@ import socket
 import time
 import tinkerforge_util as tfutil  # sudo apt install python3-tinkerforge-util
 
-ORDER_ID_PLACEHOLDER = b'SO/B1234567'
+ORDER_ID_PLACEHOLDER = b'SO/98765'
 CUSTOMER_NAME_1_PLACEHOLDER = b'Max Mustermann 1'
 CUSTOMER_NAME_2_PLACEHOLDER = b'Max Mustermann 2'
 CUSTOMER_NAME_3_PLACEHOLDER = b'Max Mustermann 3'
@@ -38,7 +38,7 @@ def print_internal2_label(order_id, customer_name, copies, stdout):
     customer_name_words = []
 
     for word in customer_name.split(' '):
-        if len(' '.join(customer_name_words + [word])) > 18 and len(customer_name_words) > 0:
+        if len(' '.join(customer_name_words + [word])) > 32 and len(customer_name_words) > 0:
             customer_name_lines.append(' '.join(customer_name_words))
             customer_name_words = []
 
@@ -81,7 +81,7 @@ def print_internal2_label(order_id, customer_name, copies, stdout):
         sys.stdout.buffer.write(template)
         sys.stdout.buffer.flush()
     else:
-        with socket.create_connection((tfutil.get_tf_printer_host('warp-docket'), 9100)) as s:
+        with socket.create_connection((tfutil.get_tf_printer_host('warp-docket-paper'), 9100)) as s:
             s.send(template)
             time.sleep(1)
 
