@@ -12,6 +12,7 @@ day_ahead_prices = Module("day_ahead_prices", T({'de': "Dynamische Strompreise",
             Const(0, U("DE")),
             Const(1, U("AT")),
             Const(2, U("LU")),
+            Const(3, U("BE")),
         ]),
         "resolution":  Elem.INT(T({'de': "Zeitliche Auflösung der dynamischen Strompreise.", 'en': "Time resolution of the dynamic electricity prices."}), constants=[
             Const(0, T({'de': "15 Minuten", 'en': "15 minutes"})),
