@@ -11,6 +11,8 @@ ORDER_ID_PLACEHOLDER = b'SO/98765'
 INFO_1_PLACEHOLDER = b'Hinweis 1'
 INFO_2_PLACEHOLDER = b'Hinweis 2'
 INFO_3_PLACEHOLDER = b'Hinweis 3'
+INFO_4_PLACEHOLDER = b'Hinweis 4'
+INFO_5_PLACEHOLDER = b'Hinweis 5'
 
 COPIES_FORMAT = '^C{0}\r'
 
@@ -67,6 +69,18 @@ def print_internal2_label(order_id, info, copies, stdout):
         raise Exception('Info 3 placeholder missing in EZPL file')
 
     template = template.replace(INFO_3_PLACEHOLDER, info_lines[2].encode('latin1', errors='replace'))
+
+    # patch info 4
+    if template.find(INFO_4_PLACEHOLDER) < 0:
+        raise Exception('Info 4 placeholder missing in EZPL file')
+
+    template = template.replace(INFO_4_PLACEHOLDER, info_lines[3].encode('latin1', errors='replace'))
+
+    # patch info 5
+    if template.find(INFO_5_PLACEHOLDER) < 0:
+        raise Exception('Info 5 placeholder missing in EZPL file')
+
+    template = template.replace(INFO_5_PLACEHOLDER, info_lines[4].encode('latin1', errors='replace'))
 
     # patch copies
     copies_command = COPIES_FORMAT.format(1).encode('ascii')
