@@ -49,7 +49,7 @@ def print_internal2_label(order_id, info, copies, stdout):
     if len(info_words) > 0:
         info_lines.append(' '.join(info_words))
 
-    while len(info_lines) < 3:
+    while len(info_lines) < 5:
         info_lines.append('')
 
     # patch info 1
