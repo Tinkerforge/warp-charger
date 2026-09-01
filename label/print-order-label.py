@@ -15,7 +15,66 @@ CUSTOMER_NAME_3_PLACEHOLDER = b'Max Mustermann 3'
 COPIES_FORMAT = '^C{0}\r'
 
 
-def print_internal2_label(order_id, customer_name, copies, stdout):
+def get_char_width(c):
+    if (c >= 'A' and c <= 'Z') or c in ['Ä', 'Ö', 'Ü']:
+        if c == 'I':
+            return 1.5
+
+        if c == 'W':
+            return 5.5
+
+        return 3.75
+
+    if (c >= 'a' and c <= 'z') or c in ['ä', 'ö', 'ü']:
+        if c in ['i', 'j', 'l']:
+            return 1.0
+
+        if c in ['f', 't']:
+            return 1.5
+
+        if c in ['m', 'w']:
+            return 4.0
+
+        return 3.0
+
+    if c >= '0' and c <= '9':
+        return 3.0
+
+    if c in [' ', '-']:
+        return 2.0
+
+    return 3.5
+
+
+def get_text_width(text):
+    width = 0
+
+    for c in text:
+        width += get_char_width(c)
+
+    return width
+
+
+def split_text(text, max_width, min_lines):
+    lines = []
+    words = []
+
+    for word in text.split(' '):
+        if get_text_width(' '.join(words + [word])) > 65 and len(words) > 0:
+            lines.append(' '.join(words))
+            words = []
+
+        words.append(word)
+
+    if len(words) > 0:
+        lines.append(' '.join(words))
+
+    while len(lines) < min_lines:
+        lines.append('')
+
+    return lines
+
+def print_order_label(order_id, customer_name, copies, stdout):
     # check copies
     if copies < 1 or copies > 5:
         raise Exception('Invalid copies: {0}'.format(copies))
@@ -34,21 +93,7 @@ def print_internal2_label(order_id, customer_name, copies, stdout):
     template = template.replace(ORDER_ID_PLACEHOLDER, order_id.encode('latin1', errors='replace'))
 
     # split customer name
-    customer_name_lines = []
-    customer_name_words = []
-
-    for word in customer_name.split(' '):
-        if len(' '.join(customer_name_words + [word])) > 32 and len(customer_name_words) > 0:
-            customer_name_lines.append(' '.join(customer_name_words))
-            customer_name_words = []
-
-        customer_name_words.append(word)
-
-    if len(customer_name_words) > 0:
-        customer_name_lines.append(' '.join(customer_name_words))
-
-    while len(customer_name_lines) < 3:
-        customer_name_lines.append('')
+    customer_name_lines = split_text(customer_name, 68, 3)
 
     # patch customer name 1
     if template.find(CUSTOMER_NAME_1_PLACEHOLDER) < 0:
@@ -98,7 +143,7 @@ def main():
 
     assert args.copies > 0
 
-    print_internal2_label(args.order_id, args.customer_name, args.copies, args.stdout)
+    print_order_label(args.order_id, args.customer_name, args.copies, args.stdout)
 
 
 if __name__ == '__main__':
