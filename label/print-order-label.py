@@ -23,7 +23,7 @@ def get_char_width(c):
         if c == 'W':
             return 5.5
 
-        return 3.75
+        return 3.5
 
     if (c >= 'a' and c <= 'z') or c in ['ä', 'ö', 'ü']:
         if c in ['i', 'j', 'l']:
@@ -43,7 +43,10 @@ def get_char_width(c):
     if c in [' ', '-']:
         return 2.0
 
-    return 3.5
+    if c in [',', ';']:
+        return 1.0
+
+    return 3
 
 
 def get_text_width(text):
