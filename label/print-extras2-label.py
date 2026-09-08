@@ -37,7 +37,7 @@ STAND_LOCK_PLACEHOLDER_A = b'Schloss: Hier'
 STAND_LOCK_PLACEHOLDER_B = b'L:1;'
 
 SUPPLY_CABLE_PLACEHOLDER_A = b'Anschlusskabel: 123,4 m'
-SUPPLY_CABLE_PLACEHOLDER_B = b'E:123.4;'
+SUPPLY_CABLE_PLACEHOLDER_B = b'E:123.4_0;'
 
 CEE_PLACEHOLDER_A = b'CEE-Stecker: Jawohl'
 CEE_PLACEHOLDER_B = b'C:1;'
@@ -63,13 +63,18 @@ def print_extras2_label(header, stand, stand_wiring, stand_lock, supply_cable, c
     supply_cable_parts = supply_cable.split('_')
 
     if len(supply_cable_parts) == 1:
-        supply_cable = float(supply_cable)
+        supply_cable_length = float(supply_cable)
         supply_cable_suffix = ''
+        supply_cable_suffix_qr = ''
     else:
-        supply_cable = float(supply_cable_parts[0])
-        supply_cable_suffix = f' / {supply_cable_parts[1]} mm²'
+        if supply_cable_parts[1] not in ['6', '4']:
+            raise Exception('Invalid supply cable: {0}'.format(supply_cable))
 
-    if supply_cable < 0:
+        supply_cable_length = float(supply_cable_parts[0])
+        supply_cable_suffix = f' / {supply_cable_parts[1]} mm²'
+        supply_cable_suffix_qr = f'_{supply_cable_parts[1]}'
+
+    if supply_cable_length < 0:
         raise Exception('Invalid supply cable: {0}'.format(supply_cable))
 
     # read EZPL file
@@ -83,8 +88,8 @@ def print_extras2_label(header, stand, stand_wiring, stand_lock, supply_cable, c
     if template.find(QR_CODE_COMMAND) < 0:
         raise Exception('QR code command missing in EZPL file')
 
-    supply_cable_a = 'Anschlusskabel: {0} m{1}'.format(str(int(supply_cable) if int(supply_cable) == supply_cable else supply_cable).replace('.', ','), supply_cable_suffix)
-    supply_cable_b = 'E:{0};'.format(supply_cable)
+    supply_cable_a = 'Anschlusskabel: {0} m{1}'.format(str(int(supply_cable_length) if int(supply_cable_length) == supply_cable_length else supply_cable_length).replace('.', ','), supply_cable_suffix)
+    supply_cable_b = 'E:{0}{1};'.format(supply_cable_length, supply_cable_suffix_qr)
 
     offset = len(SUPPLY_CABLE_PLACEHOLDER_B) - len(supply_cable_b)
 
@@ -136,7 +141,7 @@ def print_extras2_label(header, stand, stand_wiring, stand_lock, supply_cable, c
     if template.find(SUPPLY_CABLE_PLACEHOLDER_A) < 0:
         raise Exception('Supply cable placeholder A missing in EZPL file')
 
-    template = template.replace(SUPPLY_CABLE_PLACEHOLDER_A, supply_cable_a.encode('latin1', errors='replace') if supply_cable > 0 else b'')
+    template = template.replace(SUPPLY_CABLE_PLACEHOLDER_A, supply_cable_a.encode('latin1', errors='replace') if supply_cable_length > 0 else b'')
 
     if template.find(SUPPLY_CABLE_PLACEHOLDER_B) < 0:
         raise Exception('Supply cable placeholder B missing in EZPL file')
