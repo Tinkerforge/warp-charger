@@ -67,12 +67,17 @@ def print_extras2_label(header, stand, stand_wiring, stand_lock, supply_cable, c
         supply_cable_suffix = ''
         supply_cable_suffix_qr = ''
     else:
-        if supply_cable_parts[1] not in ['6', '4']:
+        if supply_cable_parts[1] not in ['6', '4', '0']:
             raise Exception('Invalid supply cable: {0}'.format(supply_cable))
 
         supply_cable_length = float(supply_cable_parts[0])
-        supply_cable_suffix = f' / {supply_cable_parts[1]} mm²'
-        supply_cable_suffix_qr = f'_{supply_cable_parts[1]}'
+
+        if supply_cable_parts[1] != '0':
+            supply_cable_suffix = f' / {supply_cable_parts[1]} mm²'
+            supply_cable_suffix_qr = f'_{supply_cable_parts[1]}'
+        else:
+            supply_cable_suffix = ''
+            supply_cable_suffix_qr = ''
 
     if supply_cable_length < 0:
         raise Exception('Invalid supply cable: {0}'.format(supply_cable))
