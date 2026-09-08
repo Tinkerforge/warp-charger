@@ -60,6 +60,15 @@ def print_extras2_label(header, stand, stand_wiring, stand_lock, supply_cable, c
         raise Exception('Invalid copies: {0}'.format(copies))
 
     # check supply cable
+    supply_cable_parts = supply_cable.split('_')
+
+    if len(supply_cable_parts) == 1:
+        supply_cable = float(supply_cable)
+        supply_cable_suffix = ''
+    else:
+        supply_cable = float(supply_cable_parts[0])
+        supply_cable_suffix = f' / {supply_cable_parts[1]} mm²'
+
     if supply_cable < 0:
         raise Exception('Invalid supply cable: {0}'.format(supply_cable))
 
@@ -74,7 +83,7 @@ def print_extras2_label(header, stand, stand_wiring, stand_lock, supply_cable, c
     if template.find(QR_CODE_COMMAND) < 0:
         raise Exception('QR code command missing in EZPL file')
 
-    supply_cable_a = 'Anschlusskabel: {0} m'.format(str(int(supply_cable) if int(supply_cable) == supply_cable else supply_cable).replace('.', ','))
+    supply_cable_a = 'Anschlusskabel: {0} m{1}'.format(str(int(supply_cable) if int(supply_cable) == supply_cable else supply_cable).replace('.', ','), supply_cable_suffix)
     supply_cable_b = 'E:{0};'.format(supply_cable)
 
     offset = len(SUPPLY_CABLE_PLACEHOLDER_B) - len(supply_cable_b)
@@ -127,7 +136,7 @@ def print_extras2_label(header, stand, stand_wiring, stand_lock, supply_cable, c
     if template.find(SUPPLY_CABLE_PLACEHOLDER_A) < 0:
         raise Exception('Supply cable placeholder A missing in EZPL file')
 
-    template = template.replace(SUPPLY_CABLE_PLACEHOLDER_A, supply_cable_a.encode('ascii') if supply_cable > 0 else b'')
+    template = template.replace(SUPPLY_CABLE_PLACEHOLDER_A, supply_cable_a.encode('latin1', errors='replace') if supply_cable > 0 else b'')
 
     if template.find(SUPPLY_CABLE_PLACEHOLDER_B) < 0:
         raise Exception('Supply cable placeholder B missing in EZPL file')
@@ -219,7 +228,7 @@ def main():
     parser.add_argument('stand', choices=['0', '1', '2', '1-PC', '2-PC'])
     parser.add_argument('stand_wiring', choices=['0', '1', '2'])
     parser.add_argument('stand_lock', type=int, choices=[0, 1])
-    parser.add_argument('supply_cable', type=float)
+    parser.add_argument('supply_cable')
     parser.add_argument('cee', type=int, choices=[1, 0])
     parser.add_argument('custom_engraving')
     parser.add_argument('custom_type2')
