@@ -24,7 +24,7 @@ Software
 Libraries used by the firmware:
 
 - `tfjson`_ - SAX style JSON serializer and deserializer
-- `tfmodbustcp`_ - Modbus TCP server and client implementation
+- `tfnetwork`_ - Modbus TCP server and client implementation
 - `tfocpp`_ - OCPP 1.6 implementation
 - `tftools`_ - Miscellaneous tools and helpers
 
@@ -102,7 +102,7 @@ Forked/patched projects
 
 .. _esp32-firmware: https://github.com/Tinkerforge/esp32-firmware
 .. _tfjson: https://github.com/Tinkerforge/tfjson
-.. _tfmodbustcp: https://github.com/Tinkerforge/tfmodbustcp
+.. _tfnetwork: https://github.com/Tinkerforge/tfnetwork
 .. _tfocpp: https://github.com/Tinkerforge/tfocpp
 .. _tftools: https://github.com/Tinkerforge/tftools
 .. _esp32-remote-access: https://github.com/Tinkerforge/esp32-remote-access
