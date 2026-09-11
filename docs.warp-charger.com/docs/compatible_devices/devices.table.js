@@ -278,7 +278,7 @@ export const devices = [
   },
   {
     manufacturer: "Growatt",
-    device: "Growatt-TL-X(H) Hybrid-Wechselrichter",
+    device: "Hybrid-Wechselrichter",
     connection: "Modbus/TCP",
     link: "/docs/compatible_devices/devices#growatt",
     grid: "x",
