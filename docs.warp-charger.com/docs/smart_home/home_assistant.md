@@ -154,10 +154,3 @@ Zusätzlich werden pro konfiguriertem Zähler-Slot die folgenden Messwerte berei
 :::note
 Die Lokalisierung der Entitäten hängt von der Sprache des Webinterfaces des WARP Chargers/WARP Energy Managers ab.
 :::
-
-## Modbus/TCP
-:::note
-Coming soon...
-:::
-
-* [Modbus/TCP](/docs/interfaces/modbus/introduction)

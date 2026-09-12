@@ -154,10 +154,3 @@ Additionally, the following measured values are provided for each configured met
 :::note
 The localization of the entities depends on the language of the web interface of the WARP Charger/WARP Energy Manager.
 :::
-
-## Modbus/TCP
-:::note
-Coming soon...
-:::
-
-* [Modbus/TCP](/interfaces/modbus/introduction.md)
