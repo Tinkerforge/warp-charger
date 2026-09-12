@@ -49,24 +49,28 @@ Don't forget to save!
 
 The MQTT broker is configured in the MQTT settings according to the [Introduction](/interfaces/mqtt_http/introduction.md).
 
-For automatic integration into Home Assistant, we recommend activating the Discovery mode and setting it to "Home Assistant".
+For automatic integration into Home Assistant, set the Discovery mode to "Home Assistant/openHAB/Domoticz/FHEM".
 ![HA Autodiscovery](/img/smart_home/homeassistant/mqtt_discovery.png)
-By default, "homeassistant" is the topic on which Home Assistant listens for Discovery messages.
-The Discovery messages are sent every 15 minutes. It can therefore take up to fifteen minutes for the devices to appear in Home Assistant.
+The discovery topic prefix defaults to `homeassistant` and must match the Home Assistant configuration. It must differ from the MQTT API topic prefix.
+
+Discovery messages are sent when discovery starts and then every 15 minutes, and are retained by the broker. After each discovery round, the associated states are also resent so that Home Assistant evaluates the current values using the new sensor definitions.
 
 ### MQTT Sensor Values in Home Assistant via Autodiscovery
 
 Autodiscovery automatically adds various sensors and controls. Which ones are added depends on whether the device is a WARP Charger or WARP Energy Manager and which functions are activated (e.g. solar forecast).
 
-Autodiscovery will remove discovered elements again should they no longer be available.
+Autodiscovery removes automatically added entities if the corresponding function is disabled or the configured meter no longer supports the measured value. Disabling discovery or changing the discovery topic prefix deletes the previous discovery messages.
+
+When MQTT is configured for read-only access (`read_only`), controls are unavailable. To control the charging current limit, **External control** must also be enabled under **Charger → Settings**.
 
 #### Automatically Added Entities
 The following entities are provided via autodiscovery:
 
 | Name | Type | Description | Available when |
 |------|------|-------------|----------------|
-| Charge status | Sensor | Current charge status of the charger | EVSE present (WARP Charger) |
-| Current charge mode EVSE | Sensor | Shows the current charge mode of the EVSE as an enum | EVSE present (WARP Charger) |
+| Charge state | Sensor | Numeric charge state: 0 = Not connected, 1 = Waiting for release, 2 = Ready to charge, 3 = Charging, 4 = Error | EVSE present (WARP Charger) |
+| Charge state (text) | Sensor | The same charge state as localized text (enum) | EVSE present (WARP Charger) |
+| Current charge mode EVSE | Sensor | Charger mode as localized text, including Default mode | EVSE present (WARP Charger) |
 | Charging current limit | Number | Maximum charging current in A (0–32 A), controllable | EVSE present (WARP Charger) |
 | Allowed charging current | Sensor | Currently allowed charging current in A | EVSE present (WARP Charger) |
 | Start charging | Button | Starts the charging process | EVSE present (WARP Charger) |
@@ -78,28 +82,73 @@ The following entities are provided via autodiscovery:
 | Charger available | Binary Sensor | Indicates whether the charger is reachable | EVSE present (WARP Charger) |
 | Front button pressed | Binary Sensor | Indicates whether the front button is pressed | EVSE present (WARP Charger) |
 | Limited according to §14a EnWG | Sensor | Indicates whether a limitation according to §14a EnWG is active | §14a EnWG activated in the configuration |
-| Active charge mode | Select | Select charge mode (Fast, Off, PV, Min + PV), controllable | PV excess charging or dynamic load management activated |
-| Current charge mode | Sensor | Shows the currently active charge mode | PV excess charging or dynamic load management activated |
+| Active charge mode | Select | Select charge mode; offers only the currently supported modes (see below) | Charge management enabled and selectable charge modes available |
+| Current charge mode | Sensor | Active charge management mode as localized text | Charge management enabled |
 | Solar forecast tomorrow | Sensor | Forecasted PV yield for tomorrow in kWh | Solar forecast activated |
 | Solar forecast today | Sensor | Forecasted PV yield for today in kWh | Solar forecast activated |
 | Solar forecast from now | Sensor | Remaining forecasted PV yield for today in kWh | Solar forecast activated |
-| Spot market price | Sensor | Current spot market electricity price in ct/kWh | Dynamic electricity prices activated |
+| Electricity market price | Sensor | Current spot market electricity price in ct/kWh | Dynamic electricity prices activated |
 
-Additionally, for each configured meter slot (meter 0 to N), the following measured values are provided, provided the respective measured value is supported by the meter:
+The numeric **Charge state** sensor retains its original discovery ID `chargerstate`. The additional text sensor uses `chargerstate_text`.
+
+#### Charge Modes
+
+The **Active charge mode** selector follows the supported modes reported by charge management and matches the available modes in the web interface:
+
+| Enabled functions | Selectable charge modes |
+|-------------------|-------------------------|
+| Neither PV excess charging nor Eco | Fast, Off |
+| PV excess charging | Fast, Off, PV, Min + PV |
+| Eco | Fast, Off, Eco, Eco + Min |
+| PV excess charging and Eco | Fast, Off, PV, Eco + PV |
+
+Discovery is resent when the list of supported modes changes. The **Current charge mode** and **Current charge mode EVSE** sensors can additionally display **Min**, **Eco + Min + PV**, and **Default mode**. **Default mode** is not a selectable mode.
+
+#### Vehicle Data (WARP4)
+
+WARP4 additionally provides the following sensors:
 
 | Name | Description | Unit |
 |------|-------------|------|
-| Voltage (L1-N) | Voltage of phase L1 against neutral | V |
-| Voltage (L2-N) | Voltage of phase L2 against neutral | V |
-| Voltage (L3-N) | Voltage of phase L3 against neutral | V |
-| Current (consumption plus feed-in) (L1) | Current on phase L1 | A |
-| Current (consumption plus feed-in) (L2) | Current on phase L2 | A |
-| Current (consumption plus feed-in) (L3) | Current on phase L3 | A |
-| Active power (consumption minus feed-in) (Σ L1, L2, L3) | Total active power | W |
-| Active energy (consumption) (Σ L1, L2, L3; since last reset) | Consumed active energy since last reset | kWh |
-| Active energy (feed-in) (Σ L1, L2, L3; since last reset) | Fed-in active energy since last reset | kWh |
-| Power factor (Σ L1, L2, L3) | Power factor, sign indicates direction of current flow | - |
-| Frequency (⌀ L1, L2, L3) | Grid frequency | Hz |
+| Vehicle name | Name of the recognized vehicle | - |
+| Vehicle MAC Address | MAC address of the recognized vehicle | - |
+| Vehicle State of Charge | State of charge of the vehicle battery | % |
+| Vehicle Battery Capacity | Capacity of the vehicle battery | kWh |
+
+Vehicle sensors are only available when a vehicle MAC address has been detected. Missing state of charge or battery capacity values are shown as **unknown**. Vehicle name and MAC address are read-only sensors.
+
+#### Meter Values
+
+The legacy meter sensors retain their original discovery IDs when the device provides the corresponding meter features:
+
+| Name | Discovery ID | Description | Unit |
+|------|--------------|-------------|------|
+| Power draw | `powernow` | Current power from `meter/values` | W |
+| Energy consumption (absolute) | `energyabs` | Absolute energy reading from `meter/values` | kWh |
+| Energy consumption (relative) | `energyrel` | Energy reading since the last reset from `meter/values` | kWh |
+| Current L1 / L2 / L3 | `current_l1` / `current_l2` / `current_l3` | Phase currents from `meter/all_values`, if available | A |
+
+Additionally, the following measured values are provided for each configured meter slot if supported by that meter. Entity names include the configured meter name. The value ID identifies the measurement in the meter API:
+
+| Name | Value ID | Description | Unit |
+|------|----------|-------------|------|
+| Voltage (L1-N / L2-N / L3-N) | 1 / 2 / 3 | Voltage of each phase against neutral | V |
+| Current (draw minus feed) (L1 / L2 / L3) | 14 / 18 / 22 | Signed current per phase | A |
+| Active power (draw minus feed) (Σ L1, L2, L3) | 74 | Total active power | W |
+| Active energy (draw) (Σ L1, L2, L3; since manufacturing) | 209 | Absolute imported active energy reading | kWh |
+| Active energy (feed) (Σ L1, L2, L3; since manufacturing) | 211 | Absolute exported active energy reading | kWh |
+| DC voltage | 10 | DC voltage | V |
+| DC current | 35 | DC current | A |
+| DC power | 160 | DC power | W |
+| DC energy (draw) (since manufacturing) | 405 | Absolute DC energy import | kWh |
+| DC energy (feed) (since manufacturing) | 407 | Absolute DC energy export | kWh |
+| DC voltage (⌀ PV) | 430 | Average PV DC voltage | V |
+| DC current (feed) (Σ PV) | 441 | Total PV DC current | A |
+| DC power (draw minus feed) (Σ PV) | 453 | Total PV DC power | W |
+| DC energy (feed) (Σ PV; since manufacturing) | 472 | Absolute PV energy yield | kWh |
+| State of charge | 387 | Battery state of charge | % |
+| Capacity | 475 | Battery capacity | kWh |
+| Frequency (⌀ L1, L2, L3) | 364 | Grid frequency | Hz |
 
 
 :::note
@@ -112,4 +161,3 @@ Coming soon...
 :::
 
 * [Modbus/TCP](/interfaces/modbus/introduction.md)
-

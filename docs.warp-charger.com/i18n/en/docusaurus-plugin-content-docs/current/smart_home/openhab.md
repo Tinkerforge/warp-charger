@@ -33,17 +33,15 @@ It is also important that discovery is enabled in the advanced settings.
 
 The WARP Charger/WARP Energy Manager is configured as described in [MQTT/HTTP API](/interfaces/mqtt_http/introduction.md). 
 The address of the configured MQTT broker is entered as the broker hostname. 
-The discovery mode is set to "Home Assistant" and the topic prefix to "homeassistant".
+Set the discovery mode to "Home Assistant/openHAB/Domoticz/FHEM" and the discovery topic prefix to `homeassistant`. The discovery topic prefix must differ from the MQTT API topic prefix. The former generic mode is no longer needed; existing configurations are automatically migrated.
 
 ## Integration in OpenHAB
 
-After both sides are configured, the WARP device should appear in *Settings &rarr; Things &rarr; Inbox*. This can take up to fifteen minutes.
-To force a quick discovery, you can first restart the WARP device and, if that doesn't help, the OpenHAB server. 
+After both sides are configured, the WARP device should appear in *Settings &rarr; Things &rarr; Inbox*. Discovery messages are sent when discovery starts and then every 15 minutes, and are retained by the broker. Changes to discovery settings take effect without a restart. After each discovery round, the associated states are also resent.
 
 The discovered devices are added from the Inbox as a Thing.
 
 Finally, we add the devices to the Model: *Settings &rarr; Model*. 
 Select *Create Equipment from Thing* and choose the WARP device.
 
-The description of the data points and under what circumstances they are available can be found in the [Home Assistant documentation](/smart_home/home_assistant.md#mqtt-sensorwerte-in-home-assistant-via-autodiscovery).
-
+The description of the data points and under what circumstances they are available can be found in the [Home Assistant documentation](/smart_home/home_assistant.md#mqtt-sensor-values-in-home-assistant-via-autodiscovery).

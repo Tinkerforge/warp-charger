@@ -17,10 +17,12 @@ For the charger to communicate via MQTT, the connection to the MQTT broker must 
 - **Broker username and password** Some brokers support authentication with username and password.
 - **Topic prefix** This prefix is prepended to all topics used by the charger. The default is `warp/AbCd`, `warp2/AbCd`, `warp3/AbCd` or `wem/AbCd` where `AbCd` is a unique identifier per charger, but other prefixes such as garage_left are possible. If multiple chargers communicate with the same broker, unique prefixes must be chosen per box.
 - **Client ID** The charger registers with the broker using this ID.
-- **Discovery mode** If a home automation system is connected to the broker, data points can be added automatically with this. A list of the data points can be found [here](/smart_home/home_assistant.md#mqtt-sensor-values-in-home-assistant-via-autodiscovery).
-  - **Discovery topic prefix** The home automation system searches for data points under this topic.
+- **Discovery mode** "Home Assistant/openHAB/Domoticz/FHEM" automatically adds sensors and controls to the home automation system. The former generic mode is automatically migrated to this mode. A list of the data points can be found [here](/smart_home/home_assistant.md#mqtt-sensor-values-in-home-assistant-via-autodiscovery).
+  - **Discovery topic prefix** The home automation system searches for data points under this prefix. The default is `homeassistant`. This prefix must differ from the MQTT API topic prefix.
 
 After the configuration is set and the "MQTT enabled" switch is set, the configuration can be saved. The ESP then restarts and connects to the broker. The status page shows whether the connection could be established.
+
+Changes only to the discovery mode or discovery topic prefix take effect without a restart. Discovery messages are sent when discovery starts and then every 15 minutes. The associated states are republished afterwards. Disabling discovery or changing its prefix deletes the previous discovery messages.
 
 ![MQTT settings page](/img/mqtt/mqtt_ui.png)
 

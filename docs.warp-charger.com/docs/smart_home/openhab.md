@@ -33,16 +33,15 @@ Wichtig ist auch, dass in den erweiterten Einstellungen die Discovery aktiviert 
 
 Der WARP Charger/WARP Energy Manager wird wie in [MQTT/HTTP API](/docs/interfaces/mqtt_http/introduction) beschrieben konfiguriert. 
 Als Broker-Hostname wird die Adresse des eingerichteten MQTT-Brokers eingetragen. 
-Der Discovery-Modus wird auf "Home Assistant" gesetzt und das Topic-Präfix auf "homeassistant".
+Der Discovery-Modus wird auf "Home Assistant/openHAB/Domoticz/FHEM" gesetzt und das Discovery-Topic-Präfix auf `homeassistant`. Das Discovery-Topic-Präfix muss sich vom Topic-Präfix der MQTT-API unterscheiden. Der frühere generische Modus wird nicht mehr benötigt; bestehende Konfigurationen werden automatisch umgestellt.
 
 ## Integration in OpenHAB
 
-Nachdem beide Seiten konfiguriert sind, sollte das WARP Gerät in *Settings &rarr; Things &rarr; Inbox* auftauchen. Das kann bis zu einer Viertelstunde dauern.
-Um eine schnelle Discovery zu erzwingen, kann man zuerst das WARP Gerät neu starten und, sollte das nicht geholfen haben, den OpenHAB Server. 
+Nachdem beide Seiten konfiguriert sind, sollte das WARP Gerät in *Settings &rarr; Things &rarr; Inbox* auftauchen. Discovery-Nachrichten werden beim Start der Discovery und danach alle 15 Minuten gesendet und vom Broker gespeichert (Retain). Änderungen an den Discovery-Einstellungen werden ohne Neustart übernommen. Nach jeder Discovery-Runde werden auch die zugehörigen Zustände erneut gesendet.
 
 Die entdeckten Geräte werden aus der Inbox als Thing hinzugefügt.
 
 Zuletzt fügen wir die Geräte zum Model hinzu: *Settings &rarr; Model*. 
 Wähle *Create Equipment from Thing* und wähle das WARP Gerät aus.
 
-Die Beschreibung der Datenpunkte und unter welchen Umständen diese vorhanden sind, findet man in der [Home Assistant Dokumentation](/docs/smart_home/home_assistant#mqtt-sensorwerte-in-home-assistant-via-autodiscovery). 
+Die Beschreibung der Datenpunkte und unter welchen Umständen diese vorhanden sind, findet man in der [Home Assistant Dokumentation](/docs/smart_home/home_assistant#mqtt-sensorwerte-in-home-assistant-via-autodiscovery).

@@ -17,10 +17,12 @@ Damit die Wallbox über MQTT kommuniziert, muss zunächst im Webinterface die Ve
 - **Broker-Benutzername und Passwort** Manche Broker unterstützen eine Authentifizierung mit Benutzername und Passwort.
 - **Topic-Präfix** Dieser Präfix wird allen Topics vorangestellt, die die Wallbox verwendet. Voreingestellt ist `warp/AbCd`, `warp2/AbCd`, `warp3/AbCd` bzw. `wem/AbCd` wobei `AbCd` eine eindeutige Kennung pro Wallbox ist, es sind aber andere Präfixe wie z.B. garage_links möglich. Falls mehrere Wallboxen mit dem selben Broker kommunizieren müssen eindeutige Präfixe pro Box gewählt werden.
 - **Client-ID** Mit dieser ID registriert sich die Wallbox beim Broker.
-- **Discovery-Modus** Wenn eine Hausautomatisierung mit dem Broker verbunden ist. können hiermit automatisch Datenpunkte hinzugefügt werden. Eine Liste der Datenpunkte ist [hier](/docs/smart_home/home_assistant#mqtt-sensorwerte-in-home-assistant-via-autodiscovery) zu finden.
-  - **Discovery-Topic-Präfix** Unter diesem Topic sucht die Hausautomatisierung nach Datenpunkten.
+- **Discovery-Modus** Mit "Home Assistant/openHAB/Domoticz/FHEM" werden Sensoren und Steuerelemente automatisch zur Hausautomatisierung hinzugefügt. Der frühere generische Modus wird automatisch auf diesen Modus umgestellt. Eine Liste der Datenpunkte ist [hier](/docs/smart_home/home_assistant#mqtt-sensorwerte-in-home-assistant-via-autodiscovery) zu finden.
+  - **Discovery-Topic-Präfix** Unter diesem Präfix sucht die Hausautomatisierung nach Datenpunkten. Standard ist `homeassistant`. Das Präfix muss sich vom Topic-Präfix der MQTT-API unterscheiden.
 
 Nachdem die Konfiguration gesetzt und der "MQTT aktiviert"-Schalter gesetzt ist, kann die Konfiguration gespeichert werden. Der ESP startet dann neu und verbindet sich zum Broker. Auf der Status-Seite wird angezeigt, ob die Verbindung aufgebaut werden konnte.
+
+Änderungen ausschließlich am Discovery-Modus oder Discovery-Topic-Präfix werden ohne Neustart übernommen. Discovery-Nachrichten werden beim Start der Discovery und danach alle 15 Minuten gesendet. Anschließend werden die zugehörigen Zustände erneut veröffentlicht. Beim Deaktivieren der Discovery oder Ändern ihres Präfixes werden die bisherigen Discovery-Nachrichten gelöscht.
 
 ![MQTT-Einstellungsseite](/img/mqtt/mqtt_ui.png)
 

@@ -52,13 +52,13 @@ mqtt = Module("mqtt", T({'de': "MQTT-Verbindung", 'en': "MQTT Connection"}), "",
         })
     ),
 
-    Func("auto_discovery_config", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Die Konfiguration der MQTT Auto Discovery.", 'en': "The MQTT auto discovery configuration."}), version=Version.WARPX, members={
-            "auto_discovery_mode": Elem.INT(T({'de': "Gibt an ob eine MQTT-Verbindung zum konfigurierten Broker aufgebaut werden soll.", 'en': "Indicates whether an MQTT connection to the configured broker should be established."}), constants=[
+    Func("auto_discovery_config", FuncType.CONFIGURATION, Elem.OBJECT(T({'de': "Die Konfiguration der MQTT Auto Discovery. Änderungen werden ohne Neustart übernommen. Beim Deaktivieren oder Ändern des Discovery-Präfixes werden die bisherigen Discovery-Nachrichten gelöscht.", 'en': "The MQTT auto discovery configuration. Changes take effect without a restart. Disabling discovery or changing the discovery prefix deletes the previous discovery messages."}), version=Version.WARPX, members={
+            "auto_discovery_mode": Elem.INT(T({'de': "Gibt an, ob und mit welchem Modus Sensoren und Steuerelemente automatisch zur Hausautomatisierung hinzugefügt werden.", 'en': "Determines whether and in which mode sensors and controls are automatically added to the home automation system."}), constants=[
                 Const(0, T({'de': "Auto Discovery deaktiviert", 'en': "Auto discovery disabled"})),
-                Const(1, T({'de': "Auto Discovery im generischen Modus; Kompatibel zu z.B. openHAB und Domoticz", 'en': "Auto discovery in generic mode; Compatible with e.g. openHAB and Domoticz"})),
-                Const(2, T({'de': "Auto Discovery im Home-Assistant-Modus", 'en': "Auto discovery in Home Assistant mode"}))
+                Const(1, T({'de': "Früherer generischer Modus. Wird weiterhin akzeptiert und automatisch auf 2 (Home-Assistant-Modus) umgestellt", 'en': "Former generic mode. Still accepted and automatically converted to 2 (Home Assistant mode)"})),
+                Const(2, T({'de': "Auto Discovery im Home-Assistant-Modus. Auch für openHAB, Domoticz und FHEM geeignet", 'en': "Auto discovery in Home Assistant mode. Also used for openHAB, Domoticz and FHEM"}))
             ]),
-            "auto_discovery_prefix": Elem.STRING(T({'de': "Präfix auf den die für Auto Discovery verwendeten Informationen gesendet werden. Typischerweise homeassistent", 'en': "Prefix to which the information used for auto discovery is sent. Typically homeassistant"}))
+            "auto_discovery_prefix": Elem.STRING(T({'de': "Präfix, unter dem die Discovery-Nachrichten veröffentlicht werden. Standard ist homeassistant. Muss sich vom Topic-Präfix der MQTT-API (global_topic_prefix) unterscheiden.", 'en': "Prefix under which discovery messages are published. Defaults to homeassistant. Must differ from the MQTT API topic prefix (global_topic_prefix)."}))
         })
     )
 ])

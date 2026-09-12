@@ -334,7 +334,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
 ## `mqtt/auto_discovery_config` {#mqtt_auto_discovery_config_warp1}
 
 
-The MQTT auto discovery configuration.
+The MQTT auto discovery configuration. Changes take effect without a restart. Disabling discovery or changing the discovery prefix deletes the previous discovery messages.
 :::info[Example]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -403,17 +403,17 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/auto_discovery_config_update -m '{ "aut
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`auto_discovery_mode`<br/>int</th>
     <td>
-        Indicates whether an MQTT connection to the configured broker should be established.
+        Determines whether and in which mode sensors and controls are automatically added to the home automation system.
         - **0** - Auto discovery disabled
-        - **1** - Auto discovery in generic mode; Compatible with e.g. openHAB and Domoticz
-        - **2** - Auto discovery in Home Assistant mode
+        - **1** - Former generic mode; still accepted and automatically converted to 2 (Home Assistant mode)
+        - **2** - Auto discovery in Home Assistant mode; also used for openHAB, Domoticz and FHEM
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`auto_discovery_prefix`<br/>string</th>
     <td>
-        Prefix to which the information used for auto discovery is sent. Typically homeassistant
+        Prefix under which discovery messages are published. Defaults to homeassistant. Must differ from the MQTT API topic prefix (global_topic_prefix).
     </td>
 </tr>
     </tbody>
@@ -745,7 +745,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
 ## `mqtt/auto_discovery_config` {#mqtt_auto_discovery_config_warp2}
 
 
-The MQTT auto discovery configuration.
+The MQTT auto discovery configuration. Changes take effect without a restart. Disabling discovery or changing the discovery prefix deletes the previous discovery messages.
 :::info[Example]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -814,17 +814,17 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/auto_discovery_config_update -m '{ "aut
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`auto_discovery_mode`<br/>int</th>
     <td>
-        Indicates whether an MQTT connection to the configured broker should be established.
+        Determines whether and in which mode sensors and controls are automatically added to the home automation system.
         - **0** - Auto discovery disabled
-        - **1** - Auto discovery in generic mode; Compatible with e.g. openHAB and Domoticz
-        - **2** - Auto discovery in Home Assistant mode
+        - **1** - Former generic mode; still accepted and automatically converted to 2 (Home Assistant mode)
+        - **2** - Auto discovery in Home Assistant mode; also used for openHAB, Domoticz and FHEM
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`auto_discovery_prefix`<br/>string</th>
     <td>
-        Prefix to which the information used for auto discovery is sent. Typically homeassistant
+        Prefix under which discovery messages are published. Defaults to homeassistant. Must differ from the MQTT API topic prefix (global_topic_prefix).
     </td>
 </tr>
     </tbody>
@@ -1156,7 +1156,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
 ## `mqtt/auto_discovery_config` {#mqtt_auto_discovery_config_warp3}
 
 
-The MQTT auto discovery configuration.
+The MQTT auto discovery configuration. Changes take effect without a restart. Disabling discovery or changing the discovery prefix deletes the previous discovery messages.
 :::info[Example]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -1225,17 +1225,17 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/auto_discovery_config_update -m '{ "aut
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`auto_discovery_mode`<br/>int</th>
     <td>
-        Indicates whether an MQTT connection to the configured broker should be established.
+        Determines whether and in which mode sensors and controls are automatically added to the home automation system.
         - **0** - Auto discovery disabled
-        - **1** - Auto discovery in generic mode; Compatible with e.g. openHAB and Domoticz
-        - **2** - Auto discovery in Home Assistant mode
+        - **1** - Former generic mode; still accepted and automatically converted to 2 (Home Assistant mode)
+        - **2** - Auto discovery in Home Assistant mode; also used for openHAB, Domoticz and FHEM
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`auto_discovery_prefix`<br/>string</th>
     <td>
-        Prefix to which the information used for auto discovery is sent. Typically homeassistant
+        Prefix under which discovery messages are published. Defaults to homeassistant. Must differ from the MQTT API topic prefix (global_topic_prefix).
     </td>
 </tr>
     </tbody>
@@ -1459,7 +1459,7 @@ The MQTT configuration.
 ## `mqtt/auto_discovery_config` {#mqtt_auto_discovery_config_warp4}
 
 
-The MQTT auto discovery configuration.
+The MQTT auto discovery configuration. Changes take effect without a restart. Disabling discovery or changing the discovery prefix deletes the previous discovery messages.
 :::info[Example]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -1528,17 +1528,17 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/auto_discovery_config_update -m '{ "aut
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`auto_discovery_mode`<br/>int</th>
     <td>
-        Indicates whether an MQTT connection to the configured broker should be established.
+        Determines whether and in which mode sensors and controls are automatically added to the home automation system.
         - **0** - Auto discovery disabled
-        - **1** - Auto discovery in generic mode; Compatible with e.g. openHAB and Domoticz
-        - **2** - Auto discovery in Home Assistant mode
+        - **1** - Former generic mode; still accepted and automatically converted to 2 (Home Assistant mode)
+        - **2** - Auto discovery in Home Assistant mode; also used for openHAB, Domoticz and FHEM
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`auto_discovery_prefix`<br/>string</th>
     <td>
-        Prefix to which the information used for auto discovery is sent. Typically homeassistant
+        Prefix under which discovery messages are published. Defaults to homeassistant. Must differ from the MQTT API topic prefix (global_topic_prefix).
     </td>
 </tr>
     </tbody>
@@ -2425,7 +2425,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/config_update -m '{
 ## `mqtt/auto_discovery_config` {#mqtt_auto_discovery_config_any}
 
 **Benötigt das Feature <a href="#features_evse"><code>"evse"</code></a>**
-The MQTT auto discovery configuration.
+The MQTT auto discovery configuration. Changes take effect without a restart. Disabling discovery or changing the discovery prefix deletes the previous discovery messages.
 :::info[Example]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -2494,20 +2494,20 @@ mosquitto_pub -h $BROKER -t $PREFIX/mqtt/auto_discovery_config_update -m '{ "aut
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`auto_discovery_mode`<br/>int</th>
     <td>
-        Indicates whether an MQTT connection to the configured broker should be established.
+        Determines whether and in which mode sensors and controls are automatically added to the home automation system.
         
         
         
         - **0** - Auto discovery disabled
-        - **1** - Auto discovery in generic mode; Compatible with e.g. openHAB and Domoticz
-        - **2** - Auto discovery in Home Assistant mode
+        - **1** - Former generic mode; still accepted and automatically converted to 2 (Home Assistant mode)
+        - **2** - Auto discovery in Home Assistant mode; also used for openHAB, Domoticz and FHEM
     </td>
 </tr>
 
 <tr>
     <th scope="row" style={{whiteSpace: "nowrap"}}>`auto_discovery_prefix`<br/>string</th>
     <td>
-        Prefix to which the information used for auto discovery is sent. Typically homeassistant
+        Prefix under which discovery messages are published. Defaults to homeassistant. Must differ from the MQTT API topic prefix (global_topic_prefix).
     </td>
 </tr>
     </tbody>
