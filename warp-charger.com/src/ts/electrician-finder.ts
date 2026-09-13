@@ -6,7 +6,7 @@
 
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./electrician-finder.css";
-import maplibregl from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
 import type {
     GeoJSONSource,
     Map as MlMap,
@@ -342,6 +342,9 @@ function init(): void {
 
     // --- Create the map (gracefully degrade to the list if WebGL is missing) ---
 
+    // MapLibre 6 ships a separate module worker. Its import.meta.url-based
+    // default cannot resolve inside our IIFE bundle, so use the built asset.
+    maplibregl.setWorkerUrl(mapEl.dataset.workerUrl!);
     maplibregl.addProtocol("pmtiles", new Protocol().tile);
 
     const featureCollection: FeatureCollection<Point> = {

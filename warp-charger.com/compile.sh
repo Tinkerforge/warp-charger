@@ -28,8 +28,8 @@ npx esbuild src/ts/index.ts --bundle --outfile=static/js/output.min.js --format=
 echo "Done: static/js/output.min.js"
 
 echo "Compiling electrician-finder bundle..."
-npx esbuild src/ts/electrician-finder.ts --bundle --outfile=static/js/finder.min.js --format=iife --minify
-echo "Done: static/js/finder.min.js (+ finder.min.css)"
+npm run build:finder
+echo "Done: static/js/finder.min.js (+ finder.min.css and maplibre-worker.min.js)"
 
 # Self-hosted basemap tiles for the electrician finder.
 # Large: Only build when missing; refresh manually with ./build_tiles.sh.
