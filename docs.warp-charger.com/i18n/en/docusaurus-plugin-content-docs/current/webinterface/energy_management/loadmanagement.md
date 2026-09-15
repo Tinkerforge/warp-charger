@@ -36,3 +36,8 @@ The following settings are then necessary for dynamic load management:
 * **Power consumption of the largest single consumer**: Expected power consumption of the largest consumer. This could be, for example, an instantaneous water heater or a heat pump, but at minimum 16 amperes from a Schuko socket. The value represents the largest expected
 sudden jump in power consumption at the meter that the dynamic load management must be able to compensate for in the short term (in under 30 seconds).
 * **Additional safety margin**: Additional percentage safety margin that is factored in by dynamic load management.
+
+## Energy Meter Data Requirements
+
+For dynamic load management to work correctly, the charger must continuously receive new data from the selected energy meter. The meter should provide updated readings at least every two seconds, ideally every second.
+If the meter does not provide any readings for approximately one minute, all active charging processes are stopped.

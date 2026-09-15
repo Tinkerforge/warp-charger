@@ -32,3 +32,8 @@ For this, the following settings must be configured:
  * **Energy meter**: The energy meter assigned to the battery storage
  * **Storage priority**: Here you can configure whether chargers or storage are prioritized higher.
  * **Grid consumption and feed-in tolerance**: The control target value for regulation.
+
+## Energy Meter Requirements
+
+For PV excess charging to work correctly, the charger must continuously receive new data from the selected energy meter. The meter should provide updated readings at least every two seconds, ideally every second.
+If the meter does not provide any readings for approximately two minutes, the charging power is reduced to the minimum. After another four minutes, active PV charging processes are stopped.

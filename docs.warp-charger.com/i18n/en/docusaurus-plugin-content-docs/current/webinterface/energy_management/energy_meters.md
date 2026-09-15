@@ -9,8 +9,8 @@ import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 <DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
 ![image](/img/webinterface/energy_management/wem2-energy_meters.jpeg)
 
-On this page, communication with energy meters can be configured. Since the WARP3 Charger Pro has a built-in energy meter,
-this is preconfigured for all WARP3 Chargers Pro. For the WARP3 Charger Smart, this meter can be removed.
+On this page, communication with energy meters can be configured. Since the WARP Charger Pro has a built-in energy meter,
+this is preconfigured for all WARP Chargers Pro. For the WARP Charger Smart, this meter can be removed.
 
 The graph displays the measured power of all configured energy meters, either as a progression over
 the last 48 hours or as a live view. The view of each meter can be expanded to show additional statistics

@@ -29,13 +29,13 @@ the API, e.g. for external NFC authorization.
 
 ## Boost Mode
 
-The charging electronics of some vehicles interpret a charging current prescribed by the WARP3 Charger too low.
+The charging electronics of some vehicles interpret a charging current prescribed by the WARP Charger too low.
 Boost mode attempts to compensate for this effect by communicating a slightly higher charging current.
 
 
 ## Meter Monitoring
 
-An energy meter is installed in the WARP3 Charger Pro. When this option is enabled, a charging process is interrupted
+An energy meter is installed in the WARP Charger Pro. When this option is enabled, a charging process is interrupted
 or not released if the energy meter or communication with it appears to be faulty. When
 meter monitoring is enabled, it is thus ensured that the charged energy is recorded for every logged charging process.
 
@@ -47,12 +47,12 @@ next or current charging process on the status page.
 
 ## Energy Limit
 
-Sets a general energy limit for charging processes on the WARP3 Charger Pro. This function
+Sets a general energy limit for charging processes on the WARP Charger Pro. This function
 is configured analogously to the time limit.
 
 ## Button Setting
 
-This configures the function of the button on the front of the WARP3 Charger. In semi-public spaces,
+This configures the function of the button on the front of the WARP Charger. In semi-public spaces,
 for example, it may be useful to prohibit stopping charging via button.
 
 If the button setting is set to "Request charge mode", the button can be used to switch the charge mode of the charger.
@@ -61,7 +61,7 @@ The colors and blink codes vary between charger versions and configured modes.
 
 :::note
 
-For a WARP3 Charger with configured Eco mode without a configured PV mode, the "?" provides the following descriptive text:
+For a WARP3/WARP4 Charger with configured Eco mode without a configured PV mode, the "?" provides the following descriptive text:
 
 On the first button press, the current charge mode is displayed. Further presses within 10 seconds switch the charge mode for the next or current charging process.
  * Red: Off
@@ -96,7 +96,7 @@ This function only affects charge management, as unused phases can be detected a
 
 :::
 
-This option is only available for the WARP3 Charger Pro. If
+This option is only available for the WARP3/WARP4 Charger Pro. If
 the option is enabled, during an ongoing charging process the internal energy meter determines whether the
 vehicle is only charging single-phase. If this is the case, the charger automatically switches to single-phase charging.
 

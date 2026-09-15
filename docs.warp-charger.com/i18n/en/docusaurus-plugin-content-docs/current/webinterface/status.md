@@ -49,9 +49,16 @@ The status page also displays information about charge management if enabled.
 Additionally, information about the interfaces is provided, including IP addresses, WiFi connection strength, etc.
 
 ### More Examples
-Examples with eco charging mode and activated charging schedule in charge management with multiple chargers.
-![image](/img/webinterface/status/warp3-status2.jpeg)
+Example with eco charging mode and activated charging schedule in charge management with multiple chargers.
 ![image](/img/webinterface/status/warp3-status3.jpeg)
+The **charging mode** section and its buttons can be used to permanently set
+the charging mode for all controlled chargers.
+Which charging modes are offered depends on whether the WARP Charger has been configured for
+PV excess charging and whether eco mode has been enabled.
+
+The **controlled chargers** section shows the chargers managed by the WARP Charger
+and their status. The charging mode of each charger can also be set individually using its
+front button or the drop-down box. This setting only applies temporarily to the current charging process.
 
 ## Status (WARP Energy Manager)
 
@@ -69,14 +76,14 @@ current **power** from energy meters is displayed. If the energy meters have bee
 configured, an overview of the power progression related to
 PV generation, grid consumption or feed-in, home battery, and consumption can be viewed here.
 
-This WARP Energy Manager has been configured as a charge manager for chargers.
-Therefore, the **charging mode** for the chargers can be set.
-Which charging modes are offered depends on whether the Energy Manager has been configured for
-PV excess charging and whether eco mode has been enabled.
-
-The **controlled chargers** and their status managed by the Energy Manager are displayed.
-
 The status of the **SG-Ready** interface (heating) and information about the current
 electricity price (**Current Market Price** and **Average Price**) are also displayed.
 
-The data for **Solar Forecast** is partially visible in this screenshot.
+This WARP Energy Manager has been configured as a charge manager for chargers.
+The **charging mode** section and its buttons can be used to permanently set
+the charging mode for all controlled chargers.
+Which charging modes are offered depends on whether the Energy Manager has been configured for
+PV excess charging and whether eco mode has been enabled.
+
+In addition, an **Eco charging schedule** is active, configured with a daily departure time of 08:00
+and a charging duration of 7 hours.

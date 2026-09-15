@@ -228,13 +228,23 @@ of the WARP Energy Manager only supports one energy meter. To use the PV excess 
 
 ## Fox ESS
 
-### Hybrid Serie H3/AC3, H3 Smart, H3 Pro
-{manufacturer_to_bubbles("Fox ESS")}
+### Hybrid Series H3/AC3
+{manufacturer_to_bubbles("Fox ESS", "Hybrid Series H3/AC3")}
 
-Fox ESS inverters do not seem to be readable via Modbus/TCP via the Fox ESS LAN or WLAN dongle. However, they can be read via RS485 (Modbus/RTU).
+Older Fox ESS inverters do not seem to be readable via Modbus/TCP via the Fox ESS LAN or WLAN dongle. However, they can be read via RS485 (Modbus/RTU).
 If an RS485 to LAN or WLAN converter is installed (see [Modbus/RTU Converter](/compatible_devices/interfaces.md#modbusrtu-converter)), these inverters can also be read.
 The device ID on the inverter must be set from 000 (Modbus/RTU deactivated) to 247. The setting can be found under Settings -> Communication -> RS485 -> Device ID.
 The inverter password is set to 0000 by default.
+
+The "Grid" energy meter is only usable if an external hardware energy meter has been installed at the grid connection and can be read by the inverter. Only in this case is the PV excess charging (PVE) application supported.
+Dynamic load management (DLM) does not seem possible with the meter data, as no phase currents are provided. If dynamic load management should still be implemented, an additional energy meter that provides phase currents must be installed.
+
+### Hybrid Series H3 Smart, H3 Pro
+{manufacturer_to_bubbles("Fox ESS", "Hybrid Series H3 Smart, H3 Pro")}
+
+Modern Fox ESS hybrid inverters appear to provide Modbus/TCP directly via their LAN connection. In this case, a converter is no longer required.
+
+The device ID on the inverter must be set to 247.
 
 The "Grid" energy meter is only usable if an external hardware energy meter has been installed at the grid connection and can be read by the inverter. Only in this case is the PV excess charging (PVE) application supported.
 Dynamic load management (DLM) does not seem possible with the meter data, as no phase currents are provided. If dynamic load management should still be implemented, an additional energy meter that provides phase currents must be installed.
@@ -294,10 +304,13 @@ Unfortunately, it seems that Fronius currently does not support SunSpec models f
 
 ## Growatt
 
-### Growatt TL-X(H) Hybrid Inverter
+### Hybrid Inverters
 {manufacturer_to_bubbles("Growatt")}
 
-Reading is possible via Modbus/TCP to Modbus/RTU converters (e.g., EW11) over the Modbus/RTU interface of the inverter.
+Supported Growatt hybrid inverters include the MIN series with the TL-X suffix, the MAX, MID and MAC series with the TL3-X suffix, and the MIX, SPA and SPH series.
+
+When using the ShineWiLan-X2 dongle, data should be readable directly via Modbus/TCP. This may also work with older ShineWiLan-X dongles.
+Otherwise, reading is possible via Modbus/TCP to Modbus/RTU converters (e.g., EW11) over the Modbus/RTU interface of the inverter.
 See [Modbus/RTU Converter](/compatible_devices/interfaces.md#modbusrtu-converter).
 
 The "Grid" energy meter is only usable if an external hardware energy meter has been installed at the grid connection and can be read by the inverter.
@@ -430,6 +443,8 @@ Only in this case are the PV excess charging (PVE) and dynamic load management (
 the battery data can also be read. Battery inverters, such as the PLENTICORE BI, obviously do not provide PV data. If no energy meter is directly connected to the inverter,
 typically a KSEM G2 (see above) is installed by the installers, so that grid data can then be retrieved via this.
 
+
+Kostal Plenticore G3 and Plus G2 can also be controlled via [Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc).
 
 ## Q-Cells
 
@@ -607,7 +622,7 @@ The account access must have admin rights!
 ### SolarEdge Synergie PV Inverters
 {manufacturer_to_bubbles("SolarEdge", "SolarEdge Synergie PV Inverter")}
 
-SolarEdge Synergie PV inverters have a SunSpec interface. The port for SolarEdge appears to be **1502** rather than **502**.
+SolarEdge Synergie PV inverters have a SunSpec interface. The default port for SolarEdge is **1502** rather than **502**.
 If the interface is not enabled under port 1502 or port 502, the SunSpec interface probably needs to be activated first.
 To our knowledge, this interface cannot be activated by yourself, but must be activated by SolarEdge support or the installer.
 In the installer app "SetApp" (for commissioning), the interface can be activated under Plant communication -> Modbus TCP.
@@ -619,20 +634,36 @@ Only in this case are the PV excess charging (PVE) and dynamic load management (
 ### SolarEdge Home Inverters
 {manufacturer_to_bubbles("SolarEdge", "SolarEdge Home Inverter")}
 
-SolarEdge Home inverters have a SunSpec interface. The port for SolarEdge appears to be **1502** rather than **502**.
+SolarEdge Home inverters have a SunSpec interface. The default port for SolarEdge is **1502** rather than **502**.
 If the interface is not enabled under port 1502 or port 502, the SunSpec interface probably needs to be activated first.
 To our knowledge, this interface cannot be activated by yourself, but must be activated by SolarEdge support or the installer.
 In the installer app "SetApp" (for commissioning), the interface can be activated under Plant communication -> Modbus TCP.
 
-The "Grid" energy meter is only usable if an external hardware energy meter has been installed at the grid connection and can be read by the inverter.
+The "Grid" energy meter is available via SunSpec and is only usable if an external hardware energy meter has been installed at the grid connection and can be read by the inverter.
 Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
 Via SunSpec, the storage capacity model 713 is also available, but it does not provide the battery power. Therefore, we have created a Modbus/TCP
-profile to also capture the power and SoC (see next entry).
+profile to also capture the power and SoC (see below).
 
-### SolarEdge Home Inverters (Storage)
-{manufacturer_to_bubbles("SolarEdge", "SolarEdge Home Inverter (Storage)")}
-Unfortunately, SolarEdge does not provide power data and the SoC via SunSpec. Therefore, we have created a custom Modbus/TCP profile for SunSpec.
-This only serves to capture the "Storage" measurement location. All other measurement locations (PV, Grid, etc.) are done via SunSpec (see above).
+**PV, Storage** \
+Unfortunately, SolarEdge does not provide power data for PV and storage via SunSpec. Therefore, we have created a custom Modbus/TCP profile.
+This only serves to capture the "PV" and "Storage" measurement locations.
+
+### SolarEdge Nexis Inverters
+{manufacturer_to_bubbles("SolarEdge", "SolarEdge Nexis Inverter")}
+
+SolarEdge Nexis inverters have a SunSpec interface. The default port for SolarEdge is **1502** rather than **502**.
+If the interface is not enabled under port 1502 or port 502, the SunSpec interface probably needs to be activated first.
+To our knowledge, this interface cannot be activated by yourself, but must be activated by SolarEdge support or the installer.
+In the installer app "SetApp" (for commissioning), the interface can be activated under Plant communication -> Modbus TCP.
+
+The "Grid" energy meter is available via SunSpec and is only usable if an external hardware energy meter has been installed at the grid connection and can be read by the inverter.
+Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
+Via SunSpec, the storage capacity model 713 is also available, but it does not provide the battery power. Therefore, we have created a Modbus/TCP
+profile to also capture the power and SoC (see below).
+
+**PV, Storage** \
+Unfortunately, SolarEdge does not provide power data for PV and storage via SunSpec. Therefore, we have created a custom Modbus/TCP profile.
+This only serves to capture the "PV" and "Storage" measurement locations.
 
 ## Solarmax
 {manufacturer_to_bubbles("Solarmax")}
@@ -830,4 +861,3 @@ These energy meters are technically Carlo Gavazzi energy meters and can therefor
 The YTL energy meter DEM4A with RS485 (Modbus/RTU) interface can be directly connected to the WARP Energy Manager and read by it.
 An energy meter can always be assigned to exactly one measurement location. The measurement location depends on the installation location of the energy meter. Only one energy meter of this type can be configured, as the RS485 (Modbus/RTU) interface
 of the WARP Energy Manager only supports one energy meter. To use the PV excess charging (PVE) and dynamic load management (DLM) applications, the energy meter must be installed at the grid connection.
-

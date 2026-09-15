@@ -172,8 +172,22 @@ export const devices = [
   },
   {
     manufacturer: "Fox ESS",
-    device: "Hybrid Series H3/AC3, H3 Smart, H3 Pro",
+    device: "Hybrid Series H3/AC3",
     connection: "Modbus/RTU",
+    note: "Hybrid Inverter",
+    link: "/docs/compatible_devices/devices#fox-ess",
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "x",
+    dlm: "-", //meter no currents available
+    pve: "x",
+    bat: "-"
+  },
+  {
+    manufacturer: "Fox ESS",
+    device: "Hybrid Series H3 Smart, H3 Pro",
+    connection: "Modbus/TCP",
     note: "Hybrid Inverter",
     link: "/docs/compatible_devices/devices#fox-ess",
     grid: "x",
@@ -316,7 +330,7 @@ export const devices = [
   },
   {
     manufacturer: "Growatt",
-    device: "Growatt TL-X(H) Hybrid Inverter",
+    device: "Hybrid Inverter",
     connection: "Modbus/TCP",
     link: "/docs/compatible_devices/devices#growatt",
     grid: "x",
@@ -457,7 +471,7 @@ export const devices = [
     load: "-",
     dlm: "x",
     pve: "x",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "Q-Cells",
@@ -682,15 +696,15 @@ export const devices = [
   },
   {
     manufacturer: "SolarEdge",
-    device: "SolarEdge Home Inverter (Storage)",
-    connection: "Modbus/TCP",
+    device: "SolarEdge Nexis Inverter",
+    connection: "SunSpec, Modbus/TCP",
     link: "/docs/compatible_devices/devices#solaredge",
-    grid: "-",
-    pv: "-",
+    grid: "x",
+    pv: "x",
     battery: "x",
     load: "-",
-    dlm: "-",
-    pve: "-",
+    dlm: "x",
+    pve: "x",
     bat: "-"
   },
   {
