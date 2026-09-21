@@ -1,6 +1,5 @@
 """Directory integration tests; all geocoding is mocked (no external requests)."""
 
-import csv
 import json
 import tempfile
 import unittest
@@ -234,21 +233,11 @@ class DirectoryTests(unittest.TestCase):
             with self.assertRaises(GeocodingError):
                 lookup("Test address", "DE")
 
-    def test_import_preserves_leading_zeroes_and_unresolved_entries_and_backup(self):
-        csv_path, json_path = Path(self.tmp.name) / "data.csv", Path(self.tmp.name) / "data.json"
-        with csv_path.open("w", newline="") as f:
-            writer = csv.DictWriter(f, fieldnames=store.FIELDS)
-            writer.writeheader()
-            row = {key: self.data[key] for key in store.FIELDS}
-            writer.writerow(row)
-            writer.writerow({**row, "name": "Missing location"})
-        json_path.write_text(json.dumps([{**row, **self.location}]))
-        count, unresolved = store.import_directory(self.path, csv_path, json_path)
-        self.assertEqual((count, unresolved), (2, ["Missing location"]))
+    def test_initialization_preserves_entries_and_backup(self):
+        self.seed()
+        store.save_electrician(self.path, {**self.data, "name": "Inactive", "active": False}, {})
         self.assertEqual(len(store.list_electricians(self.path, public=True)), 1)
         self.assertEqual(store.list_electricians(self.path, public=True)[0]["postal_code"], "01234")
-        with self.assertRaises(ValueError):
-            store.import_directory(self.path, csv_path, json_path)
         store.initialize(self.path)
         self.assertEqual(len(store.list_electricians(self.path)), 2)
         destination = Path(self.tmp.name) / "backup.sqlite3"

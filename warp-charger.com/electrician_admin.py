@@ -253,19 +253,6 @@ def init_app(app):
         store.initialize(app.config["ELECTRICIANS_DB"])
         click.echo(f"Initialized {app.config['ELECTRICIANS_DB']}")
 
-    @app.cli.command("electricians-import")
-    @click.option("--csv", "csv_path", type=click.Path(exists=True), default="data/electricians.csv")
-    @click.option("--geocoded", "json_path", type=click.Path(exists=True), default="data/electricians.geocoded.json")
-    def import_db(csv_path, json_path):
-        """Import the legacy directory once, preserving coordinates; never overwrites live data."""
-        try:
-            count, unresolved = store.import_directory(app.config["ELECTRICIANS_DB"], csv_path, json_path)
-        except (ValueError, store.DirectoryUnavailable) as exc:
-            raise click.ClickException(str(exc)) from exc
-        click.echo(f"Imported {count} entries; {len(unresolved)} inactive entries need coordinates:")
-        for name in unresolved:
-            click.echo(f"  {name}")
-
     @app.cli.command("electricians-backup")
     @click.argument("destination", type=click.Path())
     def backup_db(destination):

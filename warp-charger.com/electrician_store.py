@@ -1,7 +1,5 @@
 """SQLite storage for the live electrician directory (shared by all workers)."""
 
-import csv
-import json
 import sqlite3
 import time
 from contextlib import contextmanager
@@ -157,37 +155,3 @@ def reserve_login_attempt(path):
             return max(1, int(900 - (now - start)))
         db.execute("INSERT OR REPLACE INTO rate_limits VALUES ('admin-login', ?, ?)", (start, count + 1))
     return 0
-
-
-def import_directory(path, csv_path, json_path):
-    """One-time, offline import. CSV contact data wins; match coordinates by name/address."""
-    with open(csv_path, encoding="utf-8-sig", newline="") as f:
-        rows = [{key: (row.get(key) or "").strip() for key in FIELDS}
-                for row in csv.DictReader(f, skipinitialspace=True)]
-    geocoded = json.loads(Path(json_path).read_text(encoding="utf-8"))
-
-    def identity(row):
-        return tuple(row[key].strip().casefold() for key in ("name", *ADDRESS_FIELDS))
-
-    locations = {identity(row): row for row in geocoded}
-    unresolved = []
-    with connect(path) as db:
-        db.execute("BEGIN IMMEDIATE")
-        if db.execute("SELECT 1 FROM metadata WHERE key = 'imported'").fetchone() or db.execute(
-            "SELECT 1 FROM electricians LIMIT 1"
-        ).fetchone():
-            raise ValueError("Import refused: this database has already been imported or contains entries.")
-        for row in rows:
-            if not row["name"]:
-                continue
-            location = locations.get(identity(row), {})
-            if not location:
-                unresolved.append(row["name"])
-            db.execute(
-                "INSERT INTO electricians (" + ", ".join(FIELDS) + ", lat, lon, location_source, active) "
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                [row[key] for key in FIELDS] + [location.get("lat"), location.get("lon"),
-                                               "imported" if location else "", int(bool(location))],
-            )
-        db.execute("INSERT INTO metadata VALUES ('imported', ?)", (str(time.time()),))
-    return len([row for row in rows if row["name"]]), unresolved
