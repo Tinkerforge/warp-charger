@@ -10,7 +10,7 @@ Tinkerforge.
 Here you will find the documentation for installation and configuration of:
 * [WARP4 Charger](/warp4/introduction.md) ([WARP3](/warp3/introduction.md), [WARP2](/warp2/introduction.md), [WARP1](/warp1/introduction.md)),
 * [WARP Energy Manager 2.0](/wem2/introduction.md) ([WEM1](/wem1/introduction.md)) and
-* [WARP Charger Stand](/warp_ladesäule/introduction.md).
+* [WARP4 Charger Stand](/warp4_stand/introduction.md) ([previous generation](/warp_ladesäule/introduction.md)).
 
 This documentation is constantly maintained and expanded. If you have ideas for
 additional documentation or examples, please let us know. We also gladly
@@ -130,4 +130,3 @@ by a WARP Charger. An overview of
 currently supported devices that can measure power at the house connection
 can be found in the article
 [compatible devices](/compatible_devices/introduction.md).
-

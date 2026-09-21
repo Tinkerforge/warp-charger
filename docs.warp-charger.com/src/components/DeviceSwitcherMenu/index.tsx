@@ -1,11 +1,13 @@
 import React from 'react';
 import Link from '@docusaurus/Link';
 import {useLocation} from '@docusaurus/router';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import Translate from '@docusaurus/Translate';
 import {Collapsible, useCollapsible} from '@docusaurus/theme-common';
 import clsx from 'clsx';
 import styles from './styles.module.css';
 
-export type SwitcherDevice = {id: string; label: string};
+export type SwitcherDevice = {id: string; label: string; labelEn?: string};
 
 // "Swap" icon to signal that this entry switches between device generations.
 function SwitchIcon(): JSX.Element {
@@ -41,13 +43,16 @@ function SwitchIcon(): JSX.Element {
  */
 export default function DeviceSwitcherMenu({devices}: {devices: SwitcherDevice[]}): JSX.Element {
   const {pathname} = useLocation();
+  const {i18n} = useDocusaurusContext();
   const {collapsed, toggleCollapsed} = useCollapsible({initialState: true});
 
   // Match /docs/<id>/<rest> independently of the locale prefix (/de, /en).
-  const ids = devices.map((d) => d.id).join('|');
-  const match = pathname.match(new RegExp(`/docs/(${ids})(?:/([^?#]*))?`));
-  const currentId = match?.[1];
-  const currentRest = (match?.[2] ?? '').replace(/\/$/, '');
+  const match = pathname.match(/\/docs\/([^/]+)(?:\/([^?#]*))?$/);
+  const currentDevice = devices.find((d) =>
+    match && (match[1] === d.id || match[1].toLowerCase() === encodeURIComponent(d.id).toLowerCase()),
+  );
+  const currentId = currentDevice?.id;
+  const currentRest = currentDevice ? (match?.[2] ?? '').replace(/\/$/, '') : '';
 
   return (
     <li
@@ -71,7 +76,7 @@ export default function DeviceSwitcherMenu({devices}: {devices: SwitcherDevice[]
             toggleCollapsed();
           }}>
           <SwitchIcon />
-          Generation wechseln
+          <Translate id="deviceSwitcher.changeGeneration">Generation wechseln</Translate>
         </a>
       </div>
       <Collapsible lazy={false} as="ul" className="menu__list" collapsed={collapsed}>
@@ -86,7 +91,7 @@ export default function DeviceSwitcherMenu({devices}: {devices: SwitcherDevice[]
               )}
               aria-current={d.id === currentId ? 'page' : undefined}
               to={currentRest ? `/docs/${d.id}/${currentRest}` : `/docs/${d.id}/introduction`}>
-              {d.label}
+              {i18n.currentLocale === 'en' ? d.labelEn ?? d.label : d.label}
             </Link>
           </li>
         ))}
