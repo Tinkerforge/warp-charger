@@ -15,11 +15,6 @@ echo "Syncing compatible devices..."
 .venv/bin/python scripts/sync_compatible_devices.py
 echo "Done: data/compatible_devices.json"
 
-# Geocode the electrician directory (data/electricians.csv -> .geocoded.json).
-echo "Geocoding electrician directory..."
-.venv/bin/python scripts/geocode_electricians.py
-echo "Done: data/electricians.geocoded.json"
-
 echo "Subsetting Material Symbols icon font..."
 .venv/bin/python scripts/subset_icons.py
 
@@ -30,6 +25,10 @@ echo "Done: static/js/output.min.js"
 echo "Compiling electrician-finder bundle..."
 npm run build:finder
 echo "Done: static/js/finder.min.js (+ finder.min.css and maplibre-worker.min.js)"
+
+echo "Compiling electrician-admin bundle..."
+npm run build:admin
+echo "Done: static/js/admin.min.js (+ admin.min.css)"
 
 # Self-hosted basemap tiles for the electrician finder.
 # Large: Only build when missing; refresh manually with ./build_tiles.sh.

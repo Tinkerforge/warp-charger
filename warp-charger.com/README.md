@@ -18,8 +18,11 @@ npm install
 This runs all build steps in order:
 
 1. Syncs compatible devices data from `docs.warp-charger.com`
-2. Compiles TypeScript (`src/ts/`) into `static/js/output.min.js`
-3. Compiles Tailwind CSS (`src/input.css`) into `static/css/output.min.css`
+2. Subsets the Material Symbols icon font
+3. Compiles the main, electrician-finder, and electrician-admin TypeScript bundles
+4. Builds self-hosted map assets if missing
+5. Compiles Tailwind CSS (`src/input.css`) into `static/css/output.min.css`
+6. Pre-compresses static text assets
 
 ## Run
 

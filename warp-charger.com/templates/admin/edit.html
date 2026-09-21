@@ -1,0 +1,66 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ 'Elektriker bearbeiten' if electrician_id else 'Elektriker hinzufügen' }}{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='js/admin.min.css') }}">
+{% endblock %}
+{% block content %}
+<a href="{{ url_for('electrician_admin.index') }}">← Alle Elektriker</a>
+<h1>{{ 'Elektriker bearbeiten' if electrician_id else 'Elektriker hinzufügen' }}</h1>
+{% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+{% if notice %}<p class="notice" role="status">{{ notice }}</p>{% endif %}
+<form method="post" id="electrician-form" class="edit-grid">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="revision" value="{{ form.get('revision', '') }}">
+    <input type="hidden" name="location_token" value="{{ location_token }}">
+    <section class="panel">
+        <h2>Firma und Kontakt</h2>
+        {% for key, label, type, required in [
+            ('name', 'Firma', 'text', true), ('street', 'Straße und Hausnummer', 'text', true),
+            ('postal_code', 'Postleitzahl', 'text', true), ('city', 'Ort', 'text', true)] %}
+        <label for="{{ key }}">{{ label }} *</label>
+        <input id="{{ key }}" name="{{ key }}" type="{{ type }}" value="{{ form.get(key, '') }}" maxlength="500" {% if required %}required{% endif %} {% if key != 'name' %}data-address{% endif %}>
+        {% endfor %}
+        <label for="country">Land *</label>
+        <select id="country" name="country" data-address>
+            {% for code, name in [('DE', 'Deutschland'), ('AT', 'Österreich'), ('CH', 'Schweiz')] %}
+            <option value="{{ code }}" {% if form.get('country') == code %}selected{% endif %}>{{ name }}</option>
+            {% endfor %}
+        </select>
+        {% for key, label, type in [('phone', 'Telefon', 'tel'), ('email', 'E-Mail', 'email'), ('website', 'Website (https://…)', 'url')] %}
+        <label for="{{ key }}">{{ label }}</label>
+        <input id="{{ key }}" name="{{ key }}" type="{{ type }}" value="{{ form.get(key, '') }}" maxlength="500">
+        {% endfor %}
+        <label class="check"><input type="checkbox" name="active" value="1" {% if form.get('active') %}checked{% endif %}> Auf der Website veröffentlichen</label>
+        <p class="muted">* Pflichtfelder</p>
+    </section>
+    <section class="panel">
+        <h2>Standort</h2>
+        <p>Neue oder geänderte Adressen werden beim Speichern automatisch gesucht. Bei Änderungen an Kontaktdaten bleibt der Standort erhalten.</p>
+        <button type="submit" name="action" value="locate" class="secondary">Standort suchen / aktualisieren</button>
+        <p id="location-status" class="muted" role="status">{{ source_labels.get(location.source, '') }}{% if location.label %}: {{ location.label }}{% endif %}</p>
+        <div id="admin-map" data-style="{{ url_for('static', filename='tiles/style.json') }}"
+             data-worker="{{ url_for('static', filename='js/maplibre-worker.min.js') }}"></div>
+        <p id="map-status" class="muted" role="status">Karte wird geladen. Koordinaten können auch unten eingegeben werden.</p>
+        <label class="check"><input id="manual" name="manual" type="checkbox" value="1" {% if form.get('manual') == '1' %}checked{% endif %}> Standort manuell festlegen</label>
+        <p class="muted">Für eine Korrektur aktivieren und anschließend in die Karte klicken, den Marker verschieben oder Koordinaten eingeben.</p>
+        <div class="coordinates">
+            <div><label for="lat">Breitengrad</label><input id="lat" name="lat" type="number" step="any" min="-90" max="90" value="{{ form.get('lat', '') if form.get('lat') is not none else '' }}"></div>
+            <div><label for="lon">Längengrad</label><input id="lon" name="lon" type="number" step="any" min="-180" max="180" value="{{ form.get('lon', '') if form.get('lon') is not none else '' }}"></div>
+        </div>
+        <noscript><p>Für die Kartenansicht bitte JavaScript aktivieren. Adresssuche und manuelle Koordinateneingabe funktionieren auch ohne JavaScript.</p></noscript>
+    </section>
+    <div class="save-bar">
+        <button type="submit" name="action" value="save">Speichern</button>
+        <a href="{{ url_for('electrician_admin.index') }}">Abbrechen</a>
+        <span id="save-status" role="status"></span>
+    </div>
+</form>
+{% if electrician_id %}
+<form method="post" action="{{ url_for('electrician_admin.delete', electrician_id=electrician_id) }}" class="delete-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="revision" value="{{ form.get('revision', '') }}">
+    <button type="submit" class="danger">Elektriker dauerhaft löschen</button>
+</form>
+{% endif %}
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/admin.min.js') }}" defer></script>{% endblock %}

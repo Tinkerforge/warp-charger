@@ -4,6 +4,7 @@ import copy
 import json
 import re
 import os
+import sqlite3
 import base64
 import urllib.request
 import urllib.error
@@ -17,8 +18,19 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 from translations import get_translation, SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE
 from firmwares import get_all_firmwares
 from markdown_youtube import YouTubeEmbedExtension
+import electrician_store
+from electrician_admin import init_app as init_electrician_admin
 
 app = Flask(__name__, static_folder="static")
+app.config.from_pyfile(str(Path(app.instance_path) / "admin_config.py"), silent=True)
+app.config.update(
+    ELECTRICIANS_DB=os.environ.get("ELECTRICIANS_DB", app.config.get("ELECTRICIANS_DB", str(Path(app.instance_path) / "electricians.sqlite3"))),
+    SECRET_KEY=os.environ.get("ADMIN_SECRET_KEY", app.config.get("SECRET_KEY")),
+    ADMIN_PASSWORD_HASH=os.environ.get("ADMIN_PASSWORD_HASH", app.config.get("ADMIN_PASSWORD_HASH", "")),
+    SESSION_COOKIE_SECURE=(os.environ["ADMIN_COOKIE_SECURE"] != "0" if "ADMIN_COOKIE_SECURE" in os.environ
+                           else app.config.get("ADMIN_COOKIE_SECURE", True)),
+)
+init_electrician_admin(app)
 
 # Behind nginx (gunicorn on a unix socket) honor the X-Forwarded-Proto / -Host
 # headers so url_for(_external=True), request.url (hreflang) and request.host_url
@@ -471,7 +483,11 @@ def _load_json_cached(path):
 
 def get_electricians():
     """Return the geocoded electrician directory (list of dicts)."""
-    return _load_json_cached(DATA_DIR / "electricians.geocoded.json") or []
+    try:
+        return electrician_store.list_electricians(app.config["ELECTRICIANS_DB"], public=True)
+    except (electrician_store.DirectoryUnavailable, sqlite3.OperationalError) as exc:
+        app.logger.error("Electrician directory unavailable: %s", exc)
+        abort(503)
 
 
 def get_postal_data():
@@ -1041,6 +1057,7 @@ if __name__ == "__main__":
     css_process = None
     ts_process = None
     finder_process = None
+    admin_process = None
     if shutil.which("npx"):
         try:
             css_process = subprocess.Popen(
@@ -1075,6 +1092,16 @@ if __name__ == "__main__":
         except Exception as e:
             print(" * Could not start electrician-finder watcher: %s" % e)
 
+        try:
+            admin_process = subprocess.Popen(
+                ["npx", "esbuild", "src/ts/electrician-admin.ts", "--bundle",
+                 "--outfile=static/js/admin.min.js", "--format=iife", "--watch"],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.PIPE,
+            )
+        except Exception as e:
+            print(" * Could not start electrician-admin watcher: %s" % e)
+
     try:
         app.run(debug=True, host="0.0.0.0", port=port)
     finally:
@@ -1087,3 +1114,6 @@ if __name__ == "__main__":
         if finder_process:
             finder_process.terminate()
             finder_process.wait()
+        if admin_process:
+            admin_process.terminate()
+            admin_process.wait()

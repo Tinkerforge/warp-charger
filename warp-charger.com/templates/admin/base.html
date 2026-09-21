@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>{% block title %}Elektriker-Verwaltung{% endblock %} · WARP</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <header>
+        <a class="brand" href="{{ url_for('electrician_admin.index') }}">WARP <span>Elektriker-Verwaltung</span></a>
+        {% if admin_logged_in %}
+        <nav>
+            <a href="/de/elektriker-finden" target="_blank" rel="noopener">Öffentliche Seite ↗</a>
+            <form method="post" action="{{ url_for('electrician_admin.logout') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="secondary" type="submit">Abmelden</button>
+            </form>
+        </nav>
+        {% endif %}
+    </header>
+    <main>
+        {% for message in get_flashed_messages() %}<p class="notice" role="status">{{ message }}</p>{% endfor %}
+        {% block content %}{% endblock %}
+    </main>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

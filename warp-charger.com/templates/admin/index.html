@@ -1,0 +1,39 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<div class="heading">
+    <h1>Elektriker <small>({{ electricians|length }})</small></h1>
+    <a class="button" href="{{ url_for('electrician_admin.edit') }}">Elektriker hinzufügen</a>
+</div>
+<form method="get" class="search panel">
+    <label for="q">Suchen</label>
+    <input type="search" name="q" id="q" value="{{ query }}" placeholder="Firma, Ort, PLZ oder Kontaktdaten">
+    <button type="submit">Suchen</button>
+    {% if query %}<a href="{{ url_for('electrician_admin.index') }}">Zurücksetzen</a>{% endif %}
+</form>
+<div class="panel table-scroll">
+    <table>
+        <thead><tr><th>Firma / Adresse</th><th>Status / Standort</th><th>Aktionen</th></tr></thead>
+        <tbody>
+        {% for e in electricians %}
+        <tr>
+            <td><a class="company" href="{{ url_for('electrician_admin.edit', electrician_id=e.id) }}">{{ e.name }}</a>
+                <div>{{ e.street }}</div><div>{{ e.country }} · {{ e.postal_code }} {{ e.city }}</div></td>
+            <td><span class="badge {{ 'active' if e.active else '' }}">{{ 'Veröffentlicht' if e.active else 'Inaktiv' }}</span>
+                <div class="muted">{{ source_labels.get(e.location_source, e.location_source) }}</div></td>
+            <td><div class="actions">
+                <a class="button secondary" href="{{ url_for('electrician_admin.edit', electrician_id=e.id) }}">Bearbeiten</a>
+                {% if e.lat is not none %}
+                <form method="post" action="{{ url_for('electrician_admin.toggle_active', electrician_id=e.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="revision" value="{{ e.revision }}">
+                    <input type="hidden" name="active" value="{{ 0 if e.active else 1 }}">
+                    <button class="secondary" type="submit">{{ 'Deaktivieren' if e.active else 'Veröffentlichen' }}</button>
+                </form>
+                {% endif %}
+            </div></td>
+        </tr>
+        {% else %}<tr><td colspan="3">Keine Einträge gefunden.</td></tr>{% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

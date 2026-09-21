@@ -10,8 +10,10 @@
     "build:map-worker": "esbuild node_modules/maplibre-gl/dist/maplibre-gl-worker.mjs --bundle --outfile=static/js/maplibre-worker.min.js --format=esm --minify",
     "build:finder": "npm run build:map-worker && esbuild src/ts/electrician-finder.ts --bundle --outfile=static/js/finder.min.js --format=iife --minify",
     "watch:finder": "npm run build:map-worker && esbuild src/ts/electrician-finder.ts --bundle --outfile=static/js/finder.min.js --format=iife --watch",
-    "build": "npm run build:css && npm run build:js && npm run build:finder",
-    "watch": "npm run watch:css & npm run watch:js & npm run watch:finder",
+    "build:admin": "esbuild src/ts/electrician-admin.ts --bundle --outfile=static/js/admin.min.js --format=iife --minify",
+    "watch:admin": "esbuild src/ts/electrician-admin.ts --bundle --outfile=static/js/admin.min.js --format=iife --watch",
+    "build": "npm run build:css && npm run build:js && npm run build:finder && npm run build:admin",
+    "watch": "npm run watch:css & npm run watch:js & npm run watch:finder & npm run watch:admin",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

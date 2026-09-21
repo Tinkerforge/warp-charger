@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+{% block title %}Anmelden{% endblock %}
+{% block content %}
+<section class="panel login">
+    <h1>Anmelden</h1>
+    <p>Elektriker-Einträge für warp-charger.com verwalten.</p>
+    {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+    <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label for="password">Admin-Passwort</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" maxlength="1024" required autofocus>
+        <button type="submit">Anmelden</button>
+    </form>
+</section>
+{% endblock %}
