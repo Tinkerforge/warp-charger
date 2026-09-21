@@ -15,8 +15,8 @@
 \usepackage{siunitx}
 \sisetup{
     locale = DE,
-    binary-units,
-    detect-all,
+    mode = match,
+    propagate-math-font = true,
     per-mode = symbol %enables m/s instead of ms^-1
 }
 \AtBeginDocument{\DeclareSIUnit{\kWh}{kWh}}
@@ -76,7 +76,7 @@ white,title=Warnung]#1\end{tcolorbox}}
 
 \fancyhf{}
 \fancyhead{\colorbox{boxgray}{
-    \makebox[\dimexpr\linewidth-2\fboxsep][l]{
+    \makebox[\dimexpr\linewidth-2\fboxsep - 2.17mm][l]{
         \includegraphics[height=1cm]{./img/logo}\hfill\color{white}\Huge\raisebox{.5ex}{\thepage}
         }
     }
@@ -89,7 +89,11 @@ white,title=Warnung]#1\end{tcolorbox}}
 
 \usepackage{hyphenat}
 
+\newcommand{\manualversion}{1.0}
+\newcommand{\manualdate}{21.09.2026}
+
 \begin{document}
+\hypersetup{pageanchor=false}
 \pagestyle{empty}
 \begin{titlepage}
 	\vspace*{-3.08cm}
@@ -99,18 +103,18 @@ white,title=Warnung]#1\end{tcolorbox}}
 		\Huge
 		Betriebsanleitung\\\vspace{0.25cm}WARP4 Ladesäule\\\vspace{1cm}
 		\large
-		Version 1.0.0\\\vspace{0.25cm}
-		\today
+		Version \manualversion\\\vspace{0.25cm}
+		\manualdate
 	\end{center}
 	\vfill
 	\begin{center}
 		\includegraphics[width=0.6\linewidth]{./img4/Stand_Versions.jpg}
 	\end{center}
 \end{titlepage}
-\newpage
-\newpage
+\hypersetup{pageanchor=true}
 \pagestyle{fancy}
-\begin{multicols*}{2}
+\begin{multicols}{2}
+    \raggedcolumns
 	\tableofcontents \section{Einführung}
 	\subsection{Vorwort} Vielen Dank, dass du
 	dich für eine WARP4 Ladesäule von Tinkerforge entschieden hast!
@@ -138,7 +142,7 @@ white,title=Warnung]#1\end{tcolorbox}}
 	\par
 	Nach der Fertigstellung des Fundaments und gegebenenfalls weiteren
 	notwendigen Erdarbeiten wird die Ladesäule montiert.
-	Über die geteilte Rückwand können die Zuleitungen einfach erreicht und 
+	Über die geteilte Rückwand können die Zuleitungen einfach erreicht und
 	die Ladesäule bequem angeschlossen werden.
 	\par
 	Ein optional bestellbarer
@@ -158,7 +162,7 @@ white,title=Warnung]#1\end{tcolorbox}}
 \vspace{-0.2cm}
 	\subsection{Bestimmungsgemäße Verwendung}
 	Die Ladesäule dient zur Aufnahme von WARP4 Charger Wallboxen auf einer freien
-	Fläche, bei der eine Wandmontage nicht möglich oder nicht gewünscht ist. 
+	Fläche, bei der eine Wandmontage nicht möglich oder nicht gewünscht ist.
 	Es dürfen ausschließlich WARP4 Charger
 	an der Ladesäule montiert werden. Den Installations- und
 	Verwendungshinweisen der verwendeten WARP4 Charger ist Folge zu leisten.
@@ -170,7 +174,7 @@ white,title=Warnung]#1\end{tcolorbox}}
 		\item Aufnahme für zwei WARP4 Charger Wallboxen.
 	\end{itemize}
 	Die Variante für zwei Wallboxen verfügt über Aussparungen und
-	Befestigungspunkte für die zweite Wallbox auf der Rückseite. 
+	Befestigungspunkte für die zweite Wallbox auf der Rückseite.
 	Es ist nicht zulässig, nur die frontseitige Wallbox zu montieren und die
 	zweite Wallbox dann nicht zu montieren.
 \vspace{-0.2cm}
@@ -191,15 +195,14 @@ white,title=Warnung]#1\end{tcolorbox}}
 	Die Montage, erste Inbetriebnahme und Wartung der Ladestation dürfen nur von
 	einer ausgebildeten, qualifizierten und befugten Elektrofachkraft
 	durchgeführt werden, die dabei für die Beachtung der bestehenden Normen und
-	Installationsvorschriften verantwortlich ist. Halte die angeführten Vorgaben 
-	für die Standortauswahl und die baulichen Voraussetzungen ein! Abweichungen 
-	zu den Standortvorgaben können zu Tod, schweren Körperverletzungen oder 
-	Sachschäden führen, wenn die entsprechenden Vorsichtsmaßnahmen nicht 
+	Installationsvorschriften verantwortlich ist. Halte die angeführten Vorgaben
+	für die Standortauswahl und die baulichen Voraussetzungen ein! Abweichungen
+	zu den Standortvorgaben können zu Tod, schweren Körperverletzungen oder
+	Sachschäden führen, wenn die entsprechenden Vorsichtsmaßnahmen nicht
 	getroffen werden!
-	} 
+	}
 
 
-    \newpage
 	\section{Montage und Installation}
 
 	\subsection{Öffnen der Ladesäule}
@@ -215,7 +218,7 @@ white,title=Warnung]#1\end{tcolorbox}}
 
 	\subsection{Montage}
 	\subsubsection{Lieferumfang}
-	Im Lieferumfang der Ladesäule befinden sich, abhängig davon ob die Säule für eine
+	Im Lieferumfang der Ladesäule befinden sich, abhängig davon, ob die Säule für eine
 	Wallbox oder zwei Wallboxen vorgesehen ist:
 	\begin{itemize}
 		\item Ladesäule mit Fuß
@@ -229,7 +232,7 @@ white,title=Warnung]#1\end{tcolorbox}}
 				\item 16x M8 Muttern
 			\end{itemize}
 		\item Schaltschrankschlüssel
-		\item 1x/2x Kabelhalterungen inkl. 4x M6x16mm Innensechskantschrauben
+		\item 1x/2x Kabelhalterungen inkl. jeweils 4x M6x16mm Innensechskantschrauben
 		\item 4x/8x Innensechskantschrauben M6x35mm zur Befestigung der Wallboxen
 		\item 2x/3x Erdungsschraubenset, je
 		\begin{itemize}
@@ -286,7 +289,7 @@ white,title=Warnung]#1\end{tcolorbox}}
 	Mindestgröße anzusehen, um einen sicheren Stand zu gewährleisten.
 
 	Die Montagehilfe wird fertig aufgebaut mitgeliefert und kann direkt im Betonfundament positioniert werden.
-	Bei der Montage sind die angegebenen Maße einzuhalten. 
+	Bei der Montage sind die angegebenen Maße einzuhalten.
 
 	Es darf sich kein Wasser am Fundament ansammeln, dieses muss abfließen können. Die
 	Stromversorgungskabel, ein Erdungskabel und gegebenenfalls vorhandene Netzwerkkabel müssen in der Mitte
@@ -335,10 +338,9 @@ white,title=Warnung]#1\end{tcolorbox}}
 
 	\subsubsection{Erdung}
 	Als Erdungssternpunkt für die Ladesäule dient eine M6x16mm Schraube in der
-	linken Fußplatte der Ladesäule (siehe Foto). An SO/27063
-dieser Schraube laufen alle Erdungsleitungen
-	zusammen.
-	
+	linken Fußplatte der Ladesäule (siehe Foto). An dieser Schraube laufen alle
+	Erdungsleitungen zusammen.
+
 	\begin{center}
 		\includegraphics[width=\linewidth]{./img4/earth_star.jpg}
 	\end{center}
@@ -346,7 +348,7 @@ dieser Schraube laufen alle Erdungsleitungen
 	Diese M6 Schraube muss extern mit Erde verbunden werden. Wird die Säule mit Verteilerbox
 	bestellt, so liegt hierfür ein Erdungskabel 0,83m M6 Ringschuh auf Aderendhülse
 	bei. Die Erdungsverbindung erfolgt hierbei über die Erdungsklemme in der
-	Verteilerbox und damit über die Versorgungszuleitung. 
+	Verteilerbox und damit über die Versorgungszuleitung.
 	Wird keine Verteilerbox eingesetzt, so muss die Erde hier
 	anderweitig angeschlossen werden.
 
@@ -377,8 +379,12 @@ dieser Schraube laufen alle Erdungsleitungen
     rückseitig eingeführt und intern angeschlossen werden. Die Kabelverschraubung
     muss anschließend zugedreht werden.
     \par
-    Es liegt zusätzlich ein RJ45 Patchkabel bei. Dieses kann nach Entfernen des Gummieinsatzes
-    durch die M25 Verschraubung geführt werden und ebenfalls an der Wallbox angeschlossen werden.
+    Bei der Variante mit Verteilerbox liegt zusätzlich ein RJ45-Patchkabel bei.
+    Zum Einführen des Steckers wird der Dichtstopfen aus der M25-Kabelverschraubung
+    genommen. Der Dichtstopfen muss seitlich bis zur Kabelbohrung geschlitzt,
+    um das Kabel gelegt und wieder in die Verschraubung eingesetzt werden.
+    Anschließend die Kabelverschraubung festziehen und das Patchkabel in der
+    Wallbox anschließen.
 	\par
 	Anschließend kann die Wallbox mit den installierten Leitungen vor die Säule
 	gehängt werden. Zur Befestigung werden die vier mitgelieferten M6x35mm
@@ -388,6 +394,12 @@ dieser Schraube laufen alle Erdungsleitungen
     durch die Kabelverschraubungen der Verteilerbox geführt werden und in dieser angeschlossen werden.
 
 	\subsubsection{Verteilergehäuse}
+
+	Das optionale Verteilergehäuse wird im Inneren der Säule unterhalb der Wallbox
+	an den vorgesehenen Befestigungspunkten montiert (siehe Foto).
+	Dazu den Deckel abnehmen und das Gehäuse mit den vier mitgelieferten
+	M6x10mm Innensechskantschrauben befestigen. Nach dem Anschluss und der
+	Prüfung der Installation den Deckel wieder schließen.
 
 	\begin{center}
 		\includegraphics[width=\linewidth]{./img4/box.jpg}
@@ -410,7 +422,7 @@ dieser Schraube laufen alle Erdungsleitungen
 	Patchkabelverbinder für die Hutschiene mitgeliefert.
 
 	\section{Inbetriebnahme}
-	Eine Inbetriebnahme der eigentlichen Ladesäule erfolgt nicht, sondern eine 
+	Eine Inbetriebnahme der eigentlichen Ladesäule erfolgt nicht, sondern eine
 	Inbetriebnahme der verbauten WARP4 Charger. Dazu finden sich weitere Informationen in der
 	Betriebsanleitung der Wallboxen.
 
@@ -422,7 +434,7 @@ dieser Schraube laufen alle Erdungsleitungen
 	\warn{\textbf{Gefahr! Hochspannung}\\Gefahr von tödlichen elektrischen
 	Stromschlägen. Die Ladesäule und die Wallboxen niemals mit einem Hochdruckreiniger oder einem ähnlichen Gerät reinigen.}
 	\begin{itemize}
-		\item Anlage nur mit einem feuchten Tuch oder einem nicht aggressivem Reiniger abwischen (Anwendungshinweise des Herstellers beachten). Keine aggressiven Reinigungsmittel, Wachs oder Lösungsmittel verwenden.
+		\item Anlage nur mit einem feuchten Tuch oder einem nicht aggressiven Reiniger abwischen (Anwendungshinweise des Herstellers beachten). Keine aggressiven Reinigungsmittel, Wachs oder Lösungsmittel verwenden.
 		\item Teste das Reinigungsmittel immer erst an einer unauffälligen Stelle auf Verträglichkeit.
 	\end{itemize}
 
@@ -443,9 +455,9 @@ dieser Schraube laufen alle Erdungsleitungen
 		\end{description}
 	\end{minipage}
 
-    \newpage
+	\begin{minipage}{\linewidth}
 	\section{Kontakt}
-	Tinkerforge GmbH\\ Helleforthstraße 22-28\\ 33758 Schloß Holte-Stukenbrock\\
+	Tinkerforge GmbH\\ Helleforthstraße 22-28\\ 33758 Schloß Holte-Stukenbrock
 	\begin{description}[leftmargin=!,labelwidth=\widthof{\textbf{Website}}]
 		\item[E-Mail] \href{mailto:info@tinkerforge.com}{\texttt{info@tinkerforge.com}}
 		\item[Website] \href{https://warp-charger.com}{\texttt{warp-charger.com}}
@@ -453,6 +465,7 @@ dieser Schraube laufen alle Erdungsleitungen
 		\href{https://shop.warp-charger.com}{\texttt{shop.warp-charger.com}}
         \item[Telefon] \texttt{05207 897300-0}
 	\end{description}
+	\end{minipage}
 
 	\section{Konformitätserklärung}
 	Die EU-Konformitätserklärung ist in einem gesonderten Dokument verfügbar.
@@ -468,30 +481,24 @@ dieser Schraube laufen alle Erdungsleitungen
 
 	\section{Dokumentversionen}
 	\begin{tabular}{lll}
-		\toprule			
+		\toprule
 		Datum      & Version & Kommentar                   \\
 		\midrule
-		21.08.2026 & 1.0     & Initialversion              \\
+		\manualdate & \manualversion & Initialversion              \\
 		\bottomrule
 	\end{tabular}
 
-	\end{multicols*}
-	\pagestyle{empty}
-	%\newpage
-	%\null
-	%\newpage
-	%\newpage
-	\null
-	\newpage
-	\pagestyle{fancy}
+	\end{multicols}
+	\clearpage
 	\section*{Anhang}
 
 	\subsection*{Herstellung des Fundaments inkl. Zuleitung}
 	\label{appendix_base}
 	\begin{center}
-		\includegraphics[width=0.90\linewidth]{./img4/stand_overview.jpg}
+		\includegraphics[width=0.88\linewidth]{./img4/stand_overview.jpg}
 	\end{center}
 
+	\clearpage
 	\subsection*{Maße der Ladesäule mit einem WARP4 Charger}
 	\label{appendix_stand}
 	\begin{center}
