@@ -51,7 +51,7 @@ lifted first, followed by the upper bracket.
 Electrical Connection
 ----------------------
 
-:::note 
+:::note
 
 The work described in this chapter may only be performed by a
 qualified electrician!
@@ -104,12 +104,24 @@ input.
 
 Heat pumps that can be controlled via an [SG-Ready](https://www.waermepumpe.de/normen-technik/sg-ready/)
 interface can be connected here.
-For this, the WARP Energy Manager 2.0 offers two relay outputs.
+For this, the WARP Energy Manager 2.0 offers two relay outputs rated for voltages up to
+125 V AC or 110 V DC and currents up to 2 A.
 Output 1 is activated when operation should be
 blocked (operating state 1). Output 2 is
 activated when the heat pump should receive a
 recommendation to switch on for extended operation
 for space heating and hot water preparation (operating state 3).
+
+:::note
+
+Heat pumps that require 230 V AC at their SG-Ready inputs
+(e.g. Viessmann Vitocal 250-A) must not be connected directly to the
+WARP Energy Manager's SG-Ready outputs. In this case, a suitable coupling relay
+must be installed between the SG-Ready output and the heat pump. The relay must be
+controlled via the SG-Ready output within the voltage and current limits stated above.
+The coupling relay's switching contact switches the 230 V AC required by the heat pump.
+
+:::
 
 ### Relay Outputs
 

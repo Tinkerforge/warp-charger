@@ -53,7 +53,7 @@ die untere Halterung angehoben werden, gefolgt von der oberen Halterung.
 Elektrischer Anschluss
 ----------------------
 
-:::note 
+:::note
 
 Die in diesem Kapitel beschriebenen Arbeiten dürfen nur von einer
 ausgewiesenen Elektrofachkraft durchgeführt werden!
@@ -106,12 +106,24 @@ Eingang zu legen.
 
 Wärmepumpen, die über eine [SG-Ready](https://www.waermepumpe.de/normen-technik/sg-ready/)-Schnittstelle
 gesteuert werden können, können hier angeschlossen werden.
-Dazu bietet der WARP Energy Manager 2.0 zwei Relais-Ausgänge.
+Dazu bietet der WARP Energy Manager 2.0 zwei Relais-Ausgänge, die für Spannungen bis zu
+125 V AC bzw. 110 V DC und Ströme bis zu 2 A ausgelegt sind.
 Ausgang 1 wird betätigt, wenn der Betrieb
 blockiert werden soll (Betriebszustand 1). Ausgang 2 wird
 betätigt, wenn der Wärmepumpe eine Einschaltempfehlung
 für den erweiterten Betrieb für Raumheizung und
 Warmwasserbereitung gegeben werden soll (Betriebszustand 3).
+
+:::note
+
+Wärmepumpen, die an ihren SG-Ready-Eingängen 230 V AC erwarten
+(z.B. Viessmann Vitocal 250-A), dürfen nicht direkt an die SG-Ready-Ausgänge des
+WARP Energy Managers angeschlossen werden. In diesem Fall muss ein geeignetes
+Koppelrelais zwischengeschaltet werden. Dessen Ansteuerung über den SG-Ready-Ausgang
+muss innerhalb der oben genannten Spannungs- und Stromgrenzen erfolgen. Der
+Schaltkontakt des Koppelrelais schaltet die von der Wärmepumpe benötigten 230 V AC.
+
+:::
 
 ### Relais-Ausgänge
 
