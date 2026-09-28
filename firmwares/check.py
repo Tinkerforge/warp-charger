@@ -10,106 +10,88 @@ import hashlib
 has_error = False
 
 
-class SemVer:
-    def __init__(self, major, minor, patch, beta=0, build=None):
-        assert build == None or len(build) > 0, build
-
+class SemanticVersion:
+    def __init__(self, major, minor, patch, beta=255, timestamp=0xffffffff):
         self.major = major
         self.minor = minor
         self.patch = patch
-        self.beta = beta
-        self.build = build
+        self.beta = beta  # 255 == no beta
+        self.timestamp = timestamp  # 0xffffffff == no timestamp
 
-    def __str__(self):
-        if self.beta == 0:
+    def to_string(self, separators=('.', '-', '.', '+')):
+        if self.beta >= 255:
             beta = ''
         else:
-            beta = '-beta.{0}'.format(self.beta)
+            beta = f'{separators[1]}beta{separators[2]}{self.beta}'
 
-        if self.build == None:
-            build = ''
+        if self.timestamp >= 0xffffffff:
+            timestamp = ''
         else:
-            build = '+{0}'.format(self.build)
+            timestamp = f'{separators[3]}{self.timestamp:x}'
 
-        return '{0}.{1}.{2}{3}{4}'.format(self.major, self.minor, self.patch, beta, build)
+        return f'{self.major}{separators[0]}{self.minor}{separators[0]}{self.patch}{beta}{timestamp}'
+
+    def __str__(self):
+        return self.to_string()
+
+    def to_path(self):
+        return self.to_string(separators=('_', '_', '_', '_'))
+
+    def as_tuple(self):
+        return (self.major, self.minor, self.patch, self.beta, self.timestamp)
+
+    def _check_type(self, operator, other):
+        if not isinstance(other, SemanticVersion):
+            raise TypeError(f"'{operator}' not supported between instances of {type(self).__name__} and {type(other).__name__}")
 
     def __eq__(self, other):
-        if not isinstance(other, SemVer):
+        if other == None:
             return False
 
-        return self.compare(other) == 0 and self.build == other.build
+        self._check_type('==', other)
+
+        return self.as_tuple() == other.as_tuple()
 
     def __ne__(self, other):
-        if not isinstance(other, SemVer):
+        if other == None:
             return True
 
-        return self.compare(other) != 0 or self.build != other.build
+        self._check_type('!=', other)
+
+        return self.as_tuple() != other.as_tuple()
 
     def __lt__(self, other):
-        if not isinstance(other, SemVer):
-            return True
+        self._check_type('<', other)
 
-        return self.compare(other) < 0
+        return self.as_tuple() < other.as_tuple()
 
     def __le__(self, other):
-        if not isinstance(other, SemVer):
-            return True
+        self._check_type('<=', other)
 
-        return self.compare(other) <= 0
+        return self.as_tuple() <= other.as_tuple()
 
     def __gt__(self, other):
-        if not isinstance(other, SemVer):
-            return False
+        self._check_type('>', other)
 
-        return self.compare(other) > 0
+        return self.as_tuple() > other.as_tuple()
 
     def __ge__(self, other):
-        if not isinstance(other, SemVer):
-            return False
+        self._check_type('>=', other)
 
-        return self.compare(other) >= 0
+        return self.as_tuple() >= other.as_tuple()
 
-    def compare(self, other):
-        if self.major > other.major:
-            return 1
+    @staticmethod
+    def from_string(string):
+        m = re.match(r'^([1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(?:-beta\.([1-9][0-9]*))?(?:\+([0-9a-fA-F]+))?$', string)
 
-        if self.major < other.major:
-            return -1
+        if m != None:
+            return SemanticVersion(int(m.group(1)),
+                                   int(m.group(2)),
+                                   int(m.group(3)),
+                                   beta=int(m.group(4)) if m.group(4) != None else 255,
+                                   timestamp=int(m.group(5), 16) if m.group(5) != None else 0xffffffff)
 
-        if self.minor > other.minor:
-            return 1
-
-        if self.minor < other.minor:
-            return -1
-
-        if self.patch > other.patch:
-            return 1
-
-        if self.patch < other.patch:
-            return -1
-
-        if self.beta == 0 and other.beta > 0:
-            return 1
-
-        if self.beta > 0 and other.beta == 0:
-            return -1
-
-        if self.beta > other.beta:
-            return 1
-
-        if self.beta < other.beta:
-            return -1
-
-        return 0
-
-
-def parse_semver(string):
-    m = re.match(r'^([1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(?:-beta\.([1-9][0-9]*))?(?:\+([0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*))?$', string)
-
-    if m != None:
-        return SemVer(int(m.group(1)), int(m.group(2)), int(m.group(3)), int(m.group(4) if m.group(4) != None else '0'), build=m.group(5))
-
-    return None
+        return None
 
 
 def print_error(*args):
@@ -151,7 +133,7 @@ def main():
                 print_error(f'{prefix}_v1.txt is not matching the beginning of {prefix}_v2.txt')
 
             for line in lines:
-                semver = parse_semver(line)
+                semver = SemanticVersion.from_string(line)
 
                 if semver == None:
                     print_error(f'Cannot parse {repr(line)} from {name}')
@@ -163,15 +145,15 @@ def main():
                 last_semver = semver
 
                 for suffix in ['.elf', '_changelog_en.txt', '_changelog_de.txt', '_merged.bin', '_merged.bin.sha256']:
-                    semver_path = str(semver).replace('.', '_').replace('-', '_').replace('+', '_')
+                    semver_path = semver.to_path()
                     path = prefix + '_' + semver_path + suffix
 
                     if not os.path.exists(path):
                         print_error(f'{path} is missing')
 
                     if suffix == '.elf':
-                        if ((prefix == 'warp_firmware' or prefix == 'warp2_firmware' or prefix == 'warp3_firmware') and semver >= SemVer(2, 5, 0)) or \
-                           (prefix == 'energy_manager_firmware' and semver >= SemVer(2, 2, 0)) or \
+                        if ((prefix == 'warp_firmware' or prefix == 'warp2_firmware' or prefix == 'warp3_firmware') and semver >= SemanticVersion(2, 5, 0)) or \
+                           (prefix == 'energy_manager_firmware' and semver >= SemanticVersion(2, 2, 0)) or \
                            prefix == 'energy_manager_v2_firmware' or \
                            prefix == 'smart_energy_broker_firmware':
                             index_html_path = f'static_html/{semver_path}_index.html'
@@ -220,7 +202,7 @@ def main():
                 print_error(f'{prefix}_v1.txt is not matching the beginning of {prefix}_v3.txt')
 
             for line in lines:
-                semver = parse_semver(line)
+                semver = SemanticVersion.from_string(line)
 
                 if semver == None:
                     print_error(f'Cannot parse {repr(line)} from {name}')
@@ -231,7 +213,7 @@ def main():
 
                 if last_semver == None:
                     link_path = prefix + '_latest_ota.bin'
-                    semver_path = str(semver).replace('.', '_').replace('-', '_').replace('+', '_')
+                    semver_path = semver.to_path()
                     dest_path = prefix + '_' + semver_path + '_ota.bin'
 
                     if not os.path.exists(link_path):
@@ -242,7 +224,7 @@ def main():
                 last_semver = semver
 
                 for suffix in ['.elf', '_changelog_en.txt', '_changelog_de.txt', '_esptool.bin', '_esptool.bin.sha256', '_ota.bin', '_ota.bin.sha256']:
-                    semver_path = str(semver).replace('.', '_').replace('-', '_').replace('+', '_')
+                    semver_path = semver.to_path()
                     path = prefix + '_' + semver_path + suffix
 
                     if not os.path.exists(path):
