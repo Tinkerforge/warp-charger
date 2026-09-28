@@ -125,6 +125,8 @@ def main():
         if prefix not in v1_lines:
             print_error(f'{prefix}_v1.txt is missing')
 
+        first_semver = None
+
         with open(name, 'r') as f:
             last_semver = None
             lines = list(f.readlines())
@@ -138,6 +140,9 @@ def main():
                 if semver == None:
                     print_error(f'Cannot parse {repr(line)} from {name}')
                     continue
+
+                if first_semver == None:
+                    first_semver = semver
 
                 if last_semver != None and semver >= last_semver:
                     print_error(f'{semver} is not smaller than {last_semver} in {name}')
@@ -188,11 +193,25 @@ def main():
                         if actual_path != expected_path:
                             print_error(f'{path} path mismatch: {repr(actual_path)} != {repr(expected_path)}')
 
+        if first_semver != None:
+            path = prefix + '_latest_merged.bin'
+
+            if not os.path.exists(path):
+                print_error(f'{path} is missing')
+            else:
+                expected_target = prefix + '_' + first_semver.to_path() + '_merged.bin'
+                actual_target = os.readlink(path)
+
+                if actual_target != expected_target:
+                    print_error(f'Symlink {path} target mismatch: {repr(actual_target)} != {repr(expected_target)}')
+
     for name in sorted(glob.glob('*_firmware_v3.txt')):
         prefix = name.replace('_v3.txt', '')
 
         if prefix != 'warp4_firmware' and prefix not in v1_lines:
             print_error(f'{prefix}_v1.txt is missing')
+
+        first_semver = None
 
         with open(name, 'r') as f:
             last_semver = None
@@ -207,6 +226,9 @@ def main():
                 if semver == None:
                     print_error(f'Cannot parse {repr(line)} from {name}')
                     continue
+
+                if first_semver == None:
+                    first_semver = semver
 
                 if last_semver != None and semver >= last_semver:
                     print_error(f'{semver} is not smaller than {last_semver} in {name}')
@@ -262,6 +284,19 @@ def main():
 
                         if actual_path != expected_path:
                             print_error(f'{path} path mismatch: {repr(actual_path)} != {repr(expected_path)}')
+
+        if first_semver != None:
+            for suffix in ['_esptool.bin', '_ota.bin']:
+                path = prefix + '_latest' + suffix
+
+                if not os.path.exists(path):
+                    print_error(f'{path} is missing')
+                else:
+                    expected_target = prefix + '_' + first_semver.to_path() + suffix
+                    actual_target = os.readlink(path)
+
+                    if actual_target != expected_target:
+                        print_error(f'Symlink {path} target mismatch: {repr(actual_target)} != {repr(expected_target)}')
 
     return 1 if has_error else 0
 
