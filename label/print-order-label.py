@@ -77,7 +77,7 @@ def split_text(text, max_width, min_lines):
 
     return lines
 
-def print_order_label(order_id, customer_name, copies, stdout):
+def print_order_label(order_id, customer_name, copies, stdout, raw):
     # check copies
     if copies < 1 or copies > 5:
         raise Exception('Invalid copies: {0}'.format(copies))
@@ -96,7 +96,13 @@ def print_order_label(order_id, customer_name, copies, stdout):
     template = template.replace(ORDER_ID_PLACEHOLDER, order_id.encode('latin1', errors='replace'))
 
     # split customer name
-    customer_name_lines = split_text(customer_name, 68, 3)
+    if raw:
+        customer_name_lines = customer_name.split('\n')
+
+        while len(customer_name_lines) < 3:
+            customer_name_lines.append('')
+    else:
+        customer_name_lines = split_text(customer_name, 68, 3)
 
     # patch customer name 1
     if template.find(CUSTOMER_NAME_1_PLACEHOLDER) < 0:
@@ -141,12 +147,13 @@ def main():
     parser.add_argument('customer_name')
     parser.add_argument('-c', '--copies', type=int, default=1)
     parser.add_argument('-s', '--stdout', action='store_true')
+    parser.add_argument('-r', '--raw', action='store_true')
 
     args = parser.parse_args()
 
     assert args.copies > 0
 
-    print_order_label(args.order_id, args.customer_name, args.copies, args.stdout)
+    print_order_label(args.order_id, args.customer_name, args.copies, args.stdout, args.raw)
 
 
 if __name__ == '__main__':
