@@ -76,11 +76,11 @@ at the shutdown input inside the charger. For this, a control line from
 the ripple control receiver or the grid operator's control box must be
 routed into the charger and connected to the charge controller. For
 details on the connection at the terminal block, see
-[Assembly and Installation](/warp3/assembly_and_installation.md#evse-klemmblock--abschalteingang).
+[Assembly and Installation](@current-charger/assembly_and_installation#evse-terminal-block--shutdown-input).
 
 In the §14a EnWG module, select **Charger shutdown input** as the signal
-source. The power limit is then automatically applied as soon as the
-grid operator switches the input.
+source and enable **This charger**. The power limit is then automatically
+applied as soon as the grid operator switches the input.
 
 ![image](/img/webinterface/energy_management/p14a_enwg.png)
 
@@ -90,10 +90,14 @@ Instead of routing a control line into the charger, there is also the
 option to connect one of the four inputs of the WARP Energy Manager to
 the ripple control receiver or control box. The WARP Energy Manager then
 controls the power of the charger(s) via the network (LAN/WLAN). A
-separate control line to the charger is not required.
+separate control line to the charger is not required. For details on the
+connection, see [Assembly and Installation](@current-wem/assembly_and_installation#inputs).
 
-In the §14a EnWG module, select **Energy Manager input** as the signal
-source and configure the corresponding input (1-4).
+In the §14a EnWG module of the Energy Manager, select **WARP Energy Manager
+input** as the signal source, configure the corresponding input (1-4) and
+enable **Managed chargers**. The WARP Energy Manager must be the charge
+manager of the chargers. With the WARP Energy Manager 2.0, a heat pump
+(SG-Ready) can additionally be included as **Heating**.
 
 ### EEBUS
 

@@ -332,9 +332,9 @@ Am Abschalteingang innerhalb der Wallbox kann ein potentialfreier Kontakt (spann
 Schaltkontakt) angeschlossen werden. Dazu muss eine Steuerleitung vom Rundsteuerempfänger
 oder der Steuerbox des Netzbetreibers in die Wallbox gelegt werden und am Ladecontroller
 (untere Platine) am mit "Enable" beschrifteten, dreipoligen Stecker an Pin 1 und Pin 2
-angeschlossen werden. Damit die Wallbox abschaltet, muss unter Wallbox -> Ladeeinstellungen
-die Einstellung "Abschalteingang" auf "Begrenzen auf 4300 W wenn geschlossen" bzw. "wenn
-geöffnet" konfiguriert werden.
+angeschlossen werden. Damit die Wallbox die Leistung begrenzt, wird unter Energiemanagement ->
+§14a EnWG die Signalquelle "Abschalteingang der Wallbox" gewählt und "Diese Wallbox" aktiviert
+(ab Firmware 2.10.0, siehe [§14a EnWG](/docs/webinterface/energy_management/p14a_enwg)).
 
 #### Rundsteuerempfänger / Steuerbox (mittels WARP Energy Manager)
 
@@ -342,12 +342,10 @@ Anstatt eine Steuerleitung bis in die Wallbox zu legen, besteht auch die Möglic
 Eingänge des WARP Energy Managers mit dem Rundsteuerempfänger oder der Steuerbox zu
 verbinden. Der WARP Energy Manager steuert dann die Leistung der Wallbox(en) über das
 Netzwerk (LAN/WLAN). Eine gesonderte Steuerleitung entfällt. Der WARP Energy Manager muss
-hierfür als Lastmanager der betreffenden Wallbox(en) konfiguriert werden. Anschließend muss
-in "Energiemanager" -> "Automatisierung" folgende Regel angelegt werden:
-
--   **Bedingung:** "Eingang 3 geschaltet" (bzw. Eingang 4) -> "auf geschlossen"
--   **Aktion:** "Begrenze maximalen Gesamtstrom"
--   **Maximaler Gesamtstrom:** 6 A (bzw. 18 A bei einphasigem Anschluss)
+hierfür als Lastmanager der betreffenden Wallbox(en) konfiguriert werden. Anschließend wird im
+WARP Energy Manager unter Energiemanagement -> §14a EnWG die Signalquelle "Eingang des WARP Energy
+Manager" und der verwendete Eingang gewählt sowie "Kontrollierte Wallboxen" aktiviert, siehe
+[§14a EnWG](/docs/webinterface/energy_management/p14a_enwg).
 
 ## Prüfungen
 

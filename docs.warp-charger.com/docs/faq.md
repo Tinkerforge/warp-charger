@@ -135,7 +135,7 @@ Ja. WARP Charger können sich über das eingebaute Lastmanagement einen Hausansc
 
 ### Kann ich einen WARP Charger von außen deaktivieren? Wie schließe ich einen Rundsteuerempfänger an (Stichwort §14a EnWG)?
 
-Zum das Thema §14a EnWG bieten wir ein eigenes Tutorial, welches die verschiedenen Möglichkeiten darstellt: [Tutorial §14a EnWG](/docs/tutorials/verbrauchseinrichtung).
+Zum Thema §14a EnWG bieten wir ein eigenes Tutorial, welches die verschiedenen Möglichkeiten darstellt: [Tutorial §14a EnWG](/docs/tutorials/verbrauchseinrichtung).
 
 ## Lastmanagement
 

@@ -32,13 +32,15 @@ Enables or disables the §14a EnWG control. When disabled, no power limits are a
 The signal source determines where the grid operator's control signal is received from. The following options are available:
 
 - **Charger shutdown input** (WARP Charger only): The signal is received via the potential-free shutdown input inside the charger. A ripple control receiver or control box from the grid operator is connected directly to the shutdown input.
-- **Energy Manager input** (Energy Manager only): The signal is received via one of the four inputs of the WARP Energy Manager. The ripple control receiver or control box is connected to an input of the Energy Manager. The chargers are then controlled via the network.
-- **EEBUS**: The control signal is received via the [EEBUS interface](/docs/interfaces/eebus). EEBUS is the designated interface for grid operator control of consumer devices.
-- **API**: The control signal is received via the HTTP/MQTT API. Details can be found in the API documentation under `p14a_enwg/control_update`.
+- **WARP Energy Manager input** (Energy Manager only): The signal is received via one of the inputs of the WARP Energy Manager (WARP Energy Manager 2.0: four inputs, WARP Energy Manager: two inputs). The ripple control receiver or control box is connected to an input of the Energy Manager. The chargers are then controlled via the network.
+- **EEBUS**: The control signal is received via the [EEBUS interface](/docs/interfaces/eebus). EEBUS is the designated interface for grid operator control of consumer devices. EEBUS must also be enabled under `Interfaces` -> `EEBUS`.
+- **API**: The control signal is received via the HTTP/MQTT API. Details can be found in the API documentation under [`p14a_enwg/control_update`](/docs/interfaces/mqtt_http/api_reference/p14a_enwg). The power limit is passed along with the signal. A state set via the API is reset to inactive on reboot.
 
-### Input (only with signal source "Energy Manager input")
+The following settings **Input**, **Device count** and **Active on** are only shown if an input (charger shutdown input or WARP Energy Manager input) is selected as the signal source.
 
-Selects the input (1–4) of the WARP Energy Manager to which the ripple control receiver or control box is connected.
+### Input (Energy Manager only)
+
+Selects the input of the WARP Energy Manager to which the ripple control receiver or control box is connected.
 
 ### Device count
 
@@ -56,7 +58,8 @@ Number of controllable consumer devices managed by the energy management system.
 | 6 | 0.60 | 16800 W |
 | 7 | 0.55 | 18060 W |
 | 8 | 0.50 | 18900 W |
-| 9+ | 0.45 | 18900 W + n × 0.45 × 4200 W |
+| 9 | 0.45 | 19320 W |
+| 10+ | 0.45 | 4200 W + (n − 1) × 0.45 × 4200 W |
 
 ### Active on
 
@@ -70,12 +73,12 @@ Determines at which input state the power limit becomes active:
 This section configures which consumers the power limit should be applied to:
 
 - **This charger** (WARP Charger only): Applies the power limit to the local charger.
-- **Managed chargers**: Applies the power limit to all chargers managed via charge management.
-- **Heating** (Energy Manager only): Applies the power limit to the connected heating system (heat pump via SG-Ready). When heating is enabled as a target device, the **Heating max. power** can additionally be configured.
+- **Managed chargers**: Applies the power limit to all chargers [controlled by the charge manager](/docs/webinterface/energy_management/wallboxes#controlled-chargers). This device must be the charge manager of these chargers.
+- **Heating** (WARP Energy Manager 2.0 only): Applies the power limit to the connected heating system (heat pump via SG-Ready).
 
-### Heating max. power (Energy Manager only)
+### Heating max. power (WARP Energy Manager 2.0 only)
 
-Specifies the maximum power draw of the heating system in watts.
+Specifies the maximum power draw of the heating system in watts. The setting is intended for a later integration of the heating into the charge management and is currently not evaluated yet.
 
 ## Status
 
@@ -84,17 +87,23 @@ When the §14a EnWG control is enabled, the current status is displayed at the t
 - **Status**: Shows whether the power limit is currently active or inactive.
 - **Current limit**: Shows the currently applied power limit in watts (only visible when active).
 
-Additionally, a warning banner is displayed on the **Status page** when the power limit is active (e.g. "Power limited to 4200 W").
+Additionally, the status indicator of the web interface (top right, in the app on the status page) shows the entry "14a EnWG" with its state, e.g. "Active (4200 W)".
+
+:::tip
+
+To test the configuration, **Active on** can temporarily be set to **Open** and saved. As long as the control box does not send a signal, the input is open and the limit becomes active immediately. Afterwards set the option back to **Closed** and save.
+
+:::
 
 ## Differences between WARP Charger and Energy Manager
 
 | | WARP Charger | Energy Manager |
 |---|---|---|
-| **Signal source "Input"** | Charger shutdown input | Energy Manager input 1–4 |
-| **Input selection** | Not available (single input only) | Input 1–4 selectable |
+| **Signal source "Input"** | Charger shutdown input | WARP Energy Manager input |
+| **Input selection** | Not available (single input only) | Input 1–4 (WARP Energy Manager: 1–2) |
 | **This charger** | Available | Not available |
-| **Heating** | Not available | Available |
-| **Heating max. power** | Not available | Available |
+| **Heating** | Not available | Available (WARP Energy Manager 2.0) |
+| **Heating max. power** | Not available | Available (WARP Energy Manager 2.0) |
 
 ## Further information
 

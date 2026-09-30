@@ -28,14 +28,14 @@ heating = Module("heating", T({'de': "Heizung", 'en': "Heating"}), "", T({'de': 
         "blocking_hours": Elem.INT(T({'de': "Anzahl der (teuersten) Stunden für die der blockierende Betrieb genutzt werden soll.", 'en': "Number of (most expensive) hours for which blocking operation should be used."}), unit=Units.h),
         "pv_excess_control": Elem.BOOL(T({'de': "Gibt an, ob die PV-Überschusssteuerung aktiviert werden soll.", 'en': "Specifies whether PV excess control should be enabled."})),
         "pv_excess_control_threshold": Elem.INT(T({'de': "Grenzewert für die PV-Überschusssteuerung. Wenn die PV-Überschusssteuerung aktiviert ist und der PV-Überschuss größer als der eingestellte Wert ausfällt, wird die Heizung nur bei PV-Überschuss in den erweiterten Betrieb gebracht.", 'en': "Threshold for PV excess control. When PV excess control is enabled and PV excess exceeds the configured value, heating is only switched to extended operation when there is PV excess."}), unit=Units.W),
-        "p14enwg": Elem.BOOL(T({'de': "Gibt an, ob die §14a EnWG-Steuerung aktiviert werden soll.", 'en': "Specifies whether §14a EnWG control should be enabled."})),
-        "p14enwg_input": Elem.INT(T({'de': "Gibt an, welcher Eingang des Energiemanagers für die Abschaltung per §14a EnWG genutzt werden soll.", 'en': "Specifies which input of the energy manager should be used for shutdown via §14a EnWG."}), constants=[
+        "p14enwg": Elem.BOOL(T({'de': "Veraltet, wird ignoriert. Die §14a-EnWG-Steuerung wird über {{{ref:p14a_enwg/config}}} konfiguriert. Eine alte Konfiguration wird beim Firmware-Update automatisch dorthin übernommen.", 'en': "Obsolete, ignored. §14a EnWG control is configured via {{{ref:p14a_enwg/config}}}. An old configuration is moved there automatically by the firmware update."})),
+        "p14enwg_input": Elem.INT(T({'de': "Veraltet, wird ignoriert. Siehe {{{ref:p14a_enwg/config}}}.", 'en': "Obsolete, ignored. See {{{ref:p14a_enwg/config}}}."}), constants=[
             Const(0, T({'de': "Eingang 1", 'en': "Input 1"})),
             Const(1, T({'de': "Eingang 2", 'en': "Input 2"})),
             Const(2, T({'de': "Eingang 3", 'en': "Input 3"})),
             Const(3, T({'de': "Eingang 4", 'en': "Input 4"})),
         ]),
-        "p14enwg_type": Elem.INT(T({'de': "Konfiguration für den Eingang.", 'en': "Configuration for the input."}), constants=[
+        "p14enwg_type": Elem.INT(T({'de': "Veraltet, wird ignoriert. Siehe {{{ref:p14a_enwg/config}}}.", 'en': "Obsolete, ignored. See {{{ref:p14a_enwg/config}}}."}), constants=[
             Const(0, T({'de': "Aktiv wenn geschlossen", 'en': "Active when closed"})),
             Const(1, T({'de': "Aktiv wenn geöffnet", 'en': "Active when open"})),
         ])

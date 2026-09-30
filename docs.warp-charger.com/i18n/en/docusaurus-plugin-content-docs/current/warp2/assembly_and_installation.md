@@ -321,9 +321,8 @@ for control.
 A potential-free contact (voltage-free switching contact) can be connected to the shutdown input inside the charger. For this, a control line from the ripple control receiver
 or the control box of the grid operator must be routed into the charger and connected at the charge controller
 (lower board) at the three-pole connector labeled "Enable" at pin 1 and pin 2.
-For the charger to switch off, the setting "Shutdown input" must be configured under Charger -> Charge settings
-to "Limit to 4300 W when closed" or "when
-open".
+For the charger to limit its power, select the signal source "Charger shutdown input" under Energy Management ->
+§14a EnWG and enable "This charger" (firmware 2.10.0 or newer, see [§14a EnWG](/docs/webinterface/energy_management/p14a_enwg)).
 
 #### Ripple Control Receiver / Control Box (using WARP Energy Manager)
 
@@ -331,12 +330,10 @@ Instead of routing a control line all the way into the charger, there is also th
 inputs of the WARP Energy Manager to the ripple control receiver or the control box.
 The WARP Energy Manager then controls the power of the charger(s) via the
 network (LAN/WLAN). A separate control line is not required. The WARP Energy Manager must
-be configured as the load manager of the relevant charger(s) for this. Afterwards, the
-following rule must be created in "Energy Manager" -> "Automation":
-
--   **Condition:** "Input 3 switched" (or input 4) -> "to closed"
--   **Action:** "Limit maximum total current"
--   **Maximum total current:** 6 A (or 18 A for single-phase connection)
+be configured as the load manager of the relevant charger(s) for this. Afterwards, select the
+signal source "WARP Energy Manager input" and the input used under Energy Management -> §14a EnWG
+of the WARP Energy Manager and enable "Managed chargers", see
+[§14a EnWG](/docs/webinterface/energy_management/p14a_enwg).
 
 ## Testing
 

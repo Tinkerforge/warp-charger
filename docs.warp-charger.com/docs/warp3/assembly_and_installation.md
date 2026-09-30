@@ -271,6 +271,6 @@ Ladekabels definiert wird.
 Zusätzlich befindet sich hier der Abschalteingang ("EN"). Dieser Eingang
 muss mit PE kurzgeschlossen werden, um aktiv zu sein. PE ist mehrfach
 auf dem Klemmblock vorhanden. Zur Konfiguration des Abschalteingangs
-siehe [Steuerbare Verbrauseinrichtung nach §14a EnWG](/docs/tutorials/verbrauchseinrichtung.md).
+siehe [Steuerbare Verbrauchseinrichtung nach §14a EnWG](/docs/tutorials/verbrauchseinrichtung.md).
 
 ![image](/img/warp3/evse_clamp.jpg)

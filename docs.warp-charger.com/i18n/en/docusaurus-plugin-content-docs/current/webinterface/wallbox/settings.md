@@ -75,7 +75,12 @@ On the first button press, the current charge mode is displayed. Further presses
 ## Shutdown Input
 
 For example, a ripple control receiver can be connected to the shutdown input. Here you can set how to react to changes
-at the shutdown input. In the default charger configuration, the limit is set to 4200 W when the shutdown input is closed, see
+at the shutdown input: "Not configured" (default), "Shut down on open" or "Shut down on close".
+
+To limit the power to 4200 W according to §14a EnWG, the shutdown input is not configured here but on the
+[§14a EnWG](/webinterface/energy_management/p14a_enwg.md) page (signal source "Charger shutdown input").
+The setting here then stays at "Not configured". An older setting that limits to 4200 W is automatically moved to the
+§14a EnWG page by a firmware update. See also
 [Controllable Consumption Device according to §14a EnWG](/tutorials/verbrauchseinrichtung.md).
 
 

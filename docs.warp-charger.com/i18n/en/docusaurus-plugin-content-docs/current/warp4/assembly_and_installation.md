@@ -276,10 +276,11 @@ terminal block. The CP line of the Type 2 charging cable is connected to this.
 
 Additionally, there is the shutdown input ("EN") here. This input
 must be short-circuited with PE to be active. PE is available multiple
-times on the terminal block. The interpretation of the shutdown input
-can be defined under `Charger` → `Settings` under the item "Shutdown input".
-For use as a controllable consumption device, see
+times on the terminal block. For use as a controllable consumption device,
+the shutdown input is configured under `Energy Management` → `§14a EnWG`, see
 [Controllable Consumption Device according to §14a EnWG](/tutorials/verbrauchseinrichtung.md).
+If the input should shut the charger down completely instead, this is set
+under `Charger` → `Settings` under the item "Shutdown input".
 
 The terminal block assignment is labeled.
 

@@ -29,7 +29,7 @@ bezahlen. Dazu kann ein Modul gewählt werden:
 
 ### Modul 1 - Pauschale Reduktion
 
-Bei Modul 1 wird das Netzentgelt pauschal für einen angenonmmenen fixen Stromverbrauch reduziert. Daraus ergibt sich ein fixer Euro-Betrag der jährlich über die Stromrechnung gutgeschrieben wird.
+Bei Modul 1 wird das Netzentgelt pauschal für einen angenommenen fixen Stromverbrauch reduziert. Daraus ergibt sich ein fixer Euro-Betrag der jährlich über die Stromrechnung gutgeschrieben wird.
 Diese Gutschrift ist pauschal und dementsprechend unabhängig vom eigenen Stromverbrauch. Für die technische Umsetzung von Modul 1 ist keine zusätzliche Hardware notwendig.
 Die Reduktion hat keine technischen Auswirkungen auf WARP Charger oder WARP Energy Manager. Dieses Modul lohnt sich bei sehr niedrigen Stromverbräuchen.
 
@@ -76,12 +76,12 @@ Am Abschalteingang innerhalb der Wallbox kann ein potentialfreier
 Kontakt (spannungsfreier Schaltkontakt) angeschlossen werden. Dazu muss
 eine Steuerleitung vom Rundsteuerempfänger oder der Steuerbox des
 Netzbetreibers in die Wallbox gelegt und am Ladecontroller angeschlossen
-werden. Für Details zum Anschluss am Klemmbock siehe
-[Montage und Installation](/docs/warp3/assembly_and_installation.md#evse-klemmblock--abschalteingang).
+werden. Für Details zum Anschluss am Klemmblock siehe
+[Montage und Installation](@current-charger/assembly_and_installation#evse-klemmblock--abschalteingang).
 
 Im §14a-EnWG-Modul wird als Signalquelle **Abschalteingang der Wallbox**
-ausgewählt. Das Leistungslimit wird dann automatisch angewendet,
-sobald der Netzbetreiber den Eingang schaltet.
+ausgewählt und **Diese Wallbox** aktiviert. Das Leistungslimit wird dann
+automatisch angewendet, sobald der Netzbetreiber den Eingang schaltet.
 
 ![image](/img/webinterface/energy_management/p14a_enwg.png)
 
@@ -92,9 +92,15 @@ Möglichkeit, einen der vier Eingänge des WARP Energy Managers mit dem
 Rundsteuerempfänger oder der Steuerbox zu verbinden. Der WARP Energy
 Manager steuert dann die Leistung der Wallbox(en) über das Netzwerk
 (LAN/WLAN). Eine gesonderte Steuerleitung zur Wallbox entfällt.
+Für Details zum Anschluss siehe
+[Montage und Installation](@current-wem/assembly_and_installation#eingänge).
 
-Im §14a-EnWG-Modul wird als Signalquelle **Eingang des Energy Managers**
-ausgewählt und der entsprechende Eingang (1-4) konfiguriert.
+Im §14a-EnWG-Modul des Energy Managers wird als Signalquelle **Eingang des
+WARP Energy Manager** ausgewählt, der entsprechende Eingang (1-4) konfiguriert
+und **Kontrollierte Wallboxen** aktiviert. Voraussetzung ist, dass der
+WARP Energy Manager das Lastmanagement der Wallboxen übernimmt. Mit dem
+WARP Energy Manager 2.0 kann zusätzlich eine Wärmepumpe (SG-Ready) als
+**Heizung** einbezogen werden.
 
 
 ### EEBUS

@@ -296,10 +296,12 @@ angeschlossen.
 
 Zusätzlich befindet sich hier der Abschalteingang ("EN"). Dieser Eingang
 muss mit PE kurzgeschlossen werden, um aktiv zu sein. PE ist mehrfach
-auf dem Klemmblock vorhanden. Die Interpretation des Abschalteingangs
-kann unter `Wallbox` → `Einstellungen` unter dem Punkt "Abschalteingang"
-definiert werden. Zur Nutzung als steuerbare Verbrauchseinrichtung siehe
-[Steuerbare Verbrauchseinrichtung nach §14a EnWG](/tutorials/verbrauchseinrichtung.md).
+auf dem Klemmblock vorhanden. Zur Nutzung als steuerbare
+Verbrauchseinrichtung wird der Abschalteingang unter `Energiemanagement`
+→ `§14a EnWG` konfiguriert, siehe
+[Steuerbare Verbrauchseinrichtung nach §14a EnWG](/docs/tutorials/verbrauchseinrichtung.md).
+Soll der Eingang die Wallbox dagegen komplett abschalten, wird dies unter
+`Wallbox` → `Einstellungen` unter dem Punkt "Abschalteingang" eingestellt.
 
 Die Belegung des Klemmblocks ist beschriftet.
 

@@ -77,7 +77,12 @@ Beim ersten Taster-Druck wird der aktuelle Lademodus angezeigt. Weiteres Drücke
 ## Abschalteingang
 
 Am Abschalteingang kann zum Beispiel ein Rundsteuerempfänger angeschlossen werden. Hier kann eingestellt werden, wie auf Änderungen
-am Abschalteingang reagiert werden soll. In der Standardkonfiguration der Wallbox wird auf 4200 W limitiert, wenn der Abschalteingang geschlossen ist, siehe
+am Abschalteingang reagiert werden soll: "Nicht konfiguriert" (Standard), "Abschalten, wenn geöffnet" oder "Abschalten, wenn geschlossen".
+
+Um die Leistung nach §14a EnWG auf 4200 W zu begrenzen, wird der Abschalteingang nicht hier, sondern auf der Seite
+[§14a EnWG](/docs/webinterface/energy_management/p14a_enwg.md) konfiguriert (Signalquelle "Abschalteingang der Wallbox").
+Die Einstellung hier bleibt dann auf "Nicht konfiguriert". Eine ältere Einstellung mit Begrenzung auf 4200 W wird bei einem
+Firmware-Update automatisch auf die Seite §14a EnWG übernommen. Siehe auch
 [Steuerbare Verbrauchseinrichtung nach §14a EnWG](/docs/tutorials/verbrauchseinrichtung).
 
 
