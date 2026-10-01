@@ -12,7 +12,7 @@ Der WARP Energy Manager besitzt folgende technische Spezifikation:
 |-|-|
 | PV-Überschussladen | max. 64 WARP Charger |
 | Lastmanagement | Statisch / dynamisch integriert, max. 64 WARP Charger |
-| Heizungssteuerung | 1x SG-Ready (PV-Nutzung, dynamische Strompreise)|
+| Heizungssteuerung | 1x SG-Ready (PV-Nutzung, dynamische Strompreise, max. 125 VAC/ 110 VDC 2A)|
 | Eingänge | 4x Eingang für potentialfreien Kontakt |
 | Ausgänge | 2x Relaisausgang (potentialfrei, max. 230VAC/3A) |
 | RS485 | 1x Modbus RTU Schnittstelle für unterstützte Stromzähler |
