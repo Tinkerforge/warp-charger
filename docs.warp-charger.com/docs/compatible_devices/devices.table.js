@@ -222,7 +222,7 @@ export const devices = [
     load: "-",
     dlm: "x",
     pve: "x",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "Fronius",
@@ -274,7 +274,7 @@ export const devices = [
     load: "-",
     dlm: "x",
     pve: "x",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "Growatt",
@@ -745,6 +745,19 @@ export const devices = [
     dlm: "x",
     pve: "x",
     bat: "x"
+  },
+  {
+    manufacturer: "Sonnen",
+    device: "SonnenBatterie",
+    connection: "Sonnenbatterie HTTP",
+    link: "/docs/compatible_devices/devices#sonnen",
+    grid: "x",
+    pv: "-",
+    battery: "x",
+    load: "-",
+    dlm: "-",
+    pve: "x",
+    bat: "-"
   },
   {
     manufacturer: "Sungrow",

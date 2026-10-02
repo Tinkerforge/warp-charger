@@ -27,6 +27,10 @@ Bei der Konfiguration muss nur SunSpec als Klasse ausgewählt und die IP
 Adresse des Geräts ausgewählt werden. Das System listet alle erkannten
 Geräte auf, so dass diese einfach zugeordnet werden können.
 
+Auch eine [Batteriesteuerung (BS)](/docs/compatible_devices/introduction#batteriesteuerung-bs) ist mittels des SunSpec Standard möglich
+und auch von uns implementiert. Leider ist seitens der Wechselrichter-Hersteller, die eine Abfrage der Batteriemesswerte per SunSpec ermöglichen, automatisch
+auch eine Steuerung des Speichers mittels SunSpec Implementiert. Bei nicht von uns als kompatibel gekennzeichneten Geräten muss dies im Zweifelsfall ausprobiert werden.
+
 ## Modbus/TCP
 
 Nicht alle Geräte unterstützen SunSpec. Wir arbeiten daran die
@@ -206,6 +210,16 @@ SMA hat mit Speedwire ein eigenes netzwerkbasiertes Kommunikationsprotokoll. Die
 manchen Wechselrichtern unterstützt. Mit dieser Schnittstelle kann nur der Netzanschlusszähler gelesen werden.
 
 Hier geht es zu den unterstützten SMA Geräten: [SMA Geräte](/docs/compatible_devices/devices.mdx#sma)
+
+
+## SonnenBatterie HTTP
+
+Die Messwerte der Batterien der Firma Sonnen können mittels lokalen HTTP Abfragen vom Speicher abgerufen werden.
+Es können Messwerte zum Netzanschluss und zum Speicher abgerufen werden. Das Auslesen von Phsenströmen ist leider nicht möglich, so dass ein
+[dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) nicht unterstützt werden kann. Auch eine
+[Batteriesteuerung](/docs/compatible_devices/introduction#batteriesteuerung-bs) ist nicht möglich.
+
+Hier geht es zu den Sonnen Geräten: [SonnenBatterie](/docs/compatible_devices/devices.mdx#sonnen)
 
 ## RCT Power Serial Communication
 
