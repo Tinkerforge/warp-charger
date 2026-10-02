@@ -12,19 +12,25 @@ has_error = False
 
 class SemanticVersion:
     def __init__(self, major, minor, patch, beta=255, timestamp=0xffffffff):
-        self.major = major
-        self.minor = minor
-        self.patch = patch
-        self.beta = beta  # 255 == no beta
-        self.timestamp = timestamp  # 0xffffffff == no timestamp
+        assert major >= 1 and major <= 255, major
+        assert minor >= 0 and minor <= 255, minor
+        assert patch >= 0 and patch <= 255, patch
+        assert beta >= 1 and beta <= 255, beta
+        assert timestamp >= 0 and timestamp <= 0xffffffff, timestamp
+
+        self.major = major  # [1..255]
+        self.minor = minor  # [0..255]
+        self.patch = patch  # [0..255]
+        self.beta = beta  # [1..255], 255 == no beta
+        self.timestamp = timestamp  # [0..0xffffffff], 0xffffffff == no timestamp
 
     def to_string(self, separators=('.', '-', '.', '+')):
-        if self.beta >= 255:
+        if self.beta == 255:
             beta = ''
         else:
             beta = f'{separators[1]}beta{separators[2]}{self.beta}'
 
-        if self.timestamp >= 0xffffffff:
+        if self.timestamp == 0xffffffff:
             timestamp = ''
         else:
             timestamp = f'{separators[3]}{self.timestamp:x}'
@@ -85,11 +91,38 @@ class SemanticVersion:
         m = re.match(r'^([1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(?:-beta\.([1-9][0-9]*))?(?:\+([0-9a-fA-F]+))?$', string)
 
         if m != None:
-            return SemanticVersion(int(m.group(1)),
-                                   int(m.group(2)),
-                                   int(m.group(3)),
-                                   beta=int(m.group(4)) if m.group(4) != None else 255,
-                                   timestamp=int(m.group(5), 16) if m.group(5) != None else 0xffffffff)
+            major = int(m.group(1))
+
+            if major > 255:
+                return None
+
+            minor = int(m.group(2))
+
+            if minor > 255:
+                return None
+
+            patch = int(m.group(3))
+
+            if patch > 255:
+                return None
+
+            if m.group(4) == None:
+                beta = 255
+            else:
+                beta = int(m.group(4))
+
+                if beta >= 255:
+                    return None
+
+            if m.group(5) == None:
+                timestamp = 0xffffffff
+            else:
+                timestamp = int(m.group(5), 16)
+
+                if timestamp >= 0xffffffff:
+                    return None
+
+            return SemanticVersion(major, minor, patch, beta=beta, timestamp=timestamp)
 
         return None
 
