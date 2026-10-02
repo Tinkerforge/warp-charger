@@ -28,7 +28,7 @@ Adresse des Geräts ausgewählt werden. Das System listet alle erkannten
 Geräte auf, so dass diese einfach zugeordnet werden können.
 
 Auch eine [Batteriesteuerung (BS)](/docs/compatible_devices/introduction#batteriesteuerung-bs) ist mittels des SunSpec Standard möglich
-und auch von uns implementiert. Leider ist seitens der Wechselrichter-Hersteller, die eine Abfrage der Batteriemesswerte per SunSpec ermöglichen, automatisch
+und auch von uns implementiert. Leider ist seitens der Wechselrichter-Hersteller, die eine Abfrage der Batteriemesswerte per SunSpec ermöglichen, nicht automatisch
 auch eine Steuerung des Speichers mittels SunSpec Implementiert. Bei nicht von uns als kompatibel gekennzeichneten Geräten muss dies im Zweifelsfall ausprobiert werden.
 
 ## Modbus/TCP
