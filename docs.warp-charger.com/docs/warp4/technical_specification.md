@@ -27,7 +27,8 @@ sidebar_position: 4
 | Zuleitungsquerschnitt | 2,5 mm² bis 10 mm² |
 | Zuleitungseinführung | M32 - Von der Unterseite und Rückseite möglich |
 | Zuleitungsdurchmesser | 11 mm bis 21 mm |
-| Datenleitungseinführung | M25 - Von der Unterseite und Rückseite möglich. M25 Dichteinsatz mit 2x 9mm Bohrungen |
+| Datenleitungseinführung | M25 - Von der Unterseite und Rückseite möglich. M25 Dichteinsatz mit 2x 9mm Bohrungen|
+| Datenleitungsdurchmesser | Ausgelegt für zwei Letungen mit je ca. 7,5 mm bis 9mm (Klemmbereich Dichteinsatz)|
 
 ### Mechanik & Gehäuse
 
