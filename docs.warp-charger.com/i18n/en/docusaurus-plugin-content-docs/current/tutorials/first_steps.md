@@ -121,8 +121,8 @@ passphrase for the selected network must now be entered.
 ![image](/img/tutorials/first_steps/network_wifi.png)
 
 The configuration can now be saved with the Save button.
-The web interface will then restart and connect to the
-configured WiFi. The status page shows whether the connection
+The WARP Charger / WARP Energy Manager will then connect to the
+configured WiFi without a restart. The status page shows whether the connection
 was successful. The access point remains open so that
 configuration errors can be corrected. Since the access point uses
 the same channel as a possibly connected network, it may be

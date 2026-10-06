@@ -123,7 +123,7 @@ Passphrase des gewählten Netzes eintragen werden.
 ![image](/img/tutorials/first_steps/network_wifi.png)
 
 Die Konfiguration kann jetzt mit dem Speichern-Button abgespeichert
-werden. Das Webinterface startet dann neu und verbindet sich mit dem
+werden. Der WARP Charger / WARP Energy Manager verbindet sich dann ohne Neustart mit dem
 konfigurierten WLAN. Die Statusseite zeigt an, ob die Verbindung
 erfolgreich war. Der Access-Point bleibt weiterhin geöffnet, sodass
 Konfigurationsfehler behoben werden können. Da der Access-Point den
