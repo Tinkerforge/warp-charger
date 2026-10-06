@@ -88,7 +88,12 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
     }
 }
 
-\usepackage{hyperref}
+\ifdefined\forprint
+    % No link annotations in print: they carry RGB border colors
+    \usepackage[draft]{hyperref}
+\else
+    \usepackage{hyperref}
+\fi
 \usepackage{qrcode}
 
 \appto\UrlNoBreaks{\do\.\do\:\do\/\do\_}

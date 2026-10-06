@@ -13,6 +13,7 @@ define to_cmyk_print
 	  -sOutputICCProfile=$(ICC_PROFILE) \
 	  -sOutputFile=$(2) \
 	  $(PDFX_DEF) $(1)
+	python3 fix_blending_colorspace.py $(2)
 endef
 
 clean:
