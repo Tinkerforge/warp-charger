@@ -9,10 +9,10 @@ Das folgende Video zeigt die Installation der WARP4 Wallbox im Überblick.
 <video
   controls
   preload="none"
-  poster="/de/img/warp4/warp4-installation-poster.webp"
+  poster="https://warp-charger.com/static/images/warp4-installation-poster.de.webp?v=1"
   playsInline
   style={{width: '100%', height: 'auto', borderRadius: '8px'}}>
-  <source src="/de/videos/warp4-installation.mp4" type="video/mp4" />
+  <source src="https://warp-charger.com/static/videos/warp4-installation.de.mp4?v=1" type="video/mp4" />
 </video>
 
 ## Montage

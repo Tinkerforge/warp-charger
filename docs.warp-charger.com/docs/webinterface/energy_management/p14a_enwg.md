@@ -8,6 +8,17 @@ import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
 <DeviceCompatibility supported={['wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
 
+Das folgende Video erklärt §14a EnWG und zeigt die Einrichtung am WARP Charger und am WARP Energy Manager.
+
+<video
+  controls
+  preload="none"
+  poster="https://warp-charger.com/static/images/p14a-enwg-poster.de.webp?v=1"
+  playsInline
+  style={{width: '100%', height: 'auto', borderRadius: '8px', marginBottom: 'var(--ifm-leading)'}}>
+  <source src="https://warp-charger.com/static/videos/p14a-enwg.de.mp4?v=1" type="video/mp4" />
+</video>
+
 
 §14a des Energiewirtschaftsgesetzes (EnWG) ermöglicht es Netzbetreibern, den Strombezug steuerbarer Verbrauchseinrichtungen (Wallboxen, Wärmepumpen, Batteriespeicher, Klimaanlagen) temporär zu reduzieren, um eine Überlastung des lokalen Stromnetzes zu vermeiden. Die Geräte werden dabei nie vollständig abgeschaltet. Eine Mindestleistung von 4200 W bleibt stets verfügbar.
 

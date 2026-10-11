@@ -9,6 +9,18 @@ import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
 <DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
 
+The following video shows the first steps with a WARP Charger: setup with the WARP app,
+connecting it to the home network and updating the firmware.
+
+<video
+  controls
+  preload="none"
+  poster="https://warp-charger.com/static/images/first-steps-poster.en.webp?v=1"
+  playsInline
+  style={{width: '100%', maxWidth: '360px', height: 'auto', borderRadius: '8px', display: 'block', margin: '0 auto var(--ifm-leading)'}}>
+  <source src="https://warp-charger.com/static/videos/first-steps.en.mp4?v=1" type="video/mp4" />
+</video>
+
 :::note
 
 The initial setup for WARP Charger and WARP Energy Manager is essentially identical. Both
@@ -19,9 +31,26 @@ devices can be integrated into a network via WiFi or LAN.
 
 To configure the device (WARP Charger or WARP Energy Manager),
 a connection to the device must first be established so that it can be configured via the
-web interface using a web browser.
+web interface using a web browser or the WARP app.
 
 ## Step 1: Establish Connection to WARP Charger / WARP Energy Manager
+
+With the free WARP app for Android and iPhone, the initial setup via WiFi can be done
+directly on the smartphone, without an account.
+
+<p>
+  <a href="https://play.google.com/store/apps/details?id=com.tinkerforge.warp" target="_blank" rel="noopener"><img src="/en/img/apps/badge-googleplay.en.png" alt="Google Play" style={{height: '48px', marginRight: '16px'}} /></a>
+  <a href="https://apps.apple.com/us/app/warp-by-tinkerforge/id6736695801" target="_blank" rel="noopener"><img src="/en/img/apps/badge-appstore.png" alt="App Store" style={{height: '48px'}} /></a>
+</p>
+
+In the app, tap "Add via QR code" and scan the QR code on the WiFi credentials
+sticker on the back of the operating manual. The app connects to the WiFi access
+point of the device (confirm the smartphone's request with "Connect" on Android or
+"Join" on iPhone) and opens the web interface. Steps 2 to 4 are then done directly
+in the app, as shown in the video above. This requires Android 10 or later, or
+iOS 16 or later.
+
+Without the app, the connection can be established as follows:
 
 ### Option 1: WiFi
 

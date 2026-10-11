@@ -9,10 +9,10 @@ The following video gives an overview of installing the WARP4 Charger.
 <video
   controls
   preload="none"
-  poster="/en/img/warp4/warp4-installation-poster.webp"
+  poster="https://warp-charger.com/static/images/warp4-installation-poster.en.webp?v=1"
   playsInline
   style={{width: '100%', height: 'auto', borderRadius: '8px'}}>
-  <source src="/en/videos/warp4-installation.mp4" type="video/mp4" />
+  <source src="https://warp-charger.com/static/videos/warp4-installation.en.mp4?v=1" type="video/mp4" />
 </video>
 
 ## Assembly

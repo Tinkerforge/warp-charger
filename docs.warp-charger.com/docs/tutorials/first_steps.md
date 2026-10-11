@@ -9,6 +9,18 @@ import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
 <DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
 
+Das folgende Video zeigt die ersten Schritte mit einem WARP Charger: Einrichtung mit der WARP App,
+Einbindung ins Heimnetz und Firmware-Aktualisierung.
+
+<video
+  controls
+  preload="none"
+  poster="https://warp-charger.com/static/images/first-steps-poster.de.webp?v=1"
+  playsInline
+  style={{width: '100%', maxWidth: '360px', height: 'auto', borderRadius: '8px', display: 'block', margin: '0 auto var(--ifm-leading)'}}>
+  <source src="https://warp-charger.com/static/videos/first-steps.de.mp4?v=1" type="video/mp4" />
+</video>
+
 :::note
 
 Die Erstinbetriebnahme für WARP Charger und WARP Energy Manager ist im wesentlichen
@@ -19,9 +31,26 @@ identisch. Beide Geräte können per WLAN oder LAN in ein Netzwerk eingebunden w
 
 Damit das Gerät (WARP Charger oder WARP Energy Manager) konfiguriert werden kann,
 muss zuerst eine Verbindung zum Gerät hergestellt werden, damit diese über das
-Webinterface mittels Webbrowser konfiguriert werden kann.
+Webinterface mittels Webbrowser oder WARP App konfiguriert werden kann.
 
 ## Schritt 1: Verbindung zum WARP Charger / WARP Energy Manager herstellen
+
+Mit der kostenlosen WARP App für Android und iPhone geht die Ersteinrichtung per WLAN
+direkt auf dem Smartphone, ganz ohne Konto.
+
+<p>
+  <a href="https://play.google.com/store/apps/details?id=com.tinkerforge.warp" target="_blank" rel="noopener"><img src="/de/img/apps/badge-googleplay.de.png" alt="Google Play" style={{height: '48px', marginRight: '16px'}} /></a>
+  <a href="https://apps.apple.com/us/app/warp-by-tinkerforge/id6736695801" target="_blank" rel="noopener"><img src="/de/img/apps/badge-appstore.png" alt="App Store" style={{height: '48px'}} /></a>
+</p>
+
+In der App auf „Per QR-Code hinzufügen“ tippen und den QR-Code auf dem
+WLAN-Zugangsdaten-Aufkleber auf der Rückseite der Betriebsanleitung scannen.
+Die App verbindet sich mit dem WLAN-Access-Point des Geräts (die Anfrage des
+Smartphones mit „Verbinden“ bestätigen) und öffnet das Webinterface. Die
+Schritte 2 bis 4 werden dann direkt in der App ausgeführt, wie im Video oben
+gezeigt. Nötig ist Android 10 oder neuer bzw. iOS 16 oder neuer.
+
+Ohne App kann die Verbindung wie folgt hergestellt werden:
 
 ### Option 1: WLAN
 

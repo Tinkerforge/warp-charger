@@ -8,6 +8,24 @@ import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
 <DeviceCompatibility supported={['wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
 
+The following video explains §14a EnWG and shows the setup on the WARP Charger and the WARP Energy Manager.
+
+:::note
+
+The video is only available in German (with German subtitles). §14a EnWG is a German regulation, and the video uses
+the German terms as they appear in the documents of the German grid operators.
+
+:::
+
+<video
+  controls
+  preload="none"
+  poster="https://warp-charger.com/static/images/p14a-enwg-poster.de.webp?v=1"
+  playsInline
+  style={{width: '100%', height: 'auto', borderRadius: '8px', marginBottom: 'var(--ifm-leading)'}}>
+  <source src="https://warp-charger.com/static/videos/p14a-enwg.de.mp4?v=1" type="video/mp4" />
+</video>
+
 
 §14a of the German Energy Industry Act (Energiewirtschaftsgesetz, EnWG) allows grid operators to temporarily reduce the power consumption of controllable consumer devices (chargers, heat pumps, battery storage, air conditioning) to prevent local grid overload. The devices are never fully shut off. A minimum of 4200 W always remains available.
 
