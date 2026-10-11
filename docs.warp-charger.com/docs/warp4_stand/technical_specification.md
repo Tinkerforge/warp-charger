@@ -2,6 +2,8 @@
 sidebar_position: 3
 ---
 
+import ThemedDrawing from '@site/src/components/ThemedDrawing';
+
 # Technische Spezifikation
 
 | Eigenschaft | Wert |
@@ -25,7 +27,7 @@ Kabelhaltern und Wallboxen ergibt sich ein größerer Platzbedarf.
 
 ## Maßzeichnung
 
-[![Maße der WARP4 Ladesäule mit einer Wallbox und Fußplatte](/img/warp4_stand/dimensions.svg)](/img/warp4_stand/stand_drawings.pdf)
+<ThemedDrawing src="/img/warp4_stand/dimensions.svg" href="/img/warp4_stand/stand_drawings.pdf" alt="Maße der WARP4 Ladesäule mit einer Wallbox und Fußplatte" />
 
 [Fundament- und Maßzeichnungen als PDF](/img/warp4_stand/stand_drawings.pdf)
 

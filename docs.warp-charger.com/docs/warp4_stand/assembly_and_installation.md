@@ -2,6 +2,8 @@
 sidebar_position: 2
 ---
 
+import ThemedDrawing from '@site/src/components/ThemedDrawing';
+
 # Montage und Installation
 
 :::warning
@@ -76,7 +78,7 @@ durch die 110 × 55 mm große ovale Aussparung geführt werden und mindestens
 mindestens **300 mm überstehen**. Die Kabel während der Fundamentherstellung vor
 Beschädigungen schützen. Ein Erdungsanschluss ist zwingend erforderlich.
 
-[![Fundamentzeichnung mit Mindestmaßen, Montagehilfe und Kabelüberständen](/img/warp4_stand/foundation.svg)](/img/warp4_stand/stand_drawings.pdf)
+<ThemedDrawing src="/img/warp4_stand/foundation.svg" href="/img/warp4_stand/stand_drawings.pdf" alt="Fundamentzeichnung mit Mindestmaßen, Montagehilfe und Kabelüberständen" />
 
 [Fundament- und Maßzeichnungen als PDF](/img/warp4_stand/stand_drawings.pdf)
 

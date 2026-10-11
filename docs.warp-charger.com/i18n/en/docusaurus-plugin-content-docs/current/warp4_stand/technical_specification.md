@@ -2,6 +2,8 @@
 sidebar_position: 3
 ---
 
+import ThemedDrawing from '@site/src/components/ThemedDrawing';
+
 # Technical Specification
 
 | Property | Value |
@@ -25,7 +27,7 @@ increase the space required.
 
 ## Dimension Drawing
 
-[![Dimensions of the WARP4 stand with one charger and base plate](/img/warp4_stand/dimensions.svg)](/img/warp4_stand/stand_drawings.pdf)
+<ThemedDrawing src="/img/warp4_stand/dimensions.svg" href="/img/warp4_stand/stand_drawings.pdf" alt="Dimensions of the WARP4 stand with one charger and base plate" />
 
 [Foundation and dimension drawings (PDF, German labels)](/img/warp4_stand/stand_drawings.pdf)
 

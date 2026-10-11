@@ -2,6 +2,8 @@
 sidebar_position: 2
 ---
 
+import ThemedDrawing from '@site/src/components/ThemedDrawing';
+
 # Assembly and Installation
 
 :::warning
@@ -72,7 +74,7 @@ Route power, protective-earth and, if used, network cables through the central
 foundation**, and protective sleeves or conduits at least **300 mm**. Protect the
 cables from damage during foundation construction. An earth connection is mandatory.
 
-[![Foundation drawing showing minimum dimensions, mounting jig and cable projections; German labels](/img/warp4_stand/foundation.svg)](/img/warp4_stand/stand_drawings.pdf)
+<ThemedDrawing src="/img/warp4_stand/foundation.svg" href="/img/warp4_stand/stand_drawings.pdf" alt="Foundation drawing showing minimum dimensions, mounting jig and cable projections; German labels" />
 
 [Foundation and dimension drawings (PDF, German labels)](/img/warp4_stand/stand_drawings.pdf)
 

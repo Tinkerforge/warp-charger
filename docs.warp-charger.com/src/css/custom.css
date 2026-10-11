@@ -228,6 +228,14 @@ html:root[data-theme='dark'] {
   fill: var(--adm-heading);
 }
 
+/* Transparent SVG drawings with black lines would vanish in dark mode: white
+   background, unless they have a dark variant (ThemedDrawing component). */
+[data-theme='dark'] .markdown img[src$='.svg']:not([class*='themedComponent']) {
+  padding: 0.5rem;
+  border-radius: 8px;
+  background: #fff;
+}
+
 /* Sidebar: guide line for nested levels and a tinted current page */
 .theme-doc-sidebar-menu .menu__list {
   margin-left: 0.75rem;
