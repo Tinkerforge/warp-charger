@@ -216,7 +216,7 @@ Hier geht es zu den unterstützten SMA Geräten: [SMA Geräte](/docs/compatible_
 
 Die Messwerte der Batterien der Firma Sonnen können mittels lokalen HTTP Abfragen vom Speicher abgerufen werden.
 Es können Messwerte zum Netzanschluss und zum Speicher abgerufen werden. Das Auslesen von Phasenströmen ist leider nicht möglich, so dass ein
-[dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) nicht unterstützt werden kann. Auch eine
+[dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement-dlm) nicht unterstützt werden kann. Auch eine
 [Batteriesteuerung](/docs/compatible_devices/introduction#batteriesteuerung-bs) ist nicht möglich.
 
 Hier geht es zu den Sonnen Geräten: [SonnenBatterie](/docs/compatible_devices/devices.mdx#sonnen)
