@@ -171,57 +171,6 @@ const config: Config = {
         },
       ],
     },
-    footer: {
-      style: 'dark',
-      links: [
-        {
-          title: 'Links',
-          items: [
-            {
-              label: 'WARP Dokumentation',
-              to: '/docs/home',
-            },
-            {
-              label: 'warp-charger.com',
-              href: 'https://warp-charger.com',
-            },
-            {
-              href: 'https://www.tinkerunity.org/forum/13-warp-charger/',
-              label: 'Community-Forum',
-            },
-          ],
-        },
-        {
-          title: 'Contribute',
-          items: [
-
-            {
-              label: 'GitHub',
-              href: 'https://github.com/Tinkerforge',
-            },
-          ],
-        },
-        {
-          title: 'Legal',
-          items: [
-
-            {
-              label: 'Impressum',
-              href: 'https://www.tinkerforge.com/de/home/legal_info/',
-            },
-            {
-              label: 'Datenschutz',
-              href: 'https://www.tinkerforge.com/de/home/privacy_notice/',
-            },
-            {
-              label: 'AGB',
-              href: 'https://www.tinkerforge.com/de/home/terms_and_conditions/',
-            },
-          ],
-        },
-      ],
-      copyright: `Copyright © ${new Date().getFullYear()} Tinkerforge GmbH.`,
-    },
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,

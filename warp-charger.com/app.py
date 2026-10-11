@@ -500,6 +500,9 @@ def get_postal_data():
 RAPIDMAIL_API_BASE = "https://apiv3.emailsys.net"
 RAPIDMAIL_RECIPIENTLIST_ID = 2099
 NEWSLETTER_EMAIL_RE = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
+# The docs footer posts to the newsletter endpoint too (plain form POST, so
+# no preflight); the browser only needs this header to read the result.
+NEWSLETTER_CORS_ORIGINS = {"https://docs.warp-charger.com"}
 
 
 def get_rapidmail_credentials():
@@ -552,17 +555,28 @@ def newsletter_signup(lang):
     if lang not in SUPPORTED_LANGUAGES:
         abort(404)
 
+    body, status = _newsletter_signup()
+    response = jsonify(body)
+    response.status_code = status
+    origin = request.headers.get("Origin")
+    if origin in NEWSLETTER_CORS_ORIGINS:
+        response.headers["Access-Control-Allow-Origin"] = origin
+        response.headers["Vary"] = "Origin"
+    return response
+
+
+def _newsletter_signup():
     email = (request.form.get("email") or request.values.get("email") or "").strip()
     if not email and request.is_json:
         email = ((request.get_json(silent=True) or {}).get("email") or "").strip()
 
     if not NEWSLETTER_EMAIL_RE.match(email):
-        return jsonify({"ok": False, "error": "invalid_email"}), 400
+        return {"ok": False, "error": "invalid_email"}, 400
 
     user, password = get_rapidmail_credentials()
     if not user or not password:
         app.logger.warning("Newsletter signup attempted but rapidmail credentials are not configured.")
-        return jsonify({"ok": False, "error": "not_configured"}), 503
+        return {"ok": False, "error": "not_configured"}, 503
 
     payload = json.dumps({
         "recipientlist_id": RAPIDMAIL_RECIPIENTLIST_ID,
@@ -586,19 +600,19 @@ def newsletter_signup(lang):
     try:
         with urllib.request.urlopen(req, timeout=10) as resp:
             # 201 Created on success.
-            return jsonify({"ok": True}), 200
+            return {"ok": True}, 200
     except urllib.error.HTTPError as exc:
         body = exc.read().decode("utf-8", "replace") if exc.fp else ""
         # 400/409/422 commonly mean the address already exists or was already
         # submitted, treat these as success for the visitor's point of view.
         if exc.code in (400, 409, 422):
             app.logger.info("Newsletter signup for %s returned HTTP %s: %s", email, exc.code, body)
-            return jsonify({"ok": True}), 200
+            return {"ok": True}, 200
         app.logger.error("rapidmail signup failed (HTTP %s): %s", exc.code, body)
-        return jsonify({"ok": False, "error": "upstream"}), 502
+        return {"ok": False, "error": "upstream"}, 502
     except urllib.error.URLError as exc:
         app.logger.error("rapidmail signup connection error: %s", exc)
-        return jsonify({"ok": False, "error": "upstream"}), 502
+        return {"ok": False, "error": "upstream"}, 502
 
 
 @app.route("/<lang>/blog", strict_slashes=False)
