@@ -16,13 +16,15 @@
     badge_icon="info",
     badge_text=t.intro.badge,
     headline=t.intro.headline,
-    image="p14a-enwg-webui.webp",
     image_side="right",
-    bg="bg-background"
+    bg="bg-background",
+    video="p14a-enwg.de.mp4",
+    video_poster="p14a-enwg-poster.de.webp"
 ) %}
     <p class="text-section-body">{{ t.intro.text }}</p>
     <p class="text-section-body">{{ t.intro.text2 }}</p>
     <p class="text-section-body">{{ t.intro.text3 }}</p>
+    {% if t.intro.video_hint %}<p class="text-section-body italic">{{ t.intro.video_hint }}</p>{% endif %}
 {% endcall %}
 
 {# Modules #}

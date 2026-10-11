@@ -19,6 +19,21 @@
     </div>
 {% endcall %}
 
+{# Einrichtung (first steps video, 9:16) #}
+{% call two_col_section(
+    badge_icon="qr_code_scanner",
+    badge_text=t.setup.badge,
+    headline=t.setup.headline,
+    video="first-steps." ~ lang ~ ".mp4",
+    video_poster="first-steps-poster." ~ lang ~ ".webp",
+    image_side="left",
+    bg="bg-background",
+    media_max="max-w-xs"
+) %}
+    <p class="text-section-body">{{ t.setup.text }}</p>
+    <p class="text-section-body">{{ t.setup.text2 }}</p>
+{% endcall %}
+
 {# Fernzugriff #}
 {% call two_col_section(
     badge_icon="public",
@@ -59,6 +74,5 @@
     image_side="right"
 ) %}
     <p class="text-section-body">{{ t.local.text }}</p>
-    <p class="text-section-body italic">{{ t.local.hint }}</p>
 {% endcall %}
 {% endblock %}

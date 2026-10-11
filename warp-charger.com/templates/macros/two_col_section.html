@@ -102,7 +102,8 @@
     video_poster="",
     media_tabs=false,
     image_label="",
-    video_label=""
+    video_label="",
+    media_max="max-w-lg"
 ) %}
 {% set alt = image_alt or headline %}
 {% set flex_dir = "lg:flex-row" if image_side == "right" else "lg:flex-row-reverse" %}
@@ -162,7 +163,7 @@
                 {% elif no_frame %}
                 {{ _light_media(video, video_poster, image, alt, "block h-auto w-full max-w-lg object-contain") }}
                 {% else %}
-                <div class="glass-frame w-full max-w-lg">
+                <div class="glass-frame w-full {{ media_max }}">
                     {{ _light_media(video, video_poster, image, alt, "glass-frame-inner block h-auto w-full object-cover shadow-[0_0_27px_4.5px_rgba(0,0,0,0.10)]") }}
                 </div>
                 {% endif %}
@@ -177,7 +178,7 @@
             {% elif no_frame %}
             {{ _light_media(video, video_poster, image, alt, "block h-auto w-full max-w-lg object-contain") }}
             {% else %}
-            <div class="glass-frame w-full max-w-lg">
+            <div class="glass-frame w-full {{ media_max }}">
                 {{ _light_media(video, video_poster, image, alt, "glass-frame-inner block h-auto w-full object-cover shadow-[0_0_27px_4.5px_rgba(0,0,0,0.10)]") }}
             </div>
             {% endif %}
