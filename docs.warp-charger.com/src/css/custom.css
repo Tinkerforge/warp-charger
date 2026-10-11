@@ -27,7 +27,33 @@
 }
 
 .navbar--dark {
-  --ifm-navbar-background-color: #555;
+  --ifm-navbar-background-color: transparent;
+  --navbar-glass-tint: rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+/* Glass effect like the header of warp-charger.com. The blur sits on a layer
+   behind the navbar content: backdrop-filter on .navbar itself would trap the
+   fixed mobile sidebar inside the navbar. */
+.navbar--dark::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--navbar-glass-tint);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+/* The mobile menu panel uses the navbar color, keep it solid */
+.navbar--dark .navbar-sidebar {
+  background-color: #242526;
+}
+
+.navbar--dark .navbar__item,
+.navbar--dark .navbar__title {
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
 
 :root {
