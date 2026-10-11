@@ -1,0 +1,202 @@
+.home {
+  margin-bottom: 2.5rem;
+  container-type: inline-size;
+}
+
+.home a,
+.home a:hover {
+  text-decoration: none;
+}
+
+/* Hero: same blue gradient as the "Open Source Ladelösungen" banner on warp-charger.com */
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2.5rem 2.5rem 2.5rem 2.75rem;
+  border-radius: 20px;
+  overflow: hidden;
+  color: #fff;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px) 0 0 / 32px 32px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px) 0 0 / 32px 32px,
+    linear-gradient(135deg, #021273 0%, #1856c8 55%, #008eff 100%);
+  box-shadow: 0 18px 40px -24px rgba(2, 18, 115, 0.7);
+}
+
+.kicker {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.home .title {
+  margin: 0.35rem 0 0.75rem;
+  color: #fff;
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+}
+
+.lead {
+  max-width: 32em;
+  margin: 0 0 1.5rem;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.btnPrimary {
+  display: inline-block;
+  padding: 0.6rem 1.25rem;
+  border-radius: 999px;
+  font-weight: 700;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.home .btnPrimary {
+  background: #fff;
+  color: #021273;
+}
+
+.home .btnPrimary:hover {
+  transform: translateY(-1px);
+  color: #021273;
+}
+
+.heroImage {
+  width: 100%;
+  max-width: 320px;
+  justify-self: center;
+  filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.35));
+  transform: rotate(-4deg);
+}
+
+/* Products */
+.products {
+  display: grid;
+  margin-top: 1.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 16px;
+  background: var(--ifm-card-background-color);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.productMain {
+  flex: 1;
+  display: block;
+  color: inherit;
+}
+
+.home .productMain:hover {
+  color: inherit;
+}
+
+.productImage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 170px;
+  padding: 1rem;
+  background: linear-gradient(180deg, #f4f7fb 0%, #e5ebf3 100%);
+}
+
+:global([data-theme='dark']) .productImage {
+  background: linear-gradient(180deg, #33373d 0%, #26292d 100%);
+}
+
+.productImage img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.productName {
+  padding: 0.8rem 1rem;
+  text-align: center;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ifm-color-primary);
+}
+
+/* Underline on mouse-over like every other link in the docs */
+.home .productMain:hover .productName {
+  text-decoration: underline;
+}
+
+.older {
+  padding: 0.6rem 1rem;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.olderLabel {
+  display: block;
+}
+
+/* Too narrow for three cards: one card per row, photo on the left */
+@container (max-width: 600px) {
+  .products {
+    grid-template-columns: 1fr;
+  }
+
+  .productMain {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    align-items: center;
+  }
+
+  .productImage {
+    height: 110px;
+    padding: 0.6rem;
+  }
+
+  .productName {
+    text-align: left;
+  }
+
+  .older {
+    text-align: left;
+  }
+
+  .olderLabel {
+    display: inline;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 1.75rem;
+  }
+
+  .home .title {
+    font-size: 2.3rem;
+  }
+
+  .heroImage {
+    display: none;
+  }
+}

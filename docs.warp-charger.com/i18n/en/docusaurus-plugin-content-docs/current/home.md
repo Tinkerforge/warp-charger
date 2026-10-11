@@ -1,16 +1,12 @@
 ---
 sidebar_position: 0
+title: Introduction
+hide_title: true
 ---
 
-# Introduction
+import HomeOverview from '@site/src/components/HomeOverview';
 
-Welcome to the documentation pages of the WARP product line from
-Tinkerforge.
-
-Here you will find the documentation for installation and configuration of:
-* [WARP4 Charger](/warp4/introduction.md) ([WARP3](/warp3/introduction.md), [WARP2](/warp2/introduction.md), [WARP1](/warp1/introduction.md)),
-* [WARP Energy Manager 2.0](/wem2/introduction.md) ([WEM1](/wem1/introduction.md)) and
-* [WARP4 Charger Stand](/warp4_stand/introduction.md) ([previous generation](/warp_ladesäule/introduction.md)).
+<HomeOverview />
 
 This documentation is constantly maintained and expanded. If you have ideas for
 additional documentation or examples, please let us know. We also gladly
