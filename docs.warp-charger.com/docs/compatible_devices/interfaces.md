@@ -29,7 +29,7 @@ Geräte auf, so dass diese einfach zugeordnet werden können.
 
 Auch eine [Batteriesteuerung (BS)](/docs/compatible_devices/introduction#batteriesteuerung-bs) ist mittels des SunSpec Standard möglich
 und auch von uns implementiert. Leider ist seitens der Wechselrichter-Hersteller, die eine Abfrage der Batteriemesswerte per SunSpec ermöglichen, nicht automatisch
-auch eine Steuerung des Speichers mittels SunSpec Implementiert. Bei nicht von uns als kompatibel gekennzeichneten Geräten muss dies im Zweifelsfall ausprobiert werden.
+auch eine Steuerung des Speichers mittels SunSpec implementiert. Bei nicht von uns als kompatibel gekennzeichneten Geräten muss dies im Zweifelsfall ausprobiert werden.
 
 ## Modbus/TCP
 
@@ -215,7 +215,7 @@ Hier geht es zu den unterstützten SMA Geräten: [SMA Geräte](/docs/compatible_
 ## SonnenBatterie HTTP
 
 Die Messwerte der Batterien der Firma Sonnen können mittels lokalen HTTP Abfragen vom Speicher abgerufen werden.
-Es können Messwerte zum Netzanschluss und zum Speicher abgerufen werden. Das Auslesen von Phsenströmen ist leider nicht möglich, so dass ein
+Es können Messwerte zum Netzanschluss und zum Speicher abgerufen werden. Das Auslesen von Phasenströmen ist leider nicht möglich, so dass ein
 [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) nicht unterstützt werden kann. Auch eine
 [Batteriesteuerung](/docs/compatible_devices/introduction#batteriesteuerung-bs) ist nicht möglich.
 
