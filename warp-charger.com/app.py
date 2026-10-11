@@ -715,7 +715,7 @@ def maximum_compatibility():
     lang = request.path.split("/")[1]
     slug = "loesungen/maximale-kompatibilitaet" if lang == "de" else "solutions/maximum-compatibility"
     data_path = Path(__file__).parent / "data" / "compatible_devices.json"
-    manufacturers = json.loads(data_path.read_text()) if data_path.exists() else []
+    manufacturers = json.loads(data_path.read_text()).get(lang, []) if data_path.exists() else []
     return render_page(lang, slug, translation="maximum-compatibility", manufacturers=manufacturers)
 
 

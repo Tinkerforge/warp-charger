@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Parses devices.table.js from docs.warp-charger.com and generates
-a JSON file for use in the warp-charger.com compatible devices page.
+Parses the German and English devices.table.js from docs.warp-charger.com and
+generates a JSON file (one manufacturer list per language) for use in the
+warp-charger.com compatible devices page.
 """
 
 import json
@@ -10,7 +11,11 @@ from pathlib import Path
 
 # This script lives in scripts/; ROOT is the warp-charger.com project root.
 ROOT = Path(__file__).resolve().parent.parent
-DOCS_TABLE = ROOT.parent / "docs.warp-charger.com" / "docs" / "compatible_devices" / "devices.table.js"
+DOCS = ROOT.parent / "docs.warp-charger.com"
+DOCS_TABLES = {
+    "de": DOCS / "docs" / "compatible_devices" / "devices.table.js",
+    "en": DOCS / "i18n" / "en" / "docusaurus-plugin-content-docs" / "current" / "compatible_devices" / "devices.table.js",
+}
 OUTPUT = ROOT / "data" / "compatible_devices.json"
 
 # Logo file mapping: manufacturer name -> logo filename (without extension)
@@ -43,9 +48,10 @@ LOGO_MAP = {
     "Siemens": "siemens",
     "SMA": "sma",
     "SolarEdge": "solaredge",
-    "Solarmax": None,
+    "Solarmax": "solarmax",
     "Solax": "solax",
     "Solis": "solis",
+    "Sonnen": "sonnen",
     "Sungrow": "sungrow",
     "Tasmota": "tasmota",
     "Tinkerforge": None,
@@ -79,7 +85,18 @@ def parse_devices_js(path: Path) -> list[dict]:
     return devices
 
 
-def aggregate_by_manufacturer(devices: list[dict]) -> list[dict]:
+# Measurement locations (same wording as the "measurement" section of the page) and features per language
+ROLE_NAMES = {
+    "de": {"grid": "Netzanschluss", "pv": "PV-Erzeugung", "battery": "Batteriespeicher", "load": "Verbraucher"},
+    "en": {"grid": "Grid Connection", "pv": "PV Generation", "battery": "Battery Storage", "load": "Consumers"},
+}
+FEATURE_NAMES = {
+    "de": {"pve": "PVÜ", "dlm": "dLM", "bat": "BS"},
+    "en": {"pve": "PVE", "dlm": "DLM", "bat": "BC"},
+}
+
+
+def aggregate_by_manufacturer(devices: list[dict], lang: str) -> list[dict]:
     """Group devices by manufacturer and aggregate their properties."""
     manufacturers = {}
 
@@ -105,22 +122,14 @@ def aggregate_by_manufacturer(devices: list[dict]) -> list[dict]:
                 m["interfaces"].add(iface)
 
         # Collect measurement roles
-        if d.get("grid") in ("x", "(x)"):
-            m["roles"].add("Netzanschluss")
-        if d.get("pv") in ("x", "(x)"):
-            m["roles"].add("PV-Erzeugung")
-        if d.get("battery") in ("x", "(x)"):
-            m["roles"].add("Batteriespeicher")
-        if d.get("load") in ("x", "(x)"):
-            m["roles"].add("Verbraucher")
+        for key, role in ROLE_NAMES[lang].items():
+            if d.get(key) in ("x", "(x)"):
+                m["roles"].add(role)
 
         # Collect features
-        if d.get("pve") in ("x", "(x)"):
-            m["features"].add("PVÜ")
-        if d.get("dlm") in ("x", "(x)"):
-            m["features"].add("dLM")
-        if d.get("bat") in ("x", "(x)"):
-            m["features"].add("BS")
+        for key, feature in FEATURE_NAMES[lang].items():
+            if d.get(key) in ("x", "(x)"):
+                m["features"].add(feature)
 
     # Convert to sorted list with serializable types
     result = []
@@ -129,7 +138,7 @@ def aggregate_by_manufacturer(devices: list[dict]) -> list[dict]:
         if logo is None:
             continue  # Skip manufacturers without logos
 
-        docs_url = "https://docs.warp-charger.com/de" + m["link"] if m["link"] else ""
+        docs_url = f"https://docs.warp-charger.com/{lang}" + m["link"] if m["link"] else ""
 
         result.append({
             "name": name,
@@ -146,22 +155,30 @@ def aggregate_by_manufacturer(devices: list[dict]) -> list[dict]:
     return result
 
 
-# Manufacturers not in devices.table.js but should appear on website
-EXTRA_MANUFACTURERS = []
+# Manufacturers not in devices.table.js but should appear on website (per language)
+EXTRA_MANUFACTURERS = {"de": [], "en": []}
 
 
 def main():
-    print(f"Reading: {DOCS_TABLE}")
-    devices = parse_devices_js(DOCS_TABLE)
-    print(f"  Parsed {len(devices)} device entries")
+    result = {}
+    for lang, table in DOCS_TABLES.items():
+        print(f"Reading: {table}")
+        devices = parse_devices_js(table)
+        print(f"  Parsed {len(devices)} device entries")
 
-    aggregated = aggregate_by_manufacturer(devices)
-    aggregated.extend(EXTRA_MANUFACTURERS)
-    aggregated.sort(key=lambda x: x["name"].lower())
-    print(f"  Aggregated into {len(aggregated)} manufacturers (with logos)")
+        aggregated = aggregate_by_manufacturer(devices, lang)
+        aggregated.extend(EXTRA_MANUFACTURERS[lang])
+        aggregated.sort(key=lambda x: x["name"].lower())
+        print(f"  Aggregated into {len(aggregated)} manufacturers (with logos)")
+        result[lang] = aggregated
+
+    names = {lang: [m["name"] for m in ms] for lang, ms in result.items()}
+    if names["de"] != names["en"]:
+        print(f"  WARNING: manufacturers differ between the languages: "
+              f"only de {sorted(set(names['de']) - set(names['en']))}, only en {sorted(set(names['en']) - set(names['de']))}")
 
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT.write_text(json.dumps(aggregated, indent=2, ensure_ascii=False) + "\n")
+    OUTPUT.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n")
     print(f"  Written: {OUTPUT}")
 
 
