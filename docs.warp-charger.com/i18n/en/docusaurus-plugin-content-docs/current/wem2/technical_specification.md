@@ -10,8 +10,8 @@ The WARP Energy Manager has the following technical specification:
 
 | Property | Value |
 |-|-|
-| PV Excess Charging | max. 64 WARP Charger |
-| Charge Management | Static / dynamic integrated, max. 64 WARP Charger |
+| PV Excess Charging | max. 64 WARP Chargers |
+| Charge Management | Static / dynamic integrated, max. 64 WARP Chargers |
 | Heating Control | 1x SG-Ready (PV utilization, dynamic tariffs, max. 125 VAC/ 110 VDC 2A)|
 | Inputs | 4x input for potential-free contact |
 | Outputs | 2x relay output (potential-free, max. 230VAC/3A) |
