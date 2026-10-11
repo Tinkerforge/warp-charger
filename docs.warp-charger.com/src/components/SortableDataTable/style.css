@@ -17,11 +17,16 @@
   white-space: wrap;
 }
 
+/* Below 1600 px the table does not fit the docs column: one card per device,
+   label and value as a two-column grid. */
 @media(max-width: 1600px) {
-  .sortable-table, .sortable-table tbody, .sortable-table thead, .sortable-table tbody, .sortable-table th, .sortable-table td, .sortable-table tr {
+  .sortable-table, .sortable-table tbody, .sortable-table thead, .sortable-table th, .sortable-table td, .sortable-table tr {
     display: block;
     width: 100%;
-    clear: both;
+  }
+
+  .sortable-table {
+    border: 0;
   }
 
   .sortable-table thead tr {
@@ -30,27 +35,40 @@
     left: -9999px;
   }
 
-  .sortable-table tr {
-    padding-bottom: 5px;
-    border: var(--ifm-table-border-width) solid var(--ifm-table-border-color);
+  .sortable-table tr,
+  .sortable-table tr:nth-child(2n) {
+    margin-bottom: 0.75rem;
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--ifm-color-emphasis-200);
+    border-radius: 12px;
+    background-color: var(--ifm-card-background-color);
+  }
+
+  .sortable-table td,
+  .sortable-table td.sortable-data-table {
+    display: grid;
+    grid-template-columns: minmax(7.5rem, 30%) minmax(0, 1fr);
+    column-gap: 1rem;
+    align-items: center;
+    min-height: 1.9rem;
+    padding: 0.15rem 0;
+    border: none;
+    white-space: normal;
   }
 
   .sortable-table td:before {
-    float: left;
-    width: 35%;
-    padding: 0 0 0 1%;
+    font-size: 0.9em;
+    color: var(--ifm-color-emphasis-700);
   }
 
-  .sortable-table td {
-    padding-left: 10%;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+  .sortable-table td:first-of-type a {
+    font-weight: 700;
   }
 
-  .sortable-table td {
-    border: none;
-    padding: 2px 0 2px 0;
+  /* Placeholders only keep the pill columns aligned in the wide table */
+  .sortable-table .device.unavailable,
+  .sortable-table .application.unavailable {
+    display: none;
   }
 
   .sortable-table td:nth-of-type(1):before { content: "Hersteller:"; }

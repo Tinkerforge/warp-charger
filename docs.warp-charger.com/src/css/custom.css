@@ -26,6 +26,26 @@
   margin-top: 4px;
 }
 
+/* Mobile: smaller logo so "Dokumentation" fits next to menu and search; the
+   menu panel has the close and theme buttons next to the logo, no room for
+   the title there. */
+@media (max-width: 996px) {
+  .navbar__logo img {
+    height: 18px;
+    margin-top: 7px;
+  }
+
+  .navbar-sidebar .navbar__title {
+    display: none;
+  }
+}
+
+@media (max-width: 340px) {
+  .navbar__title {
+    display: none;
+  }
+}
+
 .navbar--dark {
   --ifm-navbar-background-color: transparent;
   --navbar-glass-tint: rgba(0, 0, 0, 0.5);
@@ -46,8 +66,12 @@
   backdrop-filter: blur(12px);
 }
 
-/* The mobile menu panel uses the navbar color, keep it solid */
+/* The mobile menu panel uses the navbar color, keep it solid. It is dark in
+   both themes, so the light theme's greys (borders, highlights) are replaced. */
 .navbar--dark .navbar-sidebar {
+  --ifm-color-emphasis-200: rgba(255, 255, 255, 0.14);
+  --ifm-menu-color-background-active: rgba(255, 255, 255, 0.07);
+  --ifm-menu-color-background-hover: rgba(255, 255, 255, 0.07);
   background-color: #242526;
 }
 
@@ -161,6 +185,59 @@ html:root[data-theme='dark'] {
   --docsearch-search-button-background: #1b1b1d;
 }
 
+/* Admonitions: light tint of the type color, thin outline and a colored left
+   border instead of Infima's solid blocks (too heavy in dark mode). */
+.theme-admonition.alert {
+  --adm-color: #8d949e;
+  --adm-heading: #525860;
+  --ifm-alert-border-radius: 10px;
+  --ifm-alert-border-width: 1px;
+  --ifm-alert-border-left-width: 4px;
+  --ifm-alert-shadow: none;
+  --ifm-alert-background-color: color-mix(in srgb, var(--adm-color) 7%, var(--ifm-background-color));
+  --ifm-alert-background-color-highlight: color-mix(in srgb, var(--adm-color) 15%, transparent);
+  --ifm-alert-border-color: color-mix(in srgb, var(--adm-color) 30%, transparent);
+  --ifm-alert-foreground-color: var(--ifm-font-color-base);
+  --ifm-link-color: var(--ifm-color-primary);
+  --ifm-link-hover-color: var(--ifm-color-primary);
+  border-left-color: var(--adm-color);
+}
+
+.theme-admonition.alert--success { --adm-color: #2f9e55; --adm-heading: #1f7a40; }
+.theme-admonition.alert--info { --adm-color: #00aaea; --adm-heading: #0077a4; }
+.theme-admonition.alert--warning { --adm-color: #e6a700; --adm-heading: #8f6200; }
+.theme-admonition.alert--danger { --adm-color: #e13238; --adm-heading: #b42318; }
+
+[data-theme='dark'] .theme-admonition.alert {
+  --adm-color: #8d949e;
+  --adm-heading: #c4c7cc;
+  --ifm-alert-background-color: color-mix(in srgb, var(--adm-color) 10%, var(--ifm-background-color));
+  --ifm-alert-border-color: color-mix(in srgb, var(--adm-color) 28%, transparent);
+}
+
+[data-theme='dark'] .theme-admonition.alert--success { --adm-color: #2f9e55; --adm-heading: #6fcf8e; }
+[data-theme='dark'] .theme-admonition.alert--info { --adm-color: #00aaea; --adm-heading: #5ccbf5; }
+[data-theme='dark'] .theme-admonition.alert--warning { --adm-color: #e6a700; --adm-heading: #f2c85b; }
+[data-theme='dark'] .theme-admonition.alert--danger { --adm-color: #e13238; --adm-heading: #ff8a80; }
+
+.theme-admonition [class*='admonitionHeading'] {
+  color: var(--adm-heading);
+}
+
+.theme-admonition [class*='admonitionIcon'] svg {
+  fill: var(--adm-heading);
+}
+
+/* Sidebar: guide line for nested levels and a tinted current page */
+.theme-doc-sidebar-menu .menu__list {
+  margin-left: 0.75rem;
+  padding-left: 0.25rem;
+  border-left: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.theme-doc-sidebar-menu .menu__link--active:not(.menu__link--sublist) {
+  background-color: rgba(0, 170, 234, 0.1);
+}
 
 /* Docs flagged with `sidebar_class_name: sidebar-item-hidden` stay part of the
    sidebar (so the menu and device context persist on their page) but their
