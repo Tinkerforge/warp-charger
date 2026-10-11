@@ -21,7 +21,7 @@ Which features the charger offers can be read via *Discrete Inputs*.
 Control of the charger is possible via the *Holding Registers* and *Coils*.
 
 ### Input Registers (Function codes: Read: 4)
-{/*LAST_COMMIT_ID=d1d169bf33e011d9113aabef16d2dc1052dfbb72*/}
+{/*LAST_COMMIT_ID=50c32b3d85dce8613b87adee99a216d8fca3cc5e*/}
 {/*
   Don't edit this table.
   Update https://github.com/Tinkerforge/esp32-firmware/blob/master/software/web/src/modules/modbus_tcp/translation_de.tsx
@@ -44,7 +44,7 @@ Control of the charger is possible via the *Holding Registers* and *Coils*.
         <td>Register table version</td>
         <td>uint32</td>
         <td>---</td>
-        <td>Current version: 4</td>
+        <td>Current version: 5</td>
     </tr>
     <tr>
         <td>2</td>
@@ -88,6 +88,13 @@ Control of the charger is possible via the *Holding Registers* and *Coils*.
         <td>uint32</td>
         <td>---</td>
         <td>Time in seconds since the boot-up of the charger firmware.</td>
+    </tr>
+    <tr>
+        <td>14</td>
+        <td>Firmware version Beta</td>
+        <td>uint32</td>
+        <td>---</td>
+        <td>For example 3 for firmware 2.4.0-beta.3+66558ade. 0 means, that no beta firmware is installed.</td>
     </tr>
     <tr>
         <td>1000</td>
@@ -295,7 +302,7 @@ Control of the charger is possible via the *Holding Registers* and *Coils*.
 </tbody>
 </table>
 
-### Holding Registers (Function codes: Read: 3, Write: 16)
+### Holding Registers (Function codes: Read: 3, Single write: 6, Multiple write: 16)
 
 <table>
 <thead>
