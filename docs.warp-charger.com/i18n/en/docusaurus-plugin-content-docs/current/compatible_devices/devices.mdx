@@ -265,9 +265,9 @@ Fronius inverters of the GEN24 series (GEN24 and GEN24 Plus) speak SunSpec and c
 Port 502 should be configured. "float" can be selected as the SunSpec Model Type. The "Grid" energy meter is only usable if an external hardware energy meter (Fronius Smart Meter) has been installed at the grid connection and can be read by the inverter.
 Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
 
-### GEN24 Series Hybrid Inverters (Storage)
-{manufacturer_to_bubbles("Fronius", "GEN24 and GEN24 Plus Series Hybrid Inverter (Storage)")}
+**Storage** \
 The SunSpec implementation by Fronius is unfortunately insufficient to read a connected storage. For this reason, we have created a custom Modbus/TCP template for reading the storage. This should be selected for the "Storage" energy meter.
+[Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc), on the other hand, is possible via SunSpec.
 
 
 
@@ -299,7 +299,9 @@ Fronius hybrid inverters of the Verto Plus series speak SunSpec and can be read 
 Port 502 should be configured. "float" can be selected as the SunSpec Model Type. The "Grid" energy meter is only usable if an external hardware energy meter (Fronius Smart Meter) has been installed at the grid connection and can be read by the inverter.
 Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
 
-Unfortunately, it seems that Fronius currently does not support SunSpec models for reading the storage (as of May 2025).
+**Storage** \
+The SunSpec implementation by Fronius is unfortunately insufficient to read a connected storage. For this reason, we have created a custom Modbus/TCP template for reading the storage. This should be selected for the "Storage" energy meter.
+[Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc), on the other hand, is possible via SunSpec.
 
 
 ## Growatt
@@ -564,6 +566,15 @@ According to SMA, the Unit ID for the "SMA Modbus profile" + 123 is used. This i
 To read the inverter power, firmware version 4.00.02.R or higher is required.
 Only the measurement value for generation (PV) is available.
 
+### Sunny Tripower CORE1
+{manufacturer_to_bubbles("SMA", "Sunny Tripower CORE1")}
+
+Sunny Tripower CORE1 inverters speak SunSpec and can be read directly. For this, the "SunSpec Modbus profile" must be activated as the Modbus profile on the inverter.
+According to SMA, the Unit ID for the "SMA Modbus profile" + 123 is used. This is set to 3 by default, so the Unit ID for SunSpec is 126.
+
+To read the inverter power, firmware version 3.14.##.R or higher is required.
+Only the measurement value for generation (PV) is available.
+
 ### Sunny Tripower Smart Energy 5.0 / 6.0 / 8.0 / 10.0
 {manufacturer_to_bubbles("SMA", "Sunny Tripower Smart Energy 5.0 / 6.0 / 8.0 / 10.0")}
 
@@ -574,15 +585,6 @@ To read the inverter power, firmware version 3.01.09.R or higher is required.
 The "Grid" energy meter is only usable if an external hardware energy meter has been installed at the grid connection and can be read by the inverter.
 Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
 Battery storage systems connected to the inverter can be controlled via [Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc).
-
-### Sunny Tripower CORE1
-{manufacturer_to_bubbles("SMA", "Sunny Tripower CORE1")}
-
-Sunny Tripower CORE1 inverters speak SunSpec and can be read directly. For this, the "SunSpec Modbus profile" must be activated as the Modbus profile on the inverter.
-According to SMA, the Unit ID for the "SMA Modbus profile" + 123 is used. This is set to 3 by default, so the Unit ID for SunSpec is 126.
-
-To read the inverter power, firmware version 3.14.##.R or higher is required.
-Only the measurement value for generation (PV) is available.
 
 ### Sunny Tripower Storage
 {manufacturer_to_bubbles("SMA", "Sunny Tripower Storage")}
@@ -700,6 +702,13 @@ The "Grid" energy meter is only usable if an external hardware energy meter has 
 Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
 A battery storage system connected to the inverter can be controlled via [Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc).
 
+
+## Sonnen
+
+### SonnenBatterie
+{manufacturer_to_bubbles("Sonnen")}
+
+The measured values of the SonnenBatterie can be read via local HTTP requests. Unfortunately, Sonnen does not provide phase currents, so only [PV Excess Charging (PVE)](/compatible_devices/introduction.md#pv-excess-charging-pve) is possible with these values.
 
 ## Sungrow
 

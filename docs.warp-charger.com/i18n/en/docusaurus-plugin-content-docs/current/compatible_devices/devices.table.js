@@ -222,20 +222,7 @@ export const devices = [
     load: "-",
     dlm: "x",
     pve: "x",
-    bat: "-"
-  },
-  {
-    manufacturer: "Fronius",
-    device: "GEN24 and GEN24 Plus Series Hybrid Inverter (Storage)",
-    connection: "Modbus/TCP",
-    link: "/docs/compatible_devices/devices#fronius",
-    grid: "-",
-    pv: "-",
-    battery: "x",
-    load: "-",
-    dlm: "-",
-    pve: "-",
-    bat: "-"
+    bat: "x"
   },
   {
     manufacturer: "Fronius",
@@ -287,7 +274,20 @@ export const devices = [
     load: "-",
     dlm: "x",
     pve: "x",
-    bat: "-"
+    bat: "x"
+  },
+  {
+    manufacturer: "Growatt",
+    device: "Hybrid Inverter",
+    connection: "Modbus/TCP",
+    link: "/docs/compatible_devices/devices#growatt",
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "x",
+    dlm: "-",
+    pve: "x",
+    bat: "x"
   },
   {
     manufacturer: "Goodwe",
@@ -327,19 +327,6 @@ export const devices = [
     dlm: "?",
     pve: "?",
     bat: "-"
-  },
-  {
-    manufacturer: "Growatt",
-    device: "Hybrid Inverter",
-    connection: "Modbus/TCP",
-    link: "/docs/compatible_devices/devices#growatt",
-    grid: "x",
-    pv: "x",
-    battery: "x",
-    load: "x",
-    dlm: "-",
-    pve: "x",
-    bat: "x"
   },
   {
     manufacturer: "Hailei", //is alpha ess
@@ -605,19 +592,6 @@ export const devices = [
   },
   {
     manufacturer: "SMA",
-    device: "Sunny Tripower Smart Energy 5.0 / 6.0 / 8.0 / 10.0",
-    connection: "SunSpec, Modbus/TCP",
-    link: "/docs/compatible_devices/devices#sma",
-    grid: "x",
-    pv: "x",
-    battery: "x",
-    load: "-",
-    dlm: "x",
-    pve: "x",
-    bat: "x"
-  },
-  {
-    manufacturer: "SMA",
     device: "Sunny Tripower CORE1",
     connection: "SunSpec",
     link: "/docs/compatible_devices/devices#sma",
@@ -628,6 +602,19 @@ export const devices = [
     dlm: "-",
     pve: "-",
     bat: "-"
+  },
+  {
+    manufacturer: "SMA",
+    device: "Sunny Tripower Smart Energy 5.0 / 6.0 / 8.0 / 10.0",
+    connection: "SunSpec, Modbus/TCP",
+    link: "/docs/compatible_devices/devices#sma",
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "-",
+    dlm: "x",
+    pve: "x",
+    bat: "x"
   },
   {
     manufacturer: "SMA",
@@ -758,6 +745,19 @@ export const devices = [
     dlm: "x",
     pve: "x",
     bat: "x"
+  },
+  {
+    manufacturer: "Sonnen",
+    device: "SonnenBatterie",
+    connection: "Sonnenbatterie HTTP",
+    link: "/docs/compatible_devices/devices#sonnen",
+    grid: "x",
+    pv: "-",
+    battery: "x",
+    load: "-",
+    dlm: "-",
+    pve: "x",
+    bat: "-"
   },
   {
     manufacturer: "Sungrow",

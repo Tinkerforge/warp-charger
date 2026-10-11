@@ -5,7 +5,7 @@ sidebar_position: 2
 # Interfaces
 
 With the exception of energy meters compatible with the [WARP Energy Manager](@current-wem/introduction),
-which can be [directly connected](/compatible_devices/interfaces.md#power-meters-connected-to-warp-energy-manager) to it,
+which can be [directly connected](/compatible_devices/interfaces.md#energy-meters-connected-to-warp-energy-manager) to it,
 all other interfaces are accessed via the network (LAN, WLAN).
 
 The following is a list of compatible interfaces:
@@ -26,6 +26,10 @@ Charger and WARP Energy Manager.
 During configuration, only SunSpec needs to be selected as the class and the IP
 address of the device needs to be entered. The system lists all detected
 devices so that they can be easily assigned.
+
+[Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc) is also possible via the SunSpec standard
+and implemented by us. Unfortunately, inverter manufacturers that allow reading the battery values via SunSpec do not
+automatically also implement control of the storage via SunSpec. For devices not marked as compatible by us, this may have to be tried out.
 
 ## Modbus/TCP
 
@@ -205,6 +209,16 @@ SMA has its own network-based communication protocol called Speedwire. This is s
 some inverters. With this interface, only the grid connection meter can be read.
 
 Here are the supported SMA devices: [SMA Devices](/compatible_devices/devices.mdx#sma)
+
+
+## SonnenBatterie HTTP
+
+The measured values of batteries from Sonnen can be read from the storage via local HTTP requests.
+Values for the grid connection and the storage are available. Unfortunately, phase currents cannot be read, so
+[Dynamic Load Management (DLM)](/compatible_devices/introduction.md#dynamic-load-management-dlm) cannot be supported.
+[Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc) is not possible either.
+
+Here are the Sonnen devices: [SonnenBatterie](/compatible_devices/devices.mdx#sonnen)
 
 ## RCT Power Serial Communication
 

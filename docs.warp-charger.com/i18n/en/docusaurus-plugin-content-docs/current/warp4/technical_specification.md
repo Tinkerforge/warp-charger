@@ -28,6 +28,7 @@ sidebar_position: 4
 | Supply Line Entry | M32 - From bottom and rear possible |
 | Supply Line Diameter | 11 mm to 21 mm |
 | Data Cable Entry | M25 - From bottom and rear possible. M25 sealing insert with two 9 mm holes |
+| Data Cable Diameter | Designed for two cables of approx. 7.5 mm to 9 mm each (clamping range of the sealing insert) |
 
 ### Mechanics & Housing
 
