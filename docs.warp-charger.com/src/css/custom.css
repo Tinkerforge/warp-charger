@@ -41,6 +41,12 @@
 
   --ifm-background-color: #fcfcfc;
   --ifm-color-primary: #00aaea;
+  --ifm-color-primary-dark: #0099d3;
+  --ifm-color-primary-darker: #0090c7;
+  --ifm-color-primary-darkest: #0077a4;
+  --ifm-color-primary-light: #02baff;
+  --ifm-color-primary-lighter: #0ebdff;
+  --ifm-color-primary-lightest: #31c7ff;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
@@ -89,9 +95,47 @@ table {
     background-color: var(--ifm-tabs-color-active);
 }
 
-/* Algolia DocSearch theming to match site colors */
-.DocSearch {
-  --docsearch-highlight-color: #00aaea !important;
+/* Algolia DocSearch theming to match site colors: DocSearch brings its own
+   blue/lilac palette, replace it with the primary color and Infima's greys.
+   html:root: DocSearch's stylesheet loads later with the same specificity. */
+html:root {
+  --docsearch-highlight-color: var(--ifm-color-primary);
+  --docsearch-focus-color: var(--ifm-color-primary);
+  --docsearch-soft-primary-color: rgba(0, 170, 234, 0.12);
+  --docsearch-hit-highlight-color: rgba(0, 170, 234, 0.12);
+  --docsearch-logo-color: var(--ifm-color-emphasis-700);
+  --docsearch-secondary-text-color: var(--ifm-color-emphasis-700);
+  --docsearch-muted-color: var(--ifm-color-emphasis-600);
+  --docsearch-icon-color: var(--ifm-color-emphasis-700);
+  --docsearch-key-color: var(--ifm-color-emphasis-700);
+  --docsearch-key-background: var(--ifm-color-emphasis-200);
+  --docsearch-subtle-color: var(--ifm-color-emphasis-300);
+  --docsearch-container-background: rgba(28, 30, 33, 0.5);
+}
+
+html:root[data-theme='dark'] {
+  --docsearch-highlight-color: var(--ifm-color-primary);
+  --docsearch-focus-color: var(--ifm-color-primary);
+  --docsearch-text-color: #e3e3e3;
+  --docsearch-subtle-color: #444950;
+  --docsearch-background-color: #303235;
+  --docsearch-container-background: rgba(0, 0, 0, 0.6);
+  --docsearch-modal-background: #242526;
+  --docsearch-modal-shadow: inset 1px 1px 0 0 #3a3b3d, 0 3px 8px 0 #000;
+  --docsearch-searchbox-background: #1b1b1d;
+  --docsearch-searchbox-focus-background: #1b1b1d;
+  --docsearch-hit-color: #dadde1;
+  --docsearch-hit-background: #1b1b1d;
+  --docsearch-hit-highlight-color: rgba(0, 170, 234, 0.18);
+  --docsearch-key-background: #303235;
+  --docsearch-key-color: #c4c6ca;
+  --docsearch-footer-background: #242526;
+  --docsearch-footer-shadow: inset 0 1px 0 0 #3a3b3d;
+  --docsearch-logo-color: #c4c6ca;
+  --docsearch-icon-color: #b0b3b8;
+  --docsearch-secondary-text-color: #b0b3b8;
+  --docsearch-muted-color: #8d949e;
+  --docsearch-search-button-background: #1b1b1d;
 }
 
 
