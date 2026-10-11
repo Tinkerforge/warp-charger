@@ -104,7 +104,7 @@ Entscheidend ist hier, dass nur eine Leistungsregelung stattfindet, die einzelne
 
 Teilen sich mehrere Wallboxen eine gemeinsame Zuleitung, ist oft der Maximalstrom durch diese Zuleitung begrenzt. Als Beispiel könnten sich mehrere
 Wallboxen eine 32A Leitung teilen. Zwei Wallboxen könnten jeweils als 11kW Wallboxen (2x16A) betrieben werden. Es wäre aber auch möglich, eine
-Wallbox mit 32kW (32A) zu betreiben, wenn die zweite Wallbox nicht genutzt wird. Für diese Anwendungen kommt das [statische Lastmanagement](/docs/tutorials/chargemanagement.md) zum Einsatz.
+Wallbox mit 22kW (32A) zu betreiben, wenn die zweite Wallbox nicht genutzt wird. Für diese Anwendungen kommt das [statische Lastmanagement](/docs/tutorials/chargemanagement.md) zum Einsatz.
 
 Der WARP Energy Manager kann das statische Lastmanagement für die Wallboxen übernehmen. Hierbei ist kein Stromzähler notwendig, es ist nur der
 Maximalstrom der Zuleitung zu definieren. Dieser Strom muss jederzeit zur Verfügung stehen. Der Energiemanager verteilt den Strom

@@ -103,7 +103,7 @@ The key point here is that only power regulation takes place; the individual pha
 
 When multiple chargers share a common supply line, the maximum current is often limited by this supply line. As an example, several
 chargers could share a 32A line. Two chargers could each be operated as 11kW chargers (2x16A). However, it would also be possible to
-operate one charger at 32kW (32A) if the second charger is not being used. [Static load management](/tutorials/chargemanagement.md) is used for these applications.
+operate one charger at 22kW (32A) if the second charger is not being used. [Static load management](/tutorials/chargemanagement.md) is used for these applications.
 
 The WARP Energy Manager can handle static load management for the chargers. No energy meter is necessary here; only the
 maximum current of the supply line needs to be defined. This current must be available at all times. The energy manager distributes the current
