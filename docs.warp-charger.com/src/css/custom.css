@@ -123,6 +123,82 @@ table {
     width: 100%;
 }
 
+/* Tables: rounded outline, lines between rows only, tinted header, no zebra
+   stripes (Infima's default is a full grid with stripes). */
+.markdown table {
+  --table-line: var(--ifm-color-emphasis-200);
+  --table-head-bg: var(--ifm-color-emphasis-100);
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--table-line);
+  border-radius: 10px;
+}
+
+[data-theme='dark'] .markdown table {
+  --table-line: rgba(255, 255, 255, 0.1);
+  --table-head-bg: rgba(255, 255, 255, 0.04);
+}
+
+.markdown table tr,
+.markdown table tr:nth-child(2n),
+.markdown table thead {
+  border: 0;
+  background-color: transparent;
+}
+
+.markdown table th,
+.markdown table td {
+  padding: 0.6rem 0.9rem;
+  border: 0;
+  border-bottom: 1px solid var(--table-line);
+  text-align: left;
+  vertical-align: top;
+}
+
+/* MDX wraps cell text in paragraphs; their bottom margin made rows uneven */
+.markdown table th > :last-child,
+.markdown table td > :last-child {
+  margin-bottom: 0;
+}
+
+.markdown table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.markdown table thead th {
+  background-color: var(--table-head-bg);
+  font-size: 0.85rem;
+  font-weight: 700;
+  vertical-align: bottom;
+  color: var(--ifm-color-emphasis-800);
+}
+
+.markdown table thead th:first-child {
+  border-top-left-radius: 9px;
+}
+
+.markdown table thead th:last-child {
+  border-top-right-radius: 9px;
+}
+
+.markdown table tbody th {
+  background-color: transparent;
+  font-weight: 600;
+}
+
+.markdown table tbody tr:hover {
+  background-color: color-mix(in srgb, var(--ifm-color-primary) 5%, transparent);
+}
+
+/* Narrow screens: wide tables (e.g. Modbus registers) scroll sideways inside
+   their outline instead of overflowing the page */
+@media (max-width: 996px) {
+  .markdown table:not(.sortable-table) {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
 /* Hides the tabs themselves. Tab controlled content is still visible. */
 .hidden-tabs {
     display: none;
