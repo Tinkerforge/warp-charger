@@ -75,34 +75,63 @@
   html[lang="en"] .manufacturer_devices .sortable-table td:nth-of-type(3):before { content: "Feature:"; }
 }
 
-.device {
+/* Pills for measurement location (green) and feature (blue) */
+:root {
+  --pill-green-text: #ffffff;
+  --pill-green-bg: #2f9e55;
+  --pill-green-border: #2f9e55;
+  --pill-green-outline: #2f9e55;
+  --pill-blue-text: #ffffff;
+  --pill-blue-bg: #3b6fdb;
+  --pill-blue-border: #3b6fdb;
+  --pill-blue-outline: #3b6fdb;
+  --pill-maybe-text: var(--ifm-color-emphasis-600);
+  --pill-maybe-border: var(--ifm-color-emphasis-400);
+}
+
+[data-theme='dark'] {
+  --pill-green-text: #5fbf7d;
+  --pill-green-bg: rgba(46, 160, 67, 0.12);
+  --pill-green-border: rgba(46, 160, 67, 0.35);
+  --pill-green-outline: #5fbf7d;
+  --pill-blue-text: #7f9fe0;
+  --pill-blue-bg: rgba(66, 120, 230, 0.12);
+  --pill-blue-border: rgba(66, 120, 230, 0.38);
+  --pill-blue-outline: #7f9fe0;
+}
+
+.device,
+.application {
   display: flex;
   align-items: center;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin-right: 2px;
+  padding: 0 0.6em;
+  margin-right: 4px;
   text-align: center;
+  font-size: 0.85em;
+  font-weight: 600;
   border-radius: 25px;
-  height: 25px;
+  height: 24px;
   width: min-content;
+  white-space: nowrap;
 }
 
 .device.available {
-  color: #ffffff;
-  background: #008000;
-  border: solid 1px #008000;
+  color: var(--pill-green-text);
+  background: var(--pill-green-bg);
+  border: solid 1px var(--pill-green-border);
 }
 
 .device.optional {
-  color: #008000;
-  background: #ffffff;
-  border: solid 1px #008000;
+  color: var(--pill-green-outline);
+  background: transparent;
+  border: solid 1px var(--pill-green-border);
 }
 
-.device.maybe {
-  color: #D3D3D3;
-  background: #ffffff;
-  border: solid 1px #d3d3d3;
+.device.maybe,
+.application.maybe {
+  color: var(--pill-maybe-text);
+  background: transparent;
+  border: dashed 1px var(--pill-maybe-border);
 }
 
 .device.unavailable {
@@ -134,34 +163,16 @@
   margin-bottom: 5px;
 }
 
-.application {
-  display: flex;
-  align-items: center;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin-right: 2px;
-  text-align: center;
-  border-radius: 25px;
-  height: 25px;
-  width: min-content;
-}
-
 .application.available {
-  color: #ffffff;
-  background: #0000ff;
-  border: solid 1px #0000ff;
+  color: var(--pill-blue-text);
+  background: var(--pill-blue-bg);
+  border: solid 1px var(--pill-blue-border);
 }
 
 .application.optional {
-  color: #0000ff;
-  background: #ffffff;
-  border: solid 1px #0000ff;
-}
-
-.application.maybe {
-  color: #D3D3D3;
-  background: #ffffff;
-  border: solid 1px #d3d3d3;
+  color: var(--pill-blue-outline);
+  background: transparent;
+  border: solid 1px var(--pill-blue-border);
 }
 
 .application.unavailable {
