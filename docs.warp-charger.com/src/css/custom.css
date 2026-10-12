@@ -92,20 +92,26 @@
   --ifm-heading-font-weight: 700;
 
   --ifm-background-color: #fcfcfc;
-  --ifm-color-primary: #00aaea;
-  --ifm-color-primary-dark: #0099d3;
-  --ifm-color-primary-darker: #0090c7;
-  --ifm-color-primary-darkest: #0077a4;
-  --ifm-color-primary-light: #02baff;
-  --ifm-color-primary-lighter: #0ebdff;
-  --ifm-color-primary-lightest: #31c7ff;
+  --ifm-color-primary: #2563eb;
+  --ifm-color-primary-dark: #1554e0;
+  --ifm-color-primary-darker: #1350d4;
+  --ifm-color-primary-darkest: #1042ae;
+  --ifm-color-primary-light: #3e75ed;
+  --ifm-color-primary-lighter: #4a7eee;
+  --ifm-color-primary-lightest: #7098f2;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #00aaea;
+  --ifm-color-primary: #60a5fa;
+  --ifm-color-primary-dark: #3e92f9;
+  --ifm-color-primary-darker: #2e89f8;
+  --ifm-color-primary-darkest: #076deb;
+  --ifm-color-primary-light: #82b8fb;
+  --ifm-color-primary-lighter: #92c1fc;
+  --ifm-color-primary-lightest: #c5defd;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
@@ -229,8 +235,8 @@ table {
 html:root {
   --docsearch-highlight-color: var(--ifm-color-primary);
   --docsearch-focus-color: var(--ifm-color-primary);
-  --docsearch-soft-primary-color: rgba(0, 170, 234, 0.12);
-  --docsearch-hit-highlight-color: rgba(0, 170, 234, 0.12);
+  --docsearch-soft-primary-color: rgba(37, 99, 235, 0.12);
+  --docsearch-hit-highlight-color: rgba(37, 99, 235, 0.12);
   --docsearch-logo-color: var(--ifm-color-emphasis-700);
   --docsearch-secondary-text-color: var(--ifm-color-emphasis-700);
   --docsearch-muted-color: var(--ifm-color-emphasis-600);
@@ -254,7 +260,7 @@ html:root[data-theme='dark'] {
   --docsearch-searchbox-focus-background: #1b1b1d;
   --docsearch-hit-color: #dadde1;
   --docsearch-hit-background: #1b1b1d;
-  --docsearch-hit-highlight-color: rgba(0, 170, 234, 0.18);
+  --docsearch-hit-highlight-color: rgba(96, 165, 250, 0.18);
   --docsearch-key-background: #303235;
   --docsearch-key-color: #c4c6ca;
   --docsearch-footer-background: #242526;
@@ -325,7 +331,7 @@ html:root[data-theme='dark'] {
 }
 
 .theme-doc-sidebar-menu .menu__link--active:not(.menu__link--sublist) {
-  background-color: rgba(0, 170, 234, 0.1);
+  background-color: color-mix(in srgb, var(--ifm-color-primary) 10%, transparent);
 }
 
 /* Docs flagged with `sidebar_class_name: sidebar-item-hidden` stay part of the
