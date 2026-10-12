@@ -288,3 +288,13 @@ Von dem WARP Energy Manager werden nicht alle Modbus/RTU Stromzähler unterstüt
 nur die zum WARP Energy Manager in der Liste aufgeführten kompatiblen Stromzähler.
 Es kann genau ein Stromzähler per RS485 am WARP Energy Manager angeschlossen und
 ausgelesen werden. Mehrere Stromzähler am RS485 Anschluss sind nicht möglich.
+
+## Messwerteupdate und Timeouts
+Das System setzt ein regelmäßiges Update der Messwerte vorraus.
+Zählerwerte sollten in einem 1-2 Sekundentakt aktualisiert werden, um dem System die Möglichkeit zu geben
+schnell genug auf Änderungen zu reagieren.
+
+Werden keine neuen Messwerte empfangen, so geht das **[dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) nach 60 Sekunden** in einen Fehler,
+beim **[PV-Überschlussladen](/tutorials/pv_excess_charging.md) ist dies nach 120 Sekunden** der Fall.
+
+Dies gilt unabhängig davon über welche Schnittstelle die Messswerte bereitgestellt werden.
