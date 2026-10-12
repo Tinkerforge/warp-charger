@@ -341,3 +341,9 @@ html:root[data-theme='dark'] {
 .theme-doc-sidebar-item-category.sidebar-item-hidden {
   display: none;
 }
+
+/* Fullscreen videos must letterbox instead of crop (e.g. 9:16 videos on
+   16:9 screens), even if a stylesheet sets object-fit on a video. */
+video:fullscreen {
+  object-fit: contain;
+}

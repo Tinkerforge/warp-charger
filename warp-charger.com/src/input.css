@@ -61,6 +61,14 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Fullscreen videos must letterbox instead of crop: utilities like
+   object-cover would otherwise override the browser's default
+   object-fit: contain and cut off e.g. 9:16 videos on 16:9 screens.
+   Unlayered, so it beats Tailwind's utilities layer. */
+video:fullscreen {
+    object-fit: contain;
+}
+
 /* Collapse spacing between adjacent sections with the same background */
 section.bg-background + section.bg-background,
 section.bg-gradient-light-white-background + section.bg-gradient-light-white-background,
