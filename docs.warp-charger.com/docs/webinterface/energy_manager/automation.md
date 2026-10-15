@@ -6,7 +6,7 @@ sidebar_position: 3
 
 import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 
-<DeviceCompatibility supported={['wem1', 'wem2']} />
+<DeviceCompatibility supported={['wc1', 'wc2', 'wc3', 'wc4', 'wem1', 'wem2']} />
 
 
 :::note
