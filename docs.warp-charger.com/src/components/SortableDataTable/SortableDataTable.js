@@ -1,18 +1,31 @@
 import React from "react";
-import { flexRender, useReactTable, getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import {
+  createSortedRowModel,
+  flexRender,
+  rowSortingFeature,
+  sortFn_alphanumeric,
+  sortFn_text,
+  tableFeatures,
+  useTable,
+} from '@tanstack/react-table'
 import "./style.css";
+
+const features = tableFeatures({
+  rowSortingFeature,
+  sortedRowModel: createSortedRowModel(),
+  sortFns: { alphanumeric: sortFn_alphanumeric, text: sortFn_text },
+});
 
 // Sortable react-table
 const SortableDataTable = ({
   columns,
   data,
 }) => {
-  const table = useReactTable(
+  const table = useTable(
     {
+      features,
       columns,
       data,
-      getCoreRowModel: getCoreRowModel(),
-      getSortedRowModel: getSortedRowModel(),
     },
   );
 
@@ -45,7 +58,7 @@ const SortableDataTable = ({
         {table.getRowModel().rows.map((row, i) => {
           return (
             <tr key={row.id} role="row">
-              {row.getVisibleCells().map(cell => {
+              {row.getAllCells().map(cell => {
                 return (
                   <td
                     key={cell.id}

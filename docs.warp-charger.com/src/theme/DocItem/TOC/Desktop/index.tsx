@@ -17,7 +17,7 @@ import styles from '@docusaurus/theme-classic/src/theme/TOC/styles.module.css';
 
 type Props = WrapperProps<typeof DesktopType>;
 
-let interval: NodeJS.Timeout = null;
+let interval: NodeJS.Timeout | null = null;
 let scrollHandled = "foobar";
 
 const hardwareTypes = ['warp1', 'warp2', 'warp3', 'warp4', 'wem', 'wem2', 'any'];
