@@ -621,6 +621,9 @@ Es steht nur der Messwert für die Erzeugung (PV) bereit.
 Auf die Daten vom SMA Energy Meter 2.0 oder dem Sunny Home Manager kann mittels Speedwire Protokoll werden können. Über diese beiden kann die Leistung am Netzanschluss gemessen
 werden, so dass ein [PV-Überschussladen (PVÜ)](/docs/compatible_devices/introduction#pv-%C3%BCberschussladen-pv%C3%BC) und ein [dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement-dlm) mit diesen Zählerwerten möglich ist. Ein Zugriff auf andere Werte als Netzdaten ist nicht möglich (PV, Speicher etc.)
 
+Sind mehrere Speedwire Geräte im Netz vorhanden, so muss beim Anlegen des Speedwire Stromzählers das optionale Feld "Seriennummer" ausgefüllt werden. Dann werden nur Messwerte von diesem Stromzähler angezeigt.
+Wird nicht gefiltert, werden die Messwerte aller Speedwire Stromzähler kombiniert. Dies führt üblicherweise zu stark schwankenden Messwerten, da die Messwerte der jeweiligen Stromzähler zeitlich versetzt dargestellt werden.
+
 :::note
 Speedwire nutzt Multicast. Nicht alle Switche und insbesondere viele DLAN/Powerline Komponenten leiten die Pakete nicht weiter. In diesem Fall empfängt die Wallbox oder der Energy Manager
 dann keine Daten.

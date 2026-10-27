@@ -209,6 +209,9 @@ Je nach verwendeter Hardware und den Einstellungen kann es sein, dass die Nachri
 SMA hat mit Speedwire ein eigenes netzwerkbasiertes Kommunikationsprotokoll. Dieses wird vom Sunny Home Manager, SMA Energy Meter und
 manchen Wechselrichtern unterstützt. Mit dieser Schnittstelle kann nur der Netzanschlusszähler gelesen werden.
 
+Sind mehrere Speedwire Geräte im Netz vorhanden, so muss beim Anlegen des Speedwire Stromzählers das optionale Feld "Seriennummer" ausgefüllt werden. Dann werden nur Messwerte von diesem Stromzähler angezeigt.
+Wird nicht gefiltert, werden die Messwerte aller Speedwire Stromzähler kombiniert. Dies führt üblicherweise zu stark schwankenden Messwerten, da die Messwerte der jeweiligen Stromzähler zeitlich versetzt dargestellt werden.
+
 Hier geht es zu den unterstützten SMA Geräten: [SMA Geräte](/docs/compatible_devices/devices.mdx#sma)
 
 
