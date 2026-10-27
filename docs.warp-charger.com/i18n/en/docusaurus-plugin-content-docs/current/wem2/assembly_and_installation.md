@@ -2,6 +2,8 @@
 sidebar_position: 2
 ---
 
+import ThemedDrawing from '@site/src/components/ThemedDrawing';
+
 # Assembly and Installation
 
 ### Scope of Delivery
@@ -111,6 +113,17 @@ blocked (operating state 1). Output 2 is
 activated when the heat pump should receive a
 recommendation to switch on for extended operation
 for space heating and hot water preparation (operating state 3).
+
+<ThemedDrawing src="/img/wem2/sg_ready_wiring_en.svg" alt="SG-Ready wiring diagram: the two potential-free relay contacts of the WARP Energy Manager 2.0 are connected to SG-Ready inputs 1 and 2 of the heat pump via a 4-core control cable" />
+
+A single control cable is sufficient for the connection to the heat pump. Since
+both outputs are independent potential-free contacts, four cores are required,
+e.g. J-Y(ST)Y 2×2×0.8 or LiYY 4×0.5 mm². As the contacts only switch the heat
+pump's control signals, 0.5 to 0.75 mm² is sufficient. If the heat pump's two
+SG-Ready inputs share a common reference terminal, three cores are enough. In
+this case, one terminal each of output 1 and output 2 is bridged at the WARP
+Energy Manager and connected to the heat pump's common terminal. Refer to the heat
+pump's manual for the exact terminal assignment.
 
 :::note
 

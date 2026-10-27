@@ -2,6 +2,8 @@
 sidebar_position: 2
 ---
 
+import ThemedDrawing from '@site/src/components/ThemedDrawing';
+
 # Montage und Installation
 
 ### Lieferumfang
@@ -113,6 +115,18 @@ blockiert werden soll (Betriebszustand 1). Ausgang 2 wird
 betätigt, wenn der Wärmepumpe eine Einschaltempfehlung
 für den erweiterten Betrieb für Raumheizung und
 Warmwasserbereitung gegeben werden soll (Betriebszustand 3).
+
+<ThemedDrawing src="/img/wem2/sg_ready_wiring.svg" alt="Anschlussschema SG-Ready: Die zwei potentialfreien Relaiskontakte des WARP Energy Managers 2.0 werden über eine 4-adrige Steuerleitung mit den SG-Ready-Eingängen 1 und 2 der Wärmepumpe verbunden" />
+
+Für die Verbindung zur Wärmepumpe reicht eine Steuerleitung. Da beide Ausgänge
+voneinander unabhängige potentialfreie Kontakte sind, werden vier Adern benötigt,
+z.B. J-Y(ST)Y 2×2×0,8 oder LiYY 4×0,5 mm². Da über die Kontakte nur die
+Steuersignale der Wärmepumpe geschaltet werden, sind 0,5 bis 0,75 mm² ausreichend.
+Fasst die Wärmepumpe ihre beiden SG-Ready-Eingänge auf einem gemeinsamen
+Bezugspotential (Common) zusammen, genügen auch drei Adern. In diesem Fall wird je
+ein Anschluss von Ausgang 1 und Ausgang 2 am WARP Energy Manager gebrückt und auf
+den gemeinsamen Anschluss der Wärmepumpe gelegt. Die genaue Klemmenbelegung ist der
+Anleitung der Wärmepumpe zu entnehmen.
 
 :::note
 
