@@ -121,7 +121,7 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
         \Huge
         WARP4 Charger Betriebsanleitung\\\vspace{1cm}
         \large
-        Version 1.0\\\vspace{0.25cm}
+        Version 1.1\\\vspace{0.25cm}
         \today
     \end{center}
     \vfill \gfx{./img_warp4/warp4_front.png}
@@ -921,17 +921,18 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
 
     \subsection{Wiederherstellungsmodus}\label{recovery}
     Falls die Wallbox weder ihren Access-Point öffnet noch über ein konfiguriertes Netzwerk auf das Webinterface zugegriffen werden kann,
-    kann wie folgt der Wiederherstellungsmodus gestartet werden:
+    kann der Wiederherstellungsmodus verwendet werden, um die Netzwerkeinstellungen zurückzusetzen. Der Wiederherstellungsmodus wird wie folgt gestartet:
     \begin{enumerate}
      \item Wallbox stromlos machen
      \item Taster im Deckel gedrückt halten
      \item Stromversorgung der Wallbox wieder herstellen (ggf. mit einer zweiten Person).
-     \item Taster ungefähr 20 Sekunden lang (mindestens 10, aber maximal 30) gedrückt halten.
+     \item Taster weitere 20 Sekunden lang (mindestens 10, aber maximal 30) gedrückt halten.
     \end{enumerate}
-    Die Wallbox startet dann im Wiederherstellungsmodus. Zunächst werden die Netzwerkeinstellungen gelöscht sowie die Anmeldung deaktiviert.
-    Anschließend sollte es wieder möglich sein, über den Access-Point auf die Wallbox zuzugreifen.
+    Die Wallbox zeigt den Start des Wiederherstellungsmodus über einen Blinkcode an: Die LED blinkt dreimal gelb und danach einmal rot. Anschließend sollte es wieder möglich sein, über den Access-Point auf die Wallbox zuzugreifen. Die möglicherweise aktivierte Anmeldung mit Benutzername und Passwort wird \textbf{nicht} deaktiviert. Falls alle Passwörter vergessen wurden, ist ein Zugriff auf das Webinterface nur noch nach dem Zurücksetzen auf Werkszustand möglich!
 
-    Durch erneutes Trennen und Verbinden der Stromversorgung innerhalb der ersten Minute im Wiederherstellungsmodus kann ein Zurücksetzen auf Werkszustand ausgelöst werden.
+    Falls die Wallbox immer noch nicht erreicht werden kann, so kann durch zweimaliges Wiederholen dieses Vorgangs ein Zurücksetzen auf Werkszustand (siehe \ref{reset}) ausgelöst werden.
+    Damit die Wiederholungen wirken, muss die Stromversorgung spätestens 40 Sekunden nach dem letzten Loslassen des Tasters getrennt werden.
+    Die Wallbox zeigt den zweiten Start des Wiederherstellungsmodus (dieser hat keinen Effekt) durch dreimal gelbes gefolgt von zweimal rotem Blinken an, den dritte Start des Wiederherstellungsmodus (der das Zurücksetzen auf Werkszustand auslöst) durch dreimal gelbes gefolgt von dreimal rotem Blinken. 
 
     \subsection{Zurücksetzen auf Werkszustand}\label{reset}
     Falls das Webinterface nicht korrekt funktioniert oder die Konfiguration defekt ist,
@@ -1110,6 +1111,8 @@ white,title=Hinweis,left*=2mm,right*=2mm,boxsep=1mm,bottom=1mm,top=1mm]#1\end{tc
         Datum      & Version\hspace{-0.2pt} & Kommentar        \\
         \midrule
         01.06.2026 & 1.0     & Initialversion                  \\
+        29.10.2026 & 1.1     & Beschreibung des Wiederher-\\
+                   &         & stellungsmodus aktualisiert \\
         \bottomrule
     \end{tabular}
 
