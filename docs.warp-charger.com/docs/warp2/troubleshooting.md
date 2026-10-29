@@ -71,21 +71,20 @@ Aufkleber auf der Rückseite der Anleitung zu entnehmen.
 
 ## Wiederherstellungsmodus
 
-Falls die Wallbox weder ihren Access Point öffnet noch über ein konfiguriertes Netzwerk auf
-das Webinterface zugegriffen werden kann, kannst du wie folgt den Wiederherstellungsmodus
-starten:
+Falls die Wallbox weder ihren Access-Point öffnet noch über ein konfiguriertes Netzwerk auf das Webinterface zugegriffen werden kann,
+kann der Wiederherstellungsmodus verwendet werden, um die Netzwerkeinstellungen zurückzusetzen und den Webinterface-Login zu deaktivieren. Der Wiederherstellungsmodus wird wie folgt gestartet:
 
- 1. Mache die Wallbox stromlos.
- 2. Halte den Taster im Deckel gedrückt.
- 3. Schalte den Strom der Wallbox wieder ein (ggf. mittels einer zweiten Person).
- 4. Halte den Taster mindestens 10, aber maximal 30 Sekunden gedrückt.
+ 1. Wallbox stromlos machen
+ 2. Taster im Deckel gedrückt halten
+ 3. Stromversorgung der Wallbox wieder herstellen (ggf. mit einer zweiten Person).
+ 4. Taster ungefähr 20 Sekunden lang (mindestens 10, aber maximal 30) gedrückt halten.
 
-Die Wallbox startet dann im Wiederherstellungsmodus. Zunächst werden die
-Netzwerkeinstellungen gelöscht sowie die Anmeldung deaktiviert. Anschließend sollte es
-wieder möglich sein, über den Access Point auf die Wallbox zuzugreifen.
+Die Wallbox zeigt den Start des Wiederherstellungsmodus über einen Blinkcode an: Die LED blinkt dreimal, pausiert dann etwas länger und blinkt danach einmal. Anschließend sollte es wieder möglich sein, über den Access-Point auf die Wallbox zuzugreifen.
 
-Durch erneutes Trennen und Verbinden der Stromversorgung innerhalb der ersten Minute im
-Wiederherstellungsmodus kann ein Zurücksetzen auf Werkszustand ausgelöst werden.
+Falls die Wallbox immer noch nicht erreicht werden kann, so kann durch einmaliges Wiederholen dieses Vorgangs die gesamte Konfiguration der Wallbox gelöscht werden, getrackte Ladevorgänge bleiben erhalten. Durch eine zweite Wiederholung des Vorgangs kann ein Zurücksetzen auf Werkszustand ausgelöst werden.
+
+Damit die Wiederholungen wirken, muss die Stromversorgung spätestens 40 Sekunden nach dem letzten Loslassen des Tasters getrennt werden.
+Die Wallbox zeigt den zweiten Start des Wiederherstellungsmodus durch dreimaliges Blinken, gefolgt von einer Pause, gefolgt von zweimaligem Blinken an, den dritte Start des Wiederherstellungsmodus durch dreimaliges Blinken, gefolgt von einer Pause, gefolgt von dreimaligem Blinken.
 
 ## Zurücksetzen auf Werkszustand
 

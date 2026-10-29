@@ -64,15 +64,19 @@ If the access data has not been changed, it corresponds to the factory settings 
 
 ## Recovery Mode
 
-If the charger neither opens its access point nor can the web interface be accessed via a configured network, the recovery mode can be started as follows:
+If the charger neither opens its access point nor can the web interface be accessed via a configured network, the recovery mode can be used to reset all network configuration and disable the web interface login. The recovery mode is started as follows:
 
  1. Power off the charger
  2. Hold down the button in the cover
  3. Restore power to the charger (possibly with a second person).
  4. Hold the button for approximately 20 seconds (at least 10, but maximum 30).
 
-The charger then starts in recovery mode. First, the network settings are deleted and login is disabled. It should then be possible to access the charger again via the access point.
-By disconnecting and reconnecting power within the first minute in recovery mode, a factory reset can be triggered.
+The charger's LED then shows the start of the recovery mode by blinking yellow thrice and red once.
+It should then be possible to access the charger again via the access point.
+
+If the charger is still not reachable, repeating this process will remove all configuration, but keep tracked charges. Repeating the process a second time will trigger a factory reset.
+
+The charger must be powered off again within 40 seconds after the button was last released. The charger's LED blinks yellow thrice and red twice on the second start of the recovery mode. The LED blinks yellow thrice and red thrice on the third start of the recovery mode.
 
 ## Factory Reset
 
