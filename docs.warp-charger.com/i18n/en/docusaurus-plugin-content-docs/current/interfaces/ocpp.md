@@ -9,7 +9,7 @@ chargers need to be managed, the OCPP standard is often used.
 
 OCPP (Open Charge Point Protocol) is a standardized
 communication protocol between charging stations and a central
-management system. The WARP2 and WARP3 Charger support OCPPJ 1.6 Core Profile
+management system. The WARP2/3/4 Charger support OCPPJ 1.6 Core Profile
 and Smart Charging Profile.
 
 ## Configuration

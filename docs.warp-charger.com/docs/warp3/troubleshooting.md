@@ -109,7 +109,7 @@ Wallbox-Fehler müssen an der entsprechenden Wallbox behoben werden. Hier hilft 
 Im Folgenden wird die Diagnose von Management-Fehlern erläutert:
 
  * **Kommunikationsfehler / Wallbox nicht erreichbar**: Eine Wallbox kann nicht zuverlässig erreicht werden. Eventuell liegt ein Verbindungsproblem vor. In diesem Fall die Netzwerkverbindung bzw. das Netzwerkkabel und die IP-Konfiguration der Wallbox prüfen.
- * **Firmware inkompatibel:** Das Lastmanagement benötigt kompatible Firmwares auf allen beteiligten Wallboxen. Die jeweils aktuellen Firmwares sollten zueinander kompatibel sein, selbst wenn WARP(1), WARP2 und WARP3 Charger in einem Lastmanagementverbund verwendet werden.
+ * **Firmware inkompatibel:** Das Lastmanagement benötigt kompatible Firmwares auf allen beteiligten Wallboxen. Die jeweils aktuellen Firmwares sollten zueinander kompatibel sein, selbst wenn WARP Charger verschiedener Generationen in einem Lastmanagementverbund verwendet werden.
  * **Fremdsteuerung deaktiviert:** Bei einer der zu steuernden Wallboxen ist die Fremdsteuerung deaktiviert. Damit ist keine Steuerung durch den Lastmanager möglich. Die Fremdsteuerung kann auf der Wallboxen-Unterseite aktiviert werden.
  * **Ladecontroller nicht erreichbar:** Der Ladecontroller einer Wallbox kann nicht erreicht werden, die Wallbox selbst aber schon. In diesem Fall sollte das Ereignis-Log der betroffenen Wallbox geprüft werden.
  * **Ladecontroller reagiert nicht:** Der Ladecontroller einer Wallbox reagiert nicht auf Stromzuweisungen. In diesem Fall sollte das Ereignis-Log der betroffenen Wallbox geprüft werden.

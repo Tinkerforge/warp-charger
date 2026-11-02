@@ -165,7 +165,7 @@ Charger errors must be resolved at the corresponding charger. The
 explained below:
 
  * **Communication error / Charger not reachable:** A charger cannot be reliably reached. There may be a connection problem. In this case, check the network connection or the network cable and the IP configuration of the charger.
- * **Firmware incompatible:** Load management requires compatible firmware on all participating chargers. The respective latest firmware versions should be compatible with each other, even when WARP(1) and WARP2 Charger are used in a load management network.
+ * **Firmware incompatible:** Load management requires compatible firmware on all participating chargers. The respective latest firmware versions should be compatible with each other, even when WARP Chargers of different generations are used in a load management network.
  * **Load management disabled:** Load management is disabled on one of the chargers to be controlled. This means no control by the load manager is possible. Load management can be enabled on the charge controller subpage.
  * **Charge controller not reachable:** The charge controller of a charger cannot be reached, but the charger itself can. In this case, the event log of the affected charger should be checked.
  * **Charge controller not responding:** The charge controller of a charger does not respond to current allocations. Load management may be disabled on it.

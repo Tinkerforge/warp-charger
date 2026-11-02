@@ -168,7 +168,7 @@ Wallbox-Fehler müssen an der entsprechenden Wallbox behoben werden. Hier hilft 
 erläutert:
 
  * **Kommunikationsfehler / Wallbox nicht erreichbar:** Eine Wallbox kann nicht zuverlässig erreicht werden. Eventuell liegt ein Verbindungsproblem vor. In diesem Fall die Netzwerkverbindung bzw. das Netzwerkkabel und die IP-Konfiguration der Wallbox prüfen.
- * **Firmware inkompatibel:** Das Lastmanagement benötigt kompatible Firmwares auf allen beteiligten Wallboxen. Die jeweils aktuellsten Firmwares sollten zueinander kompatibel sein, auch wenn WARP(1) und WARP2 Charger in einem Lastmanagementverbund verwendet werden.
+ * **Firmware inkompatibel:** Das Lastmanagement benötigt kompatible Firmwares auf allen beteiligten Wallboxen. Die jeweils aktuellsten Firmwares sollten zueinander kompatibel sein, auch wenn WARP Charger verschiedener Generationen in einem Lastmanagementverbund verwendet werden.
  * **Lastmanagement deaktiviert:** Bei einer der zu steuernden Wallboxen ist das Lastmanagement deaktiviert. Damit ist keine Steuerung durch den Lastmanager möglich. Das Lastmanagement kann auf der Ladecontroller-Unterseite aktiviert werden.
  * **Ladecontroller nicht erreichbar:** Der Ladecontroller einer Wallbox kann nicht erreicht werden, die Wallbox selbst aber schon. In diesem Fall sollte das Ereignis-Log der betroffenen Wallbox geprüft werden.
  * **Ladecontroller reagiert nicht:** Der Ladecontroller einer Wallbox reagiert nicht auf Stromzuweisungen. Eventuell ist auf diesem das Lastmanagement deaktiviert.

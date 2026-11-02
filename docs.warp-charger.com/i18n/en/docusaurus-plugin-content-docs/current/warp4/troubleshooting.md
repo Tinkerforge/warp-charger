@@ -106,7 +106,7 @@ Charger errors must be resolved at the corresponding charger. The [Charging Stat
 The following explains the diagnosis of management errors:
 
  * **Communication error / Charger not reachable**: A charger cannot be reliably reached. There may be a connection problem. In this case, check the network connection or network cable and the IP configuration of the charger.
- * **Firmware incompatible:** Charge management requires compatible firmware on all participating chargers. The current firmware versions should be compatible with each other, even when WARP(1), WARP2, WARP3 and WARP4 Charger are used in a charge management network.
+ * **Firmware incompatible:** Charge management requires compatible firmware on all participating chargers. The current firmware versions should be compatible with each other, even when WARP Chargers of different generations are used in a charge management network.
  * **External control disabled:** External control is disabled on one of the chargers to be controlled. This means no control by the charge manager is possible. External control can be enabled on the Chargers page.
  * **Charge controller not reachable:** The charge controller of a charger cannot be reached, but the charger itself can. In this case, the event log of the affected charger should be checked.
  * **Charge controller not responding:** The charge controller of a charger does not respond to current allocations. In this case, the event log of the affected charger should be checked.
