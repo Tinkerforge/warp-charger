@@ -139,6 +139,15 @@ The following energy meters are RS485 or Modbus/RTU energy meters, so a [Modbus/
 An energy meter can always be assigned to exactly one measurement location. The measurement location depends on the installation location of the energy meter. Multiple energy meters of this type can be configured.
 To use the PV excess charging (PVE) and dynamic load management (DLM) applications, the energy meter must be installed at the grid connection.
 
+## CHINT Power
+
+### ECH Hybrid Inverter
+{manufacturer_to_bubbles("CHINT Power", "ECH Hybrid Inverter")}
+CHINT Power hybrid inverters of the ECH series (ECH8~20K-TH-EU) are supported.
+
+The "Grid" energy meter is only usable if an external hardware energy meter has been installed at the grid connection and can be read by the inverter. Only in this case is the [PV Excess Charging (PVE)](/compatible_devices/introduction.md#pv-excess-charging-pve) feature supported.
+[Dynamic Load Management (DLM)](/compatible_devices/introduction.md#dynamic-load-management-dlm) is also possible with the meter data, as well as [Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc).
+
 ## Chisage
 
 ### ESS Hybrid Inverter
@@ -329,10 +338,10 @@ The "Grid" energy meter is only usable if an external hardware energy meter (e.g
 Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported.
 The device address is typically 247.
 
-### EH, EM, ES, ET, GW Hybrid Inverters
-{manufacturer_to_bubbles("Goodwe", "EH, EM, ES, ET, GW Hybrid Inverter")}
+### EH, EM, ES, ET, ESA, GW Hybrid Inverters
+{manufacturer_to_bubbles("Goodwe", "EH, EM, ES, ET, ESA, GW Hybrid Inverter")}
 
-Integration of an EH, EM, ES, ET, GW series inverter is possible via Modbus/TCP over the LAN or WiFi+LAN module (Wi-Fi/LAN Kit). Unfortunately, detailed information is scarce.
+Integration of an EH, EM, ES, ET, ESA, GW series inverter is possible via Modbus/TCP over the LAN or WiFi+LAN module (Wi-Fi/LAN Kit). Unfortunately, detailed information is scarce.
 The latest Wi-Fi/LAN Kit-20 with current firmware enables access via Modbus/TCP. However, this function must first be activated in the Goodwe APP (SolarGo).
 According to users, this works under "Settings" -> "Communication Settings" -> "Other Settings".
 
@@ -444,6 +453,7 @@ Subsequently, generation of the Piko and Plenticore inverters (PV) can be read. 
 Only in this case are the PV excess charging (PVE) and dynamic load management (DLM) applications supported. If the inverter has a connected battery,
 the battery data can also be read. Battery inverters, such as the PLENTICORE BI, obviously do not provide PV data. If no energy meter is directly connected to the inverter,
 typically a Kostal Smart Energy Meter (see above) is installed by the installers, so that grid data can then be retrieved via this.
+Customer hint from Tinkerunity: [Modbus on the inverter must be set to CDAB byte order if only a battery storage and no PV is connected to it](https://www.tinkerunity.org/topic/13927-entladen-blockieren-ist-defekt/page/2/#findComment-64011).
 
 
 Kostal Plenticore G3 and Plus G2 can also be controlled via [Battery Control (BC)](/compatible_devices/introduction.md#battery-control-bc).
@@ -607,6 +617,9 @@ Only the measurement value for generation (PV) is available.
 
 The data from the SMA Energy Meter 2.0 or the Sunny Home Manager can be accessed using the Speedwire protocol. Via these two, the power at the grid connection can be measured,
 so that PV excess charging (PVE) and dynamic load management (DLM) are possible with these meter values. Access to values other than grid data is not possible (PV, storage, etc.)
+
+If multiple Speedwire devices are present in the network, the optional "Serial number" field must be filled in when creating the Speedwire energy meter. Then only measurement values from this energy meter are shown.
+Without filtering, the measurement values of all Speedwire energy meters are combined. This usually leads to strongly fluctuating values, as the measurement values of the individual energy meters are displayed with a time offset.
 
 :::note
 Speedwire uses multicast. Not all switches and especially many powerline/DLAN components do not forward the packets. In this case, the charger or the Energy Manager

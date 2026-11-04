@@ -208,6 +208,9 @@ Depending on the hardware used and the settings, the messages may not be forward
 SMA has its own network-based communication protocol called Speedwire. This is supported by the Sunny Home Manager, SMA Energy Meter, and
 some inverters. With this interface, only the grid connection meter can be read.
 
+If multiple Speedwire devices are present in the network, the optional "Serial number" field must be filled in when creating the Speedwire energy meter. Then only measurement values from this energy meter are shown.
+Without filtering, the measurement values of all Speedwire energy meters are combined. This usually leads to strongly fluctuating values, as the measurement values of the individual energy meters are displayed with a time offset.
+
 Here are the supported SMA devices: [SMA Devices](/compatible_devices/devices.mdx#sma)
 
 
@@ -287,3 +290,13 @@ Not all Modbus/RTU energy meters are supported by the WARP Energy Manager,
 only the compatible energy meters listed for the WARP Energy Manager.
 Exactly one energy meter can be connected and
 read via RS485 on the WARP Energy Manager. Multiple energy meters on the RS485 connection are not possible.
+
+## Measurement Value Updates and Timeouts
+The system requires regular updates of the measurement values.
+Meter values should be updated every 1-2 seconds to give the system the opportunity
+to react to changes quickly enough.
+
+If no new measurement values are received, **[Dynamic Load Management (DLM)](/compatible_devices/introduction.md#dynamic-load-management-dlm) goes into an error state after 60 seconds**,
+for **[PV Excess Charging](/tutorials/pv_excess_charging.md) this is the case after 120 seconds**.
+
+This applies regardless of the interface via which the measurement values are provided.

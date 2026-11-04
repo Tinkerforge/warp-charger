@@ -54,6 +54,19 @@ export const devices = [
     bat: "-"
   },
   {
+    manufacturer: "CHINT Power",
+    device: "ECH Hybrid Inverter",
+    connection: "Modbus/TCP",
+    link: "/docs/compatible_devices/devices#ech-hybrid-inverter",
+    grid: "x",
+    pv: "x",
+    battery: "x",
+    load: "x",
+    dlm: "x",
+    pve: "x",
+    bat: "x"
+  },
+  {
     manufacturer: "Chisage",
     device: "ESS Hybrid Inverter",
     connection: "Modbus/TCP",
@@ -304,7 +317,7 @@ export const devices = [
   },
   {
     manufacturer: "Goodwe",
-    device: "EH, EM, ES, ET, GW Hybrid Inverter",
+    device: "EH, EM, ES, ET, ESA, GW Hybrid Inverter",
     connection: "Modbus/TCP",
     link: "/docs/compatible_devices/devices#goodwe",
     grid: "x",
