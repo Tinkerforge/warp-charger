@@ -449,7 +449,7 @@ export const devices = [
   },
   {
     manufacturer: "Kostal",
-    device: "Smart Energy Meter (KSEM G2)",
+    device: "Smart Energy Meter (KSEM G1 und G2)",
     connection: "SunSpec",
     link: "/docs/compatible_devices/devices#kostal",
     grid: "x",
