@@ -25,6 +25,7 @@ LOGO_MAP = {
     "BYD": "byd",
     "Carlo Galvazzi": "carlo_gavazzi",  # note: typo in docs source
     "Carlo Gavazzi": "carlo_gavazzi",
+    "CHINT Power": "chint_power",
     "Chisage": "chisage",
     "Deye": "deye",
     "E3DC": "e3dc",
