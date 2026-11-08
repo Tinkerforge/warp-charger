@@ -235,6 +235,12 @@ automation = Module("automation", T({'de': "Automatisierung", 'en': "Automation"
                                 Const(1, T({'de': "Aus", 'en': "Off"})),
                                 Const(2, U("PV")),
                                 Const(3, U("Min + PV")),
+                                Const(4, T({'de': "Standardlademodus", 'en': "Default charge mode"})),
+                                Const(5, U("Min")),
+                                Const(6, U("Eco")),
+                                Const(7, U("Eco + PV")),
+                                Const(8, U("Eco + Min")),
+                                Const(9, U("Eco + Min + PV")),
                             ])
                         }),
                         13: Elem.OBJECT(T({'de': "Schalte den Relais-Ausgang", 'en': "Switch the relay output"}), version=Version.WEM, members={

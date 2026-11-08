@@ -131,6 +131,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         - **1** - Off. Vehicles are not charged.
         - **2** - PV. Vehicles are only charged from PV excess. Only available if excess_charging_enable is true.
         - **3** - Min + PV. Allows the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. If greater PV excess is available, it is used. Only available if excess_charging_enable is true.
+        - **4** - Unchanged. The most recently selected charge mode is saved and kept after a restart.
+        - **5** - Min. Charges vehicles with the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. Greater PV excess is not used. Not offered for selection in the web interface.
+        - **6** - Eco. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise not at all. Only available if Eco mode is enabled.
+        - **7** - Eco + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise only from PV excess. Only available if excess_charging_enable is true and Eco mode is enabled.
+        - **8** - Eco + Min. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise with the configured minimum charging power (guaranteed_power). Only available if Eco mode is enabled.
+        - **9** - Eco + Min + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise as in Min + PV mode. Not offered for selection in the web interface.
     </td>
 </tr>
 
@@ -197,6 +203,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         Storage priority relative to chargers
         - **0** - Prefer chargers, excess power for storage
         - **1** - Prefer storage, excess power for chargers
+        - **2** - Prefer storage while its state of charge is below the target value (battery_target_soc). Chargers are preferred afterwards. If the storage's state of charge is unknown, the storage is preferred.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_target_soc`<br/>int (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        Target state of charge of the storage. Only used if battery_mode is 2.
     </td>
 </tr>
 
@@ -491,6 +505,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/charge_mode_update -m '2'
         - **1** - Off. Vehicles are not charged.
         - **2** - PV. Vehicles are only charged from PV excess. Only available if excess_charging_enable is true.
         - **3** - Min + PV. Allows the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. If greater PV excess is available, it is used. Only available if excess_charging_enable is true.
+        - **4** - Default charge mode. Can only be written: Resets the charge mode to the default charge mode configured in default_mode ([`power_manager/config`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_config)). If default_mode is 4 (unchanged), this has no effect.
+        - **5** - Min. Charges vehicles with the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. Greater PV excess is not used. Not offered for selection in the web interface.
+        - **6** - Eco. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise not at all. Only available if Eco mode is enabled.
+        - **7** - Eco + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise only from PV excess. Only available if excess_charging_enable is true and Eco mode is enabled.
+        - **8** - Eco + Min. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise with the configured minimum charging power (guaranteed_power). Only available if Eco mode is enabled.
+        - **9** - Eco + Min + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise as in Min + PV mode. Not offered for selection in the web interface.
     </td>
 </tr>
     </tbody>
@@ -713,6 +733,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         - **1** - Off. Vehicles are not charged.
         - **2** - PV. Vehicles are only charged from PV excess. Only available if excess_charging_enable is true.
         - **3** - Min + PV. Allows the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. If greater PV excess is available, it is used. Only available if excess_charging_enable is true.
+        - **4** - Unchanged. The most recently selected charge mode is saved and kept after a restart.
+        - **5** - Min. Charges vehicles with the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. Greater PV excess is not used. Not offered for selection in the web interface.
+        - **6** - Eco. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise not at all. Only available if Eco mode is enabled.
+        - **7** - Eco + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise only from PV excess. Only available if excess_charging_enable is true and Eco mode is enabled.
+        - **8** - Eco + Min. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise with the configured minimum charging power (guaranteed_power). Only available if Eco mode is enabled.
+        - **9** - Eco + Min + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise as in Min + PV mode. Not offered for selection in the web interface.
     </td>
 </tr>
 
@@ -779,6 +805,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         Storage priority relative to chargers
         - **0** - Prefer chargers, excess power for storage
         - **1** - Prefer storage, excess power for chargers
+        - **2** - Prefer storage while its state of charge is below the target value (battery_target_soc). Chargers are preferred afterwards. If the storage's state of charge is unknown, the storage is preferred.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_target_soc`<br/>int (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        Target state of charge of the storage. Only used if battery_mode is 2.
     </td>
 </tr>
 
@@ -1073,6 +1107,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/charge_mode_update -m '2'
         - **1** - Off. Vehicles are not charged.
         - **2** - PV. Vehicles are only charged from PV excess. Only available if excess_charging_enable is true.
         - **3** - Min + PV. Allows the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. If greater PV excess is available, it is used. Only available if excess_charging_enable is true.
+        - **4** - Default charge mode. Can only be written: Resets the charge mode to the default charge mode configured in default_mode ([`power_manager/config`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_config)). If default_mode is 4 (unchanged), this has no effect.
+        - **5** - Min. Charges vehicles with the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. Greater PV excess is not used. Not offered for selection in the web interface.
+        - **6** - Eco. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise not at all. Only available if Eco mode is enabled.
+        - **7** - Eco + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise only from PV excess. Only available if excess_charging_enable is true and Eco mode is enabled.
+        - **8** - Eco + Min. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise with the configured minimum charging power (guaranteed_power). Only available if Eco mode is enabled.
+        - **9** - Eco + Min + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise as in Min + PV mode. Not offered for selection in the web interface.
     </td>
 </tr>
     </tbody>
@@ -1295,6 +1335,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         - **1** - Off. Vehicles are not charged.
         - **2** - PV. Vehicles are only charged from PV excess. Only available if excess_charging_enable is true.
         - **3** - Min + PV. Allows the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. If greater PV excess is available, it is used. Only available if excess_charging_enable is true.
+        - **4** - Unchanged. The most recently selected charge mode is saved and kept after a restart.
+        - **5** - Min. Charges vehicles with the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. Greater PV excess is not used. Not offered for selection in the web interface.
+        - **6** - Eco. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise not at all. Only available if Eco mode is enabled.
+        - **7** - Eco + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise only from PV excess. Only available if excess_charging_enable is true and Eco mode is enabled.
+        - **8** - Eco + Min. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise with the configured minimum charging power (guaranteed_power). Only available if Eco mode is enabled.
+        - **9** - Eco + Min + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise as in Min + PV mode. Not offered for selection in the web interface.
     </td>
 </tr>
 
@@ -1361,6 +1407,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         Storage priority relative to chargers
         - **0** - Prefer chargers, excess power for storage
         - **1** - Prefer storage, excess power for chargers
+        - **2** - Prefer storage while its state of charge is below the target value (battery_target_soc). Chargers are preferred afterwards. If the storage's state of charge is unknown, the storage is preferred.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_target_soc`<br/>int (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        Target state of charge of the storage. Only used if battery_mode is 2.
     </td>
 </tr>
 
@@ -1655,6 +1709,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/charge_mode_update -m '2'
         - **1** - Off. Vehicles are not charged.
         - **2** - PV. Vehicles are only charged from PV excess. Only available if excess_charging_enable is true.
         - **3** - Min + PV. Allows the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. If greater PV excess is available, it is used. Only available if excess_charging_enable is true.
+        - **4** - Default charge mode. Can only be written: Resets the charge mode to the default charge mode configured in default_mode ([`power_manager/config`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_config)). If default_mode is 4 (unchanged), this has no effect.
+        - **5** - Min. Charges vehicles with the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. Greater PV excess is not used. Not offered for selection in the web interface.
+        - **6** - Eco. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise not at all. Only available if Eco mode is enabled.
+        - **7** - Eco + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise only from PV excess. Only available if excess_charging_enable is true and Eco mode is enabled.
+        - **8** - Eco + Min. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise with the configured minimum charging power (guaranteed_power). Only available if Eco mode is enabled.
+        - **9** - Eco + Min + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise as in Min + PV mode. Not offered for selection in the web interface.
     </td>
 </tr>
     </tbody>
@@ -1877,6 +1937,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         - **1** - Off. Vehicles are not charged.
         - **2** - PV. Vehicles are only charged from PV excess. Only available if excess_charging_enable is true.
         - **3** - Min + PV. Allows the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. If greater PV excess is available, it is used. Only available if excess_charging_enable is true.
+        - **4** - Unchanged. The most recently selected charge mode is saved and kept after a restart.
+        - **5** - Min. Charges vehicles with the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. Greater PV excess is not used. Not offered for selection in the web interface.
+        - **6** - Eco. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise not at all. Only available if Eco mode is enabled.
+        - **7** - Eco + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise only from PV excess. Only available if excess_charging_enable is true and Eco mode is enabled.
+        - **8** - Eco + Min. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise with the configured minimum charging power (guaranteed_power). Only available if Eco mode is enabled.
+        - **9** - Eco + Min + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise as in Min + PV mode. Not offered for selection in the web interface.
     </td>
 </tr>
 
@@ -1943,6 +2009,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         Storage priority relative to chargers
         - **0** - Prefer chargers, excess power for storage
         - **1** - Prefer storage, excess power for chargers
+        - **2** - Prefer storage while its state of charge is below the target value (battery_target_soc). Chargers are preferred afterwards. If the storage's state of charge is unknown, the storage is preferred.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_target_soc`<br/>int (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        Target state of charge of the storage. Only used if battery_mode is 2.
     </td>
 </tr>
 
@@ -2237,6 +2311,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/charge_mode_update -m '2'
         - **1** - Off. Vehicles are not charged.
         - **2** - PV. Vehicles are only charged from PV excess. Only available if excess_charging_enable is true.
         - **3** - Min + PV. Allows the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. If greater PV excess is available, it is used. Only available if excess_charging_enable is true.
+        - **4** - Default charge mode. Can only be written: Resets the charge mode to the default charge mode configured in default_mode ([`power_manager/config`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_config)). If default_mode is 4 (unchanged), this has no effect.
+        - **5** - Min. Charges vehicles with the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. Greater PV excess is not used. Not offered for selection in the web interface.
+        - **6** - Eco. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise not at all. Only available if Eco mode is enabled.
+        - **7** - Eco + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise only from PV excess. Only available if excess_charging_enable is true and Eco mode is enabled.
+        - **8** - Eco + Min. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise with the configured minimum charging power (guaranteed_power). Only available if Eco mode is enabled.
+        - **9** - Eco + Min + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise as in Min + PV mode. Not offered for selection in the web interface.
     </td>
 </tr>
     </tbody>
@@ -2459,6 +2539,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         - **1** - Off. Vehicles are not charged.
         - **2** - PV. Vehicles are only charged from PV excess. Only available if excess_charging_enable is true.
         - **3** - Min + PV. Allows the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. If greater PV excess is available, it is used. Only available if excess_charging_enable is true.
+        - **4** - Unchanged. The most recently selected charge mode is saved and kept after a restart.
+        - **5** - Min. Charges vehicles with the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. Greater PV excess is not used. Not offered for selection in the web interface.
+        - **6** - Eco. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise not at all. Only available if Eco mode is enabled.
+        - **7** - Eco + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise only from PV excess. Only available if excess_charging_enable is true and Eco mode is enabled.
+        - **8** - Eco + Min. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise with the configured minimum charging power (guaranteed_power). Only available if Eco mode is enabled.
+        - **9** - Eco + Min + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise as in Min + PV mode. Not offered for selection in the web interface.
     </td>
 </tr>
 
@@ -2477,6 +2563,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         - **1** - Always single-phase
         - **2** - Always three-phase
         - **4** - Single-phase PV mode, three-phase fast mode
+        - **3** - External control via [`power_manager/external_control`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_external_control). Only possible if excess_charging_enable is false.
     </td>
 </tr>
 
@@ -2525,6 +2612,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         Storage priority relative to chargers
         - **0** - Prefer chargers, excess power for storage
         - **1** - Prefer storage, excess power for chargers
+        - **2** - Prefer storage while its state of charge is below the target value (battery_target_soc). Chargers are preferred afterwards. If the storage's state of charge is unknown, the storage is preferred.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_target_soc`<br/>int (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        Target state of charge of the storage. Only used if battery_mode is 2.
     </td>
 </tr>
 
@@ -2819,6 +2914,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/charge_mode_update -m '2'
         - **1** - Off. Vehicles are not charged.
         - **2** - PV. Vehicles are only charged from PV excess. Only available if excess_charging_enable is true.
         - **3** - Min + PV. Allows the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. If greater PV excess is available, it is used. Only available if excess_charging_enable is true.
+        - **4** - Default charge mode. Can only be written: Resets the charge mode to the default charge mode configured in default_mode ([`power_manager/config`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_config)). If default_mode is 4 (unchanged), this has no effect.
+        - **5** - Min. Charges vehicles with the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. Greater PV excess is not used. Not offered for selection in the web interface.
+        - **6** - Eco. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise not at all. Only available if Eco mode is enabled.
+        - **7** - Eco + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise only from PV excess. Only available if excess_charging_enable is true and Eco mode is enabled.
+        - **8** - Eco + Min. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise with the configured minimum charging power (guaranteed_power). Only available if Eco mode is enabled.
+        - **9** - Eco + Min + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise as in Min + PV mode. Not offered for selection in the web interface.
     </td>
 </tr>
     </tbody>
@@ -3041,6 +3142,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         - **1** - Off. Vehicles are not charged.
         - **2** - PV. Vehicles are only charged from PV excess. Only available if excess_charging_enable is true.
         - **3** - Min + PV. Allows the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. If greater PV excess is available, it is used. Only available if excess_charging_enable is true.
+        - **4** - Unchanged. The most recently selected charge mode is saved and kept after a restart.
+        - **5** - Min. Charges vehicles with the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. Greater PV excess is not used. Not offered for selection in the web interface.
+        - **6** - Eco. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise not at all. Only available if Eco mode is enabled.
+        - **7** - Eco + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise only from PV excess. Only available if excess_charging_enable is true and Eco mode is enabled.
+        - **8** - Eco + Min. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise with the configured minimum charging power (guaranteed_power). Only available if Eco mode is enabled.
+        - **9** - Eco + Min + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise as in Min + PV mode. Not offered for selection in the web interface.
     </td>
 </tr>
 
@@ -3107,6 +3214,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         Storage priority relative to chargers
         - **0** - Prefer chargers, excess power for storage
         - **1** - Prefer storage, excess power for chargers
+        - **2** - Prefer storage while its state of charge is below the target value (battery_target_soc). Chargers are preferred afterwards. If the storage's state of charge is unknown, the storage is preferred.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_target_soc`<br/>int (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        Target state of charge of the storage. Only used if battery_mode is 2.
     </td>
 </tr>
 
@@ -3401,6 +3516,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/charge_mode_update -m '2'
         - **1** - Off. Vehicles are not charged.
         - **2** - PV. Vehicles are only charged from PV excess. Only available if excess_charging_enable is true.
         - **3** - Min + PV. Allows the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. If greater PV excess is available, it is used. Only available if excess_charging_enable is true.
+        - **4** - Default charge mode. Can only be written: Resets the charge mode to the default charge mode configured in default_mode ([`power_manager/config`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_config)). If default_mode is 4 (unchanged), this has no effect.
+        - **5** - Min. Charges vehicles with the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. Greater PV excess is not used. Not offered for selection in the web interface.
+        - **6** - Eco. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise not at all. Only available if Eco mode is enabled.
+        - **7** - Eco + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise only from PV excess. Only available if excess_charging_enable is true and Eco mode is enabled.
+        - **8** - Eco + Min. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise with the configured minimum charging power (guaranteed_power). Only available if Eco mode is enabled.
+        - **9** - Eco + Min + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise as in Min + PV mode. Not offered for selection in the web interface.
     </td>
 </tr>
     </tbody>
@@ -3626,6 +3747,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         - **1** - Off. Vehicles are not charged.
         - **2** - PV. Vehicles are only charged from PV excess. Only available if excess_charging_enable is true.
         - **3** - Min + PV. Allows the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. If greater PV excess is available, it is used. Only available if excess_charging_enable is true.
+        - **4** - Unchanged. The most recently selected charge mode is saved and kept after a restart.
+        - **5** - Min. Charges vehicles with the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. Greater PV excess is not used. Not offered for selection in the web interface.
+        - **6** - Eco. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise not at all. Only available if Eco mode is enabled.
+        - **7** - Eco + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise only from PV excess. Only available if excess_charging_enable is true and Eco mode is enabled.
+        - **8** - Eco + Min. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise with the configured minimum charging power (guaranteed_power). Only available if Eco mode is enabled.
+        - **9** - Eco + Min + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise as in Min + PV mode. Not offered for selection in the web interface.
     </td>
 </tr>
 
@@ -3647,6 +3774,10 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         - **1** - Always single-phase
         - **2** - Always three-phase
         - **4** - Single-phase PV mode, three-phase fast mode
+        
+        <strong>(Only Energy Manager)</strong> 
+        
+        - **3** - External control via [`power_manager/external_control`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_external_control). Only possible if excess_charging_enable is false.
     </td>
 </tr>
 
@@ -3701,6 +3832,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         
         - **0** - Prefer chargers, excess power for storage
         - **1** - Prefer storage, excess power for chargers
+        - **2** - Prefer storage while its state of charge is below the target value (battery_target_soc). Chargers are preferred afterwards. If the storage's state of charge is unknown, the storage is preferred.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_target_soc`<br/>int (<abbr title="Percent">%</abbr>)</th>
+    <td>
+        Target state of charge of the storage. Only used if battery_mode is 2.
     </td>
 </tr>
 
@@ -4004,6 +4143,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/charge_mode_update -m '2'
         - **1** - Off. Vehicles are not charged.
         - **2** - PV. Vehicles are only charged from PV excess. Only available if excess_charging_enable is true.
         - **3** - Min + PV. Allows the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. If greater PV excess is available, it is used. Only available if excess_charging_enable is true.
+        - **4** - Default charge mode. Can only be written: Resets the charge mode to the default charge mode configured in default_mode ([`power_manager/config`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_config)). If default_mode is 4 (unchanged), this has no effect.
+        - **5** - Min. Charges vehicles with the configured minimum charging power (guaranteed_power), even if it must be (partially) drawn from the grid. Greater PV excess is not used. Not offered for selection in the web interface.
+        - **6** - Eco. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise not at all. Only available if Eco mode is enabled.
+        - **7** - Eco + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise only from PV excess. Only available if excess_charging_enable is true and Eco mode is enabled.
+        - **8** - Eco + Min. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise with the configured minimum charging power (guaranteed_power). Only available if Eco mode is enabled.
+        - **9** - Eco + Min + PV. Vehicles are charged quickly during the (cheapest) time periods selected by the Eco mode charge plan, otherwise as in Min + PV mode. Not offered for selection in the web interface.
     </td>
 </tr>
     </tbody>

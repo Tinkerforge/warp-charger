@@ -742,11 +742,9 @@ curl http://$HOST/p14a_enwg/config
 ```jsx
 {
     "enable": true,
-    "source": [0, {"limit_on_close": true, "limit_w": 4200, "input_index": 0}],
+    "source": [0, {"limit_on_close": true, "limit_w": 4200}],
     "limit_charger": true,
-    "limit_charge_manager": false,
-    "limit_heating": false,
-    "heating_max_power": 0
+    "limit_charge_manager": false
 }
 ```
 
@@ -756,11 +754,9 @@ curl http://$HOST/p14a_enwg/config
 ```bash
 curl http://$HOST/p14a_enwg/config -d '{
     "enable": true,
-    "source": [0, {"limit_on_close": true, "limit_w": 4200, "input_index": 0}],
+    "source": [0, {"limit_on_close": true, "limit_w": 4200}],
     "limit_charger": true,
-    "limit_charge_manager": false,
-    "limit_heating": false,
-    "heating_max_power": 0
+    "limit_charge_manager": false
 }'
 ```
 
@@ -780,11 +776,9 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/p14a_enwg/config
 ```jsx
 {
     "enable": true,
-    "source": [0, {"limit_on_close": true, "limit_w": 4200, "input_index": 0}],
+    "source": [0, {"limit_on_close": true, "limit_w": 4200}],
     "limit_charger": true,
-    "limit_charge_manager": false,
-    "limit_heating": false,
-    "heating_max_power": 0
+    "limit_charge_manager": false
 }
 ```
 
@@ -797,11 +791,9 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/p14a_enwg/config
 ```bash
 mosquitto_pub -h $BROKER -t $PREFIX/p14a_enwg/config_update -m '{
     "enable": true,
-    "source": [0, {"limit_on_close": true, "limit_w": 4200, "input_index": 0}],
+    "source": [0, {"limit_on_close": true, "limit_w": 4200}],
     "limit_charger": true,
-    "limit_charge_manager": false,
-    "limit_heating": false,
-    "heating_max_power": 0
+    "limit_charge_manager": false
 }'
 ```
 

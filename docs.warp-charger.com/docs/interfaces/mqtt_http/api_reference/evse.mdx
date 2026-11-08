@@ -231,7 +231,29 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
 ## `evse/slots` {#evse_slots_warp1}
 
 
-Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Siehe TODO LINK für Details.
+Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Ein Ladevorgang ist nur erlaubt, wenn kein aktiver Slot blockiert. Weitere Details zu den Ladestromgrenzen sind in der [Beschreibung der Ladestatus-Seite](/webinterface/wallbox/charge_status.md#ladestromgrenzen) zu finden.
+
+Die Indizes haben folgende Bedeutung:
+
+- **[0]** Zuleitung: Maximalstrom der Zuleitung. Wird über die Schalter bzw. Jumper auf dem Ladecontroller konfiguriert.
+- **[1]** Typ-2-Ladekabel: Maximalstrom des Typ-2-Ladekabels.
+- **[2]** Abschalteingang: Blockiert oder gibt den Ladevorgang frei, je nach Konfiguration des Abschalteingangs.
+- **[3]** Konfigurierbarer Eingang: Blockiert, limitiert oder gibt den Ladevorgang frei, je nach Konfiguration des Eingangs.
+- **[4]** Manuelle Ladefreigabe: Wird durch die Autostart-Einstellung, den Taster bzw. [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) und [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging) gesteuert.
+- **[5]** Konfiguration: Über das Webinterface bzw. [`evse/global_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_global_current) vorgegebener Ladestrom.
+- **[6]** Benutzer/NFC: Blockiert, bis ein Benutzer den Ladevorgang freigibt, falls die Benutzerautorisierung aktiviert ist. Siehe [`evse/user_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_user_current).
+- **[7]** Lastmanagement: Wird vom Lastmanager bzw. dem PV-Überschussladen gesteuert. Siehe [`evse/management_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_management_current).
+- **[8]** Externe Steuerung: Wird durch eine externe Steuerung über [`evse/external_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_external_current) gesteuert, beispielsweise durch EVCC.
+- **[9]** Modbus TCP-Strom: Beschränkung des Ladestroms über die Modbus TCP-Schnittstelle.
+- **[10]** Modbus TCP-Freigabe: Freigabe bzw. Blockierung des Ladevorgangs über die Modbus TCP-Schnittstelle.
+- **[11]** OCPP: Freigabe bzw. Blockierung und Beschränkung des Ladestroms über OCPP.
+- **[12]** Energie-/Zeitlimit: Begrenzung durch konfigurierte Energie- oder Zeitlimits. Siehe [`charge_limits`-Modul](/interfaces/mqtt_http/api_reference/charge_limits.mdx).
+- **[13]** Zählerüberwachung: Blockiert, wenn die Zählerüberwachung aktiviert und keine Kommunikation mit dem Stromzähler möglich ist. Siehe [`require_meter`-Modul](/interfaces/mqtt_http/api_reference/require_meter.mdx).
+- **[14]** Automatisierung: Begrenzung durch eine Automatisierungsregel. Siehe [`evse/automation_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_automation_current).
+- **[15]** EEBUS: Begrenzung über EEBUS.
+- **[16]** §14a EnWG: Begrenzung nach §14a EnWG. Siehe [`p14a_enwg`-Modul](/interfaces/mqtt_http/api_reference/p14a_enwg.mdx).
+- **[17]** OVE R 37: Blockiert bzw. verzögert den Ladevorgang gemäß der Netzstützungsfunktionen nach OVE R 37 (Österreich).
+
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -293,7 +315,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/slots
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..14]`<br/>object</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..17]`<br/>object</th>
     <td>
         Ein Ladeslot
         <table>
@@ -2143,7 +2165,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/boost_mode_update -m 'true'
 ## `evse/stop_charging` {#evse_stop_charging_warp1}
 
 
-Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) wieder gestartet werden.
+Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird Slot 4 (Manuelle Ladefreigabe) aus [`evse/slots`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_slots) blockiert. Ein Ladevorgang kann mit [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) wieder gestartet werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -2182,7 +2204,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
 ## `evse/start_charging` {#evse_start_charging_warp1}
 
 
-Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging) wieder gestoppt werden.
+Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird Slot 4 (Manuelle Ladefreigabe) aus [`evse/slots`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_slots) freigegeben. Ein Ladevorgang kann mit [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging) wieder gestoppt werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -2573,7 +2595,29 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
 ## `evse/slots` {#evse_slots_warp2}
 
 
-Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Siehe TODO LINK für Details.
+Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Ein Ladevorgang ist nur erlaubt, wenn kein aktiver Slot blockiert. Weitere Details zu den Ladestromgrenzen sind in der [Beschreibung der Ladestatus-Seite](/webinterface/wallbox/charge_status.md#ladestromgrenzen) zu finden.
+
+Die Indizes haben folgende Bedeutung:
+
+- **[0]** Zuleitung: Maximalstrom der Zuleitung. Wird über die Schalter bzw. Jumper auf dem Ladecontroller konfiguriert.
+- **[1]** Typ-2-Ladekabel: Maximalstrom des Typ-2-Ladekabels.
+- **[2]** Abschalteingang: Blockiert oder gibt den Ladevorgang frei, je nach Konfiguration des Abschalteingangs.
+- **[3]** Konfigurierbarer Eingang: Blockiert, limitiert oder gibt den Ladevorgang frei, je nach Konfiguration des Eingangs.
+- **[4]** Manuelle Ladefreigabe: Wird durch die Autostart-Einstellung, den Taster bzw. [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) und [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging) gesteuert.
+- **[5]** Konfiguration: Über das Webinterface bzw. [`evse/global_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_global_current) vorgegebener Ladestrom.
+- **[6]** Benutzer/NFC: Blockiert, bis ein Benutzer den Ladevorgang freigibt, falls die Benutzerautorisierung aktiviert ist. Siehe [`evse/user_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_user_current).
+- **[7]** Lastmanagement: Wird vom Lastmanager bzw. dem PV-Überschussladen gesteuert. Siehe [`evse/management_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_management_current).
+- **[8]** Externe Steuerung: Wird durch eine externe Steuerung über [`evse/external_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_external_current) gesteuert, beispielsweise durch EVCC.
+- **[9]** Modbus TCP-Strom: Beschränkung des Ladestroms über die Modbus TCP-Schnittstelle.
+- **[10]** Modbus TCP-Freigabe: Freigabe bzw. Blockierung des Ladevorgangs über die Modbus TCP-Schnittstelle.
+- **[11]** OCPP: Freigabe bzw. Blockierung und Beschränkung des Ladestroms über OCPP.
+- **[12]** Energie-/Zeitlimit: Begrenzung durch konfigurierte Energie- oder Zeitlimits. Siehe [`charge_limits`-Modul](/interfaces/mqtt_http/api_reference/charge_limits.mdx).
+- **[13]** Zählerüberwachung: Blockiert, wenn die Zählerüberwachung aktiviert und keine Kommunikation mit dem Stromzähler möglich ist. Siehe [`require_meter`-Modul](/interfaces/mqtt_http/api_reference/require_meter.mdx).
+- **[14]** Automatisierung: Begrenzung durch eine Automatisierungsregel. Siehe [`evse/automation_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_automation_current).
+- **[15]** EEBUS: Begrenzung über EEBUS.
+- **[16]** §14a EnWG: Begrenzung nach §14a EnWG. Siehe [`p14a_enwg`-Modul](/interfaces/mqtt_http/api_reference/p14a_enwg.mdx).
+- **[17]** OVE R 37: Blockiert bzw. verzögert den Ladevorgang gemäß der Netzstützungsfunktionen nach OVE R 37 (Österreich).
+
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -2635,7 +2679,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/slots
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..14]`<br/>object</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..17]`<br/>object</th>
     <td>
         Ein Ladeslot
         <table>
@@ -5097,7 +5141,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/gp_output_update -m '1'
 ## `evse/stop_charging` {#evse_stop_charging_warp2}
 
 
-Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) wieder gestartet werden.
+Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird Slot 4 (Manuelle Ladefreigabe) aus [`evse/slots`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_slots) blockiert. Ein Ladevorgang kann mit [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) wieder gestartet werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -5136,7 +5180,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
 ## `evse/start_charging` {#evse_start_charging_warp2}
 
 
-Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging) wieder gestoppt werden.
+Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird Slot 4 (Manuelle Ladefreigabe) aus [`evse/slots`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_slots) freigegeben. Ein Ladevorgang kann mit [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging) wieder gestoppt werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -5533,7 +5577,29 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
 ## `evse/slots` {#evse_slots_warp3}
 
 
-Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Siehe TODO LINK für Details.
+Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Ein Ladevorgang ist nur erlaubt, wenn kein aktiver Slot blockiert. Weitere Details zu den Ladestromgrenzen sind in der [Beschreibung der Ladestatus-Seite](/webinterface/wallbox/charge_status.md#ladestromgrenzen) zu finden.
+
+Die Indizes haben folgende Bedeutung:
+
+- **[0]** Zuleitung: Maximalstrom der Zuleitung. Wird über die Schalter bzw. Jumper auf dem Ladecontroller konfiguriert.
+- **[1]** Typ-2-Ladekabel: Maximalstrom des Typ-2-Ladekabels.
+- **[2]** Abschalteingang: Blockiert oder gibt den Ladevorgang frei, je nach Konfiguration des Abschalteingangs.
+- **[3]** Konfigurierbarer Eingang: Blockiert, limitiert oder gibt den Ladevorgang frei, je nach Konfiguration des Eingangs.
+- **[4]** Manuelle Ladefreigabe: Wird durch die Autostart-Einstellung, den Taster bzw. [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) und [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging) gesteuert.
+- **[5]** Konfiguration: Über das Webinterface bzw. [`evse/global_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_global_current) vorgegebener Ladestrom.
+- **[6]** Benutzer/NFC: Blockiert, bis ein Benutzer den Ladevorgang freigibt, falls die Benutzerautorisierung aktiviert ist. Siehe [`evse/user_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_user_current).
+- **[7]** Lastmanagement: Wird vom Lastmanager bzw. dem PV-Überschussladen gesteuert. Siehe [`evse/management_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_management_current).
+- **[8]** Externe Steuerung: Wird durch eine externe Steuerung über [`evse/external_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_external_current) gesteuert, beispielsweise durch EVCC.
+- **[9]** Modbus TCP-Strom: Beschränkung des Ladestroms über die Modbus TCP-Schnittstelle.
+- **[10]** Modbus TCP-Freigabe: Freigabe bzw. Blockierung des Ladevorgangs über die Modbus TCP-Schnittstelle.
+- **[11]** OCPP: Freigabe bzw. Blockierung und Beschränkung des Ladestroms über OCPP.
+- **[12]** Energie-/Zeitlimit: Begrenzung durch konfigurierte Energie- oder Zeitlimits. Siehe [`charge_limits`-Modul](/interfaces/mqtt_http/api_reference/charge_limits.mdx).
+- **[13]** Zählerüberwachung: Blockiert, wenn die Zählerüberwachung aktiviert und keine Kommunikation mit dem Stromzähler möglich ist. Siehe [`require_meter`-Modul](/interfaces/mqtt_http/api_reference/require_meter.mdx).
+- **[14]** Automatisierung: Begrenzung durch eine Automatisierungsregel. Siehe [`evse/automation_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_automation_current).
+- **[15]** EEBUS: Begrenzung über EEBUS.
+- **[16]** §14a EnWG: Begrenzung nach §14a EnWG. Siehe [`p14a_enwg`-Modul](/interfaces/mqtt_http/api_reference/p14a_enwg.mdx).
+- **[17]** OVE R 37: Blockiert bzw. verzögert den Ladevorgang gemäß der Netzstützungsfunktionen nach OVE R 37 (Österreich).
+
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -5595,7 +5661,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/slots
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..14]`<br/>object</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..17]`<br/>object</th>
     <td>
         Ein Ladeslot
         <table>
@@ -8104,7 +8170,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/trigger_dc_fault_test -m 'null'
 ## `evse/stop_charging` {#evse_stop_charging_warp3}
 
 
-Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) wieder gestartet werden.
+Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird Slot 4 (Manuelle Ladefreigabe) aus [`evse/slots`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_slots) blockiert. Ein Ladevorgang kann mit [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) wieder gestartet werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -8143,7 +8209,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
 ## `evse/start_charging` {#evse_start_charging_warp3}
 
 
-Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging) wieder gestoppt werden.
+Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird Slot 4 (Manuelle Ladefreigabe) aus [`evse/slots`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_slots) freigegeben. Ein Ladevorgang kann mit [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging) wieder gestoppt werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -8509,7 +8575,29 @@ Die Hardwarekonfiguration des Ladecontrollers.
 ## `evse/slots` {#evse_slots_warp4}
 
 
-Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Siehe TODO LINK für Details.
+Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Ein Ladevorgang ist nur erlaubt, wenn kein aktiver Slot blockiert. Weitere Details zu den Ladestromgrenzen sind in der [Beschreibung der Ladestatus-Seite](/webinterface/wallbox/charge_status.md#ladestromgrenzen) zu finden.
+
+Die Indizes haben folgende Bedeutung:
+
+- **[0]** Zuleitung: Maximalstrom der Zuleitung. Wird über die Schalter bzw. Jumper auf dem Ladecontroller konfiguriert.
+- **[1]** Typ-2-Ladekabel: Maximalstrom des Typ-2-Ladekabels.
+- **[2]** Abschalteingang: Blockiert oder gibt den Ladevorgang frei, je nach Konfiguration des Abschalteingangs.
+- **[3]** Konfigurierbarer Eingang: Blockiert, limitiert oder gibt den Ladevorgang frei, je nach Konfiguration des Eingangs.
+- **[4]** Manuelle Ladefreigabe: Wird durch die Autostart-Einstellung, den Taster bzw. [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) und [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging) gesteuert.
+- **[5]** Konfiguration: Über das Webinterface bzw. [`evse/global_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_global_current) vorgegebener Ladestrom.
+- **[6]** Benutzer/NFC: Blockiert, bis ein Benutzer den Ladevorgang freigibt, falls die Benutzerautorisierung aktiviert ist. Siehe [`evse/user_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_user_current).
+- **[7]** Lastmanagement: Wird vom Lastmanager bzw. dem PV-Überschussladen gesteuert. Siehe [`evse/management_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_management_current).
+- **[8]** Externe Steuerung: Wird durch eine externe Steuerung über [`evse/external_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_external_current) gesteuert, beispielsweise durch EVCC.
+- **[9]** Modbus TCP-Strom: Beschränkung des Ladestroms über die Modbus TCP-Schnittstelle.
+- **[10]** Modbus TCP-Freigabe: Freigabe bzw. Blockierung des Ladevorgangs über die Modbus TCP-Schnittstelle.
+- **[11]** OCPP: Freigabe bzw. Blockierung und Beschränkung des Ladestroms über OCPP.
+- **[12]** Energie-/Zeitlimit: Begrenzung durch konfigurierte Energie- oder Zeitlimits. Siehe [`charge_limits`-Modul](/interfaces/mqtt_http/api_reference/charge_limits.mdx).
+- **[13]** Zählerüberwachung: Blockiert, wenn die Zählerüberwachung aktiviert und keine Kommunikation mit dem Stromzähler möglich ist. Siehe [`require_meter`-Modul](/interfaces/mqtt_http/api_reference/require_meter.mdx).
+- **[14]** Automatisierung: Begrenzung durch eine Automatisierungsregel. Siehe [`evse/automation_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_automation_current).
+- **[15]** EEBUS: Begrenzung über EEBUS.
+- **[16]** §14a EnWG: Begrenzung nach §14a EnWG. Siehe [`p14a_enwg`-Modul](/interfaces/mqtt_http/api_reference/p14a_enwg.mdx).
+- **[17]** OVE R 37: Blockiert bzw. verzögert den Ladevorgang gemäß der Netzstützungsfunktionen nach OVE R 37 (Österreich).
+
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -8571,7 +8659,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/slots
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..14]`<br/>object</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..17]`<br/>object</th>
     <td>
         Ein Ladeslot
         <table>
@@ -11014,7 +11102,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/trigger_dc_fault_test -m 'null'
 ## `evse/stop_charging` {#evse_stop_charging_warp4}
 
 
-Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) wieder gestartet werden.
+Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird Slot 4 (Manuelle Ladefreigabe) aus [`evse/slots`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_slots) blockiert. Ein Ladevorgang kann mit [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) wieder gestartet werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -11053,7 +11141,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
 ## `evse/start_charging` {#evse_start_charging_warp4}
 
 
-Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging) wieder gestoppt werden.
+Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird Slot 4 (Manuelle Ladefreigabe) aus [`evse/slots`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_slots) freigegeben. Ein Ladevorgang kann mit [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging) wieder gestoppt werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -11518,7 +11606,29 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
 ## `evse/slots` {#evse_slots_any}
 
 
-Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Siehe TODO LINK für Details.
+Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) ist das Minimum aller Ladeslots, die aktiv sind. Ein Ladevorgang ist nur erlaubt, wenn kein aktiver Slot blockiert. Weitere Details zu den Ladestromgrenzen sind in der [Beschreibung der Ladestatus-Seite](/webinterface/wallbox/charge_status.md#ladestromgrenzen) zu finden.
+
+Die Indizes haben folgende Bedeutung:
+
+- **[0]** Zuleitung: Maximalstrom der Zuleitung. Wird über die Schalter bzw. Jumper auf dem Ladecontroller konfiguriert.
+- **[1]** Typ-2-Ladekabel: Maximalstrom des Typ-2-Ladekabels.
+- **[2]** Abschalteingang: Blockiert oder gibt den Ladevorgang frei, je nach Konfiguration des Abschalteingangs.
+- **[3]** Konfigurierbarer Eingang: Blockiert, limitiert oder gibt den Ladevorgang frei, je nach Konfiguration des Eingangs.
+- **[4]** Manuelle Ladefreigabe: Wird durch die Autostart-Einstellung, den Taster bzw. [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) und [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging) gesteuert.
+- **[5]** Konfiguration: Über das Webinterface bzw. [`evse/global_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_global_current) vorgegebener Ladestrom.
+- **[6]** Benutzer/NFC: Blockiert, bis ein Benutzer den Ladevorgang freigibt, falls die Benutzerautorisierung aktiviert ist. Siehe [`evse/user_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_user_current).
+- **[7]** Lastmanagement: Wird vom Lastmanager bzw. dem PV-Überschussladen gesteuert. Siehe [`evse/management_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_management_current).
+- **[8]** Externe Steuerung: Wird durch eine externe Steuerung über [`evse/external_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_external_current) gesteuert, beispielsweise durch EVCC.
+- **[9]** Modbus TCP-Strom: Beschränkung des Ladestroms über die Modbus TCP-Schnittstelle.
+- **[10]** Modbus TCP-Freigabe: Freigabe bzw. Blockierung des Ladevorgangs über die Modbus TCP-Schnittstelle.
+- **[11]** OCPP: Freigabe bzw. Blockierung und Beschränkung des Ladestroms über OCPP.
+- **[12]** Energie-/Zeitlimit: Begrenzung durch konfigurierte Energie- oder Zeitlimits. Siehe [`charge_limits`-Modul](/interfaces/mqtt_http/api_reference/charge_limits.mdx).
+- **[13]** Zählerüberwachung: Blockiert, wenn die Zählerüberwachung aktiviert und keine Kommunikation mit dem Stromzähler möglich ist. Siehe [`require_meter`-Modul](/interfaces/mqtt_http/api_reference/require_meter.mdx).
+- **[14]** Automatisierung: Begrenzung durch eine Automatisierungsregel. Siehe [`evse/automation_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_automation_current).
+- **[15]** EEBUS: Begrenzung über EEBUS.
+- **[16]** §14a EnWG: Begrenzung nach §14a EnWG. Siehe [`p14a_enwg`-Modul](/interfaces/mqtt_http/api_reference/p14a_enwg.mdx).
+- **[17]** OVE R 37: Blockiert bzw. verzögert den Ladevorgang gemäß der Netzstützungsfunktionen nach OVE R 37 (Österreich).
+
 :::info[Beispiel]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -11580,7 +11690,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/slots
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..14]`<br/>object</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..17]`<br/>object</th>
     <td>
         Ein Ladeslot
         <table>
@@ -14443,7 +14553,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/gp_output_update -m '1'
 ## `evse/stop_charging` {#evse_stop_charging_any}
 
 
-Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) wieder gestartet werden.
+Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird Slot 4 (Manuelle Ladefreigabe) aus [`evse/slots`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_slots) blockiert. Ein Ladevorgang kann mit [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) wieder gestartet werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]
@@ -14482,7 +14592,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
 ## `evse/start_charging` {#evse_start_charging_any}
 
 
-Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging) wieder gestoppt werden.
+Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird Slot 4 (Manuelle Ladefreigabe) aus [`evse/slots`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_slots) freigegeben. Ein Ladevorgang kann mit [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging) wieder gestoppt werden.
 **Leerer Payload. Es muss einer der folgenden Werte übergeben werden: `null`, `""`, `false`, `0`, `[]` oder `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Löst eine einmalige Aktion aus. Nachrichten, die über den Broker retained wurden, werden ignoriert."></Admonition></TabItem></Tabs>
 :::info[Beispiel]

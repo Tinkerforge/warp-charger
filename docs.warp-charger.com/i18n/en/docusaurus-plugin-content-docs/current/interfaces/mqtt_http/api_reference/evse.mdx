@@ -231,7 +231,29 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
 ## `evse/slots` {#evse_slots_warp1}
 
 
-The state of the charging current limits. The allowed charging current `allowed_charging_current` from [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) is the minimum of all charge slots that are active. See TODO LINK for details.
+The state of the charging current limits. The allowed charging current `allowed_charging_current` from [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) is the minimum of all charge slots that are active. Charging is only allowed if no active slot blocks. More details about the charging current limits can be found in the [description of the charge status page](/webinterface/wallbox/charge_status.md#charging-current-limits).
+
+The indices have the following meaning:
+
+- **[0]** Supply cable: Maximum current of the supply cable. Configured via the switches or jumpers on the charge controller.
+- **[1]** Type 2 charging cable: Maximum current of the type 2 charging cable.
+- **[2]** Shutdown input: Blocks or releases charging, depending on the configuration of the shutdown input.
+- **[3]** Configurable input: Blocks, limits or releases charging, depending on the configuration of the input.
+- **[4]** Manual charge release: Controlled by the auto start setting, the button or [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) and [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
+- **[5]** Configuration: Charging current set via the web interface or [`evse/global_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_global_current).
+- **[6]** User/NFC: Blocks until a user authorizes charging, if user authorization is enabled. See [`evse/user_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_user_current).
+- **[7]** Charge management: Controlled by the charge manager or PV excess charging. See [`evse/management_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_management_current).
+- **[8]** External control: Controlled by an external control via [`evse/external_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_external_current), for example EVCC.
+- **[9]** Modbus TCP current: Charging current limit via the Modbus TCP interface.
+- **[10]** Modbus TCP clearance: Releases or blocks charging via the Modbus TCP interface.
+- **[11]** OCPP: Releases or blocks charging and limits the charging current via OCPP.
+- **[12]** Energy/time limit: Limited by configured energy or time limits. See [`charge_limits` module](/interfaces/mqtt_http/api_reference/charge_limits.mdx).
+- **[13]** Meter monitoring: Blocks if meter monitoring is enabled and communication with the energy meter is not possible. See [`require_meter` module](/interfaces/mqtt_http/api_reference/require_meter.mdx).
+- **[14]** Automation: Limited by an automation rule. See [`evse/automation_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_automation_current).
+- **[15]** EEBUS: Limited via EEBUS.
+- **[16]** §14a EnWG: Limited according to §14a EnWG. See [`p14a_enwg` module](/interfaces/mqtt_http/api_reference/p14a_enwg.mdx).
+- **[17]** OVE R 37: Blocks or delays charging according to the grid support functions as per OVE R 37 (Austria).
+
 :::info[Example]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -293,7 +315,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/slots
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..14]`<br/>object</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..17]`<br/>object</th>
     <td>
         A charge slot
         <table>
@@ -2143,7 +2165,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/boost_mode_update -m 'true'
 ## `evse/stop_charging` {#evse_stop_charging_warp1}
 
 
-Stops the current charging process. Calling this function is equivalent to stopping via the button on the charger: TODO LINK Slot 4 is blocked. Charging can be restarted with [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging).
+Stops the current charging process. Calling this function is equivalent to stopping via the button on the charger: Slot 4 (manual charge release) of [`evse/slots`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_slots) is blocked. Charging can be restarted with [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging).
 **Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
 :::info[Example]
@@ -2182,7 +2204,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
 ## `evse/start_charging` {#evse_start_charging_warp1}
 
 
-Starts a charging process. Calling this function is equivalent to starting via the button on the charger: TODO LINK Slot 4 is released. Charging can be stopped again with [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
+Starts a charging process. Calling this function is equivalent to starting via the button on the charger: Slot 4 (manual charge release) of [`evse/slots`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_slots) is released. Charging can be stopped again with [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
 **Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
 :::info[Example]
@@ -2573,7 +2595,29 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
 ## `evse/slots` {#evse_slots_warp2}
 
 
-The state of the charging current limits. The allowed charging current `allowed_charging_current` from [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) is the minimum of all charge slots that are active. See TODO LINK for details.
+The state of the charging current limits. The allowed charging current `allowed_charging_current` from [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) is the minimum of all charge slots that are active. Charging is only allowed if no active slot blocks. More details about the charging current limits can be found in the [description of the charge status page](/webinterface/wallbox/charge_status.md#charging-current-limits).
+
+The indices have the following meaning:
+
+- **[0]** Supply cable: Maximum current of the supply cable. Configured via the switches or jumpers on the charge controller.
+- **[1]** Type 2 charging cable: Maximum current of the type 2 charging cable.
+- **[2]** Shutdown input: Blocks or releases charging, depending on the configuration of the shutdown input.
+- **[3]** Configurable input: Blocks, limits or releases charging, depending on the configuration of the input.
+- **[4]** Manual charge release: Controlled by the auto start setting, the button or [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) and [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
+- **[5]** Configuration: Charging current set via the web interface or [`evse/global_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_global_current).
+- **[6]** User/NFC: Blocks until a user authorizes charging, if user authorization is enabled. See [`evse/user_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_user_current).
+- **[7]** Charge management: Controlled by the charge manager or PV excess charging. See [`evse/management_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_management_current).
+- **[8]** External control: Controlled by an external control via [`evse/external_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_external_current), for example EVCC.
+- **[9]** Modbus TCP current: Charging current limit via the Modbus TCP interface.
+- **[10]** Modbus TCP clearance: Releases or blocks charging via the Modbus TCP interface.
+- **[11]** OCPP: Releases or blocks charging and limits the charging current via OCPP.
+- **[12]** Energy/time limit: Limited by configured energy or time limits. See [`charge_limits` module](/interfaces/mqtt_http/api_reference/charge_limits.mdx).
+- **[13]** Meter monitoring: Blocks if meter monitoring is enabled and communication with the energy meter is not possible. See [`require_meter` module](/interfaces/mqtt_http/api_reference/require_meter.mdx).
+- **[14]** Automation: Limited by an automation rule. See [`evse/automation_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_automation_current).
+- **[15]** EEBUS: Limited via EEBUS.
+- **[16]** §14a EnWG: Limited according to §14a EnWG. See [`p14a_enwg` module](/interfaces/mqtt_http/api_reference/p14a_enwg.mdx).
+- **[17]** OVE R 37: Blocks or delays charging according to the grid support functions as per OVE R 37 (Austria).
+
 :::info[Example]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -2635,7 +2679,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/slots
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..14]`<br/>object</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..17]`<br/>object</th>
     <td>
         A charge slot
         <table>
@@ -5097,7 +5141,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/gp_output_update -m '1'
 ## `evse/stop_charging` {#evse_stop_charging_warp2}
 
 
-Stops the current charging process. Calling this function is equivalent to stopping via the button on the charger: TODO LINK Slot 4 is blocked. Charging can be restarted with [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging).
+Stops the current charging process. Calling this function is equivalent to stopping via the button on the charger: Slot 4 (manual charge release) of [`evse/slots`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_slots) is blocked. Charging can be restarted with [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging).
 **Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
 :::info[Example]
@@ -5136,7 +5180,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
 ## `evse/start_charging` {#evse_start_charging_warp2}
 
 
-Starts a charging process. Calling this function is equivalent to starting via the button on the charger: TODO LINK Slot 4 is released. Charging can be stopped again with [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
+Starts a charging process. Calling this function is equivalent to starting via the button on the charger: Slot 4 (manual charge release) of [`evse/slots`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_slots) is released. Charging can be stopped again with [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
 **Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
 :::info[Example]
@@ -5533,7 +5577,29 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
 ## `evse/slots` {#evse_slots_warp3}
 
 
-The state of the charging current limits. The allowed charging current `allowed_charging_current` from [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) is the minimum of all charge slots that are active. See TODO LINK for details.
+The state of the charging current limits. The allowed charging current `allowed_charging_current` from [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) is the minimum of all charge slots that are active. Charging is only allowed if no active slot blocks. More details about the charging current limits can be found in the [description of the charge status page](/webinterface/wallbox/charge_status.md#charging-current-limits).
+
+The indices have the following meaning:
+
+- **[0]** Supply cable: Maximum current of the supply cable. Configured via the switches or jumpers on the charge controller.
+- **[1]** Type 2 charging cable: Maximum current of the type 2 charging cable.
+- **[2]** Shutdown input: Blocks or releases charging, depending on the configuration of the shutdown input.
+- **[3]** Configurable input: Blocks, limits or releases charging, depending on the configuration of the input.
+- **[4]** Manual charge release: Controlled by the auto start setting, the button or [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) and [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
+- **[5]** Configuration: Charging current set via the web interface or [`evse/global_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_global_current).
+- **[6]** User/NFC: Blocks until a user authorizes charging, if user authorization is enabled. See [`evse/user_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_user_current).
+- **[7]** Charge management: Controlled by the charge manager or PV excess charging. See [`evse/management_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_management_current).
+- **[8]** External control: Controlled by an external control via [`evse/external_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_external_current), for example EVCC.
+- **[9]** Modbus TCP current: Charging current limit via the Modbus TCP interface.
+- **[10]** Modbus TCP clearance: Releases or blocks charging via the Modbus TCP interface.
+- **[11]** OCPP: Releases or blocks charging and limits the charging current via OCPP.
+- **[12]** Energy/time limit: Limited by configured energy or time limits. See [`charge_limits` module](/interfaces/mqtt_http/api_reference/charge_limits.mdx).
+- **[13]** Meter monitoring: Blocks if meter monitoring is enabled and communication with the energy meter is not possible. See [`require_meter` module](/interfaces/mqtt_http/api_reference/require_meter.mdx).
+- **[14]** Automation: Limited by an automation rule. See [`evse/automation_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_automation_current).
+- **[15]** EEBUS: Limited via EEBUS.
+- **[16]** §14a EnWG: Limited according to §14a EnWG. See [`p14a_enwg` module](/interfaces/mqtt_http/api_reference/p14a_enwg.mdx).
+- **[17]** OVE R 37: Blocks or delays charging according to the grid support functions as per OVE R 37 (Austria).
+
 :::info[Example]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -5595,7 +5661,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/slots
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..14]`<br/>object</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..17]`<br/>object</th>
     <td>
         A charge slot
         <table>
@@ -8104,7 +8170,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/trigger_dc_fault_test -m 'null'
 ## `evse/stop_charging` {#evse_stop_charging_warp3}
 
 
-Stops the current charging process. Calling this function is equivalent to stopping via the button on the charger: TODO LINK Slot 4 is blocked. Charging can be restarted with [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging).
+Stops the current charging process. Calling this function is equivalent to stopping via the button on the charger: Slot 4 (manual charge release) of [`evse/slots`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_slots) is blocked. Charging can be restarted with [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging).
 **Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
 :::info[Example]
@@ -8143,7 +8209,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
 ## `evse/start_charging` {#evse_start_charging_warp3}
 
 
-Starts a charging process. Calling this function is equivalent to starting via the button on the charger: TODO LINK Slot 4 is released. Charging can be stopped again with [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
+Starts a charging process. Calling this function is equivalent to starting via the button on the charger: Slot 4 (manual charge release) of [`evse/slots`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_slots) is released. Charging can be stopped again with [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
 **Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
 :::info[Example]
@@ -8509,7 +8575,29 @@ The hardware configuration of the charge controller.
 ## `evse/slots` {#evse_slots_warp4}
 
 
-The state of the charging current limits. The allowed charging current `allowed_charging_current` from [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) is the minimum of all charge slots that are active. See TODO LINK for details.
+The state of the charging current limits. The allowed charging current `allowed_charging_current` from [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) is the minimum of all charge slots that are active. Charging is only allowed if no active slot blocks. More details about the charging current limits can be found in the [description of the charge status page](/webinterface/wallbox/charge_status.md#charging-current-limits).
+
+The indices have the following meaning:
+
+- **[0]** Supply cable: Maximum current of the supply cable. Configured via the switches or jumpers on the charge controller.
+- **[1]** Type 2 charging cable: Maximum current of the type 2 charging cable.
+- **[2]** Shutdown input: Blocks or releases charging, depending on the configuration of the shutdown input.
+- **[3]** Configurable input: Blocks, limits or releases charging, depending on the configuration of the input.
+- **[4]** Manual charge release: Controlled by the auto start setting, the button or [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) and [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
+- **[5]** Configuration: Charging current set via the web interface or [`evse/global_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_global_current).
+- **[6]** User/NFC: Blocks until a user authorizes charging, if user authorization is enabled. See [`evse/user_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_user_current).
+- **[7]** Charge management: Controlled by the charge manager or PV excess charging. See [`evse/management_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_management_current).
+- **[8]** External control: Controlled by an external control via [`evse/external_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_external_current), for example EVCC.
+- **[9]** Modbus TCP current: Charging current limit via the Modbus TCP interface.
+- **[10]** Modbus TCP clearance: Releases or blocks charging via the Modbus TCP interface.
+- **[11]** OCPP: Releases or blocks charging and limits the charging current via OCPP.
+- **[12]** Energy/time limit: Limited by configured energy or time limits. See [`charge_limits` module](/interfaces/mqtt_http/api_reference/charge_limits.mdx).
+- **[13]** Meter monitoring: Blocks if meter monitoring is enabled and communication with the energy meter is not possible. See [`require_meter` module](/interfaces/mqtt_http/api_reference/require_meter.mdx).
+- **[14]** Automation: Limited by an automation rule. See [`evse/automation_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_automation_current).
+- **[15]** EEBUS: Limited via EEBUS.
+- **[16]** §14a EnWG: Limited according to §14a EnWG. See [`p14a_enwg` module](/interfaces/mqtt_http/api_reference/p14a_enwg.mdx).
+- **[17]** OVE R 37: Blocks or delays charging according to the grid support functions as per OVE R 37 (Austria).
+
 :::info[Example]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -8571,7 +8659,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/slots
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..14]`<br/>object</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..17]`<br/>object</th>
     <td>
         A charge slot
         <table>
@@ -11014,7 +11102,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/trigger_dc_fault_test -m 'null'
 ## `evse/stop_charging` {#evse_stop_charging_warp4}
 
 
-Stops the current charging process. Calling this function is equivalent to stopping via the button on the charger: TODO LINK Slot 4 is blocked. Charging can be restarted with [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging).
+Stops the current charging process. Calling this function is equivalent to stopping via the button on the charger: Slot 4 (manual charge release) of [`evse/slots`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_slots) is blocked. Charging can be restarted with [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging).
 **Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
 :::info[Example]
@@ -11053,7 +11141,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
 ## `evse/start_charging` {#evse_start_charging_warp4}
 
 
-Starts a charging process. Calling this function is equivalent to starting via the button on the charger: TODO LINK Slot 4 is released. Charging can be stopped again with [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
+Starts a charging process. Calling this function is equivalent to starting via the button on the charger: Slot 4 (manual charge release) of [`evse/slots`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_slots) is released. Charging can be stopped again with [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
 **Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
 :::info[Example]
@@ -11518,7 +11606,29 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/hardware_configuration
 ## `evse/slots` {#evse_slots_any}
 
 
-The state of the charging current limits. The allowed charging current `allowed_charging_current` from [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) is the minimum of all charge slots that are active. See TODO LINK for details.
+The state of the charging current limits. The allowed charging current `allowed_charging_current` from [`evse/state`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_state) is the minimum of all charge slots that are active. Charging is only allowed if no active slot blocks. More details about the charging current limits can be found in the [description of the charge status page](/webinterface/wallbox/charge_status.md#charging-current-limits).
+
+The indices have the following meaning:
+
+- **[0]** Supply cable: Maximum current of the supply cable. Configured via the switches or jumpers on the charge controller.
+- **[1]** Type 2 charging cable: Maximum current of the type 2 charging cable.
+- **[2]** Shutdown input: Blocks or releases charging, depending on the configuration of the shutdown input.
+- **[3]** Configurable input: Blocks, limits or releases charging, depending on the configuration of the input.
+- **[4]** Manual charge release: Controlled by the auto start setting, the button or [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging) and [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
+- **[5]** Configuration: Charging current set via the web interface or [`evse/global_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_global_current).
+- **[6]** User/NFC: Blocks until a user authorizes charging, if user authorization is enabled. See [`evse/user_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_user_current).
+- **[7]** Charge management: Controlled by the charge manager or PV excess charging. See [`evse/management_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_management_current).
+- **[8]** External control: Controlled by an external control via [`evse/external_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_external_current), for example EVCC.
+- **[9]** Modbus TCP current: Charging current limit via the Modbus TCP interface.
+- **[10]** Modbus TCP clearance: Releases or blocks charging via the Modbus TCP interface.
+- **[11]** OCPP: Releases or blocks charging and limits the charging current via OCPP.
+- **[12]** Energy/time limit: Limited by configured energy or time limits. See [`charge_limits` module](/interfaces/mqtt_http/api_reference/charge_limits.mdx).
+- **[13]** Meter monitoring: Blocks if meter monitoring is enabled and communication with the energy meter is not possible. See [`require_meter` module](/interfaces/mqtt_http/api_reference/require_meter.mdx).
+- **[14]** Automation: Limited by an automation rule. See [`evse/automation_current`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_automation_current).
+- **[15]** EEBUS: Limited via EEBUS.
+- **[16]** §14a EnWG: Limited according to §14a EnWG. See [`p14a_enwg` module](/interfaces/mqtt_http/api_reference/p14a_enwg.mdx).
+- **[17]** OVE R 37: Blocks or delays charging according to the grid support functions as per OVE R 37 (Austria).
+
 :::info[Example]
     <Tabs groupId="apiType" queryString className="hidden-tabs">
         <TabItem value="http" label="HTTP (curl)">
@@ -11580,7 +11690,7 @@ mosquitto_sub -v -C 1 -h $BROKER -t $PREFIX/evse/slots
     <tbody>
 
 <tr>
-    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..14]`<br/>object</th>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`[0..17]`<br/>object</th>
     <td>
         A charge slot
         <table>
@@ -14443,7 +14553,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/gp_output_update -m '1'
 ## `evse/stop_charging` {#evse_stop_charging_any}
 
 
-Stops the current charging process. Calling this function is equivalent to stopping via the button on the charger: TODO LINK Slot 4 is blocked. Charging can be restarted with [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging).
+Stops the current charging process. Calling this function is equivalent to stopping via the button on the charger: Slot 4 (manual charge release) of [`evse/slots`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_slots) is blocked. Charging can be restarted with [`evse/start_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_start_charging).
 **Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
 :::info[Example]
@@ -14482,7 +14592,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/evse/stop_charging -m 'null'
 ## `evse/start_charging` {#evse_start_charging_any}
 
 
-Starts a charging process. Calling this function is equivalent to starting via the button on the charger: TODO LINK Slot 4 is released. Charging can be stopped again with [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
+Starts a charging process. Calling this function is equivalent to starting via the button on the charger: Slot 4 (manual charge release) of [`evse/slots`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_slots) is released. Charging can be stopped again with [`evse/stop_charging`](/interfaces/mqtt_http/api_reference/evse.mdx#evse_stop_charging).
 **Empty payload. One of the following values must be passed: `null`, `""`, `false`, `0`, `[]` or `{}`**
 <Tabs groupId="apiType" queryString className="hidden-tabs"><TabItem value="http"></TabItem><TabItem value="mqtt"><Admonition type="warning" title="Triggers a one-time action. Messages retained via the broker are ignored."></Admonition></TabItem></Tabs>
 :::info[Example]

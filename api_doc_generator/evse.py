@@ -1,5 +1,30 @@
 from api_doc_common import *
 
+SLOTS = [
+    {'de': "Zuleitung: Maximalstrom der Zuleitung. Wird über die Schalter bzw. Jumper auf dem Ladecontroller konfiguriert.", 'en': "Supply cable: Maximum current of the supply cable. Configured via the switches or jumpers on the charge controller."},
+    {'de': "Typ-2-Ladekabel: Maximalstrom des Typ-2-Ladekabels.", 'en': "Type 2 charging cable: Maximum current of the type 2 charging cable."},
+    {'de': "Abschalteingang: Blockiert oder gibt den Ladevorgang frei, je nach Konfiguration des Abschalteingangs.", 'en': "Shutdown input: Blocks or releases charging, depending on the configuration of the shutdown input."},
+    {'de': "Konfigurierbarer Eingang: Blockiert, limitiert oder gibt den Ladevorgang frei, je nach Konfiguration des Eingangs.", 'en': "Configurable input: Blocks, limits or releases charging, depending on the configuration of the input."},
+    {'de': "Manuelle Ladefreigabe: Wird durch die Autostart-Einstellung, den Taster bzw. {{{ref:evse/start_charging}}} und {{{ref:evse/stop_charging}}} gesteuert.", 'en': "Manual charge release: Controlled by the auto start setting, the button or {{{ref:evse/start_charging}}} and {{{ref:evse/stop_charging}}}."},
+    {'de': "Konfiguration: Über das Webinterface bzw. {{{ref:evse/global_current}}} vorgegebener Ladestrom.", 'en': "Configuration: Charging current set via the web interface or {{{ref:evse/global_current}}}."},
+    {'de': "Benutzer/NFC: Blockiert, bis ein Benutzer den Ladevorgang freigibt, falls die Benutzerautorisierung aktiviert ist. Siehe {{{ref:evse/user_current}}}.", 'en': "User/NFC: Blocks until a user authorizes charging, if user authorization is enabled. See {{{ref:evse/user_current}}}."},
+    {'de': "Lastmanagement: Wird vom Lastmanager bzw. dem PV-Überschussladen gesteuert. Siehe {{{ref:evse/management_current}}}.", 'en': "Charge management: Controlled by the charge manager or PV excess charging. See {{{ref:evse/management_current}}}."},
+    {'de': "Externe Steuerung: Wird durch eine externe Steuerung über {{{ref:evse/external_current}}} gesteuert, beispielsweise durch EVCC.", 'en': "External control: Controlled by an external control via {{{ref:evse/external_current}}}, for example EVCC."},
+    {'de': "Modbus TCP-Strom: Beschränkung des Ladestroms über die Modbus TCP-Schnittstelle.", 'en': "Modbus TCP current: Charging current limit via the Modbus TCP interface."},
+    {'de': "Modbus TCP-Freigabe: Freigabe bzw. Blockierung des Ladevorgangs über die Modbus TCP-Schnittstelle.", 'en': "Modbus TCP clearance: Releases or blocks charging via the Modbus TCP interface."},
+    {'de': "OCPP: Freigabe bzw. Blockierung und Beschränkung des Ladestroms über OCPP.", 'en': "OCPP: Releases or blocks charging and limits the charging current via OCPP."},
+    {'de': "Energie-/Zeitlimit: Begrenzung durch konfigurierte Energie- oder Zeitlimits. Siehe {{{mod_ref:charge_limits}}}.", 'en': "Energy/time limit: Limited by configured energy or time limits. See {{{mod_ref:charge_limits}}}."},
+    {'de': "Zählerüberwachung: Blockiert, wenn die Zählerüberwachung aktiviert und keine Kommunikation mit dem Stromzähler möglich ist. Siehe {{{mod_ref:require_meter}}}.", 'en': "Meter monitoring: Blocks if meter monitoring is enabled and communication with the energy meter is not possible. See {{{mod_ref:require_meter}}}."},
+    {'de': "Automatisierung: Begrenzung durch eine Automatisierungsregel. Siehe {{{ref:evse/automation_current}}}.", 'en': "Automation: Limited by an automation rule. See {{{ref:evse/automation_current}}}."},
+    {'de': "EEBUS: Begrenzung über EEBUS.", 'en': "EEBUS: Limited via EEBUS."},
+    {'de': "§14a EnWG: Begrenzung nach §14a EnWG. Siehe {{{mod_ref:p14a_enwg}}}.", 'en': "§14a EnWG: Limited according to §14a EnWG. See {{{mod_ref:p14a_enwg}}}."},
+    {'de': "OVE R 37: Blockiert bzw. verzögert den Ladevorgang gemäß der Netzstützungsfunktionen nach OVE R 37 (Österreich).", 'en': "OVE R 37: Blocks or delays charging according to the grid support functions as per OVE R 37 (Austria)."},
+]
+
+SLOTS_DESC_INTRO = {'de': "Die Indizes haben folgende Bedeutung:", 'en': "The indices have the following meaning:"}
+
+SLOTS_DESC = T({locale: "\n\n" + SLOTS_DESC_INTRO[locale] + "\n\n" + "\n".join("- **[{}]** {}".format(i, s[locale]) for i, s in enumerate(SLOTS)) + "\n" for locale in SLOTS_DESC_INTRO})
+
 evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller (EVSE)"}), "", T({'de': "Das `evse`-Modul verwaltet Zustand und Konfiguration des Ladecontrollers.", 'en': "The `evse` module manages the state and configuration of the charge controller."}), Version.WARPX.with_desc('**Benötigt das Feature <a href="#features_evse"><code>"evse"</code></a>**'),[
     Func("state", FuncType.STATE, Elem.OBJECT(T({'de': "Der Zustand des Ladecontrollers.", 'en': "The state of the charge controller."}), members={
             "iec61851_state": Elem.INT(T({'de': "Der aktuelle Zustand nach IEC 61851", 'en': "The current state according to IEC 61851"}), constants=[
@@ -119,8 +144,8 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
         })
     ),
 
-    Func("slots", FuncType.STATE, Elem.ARRAY(T({'de': "Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus {{{ref:evse/state}}} ist das Minimum aller Ladeslots, die aktiv sind. Siehe TODO LINK für Details.", 'en': "The state of the charging current limits. The allowed charging current `allowed_charging_current` from {{{ref:evse/state}}} is the minimum of all charge slots that are active. See TODO LINK for details."}), members=[
-            * 15 * [Elem.OBJECT(T({'de': "Ein Ladeslot", 'en': "A charge slot"}), members = {
+    Func("slots", FuncType.STATE, Elem.ARRAY(T({'de': "Der Zustand der Ladestromgrenzen. Der erlaubte Ladestrom `allowed_charging_current` aus {{{ref:evse/state}}} ist das Minimum aller Ladeslots, die aktiv sind. Ein Ladevorgang ist nur erlaubt, wenn kein aktiver Slot blockiert. Weitere Details zu den Ladestromgrenzen sind in der [Beschreibung der Ladestatus-Seite](/webinterface/wallbox/charge_status.md#ladestromgrenzen) zu finden." + SLOTS_DESC.get('de'), 'en': "The state of the charging current limits. The allowed charging current `allowed_charging_current` from {{{ref:evse/state}}} is the minimum of all charge slots that are active. Charging is only allowed if no active slot blocks. More details about the charging current limits can be found in the [description of the charge status page](/webinterface/wallbox/charge_status.md#charging-current-limits)." + SLOTS_DESC.get('en')}), members=[
+            * 18 * [Elem.OBJECT(T({'de': "Ein Ladeslot", 'en': "A charge slot"}), members = {
                 "max_current": Elem.INT(T({'de': "Maximal erlaubter Ladestrom. 6000 (=6 Ampere) bis 32000 (=32 Ampere) oder 0 falls der Slot blockiert.", 'en': "Maximum allowed charging current. 6000 (=6 amperes) to 32000 (=32 amperes) or 0 if the slot is blocked."}), unit=Units.mA),
                 "active": Elem.BOOL(T({'de': "Gibt an ob dieser Slot aktiv ist.", 'en': "Indicates whether this slot is active."}), constants=[
                     Const(True, T({'de': "Slot ist aktiv", 'en': "Slot is active"})),
@@ -477,9 +502,9 @@ evse = Module("evse", T({'de': "Ladecontroller (EVSE)", 'en': "Charge Controller
         })
     ),
 
-    Func("stop_charging", FuncType.COMMAND, Elem.NULL(T({'de': "Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird TODO LINK Slot 4 blockiert. Ein Ladevorgang kann mit {{{ref:evse/start_charging}}} wieder gestartet werden.", 'en': "Stops the current charging process. Calling this function is equivalent to stopping via the button on the charger: TODO LINK Slot 4 is blocked. Charging can be restarted with {{{ref:evse/start_charging}}}."})), command_is_action=True),
+    Func("stop_charging", FuncType.COMMAND, Elem.NULL(T({'de': "Beendet den laufenden Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Stoppen über den Taster an der Wallbox: Es wird Slot 4 (Manuelle Ladefreigabe) aus {{{ref:evse/slots}}} blockiert. Ein Ladevorgang kann mit {{{ref:evse/start_charging}}} wieder gestartet werden.", 'en': "Stops the current charging process. Calling this function is equivalent to stopping via the button on the charger: Slot 4 (manual charge release) of {{{ref:evse/slots}}} is blocked. Charging can be restarted with {{{ref:evse/start_charging}}}."})), command_is_action=True),
 
-    Func("start_charging", FuncType.COMMAND, Elem.NULL(T({'de': "Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird TODO LINK Slot 4 freigegeben. Ein Ladevorgang kann mit {{{ref:evse/stop_charging}}} wieder gestoppt werden.", 'en': "Starts a charging process. Calling this function is equivalent to starting via the button on the charger: TODO LINK Slot 4 is released. Charging can be stopped again with {{{ref:evse/stop_charging}}}."})), command_is_action=True),
+    Func("start_charging", FuncType.COMMAND, Elem.NULL(T({'de': "Startet einen Ladevorgang. Ein Aufruf dieser Funktion ist äquivalent zum Starten über den Taster an der Wallbox: Es wird Slot 4 (Manuelle Ladefreigabe) aus {{{ref:evse/slots}}} freigegeben. Ein Ladevorgang kann mit {{{ref:evse/stop_charging}}} wieder gestoppt werden.", 'en': "Starts a charging process. Calling this function is equivalent to starting via the button on the charger: Slot 4 (manual charge release) of {{{ref:evse/slots}}} is released. Charging can be stopped again with {{{ref:evse/stop_charging}}}."})), command_is_action=True),
 
     #Func("start_debug", FuncType.HTTP_ONLY, Elem.OPAQUE("Startet ein Ladeprotokoll. Es werden hochfrequent Messwerte des Ladecontrollers auf die WebSockets geschrieben, bis {{{ref:evse/stop_debug}}} aufgerufen wird.")),
     #Func("stop_debug", FuncType.HTTP_ONLY, Elem.OPAQUE("Stoppt ein Ladeprotokoll. Siehe {{{ref:evse/start_debug}}} für Details.")),

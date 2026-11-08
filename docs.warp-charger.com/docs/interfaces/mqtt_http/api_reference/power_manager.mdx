@@ -131,6 +131,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         - **1** - Aus. Fahrzeuge werden nicht geladen.
         - **2** - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
         - **3** - Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
+        - **4** - Unverändert. Der zuletzt gewählte Lademodus wird gespeichert und nach einem Neustart weiterverwendet.
+        - **5** - Min. Lädt Fahrzeuge mit der konfigurierten Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Ein größerer PV-Überschuss wird nicht genutzt. Wird im Webinterface nicht zur Auswahl angeboten.
+        - **6** - Eco. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nicht. Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **7** - Eco + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nur vom PV-Überschuss. Steht nur zur Verfügung, wenn excess_charging_enable true und der Eco-Modus aktiviert ist.
+        - **8** - Eco + Min. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten mit der konfigurierten Mindest-Ladeleistung (guaranteed_power). Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **9** - Eco + Min + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten wie im Modus Min + PV. Wird im Webinterface nicht zur Auswahl angeboten.
     </td>
 </tr>
 
@@ -197,6 +203,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         Speicherpriorität im Verhältnis zu Wallboxen
         - **0** - Wallboxen bevorzugen, überschüssige Leistung für Speicher
         - **1** - Speicher bevorzugen, überschüssige Leistung für Wallboxen
+        - **2** - Speicher bevorzugen, solange der Ladestand unter dem Zielwert (battery_target_soc) liegt. Danach werden Wallboxen bevorzugt. Ist der Ladestand des Speichers unbekannt, wird der Speicher bevorzugt.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_target_soc`<br/>int (<abbr title="Prozent">%</abbr>)</th>
+    <td>
+        Ziel-Ladestand des Speichers. Wird nur verwendet, wenn battery_mode 2 ist.
     </td>
 </tr>
 
@@ -491,6 +505,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/charge_mode_update -m '2'
         - **1** - Aus. Fahrzeuge werden nicht geladen.
         - **2** - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
         - **3** - Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
+        - **4** - Standardlademodus. Kann nur geschrieben werden: Setzt den Lademodus auf den in default_mode ([`power_manager/config`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_config)) konfigurierten Standardlademodus zurück. Falls default_mode 4 (unverändert) ist, hat dies keine Auswirkung.
+        - **5** - Min. Lädt Fahrzeuge mit der konfigurierten Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Ein größerer PV-Überschuss wird nicht genutzt. Wird im Webinterface nicht zur Auswahl angeboten.
+        - **6** - Eco. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nicht. Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **7** - Eco + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nur vom PV-Überschuss. Steht nur zur Verfügung, wenn excess_charging_enable true und der Eco-Modus aktiviert ist.
+        - **8** - Eco + Min. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten mit der konfigurierten Mindest-Ladeleistung (guaranteed_power). Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **9** - Eco + Min + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten wie im Modus Min + PV. Wird im Webinterface nicht zur Auswahl angeboten.
     </td>
 </tr>
     </tbody>
@@ -713,6 +733,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         - **1** - Aus. Fahrzeuge werden nicht geladen.
         - **2** - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
         - **3** - Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
+        - **4** - Unverändert. Der zuletzt gewählte Lademodus wird gespeichert und nach einem Neustart weiterverwendet.
+        - **5** - Min. Lädt Fahrzeuge mit der konfigurierten Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Ein größerer PV-Überschuss wird nicht genutzt. Wird im Webinterface nicht zur Auswahl angeboten.
+        - **6** - Eco. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nicht. Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **7** - Eco + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nur vom PV-Überschuss. Steht nur zur Verfügung, wenn excess_charging_enable true und der Eco-Modus aktiviert ist.
+        - **8** - Eco + Min. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten mit der konfigurierten Mindest-Ladeleistung (guaranteed_power). Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **9** - Eco + Min + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten wie im Modus Min + PV. Wird im Webinterface nicht zur Auswahl angeboten.
     </td>
 </tr>
 
@@ -779,6 +805,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         Speicherpriorität im Verhältnis zu Wallboxen
         - **0** - Wallboxen bevorzugen, überschüssige Leistung für Speicher
         - **1** - Speicher bevorzugen, überschüssige Leistung für Wallboxen
+        - **2** - Speicher bevorzugen, solange der Ladestand unter dem Zielwert (battery_target_soc) liegt. Danach werden Wallboxen bevorzugt. Ist der Ladestand des Speichers unbekannt, wird der Speicher bevorzugt.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_target_soc`<br/>int (<abbr title="Prozent">%</abbr>)</th>
+    <td>
+        Ziel-Ladestand des Speichers. Wird nur verwendet, wenn battery_mode 2 ist.
     </td>
 </tr>
 
@@ -1073,6 +1107,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/charge_mode_update -m '2'
         - **1** - Aus. Fahrzeuge werden nicht geladen.
         - **2** - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
         - **3** - Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
+        - **4** - Standardlademodus. Kann nur geschrieben werden: Setzt den Lademodus auf den in default_mode ([`power_manager/config`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_config)) konfigurierten Standardlademodus zurück. Falls default_mode 4 (unverändert) ist, hat dies keine Auswirkung.
+        - **5** - Min. Lädt Fahrzeuge mit der konfigurierten Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Ein größerer PV-Überschuss wird nicht genutzt. Wird im Webinterface nicht zur Auswahl angeboten.
+        - **6** - Eco. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nicht. Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **7** - Eco + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nur vom PV-Überschuss. Steht nur zur Verfügung, wenn excess_charging_enable true und der Eco-Modus aktiviert ist.
+        - **8** - Eco + Min. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten mit der konfigurierten Mindest-Ladeleistung (guaranteed_power). Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **9** - Eco + Min + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten wie im Modus Min + PV. Wird im Webinterface nicht zur Auswahl angeboten.
     </td>
 </tr>
     </tbody>
@@ -1295,6 +1335,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         - **1** - Aus. Fahrzeuge werden nicht geladen.
         - **2** - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
         - **3** - Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
+        - **4** - Unverändert. Der zuletzt gewählte Lademodus wird gespeichert und nach einem Neustart weiterverwendet.
+        - **5** - Min. Lädt Fahrzeuge mit der konfigurierten Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Ein größerer PV-Überschuss wird nicht genutzt. Wird im Webinterface nicht zur Auswahl angeboten.
+        - **6** - Eco. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nicht. Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **7** - Eco + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nur vom PV-Überschuss. Steht nur zur Verfügung, wenn excess_charging_enable true und der Eco-Modus aktiviert ist.
+        - **8** - Eco + Min. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten mit der konfigurierten Mindest-Ladeleistung (guaranteed_power). Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **9** - Eco + Min + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten wie im Modus Min + PV. Wird im Webinterface nicht zur Auswahl angeboten.
     </td>
 </tr>
 
@@ -1361,6 +1407,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         Speicherpriorität im Verhältnis zu Wallboxen
         - **0** - Wallboxen bevorzugen, überschüssige Leistung für Speicher
         - **1** - Speicher bevorzugen, überschüssige Leistung für Wallboxen
+        - **2** - Speicher bevorzugen, solange der Ladestand unter dem Zielwert (battery_target_soc) liegt. Danach werden Wallboxen bevorzugt. Ist der Ladestand des Speichers unbekannt, wird der Speicher bevorzugt.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_target_soc`<br/>int (<abbr title="Prozent">%</abbr>)</th>
+    <td>
+        Ziel-Ladestand des Speichers. Wird nur verwendet, wenn battery_mode 2 ist.
     </td>
 </tr>
 
@@ -1655,6 +1709,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/charge_mode_update -m '2'
         - **1** - Aus. Fahrzeuge werden nicht geladen.
         - **2** - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
         - **3** - Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
+        - **4** - Standardlademodus. Kann nur geschrieben werden: Setzt den Lademodus auf den in default_mode ([`power_manager/config`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_config)) konfigurierten Standardlademodus zurück. Falls default_mode 4 (unverändert) ist, hat dies keine Auswirkung.
+        - **5** - Min. Lädt Fahrzeuge mit der konfigurierten Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Ein größerer PV-Überschuss wird nicht genutzt. Wird im Webinterface nicht zur Auswahl angeboten.
+        - **6** - Eco. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nicht. Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **7** - Eco + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nur vom PV-Überschuss. Steht nur zur Verfügung, wenn excess_charging_enable true und der Eco-Modus aktiviert ist.
+        - **8** - Eco + Min. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten mit der konfigurierten Mindest-Ladeleistung (guaranteed_power). Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **9** - Eco + Min + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten wie im Modus Min + PV. Wird im Webinterface nicht zur Auswahl angeboten.
     </td>
 </tr>
     </tbody>
@@ -1877,6 +1937,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         - **1** - Aus. Fahrzeuge werden nicht geladen.
         - **2** - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
         - **3** - Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
+        - **4** - Unverändert. Der zuletzt gewählte Lademodus wird gespeichert und nach einem Neustart weiterverwendet.
+        - **5** - Min. Lädt Fahrzeuge mit der konfigurierten Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Ein größerer PV-Überschuss wird nicht genutzt. Wird im Webinterface nicht zur Auswahl angeboten.
+        - **6** - Eco. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nicht. Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **7** - Eco + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nur vom PV-Überschuss. Steht nur zur Verfügung, wenn excess_charging_enable true und der Eco-Modus aktiviert ist.
+        - **8** - Eco + Min. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten mit der konfigurierten Mindest-Ladeleistung (guaranteed_power). Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **9** - Eco + Min + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten wie im Modus Min + PV. Wird im Webinterface nicht zur Auswahl angeboten.
     </td>
 </tr>
 
@@ -1943,6 +2009,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         Speicherpriorität im Verhältnis zu Wallboxen
         - **0** - Wallboxen bevorzugen, überschüssige Leistung für Speicher
         - **1** - Speicher bevorzugen, überschüssige Leistung für Wallboxen
+        - **2** - Speicher bevorzugen, solange der Ladestand unter dem Zielwert (battery_target_soc) liegt. Danach werden Wallboxen bevorzugt. Ist der Ladestand des Speichers unbekannt, wird der Speicher bevorzugt.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_target_soc`<br/>int (<abbr title="Prozent">%</abbr>)</th>
+    <td>
+        Ziel-Ladestand des Speichers. Wird nur verwendet, wenn battery_mode 2 ist.
     </td>
 </tr>
 
@@ -2237,6 +2311,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/charge_mode_update -m '2'
         - **1** - Aus. Fahrzeuge werden nicht geladen.
         - **2** - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
         - **3** - Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
+        - **4** - Standardlademodus. Kann nur geschrieben werden: Setzt den Lademodus auf den in default_mode ([`power_manager/config`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_config)) konfigurierten Standardlademodus zurück. Falls default_mode 4 (unverändert) ist, hat dies keine Auswirkung.
+        - **5** - Min. Lädt Fahrzeuge mit der konfigurierten Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Ein größerer PV-Überschuss wird nicht genutzt. Wird im Webinterface nicht zur Auswahl angeboten.
+        - **6** - Eco. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nicht. Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **7** - Eco + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nur vom PV-Überschuss. Steht nur zur Verfügung, wenn excess_charging_enable true und der Eco-Modus aktiviert ist.
+        - **8** - Eco + Min. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten mit der konfigurierten Mindest-Ladeleistung (guaranteed_power). Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **9** - Eco + Min + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten wie im Modus Min + PV. Wird im Webinterface nicht zur Auswahl angeboten.
     </td>
 </tr>
     </tbody>
@@ -2459,6 +2539,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         - **1** - Aus. Fahrzeuge werden nicht geladen.
         - **2** - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
         - **3** - Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
+        - **4** - Unverändert. Der zuletzt gewählte Lademodus wird gespeichert und nach einem Neustart weiterverwendet.
+        - **5** - Min. Lädt Fahrzeuge mit der konfigurierten Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Ein größerer PV-Überschuss wird nicht genutzt. Wird im Webinterface nicht zur Auswahl angeboten.
+        - **6** - Eco. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nicht. Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **7** - Eco + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nur vom PV-Überschuss. Steht nur zur Verfügung, wenn excess_charging_enable true und der Eco-Modus aktiviert ist.
+        - **8** - Eco + Min. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten mit der konfigurierten Mindest-Ladeleistung (guaranteed_power). Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **9** - Eco + Min + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten wie im Modus Min + PV. Wird im Webinterface nicht zur Auswahl angeboten.
     </td>
 </tr>
 
@@ -2477,6 +2563,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         - **1** - Immer einphasig
         - **2** - Immer dreiphasig
         - **4** - Einphasiger PV-Modus, dreiphasiger Schnell-Modus
+        - **3** - Externe Steuerung über [`power_manager/external_control`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_external_control). Nur möglich, wenn excess_charging_enable false ist.
     </td>
 </tr>
 
@@ -2525,6 +2612,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         Speicherpriorität im Verhältnis zu Wallboxen
         - **0** - Wallboxen bevorzugen, überschüssige Leistung für Speicher
         - **1** - Speicher bevorzugen, überschüssige Leistung für Wallboxen
+        - **2** - Speicher bevorzugen, solange der Ladestand unter dem Zielwert (battery_target_soc) liegt. Danach werden Wallboxen bevorzugt. Ist der Ladestand des Speichers unbekannt, wird der Speicher bevorzugt.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_target_soc`<br/>int (<abbr title="Prozent">%</abbr>)</th>
+    <td>
+        Ziel-Ladestand des Speichers. Wird nur verwendet, wenn battery_mode 2 ist.
     </td>
 </tr>
 
@@ -2819,6 +2914,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/charge_mode_update -m '2'
         - **1** - Aus. Fahrzeuge werden nicht geladen.
         - **2** - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
         - **3** - Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
+        - **4** - Standardlademodus. Kann nur geschrieben werden: Setzt den Lademodus auf den in default_mode ([`power_manager/config`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_config)) konfigurierten Standardlademodus zurück. Falls default_mode 4 (unverändert) ist, hat dies keine Auswirkung.
+        - **5** - Min. Lädt Fahrzeuge mit der konfigurierten Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Ein größerer PV-Überschuss wird nicht genutzt. Wird im Webinterface nicht zur Auswahl angeboten.
+        - **6** - Eco. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nicht. Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **7** - Eco + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nur vom PV-Überschuss. Steht nur zur Verfügung, wenn excess_charging_enable true und der Eco-Modus aktiviert ist.
+        - **8** - Eco + Min. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten mit der konfigurierten Mindest-Ladeleistung (guaranteed_power). Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **9** - Eco + Min + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten wie im Modus Min + PV. Wird im Webinterface nicht zur Auswahl angeboten.
     </td>
 </tr>
     </tbody>
@@ -3041,6 +3142,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         - **1** - Aus. Fahrzeuge werden nicht geladen.
         - **2** - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
         - **3** - Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
+        - **4** - Unverändert. Der zuletzt gewählte Lademodus wird gespeichert und nach einem Neustart weiterverwendet.
+        - **5** - Min. Lädt Fahrzeuge mit der konfigurierten Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Ein größerer PV-Überschuss wird nicht genutzt. Wird im Webinterface nicht zur Auswahl angeboten.
+        - **6** - Eco. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nicht. Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **7** - Eco + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nur vom PV-Überschuss. Steht nur zur Verfügung, wenn excess_charging_enable true und der Eco-Modus aktiviert ist.
+        - **8** - Eco + Min. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten mit der konfigurierten Mindest-Ladeleistung (guaranteed_power). Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **9** - Eco + Min + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten wie im Modus Min + PV. Wird im Webinterface nicht zur Auswahl angeboten.
     </td>
 </tr>
 
@@ -3107,6 +3214,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         Speicherpriorität im Verhältnis zu Wallboxen
         - **0** - Wallboxen bevorzugen, überschüssige Leistung für Speicher
         - **1** - Speicher bevorzugen, überschüssige Leistung für Wallboxen
+        - **2** - Speicher bevorzugen, solange der Ladestand unter dem Zielwert (battery_target_soc) liegt. Danach werden Wallboxen bevorzugt. Ist der Ladestand des Speichers unbekannt, wird der Speicher bevorzugt.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_target_soc`<br/>int (<abbr title="Prozent">%</abbr>)</th>
+    <td>
+        Ziel-Ladestand des Speichers. Wird nur verwendet, wenn battery_mode 2 ist.
     </td>
 </tr>
 
@@ -3401,6 +3516,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/charge_mode_update -m '2'
         - **1** - Aus. Fahrzeuge werden nicht geladen.
         - **2** - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
         - **3** - Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
+        - **4** - Standardlademodus. Kann nur geschrieben werden: Setzt den Lademodus auf den in default_mode ([`power_manager/config`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_config)) konfigurierten Standardlademodus zurück. Falls default_mode 4 (unverändert) ist, hat dies keine Auswirkung.
+        - **5** - Min. Lädt Fahrzeuge mit der konfigurierten Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Ein größerer PV-Überschuss wird nicht genutzt. Wird im Webinterface nicht zur Auswahl angeboten.
+        - **6** - Eco. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nicht. Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **7** - Eco + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nur vom PV-Überschuss. Steht nur zur Verfügung, wenn excess_charging_enable true und der Eco-Modus aktiviert ist.
+        - **8** - Eco + Min. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten mit der konfigurierten Mindest-Ladeleistung (guaranteed_power). Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **9** - Eco + Min + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten wie im Modus Min + PV. Wird im Webinterface nicht zur Auswahl angeboten.
     </td>
 </tr>
     </tbody>
@@ -3626,6 +3747,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         - **1** - Aus. Fahrzeuge werden nicht geladen.
         - **2** - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
         - **3** - Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
+        - **4** - Unverändert. Der zuletzt gewählte Lademodus wird gespeichert und nach einem Neustart weiterverwendet.
+        - **5** - Min. Lädt Fahrzeuge mit der konfigurierten Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Ein größerer PV-Überschuss wird nicht genutzt. Wird im Webinterface nicht zur Auswahl angeboten.
+        - **6** - Eco. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nicht. Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **7** - Eco + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nur vom PV-Überschuss. Steht nur zur Verfügung, wenn excess_charging_enable true und der Eco-Modus aktiviert ist.
+        - **8** - Eco + Min. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten mit der konfigurierten Mindest-Ladeleistung (guaranteed_power). Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **9** - Eco + Min + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten wie im Modus Min + PV. Wird im Webinterface nicht zur Auswahl angeboten.
     </td>
 </tr>
 
@@ -3647,6 +3774,10 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         - **1** - Immer einphasig
         - **2** - Immer dreiphasig
         - **4** - Einphasiger PV-Modus, dreiphasiger Schnell-Modus
+        
+        <strong>(Nur Energy Manager)</strong> 
+        
+        - **3** - Externe Steuerung über [`power_manager/external_control`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_external_control). Nur möglich, wenn excess_charging_enable false ist.
     </td>
 </tr>
 
@@ -3701,6 +3832,14 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/config_update -m '{
         
         - **0** - Wallboxen bevorzugen, überschüssige Leistung für Speicher
         - **1** - Speicher bevorzugen, überschüssige Leistung für Wallboxen
+        - **2** - Speicher bevorzugen, solange der Ladestand unter dem Zielwert (battery_target_soc) liegt. Danach werden Wallboxen bevorzugt. Ist der Ladestand des Speichers unbekannt, wird der Speicher bevorzugt.
+    </td>
+</tr>
+
+<tr>
+    <th scope="row" style={{whiteSpace: "nowrap"}}>`battery_target_soc`<br/>int (<abbr title="Prozent">%</abbr>)</th>
+    <td>
+        Ziel-Ladestand des Speichers. Wird nur verwendet, wenn battery_mode 2 ist.
     </td>
 </tr>
 
@@ -4004,6 +4143,12 @@ mosquitto_pub -h $BROKER -t $PREFIX/power_manager/charge_mode_update -m '2'
         - **1** - Aus. Fahrzeuge werden nicht geladen.
         - **2** - PV. Fahrzeuge werden nur vom PV-Überschuss geladen. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
         - **3** - Min + PV. Erlaubt die konfigurierte Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Wenn ein größerer PV-Überschuss zur Verfügung steht, wird dieser verwendet. Steht nur zur Verfügung, wenn excess_charging_enable true ist.
+        - **4** - Standardlademodus. Kann nur geschrieben werden: Setzt den Lademodus auf den in default_mode ([`power_manager/config`](/interfaces/mqtt_http/api_reference/power_manager.mdx#power_manager_config)) konfigurierten Standardlademodus zurück. Falls default_mode 4 (unverändert) ist, hat dies keine Auswirkung.
+        - **5** - Min. Lädt Fahrzeuge mit der konfigurierten Mindest-Ladeleistung (guaranteed_power), auch wenn diese (teilweise) aus dem Netz bezogen werden muss. Ein größerer PV-Überschuss wird nicht genutzt. Wird im Webinterface nicht zur Auswahl angeboten.
+        - **6** - Eco. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nicht. Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **7** - Eco + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten nur vom PV-Überschuss. Steht nur zur Verfügung, wenn excess_charging_enable true und der Eco-Modus aktiviert ist.
+        - **8** - Eco + Min. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten mit der konfigurierten Mindest-Ladeleistung (guaranteed_power). Steht nur zur Verfügung, wenn der Eco-Modus aktiviert ist.
+        - **9** - Eco + Min + PV. Fahrzeuge werden in den vom Ladeplan des Eco-Modus gewählten (günstigsten) Zeiträumen schnell geladen, ansonsten wie im Modus Min + PV. Wird im Webinterface nicht zur Auswahl angeboten.
     </td>
 </tr>
     </tbody>

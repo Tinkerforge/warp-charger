@@ -62,6 +62,12 @@ Folgende Grenzen können Teil der Berechnung sein:
 
  * **Automatisierung**: Begrenzung durch eine auf der Unterseite Automatisierung konfigurierte Regel.
 
+ * **EEBUS**: Begrenzung des Ladestroms über EEBUS.
+
+ * **§14a EnWG**: Begrenzung der Ladeleistung nach §14a EnWG.
+
+ * **OVE R 37**: Blockiert bzw. verzögert den Ladevorgang gemäß der Netzstützungsfunktionen nach OVE R 37 (Österreich), beispielsweise bei Unterspannung.
+
 
 Die Farbmarkierung neben einer Grenze hat folgende Bedeutung:
 
