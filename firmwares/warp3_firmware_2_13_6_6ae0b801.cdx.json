@@ -1,0 +1,3486 @@
+{
+  "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:9dbe49d5-50d8-5131-9ab9-a787914b2599",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-11-16T13:07:11Z",
+    "lifecycles": [
+      {
+        "phase": "build"
+      }
+    ],
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "bom-ref": "esp32-firmware-sbom",
+          "supplier": {
+            "name": "Tinkerforge GmbH",
+            "url": [
+              "https://www.tinkerforge.com"
+            ]
+          },
+          "name": "esp32-firmware sbom.py",
+          "description": "SBOM generator of the esp32-firmware build system"
+        },
+        {
+          "type": "application",
+          "bom-ref": "platform-espressif32@55.03.37",
+          "name": "platform-espressif32",
+          "version": "55.03.37",
+          "description": "PlatformIO development platform",
+          "licenses": [
+            {
+              "license": {
+                "id": "Apache-2.0"
+              }
+            }
+          ],
+          "externalReferences": [
+            {
+              "type": "website",
+              "url": "https://github.com/pioarduino/platform-espressif32"
+            }
+          ]
+        },
+        {
+          "type": "application",
+          "bom-ref": "toolchain-xtensa-esp-elf@14.2.0+20251107",
+          "supplier": {
+            "name": "Espressif Systems (Shanghai) CO LTD",
+            "url": [
+              "https://www.espressif.com"
+            ]
+          },
+          "name": "toolchain-xtensa-esp-elf",
+          "version": "14.2.0+20251107",
+          "description": "GCC Toolchain for Espressif ESP32 Xtensa MCUs",
+          "licenses": [
+            {
+              "license": {
+                "id": "GPL-2.0-or-later"
+              }
+            }
+          ],
+          "externalReferences": [
+            {
+              "type": "website",
+              "url": "https://github.com/espressif/crosstool-NG"
+            }
+          ]
+        }
+      ]
+    },
+    "component": {
+      "type": "firmware",
+      "bom-ref": "firmware",
+      "supplier": {
+        "name": "Tinkerforge GmbH",
+        "url": [
+          "https://www.tinkerforge.com"
+        ]
+      },
+      "manufacturer": {
+        "name": "Tinkerforge GmbH",
+        "url": [
+          "https://www.tinkerforge.com"
+        ]
+      },
+      "name": "WARP3 Charger Firmware",
+      "version": "2.13.6+6ae0b801",
+      "description": "Firmware for WARP3 Charger (warp3)",
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "purl": "pkg:github/tinkerforge/esp32-firmware@afa5c782176f2397ead9020ddc346b3d163fd840",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Tinkerforge/esp32-firmware"
+        },
+        {
+          "type": "distribution",
+          "url": "warp3_firmware_2_13_6_6ae0b801_merged.bin",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "b0f95d8499dd3169985a47d57fe709a27b2f889a9f2ed0c5da96880621bbea0e"
+            },
+            {
+              "alg": "SHA-512",
+              "content": "4678eaf1c06c1b84620ae8dca81de2746ce10ee3e6f15ef0142cffb6b0bc0ff76862dcac30c8ed5a74b8eb34c362542a991c43c737fd7eeca0752f5e67d8a19d"
+            }
+          ]
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:product_id",
+          "value": "warp3"
+        },
+        {
+          "name": "tf:firmware_info_product_id",
+          "value": "warp3"
+        },
+        {
+          "name": "tf:pio_env",
+          "value": "warp3_signed"
+        },
+        {
+          "name": "tf:firmware_basename",
+          "value": "warp3_firmware_2_13_6_6ae0b801"
+        },
+        {
+          "name": "tf:build_timestamp",
+          "value": "1793112065"
+        },
+        {
+          "name": "tf:git_commit",
+          "value": "afa5c782176f2397ead9020ddc346b3d163fd840"
+        },
+        {
+          "name": "tf:git_dirty",
+          "value": "False"
+        },
+        {
+          "name": "tf:signature_preset",
+          "value": "warp:v1"
+        },
+        {
+          "name": "tf:sbom_note",
+          "value": "Generated after the release by rebuilding the release commit with the same packages and libraries. The component data comes from the rebuild, the hashes are those of the published firmware images."
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b0f95d8499dd3169985a47d57fe709a27b2f889a9f2ed0c5da96880621bbea0e"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "4678eaf1c06c1b84620ae8dca81de2746ce10ee3e6f15ef0142cffb6b0bc0ff76862dcac30c8ed5a74b8eb34c362542a991c43c737fd7eeca0752f5e67d8a19d"
+        }
+      ]
+    },
+    "manufacturer": {
+      "name": "Tinkerforge GmbH",
+      "url": [
+        "https://www.tinkerforge.com"
+      ]
+    },
+    "supplier": {
+      "name": "Tinkerforge GmbH",
+      "url": [
+        "https://www.tinkerforge.com"
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "ArduinoJson@0b03321ed33fa6965114424fbb023260120c856b",
+      "supplier": {
+        "name": "Tinkerforge GmbH",
+        "url": [
+          "https://www.tinkerforge.com"
+        ]
+      },
+      "manufacturer": {
+        "name": "Benoit Blanchon"
+      },
+      "name": "ArduinoJson",
+      "version": "6.21.6",
+      "description": "A simple and efficient JSON library for embedded C++. ArduinoJson supports \u2714 serialization, \u2714 deserialization, \u2714 MessagePack, \u2714 fixed allocation, \u2714 zero-copy, \u2714 streams, \u2714 filtering, and more. It is the most popular Arduino library on GitHub \u2764\u2764\u2764\u2764\u2764. Check out arduinojson.org for a comprehensive documentation.",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:arduinojson:arduinojson:6.21.6:*:*:*:*:*:*:*",
+      "purl": "pkg:github/tinkerforge/arduinojson@0b03321ed33fa6965114424fbb023260120c856b",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Tinkerforge/ArduinoJson"
+        }
+      ],
+      "pedigree": {
+        "ancestors": [
+          {
+            "type": "library",
+            "bom-ref": "ArduinoJson-upstream@6.21.6",
+            "supplier": {
+              "name": "Benoit Blanchon"
+            },
+            "name": "ArduinoJson",
+            "version": "6.21.6",
+            "licenses": [
+              {
+                "license": {
+                  "id": "MIT"
+                }
+              }
+            ],
+            "cpe": "cpe:2.3:a:arduinojson:arduinojson:6.21.6:*:*:*:*:*:*:*",
+            "purl": "pkg:github/bblanchon/arduinojson@v6.21.6",
+            "externalReferences": [
+              {
+                "type": "website",
+                "url": "https://github.com/bblanchon/ArduinoJson"
+              }
+            ]
+          }
+        ],
+        "notes": "Fork maintained by Tinkerforge"
+      },
+      "properties": [
+        {
+          "name": "tf:git_commit",
+          "value": "0b03321ed33fa6965114424fbb023260120c856b"
+        },
+        {
+          "name": "tf:git_dirty",
+          "value": "False"
+        },
+        {
+          "name": "tf:library-manifest-version",
+          "value": "6.21.6"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "TFJson@55e3be4852c6928a1dca997f58b42bddf642264d",
+      "supplier": {
+        "name": "Tinkerforge GmbH",
+        "url": [
+          "https://www.tinkerforge.com"
+        ]
+      },
+      "name": "TFJson",
+      "version": "55e3be4852c6928a1dca997f58b42bddf642264d",
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "purl": "pkg:github/tinkerforge/tfjson@55e3be4852c6928a1dca997f58b42bddf642264d",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Tinkerforge/tfjson"
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:git_commit",
+          "value": "55e3be4852c6928a1dca997f58b42bddf642264d"
+        },
+        {
+          "name": "tf:git_dirty",
+          "value": "False"
+        },
+        {
+          "name": "tf:library-manifest-version",
+          "value": "0.0.1"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "TFNetwork@6d30fda885f7a22ed97df9ab5f843c7eecf50e38",
+      "supplier": {
+        "name": "Tinkerforge GmbH",
+        "url": [
+          "https://www.tinkerforge.com"
+        ]
+      },
+      "name": "TFNetwork",
+      "version": "6d30fda885f7a22ed97df9ab5f843c7eecf50e38",
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "purl": "pkg:github/tinkerforge/tfnetwork@6d30fda885f7a22ed97df9ab5f843c7eecf50e38",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Tinkerforge/tfnetwork"
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:git_commit",
+          "value": "6d30fda885f7a22ed97df9ab5f843c7eecf50e38"
+        },
+        {
+          "name": "tf:git_dirty",
+          "value": "False"
+        },
+        {
+          "name": "tf:library-manifest-version",
+          "value": "0.0.1"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "TFOCPP@828794fea0765bbc2345dd50cb509c90d51aef51",
+      "supplier": {
+        "name": "Tinkerforge GmbH",
+        "url": [
+          "https://www.tinkerforge.com"
+        ]
+      },
+      "name": "TFOCPP",
+      "version": "828794fea0765bbc2345dd50cb509c90d51aef51",
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "purl": "pkg:github/tinkerforge/tfocpp@828794fea0765bbc2345dd50cb509c90d51aef51",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Tinkerforge/tfocpp"
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:git_commit",
+          "value": "828794fea0765bbc2345dd50cb509c90d51aef51"
+        },
+        {
+          "name": "tf:git_dirty",
+          "value": "False"
+        },
+        {
+          "name": "tf:library-manifest-version",
+          "value": "0.0.1"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "TFTools@f73afaea8fa2650db226e57894b744ac2e231cab",
+      "supplier": {
+        "name": "Tinkerforge GmbH",
+        "url": [
+          "https://www.tinkerforge.com"
+        ]
+      },
+      "name": "TFTools",
+      "version": "f73afaea8fa2650db226e57894b744ac2e231cab",
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "purl": "pkg:github/tinkerforge/tftools@f73afaea8fa2650db226e57894b744ac2e231cab",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Tinkerforge/tftools"
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:git_commit",
+          "value": "f73afaea8fa2650db226e57894b744ac2e231cab"
+        },
+        {
+          "name": "tf:git_dirty",
+          "value": "False"
+        },
+        {
+          "name": "tf:library-manifest-version",
+          "value": "0.0.1"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "WireGuard-ESP32@96032fd0855d355b6ae858b41e2e8b9b4e76c916",
+      "supplier": {
+        "name": "Tinkerforge GmbH",
+        "url": [
+          "https://www.tinkerforge.com"
+        ]
+      },
+      "manufacturer": {
+        "name": "Kenta Ida"
+      },
+      "name": "WireGuard-ESP32",
+      "version": "0.1.5",
+      "description": "WireGuard implementation for Arduino ESP32",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "purl": "pkg:github/tinkerforge/wireguard-esp32-arduino@96032fd0855d355b6ae858b41e2e8b9b4e76c916",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Tinkerforge/WireGuard-ESP32-Arduino"
+        }
+      ],
+      "pedigree": {
+        "ancestors": [
+          {
+            "type": "library",
+            "bom-ref": "WireGuard-ESP32-upstream@0.1.5",
+            "supplier": {
+              "name": "Kenta Ida"
+            },
+            "name": "WireGuard-ESP32",
+            "version": "0.1.5",
+            "licenses": [
+              {
+                "license": {
+                  "id": "BSD-3-Clause"
+                }
+              }
+            ],
+            "purl": "pkg:github/ciniml/wireguard-esp32-arduino@0.1.5",
+            "externalReferences": [
+              {
+                "type": "website",
+                "url": "https://github.com/ciniml/WireGuard-ESP32-Arduino"
+              }
+            ]
+          }
+        ],
+        "notes": "Fork maintained by Tinkerforge"
+      },
+      "properties": [
+        {
+          "name": "tf:git_commit",
+          "value": "96032fd0855d355b6ae858b41e2e8b9b4e76c916"
+        },
+        {
+          "name": "tf:git_dirty",
+          "value": "False"
+        },
+        {
+          "name": "tf:library-manifest-version",
+          "value": "0.1.5"
+        }
+      ]
+    },
+    {
+      "type": "framework",
+      "bom-ref": "arduino-esp32@0ca24d74b6ec582e2780a9fdc9aadead8e272739",
+      "supplier": {
+        "name": "Tinkerforge GmbH",
+        "url": [
+          "https://www.tinkerforge.com"
+        ]
+      },
+      "manufacturer": {
+        "name": "Espressif Systems (Shanghai) CO LTD",
+        "url": [
+          "https://www.espressif.com"
+        ]
+      },
+      "name": "arduino-esp32",
+      "version": "3.3.12",
+      "description": "Arduino core for the ESP32",
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "purl": "pkg:github/tinkerforge/arduino-esp32@0ca24d74b6ec582e2780a9fdc9aadead8e272739",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Tinkerforge/arduino-esp32"
+        }
+      ],
+      "pedigree": {
+        "ancestors": [
+          {
+            "type": "library",
+            "bom-ref": "arduino-esp32-upstream@3.3.12",
+            "supplier": {
+              "name": "Espressif Systems (Shanghai) CO LTD",
+              "url": [
+                "https://www.espressif.com"
+              ]
+            },
+            "name": "arduino-esp32",
+            "version": "3.3.12",
+            "licenses": [
+              {
+                "license": {
+                  "id": "LGPL-2.1-or-later"
+                }
+              }
+            ],
+            "purl": "pkg:github/espressif/arduino-esp32@3.3.12",
+            "externalReferences": [
+              {
+                "type": "website",
+                "url": "https://github.com/espressif/arduino-esp32"
+              }
+            ]
+          }
+        ],
+        "notes": "Fork maintained by Tinkerforge"
+      },
+      "properties": [
+        {
+          "name": "tf:git_commit",
+          "value": "0ca24d74b6ec582e2780a9fdc9aadead8e272739"
+        },
+        {
+          "name": "tf:arduino-libraries",
+          "value": "Ethernet, FS, Hash, LittleFS, Networking, SPI, SPIFFS, Update, WiFi"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "bricklet/cmsis@5.0.1",
+      "supplier": {
+        "name": "Arm Limited"
+      },
+      "name": "CMSIS-Core",
+      "version": "5.0.1",
+      "description": "Cortex-M0 core headers, shipped with the XMC Peripheral Library (bricklib2/xmclib/CMSIS)",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/ARM-software/CMSIS_5"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "bricklet/nxp-nfc-library",
+      "supplier": {
+        "name": "NXP Semiconductors"
+      },
+      "name": "NXP-NCI NfcLibrary",
+      "description": "NXP NCI and NDEF library for the PN7150, modified by Tinkerforge (src/NfcLibrary)",
+      "licenses": [
+        {
+          "license": {
+            "name": "NXP proprietary license"
+          }
+        }
+      ],
+      "pedigree": {
+        "notes": "Modified by Tinkerforge"
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "bricklet/xmclib@2.1.16",
+      "supplier": {
+        "name": "Infineon Technologies AG"
+      },
+      "name": "XMC Peripheral Library",
+      "version": "2.1.16",
+      "description": "Infineon XMC1000 peripheral drivers (bricklib2/xmclib/XMCLib)",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/Infineon/mtb-xmclib-cat3"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "bricklib2",
+      "supplier": {
+        "name": "Tinkerforge GmbH",
+        "url": [
+          "https://www.tinkerforge.com"
+        ]
+      },
+      "name": "bricklib2",
+      "description": "Common code of all Bricklets with XMC co-processor. Not pinned by the Bricklet repositories, the exact revision is unknown",
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "purl": "pkg:github/tinkerforge/bricklib2",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Tinkerforge/bricklib2"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "esp-idf/components/esp_phy/lib@5695f4f38108658bc4a33e4712c1ebcb34911434",
+      "supplier": {
+        "name": "Espressif Systems (Shanghai) CO LTD",
+        "url": [
+          "https://www.espressif.com"
+        ]
+      },
+      "name": "esp-phy-lib",
+      "version": "5695f4f38108658bc4a33e4712c1ebcb34911434",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:github/espressif/esp-phy-lib@5695f4f38108658bc4a33e4712c1ebcb34911434",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/espressif/esp-phy-lib"
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:esp-idf-path",
+          "value": "components/esp_phy/lib"
+        },
+        {
+          "name": "tf:git_commit",
+          "value": "5695f4f38108658bc4a33e4712c1ebcb34911434"
+        },
+        {
+          "name": "tf:linked-archives",
+          "value": "phy, rtc"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "esp-idf/components/esp_wifi/lib@61bbece9cc8b3a6c8b2b5035f586db5d7abb95d2",
+      "supplier": {
+        "name": "Espressif Systems (Shanghai) CO LTD",
+        "url": [
+          "https://www.espressif.com"
+        ]
+      },
+      "name": "esp32-wifi-lib",
+      "version": "61bbece9cc8b3a6c8b2b5035f586db5d7abb95d2",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:github/espressif/esp32-wifi-lib@61bbece9cc8b3a6c8b2b5035f586db5d7abb95d2",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/espressif/esp32-wifi-lib"
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:esp-idf-path",
+          "value": "components/esp_wifi/lib"
+        },
+        {
+          "name": "tf:git_commit",
+          "value": "61bbece9cc8b3a6c8b2b5035f586db5d7abb95d2"
+        },
+        {
+          "name": "tf:linked-archives",
+          "value": "core, espnow, mesh, net80211, pp, smartconfig"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "esp-idf/components/freertos/FreeRTOS-Kernel/sbom.yml@10.5.1",
+      "supplier": {
+        "name": "Espressif Systems (Shanghai) CO LTD"
+      },
+      "manufacturer": {
+        "name": "Amazon Web Services"
+      },
+      "name": "freertos",
+      "version": "10.5.1",
+      "description": "An open-source, real-time operating system (RTOS) with additional features and patches from Espressif.",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:o:amazon:freertos:10.5.1:*:*:*:*:*:*:*",
+      "properties": [
+        {
+          "name": "tf:esp-idf-path",
+          "value": "components/freertos/FreeRTOS-Kernel/sbom.yml"
+        },
+        {
+          "name": "tf:linked-archives",
+          "value": "freertos"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "esp-idf/components/heap/tlsf@2867f6883a12920b1969ff9624c0ab0e4185c2ce",
+      "supplier": {
+        "name": "Espressif Systems (Shanghai) CO LTD",
+        "url": [
+          "https://www.espressif.com"
+        ]
+      },
+      "name": "tlsf",
+      "version": "2867f6883a12920b1969ff9624c0ab0e4185c2ce",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "purl": "pkg:github/espressif/tlsf@2867f6883a12920b1969ff9624c0ab0e4185c2ce",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/espressif/tlsf"
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:esp-idf-path",
+          "value": "components/heap/tlsf"
+        },
+        {
+          "name": "tf:git_commit",
+          "value": "2867f6883a12920b1969ff9624c0ab0e4185c2ce"
+        },
+        {
+          "name": "tf:linked-archives",
+          "value": "heap"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "esp-idf/components/http_parser/sbom.yml@2.7.0",
+      "supplier": {
+        "name": "Espressif Systems (Shanghai) CO LTD"
+      },
+      "manufacturer": {
+        "name": "NGINX, Joyent, Inc. and other Node contributors"
+      },
+      "name": "HTTP Parser",
+      "version": "2.7.0",
+      "description": "HTTP request/response parser for c.",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:esp-idf-path",
+          "value": "components/http_parser/sbom.yml"
+        },
+        {
+          "name": "tf:linked-archives",
+          "value": "http_parser"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "esp-idf/components/lwip/lwip@2.2.0",
+      "supplier": {
+        "name": "Espressif Systems (Shanghai) CO LTD"
+      },
+      "manufacturer": {
+        "name": "non-GNU software and documentation, lwIP Project",
+        "contact": [
+          {
+            "email": "lwip-members@nongnu.org"
+          }
+        ]
+      },
+      "name": "lwip",
+      "version": "2.2.0",
+      "description": "A Lightweight TCP/IP stack with additional features and patches from Espressif.",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:lwip_project:lwip:2.2.0:*:*:*:*:*:*:*",
+      "purl": "pkg:github/espressif/esp-lwip@c6f2f878e7b0f86033214b85547d579be43351e3",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/espressif/esp-lwip"
+        }
+      ],
+      "pedigree": {
+        "patches": [
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/components/lwip/lwip/0001-dns-Add-dns_removehost.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/components/lwip/lwip/0002-dns-Enforce-a-minimum-TTL-of-5s.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/components/lwip/lwip/0003-fix-tcp-poll-pending-close-on-LAST_ACK-completion-to.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/components/lwip/lwip/0004-Fix-ERR_ABRT-handling-multiple-potential-double-free.patch"
+            }
+          }
+        ],
+        "notes": "Patched by Tinkerforge"
+      },
+      "properties": [
+        {
+          "name": "tf:esp-idf-path",
+          "value": "components/lwip/lwip"
+        },
+        {
+          "name": "tf:git_commit",
+          "value": "c6f2f878e7b0f86033214b85547d579be43351e3"
+        },
+        {
+          "name": "tf:linked-archives",
+          "value": "lwip"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "esp-idf/components/mbedtls/mbedtls@3.6.7",
+      "supplier": {
+        "name": "Espressif Systems (Shanghai) CO LTD"
+      },
+      "manufacturer": {
+        "name": "Trusted Firmware",
+        "contact": [
+          {
+            "email": "mbed-tls-security@lists.trustedfirmware.org"
+          }
+        ]
+      },
+      "name": "mbedtls",
+      "version": "3.6.7",
+      "description": "An open source, portable, easy to use, readable and flexible SSL library with additional features and patches from Espressif.",
+      "licenses": [
+        {
+          "expression": "Apache-2.0 OR GPL-2.0-or-later"
+        }
+      ],
+      "cpe": "cpe:2.3:a:arm:mbed_tls:3.6.7:*:*:*:*:*:*:*",
+      "purl": "pkg:github/espressif/mbedtls@2b96dd8eebe880f304c69976b3c2fa0c5100cbb6",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/espressif/mbedtls"
+        }
+      ],
+      "pedigree": {
+        "patches": [
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/components/mbedtls/mbedtls/0001-ssl_tls-Add-work-around-for-broken-asymmetric-buffer.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/components/mbedtls/mbedtls/0002-error-Always-include-NET-errors.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/components/mbedtls/mbedtls/0003-ecp-bignum-Hacks-to-optimize-ECDSA-and-ECDHE.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/components/mbedtls/mbedtls/0004-Allow-TLS-1.3-sig-algs-in-TLS-1.2.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/components/mbedtls/mbedtls/0005-Add-weakly-linked-default-callback-for-TLS-key-expor.patch"
+            }
+          }
+        ],
+        "notes": "Patched by Tinkerforge"
+      },
+      "properties": [
+        {
+          "name": "tf:esp-idf-path",
+          "value": "components/mbedtls/mbedtls"
+        },
+        {
+          "name": "tf:git_commit",
+          "value": "2b96dd8eebe880f304c69976b3c2fa0c5100cbb6"
+        },
+        {
+          "name": "tf:linked-archives",
+          "value": "mbedcrypto, mbedtls, mbedtls_2, mbedx509"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "esp-idf/components/mqtt/esp-mqtt@0e9ec171b448db2101ea537300976b7ffe595941",
+      "supplier": {
+        "name": "Espressif Systems (Shanghai) CO LTD",
+        "url": [
+          "https://www.espressif.com"
+        ]
+      },
+      "name": "esp-mqtt",
+      "version": "0e9ec171b448db2101ea537300976b7ffe595941",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:github/espressif/esp-mqtt@0e9ec171b448db2101ea537300976b7ffe595941",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/espressif/esp-mqtt"
+        }
+      ],
+      "pedigree": {
+        "patches": [
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/components/mqtt/esp-mqtt/0001-Add-esp_mqtt_client_en-disable_receive.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/components/mqtt/esp-mqtt/0002-mqtt-Set-ws-path-if-not-set-via-passed-uri.patch"
+            }
+          }
+        ],
+        "notes": "Patched by Tinkerforge"
+      },
+      "properties": [
+        {
+          "name": "tf:esp-idf-path",
+          "value": "components/mqtt/esp-mqtt"
+        },
+        {
+          "name": "tf:git_commit",
+          "value": "0e9ec171b448db2101ea537300976b7ffe595941"
+        },
+        {
+          "name": "tf:linked-archives",
+          "value": "mqtt"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "esp-idf/components/spiffs/spiffs@0.2-265-gad902ca",
+      "supplier": {
+        "name": "Peter Andersson"
+      },
+      "name": "spiffs",
+      "version": "0.2-265-gad902ca",
+      "description": "Wear-leveled SPI flash file system for embedded devices",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:github/pellepl/spiffs@ad902cadceb39d0825a97e25ecb5867641f606ba",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/pellepl/spiffs"
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:esp-idf-path",
+          "value": "components/spiffs/spiffs"
+        },
+        {
+          "name": "tf:git_commit",
+          "value": "ad902cadceb39d0825a97e25ecb5867641f606ba"
+        },
+        {
+          "name": "tf:linked-archives",
+          "value": "spiffs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "esp-idf/components/wpa_supplicant/sbom.yml@2.10",
+      "supplier": {
+        "name": "Espressif Systems (Shanghai) CO LTD"
+      },
+      "manufacturer": {
+        "name": "Jouni Malinen"
+      },
+      "name": "wpa_supplicant",
+      "version": "2.10",
+      "description": "Espressif fork of wpa_supplicant - an open-source WPA/WPA2/WPA3/IEEE 802.1X Supplicant.",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:w1.fi:wpa_supplicant:2.10:*:*:*:*:*:*:*",
+      "properties": [
+        {
+          "name": "tf:esp-idf-path",
+          "value": "components/wpa_supplicant/sbom.yml"
+        },
+        {
+          "name": "tf:linked-archives",
+          "value": "wpa_supplicant"
+        }
+      ]
+    },
+    {
+      "type": "framework",
+      "bom-ref": "esp-idf@v5.5.6",
+      "supplier": {
+        "name": "Espressif Systems (Shanghai) CO LTD",
+        "url": [
+          "https://www.espressif.com"
+        ]
+      },
+      "manufacturer": {
+        "name": "Espressif Systems (Shanghai) CO LTD",
+        "url": [
+          "https://www.espressif.com"
+        ]
+      },
+      "name": "esp-idf",
+      "version": "5.5.6",
+      "description": "Espressif IoT Development Framework",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:espressif:esp-idf:5.5.6:*:*:*:*:*:*:*",
+      "purl": "pkg:github/espressif/esp-idf@v5.5.6",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/espressif/esp-idf"
+        }
+      ],
+      "pedigree": {
+        "patches": [
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/0001-lwip-Increase-DNS_TABLE_SIZE-to-12.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/0002-lwIP-Force-enable-LWIP_ESP_NETIF_DATA-for-WireGuard.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/0003-lwIP-Faster-DHCP-duplicate-address-check.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/0004-i2c-Fix-stuck-interrupt-after-a-timeout.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/0005-tcp_transport-Fix-esp_tls_connect_async-error-reporting.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/0006-esp-tls-Fix-async-connect-failure-handling.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/0007-mbedtls-Return-sensible-error-code-when-a-socket-is-.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/0008-esp-http-client-Avoid-premature-download-end.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/0009-heap-Add-MALLOC_CAP_IRAM-reserve-regions-for-manual-.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/0010-mbedtls-Replace-include_next-with-relative-paths.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/0011-esp_httpX_server-Add-HTTPS-multi-port-mode.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/0012-misc-Adjust-to-MbedTLS-hacks.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/0013-lwip-Adjust-ARP-options.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/0014-feat-netif-default-netif-override-removal-and-re-reselect.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/0015-ota-Fix-esp_ota_get_running_partition.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/0016-coredump-Speed-up-core-dump-check.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/0017-Support-optional-Secure-Boot-v2.patch"
+            }
+          },
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/esp-idf/0018-esp_partition-Allow-overriding-Flash-decryption-func.patch"
+            }
+          }
+        ],
+        "notes": "Patched by Tinkerforge"
+      },
+      "properties": [
+        {
+          "name": "tf:built-from",
+          "value": "release/v5.5 a3afb692749"
+        },
+        {
+          "name": "tf:linked-archives",
+          "value": "app_update, bootloader_support, core, cxx, driver, efuse, esp-tls, esp_app_format, esp_coex, esp_common, esp_driver_gpio, esp_driver_spi, esp_driver_uart, esp_eth, esp_event, esp_http_client, esp_http_server, esp_https_ota, esp_https_server, esp_hw_support, esp_mm, esp_netif, esp_partition, esp_phy, esp_psram, esp_ringbuf, esp_rom, esp_security, esp_system, esp_timer, esp_vfs_console, esp_wifi, espcoredump, espnow, freertos, hal, heap, http_parser, log, lwip, mbedcrypto, mbedtls, mbedtls_2, mbedx509, mesh, mqtt, net80211, newlib, nvs_flash, nvs_sec_provider, phy, pp, pthread, rtc, smartconfig, soc, spi_flash, spiffs, tcp_transport, vfs, wpa_supplicant, xt_hal, xtensa"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "esp32-arduino-libs@fe60e4e2afb935278a7d014d9215785a550eaec8",
+      "supplier": {
+        "name": "Tinkerforge GmbH",
+        "url": [
+          "https://www.tinkerforge.com"
+        ]
+      },
+      "name": "esp32-arduino-libs",
+      "version": "fe60e4e2afb935278a7d014d9215785a550eaec8",
+      "description": "Precompiled ESP-IDF libraries, built with esp32-arduino-lib-builder and patches from esp32-firmware/software/patches/lib-builder",
+      "purl": "pkg:github/tinkerforge/esp32-arduino-libs@fe60e4e2afb935278a7d014d9215785a550eaec8",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Tinkerforge/esp32-arduino-libs"
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:branch",
+          "value": "tf-esp-ethernet-20261022"
+        },
+        {
+          "name": "tf:versions:lib-builder",
+          "value": "master b63070e"
+        },
+        {
+          "name": "tf:versions:esp-idf",
+          "value": "release/v5.5 a3afb692749"
+        },
+        {
+          "name": "tf:versions:arduino",
+          "value": "tf-3-3-12 b280564c6"
+        },
+        {
+          "name": "tf:versions:tinyusb",
+          "value": "master 04d3d6ee5"
+        },
+        {
+          "name": "tf:versions:espressif__libsodium",
+          "value": "1.0.22~1"
+        },
+        {
+          "name": "tf:versions:espressif__mdns",
+          "value": "1.14.0"
+        },
+        {
+          "name": "tf:versions:joltwallet__littlefs",
+          "value": "1.23.1"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "espressif/libsodium@1.0.22~1",
+      "supplier": {
+        "name": "Espressif Systems (Shanghai) CO LTD",
+        "url": [
+          "https://www.espressif.com"
+        ]
+      },
+      "group": "espressif",
+      "name": "libsodium",
+      "version": "1.0.22~1",
+      "description": "libsodium port to ESP-IDF",
+      "licenses": [
+        {
+          "license": {
+            "id": "ISC"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/espressif/idf-extra-components/tree/master/libsodium"
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:esp-component-registry",
+          "value": "https://components.espressif.com/components/espressif/libsodium"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "espressif/mdns@1.14.0",
+      "supplier": {
+        "name": "Espressif Systems (Shanghai) CO LTD",
+        "url": [
+          "https://www.espressif.com"
+        ]
+      },
+      "group": "espressif",
+      "name": "mdns",
+      "version": "1.14.0",
+      "description": "mDNS service for ESP-IDF",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/espressif/esp-protocols/tree/master/components/mdns"
+        }
+      ],
+      "pedigree": {
+        "patches": [
+          {
+            "type": "unofficial",
+            "diff": {
+              "url": "https://github.com/Tinkerforge/esp32-firmware/blob/afa5c782176f2397ead9020ddc346b3d163fd840/software/patches/lib-builder/managed_components/espressif__mdns/0004-mdns-Place-static-buffer-to-assemble-packets-on-stac.rawpatch"
+            }
+          }
+        ],
+        "notes": "Patched by Tinkerforge"
+      },
+      "properties": [
+        {
+          "name": "tf:esp-component-registry",
+          "value": "https://components.espressif.com/components/espressif/mdns"
+        }
+      ]
+    },
+    {
+      "type": "firmware",
+      "bom-ref": "evse-v2-bricklet-firmware@2.2.26",
+      "supplier": {
+        "name": "Tinkerforge GmbH",
+        "url": [
+          "https://www.tinkerforge.com"
+        ]
+      },
+      "manufacturer": {
+        "name": "Tinkerforge GmbH",
+        "url": [
+          "https://www.tinkerforge.com"
+        ]
+      },
+      "name": "evse-v2-bricklet-firmware",
+      "version": "2.2.26",
+      "description": "Bricklet firmware, embedded to update the Bricklet (src/modules/evse_v2/bricklet_evse_v2_firmware_2_2_26.zbin)",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "c23861eae48fed3783d63d7bfec2a5737c9d888d2529b87629f726d288c9c3f2"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "1f6bbc171b363c9c7e93dc1eaaa6eb3591dc82bea60f1f4938ba326a2a9b16ad7588267c511ef9178063beb45c89bbb66fe151fe7366d4f31a9531fe74a2d4d4"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "purl": "pkg:github/tinkerforge/evse-v2-bricklet@v2.2.26",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Tinkerforge/evse-v2-bricklet"
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:git_tag",
+          "value": "v2.2.26"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "gcc@14.2.0",
+      "supplier": {
+        "name": "Espressif Systems (Shanghai) CO LTD",
+        "url": [
+          "https://www.espressif.com"
+        ]
+      },
+      "manufacturer": {
+        "name": "Free Software Foundation"
+      },
+      "name": "gcc",
+      "version": "14.2.0",
+      "description": "GCC runtime libraries, part of the toolchain",
+      "licenses": [
+        {
+          "expression": "GPL-3.0-or-later WITH GCC-exception-3.1"
+        }
+      ],
+      "cpe": "cpe:2.3:a:gnu:gcc:14.2.0:*:*:*:*:*:*:*",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/espressif/gcc"
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:linked-archives",
+          "value": "gcc, stdc++"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "joltwallet/littlefs@1.23.1",
+      "supplier": {
+        "name": "Brian Pugh"
+      },
+      "group": "joltwallet",
+      "name": "littlefs",
+      "version": "1.23.1",
+      "description": "LittleFS port to ESP-IDF",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/joltwallet/esp_littlefs"
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:esp-component-registry",
+          "value": "https://components.espressif.com/components/joltwallet/littlefs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "libsodium@1.0.22",
+      "supplier": {
+        "name": "Frank Denis"
+      },
+      "name": "libsodium",
+      "version": "1.0.22",
+      "licenses": [
+        {
+          "license": {
+            "id": "ISC"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:jedisct1:libsodium:1.0.22:*:*:*:*:*:*:*",
+      "purl": "pkg:github/jedisct1/libsodium@1.0.22",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/jedisct1/libsodium"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "littlefs@2.11.3",
+      "supplier": {
+        "name": "littlefs-project"
+      },
+      "name": "littlefs",
+      "version": "2.11.3",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:littlefs_project:littlefs:2.11.3:*:*:*:*:*:*:*",
+      "purl": "pkg:github/littlefs-project/littlefs@v2.11.3",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/littlefs-project/littlefs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "newlib@4.3.0",
+      "supplier": {
+        "name": "Espressif Systems (Shanghai) CO LTD"
+      },
+      "manufacturer": {
+        "name": "Red Hat Incorporated"
+      },
+      "name": "newlib",
+      "version": "4.3.0",
+      "description": "C standard library, part of the toolchain",
+      "licenses": [
+        {
+          "license": {
+            "name": "Newlib License (various BSD-style licenses)"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:newlib_project:newlib:4.3.0:*:*:*:*:*:*:*",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/espressif/newlib-esp32"
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:linked-archives",
+          "value": "c, m"
+        }
+      ]
+    },
+    {
+      "type": "firmware",
+      "bom-ref": "nfc-bricklet-firmware@2.1.4",
+      "supplier": {
+        "name": "Tinkerforge GmbH",
+        "url": [
+          "https://www.tinkerforge.com"
+        ]
+      },
+      "manufacturer": {
+        "name": "Tinkerforge GmbH",
+        "url": [
+          "https://www.tinkerforge.com"
+        ]
+      },
+      "name": "nfc-bricklet-firmware",
+      "version": "2.1.4",
+      "description": "Bricklet firmware, embedded to update the Bricklet (src/modules/nfc_bricklet/bricklet_nfc_firmware_2_1_4.zbin)",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "68fd61786d3ecec2a25cbcded2365147be9360397824cca607340664364f1f22"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "0fd31966326af31e20ea91648fa61ac3b24b25edaf2b2db136d482a997dcdbd38e128c6f277b081fa1a3d055a243911179daaeef4464bd2f70f2c3ab095a7645"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "purl": "pkg:github/tinkerforge/nfc-bricklet@v2.1.4",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Tinkerforge/nfc-bricklet"
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:git_tag",
+          "value": "v2.1.4"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:@babel/runtime@7.28.6",
+      "supplier": {
+        "name": "The Babel Team (https://babel.dev/team)"
+      },
+      "name": "@babel/runtime",
+      "version": "7.28.6",
+      "description": "babel's modular runtime helpers",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "d3959091da4bf42388333e0b8d3c46a4f342765a728a62a9a583682790e2e4450e6e27e5f2de2db8bb94041644a682d83a67ef216aeca7d7c29741e83d155374"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40babel/runtime@7.28.6",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://babel.dev/docs/en/next/babel-runtime"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/babel/babel"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@babel/runtime/-/runtime-7.28.6.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:@popperjs/core@2.11.8",
+      "supplier": {
+        "name": "Federico Zivolo <federico.zivolo@gmail.com>"
+      },
+      "name": "@popperjs/core",
+      "version": "2.11.8",
+      "description": "Tooltip and Popover Positioning Engine",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "3f5b2dd1a92c0ab9fdb06661a7c18c63006742c6ef016b19017e38a1734dbcb1c6a8039ca15c668d98a886cb7043b4aa2a76d1e3b6a474d8beba57960fcfa0e8"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40popperjs/core@2.11.8",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/popperjs/popper-core"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@popperjs/core/-/core-2.11.8.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:@preact/compat@18.3.1",
+      "supplier": {
+        "name": "Preact Team <team@preactjs.com>"
+      },
+      "name": "@preact/compat",
+      "version": "18.3.1",
+      "description": "Alias of preact/compat",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "2a88383d2471b53e023ad3978ecb903d5d6f317a54cd11107effba0e6732f7facc9341ce3cad074c4f5fb2916302663c47cd13fd3f20b60999ebcbb96ce4a783"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40preact/compat@18.3.1",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://preactjs.com"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/preactjs/compat-alias-package"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@preact/compat/-/compat-18.3.1.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:@preact/signals-core@1.14.4",
+      "name": "@preact/signals-core",
+      "version": "1.14.4",
+      "description": "Manage state with style in every framework",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "1cd07a1d87982a141b27568a97e6118eb4b8f905872ca5faa8aa14b1f4bf9b4beacec55a10189989a29b1bf7be34a936721e402d0aff8a159a307c620aeb961c"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40preact/signals-core@1.14.4",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://preactjs.com"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/preactjs/signals"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@preact/signals-core/-/signals-core-1.14.4.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:@preact/signals@2.10.0",
+      "name": "@preact/signals",
+      "version": "2.10.0",
+      "description": "Manage state with style in Preact",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "6af1f5cd02d947a7340e61f7a53fec9f8448cec3435c0b9ef8c128c92e5122f0292802d253c9b4e4ac8138bf2e6b6d60c5e0d8a750dc95331c15df8dd7368bd5"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40preact/signals@2.10.0",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://preactjs.com"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/preactjs/signals"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@preact/signals/-/signals-2.10.0.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:@react-aria/ssr@3.9.10",
+      "name": "@react-aria/ssr",
+      "version": "3.9.10",
+      "description": "Spectrum UI components in React",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "86f4e6efb3dffa930186e066efad0b8b405520edfc8efd48070b35c459b53682f6e8f53e7def85316e7e5595b200d47a9d82fae63a1a24a66a39d4d03243bd21"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40react-aria/ssr@3.9.10",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/adobe/react-spectrum"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@react-aria/ssr/-/ssr-3.9.10.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:@restart/hooks@0.4.16",
+      "supplier": {
+        "name": "Jason Quense"
+      },
+      "name": "@restart/hooks",
+      "version": "0.4.16",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "7fb682bfb73e9d4ff7985ecd58bb5556bd116bcd11aac3bcf613bbdabf98fe7bd0af9faad141469287049531fa309029bd179587a247505627d9cc3559d1c5df"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40restart/hooks@0.4.16",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/react-restart/hooks#readme"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/jquense/react-common-hooks"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@restart/hooks/-/hooks-0.4.16.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:@restart/hooks@0.5.1",
+      "supplier": {
+        "name": "Jason Quense"
+      },
+      "name": "@restart/hooks",
+      "version": "0.5.1",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "10ca07d383474b5a5b9f4ee22d38c88e0b6dbaa6fbaaee3efc4ca1031dbb307a6810d701d99752b0b4cdc66283f9610f9d98a0a3ad9073cce31a7371a1213fe5"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40restart/hooks@0.5.1",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/react-restart/hooks#readme"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/jquense/react-common-hooks"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@restart/hooks/-/hooks-0.5.1.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:@restart/ui@1.9.4",
+      "supplier": {
+        "name": "Jason Quense"
+      },
+      "name": "@restart/ui",
+      "version": "1.9.4",
+      "description": "Utilities for creating robust overlay components",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "3780bb85a51cdef9f82d3c1550f96424df00721ffec8832f46e4d52218e294d1ea7a063ad1218baf3b9de9eaeb38c349c129e66059edd49d07fe4f0513703828"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40restart/ui@1.9.4",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/react-restart/ui"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@restart/ui/-/ui-1.9.4.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:argon2-browser@1.18.0",
+      "supplier": {
+        "name": "Antelle"
+      },
+      "name": "argon2-browser",
+      "version": "1.18.0",
+      "description": "Argon2 library compiled for browser runtime",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "22654018822d9c59ef113d5ec61b1007b6a9473b5ca02e539e54aa7ab9cc2435236dcfc32eadd411879716b2cfae568897c7157f09d76fac17d8aa457f6cf11f"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/argon2-browser@1.18.0",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/antelle/argon2-browser#readme"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/antelle/argon2-browser"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/argon2-browser/-/argon2-browser-1.18.0.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:bootstrap@5.3.8",
+      "supplier": {
+        "name": "The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)"
+      },
+      "name": "bootstrap",
+      "version": "5.3.8",
+      "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "1cfd52643a9a2c33f0b0d8aa46a8b935c3f44925dc897dacf44f91caa24822a1a8faf25e37900954cf7c097996fd6bb1d274392fb8de59476994211fd047beb6"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/bootstrap@5.3.8",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://getbootstrap.com/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/twbs/bootstrap"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/bootstrap/-/bootstrap-5.3.8.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:classnames@2.5.1",
+      "supplier": {
+        "name": "Jed Watson"
+      },
+      "name": "classnames",
+      "version": "2.5.1",
+      "description": "A simple utility for conditionally joining classNames together",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "b1a1d83b384842ceb0cb6b15c5333a6d40ec40ee05e7457d450db6a81a447425be23efd69a47b61ce97a952e9d4e97715616fcf3f23af87b3ee37f1cde57d4a3"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/classnames@2.5.1",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/JedWatson/classnames"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/classnames/-/classnames-2.5.1.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:deepsignal@1.6.0",
+      "name": "deepsignal",
+      "version": "1.6.0",
+      "description": "",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "a2996184e49f0512a6c7de81d0fcdb851697d96ee20e91fa044aafc862c864f3b6a5d1d00fefcfdeee19f308bfb0a5e3084ee1b7c0bb50b4c4ccb4896e0c1c70"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/deepsignal@1.6.0",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/luisherranz/deepsignal"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/deepsignal/-/deepsignal-1.6.0.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:dequal@2.0.3",
+      "supplier": {
+        "name": "Luke Edwards"
+      },
+      "name": "dequal",
+      "version": "2.0.3",
+      "description": "A tiny (304B to 489B) utility for check for deep equality",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "d237bea8f28710ca21bdf453084a370ab3c6e9c033018826ccacb1462612483912e9e1897725499bb59a600e4409a003f702c1d93e0411eca603968555c61708"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/dequal@2.0.3",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/lukeed/dequal"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/dequal/-/dequal-2.0.3.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:dom-helpers@5.2.1",
+      "supplier": {
+        "name": "Jason Quense"
+      },
+      "name": "dom-helpers",
+      "version": "5.2.1",
+      "description": "tiny modular DOM lib for ie9+",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "9d109aec22b7553accd8d986908cb871b2bb219960044fcf60c9f9e6bad779faf9c570cfd0b76d7cf9db9450e855d7007ec949ee8afa8aa0149f1d0208621640"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/dom-helpers@5.2.1",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/react-bootstrap/dom-helpers#readme"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/react-bootstrap/dom-helpers"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/dom-helpers/-/dom-helpers-5.2.1.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:invariant@2.2.4",
+      "supplier": {
+        "name": "Andres Suarez <zertosh@gmail.com>"
+      },
+      "name": "invariant",
+      "version": "2.2.4",
+      "description": "invariant",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "a6125f41506e689339ada3a926349f9220fa0696c213836cfff2da5e5eb0198b54058f379d64ba45ff6d5e6d9ef1568aeb42448d895d6cf89ffc0d81d42da034"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/invariant@2.2.4",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/zertosh/invariant"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/invariant/-/invariant-2.2.4.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:lean-qr@2.7.4",
+      "supplier": {
+        "name": "David Evans"
+      },
+      "name": "lean-qr",
+      "version": "2.7.4",
+      "description": "minimal QR code generation",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "b6530f15faa100064defe8ff763452be5ff6f80613dbeed146ecaaf1bbdc6d5f2032210d8ac72ab90f564df092c9e11dc6c55a101fad53b7bd9c5642eb70459d"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/lean-qr@2.7.4",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/davidje13/lean-qr#readme"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/davidje13/lean-qr"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/lean-qr/-/lean-qr-2.7.4.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:median-js-bridge@2.19.0",
+      "supplier": {
+        "name": "Hunaid Hassan"
+      },
+      "name": "median-js-bridge",
+      "version": "2.19.0",
+      "description": "Median bridge and utilities for JS web frameworks",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "1284fa3090b57806d59390153f9f8e025405e98b734f9ff7c05d75f4217390aaa680ef128f1294557bc38db10404898e22f3b3a89575f1d7c4339f0b2ae33f95"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "ISC"
+          }
+        }
+      ],
+      "purl": "pkg:npm/median-js-bridge@2.19.0",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/gonativeio/median-javascript-bridge"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/median-js-bridge/-/median-js-bridge-2.19.0.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:preact@10.29.7",
+      "name": "preact",
+      "version": "10.29.7",
+      "description": "Fast 3kb React-compatible Virtual DOM library.",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "0c21d8acafc1d74c940f76632df859dd6204ffd55ff55154383711136751a264d80e9264eb3e8bf7079c49f85f13a33d6531d4772424a02e3a6ab20384457ce1"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/preact@10.29.7",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://preactjs.com"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/preactjs/preact"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/preact/-/preact-10.29.7.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:prop-types@15.8.1",
+      "name": "prop-types",
+      "version": "15.8.1",
+      "description": "Runtime type checking for React props and similar objects.",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "a23f3b0a064809dba5528868815011ec08e50b4df6ed4e1e9782fa780bcea827ae74c0d553435384d695f9bf437f87578123f58173139cf7617deff6a831f972"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/prop-types@15.8.1",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://facebook.github.io/react/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/facebook/prop-types"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:react-bootstrap@2.10.10",
+      "supplier": {
+        "name": "Stephen J. Collings"
+      },
+      "name": "react-bootstrap",
+      "version": "2.10.10",
+      "description": "Bootstrap 5 components built with React",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "80c724294aa7f1a2bfbc29dfc28069055154193f52550c70b18ae9f720c7b746ab5cc6a6c402deae588a071af54cf6e7b62acafc71ab5001d86c07904daf461d"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/react-bootstrap@2.10.10",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://react-bootstrap.github.io/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/react-bootstrap/react-bootstrap"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/react-bootstrap/-/react-bootstrap-2.10.10.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:react-feather@2.0.10",
+      "supplier": {
+        "name": "Carmelo Pullara"
+      },
+      "name": "react-feather",
+      "version": "2.0.10",
+      "description": "React component for Feather icons",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "04b86e93027e67dd8d99d72cf84330e9dcb567f54b8894f31100020d412758c0a58589c5ca4242196431f8d9b03ffa901c65ffe42cd0f931a2f287e0dbe1f355"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/react-feather@2.0.10",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/feathericons/react-feather#readme"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/feathericons/react-feather"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/react-feather/-/react-feather-2.0.10.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:react-lifecycles-compat@3.0.4",
+      "name": "react-lifecycles-compat",
+      "version": "3.0.4",
+      "description": "Backwards compatibility polyfill for React class components",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "7c10126c0e8b9ce53d74e536796eda43cc666014975085abf94985f5bd5e7d905acc634efab7174ff89c74a9d89b6a53c1c472955518c16ec7d4f1df2de915cc"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/react-lifecycles-compat@3.0.4",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/reactjs/react-lifecycles-compat"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:react-transition-group@4.4.5",
+      "name": "react-transition-group",
+      "version": "4.4.5",
+      "description": "A react component toolset for managing animations",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "a5971dd4c089a222a2051d8d471782460d77b825dbc9d3e7981e0439e46b63be3cd2a3563bc2088101bace50e49bab9132c5115cfb8aab4196b62339f5ae50ea"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "purl": "pkg:npm/react-transition-group@4.4.5",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/reactjs/react-transition-group#readme"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/reactjs/react-transition-group"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/react-transition-group/-/react-transition-group-4.4.5.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:uncontrollable@7.2.1",
+      "supplier": {
+        "name": "Jason Quense"
+      },
+      "name": "uncontrollable",
+      "version": "7.2.1",
+      "description": "Wrap a controlled react component, to allow specific prop/handler pairs to be uncontrolled",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "b2fb5c7e84c00c80749d3f6796d823ba34e2ec1cd59b08d90a53a6b242aefc4f055bd057ce0f68b3c38baf87fc0e59e4d2b6162485abe30bfd78a517890bd0c1"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/uncontrollable@7.2.1",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/jquense/uncontrollable#readme"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/jquense/uncontrollable"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/uncontrollable/-/uncontrollable-7.2.1.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:uncontrollable@8.0.4",
+      "supplier": {
+        "name": "Jason Quense"
+      },
+      "name": "uncontrollable",
+      "version": "8.0.4",
+      "description": "Wrap a controlled react component, to allow specific prop/handler pairs to be uncontrolled",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "ba54566161efb1c3c57344105efc898d8e8b217539e9fd21f29405be1c622a4e55d5f708f20a7d1edf65795021ad58f3a8cc340608eca4120dc7dafaa32254bd"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/uncontrollable@8.0.4",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/jquense/uncontrollable#readme"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/jquense/uncontrollable"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/uncontrollable/-/uncontrollable-8.0.4.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:uplot@1.6.32",
+      "supplier": {
+        "name": "Leon Sorokin <leeoniya@gmail.com>"
+      },
+      "name": "uplot",
+      "version": "1.6.32",
+      "description": "A small, fast chart for time series, lines, areas, ohlc & bars",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "2883159c6ebccefbb95d751b0b82d010f9e1c0ec41b8bc96d401eda66e882935c89a46cb824332fa369b8cb8122cc6ac36e186cd09bf7a9ded3a4c93c6989023"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/uplot@1.6.32",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/leeoniya/uPlot#readme"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/leeoniya/uPlot"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/uplot/-/uplot-1.6.32.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:warning@4.0.3",
+      "supplier": {
+        "name": "Berkeley Martinez <berkeley@berkeleytrue.com> (http://www.berkeleytrue.com)"
+      },
+      "name": "warning",
+      "version": "4.0.3",
+      "description": "A mirror of Facebook's Warning",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "ae9272376db629622f1c9fc5e775d266fd1997f69c72a1d1f1eb7592968c4c3fdf2c2471b55f225fc73333363bb1566ea53237cdc51383c7b2712da4345f65eb"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/warning@4.0.3",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/BerkeleyTrue/warning"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/BerkeleyTrue/warning"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/warning/-/warning-4.0.3.tgz"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:yamd5.js@1.0.0",
+      "supplier": {
+        "name": "gorhill"
+      },
+      "name": "yamd5.js",
+      "version": "1.0.0",
+      "description": "YaMD5 - Yet another MD5 hasher.",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "312cd31a29b4df87f60ba6e7232cde59004ee7511d1747757dc211a17d59b24632bcc0571f4c5b3d8e54388f6331f2128a5337dbeabc601a24f46a053e27602a"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "ISC"
+          }
+        }
+      ],
+      "purl": "pkg:npm/yamd5.js@1.0.0",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/gorhill/yamd5.js#readme"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/gorhill/yamd5.js"
+        },
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/yamd5.js/-/yamd5.js-1.0.0.tgz"
+        }
+      ]
+    },
+    {
+      "type": "firmware",
+      "bom-ref": "real-time-clock-v2-bricklet-firmware@2.0.4",
+      "supplier": {
+        "name": "Tinkerforge GmbH",
+        "url": [
+          "https://www.tinkerforge.com"
+        ]
+      },
+      "manufacturer": {
+        "name": "Tinkerforge GmbH",
+        "url": [
+          "https://www.tinkerforge.com"
+        ]
+      },
+      "name": "real-time-clock-v2-bricklet-firmware",
+      "version": "2.0.4",
+      "description": "Bricklet firmware, embedded to update the Bricklet (src/modules/rtc_bricklet/bricklet_real_time_clock_v2_firmware_2_0_4.zbin)",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4947e4799bf7af6a1830ddfd1c1400beff33fa0d3d72887c06ddd0b2cfb81d4e"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "9bb4cb5419fcc8bb38129da6dad20931e57d7c414d31947490069c36a73deb9e151cdbd6083fc89b3b1f0f53468eee0097e231b4b3213cc391ee31f70673522a"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "purl": "pkg:github/tinkerforge/real-time-clock-v2-bricklet@v2.0.4",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Tinkerforge/real-time-clock-v2-bricklet"
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:git_tag",
+          "value": "v2.0.4"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "strict_variant@07be0b9e301a0023a658f76247d09b7d19e2fde0",
+      "supplier": {
+        "name": "Tinkerforge GmbH",
+        "url": [
+          "https://www.tinkerforge.com"
+        ]
+      },
+      "manufacturer": {
+        "name": "Chris Beck"
+      },
+      "name": "strict_variant",
+      "version": "1.0.0",
+      "description": "A realtime/embedded-friendly C++11 variant type which is never empty and prevents undesirable implicit conversions.",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSL-1.0"
+          }
+        }
+      ],
+      "purl": "pkg:github/tinkerforge/strict_variant@07be0b9e301a0023a658f76247d09b7d19e2fde0",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Tinkerforge/strict_variant"
+        }
+      ],
+      "pedigree": {
+        "ancestors": [
+          {
+            "type": "library",
+            "bom-ref": "strict_variant-upstream@1.0.0",
+            "supplier": {
+              "name": "Chris Beck"
+            },
+            "name": "strict_variant",
+            "version": "1.0.0",
+            "licenses": [
+              {
+                "license": {
+                  "id": "BSL-1.0"
+                }
+              }
+            ],
+            "purl": "pkg:github/cbeck88/strict-variant@1.0.0",
+            "externalReferences": [
+              {
+                "type": "website",
+                "url": "https://github.com/cbeck88/strict-variant"
+              }
+            ]
+          }
+        ],
+        "notes": "Fork maintained by Tinkerforge"
+      },
+      "properties": [
+        {
+          "name": "tf:git_commit",
+          "value": "07be0b9e301a0023a658f76247d09b7d19e2fde0"
+        },
+        {
+          "name": "tf:git_dirty",
+          "value": "False"
+        },
+        {
+          "name": "tf:library-manifest-version",
+          "value": "1.0.0"
+        }
+      ]
+    },
+    {
+      "type": "data",
+      "bom-ref": "tzdata@2026e",
+      "supplier": {
+        "name": "IANA",
+        "url": [
+          "https://www.iana.org/time-zones"
+        ]
+      },
+      "name": "tzdata",
+      "version": "2026e",
+      "description": "Time zone database, converted to POSIX TZ strings (src/modules/ntp/timezones.c)",
+      "licenses": [
+        {
+          "license": {
+            "name": "Public Domain"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://www.iana.org/time-zones"
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:source-paths",
+          "value": "src/modules/ntp/timezones.c"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "vendored/ESPAsyncWebServer",
+      "supplier": {
+        "name": "Hristo Gochkov"
+      },
+      "name": "ESPAsyncWebServer",
+      "description": "Digest authentication, stripped down (src/digest_auth.cpp)",
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/me-no-dev/ESPAsyncWebServer"
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:source-paths",
+          "value": "src/digest_auth.cpp"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "vendored/PDFGen@8a7298e7fa934b6ab1c21c876f9474756a44931d",
+      "supplier": {
+        "name": "Andre Renaud"
+      },
+      "name": "PDFGen",
+      "version": "8a7298e7fa934b6ab1c21c876f9474756a44931d",
+      "description": "PDF generator, modified (src/modules/charge_tracker/pdfgen.cpp)",
+      "licenses": [
+        {
+          "license": {
+            "id": "Unlicense"
+          }
+        }
+      ],
+      "purl": "pkg:github/andrerenaud/pdfgen@8a7298e7fa934b6ab1c21c876f9474756a44931d",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/AndreRenaud/PDFGen"
+        }
+      ],
+      "pedigree": {
+        "notes": "Modified by Tinkerforge"
+      },
+      "properties": [
+        {
+          "name": "tf:source-paths",
+          "value": "src/modules/charge_tracker/pdfgen.cpp"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "vendored/coreMQTT@2.1.0",
+      "supplier": {
+        "name": "Amazon.com, Inc."
+      },
+      "name": "coreMQTT",
+      "version": "2.1.0",
+      "description": "MQTT topic filter matching (src/modules/mqtt/matchTopicFilter.cpp)",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:github/freertos/coremqtt@v2.1.0",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/FreeRTOS/coreMQTT"
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:source-paths",
+          "value": "src/modules/mqtt/matchTopicFilter.cpp"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "vendored/esp_websocket_client@1.4.0",
+      "supplier": {
+        "name": "Espressif Systems (Shanghai) CO LTD",
+        "url": [
+          "https://www.espressif.com"
+        ]
+      },
+      "name": "esp_websocket_client",
+      "version": "1.4.0",
+      "description": "WebSocket client, patched (src/tools/tf_websocket_client.c)",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:github/espressif/esp-protocols@websocket-v1.4.0#components/esp_websocket_client",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/espressif/esp-protocols/tree/master/components/esp_websocket_client"
+        }
+      ],
+      "pedigree": {
+        "notes": "Modified by Tinkerforge"
+      },
+      "properties": [
+        {
+          "name": "tf:source-paths",
+          "value": "src/tools/tf_websocket_client.c"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "vendored/musl@1.1.23",
+      "supplier": {
+        "name": "musl libc"
+      },
+      "name": "musl",
+      "version": "1.1.23",
+      "description": "timegm() implementation (src/musl_libc_timegm.cpp)",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:musl-libc:musl:1.1.23:*:*:*:*:*:*:*",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://musl.libc.org/"
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:source-paths",
+          "value": "src/musl_libc_timegm.cpp"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "vendored/xz-embedded",
+      "supplier": {
+        "name": "Lasse Collin"
+      },
+      "name": "xz-embedded",
+      "description": "XZ decompressor (src/tools/libxz)",
+      "licenses": [
+        {
+          "license": {
+            "id": "0BSD"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://tukaani.org/xz/embedded.html"
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:source-paths",
+          "value": "src/tools/libxz/"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "web-interface",
+      "supplier": {
+        "name": "Tinkerforge GmbH",
+        "url": [
+          "https://www.tinkerforge.com"
+        ]
+      },
+      "manufacturer": {
+        "name": "Tinkerforge GmbH",
+        "url": [
+          "https://www.tinkerforge.com"
+        ]
+      },
+      "name": "WARP3 Charger Web Interface",
+      "version": "2.13.6+6ae0b801",
+      "description": "Web interface, embedded into the firmware",
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "tf:bundled-package-source",
+          "value": "esbuild-metafile"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "firmware",
+      "dependsOn": [
+        "esp32-arduino-libs@fe60e4e2afb935278a7d014d9215785a550eaec8",
+        "arduino-esp32@0ca24d74b6ec582e2780a9fdc9aadead8e272739",
+        "newlib@4.3.0",
+        "gcc@14.2.0",
+        "ArduinoJson@0b03321ed33fa6965114424fbb023260120c856b",
+        "TFJson@55e3be4852c6928a1dca997f58b42bddf642264d",
+        "TFNetwork@6d30fda885f7a22ed97df9ab5f843c7eecf50e38",
+        "TFOCPP@828794fea0765bbc2345dd50cb509c90d51aef51",
+        "TFTools@f73afaea8fa2650db226e57894b744ac2e231cab",
+        "WireGuard-ESP32@96032fd0855d355b6ae858b41e2e8b9b4e76c916",
+        "strict_variant@07be0b9e301a0023a658f76247d09b7d19e2fde0",
+        "vendored/xz-embedded",
+        "vendored/musl@1.1.23",
+        "vendored/ESPAsyncWebServer",
+        "vendored/esp_websocket_client@1.4.0",
+        "vendored/PDFGen@8a7298e7fa934b6ab1c21c876f9474756a44931d",
+        "vendored/coreMQTT@2.1.0",
+        "evse-v2-bricklet-firmware@2.2.26",
+        "nfc-bricklet-firmware@2.1.4",
+        "real-time-clock-v2-bricklet-firmware@2.0.4",
+        "tzdata@2026e",
+        "web-interface"
+      ]
+    },
+    {
+      "ref": "ArduinoJson@0b03321ed33fa6965114424fbb023260120c856b",
+      "dependsOn": []
+    },
+    {
+      "ref": "TFJson@55e3be4852c6928a1dca997f58b42bddf642264d",
+      "dependsOn": []
+    },
+    {
+      "ref": "TFNetwork@6d30fda885f7a22ed97df9ab5f843c7eecf50e38",
+      "dependsOn": [
+        "TFTools@f73afaea8fa2650db226e57894b744ac2e231cab"
+      ]
+    },
+    {
+      "ref": "TFOCPP@828794fea0765bbc2345dd50cb509c90d51aef51",
+      "dependsOn": [
+        "TFJson@55e3be4852c6928a1dca997f58b42bddf642264d",
+        "TFTools@f73afaea8fa2650db226e57894b744ac2e231cab",
+        "ArduinoJson@0b03321ed33fa6965114424fbb023260120c856b"
+      ]
+    },
+    {
+      "ref": "TFTools@f73afaea8fa2650db226e57894b744ac2e231cab",
+      "dependsOn": []
+    },
+    {
+      "ref": "WireGuard-ESP32@96032fd0855d355b6ae858b41e2e8b9b4e76c916",
+      "dependsOn": []
+    },
+    {
+      "ref": "arduino-esp32@0ca24d74b6ec582e2780a9fdc9aadead8e272739",
+      "dependsOn": [
+        "esp-idf@v5.5.6"
+      ]
+    },
+    {
+      "ref": "bricklet/cmsis@5.0.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "bricklet/nxp-nfc-library",
+      "dependsOn": []
+    },
+    {
+      "ref": "bricklet/xmclib@2.1.16",
+      "dependsOn": []
+    },
+    {
+      "ref": "bricklib2",
+      "dependsOn": []
+    },
+    {
+      "ref": "esp-idf/components/esp_phy/lib@5695f4f38108658bc4a33e4712c1ebcb34911434",
+      "dependsOn": []
+    },
+    {
+      "ref": "esp-idf/components/esp_wifi/lib@61bbece9cc8b3a6c8b2b5035f586db5d7abb95d2",
+      "dependsOn": []
+    },
+    {
+      "ref": "esp-idf/components/freertos/FreeRTOS-Kernel/sbom.yml@10.5.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "esp-idf/components/heap/tlsf@2867f6883a12920b1969ff9624c0ab0e4185c2ce",
+      "dependsOn": []
+    },
+    {
+      "ref": "esp-idf/components/http_parser/sbom.yml@2.7.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "esp-idf/components/lwip/lwip@2.2.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "esp-idf/components/mbedtls/mbedtls@3.6.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "esp-idf/components/mqtt/esp-mqtt@0e9ec171b448db2101ea537300976b7ffe595941",
+      "dependsOn": []
+    },
+    {
+      "ref": "esp-idf/components/spiffs/spiffs@0.2-265-gad902ca",
+      "dependsOn": []
+    },
+    {
+      "ref": "esp-idf/components/wpa_supplicant/sbom.yml@2.10",
+      "dependsOn": []
+    },
+    {
+      "ref": "esp-idf@v5.5.6",
+      "dependsOn": [
+        "esp-idf/components/freertos/FreeRTOS-Kernel/sbom.yml@10.5.1",
+        "esp-idf/components/lwip/lwip@2.2.0",
+        "esp-idf/components/mbedtls/mbedtls@3.6.7",
+        "esp-idf/components/mqtt/esp-mqtt@0e9ec171b448db2101ea537300976b7ffe595941",
+        "esp-idf/components/wpa_supplicant/sbom.yml@2.10",
+        "esp-idf/components/http_parser/sbom.yml@2.7.0",
+        "esp-idf/components/spiffs/spiffs@0.2-265-gad902ca",
+        "esp-idf/components/heap/tlsf@2867f6883a12920b1969ff9624c0ab0e4185c2ce",
+        "esp-idf/components/esp_wifi/lib@61bbece9cc8b3a6c8b2b5035f586db5d7abb95d2",
+        "esp-idf/components/esp_phy/lib@5695f4f38108658bc4a33e4712c1ebcb34911434"
+      ]
+    },
+    {
+      "ref": "esp32-arduino-libs@fe60e4e2afb935278a7d014d9215785a550eaec8",
+      "dependsOn": [
+        "esp-idf@v5.5.6",
+        "espressif/libsodium@1.0.22~1",
+        "espressif/mdns@1.14.0",
+        "joltwallet/littlefs@1.23.1"
+      ]
+    },
+    {
+      "ref": "espressif/libsodium@1.0.22~1",
+      "dependsOn": [
+        "libsodium@1.0.22"
+      ]
+    },
+    {
+      "ref": "espressif/mdns@1.14.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "evse-v2-bricklet-firmware@2.2.26",
+      "dependsOn": [
+        "bricklib2",
+        "bricklet/xmclib@2.1.16",
+        "bricklet/cmsis@5.0.1"
+      ]
+    },
+    {
+      "ref": "gcc@14.2.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "joltwallet/littlefs@1.23.1",
+      "dependsOn": [
+        "littlefs@2.11.3"
+      ]
+    },
+    {
+      "ref": "libsodium@1.0.22",
+      "dependsOn": []
+    },
+    {
+      "ref": "littlefs@2.11.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "newlib@4.3.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "nfc-bricklet-firmware@2.1.4",
+      "dependsOn": [
+        "bricklib2",
+        "bricklet/xmclib@2.1.16",
+        "bricklet/cmsis@5.0.1",
+        "bricklet/nxp-nfc-library"
+      ]
+    },
+    {
+      "ref": "npm:@babel/runtime@7.28.6",
+      "dependsOn": []
+    },
+    {
+      "ref": "npm:@popperjs/core@2.11.8",
+      "dependsOn": []
+    },
+    {
+      "ref": "npm:@preact/compat@18.3.1",
+      "dependsOn": [
+        "npm:preact@10.29.7"
+      ]
+    },
+    {
+      "ref": "npm:@preact/signals-core@1.14.4",
+      "dependsOn": []
+    },
+    {
+      "ref": "npm:@preact/signals@2.10.0",
+      "dependsOn": [
+        "npm:@preact/signals-core@1.14.4",
+        "npm:preact@10.29.7"
+      ]
+    },
+    {
+      "ref": "npm:@react-aria/ssr@3.9.10",
+      "dependsOn": [
+        "npm:@preact/compat@18.3.1"
+      ]
+    },
+    {
+      "ref": "npm:@restart/hooks@0.4.16",
+      "dependsOn": [
+        "npm:dequal@2.0.3",
+        "npm:@preact/compat@18.3.1"
+      ]
+    },
+    {
+      "ref": "npm:@restart/hooks@0.5.1",
+      "dependsOn": [
+        "npm:dequal@2.0.3",
+        "npm:@preact/compat@18.3.1"
+      ]
+    },
+    {
+      "ref": "npm:@restart/ui@1.9.4",
+      "dependsOn": [
+        "npm:@babel/runtime@7.28.6",
+        "npm:@popperjs/core@2.11.8",
+        "npm:@react-aria/ssr@3.9.10",
+        "npm:@restart/hooks@0.5.1",
+        "npm:dequal@2.0.3",
+        "npm:dom-helpers@5.2.1",
+        "npm:uncontrollable@8.0.4",
+        "npm:warning@4.0.3",
+        "npm:@preact/compat@18.3.1"
+      ]
+    },
+    {
+      "ref": "npm:argon2-browser@1.18.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "npm:bootstrap@5.3.8",
+      "dependsOn": [
+        "npm:@popperjs/core@2.11.8"
+      ]
+    },
+    {
+      "ref": "npm:classnames@2.5.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "npm:deepsignal@1.6.0",
+      "dependsOn": [
+        "npm:@preact/signals@2.10.0",
+        "npm:@preact/signals-core@1.14.4",
+        "npm:preact@10.29.7"
+      ]
+    },
+    {
+      "ref": "npm:dequal@2.0.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "npm:dom-helpers@5.2.1",
+      "dependsOn": [
+        "npm:@babel/runtime@7.28.6"
+      ]
+    },
+    {
+      "ref": "npm:invariant@2.2.4",
+      "dependsOn": []
+    },
+    {
+      "ref": "npm:lean-qr@2.7.4",
+      "dependsOn": []
+    },
+    {
+      "ref": "npm:median-js-bridge@2.19.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "npm:preact@10.29.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "npm:prop-types@15.8.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "npm:react-bootstrap@2.10.10",
+      "dependsOn": [
+        "npm:@babel/runtime@7.28.6",
+        "npm:@restart/hooks@0.4.16",
+        "npm:@restart/ui@1.9.4",
+        "npm:classnames@2.5.1",
+        "npm:dom-helpers@5.2.1",
+        "npm:invariant@2.2.4",
+        "npm:prop-types@15.8.1",
+        "npm:react-transition-group@4.4.5",
+        "npm:uncontrollable@7.2.1",
+        "npm:warning@4.0.3",
+        "npm:@preact/compat@18.3.1"
+      ]
+    },
+    {
+      "ref": "npm:react-feather@2.0.10",
+      "dependsOn": [
+        "npm:prop-types@15.8.1",
+        "npm:@preact/compat@18.3.1"
+      ]
+    },
+    {
+      "ref": "npm:react-lifecycles-compat@3.0.4",
+      "dependsOn": []
+    },
+    {
+      "ref": "npm:react-transition-group@4.4.5",
+      "dependsOn": [
+        "npm:@babel/runtime@7.28.6",
+        "npm:dom-helpers@5.2.1",
+        "npm:prop-types@15.8.1",
+        "npm:@preact/compat@18.3.1"
+      ]
+    },
+    {
+      "ref": "npm:uncontrollable@7.2.1",
+      "dependsOn": [
+        "npm:@babel/runtime@7.28.6",
+        "npm:invariant@2.2.4",
+        "npm:react-lifecycles-compat@3.0.4",
+        "npm:@preact/compat@18.3.1"
+      ]
+    },
+    {
+      "ref": "npm:uncontrollable@8.0.4",
+      "dependsOn": [
+        "npm:@preact/compat@18.3.1"
+      ]
+    },
+    {
+      "ref": "npm:uplot@1.6.32",
+      "dependsOn": []
+    },
+    {
+      "ref": "npm:warning@4.0.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "npm:yamd5.js@1.0.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "real-time-clock-v2-bricklet-firmware@2.0.4",
+      "dependsOn": [
+        "bricklib2",
+        "bricklet/xmclib@2.1.16",
+        "bricklet/cmsis@5.0.1"
+      ]
+    },
+    {
+      "ref": "strict_variant@07be0b9e301a0023a658f76247d09b7d19e2fde0",
+      "dependsOn": []
+    },
+    {
+      "ref": "tzdata@2026e",
+      "dependsOn": []
+    },
+    {
+      "ref": "vendored/ESPAsyncWebServer",
+      "dependsOn": []
+    },
+    {
+      "ref": "vendored/PDFGen@8a7298e7fa934b6ab1c21c876f9474756a44931d",
+      "dependsOn": []
+    },
+    {
+      "ref": "vendored/coreMQTT@2.1.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "vendored/esp_websocket_client@1.4.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "vendored/musl@1.1.23",
+      "dependsOn": []
+    },
+    {
+      "ref": "vendored/xz-embedded",
+      "dependsOn": []
+    },
+    {
+      "ref": "web-interface",
+      "dependsOn": [
+        "npm:@preact/signals@2.10.0",
+        "npm:argon2-browser@1.18.0",
+        "npm:bootstrap@5.3.8",
+        "npm:deepsignal@1.6.0",
+        "npm:lean-qr@2.7.4",
+        "npm:median-js-bridge@2.19.0",
+        "npm:preact@10.29.7",
+        "npm:@preact/compat@18.3.1",
+        "npm:react-bootstrap@2.10.10",
+        "npm:react-feather@2.0.10",
+        "npm:uplot@1.6.32",
+        "npm:yamd5.js@1.0.0"
+      ]
+    }
+  ]
+}

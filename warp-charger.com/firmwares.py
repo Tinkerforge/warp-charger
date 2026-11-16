@@ -125,6 +125,10 @@ def _load_firmware_versions(fw_type_info, lang):
         # Build firmware filename
         firmware_filename = f"{env_name}_firmware_{index_version}{fmt['binary_suffix']}"
 
+        # Software bill of materials, only available for newer firmwares
+        sbom_filename = f"{env_name}_firmware_{index_version}.cdx.json"
+        sbom_url = f"/firmwares/{sbom_filename}" if (FIRMWARES_DIR / sbom_filename).exists() else None
+
         # Read changelog file
         changelog_path = FIRMWARES_DIR / f"{env_name}_firmware_{index_version}_changelog_{lang}.txt"
         if not changelog_path.exists():
@@ -163,6 +167,7 @@ def _load_firmware_versions(fw_type_info, lang):
             "filename": firmware_filename,
             "url": f"/firmwares/{firmware_filename}",
             "checksum_url": f"/firmwares/{firmware_filename}.sha256",
+            "sbom_url": sbom_url,
             "changelog": changelog_items,
         })
 
