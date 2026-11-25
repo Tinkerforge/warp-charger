@@ -297,7 +297,7 @@ Das System setzt ein regelmäßiges Update der Messwerte vorraus.
 Zählerwerte sollten in einem 1-2 Sekundentakt aktualisiert werden, um dem System die Möglichkeit zu geben
 schnell genug auf Änderungen zu reagieren.
 
-Werden keine neuen Messwerte empfangen, so geht das **[dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement) nach 60 Sekunden** in einen Fehler,
+Werden keine neuen Messwerte empfangen, so geht das **[dynamisches Lastmanagement (dLM)](/docs/compatible_devices/introduction#dynamisches-lastmanagement-dlm) nach 60 Sekunden** in einen Fehler,
 beim **[PV-Überschlussladen](/tutorials/pv_excess_charging.md) ist dies nach 120 Sekunden** der Fall.
 
 Dies gilt unabhängig davon über welche Schnittstelle die Messswerte bereitgestellt werden.

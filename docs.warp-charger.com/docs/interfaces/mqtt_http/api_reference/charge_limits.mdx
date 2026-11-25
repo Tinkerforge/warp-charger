@@ -6,6 +6,7 @@ import MultilineTabs from '@site/src/components/MultilineTabs';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Admonition from '@theme/Admonition';
+import ApiAnchors from '@site/src/components/ApiAnchors';
 
 # Ladezeit- und -energielimits
 Mit dem `charge_limits`-Modul können Energie- und Zeitlimits definiert werden, nach denen ein Ladevorgang beendet wird. Es können sowohl Standardlimits gesetzt werden ([`charge_limits/default_limits`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_default_limits), als auch Limits für den laufenden oder nächsten Ladevorgang überschrieben werden ([`charge_limits/override_duration`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_duration) und [`charge_limits/override_energy`](/interfaces/mqtt_http/api_reference/charge_limits.mdx#charge_limits_override_energy))
@@ -2375,6 +2376,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_limits/restart -m 'null'
 
 </TabItem>
 </Tabs>
+<ApiAnchors ids={["charge_limits_state", "charge_limits_default_limits", "charge_limits_active_limits", "charge_limits_override_duration", "charge_limits_override_energy", "charge_limits_override_soc", "charge_limits_restart"]} />
 
 export const toc = [
     {

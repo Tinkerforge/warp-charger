@@ -51,7 +51,7 @@ können alle Nachrichten der Wallbox angezeigt werden. (Den Präfix `warp/AbCd` 
 ```
 Die Nachrichten des Topics [`evse/state`](api_reference/evse.mdx#evse_state) geben einen Überblick über den Zustand des Ladecontrollers. Beispielsweise liegt der erlaubte Ladestrom gerade bei 32000, also 32 Ampere.
 
-Durch Senden der Nachricht `{"current":8000}` an das Topic  [`evse/global_current_update`](api_reference/evse.mdx#evse_global_current_update) kann der Ladestrom auf 8 Ampere begrenzt werden, zum Beispiel so:
+Durch Senden der Nachricht `{"current":8000}` an das Topic  [`evse/global_current_update`](api_reference/evse.mdx#evse_global_current) kann der Ladestrom auf 8 Ampere begrenzt werden, zum Beispiel so:
 ```bash
 mosquitto_pub -t "warp/AbCd/evse/global_current_update" -m "{\"current\": 8000}"
 ```

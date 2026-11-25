@@ -6,6 +6,7 @@ import MultilineTabs from '@site/src/components/MultilineTabs';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Admonition from '@theme/Admonition';
+import ApiAnchors from '@site/src/components/ApiAnchors';
 
 # Lastmanager
 Das `charge_manager`-Modul implementiert einen Lastmanager, der eine verfügbare Menge Strom auf ein oder mehrere WARP Charger (jeder Generation) verteilen kann. Der Lastmanager stellt sicher, dass der konfigurierte Verbund an WARP Chargern niemals mehr als den verfügbaren Strom beziehen und versucht diesen möglichst fair zu verteilen. Ein WARP Energy Manager verwendet den Lastmanager außerdem um die Phasenumschaltung eines Verbunds an WARP Chargern über ein externes Schütz sicher umzusetzen.
@@ -2543,6 +2544,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 </table>
 </TabItem>
 </Tabs>
+<ApiAnchors ids={["charge_manager_available_current", "charge_manager_state", "charge_manager_low_level_state", "charge_manager_low_level_config", "charge_manager_config"]} />
 
 export const toc = [
     {

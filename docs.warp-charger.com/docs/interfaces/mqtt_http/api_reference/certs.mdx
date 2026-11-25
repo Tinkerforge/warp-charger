@@ -6,6 +6,7 @@ import MultilineTabs from '@site/src/components/MultilineTabs';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Admonition from '@theme/Admonition';
+import ApiAnchors from '@site/src/components/ApiAnchors';
 
 # TLS-Zertifikatsverwaltung
 Das `certs`-Modul verwaltet TLS-Zertifikate, die für den Aufbau von TLS-Verbindungen (z.B. für https oder mqtts) verwendet werden. Zusätzlich zu den Zertifikaten, die hier hinterlegt werden können, ist in allen Firmwares das [Zertifikatsbundle des NSS-Projekts von Mozilla](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/protocols/esp_crt_bundle.html) eingebettet. Dieses Bundle umfasst Root-Zertifikate mit denen Verbindungen zu den meisten öffentlich erreichbaren Servern aufgebaut werden können.
@@ -2072,6 +2073,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/certs/remove -m '0'
 </table>
 </TabItem>
 </Tabs>
+<ApiAnchors ids={["certs_state", "certs_add", "certs_modify", "certs_remove"]} />
 
 export const toc = [
     {

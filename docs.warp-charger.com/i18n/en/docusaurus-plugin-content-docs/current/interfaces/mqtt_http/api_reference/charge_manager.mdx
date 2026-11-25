@@ -6,6 +6,7 @@ import MultilineTabs from '@site/src/components/MultilineTabs';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Admonition from '@theme/Admonition';
+import ApiAnchors from '@site/src/components/ApiAnchors';
 
 # Charge Manager
 The `charge_manager` module implements a charge manager that can distribute an available amount of current across one or more WARP Chargers (of any generation). The charge manager ensures that the configured group of WARP Chargers never draws more than the available current and attempts to distribute it as fairly as possible. A WARP Energy Manager also uses the charge manager to safely implement phase switching of a group of WARP Chargers via an external contactor.
@@ -2543,6 +2544,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/charge_manager/config_update -m '{
 </table>
 </TabItem>
 </Tabs>
+<ApiAnchors ids={["charge_manager_available_current", "charge_manager_state", "charge_manager_low_level_state", "charge_manager_low_level_config", "charge_manager_config"]} />
 
 export const toc = [
     {

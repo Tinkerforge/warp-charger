@@ -6,6 +6,7 @@ import MultilineTabs from '@site/src/components/MultilineTabs';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Admonition from '@theme/Admonition';
+import ApiAnchors from '@site/src/components/ApiAnchors';
 
 # §14a EnWG
 Über das `p14a_enwg`-Modul können die Einstellungen für die Steuerung gemäß §14a des Energiewirtschaftsgesetzes (EnWG) konfiguriert werden. §14a EnWG ermöglicht es Netzbetreibern, den Strombezug steuerbarer Verbrauchseinrichtungen (Wallboxen, Wärmepumpen, Batteriespeicher, Klimaanlagen) temporär zu reduzieren, um eine lokale Netzüberlastung zu vermeiden. Die Geräte werden dabei nie vollständig abgeschaltet. Eine Mindestleistung von 4200 W bleibt stets verfügbar.
@@ -2206,6 +2207,7 @@ mosquitto_pub -h $BROKER -t $PREFIX/p14a_enwg/control_update -m '{
 </table>
 </TabItem>
 </Tabs>
+<ApiAnchors ids={["p14a_enwg_config", "p14a_enwg_state", "p14a_enwg_control", "p14a_enwg_control_update"]} />
 
 export const toc = [
     {

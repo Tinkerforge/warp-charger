@@ -51,7 +51,7 @@ all messages from the charger can be displayed. (Replace the prefix `warp/AbCd` 
 ```
 The messages of the topic [`evse/state`](api_reference/evse.mdx#evse_state) provide an overview of the charge controller's state. For example, the allowed charging current is currently 32000, i.e. 32 amperes.
 
-By sending the message `{"current":8000}` to the topic [`evse/global_current_update`](api_reference/evse.mdx#evse_global_current_update), the charging current can be limited to 8 amperes, for example like this:
+By sending the message `{"current":8000}` to the topic [`evse/global_current_update`](api_reference/evse.mdx#evse_global_current), the charging current can be limited to 8 amperes, for example like this:
 ```bash
 mosquitto_pub -t "warp/AbCd/evse/global_current_update" -m "{\"current\": 8000}"
 ```

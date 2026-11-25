@@ -887,6 +887,7 @@ import MultilineTabs from '@site/src/components/MultilineTabs';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Admonition from '@theme/Admonition';
+import ApiAnchors from '@site/src/components/ApiAnchors';
 
 # {display_name}
 """
@@ -921,6 +922,7 @@ import Admonition from '@theme/Admonition';
         result += '</Tabs>\n'
 
         toc = []
+        anchor_ids = []
 
         for group, fns in itertools.groupby(self.functions, key=lambda f: f.type_):
             fns = list(fns)
@@ -931,12 +933,18 @@ import Admonition from '@theme/Admonition';
                 else:
                     v = self.version
 
+                anchor_id = "{}_{}".format(self.name, f.name.replace("/", "_")) if not self.hide_prefix else f.name
+                anchor_ids.append(anchor_id)
+
                 toc.append(f"""{{
     "value": "{"{}/{}".format(self.name, f.name) if not self.hide_prefix else f.name}",
-    "id": "{"{}_{}".format(self.name, f.name.replace("/", "_")) if not self.hide_prefix else f.name}",
+    "id": "{anchor_id}",
     "level": 2,
     {"" if v == Version.ANY else ('"hardwareType": ["' + '","'.join(v.css_classes().split(" ")) + '"]')}
 }},""")
+
+        # Links to functions omit the hardware type suffix of the heading ids, see ApiAnchors.
+        result += "<ApiAnchors ids={[" + ", ".join(f'"{x}"' for x in anchor_ids) + "]} />\n"
 
         result += f"""
 export const toc = [
