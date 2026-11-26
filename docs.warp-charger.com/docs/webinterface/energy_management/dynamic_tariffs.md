@@ -22,19 +22,24 @@ Konfiguriert man diese dem jeweiligen Anbieter entsprechend, so wird der dynamis
 
 Als Quelle kann zwischen **Automatisch über Strombörse** und **Push über API** gewählt werden. Bei der automatischen Variante werden die Day-Ahead-Preise von [ENTSO-E](https://www.entsoe.eu/about/) bezogen. Beim Push-Modus werden die Preisdaten über den API-Endpunkt [day_ahead_prices/prices_update](/docs/interfaces/mqtt_http/api_reference/day_ahead_prices) bereitgestellt.
 
-Bei der automatischen Quelle sind Region und Auflösung zu konfigurieren.
+Bei der automatischen Quelle sind die **Region** (Deutschland, Österreich, Luxemburg oder Belgien) und die **Auflösung** (15 oder 60 Minuten, abhängig vom Stromanbieter) zu konfigurieren.
 
-Optional können stromanbieterspezfische Zusatzkosten angeben werden. Die dynamischen Börsenstrompreise sind nur ein Teil der Strom­kosten. Es fallen zu­sätzliche fixe Steuern, Netzentgelte und Aufschläge an.
+### Zusatzkosten
 
-Die MwSt bezieht sich auf die MwSt die auf den Börsenstrompreis anfällt (in DE aktuell 19%). Weitere Zusatzkosten können in der Rechnung des Stromanbieters nachgeschaut werden.
+Optional können stromanbieterspezifische Zusatzkosten angegeben werden. Die dynamischen Börsenstrompreise sind nur ein Teil der Stromkosten. Es fallen zusätzliche fixe Steuern, Netzentgelte und Aufschläge an. Die Höhe der Zusatzkosten kann der Rechnung des Stromanbieters entnommen werden.
+
+* **Mehrwertsteuer**: Wird auf den Börsenpreis und den Kalenderpreis aufgeschlagen (in DE aktuell 19 %).
+* **Netzentgelte und Steuern**: In ct/kWh.
+* **Preisaufschlag des Stromtarifs**: In ct/kWh.
+* **Grundgebühr des Stromtarifs**: In €/Monat. Die Grundgebühr geht nicht in die angezeigten Preise pro kWh ein.
 
 Es gibt drei sinnvolle Möglichkeiten für die optionalen Einstellungen:
 
-* Alles auf 0 lassen: Es wird der Netto-Börsenpreis angezeigt,
+* Alles auf 0 lassen: Es wird der Netto-Börsenpreis angezeigt.
 * MwSt auf 0 lassen und bei den Gebühren den Nettopreis eintragen: Es wird der Netto-Strom­preis inkl. Gebühren angezeigt.
 * MwSt korrekt eintragen und bei den Gebühren den Bruttopreis eintragen: Es wird der Brutto-Strom­preis inkl. Gebühren angezeigt.
 
-Zur Regelung werden unabhängig von den Zusatzkosten immer nur die dyna­mischen Netto-Börsenpreise verwendet.
+Die Zusatzkosten werden nur für die Darstellung der Preise verwendet, nicht für die Regelung.
 
 ## Preiskalender
 

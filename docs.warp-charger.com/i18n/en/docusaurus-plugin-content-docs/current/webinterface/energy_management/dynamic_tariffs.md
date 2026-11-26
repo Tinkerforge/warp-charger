@@ -22,19 +22,24 @@ By configuring these according to the respective provider, the dynamic tariff of
 
 The source can be set to either **Automatic via spot market** or **Push via API**. With the automatic option, day-ahead prices are retrieved from [ENTSO-E](https://www.entsoe.eu/about/). In push mode, price data is provided via the API endpoint [day_ahead_prices/prices_update](/docs/interfaces/mqtt_http/api_reference/day_ahead_prices).
 
-When using the automatic source, the region and resolution must be configured.
+When using the automatic source, the **Region** (Germany, Austria, Luxembourg or Belgium) and the **Resolution** (15 or 60 minutes, depending on the electricity provider) must be configured.
 
-Optionally, electricity provider-specific additional costs can be specified. The dynamic exchange electricity prices are only part of the electricity costs. Additional fixed taxes, grid fees, and surcharges apply.
+### Additional costs
 
-The VAT refers to the VAT applied to the exchange electricity price (currently 19% in Germany). Additional costs can be found in the electricity provider's invoice.
+Optionally, electricity provider-specific additional costs can be specified. The dynamic exchange electricity prices are only part of the electricity costs. Additional fixed taxes, grid fees, and surcharges apply. The amounts can be found in the electricity provider's invoice.
+
+* **Value-added tax**: Applied to the exchange price and the calendar price (currently 19 % in Germany).
+* **Grid fees and taxes**: In ct/kWh.
+* **Electric utility surcharge**: In ct/kWh.
+* **Electric utility basic fee**: In €/month. The basic fee is not included in the displayed prices per kWh.
 
 There are three sensible options for the optional settings:
 
-* Leave everything at 0: The net exchange price is displayed,
+* Leave everything at 0: The net exchange price is displayed.
 * Leave VAT at 0 and enter the net price in the fees: The net electricity price including fees is displayed.
 * Enter VAT correctly and enter the gross price in the fees: The gross electricity price including fees is displayed.
 
-For regulation, only the dynamic net exchange prices are always used, regardless of the additional costs.
+The additional costs are only used to display the prices, not for regulation.
 
 ## Price Calendar
 
