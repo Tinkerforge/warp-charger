@@ -66,7 +66,7 @@ The following limits can be part of the calculation:
 
  * **§14a EnWG**: Limitation of the charging power according to §14a EnWG.
 
- * **OVE R 37**: Blocks or delays the charging process according to the grid support functions as per OVE R 37 (Austria), for example on undervoltage.
+ * **OVE R 37**: Blocks or delays the charging process according to the grid support functions as per [OVE R 37](/webinterface/energy_management/ove_r37.md) (Austria), for example on undervoltage.
 
 
 The color marking next to a limit has the following meaning:

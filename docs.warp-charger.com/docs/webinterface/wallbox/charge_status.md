@@ -66,7 +66,7 @@ Folgende Grenzen können Teil der Berechnung sein:
 
  * **§14a EnWG**: Begrenzung der Ladeleistung nach §14a EnWG.
 
- * **OVE R 37**: Blockiert bzw. verzögert den Ladevorgang gemäß der Netzstützungsfunktionen nach OVE R 37 (Österreich), beispielsweise bei Unterspannung.
+ * **OVE R 37**: Blockiert bzw. verzögert den Ladevorgang gemäß der Netzstützungsfunktionen nach [OVE R 37](/docs/webinterface/energy_management/ove_r37.md) (Österreich), beispielsweise bei Unterspannung.
 
 
 Die Farbmarkierung neben einer Grenze hat folgende Bedeutung:

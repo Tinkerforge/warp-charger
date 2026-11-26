@@ -27,6 +27,7 @@ Folgende Einstellungen sind in der Firmware des WARP4 Charger verfügbar:
    * [PV-Ertragsprognose](/docs/webinterface/energy_management/solar_forecast)
    * [Eco-Modus](/docs/webinterface/energy_management/eco_mode)
    * [§14a EnWG](/docs/webinterface/energy_management/p14a_enwg)
+   * [OVE R 37](/docs/webinterface/energy_management/ove_r37)
  * Netzwerk
    * [Einstellungen](/docs/webinterface/network/settings)
    * [WLAN-Verbindung](/docs/webinterface/network/wifi-connection)

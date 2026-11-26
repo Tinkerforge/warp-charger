@@ -14,6 +14,8 @@ import DeviceCompatibility from '@site/src/components/DeviceCompatibility';
 Auf dieser Seite kann die Systemsprache konfiguriert werden. Alternativ ist es möglich, dass der [WARP Charger](@current-charger/introduction) oder [WARP Energy Manager](@current-wem/introduction) die
 Systemsprache mittels der Browsersprache festlegt.
 
+Unter **Land** wird das Land ausgewählt, in dem das Gerät installiert ist. Dadurch werden länderspezifische Funktionen und Vorschriften aktiviert. Ist **Österreich** ausgewählt, erscheint beim WARP4 Charger unter `Energiemanagement` die Seite [OVE R 37](/docs/webinterface/energy_management/ove_r37.md).
+
 Über die Einstellung **Farbschema** lässt sich das Erscheinungsbild des Webinterfaces anpassen. Zur Auswahl stehen ein helles und ein dunkles Farbschema sowie die Option, das Farbschema des Browsers zu übernehmen.
 
 :::note
