@@ -197,6 +197,6 @@ The following functions are in preparation or planned for the long term:
 
 ## Further information
 
-- [Setting up SoC and Autocharge](/tutorials/soc_autocharge.md) – step-by-step guide
-- [ISO 15118 (web interface)](/webinterface/wallbox/iso15118.md) – settings, status, and diagnostics
-- [Vehicles (web interface)](/webinterface/users/vehicles.md) – vehicle profiles for Autocharge and SoC estimation
+- [Setting up SoC and Autocharge](/tutorials/soc_autocharge.md): step-by-step guide
+- [ISO 15118 (web interface)](/webinterface/wallbox/iso15118.md): settings, status, and diagnostics
+- [Vehicles (web interface)](/webinterface/users/vehicles.md): vehicle profiles for Autocharge and SoC estimation

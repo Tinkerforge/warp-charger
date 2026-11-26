@@ -216,6 +216,6 @@ Folgende Funktionen sind in Vorbereitung bzw. langfristig geplant:
 
 ## Weitere Informationen
 
-- [SoC und Autocharge einrichten](/docs/tutorials/soc_autocharge) – Schritt-für-Schritt-Anleitung
-- [ISO 15118 (Webinterface)](/docs/webinterface/wallbox/iso15118) – Einstellungen, Status und Diagnose
-- [Fahrzeuge (Webinterface)](/docs/webinterface/users/vehicles) – Fahrzeug-Profile für Autocharge und SoC-Schätzung
+- [SoC und Autocharge einrichten](/docs/tutorials/soc_autocharge): Schritt-für-Schritt-Anleitung
+- [ISO 15118 (Webinterface)](/docs/webinterface/wallbox/iso15118): Einstellungen, Status und Diagnose
+- [Fahrzeuge (Webinterface)](/docs/webinterface/users/vehicles): Fahrzeug-Profile für Autocharge und SoC-Schätzung

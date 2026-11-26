@@ -125,6 +125,6 @@ To test the configuration, **Active on** can temporarily be set to **Open** and 
 
 ## Further information
 
-- [Controllable Consumption Device According to §14a EnWG (Tutorial)](/tutorials/verbrauchseinrichtung.md) — Overview of the various implementation options
-- [Heating](/webinterface/energy_management/heater.md) — SG-Ready control configuration
-- [EEBUS interface](/docs/interfaces/eebus) — Details on the EEBUS connection
+- [Controllable Consumption Device According to §14a EnWG (Tutorial)](/tutorials/verbrauchseinrichtung.md): Overview of the various implementation options
+- [Heating](/webinterface/energy_management/heater.md): SG-Ready control configuration
+- [EEBUS interface](/docs/interfaces/eebus): Details on the EEBUS connection

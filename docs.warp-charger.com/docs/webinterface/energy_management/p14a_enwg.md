@@ -118,6 +118,6 @@ Zum Testen der Konfiguration kann **Aktiv bei** kurzzeitig auf **Geöffnet** ges
 
 ## Weitere Informationen
 
-- [Steuerbare Verbrauchseinrichtung nach §14a EnWG (Tutorial)](/docs/tutorials/verbrauchseinrichtung.md) — Übersicht über die verschiedenen Möglichkeiten zur Umsetzung
-- [Heizung](/docs/webinterface/energy_management/heater.md) — Konfiguration der SG-Ready-Steuerung
-- [EEBUS-Schnittstelle](/docs/interfaces/eebus) — Details zur EEBUS-Anbindung
+- [Steuerbare Verbrauchseinrichtung nach §14a EnWG (Tutorial)](/docs/tutorials/verbrauchseinrichtung.md): Übersicht über die verschiedenen Möglichkeiten zur Umsetzung
+- [Heizung](/docs/webinterface/energy_management/heater.md): Konfiguration der SG-Ready-Steuerung
+- [EEBUS-Schnittstelle](/docs/interfaces/eebus): Details zur EEBUS-Anbindung

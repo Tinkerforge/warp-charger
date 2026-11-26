@@ -141,6 +141,6 @@ EnWG module but control the charger directly.
 
 ## Further Information
 
-- [§14a EnWG module (configuration)](/webinterface/energy_management/p14a_enwg.md) — Documentation of all settings
-- [Heating](/webinterface/energy_management/heater.md) — SG-Ready control configuration
-- [EEBUS interface](/docs/interfaces/eebus) — Details on the EEBUS connection
+- [§14a EnWG module (configuration)](/webinterface/energy_management/p14a_enwg.md): Documentation of all settings
+- [Heating](/webinterface/energy_management/heater.md): SG-Ready control configuration
+- [EEBUS interface](/docs/interfaces/eebus): Details on the EEBUS connection

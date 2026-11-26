@@ -139,6 +139,6 @@ die Wallbox direkt.
 
 ## Weitere Informationen
 
-- [§14a-EnWG-Modul (Konfiguration)](/docs/webinterface/energy_management/p14a_enwg.md) — Dokumentation aller Einstellungen
-- [Heizung](/docs/webinterface/energy_management/heater.md) — Konfiguration der SG-Ready-Steuerung
-- [EEBUS-Schnittstelle](/docs/interfaces/eebus) — Details zur EEBUS-Anbindung
+- [§14a-EnWG-Modul (Konfiguration)](/docs/webinterface/energy_management/p14a_enwg.md): Dokumentation aller Einstellungen
+- [Heizung](/docs/webinterface/energy_management/heater.md): Konfiguration der SG-Ready-Steuerung
+- [EEBUS-Schnittstelle](/docs/interfaces/eebus): Details zur EEBUS-Anbindung
