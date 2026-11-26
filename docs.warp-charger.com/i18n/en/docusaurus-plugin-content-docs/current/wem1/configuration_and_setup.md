@@ -26,6 +26,7 @@ The following settings are available in the WARP Energy Manager 1.0 firmware:
    * [Solar Forecast](/docs/webinterface/energy_management/solar_forecast)
    * [Eco Mode](/docs/webinterface/energy_management/eco_mode)
    * [§14a EnWG](/docs/webinterface/energy_management/p14a_enwg)
+   * [§9 EEG](/docs/webinterface/energy_management/p9_eeg)
  * Network
    * [Settings](/docs/webinterface/network/settings)
    * [WiFi Connection](/docs/webinterface/network/wifi-connection)

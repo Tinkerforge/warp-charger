@@ -29,6 +29,7 @@ Folgende Einstellungen sind in der Firmware des WARP Energy Managers 2.0 verfüg
    * [Außentemperatur](/docs/webinterface/energy_management/temperatures)
    * [Eco-Modus](/docs/webinterface/energy_management/eco_mode)
    * [§14a EnWG](/docs/webinterface/energy_management/p14a_enwg)
+   * [§9 EEG](/docs/webinterface/energy_management/p9_eeg)
  * Netzwerk
    * [Einstellungen](/docs/webinterface/network/settings)
    * [WLAN-Verbindung](/docs/webinterface/network/wifi-connection)

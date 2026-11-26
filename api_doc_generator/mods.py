@@ -29,6 +29,7 @@ from day_ahead_prices import day_ahead_prices
 from front_panel import front_panel
 from heating import heating
 from p14a_enwg import p14a_enwg
+from p9_eeg import p9_eeg
 from solar_forecast import solar_forecast
 from temperatures import temperatures
 
@@ -64,6 +65,7 @@ mods = [
     front_panel,
     heating,
     p14a_enwg,
+    p9_eeg,
     solar_forecast,
     temperatures,
 ]

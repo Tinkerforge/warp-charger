@@ -19,7 +19,7 @@ EEBUS definiert verschiedene Use Cases für unterschiedliche Anwendungsbereiche.
 ### Netzbetreibersteuerung
 
 - **LPC** (Limitation of Power Consumption, Actor: Controllable System): Ermöglicht dem Netzbetreiber, die Leistungsaufnahme zu begrenzen. Wird von Steuerboxen zur Netzsteuerung gemäß §14a EnWG verwendet. Verfügbar auf WARP Charger und Energy Manager.
-- **LPP** (Limitation of Power Production, Actor: Controllable System): Ermöglicht dem Netzbetreiber, die Einspeisung zu begrenzen (§9 EEG). Die Begrenzung kann über eine [Automatisierungsregel](#einspeisebegrenzung) an den Wechselrichter weitergegeben werden. Nur Energy Manager.
+- **LPP** (Limitation of Power Production, Actor: Controllable System): Ermöglicht dem Netzbetreiber, die Einspeisung zu begrenzen (§9 EEG). Die Begrenzung wird über [§9 EEG](/docs/webinterface/energy_management/p9_eeg.md) an den Wechselrichter weitergegeben. Nur Energy Manager.
 
 ### E-Mobility (nur WARP Charger)
 
@@ -65,23 +65,14 @@ Falls ein Gerät nicht automatisch erkannt wird, ist es möglich die SKI und Adr
 
 <DeviceCompatibility supported={['wem1', 'wem2']} />
 
-Über den Use Case **LPP** kann die Steuerbox des Netzbetreibers die Einspeiseleistung begrenzen. Der WARP Energy Manager kann die Erzeugung der PV-Anlage nicht selbst regeln. Die Begrenzung wird daher über eine [Automatisierungsregel](/docs/webinterface/energy_manager/automation.md) an den Wechselrichter weitergegeben, z.B. indem ein Relais des Energy Managers einen Digitaleingang des Wechselrichters schaltet. Welche Einspeiseleistung der Wechselrichter bei geschlossenem Eingang zulässt (z.B. 0 %), wird im Wechselrichter konfiguriert.
+Über den Use Case **LPP** kann die Steuerbox des Netzbetreibers die Einspeiseleistung begrenzen. Der WARP Energy Manager gibt das Limit über seine Relais an den Wechselrichter weiter. Dazu wird auf der Seite [§9 EEG](/docs/webinterface/energy_management/p9_eeg.md) die Signalquelle **EEBUS** gewählt.
 
-Dazu werden zwei Regeln mit der Bedingung **§9 EEG (EEBUS-Einspeisebegrenzung)** angelegt:
-
-* Wenn §9 EEG (EEBUS-Einspeisebegrenzung) **ausgelöst** wird, Relais schließen.
-* Wenn §9 EEG (EEBUS-Einspeisebegrenzung) **nicht mehr ausgelöst** ist, Relais öffnen.
-
-Die Bedingung gilt als ausgelöst, wenn
-
-* die Steuerbox eine Begrenzung aktiviert hat oder
-* die Verbindung zur Steuerbox unterbrochen ist (Failsafe-Zustand) und das von der Steuerbox vorgegebene Failsafe-Limit gilt.
-
-Nach einem Neustart gilt bis zur erneuten Übernahme durch die Steuerbox (maximal 120 Sekunden) ebenfalls das Failsafe-Limit. Der aktuelle Zustand wird nach jedem Neustart und nach dem Aktivieren von EEBUS an die Automatisierungsregeln gemeldet, sodass das Relais immer den aktuellen Zustand widerspiegelt. Wird EEBUS deaktiviert, gilt die Bedingung als nicht mehr ausgelöst.
+Die Standardstufe von §9 EEG ist gleichzeitig der voreingestellte Failsafe-Wert von LPP. Dieser gilt nach einem Neustart und wenn die Verbindung zur Steuerbox abbricht. Schreibt die Steuerbox einen eigenen Failsafe-Wert, wird dieser dauerhaft gespeichert und hat Vorrang.
 
 Das aktuell vorgegebene Limit und der Zustand des Use Cases werden im Bereich **Details** der EEBUS-Seite angezeigt.
 
 ## Weitere Informationen
 
-- [§14a EnWG](/docs/webinterface/energy_management/p14a_enwg.md) — Zentrale §14a-EnWG-Steuerung
-- [Steuerbare Verbrauchseinrichtung (Tutorial)](/docs/tutorials/verbrauchseinrichtung.md) — Übersicht über die verschiedenen Möglichkeiten zur Umsetzung
+- [§14a EnWG](/docs/webinterface/energy_management/p14a_enwg.md): Zentrale §14a-EnWG-Steuerung
+- [§9 EEG](/docs/webinterface/energy_management/p9_eeg.md): Einspeisebegrenzung über die Relais des Energy Managers
+- [Steuerbare Verbrauchseinrichtung (Tutorial)](/docs/tutorials/verbrauchseinrichtung.md): Übersicht über die verschiedenen Möglichkeiten zur Umsetzung

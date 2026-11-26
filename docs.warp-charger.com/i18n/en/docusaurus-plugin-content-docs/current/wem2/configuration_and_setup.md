@@ -29,6 +29,7 @@ The following settings are available in the WARP Energy Manager 2.0 firmware:
    * [Outdoor Temperature](/docs/webinterface/energy_management/temperatures)
    * [Eco Mode](/docs/webinterface/energy_management/eco_mode)
    * [§14a EnWG](/docs/webinterface/energy_management/p14a_enwg)
+   * [§9 EEG](/docs/webinterface/energy_management/p9_eeg)
  * Network
    * [Settings](/docs/webinterface/network/settings)
    * [WiFi Connection](/docs/webinterface/network/wifi-connection)
