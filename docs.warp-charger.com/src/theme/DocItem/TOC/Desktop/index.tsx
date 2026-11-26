@@ -25,12 +25,7 @@ const hardwareTypes = ['warp1', 'warp2', 'warp3', 'warp4', 'wem', 'wem2', 'any']
 export default function DocItemTOCDesktop(props: Props): ReactNode {
     const { toc, frontMatter, metadata } = useDoc();
 
-    // We are not in the API documentation. Show the default TOC.
-    if (!metadata.sourceDirName.startsWith("interfaces/mqtt_http/api_reference"))
-        return <Desktop {...props} />;
-
-    // We are in the API documentation.
-    // Show the api/hardwareType tabs and filter the TOC.
+    const isApiReference = metadata.sourceDirName.startsWith("interfaces/mqtt_http/api_reference");
 
     // The user selected hardware type is stored in the localStorage and part of the query string.
     // If the page is loaded with a fragment that does not fit to
@@ -40,9 +35,14 @@ export default function DocItemTOCDesktop(props: Props): ReactNode {
     // Also allow setting the fragment _once_ even if it is already
     // correct to force the browser to scroll to the function if
     // the hardware type was not rendered in the first run.
-    if (interval == null) {
-        // Use effect to make sure the interval always runs after the first render
-        useEffect(() => {
+    // Only do this while an API reference page is shown, the
+    // fragments of all other pages don't have a hardware type suffix.
+    // Use effect to make sure the interval always runs after the first render
+    useEffect(() => {
+        if (!isApiReference)
+            return;
+
+        if (interval == null) {
             interval = setInterval(() => {
                 let storedHardwareType = window?.localStorage?.getItem("docusaurus.tab.hardwareType");
                 let hardwareType = new URLSearchParams(window.location.search)?.get("hardwareType") ?? storedHardwareType ?? window.location.hash.split('_').slice(-1)[0];
@@ -84,8 +84,23 @@ export default function DocItemTOCDesktop(props: Props): ReactNode {
                 }
                 window.location.hash = hash;
             }, 100);
-        }, []);
-    }
+        }
+
+        return () => {
+            if (interval != null) {
+                clearInterval(interval);
+                interval = null;
+            }
+            scrollHandled = "foobar";
+        };
+    }, [isApiReference]);
+
+    // We are not in the API documentation. Show the default TOC.
+    if (!isApiReference)
+        return <Desktop {...props} />;
+
+    // We are in the API documentation.
+    // Show the api/hardwareType tabs and filter the TOC.
 
     const filterToC = (toc: readonly TOCItem[], hardwareType: string) => {
         let level_filter = -1;
